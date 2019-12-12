@@ -1,5 +1,5 @@
 VC=v
-modules := quaternion
+modules := const quaternion
 
 build: clean
 	$(foreach module, $(modules), $(VC) -g build module ./vsl/$(module);)
