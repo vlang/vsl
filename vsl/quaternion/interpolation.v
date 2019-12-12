@@ -1,3 +1,7 @@
+// Copyright (c) 2019 Ulises Jeremias Cornejo Fandos. All rights reserved.
+// Use of this source code is governed by an MIT license
+// that can be found in the LICENSE file.
+
 module vsl
 
 import math
@@ -38,8 +42,7 @@ pub fn (start Quaternion) slerp(end Quaternion, tau f64) Quaternion {
                 .scalar_pow(tau)
                 .multiply(start)
         }
-        else
-        {
+        else {
                 end
                 .opposite()
                 .divide(start)

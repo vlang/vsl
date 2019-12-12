@@ -1,3 +1,7 @@
+// Copyright (c) 2019 Ulises Jeremias Cornejo Fandos. All rights reserved.
+// Use of this source code is governed by an MIT license
+// that can be found in the LICENSE file.
+
 module vsl
 
 import math
@@ -11,10 +15,10 @@ pub fn (q Quaternion) is_zero() bool {
 				true
 		}
 		else {
-				q.w == 0.0 &&
-				q.x == 0.0 &&
-				q.y == 0.0 &&
-				q.z == 0.0
+                        q.w == 0.0 &&
+                        q.x == 0.0 &&
+                        q.y == 0.0 &&
+                        q.z == 0.0
 		}
 }
 
@@ -46,39 +50,39 @@ fn choose(c, a, b bool) bool {
 }
 
 pub fn (q1 Quaternion) is_less(q2 Quaternion) bool {
-		return 
-			(!q1.is_nan() && !q2.is_nan()) &&
-			choose(q1.w != q2.w, q1.w < q2.w,
-					choose(q1.x != q2.x, q1.x < q2.x,
-							choose(q1.y != q2.y, q1.y < q2.y,
-									choose(q1.z != q2.z, q1.z < q2.z, false)
-							)
-					)
-			)
+        return 
+                (!q1.is_nan() && !q2.is_nan()) &&
+                choose(q1.w != q2.w, q1.w < q2.w,
+                        choose(q1.x != q2.x, q1.x < q2.x,
+                                choose(q1.y != q2.y, q1.y < q2.y,
+                                        choose(q1.z != q2.z, q1.z < q2.z, false)
+                                )
+                        )
+                )
 }
 
 pub fn (q1 Quaternion) is_greater(q2 Quaternion) bool {
         return 
-			(!q1.is_nan() && !q2.is_nan()) &&
-			choose(q1.w != q2.w, q1.w > q2.w,
-					choose(q1.x != q2.x, q1.x > q2.x,
-							choose(q1.y != q2.y, q1.y > q2.y,
-									choose(q1.z != q2.z, q1.z > q2.z, false)
-							)
-					)
-			)
+                (!q1.is_nan() && !q2.is_nan()) &&
+                choose(q1.w != q2.w, q1.w > q2.w,
+                        choose(q1.x != q2.x, q1.x > q2.x,
+                                choose(q1.y != q2.y, q1.y > q2.y,
+                                        choose(q1.z != q2.z, q1.z > q2.z, false)
+                                )
+                        )
+                )
 }
 
 pub fn (q1 Quaternion) is_lessequal(q2 Quaternion) bool {
         return 
-			(!q1.is_nan() && !q2.is_nan()) &&
-			choose(q1.w != q2.w, q1.w < q2.w,
-					choose(q1.x != q2.x, q1.x < q2.x,
-							choose(q1.y != q2.y, q1.y < q2.y,
-									choose(q1.z != q2.z, q1.z < q2.z, true)
-							)
-					)
-			)
+                (!q1.is_nan() && !q2.is_nan()) &&
+                choose(q1.w != q2.w, q1.w < q2.w,
+                        choose(q1.x != q2.x, q1.x < q2.x,
+                                choose(q1.y != q2.y, q1.y < q2.y,
+                                        choose(q1.z != q2.z, q1.z < q2.z, true)
+                                )
+                        )
+                )
 
         /* Note that the final possibility __is 1, whereas in
          * `is_less` it was 0.  This distinction correctly
@@ -88,14 +92,14 @@ pub fn (q1 Quaternion) is_lessequal(q2 Quaternion) bool {
 
 pub fn (q1 Quaternion) is_greaterequal(q2 Quaternion) bool {
         return 
-			(!q1.is_nan() && !q2.is_nan()) &&
-			choose(q1.w != q2.w, q1.w > q2.w,
-					choose(q1.x != q2.x, q1.x > q2.x,
-							choose(q1.y != q2.y, q1.y > q2.y,
-									choose(q1.z != q2.z, q1.z > q2.z, true)
-							)
-					)
-			)
+                (!q1.is_nan() && !q2.is_nan()) &&
+                choose(q1.w != q2.w, q1.w > q2.w,
+                        choose(q1.x != q2.x, q1.x > q2.x,
+                                choose(q1.y != q2.y, q1.y > q2.y,
+                                        choose(q1.z != q2.z, q1.z > q2.z, true)
+                                )
+                        )
+                )
         /* Note that the final possibility __is 1, whereas in
          * `is_greater` it was 0.  This distinction correctly
          * accounts for equality.

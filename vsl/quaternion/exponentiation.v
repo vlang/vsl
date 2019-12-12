@@ -1,3 +1,7 @@
+// Copyright (c) 2019 Ulises Jeremias Cornejo Fandos. All rights reserved.
+// Use of this source code is governed by an MIT license
+// that can be found in the LICENSE file.
+
 module vsl
 
 import math
@@ -8,7 +12,7 @@ pub fn (q Quaternion) scalar_pow(s f64) Quaternion {
                 return if q.is_zero() {
                         Quaternion{ 1.0, 0.0, 0.0, 0.0 }
                 }
-				else {
+                else {
                         Quaternion{ 0.0, 0.0, 0.0, 0.0 }
                 }
         }
@@ -27,7 +31,7 @@ pub fn (q Quaternion) pow(p Quaternion) Quaternion {
                 return if p.is_zero() {
                         Quaternion{1.0, 0.0, 0.0, 0.0}
                 }
-				else {
+                else {
                         Quaternion{0.0, 0.0, 0.0, 0.0}
                 }
         }
