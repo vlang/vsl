@@ -2,7 +2,7 @@
 // Use of this source code is governed by an MIT license
 // that can be found in the LICENSE file.
 
-module vsl
+module consts
 
 pub const (
 	num_fine_structure = 7.297352533e-3 /* 1 */

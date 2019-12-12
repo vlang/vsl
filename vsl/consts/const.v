@@ -1,1 +1,1 @@
-module vsl
+module consts

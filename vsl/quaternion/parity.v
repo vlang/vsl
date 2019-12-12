@@ -2,7 +2,7 @@
 // Use of this source code is governed by an MIT license
 // that can be found in the LICENSE file.
 
-module vsl
+module quaternion
 
 pub fn (q Quaternion) parity_conj() Quaternion {
         return Quaternion{q.w, q.x, q.y, q.z}

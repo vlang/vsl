@@ -2,7 +2,7 @@
 // Use of this source code is governed by an MIT license
 // that can be found in the LICENSE file.
 
-module vsl
+module consts
 
 pub const (
 	cgs_speed_of_light = 2.99792458e+10 /* cm / s */
