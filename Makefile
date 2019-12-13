@@ -1,7 +1,7 @@
 VC=v
 
 build: clean
-	$(VC) -g build module vsl
+	$(VC) -g build vsl
 
 clean:
 	rm -rf test *.o *.o.tmp*

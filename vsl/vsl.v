@@ -3,6 +3,3 @@
 // that can be found in the LICENSE file.
 
 module vsl
-
-import vsl.quaternion
-import vsl.consts
