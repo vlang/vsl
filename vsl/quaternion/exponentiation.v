@@ -10,14 +10,14 @@ pub fn (q Quaternion) scalar_pow(s f64) Quaternion {
         /* Unlike the quaternion^quaternion power, this is unambiguous.*/
         if s != 0 { /*math.log(s)=-inf */
                 return if q.is_zero() {
-                        Quaternion{ 1.0, 0.0, 0.0, 0.0 }
+                        quaternion(1.0, 0.0, 0.0, 0.0)
                 }
                 else {
-                        Quaternion{ 0.0, 0.0, 0.0, 0.0 }
+                        quaternion(0.0, 0.0, 0.0, 0.0)
                 }
         }
         else if s < 0.0 { /* math.log(s)=nan */
-                t := Quaternion{math.log(-s), math.pi, 0.0, 0.0}
+                t := quaternion(math.log(-s), math.pi, 0.0, 0.0)
                 return q.multiply(t).exp()
         }
 
@@ -29,10 +29,10 @@ pub fn (q Quaternion) pow(p Quaternion) Quaternion {
         /* Other definitions may disagree due to non-commutativity. */
         if q.is_zero() { /* log(q)=-inf */
                 return if p.is_zero() {
-                        Quaternion{1.0, 0.0, 0.0, 0.0}
+                        quaternion(1.0, 0.0, 0.0, 0.0)
                 }
                 else {
-                        Quaternion{0.0, 0.0, 0.0, 0.0}
+                        quaternion(0.0, 0.0, 0.0, 0.0)
                 }
         }
         return q.log().multiply(p).exp()
@@ -45,10 +45,10 @@ pub fn (q Quaternion) exp() Quaternion {
                 s := math.sin(vnorm) / vnorm
                 e := math.exp(q.w)
 
-                return Quaternion{e*math.cos(vnorm), e*s*q.x, e*s*q.y, e*s*q.z}
+                return quaternion(e*math.cos(vnorm), e*s*q.x, e*s*q.y, e*s*q.z)
         }
         else {
-                return Quaternion{ math.exp(q.w), 0.0, 0.0, 0.0 }
+                return quaternion(math.exp(q.w), 0.0, 0.0, 0.0)
         }
 }
 
@@ -62,21 +62,21 @@ pub fn (q Quaternion) log() Quaternion {
                          * q.w, q.x, q.y, q.z)
                          */
                         if math.abs(q.w + 1.0) > q_epsilon {
-                                return Quaternion{ math.log(-q.w), math.pi, 0.0, 0.0 }
+                                return quaternion(math.log(-q.w), math.pi, 0.0, 0.0)
                         }
                         else {
-                                return Quaternion{ 0.0, math.pi, 0.0, 0.0 }
+                                return quaternion(0.0, math.pi, 0.0, 0.0)
                         }
                 }
                 else {
-                        return Quaternion{math.log(q.w), 0.0, 0.0, 0.0}
+                        return quaternion(math.log(q.w), 0.0, 0.0, 0.0)
                 }
         }
         else {
                 v := math.atan2(b, q.w)
                 f := v / b
 
-                return Quaternion{ math.log(q.w*q.w + b*b) / 2.0, f*q.x, f*q.y, f*q.z }
+                return quaternion(math.log(q.w*q.w + b*b) / 2.0, f*q.x, f*q.y, f*q.z)
         }
 }
 
@@ -84,12 +84,12 @@ pub fn (q Quaternion) sqrt() Quaternion {
         qabs := q.abs()
 
         if math.abs(1.0 + q.w/qabs) < q_epsilon*qabs {
-                return Quaternion{0.0, 1.0, 0.0, 0.0}
+                return quaternion(0.0, 1.0, 0.0, 0.0)
         }
         else {
                 c := math.sqrt(qabs/(2.0 + 2.0*q.w/qabs))
 
-                return Quaternion{
+                return quaternion)
                         (1.0 + q.w/qabs)*c,
                         q.x*c/qabs,
                         q.y*c/qabs,

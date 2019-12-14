@@ -14,6 +14,7 @@ pub:
         z f64
 }
 
+[inline]
 pub fn quaternion(w, x, y, z f64) Quaternion {
         return Quaternion{w, x, y, z}
 }
@@ -29,8 +30,9 @@ pub fn quaternion(w, x, y, z f64) Quaternion {
  * the term pass.
  *
  */
+[inline]
 pub fn id() Quaternion {
-        return Quaternion{1.0, 0.0, 0.0, 0.0}
+        return quaternion(1.0, 0.0, 0.0, 0.0)
 }
 
 /**
@@ -45,7 +47,7 @@ pub fn from_axis_anglef3(angle, x, y, z f64) Quaternion {
         s := math.sin(half_angle)
         c := math.cos(half_angle)
 
-        q := Quaternion{c, x * s, y * s, z * s}
+        q := quaternion(c, x * s, y * s, z * s)
 
         // reduce rounding errors caused by sin/cos
         return q.normalized()
@@ -60,7 +62,7 @@ pub fn from_spherical_coords(theta, phi f64) Quaternion {
         st := math.sin(half_theta)
         sp := math.sin(half_phi)
 
-        return Quaternion{cp * ct, -sp * st, st * cp, sp * ct}
+        return quaternion(cp * ct, -sp * st, st * cp, sp * ct)
 }
 
 pub fn from_euler_angles(alpha, beta, gamma f64) Quaternion {
@@ -75,16 +77,17 @@ pub fn from_euler_angles(alpha, beta, gamma f64) Quaternion {
         sb := math.sin(half_beta)
         sc := math.sin(half_gamma)
 
-        return Quaternion{
+        return quaternion(
                 ca*cb*cc-sa*cb*sc,
                 ca*sb*sc-sa*sb*cc,
                 ca*sb*cc + sa*sb*sc,
                 sa*cb*cc + ca*cb*sc
-        }
+        )
 }
 
+[inline]
 pub fn (q Quaternion) copy() Quaternion {
-        return Quaternion{q.w, q.x, q.y, q.z}
+        return quaternion(q.w, q.x, q.y, q.z)
 }
 
 fn cof_str(a f64) string {

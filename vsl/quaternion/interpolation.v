@@ -21,12 +21,12 @@ pub fn (start Quaternion) lerp(end Quaternion, tau f64) Quaternion {
         f2 := tau
 
         // this expanded form avoids calling multiply and add
-        return Quaternion{
+        return quaternion(
                 f1 * start.w + f2 * end.w,
                 f1 * start.x + f2 * end.x,
                 f1 * start.y + f2 * end.y,
                 f1 * start.z + f2 * end.z
-        }
+        )
 }
 
 
