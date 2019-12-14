@@ -4,6 +4,8 @@
 
 module vsl
 
+import math
+
 /* TODO: change params type from []f64 to []T */
 
 // Definition of an arbitrary function with parameters
@@ -18,6 +20,24 @@ pub mut:
 pub fn (f Function) eval(x f64) f64 {
         function := f.function
 	return function(x, f.params)
+}
+
+fn is_finite(a f64) bool {
+		return !math.is_nan(a) && !math.is_inf(a, 0)
+}
+
+/* Call the pointed-to function with argument x, put its result in y, and
+ * return an error if the function value is Inf/Nan.
+ */
+
+[inline]
+pub fn (f Function) safe_eval(x f64) ?f64 {
+        function := f.function
+        y := function(x, f.params)
+
+        if is_finite(y) { return y }
+
+        return error('function value is not finite')
 }
 
 // Definition of an arbitrary function returning two values, r1, r2
