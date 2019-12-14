@@ -48,7 +48,7 @@ pub fn roots_newton(func vsl.FunctionFdf, x0, x_eps, fx_eps f64, n_max u64) ?f64
                 mut norm := f64(0.0)
 
                 /* Armijo line search */
-                for t.eq(0.0) {
+                for !t.eq(0.0) {
                         x_linesearch := root - t * dx
 
                         f, df = func.eval_f_df(x_linesearch)
