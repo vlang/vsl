@@ -6,10 +6,10 @@ module roots
 
 import math
 import vsl
+import vsl.internal
 
 const (
-		itmax = 100
-		dbl_epsilon = 2.2204460492503131e-16
+        itmax = 100
 )
 
 /**
@@ -64,7 +64,7 @@ pub fn root_brent(func vsl.Function, x1, x2, tol f64) (?f64, f64) {
                         fc = fa
                 }
 
-                tol1 = 2.0 * dbl_epsilon * math.abs(b) + 0.5 * tol
+                tol1 = 2.0 * internal.dbl_epsilon * math.abs(b) + 0.5 * tol
                 mut new_step := 0.5 * (c - b)
 
                 if math.abs(new_step) <= tol1 || fb == 0.0 {
