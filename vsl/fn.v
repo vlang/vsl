@@ -23,7 +23,7 @@ pub fn (f Function) eval(x f64) f64 {
 }
 
 fn is_finite(a f64) bool {
-		return !math.is_nan(a) && !math.is_inf(a, 0)
+        return !math.is_nan(a) && !math.is_inf(a, 0)
 }
 
 /* Call the pointed-to function with argument x, put its result in y, and
@@ -81,4 +81,3 @@ pub fn (f FunctionVec) eval(x f64, y []f64) int {
         function := f.function
 	return function(x, y, f.params)
 }
-

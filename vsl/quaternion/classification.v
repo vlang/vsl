@@ -11,15 +11,15 @@ pub fn (q Quaternion) is_nan() bool {
 }
 
 pub fn (q Quaternion) is_zero() bool {
-		return if q.is_nan() {
-				true
-		}
-		else {
-                        q.w == 0.0 &&
-                        q.x == 0.0 &&
-                        q.y == 0.0 &&
-                        q.z == 0.0
-		}
+        return if q.is_nan() {
+                true
+        }
+        else {
+                q.w == 0.0 &&
+                q.x == 0.0 &&
+                q.y == 0.0 &&
+                q.z == 0.0
+        }
 }
 
 pub fn (q Quaternion) is_inf() bool {
@@ -27,7 +27,7 @@ pub fn (q Quaternion) is_inf() bool {
 }
 
 fn is_finite(a f64) bool {
-		return !math.is_nan(a) && !math.is_inf(a, 0)
+        return !math.is_nan(a) && !math.is_inf(a, 0)
 }
 
 pub fn (q Quaternion) is_finite() bool {
