@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+mkdir vsl/roots/vsl
+cp -r vsl/vsl.v vsl/fn.v vsl/internal vsl/roots/vsl
+v test vsl
+rm -rf vsl/roots/vsl
+find . -name '*_test' | xargs rm -f 
