@@ -29,7 +29,7 @@ $ vpkg get https://github.com/nedpals/vargs
 To test the module, just type the following command:
 
 ```sh
-$ ./scripts/test
+$ ./bin/test
 ```
 
 ## License
