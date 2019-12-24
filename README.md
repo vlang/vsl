@@ -11,17 +11,17 @@ This library arises from the need to increase the domain of language V to the do
 Via vpm:
 
 ```sh
-$ v install nedpals.vargs
+$ v install ulises-jeremias.vsl
 ```
 
 Via [vpkg](https://github.com/v-pkg/vpkg):
 
 ```sh
-$ vpkg get vargs
+$ vpkg get vsl
 
 # or
 
-$ vpkg get https://github.com/nedpals/vargs
+$ vpkg get https://github.com/ulises-jeremias/vsl
 ```
 
 ## Testing
