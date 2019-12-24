@@ -20,9 +20,9 @@ import vsl
  * @param n_max maximum number of iterations
  *
  */
-pub fn root_bisection(func vsl.Function, xmin, xmax, epsrel, epsabs f64, n_max u64) ?f64 {
-        mut fxmin := func.safe_eval(xmin) or { return error(err) }
-		mut fxmax := func.safe_eval(xmax) or { return error(err) }
+pub fn bisection(func vsl.Function, xmin, xmax, epsrel, epsabs f64, n_max int) ?f64 {
+        fxmin := func.safe_eval(xmin) or { return error(err) }
+        fxmax := func.safe_eval(xmax) or { return error(err) }
 
         if (fxmin < 0.0 && fxmax < 0.0) || (fxmin > 0.0 && fxmax > 0.0) {
                 return error('endpoints do not straddle y=0')
@@ -39,7 +39,7 @@ pub fn root_bisection(func vsl.Function, xmin, xmax, epsrel, epsabs f64, n_max u
         mut fa := func.safe_eval(a) or { return error(err) }
 		mut fb := func.safe_eval(b) or { return error(err) }
 
-		mut i := u64(0)
+		mut i := 0
         for i < n_max {
                 c := (a + b)/2.0
                 fc := func.safe_eval(c) or { return error(err) }

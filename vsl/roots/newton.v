@@ -28,14 +28,14 @@ import vsl
  * @param n_max maximum number of iterations
  *
  */
-pub fn roots_newton(func vsl.FunctionFdf, x0, x_eps, fx_eps f64, n_max u64) ?f64 {
+pub fn newton(func vsl.FunctionFdf, x0, x_eps, fx_eps f64, n_max int) ?f64 {
         omega := 1e-4
         gamma := 0.5
         mut root := x0
 
         mut f, mut df := func.eval_f_df(root)
 
-        mut i := u64(0)
+        mut i := 0
         for i < n_max {
                 mut t := f64(1.0)
 
