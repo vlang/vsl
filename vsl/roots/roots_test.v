@@ -40,7 +40,7 @@ fn test_root_newton() {
 }
 
 // Helper method for comparing floats
-fn compare(x f64, y f64) bool {
+fn compare(x, y f64) bool {
         tolerance := epsabs
         // Special case for zeroes
         if x < tolerance && x > (-1.0 * tolerance) && y < tolerance && y > (-1.0 * tolerance) {

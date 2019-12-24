@@ -1,7 +1,16 @@
 #!/usr/bin/env bash
 
-mkdir vsl/roots/vsl
-cp -r vsl/vsl.v vsl/fn.v vsl/internal vsl/roots/vsl
-v test vsl
-rm -rf vsl/roots/vsl
+for module in roots diff
+do
+    mkdir vsl/$module/vsl
+    cp -r vsl/vsl.v vsl/fn.v vsl/internal vsl/$module/vsl
+done
+
+v -g test vsl
+
+for module in roots diff
+do
+    rm -rf vsl/$module/vsl
+done
+
 find . -name '*_test' | xargs rm -f 

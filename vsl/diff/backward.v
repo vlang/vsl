@@ -8,7 +8,7 @@ import math
 import vsl
 import vsl.internal
 
-pub fn diff_backward(f vsl.Function, x f64) (f64, f64) {
+pub fn backward(f vsl.Function, x f64) (f64, f64) {
         /* Construct a divided difference table with a fairly large step
          * size to get a very rough estimate of f''. Use this to estimate
          * the step size which will minimize the error in calculating f'.
