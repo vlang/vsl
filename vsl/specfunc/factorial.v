@@ -8,7 +8,7 @@ import math
 
 fn log_factorial_asymptotic_expansion(n int) f64 {
         m := 6
-        mut term := [0.0].repeat(6)
+        mut term := []f64
         xx := f64((n + 1) * (n + 1))
         mut xj := f64(n + 1)
         
@@ -17,7 +17,7 @@ fn log_factorial_asymptotic_expansion(n int) f64 {
         mut i := 0
 
         for i = 0; i < m; i++ {
-                term[i] = B[i] / xj
+                term << B[i] / xj
                 xj *= xx
         }
 

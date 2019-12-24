@@ -15,8 +15,8 @@ pub fn diff_forward(f vsl.Function, x f64) (f64, f64) {
          */
 
         mut h := internal.sqrt_dbl_epsilon
-        mut a := [f64(0.0)].repeat(3)
-        mut d := [f64(0.0)].repeat(3)
+        mut a := []f64
+        mut d := []f64
 
         mut k := 0
         mut i := 0
@@ -26,8 +26,8 @@ pub fn diff_forward(f vsl.Function, x f64) (f64, f64) {
          */
 
         for i = 0; i < 3; i++ {
-                a[i] = x + f64(i) * h
-                d[i] = f.eval(a[i])
+                a << x + f64(i) * h
+                d << f.eval(a[i])
         }
 
         for k = 1; k < 4; k++ {
