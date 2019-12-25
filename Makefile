@@ -1,10 +1,10 @@
 VC=v
 
 build: clean
-	$(VC) -g build vsl
+	$(VC) -g build vsl >> /dev/null
 
 clean:
 	rm -rf test *.o *.o.tmp*
 
-test: build
-	$(VC) -g run test.v
+test: 
+	./bin/test
