@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-for module in roots diff
+for module in roots diff deriv
 do
     mkdir vsl/$module/vsl
     cp -r vsl/vsl.v vsl/fn.v vsl/internal vsl/$module/vsl
@@ -8,7 +8,7 @@ done
 
 v -g test vsl
 
-for module in roots diff
+for module in roots diff deriv
 do
     rm -rf vsl/$module/vsl
 done
