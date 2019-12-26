@@ -4,6 +4,7 @@
 
 module easings
 
+import arrays
 import math
 
 // linear_interpolation is a method of curve fitting using linear polynomials to construct new data points within the range of a discrete set of known data points
@@ -251,12 +252,10 @@ pub fn bounce_ease_in_out(p f64) f64 {
 
 // animate returns []f64 of length "frames" using the easing function provided with lower and upper bounds as "from" and "to"
 [inline]
-pub fn animate(easing fn(f64) f64, from f64, to f64, frames int) []f64 {
-  	len := int(math.max(frames, 0))
-  	dt := f64(1.0 / (len - 1))
-  	mut animation := [f64(0)].repeat(len)
+pub fn animate(easing fn(f64) f64, from, to f64, frames int) []f64 {
+  	len := int(math.max(frames, 0.00))
+  	dt := f64(1.00 / (len - 1))
+	animation := arrays.range<f64>(0.00, len)
 
-  	for i, _ in animation { animation[i] = f64(i) } // range from 0 to len
-	
   	return animation.map(from + easing(it*dt) * (to - from)) // t := it*dt
 }
