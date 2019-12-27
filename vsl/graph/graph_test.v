@@ -20,8 +20,8 @@ fn test_graph01() {
 
 	assert g.shares.size == 4   // nverts
 	assert g.key2edge.size == 4 // nedges
-	assert g.dist.len == 4     // nverts
-	assert g.next.len == 4     // nverts
+	assert g.dist.len == 4      // nverts
+	assert g.next.len == 4      // nverts
 
 	shares := [
 		[0, 1], // edges sharing node 0
@@ -40,7 +40,7 @@ fn test_graph01() {
 	assert g.key2edge[hash_edge_key(1, 2)] == 2 // (1,2) → edge 2
 	assert g.key2edge[hash_edge_key(2, 3)] == 3 // (2,3) → edge 3
 
-        edg0 := g.get_edge(0, 1) or { panic(err) }
+	edg0 := g.get_edge(0, 1) or { panic(err) }
 	assert edg0 == 0
 	edg1 := g.get_edge(0, 3) or { panic(err) }
 	assert edg1 == 1
@@ -52,7 +52,7 @@ fn test_graph01() {
 	g2 := g.shortest_paths("FW")
 	mut pth := g2.path(0, 3)
 	for i, v in [0, 1, 2, 3] {
-		// assert pth[i] == v
+		assert pth[i] == v
 	}
 
 	mut weights_e := g2.weights_e
@@ -112,6 +112,6 @@ fn test_graph02() {
 	g2 := g.shortest_paths("FW")
 	pth := g2.path(1, 3)
         for i, v in [1, 4, 5, 3] {
-		// assert pth[i] == v
+		assert pth[i] == v
 	}
 }

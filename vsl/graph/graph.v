@@ -52,18 +52,21 @@ pub fn graph(edges [][]int, weights_e []f64, verts [][]f64, weights_v []f64) Gra
 
 	for k, edge in edges {
 		i := edge[0]
-                j := edge[1]
+		j := edge[1]
 		shares = str_ints_map_append(shares, i.str(), k)
 		shares = str_ints_map_append(shares, j.str(), k)
 		key2edge[hash_edge_key(i, j)] = k
 	}
 
 	nv := shares.size
-        nvf64 := [f64(0.0)].repeat(nv)
-        nvint := [0].repeat(nv)
 
-	dist := [nvf64].repeat(nv)
-	next := [nvint].repeat(nv)
+        mut dist := [[]f64].repeat(nv)
+        mut next := [[]int].repeat(nv)
+
+        for i := 0; i < nv; i++ {
+                dist[i] = [f64(0.0)].repeat(nv)
+                next[i] = [0].repeat(nv)
+        }
 
         return Graph{
                 edges: edges,
@@ -201,12 +204,7 @@ pub fn (g Graph) calc_dist() Graph {
 		}
 	}
 
-	return { g |
-                dist: dist,
-                next: next,
-                verts: verts,
-                edges: edges,
-        }
+	return { g | dist: dist, next: next }
 }
 
 // hash_edge_key creates a unique hash key identifying an edge
