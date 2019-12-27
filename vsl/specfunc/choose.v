@@ -5,6 +5,7 @@
 module specfunc
 
 import math
+import math.factorial
 import vsl.internal
 
 /**
@@ -29,13 +30,13 @@ pub fn choose(n, p int) f64 {
         k := math.max(p_f64, n_f64 - p_f64)
 
         if k < internal.max_int_fact_arg {
-                return math.factorial(n_f64) /
-                       (math.factorial(p_f64) * math.factorial(n_f64 - p_f64))
+                return factorial.factorial(n_f64) /
+                       (factorial.factorial(p_f64) * factorial.factorial(n_f64 - p_f64))
         }
 
-        log_choose := log_factorial(n_f64 + 1.0)
-                    - log_factorial(p_f64 + 1.0)
-                    - log_factorial(n_f64 - p_f64 + 1.0)
+        log_choose := factorial.log_factorial(n_f64 + 1.0)
+                    - factorial.log_factorial(p_f64 + 1.0)
+                    - factorial.log_factorial(n_f64 - p_f64 + 1.0)
 
         return math.exp(log_choose)
 }
