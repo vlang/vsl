@@ -8,5 +8,5 @@ pub fn safe_print<T>(format string, message T) string {
 	buf := [byte(0)]
         mut ptr := &buf[0]
 	C.sprintf(charptr(ptr), charptr(format.str), message)
-	return tos(buf.data, vstrlen(buf.data))
+	return tos(buf.data, vstrlen(buf.data)).trim_space()
 }
