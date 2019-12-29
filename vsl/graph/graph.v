@@ -6,6 +6,7 @@
 module graph
 
 import math
+import internal.io
 
 /* TODO: change map[string]* types to map[int]* */
 
@@ -221,20 +222,22 @@ pub fn (g Graph) str_dist_matrix() string {
 		for j := 0; j < nv; j++ {
                         i_dist := g.dist[i]
 			if i_dist[j] < math.max_f64 {
-                                i_dist_str := i_dist[j].str()
+                                i_dist_str := io.safe_print<f64>("%g", i_dist[j])
 				maxlen = int(math.max(maxlen, i_dist_str.len))
 			}
 		}
 	}
         mut l := ''
 	maxlen = int(math.max(3, maxlen))
+        fmts := io.safe_print<int>("%%%ds", maxlen+1)
+	fmtn := io.safe_print<int>("%%%dg", maxlen+1)
 	for i := 0; i < nv; i++ {
 		for j := 0; j < nv; j++ {
                         i_dist := g.dist[i]
 			if i_dist[j] < math.max_f64 {
-				l += i_dist[j].str() + ' '.repeat(maxlen)
+				l += io.safe_print<f64>(fmtn, i_dist[j])
 			} else {
-				l += '∞' + ' '.repeat(maxlen)
+				l += io.safe_print<string>(fmts, '∞')
 			}
 		}
 		l += '\n'
