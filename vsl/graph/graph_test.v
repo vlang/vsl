@@ -49,7 +49,7 @@ fn test_graph01() {
 		panic(err)
 	}
 	assert edg3 == 3
-	g2 := g.shortest_paths('FW')
+	g2 := g.shortest_paths(.fw)
 	mut pth := g2.path(0, 3)
 	for i, v in [0, 1, 2, 3] {
 		assert pth[i] == v
@@ -60,7 +60,7 @@ fn test_graph01() {
 		g2 |
 		weights_e:weights_e
 	}
-	g4 := g3.shortest_paths('FW')
+	g4 := g3.shortest_paths(.fw)
 	pth = g4.path(0, 3)
 	for i, v in [0, 3] {
 		assert pth[i] == v
@@ -102,7 +102,7 @@ fn test_graph02() {
 	assert g.key2edge[hash_edge_key(5, 2)] == 4 // (5,2) → edge 4
 	assert g.key2edge[hash_edge_key(2, 3)] == 5 // (2,3) → edge 5
 	assert g.key2edge[hash_edge_key(5, 3)] == 6 // (5,3) → edge 6
-	g2 := g.shortest_paths('FW')
+	g2 := g.shortest_paths(.fw)
 	pth := g2.path(1, 3)
 	for i, v in [1, 4, 5, 3] {
 		assert pth[i] == v

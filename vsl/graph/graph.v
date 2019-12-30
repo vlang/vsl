@@ -8,6 +8,12 @@ import math
 import internal.io
 /* TODO: change map[string]* types to map[int]* */
 
+
+pub enum SorthestPaths {
+	fw/* FW: Floyd-Warshall method */
+
+}
+
 // Graph defines a graph structure
 pub struct Graph {
 pub:
@@ -103,8 +109,8 @@ pub fn (g Graph) get_edge(i, j int) ?int {
 // ∞  ∞  ∞  0 |  3
 // Input:
 // method -- FW: Floyd-Warshall method
-pub fn (g Graph) shortest_paths(method string) Graph {
-	if method != 'FW' {
+pub fn (g Graph) shortest_paths(method SorthestPaths) Graph {
+	if method != .fw {
 		panic('shortest_paths works with FW (Floyd-Warshall) method only for now')
 	}
 	g2 := g.calc_dist()
