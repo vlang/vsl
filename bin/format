@@ -6,11 +6,9 @@ do
     cp -r vsl/vsl.v vsl/fn.v vsl/internal vsl/$module/vsl
 done
 
-v -g test vsl
+find . -name "*.v" | xargs v fmt -w
 
 for module in roots diff deriv specfunc
 do
     rm -rf vsl/$module/vsl
 done
-
-find . -name '*_test' | xargs rm -f 
