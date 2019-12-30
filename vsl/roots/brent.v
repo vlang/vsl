@@ -6,7 +6,7 @@ module roots
 
 import math
 import vsl
-import vsl.internal
+import internal
 
 const (
         itmax = 100
