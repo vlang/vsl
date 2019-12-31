@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
-for module in roots diff deriv specfunc
+for module in roots diff deriv specfunc graph
 do
     mkdir vsl/$module/vsl
-    cp -r vsl/vsl.v vsl/fn.v vsl/internal vsl/$module/vsl
+    cp -r vsl/vsl.v vsl/fn.v vsl/internal vsl/io vsl/$module/vsl
 done
 
 find . -name "*.v" | xargs v fmt -w
 
-for module in roots diff deriv specfunc
+for module in roots diff deriv specfunc graph
 do
     rm -rf vsl/$module/vsl
 done
