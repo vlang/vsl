@@ -6,7 +6,7 @@ module specfunc
 
 import math
 import math.factorial
-import internal
+import vsl.internal
 
 /**
  * Compute the binomial coefficient

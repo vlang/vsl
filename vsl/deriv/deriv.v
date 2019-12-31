@@ -6,7 +6,7 @@ module deriv
 
 import math
 import vsl
-import internal
+import vsl.internal
 
 fn central_deriv(f vsl.Function, x, h f64) (f64, f64, f64) {
         /* Compute the derivative using the 5-point rule (x-h, x-h/2, x,

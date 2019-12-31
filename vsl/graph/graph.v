@@ -5,7 +5,7 @@
 module graph
 
 import math
-import internal.io
+import vsl.io
 /* TODO: change map[string]* types to map[int]* */
 
 

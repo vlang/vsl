@@ -6,7 +6,7 @@ module diff
 
 import math
 import vsl
-import internal
+import vsl.internal
 
 pub fn backward(f vsl.Function, x f64) (f64, f64) {
         /* Construct a divided difference table with a fairly large step

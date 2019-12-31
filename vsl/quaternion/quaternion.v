@@ -24,7 +24,7 @@ pub fn quaternion(w, x, y, z f64) Quaternion {
  * scalar portion with 1.0.
  * The resulting quaternion has a norm of 1.0
  *
- * While CML as well as other math libraries call this the 'identity'
+ * While VSL as well as other math libraries call this the 'identity'
  * quaternion, this is not an accurate term.  Since the principle of a
  * quaternion with no rotation works similar to an identity matrix, we let
  * the term pass.
