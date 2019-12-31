@@ -6,6 +6,11 @@ module poly
 
 import math
 
+const(
+        radix = 2
+        radix2 = (radix*radix)
+)
+
 pub fn eval(c []f64, x f64) f64 {
         if c.len == 0 {
                 panic('coeficients can not be empty')
@@ -151,4 +156,115 @@ pub fn solve_cubic(a, b, c f64) []f64 {
                 B := q / A
                 return [ A + B - a / 3 ]
         }
+}
+
+pub fn companion_matrix(a []f64) [][]f64 {
+        nc := a.len - 1
+
+        mut cm := [[]f64].repeat(nc)
+        mut i := 0
+	for ; i < nc; i++ {
+		cm[i] = [f64(0.0)].repeat(nc)
+	}
+
+        for i = 0; i < nc; i++ {
+                for j := 0; j < nc; j++ {
+                        cm[i][j] = f64(0.0)
+                }
+        }
+
+        for i = 1; i < nc; i++ {
+                cm[i][i - 1] = f64(1.0)
+        }
+
+        for i = 0; i < nc; i++ {
+                cm[i][nc - 1] = -a[i] / a[nc]
+        }
+
+        return cm
+}
+
+pub fn balance_companion_matrix(cm [][]f64) [][]f64 {
+        nc := cm.len
+        mut m := cm
+        mut not_converged := true
+
+        mut row_norm := f64(0)
+        mut col_norm := f64(0)
+
+        for not_converged {
+                not_converged = false
+
+                for i := 0; i < nc; i++ {
+                        /* column norm, excluding the diagonal */
+
+                        if i != nc - 1 {
+                                col_norm = math.abs(m[i + 1][i])
+                        }
+                        else {
+                                col_norm = 0.0
+
+                                for j := 0; j < nc - 1; j++ {
+                                        col_norm += math.abs(m[j][nc - 1])
+                                }
+                        }
+
+                        /* row norm, excluding the diagonal */
+
+                        if i == 0 {
+                                row_norm = math.abs(m[0][nc - 1])
+                        }
+                        else if i == nc - 1 {
+                                row_norm = math.abs(m[i][i - 1])
+                        }
+                        else {
+                                row_norm = (math.abs(m[i][i - 1]) + math.abs(m[i][nc - 1]))
+                        }
+
+                        if col_norm == 0.0 || row_norm == 0.0 {
+                                continue
+                        }
+
+                        mut g := row_norm / radix
+                        mut f := 1.0
+                        mut s := col_norm + row_norm
+
+                        for col_norm < g {
+                                f *= radix
+                                col_norm *= radix2
+                        }
+
+                        g = row_norm * radix
+
+                        for col_norm > g {
+                                f /= radix
+                                col_norm /= radix2
+                        }
+
+                        if (row_norm + col_norm) < 0.95 * s * f {
+                                not_converged = true
+
+                                g = 1.0 / f
+
+                                if i == 0 {
+                                        m[0][nc - 1] *= g
+                                }
+                                else {
+                                        m[i][i - 1] *= g
+                                        m[i][nc - 1] *= g
+                                }
+
+                                if i == nc - 1 {
+                                        for j := 0; j < nc; j++ {
+                                                m[j][i] *= f
+                                        }
+                                }
+                                else {
+                                        m[i + 1][i] *= f
+                                }
+                        }
+                }
+        }
+
+        return m
 }
