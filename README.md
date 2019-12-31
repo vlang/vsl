@@ -6,6 +6,10 @@ A pure-V scientific library with a great variety of functions.
 
 This library arises from the need to increase the domain of language V to the domain of scientific computing. Originally, this module is based on [ScientificC/cmathl](https://github.com/ScientificC/cmathl). However, vsl is expected to have a greater variety of functionalities in the near future.
 
+## Docs
+
+Visit [vsl docs](https://vsl.readthedocs.io/) to know more about the supported features.
+
 ## Installation
 
 Via vpm:
