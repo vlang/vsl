@@ -21,7 +21,7 @@ The functions described in this chapter are declared in the module :file:`vsl.de
 Functions
 =========
 
-.. function:: deriv.central (f vsl.Function, x, h f64) (f64, f64)
+.. function:: fn central (f vsl.Function, x, h f64) (f64, f64)
 
    This function computes the numerical derivative of the function :data:`f`
    at the point :data:`x` using an adaptive central difference algorithm with
@@ -38,7 +38,7 @@ Functions
    does not contribute to the derivative calculation, so only 4-points are
    actually used.
 
-.. function:: deriv.forward (f vsl.Function, x, h f64) (f64, f64)
+.. function:: fn forward (f vsl.Function, x, h f64) (f64, f64)
 
    This function computes the numerical derivative of the function :data:`f`
    at the point :data:`x` using an adaptive forward difference algorithm with
@@ -56,7 +56,7 @@ Functions
    from the difference between the 4-point rule and the corresponding
    2-point rule :math:`x+h/2`, :math:`x+h`.
 
-.. function:: deriv.backward (f vsl.Function, x, h f64) (f64, f64)
+.. function:: fn backward (f vsl.Function, x, h f64) (f64, f64)
 
    This function computes the numerical derivative of the function :data:`f`
    at the point :data:`x` using an adaptive backward difference algorithm

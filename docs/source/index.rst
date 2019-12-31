@@ -10,10 +10,12 @@ Welcome to VSL's documentation!
    :maxdepth: 2
 
    intro.rst
-   quaternion.rst
+   consts.rst
    diff.rst
+   roots.rst
+   poly.rst
    easings.rst
-   const.rst
+   quaternion.rst
 
 Indices and tables
 ==================
