@@ -26,7 +26,7 @@ pub fn eval(c []f64, x f64) f64 {
         return ans
 }
 
-pub fn eval_derivs(c []f64, x f64, lenres u64) []f64 {
+pub fn eval_derivs(c []f64, x f64, lenres int) []f64 {
         mut res := []f64
         lenc := c.len
         
@@ -267,4 +267,103 @@ pub fn balance_companion_matrix(cm [][]f64) [][]f64 {
         }
 
         return m
+}
+
+/*
+ * Arithmetic operations on polynomials
+ *
+ * In the following descriptions a, b, c are polynomials of degree
+ * na, nb, nc respectively.
+ *
+ * Each polynomial is represented by an array containing its
+ * coefficients, together with a separately declared integer equal
+ * to the degree of the polynomial.  The coefficients appear in
+ * ascending order; that is,
+ *
+ *                                        2                      na
+ * a(x)  =  a[0]  +  a[1] * x  +  a[2] * x   +  ...  +  a[na] * x  .
+ *
+ *
+ *
+ * sum = eval( a, x )    Evaluate polynomial a(t) at t = x.
+ * c = add( a, b )   c = a + b, nc = max(na, nb)
+ * c = sub( a, b )   c = a - b, nc = max(na, nb)
+ * c = mul( a, b )   c = a * b, nc = na+nb
+ *
+ *
+ * Division:
+ *
+ * c = div( a, b )       c = a / b, nc = MAXPOL
+ *
+ * returns i = the degree of the first nonzero coefficient of a.
+ * The computed quotient c must be divided by x^i.  An error message
+ * is printed if a is identically zero.
+ *
+ *
+ * Change of variables:
+ * If a and b are polynomials, and t = a(x), then
+ *     c(t) = b(a(x))
+ * is a polynomial found by substituting a(x) for t.  The
+ * subroutine call for this is
+ *
+ */
+
+pub fn add(a , b []f64) []f64 {
+        na := a.len
+        nb := b.len
+        nc := int(math.max(na, nb))
+        mut c := [f64(0.0)].repeat(nc)
+
+        for i := 0; i < nc; i++ {
+                if i > na {
+                        c[i] = b[i]
+                }
+                else if i > nb {
+                        c[i] = a[i]
+                }
+                else {
+                        c[i] = a[i] + b[i]
+                }
+        }
+
+        return c
+}
+
+pub fn substract(a , b []f64) []f64 {
+        na := a.len
+        nb := b.len
+        nc := int(math.max(na, nb))
+        mut c := [f64(0.0)].repeat(nc)
+
+        for i := 0; i < nc; i++ {
+                if i > na {
+                        c[i] = -b[i]
+                }
+                else if i > nb {
+                        c[i] = a[i]
+                }
+                else {
+                        c[i] = a[i] - b[i]
+                }
+        }
+
+        return c
+}
+
+pub fn multiply(a, b []f64) []f64 {
+        na := a.len
+        nb := b.len
+        nc := na + nb
+        mut c := [f64(0.0)].repeat(nc)
+
+        for i := 0; i < na; i++ {
+                x := a[i]
+
+                for j := 0; j < nb; j++ {
+                        k := i + j
+                        c[k] += x * b[j]
+                }
+        }
+
+        return c
 }
