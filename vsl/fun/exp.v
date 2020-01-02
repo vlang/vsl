@@ -3,7 +3,7 @@
 // that can be found in the LICENSE file.
 module fun
 
-import mathasvmath
+import math as vmath
 
 const (
 	dbl_max_exp = f64(1024)
