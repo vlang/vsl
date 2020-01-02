@@ -3,7 +3,7 @@
 // that can be found in the LICENSE file.
 module specfunc
 
-import math.complexascmplx
+import math.complex as cmplx
 import math
 /**
  * Compute the Gamma function for complex argument
