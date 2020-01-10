@@ -22,6 +22,9 @@ fn C.cbrt(x f64) f64
 fn C.ceil(x f64) f64
 
 
+fn C.cos(x f64) f64
+
+
 fn C.cosh(x f64) f64
 
 
@@ -67,6 +70,9 @@ fn C.pow(x f64, y f64) f64
 fn C.round(x f64) f64
 
 
+fn C.sin(x f64) f64
+
+
 fn C.sinh(x f64) f64
 
 
@@ -83,6 +89,7 @@ fn C.tanh(x f64) f64
 
 
 fn C.trunc(x f64) f64
+
 // NOTE
 // When adding a new function, please make sure it's in the right place.
 // All functions are sorted alphabetically.
@@ -119,6 +126,11 @@ pub fn cbrt(a f64) f64 {
 // ceil returns the nearest f64 greater or equal to the provided value.
 pub fn ceil(a f64) f64 {
 	return C.ceil(a)
+}
+
+// cos calculates cosine.
+pub fn cos(a f64) f64 {
+	return C.cos(a)
 }
 
 // cosh calculates hyperbolic cosine.
@@ -278,6 +290,11 @@ pub fn round(f f64) f64 {
 	return C.round(f)
 }
 
+// sin calculates sine.
+pub fn sin(a f64) f64 {
+	return C.sin(a)
+}
+
 // sinh calculates hyperbolic sine.
 pub fn sinh(a f64) f64 {
 	return C.sinh(a)
@@ -302,4 +319,46 @@ pub fn tanh(a f64) f64 {
 // larger in magnitude than a.
 pub fn trunc(a f64) f64 {
 	return C.trunc(a)
+}
+
+[inline]
+fn poly_n_eval(c []f64, n int, x f64) f64 {
+	if c.len == 0 {
+                panic('coeficients can not be empty')
+        }
+
+        len := int(min(c.len, n))
+        mut ans := c[len-1]
+
+        for e in c[..len-1] {
+                ans = e + x * ans
+        }
+
+        return ans
+}
+
+[inline]
+fn poly_n_1_eval(c []f64, n int, x f64) f64 {
+        if c.len == 0 {
+                panic('coeficients can not be empty')
+        }
+
+        len := int(min(c.len, n)) - 1
+        mut ans := c[len-1]
+
+        for e in c[..len-1] {
+                ans = e + x * ans
+        }
+
+        return ans
+}
+
+[inline]
+fn poly_eval(c []f64, x f64) f64 {
+        return poly_n_eval(c, c.len, x)
+}
+
+[inline]
+fn poly_1_eval(c []f64, x f64) f64 {
+        return poly_n_1_eval(c, c.len, x)
 }

@@ -47,7 +47,7 @@ pub fn is_inf(f f64, sign int) bool {
 }
 
 pub fn is_finite(f f64) bool {
-        return is_nan(f) || is_inf(f, 0)
+        return !is_nan(f) && !is_inf(f, 0)
 }
 
 // normalize returns a normal number y and exponent exp

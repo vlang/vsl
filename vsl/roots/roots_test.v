@@ -6,16 +6,16 @@ import vsl
 import vsl.math
 
 const (
-	epsabs = 0.00001
-	epsrel = 0.000001
+	epsabs = 0.0001
+	epsrel = 0.00001
 	n_max = 100
 )
 
-fn f_cos(x f64, p []f64) f64 {
+fn f_cos(x f64, _ []f64) f64 {
 	return math.cos(x)
 }
 
-fn fdf_cos(x f64, p []f64) (f64,f64) {
+fn fdf_cos(x f64, _ []f64) (f64,f64) {
 	return math.cos(x),-math.sin(x)
 }
 

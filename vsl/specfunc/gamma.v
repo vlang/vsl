@@ -4,7 +4,6 @@
 module specfunc
 
 import vsl.internal
-import vsl.fun as vslmath
 import vsl.math
 
 const (
@@ -172,7 +171,7 @@ fn duplication_formula(two_x f64) f64 {
         n := int(two_x - 1)
 
         mut g := math.pow(2.0, two_x - 1.0 - f64(n))
-        g = vslmath.ldexp(g, n)
+        g = math.ldexp(g, n)
         g /= math.sqrt(math.pi)
         g *= gammal(x)
         g *= gammal(x + 0.5)

@@ -56,3 +56,51 @@ fn test_mod() {
 	a %= 2
 	assert a == 0
 }
+
+fn test_trig() {
+        assert compare(sin(0.0), 0.0)
+        assert compare(sin(pi_2), 1.0)
+        assert compare(sin(pi), 0.0)
+        assert compare(sin(3.0 * pi_2), -1.0)
+        assert compare(sin(-pi_2), -1.0)
+
+        assert compare(cos(0.0), 1.0)
+        assert compare(cos(pi_2), 0.0)
+        assert compare(cos(pi), -1.0)
+        assert compare(cos(3.0 * pi_2), 0.0)
+        assert compare(cos(-pi), -1.0)
+
+        assert compare(tan(0.0), 0.0)
+        assert compare(tan(pi_4), 1.0)
+        assert compare(tan(3.0 * pi_4), -1.0)
+        assert compare(tan(pi), 0.0)
+        assert compare(tan(-pi_4), -1.0)
+
+        assert compare(atan(0.0), 0.0)
+        assert compare(atan(1.0), pi_4)
+        assert compare(atan(-1.0), -pi_4)
+}
+
+fn test_pow() {
+        assert compare(pow(2.0, 0), 1.0)
+        assert compare(pow(2.0, 4), 16.0)
+        assert compare(pow(2.0, -2), 0.25)
+        assert compare(pow(2.0, -2.5), 0.17677669529)
+        assert compare(pow(2.0, 4.1), 17.1483754006)
+}
+
+// Helper methods for comparing floats
+[inline]
+fn compare(x, y f64) bool {
+	return compare_near(x, y, 1e-6)
+}
+
+fn compare_near(x, y, tolerance f64) bool {
+	// Special case for zeroes
+	if x < tolerance && x > (-1.0 * tolerance) && y < tolerance && y > (-1.0 * tolerance) {
+		return true
+	}
+	diff := math.abs(x - y)
+	mean := math.abs(x + y) / 2.0
+	return if math.is_nan(diff / mean) { true } else { ((diff / mean) < tolerance) }
+}
