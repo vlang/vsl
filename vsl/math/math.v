@@ -22,9 +22,6 @@ fn C.cbrt(x f64) f64
 fn C.ceil(x f64) f64
 
 
-fn C.cos(x f64) f64
-
-
 fn C.cosh(x f64) f64
 
 
@@ -122,11 +119,6 @@ pub fn cbrt(a f64) f64 {
 // ceil returns the nearest f64 greater or equal to the provided value.
 pub fn ceil(a f64) f64 {
 	return C.ceil(a)
-}
-
-// cos calculates cosine.
-pub fn cos(a f64) f64 {
-	return C.cos(a)
 }
 
 // cosh calculates hyperbolic cosine.

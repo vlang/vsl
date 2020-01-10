@@ -8,7 +8,7 @@ done
 
 v -g test vsl
 
-for module in roots diff deriv specfunc graph
+for module in roots diff deriv specfunc graph fit easings
 do
     rm -rf vsl/$module/vsl
 done
