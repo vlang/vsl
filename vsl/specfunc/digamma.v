@@ -3,7 +3,7 @@
 // that can be found in the LICENSE file.
 module specfunc
 
-import math
+import vsl.math
 import vsl.poly
 
 [inline]

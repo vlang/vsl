@@ -1,16 +1,12 @@
 // Copyright (c) 2019 Ulises Jeremias Cornejo Fandos. All rights reserved.
 // Use of this source code is governed by an MIT license
 // that can be found in the LICENSE file.
-module fun
-
-import math as vmath
+module math
 
 const (
 	dbl_max_exp = f64(1024)
 	dbl_min_exp = f64(-1021)
-	mask = 0x7FF
-	shift = 64 - 11 - 1
-	bias = 1023
+
 	othreshold = 7.09782712893383973096e+02 // 0x40862E42FEFA39EF
 	ln2_x56 = 3.88162421113569373274e+01 // 0x4043687a9f1af2b1
 	ln2_halfX3 = 1.03972077083991796413e+00 // 0x3ff0a2b23f3bab73
@@ -26,16 +22,6 @@ const (
 	q4 = 4.00821782732936239552e-06 // 0x3ED0CFCA86E65239
 	q5 = -2.01099218183624371326e-07 // 0xBE8AFDB76E09C32D
 )
-// NOTE: defined here because vmath.normalize is not working yet
-// normalize returns a normal number y and exponent exp
-// satisfying x == y × 2**exp. It assumes x is finite and non-zero.
-fn normalize(x f64) (f64,int) {
-	smallest_normal := 2.2250738585072014e-308 // 2**-1022
-	if vmath.abs(x) < smallest_normal {
-		return x * (1<<52),-52
-	}
-	return x,0
-}
 
 pub fn ldexp(x f64, e int) f64 {
 	if x == 0.0 {
@@ -45,14 +31,14 @@ pub fn ldexp(x f64, e int) f64 {
 		mut y,ex := frexp(x)
 		mut e2 := f64(e + ex)
 		if e2 >= dbl_max_exp {
-			y *= vmath.pow(2.0, e2 - dbl_max_exp + 1.0)
+			y *= pow(2.0, e2 - dbl_max_exp + 1.0)
 			e2 = dbl_max_exp - 1.0
 		}
 		else if e2 <= dbl_min_exp {
-			y *= vmath.pow(2.0, e2 - dbl_min_exp - 1.0)
+			y *= pow(2.0, e2 - dbl_min_exp - 1.0)
 			e2 = dbl_min_exp + 1.0
 		}
-		p2 := vmath.pow(2.0, e2)
+		p2 := pow(2.0, e2)
 		return y * p2
 	}
 }
@@ -71,16 +57,16 @@ pub fn frexp(f f64) (f64,int) {
 	if f == 0 {
 		return f,0 // correctly return -0
 	}
-	else if vmath.is_inf(f, 0) || vmath.is_nan(f) {
+	else if is_inf(f, 0) || is_nan(f) {
 		return f,0
 	}
-	f_,mut exp := normalize(f)
-	mut x := vmath.f64_bits(f)
+	_,mut exp := normalize(f)
+	mut x := f64_bits(f)
 	exp += int((x>>shift) & mask) - bias + 1
 	x &= mask<<shift
 	x ^= mask<<shift
 	x |= (-1 + bias)<<shift
-	frac := vmath.f64_from_bits(x)
+	frac := f64_from_bits(x)
 	return frac,exp
 }
 
@@ -203,10 +189,10 @@ pub fn frexp(f f64) (f64,int) {
 pub fn expm1(x_ f64) f64 {
 	mut x := x_
 	// special cases
-	if vmath.is_inf(x, 1) || vmath.is_nan(x) {
+	if is_inf(x, 1) || is_nan(x) {
 		return x
 	}
-	else if vmath.is_inf(x, -1) {
+	else if is_inf(x, -1) {
 		return -1
 	}
 	mut absx := x
@@ -223,7 +209,7 @@ pub fn expm1(x_ f64) f64 {
 		}
 		if absx >= othreshold {
 			// if |x| >= 709.78...
-			return vmath.inf(1)
+			return inf(1)
 		}
 	}
 	// argument reduction
@@ -290,18 +276,18 @@ pub fn expm1(x_ f64) f64 {
 	else if k <= -2 || k > 56 {
 		// suffice to return exp(x)-1
 		mut y := 1.0 - (e - x)
-		y = vmath.f64_from_bits(vmath.f64_bits(y) + (u64(k)<<52)) // add k to y's exponent
+		y = f64_from_bits(f64_bits(y) + (u64(k)<<52)) // add k to y's exponent
 		return y - 1
 	}
 	if k < 20 {
-		t = vmath.f64_from_bits(0x3ff0000000000000 - (0x20000000000000>>u32(k))) // t=1-2**-k
+		t = f64_from_bits(0x3ff0000000000000 - (0x20000000000000>>u32(k))) // t=1-2**-k
 		mut y := t - (e - x)
-		y = vmath.f64_from_bits(vmath.f64_bits(y) + (u64(k)<<52)) // add k to y's exponent
+		y = f64_from_bits(f64_bits(y) + (u64(k)<<52)) // add k to y's exponent
 		return y
 	}
-	t = vmath.f64_from_bits(u64(0x3ff - k)<<52) // 2**-k
+	t = f64_from_bits(u64(0x3ff - k)<<52) // 2**-k
 	mut y := x - (e + t)
 	y++
-	y = vmath.f64_from_bits(vmath.f64_bits(y) + (u64(k)<<52)) // add k to y's exponent
+	y = f64_from_bits(f64_bits(y) + (u64(k)<<52)) // add k to y's exponent
 	return y
 }

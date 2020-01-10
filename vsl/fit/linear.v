@@ -3,7 +3,7 @@
 // that can be found in the LICENSE file.
 module fit
 
-import math
+import vsl.math
 // linear computes linear fitting parameters. Errors on y-direction only
 //
 // y(x) = a + b⋅x

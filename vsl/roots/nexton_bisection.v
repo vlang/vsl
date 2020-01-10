@@ -4,7 +4,7 @@
 
 module roots
 
-import math
+import vsl.math
 import vsl
 
 /**

@@ -3,8 +3,8 @@
 // that can be found in the LICENSE file.
 module specfunc
 
-import math.complex as cmplx
-import math
+import vsl.math.complex as cmplx
+import vsl.math
 /**
  * Compute the Gamma function for complex argument
  *

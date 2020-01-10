@@ -3,7 +3,7 @@
 // that can be found in the LICENSE file.
 import roots
 import vsl
-import math
+import vsl.math
 
 const (
 	epsabs = 0.00001

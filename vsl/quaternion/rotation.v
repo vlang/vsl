@@ -4,7 +4,7 @@
 
 module quaternion
 
-import math
+import vsl.math
 
 pub fn (q1 Quaternion) rotor_intrinsic_distance(q2 Quaternion) f64 {
         return 2.0 * q1.divide(q2).log().abs()

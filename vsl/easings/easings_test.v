@@ -3,7 +3,7 @@
 // that can be found in the LICENSE file.
 
 import easings
-import math
+import vsl.math
 
 // Linear tests
 fn test_linear_interpolation() {

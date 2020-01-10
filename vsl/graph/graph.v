@@ -4,7 +4,7 @@
 // Module graph implements solvers based on Graph theory
 module graph
 
-import math
+import vsl.math
 import vsl.io
 /* TODO: change map[string]* types to map[int]* */
 

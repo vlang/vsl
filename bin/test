@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
-for module in roots diff deriv specfunc graph
+for module in roots diff deriv specfunc graph fit easings
 do
     mkdir vsl/$module/vsl
-    cp -r vsl/vsl.v vsl/fn.v vsl/internal vsl/io vsl/$module/vsl
+    cp -r vsl/vsl.v vsl/fn.v vsl/internal vsl/io vsl/math vsl/$module/vsl
 done
 
 v -g test vsl
 
-for module in roots diff deriv specfunc
+for module in roots diff deriv specfunc graph
 do
     rm -rf vsl/$module/vsl
 done

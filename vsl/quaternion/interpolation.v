@@ -4,7 +4,7 @@
 
 module quaternion
 
-import math
+import vsl.math
 
 pub fn (start Quaternion) lerp(end Quaternion, tau f64) Quaternion {
         // if tau is 0, return start

@@ -4,7 +4,7 @@
 
 module quaternion
 
-import math
+import vsl.math
 
 pub fn (q1 Quaternion) + (q2 Quaternion) Quaternion {
         return quaternion(

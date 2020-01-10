@@ -5,7 +5,7 @@ module specfunc
 
 import vsl.internal
 import vsl.fun as vslmath
-import math
+import vsl.math
 
 const (
         int_min = -2147483648

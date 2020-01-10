@@ -4,7 +4,7 @@
 
 module quaternion
 
-import math
+import vsl.math
 
 pub fn (q Quaternion) is_nan() bool {
         return math.is_nan(q.w) || math.is_nan(q.x) || math.is_nan(q.y) || math.is_nan(q.z)

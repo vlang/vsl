@@ -5,7 +5,7 @@ module specfunc
 
 import vsl.fun as vslmath
 import vsl.poly
-import math
+import vsl.math
 
 // bessel_i0 returns the modified Bessel function i0(x) for any real x.
 fn bessel_i0(x f64) f64 {

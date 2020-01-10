@@ -3,7 +3,7 @@
 // that can be found in the LICENSE file.
 module vsl
 
-import math
+import vsl.math
 /* TODO: change params type from []f64 to []T */
 
 // Definition of an arbitrary function with parameters
