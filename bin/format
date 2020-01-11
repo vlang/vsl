@@ -3,7 +3,7 @@
 for module in roots diff deriv specfunc graph fit easings
 do
     mkdir vsl/$module/vsl
-    cp -r vsl/vsl.v vsl/fn.v vsl/internal vsl/io vsl/math vsl/$module/vsl
+    cp -r vsl/vsl.v vsl/fn.v vsl/internal vsl/io vsl/math vsl/errno vsl/$module/vsl
 done
 
 find . -name "*.v" | xargs v fmt -w
