@@ -5,6 +5,7 @@
 module roots
 
 import vsl.math
+import vsl.errno
 import vsl
 
 /**
@@ -25,7 +26,7 @@ pub fn bisection(func vsl.Function, xmin, xmax, epsrel, epsabs f64, n_max int) ?
         fxmax := func.safe_eval(xmax) or { return error(err) }
 
         if (fxmin < 0.0 && fxmax < 0.0) || (fxmin > 0.0 && fxmax > 0.0) {
-                return error('endpoints do not straddle y=0')
+                return errno.vsl_error('endpoints do not straddle y=0', .einval)
         }
 
 		mut a := xmin

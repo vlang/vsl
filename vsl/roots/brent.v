@@ -5,8 +5,9 @@
 module roots
 
 import vsl.math
-import vsl
+import vsl.errno
 import vsl.internal
+import vsl
 
 const (
         itmax = 100
@@ -32,7 +33,7 @@ pub fn brent(func vsl.Function, x1, x2, tol f64) (?f64, f64) {
 
         if (fa > 0.0 && fb > 0.0) || (fa < 0.0 && fb < 0.0) {
 			    // TODO: FIXME
-                // return error('roots must be bracketed'), f64(0.0)
+                // return errno.vsl_error('roots must be bracketed', .einval), f64(0.0)
         }
 
         /* Test if one the endpoints is the root */

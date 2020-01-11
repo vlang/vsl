@@ -4,6 +4,7 @@
 module vsl
 
 import vsl.math
+import vsl.errno
 /* TODO: change params type from []f64 to []T */
 
 // Definition of an arbitrary function with parameters
@@ -35,7 +36,7 @@ pub fn (f Function) safe_eval(x f64) ?f64 {
 	if is_finite(y) {
 		return y
 	}
-	return error('function value is not finite')
+	return errno.vsl_error('function value is not finite', .ebadfunc)
 }
 
 // Definition of an arbitrary function returning two values, r1, r2
