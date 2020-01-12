@@ -4,6 +4,7 @@
 module specfunc
 
 import vsl.math
+import vsl.errno
 import vsl.internal
 
 /* sinh(x) series
@@ -243,8 +244,6 @@ pub fn cos_e(x f64) (f64, f64) {
 }
 
 pub fn hypot_e(x, y f64) (f64, f64) {
-        /* CHECK_POINTER(result) */
-
         if x == 0.0 && y == 0.0 {
                 return f64(0.0), f64(0.0)
         }
@@ -261,7 +260,7 @@ pub fn hypot_e(x, y f64) (f64, f64) {
                         return val, f64(2.0) * internal.dbl_epsilon * math.abs(val)
                 }
                 else {
-                        panic('overflow in hypot_e function')
+                        errno.vsl_panic('overflow in hypot_e function', .eovrflw)
                 }
         }
 }
