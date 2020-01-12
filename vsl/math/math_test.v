@@ -22,10 +22,8 @@ fn test_digits() {
 	assert digits_in_10th_base[0] == 5
 	assert digits_in_10th_base[1] == 2
 	assert digits_in_10th_base[2] == 1
-
 	digits_in_16th_base := digits(15, 16)
 	assert digits_in_16th_base[0] == 15
-
 	negative_digits := digits(-4, 2)
 	assert negative_digits[2] == -1
 }
@@ -44,7 +42,7 @@ fn test_gamma() {
 	sval := '2.453737'
 	assert log_gamma(4.5).str() == sval
 	assert log(gamma(4.5)).str() == sval
-	assert abs( log_gamma(4.5) - log(gamma(4.5)) ) < 0.000001
+	assert abs(log_gamma(4.5) - log(gamma(4.5))) < 0.000001
 	// assert log_gamma(4.5) == log(gamma(4.5)) /* <-- fails on alpine/musl
 }
 
@@ -58,35 +56,32 @@ fn test_mod() {
 }
 
 fn test_trig() {
-        assert compare(sin(0.0), 0.0)
-        assert compare(sin(pi_2), 1.0)
-        assert compare(sin(pi), 0.0)
-        assert compare(sin(3.0 * pi_2), -1.0)
-        assert compare(sin(-pi_2), -1.0)
-
-        assert compare(cos(0.0), 1.0)
-        assert compare(cos(pi_2), 0.0)
-        assert compare(cos(pi), -1.0)
-        assert compare(cos(3.0 * pi_2), 0.0)
-        assert compare(cos(-pi), -1.0)
-
-        assert compare(tan(0.0), 0.0)
-        assert compare(tan(pi_4), 1.0)
-        assert compare(tan(3.0 * pi_4), -1.0)
-        assert compare(tan(pi), 0.0)
-        assert compare(tan(-pi_4), -1.0)
-
-        assert compare(atan(0.0), 0.0)
-        assert compare(atan(1.0), pi_4)
-        assert compare(atan(-1.0), -pi_4)
+	assert compare(sin(0.0), 0.0)
+	assert compare(sin(pi_2), 1.0)
+	assert compare(sin(pi), 0.0)
+	assert compare(sin(3.0 * pi_2), -1.0)
+	assert compare(sin(-pi_2), -1.0)
+	assert compare(cos(0.0), 1.0)
+	assert compare(cos(pi_2), 0.0)
+	assert compare(cos(pi), -1.0)
+	assert compare(cos(3.0 * pi_2), 0.0)
+	assert compare(cos(-pi), -1.0)
+	assert compare(tan(0.0), 0.0)
+	assert compare(tan(pi_4), 1.0)
+	assert compare(tan(3.0 * pi_4), -1.0)
+	assert compare(tan(pi), 0.0)
+	assert compare(tan(-pi_4), -1.0)
+	assert compare(atan(0.0), 0.0)
+	assert compare(atan(1.0), pi_4)
+	assert compare(atan(-1.0), -pi_4)
 }
 
 fn test_pow() {
-        assert compare(pow(2.0, 0), 1.0)
-        assert compare(pow(2.0, 4), 16.0)
-        assert compare(pow(2.0, -2), 0.25)
-        assert compare(pow(2.0, -2.5), 0.17677669529)
-        assert compare(pow(2.0, 4.1), 17.1483754006)
+	assert compare(pow(2.0, 0), 1.0)
+	assert compare(pow(2.0, 4), 16.0)
+	assert compare(pow(2.0, -2), 0.25)
+	assert compare(pow(2.0, -2.5), 0.17677669529)
+	assert compare(pow(2.0, 4.1), 17.1483754006)
 }
 
 // Helper methods for comparing floats
