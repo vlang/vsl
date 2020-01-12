@@ -270,12 +270,12 @@ pub fn sin(x f64) f64 {
 
                 if octant == 0 {
                         t := 8.0*math.abs(z)/math.pi - 1.0
-                        sin_cs_val, err := sin_cs.eval_e(t)
+                        sin_cs_val, _ := sin_cs.eval_e(t)
                         result = z * (1.0 + z*z * sin_cs_val)
                 }
                 else { /* octant == 2 */
                         t := 8.0*math.abs(z)/math.pi - 1.0
-                        cos_cs_val, err := cos_cs.eval_e(t)
+                        cos_cs_val, _ := cos_cs.eval_e(t)
                         result = 1.0 - 0.5*z*z * (1.0 - z*z * cos_cs_val)
                 }
 
@@ -318,12 +318,12 @@ pub fn cos(x f64) f64 {
 
                 if octant == 0 {
                         t := 8.0*math.abs(z)/math.pi - 1.0
-                        cos_cs_val, err := cos_cs.eval_e(t)
+                        cos_cs_val, _ := cos_cs.eval_e(t)
                         result = 1.0 - 0.5*z*z * (1.0 - z*z * cos_cs_val)
                 }
                 else { /* octant == 2 */
                         t := 8.0*math.abs(z)/math.pi - 1.0
-                        sin_cs_val, err := sin_cs.eval_e(t)
+                        sin_cs_val, _ := sin_cs.eval_e(t)
                         result = z * (1.0 + z*z * sin_cs_val)
                 }
 

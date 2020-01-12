@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+for module in math
+do
+    mkdir vsl/$module/vsl
+    cp -r vsl/vsl.v vsl/fn.v vsl/internal vsl/io vsl/errno vsl/$module/vsl
+    find vsl/$module/vsl -name '*_test.v' | xargs rm -f 
+done
+
 for module in roots diff deriv specfunc graph fit easings
 do
     mkdir vsl/$module/vsl
