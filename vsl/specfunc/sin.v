@@ -117,11 +117,6 @@ const (
 
 /*-*-*-*-*-*-*-*-*-*-*-* Functions with Error Codes *-*-*-*-*-*-*-*-*-*-*-*/
 
-/* I would have prefered just using the library sin() function.
- * But after some experimentation I decided that there was
- * no good way to understand the error; library sin() is just a black box.
- * So we have to roll our own.
- */
 pub fn sin_e(x f64) (f64, f64) {
         sgn_x := if x < 0 { -1 } else { 1 }
         abs_x := math.abs(x)
@@ -243,24 +238,97 @@ pub fn cos_e(x f64) (f64, f64) {
         }
 }
 
-pub fn hypot_e(x, y f64) (f64, f64) {
-        if x == 0.0 && y == 0.0 {
-                return f64(0.0), f64(0.0)
+/*-*-*-*-*-*-*-*-*-*-*-* Functions without Error Codes *-*-*-*-*-*-*-*-*-*-*-*/
+
+pub fn sin(x f64) f64 {
+        sgn_x := if x < 0 { -1 } else { 1 }
+        abs_x := math.abs(x)
+
+        if abs_x < internal.root4_dbl_epsilon {
+                x2 := x*x
+                return x * (1.0 - x2/6.0)
         }
         else {
-                a := math.abs(x)
-                b := math.abs(y)
-                min := math.min(a, b)
-                max := math.max(a, b)
-                rat := min/max
-                root_term := math.sqrt(f64(1.0) + rat*rat)
+                mut sgn_result := sgn_x
+                mut y := math.floor(abs_x/(0.25*math.pi))
+                mut octant := int(y - math.ldexp(math.floor(math.ldexp(y, -3)), 3))
 
-                if max < math.max_f64/root_term {
-                        val := max * root_term
-                        return val, f64(2.0) * internal.dbl_epsilon * math.abs(val)
+                if (octant & 1) == 1 {
+                        octant++
+                        octant &= 07
+                        y += 1.0
                 }
-                else {
-                        errno.vsl_panic('overflow in hypot_e function', .eovrflw)
+
+                if octant > 3 {
+                        octant -= 4
+                        sgn_result = -sgn_result
                 }
+                
+                z := ((abs_x - y * p1) - y * p2) - y * p3
+
+                mut result := f64(0.0)
+
+                if octant == 0 {
+                        t := 8.0*math.abs(z)/math.pi - 1.0
+                        sin_cs_val, err := sin_cs.eval_e(t)
+                        result = z * (1.0 + z*z * sin_cs_val)
+                }
+                else { /* octant == 2 */
+                        t := 8.0*math.abs(z)/math.pi - 1.0
+                        cos_cs_val, err := cos_cs.eval_e(t)
+                        result = 1.0 - 0.5*z*z * (1.0 - z*z * cos_cs_val)
+                }
+
+                result *= sgn_result
+
+                return result
+        }
+}
+
+pub fn cos(x f64) f64 {
+        abs_x := math.abs(x)
+
+        if abs_x < internal.root4_dbl_epsilon {
+                x2 := x*x
+                return f64(1.0) - 0.5*x2
+        }
+        else {
+                mut sgn_result := 1
+                mut y := math.floor(abs_x/(0.25*math.pi))
+                mut octant := int(y - math.ldexp(math.floor(math.ldexp(y, -3)), 3))
+
+                if (octant & 1) == 1 {
+                        octant++
+                        octant &= 07
+                        y += 1.0
+                }
+
+                if octant > 3 {
+                        octant -= 4
+                        sgn_result = -sgn_result
+                }
+
+                if octant > 1 {
+                        sgn_result = -sgn_result
+                }
+                
+                z := ((abs_x - y * p1) - y * p2) - y * p3
+
+                mut result := f64(0.0)
+
+                if octant == 0 {
+                        t := 8.0*math.abs(z)/math.pi - 1.0
+                        cos_cs_val, err := cos_cs.eval_e(t)
+                        result = 1.0 - 0.5*z*z * (1.0 - z*z * cos_cs_val)
+                }
+                else { /* octant == 2 */
+                        t := 8.0*math.abs(z)/math.pi - 1.0
+                        sin_cs_val, err := sin_cs.eval_e(t)
+                        result = z * (1.0 + z*z * sin_cs_val)
+                }
+
+                result *= sgn_result
+
+                return result
         }
 }
