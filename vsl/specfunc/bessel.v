@@ -3,9 +3,8 @@
 // that can be found in the LICENSE file.
 module specfunc
 
-import vsl.fun as vslmath
 import vsl.poly
-import math
+import vsl.math
 
 // bessel_i0 returns the modified Bessel function i0(x) for any real x.
 fn bessel_i0(x f64) f64 {
@@ -58,11 +57,11 @@ fn bessel_in(n int, x f64) f64 {
 		bim = bip + f64(j)*tox*bi
 		bip = bi
 		bi = bim
-		_, k = vslmath.frexp(bi)
+		_, k = math.frexp(bi)
 		if k > iexp { // Renormalize to prevent overflows.
-			ans = vslmath.ldexp(ans, -iexp)
-			bi = vslmath.ldexp(bi, -iexp)
-			bip = vslmath.ldexp(bip, -iexp)
+			ans = math.ldexp(ans, -iexp)
+			bi = math.ldexp(bi, -iexp)
+			bip = math.ldexp(bip, -iexp)
 		}
 		if j == n {
 			ans = bip

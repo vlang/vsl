@@ -4,7 +4,7 @@
 
 module quaternion
 
-import math
+import vsl.math
 
 pub struct Quaternion {
 pub:

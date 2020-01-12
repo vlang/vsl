@@ -4,7 +4,8 @@
 
 module roots
 
-import math
+import vsl.math
+import vsl.errno
 import vsl
 
 /**
@@ -40,7 +41,7 @@ pub fn newton(func vsl.FunctionFdf, x0, x_eps, fx_eps f64, n_max int) ?f64 {
                 mut t := f64(1.0)
 
                 if df == 0.0 {
-                        panic('div by zero')
+                        errno.vsl_panic('div by zero', .ezerodiv)
                 }
 
                 dx := f / df
@@ -71,7 +72,7 @@ pub fn newton(func vsl.FunctionFdf, x0, x_eps, fx_eps f64, n_max int) ?f64 {
 
         /* maximum number of iterations reached */
         if i == n_max {
-                return error('maximum number of iterations reached')
+                return errno.vsl_error('maximum number of iterations reached', .emaxiter)
         }
 
         return root

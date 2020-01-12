@@ -4,7 +4,7 @@
 
 module deriv
 
-import math
+import vsl.math
 import vsl
 import vsl.internal
 

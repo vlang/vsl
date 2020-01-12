@@ -4,7 +4,7 @@
 
 module diff
 
-import math
+import vsl.math
 import vsl
 import vsl.internal
 

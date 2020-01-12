@@ -4,7 +4,7 @@
 
 module quaternion
 
-import math
+import vsl.math
 
 pub fn (q Quaternion) scalar_pow(s f64) Quaternion {
         /* Unlike the quaternion^quaternion power, this is unambiguous.*/

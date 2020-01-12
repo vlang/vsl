@@ -4,7 +4,7 @@
 
 module poly
 
-import math
+import vsl.math
 
 const(
         radix = 2

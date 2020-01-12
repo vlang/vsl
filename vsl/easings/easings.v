@@ -5,7 +5,7 @@
 module easings
 
 import arrays
-import math
+import vsl.math
 
 // linear_interpolation is a method of curve fitting using linear polynomials to construct new data points within the range of a discrete set of known data points
 [inline]

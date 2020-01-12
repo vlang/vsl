@@ -4,7 +4,8 @@
 
 module roots
 
-import math
+import vsl.math
+import vsl.errno
 import vsl
 
 /**
@@ -31,7 +32,7 @@ pub fn newton_bisection(func vsl.FunctionFdf, x_min, x_max, tol f64, max_iter in
 
         /* Root is not bracketed by x1 and x2  */
         if (func_low > 0.0 && func_high > 0.0) || (func_low < 0.0 && func_high < 0.0) {
-                return error('roots is not bracketed by $x_min and $x_max')
+                return errno.vsl_error('roots is not bracketed by $x_min and $x_max', .einval)
         }
 
         mut xl := 0.0
@@ -73,5 +74,5 @@ pub fn newton_bisection(func vsl.FunctionFdf, x_min, x_max, tol f64, max_iter in
         }
 
         /* Maximum number of iterations exceeded */
-        return error('maximum number of iterations exceeded')
+        return errno.vsl_error('maximum number of iterations exceeded', .emaxiter)
 }

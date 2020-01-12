@@ -4,7 +4,8 @@
 // Module graph implements solvers based on Graph theory
 module graph
 
-import math
+import vsl.math
+import vsl.errno
 import vsl.io
 /* TODO: change map[string]* types to map[int]* */
 
@@ -88,7 +89,7 @@ pub fn (g Graph) get_edge(i, j int) ?int {
 	if key in g.key2edge {
 		return g.key2edge[key]
 	}
-	return error('cannot find edge from $i to $j')
+	return errno.vsl_error('cannot find edge from $i to $j', .efailed)
 }
 
 // shortest_paths computes the shortest paths in a graph defined as follows

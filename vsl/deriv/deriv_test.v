@@ -3,7 +3,7 @@
 // that can be found in the LICENSE file.
 import deriv
 import vsl
-import math
+import vsl.math
 
 fn f1(x f64, _ []f64) f64 {
 	return math.exp(x)

@@ -4,8 +4,8 @@
 
 module specfunc
 
-import math
-import math.factorial
+import vsl.math
+import vsl.math.factorial
 import vsl.internal
 
 /**
