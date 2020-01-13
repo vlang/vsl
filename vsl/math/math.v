@@ -122,6 +122,14 @@ pub fn ceil(a f64) f64 {
 	return C.ceil(a)
 }
 
+pub fn copysign(x, y f64) f64 {
+	if (x < 0 && y > 0) || (x > 0 && y < 0) {
+                return -x
+        }
+
+        return x
+}
+
 // cosh calculates hyperbolic cosine.
 pub fn cosh(a f64) f64 {
 	return C.cosh(a)
@@ -264,6 +272,63 @@ pub fn min(a, b f64) f64 {
 	return b
 }
 
+// nextafter32 returns the next representable f32 value after x towards y.
+//
+// Special cases are:
+//	nextafter32(x, x)   = x
+//	nextafter32(nan, y) = nan
+//	nextafter32(x, nan) = nan
+pub fn nextafter32(x, y f32) f32 {
+        mut r := 0.0
+
+	if is_nan(f64(x)) || is_nan(f64(y)) { // special case
+		r = f32(nan())
+        }
+	else if x == y {
+		r = x
+        }
+	else if x == 0 {
+		r = f32(copysign(f64(f32_from_bits(1)), f64(y)))
+        }
+	else if (y > x) == (x > 0) {
+		r = f32_from_bits(f32_bits(x) + 1)
+        }
+	else {
+		r = f32_from_bits(f32_bits(x) - 1)
+        }
+
+	return r
+}
+
+// nextafter returns the next representable f64 value after x towards y.
+//
+// Special cases are:
+//	nextafter(x, x)   = x
+//	nextafter(nan, y) = nan
+//	nextafter(x, nan) = nan
+pub fn nextafter(x, y f64) f64 {
+        mut r := f64(0.0)
+
+	if is_nan(x) || is_nan(y) { // special case
+		r = nan()
+        }
+	else if x == y {
+		r = x
+        }
+	else if x == 0 {
+		r = copysign(f64_from_bits(1), y)
+        }
+	else if (y > x) == (x > 0) {
+		r = f64_from_bits(f64_bits(x) + 1)
+        }
+	else {
+		r = f64_from_bits(f64_bits(x) - 1)
+        }
+
+	return r
+}
+
+
 // pow returns base raised to the provided power.
 pub fn pow(a, b f64) f64 {
 	return C.pow(a, b)
@@ -277,6 +342,11 @@ pub fn radians(degrees f64) f64 {
 // round returns the integer nearest to the provided value.
 pub fn round(f f64) f64 {
 	return C.round(f)
+}
+
+pub fn signbit(x f64) bool {
+        return false
+	//return f64_bits(x)&(1<<63) != 0
 }
 
 // sinh calculates hyperbolic sine.

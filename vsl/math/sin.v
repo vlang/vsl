@@ -3,7 +3,6 @@
 // that can be found in the LICENSE file.
 module math
 
-import vsl.errno
 import vsl.internal
 
 const (

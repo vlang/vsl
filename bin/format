@@ -15,7 +15,7 @@ done
 
 find . -name "*.v" | xargs v fmt -w
 
-for module in roots diff deriv specfunc graph fit easings
+for module in roots diff deriv specfunc graph fit easings math
 do
     rm -rf vsl/$module/vsl
 done
