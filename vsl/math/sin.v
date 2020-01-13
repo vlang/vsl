@@ -1,49 +1,10 @@
 // Copyright (c) 2019 Ulises Jeremias Cornejo Fandos. All rights reserved.
 // Use of this source code is governed by an MIT license
 // that can be found in the LICENSE file.
-module specfunc
+module math
 
-import vsl.math
 import vsl.errno
 import vsl.internal
-
-/* sinh(x) series
- * double-precision for |x| < 1.0
- */
-[inline]
-fn sinh_series(x f64) f64 {
-        y := x*x
-        c0 := f64(1.0)/6.0
-        c1 := f64(1.0)/120.0
-        c2 := f64(1.0)/5040.0
-        c3 := f64(1.0)/362880.0
-        c4 := f64(1.0)/39916800.0
-        c5 := f64(1.0)/6227020800.0
-        c6 := f64(1.0)/1307674368000.0
-        c7 := f64(1.0)/355687428096000.0
-
-        return x*(f64(1.0) + y*(c0+y*(c1+y*(c2+y*(c3+y*(c4+y*(c5+y*(c6+y*c7))))))))
-}
-
-
-/* cosh(x)-1 series
- * double-precision for |x| < 1.0
- */
-[inline]
-fn cosh_m1_series(x f64) f64 {
-        y := x*x
-        c0 := f64(0.5)
-        c1 := f64(1.0)/24.0
-        c2 := f64(1.0)/720.0
-        c3 := f64(1.0)/40320.0
-        c4 := f64(1.0)/3628800.0
-        c5 := f64(1.0)/479001600.0
-        c6 := f64(1.0)/87178291200.0
-        c7 := f64(1.0)/20922789888000.0
-        c8 := f64(1.0)/6402373705728000.0
-        
-        return y*(c0+y*(c1+y*(c2+y*(c3+y*(c4+y*(c5+y*(c6+y*(c7+y*c8))))))))
-}
 
 const (
         /* Chebyshev expansion for f(t) = sinc((t+1)/2), -1 < t < 1
@@ -119,16 +80,16 @@ const (
 
 pub fn sin_e(x f64) (f64, f64) {
         sgn_x := if x < 0 { -1 } else { 1 }
-        abs_x := math.abs(x)
+        abs_x := abs(x)
 
         if abs_x < internal.root4_dbl_epsilon {
                 x2 := x*x
-                return x * (1.0 - x2/6.0), math.abs(x*x2*x2 / 100.0)
+                return x * (1.0 - x2/6.0), abs(x*x2*x2 / 100.0)
         }
         else {
                 mut sgn_result := sgn_x
-                mut y := math.floor(abs_x/(0.25*math.pi))
-                mut octant := int(y - math.ldexp(math.floor(math.ldexp(y, -3)), 3))
+                mut y := floor(abs_x/(0.25*pi))
+                mut octant := int(y - ldexp(floor(ldexp(y, -3)), 3))
 
                 if (octant & 1) == 1 {
                         octant++
@@ -148,12 +109,12 @@ pub fn sin_e(x f64) (f64, f64) {
                 mut result_err := f64(0.0)
 
                 if (octant == 1) || (octant == 2) {
-                        t := 8.0*math.abs(z)/math.pi - 1.0
+                        t := 8.0*abs(z)/pi - 1.0
                         cos_cs_val, _ := cos_cs.eval_e(t)
                         result = 1.0 - 0.5*z*z * (1.0 - z*z * cos_cs_val)
                 }
                 else {
-                        t := 8.0*math.abs(z)/math.pi - 1.0
+                        t := 8.0*abs(z)/pi - 1.0
                         sin_cs_val, _ := sin_cs.eval_e(t)
                         result = z * (1.0 + z*z * sin_cs_val)
                 }
@@ -161,16 +122,16 @@ pub fn sin_e(x f64) (f64, f64) {
                 result *= sgn_result
 
                 if abs_x > 1.0/internal.dbl_epsilon {
-                        result_err = math.abs(result)
+                        result_err = abs(result)
                 }
                 else if abs_x > 100.0/internal.sqrt_dbl_epsilon {
-                        result_err = 2.0 * abs_x * internal.dbl_epsilon * math.abs(result)
+                        result_err = 2.0 * abs_x * internal.dbl_epsilon * abs(result)
                 }
                 else if abs_x > 0.1/internal.sqrt_dbl_epsilon {
-                        result_err = 2.0 * internal.sqrt_dbl_epsilon * math.abs(result)
+                        result_err = 2.0 * internal.sqrt_dbl_epsilon * abs(result)
                 }
                 else {
-                        result_err = 2.0 * internal.dbl_epsilon * math.abs(result)
+                        result_err = 2.0 * internal.dbl_epsilon * abs(result)
                 }
 
                 return result, result_err
@@ -178,16 +139,16 @@ pub fn sin_e(x f64) (f64, f64) {
 }
 
 pub fn cos_e(x f64) (f64, f64) {
-        abs_x := math.abs(x)
+        abs_x := abs(x)
 
         if abs_x < internal.root4_dbl_epsilon {
                 x2 := x*x
-                return f64(1.0) - 0.5*x2, math.abs(x2*x2 / 12.0)
+                return f64(1.0) - 0.5*x2, abs(x2*x2 / 12.0)
         }
         else {
                 mut sgn_result := 1
-                mut y := math.floor(abs_x/(0.25*math.pi))
-                mut octant := int(y - math.ldexp(math.floor(math.ldexp(y, -3)), 3))
+                mut y := floor(abs_x/(0.25*pi))
+                mut octant := int(y - ldexp(floor(ldexp(y, -3)), 3))
 
                 if (octant & 1) == 1 {
                         octant++
@@ -211,12 +172,12 @@ pub fn cos_e(x f64) (f64, f64) {
                 mut result_err := f64(0.0)
 
                 if (octant == 1) || (octant == 2) {
-                        t := 8.0*math.abs(z)/math.pi - 1.0
+                        t := 8.0*abs(z)/pi - 1.0
                         sin_cs_val, _ := sin_cs.eval_e(t)
                         result = z * (1.0 + z*z * sin_cs_val)
                 }
                 else {
-                        t := 8.0*math.abs(z)/math.pi - 1.0
+                        t := 8.0*abs(z)/pi - 1.0
                         cos_cs_val, _ := cos_cs.eval_e(t)
                         result = 1.0 - 0.5*z*z * (1.0 - z*z * cos_cs_val)
                 }
@@ -224,16 +185,16 @@ pub fn cos_e(x f64) (f64, f64) {
                 result *= sgn_result
 
                 if abs_x > 1.0/internal.dbl_epsilon {
-                        result_err = math.abs(result)
+                        result_err = abs(result)
                 }
                 else if abs_x > 100.0/internal.sqrt_dbl_epsilon {
-                        result_err = 2.0 * abs_x * internal.dbl_epsilon * math.abs(result)
+                        result_err = 2.0 * abs_x * internal.dbl_epsilon * abs(result)
                 }
                 else if abs_x > 0.1/internal.sqrt_dbl_epsilon {
-                        result_err = 2.0 * internal.sqrt_dbl_epsilon * math.abs(result)
+                        result_err = 2.0 * internal.sqrt_dbl_epsilon * abs(result)
                 }
                 else {
-                        result_err = 2.0 * internal.dbl_epsilon * math.abs(result)
+                        result_err = 2.0 * internal.dbl_epsilon * abs(result)
                 }
 
                 return result, result_err
@@ -244,7 +205,7 @@ pub fn cos_e(x f64) (f64, f64) {
 
 pub fn sin(x f64) f64 {
         sgn_x := if x < 0 { -1 } else { 1 }
-        abs_x := math.abs(x)
+        abs_x := abs(x)
 
         if abs_x < internal.root4_dbl_epsilon {
                 x2 := x*x
@@ -252,8 +213,8 @@ pub fn sin(x f64) f64 {
         }
         else {
                 mut sgn_result := sgn_x
-                mut y := math.floor(abs_x/(0.25*math.pi))
-                mut octant := int(y - math.ldexp(math.floor(math.ldexp(y, -3)), 3))
+                mut y := floor(abs_x/(0.25*pi))
+                mut octant := int(y - ldexp(floor(ldexp(y, -3)), 3))
 
                 if (octant & 1) == 1 {
                         octant++
@@ -272,12 +233,12 @@ pub fn sin(x f64) f64 {
                 mut result := f64(0.0)
 
                 if (octant == 1) || (octant == 2) {
-                        t := 8.0*math.abs(z)/math.pi - 1.0
+                        t := 8.0*abs(z)/pi - 1.0
                         cos_cs_val, _ := cos_cs.eval_e(t)
                         result = 1.0 - 0.5*z*z * (1.0 - z*z * cos_cs_val)
                 }
                 else {
-                        t := 8.0*math.abs(z)/math.pi - 1.0
+                        t := 8.0*abs(z)/pi - 1.0
                         sin_cs_val, _ := sin_cs.eval_e(t)
                         result = z * (1.0 + z*z * sin_cs_val)
                 }
@@ -289,7 +250,7 @@ pub fn sin(x f64) f64 {
 }
 
 pub fn cos(x f64) f64 {
-        abs_x := math.abs(x)
+        abs_x := abs(x)
 
         if abs_x < internal.root4_dbl_epsilon {
                 x2 := x*x
@@ -297,8 +258,8 @@ pub fn cos(x f64) f64 {
         }
         else {
                 mut sgn_result := 1
-                mut y := math.floor(abs_x/(0.25*math.pi))
-                mut octant := int(y - math.ldexp(math.floor(math.ldexp(y, -3)), 3))
+                mut y := floor(abs_x/(0.25*pi))
+                mut octant := int(y - ldexp(floor(ldexp(y, -3)), 3))
 
                 if (octant & 1) == 1 {
                         octant++
@@ -321,12 +282,12 @@ pub fn cos(x f64) f64 {
                 mut result := f64(0.0)
 
                 if (octant == 1) || (octant == 2) {
-                        t := 8.0*math.abs(z)/math.pi - 1.0
+                        t := 8.0*abs(z)/pi - 1.0
                         sin_cs_val, _ := sin_cs.eval_e(t)
                         result = z * (1.0 + z*z * sin_cs_val)
                 }
                 else {
-                        t := 8.0*math.abs(z)/math.pi - 1.0
+                        t := 8.0*abs(z)/pi - 1.0
                         cos_cs_val, _ := cos_cs.eval_e(t)
                         result = 1.0 - 0.5*z*z * (1.0 - z*z * cos_cs_val)
                 }

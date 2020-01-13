@@ -22,9 +22,6 @@ fn C.cbrt(x f64) f64
 fn C.ceil(x f64) f64
 
 
-fn C.cos(x f64) f64
-
-
 fn C.cosh(x f64) f64
 
 
@@ -68,9 +65,6 @@ fn C.pow(x f64, y f64) f64
 
 
 fn C.round(x f64) f64
-
-
-fn C.sin(x f64) f64
 
 
 fn C.sinh(x f64) f64
@@ -126,11 +120,6 @@ pub fn cbrt(a f64) f64 {
 // ceil returns the nearest f64 greater or equal to the provided value.
 pub fn ceil(a f64) f64 {
 	return C.ceil(a)
-}
-
-// cos calculates cosine.
-pub fn cos(a f64) f64 {
-	return C.cos(a)
 }
 
 // cosh calculates hyperbolic cosine.
@@ -288,11 +277,6 @@ pub fn radians(degrees f64) f64 {
 // round returns the integer nearest to the provided value.
 pub fn round(f f64) f64 {
 	return C.round(f)
-}
-
-// sin calculates sine.
-pub fn sin(a f64) f64 {
-	return C.sin(a)
 }
 
 // sinh calculates hyperbolic sine.
