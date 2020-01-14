@@ -10,9 +10,6 @@ fn C.acos(x f64) f64
 fn C.asin(x f64) f64
 
 
-fn C.atan(x f64) f64
-
-
 fn C.atan2(y f64, x f64) f64
 
 
@@ -100,11 +97,6 @@ pub fn acos(a f64) f64 {
 // asin calculates inverse sine (arcsine).
 pub fn asin(a f64) f64 {
 	return C.asin(a)
-}
-
-// atan calculates inverse tangent (arctangent).
-pub fn atan(a f64) f64 {
-	return C.atan(a)
 }
 
 // atan2 calculates inverse tangent with two arguments, returns the angle between the X axis and the point.
@@ -372,46 +364,4 @@ pub fn tanh(a f64) f64 {
 // larger in magnitude than a.
 pub fn trunc(a f64) f64 {
 	return C.trunc(a)
-}
-
-[inline]
-fn poly_n_eval(c []f64, n int, x f64) f64 {
-	if c.len == 0 {
-                panic('coeficients can not be empty')
-        }
-
-        len := int(min(c.len, n))
-        mut ans := c[len-1]
-
-        for e in c[..len-1] {
-                ans = e + x * ans
-        }
-
-        return ans
-}
-
-[inline]
-fn poly_n_1_eval(c []f64, n int, x f64) f64 {
-        if c.len == 0 {
-                panic('coeficients can not be empty')
-        }
-
-        len := int(min(c.len, n)) - 1
-        mut ans := c[len-1]
-
-        for e in c[..len-1] {
-                ans = e + x * ans
-        }
-
-        return ans
-}
-
-[inline]
-fn poly_eval(c []f64, x f64) f64 {
-        return poly_n_eval(c, c.len, x)
-}
-
-[inline]
-fn poly_1_eval(c []f64, x f64) f64 {
-        return poly_n_1_eval(c, c.len, x)
 }

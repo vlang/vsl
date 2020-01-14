@@ -39,4 +39,3 @@ fn (cs ChebSeries) eval_e(x f64) (f64, f64) {
 
         return d, f64(internal.dbl_epsilon) * e + abs(cs.c[cs.order])
 }
-
