@@ -20,7 +20,7 @@ module math
 // y = atan( x );
 //
 // DESCRIPTION:
-// Returns radian angle between -pi/2 and +pi/2 whose tangent is x.
+// Returns radian angle between -pi/2.0 and +pi/2.0 whose tangent is x.
 //
 // Range reduction is from three intervals into the interval from zero to 0.66.
 // The approximant uses a rational function of degree 4/5 of the form
@@ -62,7 +62,7 @@ const (
         Q3 =  4.853903996359136964868e+02
         Q4 =  1.945506571482613964425e+02
 
-        morebits = 6.123233995736765886130e-17 // pi/2 = PIO2 + morebits
+        morebits = 6.123233995736765886130e-17 // pi/2.0 = PIO2 + morebits
         tan3pio8 = 2.41421356237309504880      // tan(3*pi/8)
 )
 
@@ -87,11 +87,11 @@ fn satan(x f64) f64 {
 	return pi/4 + xatan((x-1.0)/(x+1.0)) + 0.5*f64(morebits)
 }
 
-// Atan returns the arctangent, in radians, of x.
+// atan returns the arctangent, in radians, of x.
 //
 // Special cases are:
-// Atan(±0) = ±0
-// Atan(±Inf) = ±pi/2
+// atan(±0) = ±0
+// atan(±Inf) = ±pi/2.0
 pub fn atan(x f64) f64 {
 	if x == 0 {
 		return x
@@ -101,3 +101,67 @@ pub fn atan(x f64) f64 {
 	}
 	return -satan(-x)
 }
+
+// atan2 returns the arc tangent of y/x, using
+// the signs of the two to determine the quadrant
+// of the return value.
+//
+// Special cases are (in order):
+//	atan2(y, nan) = nan
+//	atan2(nan, x) = nan
+//	atan2(+0, x>=0) = +0
+//	atan2(-0, x>=0) = -0
+//	atan2(+0, x<=-0) = +pi
+//	atan2(-0, x<=-0) = -pi
+//	atan2(y>0, 0) = +pi/2.0
+//	atan2(y<0, 0) = -pi/2.0
+//	atan2(+Inf, +Inf) = +pi/4
+//	atan2(-Inf, +Inf) = -pi/4
+//	atan2(+Inf, -Inf) = 3pi/4
+//	atan2(-Inf, -Inf) = -3pi/4
+//	atan2(y, +Inf) = 0
+//	atan2(y>0, -Inf) = +pi
+//	atan2(y<0, -Inf) = -pi
+//	atan2(+Inf, x) = +pi/2.0
+//	atan2(-Inf, x) = -pi/2.0
+pub fn atan2(y, x f64) f64 {
+	// special cases
+	if is_nan(y) || is_nan(x) {
+		return nan()
+        }
+	if y == 0.0 {
+		if x >= 0 && !signbit(x) {
+			return copysign(0, y)
+		}
+		return copysign(pi, y)
+        }
+	if x == 0.0 {
+		return copysign(pi/2.0, y)
+        }
+	if is_inf(x, 0) {
+		if is_inf(x, 1) {
+			if is_inf(y, 0) {
+				return copysign(pi/4, y)
+			}
+                        return copysign(0, y)
+		}
+		if is_inf(y, 0) {
+			return copysign(3.0*pi/4.0, y)
+		}
+                return copysign(pi, y)
+        }
+	if is_inf(y, 0) {
+		return copysign(pi/2.0, y)
+	}
+
+	// Call atan and determine the quadrant.
+	q := atan(y / x)
+	if x < 0 {
+		if q <= 0 {
+			return q + pi
+		}
+		return q - pi
+	}
+	return q
+}
+

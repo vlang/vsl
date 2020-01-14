@@ -10,9 +10,6 @@ fn C.acos(x f64) f64
 fn C.asin(x f64) f64
 
 
-fn C.atan2(y f64, x f64) f64
-
-
 fn C.cbrt(x f64) f64
 
 
@@ -97,11 +94,6 @@ pub fn acos(a f64) f64 {
 // asin calculates inverse sine (arcsine).
 pub fn asin(a f64) f64 {
 	return C.asin(a)
-}
-
-// atan2 calculates inverse tangent with two arguments, returns the angle between the X axis and the point.
-pub fn atan2(a, b f64) f64 {
-	return C.atan2(a, b)
 }
 
 // cbrt calculates cubic root.
