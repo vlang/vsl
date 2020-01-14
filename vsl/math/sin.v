@@ -75,133 +75,6 @@ const (
         p3 = 2.69515142907905952645e-15
 )
 
-/*-*-*-*-*-*-*-*-*-*-*-* Functions with Error Codes *-*-*-*-*-*-*-*-*-*-*-*/
-
-pub fn sin_e(x f64) (f64, f64) {
-        sgn_x := if x < 0 { -1 } else { 1 }
-        abs_x := abs(x)
-
-        if abs_x < internal.root4_dbl_epsilon {
-                x2 := x*x
-                return x * (1.0 - x2/6.0), abs(x*x2*x2 / 100.0)
-        }
-        else {
-                mut sgn_result := sgn_x
-                mut y := floor(abs_x/(0.25*pi))
-                mut octant := int(y - ldexp(floor(ldexp(y, -3)), 3))
-
-                if (octant & 1) == 1 {
-                        octant++
-                        y += 1.0
-                }
-
-                octant &= 07
-
-                if octant > 3 {
-                        octant -= 4
-                        sgn_result = -sgn_result
-                }
-                
-                z := ((abs_x - y * p1) - y * p2) - y * p3
-
-                mut result := f64(0.0)
-                mut result_err := f64(0.0)
-
-                if (octant == 1) || (octant == 2) {
-                        t := 8.0*abs(z)/pi - 1.0
-                        cos_cs_val, _ := cos_cs.eval_e(t)
-                        result = 1.0 - 0.5*z*z * (1.0 - z*z * cos_cs_val)
-                }
-                else {
-                        t := 8.0*abs(z)/pi - 1.0
-                        sin_cs_val, _ := sin_cs.eval_e(t)
-                        result = z * (1.0 + z*z * sin_cs_val)
-                }
-
-                result *= sgn_result
-
-                if abs_x > 1.0/internal.dbl_epsilon {
-                        result_err = abs(result)
-                }
-                else if abs_x > 100.0/internal.sqrt_dbl_epsilon {
-                        result_err = 2.0 * abs_x * internal.dbl_epsilon * abs(result)
-                }
-                else if abs_x > 0.1/internal.sqrt_dbl_epsilon {
-                        result_err = 2.0 * internal.sqrt_dbl_epsilon * abs(result)
-                }
-                else {
-                        result_err = 2.0 * internal.dbl_epsilon * abs(result)
-                }
-
-                return result, result_err
-        }
-}
-
-pub fn cos_e(x f64) (f64, f64) {
-        abs_x := abs(x)
-
-        if abs_x < internal.root4_dbl_epsilon {
-                x2 := x*x
-                return f64(1.0) - 0.5*x2, abs(x2*x2 / 12.0)
-        }
-        else {
-                mut sgn_result := 1
-                mut y := floor(abs_x/(0.25*pi))
-                mut octant := int(y - ldexp(floor(ldexp(y, -3)), 3))
-
-                if (octant & 1) == 1 {
-                        octant++
-                        y += 1.0
-                }
-
-                octant &= 07
-
-                if octant > 3 {
-                        octant -= 4
-                        sgn_result = -sgn_result
-                }
-
-                if octant > 1 {
-                        sgn_result = -sgn_result
-                }
-                
-                z := ((abs_x - y * p1) - y * p2) - y * p3
-
-                mut result := f64(0.0)
-                mut result_err := f64(0.0)
-
-                if (octant == 1) || (octant == 2) {
-                        t := 8.0*abs(z)/pi - 1.0
-                        sin_cs_val, _ := sin_cs.eval_e(t)
-                        result = z * (1.0 + z*z * sin_cs_val)
-                }
-                else {
-                        t := 8.0*abs(z)/pi - 1.0
-                        cos_cs_val, _ := cos_cs.eval_e(t)
-                        result = 1.0 - 0.5*z*z * (1.0 - z*z * cos_cs_val)
-                }
-
-                result *= sgn_result
-
-                if abs_x > 1.0/internal.dbl_epsilon {
-                        result_err = abs(result)
-                }
-                else if abs_x > 100.0/internal.sqrt_dbl_epsilon {
-                        result_err = 2.0 * abs_x * internal.dbl_epsilon * abs(result)
-                }
-                else if abs_x > 0.1/internal.sqrt_dbl_epsilon {
-                        result_err = 2.0 * internal.sqrt_dbl_epsilon * abs(result)
-                }
-                else {
-                        result_err = 2.0 * internal.dbl_epsilon * abs(result)
-                }
-
-                return result, result_err
-        }
-}
-
-/*-*-*-*-*-*-*-*-*-*-*-* Functions without Error Codes *-*-*-*-*-*-*-*-*-*-*-*/
-
 pub fn sin(x f64) f64 {
         sgn_x := if x < 0 { -1 } else { 1 }
         abs_x := abs(x)
@@ -217,10 +90,10 @@ pub fn sin(x f64) f64 {
 
                 if (octant & 1) == 1 {
                         octant++
+                        octant &= 07
                         y += 1.0
                 }
 
-                octant &= 07
 
                 if octant > 3 {
                         octant -= 4
@@ -231,15 +104,15 @@ pub fn sin(x f64) f64 {
 
                 mut result := f64(0.0)
 
-                if (octant == 1) || (octant == 2) {
-                        t := 8.0*abs(z)/pi - 1.0
-                        cos_cs_val, _ := cos_cs.eval_e(t)
-                        result = 1.0 - 0.5*z*z * (1.0 - z*z * cos_cs_val)
-                }
-                else {
+                if octant == 0 {
                         t := 8.0*abs(z)/pi - 1.0
                         sin_cs_val, _ := sin_cs.eval_e(t)
                         result = z * (1.0 + z*z * sin_cs_val)
+                }
+                else {
+                        t := 8.0*abs(z)/pi - 1.0
+                        cos_cs_val, _ := cos_cs.eval_e(t)
+                        result = 1.0 - 0.5*z*z * (1.0 - z*z * cos_cs_val)
                 }
 
                 result *= sgn_result
@@ -262,10 +135,10 @@ pub fn cos(x f64) f64 {
 
                 if (octant & 1) == 1 {
                         octant++
+                        octant &= 07
                         y += 1.0
                 }
 
-                octant &= 07
 
                 if octant > 3 {
                         octant -= 4
@@ -280,15 +153,15 @@ pub fn cos(x f64) f64 {
 
                 mut result := f64(0.0)
 
-                if (octant == 1) || (octant == 2) {
-                        t := 8.0*abs(z)/pi - 1.0
-                        sin_cs_val, _ := sin_cs.eval_e(t)
-                        result = z * (1.0 + z*z * sin_cs_val)
-                }
-                else {
+                if octant == 0 {
                         t := 8.0*abs(z)/pi - 1.0
                         cos_cs_val, _ := cos_cs.eval_e(t)
                         result = 1.0 - 0.5*z*z * (1.0 - z*z * cos_cs_val)
+                }
+                else {
+                        t := 8.0*abs(z)/pi - 1.0
+                        sin_cs_val, _ := sin_cs.eval_e(t)
+                        result = z * (1.0 + z*z * sin_cs_val)
                 }
 
                 result *= sgn_result

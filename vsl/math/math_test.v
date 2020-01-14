@@ -1966,7 +1966,6 @@ fn test_min() {
 	}*/
 }
 
-/*
 fn test_frexp() {
 	for i := 0; i < vf_.len; i++ {
 		f, j := frexp(vf_[i])
@@ -1976,7 +1975,7 @@ fn test_frexp() {
 		f, j := frexp(vffrexp_sc_[i])
                 assert alike(frexp_sc_[i].f, f) || frexp_sc_[i].i != j
 	}
-}*/
+}
 
 fn test_gamma() {
 	for i := 0; i < vf_.len; i++ {
@@ -2009,7 +2008,7 @@ fn test_hypot() {
 	}
 }
 
-/*fn test_ldexp() {
+fn test_ldexp() {
 	for i := 0; i < vf_.len; i++ {
 		f := ldexp(frexp_[i].f, frexp_[i].i)
                 assert veryclose(vf_[i], f)
@@ -2022,7 +2021,7 @@ fn test_hypot() {
 		f := ldexp(vfldexp_sc_[i].f, vfldexp_sc_[i].i)
                 assert alike(ldexp_sc_[i], f)
 	}
-}*/
+}
 
 fn test_lgamma() {
 	for i := 0; i < vf_.len; i++ {

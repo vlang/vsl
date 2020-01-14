@@ -132,10 +132,10 @@ pub fn sin_e(x f64) (f64, f64) {
 
                 if (octant & 1) == 1 {
                         octant++
+                        octant &= 07
                         y += 1.0
                 }
 
-                octant &= 07
 
                 if octant > 3 {
                         octant -= 4
@@ -147,15 +147,15 @@ pub fn sin_e(x f64) (f64, f64) {
                 mut result := f64(0.0)
                 mut result_err := f64(0.0)
 
-                if (octant == 1) || (octant == 2) {
-                        t := 8.0*math.abs(z)/math.pi - 1.0
-                        cos_cs_val, _ := cos_cs.eval_e(t)
-                        result = 1.0 - 0.5*z*z * (1.0 - z*z * cos_cs_val)
-                }
-                else {
+                if octant == 0 {
                         t := 8.0*math.abs(z)/math.pi - 1.0
                         sin_cs_val, _ := sin_cs.eval_e(t)
                         result = z * (1.0 + z*z * sin_cs_val)
+                }
+                else {
+                        t := 8.0*math.abs(z)/math.pi - 1.0
+                        cos_cs_val, _ := cos_cs.eval_e(t)
+                        result = 1.0 - 0.5*z*z * (1.0 - z*z * cos_cs_val)
                 }
 
                 result *= sgn_result
@@ -191,10 +191,10 @@ pub fn cos_e(x f64) (f64, f64) {
 
                 if (octant & 1) == 1 {
                         octant++
+                        octant &= 07
                         y += 1.0
                 }
 
-                octant &= 07
 
                 if octant > 3 {
                         octant -= 4
@@ -210,15 +210,15 @@ pub fn cos_e(x f64) (f64, f64) {
                 mut result := f64(0.0)
                 mut result_err := f64(0.0)
 
-                if (octant == 1) || (octant == 2) {
-                        t := 8.0*math.abs(z)/math.pi - 1.0
-                        sin_cs_val, _ := sin_cs.eval_e(t)
-                        result = z * (1.0 + z*z * sin_cs_val)
-                }
-                else {
+                if octant == 0 {
                         t := 8.0*math.abs(z)/math.pi - 1.0
                         cos_cs_val, _ := cos_cs.eval_e(t)
                         result = 1.0 - 0.5*z*z * (1.0 - z*z * cos_cs_val)
+                }
+                else {
+                        t := 8.0*math.abs(z)/math.pi - 1.0
+                        sin_cs_val, _ := sin_cs.eval_e(t)
+                        result = z * (1.0 + z*z * sin_cs_val)
                 }
 
                 result *= sgn_result
@@ -257,10 +257,10 @@ pub fn sin(x f64) f64 {
 
                 if (octant & 1) == 1 {
                         octant++
+                        octant &= 07
                         y += 1.0
                 }
 
-                octant &= 07
 
                 if octant > 3 {
                         octant -= 4
@@ -271,15 +271,15 @@ pub fn sin(x f64) f64 {
 
                 mut result := f64(0.0)
 
-                if (octant == 1) || (octant == 2) {
-                        t := 8.0*math.abs(z)/math.pi - 1.0
-                        cos_cs_val, _ := cos_cs.eval_e(t)
-                        result = 1.0 - 0.5*z*z * (1.0 - z*z * cos_cs_val)
-                }
-                else {
+                if octant == 0 {
                         t := 8.0*math.abs(z)/math.pi - 1.0
                         sin_cs_val, _ := sin_cs.eval_e(t)
                         result = z * (1.0 + z*z * sin_cs_val)
+                }
+                else {
+                        t := 8.0*math.abs(z)/math.pi - 1.0
+                        cos_cs_val, _ := cos_cs.eval_e(t)
+                        result = 1.0 - 0.5*z*z * (1.0 - z*z * cos_cs_val)
                 }
 
                 result *= sgn_result
@@ -302,10 +302,10 @@ pub fn cos(x f64) f64 {
 
                 if (octant & 1) == 1 {
                         octant++
+                        octant &= 07
                         y += 1.0
                 }
 
-                octant &= 07
 
                 if octant > 3 {
                         octant -= 4
@@ -320,15 +320,15 @@ pub fn cos(x f64) f64 {
 
                 mut result := f64(0.0)
 
-                if (octant == 1) || (octant == 2) {
-                        t := 8.0*math.abs(z)/math.pi - 1.0
-                        sin_cs_val, _ := sin_cs.eval_e(t)
-                        result = z * (1.0 + z*z * sin_cs_val)
-                }
-                else {
+                if octant == 0 {
                         t := 8.0*math.abs(z)/math.pi - 1.0
                         cos_cs_val, _ := cos_cs.eval_e(t)
                         result = 1.0 - 0.5*z*z * (1.0 - z*z * cos_cs_val)
+                }
+                else {
+                        t := 8.0*math.abs(z)/math.pi - 1.0
+                        sin_cs_val, _ := sin_cs.eval_e(t)
+                        result = z * (1.0 + z*z * sin_cs_val)
                 }
 
                 result *= sgn_result

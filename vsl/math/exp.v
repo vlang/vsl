@@ -52,22 +52,48 @@ pub fn ldexp(x f64, e int) f64 {
 // frexp(±0) = ±0, 0
 // frexp(±Inf) = ±Inf, 0
 // frexp(NaN) = NaN, 0
-pub fn frexp(f f64) (f64,int) {
-	// special cases
-	if f == 0 {
-		return f,0 // correctly return -0
-	}
-	else if is_inf(f, 0) || is_nan(f) {
-		return f,0
-	}
-	_,mut exp := normalize(f)
-	mut x := f64_bits(f)
-	exp += int((x>>shift) & mask) - bias + 1
-	x &= mask<<shift
-	x ^= mask<<shift
-	x |= (-1 + bias)<<shift
-	frac := f64_from_bits(x)
-	return frac,exp
+pub fn frexp(x f64) (f64, int) {
+	if x == 0.0 {
+                return f64(0.0), 0
+        }
+        else if !is_finite(x) {
+                return x, 0
+        }
+        else if abs(x) >= 0.5 && abs(x) < 1 {    /* Handle the common case */
+                return x, 0
+        }
+        else {
+                ex := ceil(log(abs(x)) / ln2)
+                mut ei := int(ex)
+
+                /* Prevent underflow and overflow of 2**(-ei) */
+                if ei < int(dbl_min_exp) {
+                        ei = int(dbl_min_exp)
+                }
+
+                if ei > -int(dbl_min_exp) {
+                        ei = -int(dbl_min_exp)
+                }
+
+                mut f := x * pow (2.0, -ei)
+
+                if !is_finite(f) {
+                        /* This should not happen */
+                        return f, 0
+                }
+
+                for abs(f) >= 1.0 {
+                        ei++
+                        f /= 2.0
+                }
+
+                for abs(f) > 0 && abs(f) < 0.5 {
+                        ei--
+                        f *= 2.0
+                }
+
+                return f, ei
+        }
 }
 
 // The original C code, the long comment, and the constants
