@@ -345,8 +345,7 @@ pub fn round(f f64) f64 {
 }
 
 pub fn signbit(x f64) bool {
-        return false
-	//return f64_bits(x)&(1<<63) != 0
+	return f64_bits(x)&(1<<63) != 0
 }
 
 // sinh calculates hyperbolic sine.
