@@ -9,8 +9,13 @@ struct Fi {
 }
 
 const (
+	max_f64_ = 1.797693134862315708145274237317043567981e+308 // 2**1023 * (2**53 - 1) / 2**52
+	smallest_non_zero_f64_ = 4.940656458412465441765687928682213723651e-324 // 1 / 2**(1023 - 1 + 52)
+        max_i32_ = 2147483647
+        pi_ = 3.14159265358979323846264338327950288419716939937510582097494459
+
         nan_ = f64(0.0)/0.0
-        pinf_ = f64(1.0)/0.0
+        inf_ = f64(1.0)/0.0
         ninf_ = -f64(1.0)/0.0
 
         vf_ = [
@@ -520,12 +525,11 @@ const (
                 -8.0000000000000000e+00,
         ]
 
-        /*
         // arguments and expected results for special cases
         vfacos_sc_ = [
-                f64(-pi),
+                f64(-pi_),
                 1,
-                f64(pi),
+                f64(pi_),
                 nan_,
         ]
         
@@ -540,22 +544,22 @@ const (
                 ninf_,
                 0.5,
                 1,
-                pinf_,
+                inf_,
                 nan_,
         ]
         acosh_sc_ = [
                 nan_,
                 nan_,
                 0,
-                pinf_,
+                inf_,
                 nan_,
         ]
 
         vfasin_sc_ = [
-                f64(-pi),
+                f64(-pi_),
                 -0.0,
                 0,
-                pi,
+                pi_,
                 nan_,
         ]
         asin_sc_ = [
@@ -570,14 +574,14 @@ const (
                 ninf_,
                 -0.0,
                 0,
-                pinf_,
+                inf_,
                 nan_,
         ]
         asinh_sc_ = [
                 ninf_,
                 -0.0,
                 0,
-                pinf_,
+                inf_,
                 nan_,
         ]
 
@@ -585,26 +589,26 @@ const (
                 ninf_,
                 -0.0,
                 0,
-                pinf_,
+                inf_,
                 nan_,
         ]
         atan_sc_ = [
-                f64(-pi / 2),
+                f64(-pi_ / 2),
                 -0.0,
                 0,
-                pi / 2,
+                pi_ / 2,
                 nan_,
         ]
 
         vfatanh_sc_ = [
                 ninf_,
-                -pi,
+                -pi_,
                 -1,
                 -0.0,
                 0,
                 1,
-                pi,
-                pinf_,
+                pi_,
+                inf_,
                 nan_,
         ]
         atanh_sc_ = [
@@ -613,82 +617,82 @@ const (
                 ninf_,
                 -0.0,
                 0,
-                pinf_,
+                inf_,
                 nan_,
                 nan_,
                 nan_,
         ]
         vfatan2_sc_ = [
-                [ninf_, inf(-1)],
-                [ninf_, -pi],
+                [ninf_, ninf_],
+                [ninf_, -pi_],
                 [ninf_, 0],
-                [ninf_, pi],
-                [ninf_, inf(1)],
-                [ninf_, nan()],
-                [f64(-pi), inf(-1)],
-                [f64(-pi), 0],
-                [f64(-pi), inf(1)],
-                [f64(-pi), nan()],
-                [f64(-0.0), inf(-1)],
-                [f64(-0.0), -pi],
+                [ninf_, pi_],
+                [ninf_, inf_],
+                [ninf_, nan_],
+                [f64(-pi_), ninf_],
+                [f64(-pi_), 0],
+                [f64(-pi_), inf_],
+                [f64(-pi_), nan_],
+                [f64(-0.0), ninf_],
+                [f64(-0.0), -pi_],
                 [f64(-0.0), -0.0],
                 [f64(-0.0), 0],
-                [f64(-0.0), pi],
-                [f64(-0.0), inf(1)],
-                [f64(-0.0), nan()],
-                [f64(0), inf(-1)],
-                [f64(0), -pi],
+                [f64(-0.0), pi_],
+                [f64(-0.0), inf_],
+                [f64(-0.0), nan_],
+                [f64(0), ninf_],
+                [f64(0), -pi_],
                 [f64(0), -0.0],
                 [f64(0), 0],
-                [f64(0), pi],
-                [f64(0), inf(1)],
-                [f64(0), nan()],
-                [f64(pi), inf(-1)],
-                [f64(pi), 0],
-                [f64(pi), inf(1)],
-                [f64(pi), nan()],
-                [pinf_, inf(-1)],
-                [pinf_, -pi],
-                [pinf_, 0],
-                [pinf_, pi],
-                [pinf_, inf(1)],
-                [pinf_, nan()],
-                [nan_, nan()],
+                [f64(0), pi_],
+                [f64(0), inf_],
+                [f64(0), nan_],
+                [f64(pi_), ninf_],
+                [f64(pi_), 0],
+                [f64(pi_), inf_],
+                [f64(pi_), nan_],
+                [inf_, ninf_],
+                [inf_, -pi_],
+                [inf_, 0],
+                [inf_, pi_],
+                [inf_, inf_],
+                [inf_, nan_],
+                [nan_, nan_],
         ]
         atan2_sc_ = [
                 f64(-3.0) * pi / 4.0,     // atan2(-inf, -inf)
-                -pi / 2,         // atan2(-inf, -pi)
-                -pi / 2,         // atan2(-inf, +0)
-                -pi / 2,         // atan2(-inf, pi)
-                -pi / 4,         // atan2(-inf, +inf)
+                -pi_ / 2,         // atan2(-inf, -pi_)
+                -pi_ / 2,         // atan2(-inf, +0)
+                -pi_ / 2,         // atan2(-inf, pi_)
+                -pi_ / 4,         // atan2(-inf, +inf)
                 nan_,           // atan2(-inf, nan)
-                -pi,             // atan2(-pi, -inf)
-                -pi / 2,         // atan2(-pi, +0)
-                -0.0, // atan2(-pi, inf)
-                nan_,           // atan2(-pi, nan)
-                -pi,             // atan2(-0, -inf)
-                -pi,             // atan2(-0, -pi)
-                -pi,             // atan2(-0, -0)
+                -pi_,             // atan2(-pi_, -inf)
+                -pi_ / 2,         // atan2(-pi_, +0)
+                -0.0, // atan2(-pi_, inf)
+                nan_,           // atan2(-pi_, nan)
+                -pi_,             // atan2(-0, -inf)
+                -pi_,             // atan2(-0, -pi_)
+                -pi_,             // atan2(-0, -0)
                 -0.0, // atan2(-0, +0)
-                -0.0, // atan2(-0, pi)
+                -0.0, // atan2(-0, pi_)
                 -0.0, // atan2(-0, +inf)
                 nan_,           // atan2(-0, nan)
-                pi,              // atan2(+0, -inf)
-                pi,              // atan2(+0, -pi)
-                pi,              // atan2(+0, -0)
+                pi_,              // atan2(+0, -inf)
+                pi_,              // atan2(+0, -pi_)
+                pi_,              // atan2(+0, -0)
                 0,               // atan2(+0, +0)
-                0,               // atan2(+0, pi)
+                0,               // atan2(+0, pi_)
                 0,               // atan2(+0, +inf)
                 nan_,           // atan2(+0, nan)
-                pi,              // atan2(pi, -inf)
-                pi / 2,          // atan2(pi, +0)
-                0,               // atan2(pi, +inf)
-                nan_,           // atan2(pi, nan)
+                pi_,              // atan2(pi_, -inf)
+                pi_ / 2,          // atan2(pi_, +0)
+                0,               // atan2(pi_, +inf)
+                nan_,           // atan2(pi_, nan)
                 3.0 * pi / 4,      // atan2(+inf, -inf)
-                pi / 2,          // atan2(+inf, -pi)
-                pi / 2,          // atan2(+inf, +0)
-                pi / 2,          // atan2(+inf, pi)
-                pi / 4,          // atan2(+inf, +inf)
+                pi_ / 2,          // atan2(+inf, -pi_)
+                pi_ / 2,          // atan2(+inf, +0)
+                pi_ / 2,          // atan2(+inf, pi_)
+                pi_ / 4,          // atan2(+inf, +inf)
                 nan_,           // atan2(+inf, nan)
                 nan_,           // atan2(nan, nan)
         ]
@@ -697,14 +701,14 @@ const (
                 ninf_,
                 -0.0,
                 0,
-                pinf_,
+                inf_,
                 nan_,
         ]
         cbrt_sc_ = [
                 ninf_,
                 -0.0,
                 0,
-                pinf_,
+                inf_,
                 nan_,
         ]
 
@@ -712,20 +716,20 @@ const (
                 ninf_,
                 -0.0,
                 0,
-                pinf_,
+                inf_,
                 nan_,
         ]
         ceil_sc_ = [
                 ninf_,
                 -0.0,
                 0,
-                pinf_,
+                inf_,
                 nan_,
         ]
 
         vfcopysign_sc_ = [
                 ninf_,
-                pinf_,
+                inf_,
                 nan_,
         ]
         copysign_sc_ = [
@@ -736,7 +740,7 @@ const (
 
         vfcos_sc_ = [
                 ninf_,
-                pinf_,
+                inf_,
                 nan_,
         ]
         cos_sc_ = [
@@ -749,14 +753,14 @@ const (
                 ninf_,
                 -0.0,
                 0,
-                pinf_,
+                inf_,
                 nan_,
         ]
         cosh_sc_ = [
-                pinf_,
+                inf_,
                 1,
                 1,
-                pinf_,
+                inf_,
                 nan_,
         ]
 
@@ -764,7 +768,7 @@ const (
                 ninf_,
                 -0.0,
                 0,
-                pinf_,
+                inf_,
                 nan_,
                 -1000,
                 1000,
@@ -781,7 +785,7 @@ const (
 
         vferfc_sc_ = [
                 ninf_,
-                pinf_,
+                inf_,
                 nan_,
                 -1000,
                 1000,
@@ -799,11 +803,11 @@ const (
                 -1,
                 0,
                 ninf_,
-                pinf_,
+                inf_,
                 nan_,
         ]
         erfinv_sc_ = [
-                pinf_,
+                inf_,
                 ninf_,
                 0,
                 nan_,
@@ -815,12 +819,12 @@ const (
                 f64(0),
                 2,
                 1,
-                pinf_,
+                inf_,
                 ninf_,
                 nan_,
         ]
         erfcinv_sc_ = [
-                pinf_,
+                inf_,
                 ninf_,
                 0,
                 nan_,
@@ -832,7 +836,7 @@ const (
                 ninf_,
                 -2000,
                 2000,
-                pinf_,
+                inf_,
                 nan_,
                 // smallest f64 that overflows Exp(x)
                 7.097827128933841e+02,
@@ -848,12 +852,12 @@ const (
         exp_sc_ = [
                 f64(0),
                 0,
-                pinf_,
-                pinf_,
+                inf_,
+                inf_,
                 nan_,
-                pinf_,
-                pinf_,
-                pinf_,
+                inf_,
+                inf_,
+                inf_,
                 2.718281828459045,
                 1.0000000037252903,
                 4.2e-322,
@@ -863,7 +867,7 @@ const (
                 ninf_,
                 -2000,
                 2000,
-                pinf_,
+                inf_,
                 nan_,
                 // smallest f64 that overflows Exp2(x)
                 1024,
@@ -875,10 +879,10 @@ const (
         exp2_sc_ = [
                 f64(0),
                 0,
-                pinf_,
-                pinf_,
+                inf_,
+                inf_,
                 nan_,
-                pinf_,
+                inf_,
                 5e-324,
                 1.0000000025821745,
         ]
@@ -889,7 +893,7 @@ const (
                 -0.0,
                 0,
                 710,
-                pinf_,
+                inf_,
                 nan_,
         ]
         expm1_sc_ = [
@@ -897,8 +901,8 @@ const (
                 -1,
                 -0.0,
                 0,
-                pinf_,
-                pinf_,
+                inf_,
+                inf_,
                 nan_,
         ]
 
@@ -906,51 +910,51 @@ const (
                 ninf_,
                 -0.0,
                 0,
-                pinf_,
+                inf_,
                 nan_,
         ]
         fabs_sc_ = [
-                pinf_,
+                inf_,
                 0,
                 0,
-                pinf_,
+                inf_,
                 nan_,
         ]
 
         vffdim_sc_ = [
-                [ninf_, inf(-1)],
-                [ninf_, inf(1)],
-                [ninf_, nan()],
+                [ninf_, ninf_],
+                [ninf_, inf_],
+                [ninf_, nan_],
                 [f64(-0.0), -0.0],
                 [f64(-0.0), 0],
                 [f64(0), -0.0],
                 [f64(0), 0],
-                [pinf_, inf(-1)],
-                [pinf_, inf(1)],
-                [pinf_, nan()],
-                [nan_, inf(-1)],
+                [inf_, ninf_],
+                [inf_, inf_],
+                [inf_, nan_],
+                [nan_, ninf_],
                 [nan_, -0.0],
                 [nan_, 0],
-                [nan_, inf(1)],
-                [nan_, nan()],
+                [nan_, inf_],
+                [nan_, nan_],
         ]
 
         vffdim2_sc_ = [
-                [ninf_, inf(-1)],
-                [ninf_, inf(1)],
-                [ninf_, nan()],
+                [ninf_, ninf_],
+                [ninf_, inf_],
+                [ninf_, nan_],
                 [f64(-0.0), -0.0],
                 [f64(-0.0), 0],
                 [f64(0), -0.0],
                 [f64(0), 0],
-                [pinf_, inf(-1)],
-                [pinf_, inf(1)],
-                [pinf_, nan()],
-                [nan_, inf(-1)],
+                [inf_, ninf_],
+                [inf_, inf_],
+                [inf_, nan_],
+                [nan_, ninf_],
                 [nan_, -0.0],
                 [nan_, 0],
-                [nan_, inf(1)],
-                [nan_, nan()],
+                [nan_, inf_],
+                [nan_, nan_],
         ]
         fdim_sc_ = [
                 nan_,
@@ -960,7 +964,7 @@ const (
                 0,
                 0,
                 0,
-                pinf_,
+                inf_,
                 nan_,
                 nan_,
                 nan_,
@@ -971,19 +975,19 @@ const (
         ]
         fmax_sc_ = [
                 ninf_,
-                pinf_,
+                inf_,
                 nan_,
                 -0.0,
                 0,
                 0,
                 0,
-                pinf_,
-                pinf_,
-                pinf_,
+                inf_,
+                inf_,
+                inf_,
                 nan_,
                 nan_,
                 nan_,
-                pinf_,
+                inf_,
                 nan_,
         ]
         fmin_sc_ = [
@@ -995,7 +999,7 @@ const (
                 -0.0,
                 0,
                 ninf_,
-                pinf_,
+                inf_,
                 nan_,
                 ninf_,
                 nan_,
@@ -1005,52 +1009,52 @@ const (
         ]
 
         vffmod_sc_ = [
-                [ninf_, inf(-1)],
-                [ninf_, -pi],
+                [ninf_, ninf_],
+                [ninf_, -pi_],
                 [ninf_, 0],
-                [ninf_, pi],
-                [ninf_, inf(1)],
-                [ninf_, nan()],
-                [f64(-pi), inf(-1)],
-                [f64(-pi), 0],
-                [f64(-pi), inf(1)],
-                [f64(-pi), nan()],
-                [f64(-0.0), inf(-1)],
+                [ninf_, pi_],
+                [ninf_, inf_],
+                [ninf_, nan_],
+                [f64(-pi_), ninf_],
+                [f64(-pi_), 0],
+                [f64(-pi_), inf_],
+                [f64(-pi_), nan_],
+                [f64(-0.0), ninf_],
                 [f64(-0.0), 0],
-                [f64(-0.0), inf(1)],
-                [f64(-0.0), nan()],
-                [f64(0), inf(-1)],
+                [f64(-0.0), inf_],
+                [f64(-0.0), nan_],
+                [f64(0), ninf_],
                 [f64(0), 0],
-                [f64(0), inf(1)],
-                [f64(0), nan()],
-                [f64(pi), inf(-1)],
-                [f64(pi), 0],
-                [f64(pi), inf(1)],
-                [f64(pi), nan()],
-                [pinf_, inf(-1)],
-                [pinf_, -pi],
-                [pinf_, 0],
-                [pinf_, pi],
-                [pinf_, inf(1)],
-                [pinf_, nan()],
-                [nan_, inf(-1)],
-                [nan_, -pi],
+                [f64(0), inf_],
+                [f64(0), nan_],
+                [f64(pi_), ninf_],
+                [f64(pi_), 0],
+                [f64(pi_), inf_],
+                [f64(pi_), nan_],
+                [inf_, ninf_],
+                [inf_, -pi_],
+                [inf_, 0],
+                [inf_, pi_],
+                [inf_, inf_],
+                [inf_, nan_],
+                [nan_, ninf_],
+                [nan_, -pi_],
                 [nan_, 0],
-                [nan_, pi],
-                [nan_, inf(1)],
-                [nan_, nan()],
+                [nan_, pi_],
+                [nan_, inf_],
+                [nan_, nan_],
         ]
         fmod_sc_ = [
                 nan_,           // fmod(-inf, -inf)
-                nan_,           // fmod(-inf, -pi)
+                nan_,           // fmod(-inf, -pi_)
                 nan_,           // fmod(-inf, 0)
-                nan_,           // fmod(-inf, pi)
+                nan_,           // fmod(-inf, pi_)
                 nan_,           // fmod(-inf, +inf)
                 nan_,           // fmod(-inf, nan)
-                -pi,             // fmod(-pi, -inf)
-                nan_,           // fmod(-pi, 0)
-                -pi,             // fmod(-pi, +inf)
-                nan_,           // fmod(-pi, nan)
+                -pi_,             // fmod(-pi_, -inf)
+                nan_,           // fmod(-pi_, 0)
+                -pi_,             // fmod(-pi_, +inf)
+                nan_,           // fmod(-pi_, nan)
                 -0.0, // fmod(-0, -inf)
                 nan_,           // fmod(-0, 0)
                 -0.0, // fmod(-0, inf)
@@ -1059,20 +1063,20 @@ const (
                 nan_,           // fmod(0, 0)
                 0,               // fmod(0, +inf)
                 nan_,           // fmod(0, nan)
-                pi,              // fmod(pi, -inf)
-                nan_,           // fmod(pi, 0)
-                pi,              // fmod(pi, +inf)
-                nan_,           // fmod(pi, nan)
+                pi_,              // fmod(pi_, -inf)
+                nan_,           // fmod(pi_, 0)
+                pi_,              // fmod(pi_, +inf)
+                nan_,           // fmod(pi_, nan)
                 nan_,           // fmod(+inf, -inf)
-                nan_,           // fmod(+inf, -pi)
+                nan_,           // fmod(+inf, -pi_)
                 nan_,           // fmod(+inf, 0)
-                nan_,           // fmod(+inf, pi)
+                nan_,           // fmod(+inf, pi_)
                 nan_,           // fmod(+inf, +inf)
                 nan_,           // fmod(+inf, nan)
                 nan_,           // fmod(nan, -inf)
-                nan_,           // fmod(nan, -pi)
+                nan_,           // fmod(nan, -pi_)
                 nan_,           // fmod(nan, 0)
-                nan_,           // fmod(nan, pi)
+                nan_,           // fmod(nan, pi_)
                 nan_,           // fmod(nan, +inf)
                 nan_,           // fmod(nan, nan)
         ]
@@ -1081,31 +1085,31 @@ const (
                 ninf_,
                 -0.0,
                 0,
-                pinf_,
+                inf_,
                 nan_,
         ]
         frexp_sc_ = [
                 Fi{ninf_, 0},
                 Fi{-0.0, 0},
                 Fi{0, 0},
-                Fi{pinf_, 0},
+                Fi{inf_, 0},
                 Fi{nan_, 0},
         ]
 
         vfgamma_ = [
-                [pinf_, inf(1)],
-                [ninf_, nan()],
-                [f64(0), inf(1)],
-                [f64(-0.0), inf(-1)],
-                [nan_, nan()],
-                [f64(-1), nan()],
-                [f64(-2), nan()],
-                [f64(-3), nan()],
-                [f64(-1e+16), nan()],
-                [f64(-1e+300), nan()],
-                [f64(1.7e+308), inf(1)],
+                [inf_, inf_],
+                [ninf_, nan_],
+                [f64(0), inf_],
+                [f64(-0.0), ninf_],
+                [nan_, nan_],
+                [f64(-1), nan_],
+                [f64(-2), nan_],
+                [f64(-3), nan_],
+                [f64(-1e+16), nan_],
+                [f64(-1e+300), nan_],
+                [f64(1.7e+308), inf_],
 
-                // Test inputs inspired by Python test suite.
+                // Test inputs inspi_red by Python test suite.
                 // Outputs computed at high precision by PARI/GP.
                 // If recomputing table entries), be careful to use
                 // high-precision (%.1000g) formatting of the f64 inputs.
@@ -1130,10 +1134,10 @@ const (
                 [f64(1e-16), 1e+16],
                 [f64(1e-308), 1e+308],
                 [f64(5.6e-309), 1.7857142857142864e+308],
-                [f64(5.5e-309), inf(1)],
-                [f64(1e-309), inf(1)],
-                [f64(1e-323), inf(1)],
-                [f64(5e-324), inf(1)],
+                [f64(5.5e-309), inf_],
+                [f64(1e-309), inf_],
+                [f64(1e-323), inf_],
+                [f64(5e-324), inf_],
                 [f64(-0.1), -10.686287021193193],
                 [f64(-0.01), -100.58719796441078],
                 [f64(-1e-08), -1.0000000057721567e+08],
@@ -1142,10 +1146,10 @@ const (
                 [f64(-1e-16), -1e+16],
                 [f64(-1e-308), -1e+308],
                 [f64(-5.6e-309), -1.7857142857142864e+308],
-                [f64(-5.5e-309), inf(-1)],
-                [f64(-1e-309), inf(-1)],
-                [f64(-1e-323), inf(-1)],
-                [f64(-5e-324), inf(-1)],
+                [f64(-5.5e-309), ninf_],
+                [f64(-1e-309), ninf_],
+                [f64(-1e-323), ninf_],
+                [f64(-5e-324), ninf_],
                 [f64(-0.9999999999999999), -9.007199254740992e+15],
                 [f64(-1.0000000000000002), 4.5035996273704955e+15],
                 [f64(-1.9999999999999998), 2.2517998136852485e+15],
@@ -1156,9 +1160,9 @@ const (
                 [f64(171), 7.257415615307999e+306],
                 [f64(171.6), 1.5858969096672565e+308],
                 [f64(171.624), 1.7942117599248104e+308],
-                [f64(171.625), inf(1)],
-                [f64(172), inf(1)],
-                [f64(2000), inf(1)],
+                [f64(171.625), inf_],
+                [f64(172), inf_],
+                [f64(2000), inf_],
                 [f64(-100.5), -3.3536908198076787e-159],
                 [f64(-160.5), -5.255546447007829e-286],
                 [f64(-170.5), -3.3127395215386074e-308],
@@ -1177,51 +1181,51 @@ const (
         ]
 
         vfhypot_sc_ = [
-                [ninf_, inf(-1)],
+                [ninf_, ninf_],
                 [ninf_, 0],
-                [ninf_, inf(1)],
-                [ninf_, nan()],
+                [ninf_, inf_],
+                [ninf_, nan_],
                 [f64(-0.0), -0.0],
                 [f64(-0.0), 0],
                 [f64(0), -0.0],
                 [f64(0), 0], // +0,0
-                [f64(0), inf(-1)],
-                [f64(0), inf(1)],
-                [f64(0), nan()],
-                [pinf_, inf(-1)],
-                [pinf_, 0],
-                [pinf_, inf(1)],
-                [pinf_, nan()],
-                [nan_, inf(-1)],
+                [f64(0), ninf_],
+                [f64(0), inf_],
+                [f64(0), nan_],
+                [inf_, ninf_],
+                [inf_, 0],
+                [inf_, inf_],
+                [inf_, nan_],
+                [nan_, ninf_],
                 [nan_, 0],
-                [nan_, inf(1)],
-                [nan_, nan()],
+                [nan_, inf_],
+                [nan_, nan_],
         ]
         hypot_sc_ = [
-                pinf_,
-                pinf_,
-                pinf_,
-                pinf_,
+                inf_,
+                inf_,
+                inf_,
+                inf_,
                 0,
                 0,
                 0,
                 0,
-                pinf_,
-                pinf_,
+                inf_,
+                inf_,
                 nan_,
-                pinf_,
-                pinf_,
-                pinf_,
-                pinf_,
-                pinf_,
+                inf_,
+                inf_,
+                inf_,
+                inf_,
+                inf_,
                 nan_,
-                pinf_,
+                inf_,
                 nan_,
         ]
 
         ilogb_sc_ = [
-                max_i32,
-                max_i32,
+                max_i32_,
+                max_i32_,
         ]
 
         vfldexp_sc_ = [
@@ -1231,8 +1235,8 @@ const (
                 Fi{-0.0, 0},
                 Fi{-0.0, -1075},
                 Fi{-0.0, 1024},
-                Fi{pinf_, 0},
-                Fi{pinf_, -1024},
+                Fi{inf_, 0},
+                Fi{inf_, -1024},
                 Fi{ninf_, 0},
                 Fi{ninf_, -1024},
                 Fi{nan_, -1024},
@@ -1247,12 +1251,12 @@ const (
                 -0.0,
                 -0.0,
                 -0.0,
-                pinf_,
-                pinf_,
+                inf_,
+                inf_,
                 ninf_,
                 ninf_,
                 nan_,
-                pinf_,
+                inf_,
                 0,
         ]
 
@@ -1262,26 +1266,26 @@ const (
                 0,
                 1,
                 2,
-                pinf_,
+                inf_,
                 nan_,
         ]
         lgamma_sc_ = [
                 Fi{ninf_, 1},
-                Fi{pinf_, 1},
-                Fi{pinf_, 1},
+                Fi{inf_, 1},
+                Fi{inf_, 1},
                 Fi{0, 1},
                 Fi{0, 1},
-                Fi{pinf_, 1},
+                Fi{inf_, 1},
                 Fi{nan_, 1},
         ]
 
         vflog_sc_ = [
                 ninf_,
-                -pi,
+                -pi_,
                 -0.0,
                 0,
                 1,
-                pinf_,
+                inf_,
                 nan_,
         ]
         log_sc_ = [
@@ -1290,30 +1294,30 @@ const (
                 ninf_,
                 ninf_,
                 0,
-                pinf_,
+                inf_,
                 nan_,
         ]
 
         vflogb_sc_ = [
                 ninf_,
                 0,
-                pinf_,
+                inf_,
                 nan_,
         ]
         logb_sc_ = [
-                pinf_,
+                inf_,
                 ninf_,
-                pinf_,
+                inf_,
                 nan_,
         ]
 
         vflog1p_sc_ = [
                 ninf_,
-                -pi,
+                -pi_,
                 -1,
                 -0.0,
                 0,
-                pinf_,
+                inf_,
                 nan_,
                 4503599627370496.5, 
         ]
@@ -1323,7 +1327,7 @@ const (
                 ninf_,
                 -0.0,
                 0,
-                pinf_,
+                inf_,
                 nan_,
                 36.04365338911715, 
         ]
@@ -1331,52 +1335,52 @@ const (
         vfmodf_sc_ = [
                 ninf_,
                 -0.0,
-                pinf_,
+                inf_,
                 nan_,
         ]
         modf_sc_ = [
-                [ninf_, nan()], // [2]f64{-0.0, inf(-1)],
+                [ninf_, nan_], // [2]f64{-0.0, ninf_],
                 [f64(-0.0), -0.0],
-                [pinf_, nan()], // [2]f64{0, inf(1)],
-                [nan_, nan()],
+                [inf_, nan_], // [2]f64{0, inf_],
+                [nan_, nan_],
         ]
 
         vfnextafter32_sc_ = [
                 [f32(0), 0],
                 [f32(0), -0.0],
                 [f32(0), -1],
-                [f32(0), nan()],
+                [f32(0), nan_],
                 [-0.0, 1],
                 [-0.0, 0],
                 [-0.0, -0.0],
                 [-0.0, -1],
-                [f32(nan()), 0],
-                [f32(nan()), nan()],
+                [f32(nan_), 0],
+                [f32(nan_), nan_],
         ]
         nextafter32_sc_ = [
                 f32(0),
                 0,
                 -1.401298464e-45, // Float32frombits(0x80000001)
-                f32(nan()),
+                f32(nan_),
                 1.401298464e-45, // Float32frombits(0x00000001)
                 -0.0,
                 -0.0,
                 -1.401298464e-45, // Float32frombits(0x80000001)
-                f32(nan()),
-                f32(nan()),
+                f32(nan_),
+                f32(nan_),
         ]
 
         vfnextafter64_sc_ = [
                 [f64(0), 0],
                 [f64(0), -0.0],
                 [f64(0), -1],
-                [f64(0), nan()],
+                [f64(0), nan_],
                 [f64(-0.0), 1],
                 [f64(-0.0), 0],
                 [f64(-0.0), -0.0],
                 [f64(-0.0), -1],
                 [nan_, 0],
-                [nan_, nan()],
+                [nan_, nan_],
         ]
         nextafter64_sc_ = [
                 f64(0),
@@ -1392,136 +1396,136 @@ const (
         ]
 
         vfpow_sc_ = [
-                [ninf_, -pi],
+                [ninf_, -pi_],
                 [ninf_, -3],
                 [ninf_, -0.0],
                 [ninf_, 0],
                 [ninf_, 1],
                 [ninf_, 3],
-                [ninf_, pi],
+                [ninf_, pi_],
                 [ninf_, 0.5],
-                [ninf_, nan()],
+                [ninf_, nan_],
 
-                [f64(-pi), inf(-1)],
-                [f64(-pi), -pi],
-                [f64(-pi), -0.0],
-                [f64(-pi), 0],
-                [f64(-pi), 1],
-                [f64(-pi), pi],
-                [f64(-pi), inf(1)],
-                [f64(-pi), nan()],
+                [f64(-pi_), ninf_],
+                [f64(-pi_), -pi_],
+                [f64(-pi_), -0.0],
+                [f64(-pi_), 0],
+                [f64(-pi_), 1],
+                [f64(-pi_), pi_],
+                [f64(-pi_), inf_],
+                [f64(-pi_), nan_],
 
-                [f64(-1), inf(-1)],
-                [f64(-1), inf(1)],
-                [f64(-1), nan()],
-                [f64(-1 / 2), inf(-1)],
-                [f64(-1 / 2), inf(1)],
-                [f64(-0.0), inf(-1)],
-                [f64(-0.0), -pi],
+                [f64(-1), ninf_],
+                [f64(-1), inf_],
+                [f64(-1), nan_],
+                [f64(-1 / 2), ninf_],
+                [f64(-1 / 2), inf_],
+                [f64(-0.0), ninf_],
+                [f64(-0.0), -pi_],
                 [f64(-0.0), -0.5],
                 [f64(-0.0), -3],
                 [f64(-0.0), 3],
-                [f64(-0.0), pi],
+                [f64(-0.0), pi_],
                 [f64(-0.0), 0.5],
-                [f64(-0.0), inf(1)],
+                [f64(-0.0), inf_],
 
-                [f64(0), inf(-1)],
-                [f64(0), -pi],
+                [f64(0), ninf_],
+                [f64(0), -pi_],
                 [f64(0), -3],
                 [f64(0), -0.0],
                 [f64(0), 0],
                 [f64(0), 3],
-                [f64(0), pi],
-                [f64(0), inf(1)],
-                [f64(0), nan()],
+                [f64(0), pi_],
+                [f64(0), inf_],
+                [f64(0), nan_],
 
-                [f64(1 / 2), inf(-1)],
-                [f64(1 / 2), inf(1)],
-                [f64(1), inf(-1)],
-                [f64(1), inf(1)],
-                [f64(1), nan()],
+                [f64(1 / 2), ninf_],
+                [f64(1 / 2), inf_],
+                [f64(1), ninf_],
+                [f64(1), inf_],
+                [f64(1), nan_],
 
-                [f64(pi), inf(-1)],
-                [f64(pi), -0.0],
-                [f64(pi), 0],
-                [f64(pi), 1],
-                [f64(pi), inf(1)],
-                [f64(pi), nan()],
-                [pinf_, -pi],
-                [pinf_, -0.0],
-                [pinf_, 0],
-                [pinf_, 1],
-                [pinf_, pi],
-                [pinf_, nan()],
-                [nan_, -pi],
+                [f64(pi_), ninf_],
+                [f64(pi_), -0.0],
+                [f64(pi_), 0],
+                [f64(pi_), 1],
+                [f64(pi_), inf_],
+                [f64(pi_), nan_],
+                [inf_, -pi_],
+                [inf_, -0.0],
+                [inf_, 0],
+                [inf_, 1],
+                [inf_, pi_],
+                [inf_, nan_],
+                [nan_, -pi_],
                 [nan_, -0.0],
                 [nan_, 0],
                 [nan_, 1],
-                [nan_, pi],
-                [nan_, nan()],
+                [nan_, pi_],
+                [nan_, nan_],
         ]
         pow_sc_ = [
-                f64(0),               // pow(-inf, -pi)
+                f64(0),               // pow(-inf, -pi_)
                 -0.0, // pow(-inf, -3)
                 1,               // pow(-inf, -0)
                 1,               // pow(-inf, +0)
                 ninf_,         // pow(-inf, 1)
                 ninf_,         // pow(-inf, 3)
-                pinf_,          // pow(-inf, pi)
-                pinf_,          // pow(-inf, 0.5)
+                inf_,          // pow(-inf, pi_)
+                inf_,          // pow(-inf, 0.5)
                 nan_,           // pow(-inf, nan)
-                0,               // pow(-pi, -inf)
-                nan_,           // pow(-pi, -pi)
-                1,               // pow(-pi, -0)
-                1,               // pow(-pi, +0)
-                -pi,             // pow(-pi, 1)
-                nan_,           // pow(-pi, pi)
-                pinf_,          // pow(-pi, +inf)
-                nan_,           // pow(-pi, nan)
+                0,               // pow(-pi_, -inf)
+                nan_,           // pow(-pi_, -pi_)
+                1,               // pow(-pi_, -0)
+                1,               // pow(-pi_, +0)
+                -pi_,             // pow(-pi_, 1)
+                nan_,           // pow(-pi_, pi_)
+                inf_,          // pow(-pi_, +inf)
+                nan_,           // pow(-pi_, nan)
                 1,               // pow(-1, -inf) IEEE 754-2008
                 1,               // pow(-1, +inf) IEEE 754-2008
                 nan_,           // pow(-1, nan)
-                pinf_,          // pow(-1/2, -inf)
+                inf_,          // pow(-1/2, -inf)
                 0,               // pow(-1/2, +inf)
-                pinf_,          // pow(-0, -inf)
-                pinf_,          // pow(-0, -pi)
-                pinf_,          // pow(-0, -0.5)
+                inf_,          // pow(-0, -inf)
+                inf_,          // pow(-0, -pi_)
+                inf_,          // pow(-0, -0.5)
                 ninf_,         // pow(-0, -3) IEEE 754-2008
                 -0.0, // pow(-0, 3) IEEE 754-2008
-                0,               // pow(-0, pi)
+                0,               // pow(-0, pi_)
                 0,               // pow(-0, 0.5)
                 0,               // pow(-0, +inf)
-                pinf_,          // pow(+0, -inf)
-                pinf_,          // pow(+0, -pi)
-                pinf_,          // pow(+0, -3)
+                inf_,          // pow(+0, -inf)
+                inf_,          // pow(+0, -pi_)
+                inf_,          // pow(+0, -3)
                 1,               // pow(+0, -0)
                 1,               // pow(+0, +0)
                 0,               // pow(+0, 3)
-                0,               // pow(+0, pi)
+                0,               // pow(+0, pi_)
                 0,               // pow(+0, +inf)
                 nan_,           // pow(+0, nan)
-                pinf_,          // pow(1/2, -inf)
+                inf_,          // pow(1/2, -inf)
                 0,               // pow(1/2, +inf)
                 1,               // pow(1, -inf) IEEE 754-2008
                 1,               // pow(1, +inf) IEEE 754-2008
                 1,               // pow(1, nan) IEEE 754-2008
-                0,               // pow(pi, -inf)
-                1,               // pow(pi, -0)
-                1,               // pow(pi, +0)
-                pi,              // pow(pi, 1)
-                pinf_,          // pow(pi, +inf)
-                nan_,           // pow(pi, nan)
-                0,               // pow(+inf, -pi)
+                0,               // pow(pi_, -inf)
+                1,               // pow(pi_, -0)
+                1,               // pow(pi_, +0)
+                pi_,              // pow(pi_, 1)
+                inf_,          // pow(pi_, +inf)
+                nan_,           // pow(pi_, nan)
+                0,               // pow(+inf, -pi_)
                 1,               // pow(+inf, -0)
                 1,               // pow(+inf, +0)
-                pinf_,          // pow(+inf, 1)
-                pinf_,          // pow(+inf, pi)
+                inf_,          // pow(+inf, 1)
+                inf_,          // pow(+inf, pi_)
                 nan_,           // pow(+inf, nan)
-                nan_,           // pow(nan, -pi)
+                nan_,           // pow(nan, -pi_)
                 1,               // pow(nan, -0)
                 1,               // pow(nan, +0)
                 nan_,           // pow(nan, 1)
-                nan_,           // pow(nan, pi)
+                nan_,           // pow(nan, pi_)
                 nan_,           // pow(nan, nan)
         ]
 
@@ -1533,8 +1537,8 @@ const (
                 [f64(0.5000000000000001), 1], // 0.5+epsil]n
                 [f64(-1.5), -2],
                 [f64(-2.5), -3],
-                [nan_, nan()],
-                [pinf_, inf(1)],
+                [nan_, nan_],
+                [inf_, inf_],
                 [f64(2251799813685249.5), 2251799813685250], // 1 bit fractian
                 [f64(2251799813685250.5), 2251799813685251],
                 [f64(4503599627370495.5), 4503599627370496], // 1 bit fraction, rounding to 0 bit fractian
@@ -1548,8 +1552,8 @@ const (
                 [f64(0.5000000000000001), 1], // 0.5+epsil]n
                 [f64(-1.5), -2],
                 [f64(-2.5), -2],
-                [nan_, nan()],
-                [pinf_, inf(1)],
+                [nan_, nan_],
+                [inf_, inf_],
                 [f64(2251799813685249.5), 2251799813685250], // 1 bit fractian
                 [f64(2251799813685250.5), 2251799813685250],
                 [f64(4503599627370495.5), 4503599627370496], // 1 bit fraction, rounding to 0 bit fractian
@@ -1560,7 +1564,7 @@ const (
                 ninf_,
                 -0.0,
                 0,
-                pinf_,
+                inf_,
                 nan_,
         ]
         signbitsc_ = [
@@ -1575,7 +1579,7 @@ const (
                 ninf_,
                 -0.0,
                 0,
-                pinf_,
+                inf_,
                 nan_,
         ]
         sin_sc_ = [
@@ -1590,24 +1594,24 @@ const (
                 ninf_,
                 -0.0,
                 0,
-                pinf_,
+                inf_,
                 nan_,
         ]
         sinh_sc_ = [
                 ninf_,
                 -0.0,
                 0,
-                pinf_,
+                inf_,
                 nan_,
         ]
 
 
         vfsqrt_sc_ = [
                 ninf_,
-                -pi,
+                -pi_,
                 -0.0,
                 0,
-                pinf_,
+                inf_,
                 nan_,
         ]
         sqrt_sc_ = [
@@ -1615,7 +1619,7 @@ const (
                 nan_,
                 -0.0,
                 0,
-                pinf_,
+                inf_,
                 nan_,
         ]
 
@@ -1623,7 +1627,7 @@ const (
                 ninf_,
                 -0.0,
                 0,
-                pinf_,
+                inf_,
                 nan_,
         ]
         tanh_sc_ = [
@@ -1637,7 +1641,7 @@ const (
         vfy0_sc_ = [
                 ninf_,
                 0,
-                pinf_,
+                inf_,
                 nan_,
                 -1,
         ]
@@ -1664,7 +1668,7 @@ const (
         ]
         yM3_sc_ = [
                 nan_,
-                pinf_,
+                inf_,
                 0,
                 nan_,
                 nan_,
@@ -1672,17 +1676,17 @@ const (
 
         // arguments and expected results for boundary cases
         smallest_normalf64   = 2.2250738585072014e-308 // 2**-1022
-        largest_subnormalf64 = smallest_normalf64 - smallest_non_zero_f64
+        largest_subnormalf64 = smallest_normalf64 - smallest_non_zero_f64_
 
         vffrexp_bc_ = [
                 f64(smallest_normalf64),
                 largest_subnormalf64,
-                smallest_non_zero_f64,
-                max_f64,
+                smallest_non_zero_f64_,
+                max_f64_,
                 -smallest_normalf64,
                 -largest_subnormalf64,
-                -smallest_non_zero_f64,
-                -max_f64,
+                -smallest_non_zero_f64_,
+                -max_f64_,
         ]
         frexp_bc_ = [
                 Fi{0.5, -1021},
@@ -1698,8 +1702,8 @@ const (
         vfldexp_bc_ = [
                 Fi{smallest_normalf64, -52},
                 Fi{largest_subnormalf64, -51},
-                Fi{smallest_non_zero_f64, 1074},
-                Fi{max_f64, -(1023 + 1074)},
+                Fi{smallest_non_zero_f64_, 1074},
+                Fi{max_f64_, -(1023 + 1074)},
                 Fi{1, -1075},
                 Fi{-1, -1075},
                 Fi{1, 1024},
@@ -1709,15 +1713,15 @@ const (
         ]
 
         ldexp_bc_ = [
-                f64(smallest_non_zero_f64),
+                f64(smallest_non_zero_f64_),
                 1e-323, // 2**-1073
                 1,
                 1e-323, // 2**-1073
                 0,
                 -0.0,
-                pinf_,
+                inf_,
                 ninf_,
-                smallest_non_zero_f64,
+                smallest_non_zero_f64_,
                 0,
         ]
 
@@ -1730,7 +1734,7 @@ const (
                 -1023,
                 -1074,
                 1023,
-        ]*/
+        ]
 )
 
 fn tolerance(a, b, tol f64) bool {
@@ -1784,10 +1788,10 @@ fn test_acos() {
 		f := acos(a)
                 assert close(acos_[i], f)
 	}
-	/*for i := 0; i < vfacos_sc_.len; i++ {
+	for i := 0; i < vfacos_sc_.len; i++ {
 		f := acos(vfacos_sc_[i])
                 assert alike(acos_sc_[i], f)
-	}*/
+	}
 }
 
 /*fn test_acosh() {
@@ -1796,10 +1800,10 @@ fn test_acos() {
 		f := acosh(a)
                 assert veryclose(acosh_[i], f)
 	}
-	/*for i := 0; i < vfacosh_sc_.len; i++ {
+	for i := 0; i < vfacosh_sc_.len; i++ {
 		f := acosh(vfacosh_sc_[i])
                 assert alike(acosh_sc_[i], f)
-	}*/
+	}
 }*/
 
 fn test_asin() {
@@ -1808,10 +1812,10 @@ fn test_asin() {
 		f := asin(a)
                 assert veryclose(asin_[i], f)
 	}
-	/*for i := 0; i < vfasin_sc_.len; i++ {
+	for i := 0; i < vfasin_sc_.len; i++ {
 		f := asin(vfasin_sc_[i])
                 assert alike(asin_sc_[i], f)
-	}*/
+	}
 }
 
 /*fn test_asinh() {
@@ -1819,10 +1823,10 @@ fn test_asin() {
 		f := asinh(vf_[i])
                 assert veryclose(asinh_[i], f)
 	}
-	/*for i := 0; i < vfasinh_sc_.len; i++ {
+	for i := 0; i < vfasinh_sc_.len; i++ {
 		f := asinh(vfasinh_sc_[i])
                 assert alike(asinh_sc_[i], f)
-	}*/
+	}
 }*/
 
 fn test_atan() {
@@ -1830,10 +1834,10 @@ fn test_atan() {
 		f := atan(vf_[i])
                 assert veryclose(atan_[i], f)
 	}
-	/*for i := 0; i < vfatan_sc_.len; i++ {
+	for i := 0; i < vfatan_sc_.len; i++ {
 		f := atan(vfatan_sc_[i])
                 assert alike(atan_sc_[i], f)
-	}*/
+	}
 }
 
 /*fn test_atanh() {
@@ -1842,10 +1846,10 @@ fn test_atan() {
 		f := atanh(a)
                 assert veryclose(atanh_[i], f)
 	}
-	/*for i := 0; i < vfatanh_sc_.len; i++ {
+	for i := 0; i < vfatanh_sc_.len; i++ {
 		f := atanh(vfatanh_sc_[i])
                 assert alike(atanh_sc_[i], f)
-	}*/
+	}
 }*/
 
 fn test_atan2() {
@@ -1853,10 +1857,10 @@ fn test_atan2() {
 		f := atan2(10, vf_[i])
                 assert veryclose(atan2_[i], f)
 	}
-	/*for i := 0; i < vfatan2_sc_.len; i++ {
+	for i := 0; i < vfatan2_sc_.len; i++ {
 		f := atan2(vfatan2_sc_[i][0], vfatan2_sc_[i][1])
                 assert alike(atan2_sc_[i], f)
-	}*/
+	}
 }
 
 fn test_ceil() {
@@ -1864,10 +1868,10 @@ fn test_ceil() {
 		f := ceil(vf_[i])
                 assert alike(ceil_[i], f)
 	}
-	/*for i := 0; i < vfceil_sc_.len; i++ {
+	for i := 0; i < vfceil_sc_.len; i++ {
 		f := ceil(vfceil_sc_[i])
                 assert alike(ceil_sc_[i], f)
-	}*/
+	}
 }
 
 fn test_cos() {
@@ -1875,10 +1879,10 @@ fn test_cos() {
 		f := cos(vf_[i])
                 assert soclose(cos_[i], f, 1e-11)
 	}
-	/*for i := 0; i < vfcos_sc_.len; i++ {
+	for i := 0; i < vfcos_sc_.len; i++ {
 		f := cos(vfcos_sc_[i])
                 assert alike(cos_sc_[i], f)
-	}*/
+	}
 }
 
 fn test_cosh() {
@@ -1886,10 +1890,10 @@ fn test_cosh() {
 		f := cosh(vf_[i])
                 assert close(cosh_[i], f)
 	}
-	/*for i := 0; i < vfcosh_sc_.len; i++ {
+	for i := 0; i < vfcosh_sc_.len; i++ {
 		f := cosh(vfcosh_sc_[i])
                 assert alike(cosh_sc_[i], f)
-	}*/
+	}
 }
 
 /*
@@ -1904,10 +1908,10 @@ fn test_expm1() {
 		f := expm1(a)
                 assert close(expm1_large_[i], f)
 	}
-	/*for i := 0; i < vfexpm1_sc_.len; i++ {
+	for i := 0; i < vfexpm1_sc_.len; i++ {
 		f := expm1(vfexpm1_sc_[i])
                 assert alike(expm1_sc_[i], f)
-	}*/
+	}
 }*/
 
 fn test_abs() {
@@ -1915,10 +1919,10 @@ fn test_abs() {
 		f := abs(vf_[i])
                 assert fabs_[i] == f
 	}
-	/*for i := 0; i < vffabs_sc_.len; i++ {
+	for i := 0; i < vffabs_sc_.len; i++ {
 		f := abs(vffabs_sc_[i])
                 assert alike(fabs_sc_[i], f)
-	}*/
+	}
 }
 
 fn test_floor() {
@@ -1926,10 +1930,10 @@ fn test_floor() {
 		f := floor(vf_[i])
                 assert alike(floor_[i], f)
 	}
-	/*for i := 0; i < vfceil_sc_.len; i++ {
+	for i := 0; i < vfceil_sc_.len; i++ {
 		f := floor(vfceil_sc_[i])
                 assert alike(ceil_sc_[i], f)
-	}*/
+	}
 }
 
 fn test_max() {
@@ -1940,8 +1944,8 @@ fn test_max() {
 	/*for i := 0; i < vffdim_sc_.len; i++ {
 		f := max(vffdim_sc_[i][0], vffdim_sc_[i][1])
                 assert alike(fmax_sc_[i], f)
-	}*/
-	/*for i := 0; i < vffdim2_sc_.len; i++ {
+	}
+	for i := 0; i < vffdim2_sc_.len; i++ {
 		f := max(vffdim2_sc_[i][0], vffdim2_sc_[i][1])
                 assert alike(fmax_sc_[i], f)
 	}*/
@@ -1955,8 +1959,8 @@ fn test_min() {
 	/*for i := 0; i < vffdim_sc_.len; i++ {
 		f := min(vffdim_sc_[i][0], vffdim_sc_[i][1])
                 assert alike(fmin_sc_[i], f)
-	}*/
-	/*for i := 0; i < vffdim2_sc_.len; i++ {
+	}
+	for i := 0; i < vffdim2_sc_.len; i++ {
 		f := min(vffdim2_sc_[i][0], vffdim2_sc_[i][1])
                 assert alike(fmin_sc_[i], f)
 	}*/
@@ -1968,10 +1972,10 @@ fn test_frexp() {
 		f, j := frexp(vf_[i])
                 assert veryclose(frexp_[i].f, f) || frexp_[i].i != j
 	}
-	/*for i := 0; i < vffrexp_sc_.len; i++ {
+	for i := 0; i < vffrexp_sc_.len; i++ {
 		f, j := frexp(vffrexp_sc_[i])
                 assert alike(frexp_sc_[i].f, f) || frexp_sc_[i].i != j
-	}*/
+	}
 }*/
 
 fn test_gamma() {
@@ -1979,9 +1983,9 @@ fn test_gamma() {
 		f := gamma(vf_[i])
                 assert close(gamma_[i], f)
 	}
-	/*for _, g in vfgamma_ {
+	for _, g in vfgamma_ {
 		f := gamma(g[0])
-		ok bool
+		mut ok := true
 		if is_nan(g[1]) || is_inf(g[1], 0) || g[1] == 0 || f == 0 {
 			ok = alike(g[1], f)
 		} else if g[0] > -50 && g[0] <= 171 {
@@ -1989,10 +1993,8 @@ fn test_gamma() {
 		} else {
 			ok = close(g[1], f)
 		}
-		if !ok {
-			t.errorf("gamma(%g) = %g, want %g", g[0], f, g[1])
-		}
-	}*/
+		assert ok
+	}
 }
 
 fn test_hypot() {
@@ -2001,10 +2003,10 @@ fn test_hypot() {
 		f := hypot(1e+200*tanh_[i], 1e+200*tanh_[i])
                 assert veryclose(a, f)
 	}
-	/*for i := 0; i < vfhypot_sc_.len; i++ {
+	for i := 0; i < vfhypot_sc_.len; i++ {
 		f := hypot(vfhypot_sc_[i][0], vfhypot_sc_[i][1])
                 assert alike(hypot_sc_[i], f)
-	}*/
+	}
 }
 
 /*fn test_ldexp() {
@@ -2012,14 +2014,14 @@ fn test_hypot() {
 		f := ldexp(frexp_[i].f, frexp_[i].i)
                 assert veryclose(vf_[i], f)
 	}
-	/*for i := 0; i < vffrexp_sc_.len; i++ {
+	for i := 0; i < vffrexp_sc_.len; i++ {
 		f := ldexp(frexp_sc_[i].f, frexp_sc_[i].i)
                 assert alike(vffrexp_sc_[i], f)
-	}*/
-	/*for i := 0; i < vfldexp_sc_.len; i++ {
+	}
+	for i := 0; i < vfldexp_sc_.len; i++ {
 		f := ldexp(vfldexp_sc_[i].f, vfldexp_sc_[i].i)
                 assert alike(ldexp_sc_[i], f)
-	}*/
+	}
 }*/
 
 fn test_lgamma() {
@@ -2028,11 +2030,11 @@ fn test_lgamma() {
                 s := if signbit(f) { 1 } else { -1 }
                 assert close(lgamma_[i].f, f) || lgamma_[i].i != s
 	}
-	/*for i := 0; i < vflgamma_sc_.len; i++ {
+	for i := 0; i < vflgamma_sc_.len; i++ {
 		f := lgamma(vflgamma_sc_[i])
-                s := if signbit(f) { 1.0 } else { -1.0 }
+                s := if signbit(f) { 1 } else { -1 }
                 assert alike(lgamma_sc_[i].f, f) || lgamma_sc_[i].i != s
-	}*/
+	}
 }
 
 fn test_log() {
@@ -2043,10 +2045,10 @@ fn test_log() {
 	}
 	f := log(10)
         assert f == ln10
-	/*for i := 0; i < vflog_sc_.len; i++ {
-		f := log(vflog_sc_[i])
-                assert alike(log_sc_[i], f)
-	}*/
+	for i := 0; i < vflog_sc_.len; i++ {
+		g := log(vflog_sc_[i])
+                assert alike(log_sc_[i], g)
+	}
 }
 
 fn test_log10() {
@@ -2057,10 +2059,10 @@ fn test_log10() {
 	}
 	/*f := log10(e)
         assert f == log10_e*/
-	/*for i := 0; i < vflog_sc_.len; i++ {
+	for i := 0; i < vflog_sc_.len; i++ {
 		f := log10(vflog_sc_[i])
                 assert alike(log_sc_[i], f)
-	}*/
+	}
 }
 
 fn test_pow() {
@@ -2068,10 +2070,10 @@ fn test_pow() {
 		f := pow(10, vf_[i])
                 assert close(pow_[i], f)
 	}
-	/*for i := 0; i < vfpow_sc_.len; i++ {
+	for i := 0; i < vfpow_sc_.len; i++ {
 		f := pow(vfpow_sc_[i][0], vfpow_sc_[i][1])
                 assert alike(pow_sc_[i], f)
-	}*/
+	}
 }
 
 fn test_round() {
@@ -2079,10 +2081,10 @@ fn test_round() {
 		f := round(vf_[i])
                 assert alike(round_[i], f)
 	}
-	/*for i := 0; i < vfround_sc_.len; i++ {
+	for i := 0; i < vfround_sc_.len; i++ {
 		f := round(vfround_sc_[i][0])
                 assert alike(vfround_sc_[i][1], f)
-	}*/
+	}
 }
 
 fn test_sin() {
@@ -2090,10 +2092,10 @@ fn test_sin() {
 		f := sin(vf_[i])
                 assert veryclose(sin_[i], f)
 	}
-	/*for i := 0; i < vfsin_sc_.len; i++ {
+	for i := 0; i < vfsin_sc_.len; i++ {
 		f := sin(vfsin_sc_[i])
                 assert alike(sin_sc_[i], f)
-	}*/
+	}
 }
 
 fn test_sinh() {
@@ -2101,10 +2103,10 @@ fn test_sinh() {
 		f := sinh(vf_[i])
                 assert close(sinh_[i], f)
 	}
-	/*for i := 0; i < vfsinh_sc_.len; i++ {
+	for i := 0; i < vfsinh_sc_.len; i++ {
 		f := sinh(vfsinh_sc_[i])
                 assert alike(sinh_sc_[i], f)
-	}*/
+	}
 }
 
 fn test_sqrt() {
@@ -2116,12 +2118,12 @@ fn test_sqrt() {
 		f = sqrt(a)
                 assert sqrt_[i] == f
 	}
-	/*for i := 0; i < vfsqrt_sc_.len; i++ {
-		f := sqrt(vfsqrt_sc_[i])
+	for i := 0; i < vfsqrt_sc_.len; i++ {
+		mut f := sqrt(vfsqrt_sc_[i])
                 assert alike(sqrt_sc_[i], f)
-		f := sqrt(vfsqrt_sc_[i])
+		f = sqrt(vfsqrt_sc_[i])
                 assert alike(sqrt_sc_[i], f)
-	}*/
+	}
 }
 
 fn test_tan() {
@@ -2130,10 +2132,10 @@ fn test_tan() {
                 assert veryclose(tan_[i], f)
 	}
 	// same special cases as sin
-	/*for i := 0; i < vfsin_sc_.len; i++ {
+	for i := 0; i < vfsin_sc_.len; i++ {
 		f := tan(vfsin_sc_[i])
                 assert alike(sin_sc_[i], f)
-	}*/
+	}
 }
 
 fn test_tanh() {
@@ -2141,10 +2143,10 @@ fn test_tanh() {
 		f := tanh(vf_[i])
                 assert veryclose(tanh_[i], f)
 	}
-	/*for i := 0; i < vftanh_sc_.len; i++ {
+	for i := 0; i < vftanh_sc_.len; i++ {
 		f := tanh(vftanh_sc_[i])
                 assert alike(tanh_sc_[i], f)
-	}*/
+	}
 }
 
 fn test_trunc() {
@@ -2152,16 +2154,16 @@ fn test_trunc() {
 		f := trunc(vf_[i])
                 assert alike(trunc_[i], f)
 	}
-	/*for i := 0; i < vfceil_sc_.len; i++ {
+	for i := 0; i < vfceil_sc_.len; i++ {
 		f := trunc(vfceil_sc_[i])
                 assert alike(ceil_sc_[i], f)
-	}*/
+	}
 }
 
 // Check that math functions of high angle values
 // return accurate results. [since (vf_[i] + large) - large != vf_[i],
 // testing for Trig(vf_[i] + large) == Trig(vf_[i]), where large is
-// a multiple of 2*pi, is misleading.]
+// a multiple of 2 * pi, is misleading.]
 fn test_large_cos() {
 	large := f64(100000) * pi
 	for i := 0; i < vf_.len; i++ {
