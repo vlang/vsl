@@ -12,19 +12,19 @@ const (
 
 /*
  * This function uses Lanczos' expression to calculate gamma(x) for real
- * x, where -(interinternal.nal.max_dbl_fact_arg - 1) < x < interinternal.nal.max_dbl_fact_arg.
+ * x, where -(internal.max_dbl_fact_arg - 1) < x < internal.max_dbl_fact_arg.
  * Note the gamma function is meromorphic in the complex plane and has
  * poles at the nonpositive integers.
  * Tests for x a positive integer or a half positive integer give a
  * maximum absolute relative error of about 1.9e-16.
  *
- * If x > interinternal.nal.max_dbl_fact_arg, then one should either use gammal(x)
+ * If x > internal.max_dbl_fact_arg, then one should either use gamma_lanczos(x)
  * or calculate log_gamma(x).
  * Note that for x < 0, ln (gamma(x)) may be a complex number.
  *
  * @param f64 x Argument of the gamma function.
  *
- * @return f64 If x is positive and is less than interinternal.nal.max_dbl_fact_arg then gamma(x) is
+ * @return f64 If x is positive and is less than internal.max_dbl_fact_arg then gamma(x) is
  * returned and if x > internal.max_dbl_fact_arg then internal.dbl_max is returned.  If x is
  * a nonpositive integer i.e. x is a pole, then internal.dbl_max is returned
  * ( note that gamma(x) changes sign on each side of the pole).  If x is
@@ -37,10 +37,9 @@ pub fn gamma(x f64) f64 {
                 return internal.dbl_max
         }
 
-        g := gammal(x)
+        g := gamma_lanczos(x)
 
-        if (math.abs(g) < internal.dbl_max)
-        {
+        if math.abs(g) < internal.dbl_max {
                 return g
         }
 
@@ -60,7 +59,7 @@ pub fn gamma(x f64) f64 {
  * j from 1 to 3 and where B[2j] is the 2j-th Bernoulli number.
  *
  */
-fn log_gamma(x f64) f64 {
+pub fn log_gamma(x f64) f64 {
         if x <= internal.max_dbl_fact_arg {
                 return math.log(gamma(x))
         }
@@ -89,10 +88,10 @@ fn log_gamma(x f64) f64 {
  * then gamma(x) is returned otherwise 0.0 is returned.
  *
  */
-pub fn gammal(x f64) f64 {
+fn gamma_lanczos(x f64) f64 {
         if x > 0.0 {
                 if x <= internal.max_dbl_fact_arg {
-                        return lgammal(x)
+                        return lgamma_lanczos(x)
                 }
                 else {
                         return internal.dbl_max
@@ -118,7 +117,7 @@ pub fn gammal(x f64) f64 {
                 return 0.0
         }
 
-        rg := lgammal(1.0 - x) * sin_x / math.pi
+        rg := lgamma_lanczos(1.0 - x) * sin_x / math.pi
 
         if rg != 0.0 {
                 return 1.0 / rg
@@ -139,7 +138,7 @@ pub fn gammal(x f64) f64 {
  * If x > 171.0, then one should calculate log_gamma(x).
  *
  */
-fn lgammal(x f64) f64 {
+fn lgamma_lanczos(x f64) f64 {
         xx := if x < 1.0 { x + 1.0 } else { x }
         n := gamma_a.len
 
@@ -159,8 +158,8 @@ fn lgammal(x f64) f64 {
         temp += 1.0
         temp *= (math.pow((g + xx - 0.5) / math.e, xx - 0.5) / exp_g_o_sqrt_2pi)
 
-        return if x < 1.0 { temp/x } else { temp
-}}
+        return if x < 1.0 { temp/x } else { temp }
+}
 
 /*
  * This function returns the gamma(two_x) using the duplication formula
@@ -173,8 +172,8 @@ fn duplication_formula(two_x f64) f64 {
         mut g := math.pow(2.0, two_x - 1.0 - f64(n))
         g = math.ldexp(g, n)
         g /= math.sqrt(math.pi)
-        g *= gammal(x)
-        g *= gammal(x + 0.5)
+        g *= gamma_lanczos(x)
+        g *= gamma_lanczos(x + 0.5)
 
         return g
 }

@@ -268,7 +268,7 @@ const (
                 9.3834586598354592860187267089e-01,
                 -2.093995902923148389186189429e-05,
         ]
-        lgamma_ = [
+        log_gamma_ = [
                 Fi{3.146492141244545774319734e+00, 1},
                 Fi{8.003414490659126375852113e+00, 1},
                 Fi{1.517575735509779707488106e+00, -1},
@@ -1260,7 +1260,7 @@ const (
                 0,
         ]
 
-        vflgamma_sc_ = [
+        vflog_gamma_sc_ = [
                 ninf_,
                 -3,
                 0,
@@ -1269,7 +1269,7 @@ const (
                 inf_,
                 nan_,
         ]
-        lgamma_sc_ = [
+        log_gamma_sc_ = [
                 Fi{ninf_, 1},
                 Fi{inf_, 1},
                 Fi{inf_, 1},
@@ -1877,7 +1877,7 @@ fn test_ceil() {
 fn test_cos() {
 	for i := 0; i < vf_.len; i++ {
 		f := cos(vf_[i])
-                assert soclose(cos_[i], f, 1e-11)
+                assert veryclose(cos_[i], f)
 	}
 	for i := 0; i < vfcos_sc_.len; i++ {
 		f := cos(vfcos_sc_[i])
@@ -1980,7 +1980,7 @@ fn test_frexp() {
 fn test_gamma() {
 	for i := 0; i < vf_.len; i++ {
 		f := gamma(vf_[i])
-                assert close(gamma_[i], f)
+                assert soclose(gamma_[i], f, 1e-9)
 	}
 	for _, g in vfgamma_ {
 		f := gamma(g[0])
@@ -2023,16 +2023,16 @@ fn test_ldexp() {
 	}
 }
 
-fn test_lgamma() {
+fn test_log_gamma() {
 	for i := 0; i < vf_.len; i++ {
-		f := lgamma(vf_[i])
+		f := log_gamma(vf_[i])
                 s := if signbit(f) { 1 } else { -1 }
-                assert close(lgamma_[i].f, f) || lgamma_[i].i != s
+                assert close(log_gamma_[i].f, f) || log_gamma_[i].i != s
 	}
-	for i := 0; i < vflgamma_sc_.len; i++ {
-		f := lgamma(vflgamma_sc_[i])
+	for i := 0; i < vflog_gamma_sc_.len; i++ {
+		f := log_gamma(vflog_gamma_sc_[i])
                 s := if signbit(f) { 1 } else { -1 }
-                assert alike(lgamma_sc_[i].f, f) || lgamma_sc_[i].i != s
+                assert alike(log_gamma_sc_[i].f, f) || log_gamma_sc_[i].i != s
 	}
 }
 
@@ -2168,7 +2168,7 @@ fn test_large_cos() {
 	for i := 0; i < vf_.len; i++ {
 		f1 := cos_large_[i]
 		f2 := cos(vf_[i] + large)
-		assert soclose(f1, f2, 1e-9)
+		assert veryclose(f1, f2)
 	}
 }
 
@@ -2177,7 +2177,7 @@ fn test_large_sin() {
 	for i := 0; i < vf_.len; i++ {
 		f1 := sin_large_[i]
 		f2 := sin(vf_[i] + large)
-		assert soclose(f1, f2, 1e-9)
+		assert veryclose(f1, f2)
 	}
 }
 
