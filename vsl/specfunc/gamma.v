@@ -12,45 +12,45 @@ const (
 
 /*
  * This function uses Lanczos' expression to calculate gamma(x) for real
- * x, where -(internal.max_dbl_fact_arg - 1) < x < internal.max_dbl_fact_arg.
+ * x, where -(internal.max_f64_fact_arg - 1) < x < internal.max_f64_fact_arg.
  * Note the gamma function is meromorphic in the complex plane and has
  * poles at the nonpositive integers.
  * Tests for x a positive integer or a half positive integer give a
  * maximum absolute relative error of about 1.9e-16.
  *
- * If x > internal.max_dbl_fact_arg, then one should either use gamma_lanczos(x)
+ * If x > internal.max_f64_fact_arg, then one should either use gamma_lanczos(x)
  * or calculate log_gamma(x).
  * Note that for x < 0, ln (gamma(x)) may be a complex number.
  *
  * @param f64 x Argument of the gamma function.
  *
- * @return f64 If x is positive and is less than internal.max_dbl_fact_arg then gamma(x) is
- * returned and if x > internal.max_dbl_fact_arg then internal.dbl_max is returned.  If x is
- * a nonpositive integer i.e. x is a pole, then internal.dbl_max is returned
+ * @return f64 If x is positive and is less than internal.max_f64_fact_arg then gamma(x) is
+ * returned and if x > internal.max_f64_fact_arg then internal.f64_max is returned.  If x is
+ * a nonpositive integer i.e. x is a pole, then internal.f64_max is returned
  * ( note that gamma(x) changes sign on each side of the pole).  If x is
- * nonpositive nonintegral, then if gamma(x) > internal.dbl_max, then internal.dbl_max is
- * returned and if gamma(x) < -internal.dbl_max, then -internal.dbl_max is returned.
+ * nonpositive nonintegral, then if gamma(x) > internal.f64_max, then internal.f64_max is
+ * returned and if gamma(x) < -internal.f64_max, then -internal.f64_max is returned.
  *
  */
 pub fn gamma(x f64) f64 {
-        if x > internal.max_dbl_fact_arg {
-                return internal.dbl_max
+        if x > internal.max_f64_fact_arg {
+                return internal.f64_max
         }
 
         g := gamma_lanczos(x)
 
-        if math.abs(g) < internal.dbl_max {
+        if math.abs(g) < internal.f64_max {
                 return g
         }
 
-        return if g < 0.0 { -internal.dbl_max } else { internal.dbl_max }
+        return if g < 0.0 { -internal.f64_max } else { internal.f64_max }
 }
 
 /*
  * This function calculates the natural log of gamma(x) for positive real
  * x.
  *
- * Assuming that max_dbl_fact_arg = 171, then
+ * Assuming that max_f64_fact_arg = 171, then
  * If 0 < x <= 171, then ln(gamma(x)) is calculated by taking the natural
  * log of the result from gamma(x).  If x > 171, then
  * ln(gamma(x)) is calculated using the asymptotic expansion
@@ -60,7 +60,7 @@ pub fn gamma(x f64) f64 {
  *
  */
 pub fn log_gamma(x f64) f64 {
-        if x <= internal.max_dbl_fact_arg {
+        if x <= internal.max_f64_fact_arg {
                 return math.log(gamma(x))
         }
 
@@ -69,32 +69,32 @@ pub fn log_gamma(x f64) f64 {
 
 /*
  * This function uses Lanczos' expression to calculate gamma(x) for real
- * x, where -(max_dbl_fact_arg - 1) < x < max_dbl_fact_arg.
+ * x, where -(max_f64_fact_arg - 1) < x < max_f64_fact_arg.
  * Note the gamma function is meromorphic in the complex plane and has
  * poles at the nonpositive integers.
  * Tests for x a positive integer or a half positive integer give a
  * maximum absolute relative error of about 3.5e-16.
  *
- * If x > max_dbl_fact_arg, then one should use log_gamma(x).
+ * If x > max_f64_fact_arg, then one should use log_gamma(x).
  * Note that for x < 0, ln (gamma(x)) may be a complex number.
  *
  * @param f64 x Argument of the gamma function.
  *
- * @return f64 If x is positive and is less than max_dbl_fact_arg, then gamma(x)
- * is returned and if x > max_dbl_fact_arg, then internal.dbl_max is returned.
- * If x is a nonpositive integer i.e. x is a pole, then internal.dbl_max is
+ * @return f64 If x is positive and is less than max_f64_fact_arg, then gamma(x)
+ * is returned and if x > max_f64_fact_arg, then internal.f64_max is returned.
+ * If x is a nonpositive integer i.e. x is a pole, then internal.f64_max is
  * returned ( note that gamma(x) changes sign on each side of the pole).
- * If x is nonpositive nonintegral, then if x > -(max_dbl_fact_arg + 1)
+ * If x is nonpositive nonintegral, then if x > -(max_f64_fact_arg + 1)
  * then gamma(x) is returned otherwise 0.0 is returned.
  *
  */
 fn gamma_lanczos(x f64) f64 {
         if x > 0.0 {
-                if x <= internal.max_dbl_fact_arg {
+                if x <= internal.max_f64_fact_arg {
                         return lgamma_lanczos(x)
                 }
                 else {
-                        return internal.dbl_max
+                        return internal.f64_max
                 }
         }
 
@@ -103,17 +103,17 @@ fn gamma_lanczos(x f64) f64 {
 
                 if (x == f64(ix))
                 {
-                        return internal.dbl_max
+                        return internal.f64_max
                 }
         }
 
         sin_x := math.sin(math.pi * x)
 
         if sin_x == 0.0 {
-                return internal.dbl_max
+                return internal.f64_max
         }
 
-        if x < -(internal.max_dbl_fact_arg - 1.0) {
+        if x < -(internal.max_f64_fact_arg - 1.0) {
                 return 0.0
         }
 
@@ -123,7 +123,7 @@ fn gamma_lanczos(x f64) f64 {
                 return 1.0 / rg
         }
 
-        return internal.dbl_max
+        return internal.f64_max
 }
 
 /*
@@ -142,11 +142,11 @@ fn lgamma_lanczos(x f64) f64 {
         xx := if x < 1.0 { x + 1.0 } else { x }
         n := gamma_a.len
 
-        if x > internal.max_dbl_fact_arg {
-                return internal.dbl_max
+        if x > internal.max_f64_fact_arg {
+                return internal.f64_max
         }
 
-        if x > internal.max_dbl_fact_arg / 2.0 {
+        if x > internal.max_f64_fact_arg / 2.0 {
                 return duplication_formula(x)
         }
 

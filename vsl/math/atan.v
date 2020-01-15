@@ -89,7 +89,7 @@ fn satan(x f64) f64 {
 
 // atan returns the arctangent, in radians, of x.
 //
-// Special cases are:
+// special cases are:
 // atan(±0) = ±0
 // atan(±Inf) = ±pi/2.0
 pub fn atan(x f64) f64 {
@@ -106,7 +106,7 @@ pub fn atan(x f64) f64 {
 // the signs of the two to determine the quadrant
 // of the return value.
 //
-// Special cases are (in order):
+// special cases are (in order):
 //	atan2(y, nan) = nan
 //	atan2(nan, x) = nan
 //	atan2(+0, x>=0) = +0

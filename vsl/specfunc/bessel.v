@@ -75,7 +75,7 @@ fn bessel_in(n int, x f64) f64 {
 }
 
 // bessel_k0 returns the modified Bessel function k0(x) for positive real x.
-//   Special cases:
+//   special cases:
 //     K0(x=0) = +inf
 //     K0(x<0) = nan
 fn bessel_k0(x f64) f64 {
@@ -96,7 +96,7 @@ fn bessel_k0(x f64) f64 {
 }
 
 // bessel_k1 returns the modified Bessel function k1(x) for positive real x.
-//   Special cases:
+//   special cases:
 //     K0(x=0) = +inf
 //     K0(x<0) = nan
 fn bessel_k1(x f64) f64 {

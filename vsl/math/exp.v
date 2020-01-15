@@ -4,8 +4,8 @@
 module math
 
 const (
-	dbl_max_exp = f64(1024)
-	dbl_min_exp = f64(-1021)
+	f64_max_exp = f64(1024)
+	f64_min_exp = f64(-1021)
 
 	othreshold = 7.09782712893383973096e+02 // 0x40862E42FEFA39EF
 	ln2_x56 = 3.88162421113569373274e+01 // 0x4043687a9f1af2b1
@@ -30,13 +30,13 @@ pub fn ldexp(x f64, e int) f64 {
 	else {
 		mut y,ex := frexp(x)
 		mut e2 := f64(e + ex)
-		if e2 >= dbl_max_exp {
-			y *= pow(2.0, e2 - dbl_max_exp + 1.0)
-			e2 = dbl_max_exp - 1.0
+		if e2 >= f64_max_exp {
+			y *= pow(2.0, e2 - f64_max_exp + 1.0)
+			e2 = f64_max_exp - 1.0
 		}
-		else if e2 <= dbl_min_exp {
-			y *= pow(2.0, e2 - dbl_min_exp - 1.0)
-			e2 = dbl_min_exp + 1.0
+		else if e2 <= f64_min_exp {
+			y *= pow(2.0, e2 - f64_min_exp - 1.0)
+			e2 = f64_min_exp + 1.0
 		}
 		p2 := pow(2.0, e2)
 		return y * p2
@@ -48,7 +48,7 @@ pub fn ldexp(x f64, e int) f64 {
 // It returns frac and exp satisfying f == frac × 2**exp,
 // with the absolute value of frac in the interval [½, 1).
 //
-// Special cases are:
+// special cases are:
 // frexp(±0) = ±0, 0
 // frexp(±Inf) = ±Inf, 0
 // frexp(NaN) = NaN, 0
@@ -67,12 +67,12 @@ pub fn frexp(x f64) (f64, int) {
                 mut ei := int(ex)
 
                 /* Prevent underflow and overflow of 2**(-ei) */
-                if ei < int(dbl_min_exp) {
-                        ei = int(dbl_min_exp)
+                if ei < int(f64_min_exp) {
+                        ei = int(f64_min_exp)
                 }
 
-                if ei > -int(dbl_min_exp) {
-                        ei = -int(dbl_min_exp)
+                if ei > -int(f64_min_exp) {
+                        ei = -int(f64_min_exp)
                 }
 
                 mut f := x * pow (2.0, -ei)
@@ -185,7 +185,7 @@ pub fn frexp(x f64) (f64, int) {
 // (vi)  if k <= 20, return 2**k((1-2**-k)-(E-r)), else
 // (vii) return 2**k(1-((E+2**-k)-r))
 //
-// Special cases:
+// special cases:
 // expm1(INF) is INF, expm1(NaN) is NaN;
 // expm1(-INF) is -1, and
 // for finite argument, only expm1(0)=0 is exact.
@@ -207,7 +207,7 @@ pub fn frexp(x f64) (f64, int) {
 // expm1 returns e**x - 1, the base-e exponential of x minus 1.
 // It is more accurate than Exp(x) - 1 when x is near zero.
 //
-// Special cases are:
+// special cases are:
 // expm1(+Inf) = +Inf
 // expm1(-Inf) = -1
 // expm1(NaN) = NaN

@@ -7,7 +7,7 @@ module math
 // modf returns integer and fractional floating-point numbers
 // that sum to f. Both values have the same sign as f.
 //
-// Special cases are:
+// special cases are:
 //	modf(±Inf) = ±Inf, NaN
 //	modf(NaN) = NaN, NaN
 pub fn modf(f f64) (f64,f64) {

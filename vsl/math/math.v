@@ -31,19 +31,10 @@ fn C.exp(x f64) f64
 fn C.exp2(x f64) f64
 
 
-fn C.fabs(x f64) f64
-
-
 fn C.floor(x f64) f64
 
 
 fn C.fmod(x f64, y f64) f64
-
-
-fn C.hypot(x f64, y f64) f64
-
-
-fn C.log(x f64) f64
 
 
 fn C.log2(x f64) f64
@@ -78,14 +69,6 @@ fn C.tanh(x f64) f64
 
 fn C.trunc(x f64) f64
 
-// NOTE
-// When adding a new function, please make sure it's in the right place.
-// All functions are sorted alphabetically.
-// Returns the absolute value.
-pub fn abs(a f64) f64 {
-	return C.fabs(a)
-}
-
 // acos calculates inverse cosine (arccosine).
 pub fn acos(a f64) f64 {
 	return C.acos(a)
@@ -104,14 +87,6 @@ pub fn cbrt(a f64) f64 {
 // ceil returns the nearest f64 greater or equal to the provided value.
 pub fn ceil(a f64) f64 {
 	return C.ceil(a)
-}
-
-pub fn copysign(x, y f64) f64 {
-	if (x < 0 && y > 0) || (x > 0 && y < 0) {
-                return -x
-        }
-
-        return x
 }
 
 // cosh calculates hyperbolic cosine.
@@ -198,11 +173,6 @@ pub fn gcd(a_, b_ i64) i64 {
 	return a
 }
 
-// Returns hypotenuse of a right triangle.
-pub fn hypot(a, b f64) f64 {
-	return C.hypot(a, b)
-}
-
 // lcm calculates least common (non-negative) multiple.
 pub fn lcm(a, b i64) i64 {
 	if a == 0 {
@@ -213,11 +183,6 @@ pub fn lcm(a, b i64) i64 {
 		return -res
 	}
 	return res
-}
-
-// log calculates natural (base-e) logarithm of the provided value.
-pub fn log(a f64) f64 {
-	return C.log(a)
 }
 
 // log2 calculates base-2 logarithm of the provided value.
@@ -233,11 +198,6 @@ pub fn log10(a f64) f64 {
 // log_gamma computes the log-gamma function value
 pub fn log_gamma(a f64) f64 {
 	return C.lgamma(a)
-}
-
-// log_n calculates base-N logarithm of the provided value.
-pub fn log_n(a, b f64) f64 {
-	return C.log(a) / C.log(b)
 }
 
 // max returns the maximum value of the two provided.
@@ -256,63 +216,6 @@ pub fn min(a, b f64) f64 {
 	return b
 }
 
-// nextafter32 returns the next representable f32 value after x towards y.
-//
-// Special cases are:
-//	nextafter32(x, x)   = x
-//	nextafter32(nan, y) = nan
-//	nextafter32(x, nan) = nan
-pub fn nextafter32(x, y f32) f32 {
-        mut r := 0.0
-
-	if is_nan(f64(x)) || is_nan(f64(y)) { // special case
-		r = f32(nan())
-        }
-	else if x == y {
-		r = x
-        }
-	else if x == 0 {
-		r = f32(copysign(f64(f32_from_bits(1)), f64(y)))
-        }
-	else if (y > x) == (x > 0) {
-		r = f32_from_bits(f32_bits(x) + 1)
-        }
-	else {
-		r = f32_from_bits(f32_bits(x) - 1)
-        }
-
-	return r
-}
-
-// nextafter returns the next representable f64 value after x towards y.
-//
-// Special cases are:
-//	nextafter(x, x)   = x
-//	nextafter(nan, y) = nan
-//	nextafter(x, nan) = nan
-pub fn nextafter(x, y f64) f64 {
-        mut r := f64(0.0)
-
-	if is_nan(x) || is_nan(y) { // special case
-		r = nan()
-        }
-	else if x == y {
-		r = x
-        }
-	else if x == 0 {
-		r = copysign(f64_from_bits(1), y)
-        }
-	else if (y > x) == (x > 0) {
-		r = f64_from_bits(f64_bits(x) + 1)
-        }
-	else {
-		r = f64_from_bits(f64_bits(x) - 1)
-        }
-
-	return r
-}
-
-
 // pow returns base raised to the provided power.
 pub fn pow(a, b f64) f64 {
 	return C.pow(a, b)
@@ -326,10 +229,6 @@ pub fn radians(degrees f64) f64 {
 // round returns the integer nearest to the provided value.
 pub fn round(f f64) f64 {
 	return C.round(f)
-}
-
-pub fn signbit(x f64) bool {
-	return f64_bits(x)&(1<<63) != 0
 }
 
 // sinh calculates hyperbolic sine.

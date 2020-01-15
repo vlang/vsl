@@ -2097,6 +2097,22 @@ fn test_sin() {
 	}
 }
 
+fn test_sincos() {
+	for i := 0; i < vf_.len; i++ {
+		f, g := sincos(vf_[i])
+                assert veryclose(sin_[i], f)
+                assert veryclose(cos_[i], g)
+	}
+	for i := 0; i < vfsin_sc_.len; i++ {
+		f, _ := sincos(vfsin_sc_[i])
+                assert alike(sin_sc_[i], f)
+	}
+	for i := 0; i < vfcos_sc_.len; i++ {
+                _, f := sincos(vfcos_sc_[i])
+                assert alike(cos_sc_[i], f)
+	}
+}
+
 fn test_sinh() {
 	for i := 0; i < vf_.len; i++ {
 		f := sinh(vf_[i])
