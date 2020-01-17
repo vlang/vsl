@@ -37,5 +37,5 @@ fn (cs ChebSeries) eval_e(x f64) (f64, f64) {
         d = y*d - dd + 0.5 * cs.c[0]
         e += abs(y*temp) + abs(dd) + 0.5 * abs(cs.c[0])
 
-        return d, f64(internal.dbl_epsilon) * e + abs(cs.c[cs.order])
+        return d, f64(internal.f64_epsilon) * e + abs(cs.c[cs.order])
 }

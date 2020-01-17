@@ -54,7 +54,7 @@ pub fn sin(x f64) f64 {
         sgn_x := if x < 0 { -1 } else { 1 }
         abs_x := abs(x)
 
-        if abs_x < internal.root4_dbl_epsilon {
+        if abs_x < internal.root4_f64_epsilon {
                 x2 := x*x
                 return x * (1.0 - x2/6.0)
         }
@@ -99,7 +99,7 @@ pub fn sin(x f64) f64 {
 pub fn cos(x f64) f64 {
         abs_x := abs(x)
 
-        if abs_x < internal.root4_dbl_epsilon {
+        if abs_x < internal.root4_f64_epsilon {
                 x2 := x*x
                 return f64(1.0) - 0.5*x2
         }
@@ -142,5 +142,60 @@ pub fn cos(x f64) f64 {
                 result *= sgn_result
 
                 return result
+        }
+}
+
+pub fn sincos(x f64) (f64, f64) {
+        sgn_x := if x < 0 { -1 } else { 1 }
+        abs_x := abs(x)
+
+        if abs_x < internal.root4_f64_epsilon {
+                x2 := x*x
+                return x * (1.0 - x2/6.0), f64(1.0) - 0.5*x2
+        }
+        else {
+                mut sgn_result_sin := sgn_x
+                mut sgn_result_cos := 1
+                mut y := floor(abs_x/(0.25*pi))
+                mut octant := int(y - ldexp(floor(ldexp(y, -3)), 3))
+
+                if (octant & 1) == 1 {
+                        octant++
+                        octant &= 07
+                        y += 1.0
+                }
+
+
+                if octant > 3 {
+                        octant -= 4
+                        sgn_result_sin = -sgn_result_sin
+                        sgn_result_cos = -sgn_result_cos
+                }
+
+                sgn_result_cos = if octant > 1 { -sgn_result_cos } else { sgn_result_cos }
+                
+                z := ((abs_x - y * p1) - y * p2) - y * p3
+
+                t := 8.0*abs(z)/pi - 1.0
+
+                sin_cs_val, _ := sin_cs.eval_e(t)
+                cos_cs_val, _ := cos_cs.eval_e(t)
+
+                mut result_sin := f64(0.0)
+                mut result_cos := f64(0.0)
+
+                if octant == 0 {
+                        result_sin = z * (1.0 + z*z * sin_cs_val)
+                        result_cos = 1.0 - 0.5*z*z * (1.0 - z*z * cos_cs_val)
+                }
+                else {
+                        result_sin = 1.0 - 0.5*z*z * (1.0 - z*z * cos_cs_val)
+                        result_cos = z * (1.0 + z*z * sin_cs_val)
+                }
+
+                result_sin *= sgn_result_sin
+                result_cos *= sgn_result_cos
+
+                return result_sin, result_cos
         }
 }

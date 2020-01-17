@@ -8,6 +8,13 @@ import vsl.errno
 import vsl.internal
 
 pub fn hypot(x, y f64) f64 {
+        if math.is_inf(x, 0) || math.is_inf(y, 0) {
+		return math.inf(1)
+        }
+	if math.is_nan(x) || math.is_nan(y) {
+		return math.nan()
+	}
+
         mut result := f64(0.0)
 
         if x != 0.0 || y != 0.0 {
@@ -30,6 +37,13 @@ pub fn hypot(x, y f64) f64 {
 }
 
 pub fn hypot_e(x, y f64) (f64, f64) {
+        if math.is_inf(x, 0) || math.is_inf(y, 0) {
+		return math.inf(1)
+        }
+	if math.is_nan(x) || math.is_nan(y) {
+		return math.nan()
+	}
+
         mut result := f64(0.0)
         mut result_err := f64(0.0)
 
@@ -43,7 +57,7 @@ pub fn hypot_e(x, y f64) (f64, f64) {
 
                 if max < math.max_f64/root_term {
                         result = max * root_term
-                        result_err = f64(2.0) * internal.dbl_epsilon * math.abs(result)
+                        result_err = f64(2.0) * internal.f64_epsilon * math.abs(result)
                 }
                 else {
                         errno.vsl_panic('overflow in hypot_e function', .eovrflw)

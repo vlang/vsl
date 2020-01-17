@@ -5,7 +5,6 @@
 module roots
 
 import vsl.math
-import vsl.errno
 import vsl.internal
 import vsl
 
@@ -65,7 +64,7 @@ pub fn brent(func vsl.Function, x1, x2, tol f64) (?f64, f64) {
                         fc = fa
                 }
 
-                tol1 = 2.0 * internal.dbl_epsilon * math.abs(b) + 0.5 * tol
+                tol1 = 2.0 * internal.f64_epsilon * math.abs(b) + 0.5 * tol
                 mut new_step := 0.5 * (c - b)
 
                 if math.abs(new_step) <= tol1 || fb == 0.0 {

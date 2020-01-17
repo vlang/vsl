@@ -2,7 +2,7 @@
 // Use of this source code is governed by an MIT license
 // that can be found in the LICENSE file.
 
-module factorial
+module math
 
 const (
         log_sqrt_2pi = 9.18938533204672741780329736e-1

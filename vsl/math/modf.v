@@ -1,0 +1,34 @@
+// Copyright (c) 2019 Ulises Jeremias Cornejo Fandos. All rights reserved.
+// Use of this source code is governed by an MIT license
+// that can be found in the LICENSE file.
+
+module math
+
+const (
+        _maxpowtwo = 4.503599627370496000e+15
+)
+
+// modf returns integer and fractional floating-point numbers
+// that sum to f. Both values have the same sign as f.
+//
+// special cases are:
+//	modf(±Inf) = ±Inf, NaN
+//	modf(NaN) = NaN, NaN
+pub fn modf(f f64) (f64,f64) {
+        abs_f := abs(f)
+        mut i := f64(0.0)
+	if abs_f >= _maxpowtwo {
+		i = f /* it must be an integer */
+	}
+        else {
+		i = abs_f + _maxpowtwo /* shift fraction off right */
+		i -= _maxpowtwo /* shift back without fraction */
+		for i > abs_f { /* above arithmetic might round */
+			i -= 1.0 /* test again just to be sure */
+                }
+                if f < 0.0 {
+			i = -i
+                }
+	}
+	return i, f - i /* signed fractional part */
+}
