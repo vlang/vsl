@@ -67,6 +67,7 @@ const (
 )
 
 // xatan evaluates a series valid in the range [0, 0.66].
+[inline]
 fn xatan(x f64) f64 {
 	mut z := x * x
 	z = z * ((((P0*z+P1)*z+P2)*z+P3)*z + P4) / (((((z+Q0)*z+Q1)*z+Q2)*z+Q3)*z + Q4)
@@ -77,6 +78,7 @@ fn xatan(x f64) f64 {
 
 // satan reduces its argument (known to be positive)
 // to the range [0, 0.66] and calls xatan.
+[inline]
 fn satan(x f64) f64 {
 	if x <= 0.66 {
 		return xatan(x)

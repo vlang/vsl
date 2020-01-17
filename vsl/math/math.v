@@ -28,9 +28,6 @@ fn C.exp(x f64) f64
 fn C.exp2(x f64) f64
 
 
-fn C.fmod(x f64, y f64) f64
-
-
 fn C.log2(x f64) f64
 
 
@@ -103,46 +100,9 @@ pub fn exp2(a f64) f64 {
 	return C.exp2(a)
 }
 
-// fmod returns the floating-point remainder of number / denom (rounded towards zero):
-pub fn fmod(a, b f64) f64 {
-	return C.fmod(a, b)
-}
-
 // gamma computes the gamma function value
 pub fn gamma(a f64) f64 {
 	return C.tgamma(a)
-}
-
-// gcd calculates greatest common (positive) divisor (or zero if a and b are both zero).
-pub fn gcd(a_, b_ i64) i64 {
-	mut a := a_
-	mut b := b_
-	if a < 0 {
-		a = -a
-	}
-	if b < 0 {
-		b = -b
-	}
-	for b != 0 {
-		a %= b
-		if a == 0 {
-			return b
-		}
-		b %= a
-	}
-	return a
-}
-
-// lcm calculates least common (non-negative) multiple.
-pub fn lcm(a, b i64) i64 {
-	if a == 0 {
-		return a
-	}
-	res := a * (b / gcd(b, a))
-	if res < 0 {
-		return -res
-	}
-	return res
 }
 
 // log2 calculates base-2 logarithm of the provided value.
