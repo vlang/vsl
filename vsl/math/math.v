@@ -13,9 +13,6 @@ fn C.asin(x f64) f64
 fn C.cbrt(x f64) f64
 
 
-fn C.ceil(x f64) f64
-
-
 fn C.cosh(x f64) f64
 
 
@@ -29,9 +26,6 @@ fn C.exp(x f64) f64
 
 
 fn C.exp2(x f64) f64
-
-
-fn C.floor(x f64) f64
 
 
 fn C.fmod(x f64, y f64) f64
@@ -49,9 +43,6 @@ fn C.lgamma(x f64) f64
 fn C.pow(x f64, y f64) f64
 
 
-fn C.round(x f64) f64
-
-
 fn C.sinh(x f64) f64
 
 
@@ -67,8 +58,6 @@ fn C.tan(x f64) f64
 fn C.tanh(x f64) f64
 
 
-fn C.trunc(x f64) f64
-
 // acos calculates inverse cosine (arccosine).
 pub fn acos(a f64) f64 {
 	return C.acos(a)
@@ -82,11 +71,6 @@ pub fn asin(a f64) f64 {
 // cbrt calculates cubic root.
 pub fn cbrt(a f64) f64 {
 	return C.cbrt(a)
-}
-
-// ceil returns the nearest f64 greater or equal to the provided value.
-pub fn ceil(a f64) f64 {
-	return C.ceil(a)
 }
 
 // cosh calculates hyperbolic cosine.
@@ -104,25 +88,6 @@ pub fn exp(a f64) f64 {
 	return C.exp(a)
 }
 
-// digits returns an array of the digits of n in the given base.
-pub fn digits(_n, base int) []int {
-	if base < 2 {
-		panic('digits: Cannot find digits of n with base $base')
-	}
-	mut n := _n
-	mut sign := 1
-	if n < 0 {
-		sign = -1
-		n = -n
-	}
-	mut res := []int
-	for n != 0 {
-		res << (n % base) * sign
-		n /= base
-	}
-	return res
-}
-
 // erf computes the error function value
 pub fn erf(a f64) f64 {
 	return C.erf(a)
@@ -136,11 +101,6 @@ pub fn erfc(a f64) f64 {
 // exp2 returns the base-2 exponential function of a (math.pow(2, a)).
 pub fn exp2(a f64) f64 {
 	return C.exp2(a)
-}
-
-// floor returns the nearest f64 lower or equal of the provided value.
-pub fn floor(a f64) f64 {
-	return C.floor(a)
 }
 
 // fmod returns the floating-point remainder of number / denom (rounded towards zero):
@@ -200,22 +160,6 @@ pub fn log_gamma(a f64) f64 {
 	return C.lgamma(a)
 }
 
-// max returns the maximum value of the two provided.
-pub fn max(a, b f64) f64 {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-// min returns the minimum value of the two provided.
-pub fn min(a, b f64) f64 {
-	if a < b {
-		return a
-	}
-	return b
-}
-
 // pow returns base raised to the provided power.
 pub fn pow(a, b f64) f64 {
 	return C.pow(a, b)
@@ -224,11 +168,6 @@ pub fn pow(a, b f64) f64 {
 // radians convert from radians to degrees.
 pub fn radians(degrees f64) f64 {
 	return degrees * (pi / 180.0)
-}
-
-// round returns the integer nearest to the provided value.
-pub fn round(f f64) f64 {
-	return C.round(f)
 }
 
 // sinh calculates hyperbolic sine.
@@ -249,10 +188,4 @@ pub fn tan(a f64) f64 {
 // tanh calculates hyperbolic tangent.
 pub fn tanh(a f64) f64 {
 	return C.tanh(a)
-}
-
-// trunc rounds a toward zero, returning the nearest integral value that is not
-// larger in magnitude than a.
-pub fn trunc(a f64) f64 {
-	return C.trunc(a)
 }

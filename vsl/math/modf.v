@@ -4,6 +4,10 @@
 
 module math
 
+const (
+        _maxpowtwo = 4.503599627370496000e+15
+)
+
 // modf returns integer and fractional floating-point numbers
 // that sum to f. Both values have the same sign as f.
 //
@@ -11,26 +15,20 @@ module math
 //	modf(±Inf) = ±Inf, NaN
 //	modf(NaN) = NaN, NaN
 pub fn modf(f f64) (f64,f64) {
-	if f < 1 {
-		if f < 0 {
-			i, frac := modf(-f)
-			return -i, -frac
+        abs_f := abs(f)
+        mut i := f64(0.0)
+	if abs_f >= _maxpowtwo {
+		i = f /* it must be an integer */
+	}
+        else {
+		i = abs_f + _maxpowtwo /* shift fraction off right */
+		i -= _maxpowtwo /* shift back without fraction */
+		for i > abs_f { /* above arithmetic might round */
+			i -= 1.0 /* test again just to be sure */
                 }
-		if f == 0 {
-			return f, f // Return -0, -0 when f == -0
-		}
-		return f64(0.0), f
+                if f < 0.0 {
+			i = -i
+                }
 	}
-
-	mut x := f64_bits(f)
-	e := (x>>shift)&mask - bias
-
-	// Keep the top 12+e bits, the integer part; clear the rest.
-	if e < 64-12 {
-		x &= 1<<(64-12-e) - 1
-		x ^= 1<<(64-12-e) - 1
-	}
-	i := f64_from_bits(x)
-	frac := f - i
-	return i, frac
+	return i, f - i /* signed fractional part */
 }
