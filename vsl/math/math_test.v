@@ -1776,7 +1776,7 @@ fn test_acos() {
 	for i := 0; i < vf_.len; i++ {
 		a := vf_[i] / 10
 		f := acos(a)
-                assert close(acos_[i], f)
+                assert soclose(acos_[i], f, 1e-7)
 	}
 	for i := 0; i < vfacos_sc_.len; i++ {
 		f := acos(vfacos_sc_[i])

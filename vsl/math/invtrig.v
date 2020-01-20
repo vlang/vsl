@@ -16,8 +16,8 @@ module math
 // Inverse circular tangent (arctangent)
 //
 // SYNOPSIS:
-// double x, y, atan();
-// y = atan( x );
+// double x, y, atan()
+// y = atan( x )
 //
 // DESCRIPTION:
 // Returns radian angle between -pi/2.0 and +pi/2.0 whose tangent is x.
@@ -167,3 +167,60 @@ pub fn atan2(y, x f64) f64 {
 	return q
 }
 
+/*
+	Floating-point arcsine and arccosine.
+
+	They are implemented by computing the arctangent
+	after appropriate range reduction.
+*/
+
+// asin returns the arcsine, in radians, of x.
+//
+// special cases are:
+//	asin(±0) = ±0
+//	asin(x) = nan if x < -1 or x > 1
+pub fn asin(x_ f64) f64 {
+        mut x := x_
+	if x == f64(0.0) {
+		return x // special case
+	}
+	mut sign := false
+	if x < 0.0 {
+		x = -x
+		sign = true
+	}
+	if x > 1.0 {
+		return nan() // special case
+	}
+
+	mut temp := sqrt(f64(1.0) - x*x)
+	if x > 0.7 {
+		temp = pi/2.0 - satan(temp/x)
+	} else {
+		temp = satan(x / temp)
+	}
+
+	if sign {
+		temp = -temp
+	}
+
+	return temp
+}
+
+// acos returns the arccosine, in radians, of x.
+//
+// special case is:
+//	acos(x) = nan if x < -1 or x > 1
+[inline]
+pub fn acos(x f64) f64 {
+	if (x < -1.0) || (x > 1.0) {
+	        return nan()
+	}
+        if x > 0.5 {
+                return f64(2.0) * asin(sqrt(0.5 - 0.5*x))
+        }
+        mut z := pi/f64(4.0) - asin(x)
+        z = z + morebits
+        z = z + pi/f64(4.0)
+        return z
+}

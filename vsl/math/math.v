@@ -4,12 +4,6 @@
 module math
 
 #include <math.h>
-fn C.acos(x f64) f64
-
-
-fn C.asin(x f64) f64
-
-
 fn C.cbrt(x f64) f64
 
 
@@ -53,17 +47,6 @@ fn C.tan(x f64) f64
 
 
 fn C.tanh(x f64) f64
-
-
-// acos calculates inverse cosine (arccosine).
-pub fn acos(a f64) f64 {
-	return C.acos(a)
-}
-
-// asin calculates inverse sine (arcsine).
-pub fn asin(a f64) f64 {
-	return C.asin(a)
-}
 
 // cbrt calculates cubic root.
 pub fn cbrt(a f64) f64 {
