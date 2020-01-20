@@ -34,12 +34,12 @@ pub fn ceil(x f64) f64 {
 	return -floor(-x)
 }
 
-// Trunc returns the integer value of x.
+// trunc returns the integer value of x.
 //
 // special cases are:
-//	Trunc(±0) = ±0
-//	Trunc(±inf) = ±inf
-//	Trunc(nan) = nan
+//	trunc(±0) = ±0
+//	trunc(±inf) = ±inf
+//	trunc(nan) = nan
 pub fn trunc(x f64) f64 {
 	if x == 0 || is_nan(x) || is_inf(x, 0) {
 		return x
