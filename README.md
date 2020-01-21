@@ -16,6 +16,7 @@ Via vpm:
 
 ```sh
 $ v install ulises-jeremias.vsl
+$ cp -r ~/.vmodules/ulises-jeremias/vsl ~/.vmodules/vsl
 ```
 
 Via [vpkg](https://github.com/v-pkg/vpkg):
