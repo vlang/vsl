@@ -4,7 +4,6 @@
 module specfunc
 
 import vsl.math
-import vsl.errno
 import vsl.internal
 
 /* sinh(x) series

@@ -142,9 +142,9 @@ pub fn solve_cubic(a, b, c f64) []f64 {
                 theta := math.acos(ratio)
                 norm := f64(-2.0 * math.sqrt(q))
                 
-                mut x0 := norm * math.cos(theta / 3.0) - a / 3.0
-                mut x1 := norm * math.cos((theta + 2.0 * math.pi) / 3.0) - a / 3.0
-                mut x2 := norm * math.cos((theta - 2.0 * math.pi) / 3.0) - a / 3.0
+                x0 := norm * math.cos(theta / 3.0) - a / 3.0
+                x1 := norm * math.cos((theta + 2.0 * math.pi) / 3.0) - a / 3.0
+                x2 := norm * math.cos((theta - 2.0 * math.pi) / 3.0) - a / 3.0
                 
                 /* TODO: Sort x0, x1, x2 into increasing order */
 
@@ -227,7 +227,7 @@ pub fn balance_companion_matrix(cm [][]f64) [][]f64 {
 
                         mut g := row_norm / radix
                         mut f := 1.0
-                        mut s := col_norm + row_norm
+                        s := col_norm + row_norm
 
                         for col_norm < g {
                                 f *= radix

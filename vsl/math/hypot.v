@@ -18,8 +18,7 @@ pub fn hypot(x, y f64) f64 {
         if x != 0.0 || y != 0.0 {
                 a := abs(x)
                 b := abs(y)
-                min := min(a, b)
-                max := max(a, b)
+                min, max := minmax(a, b)
                 rat := min/max
                 root_term := sqrt(f64(1.0) + rat*rat)
 

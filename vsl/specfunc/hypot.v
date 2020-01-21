@@ -38,10 +38,10 @@ pub fn hypot(x, y f64) f64 {
 
 pub fn hypot_e(x, y f64) (f64, f64) {
         if math.is_inf(x, 0) || math.is_inf(y, 0) {
-		return math.inf(1)
+		return math.inf(1), f64(0.0)
         }
 	if math.is_nan(x) || math.is_nan(y) {
-		return math.nan()
+		return math.nan(), f64(0.0)
 	}
 
         mut result := f64(0.0)

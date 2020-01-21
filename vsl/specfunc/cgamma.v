@@ -5,6 +5,7 @@ module specfunc
 
 import vsl.math.complex as cmplx
 import vsl.math
+
 /**
  * Compute the Gamma function for complex argument
  *
@@ -16,8 +17,6 @@ import vsl.math
  * @param kf an integer flag. If kf, Gamma is computed, if !kf, log(Gamma)
  *
  */
-
-
 fn _sp_cgamma(x_, y_ f64, kf bool) (f64,f64) {
 	mut x := x_
 	mut y := y_

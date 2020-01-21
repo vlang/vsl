@@ -4,49 +4,6 @@
 module math
 
 #include <math.h>
-fn C.cbrt(x f64) f64
-
-
-fn C.cosh(x f64) f64
-
-
-fn C.erf(x f64) f64
-
-
-fn C.erfc(x f64) f64
-
-
-fn C.exp(x f64) f64
-
-
-fn C.exp2(x f64) f64
-
-
-fn C.log2(x f64) f64
-
-
-fn C.log10(x f64) f64
-
-
-fn C.lgamma(x f64) f64
-
-
-fn C.pow(x f64, y f64) f64
-
-
-fn C.sinh(x f64) f64
-
-
-fn C.sqrt(x f64) f64
-
-
-fn C.tgamma(x f64) f64
-
-
-fn C.tan(x f64) f64
-
-
-fn C.tanh(x f64) f64
 
 // cbrt calculates cubic root.
 pub fn cbrt(a f64) f64 {
