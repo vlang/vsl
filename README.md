@@ -34,7 +34,7 @@ $ vpkg get https://github.com/ulises-jeremias/vsl
 To test the module, just type the following command:
 
 ```sh
-$ ./bin/test
+$ make test
 ```
 
 ## License

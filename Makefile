@@ -1,10 +1,15 @@
 VC=v
 
 build: clean
-	$(VC) -g build vsl >> /dev/null
+	$(VC) -g build . >> /dev/null
 
 clean:
-	rm -rf test *.o *.o.tmp*
+	find . -name '*_test' | xargs rm -f 
+	rm -rf *.o *.o.tmp*
 
 test: 
 	./bin/test
+	find . -name '*_test' | xargs rm -f 
+
+format:
+	v -g test .
