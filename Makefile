@@ -8,7 +8,7 @@ clean:
 	rm -rf *.o *.o.tmp*
 
 test: 
-	./bin/test
+	v test .
 	find . -name '*_test' | xargs rm -f 
 
 format:
