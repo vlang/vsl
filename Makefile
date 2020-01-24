@@ -10,5 +10,5 @@ clean:
 test: 
 	./bin/test
 
-format:
-	v -g test .
+fmt:
+	./bin/fmt
