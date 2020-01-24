@@ -12,4 +12,6 @@ v test .
 find . -name '*_test' | xargs rm -f
 
 rm -rf ~/.vmodules/vsl
-[ -d ~/.vmodules/old_vsl ] && mv ~/.vmodules/old_vsl ~/.vmodules/vsl
+if [ -d ~/.vmodules/old_vsl ]; then
+    mv ~/.vmodules/old_vsl ~/.vmodules/vsl
+fi

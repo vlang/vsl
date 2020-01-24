@@ -19,4 +19,4 @@ jobs:
         sudo ./v symlink
         popd
     - name: run tests
-      run: ./bin/test
+      run: make test
