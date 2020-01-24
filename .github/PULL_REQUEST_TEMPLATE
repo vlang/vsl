@@ -1,0 +1,33 @@
+<!--
+
+Please title your PR as follows: `time: fix foo bar`. 
+Always start with the thing you are fixing, then describe the fix.
+Don't use past tense (e.g. "fixed foo bar").
+
+Explain what your PR does and why.
+
+If you are adding a new function, please document it and add tests:
+
+```
+// foo does foo and bar
+fn foo() {
+
+// file_test.v
+fn test_foo() {
+    assert foo() == ...
+    ...
+}
+```
+
+If you are fixing a bug, please add a test that covers it.
+
+Before submitting a PR, please:
+  - run the tests with `./bin/test`
+
+I try to process PRs as soon as possible. They should be handled within 24 hours.
+
+Applying labels to PRs is not needed.
+
+Thanks a lot for your contribution!
+
+->
