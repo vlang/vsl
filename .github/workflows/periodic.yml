@@ -23,4 +23,4 @@ jobs:
         sudo ./v symlink
         popd
     - name: run tests
-      run: make test
+      run: ./bin/test
