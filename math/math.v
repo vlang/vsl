@@ -4,9 +4,6 @@
 module math
 
 #include <math.h>
-fn C.cbrt(x f64) f64
-
-
 fn C.cosh(x f64) f64
 
 
@@ -37,9 +34,6 @@ fn C.pow(x f64, y f64) f64
 fn C.sinh(x f64) f64
 
 
-fn C.sqrt(x f64) f64
-
-
 fn C.tgamma(x f64) f64
 
 
@@ -48,11 +42,6 @@ fn C.tan(x f64) f64
 
 fn C.tanh(x f64) f64
 
-
-// cbrt calculates cubic root.
-pub fn cbrt(a f64) f64 {
-	return C.cbrt(a)
-}
 
 // cosh calculates hyperbolic cosine.
 pub fn cosh(a f64) f64 {
@@ -117,11 +106,6 @@ pub fn radians(degrees f64) f64 {
 // sinh calculates hyperbolic sine.
 pub fn sinh(a f64) f64 {
 	return C.sinh(a)
-}
-
-// sqrt calculates square-root of the provided value.
-pub fn sqrt(a f64) f64 {
-	return C.sqrt(a)
 }
 
 // tan calculates tangent.
