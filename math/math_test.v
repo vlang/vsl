@@ -1999,10 +1999,10 @@ fn test_sqrt() {
 	for i := 0; i < vf_.len; i++ {
 		mut a := abs(vf_[i])
 		mut f := sqrt(a)
-		assert sqrt_[i] == f
+		assert veryclose(sqrt_[i], f)
 		a = abs(vf_[i])
 		f = sqrt(a)
-		assert sqrt_[i] == f
+		assert veryclose(sqrt_[i], f)
 	}
 	for i := 0; i < vfsqrt_sc_.len; i++ {
 		mut f := sqrt(vfsqrt_sc_[i])
