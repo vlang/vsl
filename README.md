@@ -1,5 +1,7 @@
 # vsl
 
+[![Build Status](https://github.com/ulises-jeremias/vsl/workflows/CI/badge.svg)](https://github.com/ulises-jeremias/vsl/commits/master)
+
 A pure-V scientific library with a great variety of functions.
 
 > The version of this module will remain in `0.x.x` unless the language API's are finalized and implemented.
