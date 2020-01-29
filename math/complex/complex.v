@@ -40,25 +40,25 @@ pub fn (c Complex) angle() f64 {
 }
 
 // Complex Addition c1 + c2
-pub fn (c1 Complex) +(c2 Complex) Complex {
+pub fn (c1 Complex) + (c2 Complex) Complex {
 	return Complex{
 		c1.re + c2.re,c1.im + c2.im}
 }
 
 // Complex Substraction c1 - c2
-pub fn (c1 Complex) -(c2 Complex) Complex {
+pub fn (c1 Complex) - (c2 Complex) Complex {
 	return Complex{
 		c1.re - c2.re,c1.im - c2.im}
 }
 
 // Complex Multiplication c1 * c2
-pub fn (c1 Complex) *(c2 Complex) Complex {
+pub fn (c1 Complex) * (c2 Complex) Complex {
 	return Complex{
 		(c1.re * c2.re) + ((c1.im * c2.im) * -1),(c1.re * c2.im) + (c1.im * c2.re)}
 }
 
 // Complex Division c1 / c2
-pub fn (c1 Complex) /(c2 Complex) Complex {
+pub fn (c1 Complex) / (c2 Complex) Complex {
 	denom := (c2.re * c2.re) + (c2.im * c2.im)
 	return Complex{
 		((c1.re * c2.re) + ((c1.im * -c2.im) * -1)) / denom,((c1.re * -c2.im) + (c1.im * c2.re)) / denom}
