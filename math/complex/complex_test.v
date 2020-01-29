@@ -1,5 +1,5 @@
-import math
-import math.complex as cmplx
+import vsl.math
+import vsl.math.complex as cmplx
 
 fn test_complex_addition() {
 	// Test is based on and verified from practice examples of Khan Academy
