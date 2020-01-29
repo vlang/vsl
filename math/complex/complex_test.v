@@ -1,5 +1,5 @@
-import math
-import math.complex as cmplx
+import vsl.math
+import vsl.math.complex as cmplx
 
 fn test_complex_addition() {
 	// Test is based on and verified from practice examples of Khan Academy
@@ -743,24 +743,25 @@ fn test_complex_acoth() {
 	assert result.str().eq(c2.str())
 }
 
-// fn test_complex_asech() {
-// // Tests were also verified on Wolfram Alpha
-// mut c1 := cmplx.complex(5,7)
-// mut c2 := cmplx.complex(0.094668,-1.503480)
-// mut result := c1.asech()
-// // Some issue with precision comparison in f64 using == operator hence serializing to string
-// assert result.str().eq(c2.str())
-// c1 = cmplx.complex(-3,4)
-// c2 = cmplx.complex(0.160446,-1.689547)
-// result = c1.asech()
-// // Some issue with precision comparison in f64 using == operator hence serializing to string
-// assert result.str().eq(c2.str())
-// c1 = cmplx.complex(-1,-2)
-// c2 = cmplx.complex(0.396568,1.757114)
-// result = c1.asech()
-// // Some issue with precision comparison in f64 using == operator hence serializing to string
-// assert result.str().eq(c2.str())
-// }
+fn test_complex_asech() {
+	// Tests were also verified on Wolfram Alpha
+	mut c1 := cmplx.complex(5, 7)
+	mut c2 := cmplx.complex(0.094668, -1.503480)
+	mut result := c1.asech()
+	// Some issue with precision comparison in f64 using == operator hence serializing to string
+	assert result.str().eq(c2.str())
+	c1 = cmplx.complex(-3, 4)
+	c2 = cmplx.complex(0.160446, -1.689547)
+	result = c1.asech()
+	// // Some issue with precision comparison in f64 using == operator hence serializing to string
+	// assert result.str().eq(c2.str())
+	c1 = cmplx.complex(-1, -2)
+	c2 = cmplx.complex(0.396568, 1.757114)
+	result = c1.asech()
+	// Some issue with precision comparison in f64 using == operator hence serializing to string
+	assert result.str().eq(c2.str())
+}
+
 fn test_complex_acsch() {
 	// Tests were also verified on Wolfram Alpha
 	mut c1 := cmplx.complex(5, 7)

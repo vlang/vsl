@@ -3,7 +3,7 @@
 // that can be found in the LICENSE file.
 module complex
 
-import math
+import vsl.math
 
 pub struct Complex {
 pub:
@@ -27,7 +27,7 @@ pub fn (c Complex) str() string {
 // Complex Modulus value
 // mod() and abs() return the same
 pub fn (c Complex) abs() f64 {
-	return C.hypot(c.re, c.im)
+	return math.hypot(c.re, c.im)
 }
 
 pub fn (c Complex) mod() f64 {
@@ -40,25 +40,25 @@ pub fn (c Complex) angle() f64 {
 }
 
 // Complex Addition c1 + c2
-pub fn (c1 Complex) +(c2 Complex) Complex {
+pub fn (c1 Complex) + (c2 Complex) Complex {
 	return Complex{
 		c1.re + c2.re,c1.im + c2.im}
 }
 
 // Complex Substraction c1 - c2
-pub fn (c1 Complex) -(c2 Complex) Complex {
+pub fn (c1 Complex) - (c2 Complex) Complex {
 	return Complex{
 		c1.re - c2.re,c1.im - c2.im}
 }
 
 // Complex Multiplication c1 * c2
-pub fn (c1 Complex) *(c2 Complex) Complex {
+pub fn (c1 Complex) * (c2 Complex) Complex {
 	return Complex{
 		(c1.re * c2.re) + ((c1.im * c2.im) * -1),(c1.re * c2.im) + (c1.im * c2.re)}
 }
 
 // Complex Division c1 / c2
-pub fn (c1 Complex) /(c2 Complex) Complex {
+pub fn (c1 Complex) / (c2 Complex) Complex {
 	denom := (c2.re * c2.re) + (c2.im * c2.im)
 	return Complex{
 		((c1.re * c2.re) + ((c1.im * -c2.im) * -1)) / denom,((c1.re * -c2.im) + (c1.im * c2.re)) / denom}
@@ -350,29 +350,16 @@ pub fn (c Complex) acoth() Complex {
 // Based on
 // http://www.suitcaseofdreams.net/Inverse__Hyperbolic_Functions.htm
 // For certain scenarios, Result mismatch in crossverification with Wolfram Alpha - analysis pending
-// pub fn (c Complex) asech() Complex {
-// one := complex(1,0)
-// if(c.re < -1.0) {
-// return one.subtract(
-// one.subtract(
-// c.pow(2)
-// )
-// .root(2)
-// )
-// .divide(c)
-// .ln()
-// }
-// else {
-// return one.add(
-// one.subtract(
-// c.pow(2)
-// )
-// .root(2)
-// )
-// .divide(c)
-// .ln()
-// }
-// }
+pub fn (c Complex) asech() Complex {
+	one := complex(1, 0)
+	if (c.re < -1.0) {
+		return one.subtract(one.subtract(c.pow(2)).root(2)).divide(c).ln()
+	}
+	else {
+		return one.add(one.subtract(c.pow(2)).root(2)).divide(c).ln()
+	}
+}
+
 // Complex Hyperbolic Arc Cosecant / Cosecant Inverse
 // Based on
 // http://www.suitcaseofdreams.net/Inverse__Hyperbolic_Functions.htm
