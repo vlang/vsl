@@ -350,29 +350,16 @@ pub fn (c Complex) acoth() Complex {
 // Based on
 // http://www.suitcaseofdreams.net/Inverse__Hyperbolic_Functions.htm
 // For certain scenarios, Result mismatch in crossverification with Wolfram Alpha - analysis pending
-// pub fn (c Complex) asech() Complex {
-// one := complex(1,0)
-// if(c.re < -1.0) {
-// return one.subtract(
-// one.subtract(
-// c.pow(2)
-// )
-// .root(2)
-// )
-// .divide(c)
-// .ln()
-// }
-// else {
-// return one.add(
-// one.subtract(
-// c.pow(2)
-// )
-// .root(2)
-// )
-// .divide(c)
-// .ln()
-// }
-// }
+pub fn (c Complex) asech() Complex {
+	one := complex(1, 0)
+	if (c.re < -1.0) {
+		return one.subtract(one.subtract(c.pow(2)).root(2)).divide(c).ln()
+	}
+	else {
+		return one.add(one.subtract(c.pow(2)).root(2)).divide(c).ln()
+	}
+}
+
 // Complex Hyperbolic Arc Cosecant / Cosecant Inverse
 // Based on
 // http://www.suitcaseofdreams.net/Inverse__Hyperbolic_Functions.htm
