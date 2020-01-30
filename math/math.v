@@ -22,9 +22,6 @@ fn C.exp2(x f64) f64
 fn C.lgamma(x f64) f64
 
 
-fn C.pow(x f64, y f64) f64
-
-
 fn C.sinh(x f64) f64
 
 
@@ -75,11 +72,6 @@ pub fn gamma(a f64) f64 {
 // log_gamma computes the log-gamma function value
 pub fn log_gamma(a f64) f64 {
 	return C.lgamma(a)
-}
-
-// pow returns base raised to the provided power.
-pub fn pow(a, b f64) f64 {
-	return C.pow(a, b)
 }
 
 // radians convert from radians to degrees.
