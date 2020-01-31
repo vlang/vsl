@@ -19,16 +19,7 @@ fn C.exp(x f64) f64
 fn C.exp2(x f64) f64
 
 
-fn C.log2(x f64) f64
-
-
-fn C.log10(x f64) f64
-
-
 fn C.lgamma(x f64) f64
-
-
-fn C.pow(x f64, y f64) f64
 
 
 fn C.sinh(x f64) f64
@@ -78,24 +69,9 @@ pub fn gamma(a f64) f64 {
 	return C.tgamma(a)
 }
 
-// log2 calculates base-2 logarithm of the provided value.
-pub fn log2(a f64) f64 {
-	return C.log2(a)
-}
-
-// log10 calculates the common (base-10) logarithm of the provided value.
-pub fn log10(a f64) f64 {
-	return C.log10(a)
-}
-
 // log_gamma computes the log-gamma function value
 pub fn log_gamma(a f64) f64 {
 	return C.lgamma(a)
-}
-
-// pow returns base raised to the provided power.
-pub fn pow(a, b f64) f64 {
-	return C.pow(a, b)
 }
 
 // radians convert from radians to degrees.
