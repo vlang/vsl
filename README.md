@@ -1,8 +1,10 @@
-# vsl
+<img width="80" src="./static/vsl-logo.png">
 
 [![Mentioned in Awesome V](https://awesome.re/mentioned-badge.svg)](https://github.com/vlang/awesome-v/blob/master/README.md#scientific-computing)
 [![Build Status](https://github.com/ulises-jeremias/vsl/workflows/CI/badge.svg)](https://github.com/ulises-jeremias/vsl/commits/master)
 [![Documentation Status](https://readthedocs.org/projects/vsl/badge/?version=latest)](http://vsl.readthedocs.io/en/latest/?badge=latest) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
+# V Scientific Library
 
 A pure-V scientific library with a great variety of functions.
 
