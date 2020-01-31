@@ -1,4 +1,4 @@
-<img width="80" src="./static/vsl-logo.png">
+<img width="155" src="./static/vsl-logo.png">
 
 [![Mentioned in Awesome V](https://awesome.re/mentioned-badge.svg)](https://github.com/vlang/awesome-v/blob/master/README.md#scientific-computing)
 [![Build Status](https://github.com/ulises-jeremias/vsl/workflows/CI/badge.svg)](https://github.com/ulises-jeremias/vsl/commits/master)
