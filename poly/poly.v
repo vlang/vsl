@@ -118,11 +118,10 @@ pub fn solve_cubic(a, b, c f64) []f64 {
 		ratio := sgnr * math.sqrt(r2 / q3)
 		theta := math.acos(ratio)
 		norm := f64(-2.0 * math.sqrt(q))
-		x0 := norm * math.cos(theta / 3.0) - a / 3.0
-		x1 := norm * math.cos((theta + 2.0 * math.pi) / 3.0) - a / 3.0
-		x2 := norm * math.cos((theta - 2.0 * math.pi) / 3.0) - a / 3.0
-		/* TODO: Sort x0, x1, x2 into increasing order */
-
+		mut x0 := norm * math.cos(theta / 3.0) - a / 3.0
+		mut x1 := norm * math.cos((theta + 2.0 * math.pi) / 3.0) - a / 3.0
+		mut x2 := norm * math.cos((theta - 2.0 * math.pi) / 3.0) - a / 3.0
+		x0,x1,x2 = sorted_3_(x0, x1, x2)
 		return [x0, x1, x2]
 	}
 	else {
@@ -131,6 +130,28 @@ pub fn solve_cubic(a, b, c f64) []f64 {
 		B := q / A
 		return [A + B - a / 3]
 	}
+}
+
+[inline]
+fn swap_(a f64, b f64) (f64,f64) {
+	return b,a
+}
+
+[inline]
+fn sorted_3_(x_ f64, y_ f64, z_ f64) (f64,f64,f64) {
+	mut x := x_
+	mut y := y_
+	mut z := z_
+	if (x > y) {
+		y,x = swap_(x, y)
+	}
+	if (y > z) {
+		z,y = swap_(y, z)
+	}
+	if (x > y) {
+		y,x = swap_(x, y)
+	}
+	return x,y,z
 }
 
 pub fn companion_matrix(a []f64) [][]f64 {
