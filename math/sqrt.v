@@ -11,10 +11,10 @@ module math
 //	sqrt(nan) = nan
 pub fn sqrt(x_ f64) f64 {
         mut x := x_
-	if x == f64(0.0) || is_nan(x) || is_inf(x, 1) {
+	if x == f64(0) || is_nan(x) || is_inf(x, 1) {
 		return x
         }
-	if x < f64(0.0) {
+	if x < f64(0) {
 		return nan()
 	}
 	z, e := frexp(x)

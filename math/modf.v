@@ -16,7 +16,7 @@ const (
 //	modf(NaN) = NaN, NaN
 pub fn modf(f f64) (f64,f64) {
         abs_f := abs(f)
-        mut i := f64(0.0)
+        mut i := f64(0)
 	if abs_f >= _maxpowtwo {
 		i = f /* it must be an integer */
 	}

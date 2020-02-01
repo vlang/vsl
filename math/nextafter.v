@@ -39,7 +39,7 @@ pub fn nextafter32(x, y f32) f32 {
 //	nextafter(nan, y) = nan
 //	nextafter(x, nan) = nan
 pub fn nextafter(x, y f64) f64 {
-        mut r := f64(0.0)
+        mut r := f64(0)
 
 	if is_nan(x) || is_nan(y) {
 		r = nan()

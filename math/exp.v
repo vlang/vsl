@@ -54,7 +54,7 @@ pub fn ldexp(x f64, e int) f64 {
 // frexp(NaN) = NaN, 0
 pub fn frexp(x f64) (f64, int) {
 	if x == 0.0 {
-                return f64(0.0), 0
+                return f64(0), 0
         }
         else if !is_finite(x) {
                 return x, 0
@@ -239,12 +239,12 @@ pub fn expm1(x_ f64) f64 {
 		}
 	}
 	// argument reduction
-	mut c := f64(0.0)
+	mut c := f64(0)
 	mut k := 0
 	if absx > ln2_half {
 		// if  |x| > 0.5 * ln2
-		mut hi := f64(0.0)
-		mut lo := f64(0.0)
+		mut hi := f64(0)
+		mut lo := f64(0)
 		if absx < ln2_halfX3 {
 			// and |x| < 1.5 * ln2
 			if !sign {

@@ -63,7 +63,7 @@ pub fn graph(edges [][]int, weights_e []f64, verts [][]f64, weights_v []f64) Gra
 	mut dist := [[]f64].repeat(nv)
 	mut next := [[]int].repeat(nv)
 	for i := 0; i < nv; i++ {
-		dist[i] = [f64(0.0)].repeat(nv)
+		dist[i] = [f64(0)].repeat(nv)
 		next[i] = [0].repeat(nv)
 	}
 	return Graph{

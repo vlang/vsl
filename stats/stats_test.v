@@ -1,7 +1,7 @@
 // Copyright (c) 2019 Ulises Jeremias Cornejo Fandos. All rights reserved.
 // Use of this source code is governed by an MIT license
 // that can be found in the LICENSE file.
-import vsl.math.stats as stats
+import vsl.stats
 
 fn test_freq() {
 	// Tests were also verified on Wolfram Alpha

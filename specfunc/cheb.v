@@ -17,12 +17,12 @@ pub:
 }
 
 pub fn (cs ChebSeries) eval_e(x f64) (f64,f64) {
-	mut d := f64(0.0)
-	mut dd := f64(0.0)
+	mut d := f64(0)
+	mut dd := f64(0)
 	y := (2.0 * x - cs.a - cs.b) / (cs.b - cs.a)
 	y2 := 2.0 * y
-	mut e := f64(0.0)
-	mut temp := f64(0.0)
+	mut e := f64(0)
+	mut temp := f64(0)
 	for j := cs.order; j >= 1; j-- {
 		temp = d
 		d = y2 * d - dd + cs.c[j]

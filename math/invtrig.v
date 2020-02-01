@@ -181,7 +181,7 @@ pub fn atan2(y, x f64) f64 {
 //	asin(x) = nan if x < -1 or x > 1
 pub fn asin(x_ f64) f64 {
         mut x := x_
-	if x == f64(0.0) {
+	if x == f64(0) {
 		return x // special case
 	}
 	mut sign := false

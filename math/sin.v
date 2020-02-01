@@ -77,7 +77,7 @@ pub fn sin(x f64) f64 {
                 
                 z := ((abs_x - y * p1) - y * p2) - y * p3
 
-                mut result := f64(0.0)
+                mut result := f64(0)
 
                 if octant == 0 {
                         t := 8.0*abs(z)/pi - 1.0
@@ -126,7 +126,7 @@ pub fn cos(x f64) f64 {
                 
                 z := ((abs_x - y * p1) - y * p2) - y * p3
 
-                mut result := f64(0.0)
+                mut result := f64(0)
 
                 if octant == 0 {
                         t := 8.0*abs(z)/pi - 1.0
@@ -181,8 +181,8 @@ pub fn sincos(x f64) (f64, f64) {
                 sin_cs_val, _ := sin_cs.eval_e(t)
                 cos_cs_val, _ := cos_cs.eval_e(t)
 
-                mut result_sin := f64(0.0)
-                mut result_cos := f64(0.0)
+                mut result_sin := f64(0)
+                mut result_cos := f64(0)
 
                 if octant == 0 {
                         result_sin = z * (1.0 + z*z * sin_cs_val)

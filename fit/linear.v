@@ -13,8 +13,8 @@ import vsl.math
 // [1] Press WH, Teukolsky SA, Vetterling WT, Fnannery BP (2007) Numerical Recipes: The Art of
 // Scientific Computing. Third Edition. Cambridge University Press. 1235p.
 fn linear(x, y []f64) (f64,f64) {
-	mut sx := f64(0.0)
-	mut sy := f64(0.0)
+	mut sx := f64(0)
+	mut sy := f64(0)
 	ndata := x.len
 	// accumulate sums
 	for i := 0; i < ndata; i++ {
@@ -22,8 +22,8 @@ fn linear(x, y []f64) (f64,f64) {
 		sy += y[i]
 	}
 	// compute b
-	mut b := f64(0.0)
-	mut st2 := f64(0.0)
+	mut b := f64(0)
+	mut st2 := f64(0)
 	ss := f64(ndata)
 	sxoss := sx / ss
 	for i := 0; i < ndata; i++ {
@@ -47,8 +47,8 @@ fn linear(x, y []f64) (f64,f64) {
 // [1] Press WH, Teukolsky SA, Vetterling WT, Fnannery BP (2007) Numerical Recipes: The Art of
 // Scientific Computing. Third Edition. Cambridge University Press. 1235p.
 fn linear_sigma(x, y []f64) (f64,f64,f64,f64,f64) {
-	mut sx := f64(0.0)
-	mut sy := f64(0.0)
+	mut sx := f64(0)
+	mut sy := f64(0)
 	ndata := x.len
 	// accumulate sums
 	for i := 0; i < ndata; i++ {
@@ -56,8 +56,8 @@ fn linear_sigma(x, y []f64) (f64,f64,f64,f64,f64) {
 		sy += y[i]
 	}
 	// compute b
-	mut b := f64(0.0)
-	mut st2 := f64(0.0)
+	mut b := f64(0)
+	mut st2 := f64(0)
 	ss := f64(ndata)
 	sxoss := sx / ss
 	for i := 0; i < ndata; i++ {
@@ -72,7 +72,7 @@ fn linear_sigma(x, y []f64) (f64,f64,f64,f64,f64) {
 	mut sigma_a := math.sqrt((1.0 + sx * sx / (ss * st2)) / ss)
 	mut sigma_b := math.sqrt(1.0 / st2)
 	// calculate χ².
-	mut chi_2 := f64(0.0)
+	mut chi_2 := f64(0)
 	for i := 0; i < ndata; i++ {
 		d := y[i] - a - b * x[i]
 		chi_2 += d * d

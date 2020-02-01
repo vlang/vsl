@@ -31,15 +31,15 @@ pub fn brent(func vsl.Function, x1, x2, tol f64) (?f64,f64) {
 	mut fc := fa
 	if (fa > 0.0 && fb > 0.0) || (fa < 0.0 && fb < 0.0) {
 		// TODO: FIXME
-		// return errno.vsl_error('roots must be bracketed', .einval), f64(0.0)
+		// return errno.vsl_error('roots must be bracketed', .einval), f64(0)
 		}
 		/* Test if one the endpoints is the root */
 
 		if fa == 0.0 {
-			return a,f64(0.0)
+			return a,f64(0)
 		}
 		if fb == 0.0 {
-			return b,f64(0.0)
+			return b,f64(0)
 		}
 		mut prev_step := b - a
 		mut tol1 := tol

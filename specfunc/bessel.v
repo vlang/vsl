@@ -87,7 +87,7 @@ pub fn bessel_j0(x_ f64) f64 {
 		}
 		// j0(x) = 1/sqrt(pi) * (P(0,x)*cc - Q(0,x)*ss) / sqrt(x)
 		// y0(x) = 1/sqrt(pi) * (P(0,x)*ss + Q(0,x)*cc) / sqrt(x)
-		mut z := f64(0.0)
+		mut z := f64(0)
 		if x > two129 {
 			// |x| > ~6.8056e+38
 			z = (f64(1.0) / math.sqrt_pi) * cc / math.sqrt(x)
@@ -126,7 +126,7 @@ pub fn bessel_j1(x_ f64) f64 {
 		return x
 	}
 	if math.is_inf(x, 0) || x == 0 {
-		return f64(0.0)
+		return f64(0)
 	}
 	mut sign := false
 	if x < 0.0 {
@@ -149,7 +149,7 @@ pub fn bessel_j1(x_ f64) f64 {
 		}
 		// j1(x) = 1/sqrt(pi) * (P(1,x)*cc - Q(1,x)*ss) / sqrt(x)
 		// y1(x) = 1/sqrt(pi) * (P(1,x)*ss + Q(1,x)*cc) / sqrt(x)
-		mut z := f64(0.0)
+		mut z := f64(0)
 		if x > two129 {
 			z = (f64(1.0) / math.sqrt_pi) * cc / math.sqrt(x)
 		}
@@ -190,7 +190,7 @@ pub fn bessel_jn(n_ int, x_ f64) f64 {
 		return x
 	}
 	if math.is_inf(x, 0) {
-		return f64(0.0)
+		return f64(0)
 	}
 	// J(-n, x) = (-1)**n * J(n, x), J(n, -x) = (-1)**n * J(n, x)
 	// Thus, J(-n, x) = J(n, -x)
@@ -198,7 +198,7 @@ pub fn bessel_jn(n_ int, x_ f64) f64 {
 		return bessel_j0(x)
 	}
 	if x == 0 {
-		return f64(0.0)
+		return f64(0)
 	}
 	if n < 0 {
 		n = -n
@@ -214,7 +214,7 @@ pub fn bessel_jn(n_ int, x_ f64) f64 {
 			sign = true // odd n and negative x
 		}
 	}
-	mut b := f64(0.0)
+	mut b := f64(0)
 	if f64(n) <= x {
 		// Safe to use J(n+1,x)=2n/x *J(n,x)-J(n-1,x)
 		if x >= two302 {
@@ -231,7 +231,7 @@ pub fn bessel_jn(n_ int, x_ f64) f64 {
 			// 1    -s-c            -c+s
 			// 2    -s+c            -c-s
 			// 3     s+c             c-s
-			mut temp := f64(0.0)
+			mut temp := f64(0)
 			s,c := math.sincos(x)
 			n3 := n & 3
 			if n3 == 0 {
@@ -322,7 +322,7 @@ pub fn bessel_jn(n_ int, x_ f64) f64 {
 				q1 = z * q1 - q0_
 			}
 			m := n + n
-			mut t := f64(0.0)
+			mut t := f64(0)
 			for i := 2 * (n + k); i >= m; i -= 2 {
 				t = f64(1.0) / (f64(i) / x - t)
 			}
@@ -382,7 +382,7 @@ pub fn bessel_y0(x f64) f64 {
 		return math.nan()
 	}
 	if math.is_inf(x, 1) {
-		return f64(0.0)
+		return f64(0)
 	}
 	if x == 0 {
 		return math.inf(-1)
@@ -414,7 +414,7 @@ pub fn bessel_y0(x f64) f64 {
 				ss = z / cc
 			}
 		}
-		mut z := f64(0.0)
+		mut z := f64(0)
 		if x > two129 {
 			// |x| > ~6.8056e+38
 			z = (f64(1.0) / math.sqrt_pi) * ss / math.sqrt(x)
@@ -446,7 +446,7 @@ pub fn bessel_y1(x f64) f64 {
 		return math.nan()
 	}
 	if math.is_inf(x, 1) {
-		return f64(0.0)
+		return f64(0)
 	}
 	if x == 0 {
 		return math.inf(-1)
@@ -475,7 +475,7 @@ pub fn bessel_y1(x f64) f64 {
 		// To avoid cancellation, use
 		// sin(x) +- cos(x) = -cos(2x)/(sin(x) -+ cos(x))
 		// to compute the worse one.
-		mut z := f64(0.0)
+		mut z := f64(0)
 		if x > two129 {
 			z = (f64(1.0) / math.sqrt_pi) * ss / math.sqrt(x)
 		}
@@ -510,7 +510,7 @@ pub fn bessel_yn(n_ int, x f64) f64 {
 		return math.nan()
 	}
 	if math.is_inf(x, 1) {
-		return f64(0.0)
+		return f64(0)
 	}
 	if n == 0 {
 		return bessel_y0(x)
@@ -534,7 +534,7 @@ pub fn bessel_yn(n_ int, x f64) f64 {
 		}
 		return bessel_y1(x)
 	}
-	mut b := f64(0.0)
+	mut b := f64(0)
 	if x >= two302 {
 		// x > 2**302
 		// (x >> n**2)
@@ -549,7 +549,7 @@ pub fn bessel_yn(n_ int, x f64) f64 {
 		// 1	-s-c 		-c+s
 		// 2	-s+c		-c-s
 		// 3	 s+c		 c-s
-		mut temp := f64(0.0)
+		mut temp := f64(0)
 		s,c := math.sincos(x)
 		n3 := n & 3
 		if n3 == 0 {

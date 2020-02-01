@@ -13,7 +13,7 @@ pub fn hypot(x, y f64) f64 {
 		return nan()
 	}
 
-        mut result := f64(0.0)
+        mut result := f64(0)
 
         if x != 0.0 || y != 0.0 {
                 a := abs(x)

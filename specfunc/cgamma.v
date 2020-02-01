@@ -22,7 +22,7 @@ fn _sp_cgamma(x_, y_ f64, kf bool) (f64,f64) {
 	mut x := x_
 	mut y := y_
 	if y == 0.0 && x == f64(u64(x)) && x <= 0.0 {
-		return f64(1.0e+300),f64(0.0)
+		return f64(1.0e+300),f64(0)
 	}
 	mut x1 := 0.0
 	mut y1 := 0.0

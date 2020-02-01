@@ -130,8 +130,8 @@ pub fn sin_e(x f64) (f64,f64) {
 			sgn_result = -sgn_result
 		}
 		z := ((abs_x - y * p1) - y * p2) - y * p3
-		mut result := f64(0.0)
-		mut result_err := f64(0.0)
+		mut result := f64(0)
+		mut result_err := f64(0)
 		if octant == 0 {
 			t := 8.0 * math.abs(z) / math.pi - 1.0
 			sin_cs_val,_ := sin_cs.eval_e(t)
@@ -182,8 +182,8 @@ pub fn cos_e(x f64) (f64,f64) {
 			sgn_result = -sgn_result
 		}
 		z := ((abs_x - y * p1) - y * p2) - y * p3
-		mut result := f64(0.0)
-		mut result_err := f64(0.0)
+		mut result := f64(0)
+		mut result_err := f64(0)
 		if octant == 0 {
 			t := 8.0 * math.abs(z) / math.pi - 1.0
 			cos_cs_val,_ := cos_cs.eval_e(t)
@@ -235,7 +235,7 @@ pub fn sin(x f64) f64 {
 			sgn_result = -sgn_result
 		}
 		z := ((abs_x - y * p1) - y * p2) - y * p3
-		mut result := f64(0.0)
+		mut result := f64(0)
 		if octant == 0 {
 			t := 8.0 * math.abs(z) / math.pi - 1.0
 			sin_cs_val,_ := sin_cs.eval_e(t)
@@ -274,7 +274,7 @@ pub fn cos(x f64) f64 {
 			sgn_result = -sgn_result
 		}
 		z := ((abs_x - y * p1) - y * p2) - y * p3
-		mut result := f64(0.0)
+		mut result := f64(0)
 		if octant == 0 {
 			t := 8.0 * math.abs(z) / math.pi - 1.0
 			cos_cs_val,_ := cos_cs.eval_e(t)

@@ -18,7 +18,7 @@ pub fn acosh(x f64) f64 {
                 return log1p(t + sqrt(2.0 * t + t * t))
         }
         else if x == f64(1.0) {
-                return f64(0.0)
+                return f64(0)
         }
         else {
                 return nan()

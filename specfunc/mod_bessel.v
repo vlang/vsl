@@ -51,8 +51,8 @@ fn bessel_in(n int, x f64) f64 {
 	mut bip := 0.0
 	mut bi := 1.0
 	mut k := 0
-	mut bim := f64(0.0)
-        mut ans := f64(0.0)
+	mut bim := f64(0)
+        mut ans := f64(0)
 	for j := 2 * (n + int(math.sqrt(acc*f64(n)))); j > 0; j-- { // Downward recurrence.
 		bim = bip + f64(j)*tox*bi
 		bip = bi
@@ -133,7 +133,7 @@ fn bessel_kn(n int, x f64) f64 {
 	tox := 2.0 / x
 	mut bkm := bessel_k0(x) // Upward recurrence for all x...
 	mut bk := bessel_k1(x)
-	mut bkp := f64(0.0)
+	mut bkp := f64(0)
 	for j := 1; j < n; j++ {
 		bkp = bkm + f64(j)*tox*bk
 		bkm = bk

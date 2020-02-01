@@ -138,11 +138,11 @@ pub fn companion_matrix(a []f64) [][]f64 {
 	mut cm := [[]f64].repeat(nc)
 	mut i := 0
 	for ; i < nc; i++ {
-		cm[i] = [f64(0.0)].repeat(nc)
+		cm[i] = [f64(0)].repeat(nc)
 	}
 	for i = 0; i < nc; i++ {
 		for j := 0; j < nc; j++ {
-			cm[i][j] = f64(0.0)
+			cm[i][j] = f64(0)
 		}
 	}
 	for i = 1; i < nc; i++ {
@@ -267,7 +267,7 @@ pub fn add(a, b []f64) []f64 {
 	na := a.len
 	nb := b.len
 	nc := int(math.max(na, nb))
-	mut c := [f64(0.0)].repeat(nc)
+	mut c := [f64(0)].repeat(nc)
 	for i := 0; i < nc; i++ {
 		if i > na {
 			c[i] = b[i]
@@ -286,7 +286,7 @@ pub fn substract(a, b []f64) []f64 {
 	na := a.len
 	nb := b.len
 	nc := int(math.max(na, nb))
-	mut c := [f64(0.0)].repeat(nc)
+	mut c := [f64(0)].repeat(nc)
 	for i := 0; i < nc; i++ {
 		if i > na {
 			c[i] = -b[i]
@@ -305,7 +305,7 @@ pub fn multiply(a, b []f64) []f64 {
 	na := a.len
 	nb := b.len
 	nc := na + nb
-	mut c := [f64(0.0)].repeat(nc)
+	mut c := [f64(0)].repeat(nc)
 	for i := 0; i < na; i++ {
 		x := a[i]
 		for j := 0; j < nb; j++ {

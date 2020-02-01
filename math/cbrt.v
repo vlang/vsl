@@ -22,7 +22,7 @@ pub fn cbrt(x_ f64) f64 {
         g              := 3.57142857142857150787e-01  // 5/14      = 0x3FD6DB6DB6DB6DB7
         smallest_normal := 2.22507385850720138309e-308 // 2**-1022  = 0x0010000000000000
 
-	if x == f64(0.0) || is_nan(x) || is_inf(x, 0) {
+	if x == f64(0) || is_nan(x) || is_inf(x, 0) {
 		return x
 	}
 

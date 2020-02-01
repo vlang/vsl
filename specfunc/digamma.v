@@ -14,8 +14,8 @@ pub fn digamma(x f64) f64 {
 pub fn psi(x_ f64) f64 {
         mut x := x_
         mut negative := false
-        mut nz := f64(0.0)
-        mut y := f64(0.0)
+        mut nz := f64(0)
+        mut y := f64(0)
 
         if x <= 0.0 {
                 negative = true

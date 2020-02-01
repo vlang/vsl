@@ -180,8 +180,8 @@ fn duplication_formula(two_x f64) f64 {
 
 fn log_gamma_asymptotic_expansion(x f64) f64 {
         m := B.len
-        mut term := [f64(0.0)].repeat(m)
-        mut sum := f64(0.0)
+        mut term := [f64(0)].repeat(m)
+        mut sum := f64(0)
         xx := x * x
         mut xj := x
         log_gamma := log_sqrt_2pi - xj + (xj - 0.5) * math.log(xj)

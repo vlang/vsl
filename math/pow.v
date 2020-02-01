@@ -52,5 +52,5 @@ pub fn pow10(n int) f64 {
 	}
 
 	// n < -323
-	return f64(0.0)
+	return f64(0)
 }
