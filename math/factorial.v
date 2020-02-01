@@ -1,9 +1,6 @@
 // Copyright (c) 2019 Ulises Jeremias Cornejo Fandos. All rights reserved.
 // Use of this source code is governed by an MIT license
 // that can be found in the LICENSE file.
-
-// Module created by Ulises Jeremias Cornejo Fandos based on
-// the definitions provided in https://scientificc.github.io/cmathl/
 module math
 
 // factorial calculates the factorial of the provided value.
