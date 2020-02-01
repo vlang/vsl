@@ -7,12 +7,6 @@ module math
 fn C.cosh(x f64) f64
 
 
-fn C.erf(x f64) f64
-
-
-fn C.erfc(x f64) f64
-
-
 fn C.exp(x f64) f64
 
 
@@ -47,16 +41,6 @@ pub fn degrees(radians f64) f64 {
 // exp calculates exponent of the number (math.pow(math.E, a)).
 pub fn exp(a f64) f64 {
 	return C.exp(a)
-}
-
-// erf computes the error function value
-pub fn erf(a f64) f64 {
-	return C.erf(a)
-}
-
-// erfc computes the complementary error function value
-pub fn erfc(a f64) f64 {
-	return C.erfc(a)
 }
 
 // exp2 returns the base-2 exponential function of a (math.pow(2, a)).
