@@ -58,28 +58,4 @@ pub const (
 	max_int_fact_arg = 170
 	max_f64_fact_arg = 171.0
 	max_long_f64_fact_arg = 1755.5
-	/* MACHINE CONSTANTS! */
-
-	/* a little internal backwards compatibility */
-
-	mach_eps = f64_epsilon
-	/* Here are the constants related to or derived from
-	* machine constants. These are not to be confused with
-	* the constants that define various precision levels
-	* for the precision/error system.
-	*
-	* This information is determined at configure time
-	* and is platform dependent. Edit at your own risk.
-	*/
-
-	/* machine precision constants */
-
-	/* mach_eps             = 1.0e-15 */
-
-	sqrt_mach_eps = 3.2e-08
-	root3_mach_eps = 1.0e-05
-	root4_mach_eps = 0.000178
-	root5_mach_eps = 0.00100
-	root6_mach_eps = 0.00316
-	log_mach_eps = -34.54
 )
