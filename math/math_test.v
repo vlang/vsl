@@ -2071,9 +2071,9 @@ fn test_large_sin() {
 fn test_large_tan() {
 	large := f64(100000) * pi
 	for i := 0; i < vf_.len; i++ {
-		f1 := tan_large_[i]
-		f2 := tan(vf_[i] + large)
 		// TODO: improve trig reduction for large arguments
+		// f1 := tan_large_[i]
+		// f2 := tan(vf_[i] + large)
 		// assert soclose(f1, f2, 1e-9)
 	}
 }
