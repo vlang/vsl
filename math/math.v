@@ -19,13 +19,10 @@ fn C.lgamma(x f64) f64
 fn C.sinh(x f64) f64
 
 
-fn C.tgamma(x f64) f64
-
-
-fn C.tan(x f64) f64
-
-
 fn C.tanh(x f64) f64
+
+
+fn C.tgamma(x f64) f64
 
 
 // cosh calculates hyperbolic cosine.
@@ -66,11 +63,6 @@ pub fn radians(degrees f64) f64 {
 // sinh calculates hyperbolic sine.
 pub fn sinh(a f64) f64 {
 	return C.sinh(a)
-}
-
-// tan calculates tangent.
-pub fn tan(a f64) f64 {
-	return C.tan(a)
 }
 
 // tanh calculates hyperbolic tangent.
