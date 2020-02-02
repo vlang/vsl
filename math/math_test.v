@@ -2073,7 +2073,7 @@ fn test_large_tan() {
 	for i := 0; i < vf_.len; i++ {
 		f1 := tan_large_[i]
 		f2 := tan(vf_[i] + large)
-                // TODO: improve trig reduction for large arguments
+		// TODO: improve trig reduction for large arguments
 		// assert soclose(f1, f2, 1e-9)
 	}
 }
