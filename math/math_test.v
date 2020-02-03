@@ -1761,7 +1761,6 @@ fn test_cosh() {
 	}
 }
 
-/*
 fn test_expm1() {
 	for i := 0; i < vf_.len; i++ {
 		a := vf_[i] / 100
@@ -1777,8 +1776,7 @@ fn test_expm1() {
 		f := expm1(vfexpm1_sc_[i])
                 assert alike(expm1_sc_[i], f)
 	}
-}*/
-
+}
 
 fn test_abs() {
 	for i := 0; i < vf_.len; i++ {
