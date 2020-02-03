@@ -802,8 +802,7 @@ const (
 	5e-324,
 	1.0000000025821745,
 	]
-	vfexpm1_sc_ = [ninf_,
-	-710,
+	vfexpm1_sc_ = [f64(-710),
 	-0.0,
 	0,
 	710,
@@ -811,7 +810,6 @@ const (
 	nan_,
 	]
 	expm1_sc_ = [f64(-1),
-	-1,
 	-0.0,
 	0,
 	inf_,
@@ -1765,16 +1763,19 @@ fn test_expm1() {
 	for i := 0; i < vf_.len; i++ {
 		a := vf_[i] / 100
 		f := expm1(a)
-                assert veryclose(expm1_[i], f)
+		assert veryclose(expm1_[i], f)
 	}
 	for i := 0; i < vf_.len; i++ {
 		a := vf_[i] * 10
 		f := expm1(a)
-                assert close(expm1_large_[i], f)
+		assert close(expm1_large_[i], f)
 	}
 	for i := 0; i < vfexpm1_sc_.len; i++ {
 		f := expm1(vfexpm1_sc_[i])
-                assert alike(expm1_sc_[i], f)
+		println(vfexpm1_sc_[i])
+		println(expm1_sc_[i])
+		println(f)
+		assert alike(expm1_sc_[i], f)
 	}
 }
 
@@ -2084,5 +2085,5 @@ fn test_large_tan() {
 		// f1 := tan_large_[i]
 		// f2 := tan(vf_[i] + large)
 		// assert soclose(f1, f2, 1e-9)
+		}
 	}
-}

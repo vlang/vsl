@@ -105,8 +105,8 @@ pub fn expm1(x f64) f64 {
         if is_inf(x, 1) || is_nan(x) {
 		return x
 	}
-	else if is_inf(x, -1) {
-		return -1
+	if is_inf(x, -1) {
+		return f64(-1)
 	}
 
         /* FIXME: this should be improved */
@@ -124,7 +124,7 @@ pub fn expm1(x f64) f64 {
 
                 for abs(term) > abs(sum) * internal.f64_epsilon {
                         i++ 
-                        term *= x/f64(i)i
+                        term *= x/f64(i)
                         sum += term
                 }
                 
