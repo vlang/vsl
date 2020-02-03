@@ -24,6 +24,54 @@ const (
 	EXPM1_Q5 = -2.01099218183624371326e-07 // 0xBE8AFDB76E09C32D
 )
 
+// Exp2 returns 2**x, the base-2 exponential of x.
+//
+// special cases are the same as Exp.
+pub fn exp2(x f64) f64 {
+        overflow  := 1.0239999999999999e+03
+        underflow := -1.0740e+03
+
+        p1 := 1.66666666666666657415e-01  /* 0x3FC55555; 0x55555555 */
+        p2 := -2.77777777770155933842e-03 /* 0xBF66C16C; 0x16BEBD93 */
+        p3 := 6.61375632143793436117e-05  /* 0x3F11566A; 0xAF25DE2C */
+        p4 := -1.65339022054652515390e-06 /* 0xBEBBBD41; 0xC5D26BF1 */
+        p5 := 4.13813679705723846039e-08  /* 0x3E663769; 0x72BEA4D0 */
+
+	if is_nan(x) || is_inf(x, 1) {
+		return x
+        }
+	if is_inf(x, -1) {
+		return 0
+        }
+	if x > overflow {
+		return inf(1)
+        }
+	if x < underflow {
+		return 0
+	}
+
+	// argument reduction; x = r×lg(e) + k with |r| ≤ ln(2)/2.
+	// computed as r = hi - lo for extra precision.
+        mut k := 0
+	if x > 0 {
+		k = int(x + 0.5)
+        }
+	if x < 0 {
+		k = int(x - 0.5)
+	}
+	mut t := x - f64(k)
+	hi := t * ln2Hi
+	lo := -t * ln2Lo
+        
+	r := hi - lo
+	t = r * r
+	c := r - t*(p1+t*(p2+t*(p3+t*(p4+t*p5))))
+	y := f64(1) - ((lo - (r*c)/(f64(2)-c)) - hi)
+	// TODO(rsc): make sure Ldexp can handle boundary k
+	return ldexp(y, k)
+
+}
+
 pub fn ldexp(x f64, e int) f64 {
 	if x == 0.0 {
 		return x

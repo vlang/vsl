@@ -7,9 +7,6 @@ module math
 fn C.exp(x f64) f64
 
 
-fn C.exp2(x f64) f64
-
-
 fn C.lgamma(x f64) f64
 
 
@@ -26,11 +23,6 @@ pub fn degrees(radians f64) f64 {
 // exp calculates exponent of the number (math.pow(math.E, a)).
 pub fn exp(a f64) f64 {
 	return C.exp(a)
-}
-
-// exp2 returns the base-2 exponential function of a (math.pow(2, a)).
-pub fn exp2(a f64) f64 {
-	return C.exp2(a)
 }
 
 // gamma computes the gamma function value
