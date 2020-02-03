@@ -7,9 +7,6 @@ module math
 fn C.lgamma(x f64) f64
 
 
-fn C.tanh(x f64) f64
-
-
 fn C.tgamma(x f64) f64
 
 // degrees convert from degrees to radians.
@@ -30,9 +27,4 @@ pub fn log_gamma(a f64) f64 {
 // radians convert from radians to degrees.
 pub fn radians(degrees f64) f64 {
 	return degrees * (pi / 180.0)
-}
-
-// tanh calculates hyperbolic tangent.
-pub fn tanh(a f64) f64 {
-	return C.tanh(a)
 }
