@@ -1665,14 +1665,13 @@ fn test_acosh() {
 	for i := 0; i < vf_.len; i++ {
 		a := 1.0 + abs(vf_[i])
 		f := acosh(a)
-                assert veryclose(acosh_[i], f)
+		assert veryclose(acosh_[i], f)
 	}
 	for i := 0; i < vfacosh_sc_.len; i++ {
 		f := acosh(vfacosh_sc_[i])
-                assert alike(acosh_sc_[i], f)
+		assert alike(acosh_sc_[i], f)
 	}
 }
-
 
 fn test_asin() {
 	for i := 0; i < vf_.len; i++ {
@@ -1689,14 +1688,13 @@ fn test_asin() {
 fn test_asinh() {
 	for i := 0; i < vf_.len; i++ {
 		f := asinh(vf_[i])
-                assert veryclose(asinh_[i], f)
+		assert veryclose(asinh_[i], f)
 	}
 	for i := 0; i < vfasinh_sc_.len; i++ {
 		f := asinh(vfasinh_sc_[i])
-                assert alike(asinh_sc_[i], f)
+		assert alike(asinh_sc_[i], f)
 	}
 }
-
 
 fn test_atan() {
 	for i := 0; i < vf_.len; i++ {
@@ -1713,14 +1711,13 @@ fn test_atanh() {
 	for i := 0; i < vf_.len; i++ {
 		a := vf_[i] / 10
 		f := atanh(a)
-                assert veryclose(atanh_[i], f)
+		assert veryclose(atanh_[i], f)
 	}
 	for i := 0; i < vfatanh_sc_.len; i++ {
 		f := atanh(vfatanh_sc_[i])
-                assert alike(atanh_sc_[i], f)
+		assert alike(atanh_sc_[i], f)
 	}
 }
-
 
 fn test_atan2() {
 	for i := 0; i < vf_.len; i++ {
@@ -1838,6 +1835,20 @@ fn test_min() {
 
 }
 
+fn test_mod() {
+	for i := 0; i < vf_.len; i++ {
+		f := mod(10, vf_[i])
+		assert fmod_[i] == f
+	}
+	for i := 0; i < vffmod_sc_.len; i++ {
+		f := mod(vffmod_sc_[i][0], vffmod_sc_[i][1])
+		// assert alike(fmod_sc_[i], f)
+	}
+	// verify precision of result for extreme inputs
+	f := mod(5.9790119248836734e+200, 1.1258465975523544)
+	assert (0.6447968302508578) == f
+}
+
 fn test_exp() {
 	for i := 0; i < vf_.len; i++ {
 		f := exp(vf_[i])
@@ -1922,14 +1933,12 @@ fn test_ldexp() {
 
 fn test_log_gamma() {
 	for i := 0; i < vf_.len; i++ {
-		f := log_gamma(vf_[i])
-		s := if signbit(f) { 1 } else { -1 }
-		assert close(log_gamma_[i].f, f) || log_gamma_[i].i != s
+		f, s := log_gamma_sign(vf_[i])
+		assert soclose(log_gamma_[i].f, f, 1e-6) && log_gamma_[i].i == s
 	}
 	for i := 0; i < vflog_gamma_sc_.len; i++ {
-		f := log_gamma(vflog_gamma_sc_[i])
-		s := if signbit(f) { 1 } else { -1 }
-		assert alike(log_gamma_sc_[i].f, f) || log_gamma_sc_[i].i != s
+		f, s := log_gamma_sign(vflog_gamma_sc_[i])
+		assert alike(log_gamma_sc_[i].f, f) && log_gamma_sc_[i].i == s
 	}
 }
 

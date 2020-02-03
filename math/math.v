@@ -3,19 +3,11 @@
 // that can be found in the LICENSE file.
 module math
 
-#include <math.h>
-fn C.lgamma(x f64) f64
-
-
 // degrees convert from degrees to radians.
 pub fn degrees(radians f64) f64 {
 	return radians * (180.0 / pi)
 }
 
-// log_gamma computes the log-gamma function value
-pub fn log_gamma(a f64) f64 {
-	return C.lgamma(a)
-}
 // radians convert from radians to degrees.
 pub fn radians(degrees f64) f64 {
 	return degrees * (pi / 180.0)
