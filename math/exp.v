@@ -2,6 +2,9 @@
 // Use of this source code is governed by an MIT license
 // that can be found in the LICENSE file.
 module math
+#include <math.h>
+
+fn C.exp(x f64) f64
 
 import vsl.internal
 
@@ -24,9 +27,21 @@ const (
 	EXPM1_Q5 = -2.01099218183624371326e-07 // 0xBE8AFDB76E09C32D
 )
 
-// Exp2 returns 2**x, the base-2 exponential of x.
+// exp returns e**x, the base-e exponential of x.
 //
-// special cases are the same as Exp.
+// special cases are:
+//	exp(+inf) = +inf
+//	exp(nan) = nan
+// Very large values overflow to 0 or +inf.
+// Very small values underflow to 1.
+pub fn exp(x f64) f64 {
+        return C.exp(x)
+
+}
+
+// exp2 returns 2**x, the base-2 exponential of x.
+//
+// special cases are the same as exp.
 pub fn exp2(x f64) f64 {
         overflow  := 1.0239999999999999e+03
         underflow := -1.0740e+03
@@ -69,7 +84,6 @@ pub fn exp2(x f64) f64 {
 	y := f64(1) - ((lo - (r*c)/(f64(2)-c)) - hi)
 	// TODO(rsc): make sure Ldexp can handle boundary k
 	return ldexp(y, k)
-
 }
 
 pub fn ldexp(x f64, e int) f64 {

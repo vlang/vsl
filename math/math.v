@@ -4,9 +4,6 @@
 module math
 
 #include <math.h>
-fn C.exp(x f64) f64
-
-
 fn C.lgamma(x f64) f64
 
 
@@ -18,11 +15,6 @@ fn C.tgamma(x f64) f64
 // degrees convert from degrees to radians.
 pub fn degrees(radians f64) f64 {
 	return radians * (180.0 / pi)
-}
-
-// exp calculates exponent of the number (math.pow(math.E, a)).
-pub fn exp(a f64) f64 {
-	return C.exp(a)
 }
 
 // gamma computes the gamma function value
