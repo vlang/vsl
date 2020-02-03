@@ -1834,6 +1834,17 @@ fn test_min() {
 
 }
 
+fn test_exp() {
+	for i := 0; i < vf_.len; i++ {
+		f := exp(vf_[i])
+		assert veryclose(exp_[i], f)
+	}
+	for i := 0; i < vfexp_sc_.len; i++ {
+		f := exp(vfexp_sc_[i])
+		assert alike(exp_sc_[i], f)
+	}
+}
+
 fn test_frexp() {
 	for i := 0; i < vf_.len; i++ {
 		f,j := frexp(vf_[i])
