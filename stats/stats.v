@@ -4,7 +4,6 @@
 module stats
 
 import vsl.math
-
 // Measure of Occurance
 // Frequency of a given number
 // Based on
@@ -261,7 +260,7 @@ pub fn tss(data []f64) f64 {
 	if data.len == 0 {
 		return f64(0)
 	}
-        mean := mean(data)
+	mean := mean(data)
 	mut tss := f64(0)
 	for v in data {
 		tss += (v - mean) * (v - mean)
@@ -394,7 +393,7 @@ pub fn range(data []f64) f64 {
 
 [inline]
 pub fn lag1_autocorrelation(data []f64) f64 {
-        mean := mean(data)
+	mean := mean(data)
 	return lag1_autocorrelation_mean(data, mean)
 }
 
@@ -417,59 +416,56 @@ pub fn lag1_autocorrelation_mean(data []f64, mean f64) f64 {
 
 [inline]
 pub fn kurtosis(data []f64) f64 {
-        mean := mean(data)
-        sd := population_stddev_mean(data, mean)
-        return kurtosis_mean_stddev(data, mean, sd)
+	mean := mean(data)
+	sd := population_stddev_mean(data, mean)
+	return kurtosis_mean_stddev(data, mean, sd)
 }
 
 // Takes a dataset and finds the kurtosis
 // using the fourth moment the deviations, normalized by the sd
 pub fn kurtosis_mean_stddev(data []f64, mean f64, sd f64) f64 {
-        mut avg := f64(0)
-        /* find the fourth moment the deviations, normalized by the sd */
+	mut avg := f64(0)
+	/* find the fourth moment the deviations, normalized by the sd */
 
-        /* we use a recurrence relation to stably update a running value so
+	/* we use a recurrence relation to stably update a running value so
          * there aren't any large sums that can overflow
          */
-        for i, v in data {
-                x := (v - mean)/sd
-                avg += (x * x * x * x - avg)/(f64(i) + 1.0)
-        }
-        return avg - f64(3.0)
+
+	for i, v in data {
+		x := (v - mean) / sd
+		avg += (x * x * x * x - avg) / (f64(i) + 1.0)
+	}
+	return avg - f64(3.0)
 }
 
 [inline]
 pub fn skew(data []f64) f64 {
-        mean := mean(data)
-        sd := population_stddev_mean(data, mean)
-        return skew_mean_stddev(data, mean, sd)
+	mean := mean(data)
+	sd := population_stddev_mean(data, mean)
+	return skew_mean_stddev(data, mean, sd)
 }
 
 pub fn skew_mean_stddev(data []f64, mean f64, sd f64) f64 {
-        mut skew := f64(0)
-        /* find the sum of the cubed deviations, normalized by the sd. */
+	mut skew := f64(0)
+	/* find the sum of the cubed deviations, normalized by the sd. */
 
-        /* we use a recurrence relation to stably update a running value so
+	/* we use a recurrence relation to stably update a running value so
          * there aren't any large sums that can overflow
          */
-        for i, v in data {
-                x := (v - mean)/sd
-                skew += (x * x * x - skew)/(f64(i) + 1.0)
-        }
-        return skew
+
+	for i, v in data {
+		x := (v - mean) / sd
+		skew += (x * x * x - skew) / (f64(i) + 1.0)
+	}
+	return skew
 }
 
 pub fn quantile_for_sorted_data(sorted_data []f64, f f64) f64 {
-        if sorted_data.len == 0 {
-                return f64(0)
-        }
-
-        index := f * (f64(sorted_data.len) - 1.0)
-        lhs := int(index)
-        delta := index - f64(lhs)
-        return if lhs == sorted_data.len - 1 {
-                sorted_data[lhs]
-        } else {
-                (f64(1.0) - delta) * sorted_data[lhs] + delta * sorted_data[(lhs + 1)]
-        }
+	if sorted_data.len == 0 {
+		return f64(0)
+	}
+	index := f * (f64(sorted_data.len) - 1.0)
+	lhs := int(index)
+	delta := index - f64(lhs)
+	return if lhs == sorted_data.len - 1 { sorted_data[lhs] } else { (f64(1.0) - delta) * sorted_data[lhs] + delta * sorted_data[(lhs + 1)] }
 }
