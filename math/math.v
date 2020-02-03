@@ -28,3 +28,8 @@ pub fn log_gamma(a f64) f64 {
 pub fn radians(degrees f64) f64 {
 	return degrees * (pi / 180.0)
 }
+
+fn is_odd_int(x f64) bool {
+	xi, xf := modf(x)
+	return xf == 0 && (i64(xi) & 1) == 1
+}
