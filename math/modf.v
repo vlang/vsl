@@ -12,8 +12,8 @@ const (
 // that sum to f. Both values have the same sign as f.
 //
 // special cases are:
-//	modf(±Inf) = ±Inf, NaN
-//	modf(NaN) = NaN, NaN
+//	modf(±inf) = ±inf, nan
+//	modf(nan) = nan, nan
 pub fn modf(f f64) (f64,f64) {
         abs_f := abs(f)
         mut i := f64(0)

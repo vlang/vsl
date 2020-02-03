@@ -25,7 +25,7 @@ fn is_finite(a f64) bool {
 }
 
 /* Call the pointed-to function with argument x, put its result in y, and
- * return an error if the function value is Inf/Nan.
+ * return an error if the function value is inf/nan.
  */
 
 
