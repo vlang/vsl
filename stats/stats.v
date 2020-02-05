@@ -70,16 +70,16 @@ pub fn harmonic_mean(data []f64) f64 {
 // Median of the given input array ( input array is assumed to be sorted )
 // Based on
 // https://www.mathsisfun.com/data/central-measures.html
-pub fn median(data []f64) f64 {
-	if data.len == 0 {
+pub fn median_for_sorted_data(sorted_data []f64) f64 {
+	if sorted_data.len == 0 {
 		return f64(0)
 	}
-	if data.len % 2 == 0 {
-		mid := (data.len / 2) - 1
-		return (data[mid] + data[mid + 1]) / f64(2)
+	if sorted_data.len % 2 == 0 {
+		mid := (sorted_data.len / 2) - 1
+		return (sorted_data[mid] + sorted_data[mid + 1]) / f64(2)
 	}
 	else {
-		return data[((data.len - 1) / 2)]
+		return sorted_data[((sorted_data.len - 1) / 2)]
 	}
 }
 
@@ -228,7 +228,7 @@ pub fn sample_stddev_mean(data []f64, mean f64) f64 {
 // Mean Absolute Deviation of the given input array
 // Based on
 // https://en.wikipedia.org/wiki/Average_absolute_deviation
-pub fn mean_absdev(data []f64) f64 {
+pub fn absdev(data []f64) f64 {
 	if data.len == 0 {
 		return f64(0)
 	}
@@ -244,7 +244,7 @@ pub fn mean_absdev(data []f64) f64 {
 // Mean Absolute Deviation of the given input array
 // Based on
 // https://en.wikipedia.org/wiki/Average_absolute_deviation
-pub fn mean_absdev_mean(data []f64, mean f64) f64 {
+pub fn absdev_mean(data []f64, mean f64) f64 {
 	if data.len == 0 {
 		return f64(0)
 	}
@@ -389,6 +389,29 @@ pub fn range(data []f64) f64 {
 		return f64(0)
 	}
 	return max(data) - min(data)
+}
+
+[inline]
+pub fn covariance(data1 []f64, data2 []f64) f64 {
+	mean1 := mean(data1)
+	mean2 := mean(data2)
+	return covariance_mean(data1, data2, mean1, mean2)
+}
+
+// Compute the covariance of a dataset using
+// the recurrence relation
+pub fn covariance_mean(data1 []f64, data2 []f64, mean1 f64, mean2 f64) f64 {
+	n := int(math.min(data1.len, data2.len))
+	if n == 0 {
+		return f64(0)
+	}
+	mut covariance := f64(0)
+	for i := 0; i < n; i++ {
+		delta1 := data1[i] - mean1
+		delta2 := data2[i] - mean2
+		covariance += (delta1 * delta2 - covariance) / (f64(i) + 1.0)
+	}
+	return covariance
 }
 
 [inline]

@@ -12,11 +12,12 @@ Welcome to VSL's documentation!
    intro.rst
    consts.rst
    math.rst
-   diff.rst
-   roots.rst
-   poly.rst
-   easings.rst
    quaternion.rst
+   poly.rst
+   roots.rst
+   diff.rst
+   stats.rst
+   easings.rst
 
 Indices and tables
 ==================
