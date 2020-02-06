@@ -85,20 +85,20 @@ fn test_complex_division() {
 	assert result.equals(cmplx.complex(-4, -5))
 }
 
-fn test_complex_conjugate() {
+fn test_complex_conj() {
 	// Test is based on and verified from practice examples of Khan Academy
 	// https://www.khanacademy.org/math/precalculus/imaginary-and-complex-numbers
 	mut c1 := cmplx.complex(0, 8)
-	mut result := c1.conjugate()
+	mut result := c1.conj()
 	assert result.equals(cmplx.complex(0, -8))
 	c1 = cmplx.complex(7, 3)
-	result = c1.conjugate()
+	result = c1.conj()
 	assert result.equals(cmplx.complex(7, -3))
 	c1 = cmplx.complex(2, 2)
-	result = c1.conjugate()
+	result = c1.conj()
 	assert result.equals(cmplx.complex(2, -2))
 	c1 = cmplx.complex(7, 0)
-	result = c1.conjugate()
+	result = c1.conj()
 	assert result.equals(cmplx.complex(7, 0))
 }
 
@@ -116,7 +116,7 @@ fn test_complex_abs() {
 	assert c1.abs() == 5
 	c1 = cmplx.complex(1, 2)
 	assert c1.abs().eq(math.sqrt(5))
-	assert c1.abs().eq(c1.conjugate().abs())
+	assert c1.abs().eq(c1.conj().abs())
 	c1 = cmplx.complex(7, 0)
 	assert c1.abs() == 7
 }
@@ -134,7 +134,7 @@ fn test_complex_angle() {
 	assert (c.angle() * 180 / math.pi).eq(135)
 	c = cmplx.complex(-1, -1)
 	assert (c.angle() * 180 / math.pi).eq(-135)
-	cc := c.conjugate()
+	cc := c.conj()
 	assert (cc.angle() + c.angle()).eq(0)
 }
 

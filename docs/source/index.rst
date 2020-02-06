@@ -12,6 +12,7 @@ Welcome to VSL's documentation!
    intro.rst
    consts.rst
    math.rst
+   complex.rst
    quaternion.rst
    poly.rst
    roots.rst
