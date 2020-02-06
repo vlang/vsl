@@ -16,10 +16,10 @@ Routines available in VSL
 Routines are available for the following areas,
 
 ===========================  ===========================  ===========================
-Mathematical Functions       Complex Numbers              Special Functions
-Roots finding                Polynomials
-Quaternions                  Differential Equations       Numerical Differentiation
-Graph theory structure       Physical Constants           Easing Functions
+Mathematical Functions       Complex Numbers              Quaternions
+Special Functions            Roots finding                Polynomials
+Differential Equations       Numerical Differentiation    Statistics
+Graph theory Structure       Physical Constants           Easing Functions
 ===========================  ===========================  ===========================
 
 Each chapter of this manual
