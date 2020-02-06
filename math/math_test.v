@@ -1933,11 +1933,11 @@ fn test_ldexp() {
 
 fn test_log_gamma() {
 	for i := 0; i < vf_.len; i++ {
-		f, s := log_gamma_sign(vf_[i])
+		f,s := log_gamma_sign(vf_[i])
 		assert soclose(log_gamma_[i].f, f, 1e-6) && log_gamma_[i].i == s
 	}
 	for i := 0; i < vflog_gamma_sc_.len; i++ {
-		f, s := log_gamma_sign(vflog_gamma_sc_[i])
+		f,s := log_gamma_sign(vflog_gamma_sc_[i])
 		assert alike(log_gamma_sc_[i].f, f) && log_gamma_sc_[i].i == s
 	}
 }
@@ -2082,6 +2082,31 @@ fn test_trunc() {
 	}
 }
 
+fn test_gcd() {
+	assert gcd(6, 9) == 3
+	assert gcd(6, -9) == 3
+	assert gcd(-6, -9) == 3
+	assert gcd(0, 0) == 0
+}
+
+fn test_lcm() {
+	assert lcm(2, 3) == 6
+	assert lcm(-2, 3) == 6
+	assert lcm(-2, -3) == 6
+	assert lcm(0, 0) == 0
+}
+
+fn test_digits() {
+	digits_in_10th_base := digits(125, 10)
+	assert digits_in_10th_base[0] == 5
+	assert digits_in_10th_base[1] == 2
+	assert digits_in_10th_base[2] == 1
+	digits_in_16th_base := digits(15, 16)
+	assert digits_in_16th_base[0] == 15
+	negative_digits := digits(-4, 2)
+	assert negative_digits[2] == -1
+}
+
 // Check that math functions of high angle values
 // return accurate results. [since (vf_[i] + large) - large != vf_[i],
 // testing for Trig(vf_[i] + large) == Trig(vf_[i]), where large is
@@ -2110,6 +2135,6 @@ fn test_large_tan() {
 		// TODO: improve trig reduction for large arguments
 		// f1 := tan_large_[i]
 		// f2 := tan(vf_[i] + large)
-		// assert soclose(f1, f2, 1e-9)
+		// assert veryclose(f1, f2)
 		}
 	}
