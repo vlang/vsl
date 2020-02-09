@@ -19,18 +19,13 @@ Visit [vsl docs](https://vsl.readthedocs.io/) to know more about the supported f
 Via vpm:
 
 ```sh
-$ v install ulises-jeremias.vsl
-$ cp -r ~/.vmodules/ulises-jeremias/vsl ~/.vmodules/vsl
+$ v install vsl
 ```
 
 Via [vpkg](https://github.com/v-pkg/vpkg):
 
 ```sh
-$ vpkg get vsl
-
-# or
-
-$ vpkg get https://github.com/ulises-jeremias/vsl
+$ vpkg get https://github.com/vlang/vsl
 ```
 
 ## Testing
