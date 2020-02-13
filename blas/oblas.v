@@ -525,21 +525,21 @@ const (
 // Lapack matrix layout
 	lapack_row_major = 101
 	lapack_col_major = 102
-	// CBLAS_ORDER;
+	// CBLAS_ORDER
 	cblas_row_major = u32(101)
 	cblas_col_major = u32(102)
-	// CBLAS_TRANSPOSE;
+	// CBLAS_TRANSPOSE
 	cblas_no_trans = u32(111)
 	cblas_trans = u32(112)
 	cblas_conj_trans = u32(113)
 	cblas_conj_no_trans = u32(114)
-	// CBLAS_UPLO;
+	// CBLAS_UPLO
 	cblas_upper = u32(121)
 	cblas_lower = u32(122)
-	// CBLAS_DIAG;
+	// CBLAS_DIAG
 	cblas_non_unit = u32(131)
 	cblas_unit = u32(132)
-	// CBLAS_SIDE;
+	// CBLAS_SIDE
 	cblas_left = u32(141)
 	cblas_right = u32(142)
 )
