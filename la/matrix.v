@@ -8,7 +8,7 @@ import vsl.errno
 import vsl.blas
 import vsl.math
 
-struct Matrix {
+pub struct Matrix {
 pub mut:
         m int
         n int
@@ -279,7 +279,7 @@ pub fn (o Matrix) det() f64 {
 	blas.dgetrf(o.m, o.n, mut ai, o.m, ipiv) // NOTE: ipiv are 1-based indices
 	mut det := f64(1)
 	for i := 0; i < o.m; i++ {
-		if ipiv[i]-1 == int(i) { // NOTE: ipiv are 1-based indices
+		if ipiv[i]-1 == i { // NOTE: ipiv are 1-based indices
 			det = det * ai[i+i*o.m]
 		} else {
 			det = -det * ai[i+i*o.m]

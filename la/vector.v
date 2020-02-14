@@ -4,7 +4,6 @@
 module la
 
 import vsl.math
-
 // apply sets this []f64 with the scaled components of another []f64
 // this := a * another   ⇒   this[i] := a * another[i]
 // NOTE: "another" may be "this"
@@ -25,14 +24,13 @@ pub fn vector_apply_func(o mut []f64, f fn(int, f64)f64) {
 // unit returns the unit []f64 parallel to this []f64
 // b := a / norm(a)
 pub fn vector_unit(o mut []f64) []f64 {
-        mut unit := [f64(0.0)].repeat(o.len)
-        s := vector_norm(o)
-        if s > 0 {
-                vector_apply(mut unit, 1.0/s, o)
-        }
-        return unit
+	mut unit := [f64(0.0)].repeat(o.len)
+	s := vector_norm(o)
+	if s > 0 {
+		vector_apply(mut unit, 1.0 / s, o)
+	}
+	return unit
 }
-
 
 // accum sum/accumulates all components in a []f64
 // sum := Σ_i v[i]
@@ -47,7 +45,7 @@ pub fn vector_accum(o []f64) f64 {
 // norm returns the Euclidean norm of a []f64:
 // nrm := ‖v‖
 pub fn vector_norm(o []f64) f64 {
-        return math.sqrt(vector_dot(o, o))
+	return math.sqrt(vector_dot(o, o))
 }
 
 // rms returns the root-mean-square of this []f64
