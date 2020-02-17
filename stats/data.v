@@ -44,29 +44,21 @@ pub mut:
 //  Output:
 //    new object
 pub fn data(nb_samples, nb_features int, use_y, allocate bool) Data {
-	if allocate {
-		x := la.matrix(nb_samples, nb_features)
-		mut y := []f64
-		if use_y {
-			y = [f64(0)].repeat(nb_samples)
-		}
-                mut o := Data(calloc(sizeof(Data)))
-		o.observers = []
-                o.nb_samples = nb_samples
-                o.nb_features = nb_features
-                o.x = &x
-                o.y = y
-		o.stat = stat_from_data(mut o)
-		return o
-	}
-	y := []f64
 	mut o := Data(calloc(sizeof(Data)))
+        mut y := []f64
         o.observers = []
         o.nb_samples = nb_samples
         o.nb_features = nb_features
+	if allocate {
+		x := la.matrix(nb_samples, nb_features)
+		if use_y {
+			y = [f64(0)].repeat(nb_samples)
+		}
+                o.x = &x
+	}
         o.y = y
         o.stat = stat_from_data(mut o)
-	return o
+        return o
 }
 
 // set sets x matrix and y vector [optional] and notify observers
