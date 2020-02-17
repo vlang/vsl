@@ -8,7 +8,7 @@ import vsl.math
 
 // Stat holds statistics about data
 //
-//  NOTE: Stat is an Observer of Data; thus, data.Notifyupdate() will recompute stat
+//  NOTE: Stat is an Observer of Data; thus, data.notify_update() will recompute stat
 //
 pub struct Stat {
 pub mut:
