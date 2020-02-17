@@ -3,9 +3,7 @@
 // that can be found in the LICENSE file.
 module stats
 
-import vsl.util
 import vsl.la
-import vsl.errno
 import vsl.math
 
 // Stat holds statistics about data
@@ -30,7 +28,7 @@ pub mut:
 }
 
 // stat returns a new Stat object
-pub fn stat(data mut &Data) Stat {
+pub fn stat_from_data(data mut &Data) Stat {
         mut o := Stat{data: data}
 	o.min_x = [f64(0)].repeat(data.nb_features)
 	o.max_x = [f64(0)].repeat(data.nb_features)
