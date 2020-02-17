@@ -140,7 +140,7 @@ pub fn (o Data) clone() Data {
 		p.y = o.y.clone()
 	}
 	o.stat.copy_into(mut p.stat)
-	return o
+	return p
 }
 
 // add_observer adds an object to the list of interested observers
