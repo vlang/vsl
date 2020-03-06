@@ -5,7 +5,6 @@
 module math
 
 #include <math.h>
-fn C.pow(a, b f64) f64
 
 // pow returns base raised to the provided power.
 pub fn pow(a, b f64) f64 {

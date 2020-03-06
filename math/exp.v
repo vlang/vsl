@@ -4,8 +4,6 @@
 module math
 #include <math.h>
 
-fn C.exp(x f64) f64
-
 import vsl.internal
 
 const (
@@ -36,7 +34,6 @@ const (
 // Very small values underflow to 1.
 pub fn exp(x f64) f64 {
         return C.exp(x)
-
 }
 
 // exp2 returns 2**x, the base-2 exponential of x.

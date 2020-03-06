@@ -4,9 +4,6 @@
 
 module math
 
-#include <math.h>
-fn C.sinh(a f64) f64
-
 // sinh calculates hyperbolic sine.
 pub fn sinh(x_ f64) f64 {
         mut x := x_
