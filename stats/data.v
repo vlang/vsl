@@ -25,13 +25,10 @@ pub mut:
         observers []util.Observer // list of interested parties
 
 	// input
-	nb_samples  int        // number of data points (samples). number of rows in x and y
-	nb_features int        // number of features. number of columns in x
-	x           &la.Matrix // [nb_samples][nb_features] x values
-	y           []f64      // [nb_samples] y values [optional]
-
-	// access
-	stat        &Stat // statistics about this data
+	nb_samples  int           // number of data points (samples). number of rows in x and y
+	nb_features int           // number of features. number of columns in x
+	x           &la.Matrix    // [nb_samples][nb_features] x values
+	y           []f64         // [nb_samples] y values [optional]
 }
 
 // data returns a new object to hold ML data
@@ -44,20 +41,17 @@ pub mut:
 //  Output:
 //    new object
 pub fn data(nb_samples, nb_features int, use_y, allocate bool) Data {
-	if allocate {
-		x := la.matrix(nb_samples, nb_features)
-                mut y := []f64
-		if use_y {
-			y = [f64(0)].repeat(nb_samples)
-                }
-                mut o := Data{observers: [], nb_samples: nb_samples, nb_features: nb_features, x: &x, y: y}
-	        o.stat = stat(o)
-	        return o
+	mut o := Data(calloc(sizeof(Data)))
+	mut y := []f64
+	o.observers = []
+	o.nb_samples = nb_samples
+	o.nb_features = nb_features
+	o.x = if allocate { la.matrix(nb_samples, nb_features) } else { la.matrix(0, 0) }
+	if allocate && use_y {
+		y = [f64(0)].repeat(nb_samples)
 	}
-
-        mut o := Data{observers: [], nb_samples: nb_samples, nb_features: nb_features}
-        o.stat = stat(o)
-        return o
+	o.y = y
+	return o
 }
 
 // set sets x matrix and y vector [optional] and notify observers
@@ -93,9 +87,6 @@ pub fn data_given_raw_x(xraw [][]f64) Data {
 		}
 	}
 
-	// stat
-	o.stat = stat(o)
-	o.notify_update()
 	return o
 }
 
@@ -124,9 +115,6 @@ pub fn data_give_raw_xy(xyraw [][]f64) Data {
 		o.y[i] = xyraw[i][nb_features]
 	}
 
-	// stat
-	o.stat = stat(o)
-	o.notify_update()
 	return o
 }
 
@@ -138,8 +126,7 @@ pub fn (o Data) clone() Data {
 	if use_y {
 		p.y = o.y.clone()
 	}
-	o.stat.copy_into(mut p.stat)
-	return o
+	return p
 }
 
 // add_observer adds an object to the list of interested observers
