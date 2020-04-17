@@ -96,7 +96,7 @@ pub fn brent(func vsl.Function, x1, x2, tol f64) ?(f64,f64) {
                          * significantly
                          */
 
-			if 2.0 * p < 3.0 * new_step * q - math.abs(tol1 * q) && 2. * p < math.abs(prev_step * q) {
+			if 2.0 * p < 3.0 * new_step * q - math.abs(tol1 * q) && 2.0* p < math.abs(prev_step * q) {
 				new_step = p / q
 			}
 			else {
