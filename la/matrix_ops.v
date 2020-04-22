@@ -18,7 +18,7 @@ import vsl.math
 //     ai  -- the inverse matrix
 //     det -- determinant of a
 pub fn matrix_inv_small(ai, a mut Matrix, tol f64) f64 {
-        mut det := f64(0)
+        mut det := 0.0
 	if a.m == 1 && a.n == 1 {
 		det = a.get(0, 0)
 		if math.abs(det) < tol {
@@ -69,7 +69,7 @@ pub fn matrix_inv_small(ai, a mut Matrix, tol f64) f64 {
 //     u  -- left matrix [must be pre-allocated] u is (a.m x a.m)
 //     vt -- transposed right matrix [must be pre-allocated] vt is (a.n x a.n)
 pub fn matrix_svd(s []f64, u, vt, a Matrix, copy_a bool) {
-	superb := [f64(0)].repeat(int(math.min(a.m, a.n)))
+	superb := [0.0].repeat(int(math.min(a.m, a.n)))
 	mut acpy := a
 	if copy_a {
 		acpy = a.clone()
@@ -86,7 +86,7 @@ pub fn matrix_svd(s []f64, u, vt, a Matrix, copy_a bool) {
 //     det -- determinant of matrix (ONLY if calc_det == true and the matrix is square)
 //   NOTE: the dimension of the ai matrix must be N x M for the pseudo-inverse
 pub fn matrix_inv(ai, a mut Matrix, calc_det bool) f64 {
-        mut det := f64(0)
+        mut det := 0.0
         
 	// square inverse
 	if a.m == a.n {
@@ -97,7 +97,7 @@ pub fn matrix_inv(ai, a mut Matrix, calc_det bool) f64 {
 			det = 1.0
 			for i := 0; i < a.m; i++ {
 				if ipiv[i]-1 == int32(i) { // NOTE: ipiv are 1-based indices
-					det = +det * ai.get(i, i)
+					det = math.abs(det) * ai.get(i, i)
 				} else {
 					det = -det * ai.get(i, i)
 				}
@@ -108,7 +108,7 @@ pub fn matrix_inv(ai, a mut Matrix, calc_det bool) f64 {
 	}
 
 	// singular value decomposition
-	s := [f64(0)].repeat(int(math.min(a.m, a.n)))
+	s := [0.0].repeat(int(math.min(a.m, a.n)))
 	u := matrix(a.m, a.m)
 	vt := matrix(a.n, a.n)
 	matrix_svd(s, u, vt, a, true)
@@ -134,7 +134,7 @@ pub fn matrix_inv(ai, a mut Matrix, calc_det bool) f64 {
 //    "F" or "" => Frobenius
 //    "I"       => Infinite
 pub fn matrix_cond_num(a mut Matrix, normtype string) f64 {
-        mut res := f64(0)
+        mut res := 0.0
 	ai := matrix(a.m, a.n)
 	matrix_inv(ai, a, false)
 	if normtype == "I" {

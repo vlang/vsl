@@ -6,7 +6,9 @@ module roots
 import vsl.math
 import vsl.errno
 import vsl
-/**
+
+/*
+*
  * Find the root of a function by combining Newton's method with the bisection
  * method
  *
@@ -16,20 +18,16 @@ import vsl
  * @param tol a double speed of derivative decrease, if derivative is less
  * than tolerance, then it is converged
  * @param max_iter a int maximal number of iteration
- */
-
-
+*/
 pub fn newton_bisection(func vsl.FunctionFdf, x_min, x_max, tol f64, max_iter int) ?f64 {
-	func_low,_ := func.eval_f_df(x_min)
+	func_low, _ := func.eval_f_df(x_min)
 	if func_low == 0.0 {
 		return x_min
 	}
-	func_high,_ := func.eval_f_df(x_max)
+	func_high, _ := func.eval_f_df(x_max)
 	if func_high == 0.0 {
 		return x_max
-	}
-	/* Root is not bracketed by x1 and x2  */
-
+	} // Root is not bracketed by x1 and x2
 	if (func_low > 0.0 && func_high > 0.0) || (func_low < 0.0 && func_high < 0.0) {
 		return errno.vsl_error('roots is not bracketed by $x_min and $x_max', .einval)
 	}
@@ -38,22 +36,21 @@ pub fn newton_bisection(func vsl.FunctionFdf, x_min, x_max, tol f64, max_iter in
 	if func_low < 0.0 {
 		xl = x_min
 		xh = x_max
-	}
-	else {
+	} else {
 		xl = x_max
 		xh = x_min
 	}
 	mut rts := f64(0.5) * (x_min + x_max)
 	mut dx_anc := math.abs(x_max - x_min)
 	mut dx := dx_anc
-	mut func_current,mut diff_func_current := func.eval_f_df(rts)
+	mut func_current, mut diff_func_current := func.eval_f_df(rts)
 	for i := 0; i < max_iter; i++ {
-		if (((rts - xh) * diff_func_current - func_current) * ((rts - xl) * diff_func_current - func_current) >= 0.0) || math.abs(2.0 * func_current) > math.abs(dx_anc * diff_func_current) {
+		if (((rts - xh) * diff_func_current - func_current) * ((rts - xl) * diff_func_current -
+			func_current) >= 0.0) || math.abs(2.0 * func_current) > math.abs(dx_anc * diff_func_current) {
 			dx_anc = dx
 			dx = 0.5 * (xh - xl)
 			rts = xl + dx
-		}
-		else {
+		} else {
 			dx_anc = dx
 			dx = func_current / diff_func_current
 			rts -= dx
@@ -61,15 +58,12 @@ pub fn newton_bisection(func vsl.FunctionFdf, x_min, x_max, tol f64, max_iter in
 		if math.abs(dx) < tol {
 			return rts
 		}
-		func_current,diff_func_current = func.eval_f_df(rts)
+		func_current, diff_func_current = func.eval_f_df(rts)
 		if func_current < 0.0 {
 			xl = rts
-		}
-		else {
+		} else {
 			xh = rts
 		}
-	}
-	/* Maximum number of iterations exceeded */
-
+	} // Maximum number of iterations exceeded
 	return errno.vsl_error('maximum number of iterations exceeded', .emaxiter)
 }

@@ -171,7 +171,7 @@ pub fn erf(x_ f64) f64 {
 		return nan()
         }
 	if is_inf(x, 1) {
-		return f64(1)
+		return 1.0
 	}
         if is_inf(x, -1) {
 		return f64(-1)
@@ -182,7 +182,7 @@ pub fn erf(x_ f64) f64 {
 		sign = true
 	}
 	if x < 0.84375 { // |x| < 0.84375
-		mut temp := f64(0)
+		mut temp := 0.0
 		if x < small { // |x| < 2**-28
 			if x < very_tiny {
 				temp = 0.125 * (8.0*x + efx8*x) // avoid underflow
@@ -192,7 +192,7 @@ pub fn erf(x_ f64) f64 {
 		} else {
 			z := x * x
 			r := pp0 + z*(pp1+z*(pp2+z*(pp3+z*pp4)))
-			s_ := f64(1) + z*(qq1+z*(qq2+z*(qq3+z*(qq4+z*qq5))))
+			s_ := 1.0 + z*(qq1+z*(qq2+z*(qq3+z*(qq4+z*qq5))))
 			y := r / s_
 			temp = x + x*y
 		}
@@ -204,7 +204,7 @@ pub fn erf(x_ f64) f64 {
 	if x < 1.25 { // 0.84375 <= |x| < 1.25
 		s_ := x - 1
 		p := pa0 + s_*(pa1+s_*(pa2+s_*(pa3+s_*(pa4+s_*(pa5+s_*pa6)))))
-		q := f64(1) + s_*(qa1+s_*(qa2+s_*(qa3+s_*(qa4+s_*(qa5+s_*qa6)))))
+		q := 1.0 + s_*(qa1+s_*(qa2+s_*(qa3+s_*(qa4+s_*(qa5+s_*qa6)))))
 		if sign {
 			return -erx - p/q
 		}
@@ -214,24 +214,24 @@ pub fn erf(x_ f64) f64 {
 		if sign {
 			return -1
 		}
-		return f64(1)
+		return 1.0
 	}
-	s_ := f64(1) / (x * x)
-	mut r := f64(0)
-        mut s := f64(0)
-	if x < f64(1)/0.35 { // |x| < 1 / 0.35  ~ 2.857143
+	s_ := 1.0 / (x * x)
+	mut r := 0.0
+        mut s := 0.0
+	if x < 1.0/0.35 { // |x| < 1 / 0.35  ~ 2.857143
 		r = ra0 + s_*(ra1+s_*(ra2+s_*(ra3+s_*(ra4+s_*(ra5+s_*(ra6+s_*ra7))))))
-		s = f64(1) + s_*(sa1+s_*(sa2+s_*(sa3+s_*(sa4+s_*(sa5+s_*(sa6+s_*(sa7+s_*sa8)))))))
+		s = 1.0 + s_*(sa1+s_*(sa2+s_*(sa3+s_*(sa4+s_*(sa5+s_*(sa6+s_*(sa7+s_*sa8)))))))
 	} else { // |x| >= 1 / 0.35  ~ 2.857143
 		r = rb0 + s_*(rb1+s_*(rb2+s_*(rb3+s_*(rb4+s_*(rb5+s_*rb6)))))
-		s = f64(1) + s_*(sb1+s_*(sb2+s_*(sb3+s_*(sb4+s_*(sb5+s_*(sb6+s_*sb7))))))
+		s = 1.0 + s_*(sb1+s_*(sb2+s_*(sb3+s_*(sb4+s_*(sb5+s_*(sb6+s_*sb7))))))
 	}
 	z := f64_from_bits(f64_bits(x) & 0xffffffff00000000) // pseudo-single (20-bit) precision x
 	r_ := exp(-z*z-0.5625) * exp((z-x)*(z+x)+r/s)
 	if sign {
-		return r_/x - f64(1)
+		return r_/x - 1.0
 	}
-	return f64(1) - r_/x
+	return 1.0 - r_/x
 }
 
 // erfc returns the complementary error function of x.
@@ -248,7 +248,7 @@ pub fn erfc(x_ f64) f64 {
 		return nan()
         }
 	if is_inf(x, 1) {
-		return f64(0)
+		return 0.0
 	}
         if is_inf(x, -1) {
 		return f64(2)
@@ -259,48 +259,48 @@ pub fn erfc(x_ f64) f64 {
 		sign = true
 	}
 	if x < 0.84375 { // |x| < 0.84375
-		mut temp := f64(0)
+		mut temp := 0.0
 		if x < tiny { // |x| < 2**-56
 			temp = x
 		} else {
 			z := x * x
 			r := pp0 + z*(pp1+z*(pp2+z*(pp3+z*pp4)))
-			s_ := f64(1) + z*(qq1+z*(qq2+z*(qq3+z*(qq4+z*qq5))))
+			s_ := 1.0 + z*(qq1+z*(qq2+z*(qq3+z*(qq4+z*qq5))))
 			y := r / s_
-			if x < 0.25 { // |x| < f64(1)/4
+			if x < 0.25 { // |x| < 1.0/4
 				temp = x + x*y
 			} else {
 				temp = 0.5 + (x*y + (x - 0.5))
 			}
 		}
 		if sign {
-			return f64(1) + temp
+			return 1.0 + temp
 		}
-		return f64(1) - temp
+		return 1.0 - temp
 	}
 	if x < 1.25 { // 0.84375 <= |x| < 1.25
 		s_ := x - 1
 		p := pa0 + s_*(pa1+s_*(pa2+s_*(pa3+s_*(pa4+s_*(pa5+s_*pa6)))))
-		q := f64(1) + s_*(qa1+s_*(qa2+s_*(qa3+s_*(qa4+s_*(qa5+s_*qa6)))))
+		q := 1.0 + s_*(qa1+s_*(qa2+s_*(qa3+s_*(qa4+s_*(qa5+s_*qa6)))))
 		if sign {
-			return f64(1) + erx + p/q
+			return 1.0 + erx + p/q
 		}
-		return f64(1) - erx - p/q
+		return 1.0 - erx - p/q
 
 	}
 	if x < 28 { // |x| < 28
-		s_ := f64(1) / (x * x)
-		mut r := f64(0)
-                mut s := f64(0)
-		if x < f64(1)/0.35 { // |x| < 1 / 0.35 ~ 2.857143
+		s_ := 1.0 / (x * x)
+		mut r := 0.0
+                mut s := 0.0
+		if x < 1.0/0.35 { // |x| < 1 / 0.35 ~ 2.857143
 			r = ra0 + s_*(ra1+s_*(ra2+s_*(ra3+s_*(ra4+s_*(ra5+s_*(ra6+s_*ra7))))))
-			s = f64(1) + s_*(sa1+s_*(sa2+s_*(sa3+s_*(sa4+s_*(sa5+s_*(sa6+s_*(sa7+s_*sa8)))))))
+			s = 1.0 + s_*(sa1+s_*(sa2+s_*(sa3+s_*(sa4+s_*(sa5+s_*(sa6+s_*(sa7+s_*sa8)))))))
 		} else { // |x| >= 1 / 0.35 ~ 2.857143
 			if sign && x > 6 {
 				return f64(2) // x < -6
 			}
 			r = rb0 + s_*(rb1+s_*(rb2+s_*(rb3+s_*(rb4+s_*(rb5+s_*rb6)))))
-			s = f64(1) + s_*(sb1+s_*(sb2+s_*(sb3+s_*(sb4+s_*(sb5+s_*(sb6+s_*sb7))))))
+			s = 1.0 + s_*(sb1+s_*(sb2+s_*(sb3+s_*(sb4+s_*(sb5+s_*(sb6+s_*sb7))))))
 		}
 		z := f64_from_bits(f64_bits(x) & 0xffffffff00000000) // pseudo-single (20-bit) precision x
 		r_ := exp(-z*z-0.5625) * exp((z-x)*(z+x)+r/s)
@@ -312,5 +312,5 @@ pub fn erfc(x_ f64) f64 {
 	if sign {
 		return f64(2)
 	}
-	return f64(0)
+	return 0.0
 }

@@ -4,6 +4,7 @@
 module la
 
 import vsl.math
+
 // apply sets this []f64 with the scaled components of another []f64
 // this := a * another   ⇒   this[i] := a * another[i]
 // NOTE: "another" may be "this"
@@ -15,7 +16,7 @@ pub fn vector_apply(o mut []f64, a f64, another []f64) {
 
 // apply_func runs a function over all components of a []f64
 // vi = f(i,vi)
-pub fn vector_apply_func(o mut []f64, f fn(int, f64)f64) {
+pub fn vector_apply_func(o mut []f64, f anon_fn_7_14_14) {
 	for i := 0; i < o.len; i++ {
 		o[i] = f(i, o[i])
 	}
@@ -35,7 +36,7 @@ pub fn vector_unit(o mut []f64) []f64 {
 // accum sum/accumulates all components in a []f64
 // sum := Σ_i v[i]
 pub fn vector_accum(o []f64) f64 {
-	mut sum := f64(0)
+	mut sum := 0.0
 	for i := 0; i < o.len; i++ {
 		sum += o[i]
 	}
@@ -51,7 +52,7 @@ pub fn vector_norm(o []f64) f64 {
 // rms returns the root-mean-square of this []f64
 //
 pub fn vector_rms(o []f64) f64 {
-	mut rms := f64(0)
+	mut rms := 0.0
 	for i := 0; i < o.len; i++ {
 		rms += o[i] * o[i]
 	}
@@ -61,8 +62,8 @@ pub fn vector_rms(o []f64) f64 {
 
 // norm_diff returns the Euclidean norm of the difference:
 // nrm := ||u - v||
-pub fn vector_norm_diff(o []f64, v []f64) f64 {
-	mut nrm := f64(0)
+pub fn vector_norm_diff(o, v []f64) f64 {
+	mut nrm := 0.0
 	for i := 0; i < v.len; i++ {
 		nrm += (o[i] - v[i]) * (o[i] - v[i])
 	}

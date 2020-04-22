@@ -8,44 +8,45 @@ import vsl.math
 
 // Stat holds statistics about data
 //
-//  NOTE: Stat is an Observer of Data; thus, data.notify_update() will recompute stat
+// NOTE: Stat is an Observer of Data; thus, data.notify_update() will recompute stat
 //
 pub struct Stat {
 pub mut:
-	data  &Data  // data
+	data   &Data // data
 	min_x  []f64 // [nFeatures] min x values
 	max_x  []f64 // [nFeatures] max x values
 	sum_x  []f64 // [nFeatures] sum of x values
 	mean_x []f64 // [nFeatures] mean of x values
 	sig_x  []f64 // [nFeatures] standard deviations of x
 	del_x  []f64 // [nFeatures] difference: max(x) - min(x)
-	min_y  f64   // min of y values
-	max_y  f64   // max of y values
-	sum_y  f64   // sum of y values
-	mean_y f64   // mean of y values
-	sig_y  f64   // standard deviation of y
-	del_y  f64   // difference: max(y) - min(y)
+	min_y  f64 // min of y values
+	max_y  f64 // max of y values
+	sum_y  f64 // sum of y values
+	mean_y f64 // mean of y values
+	sig_y  f64 // standard deviation of y
+	del_y  f64 // difference: max(y) - min(y)
 }
 
 // stat returns a new Stat object
 pub fn stat_from_data(data mut &Data) Stat {
-        mut o := Stat{data: data}
-	o.min_x = [f64(0)].repeat(data.nb_features)
-	o.max_x = [f64(0)].repeat(data.nb_features)
-	o.sum_x = [f64(0)].repeat(data.nb_features)
-	o.mean_x = [f64(0)].repeat(data.nb_features)
-	o.sig_x = [f64(0)].repeat(data.nb_features)
-	o.del_x = [f64(0)].repeat(data.nb_features)
+	mut o := Stat{
+		data: data
+	}
+	o.min_x = [0.0].repeat(data.nb_features)
+	o.max_x = [0.0].repeat(data.nb_features)
+	o.sum_x = [0.0].repeat(data.nb_features)
+	o.mean_x = [0.0].repeat(data.nb_features)
+	o.sig_x = [0.0].repeat(data.nb_features)
+	o.del_x = [0.0].repeat(data.nb_features)
 	data.add_observer(o)
 	return o
 }
 
 // update compute statistics for given data (an Observer of Data)
-pub fn (o mut Stat) update() {
+pub fn (mut o Stat) update() {
 	// constants
 	m := o.data.x.m // number of samples
 	n := o.data.x.n // number of features
-
 	// x values
 	mf := f64(m)
 	for j := 0; j < n; j++ {
@@ -62,7 +63,6 @@ pub fn (o mut Stat) update() {
 		o.sig_x[j] = sample_stddev_mean(o.data.x.col(j), o.mean_x[j])
 		o.del_x[j] = o.max_x[j] - o.min_x[j]
 	}
-
 	// y values
 	if o.data.y.len > 0 {
 		o.min_y = o.data.y[0]
@@ -80,13 +80,13 @@ pub fn (o mut Stat) update() {
 }
 
 // sum_vars computes the sums along the columns of X and y
-//   Output:
-//     t -- scalar t = oᵀy  sum of columns of the y vector: t = Σ_i^m o_i y_i
-//     s -- vector s = Xᵀo  sum of columns of the X matrix: s_j = Σ_i^m o_i X_ij  [nFeatures]
-pub fn (o mut Stat) sum_vars() ([]f64, f64) {
-	one := [f64(1)].repeat(o.data.x.m)
+// Output:
+// t -- scalar t = oᵀy  sum of columns of the y vector: t = Σ_i^m o_i y_i
+// s -- vector s = Xᵀo  sum of columns of the X matrix: s_j = Σ_i^m o_i X_ij  [nFeatures]
+pub fn (mut o Stat) sum_vars() ([]f64, f64) {
+	one := [1.0].repeat(o.data.x.m)
 	s := la.matrix_tr_vector_mul(1, o.data.x, one)
-        mut t := f64(0)
+	mut t := 0.0
 	if o.data.y.len > 0 {
 		t = la.vector_dot(one, o.data.y)
 	}

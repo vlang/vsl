@@ -4,6 +4,7 @@
 module fit
 
 import vsl.math
+
 // linear computes linear fitting parameters. Errors on y-direction only
 //
 // y(x) = a + b⋅x
@@ -12,9 +13,9 @@ import vsl.math
 // Reference:
 // [1] Press WH, Teukolsky SA, Vetterling WT, Fnannery BP (2007) Numerical Recipes: The Art of
 // Scientific Computing. Third Edition. Cambridge University Press. 1235p.
-fn linear(x, y []f64) (f64,f64) {
-	mut sx := f64(0)
-	mut sy := f64(0)
+fn linear(x, y []f64) (f64, f64) {
+	mut sx := 0.0
+	mut sy := 0.0
 	ndata := x.len
 	// accumulate sums
 	for i := 0; i < ndata; i++ {
@@ -22,8 +23,8 @@ fn linear(x, y []f64) (f64,f64) {
 		sy += y[i]
 	}
 	// compute b
-	mut b := f64(0)
-	mut st2 := f64(0)
+	mut b := 0.0
+	mut st2 := 0.0
 	ss := f64(ndata)
 	sxoss := sx / ss
 	for i := 0; i < ndata; i++ {
@@ -34,7 +35,7 @@ fn linear(x, y []f64) (f64,f64) {
 	b /= st2
 	// compute a
 	a := (sy - sx * b) / ss
-	return a,b
+	return a, b
 }
 
 // linear_sigma computes linear fitting parameters and variances (sigma_a,sigma_b) in the estimates of a and b
@@ -46,9 +47,9 @@ fn linear(x, y []f64) (f64,f64) {
 // Reference:
 // [1] Press WH, Teukolsky SA, Vetterling WT, Fnannery BP (2007) Numerical Recipes: The Art of
 // Scientific Computing. Third Edition. Cambridge University Press. 1235p.
-fn linear_sigma(x, y []f64) (f64,f64,f64,f64,f64) {
-	mut sx := f64(0)
-	mut sy := f64(0)
+fn linear_sigma(x, y []f64) (f64, f64, f64, f64, f64) {
+	mut sx := 0.0
+	mut sy := 0.0
 	ndata := x.len
 	// accumulate sums
 	for i := 0; i < ndata; i++ {
@@ -56,8 +57,8 @@ fn linear_sigma(x, y []f64) (f64,f64,f64,f64,f64) {
 		sy += y[i]
 	}
 	// compute b
-	mut b := f64(0)
-	mut st2 := f64(0)
+	mut b := 0.0
+	mut st2 := 0.0
 	ss := f64(ndata)
 	sxoss := sx / ss
 	for i := 0; i < ndata; i++ {
@@ -72,7 +73,7 @@ fn linear_sigma(x, y []f64) (f64,f64,f64,f64,f64) {
 	mut sigma_a := math.sqrt((1.0 + sx * sx / (ss * st2)) / ss)
 	mut sigma_b := math.sqrt(1.0 / st2)
 	// calculate χ².
-	mut chi_2 := f64(0)
+	mut chi_2 := 0.0
 	for i := 0; i < ndata; i++ {
 		d := y[i] - a - b * x[i]
 		chi_2 += d * d
@@ -85,5 +86,5 @@ fn linear_sigma(x, y []f64) (f64,f64,f64,f64,f64) {
 	}
 	sigma_a *= sigma_dat
 	sigma_b *= sigma_dat
-	return a,b,sigma_a,sigma_b,chi_2
+	return a, b, sigma_a, sigma_b, chi_2
 }

@@ -14,37 +14,33 @@ fn df1(x f64, _ []f64) f64 {
 }
 
 fn f2(x f64, _ []f64) f64 {
-	if x >= 0.00 {
+	if x >= 0.0 {
 		return x * math.sqrt(x)
-	}
-	else {
+	} else {
 		return 0.00
 	}
 }
 
 fn df2(x f64, _ []f64) f64 {
-	if x >= 0.00 {
+	if x >= 0.0 {
 		return 1.50 * math.sqrt(x)
-	}
-	else {
+	} else {
 		return 0.00
 	}
 }
 
 fn f3(x f64, _ []f64) f64 {
-	if x != 0.00 {
-		return math.sin(1.00 / x)
-	}
-	else {
+	if x != 0.0 {
+		return math.sin(1.0 / x)
+	} else {
 		return 0.00
 	}
 }
 
 fn df3(x f64, _ []f64) f64 {
-	if x != 0.00 {
-		return -math.cos(1.00 / x) / (x * x)
-	}
-	else {
+	if x != 0.0 {
+		return -math.cos(1.0 / x) / (x * x)
+	} else {
 		return 0.00
 	}
 }
@@ -54,7 +50,7 @@ fn f4(x f64, _ []f64) f64 {
 }
 
 fn df4(x f64, _ []f64) f64 {
-	return -2.00 * x * math.exp(-x * x)
+	return -2.0 * x * math.exp(-x * x)
 }
 
 fn f5(x f64, _ []f64) f64 {
@@ -62,15 +58,15 @@ fn f5(x f64, _ []f64) f64 {
 }
 
 fn df5(x f64, _ []f64) f64 {
-	return 2.00 * x
+	return 2.0 * x
 }
 
 fn f6(x f64, _ []f64) f64 {
-	return 1.00 / x
+	return 1.0 / x
 }
 
 fn df6(x f64, _ []f64) f64 {
-	return -1.00 / (x * x)
+	return -1.0 / (x * x)
 }
 
 fn test_deriv() {
@@ -110,37 +106,49 @@ fn test_deriv() {
 	_df6 := vsl.Function{
 		function: df6
 	}
-	assert deriv_test('central', _f1, _df1, f64(1.0))
-	assert deriv_test('forward', _f1, _df1, f64(1.0))
-	assert deriv_test('backward', _f1, _df1, f64(1.0))
-	assert deriv_test('central', _f2, _df2, f64(0.1))
-	assert deriv_test('forward', _f2, _df2, f64(0.1))
-	assert deriv_test('backward', _f2, _df2, f64(0.1))
-	assert deriv_test('central', _f3, _df3, f64(0.45))
-	assert deriv_test('forward', _f3, _df3, f64(0.45))
-	assert deriv_test('backward', _f3, _df3, f64(0.45))
-	assert deriv_test('central', _f4, _df4, f64(0.5))
-	assert deriv_test('forward', _f4, _df4, f64(0.5))
-	assert deriv_test('backward', _f4, _df4, f64(0.5))
-	assert deriv_test('central', _f5, _df5, f64(0))
-	assert deriv_test('forward', _f5, _df5, f64(0))
-	assert deriv_test('backward', _f5, _df5, f64(0))
-	assert deriv_test('central', _f6, _df6, f64(10.0))
-	assert deriv_test('forward', _f6, _df6, f64(10.0))
-	assert deriv_test('backward', _f6, _df6, f64(10.0))
+	assert deriv_test('central', _f1, _df1, 1.0)
+	assert deriv_test('forward', _f1, _df1, 1.0)
+	assert deriv_test('backward', _f1, _df1, 1.0)
+	assert deriv_test('central', _f2, _df2, 0.1)
+	assert deriv_test('forward', _f2, _df2, 0.1)
+	assert deriv_test('backward', _f2, _df2, 0.1)
+	assert deriv_test('central', _f3, _df3, 0.45)
+	assert deriv_test('forward', _f3, _df3, 0.45)
+	assert deriv_test('backward', _f3, _df3, 0.45)
+	assert deriv_test('central', _f4, _df4, 0.5)
+	assert deriv_test('forward', _f4, _df4, 0.5)
+	assert deriv_test('backward', _f4, _df4, 0.5)
+	assert deriv_test('central', _f5, _df5, 0.0)
+	assert deriv_test('forward', _f5, _df5, 0.0)
+	assert deriv_test('backward', _f5, _df5, 0.0)
+	assert deriv_test('central', _f6, _df6, 10.0)
+	assert deriv_test('forward', _f6, _df6, 10.0)
+	assert deriv_test('backward', _f6, _df6, 10.0)
 }
 
 fn deriv_test(deriv_method string, f, df vsl.Function, x f64) bool {
 	expected := df.eval(x)
 	h := 1e-5
-	result,_ := if deriv_method == 'backward' { deriv.backward(f, x, h) } else if deriv_method == 'forward' { deriv.forward(f, x, h) } else { deriv.central(f, x, h) }
+	result, _ := if deriv_method == 'backward' {
+		deriv.backward(f, x, h)
+	} else if deriv_method == 'forward' {
+		deriv.forward(f, x, h)
+	} else {
+		deriv.central(f, x, h)
+	}
 	return compare(result, expected)
 }
 
 fn deriv_near_test(deriv_method string, f, df vsl.Function, x, tolerance f64) bool {
 	expected := df.eval(x)
 	h := 1e-5
-	result,_ := if deriv_method == 'backward' { deriv.backward(f, x, h) } else if deriv_method == 'forward' { deriv.forward(f, x, h) } else { deriv.central(f, x, h) }
+	result, _ := if deriv_method == 'backward' {
+		deriv.backward(f, x, h)
+	} else if deriv_method == 'forward' {
+		deriv.forward(f, x, h)
+	} else {
+		deriv.central(f, x, h)
+	}
 	return compare_near(result, expected, tolerance)
 }
 
@@ -157,5 +165,9 @@ fn compare_near(x, y, tolerance f64) bool {
 	}
 	deriv := math.abs(x - y)
 	mean := math.abs(x + y) / 2.0
-	return if math.is_nan(deriv / mean) { true } else { ((deriv / mean) < tolerance) }
+	return if math.is_nan(deriv / mean) {
+		true
+	} else {
+		((deriv / mean) < tolerance)
+	}
 }

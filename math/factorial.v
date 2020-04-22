@@ -6,7 +6,7 @@ module math
 // factorial calculates the factorial of the provided value.
 pub fn factorial(n f64) f64 {
 	// For a large postive argument (n >= FACTORIALS.len) return max_f64
-	if n >= FACTORIALS.len {
+	if n >= math.FACTORIALS.len {
 		return max_f64
 	}
 	// Otherwise return n!.
@@ -25,8 +25,7 @@ pub fn log_factorial(n f64) f64 {
 	// If n < N then return ln(n!).
 	if n != f64(i64(n)) {
 		return log_gamma(n + 1)
-	}
-	else if n < LOG_FACTORIALS.len {
+	} else if n < math.LOG_FACTORIALS.len {
 		return LOG_FACTORIALS[i64(n)]
 	}
 	// Otherwise return asymptotic expansion of ln(n!).

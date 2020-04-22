@@ -14,37 +14,33 @@ fn df1(x f64, _ []f64) f64 {
 }
 
 fn f2(x f64, _ []f64) f64 {
-	if x >= 0.00 {
+	if x >= 0.0 {
 		return x * math.sqrt(x)
-	}
-	else {
+	} else {
 		return 0.00
 	}
 }
 
 fn df2(x f64, _ []f64) f64 {
-	if x >= 0.00 {
+	if x >= 0.0 {
 		return 1.50 * math.sqrt(x)
-	}
-	else {
+	} else {
 		return 0.00
 	}
 }
 
 fn f3(x f64, _ []f64) f64 {
-	if x != 0.00 {
-		return math.sin(1.00 / x)
-	}
-	else {
+	if x != 0.0 {
+		return math.sin(1.0 / x)
+	} else {
 		return 0.00
 	}
 }
 
 fn df3(x f64, _ []f64) f64 {
-	if x != 0.00 {
-		return -math.cos(1.00 / x) / (x * x)
-	}
-	else {
+	if x != 0.0 {
+		return -math.cos(1.0 / x) / (x * x)
+	} else {
 		return 0.00
 	}
 }
@@ -54,7 +50,7 @@ fn f4(x f64, _ []f64) f64 {
 }
 
 fn df4(x f64, _ []f64) f64 {
-	return -2.00 * x * math.exp(-x * x)
+	return -2.0 * x * math.exp(-x * x)
 }
 
 fn f5(x f64, _ []f64) f64 {
@@ -62,15 +58,15 @@ fn f5(x f64, _ []f64) f64 {
 }
 
 fn df5(x f64, _ []f64) f64 {
-	return 2.00 * x
+	return 2.0 * x
 }
 
 fn f6(x f64, _ []f64) f64 {
-	return 1.00 / x
+	return 1.0 / x
 }
 
 fn df6(x f64, _ []f64) f64 {
-	return -1.00 / (x * x)
+	return -1.0 / (x * x)
 }
 
 fn test_diff() {
@@ -110,35 +106,47 @@ fn test_diff() {
 	_df6 := vsl.Function{
 		function: df6
 	}
-	assert diff_test('central', _f1, _df1, f64(1.0))
-	assert diff_test('forward', _f1, _df1, f64(1.0))
-	assert diff_test('backward', _f1, _df1, f64(1.0))
-	assert diff_test('central', _f2, _df2, f64(0.1))
-	assert diff_test('forward', _f2, _df2, f64(0.1))
-	assert diff_test('backward', _f2, _df2, f64(0.1))
-	assert diff_test('central', _f3, _df3, f64(0.45))
-	assert diff_test('forward', _f3, _df3, f64(0.45))
-	assert diff_test('backward', _f3, _df3, f64(0.45))
-	assert diff_test('central', _f4, _df4, f64(0.5))
-	assert diff_test('forward', _f4, _df4, f64(0.5))
-	assert diff_test('backward', _f4, _df4, f64(0.5))
-	assert diff_test('central', _f5, _df5, f64(0))
-	assert diff_test('forward', _f5, _df5, f64(0))
-	assert diff_test('backward', _f5, _df5, f64(0))
-	assert diff_test('central', _f6, _df6, f64(10.0))
-	assert diff_test('forward', _f6, _df6, f64(10.0))
-	assert diff_test('backward', _f6, _df6, f64(10.0))
+	assert diff_test('central', _f1, _df1, 1.0)
+	assert diff_test('forward', _f1, _df1, 1.0)
+	assert diff_test('backward', _f1, _df1, 1.0)
+	assert diff_test('central', _f2, _df2, 0.1)
+	assert diff_test('forward', _f2, _df2, 0.1)
+	assert diff_test('backward', _f2, _df2, 0.1)
+	assert diff_test('central', _f3, _df3, 0.45)
+	assert diff_test('forward', _f3, _df3, 0.45)
+	assert diff_test('backward', _f3, _df3, 0.45)
+	assert diff_test('central', _f4, _df4, 0.5)
+	assert diff_test('forward', _f4, _df4, 0.5)
+	assert diff_test('backward', _f4, _df4, 0.5)
+	assert diff_test('central', _f5, _df5, 0.0)
+	assert diff_test('forward', _f5, _df5, 0.0)
+	assert diff_test('backward', _f5, _df5, 0.0)
+	assert diff_test('central', _f6, _df6, 10.0)
+	assert diff_test('forward', _f6, _df6, 10.0)
+	assert diff_test('backward', _f6, _df6, 10.0)
 }
 
 fn diff_test(diff_method string, f, df vsl.Function, x f64) bool {
 	expected := df.eval(x)
-	result,_ := if diff_method == 'backward' { diff.backward(f, x) } else if diff_method == 'forward' { diff.forward(f, x) } else { diff.central(f, x) }
+	result, _ := if diff_method == 'backward' {
+		diff.backward(f, x)
+	} else if diff_method == 'forward' {
+		diff.forward(f, x)
+	} else {
+		diff.central(f, x)
+	}
 	return compare(result, expected)
 }
 
 fn diff_near_test(diff_method string, f, df vsl.Function, x, tolerance f64) bool {
 	expected := df.eval(x)
-	result,_ := if diff_method == 'backward' { diff.backward(f, x) } else if diff_method == 'forward' { diff.forward(f, x) } else { diff.central(f, x) }
+	result, _ := if diff_method == 'backward' {
+		diff.backward(f, x)
+	} else if diff_method == 'forward' {
+		diff.forward(f, x)
+	} else {
+		diff.central(f, x)
+	}
 	return compare_near(result, expected, tolerance)
 }
 
@@ -155,5 +163,9 @@ fn compare_near(x, y, tolerance f64) bool {
 	}
 	diff := math.abs(x - y)
 	mean := math.abs(x + y) / 2.0
-	return if math.is_nan(diff / mean) { true } else { ((diff / mean) < tolerance) }
+	return if math.is_nan(diff / mean) {
+		true
+	} else {
+		((diff / mean) < tolerance)
+	}
 }

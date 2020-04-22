@@ -11,19 +11,25 @@ pub:
 	im f64
 }
 
-pub fn complex(re f64, im f64) Complex {
+pub fn complex(re, im f64) Complex {
 	return Complex{
-		re,im}
+		re: re
+		im: im
+	}
 }
 
-pub fn complex_polar(r f64, theta f64) Complex {
+pub fn complex_polar(r, theta f64) Complex {
 	return complex(r * math.cos(theta), r * math.sin(theta))
 }
 
 // To String method
 pub fn (c Complex) str() string {
 	mut out := '$c.re'
-	out += if c.im >= 0 { '+$c.im' } else { '$c.im' }
+	out += if c.im >= 0 {
+		'+$c.im'
+	} else {
+		'$c.im'
+	}
 	out += 'i'
 	return out
 }
@@ -45,27 +51,24 @@ pub fn (c Complex) angle() f64 {
 
 // Complex Addition c1 + c2
 pub fn (c1 Complex) +(c2 Complex) Complex {
-	return Complex{
-		c1.re + c2.re,c1.im + c2.im}
+	return complex(c1.re + c2.re, c1.im + c2.im)
 }
 
 // Complex Substraction c1 - c2
 pub fn (c1 Complex) -(c2 Complex) Complex {
-	return Complex{
-		c1.re - c2.re,c1.im - c2.im}
+	return complex(c1.re - c2.re, c1.im - c2.im)
 }
 
 // Complex Multiplication c1 * c2
 pub fn (c1 Complex) *(c2 Complex) Complex {
-	return Complex{
-		(c1.re * c2.re) + ((c1.im * c2.im) * -1),(c1.re * c2.im) + (c1.im * c2.re)}
+	return complex((c1.re * c2.re) + ((c1.im * c2.im) * -1), (c1.re * c2.im) + (c1.im * c2.re))
 }
 
 // Complex Division c1 / c2
 pub fn (c1 Complex) /(c2 Complex) Complex {
 	denom := (c2.re * c2.re) + (c2.im * c2.im)
-	return Complex{
-		((c1.re * c2.re) + ((c1.im * -c2.im) * -1)) / denom,((c1.re * -c2.im) + (c1.im * c2.re)) / denom}
+	return complex(((c1.re * c2.re) + ((c1.im * -c2.im) * -1)) / denom, ((c1.re * -c2.im) +
+		(c1.im * c2.re)) / denom)
 }
 
 // Complex Addition c1.add(c2)
@@ -80,37 +83,33 @@ pub fn (c1 Complex) sub(c2 Complex) Complex {
 
 // Complex Multiplication c1.mul(c2)
 pub fn (c1 Complex) mul(c2 Complex) Complex {
-	return Complex{
-		(c1.re * c2.re) + ((c1.im * c2.im) * -1),(c1.re * c2.im) + (c1.im * c2.re)}
+	return complex((c1.re * c2.re) + ((c1.im * c2.im) * -1), (c1.re * c2.im) + (c1.im * c2.re))
 }
 
 // Complex Division c1.div(c2)
 pub fn (c1 Complex) div(c2 Complex) Complex {
 	denom := (c2.re * c2.re) + (c2.im * c2.im)
-	return Complex{
-		((c1.re * c2.re) + ((c1.im * -c2.im) * -1)) / denom,((c1.re * -c2.im) + (c1.im * c2.re)) / denom}
+	return complex(((c1.re * c2.re) + ((c1.im * -c2.im) * -1)) / denom, ((c1.re * -c2.im) +
+		(c1.im * c2.re)) / denom)
 }
 
 // Complex Conjugate
 pub fn (c Complex) conj() Complex {
-	return Complex{
-		c.re,-c.im}
+	return complex(c.re, -c.im)
 }
 
 // Complex Additive Inverse
 // Based on
 // http://tutorial.math.lamar.edu/Extras/ComplexPrimer/Arithmetic.aspx
 pub fn (c Complex) addinv() Complex {
-	return Complex{
-		-c.re,-c.im}
+	return complex(-c.re, -c.im)
 }
 
 // Complex Multiplicative Inverse
 // Based on
 // http://tutorial.math.lamar.edu/Extras/ComplexPrimer/Arithmetic.aspx
 pub fn (c Complex) mulinv() Complex {
-	return Complex{
-		c.re / (c.re * c.re + c.im * c.im),-c.im / (c.re * c.re + c.im * c.im)}
+	return complex(c.re / (c.re * c.re + c.im * c.im), -c.im / (c.re * c.re + c.im * c.im))
 }
 
 // Complex Power
@@ -119,8 +118,7 @@ pub fn (c Complex) mulinv() Complex {
 pub fn (c Complex) pow(n f64) Complex {
 	r := math.pow(c.abs(), n)
 	angle := c.angle()
-	return Complex{
-		r * math.cos(n * angle),r * math.sin(n * angle)}
+	return complex(r * math.cos(n * angle), r * math.sin(n * angle))
 }
 
 // Complex nth root
@@ -134,16 +132,14 @@ pub fn (c Complex) root(n f64) Complex {
 // https://www.math.wisc.edu/~angenent/Free-Lecture-Notes/freecomplexnumbers.pdf
 pub fn (c Complex) exp() Complex {
 	a := math.exp(c.re)
-	return Complex{
-		a * math.cos(c.im),a * math.sin(c.im)}
+	return complex(a * math.cos(c.im), a * math.sin(c.im))
 }
 
 // Complex Natural Logarithm
 // Based on
 // http://www.chemistrylearning.com/logarithm-of-complex-number/
 pub fn (c Complex) ln() Complex {
-	return Complex{
-		math.log(c.abs()),c.angle()}
+	return complex(math.log(c.abs()), c.angle())
 }
 
 // Complex Log Base Complex
@@ -168,24 +164,21 @@ pub fn (c Complex) cpow(p Complex) Complex {
 	b := math.pow(c.re, 2) + math.pow(c.im, 2)
 	d := p.re * a + (1.0 / 2) * p.im * math.log(b)
 	t1 := math.pow(b, p.re / 2) * math.exp(-p.im * a)
-	return Complex{
-		t1 * math.cos(d),t1 * math.sin(d)}
+	return complex(t1 * math.cos(d), t1 * math.sin(d))
 }
 
 // Complex Sin
 // Based on
 // http://www.milefoot.com/math/complex/functionsofi.htm
 pub fn (c Complex) sin() Complex {
-	return Complex{
-		math.sin(c.re) * math.cosh(c.im),math.cos(c.re) * math.sinh(c.im)}
+	return complex(math.sin(c.re) * math.cosh(c.im), math.cos(c.re) * math.sinh(c.im))
 }
 
 // Complex Cosine
 // Based on
 // http://www.milefoot.com/math/complex/functionsofi.htm
 pub fn (c Complex) cos() Complex {
-	return Complex{
-		math.cos(c.re) * math.cosh(c.im),-(math.sin(c.re) * math.sinh(c.im))}
+	return complex(math.cos(c.re) * math.cosh(c.im), -(math.sin(c.re) * math.sinh(c.im)))
 }
 
 // Complex Tangent
@@ -263,16 +256,14 @@ pub fn (c Complex) acsc() Complex {
 // Based on
 // http://www.milefoot.com/math/complex/functionsofi.htm
 pub fn (c Complex) sinh() Complex {
-	return Complex{
-		math.cos(c.im) * math.sinh(c.re),math.sin(c.im) * math.cosh(c.re)}
+	return complex(math.cos(c.im) * math.sinh(c.re), math.sin(c.im) * math.cosh(c.re))
 }
 
 // Complex Hyperbolic Cosine
 // Based on
 // http://www.milefoot.com/math/complex/functionsofi.htm
 pub fn (c Complex) cosh() Complex {
-	return Complex{
-		math.cos(c.im) * math.cosh(c.re),math.sin(c.im) * math.sinh(c.re)}
+	return complex(math.cos(c.im) * math.cosh(c.re), math.sin(c.im) * math.sinh(c.re))
 }
 
 // Complex Hyperbolic Tangent
@@ -316,8 +307,7 @@ pub fn (c Complex) asinh() Complex {
 pub fn (c Complex) acosh() Complex {
 	if (c.re > 1) {
 		return c.add(c.pow(2).sub(complex(1, 0)).root(2)).ln()
-	}
-	else {
+	} else {
 		one := complex(1, 0)
 		return c.add(c.add(one).root(2).mul(c.sub(one).root(2))).ln()
 	}
@@ -330,8 +320,7 @@ pub fn (c Complex) atanh() Complex {
 	one := complex(1, 0)
 	if (c.re < 1) {
 		return complex(1.0 / 2, 0).mul(one.add(c).div(one.sub(c)).ln())
-	}
-	else {
+	} else {
 		return complex(1.0 / 2, 0).mul(one.add(c).ln().sub(one.sub(c).ln()))
 	}
 }
@@ -343,8 +332,7 @@ pub fn (c Complex) acoth() Complex {
 	one := complex(1, 0)
 	if (c.re < 0 || c.re > 1) {
 		return complex(1.0 / 2, 0).mul(c.add(one).div(c.sub(one)).ln())
-	}
-	else {
+	} else {
 		div := one.div(c)
 		return complex(1.0 / 2, 0).mul(one.add(div).ln().sub(one.sub(div).ln()))
 	}
@@ -358,8 +346,7 @@ pub fn (c Complex) asech() Complex {
 	one := complex(1, 0)
 	if (c.re < -1.0) {
 		return one.sub(one.sub(c.pow(2)).root(2)).div(c).ln()
-	}
-	else {
+	} else {
 		return one.add(one.sub(c.pow(2)).root(2)).div(c).ln()
 	}
 }
@@ -371,8 +358,7 @@ pub fn (c Complex) acsch() Complex {
 	one := complex(1, 0)
 	if (c.re < 0) {
 		return one.sub(one.add(c.pow(2)).root(2)).div(c).ln()
-	}
-	else {
+	} else {
 		return one.add(one.add(c.pow(2)).root(2)).div(c).ln()
 	}
 }

@@ -6,9 +6,9 @@ import vsl.math
 
 fn test_linear_fit01() {
 	// data
-	x := [f64(1), 2, 3, 4]
-	y := [f64(1), 2, 3, 4]
-	a,b,sigma_a,sigma_b,chi_2 := fit.linear_sigma(x, y)
+	x := [1.0, 2, 3, 4]
+	y := [1.0, 2, 3, 4]
+	a, b, sigma_a, sigma_b, chi_2 := fit.linear_sigma(x, y)
 	assert compare(a, 0.0)
 	assert compare(b, 1.0)
 	assert compare(sigma_a, 0.0)
@@ -18,9 +18,12 @@ fn test_linear_fit01() {
 
 fn test_linear_fit02() {
 	// data
-	x := [f64(1), 2, 3, 4]
-	y := [f64(6), 5, 7, 10]
-	a,b := fit.linear(x, y)
+	x := [1.0, 2, 3, 4]
+	y := [f64(6), 5
+	7
+	10
+	]
+	a, b := fit.linear(x, y)
 	assert compare(a, 3.5)
 	assert compare(b, 1.4)
 }
@@ -34,5 +37,9 @@ fn compare(x, y f64) bool {
 	}
 	diff := math.abs(x - y)
 	mean := math.abs(x + y) / 2.0
-	return if math.is_nan(diff / mean) { true } else { ((diff / mean) < tolerance) }
+	return if math.is_nan(diff / mean) {
+		true
+	} else {
+		((diff / mean) < tolerance)
+	}
 }

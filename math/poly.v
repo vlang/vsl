@@ -1,47 +1,40 @@
 // Copyright (c) 2019-2020 Ulises Jeremias Cornejo Fandos. All rights reserved.
 // Use of this source code is governed by an MIT license
 // that can be found in the LICENSE file.
-
 module math
 
 [inline]
 fn poly_n_eval(c []f64, n int, x f64) f64 {
 	if c.len == 0 {
-                panic('coeficients can not be empty')
-        }
-
-        len := int(min(c.len, n))
-        mut ans := c[len-1]
-
-        for e in c[..len-1] {
-                ans = e + x * ans
-        }
-
-        return ans
+		panic('coeficients can not be empty')
+	}
+	len := int(min(c.len, n))
+	mut ans := c[len - 1]
+	for e in c[..len - 1] {
+		ans = e + x * ans
+	}
+	return ans
 }
 
 [inline]
 fn poly_n_1_eval(c []f64, n int, x f64) f64 {
-        if c.len == 0 {
-                panic('coeficients can not be empty')
-        }
-
-        len := int(min(c.len, n)) - 1
-        mut ans := c[len-1]
-
-        for e in c[..len-1] {
-                ans = e + x * ans
-        }
-
-        return ans
+	if c.len == 0 {
+		panic('coeficients can not be empty')
+	}
+	len := int(min(c.len, n)) - 1
+	mut ans := c[len - 1]
+	for e in c[..len - 1] {
+		ans = e + x * ans
+	}
+	return ans
 }
 
 [inline]
 fn poly_eval(c []f64, x f64) f64 {
-        return poly_n_eval(c, c.len, x)
+	return poly_n_eval(c, c.len, x)
 }
 
 [inline]
 fn poly_1_eval(c []f64, x f64) f64 {
-        return poly_n_1_eval(c, c.len, x)
+	return poly_n_1_eval(c, c.len, x)
 }

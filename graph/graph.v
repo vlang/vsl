@@ -63,7 +63,7 @@ pub fn graph(edges [][]int, weights_e []f64, verts [][]f64, weights_v []f64) Gra
 	mut dist := [[]f64].repeat(nv)
 	mut next := [[]int].repeat(nv)
 	for i := 0; i < nv; i++ {
-		dist[i] = [f64(0)].repeat(nv)
+		dist[i] = [0.0].repeat(nv)
 		next[i] = [0].repeat(nv)
 	}
 	return Graph{
@@ -216,23 +216,23 @@ pub fn (g Graph) str_dist_matrix() string {
 		for j := 0; j < nv; j++ {
 			i_dist := g.dist[i]
 			if i_dist[j] < math.max_f64 {
-				i_dist_str := io.safe_print<f64>('%g', i_dist[j])
+				i_dist_str := io.safe_print_f64('%g', i_dist[j])
 				maxlen = int(math.max(maxlen, i_dist_str.len))
 			}
 		}
 	}
 	mut l := ''
 	maxlen = int(math.max(3, maxlen))
-	fmts := io.safe_print<int>('%%%ds', maxlen + 1)
-	fmtn := io.safe_print<int>('%%%dg', maxlen + 1)
+	fmts := io.safe_print_int('%%%ds', maxlen + 1)
+	fmtn := io.safe_print_int('%%%dg', maxlen + 1)
 	for i := 0; i < nv; i++ {
 		for j := 0; j < nv; j++ {
 			i_dist := g.dist[i]
 			if i_dist[j] < math.max_f64 {
-				l += io.safe_print<f64>(fmtn, i_dist[j])
+				l += io.safe_print_f64(fmtn, i_dist[j])
 			}
 			else {
-				l += io.safe_print<string>(fmts, '∞')
+				l += io.safe_print_string(fmts, '∞')
 			}
 		}
 		l += '\n'

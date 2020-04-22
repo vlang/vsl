@@ -4,6 +4,7 @@
 module stats
 
 import vsl.math
+
 // Measure of Occurance
 // Frequency of a given number
 // Based on
@@ -27,9 +28,9 @@ pub fn freq(data []f64, val f64) int {
 // https://www.mathsisfun.com/data/central-measures.html
 pub fn mean(data []f64) f64 {
 	if data.len == 0 {
-		return f64(0)
+		return 0.0
 	}
-	mut sum := f64(0)
+	mut sum := 0.0
 	for v in data {
 		sum += v
 	}
@@ -42,13 +43,13 @@ pub fn mean(data []f64) f64 {
 // https://www.mathsisfun.com/numbers/geometric-mean.html
 pub fn geometric_mean(data []f64) f64 {
 	if data.len == 0 {
-		return f64(0)
+		return 0.0
 	}
-	mut sum := f64(1)
+	mut sum := 1.0
 	for v in data {
 		sum *= v
 	}
-	return math.pow(sum, f64(1) / data.len)
+	return math.pow(sum, 1.0 / data.len)
 }
 
 // Measure of Central Tendancy
@@ -57,11 +58,11 @@ pub fn geometric_mean(data []f64) f64 {
 // https://www.mathsisfun.com/numbers/harmonic-mean.html
 pub fn harmonic_mean(data []f64) f64 {
 	if data.len == 0 {
-		return f64(0)
+		return 0.0
 	}
-	mut sum := f64(0)
+	mut sum := 0.0
 	for v in data {
-		sum += f64(1) / v
+		sum += 1.0 / v
 	}
 	return f64(data.len) / sum
 }
@@ -72,13 +73,12 @@ pub fn harmonic_mean(data []f64) f64 {
 // https://www.mathsisfun.com/data/central-measures.html
 pub fn median_for_sorted_data(sorted_data []f64) f64 {
 	if sorted_data.len == 0 {
-		return f64(0)
+		return 0.0
 	}
 	if sorted_data.len % 2 == 0 {
 		mid := (sorted_data.len / 2) - 1
 		return (sorted_data[mid] + sorted_data[mid + 1]) / f64(2)
-	}
-	else {
+	} else {
 		return sorted_data[((sorted_data.len - 1) / 2)]
 	}
 }
@@ -89,7 +89,7 @@ pub fn median_for_sorted_data(sorted_data []f64) f64 {
 // https://www.mathsisfun.com/data/central-measures.html
 pub fn mode(data []f64) f64 {
 	if data.len == 0 {
-		return f64(0)
+		return 0.0
 	}
 	mut freqs := []int
 	for v in data {
@@ -109,9 +109,9 @@ pub fn mode(data []f64) f64 {
 // https://en.wikipedia.org/wiki/Root_mean_square
 pub fn rms(data []f64) f64 {
 	if data.len == 0 {
-		return f64(0)
+		return 0.0
 	}
-	mut sum := f64(0)
+	mut sum := 0.0
 	for v in data {
 		sum += math.pow(v, 2)
 	}
@@ -124,10 +124,10 @@ pub fn rms(data []f64) f64 {
 // https://www.mathsisfun.com/data/standard-deviation.html
 pub fn population_variance(data []f64) f64 {
 	if data.len == 0 {
-		return f64(0)
+		return 0.0
 	}
 	mean := mean(data)
-	mut sum := f64(0)
+	mut sum := 0.0
 	for v in data {
 		sum += (v - mean) * (v - mean)
 	}
@@ -140,9 +140,9 @@ pub fn population_variance(data []f64) f64 {
 // https://www.mathsisfun.com/data/standard-deviation.html
 pub fn population_variance_mean(data []f64, mean f64) f64 {
 	if data.len == 0 {
-		return f64(0)
+		return 0.0
 	}
-	mut sum := f64(0)
+	mut sum := 0.0
 	for v in data {
 		sum += (v - mean) * (v - mean)
 	}
@@ -155,10 +155,10 @@ pub fn population_variance_mean(data []f64, mean f64) f64 {
 // https://www.mathsisfun.com/data/standard-deviation.html
 pub fn sample_variance(data []f64) f64 {
 	if data.len == 0 {
-		return f64(0)
+		return 0.0
 	}
 	mean := mean(data)
-	mut sum := f64(0)
+	mut sum := 0.0
 	for v in data {
 		sum += (v - mean) * (v - mean)
 	}
@@ -171,9 +171,9 @@ pub fn sample_variance(data []f64) f64 {
 // https://www.mathsisfun.com/data/standard-deviation.html
 pub fn sample_variance_mean(data []f64, mean f64) f64 {
 	if data.len == 0 {
-		return f64(0)
+		return 0.0
 	}
-	mut sum := f64(0)
+	mut sum := 0.0
 	for v in data {
 		sum += (v - mean) * (v - mean)
 	}
@@ -186,7 +186,7 @@ pub fn sample_variance_mean(data []f64, mean f64) f64 {
 // https://www.mathsisfun.com/data/standard-deviation.html
 pub fn population_stddev(data []f64) f64 {
 	if data.len == 0 {
-		return f64(0)
+		return 0.0
 	}
 	return math.sqrt(population_variance(data))
 }
@@ -197,7 +197,7 @@ pub fn population_stddev(data []f64) f64 {
 // https://www.mathsisfun.com/data/standard-deviation.html
 pub fn population_stddev_mean(data []f64, mean f64) f64 {
 	if data.len == 0 {
-		return f64(0)
+		return 0.0
 	}
 	return math.sqrt(population_variance_mean(data, mean))
 }
@@ -208,7 +208,7 @@ pub fn population_stddev_mean(data []f64, mean f64) f64 {
 // https://www.mathsisfun.com/data/standard-deviation.html
 pub fn sample_stddev(data []f64) f64 {
 	if data.len == 0 {
-		return f64(0)
+		return 0.0
 	}
 	return math.sqrt(sample_variance(data))
 }
@@ -219,7 +219,7 @@ pub fn sample_stddev(data []f64) f64 {
 // https://www.mathsisfun.com/data/standard-deviation.html
 pub fn sample_stddev_mean(data []f64, mean f64) f64 {
 	if data.len == 0 {
-		return f64(0)
+		return 0.0
 	}
 	return math.sqrt(sample_variance_mean(data, mean))
 }
@@ -230,10 +230,10 @@ pub fn sample_stddev_mean(data []f64, mean f64) f64 {
 // https://en.wikipedia.org/wiki/Average_absolute_deviation
 pub fn absdev(data []f64) f64 {
 	if data.len == 0 {
-		return f64(0)
+		return 0.0
 	}
 	mean := mean(data)
-	mut sum := f64(0)
+	mut sum := 0.0
 	for v in data {
 		sum += math.abs(v - mean)
 	}
@@ -246,9 +246,9 @@ pub fn absdev(data []f64) f64 {
 // https://en.wikipedia.org/wiki/Average_absolute_deviation
 pub fn absdev_mean(data []f64, mean f64) f64 {
 	if data.len == 0 {
-		return f64(0)
+		return 0.0
 	}
-	mut sum := f64(0)
+	mut sum := 0.0
 	for v in data {
 		sum += math.abs(v - mean)
 	}
@@ -258,10 +258,10 @@ pub fn absdev_mean(data []f64, mean f64) f64 {
 // Sum of squares
 pub fn tss(data []f64) f64 {
 	if data.len == 0 {
-		return f64(0)
+		return 0.0
 	}
 	mean := mean(data)
-	mut tss := f64(0)
+	mut tss := 0.0
 	for v in data {
 		tss += (v - mean) * (v - mean)
 	}
@@ -271,9 +271,9 @@ pub fn tss(data []f64) f64 {
 // Sum of squares about the mean
 pub fn tss_mean(data []f64, mean f64) f64 {
 	if data.len == 0 {
-		return f64(0)
+		return 0.0
 	}
-	mut tss := f64(0)
+	mut tss := 0.0
 	for v in data {
 		tss += (v - mean) * (v - mean)
 	}
@@ -283,7 +283,7 @@ pub fn tss_mean(data []f64, mean f64) f64 {
 // Minimum of the given input array
 pub fn min(data []f64) f64 {
 	if data.len == 0 {
-		return f64(0)
+		return 0.0
 	}
 	mut min := data[0]
 	for v in data {
@@ -297,7 +297,7 @@ pub fn min(data []f64) f64 {
 // Maximum of the given input array
 pub fn max(data []f64) f64 {
 	if data.len == 0 {
-		return f64(0)
+		return 0.0
 	}
 	mut max := data[0]
 	for v in data {
@@ -309,9 +309,9 @@ pub fn max(data []f64) f64 {
 }
 
 // Minimum and maximum of the given input array
-pub fn minmax(data []f64) (f64,f64) {
+pub fn minmax(data []f64) (f64, f64) {
 	if data.len == 0 {
-		return f64(0),f64(0)
+		return 0.0, 0.0
 	}
 	mut max := data[0]
 	mut min := data[0]
@@ -323,7 +323,7 @@ pub fn minmax(data []f64) (f64,f64) {
 			min = v
 		}
 	}
-	return min,max
+	return min, max
 }
 
 // Minimum of the given input array
@@ -359,9 +359,9 @@ pub fn max_index(data []f64) int {
 }
 
 // Minimum and maximum of the given input array
-pub fn minmax_index(data []f64) (int,int) {
+pub fn minmax_index(data []f64) (int, int) {
 	if data.len == 0 {
-		return 0,0
+		return 0, 0
 	}
 	mut min := data[0]
 	mut max := data[0]
@@ -377,7 +377,7 @@ pub fn minmax_index(data []f64) (int,int) {
 			max_index = i
 		}
 	}
-	return min_index,max_index
+	return min_index, max_index
 }
 
 // Measure of Dispersion / Spread
@@ -386,13 +386,13 @@ pub fn minmax_index(data []f64) (int,int) {
 // https://www.mathsisfun.com/data/range.html
 pub fn range(data []f64) f64 {
 	if data.len == 0 {
-		return f64(0)
+		return 0.0
 	}
 	return max(data) - min(data)
 }
 
 [inline]
-pub fn covariance(data1 []f64, data2 []f64) f64 {
+pub fn covariance(data1, data2 []f64) f64 {
 	mean1 := mean(data1)
 	mean2 := mean(data2)
 	return covariance_mean(data1, data2, mean1, mean2)
@@ -400,12 +400,12 @@ pub fn covariance(data1 []f64, data2 []f64) f64 {
 
 // Compute the covariance of a dataset using
 // the recurrence relation
-pub fn covariance_mean(data1 []f64, data2 []f64, mean1 f64, mean2 f64) f64 {
+pub fn covariance_mean(data1, data2 []f64, mean1, mean2 f64) f64 {
 	n := int(math.min(data1.len, data2.len))
 	if n == 0 {
-		return f64(0)
+		return 0.0
 	}
-	mut covariance := f64(0)
+	mut covariance := 0.0
 	for i := 0; i < n; i++ {
 		delta1 := data1[i] - mean1
 		delta2 := data2[i] - mean2
@@ -424,9 +424,9 @@ pub fn lag1_autocorrelation(data []f64) f64 {
 // the recurrence relation
 pub fn lag1_autocorrelation_mean(data []f64, mean f64) f64 {
 	if data.len == 0 {
-		return f64(0)
+		return 0.0
 	}
-	mut q := f64(0)
+	mut q := 0.0
 	mut v := (data[0] * mean) - (data[0] * mean)
 	for i := 1; i < data.len; i++ {
 		delta0 := data[i - 1] - mean
@@ -446,14 +446,12 @@ pub fn kurtosis(data []f64) f64 {
 
 // Takes a dataset and finds the kurtosis
 // using the fourth moment the deviations, normalized by the sd
-pub fn kurtosis_mean_stddev(data []f64, mean f64, sd f64) f64 {
-	mut avg := f64(0)
-	/* find the fourth moment the deviations, normalized by the sd */
-
-	/* we use a recurrence relation to stably update a running value so
+pub fn kurtosis_mean_stddev(data []f64, mean, sd f64) f64 {
+	mut avg := 0.0 // find the fourth moment the deviations, normalized by the sd
+	/*
+	we use a recurrence relation to stably update a running value so
          * there aren't any large sums that can overflow
-         */
-
+*/
 	for i, v in data {
 		x := (v - mean) / sd
 		avg += (x * x * x * x - avg) / (f64(i) + 1.0)
@@ -468,14 +466,12 @@ pub fn skew(data []f64) f64 {
 	return skew_mean_stddev(data, mean, sd)
 }
 
-pub fn skew_mean_stddev(data []f64, mean f64, sd f64) f64 {
-	mut skew := f64(0)
-	/* find the sum of the cubed deviations, normalized by the sd. */
-
-	/* we use a recurrence relation to stably update a running value so
+pub fn skew_mean_stddev(data []f64, mean, sd f64) f64 {
+	mut skew := 0.0 // find the sum of the cubed deviations, normalized by the sd.
+	/*
+	we use a recurrence relation to stably update a running value so
          * there aren't any large sums that can overflow
-         */
-
+*/
 	for i, v in data {
 		x := (v - mean) / sd
 		skew += (x * x * x - skew) / (f64(i) + 1.0)
@@ -485,10 +481,14 @@ pub fn skew_mean_stddev(data []f64, mean f64, sd f64) f64 {
 
 pub fn quantile_for_sorted_data(sorted_data []f64, f f64) f64 {
 	if sorted_data.len == 0 {
-		return f64(0)
+		return 0.0
 	}
 	index := f * (f64(sorted_data.len) - 1.0)
 	lhs := int(index)
 	delta := index - f64(lhs)
-	return if lhs == sorted_data.len - 1 { sorted_data[lhs] } else { (f64(1.0) - delta) * sorted_data[lhs] + delta * sorted_data[(lhs + 1)] }
+	return if lhs == sorted_data.len - 1 {
+		sorted_data[lhs]
+	} else {
+		(f64(1.0) - delta) * sorted_data[lhs] + delta * sorted_data[(lhs + 1)]
+	}
 }

@@ -5,7 +5,9 @@ module specfunc
 
 import vsl.math.complex as cmplx
 import vsl.math
-/**
+
+/*
+*
  * Compute the Gamma function for complex argument
  *
  * gr + gi i = Gamma(x + i y) if kf = 1
@@ -15,14 +17,12 @@ import vsl.math
  * @param y imaginary of the argument
  * @param kf an integer flag. If kf, Gamma is computed, if !kf, log(Gamma)
  *
- */
-
-
-fn _sp_cgamma(x_, y_ f64, kf bool) (f64,f64) {
+*/
+fn _sp_cgamma(x_, y_ f64, kf bool) (f64, f64) {
 	mut x := x_
 	mut y := y_
 	if y == 0.0 && x == f64(u64(x)) && x <= 0.0 {
-		return f64(1.0e+300),f64(0)
+		return f64(1.0e+300), 0.0
 	}
 	mut x1 := 0.0
 	mut y1 := 0.0
@@ -32,8 +32,7 @@ fn _sp_cgamma(x_, y_ f64, kf bool) (f64,f64) {
 		y1 = y
 		x = -x
 		y = -y
-	}
-	else {
+	} else {
 		y1 = 0.0
 		x1 = x
 	}
@@ -80,19 +79,19 @@ fn _sp_cgamma(x_, y_ f64, kf bool) (f64,f64) {
 	}
 	if kf {
 		g0 = math.exp(gr)
-		return f64(g0) * math.cos(gi),f64(g0) * math.sin(gi)
+		return f64(g0) * math.cos(gi), f64(g0) * math.sin(gi)
 	}
-	return gr,gi
+	return gr, gi
 }
 
 // gamma computes the gamma function value
-pub fn cgamma(z cmplx.Complex) cmplx.Complex {
-	re,im := _sp_cgamma(z.re, z.im, true)
-	return cmplx.complex(re, im)
+pub fn cgamma(z complex.Complex) complex.Complex {
+	re, im := _sp_cgamma(z.re, z.im, true)
+	return complex.complex(re, im)
 }
 
 // log_gamma computes the log-gamma function value
-pub fn clog_gamma(z cmplx.Complex) cmplx.Complex {
-	re,im := _sp_cgamma(z.re, z.im, true)
-	return cmplx.complex(re, im)
+pub fn clog_gamma(z complex.Complex) complex.Complex {
+	re, im := _sp_cgamma(z.re, z.im, true)
+	return complex.complex(re, im)
 }

@@ -14,7 +14,7 @@ import vsl.errno
 pub fn slice_to_col_major(a [][]f64) []f64 {
 	m := a.len
 	n := a[0].len
-	mut data := [f64(0)].repeat(m * n)
+	mut data := [0.0].repeat(m * n)
 	mut k := 0
 	for j := 0; j < n; j++ {
 		for i := 0; i < m; i++ {
@@ -29,7 +29,7 @@ pub fn slice_to_col_major(a [][]f64) []f64 {
 pub fn col_major_to_slice(m, n int, data []f64) [][]f64 {
 	mut a := [[]f64].repeat(n)
 	for i := 0; i < m; i++ {
-		a[i] = [f64(0)].repeat(n)
+		a[i] = [0.0].repeat(n)
 		for j := 0; j < n; j++ {
 			a[i][j] = data[i + j * m]
 		}
@@ -49,7 +49,7 @@ pub fn print_col_major(m, n int, data []f64, nfmt_ string) string {
 			l += '\n'
 		}
 		for j := 0; j < n; j++ {
-			l += io.safe_print<f64>(nfmt, data[i + j * m])
+			l += io.safe_print_f64(nfmt, data[i + j * m])
 		}
 	}
 	return l
@@ -68,7 +68,7 @@ pub fn print_col_major_v(m, n int, data []f64, nfmt_ string) string {
 			if j > 0 {
 				l += ','
 			}
-			l += io.safe_print<f64>(nfmt, data[i + j * m])
+			l += io.safe_print_f64(nfmt, data[i + j * m])
 		}
 		l += '},\n'
 	}
@@ -89,7 +89,7 @@ pub fn print_col_major_py(m, n int, data []f64, nfmt_ string) string {
 			if j > 0 {
 				l += ','
 			}
-			l += io.safe_print<f64>(nfmt, data[i + j * m])
+			l += io.safe_print_f64(nfmt, data[i + j * m])
 		}
 		l += '],\n'
 	}
@@ -160,7 +160,7 @@ pub fn print_col_major_complex(m, n int, data []cplx.Complex, nfmt_r_, nfmt_i_ s
 				l += ', '
 			}
 			v := data[i + j * m]
-			l += io.safe_print<f64>(nfmt_r, v.re) + io.safe_print<f64>(nfmt_i, v.im) + 'i'
+			l += io.safe_print_f64(nfmt_r, v.re) + io.safe_print_f64(nfmt_i, v.im) + 'i'
 		}
 	}
 	return l
@@ -188,7 +188,7 @@ pub fn print_col_major_complex_v(m, n int, data []cplx.Complex, nfmt_r_, nfmt_i_
 				l += ','
 			}
 			v := data[i + j * m]
-			l += io.safe_print<f64>(nfmt_r, v.re) + io.safe_print<f64>(nfmt_i, v.im) + 'i'
+			l += io.safe_print_f64(nfmt_r, v.re) + io.safe_print_f64(nfmt_i, v.im) + 'i'
 		}
 		l += '},\n'
 	}
@@ -218,7 +218,7 @@ pub fn print_col_major_omplex_py(m, n int, data []cplx.Complex, nfmt_r_, nfmt_i_
 				l += ','
 			}
 			v := data[i + j * m]
-			l += io.safe_print<f64>(nfmt_r, v.re) + io.safe_print<f64>(nfmt_i, v.im) + 'j'
+			l += io.safe_print_f64(nfmt_r, v.re) + io.safe_print_f64(nfmt_i, v.im) + 'j'
 		}
 		l += '],\n'
 	}
@@ -238,8 +238,8 @@ pub fn get_join_complex(v_real, v_imag []f64) []cplx.Complex {
 
 // get_split_complex splits real and imag parts of array
 pub fn get_split_complex(v []cplx.Complex) ([]f64,[]f64) {
-	mut v_real := [f64(0)].repeat(v.len)
-	mut v_imag := [f64(0)].repeat(v.len)
+	mut v_real := [0.0].repeat(v.len)
+	mut v_imag := [0.0].repeat(v.len)
 	for i := 0; i < v.len; i++ {
 		v_real[i] = v[i].re
 		v_imag[i] = v[i].im
@@ -258,8 +258,8 @@ pub fn join_complex(v_real, v_imag []f64) []cplx.Complex {
 
 // split_complex splits real and imag parts of array
 pub fn split_complex(v []cplx.Complex) ([]f64,[]f64) {
-	mut v_real := [f64(0)].repeat(v.len)
-	mut v_imag := [f64(0)].repeat(v.len)
+	mut v_real := [0.0].repeat(v.len)
+	mut v_imag := [0.0].repeat(v.len)
 	for i := 0; i < v.len; i++ {
 		v_real[i] = v[i].re
 		v_imag[i] = v[i].im
@@ -270,7 +270,7 @@ pub fn split_complex(v []cplx.Complex) ([]f64,[]f64) {
 // extraction //////////////////////////////////////////////////////////////////////////////////////
 // extract_row extracts i row from (m,n) col-major matrix
 pub fn extract_row(i, m, n int, A []f64) []f64 {
-	mut rowi := [f64(0)].repeat(n)
+	mut rowi := [0.0].repeat(n)
 	for j := 0; j < n; j++ {
 		rowi[j] = A[i + j * m]
 	}
@@ -279,7 +279,7 @@ pub fn extract_row(i, m, n int, A []f64) []f64 {
 
 // extract_col extracts j column from (m,n) col-major matrix
 pub fn extract_col(j, m, n int, A []f64) []f64 {
-	mut colj := [f64(0)].repeat(m)
+	mut colj := [0.0].repeat(m)
 	for i := 0; i < m; i++ {
 		colj[i] = A[i + j * m]
 	}

@@ -78,7 +78,7 @@ pub fn exp2(x f64) f64 {
 	r := hi - lo
 	t = r * r
 	c := r - t*(p1+t*(p2+t*(p3+t*(p4+t*p5))))
-	y := f64(1) - ((lo - (r*c)/(f64(2)-c)) - hi)
+	y := 1.0 - ((lo - (r*c)/(f64(2)-c)) - hi)
 	// TODO(rsc): make sure Ldexp can handle boundary k
 	return ldexp(y, k)
 }
@@ -114,7 +114,7 @@ pub fn ldexp(x f64, e int) f64 {
 // frexp(nan) = nan, 0
 pub fn frexp(x f64) (f64, int) {
 	if x == 0.0 {
-                return f64(0), 0
+                return 0.0, 0
         }
         else if !is_finite(x) {
                 return x, 0

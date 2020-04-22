@@ -8,50 +8,36 @@ import vsl.errno
 #include "openblas_cblas.h"
 fn C.openblas_set_num_threads(n int)
 
-
 fn C.cblas_ddot(n int, dx &f64, incx int, dy &f64, incy int) f64
-
 
 fn C.cblas_dscal(n int, alpha f64, x []f64, incx int) f64
 
-
-fn C.cblas_dger(m int, n int, alpha f64, x &f64, incx int, y &f64, incy int, a &f64, lda int)
-
+fn C.cblas_dger(m, n int, alpha f64, x &f64, incx int, y &f64, incy int, a &f64, lda int)
 
 fn C.cblas_dnrm2(n int, x &f64, incx int) f64
 
-
 fn C.cblas_idamax(n int, x &f64, incx int) int
-
 
 fn C.cblas_daxpy(n int, alpha f64, x &f64, incx int, y &f64, incy int)
 
+fn C.cblas_dgemv(trans byte, m, n int, alpha f64, a &f64, lda int, x &f64, incx int, beta f64, y &f64, incy int)
 
-fn C.cblas_dgemv(trans byte, m int, n int, alpha f64, a &f64, lda int, x &f64, incx int, beta f64, y &f64, incy int)
+fn C.cblas_dgemm(trans byte, m, n, k int, alpha f64, a &f64, lda int, b &f64, ldb int, c &f64, ldc int)
 
-
-fn C.cblas_dgemm(trans byte, m int, n int, k int, alpha f64, a &f64, lda int, b &f64, ldb int, c &f64, ldc int)
-
-
-fn C.cblas_dsyrk(cblas_col_major u32, up, trans u32, n, k int, alpha f64, a &f64, lda int, beta f64, c &f64, ldc int)
-
+fn C.cblas_dsyrk(cblas_col_major, up, trans u32, n, k int, alpha f64, a &f64, lda int, beta f64, c &f64, ldc int)
 
 fn C.LAPACKE_dgesv(n, nrhs int, a &f64, lda int, ipiv &int, b &f64, ldb int) int
 
-
-fn C.LAPACKE_dgesvd(jobu, jobvt rune, m, n int, a &f64, lda int, s &f64, u &f64, ldu int, vt &f64, ldvt int, superb &f64) int
-
+fn C.LAPACKE_dgesvd(jobu, jobvt rune, m, n int, a &f64, lda int, s, u &f64, ldu int, vt &f64, ldvt int, superb &f64) int
 
 fn C.LAPACKE_dgetrf(m, n int, a &f64, lda int, ipiv &int) int
 
-
 fn C.LAPACKE_dgetri(n int, a &f64, lda int, ipiv &int) int
-
 
 fn C.LAPACKE_dpotrf(lapack_col_major int, up u32, n int, a &f64, lda int) int
 
+fn C.LAPACKE_dgeev(lapack_col_major int, calcVl, calcVr byte, n int, a &f64, lda int, wr, wi, vl &f64, ldvl_ int, vr &f64, ldvr_ int) int
 
-fn C.LAPACKE_dgeev(lapack_col_major int, calcVl, calcVr byte, n int, a &f64, lda int, wr &f64, wi, vl &f64, ldvl_ int, vr &f64, ldvr_ int) int
 // set_num_threads sets the number of threads in OpenBLAS
 pub fn set_num_threads(n int) {
 	C.openblas_set_num_threads(n)
@@ -108,7 +94,8 @@ pub fn daxpy(n int, alpha f64, x []f64, incx int, y mut []f64, incy int) {
 //
 // trans=true      y := alpha*A**T*x + beta*y.
 pub fn dgemv(trans bool, m, n int, alpha f64, a []f64, lda int, x []f64, incx int, beta f64, y mut []f64, incy int) {
-	C.cblas_dgemv(cblas_col_major, c_trans(trans), m, n, alpha, &a[0], lda, &x[0], incx, beta, &y[0], incy)
+	C.cblas_dgemv(cblas_col_major, c_trans(trans), m, n, alpha, &a[0], lda, &x[0], incx, beta,
+		&y[0], incy)
 }
 
 // zgemv performs one of the matrix-vector operations.
@@ -160,7 +147,8 @@ pub fn dger(m, n int, alpha f64, x []f64, incx int, y mut []f64, incy int, a []f
 // alpha and beta are scalars, and A, B and C are matrices, with op( A )
 // an m by k matrix,  op( B )  a  k by n matrix and  C an m by n matrix.
 pub fn dgemm(transA, transB bool, m, n, k int, alpha f64, a []f64, lda int, b []f64, ldb int, beta f64, c []f64, ldc int) {
-	C.cblas_dgemm(cblas_col_major, c_trans(transA), c_trans(transB), m, n, k, alpha, &a[0], lda, &b[0], ldb, beta, &c[0], ldc)
+	C.cblas_dgemm(cblas_col_major, c_trans(transA), c_trans(transB), m, n, k, alpha, &a[0],
+		lda, &b[0], ldb, beta, &c[0], ldc)
 }
 
 // zgemm performs one of the matrix-matrix operations
@@ -263,8 +251,9 @@ pub fn dgesv(n, nrhs int, a []f64, lda int, ipiv []int, b []f64, ldb int) {
 // Note that the routine returns V**T, not V.
 //
 // NOTE: matrix 'a' will be modified
-pub fn dgesvd(jobu, jobvt rune, m, n int, a []f64, lda int, s []f64, u []f64, ldu int, vt []f64, ldvt int, superb []f64) {
-	info := C.LAPACKE_dgesvd(lapack_col_major, jobu, jobvt, m, n, &a[0], lda, &s[0], &u[0], ldu, &vt[0], ldvt, &superb[0])
+pub fn dgesvd(jobu, jobvt rune, m, n int, a []f64, lda int, s, u []f64, ldu int, vt []f64, ldvt int, superb []f64) {
+	info := C.LAPACKE_dgesvd(lapack_col_major, jobu, jobvt, m, n, &a[0], lda, &s[0], &u[0],
+		ldu, &vt[0], ldvt, &superb[0])
 	if info != 0 {
 		errno.vsl_panic('lapack failed', .efailed)
 	}
@@ -386,7 +375,8 @@ pub fn dgetri(n int, a mut []f64, lda int, ipiv []int) {
 // and  A  is an  n by k  matrix in the first case and a  k by n  matrix
 // in the second case.
 pub fn dsyrk(up, trans bool, n, k int, alpha f64, a []f64, lda int, beta f64, c mut []f64, ldc int) {
-	C.cblas_dsyrk(cblas_col_major, c_uplo(up), c_trans(trans), n, k, alpha, &a[0], lda, beta, &c[0], ldc)
+	C.cblas_dsyrk(cblas_col_major, c_uplo(up), c_trans(trans), n, k, alpha, &a[0], lda, beta,
+		&c[0], ldc)
 }
 
 // zsyrk performs one of the symmetric rank k operations
@@ -496,24 +486,23 @@ pub fn dpotrf(up bool, n int, a mut []f64, lda int) {
 //
 // The computed eigenvectors are normalized to have Euclidean norm
 // equal to 1 and largest component real.
-pub fn dgeev(calcVl, calcVr bool, n int, a mut []f64, lda int, wr []f64, wi, vl []f64, ldvl_ int, vr []f64, ldvr_ int) {
-	mut vvl := f64(0)
-	mut vvr := f64(0)
+pub fn dgeev(calcVl, calcVr bool, n int, a mut []f64, lda int, wr, wi, vl []f64, ldvl_ int, vr []f64, ldvr_ int) {
+	mut vvl := 0.0
+	mut vvr := 0.0
 	mut ldvl := ldvl_
 	mut ldvr := ldvr_
 	if calcVl {
 		vvl = &vl[0]
-	}
-	else {
+	} else {
 		ldvl = 1
 	}
 	if calcVr {
 		vvr = &vr[0]
-	}
-	else {
+	} else {
 		ldvr = 1
 	}
-	info := C.LAPACKE_dgeev(lapack_col_major, job_vlr(calcVl), job_vlr(calcVr), n, &a[0], lda, &wr[0], &wi[0], vvl, ldvl, vvr, ldvr)
+	info := C.LAPACKE_dgeev(lapack_col_major, job_vlr(calcVl), job_vlr(calcVr), n, &a[0], lda,
+		&wr[0], &wi[0], vvl, ldvl, vvr, ldvr)
 	if info != 0 {
 		errno.vsl_panic('lapack failed', .efailed)
 	}
@@ -522,26 +511,20 @@ pub fn dgeev(calcVl, calcVr bool, n int, a mut []f64, lda int, wr []f64, wi, vl 
 // auxiliary //////////////////////////////////////////////////////////////////////////////////////
 // constants
 const (
-// Lapack matrix layout
-	lapack_row_major = 101
-	lapack_col_major = 102
-	// CBLAS_ORDER
-	cblas_row_major = u32(101)
-	cblas_col_major = u32(102)
-	// CBLAS_TRANSPOSE
-	cblas_no_trans = u32(111)
-	cblas_trans = u32(112)
-	cblas_conj_trans = u32(113)
+	lapack_row_major    = 101
+	lapack_col_major    = 102
+	cblas_row_major     = u32(101)
+	cblas_col_major     = u32(102)
+	cblas_no_trans      = u32(111)
+	cblas_trans         = u32(112)
+	cblas_conj_trans    = u32(113)
 	cblas_conj_no_trans = u32(114)
-	// CBLAS_UPLO
-	cblas_upper = u32(121)
-	cblas_lower = u32(122)
-	// CBLAS_DIAG
-	cblas_non_unit = u32(131)
-	cblas_unit = u32(132)
-	// CBLAS_SIDE
-	cblas_left = u32(141)
-	cblas_right = u32(142)
+	cblas_upper         = u32(121)
+	cblas_lower         = u32(122)
+	cblas_non_unit      = u32(131)
+	cblas_unit          = u32(132)
+	cblas_left          = u32(141)
+	cblas_right         = u32(142)
 )
 
 fn c_trans(trans bool) u32 {

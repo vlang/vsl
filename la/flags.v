@@ -3,7 +3,7 @@
 // that can be found in the LICENSE file.
 module la
 
-#flag linux -O2 -I/usr/local/include -I@VMODULE/blas -I./blas
+#flag linux -O2 -I/usr/local/include -I@VROOT/blas -I./blas
 #flag linux -lopenblas -llapacke -L/usr/lib
 #flag windows -O2
 #flag windows -lopenblas -lgfortran

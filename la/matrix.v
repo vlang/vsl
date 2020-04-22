@@ -18,7 +18,7 @@ pub mut:
 
 // matrix allocates a new (empty) Matrix with given (m,n) (row/col sizes)
 pub fn matrix(m, n int) Matrix {
-        data := [f64(0)].repeat(m*n)
+        data := [0.0].repeat(m*n)
 	return Matrix{ m, n, data }
 }
 
@@ -78,7 +78,7 @@ pub fn (o Matrix) get(i, j int) f64 {
 pub fn (o Matrix) get_deep2() [][]f64 {
 	mut M := [[]f64].repeat(o.m)
 	for i := 0; i < o.m; i++ {
-		M[i] = [f64(0)].repeat(o.n)
+		M[i] = [0.0].repeat(o.n)
 		for j := 0; j < o.n; j++ {
 			M[i][j] = o.data[i+j*o.m]
 		}
@@ -196,7 +196,7 @@ pub fn (o Matrix) col(j int) []f64 {
 
 // get_row returns row i of this matrix
 pub fn (o Matrix) get_row(i int) []f64 {
-	mut row := [f64(0)].repeat(o.n)
+	mut row := [0.0].repeat(o.n)
 	for j := 0; j < o.n; j++ {
 		row[j] = o.data[i+j*o.m]
 	}
@@ -231,7 +231,7 @@ pub fn (o mut Matrix) set_col(j int, value f64) {
 // norm_frob returns the Frobenious norm of this matrix
 //  nrm := ‖a‖_F = sqrt(Σ_i Σ_j a[ij]⋅a[ij]) = ‖a‖_2
 pub fn (o Matrix) norm_frob() f64 {
-        mut nrm := f64(0)
+        mut nrm := 0.0
 	for k := 0; k < o.m*o.n; k++ {
 		nrm += o.data[k] * o.data[k]
 	}
@@ -241,11 +241,11 @@ pub fn (o Matrix) norm_frob() f64 {
 // norm_inf returns the infinite norm of this matrix
 //  nrm := ‖a‖_∞ = max_i ( Σ_j a[ij] )
 pub fn (o Matrix) norm_inf() f64 {
-        mut nrm := f64(0)
+        mut nrm := 0.0
 	for j := 0; j < o.n; j++ { // sum first row
 		nrm += math.abs(o.data[j*o.m])
 	}
-	mut sumrow := f64(0)
+	mut sumrow := 0.0
 	for i := 1; i < o.m; i++ {
 		sumrow = 0.0
 		for j := 0; j < o.n; j++ { // sum the other rows
@@ -277,7 +277,7 @@ pub fn (o Matrix) det() f64 {
 	mut ai := o.data.clone()
 	ipiv := [0].repeat(int(math.min(o.m, o.n)))
 	blas.dgetrf(o.m, o.n, mut ai, o.m, ipiv) // NOTE: ipiv are 1-based indices
-	mut det := f64(1)
+	mut det := 1.0
 	for i := 0; i < o.m; i++ {
 		if ipiv[i]-1 == i { // NOTE: ipiv are 1-based indices
 			det = det * ai[i+i*o.m]
@@ -305,7 +305,7 @@ pub fn (o Matrix) print(nfmt_ string) string {
 			l += "\n"
 		}
 		for j := 0; j < o.n; j++ {
-			l += io.safe_print<f64>(nfmt, o.get(i, j))
+			l += io.safe_print_f64(nfmt, o.get(i, j))
 		}
 	}
 	return l
@@ -324,7 +324,7 @@ pub fn (o Matrix) print_v(nfmt_ string) string {
 			if j > 0 {
 				l += ","
 			}
-			l += io.safe_print<f64>(nfmt, o.get(i, j))
+			l += io.safe_print_f64(nfmt, o.get(i, j))
 		}
 		l += "},\n"
 	}
@@ -345,7 +345,7 @@ pub fn (o Matrix) print_py(nfmt_ string) string {
 			if j > 0 {
 				l += ","
 			}
-			l += io.safe_print<f64>(nfmt, o.get(i, j))
+			l += io.safe_print_f64(nfmt, o.get(i, j))
 		}
 		l += "],\n"
 	}

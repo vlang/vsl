@@ -8,19 +8,19 @@ import vsl.math
 const (
 	epsabs = 0.0001
 	epsrel = 0.00001
-	n_max = 100
+	n_max  = 100
 )
 
 fn f_cos(x f64, _ []f64) f64 {
 	return math.cos(x)
 }
 
-fn fdf_cos(x f64, _ []f64) (f64,f64) {
-	return math.cos(x),-math.sin(x)
+fn fdf_cos(x f64, _ []f64) (f64, f64) {
+	return math.cos(x), -math.sin(x)
 }
 
 fn test_root_bisection() {
-	x1 := f64(0)
+	x1 := 0.0
 	x2 := f64(3)
 	func := vsl.Function{
 		function: f_cos
@@ -51,5 +51,9 @@ fn compare(x, y f64) bool {
 	}
 	diff := math.abs(x - y)
 	mean := math.abs(x + y) / 2.0
-	return if math.is_nan(diff / mean) { true } else { ((diff / mean) < tolerance) }
+	return if math.is_nan(diff / mean) {
+		true
+	} else {
+		((diff / mean) < tolerance)
+	}
 }

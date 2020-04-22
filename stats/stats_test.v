@@ -39,7 +39,8 @@ fn test_geometric_mean() {
 	data = [f64(-3.0), f64(67.31), f64(4.4), f64(1.89)]
 	o = stats.geometric_mean(data)
 	// Some issue with precision comparison in f64 using == operator hence serializing to string
-	assert o.str().eq('nan') || o.str().eq('-nan') || o.str().eq('-1.#IND00') || o == f64(0) || o.str().eq('-nan(ind)') // Because in math it yields a complex number
+	assert o.str().eq('nan') || o.str().eq('-nan') || o.str().eq('-1.#IND00') || o == 0.0 ||
+		o.str().eq('-nan(ind)') // Because in math it yields a complex number
 	data = [f64(12.0), f64(7.88), f64(76.122), f64(54.83)]
 	o = stats.geometric_mean(data)
 	// Some issue with precision comparison in f64 using == operator hence serializing to string
@@ -95,7 +96,8 @@ fn test_mode() {
 	mut data := [f64(2.7), f64(2.7), f64(4.45), f64(5.9), f64(10.0)]
 	mut o := stats.mode(data)
 	assert o == f64(2.7)
-	data = [f64(-3.0), f64(1.89), f64(1.89), f64(1.89), f64(9), f64(4.4), f64(4.4), f64(9), f64(67.31)]
+	data = [f64(-3.0), f64(1.89), f64(1.89), f64(1.89), f64(9), f64(4.4), f64(4.4), f64(9),
+		f64(67.31)]
 	o = stats.mode(data)
 	assert o == f64(1.89)
 	// Testing greedy nature
@@ -242,18 +244,18 @@ fn test_range() {
 fn test_passing_empty() {
 	data := []f64
 	assert stats.freq(data, 0) == 0
-	assert stats.mean(data) == f64(0)
-	assert stats.geometric_mean(data) == f64(0)
-	assert stats.harmonic_mean(data) == f64(0)
-	assert stats.median_for_sorted_data(data) == f64(0)
-	assert stats.mode(data) == f64(0)
-	assert stats.rms(data) == f64(0)
-	assert stats.population_variance(data) == f64(0)
-	assert stats.sample_variance(data) == f64(0)
-	assert stats.population_stddev(data) == f64(0)
-	assert stats.sample_stddev(data) == f64(0)
-	assert stats.absdev(data) == f64(0)
-	assert stats.min(data) == f64(0)
-	assert stats.max(data) == f64(0)
-	assert stats.range(data) == f64(0)
+	assert stats.mean(data) == 0.0
+	assert stats.geometric_mean(data) == 0.0
+	assert stats.harmonic_mean(data) == 0.0
+	assert stats.median_for_sorted_data(data) == 0.0
+	assert stats.mode(data) == 0.0
+	assert stats.rms(data) == 0.0
+	assert stats.population_variance(data) == 0.0
+	assert stats.sample_variance(data) == 0.0
+	assert stats.population_stddev(data) == 0.0
+	assert stats.sample_stddev(data) == 0.0
+	assert stats.absdev(data) == 0.0
+	assert stats.min(data) == 0.0
+	assert stats.max(data) == 0.0
+	assert stats.range(data) == 0.0
 }

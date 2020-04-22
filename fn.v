@@ -5,12 +5,12 @@ module vsl
 
 import vsl.math
 import vsl.errno
-/* TODO: change params type from []f64 to []T */
 
+// TODO: change params type from []f64 to []T
 // Definition of an arbitrary function with parameters
 pub struct Function {
 pub mut:
-	function fn(f64, []f64)f64
+	function anon_fn_14_26_14
 	params   []f64
 }
 
@@ -24,11 +24,10 @@ fn is_finite(a f64) bool {
 	return !math.is_nan(a) && !math.is_inf(a, 0)
 }
 
-/* Call the pointed-to function with argument x, put its result in y, and
+/*
+Call the pointed-to function with argument x, put its result in y, and
  * return an error if the function value is inf/nan.
- */
-
-
+*/
 [inline]
 pub fn (f Function) safe_eval(x f64) ?f64 {
 	function := f.function
@@ -42,9 +41,9 @@ pub fn (f Function) safe_eval(x f64) ?f64 {
 // Definition of an arbitrary function returning two values, r1, r2
 pub struct FunctionFdf {
 pub mut:
-	f      fn(f64, []f64)f64
-	df     fn(f64, []f64)f64
-	fdf    fn(f64, []f64)(f64,f64)
+	f      anon_fn_14_26_14
+	df     anon_fn_14_26_14
+	fdf    anon_fn_14_26_29
 	params []f64
 }
 
@@ -61,7 +60,7 @@ pub fn (fdf FunctionFdf) eval_df(x f64) f64 {
 }
 
 [inline]
-pub fn (fdf FunctionFdf) eval_f_df(x f64) (f64,f64) {
+pub fn (fdf FunctionFdf) eval_f_df(x f64) (f64, f64) {
 	function := fdf.fdf
 	return function(x, fdf.params)
 }
@@ -69,7 +68,7 @@ pub fn (fdf FunctionFdf) eval_f_df(x f64) (f64,f64) {
 // Definition of an arbitrary vector-valued function with parameters
 pub struct FunctionVec {
 pub mut:
-	function fn(f64, []f64, []f64)int
+	function anon_fn_14_26_26_7
 	params   []f64
 }
 

@@ -5,8 +5,9 @@
 module util
 
 // Observer is an interface to objects that need to observe something
+// the data observed by this observer is being update
 pub interface Observer {
-	update() // the data observed by this observer is being update
+	update()
 }
 
 // Observable indicates that an object is observable; i.e. it has a list of interested observers

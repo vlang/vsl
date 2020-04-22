@@ -6,7 +6,9 @@ module roots
 import vsl.math
 import vsl.errno
 import vsl
-/**
+
+/*
+*
  * Find the root of a function using a bisection method
  *
  * @param func a function pointer
@@ -18,9 +20,7 @@ import vsl
  * then break
  * @param n_max maximum number of iterations
  *
- */
-
-
+*/
 pub fn bisection(func vsl.Function, xmin, xmax, epsrel, epsabs f64, n_max int) ?f64 {
 	fxmin := func.safe_eval(xmin) or {
 		return error(err)
@@ -52,8 +52,7 @@ pub fn bisection(func vsl.Function, xmin, xmax, epsrel, epsabs f64, n_max int) ?
 		if fc < 0.0 {
 			a = c
 			fa = fc
-		}
-		else {
+		} else {
 			b = c
 			fb = fc
 		}
@@ -61,9 +60,7 @@ pub fn bisection(func vsl.Function, xmin, xmax, epsrel, epsabs f64, n_max int) ?
 			break
 		}
 		i++
-	}
-	/* maximum number of iterations reached */
-
+	} // maximum number of iterations reached
 	if i == n_max {
 		return error('maximum number of iterations reached')
 	}
