@@ -17,7 +17,7 @@ pub fn safe_print_f64(format string, message f64) string {
 	return tos(buf.data, vstrlen(buf.data)).trim_space()
 }
 
-pub fn safe_print_string(format string, message string) string {
+pub fn safe_print_string(format, message string) string {
 	buf := [byte(0)]
 	mut ptr := &buf[0]
 	C.sprintf(charptr(ptr), charptr(format.str), message)

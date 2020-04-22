@@ -4,9 +4,10 @@
 module blas
 
 import vsl.math
-import vsl.math.complex as cplx
+import vsl.math.complex
 import vsl.io
 import vsl.errno
+
 // slice_to_col_major converts nested slice into an array representing a col-major matrix
 //
 //
@@ -110,10 +111,10 @@ pub fn print_col_major_py(m, n int, data []f64, nfmt_ string) string {
 // data[i+j*m] = a[i][j]
 //
 // NOTE: make sure to have at least 1x1 item
-pub fn slice_to_col_major_complex(a [][]cplx.Complex) []cplx.Complex {
+pub fn slice_to_col_major_complex(a []complex.Complex) []complex.Complex {
 	m := a.len
 	n := a[0].len
-	mut data := [cplx.complex(0.0, 0.0)].repeat(m * n)
+	mut data := [complex.complex(0.0, 0.0)].repeat(m * n)
 	mut k := 0
 	for j := 0; j < n; j++ {
 		for i := 0; i < m; i++ {
@@ -125,10 +126,10 @@ pub fn slice_to_col_major_complex(a [][]cplx.Complex) []cplx.Complex {
 }
 
 // col_major_complex_to_slice converts col-major matrix to nested slice
-pub fn col_major_complex_to_slice(m, n int, data []cplx.Complex) [][]cplx.Complex {
-	mut a := [[]cplx.Complex].repeat(m)
+pub fn col_major_complex_to_slice(m, n int, data []complex.Complex) []complex.Complex {
+	mut a := [[]complex.Complex].repeat(m)
 	for i := 0; i < m; i++ {
-		a[i] = [cplx.complex(0.0, 0.0)].repeat(n)
+		a[i] = [complex.complex(0.0, 0.0)].repeat(n)
 		for j := 0; j < n; j++ {
 			a[i][j] = data[i + j * m]
 		}
@@ -138,7 +139,7 @@ pub fn col_major_complex_to_slice(m, n int, data []cplx.Complex) [][]cplx.Comple
 
 // print_col_major_complex prints matrix (without commas or brackets).
 // NOTE: if non-empty, nfmt_i must have '+' e.g. %+g
-pub fn print_col_major_complex(m, n int, data []cplx.Complex, nfmt_r_, nfmt_i_ string) string {
+pub fn print_col_major_complex(m, n int, data []complex.Complex, nfmt_r_, nfmt_i_ string) string {
 	mut nfmt_r := nfmt_r_
 	mut nfmt_i := nfmt_i_
 	if nfmt_r == '' {
@@ -168,7 +169,7 @@ pub fn print_col_major_complex(m, n int, data []cplx.Complex, nfmt_r_, nfmt_i_ s
 
 // print_col_major_complex_v prints matrix in v format
 // NOTE: if non-empty, nfmt_i must have '+' e.g. %+g
-pub fn print_col_major_complex_v(m, n int, data []cplx.Complex, nfmt_r_, nfmt_i_ string) string {
+pub fn print_col_major_complex_v(m, n int, data []complex.Complex, nfmt_r_, nfmt_i_ string) string {
 	mut nfmt_r := nfmt_r_
 	mut nfmt_i := nfmt_i_
 	if nfmt_r == '' {
@@ -198,7 +199,7 @@ pub fn print_col_major_complex_v(m, n int, data []cplx.Complex, nfmt_r_, nfmt_i_
 
 // print_col_major_omplex_py prints matrix in Python format
 // NOTE: if non-empty, nfmt_i must have '+' e.g. %+g
-pub fn print_col_major_omplex_py(m, n int, data []cplx.Complex, nfmt_r_, nfmt_i_ string) string {
+pub fn print_col_major_omplex_py(m, n int, data []complex.Complex, nfmt_r_, nfmt_i_ string) string {
 	mut nfmt_r := nfmt_r_
 	mut nfmt_i := nfmt_i_
 	if nfmt_r == '' {
@@ -228,43 +229,43 @@ pub fn print_col_major_omplex_py(m, n int, data []cplx.Complex, nfmt_r_, nfmt_i_
 
 // complex arrays //////////////////////////////////////////////////////////////////////////////////
 // get_join_complex joins real and imag parts of array
-pub fn get_join_complex(v_real, v_imag []f64) []cplx.Complex {
-	mut v := [cplx.complex(0.0, 0.0)].repeat(v_real.len)
+pub fn get_join_complex(v_real, v_imag []f64) []complex.Complex {
+	mut v := [complex.complex(0.0, 0.0)].repeat(v_real.len)
 	for i := 0; i < v_real.len; i++ {
-		v[i] = cplx.complex(v_real[i], v_imag[i])
+		v[i] = complex.complex(v_real[i], v_imag[i])
 	}
 	return v
 }
 
 // get_split_complex splits real and imag parts of array
-pub fn get_split_complex(v []cplx.Complex) ([]f64,[]f64) {
+pub fn get_split_complex(v []complex.Complex) ([]f64, []f64) {
 	mut v_real := [0.0].repeat(v.len)
 	mut v_imag := [0.0].repeat(v.len)
 	for i := 0; i < v.len; i++ {
 		v_real[i] = v[i].re
 		v_imag[i] = v[i].im
 	}
-	return v_real,v_imag
+	return v_real, v_imag
 }
 
 // join_complex joins real and imag parts of array
-pub fn join_complex(v_real, v_imag []f64) []cplx.Complex {
-	mut v := [cplx.complex(0.0, 0.0)].repeat(v_real.len)
+pub fn join_complex(v_real, v_imag []f64) []complex.Complex {
+	mut v := [complex.complex(0.0, 0.0)].repeat(v_real.len)
 	for i := 0; i < v_real.len; i++ {
-		v[i] = cplx.complex(v_real[i], v_imag[i])
+		v[i] = complex.complex(v_real[i], v_imag[i])
 	}
 	return v
 }
 
 // split_complex splits real and imag parts of array
-pub fn split_complex(v []cplx.Complex) ([]f64,[]f64) {
+pub fn split_complex(v []complex.Complex) ([]f64, []f64) {
 	mut v_real := [0.0].repeat(v.len)
 	mut v_imag := [0.0].repeat(v.len)
 	for i := 0; i < v.len; i++ {
 		v_real[i] = v[i].re
 		v_imag[i] = v[i].im
 	}
-	return v_real,v_imag
+	return v_real, v_imag
 }
 
 // extraction //////////////////////////////////////////////////////////////////////////////////////
@@ -287,8 +288,8 @@ pub fn extract_col(j, m, n int, A []f64) []f64 {
 }
 
 // extract_row_complex extracts i row from (m,n) col-major matrix (complex version)
-pub fn extract_row_complex(i, m, n int, A []cplx.Complex) []cplx.Complex {
-	mut rowi := [cplx.complex(0.0, 0.0)].repeat(n)
+pub fn extract_row_complex(i, m, n int, A []complex.Complex) []complex.Complex {
+	mut rowi := [complex.complex(0.0, 0.0)].repeat(n)
 	for j := 0; j < n; j++ {
 		rowi[j] = A[i + j * m]
 	}
@@ -296,8 +297,8 @@ pub fn extract_row_complex(i, m, n int, A []cplx.Complex) []cplx.Complex {
 }
 
 // extract_col_complex extracts j column from (m,n) col-major matrix (complex version)
-pub fn extract_col_complex(j, m, n int, A []cplx.Complex) []cplx.Complex {
-	mut colj := [cplx.complex(0.0, 0.0)].repeat(m)
+pub fn extract_col_complex(j, m, n int, A []complex.Complex) []complex.Complex {
+	mut colj := [complex.complex(0.0, 0.0)].repeat(m)
 	for i := 0; i < m; i++ {
 		colj[i] = A[i + j * m]
 	}
@@ -314,7 +315,7 @@ pub fn extract_col_complex(j, m, n int, A []cplx.Complex) []cplx.Complex {
 // NOTE (no checks made)
 // n = wr.len = wi.len = v.len
 // 2 * n = len(vv)
-pub fn eigenvecs_build(vv mut []cplx.Complex, wr, wi, v []f64) {
+pub fn eigenvecs_build(vv mut []complex.Complex, wr, wi, v []f64) {
 	n := wr.len
 	mut dj := 1 // increment for next conjugate pair
 	for j := 0; j < n; j += dj {
@@ -328,16 +329,15 @@ pub fn eigenvecs_build(vv mut []cplx.Complex, wr, wi, v []f64) {
 				// loop over rows
 				p := i + j * n
 				q := i + (j + 1) * n
-				vv[p] = cplx.complex(v[p], v[q])
-				vv[q] = cplx.complex(v[p], -v[q])
+				vv[p] = complex.complex(v[p], v[q])
+				vv[q] = complex.complex(v[p], -v[q])
 			}
 			dj = 2
-		}
-		else {
+		} else {
 			for i := 0; i < n; i++ {
 				// loop over rows
 				p := i + j * n
-				vv[p] = cplx.complex(v[p], 0.0)
+				vv[p] = complex.complex(v[p], 0.0)
 			}
 			dj = 1
 		}
@@ -353,7 +353,7 @@ pub fn eigenvecs_build(vv mut []cplx.Complex, wr, wi, v []f64) {
 // NOTE (no checks made)
 // n = wr.len = wi.len = len(vl) = len(vr)
 // 2 * n = len(vvl) = len(vvr)
-pub fn eigenvecs_build_both(vvl mut []cplx.Complex, vvr mut []cplx.Complex, wr, wi, vl, vr []f64) {
+pub fn eigenvecs_build_both(vvl mut, vvr mut []complex.Complex, wr, wi, vl, vr []f64) {
 	n := wr.len
 	mut dj := 1 // increment for next conjugate pair
 	for j := 0; j < n; j += dj {
@@ -367,19 +367,18 @@ pub fn eigenvecs_build_both(vvl mut []cplx.Complex, vvr mut []cplx.Complex, wr, 
 				// loop over rows
 				p := i + j * n
 				q := i + (j + 1) * n
-				vvl[p] = cplx.complex(vl[p], vl[q])
-				vvr[p] = cplx.complex(vr[p], vr[q])
-				vvl[q] = cplx.complex(vl[p], -vl[q])
-				vvr[q] = cplx.complex(vr[p], -vr[q])
+				vvl[p] = complex.complex(vl[p], vl[q])
+				vvr[p] = complex.complex(vr[p], vr[q])
+				vvl[q] = complex.complex(vl[p], -vl[q])
+				vvr[q] = complex.complex(vr[p], -vr[q])
 			}
 			dj = 2
-		}
-		else {
+		} else {
 			for i := 0; i < n; i++ {
 				// loop over rows
 				p := i + j * n
-				vvl[p] = cplx.complex(vl[p], 0.0)
-				vvr[p] = cplx.complex(vr[p], 0.0)
+				vvl[p] = complex.complex(vl[p], 0.0)
+				vvr[p] = complex.complex(vr[p], 0.0)
 			}
 			dj = 1
 		}
