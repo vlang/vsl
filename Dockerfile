@@ -9,9 +9,9 @@ RUN apt-get update && \
     apt-get clean && rm -rf /var/cache/apt/archives/* && \
     rm -rf /var/lib/apt/lists/*
 
-RUN git clone https://github.com/vlang/v /opt/vlang/v && \
+RUN git clone https://github.com/vlang/v0.1.25 /opt/vlang/v && \
     cd /opt/vlang/v && \
-    make && \
+    bash ./build.sh && \
     ln -s /opt/vlang/v /usr/local/bin/v
 
 CMD [ "bash" ]
