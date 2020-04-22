@@ -16,7 +16,7 @@ import vsl.math
 // Output:
 // ai  -- the inverse matrix
 // det -- determinant of a
-pub fn matrix_inv_small(ai mut, a mut Matrix, tol f64) f64 {
+pub fn matrix_inv_small(ai mut Matrix, a mut Matrix, tol f64) f64 {
 	mut det := 0.0
 	if a.m == 1 && a.n == 1 {
 		det = a.get(0, 0)
