@@ -64,7 +64,7 @@ pub fn matrix_inv_small(ai mut Matrix, a mut Matrix, tol f64) f64 {
 // a     -- matrix a
 // copy_a -- creates a copy of a; otherwise 'a' is modified
 // Output:
-// s  -- diagonal terms [must be pre-allocated] len(s) = imin(a.m, a.n)
+// s  -- diagonal terms [must be pre-allocated] s.len = imin(a.m, a.n)
 // u  -- left matrix [must be pre-allocated] u is (a.m x a.m)
 // vt -- transposed right matrix [must be pre-allocated] vt is (a.n x a.n)
 pub fn matrix_svd(s []f64, u, vt, a Matrix, copy_a bool) {
@@ -73,7 +73,7 @@ pub fn matrix_svd(s []f64, u, vt, a Matrix, copy_a bool) {
 	if copy_a {
 		acpy = a.clone()
 	}
-	blas.dgesvd(int(`A`), int(`A`), a.m, a.n, acpy.data, a.m, s, u.data, a.m, vt.data, a.n,
+	blas.dgesvd(rune(`A`), rune(`A`), a.m, a.n, acpy.data, a.m, s, u.data, a.m, vt.data, a.n,
 		superb)
 }
 
@@ -85,7 +85,7 @@ pub fn matrix_svd(s []f64, u, vt, a Matrix, copy_a bool) {
 // ai -- inverse matrix (N x M)
 // det -- determinant of matrix (ONLY if calc_det == true and the matrix is square)
 // NOTE: the dimension of the ai matrix must be N x M for the pseudo-inverse
-pub fn matrix_inv(ai mut, a mut Matrix, calc_det bool) f64 {
+pub fn matrix_inv(ai mut Matrix, a mut Matrix, calc_det bool) f64 {
 	mut det := 0.0
 	// square inverse
 	if a.m == a.n {
@@ -95,7 +95,7 @@ pub fn matrix_inv(ai mut, a mut Matrix, calc_det bool) f64 {
 		if calc_det {
 			det = 1.0
 			for i := 0; i < a.m; i++ {
-				if ipiv[i] - 1 == int32(i) { // NOTE: ipiv are 1-based indices
+				if ipiv[i] - 1 == i { // NOTE: ipiv are 1-based indices
 					det = math.abs(det) * ai.get(i, i)
 				} else {
 					det = -det * ai.get(i, i)
@@ -115,7 +115,7 @@ pub fn matrix_inv(ai mut, a mut Matrix, calc_det bool) f64 {
 	for i := 0; i < a.n; i++ {
 		for j := 0; j < a.m; j++ {
 			ai.set(i, j, 0)
-			for k := 0; k < len(s); k++ {
+			for k := 0; k < s.len; k++ {
 				if s[k] > tol_s {
 					ai.add(i, j, vt.get(k, i) * u.get(j, k) / s[k])
 				}
@@ -132,12 +132,12 @@ pub fn matrix_inv(ai mut, a mut Matrix, calc_det bool) f64 {
 // "I"       => Infinite
 pub fn matrix_cond_num(a mut Matrix, normtype string) f64 {
 	mut res := 0.0
-	ai := matrix(a.m, a.n)
-	matrix_inv(ai, a, false)
+	mut ai := matrix(a.m, a.n)
+	matrix_inv(mut ai, mut a, false)
 	if normtype == 'I' {
-		res = a.normInf() * ai.normInf()
+		res = a.norm_inf() * ai.norm_inf()
 		return res
 	}
-	res = a.normFrob() * ai.normFrob()
+	res = a.norm_frob() * ai.norm_frob()
 	return res
 }

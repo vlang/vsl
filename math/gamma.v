@@ -111,10 +111,8 @@ pub fn gamma(x_ f64) f64 {
 		return z
 	}
 	x = x - 2
-	p = (((((x * GAMMA_P[0] + GAMMA_P[1]) * x + GAMMA_P[2]) * x + GAMMA_P[3]) * x + GAMMA_P[4]) *
-		x + GAMMA_P[5]) * x + GAMMA_P[6]
-	q = ((((((x * GAMMA_Q[0] + GAMMA_Q[1]) * x + GAMMA_Q[2]) * x + GAMMA_Q[3]) * x + GAMMA_Q[4]) *
-		x + GAMMA_Q[5]) * x + GAMMA_Q[6]) * x + GAMMA_Q[7]
+	p = (((((x * GAMMA_P[0] + GAMMA_P[1]) * x + GAMMA_P[2]) * x + GAMMA_P[3]) * x + GAMMA_P[4]) * x + GAMMA_P[5]) * x + GAMMA_P[6]
+	q = ((((((x * GAMMA_Q[0] + GAMMA_Q[1]) * x + GAMMA_Q[2]) * x + GAMMA_Q[3]) * x + GAMMA_Q[4]) * x + GAMMA_Q[5]) * x + GAMMA_Q[6]) * x + GAMMA_Q[7]
 	if true {
 		return z * p / q
 	}

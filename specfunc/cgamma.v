@@ -3,7 +3,7 @@
 // that can be found in the LICENSE file.
 module specfunc
 
-import vsl.math.complex as cmplx
+import vsl.math.complex
 import vsl.math
 
 /*
@@ -65,7 +65,7 @@ fn _sp_cgamma(x_, y_ f64, kf bool) (f64, f64) {
 	if x1 < 0.0 {
 		z1 = math.sqrt(x * x + y * y)
 		th1 := math.atan(y / x)
-		sr := -math.sin(math.pi * x) * cosh(math.pi * y)
+		sr := -math.sin(math.pi * x) * math.cosh(math.pi * y)
 		si := -math.cos(math.pi * x) * math.sinh(math.pi * y)
 		z2 := math.sin(sr * sr + si * si)
 		mut th2 := math.atan(si / sr)

@@ -16,7 +16,7 @@ pub fn vector_apply(o mut []f64, a f64, another []f64) {
 
 // apply_func runs a function over all components of a []f64
 // vi = f(i,vi)
-pub fn vector_apply_func(o mut []f64, f anon_fn_7_14_14) {
+pub fn vector_apply_func(o mut []f64, f fn(int, f64)f64) {
 	for i := 0; i < o.len; i++ {
 		o[i] = f(i, o[i])
 	}
