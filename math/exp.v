@@ -2,9 +2,11 @@
 // Use of this source code is governed by an MIT license
 // that can be found in the LICENSE file.
 module math
-#include <math.h>
 
 import vsl.internal
+
+#include <math.h>
+fn C.exp(x f64) f64
 
 const (
 	f64_max_exp = f64(1024)

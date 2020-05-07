@@ -57,14 +57,14 @@ pub fn (q1 Quaternion) is_lessequal(q2 Quaternion) bool {
 	return (!q1.is_nan() && !q2.is_nan()) && choose(q1.w != q2.w, q1.w < q2.w, choose(q1.x !=
 		q2.x, q1.x < q2.x, choose(q1.y != q2.y, q1.y < q2.y, choose(q1.z != q2.z, q1.z < q2.z, true))))
 	// Note that the final possibility __is 1, whereas in
-    // `is_less` it was 0.  This distinction correctly
-    // accounts for equality.
+	// `is_less` it was 0.  This distinction correctly
+	// accounts for equality.
 }
 
 pub fn (q1 Quaternion) is_greaterequal(q2 Quaternion) bool {
 	return (!q1.is_nan() && !q2.is_nan()) && choose(q1.w != q2.w, q1.w > q2.w, choose(q1.x !=
 		q2.x, q1.x > q2.x, choose(q1.y != q2.y, q1.y > q2.y, choose(q1.z != q2.z, q1.z > q2.z, true))))
 	// Note that the final possibility __is 1, whereas in
-    // `is_greater` it was 0.  This distinction correctly
-    // accounts for equality.
+	// `is_greater` it was 0.  This distinction correctly
+	// accounts for equality.
 }

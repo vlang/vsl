@@ -5,7 +5,7 @@ module util
 
 // Observer is an interface to objects that need to observe something
 // the data observed by this observer is being update
-interface util.Observer {
+pub interface Observer {
 	update()
 }
 
