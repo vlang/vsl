@@ -12,16 +12,16 @@ pub fn backward(f vsl.Function, x f64) (f64, f64) {
 	Construct a divided difference table with a fairly large step
          * size to get a very rough estimate of f''. Use this to estimate
          * the step size which will minimize the error in calculating f'.
-*/
+	*/
 	mut h := internal.sqrt_f64_epsilon
-	mut a := []f64
-	mut d := []f64
+	mut a := []f64{}
+	mut d := []f64{}
 	mut k := 0
 	mut i := 0
 	/*
 	Algorithm based on description on pg. 204 of Conte and de Boor
          * (CdB) - coefficients of Newton form of polynomial of degree 2.
-*/
+	*/
 	for i = 0; i < 3; i++ {
 		a << x + (f64(i) - 2.0) * h
 		d << f.eval(a[i])
@@ -34,7 +34,7 @@ pub fn backward(f vsl.Function, x f64) (f64, f64) {
 	/*
 	Adapt procedure described on pg. 282 of CdB to find best value of
          * step size.
-*/
+	*/
 	mut a2 := math.abs(d[0] + d[1] + d[2])
 	if a2 < 100.0 * internal.sqrt_f64_epsilon {
 		a2 = 100.0 * internal.sqrt_f64_epsilon
@@ -51,16 +51,16 @@ pub fn forward(f vsl.Function, x f64) (f64, f64) {
 	Construct a divided difference table with a fairly large step
          * size to get a very rough estimate of f''. Use this to estimate
          * the step size which will minimize the error in calculating f'.
-*/
+	*/
 	mut h := internal.sqrt_f64_epsilon
-	mut a := []f64
-	mut d := []f64
+	mut a := []f64{}
+	mut d := []f64{}
 	mut k := 0
 	mut i := 0
 	/*
 	Algorithm based on description on pg. 204 of Conte and de Boor
          * (CdB) - coefficients of Newton form of polynomial of degree 2.
-*/
+	*/
 	for i = 0; i < 3; i++ {
 		a << x + f64(i) * h
 		d << f.eval(a[i])
@@ -73,7 +73,7 @@ pub fn forward(f vsl.Function, x f64) (f64, f64) {
 	/*
 	Adapt procedure described on pg. 282 of CdB to find best value of
          * step size.
-*/
+	*/
 	mut a2 := math.abs(d[0] + d[1] + d[2])
 	if a2 < 100.0 * internal.sqrt_f64_epsilon {
 		a2 = 100.0 * internal.sqrt_f64_epsilon
@@ -90,16 +90,16 @@ pub fn central(f vsl.Function, x f64) (f64, f64) {
 	Construct a divided difference table with a fairly large step
          * size to get a very rough estimate of f'''. Use this to estimate
          * the step size which will minimize the error in calculating f'.
-*/
+	*/
 	mut h := internal.sqrt_f64_epsilon
-	mut a := []f64
-	mut d := []f64
+	mut a := []f64{}
+	mut d := []f64{}
 	mut k := 0
 	mut i := 0
 	/*
 	Algorithm based on description on pg. 204 of Conte and de Boor
          * (CdB) - coefficients of Newton form of polynomial of degree 3.
-*/
+	*/
 	for i = 0; i < 4; i++ {
 		a << x + (f64(i) - 2.0) * h
 		d << f.eval(a[i])
@@ -112,7 +112,7 @@ pub fn central(f vsl.Function, x f64) (f64, f64) {
 	/*
 	Adapt procedure described on pg. 282 of CdB to find best value of
          * step size.
-*/
+	*/
 	mut a3 := math.abs(d[0] + d[1] + d[2] + d[3])
 	if a3 < 100.0 * internal.sqrt_f64_epsilon {
 		a3 = 100.0 * internal.sqrt_f64_epsilon

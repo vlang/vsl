@@ -28,7 +28,7 @@ pub fn slice_to_col_major(a [][]f64) []f64 {
 
 // col_major_to_slice converts col-major matrix to nested slice
 pub fn col_major_to_slice(m, n int, data []f64) [][]f64 {
-	mut a := [[]f64].repeat(n)
+	mut a := [[]f64{}].repeat(n)
 	for i := 0; i < m; i++ {
 		a[i] = [0.0].repeat(n)
 		for j := 0; j < n; j++ {
@@ -111,7 +111,7 @@ pub fn print_col_major_py(m, n int, data []f64, nfmt_ string) string {
 // data[i+j*m] = a[i][j]
 //
 // NOTE: make sure to have at least 1x1 item
-pub fn slice_to_col_major_complex(a [][]complex.Complex) []complex.Complex {
+pub fn slice_to_col_major_complex(a []complex.Complex) []complex.Complex {
 	m := a.len
 	n := a[0].len
 	mut data := [complex.complex(0.0, 0.0)].repeat(m * n)
@@ -127,7 +127,7 @@ pub fn slice_to_col_major_complex(a [][]complex.Complex) []complex.Complex {
 
 // col_major_complex_to_slice converts col-major matrix to nested slice
 pub fn col_major_complex_to_slice(m, n int, data []complex.Complex) []complex.Complex {
-	mut a := [[]complex.Complex].repeat(m)
+	mut a := [[]complex.Complex{}].repeat(m)
 	for i := 0; i < m; i++ {
 		a[i] = [complex.complex(0.0, 0.0)].repeat(n)
 		for j := 0; j < n; j++ {
@@ -315,7 +315,7 @@ pub fn extract_col_complex(j, m, n int, A []complex.Complex) []complex.Complex {
 // NOTE (no checks made)
 // n = wr.len = wi.len = v.len
 // 2 * n = len(vv)
-pub fn eigenvecs_build(vv mut []complex.Complex, wr, wi, v []f64) {
+pub fn eigenvecs_build(mut vv []complex.Complex, wr, wi, v []f64) {
 	n := wr.len
 	mut dj := 1 // increment for next conjugate pair
 	for j := 0; j < n; j += dj {
@@ -353,7 +353,7 @@ pub fn eigenvecs_build(vv mut []complex.Complex, wr, wi, v []f64) {
 // NOTE (no checks made)
 // n = wr.len = wi.len = len(vl) = len(vr)
 // 2 * n = len(vvl) = len(vvr)
-pub fn eigenvecs_build_both(vvl mut []complex.Complex, vvr mut []complex.Complex, wr, wi, vl, vr []f64) {
+pub fn eigenvecs_build_both(mut vvl, mut vvr []complex.Complex, wr, wi, vl, vr []f64) {
 	n := wr.len
 	mut dj := 1 // increment for next conjugate pair
 	for j := 0; j < n; j += dj {

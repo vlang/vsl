@@ -1,12 +1,11 @@
 // Copyright (c) 2019-2020 Ulises Jeremias Cornejo Fandos. All rights reserved.
 // Use of this source code is governed by an MIT license
 // that can be found in the LICENSE file.
-
 module util
 
 // Observer is an interface to objects that need to observe something
 // the data observed by this observer is being update
-pub interface Observer {
+interface util.Observer {
 	update()
 }
 
@@ -17,7 +16,7 @@ pub mut:
 }
 
 // add_observer adds an object to the list of interested observers
-pub fn (o mut Observable) add_observer(obs Observer) {
+pub fn (mut o Observable) add_observer(obs Observer) {
 	o.observers << obs
 }
 

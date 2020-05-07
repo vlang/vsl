@@ -28,7 +28,7 @@ pub mut:
 }
 
 // stat returns a new Stat object
-pub fn stat_from_data(data mut &Data) Stat {
+pub fn stat_from_data(mut data &Data) Stat {
 	mut o := Stat{
 		data: data
 	}
@@ -43,7 +43,7 @@ pub fn stat_from_data(data mut &Data) Stat {
 }
 
 // update compute statistics for given data (an Observer of Data)
-pub fn (o mut Stat) update() {
+pub fn (mut o Stat) update() {
 	// constants
 	m := o.data.x.m // number of samples
 	n := o.data.x.n // number of features
@@ -83,7 +83,7 @@ pub fn (o mut Stat) update() {
 // Output:
 // t -- scalar t = oᵀy  sum of columns of the y vector: t = Σ_i^m o_i y_i
 // s -- vector s = Xᵀo  sum of columns of the X matrix: s_j = Σ_i^m o_i X_ij  [nFeatures]
-pub fn (o mut Stat) sum_vars() ([]f64, f64) {
+pub fn (mut o Stat) sum_vars() ([]f64, f64) {
 	one := [1.0].repeat(o.data.x.m)
 	s := la.matrix_tr_vector_mul(1, o.data.x, one)
 	mut t := 0.0
@@ -94,7 +94,7 @@ pub fn (o mut Stat) sum_vars() ([]f64, f64) {
 }
 
 // copy_into copies stat into p
-pub fn (o Stat) copy_into(p mut Stat) {
+pub fn (o Stat) copy_into(mut p Stat) {
 	p.min_x = o.min_x.clone()
 	p.max_x = o.max_x.clone()
 	p.sum_x = o.sum_x.clone()

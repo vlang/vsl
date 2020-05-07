@@ -50,7 +50,8 @@ pub fn tan(x_ f64) f64 {
 	z = ((x - y * TAN_DP1) - y * TAN_DP2) - y * TAN_DP3
 	zz := z * z
 	if zz > 1.0e-14 {
-		y = z + z * (zz * (((TAN_P[0] * zz) + TAN_P[1]) * zz + TAN_P[2]) / ((((zz + TAN_Q[1]) * zz + TAN_Q[2]) * zz + TAN_Q[3]) * zz + TAN_Q[4]))
+		y = z + z * (zz * (((TAN_P[0] * zz) + TAN_P[1]) * zz + TAN_P[2]) / ((((zz + TAN_Q[1]) *
+			zz + TAN_Q[2]) * zz + TAN_Q[3]) * zz + TAN_Q[4]))
 	} else {
 		y = z
 	}
@@ -88,7 +89,8 @@ pub fn cot(x_ f64) f64 {
 	z = ((x - y * TAN_DP1) - y * TAN_DP2) - y * TAN_DP3
 	zz := z * z
 	if zz > 1.0e-14 {
-		y = z + z * (zz * (((TAN_P[0] * zz) + TAN_P[1]) * zz + TAN_P[2]) / ((((zz + TAN_Q[1]) * zz + TAN_Q[2]) * zz + TAN_Q[3]) * zz + TAN_Q[4]))
+		y = z + z * (zz * (((TAN_P[0] * zz) + TAN_P[1]) * zz + TAN_P[2]) / ((((zz + TAN_Q[1]) *
+			zz + TAN_Q[2]) * zz + TAN_Q[3]) * zz + TAN_Q[4]))
 	} else {
 		y = z
 	}

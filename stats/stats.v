@@ -91,7 +91,7 @@ pub fn mode(data []f64) f64 {
 	if data.len == 0 {
 		return 0.0
 	}
-	mut freqs := []int
+	mut freqs := []int{}
 	for v in data {
 		freqs << freq(data, v)
 	}
@@ -451,7 +451,7 @@ pub fn kurtosis_mean_stddev(data []f64, mean, sd f64) f64 {
 	/*
 	we use a recurrence relation to stably update a running value so
          * there aren't any large sums that can overflow
-*/
+	*/
 	for i, v in data {
 		x := (v - mean) / sd
 		avg += (x * x * x * x - avg) / (f64(i) + 1.0)
@@ -471,7 +471,7 @@ pub fn skew_mean_stddev(data []f64, mean, sd f64) f64 {
 	/*
 	we use a recurrence relation to stably update a running value so
          * there aren't any large sums that can overflow
-*/
+	*/
 	for i, v in data {
 		x := (v - mean) / sd
 		skew += (x * x * x - skew) / (f64(i) + 1.0)

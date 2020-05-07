@@ -39,7 +39,7 @@ pub mut:
 // new object
 pub fn data(nb_samples, nb_features int, use_y, allocate bool) Data {
 	mut o := Data(calloc(sizeof(Data)))
-	mut y := []f64
+	mut y := []f64{}
 	o.observers = []
 	o.nb_samples = nb_samples
 	o.nb_features = nb_features
@@ -49,7 +49,7 @@ pub fn data(nb_samples, nb_features int, use_y, allocate bool) Data {
 		la.matrix(0, 0)
 	}
 	if allocate && use_y {
-		y = [0.0].repeat(nb_samples)
+		y = []f64{ len: nb_samples }
 	}
 	o.y = y
 	return o
@@ -59,7 +59,7 @@ pub fn data(nb_samples, nb_features int, use_y, allocate bool) Data {
 // Input:
 // x -- x values
 // y -- y values [optional]
-pub fn (o mut Data) set(x la.Matrix, y []f64) {
+pub fn (mut o Data) set(x la.Matrix, y []f64) {
 	o.x = x
 	o.y = y
 	o.notify_update()
@@ -125,7 +125,7 @@ pub fn (o Data) clone() Data {
 }
 
 // add_observer adds an object to the list of interested observers
-pub fn (o mut Data) add_observer(obs util.Observer) {
+pub fn (mut o Data) add_observer(obs util.Observer) {
 	o.observers << obs
 }
 

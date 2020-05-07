@@ -65,7 +65,7 @@ pub fn dscal(n int, alpha f64, x []f64, incx int) {
 //
 // y += alpha*x + y
 //
-pub fn daxpy(n int, alpha f64, x []f64, incx int, y mut []f64, incy int) {
+pub fn daxpy(n int, alpha f64, x []f64, incx int, mut y []f64, incy int) {
 	C.cblas_daxpy(n, alpha, &x[0], incx, &y[0], incy)
 }
 
@@ -93,7 +93,7 @@ pub fn daxpy(n int, alpha f64, x []f64, incx int, y mut []f64, incy int) {
 // trans=false     y := alpha*A*x + beta*y.
 //
 // trans=true      y := alpha*A**T*x + beta*y.
-pub fn dgemv(trans bool, m, n int, alpha f64, a []f64, lda int, x []f64, incx int, beta f64, y mut []f64, incy int) {
+pub fn dgemv(trans bool, m, n int, alpha f64, a []f64, lda int, x []f64, incx int, beta f64, mut y []f64, incy int) {
 	C.cblas_dgemv(cblas_col_major, c_trans(trans), m, n, alpha, &a[0], lda, &x[0], incx, beta,
 		&y[0], incy)
 }
@@ -123,7 +123,7 @@ pub fn dgemv(trans bool, m, n int, alpha f64, a []f64, lda int, x []f64, incx in
 //
 // where alpha is a scalar, x is an m element vector, y is an n element
 // vector and A is an m by n matrix.
-pub fn dger(m, n int, alpha f64, x []f64, incx int, y mut []f64, incy int, a []f64, lda int) {
+pub fn dger(m, n int, alpha f64, x []f64, incx int, mut y []f64, incy int, a []f64, lda int) {
 	C.cblas_dger(cblas_col_major, m, n, alpha, &x[0], incx, &y[0], incy, &a[0], lda)
 }
 
@@ -301,7 +301,7 @@ pub fn dgesvd(jobu, jobvt rune, m, n int, a []f64, lda int, s, u []f64, ldu int,
 //
 // NOTE: (1) matrix 'a' will be modified
 // (2) ipiv indices are 1-based (i.e. Fortran)
-pub fn dgetrf(m, n int, a mut []f64, lda int, ipiv []int) {
+pub fn dgetrf(m, n int, mut a []f64, lda int, ipiv []int) {
 	info := C.LAPACKE_dgetrf(lapack_col_major, m, n, &a[0], lda, &ipiv[0])
 	if info != 0 {
 		errno.vsl_panic('lapack failed', .efailed)
@@ -338,7 +338,7 @@ pub fn dgetrf(m, n int, a mut []f64, lda int, ipiv []int) {
 //
 // This method inverts U and then computes inv(A) by solving the system
 // inv(A)*L = inv(U) for inv(A).
-pub fn dgetri(n int, a mut []f64, lda int, ipiv []int) {
+pub fn dgetri(n int, mut a []f64, lda int, ipiv []int) {
 	info := C.LAPACKE_dgetri(lapack_col_major, n, &a[0], lda, &ipiv[0])
 	if info != 0 {
 		errno.vsl_panic('lapack failed', .efailed)
@@ -374,7 +374,7 @@ pub fn dgetri(n int, a mut []f64, lda int, ipiv []int) {
 // where  alpha and beta  are scalars, C is an  n by n  symmetric matrix
 // and  A  is an  n by k  matrix in the first case and a  k by n  matrix
 // in the second case.
-pub fn dsyrk(up, trans bool, n, k int, alpha f64, a []f64, lda int, beta f64, c mut []f64, ldc int) {
+pub fn dsyrk(up, trans bool, n, k int, alpha f64, a []f64, lda int, beta f64, mut c []f64, ldc int) {
 	C.cblas_dsyrk(cblas_col_major, c_uplo(up), c_trans(trans), n, k, alpha, &a[0], lda, beta,
 		&c[0], ldc)
 }
@@ -432,7 +432,7 @@ pub fn dsyrk(up, trans bool, n, k int, alpha f64, a []f64, lda int, beta f64, c 
 // where U is an upper triangular matrix and L is lower triangular.
 //
 // This is the block version of the algorithm, calling Level 3 BLAS.
-pub fn dpotrf(up bool, n int, a mut []f64, lda int) {
+pub fn dpotrf(up bool, n int, mut a []f64, lda int) {
 	info := C.LAPACKE_dpotrf(lapack_col_major, l_uplo(up), n, &a[0], lda)
 	if info != 0 {
 		errno.vsl_panic('lapack failed', .efailed)
@@ -486,7 +486,7 @@ pub fn dpotrf(up bool, n int, a mut []f64, lda int) {
 //
 // The computed eigenvectors are normalized to have Euclidean norm
 // equal to 1 and largest component real.
-pub fn dgeev(calcVl, calcVr bool, n int, a mut []f64, lda int, wr, wi, vl []f64, ldvl_ int, vr []f64, ldvr_ int) {
+pub fn dgeev(calcVl, calcVr bool, n int, mut a []f64, lda int, wr, wi, vl []f64, ldvl_ int, vr []f64, ldvr_ int) {
 	mut vvl := 0.0
 	mut vvr := 0.0
 	mut ldvl := ldvl_

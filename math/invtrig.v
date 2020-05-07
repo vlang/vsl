@@ -66,7 +66,8 @@ const (
 [inline]
 fn xatan(x f64) f64 {
 	mut z := x * x
-	z = z * ((((P0 * z + P1) * z + P2) * z + P3) * z + P4) / (((((z + Q0) * z + Q1) * z + Q2) * z + Q3) * z + Q4)
+	z = z * ((((P0 * z + P1) * z + P2) * z + P3) * z + P4) / (((((z + Q0) * z + Q1) * z + Q2) *
+		z + Q3) * z + Q4)
 	z = x * z + x
 	return z
 }

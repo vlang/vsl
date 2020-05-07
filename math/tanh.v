@@ -7,7 +7,7 @@ const (
 	TANH_P = [
 		-9.64399179425052238628e-1,
 		-9.92877231001918586564e+1,
-		- 1.61468768441708447952e+3
+		-1.61468768441708447952e+3
 	]
 	TANH_Q = [
 		1.12811678491632931402e+2,
@@ -41,7 +41,8 @@ pub fn tanh(x f64) f64 {
 			return x
 		}
 		s := x * x
-		z = x + x * s * ((TANH_P[0] * s + TANH_P[1]) * s + TANH_P[2]) / (((s + TANH_Q[0]) * s + TANH_Q[1]) * s + TANH_Q[2])
+		z = x + x * s * ((TANH_P[0] * s + TANH_P[1]) * s + TANH_P[2]) / (((s + TANH_Q[0]) *
+			s + TANH_Q[1]) * s + TANH_Q[2])
 	}
 	return z
 }

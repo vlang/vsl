@@ -23,10 +23,9 @@ pub fn psi(x_ f64) f64 {
 		if p == q {
 			return math.max_f64
 		}
-		/*
-		Remove the zeros of tan(PI x)
-                * by subtracting the nearest integer from x
-*/
+
+		// Remove the zeros of tan(PI x)
+        // by subtracting the nearest integer from x
 		nz = q - p
 		if nz != 0.5 {
 			if nz > 0.5 {

@@ -34,7 +34,7 @@ pub fn log_factorial(n f64) f64 {
 
 fn log_factorial_asymptotic_expansion(n int) f64 {
 	m := 6
-	mut term := []f64
+	mut term := []f64{}
 	xx := f64((n + 1) * (n + 1))
 	mut xj := f64(n + 1)
 	log_factorial := log_sqrt_2pi - xj + (xj - 0.5) * log(xj)

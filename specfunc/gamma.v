@@ -114,8 +114,10 @@ pub fn gamma(x_ f64) f64 {
 		return z
 	}
 	x = x - 2
-	p = (((((x * GAMMA_P[0] + GAMMA_P[1]) * x + GAMMA_P[2]) * x + GAMMA_P[3]) * x + GAMMA_P[4]) * x + GAMMA_P[5]) * x + GAMMA_P[6]
-	q = ((((((x * GAMMA_Q[0] + GAMMA_Q[1]) * x + GAMMA_Q[2]) * x + GAMMA_Q[3]) * x + GAMMA_Q[4]) * x + GAMMA_Q[5]) * x + GAMMA_Q[6]) * x + GAMMA_Q[7]
+	p = (((((x * GAMMA_P[0] + GAMMA_P[1]) * x + GAMMA_P[2]) * x + GAMMA_P[3]) * x + GAMMA_P[4]) *
+		x + GAMMA_P[5]) * x + GAMMA_P[6]
+	q = ((((((x * GAMMA_Q[0] + GAMMA_Q[1]) * x + GAMMA_Q[2]) * x + GAMMA_Q[3]) * x + GAMMA_Q[4]) *
+		x + GAMMA_Q[5]) * x + GAMMA_Q[6]) * x + GAMMA_Q[7]
 	if true {
 		return z * p / q
 	}
@@ -227,29 +229,38 @@ pub fn log_gamma_sign(x_ f64) (f64, int) {
 		}
 		if i == 0 {
 			z := y * y
-			p1 := LGAMMA_A[0] + z * (LGAMMA_A[2] + z * (LGAMMA_A[4] + z * (LGAMMA_A[6] + z * (LGAMMA_A[8] + z * LGAMMA_A[10]))))
-			p2 := z * (LGAMMA_A[1] + z * (LGAMMA_A[3] + z * (LGAMMA_A[5] + z * (LGAMMA_A[7] + z * (LGAMMA_A[9] + z * LGAMMA_A[11])))))
+			p1 := LGAMMA_A[0] + z * (LGAMMA_A[2] + z * (LGAMMA_A[4] + z * (LGAMMA_A[6] + z *
+				(LGAMMA_A[8] + z * LGAMMA_A[10]))))
+			p2 := z * (LGAMMA_A[1] + z * (LGAMMA_A[3] + z * (LGAMMA_A[5] + z * (LGAMMA_A[7] +
+				z * (LGAMMA_A[9] + z * LGAMMA_A[11])))))
 			p := y * p1 + p2
 			lgamma += (p - 0.5 * y)
 		} else if i == 1 {
 			z := y * y
 			w := z * y
-			p1 := LGAMMA_T[0] + w * (LGAMMA_T[3] + w * (LGAMMA_T[6] + w * (LGAMMA_T[9] + w * LGAMMA_T[12]))) // parallel comp
-			p2 := LGAMMA_T[1] + w * (LGAMMA_T[4] + w * (LGAMMA_T[7] + w * (LGAMMA_T[10] + w * LGAMMA_T[13])))
-			p3 := LGAMMA_T[2] + w * (LGAMMA_T[5] + w * (LGAMMA_T[8] + w * (LGAMMA_T[11] + w * LGAMMA_T[14])))
+			p1 := LGAMMA_T[0] + w * (LGAMMA_T[3] + w * (LGAMMA_T[6] + w * (LGAMMA_T[9] + w *
+				LGAMMA_T[12]))) // parallel comp
+			p2 := LGAMMA_T[1] + w * (LGAMMA_T[4] + w * (LGAMMA_T[7] + w * (LGAMMA_T[10] + w *
+				LGAMMA_T[13])))
+			p3 := LGAMMA_T[2] + w * (LGAMMA_T[5] + w * (LGAMMA_T[8] + w * (LGAMMA_T[11] + w *
+				LGAMMA_T[14])))
 			p := z * p1 - (tt - w * (p2 + y * p3))
 			lgamma += (tf + p)
 		} else if i == 2 {
-			p1 := y * (LGAMMA_U[0] + y * (LGAMMA_U[1] + y * (LGAMMA_U[2] + y * (LGAMMA_U[3] + y * (LGAMMA_U[4] + y * LGAMMA_U[5])))))
-			p2 := 1.0 + y * (LGAMMA_V[1] + y * (LGAMMA_V[2] + y * (LGAMMA_V[3] + y * (LGAMMA_V[4] + y * LGAMMA_V[5]))))
+			p1 := y * (LGAMMA_U[0] + y * (LGAMMA_U[1] + y * (LGAMMA_U[2] + y * (LGAMMA_U[3] +
+				y * (LGAMMA_U[4] + y * LGAMMA_U[5])))))
+			p2 := 1.0 + y * (LGAMMA_V[1] + y * (LGAMMA_V[2] + y * (LGAMMA_V[3] + y * (LGAMMA_V[4] +
+				y * LGAMMA_V[5]))))
 			lgamma += (-0.5 * y + p1 / p2)
 		}
 	} else if x < 8 {
 		// 2 <= x < 8
 		i := int(x)
 		y := x - f64(i)
-		p := y * (LGAMMA_S[0] + y * (LGAMMA_S[1] + y * (LGAMMA_S[2] + y * (LGAMMA_S[3] + y * (LGAMMA_S[4] + y * (LGAMMA_S[5] + y * LGAMMA_S[6]))))))
-		q := 1.0 + y * (LGAMMA_R[1] + y * (LGAMMA_R[2] + y * (LGAMMA_R[3] + y * (LGAMMA_R[4] + y * (LGAMMA_R[5] + y * LGAMMA_R[6])))))
+		p := y * (LGAMMA_S[0] + y * (LGAMMA_S[1] + y * (LGAMMA_S[2] + y * (LGAMMA_S[3] + y *
+			(LGAMMA_S[4] + y * (LGAMMA_S[5] + y * LGAMMA_S[6]))))))
+		q := 1.0 + y * (LGAMMA_R[1] + y * (LGAMMA_R[2] + y * (LGAMMA_R[3] + y * (LGAMMA_R[4] +
+			y * (LGAMMA_R[5] + y * LGAMMA_R[6])))))
 		lgamma = 0.5 * y + p / q
 		mut z := 1.0 // lgamma(1+s) = math.log(s) + lgamma(s)
 		if i == 7 {
@@ -283,7 +294,8 @@ pub fn log_gamma_sign(x_ f64) (f64, int) {
 		t := math.log(x)
 		z := 1.0 / x
 		y := z * z
-		w := LGAMMA_W[0] + z * (LGAMMA_W[1] + y * (LGAMMA_W[2] + y * (LGAMMA_W[3] + y * (LGAMMA_W[4] + y * (LGAMMA_W[5] + y * LGAMMA_W[6])))))
+		w := LGAMMA_W[0] + z * (LGAMMA_W[1] + y * (LGAMMA_W[2] + y * (LGAMMA_W[3] + y * (LGAMMA_W[4] +
+			y * (LGAMMA_W[5] + y * LGAMMA_W[6])))))
 		lgamma = (x - 0.5) * (t - 1.0) + w
 	} else {
 		// 2**58 <= x <= Inf

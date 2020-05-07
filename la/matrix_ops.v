@@ -16,7 +16,7 @@ import vsl.math
 // Output:
 // ai  -- the inverse matrix
 // det -- determinant of a
-pub fn matrix_inv_small(ai mut Matrix, a mut Matrix, tol f64) f64 {
+pub fn matrix_inv_small(mut ai, mut a Matrix, tol f64) f64 {
 	mut det := 0.0
 	if a.m == 1 && a.n == 1 {
 		det = a.get(0, 0)
@@ -85,7 +85,7 @@ pub fn matrix_svd(s []f64, u, vt, a Matrix, copy_a bool) {
 // ai -- inverse matrix (N x M)
 // det -- determinant of matrix (ONLY if calc_det == true and the matrix is square)
 // NOTE: the dimension of the ai matrix must be N x M for the pseudo-inverse
-pub fn matrix_inv(ai mut Matrix, a mut Matrix, calc_det bool) f64 {
+pub fn matrix_inv(mut ai, mut a Matrix, calc_det bool) f64 {
 	mut det := 0.0
 	// square inverse
 	if a.m == a.n {
@@ -130,7 +130,7 @@ pub fn matrix_inv(ai mut Matrix, a mut Matrix, calc_det bool) f64 {
 // normtype -- Type of norm to use:
 // "F" or "" => Frobenius
 // "I"       => Infinite
-pub fn matrix_cond_num(a mut Matrix, normtype string) f64 {
+pub fn matrix_cond_num(mut a Matrix, normtype string) f64 {
 	mut res := 0.0
 	mut ai := matrix(a.m, a.n)
 	matrix_inv(mut ai, mut a, false)

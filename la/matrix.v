@@ -48,7 +48,7 @@ pub fn matrix_raw(m, n int, rawdata []f64) Matrix {
 }
 
 // set_from_deep2 sets matrix with data from a nested slice (Deep2) structure
-pub fn (o mut Matrix) set_from_deep2(a [][]f64) {
+pub fn (mut o Matrix) set_from_deep2(a [][]f64) {
 	mut k := 0
 	for j := 0; j < o.n; j++ {
 		for i := 0; i < o.m; i++ {
@@ -59,7 +59,7 @@ pub fn (o mut Matrix) set_from_deep2(a [][]f64) {
 }
 
 // set_diag sets diagonal matrix with diagonal components equal to val
-pub fn (o mut Matrix) set_diag(val f64) {
+pub fn (mut o Matrix) set_diag(val f64) {
 	for i := 0; i < o.m; i++ {
 		for j := 0; j < o.n; j++ {
 			if i == j {
@@ -72,7 +72,7 @@ pub fn (o mut Matrix) set_diag(val f64) {
 }
 
 // set sets value
-pub fn (o mut Matrix) set(i, j int, val f64) {
+pub fn (mut o Matrix) set(i, j int, val f64) {
 	o.data[i + j * o.m] = val // col-major
 }
 
@@ -83,7 +83,7 @@ pub fn (o Matrix) get(i, j int) f64 {
 
 // get_deep2 returns nested slice representation
 pub fn (o Matrix) get_deep2() [][]f64 {
-	mut M := [[]f64].repeat(o.m)
+	mut M := [[]f64{}].repeat(o.m)
 	for i := 0; i < o.m; i++ {
 		M[i] = [0.0].repeat(o.n)
 		for j := 0; j < o.n; j++ {
@@ -113,20 +113,20 @@ pub fn (o Matrix) transpose() Matrix {
 
 // copy_into copies the scaled components of this matrix into another one (result)
 // result := alpha * this   ⇒   result[ij] := alpha * this[ij]
-pub fn (o Matrix) copy_into(result mut Matrix, alpha f64) {
+pub fn (o Matrix) copy_into(mut result Matrix, alpha f64) {
 	for k := 0; k < o.m * o.n; k++ {
 		result.data[k] = alpha * o.data[k]
 	}
 }
 
 // add adds value to (i,j) location
-pub fn (o mut Matrix) add(i, j int, val f64) {
+pub fn (mut o Matrix) add(i, j int, val f64) {
 	o.data[i + j * o.m] += val // col-major
 }
 
 // fill fills this matrix with a single number val
 // aij = val
-pub fn (o mut Matrix) fill(val f64) {
+pub fn (mut o Matrix) fill(val f64) {
 	for k := 0; k < o.m * o.n; k++ {
 		o.data[k] = val
 	}
@@ -138,7 +138,7 @@ pub fn (o mut Matrix) fill(val f64) {
 // A = |  5 6 7 8  |  ⇒  clear([1,2], [], 1.0)  ⇒  A = |  0 1 0 0  |
 // |_ 4 3 2 1 _|                                   |_ 0 0 1 0 _|
 //
-pub fn (o mut Matrix) clear_rc(rows, cols []int, diag f64) {
+pub fn (mut o Matrix) clear_rc(rows, cols []int, diag f64) {
 	for r in rows {
 		for j := 0; j < o.n; j++ {
 			if r == j {
@@ -165,7 +165,7 @@ pub fn (o mut Matrix) clear_rc(rows, cols []int, diag f64) {
 // A = |  4 5 6  |  ⇒  clear(1.0)  ⇒  A = |  0 5 0  |
 // |_ 7 8 9 _|                        |_ 0 0 1 _|
 //
-pub fn (o mut Matrix) clear_bry(diag f64) {
+pub fn (mut o Matrix) clear_bry(diag f64) {
 	o.clear_rc([0, o.m - 1], [0, o.n - 1], diag)
 }
 
@@ -230,7 +230,7 @@ pub fn (o Matrix) extract_cols(start, endp1 int) Matrix {
 }
 
 // set_col sets the values of a column j with a single value
-pub fn (o mut Matrix) set_col(j int, value f64) {
+pub fn (mut o Matrix) set_col(j int, value f64) {
 	for k := j * o.m; k < (j + 1) * o.m; k++ {
 		o.data[k] = value
 	}
@@ -269,7 +269,7 @@ pub fn (o Matrix) norm_inf() f64 {
 // apply sets this matrix with the scaled components of another matrix
 // this := alpha * another   ⇒   this[i] := alpha * another[i]
 // NOTE: "another" may be "this"
-pub fn (o mut Matrix) apply(alpha f64, another Matrix) {
+pub fn (mut o Matrix) apply(alpha f64, another Matrix) {
 	for k := 0; k < o.m * o.n; k++ {
 		o.data[k] = alpha * another.data[k]
 	}

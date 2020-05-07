@@ -14,7 +14,7 @@ fn central_deriv(f vsl.Function, x, h f64) (f64, f64, f64) {
          * Compute the error using the difference between the 5-point and
          * the 3-point rule (x-h,x,x+h). Again the central point is not
          * used.
-*/
+	*/
 	fm1 := f.eval(x - h)
 	fp1 := f.eval(x + h)
 	fmh := f.eval(x - h / 2)
@@ -29,7 +29,7 @@ fn central_deriv(f vsl.Function, x, h f64) (f64, f64, f64) {
          * However, for safety, we estimate the error from r5-r3, which is
          * O(h^2).  By scaling h we will minimise this estimated error, not
          * the actual truncation error in r5.
-*/
+	*/
 	result := r5 / h
 	abserr_trunc := math.abs((r5 - r3) / h) // Estimated truncation error O(h^2)
 	abserr_round := math.abs(e5 / h) + dy // Rounding error (cancellations)
@@ -45,14 +45,14 @@ pub fn central(f vsl.Function, x, h f64) (f64, f64) {
 		Compute an optimised stepsize to minimize the total error,
                  * using the scaling of the truncation error (O(h^2)) and
                  * rounding error (O(1/h)).
-*/
+		*/
 		h_opt := h * math.pow(round / (2.0 * trunc), 1.0 / 3.00)
 		r_opt, round_opt, trunc_opt := central_deriv(f, x, h_opt)
 		error_opt := round_opt + trunc_opt
 		/*
 		Check that the new error is smaller, and that the new derivative
                  * is consistent with the error bounds of the original estimate.
-*/
+		*/
 		if error_opt < error && math.abs(r_opt - r_0) < 4.0 * error {
 			result = r_opt
 			error = error_opt
@@ -67,7 +67,7 @@ fn forward_deriv(f vsl.Function, x, h f64) (f64, f64, f64) {
          * x+3h/4, x+h).
          * Compute the error using the difference between the 4-point and
          * the 2-point rule (x+h/2,x+h).
-*/
+	*/
 	f1 := f.eval(x + h / 4.0)
 	f2 := f.eval(x + h / 2.0)
 	f3 := f.eval(x + (3.0 / 4.0) * h)
@@ -81,7 +81,7 @@ fn forward_deriv(f vsl.Function, x, h f64) (f64, f64, f64) {
          * However, for safety, we estimate the error from r4-r2, which is
          * O(h).  By scaling h we will minimise this estimated error, not
          * the actual truncation error in r4.
-*/
+	*/
 	result := r4 / h
 	abserr_trunc := math.abs((r4 - r2) / h) // Estimated truncation error O(h)
 	abserr_round := math.abs(e4 / h) + dy
@@ -97,14 +97,14 @@ pub fn forward(f vsl.Function, x, h f64) (f64, f64) {
 		Compute an optimised stepsize to minimize the total error,
                  * using the scaling of the estimated truncation error (O(h)) and
                  * rounding error (O(1/h)).
-*/
+		*/
 		h_opt := h * math.pow(round / (trunc), 1.0 / 2.00)
 		r_opt, round_opt, trunc_opt := forward_deriv(f, x, h_opt)
 		error_opt := round_opt + trunc_opt
 		/*
 		Check that the new error is smaller, and that the new derivative
                  * is consistent with the error bounds of the original estimate.
-*/
+		*/
 		if error_opt < error && math.abs(r_opt - r_0) < 4.0 * error {
 			result = r_opt
 			error = error_opt

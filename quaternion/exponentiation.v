@@ -45,10 +45,7 @@ pub fn (q Quaternion) log() Quaternion {
 	b := math.sqrt(q.x * q.x + q.y * q.y + q.z * q.z)
 	if math.abs(b) <= q_epsilon * math.abs(q.w) {
 		if q.w < 0.0 {
-			/*
-			* has no unique logarithm returning one arbitrarily.",
-                         * q.w, q.x, q.y, q.z)
-*/
+			// has no unique logarithm returning one arbitrarily.",
 			if math.abs(q.w + 1.0) > q_epsilon {
 				return quaternion(math.log(-q.w), math.pi, 0.0, 0.0)
 			} else {

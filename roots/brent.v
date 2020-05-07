@@ -59,17 +59,14 @@ pub fn brent(func vsl.Function, x1, x2, tol f64) ?(f64, f64) {
 		if math.abs(new_step) <= tol1 || fb == 0.0 {
 			return b, math.abs(c - b)
 		}
-		/*
-		decide if the interpolation can be tried. if prev_step was
-                 * large enough and in the right direction
-*/
+
+		//decide if the interpolation can be tried. if prev_step was
+        // large enough and in the right direction
 		if math.abs(prev_step) >= tol1 && math.abs(fa) > math.abs(fb) {
 			s := fb / fa
 			if (a == c) {
-				/*
-				if we only have two distinct points, only linear
-                                 * interpolation can be applied
-*/
+				// if we only have two distinct points, only linear
+                // interpolation can be applied
 				p = 2.0 * new_step * s
 				q = 1.0 - s
 			} else { // Quadratic inverse interpolation
@@ -78,20 +75,16 @@ pub fn brent(func vsl.Function, x1, x2, tol f64) ?(f64, f64) {
 				p = s * (2.0 * new_step * q * (q - r) - (b - a) * (r - 1.0))
 				q = (q - 1.0) * (r - 1.0) * (s - 1.0)
 			}
-			/*
-			p was calculated with the oppposite sign make p positive and
-                         * assign the possible minus to q
-*/
+			// p was calculated with the oppposite sign make p positive and
+            // assign the possible minus to q
 			if (p > 0.0) {
 				q = -q
 			} else {
 				p = -p
 			}
-			/*
-			if b+p/q falls in [b,c] and isn't too large, it is accepted. If
-                         * p/q is too large the the bisection procedure can reduce [b,c] more
-                         * significantly
-*/
+			// if b+p/q falls in [b,c] and isn't too large, it is accepted. If
+            // p/q is too large the the bisection procedure can reduce [b,c] more
+            // significantly
 			if 2.0 * p < 3.0 * new_step * q - math.abs(tol1 * q) && 2.0 * p < math.abs(prev_step *
 				q) {
 				new_step = p / q

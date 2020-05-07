@@ -23,7 +23,7 @@ pub fn eval(c []f64, x f64) f64 {
 }
 
 pub fn eval_derivs(c []f64, x f64, lenres int) []f64 {
-	mut res := []f64
+	mut res := []f64{}
 	lenc := c.len
 	mut i := 0
 	mut n := 0
@@ -99,12 +99,12 @@ pub fn solve_cubic(a, b, c f64) []f64 {
 		/*
 		this test is actually r2 == q3, written in a form suitable
                         for exact computation with integers
-*/
+		*/
 		/*
 		Due to finite precision some double roots may be missed, and
                         considered to be a pair of complex roots z = x +/- epsilon i
                         close to the real axis.
-*/
+		*/
 		sqrt_q := math.sqrt(q)
 		if r > 0.0 {
 			return [-2.0 * sqrt_q - a / 3.0, sqrt_q - a / 3.0, sqrt_q - a / 3.0]
@@ -153,7 +153,7 @@ fn sorted_3_(x_, y_, z_ f64) (f64, f64, f64) {
 
 pub fn companion_matrix(a []f64) [][]f64 {
 	nc := a.len - 1
-	mut cm := [[]f64].repeat(nc)
+	mut cm := [[]f64{}].repeat(nc)
 	mut i := 0
 	for ; i < nc; i++ {
 		cm[i] = [0.0].repeat(nc)

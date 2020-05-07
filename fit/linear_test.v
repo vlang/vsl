@@ -19,9 +19,11 @@ fn test_linear_fit01() {
 fn test_linear_fit02() {
 	// data
 	x := [1.0, 2, 3, 4]
-	y := [f64(6), 5
-	7
-	10
+	y := [
+		6.0,
+		5,
+		7,
+		10
 	]
 	a, b := fit.linear(x, y)
 	assert compare(a, 3.5)

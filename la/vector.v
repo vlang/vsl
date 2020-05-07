@@ -8,7 +8,7 @@ import vsl.math
 // apply sets this []f64 with the scaled components of another []f64
 // this := a * another   ⇒   this[i] := a * another[i]
 // NOTE: "another" may be "this"
-pub fn vector_apply(o mut []f64, a f64, another []f64) {
+pub fn vector_apply(mut o []f64, a f64, another []f64) {
 	for i := 0; i < o.len; i++ {
 		o[i] = a * another[i]
 	}
@@ -16,7 +16,7 @@ pub fn vector_apply(o mut []f64, a f64, another []f64) {
 
 // apply_func runs a function over all components of a []f64
 // vi = f(i,vi)
-pub fn vector_apply_func(o mut []f64, f fn(int, f64)f64) {
+pub fn vector_apply_func(mut o []f64, f anon_fn_7_14_14) {
 	for i := 0; i < o.len; i++ {
 		o[i] = f(i, o[i])
 	}
@@ -24,8 +24,8 @@ pub fn vector_apply_func(o mut []f64, f fn(int, f64)f64) {
 
 // unit returns the unit []f64 parallel to this []f64
 // b := a / norm(a)
-pub fn vector_unit(o mut []f64) []f64 {
-	mut unit := [f64(0.0)].repeat(o.len)
+pub fn vector_unit(mut o []f64) []f64 {
+	mut unit := []f64{ len: o.len }
 	s := vector_norm(o)
 	if s > 0 {
 		vector_apply(mut unit, 1.0 / s, o)
