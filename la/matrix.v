@@ -3,7 +3,7 @@
 // that can be found in the LICENSE file.
 module la
 
-import vsl.io
+import strconv
 import vsl.errno
 import vsl.blas
 import vsl.math
@@ -313,7 +313,7 @@ pub fn (o Matrix) print(nfmt_ string) string {
 			l += '\n'
 		}
 		for j := 0; j < o.n; j++ {
-			l += io.safe_print_f64(nfmt, o.get(i, j))
+			l += strconv.v_sprintf(nfmt, o.get(i, j))
 		}
 	}
 	return l
@@ -332,7 +332,7 @@ pub fn (o Matrix) print_v(nfmt_ string) string {
 			if j > 0 {
 				l += ','
 			}
-			l += io.safe_print_f64(nfmt, o.get(i, j))
+			l += strconv.v_sprintf(nfmt, o.get(i, j))
 		}
 		l += '},\n'
 	}
@@ -353,7 +353,7 @@ pub fn (o Matrix) print_py(nfmt_ string) string {
 			if j > 0 {
 				l += ','
 			}
-			l += io.safe_print_f64(nfmt, o.get(i, j))
+			l += strconv.v_sprintf(nfmt, o.get(i, j))
 		}
 		l += '],\n'
 	}

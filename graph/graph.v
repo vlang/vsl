@@ -4,9 +4,9 @@
 // Module graph implements solvers based on Graph theory
 module graph
 
+import strconv
 import vsl.math
 import vsl.errno
-import vsl.io
 /* TODO: change map[string]* types to map[int]* */
 
 
@@ -60,8 +60,8 @@ pub fn graph(edges [][]int, weights_e []f64, verts [][]f64, weights_v []f64) Gra
 		key2edge[hash_edge_key(i, j)] = k
 	}
 	nv := shares.size
-	mut dist := [[]f64].repeat(nv)
-	mut next := [[]int].repeat(nv)
+	mut dist := [[]f64{}].repeat(nv)
+	mut next := [[]int{}].repeat(nv)
 	for i := 0; i < nv; i++ {
 		dist[i] = [0.0].repeat(nv)
 		next[i] = [0].repeat(nv)
@@ -216,23 +216,23 @@ pub fn (g Graph) str_dist_matrix() string {
 		for j := 0; j < nv; j++ {
 			i_dist := g.dist[i]
 			if i_dist[j] < math.max_f64 {
-				i_dist_str := io.safe_print_f64('%g', i_dist[j])
+				i_dist_str := strconv.v_sprintf('%g', i_dist[j])
 				maxlen = int(math.max(maxlen, i_dist_str.len))
 			}
 		}
 	}
 	mut l := ''
 	maxlen = int(math.max(3, maxlen))
-	fmts := io.safe_print_int('%%%ds', maxlen + 1)
-	fmtn := io.safe_print_int('%%%dg', maxlen + 1)
+	fmts := strconv.v_sprintf('%%%ds', maxlen + 1)
+	fmtn := strconv.v_sprintf('%%%dg', maxlen + 1)
 	for i := 0; i < nv; i++ {
 		for j := 0; j < nv; j++ {
 			i_dist := g.dist[i]
 			if i_dist[j] < math.max_f64 {
-				l += io.safe_print_f64(fmtn, i_dist[j])
+				l += strconv.v_sprintf(fmtn, i_dist[j])
 			}
 			else {
-				l += io.safe_print_string(fmts, '∞')
+				l += strconv.v_sprintf(fmts, '∞')
 			}
 		}
 		l += '\n'

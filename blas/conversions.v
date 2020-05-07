@@ -3,9 +3,9 @@
 // that can be found in the LICENSE file.
 module blas
 
+import strconv
 import vsl.math
 import vsl.math.complex
-import vsl.io
 import vsl.errno
 
 // slice_to_col_major converts nested slice into an array representing a col-major matrix
@@ -50,7 +50,7 @@ pub fn print_col_major(m, n int, data []f64, nfmt_ string) string {
 			l += '\n'
 		}
 		for j := 0; j < n; j++ {
-			l += io.safe_print_f64(nfmt, data[i + j * m])
+			l += strconv.v_sprintf(nfmt, data[i + j * m])
 		}
 	}
 	return l
@@ -69,7 +69,7 @@ pub fn print_col_major_v(m, n int, data []f64, nfmt_ string) string {
 			if j > 0 {
 				l += ','
 			}
-			l += io.safe_print_f64(nfmt, data[i + j * m])
+			l += strconv.v_sprintf(nfmt, data[i + j * m])
 		}
 		l += '},\n'
 	}
@@ -90,7 +90,7 @@ pub fn print_col_major_py(m, n int, data []f64, nfmt_ string) string {
 			if j > 0 {
 				l += ','
 			}
-			l += io.safe_print_f64(nfmt, data[i + j * m])
+			l += strconv.v_sprintf(nfmt, data[i + j * m])
 		}
 		l += '],\n'
 	}
@@ -161,7 +161,7 @@ pub fn print_col_major_complex(m, n int, data []complex.Complex, nfmt_r_, nfmt_i
 				l += ', '
 			}
 			v := data[i + j * m]
-			l += io.safe_print_f64(nfmt_r, v.re) + io.safe_print_f64(nfmt_i, v.im) + 'i'
+			l += strconv.v_sprintf(nfmt_r, v.re) + strconv.v_sprintf(nfmt_i, v.im) + 'i'
 		}
 	}
 	return l
@@ -189,7 +189,7 @@ pub fn print_col_major_complex_v(m, n int, data []complex.Complex, nfmt_r_, nfmt
 				l += ','
 			}
 			v := data[i + j * m]
-			l += io.safe_print_f64(nfmt_r, v.re) + io.safe_print_f64(nfmt_i, v.im) + 'i'
+			l += strconv.v_sprintf(nfmt_r, v.re) + strconv.v_sprintf(nfmt_i, v.im) + 'i'
 		}
 		l += '},\n'
 	}
@@ -219,7 +219,7 @@ pub fn print_col_major_omplex_py(m, n int, data []complex.Complex, nfmt_r_, nfmt
 				l += ','
 			}
 			v := data[i + j * m]
-			l += io.safe_print_f64(nfmt_r, v.re) + io.safe_print_f64(nfmt_i, v.im) + 'j'
+			l += strconv.v_sprintf(nfmt_r, v.re) + strconv.v_sprintf(nfmt_i, v.im) + 'j'
 		}
 		l += '],\n'
 	}
