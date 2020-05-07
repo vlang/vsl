@@ -83,14 +83,14 @@ pub fn (o Matrix) get(i, j int) f64 {
 
 // get_deep2 returns nested slice representation
 pub fn (o Matrix) get_deep2() [][]f64 {
-	mut M := [[]f64{}].repeat(o.m)
+	mut m := [[]f64{}].repeat(o.m)
 	for i := 0; i < o.m; i++ {
-		M[i] = [0.0].repeat(o.n)
+		m[i] = [0.0].repeat(o.n)
 		for j := 0; j < o.n; j++ {
-			M[i][j] = o.data[i + j * o.m]
+			m[i][j] = o.data[i + j * o.m]
 		}
 	}
-	return M
+	return m
 }
 
 // clone returns a copy of this matrix

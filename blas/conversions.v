@@ -111,10 +111,10 @@ pub fn print_col_major_py(m, n int, data []f64, nfmt_ string) string {
 // data[i+j*m] = a[i][j]
 //
 // NOTE: make sure to have at least 1x1 item
-pub fn slice_to_col_major_complex(a []complex.Complex) []complex.Complex {
+pub fn slice_to_col_major_complex(a [][]complex.Complex) []complex.Complex {
 	m := a.len
 	n := a[0].len
-	mut data := [complex.complex(0.0, 0.0)].repeat(m * n)
+	mut data := []complex.Complex{ len: m * n }
 	mut k := 0
 	for j := 0; j < n; j++ {
 		for i := 0; i < m; i++ {
@@ -126,10 +126,10 @@ pub fn slice_to_col_major_complex(a []complex.Complex) []complex.Complex {
 }
 
 // col_major_complex_to_slice converts col-major matrix to nested slice
-pub fn col_major_complex_to_slice(m, n int, data []complex.Complex) []complex.Complex {
+pub fn col_major_complex_to_slice(m, n int, data []complex.Complex) [][]complex.Complex {
 	mut a := [[]complex.Complex{}].repeat(m)
 	for i := 0; i < m; i++ {
-		a[i] = [complex.complex(0.0, 0.0)].repeat(n)
+		a[i] = []complex.Complex{ len: n }
 		for j := 0; j < n; j++ {
 			a[i][j] = data[i + j * m]
 		}
@@ -230,7 +230,7 @@ pub fn print_col_major_omplex_py(m, n int, data []complex.Complex, nfmt_r_, nfmt
 // complex arrays //////////////////////////////////////////////////////////////////////////////////
 // get_join_complex joins real and imag parts of array
 pub fn get_join_complex(v_real, v_imag []f64) []complex.Complex {
-	mut v := [complex.complex(0.0, 0.0)].repeat(v_real.len)
+	mut v := []complex.Complex{ len: v_real.len }
 	for i := 0; i < v_real.len; i++ {
 		v[i] = complex.complex(v_real[i], v_imag[i])
 	}
@@ -250,7 +250,7 @@ pub fn get_split_complex(v []complex.Complex) ([]f64, []f64) {
 
 // join_complex joins real and imag parts of array
 pub fn join_complex(v_real, v_imag []f64) []complex.Complex {
-	mut v := [complex.complex(0.0, 0.0)].repeat(v_real.len)
+	mut v := []complex.Complex{ len: v_real.len }
 	for i := 0; i < v_real.len; i++ {
 		v[i] = complex.complex(v_real[i], v_imag[i])
 	}
@@ -289,7 +289,7 @@ pub fn extract_col(j, m, n int, A []f64) []f64 {
 
 // extract_row_complex extracts i row from (m,n) col-major matrix (complex version)
 pub fn extract_row_complex(i, m, n int, A []complex.Complex) []complex.Complex {
-	mut rowi := [complex.complex(0.0, 0.0)].repeat(n)
+	mut rowi := []complex.Complex{ len: n }
 	for j := 0; j < n; j++ {
 		rowi[j] = A[i + j * m]
 	}
@@ -298,7 +298,7 @@ pub fn extract_row_complex(i, m, n int, A []complex.Complex) []complex.Complex {
 
 // extract_col_complex extracts j column from (m,n) col-major matrix (complex version)
 pub fn extract_col_complex(j, m, n int, A []complex.Complex) []complex.Complex {
-	mut colj := [complex.complex(0.0, 0.0)].repeat(m)
+	mut colj := []complex.Complex{ len: m }
 	for i := 0; i < m; i++ {
 		colj[i] = A[i + j * m]
 	}
@@ -353,7 +353,7 @@ pub fn eigenvecs_build(mut vv []complex.Complex, wr, wi, v []f64) {
 // NOTE (no checks made)
 // n = wr.len = wi.len = len(vl) = len(vr)
 // 2 * n = len(vvl) = len(vvr)
-pub fn eigenvecs_build_both(mut vvl, mut vvr []complex.Complex, wr, wi, vl, vr []f64) {
+pub fn eigenvecs_build_both(mut vvl []complex.Complex, mut vvr []complex.Complex, wr, wi, vl, vr []f64) {
 	n := wr.len
 	mut dj := 1 // increment for next conjugate pair
 	for j := 0; j < n; j += dj {

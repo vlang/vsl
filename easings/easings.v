@@ -3,7 +3,6 @@
 // that can be found in the LICENSE file.
 module easings
 
-import arrays
 import vsl.math
 
 // linear_interpolation is a method of curve fitting using linear polynomials to construct new data points within the range of a discrete set of known data points
@@ -27,7 +26,7 @@ pub fn quadratic_ease_out(p f64) f64 {
 // quadratic_easing_in_out speeds up function's growth in a power of 2, then slows down after a half at the same rate
 [inline]
 pub fn quadratic_ease_in_out(p f64) f64 {
-	if (p < 0.5) {
+	if p < 0.5 {
 		return 2.0 * p * p
 	} else {
 		return (-2.0 * p * p) + (4.0 * p) - 1
@@ -50,7 +49,7 @@ pub fn cubic_ease_out(p f64) f64 {
 // cubic_ease_in_out speeds up function's growth in a power of 3, then slows down after a half at the same rate
 [inline]
 pub fn cubic_ease_in_out(p f64) f64 {
-	if (p < 0.5) {
+	if p < 0.5 {
 		return 4.0 * p * p * p
 	} else {
 		f := ((2.0 * p) - 2.0)
@@ -74,7 +73,7 @@ pub fn quartic_ease_out(p f64) f64 {
 // quartic_ease_in_out speeds up function's growth in a power of 4, then slows down after a half at the same rate
 [inline]
 pub fn quartic_ease_in_out(p f64) f64 {
-	if (p < 0.5) {
+	if p < 0.5 {
 		return 8.0 * p * p * p * p
 	} else {
 		f := (p - 1.0)
@@ -98,7 +97,7 @@ pub fn quintic_ease_out(p f64) f64 {
 // quintic_ease_in_out speeds up function's growth in a power of 5, then slows down after a half at the same rate
 [inline]
 pub fn quintic_ease_in_out(p f64) f64 {
-	if (p < 0.5) {
+	if p < 0.5 {
 		return 16.0 * p * p * p * p * p
 	} else {
 		f := ((2.0 * p) - 2.0)
@@ -139,7 +138,7 @@ pub fn circular_ease_out(p f64) f64 {
 // circular_ease_in_out accelerates and decelerates using a circular function
 [inline]
 pub fn circular_ease_in_out(p f64) f64 {
-	if (p < 0.5) {
+	if p < 0.5 {
 		return 0.5 * (1.0 - math.sqrt(1.0 - 4.0 * (p * p)))
 	} else {
 		return 0.5 * (math.sqrt(-((2.0 * p) - 3.0) * ((2.0 * p) - 1.0)) + 1.0)
@@ -169,10 +168,10 @@ pub fn exponential_ease_out(p f64) f64 {
 // exponential_ease_in_out accelerates and decelerates using an exponential formula
 [inline]
 pub fn exponential_ease_in_out(p f64) f64 {
-	if (p == 0.0 || p == 1.0) {
+	if p == 0.0 || p == 1.0 {
 		return p
 	}
-	if (p < 0.5) {
+	if p < 0.5 {
 		return 0.5 * math.pow(2, (20.0 * p) - 10.0)
 	} else {
 		return -0.5 * math.pow(2, (-20.0 * p) + 10.0) + 1
@@ -194,7 +193,7 @@ pub fn elastic_ease_out(p f64) f64 {
 // elastic_ease_in_out resembles a spring oscillating back and forth before it begins to accelerate, then resembles a spring oscillating back and forth before it begins to decelerate afer a half
 [inline]
 pub fn elastic_ease_in_out(p f64) f64 {
-	if (p < 0.5) {
+	if p < 0.5 {
 		return 0.5 * math.sin(13.0 * math.tau * (2.0 * p)) * math.pow(2, 10.0 * ((2.0 * p) -
 			1.0))
 	} else {
@@ -219,7 +218,7 @@ pub fn back_ease_out(p f64) f64 {
 // back_ease_in_out retracts the motion slightly before it begins to accelerate, then retracts the motion slightly before it begins to decelerate afer a half
 [inline]
 pub fn back_ease_in_out(p f64) f64 {
-	if (p < 0.5) {
+	if p < 0.5 {
 		f := 2.0 * p
 		return 0.5 * (f * f * f - f * math.sin(f * math.pi))
 	} else {
@@ -237,11 +236,11 @@ pub fn bounce_ease_in(p f64) f64 {
 // bounce_ease_out creates a bouncing effect, then decelerates
 [inline]
 pub fn bounce_ease_out(p f64) f64 {
-	if (p < 4.0 / 11.0) {
+	if p < 4.0 / 11.0 {
 		return (121.0 * p * p) / 16.0
-	} else if (p < 8.0 / 11.0) {
+	} else if p < 8.0 / 11.0 {
 		return (363.0 / 40.0 * p * p) - (99.0 / 10.0 * p) + 17.0 / 5.0
-	} else if (p < 9.0 / 10.0) {
+	} else if p < 9.0 / 10.0 {
 		return (4356.0 / 361.0 * p * p) - (35442.0 / 1805.0 * p) + 16061.0 / 1805.0
 	} else {
 		return (54.0 / 5.0 * p * p) - (513.0 / 25.0 * p) + 268.0 / 25.0
@@ -251,7 +250,7 @@ pub fn bounce_ease_out(p f64) f64 {
 // bounce_ease_in_out creates a bouncing effect before it begins to accelerate, then it creates a bouncing effects again before it begins to decelerate
 [inline]
 pub fn bounce_ease_in_out(p f64) f64 {
-	if (p < 0.5) {
+	if p < 0.5 {
 		return 0.5 * bounce_ease_in(p * 2.0)
 	} else {
 		return 0.5 * bounce_ease_out(p * 2.0 - 1.0) + 0.5
@@ -263,6 +262,14 @@ pub fn bounce_ease_in_out(p f64) f64 {
 pub fn animate(easing fn(f64) f64, from, to f64, frames int) []f64 {
 	len := int(math.max(frames, 0.0))
 	dt := f64(1.0 / (len - 1))
-	animation := arrays.range(0.0, len)
-	return animation.map(from + easing(f64(it) * dt) * (to - from)) // t := it*dt
+	animation := range(0, len)
+	return animation.map(from + easing(it * dt) * (to - from)) // t := it*dt
+}
+
+fn range(start, end f64) []f64 {
+	mut res := []f64{}
+	for i := start; i < end; i++ {
+		res << i
+	}
+	return res
 }

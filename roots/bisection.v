@@ -29,7 +29,7 @@ pub fn bisection(func vsl.Function, xmin, xmax, epsrel, epsabs f64, n_max int) ?
 		return error(err)
 	}
 	if (fxmin < 0.0 && fxmax < 0.0) || (fxmin > 0.0 && fxmax > 0.0) {
-		return errno.vsl_error('endpoints do not straddle y=0', .einval)
+		return error(errno.vsl_error_message('endpoints do not straddle y=0', .einval))
 	}
 	mut a := xmin
 	mut b := xmax

@@ -305,7 +305,7 @@ pub fn (c Complex) asinh() Complex {
 // Based on
 // http://www.suitcaseofdreams.net/Inverse__Hyperbolic_Functions.htm
 pub fn (c Complex) acosh() Complex {
-	if (c.re > 1) {
+	if c.re > 1 {
 		return c.add(c.pow(2).sub(complex(1, 0)).root(2)).ln()
 	} else {
 		one := complex(1, 0)
@@ -318,7 +318,7 @@ pub fn (c Complex) acosh() Complex {
 // http://www.suitcaseofdreams.net/Inverse__Hyperbolic_Functions.htm
 pub fn (c Complex) atanh() Complex {
 	one := complex(1, 0)
-	if (c.re < 1) {
+	if c.re < 1 {
 		return complex(1.0 / 2, 0).mul(one.add(c).div(one.sub(c)).ln())
 	} else {
 		return complex(1.0 / 2, 0).mul(one.add(c).ln().sub(one.sub(c).ln()))
@@ -330,7 +330,7 @@ pub fn (c Complex) atanh() Complex {
 // http://www.suitcaseofdreams.net/Inverse__Hyperbolic_Functions.htm
 pub fn (c Complex) acoth() Complex {
 	one := complex(1, 0)
-	if (c.re < 0 || c.re > 1) {
+	if c.re < 0 || c.re > 1 {
 		return complex(1.0 / 2, 0).mul(c.add(one).div(c.sub(one)).ln())
 	} else {
 		div := one.div(c)
@@ -344,7 +344,7 @@ pub fn (c Complex) acoth() Complex {
 // For certain scenarios, Result mismatch in crossverification with Wolfram Alpha - analysis pending
 pub fn (c Complex) asech() Complex {
 	one := complex(1, 0)
-	if (c.re < -1.0) {
+	if c.re < -1.0 {
 		return one.sub(one.sub(c.pow(2)).root(2)).div(c).ln()
 	} else {
 		return one.add(one.sub(c.pow(2)).root(2)).div(c).ln()
@@ -356,7 +356,7 @@ pub fn (c Complex) asech() Complex {
 // http://www.suitcaseofdreams.net/Inverse__Hyperbolic_Functions.htm
 pub fn (c Complex) acsch() Complex {
 	one := complex(1, 0)
-	if (c.re < 0) {
+	if c.re < 0 {
 		return one.sub(one.add(c.pow(2)).root(2)).div(c).ln()
 	} else {
 		return one.add(one.add(c.pow(2)).root(2)).div(c).ln()

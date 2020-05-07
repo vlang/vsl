@@ -69,7 +69,7 @@ fn _sp_cgamma(x_, y_ f64, kf bool) (f64, f64) {
 		si := -math.cos(math.pi * x) * math.sinh(math.pi * y)
 		z2 := math.sin(sr * sr + si * si)
 		mut th2 := math.atan(si / sr)
-		if (sr < 0.) {
+		if sr < 0.0 {
 			th2 += math.pi
 		}
 		gr = math.log(math.pi / (z1 * z2)) - gr

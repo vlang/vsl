@@ -31,7 +31,7 @@ pub fn brent(func vsl.Function, x1, x2, tol f64) ?(f64, f64) {
 	mut fb := func.eval(b)
 	mut fc := fa
 	if (fa > 0.0 && fb > 0.0) || (fa < 0.0 && fb < 0.0) {
-		return errno.vsl_error('roots must be bracketed', .einval)
+		return error(errno.vsl_error_message('roots must be bracketed', .einval))
 	} // Test if one the endpoints is the root
 	if fa == 0.0 {
 		return a, 0.0
@@ -64,7 +64,7 @@ pub fn brent(func vsl.Function, x1, x2, tol f64) ?(f64, f64) {
         // large enough and in the right direction
 		if math.abs(prev_step) >= tol1 && math.abs(fa) > math.abs(fb) {
 			s := fb / fa
-			if (a == c) {
+			if a == c {
 				// if we only have two distinct points, only linear
                 // interpolation can be applied
 				p = 2.0 * new_step * s
@@ -77,7 +77,7 @@ pub fn brent(func vsl.Function, x1, x2, tol f64) ?(f64, f64) {
 			}
 			// p was calculated with the oppposite sign make p positive and
             // assign the possible minus to q
-			if (p > 0.0) {
+			if p > 0.0 {
 				q = -q
 			} else {
 				p = -p

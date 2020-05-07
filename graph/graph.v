@@ -89,7 +89,7 @@ pub fn (g Graph) get_edge(i, j int) ?int {
 	if key in g.key2edge {
 		return g.key2edge[key]
 	}
-	return errno.vsl_error('cannot find edge from $i to $j', .efailed)
+	return error(errno.vsl_error_message('cannot find edge from $i to $j', .efailed))
 }
 
 // shortest_paths computes the shortest paths in a graph defined as follows

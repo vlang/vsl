@@ -71,7 +71,7 @@ pub fn solve_quadratic(a, b, c f64) []f64 { // Handle linear case
 			temp := -0.5 * (b + f64(sgnb) * math.sqrt(disc))
 			r1 := temp / a
 			r2 := c / temp
-			return if (r1 < r2) {
+			return if r1 < r2 {
 				[r1, r2]
 			} else {
 				[r2, r1]
@@ -123,9 +123,9 @@ pub fn solve_cubic(a, b, c f64) []f64 {
 		return [x0, x1, x2]
 	} else {
 		sgnr := if r >= 0.0 { 1.0 } else { -1.0 }
-		A := -sgnr * math.pow(math.abs(r) + math.sqrt(r2 - q3), 1.0 / 3.0)
-		B := q / A
-		return [A + B - a / 3]
+		a_ := -sgnr * math.pow(math.abs(r) + math.sqrt(r2 - q3), 1.0 / 3.0)
+		b_ := q / a_
+		return [a_ + b_ - a / 3]
 	}
 }
 
@@ -139,13 +139,13 @@ fn sorted_3_(x_, y_, z_ f64) (f64, f64, f64) {
 	mut x := x_
 	mut y := y_
 	mut z := z_
-	if (x > y) {
+	if x > y {
 		y, x = swap_(x, y)
 	}
-	if (y > z) {
+	if y > z {
 		z, y = swap_(y, z)
 	}
-	if (x > y) {
+	if x > y {
 		y, x = swap_(x, y)
 	}
 	return x, y, z

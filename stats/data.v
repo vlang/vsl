@@ -38,7 +38,7 @@ pub mut:
 // Output:
 // new object
 pub fn data(nb_samples, nb_features int, use_y, allocate bool) Data {
-	mut o := Data(calloc(sizeof(Data)))
+	mut o := Data(vcalloc(sizeof(Data)))
 	mut y := []f64{}
 	o.observers = []
 	o.nb_samples = nb_samples

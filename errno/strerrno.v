@@ -40,6 +40,6 @@ pub fn str_error(errno Errno) string {
 		.etolx { 'cannot reach the specified tolerance in X' }
 		.etolg { 'cannot reach the specified tolerance in gradient' }
 		.eof { 'end of file' }
-		else { 'unknown error code' }
+		// else { 'unknown error code' }
 	}
 }

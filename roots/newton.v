@@ -59,7 +59,7 @@ pub fn newton(func vsl.FunctionFdf, x0, x_eps, fx_eps f64, n_max int) ?f64 {
 		i++
 	} // maximum number of iterations reached
 	if i == n_max {
-		return errno.vsl_error('maximum number of iterations reached', .emaxiter)
+		return error(errno.vsl_error_message('maximum number of iterations reached', .emaxiter))
 	}
 	return root
 }
