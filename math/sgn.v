@@ -4,12 +4,9 @@
 module math
 
 pub fn copysign(x, y f64) f64 {
-	if (x < 0 && y > 0) || (x > 0 && y < 0) {
-		return -x
-	}
-	return x
+	return f64_from_bits((f64_bits(x) & ~sign_mask) | (f64_bits(y) & sign_mask))
 }
 
 pub fn signbit(x f64) bool {
-	return f64_bits(x) & (1 << 63) != 0
+	return f64_bits(x) & sign_mask != 0
 }

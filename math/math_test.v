@@ -9,13 +9,6 @@ struct Fi {
 }
 
 const (
-	max_f64_ = 1.797693134862315708145274237317043567981e+308 // 2**1023 * (2**53 - 1) / 2**52
-	smallest_non_zero_f64_ = 4.940656458412465441765687928682213723651e-324 // 1 / 2**(1023 - 1 + 52)
-	max_i32_ = 2147483647
-	pi_ = 3.14159265358979323846264338327950288419716939937510582097494459
-	nan_ = nan()
-	inf_ = inf(1)
-	ninf_ = inf(-1)
 	vf_ = [f64(4.9790119248836735e+00),
 	7.7388724745781045e+00,
 	-2.7688005719200159e-01,
@@ -506,213 +499,213 @@ const (
 	-8.0000000000000000e+00,
 	]
 	// arguments and expected results for special cases
-	vfacos_sc_ = [f64(-pi_),
+	vfacos_sc_ = [f64(-pi),
 	1,
-	f64(pi_),
-	nan_,
+	f64(pi),
+	nan(),
 	]
-	acos_sc_ = [nan_,
+	acos_sc_ = [nan(),
 	0,
-	nan_,
-	nan_,
+	nan(),
+	nan(),
 	]
-	vfacosh_sc_ = [ninf_,
+	vfacosh_sc_ = [inf(-1),
 	0.5,
 	1,
-	inf_,
-	nan_,
+	inf(1),
+	nan(),
 	]
-	acosh_sc_ = [nan_,
-	nan_,
+	acosh_sc_ = [nan(),
+	nan(),
 	0,
-	inf_,
-	nan_,
+	inf(1),
+	nan(),
 	]
-	vfasin_sc_ = [f64(-pi_),
+	vfasin_sc_ = [f64(-pi),
 	-0.0,
 	0,
-	pi_,
-	nan_,
+	pi,
+	nan(),
 	]
-	asin_sc_ = [nan_,
+	asin_sc_ = [nan(),
 	-0.0,
 	0,
-	nan_,
-	nan_,
+	nan(),
+	nan(),
 	]
-	vfasinh_sc_ = [ninf_,
+	vfasinh_sc_ = [inf(-1),
 	-0.0,
 	0,
-	inf_,
-	nan_,
+	inf(1),
+	nan(),
 	]
-	asinh_sc_ = [ninf_,
+	asinh_sc_ = [inf(-1),
 	-0.0,
 	0,
-	inf_,
-	nan_,
+	inf(1),
+	nan(),
 	]
-	vfatan_sc_ = [ninf_,
+	vfatan_sc_ = [inf(-1),
 	-0.0,
 	0,
-	inf_,
-	nan_,
+	inf(1),
+	nan(),
 	]
-	atan_sc_ = [f64(-pi_ / 2),
+	atan_sc_ = [f64(-pi / 2),
 	-0.0,
 	0,
-	pi_ / 2,
-	nan_,
+	pi / 2,
+	nan(),
 	]
-	vfatanh_sc_ = [ninf_,
-	-pi_,
+	vfatanh_sc_ = [inf(-1),
+	-pi,
 	-1,
 	-0.0,
 	0,
 	1,
-	pi_,
-	inf_,
-	nan_,
+	pi,
+	inf(1),
+	nan(),
 	]
-	atanh_sc_ = [nan_,
-	nan_,
-	ninf_,
+	atanh_sc_ = [nan(),
+	nan(),
+	inf(-1),
 	-0.0,
 	0,
-	inf_,
-	nan_,
-	nan_,
-	nan_,
+	inf(1),
+	nan(),
+	nan(),
+	nan(),
 	]
-	vfatan2_sc_ = [[ninf_, ninf_],
-	[ninf_, -pi_],
-	[ninf_, 0],
-	[ninf_, pi_],
-	[ninf_, inf_],
-	[ninf_, nan_],
-	[f64(-pi_), ninf_],
-	[f64(-pi_), 0],
-	[f64(-pi_), inf_],
-	[f64(-pi_), nan_],
-	[f64(-0.0), ninf_],
-	[f64(-0.0), -pi_],
+	vfatan2_sc_ = [[inf(-1), inf(-1)],
+	[inf(-1), -pi],
+	[inf(-1), 0],
+	[inf(-1), pi],
+	[inf(-1), inf(1)],
+	[inf(-1), nan()],
+	[f64(-pi), inf(-1)],
+	[f64(-pi), 0],
+	[f64(-pi), inf(1)],
+	[f64(-pi), nan()],
+	[f64(-0.0), inf(-1)],
+	[f64(-0.0), -pi],
 	[f64(-0.0), -0.0],
 	[f64(-0.0), 0],
-	[f64(-0.0), pi_],
-	[f64(-0.0), inf_],
-	[f64(-0.0), nan_],
-	[0.0, ninf_],
-	[0.0, -pi_],
+	[f64(-0.0), pi],
+	[f64(-0.0), inf(1)],
+	[f64(-0.0), nan()],
+	[0.0, inf(-1)],
+	[0.0, -pi],
 	[0.0, -0.0],
 	[0.0, 0],
-	[0.0, pi_],
-	[0.0, inf_],
-	[0.0, nan_],
-	[f64(pi_), ninf_],
-	[f64(pi_), 0],
-	[f64(pi_), inf_],
-	[f64(pi_), nan_],
-	[inf_, ninf_],
-	[inf_, -pi_],
-	[inf_, 0],
-	[inf_, pi_],
-	[inf_, inf_],
-	[inf_, nan_],
-	[nan_, nan_],
+	[0.0, pi],
+	[0.0, inf(1)],
+	[0.0, nan()],
+	[f64(pi), inf(-1)],
+	[f64(pi), 0],
+	[f64(pi), inf(1)],
+	[f64(pi), nan()],
+	[inf(1), inf(-1)],
+	[inf(1), -pi],
+	[inf(1), 0],
+	[inf(1), pi],
+	[inf(1), inf(1)],
+	[inf(1), nan()],
+	[nan(), nan()],
 	]
 	atan2_sc_ = [f64(-3.0) * pi / 4.0, // atan2(-inf, -inf)
-	-pi_ / 2, // atan2(-inf, -pi_)
-	-pi_ / 2, // atan2(-inf, +0)
-	-pi_ / 2, // atan2(-inf, pi_)
-	-pi_ / 4, // atan2(-inf, +inf)
-	nan_, // atan2(-inf, nan)
-	-pi_, // atan2(-pi_, -inf)
-	-pi_ / 2, // atan2(-pi_, +0)
-	-0.0, // atan2(-pi_, inf)
-	nan_, // atan2(-pi_, nan)
-	-pi_, // atan2(-0, -inf)
-	-pi_, // atan2(-0, -pi_)
-	-pi_, // atan2(-0, -0)
+	-pi / 2, // atan2(-inf, -pi)
+	-pi / 2, // atan2(-inf, +0)
+	-pi / 2, // atan2(-inf, pi)
+	-pi / 4, // atan2(-inf, +inf)
+	nan(), // atan2(-inf, nan)
+	-pi, // atan2(-pi, -inf)
+	-pi / 2, // atan2(-pi, +0)
+	-0.0, // atan2(-pi, inf)
+	nan(), // atan2(-pi, nan)
+	-pi, // atan2(-0, -inf)
+	-pi, // atan2(-0, -pi)
+	-pi, // atan2(-0, -0)
 	-0.0, // atan2(-0, +0)
-	-0.0, // atan2(-0, pi_)
+	-0.0, // atan2(-0, pi)
 	-0.0, // atan2(-0, +inf)
-	nan_, // atan2(-0, nan)
-	pi_, // atan2(+0, -inf)
-	pi_, // atan2(+0, -pi_)
-	pi_, // atan2(+0, -0)
+	nan(), // atan2(-0, nan)
+	pi, // atan2(+0, -inf)
+	pi, // atan2(+0, -pi)
+	pi, // atan2(+0, -0)
 	0, // atan2(+0, +0)
-	0, // atan2(+0, pi_)
+	0, // atan2(+0, pi)
 	0, // atan2(+0, +inf)
-	nan_, // atan2(+0, nan)
-	pi_, // atan2(pi_, -inf)
-	pi_ / 2, // atan2(pi_, +0)
-	0, // atan2(pi_, +inf)
-	nan_, // atan2(pi_, nan)
+	nan(), // atan2(+0, nan)
+	pi, // atan2(pi, -inf)
+	pi / 2, // atan2(pi, +0)
+	0, // atan2(pi, +inf)
+	nan(), // atan2(pi, nan)
 	3.0 * pi / 4, // atan2(+inf, -inf)
-	pi_ / 2, // atan2(+inf, -pi_)
-	pi_ / 2, // atan2(+inf, +0)
-	pi_ / 2, // atan2(+inf, pi_)
-	pi_ / 4, // atan2(+inf, +inf)
-	nan_, // atan2(+inf, nan)
-	nan_, // atan2(nan, nan)
+	pi / 2, // atan2(+inf, -pi)
+	pi / 2, // atan2(+inf, +0)
+	pi / 2, // atan2(+inf, pi)
+	pi / 4, // atan2(+inf, +inf)
+	nan(), // atan2(+inf, nan)
+	nan(), // atan2(nan, nan)
 	]
-	vfcbrt_sc_ = [ninf_,
+	vfcbrt_sc_ = [inf(-1),
 	-0.0,
 	0,
-	inf_,
-	nan_,
+	inf(1),
+	nan(),
 	]
-	cbrt_sc_ = [ninf_,
+	cbrt_sc_ = [inf(-1),
 	-0.0,
 	0,
-	inf_,
-	nan_,
+	inf(1),
+	nan(),
 	]
-	vfceil_sc_ = [ninf_,
+	vfceil_sc_ = [inf(-1),
 	-0.0,
 	0,
-	inf_,
-	nan_,
+	inf(1),
+	nan(),
 	]
-	ceil_sc_ = [ninf_,
+	ceil_sc_ = [inf(-1),
 	-0.0,
 	0,
-	inf_,
-	nan_,
+	inf(1),
+	nan(),
 	]
-	vfcopysign_sc_ = [ninf_,
-	inf_,
-	nan_,
+	vfcopysign_sc_ = [inf(-1),
+	inf(1),
+	nan(),
 	]
-	copysign_sc_ = [ninf_,
-	ninf_,
-	nan_,
+	copysign_sc_ = [inf(-1),
+	inf(-1),
+	nan(),
 	]
-	vfcos_sc_ = [ninf_,
-	inf_,
-	nan_,
+	vfcos_sc_ = [inf(-1),
+	inf(1),
+	nan(),
 	]
-	cos_sc_ = [nan_,
-	nan_,
-	nan_,
+	cos_sc_ = [nan(),
+	nan(),
+	nan(),
 	]
-	vfcosh_sc_ = [ninf_,
+	vfcosh_sc_ = [inf(-1),
 	-0.0,
 	0,
-	inf_,
-	nan_,
+	inf(1),
+	nan(),
 	]
-	cosh_sc_ = [inf_,
+	cosh_sc_ = [inf(1),
 	1,
 	1,
-	inf_,
-	nan_,
+	inf(1),
+	nan(),
 	]
-	vferf_sc_ = [ninf_,
+	vferf_sc_ = [inf(-1),
 	-0.0,
 	0,
-	inf_,
-	nan_,
+	inf(1),
+	nan(),
 	-1000,
 	1000,
 	]
@@ -720,55 +713,55 @@ const (
 	-0.0,
 	0,
 	1,
-	nan_,
+	nan(),
 	-1,
 	1,
 	]
-	vferfc_sc_ = [ninf_,
-	inf_,
-	nan_,
+	vferfc_sc_ = [inf(-1),
+	inf(1),
+	nan(),
 	-1000,
 	1000,
 	]
 	erfc_sc_ = [f64(2),
 	0,
-	nan_,
+	nan(),
 	2,
 	0,
 	]
 	vferfinv_sc_ = [1.0,
 	-1,
 	0,
-	ninf_,
-	inf_,
-	nan_,
+	inf(-1),
+	inf(1),
+	nan(),
 	]
-	erfinv_sc_ = [inf_,
-	ninf_,
+	erfinv_sc_ = [inf(1),
+	inf(-1),
 	0,
-	nan_,
-	nan_,
-	nan_,
+	nan(),
+	nan(),
+	nan(),
 	]
 	vferfcinv_sc_ = [0.0,
 	2,
 	1,
-	inf_,
-	ninf_,
-	nan_,
+	inf(1),
+	inf(-1),
+	nan(),
 	]
-	erfcinv_sc_ = [inf_,
-	ninf_,
+	erfcinv_sc_ = [inf(1),
+	inf(-1),
 	0,
-	nan_,
-	nan_,
-	nan_,
+	nan(),
+	nan(),
+	nan(),
 	]
-	vfexp_sc_ = [ninf_,
+	vfexp_sc_ = [inf(-1),
 	-2000,
 	2000,
-	inf_,
-	nan_,
+	inf(1),
+	nan(),
 	// smallest f64 that overflows Exp(x)
 	7.097827128933841e+02,
 	1.48852223e+09,
@@ -781,20 +774,20 @@ const (
 	]
 	exp_sc_ = [0.0,
 	0,
-	inf_,
-	inf_,
-	nan_,
-	inf_,
-	inf_,
-	inf_,
+	inf(1),
+	inf(1),
+	nan(),
+	inf(1),
+	inf(1),
+	inf(1),
 	2.718281828459045,
 	1.0000000037252903,
 	4.2e-322,
 	]
 	vfexp2_sc_ = [f64(-2000),
 	2000,
-	inf_,
-	nan_,
+	inf(1),
+	nan(),
 	// smallest f64 that overflows Exp2(x)
 	1024,
 	// near underflow
@@ -803,10 +796,10 @@ const (
 	3.725290298461915e-09,
 	]
 	exp2_sc_ = [0.0,
-	inf_,
-	inf_,
-	nan_,
-	inf_,
+	inf(1),
+	inf(1),
+	nan(),
+	inf(1),
 	5e-324,
 	1.0000000025821745,
 	]
@@ -814,207 +807,207 @@ const (
 	-0.0,
 	0,
 	710,
-	inf_,
-	nan_,
+	inf(1),
+	nan(),
 	]
 	expm1_sc_ = [f64(-1),
 	-0.0,
 	0,
-	inf_,
-	inf_,
-	nan_,
+	inf(1),
+	inf(1),
+	nan(),
 	]
-	vffabs_sc_ = [ninf_,
+	vffabs_sc_ = [inf(-1),
 	-0.0,
 	0,
-	inf_,
-	nan_,
+	inf(1),
+	nan(),
 	]
-	fabs_sc_ = [inf_,
+	fabs_sc_ = [inf(1),
 	0,
 	0,
-	inf_,
-	nan_,
+	inf(1),
+	nan(),
 	]
-	vffdim_sc_ = [[ninf_, ninf_],
-	[ninf_, inf_],
-	[ninf_, nan_],
+	vffdim_sc_ = [[inf(-1), inf(-1)],
+	[inf(-1), inf(1)],
+	[inf(-1), nan()],
 	[f64(-0.0), -0.0],
 	[f64(-0.0), 0],
 	[0.0, -0.0],
 	[0.0, 0],
-	[inf_, ninf_],
-	[inf_, inf_],
-	[inf_, nan_],
-	[nan_, ninf_],
-	[nan_, -0.0],
-	[nan_, 0],
-	[nan_, inf_],
-	[nan_, nan_],
+	[inf(1), inf(-1)],
+	[inf(1), inf(1)],
+	[inf(1), nan()],
+	[nan(), inf(-1)],
+	[nan(), -0.0],
+	[nan(), 0],
+	[nan(), inf(1)],
+	[nan(), nan()],
 	]
-	vffdim2_sc_ = [[ninf_, ninf_],
-	[ninf_, inf_],
-	[ninf_, nan_],
+	vffdim2_sc_ = [[inf(-1), inf(-1)],
+	[inf(-1), inf(1)],
+	[inf(-1), nan()],
 	[f64(-0.0), -0.0],
 	[f64(-0.0), 0],
 	[0.0, -0.0],
 	[0.0, 0],
-	[inf_, ninf_],
-	[inf_, inf_],
-	[inf_, nan_],
-	[nan_, ninf_],
-	[nan_, -0.0],
-	[nan_, 0],
-	[nan_, inf_],
-	[nan_, nan_],
+	[inf(1), inf(-1)],
+	[inf(1), inf(1)],
+	[inf(1), nan()],
+	[nan(), inf(-1)],
+	[nan(), -0.0],
+	[nan(), 0],
+	[nan(), inf(1)],
+	[nan(), nan()],
 	]
-	fdim_sc_ = [nan_,
+	fdim_sc_ = [nan(),
 	0,
-	nan_,
-	0,
-	0,
+	nan(),
 	0,
 	0,
-	inf_,
-	nan_,
-	nan_,
-	nan_,
-	nan_,
-	nan_,
-	nan_,
-	nan_,
+	0,
+	0,
+	inf(1),
+	nan(),
+	nan(),
+	nan(),
+	nan(),
+	nan(),
+	nan(),
+	nan(),
 	]
-	fmax_sc_ = [ninf_,
-	inf_,
-	nan_,
+	fmax_sc_ = [inf(-1),
+	inf(1),
+	nan(),
 	-0.0,
 	0,
 	0,
 	0,
-	inf_,
-	inf_,
-	inf_,
-	nan_,
-	nan_,
-	nan_,
-	inf_,
-	nan_,
+	inf(1),
+	inf(1),
+	inf(1),
+	nan(),
+	nan(),
+	nan(),
+	inf(1),
+	nan(),
 	]
-	fmin_sc_ = [ninf_,
-	ninf_,
-	ninf_,
+	fmin_sc_ = [inf(-1),
+	inf(-1),
+	inf(-1),
 	-0.0,
 	-0.0,
 	-0.0,
 	0,
-	ninf_,
-	inf_,
-	nan_,
-	ninf_,
-	nan_,
-	nan_,
-	nan_,
-	nan_,
+	inf(-1),
+	inf(1),
+	nan(),
+	inf(-1),
+	nan(),
+	nan(),
+	nan(),
+	nan(),
 	]
-	vffmod_sc_ = [[ninf_, ninf_],
-	[ninf_, -pi_],
-	[ninf_, 0],
-	[ninf_, pi_],
-	[ninf_, inf_],
-	[ninf_, nan_],
-	[f64(-pi_), ninf_],
-	[f64(-pi_), 0],
-	[f64(-pi_), inf_],
-	[f64(-pi_), nan_],
-	[f64(-0.0), ninf_],
+	vffmod_sc_ = [[inf(-1), inf(-1)],
+	[inf(-1), -pi],
+	[inf(-1), 0],
+	[inf(-1), pi],
+	[inf(-1), inf(1)],
+	[inf(-1), nan()],
+	[f64(-pi), inf(-1)],
+	[f64(-pi), 0],
+	[f64(-pi), inf(1)],
+	[f64(-pi), nan()],
+	[f64(-0.0), inf(-1)],
 	[f64(-0.0), 0],
-	[f64(-0.0), inf_],
-	[f64(-0.0), nan_],
-	[0.0, ninf_],
+	[f64(-0.0), inf(1)],
+	[f64(-0.0), nan()],
+	[0.0, inf(-1)],
 	[0.0, 0],
-	[0.0, inf_],
-	[0.0, nan_],
-	[f64(pi_), ninf_],
-	[f64(pi_), 0],
-	[f64(pi_), inf_],
-	[f64(pi_), nan_],
-	[inf_, ninf_],
-	[inf_, -pi_],
-	[inf_, 0],
-	[inf_, pi_],
-	[inf_, inf_],
-	[inf_, nan_],
-	[nan_, ninf_],
-	[nan_, -pi_],
-	[nan_, 0],
-	[nan_, pi_],
-	[nan_, inf_],
-	[nan_, nan_],
+	[0.0, inf(1)],
+	[0.0, nan()],
+	[f64(pi), inf(-1)],
+	[f64(pi), 0],
+	[f64(pi), inf(1)],
+	[f64(pi), nan()],
+	[inf(1), inf(-1)],
+	[inf(1), -pi],
+	[inf(1), 0],
+	[inf(1), pi],
+	[inf(1), inf(1)],
+	[inf(1), nan()],
+	[nan(), inf(-1)],
+	[nan(), -pi],
+	[nan(), 0],
+	[nan(), pi],
+	[nan(), inf(1)],
+	[nan(), nan()],
 	]
-	fmod_sc_ = [nan_, // fmod(-inf, -inf)
-	nan_, // fmod(-inf, -pi_)
-	nan_, // fmod(-inf, 0)
-	nan_, // fmod(-inf, pi_)
-	nan_, // fmod(-inf, +inf)
-	nan_, // fmod(-inf, nan)
-	-pi_, // fmod(-pi_, -inf)
-	nan_, // fmod(-pi_, 0)
-	-pi_, // fmod(-pi_, +inf)
-	nan_, // fmod(-pi_, nan)
+	fmod_sc_ = [nan(), // fmod(-inf, -inf)
+	nan(), // fmod(-inf, -pi)
+	nan(), // fmod(-inf, 0)
+	nan(), // fmod(-inf, pi)
+	nan(), // fmod(-inf, +inf)
+	nan(), // fmod(-inf, nan)
+	-pi, // fmod(-pi, -inf)
+	nan(), // fmod(-pi, 0)
+	-pi, // fmod(-pi, +inf)
+	nan(), // fmod(-pi, nan)
 	-0.0, // fmod(-0, -inf)
-	nan_, // fmod(-0, 0)
+	nan(), // fmod(-0, 0)
 	-0.0, // fmod(-0, inf)
-	nan_, // fmod(-0, nan)
+	nan(), // fmod(-0, nan)
 	0, // fmod(0, -inf)
-	nan_, // fmod(0, 0)
+	nan(), // fmod(0, 0)
 	0, // fmod(0, +inf)
-	nan_, // fmod(0, nan)
-	pi_, // fmod(pi_, -inf)
-	nan_, // fmod(pi_, 0)
-	pi_, // fmod(pi_, +inf)
-	nan_, // fmod(pi_, nan)
-	nan_, // fmod(+inf, -inf)
-	nan_, // fmod(+inf, -pi_)
-	nan_, // fmod(+inf, 0)
-	nan_, // fmod(+inf, pi_)
-	nan_, // fmod(+inf, +inf)
-	nan_, // fmod(+inf, nan)
-	nan_, // fmod(nan, -inf)
-	nan_, // fmod(nan, -pi_)
-	nan_, // fmod(nan, 0)
-	nan_, // fmod(nan, pi_)
-	nan_, // fmod(nan, +inf)
-	nan_, // fmod(nan, nan)
+	nan(), // fmod(0, nan)
+	pi, // fmod(pi, -inf)
+	nan(), // fmod(pi, 0)
+	pi, // fmod(pi, +inf)
+	nan(), // fmod(pi, nan)
+	nan(), // fmod(+inf, -inf)
+	nan(), // fmod(+inf, -pi)
+	nan(), // fmod(+inf, 0)
+	nan(), // fmod(+inf, pi)
+	nan(), // fmod(+inf, +inf)
+	nan(), // fmod(+inf, nan)
+	nan(), // fmod(nan, -inf)
+	nan(), // fmod(nan, -pi)
+	nan(), // fmod(nan, 0)
+	nan(), // fmod(nan, pi)
+	nan(), // fmod(nan, +inf)
+	nan(), // fmod(nan, nan)
 	]
-	vffrexp_sc_ = [ninf_,
+	vffrexp_sc_ = [inf(-1),
 	-0.0,
 	0,
-	inf_,
-	nan_,
+	inf(1),
+	nan(),
 	]
 	frexp_sc_ = [Fi{
-		ninf_,0},
+		inf(-1),0},
 	Fi{
 		-0.0,0},
 	Fi{
 		0,0},
 	Fi{
-		inf_,0},
+		inf(1),0},
 	Fi{
-		nan_,0},
+		nan(),0},
 	]
-	vfgamma_ = [[inf_, inf_],
-	[ninf_, nan_],
-	[0.0, inf_],
-	[f64(-0.0), ninf_],
-	[nan_, nan_],
-	[f64(-1), nan_],
-	[f64(-2), nan_],
-	[f64(-3), nan_],
-	[f64(-1e+16), nan_],
-	[f64(-1e+300), nan_],
-	[f64(1.7e+308), inf_],
-	// Test inputs inspi_red by Python test suite.
+	vfgamma_ = [[inf(1), inf(1)],
+	[inf(-1), nan()],
+	[0.0, inf(1)],
+	[f64(-0.0), inf(-1)],
+	[nan(), nan()],
+	[f64(-1), nan()],
+	[f64(-2), nan()],
+	[f64(-3), nan()],
+	[f64(-1e+16), nan()],
+	[f64(-1e+300), nan()],
+	[f64(1.7e+308), inf(1)],
+	// Test inputs inspired by Python test suite.
 	// Outputs computed at high precision by PARI/GP.
 	// If recomputing table entries), be careful to use
 	// high-precision (%.1000g) formatting of the f64 inputs.
@@ -1039,10 +1032,10 @@ const (
 	[f64(1e-16), 1e+16],
 	[f64(1e-308), 1e+308],
 	[f64(5.6e-309), 1.7857142857142864e+308],
-	[f64(5.5e-309), inf_],
-	[f64(1e-309), inf_],
-	[f64(1e-323), inf_],
-	[f64(5e-324), inf_],
+	[f64(5.5e-309), inf(1)],
+	[f64(1e-309), inf(1)],
+	[f64(1e-323), inf(1)],
+	[f64(5e-324), inf(1)],
 	[f64(-0.1), -10.686287021193193],
 	[f64(-0.01), -100.58719796441078],
 	[f64(-1e-08), -1.0000000057721567e+08],
@@ -1051,10 +1044,10 @@ const (
 	[f64(-1e-16), -1e+16],
 	[f64(-1e-308), -1e+308],
 	[f64(-5.6e-309), -1.7857142857142864e+308],
-	[f64(-5.5e-309), ninf_],
-	[f64(-1e-309), ninf_],
-	[f64(-1e-323), ninf_],
-	[f64(-5e-324), ninf_],
+	[f64(-5.5e-309), inf(-1)],
+	[f64(-1e-309), inf(-1)],
+	[f64(-1e-323), inf(-1)],
+	[f64(-5e-324), inf(-1)],
 	[f64(-0.9999999999999999), -9.007199254740992e+15],
 	[f64(-1.0000000000000002), 4.5035996273704955e+15],
 	[f64(-1.9999999999999998), 2.2517998136852485e+15],
@@ -1065,9 +1058,9 @@ const (
 	[f64(171), 7.257415615307999e+306],
 	[f64(171.6), 1.5858969096672565e+308],
 	[f64(171.624), 1.7942117599248104e+308],
-	[f64(171.625), inf_],
-	[f64(172), inf_],
-	[f64(2000), inf_],
+	[f64(171.625), inf(1)],
+	[f64(172), inf(1)],
+	[f64(2000), inf(1)],
 	[f64(-100.5), -3.3536908198076787e-159],
 	[f64(-160.5), -5.255546447007829e-286],
 	[f64(-170.5), -3.3127395215386074e-308],
@@ -1084,48 +1077,48 @@ const (
 	[f64(-63.349078729022985), 4.177797167776188e-88],
 	[f64(-127.45117632943295), 1.183111089623681e-214],
 	]
-	vfhypot_sc_ = [[ninf_, ninf_],
-	[ninf_, 0],
-	[ninf_, inf_],
-	[ninf_, nan_],
+	vfhypot_sc_ = [[inf(-1), inf(-1)],
+	[inf(-1), 0],
+	[inf(-1), inf(1)],
+	[inf(-1), nan()],
 	[f64(-0.0), -0.0],
 	[f64(-0.0), 0],
 	[0.0, -0.0],
 	[0.0, 0], // +0,0
-	[0.0, ninf_],
-	[0.0, inf_],
-	[0.0, nan_],
-	[inf_, ninf_],
-	[inf_, 0],
-	[inf_, inf_],
-	[inf_, nan_],
-	[nan_, ninf_],
-	[nan_, 0],
-	[nan_, inf_],
-	[nan_, nan_],
+	[0.0, inf(-1)],
+	[0.0, inf(1)],
+	[0.0, nan()],
+	[inf(1), inf(-1)],
+	[inf(1), 0],
+	[inf(1), inf(1)],
+	[inf(1), nan()],
+	[nan(), inf(-1)],
+	[nan(), 0],
+	[nan(), inf(1)],
+	[nan(), nan()],
 	]
-	hypot_sc_ = [inf_,
-	inf_,
-	inf_,
-	inf_,
+	hypot_sc_ = [inf(1),
+	inf(1),
+	inf(1),
+	inf(1),
 	0,
 	0,
 	0,
 	0,
-	inf_,
-	inf_,
-	nan_,
-	inf_,
-	inf_,
-	inf_,
-	inf_,
-	inf_,
-	nan_,
-	inf_,
-	nan_,
+	inf(1),
+	inf(1),
+	nan(),
+	inf(1),
+	inf(1),
+	inf(1),
+	inf(1),
+	inf(1),
+	nan(),
+	inf(1),
+	nan(),
 	]
-	ilogb_sc_ = [max_i32_,
-	max_i32_,
+	ilogb_sc_ = [max_i32,
+	max_i32,
 	]
 	vfldexp_sc_ = [Fi{
 		0,0},
@@ -1140,15 +1133,15 @@ const (
 	Fi{
 		-0.0,1024},
 	Fi{
-		inf_,0},
+		inf(1),0},
 	Fi{
-		inf_,-1024},
+		inf(1),-1024},
 	Fi{
-		ninf_,0},
+		inf(-1),0},
 	Fi{
-		ninf_,-1024},
+		inf(-1),-1024},
 	Fi{
-		nan_,-1024},
+		nan(),-1024},
 	Fi{
 		10,1<<(u64(sizeof(int) - 1) * 8)},
 	Fi{
@@ -1160,264 +1153,264 @@ const (
 	-0.0,
 	-0.0,
 	-0.0,
-	inf_,
-	inf_,
-	ninf_,
-	ninf_,
-	nan_,
-	inf_,
+	inf(1),
+	inf(1),
+	inf(-1),
+	inf(-1),
+	nan(),
+	inf(1),
 	0,
 	]
-	vflog_gamma_sc_ = [ninf_,
+	vflog_gamma_sc_ = [inf(-1),
 	-3,
 	0,
 	1,
 	2,
-	inf_,
-	nan_,
+	inf(1),
+	nan(),
 	]
 	log_gamma_sc_ = [Fi{
-		ninf_,1},
+		inf(-1),1},
 	Fi{
-		inf_,1},
+		inf(1),1},
 	Fi{
-		inf_,1},
-	Fi{
-		0,1},
+		inf(1),1},
 	Fi{
 		0,1},
 	Fi{
-		inf_,1},
+		0,1},
 	Fi{
-		nan_,1},
+		inf(1),1},
+	Fi{
+		nan(),1},
 	]
-	vflog_sc_ = [ninf_,
-	-pi_,
+	vflog_sc_ = [inf(-1),
+	-pi,
 	-0.0,
 	0,
 	1,
-	inf_,
-	nan_,
+	inf(1),
+	nan(),
 	]
-	log_sc_ = [nan_,
-	nan_,
-	ninf_,
-	ninf_,
+	log_sc_ = [nan(),
+	nan(),
+	inf(-1),
+	inf(-1),
 	0,
-	inf_,
-	nan_,
+	inf(1),
+	nan(),
 	]
-	vflogb_sc_ = [ninf_,
+	vflogb_sc_ = [inf(-1),
 	0,
-	inf_,
-	nan_,
+	inf(1),
+	nan(),
 	]
-	logb_sc_ = [inf_,
-	ninf_,
-	inf_,
-	nan_,
+	logb_sc_ = [inf(1),
+	inf(-1),
+	inf(1),
+	nan(),
 	]
-	vflog1p_sc_ = [ninf_,
-	-pi_,
+	vflog1p_sc_ = [inf(-1),
+	-pi,
 	-1,
 	-0.0,
 	0,
-	inf_,
-	nan_,
+	inf(1),
+	nan(),
 	4503599627370496.5,
 	]
-	log1p_sc_ = [nan_,
-	nan_,
-	ninf_,
+	log1p_sc_ = [nan(),
+	nan(),
+	inf(-1),
 	-0.0,
 	0,
-	inf_,
-	nan_,
+	inf(1),
+	nan(),
 	36.04365338911715,
 	]
-	vfmodf_sc_ = [ninf_,
+	vfmodf_sc_ = [inf(-1),
 	-0.0,
-	inf_,
-	nan_,
+	inf(1),
+	nan(),
 	]
-	modf_sc_ = [[ninf_, nan_], // [2]f64{-0.0, ninf_],
+	modf_sc_ = [[inf(-1), nan()], // [2]f64{-0.0, inf(-1)],
 	[f64(-0.0), -0.0],
-	[inf_, nan_], // [2]f64{0, inf_],
-	[nan_, nan_],
+	[inf(1), nan()], // [2]f64{0, inf(1)],
+	[nan(), nan()],
 	]
 	vfnextafter32_sc_ = [[f32(0), 0],
 	[f32(0), -0.0],
 	[f32(0), -1],
-	[f32(0), nan_],
+	[f32(0), nan()],
 	[f32(-0), 1],
 	[f32(-0), 0],
 	[f32(-0), -0.0],
 	[f32(-0), -1],
-	[f32(nan_), 0],
-	[f32(nan_), nan_],
+	[f32(nan()), 0],
+	[f32(nan()), nan()],
 	]
 	nextafter32_sc_ = [f32(0),
 	0,
 	-1.401298464e-45, // Float32frombits(0x80000001)
-	f32(nan_),
+	f32(nan()),
 	1.401298464e-45, // Float32frombits(0x00000001)
 	-0.0,
 	-0.0,
 	-1.401298464e-45, // Float32frombits(0x80000001)
-	f32(nan_),
-	f32(nan_),
+	f32(nan()),
+	f32(nan()),
 	]
 	vfnextafter64_sc_ = [[0.0, 0],
 	[0.0, -0.0],
 	[0.0, -1],
-	[0.0, nan_],
+	[0.0, nan()],
 	[f64(-0.0), 1],
 	[f64(-0.0), 0],
 	[f64(-0.0), -0.0],
 	[f64(-0.0), -1],
-	[nan_, 0],
-	[nan_, nan_],
+	[nan(), 0],
+	[nan(), nan()],
 	]
 	nextafter64_sc_ = [0.0,
 	0,
 	-4.9406564584124654418e-324, // f64_from_bits(0x8000000000000001)
-	nan_,
+	nan(),
 	4.9406564584124654418e-324, // f64_from_bits(0x0000000000000001)
 	-0.0,
 	-0.0,
 	-4.9406564584124654418e-324, // f64_from_bits(0x8000000000000001)
-	nan_,
-	nan_,
+	nan(),
+	nan(),
 	]
-	vfpow_sc_ = [[ninf_, -pi_],
-	[ninf_, -3],
-	[ninf_, -0.0],
-	[ninf_, 0],
-	[ninf_, 1],
-	[ninf_, 3],
-	[ninf_, pi_],
-	[ninf_, 0.5],
-	[ninf_, nan_],
-	[f64(-pi_), ninf_],
-	[f64(-pi_), -pi_],
-	[f64(-pi_), -0.0],
-	[f64(-pi_), 0],
-	[f64(-pi_), 1],
-	[f64(-pi_), pi_],
-	[f64(-pi_), inf_],
-	[f64(-pi_), nan_],
-	[f64(-1), ninf_],
-	[f64(-1), inf_],
-	[f64(-1), nan_],
-	[f64(-1 / 2), ninf_],
-	[f64(-1 / 2), inf_],
-	[f64(-0.0), ninf_],
-	[f64(-0.0), -pi_],
+	vfpow_sc_ = [[inf(-1), -pi],
+	[inf(-1), -3],
+	[inf(-1), -0.0],
+	[inf(-1), 0],
+	[inf(-1), 1],
+	[inf(-1), 3],
+	[inf(-1), pi],
+	[inf(-1), 0.5],
+	[inf(-1), nan()],
+	[f64(-pi), inf(-1)],
+	[f64(-pi), -pi],
+	[f64(-pi), -0.0],
+	[f64(-pi), 0],
+	[f64(-pi), 1],
+	[f64(-pi), pi],
+	[f64(-pi), inf(1)],
+	[f64(-pi), nan()],
+	[f64(-1), inf(-1)],
+	[f64(-1), inf(1)],
+	[f64(-1), nan()],
+	[f64(-1 / 2), inf(-1)],
+	[f64(-1 / 2), inf(1)],
+	[f64(-0.0), inf(-1)],
+	[f64(-0.0), -pi],
 	[f64(-0.0), -0.5],
 	[f64(-0.0), -3],
 	[f64(-0.0), 3],
-	[f64(-0.0), pi_],
+	[f64(-0.0), pi],
 	[f64(-0.0), 0.5],
-	[f64(-0.0), inf_],
-	[0.0, ninf_],
-	[0.0, -pi_],
+	[f64(-0.0), inf(1)],
+	[0.0, inf(-1)],
+	[0.0, -pi],
 	[0.0, -3],
 	[0.0, -0.0],
 	[0.0, 0],
 	[0.0, 3],
-	[0.0, pi_],
-	[0.0, inf_],
-	[0.0, nan_],
-	[f64(1 / 2), ninf_],
-	[f64(1 / 2), inf_],
-	[1.0, ninf_],
-	[1.0, inf_],
-	[1.0, nan_],
-	[f64(pi_), ninf_],
-	[f64(pi_), -0.0],
-	[f64(pi_), 0],
-	[f64(pi_), 1],
-	[f64(pi_), inf_],
-	[f64(pi_), nan_],
-	[inf_, -pi_],
-	[inf_, -0.0],
-	[inf_, 0],
-	[inf_, 1],
-	[inf_, pi_],
-	[inf_, nan_],
-	[nan_, -pi_],
-	[nan_, -0.0],
-	[nan_, 0],
-	[nan_, 1],
-	[nan_, pi_],
-	[nan_, nan_],
+	[0.0, pi],
+	[0.0, inf(1)],
+	[0.0, nan()],
+	[f64(1 / 2), inf(-1)],
+	[f64(1 / 2), inf(1)],
+	[1.0, inf(-1)],
+	[1.0, inf(1)],
+	[1.0, nan()],
+	[f64(pi), inf(-1)],
+	[f64(pi), -0.0],
+	[f64(pi), 0],
+	[f64(pi), 1],
+	[f64(pi), inf(1)],
+	[f64(pi), nan()],
+	[inf(1), -pi],
+	[inf(1), -0.0],
+	[inf(1), 0],
+	[inf(1), 1],
+	[inf(1), pi],
+	[inf(1), nan()],
+	[nan(), -pi],
+	[nan(), -0.0],
+	[nan(), 0],
+	[nan(), 1],
+	[nan(), pi],
+	[nan(), nan()],
 	]
-	pow_sc_ = [0.0, // pow(-inf, -pi_)
+	pow_sc_ = [0.0, // pow(-inf, -pi)
 	-0.0, // pow(-inf, -3)
 	1, // pow(-inf, -0)
 	1, // pow(-inf, +0)
-	ninf_, // pow(-inf, 1)
-	ninf_, // pow(-inf, 3)
-	inf_, // pow(-inf, pi_)
-	inf_, // pow(-inf, 0.5)
-	nan_, // pow(-inf, nan)
-	0, // pow(-pi_, -inf)
-	nan_, // pow(-pi_, -pi_)
-	1, // pow(-pi_, -0)
-	1, // pow(-pi_, +0)
-	-pi_, // pow(-pi_, 1)
-	nan_, // pow(-pi_, pi_)
-	inf_, // pow(-pi_, +inf)
-	nan_, // pow(-pi_, nan)
+	inf(-1), // pow(-inf, 1)
+	inf(-1), // pow(-inf, 3)
+	inf(1), // pow(-inf, pi)
+	inf(1), // pow(-inf, 0.5)
+	nan(), // pow(-inf, nan)
+	0, // pow(-pi, -inf)
+	nan(), // pow(-pi, -pi)
+	1, // pow(-pi, -0)
+	1, // pow(-pi, +0)
+	-pi, // pow(-pi, 1)
+	nan(), // pow(-pi, pi)
+	inf(1), // pow(-pi, +inf)
+	nan(), // pow(-pi, nan)
 	1, // pow(-1, -inf) IEEE 754-2008
 	1, // pow(-1, +inf) IEEE 754-2008
-	nan_, // pow(-1, nan)
-	inf_, // pow(-1/2, -inf)
+	nan(), // pow(-1, nan)
+	inf(1), // pow(-1/2, -inf)
 	0, // pow(-1/2, +inf)
-	inf_, // pow(-0, -inf)
-	inf_, // pow(-0, -pi_)
-	inf_, // pow(-0, -0.5)
-	ninf_, // pow(-0, -3) IEEE 754-2008
+	inf(1), // pow(-0, -inf)
+	inf(1), // pow(-0, -pi)
+	inf(1), // pow(-0, -0.5)
+	inf(-1), // pow(-0, -3) IEEE 754-2008
 	-0.0, // pow(-0, 3) IEEE 754-2008
-	0, // pow(-0, pi_)
+	0, // pow(-0, pi)
 	0, // pow(-0, 0.5)
 	0, // pow(-0, +inf)
-	inf_, // pow(+0, -inf)
-	inf_, // pow(+0, -pi_)
-	inf_, // pow(+0, -3)
+	inf(1), // pow(+0, -inf)
+	inf(1), // pow(+0, -pi)
+	inf(1), // pow(+0, -3)
 	1, // pow(+0, -0)
 	1, // pow(+0, +0)
 	0, // pow(+0, 3)
-	0, // pow(+0, pi_)
+	0, // pow(+0, pi)
 	0, // pow(+0, +inf)
-	nan_, // pow(+0, nan)
-	inf_, // pow(1/2, -inf)
+	nan(), // pow(+0, nan)
+	inf(1), // pow(1/2, -inf)
 	0, // pow(1/2, +inf)
 	1, // pow(1, -inf) IEEE 754-2008
 	1, // pow(1, +inf) IEEE 754-2008
 	1, // pow(1, nan) IEEE 754-2008
-	0, // pow(pi_, -inf)
-	1, // pow(pi_, -0)
-	1, // pow(pi_, +0)
-	pi_, // pow(pi_, 1)
-	inf_, // pow(pi_, +inf)
-	nan_, // pow(pi_, nan)
-	0, // pow(+inf, -pi_)
+	0, // pow(pi, -inf)
+	1, // pow(pi, -0)
+	1, // pow(pi, +0)
+	pi, // pow(pi, 1)
+	inf(1), // pow(pi, +inf)
+	nan(), // pow(pi, nan)
+	0, // pow(+inf, -pi)
 	1, // pow(+inf, -0)
 	1, // pow(+inf, +0)
-	inf_, // pow(+inf, 1)
-	inf_, // pow(+inf, pi_)
-	nan_, // pow(+inf, nan)
-	nan_, // pow(nan, -pi_)
+	inf(1), // pow(+inf, 1)
+	inf(1), // pow(+inf, pi)
+	nan(), // pow(+inf, nan)
+	nan(), // pow(nan, -pi)
 	1, // pow(nan, -0)
 	1, // pow(nan, +0)
-	nan_, // pow(nan, 1)
-	nan_, // pow(nan, pi_)
-	nan_, // pow(nan, nan)
+	nan(), // pow(nan, 1)
+	nan(), // pow(nan, pi)
+	nan(), // pow(nan, nan)
 	]
 	vfround_sc_ = [[0.0, 0],
-	[nan_, nan_],
-	[inf_, inf_],
+	[nan(), nan()],
+	[inf(1), inf(1)],
 	]
 	vfroundEven_sc_ = [[0.0, 0],
 	[f64(1.390671161567e-309), 0], // denormal
@@ -1426,18 +1419,18 @@ const (
 	[f64(0.5000000000000001), 1], // 0.5+epsilon
 	[f64(-1.5), -2],
 	[f64(-2.5), -2],
-	[nan_, nan_],
-	[inf_, inf_],
+	[nan(), nan()],
+	[inf(1), inf(1)],
 	[f64(2251799813685249.5), 2251799813685250], // 1 bit fractian
 	[f64(2251799813685250.5), 2251799813685250],
 	[f64(4503599627370495.5), 4503599627370496], // 1 bit fraction, rounding to 0 bit fractian
 	[f64(4503599627370497), 4503599627370497], // large integer
 	]
-	vfsignbitsc_ = [ninf_,
+	vfsignbitsc_ = [inf(-1),
 	-0.0,
 	0,
-	inf_,
-	nan_,
+	inf(1),
+	nan(),
 	]
 	signbitsc_ = [true,
 	true,
@@ -1445,97 +1438,97 @@ const (
 	false,
 	false,
 	]
-	vfsin_sc_ = [ninf_,
+	vfsin_sc_ = [inf(-1),
 	-0.0,
 	0,
-	inf_,
-	nan_,
+	inf(1),
+	nan(),
 	]
-	sin_sc_ = [nan_,
+	sin_sc_ = [nan(),
 	-0.0,
 	0,
-	nan_,
-	nan_,
+	nan(),
+	nan(),
 	]
-	vfsinh_sc_ = [ninf_,
+	vfsinh_sc_ = [inf(-1),
 	-0.0,
 	0,
-	inf_,
-	nan_,
+	inf(1),
+	nan(),
 	]
-	sinh_sc_ = [ninf_,
+	sinh_sc_ = [inf(-1),
 	-0.0,
 	0,
-	inf_,
-	nan_,
+	inf(1),
+	nan(),
 	]
-	vfsqrt_sc_ = [ninf_,
-	-pi_,
+	vfsqrt_sc_ = [inf(-1),
+	-pi,
 	-0.0,
 	0,
-	inf_,
-	nan_,
+	inf(1),
+	nan(),
 	]
-	sqrt_sc_ = [nan_,
-	nan_,
+	sqrt_sc_ = [nan(),
+	nan(),
 	-0.0,
 	0,
-	inf_,
-	nan_,
+	inf(1),
+	nan(),
 	]
-	vftanh_sc_ = [ninf_,
+	vftanh_sc_ = [inf(-1),
 	-0.0,
 	0,
-	inf_,
-	nan_,
+	inf(1),
+	nan(),
 	]
 	tanh_sc_ = [f64(-1),
 	-0.0,
 	0,
 	1,
-	nan_,
+	nan(),
 	]
-	vfy0_sc_ = [ninf_,
+	vfy0_sc_ = [inf(-1),
 	0,
-	inf_,
-	nan_,
+	inf(1),
+	nan(),
 	-1,
 	]
-	y0_sc_ = [nan_,
-	ninf_,
+	y0_sc_ = [nan(),
+	inf(-1),
 	0,
-	nan_,
-	nan_,
+	nan(),
+	nan(),
 	]
-	y1_sc_ = [nan_,
-	ninf_,
+	y1_sc_ = [nan(),
+	inf(-1),
 	0,
-	nan_,
-	nan_,
+	nan(),
+	nan(),
 	]
-	y2_sc_ = [nan_,
-	ninf_,
+	y2_sc_ = [nan(),
+	inf(-1),
 	0,
-	nan_,
-	nan_,
+	nan(),
+	nan(),
 	]
-	yM3_sc_ = [nan_,
-	inf_,
+	yM3_sc_ = [nan(),
+	inf(1),
 	0,
-	nan_,
-	nan_,
+	nan(),
+	nan(),
 	]
 	// arguments and expected results for boundary cases
 	smallest_normalf64 = 2.2250738585072014e-308 // 2**-1022
-	largest_subnormalf64 = smallest_normalf64 - smallest_non_zero_f64_
+	largest_subnormalf64 = smallest_normalf64 - smallest_non_zero_f64
 	vffrexp_bc_ = [f64(smallest_normalf64),
 	largest_subnormalf64,
-	smallest_non_zero_f64_,
-	max_f64_,
+	smallest_non_zero_f64,
+	max_f64,
 	-smallest_normalf64,
 	-largest_subnormalf64,
-	-smallest_non_zero_f64_,
-	-max_f64_,
+	-smallest_non_zero_f64,
+	-max_f64,
 	]
 	frexp_bc_ = [Fi{
 		0.5,-1021},
@@ -1559,9 +1552,9 @@ const (
 	Fi{
 		largest_subnormalf64,-51},
 	Fi{
-		smallest_non_zero_f64_,1074},
+		smallest_non_zero_f64,1074},
 	Fi{
-		max_f64_,-(1023 + 1074)},
+		max_f64,-(1023 + 1074)},
 	Fi{
 		1,-1075},
 	Fi{
@@ -1575,15 +1568,15 @@ const (
 	Fi{
 		1,-1075},
 	]
-	ldexp_bc_ = [f64(smallest_non_zero_f64_),
+	ldexp_bc_ = [f64(smallest_non_zero_f64),
 	1e-323, // 2**-1073
 	1,
 	1e-323, // 2**-1073
 	0,
 	-0.0,
-	inf_,
-	ninf_,
-	smallest_non_zero_f64_,
+	inf(1),
+	inf(-1),
+	smallest_non_zero_f64,
 	0,
 	]
 	logb_bc_ = [f64(-1022),
@@ -1597,6 +1590,7 @@ const (
 	]
 )
 
+[inline]
 fn tolerance(a, b, tol f64) bool {
 	mut e := tol
 	// Multiplying by e here can underflow denormal values to zero.
