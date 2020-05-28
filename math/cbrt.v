@@ -28,12 +28,12 @@ pub fn cbrt(x_ f64) f64 {
 		sign = true
 	}
 	// rough cbrt to 5 bits
-	mut t := f64_from_bits(f64_bits(x) / 3 + (b1 << 32))
+	mut t := f64_from_bits(f64_bits(x) / u64(3 + (b1 << 32)))
 	if x < smallest_normal {
 		// subnormal number
 		t = f64(1 << 54) // set t= 2**54
 		t *= x
-		t = f64_from_bits(f64_bits(t) / 3 + (b2 << 32))
+		t = f64_from_bits(f64_bits(t) / u64(3 + (b2 << 32)))
 	}
 	// new cbrt to 23 bits
 	mut r := t * t / x

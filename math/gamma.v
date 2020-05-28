@@ -314,7 +314,7 @@ fn sin_pi(x_ f64) f64 {
 			if x < two52 {
 				z = x + two52 // exact
 			}
-			n = 1 & f64_bits(z)
+			n = 1 & int(f64_bits(z))
 			x = f64(n)
 			n <<= 2
 		}

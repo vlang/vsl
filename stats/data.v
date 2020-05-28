@@ -49,7 +49,7 @@ pub fn data(nb_samples, nb_features int, use_y, allocate bool) Data {
 		la.matrix(0, 0)
 	}
 	if allocate && use_y {
-		y = []f64{ len: nb_samples }
+		y = []f64{len: nb_samples}
 	}
 	o.y = y
 	return o
