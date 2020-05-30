@@ -13,11 +13,11 @@ import vsl.errno
 //          _          _                                     _   _
 //         |  -1  0 -3  |                                   |  0  |
 //         |  -2  3  3  |                       (optional)  |  1  |
-//     X = |   3  1  4  |                               Y = |  1  |
+//     x = |   3  1  4  |                               y = |  1  |
 //         |  -4  5  0  |                                   |  0  |
-//         |_  1 -8  5 _|(nSamples x nFeatures)             |_ 1 _|(nSamples)
+//         |_  1 -8  5 _|(nb_samples x nb_features)         |_ 1 _|(nb_samples)
 //
-//   NOTE: remember to call data.NotifyUpdate() after changing X or y components
+//   NOTE: remember to call data.notify_update() after changing x or y components
 //
 pub struct Data {
 pub mut:
