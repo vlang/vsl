@@ -40,7 +40,7 @@ fn log_factorial_asymptotic_expansion(n int) f64 {
 	log_factorial := log_sqrt_2pi - xj + (xj - 0.5) * log(xj)
 	mut i := 0
 	for i = 0; i < m; i++ {
-		term << B[i] / xj
+		term << bernoulli[i] / xj
 		xj *= xx
 	}
 	mut sum := term[m - 1]

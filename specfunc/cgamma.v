@@ -48,8 +48,8 @@ fn _sp_cgamma(x_, y_ f64, kf bool) (f64, f64) {
 	mut gi := th * (x0 - 0.5) + y * math.log(z1) - y
 	for k := 1; k <= 10; k++ {
 		t := math.pow(z1, 1 - 2 * k)
-		gr += a[k - 1] * t * math.cos((2.0 * k - 1.0) * th)
-		gi -= a[k - 1] * t * math.sin((2.0 * k - 1.0) * th)
+		gr += a[k - 1] * t * math.cos((2.0 * f64(k) - 1.0) * th)
+		gi -= a[k - 1] * t * math.sin((2.0 * f64(k) - 1.0) * th)
 	}
 	if x <= 7.0 {
 		mut gr1 := 0.0
