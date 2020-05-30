@@ -8,15 +8,15 @@ import vsl.math
 
 // vector_rms_error returns the scaled root-mean-square of the difference between two vectors
 // with components normalised by a scaling factor
-// __________________________
-// /     ————              2
-// /  1   \    /  error[i]  \
-// rms =  \  /  ———  /    | —————————— |
-// \/    N   ———— \  scale[i]  /
+//                __________________________
+//               /     ————              2
+//              /  1   \    /  error[i]  \
+//   rms =  \  /  ———  /    | —————————— |
+//           \/    N   ———— \  scale[i]  /
 //
-// error[i] = |u[i] - v[i]|
+//   error[i] = |u[i] - v[i]|
 //
-// scale[i] = a + m*|s[i]|
+//   scale[i] = a + m*|s[i]|
 //
 pub fn vector_rms_error(u, v []f64, a, m f64, s []f64) f64 {
 	mut rms := 0.0
