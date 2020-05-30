@@ -48,7 +48,7 @@ provides the individual functions necessary for each of the steps.
 Functions
 =========
 
-.. function:: fn brent (f vsl.Function, x1, x2, tol f64) (?f64, f64)
+.. function:: fn brent (f vsl.Function, x1, x2, tol f64) ?(f64, f64)
 
   Find th root of :data:`f` between :data:`x1` and :data:`x1` with an accuracy
   of order :data:`tol`. The result will be the root and an upper bound of the error.

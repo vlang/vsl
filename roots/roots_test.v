@@ -1,7 +1,8 @@
 // Copyright (c) 2019-2020 Ulises Jeremias Cornejo Fandos. All rights reserved.
 // Use of this source code is governed by an MIT license
 // that can be found in the LICENSE file.
-import roots
+module roots
+
 import vsl
 import vsl.math
 
@@ -25,7 +26,7 @@ fn test_root_bisection() {
 	func := vsl.Function{
 		function: f_cos
 	}
-	result := roots.bisection(func, x1, x2, epsrel, epsabs, n_max) or {
+	result := bisection(func, x1, x2, epsrel, epsabs, n_max) or {
 		panic(err)
 	}
 	assert compare(result, math.pi / 2.00)
@@ -36,7 +37,7 @@ fn test_root_newton() {
 	func := vsl.FunctionFdf{
 		fdf: fdf_cos
 	}
-	result := roots.newton(func, x0, epsrel, epsabs, n_max) or {
+	result := newton(func, x0, epsrel, epsabs, n_max) or {
 		panic(err)
 	}
 	assert compare(result, math.pi / 2.00)
