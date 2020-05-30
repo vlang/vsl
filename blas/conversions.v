@@ -126,7 +126,7 @@ pub fn slice_to_col_major_complex(a [][]complex.Complex) []complex.Complex {
 }
 
 // col_major_complex_to_slice converts col-major matrix to nested slice
-pub fn col_major_complex_to_slice(m, n int, data []complex.Complex) []complex.Complex {
+pub fn col_major_complex_to_slice(m, n int, data []complex.Complex) [][]complex.Complex {
 	mut a := [[]complex.Complex{}].repeat(m)
 	for i := 0; i < m; i++ {
 		a[i] = []complex.Complex{len: n}

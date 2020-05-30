@@ -261,7 +261,7 @@ pub fn bounce_ease_in_out(p f64) f64 {
 [inline]
 pub fn animate(easing fn(f64) f64, from, to f64, frames int) []f64 {
 	len := int(math.max(frames, 0.0))
-	dt := f64(1.0 / (len - 1))
+	dt := 1.0 / f64(len - 1)
 	animation := range(0, len)
 	return animation.map(from + easing(it * dt) * (to - from)) // t := it*dt
 }

@@ -70,60 +70,60 @@ fn df6(x f64, _ []f64) f64 {
 }
 
 fn test_deriv() {
-	_f1 := vsl.Function{
+	f1_ := vsl.Function{
 		function: f1
 	}
-	_df1 := vsl.Function{
+	df1_ := vsl.Function{
 		function: df1
 	}
-	_f2 := vsl.Function{
+	f2_ := vsl.Function{
 		function: f2
 	}
-	_df2 := vsl.Function{
+	df2_ := vsl.Function{
 		function: df2
 	}
-	_f3 := vsl.Function{
+	f3_ := vsl.Function{
 		function: f3
 	}
-	_df3 := vsl.Function{
+	df3_ := vsl.Function{
 		function: df3
 	}
-	_f4 := vsl.Function{
+	f4_ := vsl.Function{
 		function: f4
 	}
-	_df4 := vsl.Function{
+	df4_ := vsl.Function{
 		function: df4
 	}
-	_f5 := vsl.Function{
+	f5_ := vsl.Function{
 		function: f5
 	}
-	_df5 := vsl.Function{
+	df5_ := vsl.Function{
 		function: df5
 	}
-	_f6 := vsl.Function{
+	f6_ := vsl.Function{
 		function: f6
 	}
-	_df6 := vsl.Function{
+	df6_ := vsl.Function{
 		function: df6
 	}
-	assert deriv_test('central', _f1, _df1, 1.0)
-	assert deriv_test('forward', _f1, _df1, 1.0)
-	assert deriv_test('backward', _f1, _df1, 1.0)
-	assert deriv_test('central', _f2, _df2, 0.1)
-	assert deriv_test('forward', _f2, _df2, 0.1)
-	assert deriv_test('backward', _f2, _df2, 0.1)
-	assert deriv_test('central', _f3, _df3, 0.45)
-	assert deriv_test('forward', _f3, _df3, 0.45)
-	assert deriv_test('backward', _f3, _df3, 0.45)
-	assert deriv_test('central', _f4, _df4, 0.5)
-	assert deriv_test('forward', _f4, _df4, 0.5)
-	assert deriv_test('backward', _f4, _df4, 0.5)
-	assert deriv_test('central', _f5, _df5, 0.0)
-	assert deriv_test('forward', _f5, _df5, 0.0)
-	assert deriv_test('backward', _f5, _df5, 0.0)
-	assert deriv_test('central', _f6, _df6, 10.0)
-	assert deriv_test('forward', _f6, _df6, 10.0)
-	assert deriv_test('backward', _f6, _df6, 10.0)
+	assert deriv_test('central', f1_, df1_, 1.0)
+	assert deriv_test('forward', f1_, df1_, 1.0)
+	assert deriv_test('backward', f1_, df1_, 1.0)
+	assert deriv_test('central', f2_, df2_, 0.1)
+	assert deriv_test('forward', f2_, df2_, 0.1)
+	assert deriv_test('backward', f2_, df2_, 0.1)
+	assert deriv_test('central', f3_, df3_, 0.45)
+	assert deriv_test('forward', f3_, df3_, 0.45)
+	assert deriv_test('backward', f3_, df3_, 0.45)
+	assert deriv_test('central', f4_, df4_, 0.5)
+	assert deriv_test('forward', f4_, df4_, 0.5)
+	assert deriv_test('backward', f4_, df4_, 0.5)
+	assert deriv_test('central', f5_, df5_, 0.0)
+	assert deriv_test('forward', f5_, df5_, 0.0)
+	assert deriv_test('backward', f5_, df5_, 0.0)
+	assert deriv_test('central', f6_, df6_, 10.0)
+	assert deriv_test('forward', f6_, df6_, 10.0)
+	assert deriv_test('backward', f6_, df6_, 10.0)
 }
 
 fn deriv_test(deriv_method string, f, df vsl.Function, x f64) bool {

@@ -49,7 +49,7 @@ pub fn geometric_mean(data []f64) f64 {
 	for v in data {
 		sum *= v
 	}
-	return math.pow(sum, 1.0 / data.len)
+	return math.pow(sum, 1.0 / f64(data.len))
 }
 
 // Measure of Central Tendancy
