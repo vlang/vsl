@@ -13,9 +13,9 @@ jobs:
       run: sudo rm -f /etc/apt/sources.list.d/dotnetdev.list /etc/apt/sources.list.d/microsoft-prod.list; sudo apt-get update; sudo apt-get install --quiet -y libglfw3 libglfw3-dev libfreetype6-dev libssl-dev sqlite3 libsqlite3-dev libsdl2-dev libsdl2-ttf-dev libsdl2-mixer-dev libsdl2-image-dev
     - name: install V
       run: |
-        git clone https://github.com/vlang/v0.1.25.git /tmp/v
+        git clone https://github.com/vlang/v.git /tmp/v
         pushd /tmp/v
-        bash ./build.sh
+        make
         sudo ./v symlink
         popd
     - name: run tests

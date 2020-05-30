@@ -28,7 +28,7 @@ fn C.cblas_dsyrk(cblas_col_major, up, trans u32, n, k int, alpha f64, a &f64, ld
 
 fn C.LAPACKE_dgesv(n, nrhs int, a &f64, lda int, ipiv &int, b &f64, ldb int) int
 
-fn C.LAPACKE_dgesvd(jobu, jobvt rune, m, n int, a &f64, lda int, s, u &f64, ldu int, vt &f64, ldvt int, superb &f64) int
+fn C.LAPACKE_dgesvd(jobu, jobvt byte, m, n int, a &f64, lda int, s, u &f64, ldu int, vt &f64, ldvt int, superb &f64) int
 
 fn C.LAPACKE_dgetrf(m, n int, a &f64, lda int, ipiv &int) int
 
@@ -251,7 +251,7 @@ pub fn dgesv(n, nrhs int, a []f64, lda int, ipiv []int, b []f64, ldb int) {
 // Note that the routine returns V**T, not V.
 //
 // NOTE: matrix 'a' will be modified
-pub fn dgesvd(jobu, jobvt rune, m, n int, a []f64, lda int, s, u []f64, ldu int, vt []f64, ldvt int, superb []f64) {
+pub fn dgesvd(jobu, jobvt byte, m, n int, a []f64, lda int, s, u []f64, ldu int, vt []f64, ldvt int, superb []f64) {
 	info := C.LAPACKE_dgesvd(lapack_col_major, jobu, jobvt, m, n, &a[0], lda, &s[0], &u[0],
 		ldu, &vt[0], ldvt, &superb[0])
 	if info != 0 {
@@ -279,7 +279,7 @@ pub fn dgesvd(jobu, jobvt rune, m, n int, a []f64, lda int, s, u []f64, ldu int,
 // Note that the routine returns V**H, not V.
 //
 // NOTE: matrix 'a' will be modified
-// pub fn zgesvd(jobu, jobvt rune, m, n int, a []complex128, lda int, s []f64, u []complex128, ldu int, vt []complex128, ldvt int, superb []f64) {
+// pub fn zgesvd(jobu, jobvt byte, m, n int, a []complex128, lda int, s []f64, u []complex128, ldu int, vt []complex128, ldvt int, superb []f64) {
 // info := C.LAPACKE_zgesvd(lapack_col_major, jobu, jobvt, m, n, &a[0], lda, &s[0], &u[0], ldu, &vt[0], ldvt, &superb[0])
 // if info != 0 {
 // errno.vsl_panic("lapack failed", .efailed)
