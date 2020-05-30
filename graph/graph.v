@@ -44,12 +44,12 @@ fn str_ints_map_append(o map[string][]int, key string, item int) map[string][]in
 	return m
 }
 
-// graph initialises graph
+// new_graph initialises graph
 // edges    -- [nedges][2] edges (connectivity)
 // weights_e -- [nedges] weights of edges
 // verts    -- [nverts][ndim] vertices
 // weights_v -- [nverts] weights of vertices
-pub fn graph(edges [][]int, weights_e []f64, verts [][]f64, weights_v []f64) Graph {
+pub fn new_graph(edges [][]int, weights_e []f64, verts [][]f64, weights_v []f64) Graph {
 	mut key2edge := map[string]int
 	mut shares := map[string][]int
 	for k, edge in edges {
@@ -94,22 +94,22 @@ pub fn (g Graph) get_edge(i, j int) ?int {
 
 // shortest_paths computes the shortest paths in a graph defined as follows
 //
-// [10]
-// 0 ––––––→ 3            numbers in brackets
-// |         ↑            indicate weights
-// [5] |         | [1]
-// ↓         |
-// 1 ––––––→ 2
-// [3]                ∞ means that there are no
-// connections from i to j
-// graph:  j= 0  1  2  3
-// -----------  i=
-// 0  5  ∞ 10 |  0  ⇒  w(0→1)=5, w(0→3)=10
-// ∞  0  3  ∞ |  1  ⇒  w(1→2)=3
-// ∞  ∞  0  1 |  2  ⇒  w(2→3)=1
-// ∞  ∞  ∞  0 |  3
-// Input:
-// method -- FW: Floyd-Warshall method
+//          [10]
+//       0 ––––––→ 3            numbers in brackets
+//       |         ↑            indicate weights
+//   [5] |         | [1]
+//       ↓         |
+//       1 ––––––→ 2
+//           [3]                ∞ means that there are no
+//                              connections from i to j
+//   graph:  j= 0  1  2  3
+//              -----------  i=
+//              0  5  ∞ 10 |  0  ⇒  w(0→1)=5, w(0→3)=10
+//              ∞  0  3  ∞ |  1  ⇒  w(1→2)=3
+//              ∞  ∞  0  1 |  2  ⇒  w(2→3)=1
+//              ∞  ∞  ∞  0 |  3
+//  Input:
+//   method -- FW: Floyd-Warshall method
 pub fn (g Graph) shortest_paths(method SorthestPaths) Graph {
 	if method != .fw {
 		panic('shortest_paths works with FW (Floyd-Warshall) method only for now')

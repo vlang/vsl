@@ -4,5 +4,5 @@
 module vsl
 
 pub const (
-	VERSION = '0.2'
+	version = '0.2'
 )
