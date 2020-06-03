@@ -20,8 +20,7 @@ pub fn (c Complex) str() string {
 	mut out := '${c.re:f}'
 	out += if c.im >= 0 {
 		'+${c.im:f}'
-	}
-	else {
+	} else {
 		'${c.im:f}'
 	}
 	out += 'i'
@@ -371,8 +370,7 @@ pub fn (c Complex) acosh() Complex {
 			.subtract(complex(1,0))
 			.root(2)
 		).ln()
-	}
-	else {
+	} else {
 		one := complex(1,0)
 		return c.add(
 			c.add(one)
@@ -400,8 +398,7 @@ pub fn (c Complex) atanh() Complex {
 			)
 			.ln()
 		)
-	}
-	else {
+	} else {
 		return complex(1.0/2,0).multiply(
 			one
 			.add(c)
@@ -429,8 +426,7 @@ pub fn (c Complex) acoth() Complex {
 			)
 			.ln()
 		)
-	}
-	else {
+	} else {
 		div := one.divide(c)
 		return complex(1.0/2,0).multiply(
 			one

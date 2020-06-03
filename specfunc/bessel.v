@@ -258,8 +258,7 @@ pub fn bessel_jn(n_ int, x_ f64) f64 {
 				b = b * (f64(i + i) / x) - a_ // avoid underflow
 			}
 		}
-	}
-	else {
+	} else {
 		if x < two_m29 {
 			// x < 2**-29
 			// x is tiny, return the first Taylor expansion of J(n,x)
@@ -565,8 +564,7 @@ pub fn bessel_yn(n_ int, x f64) f64 {
 			temp = s + c
 		}
 		b = (f64(1.0) / math.sqrt_pi) * temp / math.sqrt(x)
-	}
-	else {
+	} else {
 		mut a := bessel_y0(x)
 		b = bessel_y1(x)
 		// quit if b is -inf

@@ -88,8 +88,7 @@ pub fn exp2(x f64) f64 {
 pub fn ldexp(x f64, e int) f64 {
 	if x == 0.0 {
 		return x
-	}
-	else {
+	} else {
 		mut y, ex := frexp(x)
 		mut e2 := f64(e + ex)
 		if e2 >= f64_max_exp {

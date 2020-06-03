@@ -37,8 +37,7 @@ fn str_ints_map_append(o map[string][]int, key string, item int) map[string][]in
 		mut slice := m[key]
 		slice << item
 		m[key] = slice
-	}
-	else {
+	} else {
 		m[key] = [item]
 	}
 	return m
