@@ -10,7 +10,7 @@ module math
 // nextafter32(nan, y) = nan
 // nextafter32(x, nan) = nan
 pub fn nextafter32(x, y f32) f32 {
-	mut r := 0.0
+	mut r := f32(0.0)
 	if is_nan(f64(x)) || is_nan(f64(y)) {
 		r = f32(nan())
 	} else if x == y {
