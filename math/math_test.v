@@ -1232,13 +1232,13 @@ const (
 	vfnextafter32_sc_    = [[f32(0), 0],
 		[f32(0), -0.0],
 		[f32(0), -1],
-		[f32(0), nan()],
+		[f32(0), f32(nan())],
 		[f32(-0), 1],
 		[f32(-0), 0],
 		[f32(-0), -0.0],
 		[f32(-0), -1],
 		[f32(nan()), 0],
-		[f32(nan()), nan()]
+		[f32(nan()), f32(nan())]
 	]
 	nextafter32_sc_      = [f32(0),
 		0,
@@ -1602,7 +1602,7 @@ fn close(a, b f64) bool {
 }
 
 fn veryclose(a, b f64) bool {
-	return tolerance(a, b, 4e-6)
+	return tolerance(a, b, 4e-9)
 }
 
 fn soclose(a, b, e f64) bool {
@@ -1821,7 +1821,7 @@ fn test_mod() {
 	}
 	for i := 0; i < vffmod_sc_.len; i++ {
 		f := mod(vffmod_sc_[i][0], vffmod_sc_[i][1])
-		// assert alike(fmod_sc_[i], f)
+		assert alike(fmod_sc_[i], f)
 	}
 	// verify precision of result for extreme inputs
 	f := mod(5.9790119248836734e+200, 1.1258465975523544)
@@ -2109,7 +2109,7 @@ fn test_large_sin() {
 }
 
 fn test_large_tan() {
-	large := f64(100000) * pi
+	// large := f64(100000) * pi
 	for i := 0; i < vf_.len; i++ {
 		// TODO: improve trig reduction for large arguments
 		// f1 := tan_large_[i]

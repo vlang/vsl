@@ -43,7 +43,7 @@ pub fn newton(func vsl.FunctionFdf, x0, x_eps, fx_eps f64, n_max int) ?f64 {
 		dx := f / df
 		norm0 := math.abs(f)
 		mut norm := 0.0 // Armijo line search
-		for !t.eq(0.0) {
+		for t != 0.0 {
 			x_linesearch := root - t * dx
 			f, df = func.eval_f_df(x_linesearch)
 			norm = math.abs(f)

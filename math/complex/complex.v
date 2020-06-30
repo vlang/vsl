@@ -97,7 +97,7 @@ pub fn (c1 Complex) divide(c2 Complex) Complex {
 }
 
 // Complex Conjugate
-pub fn (c Complex) conj() Complex{
+pub fn (c Complex) conjugate() Complex{
 	return Complex{c.re, -c.im}
 }
 

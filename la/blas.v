@@ -132,7 +132,7 @@ pub fn matrix_tr_vector_mul(alpha f64, a Matrix, u []f64) []f64 {
 //
 // a = alpha⋅u⋅vᵀ    ⇒    aij = alpha * ui * vj
 //
-pub fn vector_vector_tr_mul(alpha f64, u, v []f64) Matrix {
+pub fn vector_vector_tr_mul(alpha f64, u []f64, mut v []f64) Matrix {
 	mut a := matrix(u.len, v.len)
 	if a.m < 9 && a.n < 9 {
 		for i := 0; i < a.m; i++ {

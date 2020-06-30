@@ -69,7 +69,7 @@ pub fn (q Quaternion) opposite() Quaternion {
 	return quaternion(-q.w, -q.x, -q.y, -q.z)
 }
 
-pub fn (q Quaternion) conj() Quaternion {
+pub fn (q Quaternion) conjugate() Quaternion {
 	return quaternion(q.w, -q.x, -q.y, -q.z)
 }
 
