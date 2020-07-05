@@ -58,7 +58,7 @@ pub fn new_graph(edges [][]int, weights_e []f64, verts [][]f64, weights_v []f64)
 		shares = str_ints_map_append(shares, j.str(), k)
 		key2edge[hash_edge_key(i, j)] = k
 	}
-	nv := shares.size
+	nv := shares.keys().len
 	mut dist := [[]f64{}].repeat(nv)
 	mut next := [[]int{}].repeat(nv)
 	for i := 0; i < nv; i++ {
@@ -79,7 +79,7 @@ pub fn new_graph(edges [][]int, weights_e []f64, verts [][]f64, weights_v []f64)
 
 // nverts returns the number of vertices
 pub fn (g Graph) nverts() int {
-	return g.shares.size
+	return g.shares.keys().len
 }
 
 // get_edge performs a lookup on key2edge map and returs id of edge for given nodes ides

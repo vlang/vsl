@@ -16,8 +16,8 @@ fn test_graph01() {
 	//           [3]
 
 	g := new_graph([[0, 1], [0, 3], [1, 2], [2, 3]], [f64(5), 10, 3, 1], [], [])
-	assert g.shares.size == 4 // nverts
-	assert g.key2edge.size == 4 // nedges
+	assert g.shares.keys().len == 4 // nverts
+	assert g.key2edge.keys().len == 4 // nedges
 	assert g.dist.len == 4 // nverts
 	assert g.next.len == 4 // nverts
 	shares := [[0, 1], [0, 2],  [2, 3],  [1, 3]]
@@ -77,8 +77,8 @@ fn test_graph02() {
 	//          [6]    [8]
 
 	g := new_graph([[4, 5], [1, 4], [0, 1], [0, 2], [5, 2], [2, 3], [5, 3]], [f64(3), 11, 6, 8, 7, 9, 4], [], [])
-	assert g.shares.size == 6 // nverts
-	assert g.key2edge.size == 7 // nedges
+	assert g.shares.keys().len == 6 // nverts
+	assert g.key2edge.keys().len == 7 // nedges
 	assert g.dist.len == 6 // nverts
 	assert g.next.len == 6 // nverts
 	shares := [[2, 3], [1, 2],  [3, 4, 5],  [5, 6],  [0, 1], [0, 4, 6]]

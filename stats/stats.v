@@ -126,10 +126,10 @@ pub fn population_variance(data []f64) f64 {
 	if data.len == 0 {
 		return 0.0
 	}
-	mean := mean(data)
+	data_mean := mean(data)
 	mut sum := 0.0
 	for v in data {
-		sum += (v - mean) * (v - mean)
+		sum += (v - data_mean) * (v - data_mean)
 	}
 	return sum / f64(data.len)
 }
@@ -157,10 +157,10 @@ pub fn sample_variance(data []f64) f64 {
 	if data.len == 0 {
 		return 0.0
 	}
-	mean := mean(data)
+	data_mean := mean(data)
 	mut sum := 0.0
 	for v in data {
-		sum += (v - mean) * (v - mean)
+		sum += (v - data_mean) * (v - data_mean)
 	}
 	return sum / f64(data.len - 1)
 }
@@ -232,10 +232,10 @@ pub fn absdev(data []f64) f64 {
 	if data.len == 0 {
 		return 0.0
 	}
-	mean := mean(data)
+	data_mean := mean(data)
 	mut sum := 0.0
 	for v in data {
-		sum += math.abs(v - mean)
+		sum += math.abs(v - data_mean)
 	}
 	return sum / f64(data.len)
 }
@@ -260,10 +260,10 @@ pub fn tss(data []f64) f64 {
 	if data.len == 0 {
 		return 0.0
 	}
-	mean := mean(data)
+	data_mean := mean(data)
 	mut tss := 0.0
 	for v in data {
-		tss += (v - mean) * (v - mean)
+		tss += (v - data_mean) * (v - data_mean)
 	}
 	return tss
 }
@@ -416,8 +416,8 @@ pub fn covariance_mean(data1, data2 []f64, mean1, mean2 f64) f64 {
 
 [inline]
 pub fn lag1_autocorrelation(data []f64) f64 {
-	mean := mean(data)
-	return lag1_autocorrelation_mean(data, mean)
+	data_mean := mean(data)
+	return lag1_autocorrelation_mean(data, data_mean)
 }
 
 // Compute the lag-1 autocorrelation of a dataset using
@@ -439,9 +439,9 @@ pub fn lag1_autocorrelation_mean(data []f64, mean f64) f64 {
 
 [inline]
 pub fn kurtosis(data []f64) f64 {
-	mean := mean(data)
-	sd := population_stddev_mean(data, mean)
-	return kurtosis_mean_stddev(data, mean, sd)
+	data_mean := mean(data)
+	sd := population_stddev_mean(data, data_mean)
+	return kurtosis_mean_stddev(data, data_mean, sd)
 }
 
 // Takes a dataset and finds the kurtosis
@@ -461,9 +461,9 @@ pub fn kurtosis_mean_stddev(data []f64, mean, sd f64) f64 {
 
 [inline]
 pub fn skew(data []f64) f64 {
-	mean := mean(data)
-	sd := population_stddev_mean(data, mean)
-	return skew_mean_stddev(data, mean, sd)
+	data_mean := mean(data)
+	sd := population_stddev_mean(data, data_mean)
+	return skew_mean_stddev(data, data_mean, sd)
 }
 
 pub fn skew_mean_stddev(data []f64, mean, sd f64) f64 {
