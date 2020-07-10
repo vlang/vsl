@@ -7,9 +7,10 @@ import vsl.math
 import vsl.errno
 /* TODO: change params type from []f64 to []T */
 
-pub type ArbitraryFn = fn(f64, []f64) f64
-pub type ArbitraryFdf = fn(f64, []f64) (f64,f64)
-pub type VectorValuedFn = fn(f64, []f64, []f64) int
+pub type ArbitraryFn = fn(x f64, params []f64) f64
+pub type DfFn = fn(x f64, params []f64) f64
+pub type FdfFn = fn(x f64, params []f64) (f64, f64)
+pub type VectorValuedFn = fn(x f64, y []f64, params []f64) int
 
 // Definition of an arbitrary function with parameters
 pub struct Function {
@@ -47,8 +48,8 @@ pub fn (f Function) safe_eval(x f64) ?f64 {
 pub struct FunctionFdf {
 pub mut:
 	f      ArbitraryFn
-	df     ArbitraryFn
-	fdf    ArbitraryFdf
+	df     DfFn
+	fdf    FdfFn
 	params []f64
 }
 
@@ -65,7 +66,7 @@ pub fn (fdf FunctionFdf) eval_df(x f64) f64 {
 }
 
 [inline]
-pub fn (fdf FunctionFdf) eval_f_df(x f64) (f64,f64) {
+pub fn (fdf FunctionFdf) eval_f_df(x f64) (f64, f64) {
 	function := fdf.fdf
 	return function(x, fdf.params)
 }
