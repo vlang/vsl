@@ -5,6 +5,8 @@ module la
 
 import vsl.math
 
+pub type VectorApplyFn = fn(f64, f64) f64
+
 // apply sets this []f64 with the scaled components of another []f64
 // this := a * another   ⇒   this[i] := a * another[i]
 // NOTE: "another" may be "this"
@@ -16,7 +18,7 @@ pub fn vector_apply(mut o []f64, a f64, another []f64) {
 
 // apply_func runs a function over all components of a []f64
 // vi = f(i,vi)
-pub fn vector_apply_func(mut o []f64, f fn(f64, f64) f64) {
+pub fn vector_apply_func(mut o []f64, f VectorApplyFn) {
 	for i := 0; i < o.len; i++ {
 		o[i] = f(i, o[i])
 	}

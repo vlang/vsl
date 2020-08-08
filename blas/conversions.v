@@ -353,7 +353,7 @@ pub fn eigenvecs_build(mut vv []complex.Complex, wr, wi, v []f64) {
 // NOTE (no checks made)
 // n = wr.len = wi.len = len(vl) = len(vr)
 // 2 * n = len(vvl) = len(vvr)
-pub fn eigenvecs_build_both(mut vvl, mut vvr []complex.Complex, wr, wi, vl, vr []f64) {
+pub fn eigenvecs_build_both(mut vvl []complex.Complex, mut vvr []complex.Complex, wr, wi, vl, vr []f64) {
 	n := wr.len
 	mut dj := 1 // increment for next conjugate pair
 	for j := 0; j < n; j += dj {
