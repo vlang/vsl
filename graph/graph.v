@@ -7,18 +7,16 @@ module graph
 import strconv
 import vsl.math
 import vsl.errno
-/* TODO: change map[string]* types to map[int]* */
 
-
+// TODO: change map[string]* types to map[int]*
 pub enum SorthestPaths {
-	fw/* FW: Floyd-Warshall method */
-
+	fw // FW: Floyd-Warshall method
 }
 
 // Graph defines a graph structure
 pub struct Graph {
 pub:
-// input
+	// input
 	edges     [][]int // [nedges][2] edges (connectivity)
 	weights_e []f64 // [nedges] weights of edges
 	verts     [][]f64 // [nverts][ndim] vertices
@@ -29,6 +27,7 @@ pub:
 	dist      [][]f64 // [nverts][nverts] distances
 	next      [][]int // [nverts][nverts] next tree connection. -1 means no connection
 }
+
 // str_ints_map_append appends a new item to a map of slice.
 // Note: this function creates a new slice in the map if key is not found.
 fn str_ints_map_append(o map[string][]int, key string, item int) map[string][]int {
@@ -49,8 +48,8 @@ fn str_ints_map_append(o map[string][]int, key string, item int) map[string][]in
 // verts    -- [nverts][ndim] vertices
 // weights_v -- [nverts] weights of vertices
 pub fn new_graph(edges [][]int, weights_e []f64, verts [][]f64, weights_v []f64) Graph {
-	mut key2edge := map[string]int
-	mut shares := map[string][]int
+	mut key2edge := map[string]int{}
+	mut shares := map[string][]int{}
 	for k, edge in edges {
 		i := edge[0]
 		j := edge[1]
@@ -130,8 +129,8 @@ pub fn (g Graph) shortest_paths(method SorthestPaths) Graph {
 	}
 	return {
 		g2 |
-		dist:dist,
-		next:next
+		dist: dist
+		next: next
 	}
 }
 
@@ -165,8 +164,7 @@ pub fn (g Graph) calc_dist() Graph {
 		for j := 0; j < nv; j++ {
 			if i == j {
 				dist[i][j] = 0
-			}
-			else {
+			} else {
 				dist[i][j] = math.max_f64
 			}
 			next[i][j] = -1
@@ -196,8 +194,8 @@ pub fn (g Graph) calc_dist() Graph {
 	}
 	return {
 		g |
-		dist:dist,
-		next:next
+		dist: dist
+		next: next
 	}
 }
 
@@ -229,8 +227,7 @@ pub fn (g Graph) str_dist_matrix() string {
 			i_dist := g.dist[i]
 			if i_dist[j] < math.max_f64 {
 				l += strconv.v_sprintf(fmtn, i_dist[j])
-			}
-			else {
+			} else {
 				l += strconv.v_sprintf(fmts) + '∞'
 			}
 		}
@@ -240,7 +237,7 @@ pub fn (g Graph) str_dist_matrix() string {
 }
 
 // get_adj returns adjacency list as a compressed storage format for METIS
-pub fn (g Graph) get_adj() ([]int,[]int) {
+pub fn (g Graph) get_adj() ([]int, []int) {
 	nv := g.nverts()
 	mut szadj := 0
 	for vid := 0; vid < nv; vid++ {
@@ -262,5 +259,5 @@ pub fn (g Graph) get_adj() ([]int,[]int) {
 		}
 		xadj[1 + vid] = xadj[vid] + edges.len
 	}
-	return xadj,adjncy
+	return xadj, adjncy
 }

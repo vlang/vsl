@@ -27,7 +27,8 @@ pub fn newton_bisection(func vsl.FunctionFdf, x_min, x_max, tol f64, max_iter in
 	func_high, _ := func.eval_f_df(x_max)
 	if func_high == 0.0 {
 		return x_max
-	} // Root is not bracketed by x1 and x2
+	}
+	// Root is not bracketed by x1 and x2
 	if (func_low > 0.0 && func_high > 0.0) || (func_low < 0.0 && func_high < 0.0) {
 		return error(errno.vsl_error_message('roots is not bracketed by $x_min and $x_max',
 			.einval))
@@ -46,8 +47,9 @@ pub fn newton_bisection(func vsl.FunctionFdf, x_min, x_max, tol f64, max_iter in
 	mut dx := dx_anc
 	mut func_current, mut diff_func_current := func.eval_f_df(rts)
 	for i := 0; i < max_iter; i++ {
-		if (((rts - xh) * diff_func_current - func_current) * ((rts - xl) * diff_func_current -
-			func_current) >= 0.0) || math.abs(2.0 * func_current) > math.abs(dx_anc * diff_func_current) {
+		if (((rts - xh) * diff_func_current - func_current) *
+			((rts - xl) * diff_func_current - func_current) >= 0.0) ||
+			math.abs(2.0 * func_current) > math.abs(dx_anc * diff_func_current) {
 			dx_anc = dx
 			dx = 0.5 * (xh - xl)
 			rts = xl + dx

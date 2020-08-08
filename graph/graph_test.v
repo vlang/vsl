@@ -2,9 +2,8 @@
 // Use of this source code is governed by an MIT license
 // that can be found in the LICENSE file.
 module graph
-/* FIXME: g.path(source, dest) not working. */
 
-
+// FIXME: g.path(source, dest) not working.
 fn test_graph01() {
 	//           [10]
 	//      0 ––––––––→ 3      numbers in parentheses
@@ -20,7 +19,7 @@ fn test_graph01() {
 	assert g.key2edge.keys().len == 4 // nedges
 	assert g.dist.len == 4 // nverts
 	assert g.next.len == 4 // nverts
-	shares := [[0, 1], [0, 2],  [2, 3],  [1, 3]]
+	shares := [[0, 1], [0, 2], [2, 3], [1, 3]]
 	for k, share in shares {
 		for i, s in g.shares[k.str()] {
 			assert s == shares[k][i]
@@ -30,13 +29,21 @@ fn test_graph01() {
 	assert g.key2edge[hash_edge_key(0, 3)] == 1 // (0,3) → edge 1
 	assert g.key2edge[hash_edge_key(1, 2)] == 2 // (1,2) → edge 2
 	assert g.key2edge[hash_edge_key(2, 3)] == 3 // (2,3) → edge 3
-	edg0 := g.get_edge(0, 1) or { panic(err) }
+	edg0 := g.get_edge(0, 1) or {
+		panic(err)
+	}
 	assert edg0 == 0
-	edg1 := g.get_edge(0, 3) or { panic(err) }
+	edg1 := g.get_edge(0, 3) or {
+		panic(err)
+	}
 	assert edg1 == 1
-	edg2 := g.get_edge(1, 2) or { panic(err) }
+	edg2 := g.get_edge(1, 2) or {
+		panic(err)
+	}
 	assert edg2 == 2
-	edg3 := g.get_edge(2, 3) or { panic(err) }
+	edg3 := g.get_edge(2, 3) or {
+		panic(err)
+	}
 	assert edg3 == 3
 	g2 := g.shortest_paths(.fw)
 	mut pth := g2.path(0, 3)
@@ -47,7 +54,7 @@ fn test_graph01() {
 	weights_e[3] = 13
 	g3 := {
 		g2 |
-		weights_e:weights_e
+		weights_e: weights_e
 	}
 	g4 := g3.shortest_paths(.fw)
 	pth = g4.path(0, 3)
@@ -73,7 +80,7 @@ fn test_graph02() {
 	assert g.key2edge.keys().len == 7 // nedges
 	assert g.dist.len == 6 // nverts
 	assert g.next.len == 6 // nverts
-	shares := [[2, 3], [1, 2],  [3, 4, 5],  [5, 6],  [0, 1], [0, 4, 6]]
+	shares := [[2, 3], [1, 2], [3, 4, 5], [5, 6], [0, 1], [0, 4, 6]]
 	for k, share in shares {
 		for i, s in g.shares[k.str()] {
 			assert s == shares[k][i]

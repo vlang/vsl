@@ -27,8 +27,8 @@ fn test_root_bisection() {
 		function: f_cos
 	}
 	result := bisection(func, x1, x2, epsrel, epsabs, n_max) or {
-                panic(err)
-        }
+		panic(err)
+	}
 	assert compare(result, math.pi / 2.00)
 }
 
@@ -38,8 +38,8 @@ fn test_root_newton() {
 		fdf: fdf_cos
 	}
 	result := newton(func, x0, epsrel, epsabs, n_max) or {
-                panic(err)
-        }
+		panic(err)
+	}
 	assert compare(result, math.pi / 2.00)
 }
 

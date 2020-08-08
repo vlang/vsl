@@ -57,19 +57,22 @@ pub fn trunc(x f64) f64 {
 pub fn round(x f64) f64 {
 	if x == 0 || is_nan(x) || is_inf(x, 0) {
 		return x
-	} // Largest integer <= x
+	}
+	// Largest integer <= x
 	mut y := floor(x) // Fractional part
 	mut r := x - y // Round up to nearest.
 	if r > 0.5 {
 		goto rndup
-	} // Round to even
+	}
+	// Round to even
 	if r == 0.5 {
 		r = y - 2.0 * floor(0.5 * y)
 		if r == 1.0 {
 			rndup:
 			y += 1.0
 		}
-	} // Else round down.
+	}
+	// Else round down.
 	return y
 }
 

@@ -25,7 +25,7 @@ pub fn vector_apply_func(mut o []f64, f fn(f64, f64) f64) {
 // unit returns the unit []f64 parallel to this []f64
 // b := a / norm(a)
 pub fn vector_unit(mut o []f64) []f64 {
-	mut unit := []f64{ len: o.len }
+	mut unit := []f64{len: o.len}
 	s := vector_norm(o)
 	if s > 0 {
 		vector_apply(mut unit, 1.0 / s, o)

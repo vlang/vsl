@@ -94,8 +94,8 @@ pub fn daxpy(n int, alpha f64, x []f64, incx int, mut y []f64, incy int) {
 //
 // trans=true      y := alpha*A**T*x + beta*y.
 pub fn dgemv(trans bool, m, n int, alpha f64, a []f64, lda int, x []f64, incx int, beta f64, mut y []f64, incy int) {
-	C.cblas_dgemv(cblas_col_major, c_trans(trans), m, n, alpha, &a[0], lda, &x[0], incx, beta,
-		&y[0], incy)
+	C.cblas_dgemv(cblas_col_major, c_trans(trans), m, n, alpha, &a[0], lda, &x[0], incx,
+		beta, &y[0], incy)
 }
 
 // zgemv performs one of the matrix-vector operations.
@@ -375,8 +375,8 @@ pub fn dgetri(n int, mut a []f64, lda int, ipiv []int) {
 // and  A  is an  n by k  matrix in the first case and a  k by n  matrix
 // in the second case.
 pub fn dsyrk(up, trans bool, n, k int, alpha f64, a []f64, lda int, beta f64, mut c []f64, ldc int) {
-	C.cblas_dsyrk(cblas_col_major, c_uplo(up), c_trans(trans), n, k, alpha, &a[0], lda, beta,
-		&c[0], ldc)
+	C.cblas_dsyrk(cblas_col_major, c_uplo(up), c_trans(trans), n, k, alpha, &a[0], lda,
+		beta, &c[0], ldc)
 }
 
 // zsyrk performs one of the symmetric rank k operations
@@ -501,8 +501,8 @@ pub fn dgeev(calcVl, calcVr bool, n int, mut a []f64, lda int, wr, wi, vl []f64,
 	} else {
 		ldvr = 1
 	}
-	info := C.LAPACKE_dgeev(lapack_col_major, job_vlr(calcVl), job_vlr(calcVr), n, &a[0], lda,
-		&wr[0], &wi[0], vvl, ldvl, vvr, ldvr)
+	info := C.LAPACKE_dgeev(lapack_col_major, job_vlr(calcVl), job_vlr(calcVr), n, &a[0],
+		lda, &wr[0], &wi[0], vvl, ldvl, vvr, ldvr)
 	if info != 0 {
 		errno.vsl_panic('lapack failed', .efailed)
 	}

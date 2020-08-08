@@ -23,7 +23,7 @@ fn test_linear_fit02() {
 		6.0,
 		5,
 		7,
-		10
+		10,
 	]
 	a, b := fit.linear(x, y)
 	assert compare(a, 3.5)

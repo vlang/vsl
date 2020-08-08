@@ -67,7 +67,6 @@ pub fn (q Quaternion) sqrt() Quaternion {
 		return quaternion(0.0, 1.0, 0.0, 0.0)
 	} else {
 		c := math.sqrt(qabs / (2.0 + 2.0 * q.w / qabs))
-		return quaternion((1.0 + q.w / qabs) * c, q.x * c / qabs, q.y * c / qabs, q.z * c /
-			qabs)
+		return quaternion((1.0 + q.w / qabs) * c, q.x * c / qabs, q.y * c / qabs, q.z * c / qabs)
 	}
 }

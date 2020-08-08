@@ -7,14 +7,14 @@ const (
 	tan_p      = [
 		-1.30936939181383777646e+4,
 		1.15351664838587416140e+6,
-		-1.79565251976484877988e+7
+		-1.79565251976484877988e+7,
 	]
 	tan_q      = [
 		1.00000000000000000000e+0,
 		1.36812963470692954678e+4,
 		-1.32089234440210967447e+6,
 		2.50083801823357915839e+7,
-		-5.38695755929454629881e+7
+		-5.38695755929454629881e+7,
 	]
 	tan_dp1    = 7.853981554508209228515625e-1
 	tan_dp2    = 7.94662735614792836714e-9
@@ -37,7 +37,8 @@ pub fn tan(x_ f64) f64 {
 	}
 	if x > tan_lossth {
 		return 0.0
-	} // compute x mod pi_4
+	}
+	// compute x mod pi_4
 	mut y := floor(x * 4.0 / pi) // strip high bits of integer part
 	mut z := ldexp(y, -3)
 	z = floor(z) // integer part of y/8
@@ -50,8 +51,9 @@ pub fn tan(x_ f64) f64 {
 	z = ((x - y * tan_dp1) - y * tan_dp2) - y * tan_dp3
 	zz := z * z
 	if zz > 1.0e-14 {
-		y = z + z * (zz * (((tan_p[0] * zz) + tan_p[1]) * zz + tan_p[2]) / ((((zz + tan_q[1]) *
-			zz + tan_q[2]) * zz + tan_q[3]) * zz + tan_q[4]))
+		y = z + z * (zz *
+			(((tan_p[0] * zz) + tan_p[1]) * zz + tan_p[2]) /
+			((((zz + tan_q[1]) * zz + tan_q[2]) * zz + tan_q[3]) * zz + tan_q[4]))
 	} else {
 		y = z
 	}
@@ -76,7 +78,8 @@ pub fn cot(x_ f64) f64 {
 	}
 	if x > tan_lossth {
 		return 0.0
-	} // compute x mod pi_4
+	}
+	// compute x mod pi_4
 	mut y := floor(x * 4.0 / pi) // strip high bits of integer part
 	mut z := ldexp(y, -3)
 	z = floor(z) // integer part of y/8
@@ -89,8 +92,9 @@ pub fn cot(x_ f64) f64 {
 	z = ((x - y * tan_dp1) - y * tan_dp2) - y * tan_dp3
 	zz := z * z
 	if zz > 1.0e-14 {
-		y = z + z * (zz * (((tan_p[0] * zz) + tan_p[1]) * zz + tan_p[2]) / ((((zz + tan_q[1]) *
-			zz + tan_q[2]) * zz + tan_q[3]) * zz + tan_q[4]))
+		y = z + z * (zz *
+			(((tan_p[0] * zz) + tan_p[1]) * zz + tan_p[2]) /
+			((((zz + tan_q[1]) * zz + tan_q[2]) * zz + tan_q[3]) * zz + tan_q[4]))
 	} else {
 		y = z
 	}

@@ -32,7 +32,8 @@ pub fn brent(func vsl.Function, x1, x2, tol f64) ?(f64, f64) {
 	mut fc := fa
 	if (fa > 0.0 && fb > 0.0) || (fa < 0.0 && fb < 0.0) {
 		return error(errno.vsl_error_message('roots must be bracketed', .einval))
-	} // Test if one the endpoints is the root
+	}
+	// Test if one the endpoints is the root
 	if fa == 0.0 {
 		return a, 0.0
 	}
@@ -84,20 +85,17 @@ pub fn brent(func vsl.Function, x1, x2, tol f64) ?(f64, f64) {
 			// if b+p/q falls in [b,c] and isn't too large, it is accepted. If
 			// p/q is too large the the bisection procedure can reduce [b,c] more
 			// significantly
-			if 2.0 * p < 3.0 * new_step * q - math.abs(tol1 * q) && 2.0 * p < math.abs(prev_step *
-				q) {
+			if 2.0 * p < 3.0 * new_step * q - math.abs(tol1 * q) &&
+				2.0 * p < math.abs(prev_step * q) {
 				new_step = p / q
 			} else {
 				new_step = 0.5 * (c - b)
 				prev_step = new_step
 			}
-		} // adjust the step to be not less than tolerance
+		}
+		// adjust the step to be not less than tolerance
 		if math.abs(new_step) < tol1 {
-			new_step = if new_step > 0 {
-				tol1
-			} else {
-				-tol1
-			}
+			new_step = if new_step > 0 { tol1 } else { -tol1 }
 		}
 		a = b
 		fa = fb

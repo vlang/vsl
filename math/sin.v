@@ -18,7 +18,7 @@ const (
 		-1.0554678305790849834462e-13,
 		5.3701981409132410797062e-16,
 		2.5984137983099020336115e-17,
-		-1.1821555255364833468288e-19
+		-1.1821555255364833468288e-19,
 	]
 	sin_cs   = ChebSeries{
 		c: sin_data
@@ -37,7 +37,7 @@ const (
 		2.90748249201909353949854872638e-13,
 		1.77126739876261435667156490461e-14,
 		-7.6896421502815579078577263149e-17,
-		-3.7363121133079412079201377318e-18
+		-3.7363121133079412079201377318e-18,
 	]
 	cos_cs   = ChebSeries{
 		c: cos_data
@@ -143,11 +143,7 @@ pub fn sincos(x f64) (f64, f64) {
 			sgn_result_sin = -sgn_result_sin
 			sgn_result_cos = -sgn_result_cos
 		}
-		sgn_result_cos = if octant > 1 {
-			-sgn_result_cos
-		} else {
-			sgn_result_cos
-		}
+		sgn_result_cos = if octant > 1 { -sgn_result_cos } else { sgn_result_cos }
 		z := ((abs_x - y * p1) - y * p2) - y * p3
 		t := 8.0 * abs(z) / pi - 1.0
 		sin_cs_val, _ := sin_cs.eval_e(t)

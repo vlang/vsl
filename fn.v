@@ -5,12 +5,15 @@ module vsl
 
 import vsl.math
 import vsl.errno
-/* TODO: change params type from []f64 to []T */
 
-pub type ArbitraryFn = fn(x f64, params []f64) f64
-pub type DfFn = fn(x f64, params []f64) f64
-pub type FdfFn = fn(x f64, params []f64) (f64, f64)
-pub type VectorValuedFn = fn(x f64, y []f64, params []f64) int
+// TODO: change params type from []f64 to []T
+pub type ArbitraryFn = fn (x f64, params []f64) f64
+
+pub type DfFn = fn (x f64, params []f64) f64
+
+pub type FdfFn = fn (x f64, params []f64) (f64, f64)
+
+pub type VectorValuedFn = fn (x f64, y, params []f64) int
 
 // Definition of an arbitrary function with parameters
 pub struct Function {
@@ -29,11 +32,8 @@ fn is_finite(a f64) bool {
 	return !math.is_nan(a) && !math.is_inf(a, 0)
 }
 
-/* Call the pointed-to function with argument x, put its result in y, and
- * return an error if the function value is inf/nan.
- */
-
-
+// Call the pointed-to function with argument x, put its result in y, and
+// return an error if the function value is inf/nan.
 [inline]
 pub fn (f Function) safe_eval(x f64) ?f64 {
 	function := f.function

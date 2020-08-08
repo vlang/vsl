@@ -15,7 +15,7 @@ import vsl.math
 // Output:
 // ai  -- the inverse matrix
 // det -- determinant of a
-pub fn matrix_inv_small(mut ai Matrix, mut a Matrix, tol f64) f64 {
+pub fn matrix_inv_small(mut ai, mut a Matrix, tol f64) f64 {
 	mut det := 0.0
 	if a.m == 1 && a.n == 1 {
 		det = a.get(0, 0)
@@ -35,9 +35,10 @@ pub fn matrix_inv_small(mut ai Matrix, mut a Matrix, tol f64) f64 {
 		ai.set(1, 0, -a.get(1, 0) / det)
 		ai.set(1, 1, a.get(0, 0) / det)
 	} else if a.m == 3 && a.n == 3 {
-		det = a.get(0, 0) * (a.get(1, 1) * a.get(2, 2) - a.get(1, 2) * a.get(2, 1)) - a.get(0,
-			1) * (a.get(1, 0) * a.get(2, 2) - a.get(1, 2) * a.get(2, 0)) + a.get(0, 2) * (a.get(1, 0) *
-			a.get(2, 1) - a.get(1, 1) * a.get(2, 0))
+		det = a.get(0, 0) * (a.get(1, 1) * a.get(2, 2) -
+			a.get(1, 2) * a.get(2, 1)) - a.get(0, 1) *
+			(a.get(1, 0) * a.get(2, 2) - a.get(1, 2) * a.get(2, 0)) + a.get(0, 2) *
+			(a.get(1, 0) * a.get(2, 1) - a.get(1, 1) * a.get(2, 0))
 		if math.abs(det) < tol {
 			errno.vsl_panic('inverse of ($a.m x $a.n) matrix failed with zero determinant: |det(a)| = $det < $tol',
 				.efailed)
@@ -72,8 +73,8 @@ pub fn matrix_svd(s []f64, u, vt, a Matrix, copy_a bool) {
 	if copy_a {
 		acpy = a.clone()
 	}
-	blas.dgesvd(byte(`A`), byte(`A`), a.m, a.n, acpy.data, a.m, s, u.data, a.m, vt.data, a.n,
-		superb)
+	blas.dgesvd(byte(`A`), byte(`A`), a.m, a.n, acpy.data, a.m, s, u.data, a.m, vt.data,
+		a.n, superb)
 }
 
 // matrix_inv computes the inverse of a general matrix (square or not). It also computes the
@@ -84,7 +85,7 @@ pub fn matrix_svd(s []f64, u, vt, a Matrix, copy_a bool) {
 // ai -- inverse matrix (N x M)
 // det -- determinant of matrix (ONLY if calc_det == true and the matrix is square)
 // NOTE: the dimension of the ai matrix must be N x M for the pseudo-inverse
-pub fn matrix_inv(mut ai Matrix, mut a Matrix, calc_det bool) f64 {
+pub fn matrix_inv(mut ai, mut a Matrix, calc_det bool) f64 {
 	mut det := 0.0
 	// square inverse
 	if a.m == a.n {

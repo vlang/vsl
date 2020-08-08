@@ -194,11 +194,10 @@ pub fn elastic_ease_out(p f64) f64 {
 [inline]
 pub fn elastic_ease_in_out(p f64) f64 {
 	if p < 0.5 {
-		return 0.5 * math.sin(13.0 * math.tau * (2.0 * p)) * math.pow(2, 10.0 * ((2.0 * p) -
-			1.0))
+		return 0.5 * math.sin(13.0 * math.tau * (2.0 * p)) * math.pow(2, 10.0 * ((2.0 * p) - 1.0))
 	} else {
-		return 0.5 * (math.sin(-13.0 * math.tau * ((2.0 * p - 1.0) + 1.0)) * math.pow(2, -10.0 *
-			(2.0 * p - 1.0)) + 2.0)
+		return 0.5 *
+			(math.sin(-13.0 * math.tau * ((2.0 * p - 1.0) + 1.0)) * math.pow(2, -10.0 * (2.0 * p - 1.0)) + 2.0)
 	}
 }
 

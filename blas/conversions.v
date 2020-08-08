@@ -103,10 +103,10 @@ pub fn print_col_major_py(m, n int, data []f64, nfmt_ string) string {
 // complex numbers.
 //
 // Example:
-// _            _
-// |  0+0i  3+3i  |
-// a = |  1+1i  4+4i  |          ⇒   data = [0+0i, 1+1i, 2+2i, 3+3i, 4+4i, 5+5i]
-// |_ 2+2i  5+5i _|(m x n)
+//       _            _
+//      |  0+0i  3+3i  |
+// a =  |  1+1i  4+4i  |          ⇒   data = [0+0i, 1+1i, 2+2i, 3+3i, 4+4i, 5+5i]
+//      |_ 2+2i  5+5i _|(m x n)
 //
 // data[i+j*m] = a[i][j]
 //
@@ -353,7 +353,7 @@ pub fn eigenvecs_build(mut vv []complex.Complex, wr, wi, v []f64) {
 // NOTE (no checks made)
 // n = wr.len = wi.len = len(vl) = len(vr)
 // 2 * n = len(vvl) = len(vvr)
-pub fn eigenvecs_build_both(mut vvl []complex.Complex, mut vvr []complex.Complex, wr, wi, vl, vr []f64) {
+pub fn eigenvecs_build_both(mut vvl, mut vvr []complex.Complex, wr, wi, vl, vr []f64) {
 	n := wr.len
 	mut dj := 1 // increment for next conjugate pair
 	for j := 0; j < n; j += dj {
