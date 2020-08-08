@@ -13,7 +13,7 @@ pub type DfFn = fn (x f64, params []f64) f64
 
 pub type FdfFn = fn (x f64, params []f64) (f64, f64)
 
-pub type VectorValuedFn = fn (x f64, y, params []f64) int
+pub type VectorValuedFn = fn (x f64, y, params []f64) f64
 
 // Definition of an arbitrary function with parameters
 pub struct Function {
@@ -79,7 +79,7 @@ pub mut:
 }
 
 [inline]
-pub fn (f FunctionVec) eval(x f64, y []f64) int {
+pub fn (f FunctionVec) eval(x f64, y []f64) f64 {
 	function := f.function
 	return function(x, y, f.params)
 }
