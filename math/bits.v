@@ -14,6 +14,7 @@ const (
 	sign_mask = (u64(1)<<63)
 	frac_mask = ((u64(1)<<u64(shift)) - u64(1))
 )
+
 // inf returns positive infinity if sign >= 0, negative infinity if sign < 0.
 pub fn inf(sign int) f64 {
 	v := if sign >= 0 { uvinf } else { uvneginf }
