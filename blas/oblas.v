@@ -66,9 +66,7 @@ pub fn dscal(n int, alpha f64, x []f64, incx int) {
 // y += alpha*x + y
 //
 pub fn daxpy(n int, alpha f64, x []f64, incx int, mut y []f64, incy int) {
-	unsafe {
-                C.cblas_daxpy(n, alpha, &x[0], incx, &y[0], incy)
-        }
+	unsafe {C.cblas_daxpy(n, alpha, &x[0], incx, &y[0], incy)}
 }
 
 // zaxpy computes constant times a vector plus a vector.
@@ -96,9 +94,8 @@ pub fn daxpy(n int, alpha f64, x []f64, incx int, mut y []f64, incy int) {
 //
 // trans=true      y := alpha*A**T*x + beta*y.
 pub fn dgemv(trans bool, m, n int, alpha f64, a []f64, lda int, x []f64, incx int, beta f64, mut y []f64, incy int) {
-        unsafe {
-	        C.cblas_dgemv(cblas_col_major, c_trans(trans), m, n, alpha, &a[0], lda, &x[0], incx, beta, &y[0], incy)
-        }
+	unsafe {C.cblas_dgemv(cblas_col_major, c_trans(trans), m, n, alpha, &a[0], lda, &x[0],
+		incx, beta, &y[0], incy)}
 }
 
 // zgemv performs one of the matrix-vector operations.
@@ -127,9 +124,8 @@ pub fn dgemv(trans bool, m, n int, alpha f64, a []f64, lda int, x []f64, incx in
 // where alpha is a scalar, x is an m element vector, y is an n element
 // vector and A is an m by n matrix.
 pub fn dger(m, n int, alpha f64, x []f64, incx int, mut y []f64, incy int, a []f64, lda int) {
-	unsafe {
-                C.cblas_dger(cblas_col_major, m, n, alpha, &x[0], incx, &y[0], incy, &a[0], lda)
-        }
+	unsafe {C.cblas_dger(cblas_col_major, m, n, alpha, &x[0], incx, &y[0], incy, &a[0],
+		lda)}
 }
 
 // dgemm performs one of the matrix-matrix operations
@@ -152,9 +148,8 @@ pub fn dger(m, n int, alpha f64, x []f64, incx int, mut y []f64, incy int, a []f
 // alpha and beta are scalars, and A, B and C are matrices, with op( A )
 // an m by k matrix,  op( B )  a  k by n matrix and  C an m by n matrix.
 pub fn dgemm(transA, transB bool, m, n, k int, alpha f64, a []f64, lda int, b []f64, ldb int, beta f64, c []f64, ldc int) {
-        unsafe {
-                C.cblas_dgemm(cblas_col_major, c_trans(transA), c_trans(transB), m, n, k, alpha, &a[0], lda, &b[0], ldb, beta, &c[0], ldc)
-        }
+	unsafe {C.cblas_dgemm(cblas_col_major, c_trans(transA), c_trans(transB), m, n, k,
+		alpha, &a[0], lda, &b[0], ldb, beta, &c[0], ldc)}
 }
 
 // zgemm performs one of the matrix-matrix operations
@@ -309,11 +304,11 @@ pub fn dgesvd(jobu, jobvt byte, m, n int, a []f64, lda int, s, u []f64, ldu int,
 // (2) ipiv indices are 1-based (i.e. Fortran)
 pub fn dgetrf(m, n int, mut a []f64, lda int, ipiv []int) {
 	unsafe {
-                info := C.LAPACKE_dgetrf(lapack_col_major, m, n, &a[0], lda, &ipiv[0])
-                if info != 0 {
-                        errno.vsl_panic('lapack failed', .efailed)
-                }
-        }
+		info := C.LAPACKE_dgetrf(lapack_col_major, m, n, &a[0], lda, &ipiv[0])
+		if info != 0 {
+			errno.vsl_panic('lapack failed', .efailed)
+		}
+	}
 }
 
 // zgetrf computes an LU factorization of a general M-by-N matrix A using partial pivoting with row interchanges.
@@ -348,11 +343,11 @@ pub fn dgetrf(m, n int, mut a []f64, lda int, ipiv []int) {
 // inv(A)*L = inv(U) for inv(A).
 pub fn dgetri(n int, mut a []f64, lda int, ipiv []int) {
 	unsafe {
-                info := C.LAPACKE_dgetri(lapack_col_major, n, &a[0], lda, &ipiv[0])
-                if info != 0 {
-                        errno.vsl_panic('lapack failed', .efailed)
-                }
-        }
+		info := C.LAPACKE_dgetri(lapack_col_major, n, &a[0], lda, &ipiv[0])
+		if info != 0 {
+			errno.vsl_panic('lapack failed', .efailed)
+		}
+	}
 }
 
 // zgetri computes the inverse of a matrix using the LU factorization computed by zgetrf.
@@ -385,10 +380,8 @@ pub fn dgetri(n int, mut a []f64, lda int, ipiv []int) {
 // and  A  is an  n by k  matrix in the first case and a  k by n  matrix
 // in the second case.
 pub fn dsyrk(up, trans bool, n, k int, alpha f64, a []f64, lda int, beta f64, mut c []f64, ldc int) {
-	unsafe {
-                C.cblas_dsyrk(cblas_col_major, c_uplo(up), c_trans(trans), n, k, alpha, &a[0], lda,
-		beta, &c[0], ldc)
-        }
+	unsafe {C.cblas_dsyrk(cblas_col_major, c_uplo(up), c_trans(trans), n, k, alpha, &a[0],
+		lda, beta, &c[0], ldc)}
 }
 
 // zsyrk performs one of the symmetric rank k operations
@@ -446,11 +439,11 @@ pub fn dsyrk(up, trans bool, n, k int, alpha f64, a []f64, lda int, beta f64, mu
 // This is the block version of the algorithm, calling Level 3 BLAS.
 pub fn dpotrf(up bool, n int, mut a []f64, lda int) {
 	unsafe {
-                info := C.LAPACKE_dpotrf(lapack_col_major, l_uplo(up), n, &a[0], lda)
-                if info != 0 {
-                        errno.vsl_panic('lapack failed', .efailed)
-                }
-        }
+		info := C.LAPACKE_dpotrf(lapack_col_major, l_uplo(up), n, &a[0], lda)
+		if info != 0 {
+			errno.vsl_panic('lapack failed', .efailed)
+		}
+	}
 }
 
 // zpotrf computes the Cholesky factorization of a complex Hermitian positive definite matrix A.
@@ -516,12 +509,12 @@ pub fn dgeev(calcVl, calcVr bool, n int, mut a []f64, lda int, wr, wi, vl []f64,
 		ldvr = 1
 	}
 	unsafe {
-                info := C.LAPACKE_dgeev(lapack_col_major, job_vlr(calcVl), job_vlr(calcVr), n, &a[0],
-		        lda, &wr[0], &wi[0], vvl, ldvl, vvr, ldvr)
-                if info != 0 {
-                        errno.vsl_panic('lapack failed', .efailed)
-                }
-        }
+		info := C.LAPACKE_dgeev(lapack_col_major, job_vlr(calcVl), job_vlr(calcVr), n,
+			&a[0], lda, &wr[0], &wi[0], vvl, ldvl, vvr, ldvr)
+		if info != 0 {
+			errno.vsl_panic('lapack failed', .efailed)
+		}
+	}
 }
 
 // auxiliary //////////////////////////////////////////////////////////////////////////////////////
