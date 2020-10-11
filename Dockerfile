@@ -1,53 +1,77 @@
-ARG OPENBLAS_VERSION=0.3.1
+ARG UBUNTU_VERSION=20.04
 
-FROM slothai/openblas:${OPENBLAS_VERSION} as openblas
-FROM thevlang/vlang
-
-# OPENBLAS_VERSION is specified again because the FROM directive resets ARGs
+FROM ubuntu:${UBUNTU_VERSION}
+# UBUNTU_VERSION is specified again because the FROM directive resets ARGs
 # (but their default value is retained if set previously)
 
-ARG OPENBLAS_VERSION
+ARG UBUNTU_VERSION
 
-COPY --from=openblas /opt/OpenBLAS/ /opt/OpenBLAS/
-ARG USER=test
+# options
+ARG DEV_IMG="false"
 
-# Needed for string substitution
+# disable tzdata questions
+ENV DEBIAN_FRONTEND=noninteractive
+
+# use bash
 SHELL ["/bin/bash", "-c"]
 
-RUN apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-        build-essential \
-        gcc \
-        clang \
-        make \
-        git \
-        net-tools \
-        sudo \
-        neovim \
-        apt-utils \
-        locales \
-        git \
-    && apt-get clean \
-    && rm -rf /var/cache/apt/archives/* \
-    && rm -rf /var/lib/apt/lists/*
+# install apt-utils
+RUN apt-get update -y \
+  && apt-get install -y apt-utils 2> >( grep -v 'debconf: delaying package configuration, since apt-utils is not installed' >&2 ) \
+  && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# essential tools
+RUN apt-get update -y && apt-get install -y --no-install-recommends \
+    ca-certificates \
+    netbase \
+    curl \
+    git \
+    make \
+  && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# required compilers and libraries for gosl
+RUN apt-get update -y && apt-get install -y --no-install-recommends \
+    gcc \
+    gfortran \
+    libopenmpi-dev \
+    libhwloc-dev \
+    liblapacke-dev \
+    libopenblas-dev \
+    libmetis-dev \
+    libsuitesparse-dev \
+    libmumps-dev \
+    libfftw3-dev \
+    libfftw3-mpi-dev \
+  && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 ENV EDITOR nvim
 
-RUN useradd -m ${USER} \
-    && passwd -d ${USER} \
-    && sed -i -e "s/Defaults    requiretty.*/ #Defaults    requiretty/g" /etc/sudoers \
-    && echo "${USER} ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/${USER} \
-    && usermod -a -G sudo ${USER} \
-    && rm -rf /home/${USER}/.bashrc
+ARG VLANG_VERSION=master
+ENV VLANG_FOLDER=v-${VLANG_VERSION}
+RUN git clone https://github.com/vlang/v /opt/vlang/v \
+    && cd /opt/vlang/v \
+    && make \
+    && ./v symlink \
+    && chmod a+rwx /opt/vlang/v/cmd/tools \
+    && rm -rf /tmp/v
 
-# Set correct locale
-RUN echo "LC_ALL=en_US.UTF-8" >> /etc/environment \
-    && echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen \
-    && echo "LANG=en_US.UTF-8" > /etc/locale.conf
+##################################################################################################
+#                                                                                                #
+#   The code below is copied from:                                                               #
+#      https://github.com/microsoft/vscode-remote-try-go/blob/master/.devcontainer/Dockerfile    #
+#   And modifies to use v lang instead                                                           #
+#                                                                                                #
+##################################################################################################
 
-RUN locale-gen en_US.UTF-8
-ENV LC_CTYPE 'en_US.UTF-8'
-ENV LANG C.UTF-8
+# Options for setup script
+ARG INSTALL_ZSH="true"
+ARG UPGRADE_PACKAGES="false"
+ARG USERNAME=vscode
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
 
-COPY bashrc /etc/bash.bashrc
-RUN chmod a+rwx /etc/bash.bashrc
+# Install needed packages and setup non-root user. Use a separate RUN statement to add your own dependencies.
+COPY scripts/common-debian.sh /tmp/library-scripts/
+RUN apt-get update \
+  && /bin/bash /tmp/library-scripts/common-debian.sh "${INSTALL_ZSH}" "${USERNAME}" "${USER_UID}" "${USER_GID}" "${UPGRADE_PACKAGES}" \
+  && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/library-scripts

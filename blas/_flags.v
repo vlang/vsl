@@ -4,7 +4,7 @@
 module blas
 
 #flag linux -O2 -I/usr/local/include -I@VROOT/blas
-#flag linux -lopenblas -llapacke -L/usr/lib
+#flag linux -lopenblas -llapacke -L/usr/local/lib
 #flag windows -O2
 #flag windows -lopenblas -lgfortran
 #flag darwin -I/usr/local/opt/openblas/include
