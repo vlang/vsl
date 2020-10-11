@@ -74,7 +74,8 @@ fn forward_deriv(f vsl.Function, x, h f64) (f64, f64, f64) {
 	f4 := f.eval(x + h)
 	r2 := 2.0 * (f4 - f2)
 	r4 := (22.0 / 3.00) * (f4 - f3) - (62.0 / 3.00) * (f3 - f2) + (52.0 / 3.00) * (f2 - f1) // Estimate the rounding error for r4
-	e4 := 2.0 * 20.670 * (math.abs(f4) + math.abs(f3) + math.abs(f2) + math.abs(f1)) * internal.f64_epsilon // The next term is due to finite precision in x+h = O(eps * x)
+	e4 := 2.0 * 20.670 *
+		(math.abs(f4) + math.abs(f3) + math.abs(f2) + math.abs(f1)) * internal.f64_epsilon // The next term is due to finite precision in x+h = O(eps * x)
 	dy := math.max(math.abs(r2 / h), math.abs(r4 / h)) * math.abs(x / h) * internal.f64_epsilon
 	/*
 	The truncation error in the r4 approximation itself is O(h^3).

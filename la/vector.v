@@ -5,7 +5,7 @@ module la
 
 import vsl.math
 
-pub type VectorApplyFn = fn(f64, f64) f64
+pub type VectorApplyFn = fn(int, f64) f64
 
 // apply sets this []f64 with the scaled components of another []f64
 // this := a * another   ⇒   this[i] := a * another[i]

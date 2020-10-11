@@ -6,53 +6,54 @@ module specfunc
 import vsl.math
 
 const (
-	huge = 1e+300
-	two_m27 = 1.0 / (1<<27) // 2**-27 0x3e40000000000000
-	two_m13 = 1.0 / (1<<13) // 2**-13 0x3f20000000000000
-	two_m29 = 1.0 / (1<<29) // 2**-29 0x3e10000000000000
-	two_m54 = 1.0 / (1<<54) // 2**-54 0x3c90000000000000
-	two129 = 1<<129 // 2**129 0x4800000000000000
-	two302 = 1<<302 // 2**302 0x52D0000000000000
+	huge    = 1e+300
+	two_m27 = 1.0 / (1 << 27) // 2**-27 0x3e40000000000000
+	two_m13 = 1.0 / (1 << 13) // 2**-13 0x3f20000000000000
+	two_m29 = 1.0 / (1 << 29) // 2**-29 0x3e10000000000000
+	two_m54 = 1.0 / (1 << 54) // 2**-54 0x3c90000000000000
+	two129  = 1 << 129 // 2**129 0x4800000000000000
+	two302  = 1 << 302 // 2**302 0x52D0000000000000
 	// j0r0/j0s0 on [0, 2]
-	j0r02 = 1.56249999999999947958e-02 // 0x3F8FFFFFFFFFFFFD
-	j0r03 = -1.89979294238854721751e-04 // 0xBF28E6A5B61AC6E9
-	j0r04 = 1.82954049532700665670e-06 // 0x3EBEB1D10C503919
-	j0r05 = -4.61832688532103189199e-09 // 0xBE33D5E773D63FCE
-	j0s01 = 1.56191029464890010492e-02 // 0x3F8FFCE882C8C2A4
-	j0s02 = 1.16926784663337450260e-04 // 0x3F1EA6D2DD57DBF4
-	j0s03 = 5.13546550207318111446e-07 // 0x3EA13B54CE84D5A9
-	j0s04 = 1.16614003333790000205e-09 // 0x3E1408BCF4745D8F
-	j1r00 = -6.25000000000000000000e-02 // 0xBFB0000000000000
-	j1r01 = 1.40705666955189706048e-03 // 0x3F570D9F98472C61
-	j1r02 = -1.59955631084035597520e-05 // 0xBEF0C5C6BA169668
-	j1r03 = 4.96727999609584448412e-08 // 0x3E6AAAFA46CA0BD9
-	j1s01 = 1.91537599538363460805e-02 // 0x3F939D0B12637E53
-	j1s02 = 1.85946785588630915560e-04 // 0x3F285F56B9CDF664
-	j1s03 = 1.17718464042623683263e-06 // 0x3EB3BFF8333F8498
-	j1s04 = 5.04636257076217042715e-09 // 0x3E35AC88C97DFF2C
-	j1s05 = 1.23542274426137913908e-11 // 0x3DAB2ACFCFB97ED8
-	y0u00 = -7.38042951086872317523e-02 // 0xBFB2E4D699CBD01F
-	y0u01 = 1.76666452509181115538e-01 // 0x3FC69D019DE9E3FC
-	y0u02 = -1.38185671945596898896e-02 // 0xBF8C4CE8B16CFA97
-	y0u03 = 3.47453432093683650238e-04 // 0x3F36C54D20B29B6B
-	y0u04 = -3.81407053724364161125e-06 // 0xBECFFEA773D25CAD
-	y0u05 = 1.95590137035022920206e-08 // 0x3E5500573B4EABD4
-	y0u06 = -3.98205194132103398453e-11 // 0xBDC5E43D693FB3C8
-	y0v01 = 1.27304834834123699328e-02 // 0x3F8A127091C9C71A
-	y0v02 = 7.60068627350353253702e-05 // 0x3F13ECBBF578C6C1
-	y0v03 = 2.59150851840457805467e-07 // 0x3E91642D7FF202FD
-	y0v04 = 4.41110311332675467403e-10 // 0x3DFE50183BD6D9EF
-	y1u00 = -1.96057090646238940668e-01 // 0xBFC91866143CBC8A
-	y1u01 = 5.04438716639811282616e-02 // 0x3FA9D3C776292CD1
-	y1u02 = -1.91256895875763547298e-03 // 0xBF5F55E54844F50F
-	y1u03 = 2.35252600561610495928e-05 // 0x3EF8AB038FA6B88E
-	y1u04 = -9.19099158039878874504e-08 // 0xBE78AC00569105B8
-	y1v00 = 1.99167318236649903973e-02 // 0x3F94650D3F4DA9F0
-	y1v01 = 2.02552581025135171496e-04 // 0x3F2A8C896C257764
-	y1v02 = 1.35608801097516229404e-06 // 0x3EB6C05A894E8CA6
-	y1v03 = 6.22741452364621501295e-09 // 0x3E3ABF1D5BA69A86
-	y1v04 = 1.66559246207992079114e-11 // 0x3DB25039DACA772A
+	j0r02   = 1.56249999999999947958e-02 // 0x3F8FFFFFFFFFFFFD
+	j0r03   = -1.89979294238854721751e-04 // 0xBF28E6A5B61AC6E9
+	j0r04   = 1.82954049532700665670e-06 // 0x3EBEB1D10C503919
+	j0r05   = -4.61832688532103189199e-09 // 0xBE33D5E773D63FCE
+	j0s01   = 1.56191029464890010492e-02 // 0x3F8FFCE882C8C2A4
+	j0s02   = 1.16926784663337450260e-04 // 0x3F1EA6D2DD57DBF4
+	j0s03   = 5.13546550207318111446e-07 // 0x3EA13B54CE84D5A9
+	j0s04   = 1.16614003333790000205e-09 // 0x3E1408BCF4745D8F
+	j1r00   = -6.25000000000000000000e-02 // 0xBFB0000000000000
+	j1r01   = 1.40705666955189706048e-03 // 0x3F570D9F98472C61
+	j1r02   = -1.59955631084035597520e-05 // 0xBEF0C5C6BA169668
+	j1r03   = 4.96727999609584448412e-08 // 0x3E6AAAFA46CA0BD9
+	j1s01   = 1.91537599538363460805e-02 // 0x3F939D0B12637E53
+	j1s02   = 1.85946785588630915560e-04 // 0x3F285F56B9CDF664
+	j1s03   = 1.17718464042623683263e-06 // 0x3EB3BFF8333F8498
+	j1s04   = 5.04636257076217042715e-09 // 0x3E35AC88C97DFF2C
+	j1s05   = 1.23542274426137913908e-11 // 0x3DAB2ACFCFB97ED8
+	y0u00   = -7.38042951086872317523e-02 // 0xBFB2E4D699CBD01F
+	y0u01   = 1.76666452509181115538e-01 // 0x3FC69D019DE9E3FC
+	y0u02   = -1.38185671945596898896e-02 // 0xBF8C4CE8B16CFA97
+	y0u03   = 3.47453432093683650238e-04 // 0x3F36C54D20B29B6B
+	y0u04   = -3.81407053724364161125e-06 // 0xBECFFEA773D25CAD
+	y0u05   = 1.95590137035022920206e-08 // 0x3E5500573B4EABD4
+	y0u06   = -3.98205194132103398453e-11 // 0xBDC5E43D693FB3C8
+	y0v01   = 1.27304834834123699328e-02 // 0x3F8A127091C9C71A
+	y0v02   = 7.60068627350353253702e-05 // 0x3F13ECBBF578C6C1
+	y0v03   = 2.59150851840457805467e-07 // 0x3E91642D7FF202FD
+	y0v04   = 4.41110311332675467403e-10 // 0x3DFE50183BD6D9EF
+	y1u00   = -1.96057090646238940668e-01 // 0xBFC91866143CBC8A
+	y1u01   = 5.04438716639811282616e-02 // 0x3FA9D3C776292CD1
+	y1u02   = -1.91256895875763547298e-03 // 0xBF5F55E54844F50F
+	y1u03   = 2.35252600561610495928e-05 // 0x3EF8AB038FA6B88E
+	y1u04   = -9.19099158039878874504e-08 // 0xBE78AC00569105B8
+	y1v00   = 1.99167318236649903973e-02 // 0x3F94650D3F4DA9F0
+	y1v01   = 2.02552581025135171496e-04 // 0x3F2A8C896C257764
+	y1v02   = 1.35608801097516229404e-06 // 0x3EB6C05A894E8CA6
+	y1v03   = 6.22741452364621501295e-09 // 0x3E3ABF1D5BA69A86
+	y1v04   = 1.66559246207992079114e-11 // 0x3DB25039DACA772A
 )
+
 // bessel_j0 returns the order-zero Bessel function of the first kind.
 //
 // special cases are:
@@ -72,7 +73,7 @@ pub fn bessel_j0(x_ f64) f64 {
 	}
 	x = math.abs(x)
 	if x >= 2.0 {
-		s,c := math.sincos(x)
+		s, c := math.sincos(x)
 		mut ss := s - c
 		mut cc := s + c
 		// make sure x+x does not overflow
@@ -80,8 +81,7 @@ pub fn bessel_j0(x_ f64) f64 {
 			z := -math.cos(x + x)
 			if s * c < 0.0 {
 				cc = z / ss
-			}
-			else {
+			} else {
 				ss = z / cc
 			}
 		}
@@ -91,18 +91,19 @@ pub fn bessel_j0(x_ f64) f64 {
 		if x > two129 {
 			// |x| > ~6.8056e+38
 			z = (f64(1.0) / math.sqrt_pi) * cc / math.sqrt(x)
-		}
-		else {
+		} else {
 			u := pzero(x)
 			v := qzero(x)
 			z = (f64(1.0) / math.sqrt_pi) * (u * cc - v * ss) / math.sqrt(x)
 		}
-		return z // |x| >= 2.0
+		return z
+		// x| >= 2.0
 	}
 	if x < two_m13 {
 		// |x| < ~1.2207e-4
 		if x < two_m27 {
-			return f64(1.0) // |x| < ~7.4506e-9
+			return f64(1.0)
+			// x| < ~7.4506e-9
 		}
 		return f64(1.0) - 0.25 * x * x // ~7.4506e-9 < |x| < ~1.2207e-4
 	}
@@ -110,11 +111,13 @@ pub fn bessel_j0(x_ f64) f64 {
 	r := z * (j0r02 + z * (j0r03 + z * (j0r04 + z * j0r05)))
 	s := f64(1.0) + z * (j0s01 + z * (j0s02 + z * (j0s03 + z * j0s04)))
 	if x < 1.0 {
-		return f64(1.0) + z * (-0.25 + (r / s)) // |x| < 1.00
+		return f64(1.0) + z * (-0.25 + (r / s))
+		// x| < 1.00
 	}
 	u := f64(0.5) * x
 	return (f64(1.0) + u) * (f64(1.0) - u) + z * (r / s) // 1.0 < |x| < 2.0
 }
+
 // bessel_j1 returns the order-one Bessel function of the first kind.
 //
 // special cases are:
@@ -134,7 +137,7 @@ pub fn bessel_j1(x_ f64) f64 {
 		sign = true
 	}
 	if x >= 2 {
-		s,c := math.sincos(x)
+		s, c := math.sincos(x)
 		mut ss := -s - c
 		mut cc := s - c
 		// make sure x+x does not overflow
@@ -142,8 +145,7 @@ pub fn bessel_j1(x_ f64) f64 {
 			z := math.cos(x + x)
 			if s * c > 0 {
 				cc = z / ss
-			}
-			else {
+			} else {
 				ss = z / cc
 			}
 		}
@@ -152,8 +154,7 @@ pub fn bessel_j1(x_ f64) f64 {
 		mut z := 0.0
 		if x > two129 {
 			z = (f64(1.0) / math.sqrt_pi) * cc / math.sqrt(x)
-		}
-		else {
+		} else {
 			u := pone(x)
 			v := qone(x)
 			z = (f64(1.0) / math.sqrt_pi) * (u * cc - v * ss) / math.sqrt(x)
@@ -232,7 +233,7 @@ pub fn bessel_jn(n_ int, x_ f64) f64 {
 			// 2    -s+c            -c-s
 			// 3     s+c             c-s
 			mut temp := 0.0
-			s,c := math.sincos(x)
+			s, c := math.sincos(x)
 			n3 := n & 3
 			if n3 == 0 {
 				temp = c + s
@@ -247,8 +248,7 @@ pub fn bessel_jn(n_ int, x_ f64) f64 {
 				temp = c - s
 			}
 			b = (f64(1.0) / math.sqrt_pi) * temp / math.sqrt(x)
-		}
-		else {
+		} else {
 			b = bessel_j1(x)
 			mut i := 1
 			mut a := bessel_j0(x)
@@ -266,8 +266,7 @@ pub fn bessel_jn(n_ int, x_ f64) f64 {
 			if n > 33 {
 				// underflow
 				b = 0
-			}
-			else {
+			} else {
 				temp := x * 0.5
 				b = temp
 				mut a := f64(1.0)
@@ -277,8 +276,7 @@ pub fn bessel_jn(n_ int, x_ f64) f64 {
 				}
 				b /= a
 			}
-		}
-		else {
+		} else {
 			// use backward recurrence
 			// x      x**2      x**2
 			// J(n,x)/J(n-1,x) =  ----   ------   ------   .....
@@ -344,8 +342,7 @@ pub fn bessel_jn(n_ int, x_ f64) f64 {
 					a = b
 					b = b * di / x - a_
 				}
-			}
-			else {
+			} else {
 				for i := n - 1; i > 0; i-- {
 					di := f64(i + i)
 					a_ := a
@@ -398,7 +395,7 @@ pub fn bessel_y0(x f64) f64 {
 		// To avoid cancellation, use
 		// sin(x) +- cos(x) = -cos(2x)/(sin(x) -+ cos(x))
 		// to compute the worse one.
-		s,c := math.sincos(x)
+		s, c := math.sincos(x)
 		mut ss := s - c
 		mut cc := s + c
 		// j0(x) = 1/sqrt(pi) * (P(0,x)*cc - Q(0,x)*ss) / sqrt(x)
@@ -408,8 +405,7 @@ pub fn bessel_y0(x f64) f64 {
 			z := -math.cos(x + x)
 			if s * c < 0.0 {
 				cc = z / ss
-			}
-			else {
+			} else {
 				ss = z / cc
 			}
 		}
@@ -417,22 +413,24 @@ pub fn bessel_y0(x f64) f64 {
 		if x > two129 {
 			// |x| > ~6.8056e+38
 			z = (f64(1.0) / math.sqrt_pi) * ss / math.sqrt(x)
-		}
-		else {
+		} else {
 			u := pzero(x)
 			v := qzero(x)
 			z = (f64(1.0) / math.sqrt_pi) * (u * ss + v * cc) / math.sqrt(x)
 		}
-		return z // |x| >= 2.0
+		return z
+		// x| >= 2.0
 	}
 	if x <= two_m27 {
-		return y0u00 + (f64(2.0) / math.pi) * math.log(x) // |x| < ~7.4506e-9
+		return y0u00 + (f64(2.0) / math.pi) * math.log(x)
+		// x| < ~7.4506e-9
 	}
 	z := x * x
 	u := y0u00 + z * (y0u01 + z * (y0u02 + z * (y0u03 + z * (y0u04 + z * (y0u05 + z * y0u06)))))
 	v := f64(1.0) + z * (y0v01 + z * (y0v02 + z * (y0v03 + z * y0v04)))
 	return u / v + (f64(2.0) / math.pi) * bessel_j0(x) * math.log(x) // ~7.4506e-9 < |x| < 2.0
 }
+
 // bessel_y1 returns the order-one Bessel function of the second kind.
 //
 // special cases are:
@@ -451,7 +449,7 @@ pub fn bessel_y1(x f64) f64 {
 		return math.inf(-1)
 	}
 	if x >= 2.0 {
-		s,c := math.sincos(x)
+		s, c := math.sincos(x)
 		mut ss := -s - c
 		mut cc := s - c
 		// make sure x+x does not overflow
@@ -459,8 +457,7 @@ pub fn bessel_y1(x f64) f64 {
 			z := math.cos(x + x)
 			if s * c > 0.0 {
 				cc = z / ss
-			}
-			else {
+			} else {
 				ss = z / cc
 			}
 		}
@@ -477,8 +474,7 @@ pub fn bessel_y1(x f64) f64 {
 		mut z := 0.0
 		if x > two129 {
 			z = (f64(1.0) / math.sqrt_pi) * ss / math.sqrt(x)
-		}
-		else {
+		} else {
 			u := pone(x)
 			v := qone(x)
 			z = (f64(1.0) / math.sqrt_pi) * (u * ss + v * cc) / math.sqrt(x)
@@ -549,7 +545,7 @@ pub fn bessel_yn(n_ int, x f64) f64 {
 		// 2	-s+c		-c-s
 		// 3	 s+c		 c-s
 		mut temp := 0.0
-		s,c := math.sincos(x)
+		s, c := math.sincos(x)
 		n3 := n & 3
 		if n3 == 0 {
 			temp = s - c
@@ -594,16 +590,13 @@ pub fn pzero(x f64) f64 {
 	if x >= 8.0 {
 		p = p0r8
 		q = p0s8
-	}
-	else if x >= 4.5454 {
+	} else if x >= 4.5454 {
 		p = p0r5
 		q = p0s5
-	}
-	else if x >= 2.8571 {
+	} else if x >= 2.8571 {
 		p = p0r3
 		q = p0s3
-	}
-	else if x >= 2 {
+	} else if x >= 2 {
 		p = p0r2
 		q = p0s2
 	}
@@ -627,16 +620,13 @@ pub fn pone(x f64) f64 {
 	if x >= 8.0 {
 		p = p1r8
 		q = p1s8
-	}
-	else if x >= 4.5454 {
+	} else if x >= 4.5454 {
 		p = p1r5
 		q = p1s5
-	}
-	else if x >= 2.8571 {
+	} else if x >= 2.8571 {
 		p = p1r3
 		q = p1s3
-	}
-	else if x >= 2 {
+	} else if x >= 2 {
 		p = p1r2
 		q = p1s2
 	}
@@ -660,16 +650,13 @@ pub fn qzero(x f64) f64 {
 	if x >= 8.0 {
 		p = q0r8
 		q = q0s8
-	}
-	else if x >= 4.5454 {
+	} else if x >= 4.5454 {
 		p = q0r5
 		q = q0s5
-	}
-	else if x >= 2.8571 {
+	} else if x >= 2.8571 {
 		p = q0r3
 		q = q0s3
-	}
-	else if x >= 2 {
+	} else if x >= 2 {
 		p = q0r2
 		q = q0s2
 	}
@@ -693,16 +680,13 @@ pub fn qone(x f64) f64 {
 	if x >= 8 {
 		p = q1r8
 		q = q1s8
-	}
-	else if x >= 4.5454 {
+	} else if x >= 4.5454 {
 		p = q1r5
 		q = q1s5
-	}
-	else if x >= 2.8571 {
+	} else if x >= 2.8571 {
 		p = q1r3
 		q = q1s3
-	}
-	else if x >= 2 {
+	} else if x >= 2 {
 		p = q1r2
 		q = q1s2
 	}

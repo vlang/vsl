@@ -43,11 +43,7 @@ pub fn data(nb_samples, nb_features int, use_y, allocate bool) Data {
 	o.observers = []
 	o.nb_samples = nb_samples
 	o.nb_features = nb_features
-	o.x = if allocate {
-		la.matrix(nb_samples, nb_features)
-	} else {
-		la.matrix(0, 0)
-	}
+	o.x = if allocate { la.matrix(nb_samples, nb_features) } else { la.matrix(0, 0) }
 	if allocate && use_y {
 		y = []f64{len: nb_samples}
 	}
