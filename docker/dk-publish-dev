@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+NAME=vsl_dev
+
+docker logout
+docker login
+docker push ulisesjeremias/$NAME

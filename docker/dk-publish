@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+NAME="vsl"
+VERSION="latest"
+
+docker logout
+docker login
+docker push ulisesjeremias/$NAME:$VERSION

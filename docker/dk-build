@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+NAME="vsl"
+VERSION="latest"
+
+echo
+echo
+echo "... docker .................................................."
+echo "............................................................."
+echo
+
+docker build --no-cache -t ulisesjeremias/$NAME:$VERSION . --build-arg VSL_VERSION=$VERSION
+docker images -q -f "dangling=true" | xargs docker rmi

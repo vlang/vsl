@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+NAME=vsl_dev
+
+echo
+echo
+echo "... docker .................................................."
+echo "............................................................."
+echo
+
+docker build --no-cache -t ulisesjeremias/$NAME . --build-arg DEV_IMG=true
+docker images -q -f "dangling=true" | xargs docker rmi
