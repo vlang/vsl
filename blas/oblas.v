@@ -6,6 +6,8 @@ module blas
 import vsl.errno
 
 #include "openblas_cblas.h"
+#include <lapacke.h>
+
 fn C.openblas_set_num_threads(n int)
 
 fn C.cblas_ddot(n int, dx &f64, incx int, dy &f64, incy int) f64
@@ -510,7 +512,7 @@ pub fn dgeev(calcVl, calcVr bool, n int, mut a []f64, lda int, wr, wi, vl []f64,
 	}
 	unsafe {
 		info := C.LAPACKE_dgeev(lapack_col_major, job_vlr(calcVl), job_vlr(calcVr), n,
-			&a[0], lda, &wr[0], &wi[0], vvl, ldvl, vvr, ldvr)
+			&a[0], lda, &wr[0], &wi[0], &vvl, ldvl, &vvr, ldvr)
 		if info != 0 {
 			errno.vsl_panic('lapack failed', .efailed)
 		}

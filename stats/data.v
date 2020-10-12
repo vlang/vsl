@@ -56,7 +56,7 @@ pub fn data(nb_samples, nb_features int, use_y, allocate bool) Data {
 // Input:
 // x -- x values
 // y -- y values [optional]
-pub fn (mut o Data) set(x la.Matrix, y []f64) {
+pub fn (mut o Data) set(x &la.Matrix, y []f64) {
 	o.x = x
 	o.y = y
 	o.notify_update()
