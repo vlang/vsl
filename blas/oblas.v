@@ -40,6 +40,15 @@ fn C.LAPACKE_dpotrf(lapack_col_major int, up u32, n int, a &f64, lda int) int
 
 fn C.LAPACKE_dgeev(lapack_col_major int, calcVl, calcVr byte, n int, a &f64, lda int, wr, wi, vl &f64, ldvl_ int, vr &f64, ldvr_ int) int
 
+fn C.LAPACKE_dlange(norm byte, m int, n int, a &f64, lda int, work &f64) f64
+
+fn C.LAPACKE_dsyev(jobz byte, uplo byte, n int, a &f64, lda int, w &f64, work &f64, lwork int, info &int)
+
+fn C.LAPACKE_dgebal(job byte, n int, a &f64, lda int, ilo int, ihi int, scale &f64, info &int)
+
+fn C.LAPACKE_dgehrd(n int, ilo int, ihi int, a &f64, lda int, tau &f64, work &f64, lwork int, info &int)
+
+
 // set_num_threads sets the number of threads in OpenBLAS
 pub fn set_num_threads(n int) {
 	C.openblas_set_num_threads(n)
