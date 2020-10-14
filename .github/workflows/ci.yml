@@ -11,5 +11,7 @@ jobs:
       with:
         v-version: latest
       id: v
+    - name: V doctor
+      run: v doctor
     - name: run tests
       run: make test
