@@ -4,14 +4,19 @@ jobs:
   ubuntu:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
+    - name: Checkout Latest V
       uses: actions/checkout@v2
-    - name: Set up V version latest
-      uses: nocturlab/setup-vlang-action@v1
       with:
-        v-version: latest
-      id: v
+        repository: vlang/v
+    - name: Checkout VSL
+      uses: actions/checkout@v2
+      with:
+        path: vsl
+    - name: Build V
+      run: |
+        make
+        sudo ./v symlink
     - name: V doctor
       run: v doctor
     - name: run tests
-      run: make test
+      run: cd vsl; make test
