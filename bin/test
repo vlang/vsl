@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 if [ -d ~/.vmodules/vsl ]; then
     mv ~/.vmodules/vsl ~/.vmodules/old_vsl
     rm -rf ~/.vmodules/vsl
