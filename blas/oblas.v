@@ -530,7 +530,7 @@ pub fn dgeev(calcVl, calcVr bool, n int, mut a []f64, lda int, wr, wi, vl []f64,
 
 // auxiliary //////////////////////////////////////////////////////////////////////////////////////
 // constants
-const (
+pub const (
 	lapack_row_major    = 101
 	lapack_col_major    = 102
 	cblas_row_major     = u32(101)
@@ -547,28 +547,28 @@ const (
 	cblas_right         = u32(142)
 )
 
-fn c_trans(trans bool) u32 {
+pub fn c_trans(trans bool) u32 {
 	if trans {
 		return cblas_trans
 	}
 	return cblas_no_trans
 }
 
-fn c_uplo(up bool) u32 {
+pub fn c_uplo(up bool) u32 {
 	if up {
 		return cblas_upper
 	}
 	return cblas_lower
 }
 
-fn l_uplo(up bool) byte {
+pub fn l_uplo(up bool) byte {
 	if up {
 		return `U`
 	}
 	return `L`
 }
 
-fn job_vlr(doCalc bool) byte {
+pub fn job_vlr(doCalc bool) byte {
 	if doCalc {
 		return `V`
 	}
