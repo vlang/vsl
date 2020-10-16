@@ -11,7 +11,7 @@ mkdir -p ~/.vmodules/vsl
 cp -r ./* ~/.vmodules/vsl
 
 v test .
-find . -name '*_test' | xargs rm -f
+find . -name '*_test' -exec rm -f {} +
 
 rm -rf ~/.vmodules/vsl
 if [ -d ~/.vmodules/old_vsl ]; then

@@ -8,7 +8,7 @@ fi
 mkdir -p ~/.vmodules/vsl
 cp -r ./* ~/.vmodules/vsl
 
-find . -name "*.v" | xargs v fmt -w
+find . -name "*.v" -exec v fmt -w {} +
 
 rm -rf ~/.vmodules/vsl
 [ -d ~/.vmodules/old_vsl ] && mv ~/.vmodules/old_vsl ~/.vmodules/vsl
