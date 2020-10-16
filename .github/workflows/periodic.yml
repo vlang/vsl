@@ -4,26 +4,26 @@ on:
   schedule:
     - cron:  '31 1,12 * * *'
 
-    jobs:
-      ubuntu:
-        runs-on: ubuntu-latest
-        steps:
-        - name: Checkout Latest V
-          uses: actions/checkout@v2
-          with:
-            repository: vlang/v
-        - name: Checkout VSL
-          uses: actions/checkout@v2
-          with:
-            path: vsl
-        - name: Build V
-          run: |
-            make
-            sudo ./v symlink
-        - name: V doctor
-          run: v doctor
-        - name: Install VSL dependencies
-          run: |
-            sudo apt-get install --quiet -y --no-install-recommends gfortran liblapacke-dev libopenblas-dev
-        - name: run tests
-          run: cd vsl; make test
+jobs:
+  ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Latest V
+      uses: actions/checkout@v2
+      with:
+        repository: vlang/v
+    - name: Checkout VSL
+      uses: actions/checkout@v2
+      with:
+        path: vsl
+    - name: Build V
+      run: |
+        make
+        sudo ./v symlink
+    - name: V doctor
+      run: v doctor
+    - name: Install VSL dependencies
+      run: |
+        sudo apt-get install --quiet -y --no-install-recommends gfortran liblapacke-dev libopenblas-dev
+    - name: run tests
+      run: cd vsl; make test
