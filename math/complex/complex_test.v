@@ -1,7 +1,7 @@
 import vsl.math
 import vsl.math.complex as cmplx
 
-fn tst_res(str1, str2 string) bool {
+fn tst_res(str1 string, str2 string) bool {
 	if (math.abs(str1.f64() - str2.f64())) < 1e-5 {
 		return true
 	}

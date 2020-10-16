@@ -33,6 +33,6 @@ pub fn (start Quaternion) slerp(end Quaternion, tau f64) Quaternion {
 	}
 }
 
-pub fn (qi Quaternion) squad(taui f64, ai, bip1, qip1 Quaternion) Quaternion {
+pub fn (qi Quaternion) squad(taui f64, ai Quaternion, bip1 Quaternion, qip1 Quaternion) Quaternion {
 	return qi.slerp(qip1, taui).slerp(ai.slerp(bip1, taui), 2.0 * taui * (1.0 - taui))
 }

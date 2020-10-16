@@ -178,7 +178,7 @@ fn test_bounce_ease_in_out() {
 }
 
 // Helper method for comparing floats
-fn compare(x, y f64) bool {
+fn compare(x f64, y f64) bool {
 	tolerance := 0.00001
 	// Special case for zeroes
 	if x < tolerance && x > (-1.0 * tolerance) && y < tolerance && y > (-1.0 * tolerance) {

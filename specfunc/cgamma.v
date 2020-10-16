@@ -18,7 +18,7 @@ import vsl.math
  * @param kf an integer flag. If kf, Gamma is computed, if !kf, log(Gamma)
  *
 */
-fn _sp_cgamma(x_, y_ f64, kf bool) (f64, f64) {
+fn _sp_cgamma(x_ f64, y_ f64, kf bool) (f64, f64) {
 	mut x := x_
 	mut y := y_
 	if y == 0.0 && x == f64(u64(x)) && x <= 0.0 {

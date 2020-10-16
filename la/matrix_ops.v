@@ -32,7 +32,7 @@ pub fn matrix_inv_small(mut ai Matrix, mut a Matrix, tol f64) f64 {
 		}
 		ai.set(0, 0, a.get(1, 1) / det)
 		ai.set(0, 1, -(a.get(0, 1)) / det)
-		ai.set(1, 0, - (a.get(1, 0)) / det)
+		ai.set(1, 0, -(a.get(1, 0)) / det)
 		ai.set(1, 1, a.get(0, 0) / det)
 	} else if a.m == 3 && a.n == 3 {
 		det = a.get(0, 0) * (a.get(1, 1) * a.get(2, 2) -
@@ -67,7 +67,7 @@ pub fn matrix_inv_small(mut ai Matrix, mut a Matrix, tol f64) f64 {
 // s  -- diagonal terms [must be pre-allocated] s.len = imin(a.m, a.n)
 // u  -- left matrix [must be pre-allocated] u is (a.m x a.m)
 // vt -- transposed right matrix [must be pre-allocated] vt is (a.n x a.n)
-pub fn matrix_svd(s []f64, u, vt, a Matrix, copy_a bool) {
+pub fn matrix_svd(s []f64, u Matrix, vt Matrix, a Matrix, copy_a bool) {
 	superb := [0.0].repeat(int(math.min(a.m, a.n)))
 	mut acpy := a
 	if copy_a {

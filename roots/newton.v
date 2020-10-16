@@ -29,7 +29,7 @@ import vsl
  * @param n_max maximum number of iterations
  *
 */
-pub fn newton(func vsl.FunctionFdf, x0, x_eps, fx_eps f64, n_max int) ?f64 {
+pub fn newton(func vsl.FunctionFdf, x0 f64, x_eps f64, fx_eps f64, n_max int) ?f64 {
 	omega := 1e-4
 	gamma := 0.5
 	mut root := x0

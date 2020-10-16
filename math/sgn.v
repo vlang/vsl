@@ -3,7 +3,7 @@
 // that can be found in the LICENSE file.
 module math
 
-pub fn copysign(x, y f64) f64 {
+pub fn copysign(x f64, y f64) f64 {
 	return f64_from_bits((f64_bits(x) & ~sign_mask) | (f64_bits(y) & sign_mask))
 }
 

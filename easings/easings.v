@@ -260,14 +260,14 @@ pub fn bounce_ease_in_out(p f64) f64 {
 
 // animate returns []f64 of length "frames" using the easing function provided with lower and upper bounds as "from" and "to"
 [inline]
-pub fn animate(easing EasingFn, from, to f64, frames int) []f64 {
+pub fn animate(easing EasingFn, from f64, to f64, frames int) []f64 {
 	len := int(math.max(frames, 0.0))
 	dt := 1.0 / f64(len - 1)
 	animation := range(0, len)
 	return animation.map(from + easing(it * dt) * (to - from)) // t := it*dt
 }
 
-fn range(start, end f64) []f64 {
+fn range(start f64, end f64) []f64 {
 	mut res := []f64{}
 	for i := start; i < end; i++ {
 		res << i

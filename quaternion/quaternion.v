@@ -14,7 +14,7 @@ pub:
 }
 
 [inline]
-pub fn quaternion(w, x, y, z f64) Quaternion {
+pub fn quaternion(w f64, x f64, y f64, z f64) Quaternion {
 	return Quaternion{
 		w: w
 		x: x
@@ -48,7 +48,7 @@ pub fn id() Quaternion {
  * q = cos(angle/2) + i ( x * sin(angle/2)) + j (y * sin(angle/2)) + k ( z * sin(angle/2))
  *
 */
-pub fn from_axis_anglef3(angle, x, y, z f64) Quaternion {
+pub fn from_axis_anglef3(angle f64, x f64, y f64, z f64) Quaternion {
 	half_angle := angle / 2.0
 	s := math.sin(half_angle)
 	c := math.cos(half_angle)
@@ -57,7 +57,7 @@ pub fn from_axis_anglef3(angle, x, y, z f64) Quaternion {
 	return q.normalized()
 }
 
-pub fn from_spherical_coords(theta, phi f64) Quaternion {
+pub fn from_spherical_coords(theta f64, phi f64) Quaternion {
 	half_theta := theta / 2.0
 	half_phi := phi / 2.0
 	ct := math.cos(half_theta)
@@ -67,7 +67,7 @@ pub fn from_spherical_coords(theta, phi f64) Quaternion {
 	return quaternion(cp * ct, -sp * st, st * cp, sp * ct)
 }
 
-pub fn from_euler_angles(alpha, beta, gamma f64) Quaternion {
+pub fn from_euler_angles(alpha f64, beta f64, gamma f64) Quaternion {
 	half_alpha := alpha / 2.0
 	half_beta := beta / 2.0
 	half_gamma := gamma / 2.0

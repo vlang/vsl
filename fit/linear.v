@@ -13,7 +13,7 @@ import vsl.math
 // Reference:
 // [1] Press WH, Teukolsky SA, Vetterling WT, Fnannery BP (2007) Numerical Recipes: The Art of
 // Scientific Computing. Third Edition. Cambridge University Press. 1235p.
-pub fn linear(x, y []f64) (f64, f64) {
+pub fn linear(x []f64, y []f64) (f64, f64) {
 	mut sx := 0.0
 	mut sy := 0.0
 	ndata := x.len
@@ -47,7 +47,7 @@ pub fn linear(x, y []f64) (f64, f64) {
 // Reference:
 // [1] Press WH, Teukolsky SA, Vetterling WT, Fnannery BP (2007) Numerical Recipes: The Art of
 // Scientific Computing. Third Edition. Cambridge University Press. 1235p.
-pub fn linear_sigma(x, y []f64) (f64, f64, f64, f64, f64) {
+pub fn linear_sigma(x []f64, y []f64) (f64, f64, f64, f64, f64) {
 	mut sx := 0.0
 	mut sy := 0.0
 	ndata := x.len

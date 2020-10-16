@@ -34,7 +34,7 @@ pub fn (q1 Quaternion) equal(q2 Quaternion) bool {
 		q1.z == q2.z
 }
 
-fn choose(c, a, b bool) bool {
+fn choose(c bool, a bool, b bool) bool {
 	return if c {
 		a
 	} else {

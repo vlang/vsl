@@ -31,7 +31,7 @@ pub fn is_nan(f f64) bool {
 	// IEEE 754 says that only NaNs satisfy f != f.
 	// To avoid the floating-point hardware, could use:
 	x := f64_bits(f)
-	return u32(x>>shift)&mask == mask && x != uvinf && x != uvneginf
+	return u32(x >> shift) & mask == mask && x != uvinf && x != uvneginf
 }
 
 // is_inf reports whether f is an infinity, according to sign.

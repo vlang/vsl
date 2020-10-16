@@ -15,7 +15,7 @@ pub mut:
 }
 
 // matrix allocates a new (empty) Matrix with given (m,n) (row/col sizes)
-pub fn matrix(m, n int) Matrix {
+pub fn matrix(m int, n int) Matrix {
 	data := [0.0].repeat(m * n)
 	return Matrix{
 		m: m
@@ -38,7 +38,7 @@ pub fn matrix_deep2(a [][]f64) Matrix {
 // NOTE:
 // (1) rawdata is not copied!
 // (2) the external slice rawdata should not be changed or deleted
-pub fn matrix_raw(m, n int, rawdata []f64) Matrix {
+pub fn matrix_raw(m int, n int, rawdata []f64) Matrix {
 	return Matrix{
 		m: m
 		n: n
@@ -71,12 +71,12 @@ pub fn (mut o Matrix) set_diag(val f64) {
 }
 
 // set sets value
-pub fn (mut o Matrix) set(i, j int, val f64) {
+pub fn (mut o Matrix) set(i int, j int, val f64) {
 	o.data[i + j * o.m] = val // col-major
 }
 
 // get gets value
-pub fn (o Matrix) get(i, j int) f64 {
+pub fn (o Matrix) get(i int, j int) f64 {
 	return o.data[i + j * o.m] // col-major
 }
 
@@ -119,7 +119,7 @@ pub fn (o Matrix) copy_into(mut result Matrix, alpha f64) {
 }
 
 // add adds value to (i,j) location
-pub fn (mut o Matrix) add(i, j int, val f64) {
+pub fn (mut o Matrix) add(i int, j int, val f64) {
 	o.data[i + j * o.m] += val // col-major
 }
 
@@ -132,12 +132,12 @@ pub fn (mut o Matrix) fill(val f64) {
 }
 
 // clear_rc clear rows and columns and set diagonal components
-// _         _                                     _         _
+//                _         _                                     _         _
 // Example:      |  1 2 3 4  |                                   |  1 2 3 4  |
-// A = |  5 6 7 8  |  ⇒  clear([1,2], [], 1.0)  ⇒  A = |  0 1 0 0  |
-// |_ 4 3 2 1 _|                                   |_ 0 0 1 0 _|
+// A =           |  5 6 7 8  |  ⇒  clear([1,2], [], 1.0)  ⇒  A = |  0 1 0 0  |
+//               |_ 4 3 2 1 _|                                   |_ 0 0 1 0 _|
 //
-pub fn (mut o Matrix) clear_rc(rows, cols []int, diag f64) {
+pub fn (mut o Matrix) clear_rc(rows []int, cols []int, diag f64) {
 	for r in rows {
 		for j := 0; j < o.n; j++ {
 			if r == j {
@@ -159,10 +159,10 @@ pub fn (mut o Matrix) clear_rc(rows, cols []int, diag f64) {
 }
 
 // clear_bry clears boundaries
-// _       _                          _       _
+//                _       _                          _       _
 // Example:      |  1 2 3  |                        |  1 0 0  |
-// A = |  4 5 6  |  ⇒  clear(1.0)  ⇒  A = |  0 5 0  |
-// |_ 7 8 9 _|                        |_ 0 0 1 _|
+// A =           |  4 5 6  |  ⇒  clear(1.0)  ⇒  A = |  0 5 0  |
+//               |_ 7 8 9 _|                        |_ 0 0 1 _|
 //
 pub fn (mut o Matrix) clear_bry(diag f64) {
 	o.clear_rc([0, o.m - 1], [0, o.n - 1], diag)
@@ -217,7 +217,7 @@ pub fn (o Matrix) get_col(j int) []f64 {
 // extract_cols returns columns from j=start to j=endp1-1
 // start -- first column
 // endp1 -- "end-plus-one", the number of the last requested column + 1
-pub fn (o Matrix) extract_cols(start, endp1 int) Matrix {
+pub fn (o Matrix) extract_cols(start int, endp1 int) Matrix {
 	if endp1 <= start {
 		errno.vsl_panic("endp1 'end-plus-one' must be greater than start. start=$start, endp1=$endp1 invalid",
 			.efailed)
@@ -364,6 +364,6 @@ pub fn (o Matrix) print_py(nfmt_ string) string {
 pub fn safe_print<T>(format string, message T) string {
 	buf := [byte(0)]
 	mut ptr := &buf[0]
-	unsafe{C.sprintf(charptr(ptr), charptr(format.str), message)}
+	unsafe {C.sprintf(charptr(ptr), charptr(format.str), message)}
 	return tos(buf.data, vstrlen(buf.data)).trim_space()
 }

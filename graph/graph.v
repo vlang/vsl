@@ -82,7 +82,7 @@ pub fn (g Graph) nverts() int {
 }
 
 // get_edge performs a lookup on key2edge map and returs id of edge for given nodes ides
-pub fn (g Graph) get_edge(i, j int) ?int {
+pub fn (g Graph) get_edge(i int, j int) ?int {
 	key := hash_edge_key(i, j)
 	if key in g.key2edge {
 		return g.key2edge[key]
@@ -136,7 +136,7 @@ pub fn (g Graph) shortest_paths(method SorthestPaths) Graph {
 
 // path returns the path from source (s) to destination (t)
 // Note: shortest_paths method must be called first
-pub fn (g Graph) path(s, t int) []int {
+pub fn (g Graph) path(s int, t int) []int {
 	s_next := g.next[s]
 	n := s_next[t]
 	if n < 0 {
@@ -200,7 +200,7 @@ pub fn (g Graph) calc_dist() Graph {
 }
 
 // hash_edge_key creates a unique hash key identifying an edge
-fn hash_edge_key(i, j int) string {
+fn hash_edge_key(i int, j int) string {
 	key := i + 10000001 * j
 	return key.str()
 }

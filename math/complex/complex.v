@@ -11,7 +11,7 @@ pub:
 	im f64
 }
 
-pub fn complex(re, im f64) Complex {
+pub fn complex(re f64, im f64) Complex {
 	return Complex{re, im}
 }
 

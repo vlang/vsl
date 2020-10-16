@@ -1,7 +1,9 @@
 // Copyright (c) 2019-2020 Ulises Jeremias Cornejo Fandos. All rights reserved.
 // Use of this source code is governed by an MIT license
 // that can be found in the LICENSE file.
-module math // Floating-point mod function.
+module math
+
+// Floating-point mod function.
 // mod returns the floating-point remainder of x/y.
 // The magnitude of the result is less than y and its
 // sign agrees with that of x.
@@ -12,11 +14,11 @@ module math // Floating-point mod function.
 // mod(x, 0) = nan
 // mod(x, ±inf) = x
 // mod(x, nan) = nan
-pub fn mod(x, y f64) f64 {
+pub fn mod(x f64, y f64) f64 {
 	return fmod(x, y)
 }
 
-pub fn fmod(x, y f64) f64 {
+pub fn fmod(x f64, y f64) f64 {
 	if y == 0 || is_inf(x, 0) || is_nan(x) || is_nan(y) {
 		return nan()
 	}
@@ -40,7 +42,7 @@ pub fn fmod(x, y f64) f64 {
 }
 
 // gcd calculates greatest common (positive) divisor (or zero if a and b are both zero).
-pub fn gcd(a_, b_ i64) i64 {
+pub fn gcd(a_ i64, b_ i64) i64 {
 	mut a := a_
 	mut b := b_
 	if a < 0 {
@@ -60,7 +62,7 @@ pub fn gcd(a_, b_ i64) i64 {
 }
 
 // lcm calculates least common (non-negative) multiple.
-pub fn lcm(a, b i64) i64 {
+pub fn lcm(a i64, b i64) i64 {
 	if a == 0 {
 		return a
 	}

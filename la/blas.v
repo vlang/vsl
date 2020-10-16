@@ -18,7 +18,7 @@ import vsl.math
 //
 //   scale[i] = a + m*|s[i]|
 //
-pub fn vector_rms_error(u, v []f64, a, m f64, s []f64) f64 {
+pub fn vector_rms_error(u []f64, v []f64, a f64, m f64, s []f64) f64 {
 	mut rms := 0.0
 	for i := 0; i < u.len; i++ {
 		scale := a + m * math.abs(s[i])
@@ -30,7 +30,7 @@ pub fn vector_rms_error(u, v []f64, a, m f64, s []f64) f64 {
 
 // vector_dot returns the dot product between two vectors:
 // s := u・v
-pub fn vector_dot(u, v []f64) f64 {
+pub fn vector_dot(u []f64, v []f64) f64 {
 	mut res := 0.0
 	cutoff := 150
 	if u.len <= cutoff {
@@ -68,7 +68,7 @@ pub fn vector_add(alpha f64, u []f64, beta f64, v []f64) []f64 {
 
 // vector_max_diff returns the maximum absolute difference between two vectors
 // maxdiff = max(|u - v|)
-pub fn vector_max_diff(u, v []f64) f64 {
+pub fn vector_max_diff(u []f64, v []f64) f64 {
 	mut maxdiff := math.abs(u[0] - v[0])
 	for i := 1; i < u.len; i++ {
 		diff := math.abs(u[i] - v[i])
@@ -81,7 +81,7 @@ pub fn vector_max_diff(u, v []f64) f64 {
 
 // vector_scale_abs creates a "scale" vector using the absolute value of another vector
 // scale := a + m ⋅ |x|     ⇒      scale[i] := a + m ⋅ |x[i]|
-pub fn vector_scale_abs(a, m f64, x []f64) []f64 {
+pub fn vector_scale_abs(a f64, m f64, x []f64) []f64 {
 	mut scale := [0.0].repeat(x.len)
 	for i := 0; i < x.len; i++ {
 		scale[i] = a + m * math.abs(x[i])

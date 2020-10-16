@@ -7,7 +7,7 @@ import vsl.math
 import vsl.errno
 import vsl.internal
 
-pub fn hypot(x, y f64) f64 {
+pub fn hypot(x f64, y f64) f64 {
 	if math.is_inf(x, 0) || math.is_inf(y, 0) {
 		return math.inf(1)
 	}
@@ -31,7 +31,7 @@ pub fn hypot(x, y f64) f64 {
 	return result
 }
 
-pub fn hypot_e(x, y f64) (f64, f64) {
+pub fn hypot_e(x f64, y f64) (f64, f64) {
 	if math.is_inf(x, 0) || math.is_inf(y, 0) {
 		return math.inf(1), 0.0
 	}

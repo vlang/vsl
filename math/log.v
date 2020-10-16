@@ -10,7 +10,7 @@ pub fn log(x f64) f64 {
 	return C.log(x)
 }
 
-pub fn log_n(x, b f64) f64 {
+pub fn log_n(x f64, b f64) f64 {
 	y := log(x)
 	z := log(b)
 	return y / z

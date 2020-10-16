@@ -64,7 +64,7 @@ pub fn vector_rms(o []f64) f64 {
 
 // norm_diff returns the Euclidean norm of the difference:
 // nrm := ||u - v||
-pub fn vector_norm_diff(o, v []f64) f64 {
+pub fn vector_norm_diff(o []f64, v []f64) f64 {
 	mut nrm := 0.0
 	for i := 0; i < v.len; i++ {
 		nrm += (o[i] - v[i]) * (o[i] - v[i])

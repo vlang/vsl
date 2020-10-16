@@ -53,7 +53,7 @@ pub fn eval_derivs(c []f64, x f64, lenres int) []f64 {
 	return res
 }
 
-pub fn solve_quadratic(a, b, c f64) []f64 { // Handle linear case
+pub fn solve_quadratic(a f64, b f64, c f64) []f64 { // Handle linear case
 	if a == 0 {
 		if b == 0 {
 			return []
@@ -84,7 +84,7 @@ pub fn solve_quadratic(a, b, c f64) []f64 { // Handle linear case
 	}
 }
 
-pub fn solve_cubic(a, b, c f64) []f64 {
+pub fn solve_cubic(a f64, b f64, c f64) []f64 {
 	q_ := (a * a - 3.0 * b)
 	r_ := (2.0 * a * a * a - 9.0 * a * b + 27.0 * c)
 	q := q_ / 9.0
@@ -130,12 +130,12 @@ pub fn solve_cubic(a, b, c f64) []f64 {
 }
 
 [inline]
-fn swap_(a, b f64) (f64, f64) {
+fn swap_(a f64, b f64) (f64, f64) {
 	return b, a
 }
 
 [inline]
-fn sorted_3_(x_, y_, z_ f64) (f64, f64, f64) {
+fn sorted_3_(x_ f64, y_ f64, z_ f64) (f64, f64, f64) {
 	mut x := x_
 	mut y := y_
 	mut z := z_
@@ -271,7 +271,7 @@ pub fn balance_companion_matrix(cm [][]f64) [][]f64 {
  * subroutine call for this is
  *
 */
-pub fn add(a, b []f64) []f64 {
+pub fn add(a []f64, b []f64) []f64 {
 	na := a.len
 	nb := b.len
 	nc := int(math.max(na, nb))
@@ -288,7 +288,7 @@ pub fn add(a, b []f64) []f64 {
 	return c
 }
 
-pub fn substract(a, b []f64) []f64 {
+pub fn substract(a []f64, b []f64) []f64 {
 	na := a.len
 	nb := b.len
 	nc := int(math.max(na, nb))
@@ -305,7 +305,7 @@ pub fn substract(a, b []f64) []f64 {
 	return c
 }
 
-pub fn multiply(a, b []f64) []f64 {
+pub fn multiply(a []f64, b []f64) []f64 {
 	na := a.len
 	nb := b.len
 	nc := na + nb

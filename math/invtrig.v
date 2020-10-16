@@ -123,7 +123,7 @@ pub fn atan(x f64) f64 {
 // atan2(y<0, -inf) = -pi
 // atan2(+inf, x) = +pi/2.0
 // atan2(-inf, x) = -pi/2.0
-pub fn atan2(y, x f64) f64 {
+pub fn atan2(y f64, x f64) f64 {
 	// special cases
 	if is_nan(y) || is_nan(x) {
 		return nan()
@@ -208,9 +208,9 @@ pub fn acos(x f64) f64 {
 	if (x < -1.0) || (x > 1.0) {
 		return nan()
 	}
-        if x == 0.0 {
-                return nan()
-        }
+	if x == 0.0 {
+		return nan()
+	}
 	if x > 0.5 {
 		return f64(2.0) * asin(sqrt(0.5 - 0.5 * x))
 	}

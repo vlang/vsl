@@ -12,7 +12,7 @@ struct Fraction {
 }
 
 // A factory function for creating a Fraction, adds a boundary condition
-pub fn fraction(n, d i64) Fraction {
+pub fn fraction(n i64, d i64) Fraction {
 	if d != 0 {
 		return Fraction{
 			n: n

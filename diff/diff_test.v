@@ -126,7 +126,7 @@ fn test_diff() {
 	assert diff_test('backward', f6_, df6_, 10.0)
 }
 
-fn diff_test(diff_method string, f, df vsl.Function, x f64) bool {
+fn diff_test(diff_method string, f vsl.Function, df vsl.Function, x f64) bool {
 	expected := df.eval(x)
 	result, _ := if diff_method == 'backward' {
 		diff.backward(f, x)
@@ -138,7 +138,7 @@ fn diff_test(diff_method string, f, df vsl.Function, x f64) bool {
 	return compare(result, expected)
 }
 
-fn diff_near_test(diff_method string, f, df vsl.Function, x, tolerance f64) bool {
+fn diff_near_test(diff_method string, f vsl.Function, df vsl.Function, x f64, tolerance f64) bool {
 	expected := df.eval(x)
 	result, _ := if diff_method == 'backward' {
 		diff.backward(f, x)
@@ -152,11 +152,11 @@ fn diff_near_test(diff_method string, f, df vsl.Function, x, tolerance f64) bool
 
 // Helper methods for comparing floats
 [inline]
-fn compare(x, y f64) bool {
+fn compare(x f64, y f64) bool {
 	return compare_near(x, y, 1e-5)
 }
 
-fn compare_near(x, y, tolerance f64) bool {
+fn compare_near(x f64, y f64, tolerance f64) bool {
 	// Special case for zeroes
 	if x < tolerance && x > (-1.0 * tolerance) && y < tolerance && y > (-1.0 * tolerance) {
 		return true

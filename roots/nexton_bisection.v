@@ -19,7 +19,7 @@ import vsl
  * than tolerance, then it is converged
  * @param max_iter a int maximal number of iteration
 */
-pub fn newton_bisection(func vsl.FunctionFdf, x_min, x_max, tol f64, max_iter int) ?f64 {
+pub fn newton_bisection(func vsl.FunctionFdf, x_min f64, x_max f64, tol f64, max_iter int) ?f64 {
 	func_low, _ := func.eval_f_df(x_min)
 	if func_low == 0.0 {
 		return x_min

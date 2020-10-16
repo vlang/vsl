@@ -392,7 +392,7 @@ pub fn range(data []f64) f64 {
 }
 
 [inline]
-pub fn covariance(data1, data2 []f64) f64 {
+pub fn covariance(data1 []f64, data2 []f64) f64 {
 	mean1 := mean(data1)
 	mean2 := mean(data2)
 	return covariance_mean(data1, data2, mean1, mean2)
@@ -400,7 +400,7 @@ pub fn covariance(data1, data2 []f64) f64 {
 
 // Compute the covariance of a dataset using
 // the recurrence relation
-pub fn covariance_mean(data1, data2 []f64, mean1, mean2 f64) f64 {
+pub fn covariance_mean(data1 []f64, data2 []f64, mean1 f64, mean2 f64) f64 {
 	n := int(math.min(data1.len, data2.len))
 	if n == 0 {
 		return 0.0
@@ -446,7 +446,7 @@ pub fn kurtosis(data []f64) f64 {
 
 // Takes a dataset and finds the kurtosis
 // using the fourth moment the deviations, normalized by the sd
-pub fn kurtosis_mean_stddev(data []f64, mean, sd f64) f64 {
+pub fn kurtosis_mean_stddev(data []f64, mean f64, sd f64) f64 {
 	mut avg := 0.0 // find the fourth moment the deviations, normalized by the sd
 	/*
 	we use a recurrence relation to stably update a running value so
@@ -466,7 +466,7 @@ pub fn skew(data []f64) f64 {
 	return skew_mean_stddev(data, data_mean, sd)
 }
 
-pub fn skew_mean_stddev(data []f64, mean, sd f64) f64 {
+pub fn skew_mean_stddev(data []f64, mean f64, sd f64) f64 {
 	mut skew := 0.0 // find the sum of the cubed deviations, normalized by the sd.
 	/*
 	we use a recurrence relation to stably update a running value so

@@ -4,7 +4,7 @@
 module math
 
 // max returns the maximum value of the two provided.
-pub fn max(a, b f64) f64 {
+pub fn max(a f64, b f64) f64 {
 	if a > b {
 		return a
 	}
@@ -12,14 +12,14 @@ pub fn max(a, b f64) f64 {
 }
 
 // min returns the minimum value of the two provided.
-pub fn min(a, b f64) f64 {
+pub fn min(a f64, b f64) f64 {
 	if a < b {
 		return a
 	}
 	return b
 }
 
-pub fn minmax(a, b f64) (f64, f64) {
+pub fn minmax(a f64, b f64) (f64, f64) {
 	if a < b {
 		return a, b
 	}

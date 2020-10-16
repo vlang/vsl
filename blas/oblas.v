@@ -14,7 +14,7 @@ fn C.cblas_ddot(n int, dx &f64, incx int, dy &f64, incy int) f64
 
 fn C.cblas_dscal(n int, alpha f64, x []f64, incx int) f64
 
-fn C.cblas_dger(m, n int, alpha f64, x &f64, incx int, y &f64, incy int, a &f64, lda int)
+fn C.cblas_dger(m int, n int, alpha f64, x &f64, incx int, y &f64, incy int, a &f64, lda int)
 
 fn C.cblas_dnrm2(n int, x &f64, incx int) f64
 
@@ -22,23 +22,23 @@ fn C.cblas_idamax(n int, x &f64, incx int) int
 
 fn C.cblas_daxpy(n int, alpha f64, x &f64, incx int, y &f64, incy int)
 
-fn C.cblas_dgemv(trans byte, m, n int, alpha f64, a &f64, lda int, x &f64, incx int, beta f64, y &f64, incy int)
+fn C.cblas_dgemv(trans byte, m int, n int, alpha f64, a &f64, lda int, x &f64, incx int, beta f64, y &f64, incy int)
 
-fn C.cblas_dgemm(trans byte, m, n, k int, alpha f64, a &f64, lda int, b &f64, ldb int, c &f64, ldc int)
+fn C.cblas_dgemm(trans byte, m int, n int, k int, alpha f64, a &f64, lda int, b &f64, ldb int, c &f64, ldc int)
 
-fn C.cblas_dsyrk(cblas_col_major, up, trans u32, n, k int, alpha f64, a &f64, lda int, beta f64, c &f64, ldc int)
+fn C.cblas_dsyrk(cblas_col_major u32, up u32, trans u32, n int, k int, alpha f64, a &f64, lda int, beta f64, c &f64, ldc int)
 
-fn C.LAPACKE_dgesv(n, nrhs int, a &f64, lda int, ipiv &int, b &f64, ldb int) int
+fn C.LAPACKE_dgesv(n int, nrhs int, a &f64, lda int, ipiv &int, b &f64, ldb int) int
 
-fn C.LAPACKE_dgesvd(jobu, jobvt byte, m, n int, a &f64, lda int, s, u &f64, ldu int, vt &f64, ldvt int, superb &f64) int
+fn C.LAPACKE_dgesvd(jobu byte, jobvt byte, m int, n int, a &f64, lda int, s &f64, u &f64, ldu int, vt &f64, ldvt int, superb &f64) int
 
-fn C.LAPACKE_dgetrf(m, n int, a &f64, lda int, ipiv &int) int
+fn C.LAPACKE_dgetrf(m int, n int, a &f64, lda int, ipiv &int) int
 
 fn C.LAPACKE_dgetri(n int, a &f64, lda int, ipiv &int) int
 
 fn C.LAPACKE_dpotrf(lapack_col_major int, up u32, n int, a &f64, lda int) int
 
-fn C.LAPACKE_dgeev(lapack_col_major int, calcVl, calcVr byte, n int, a &f64, lda int, wr, wi, vl &f64, ldvl_ int, vr &f64, ldvr_ int) int
+fn C.LAPACKE_dgeev(lapack_col_major int, calcVl byte, calcVr byte, n int, a &f64, lda int, wr &f64, wi &f64, vl &f64, ldvl_ int, vr &f64, ldvr_ int) int
 
 fn C.LAPACKE_dlange(norm byte, m int, n int, a &f64, lda int, work &f64) f64
 
@@ -47,7 +47,6 @@ fn C.LAPACKE_dsyev(jobz byte, uplo byte, n int, a &f64, lda int, w &f64, work &f
 fn C.LAPACKE_dgebal(job byte, n int, a &f64, lda int, ilo int, ihi int, scale &f64, info &int)
 
 fn C.LAPACKE_dgehrd(n int, ilo int, ihi int, a &f64, lda int, tau &f64, work &f64, lwork int, info &int)
-
 
 // set_num_threads sets the number of threads in OpenBLAS
 pub fn set_num_threads(n int) {
@@ -104,7 +103,7 @@ pub fn daxpy(n int, alpha f64, x []f64, incx int, mut y []f64, incy int) {
 // trans=false     y := alpha*A*x + beta*y.
 //
 // trans=true      y := alpha*A**T*x + beta*y.
-pub fn dgemv(trans bool, m, n int, alpha f64, a []f64, lda int, x []f64, incx int, beta f64, mut y []f64, incy int) {
+pub fn dgemv(trans bool, m int, n int, alpha f64, a []f64, lda int, x []f64, incx int, beta f64, mut y []f64, incy int) {
 	unsafe {C.cblas_dgemv(cblas_col_major, c_trans(trans), m, n, alpha, &a[0], lda, &x[0],
 		incx, beta, &y[0], incy)}
 }
@@ -134,7 +133,7 @@ pub fn dgemv(trans bool, m, n int, alpha f64, a []f64, lda int, x []f64, incx in
 //
 // where alpha is a scalar, x is an m element vector, y is an n element
 // vector and A is an m by n matrix.
-pub fn dger(m, n int, alpha f64, x []f64, incx int, mut y []f64, incy int, a []f64, lda int) {
+pub fn dger(m int, n int, alpha f64, x []f64, incx int, mut y []f64, incy int, a []f64, lda int) {
 	unsafe {C.cblas_dger(cblas_col_major, m, n, alpha, &x[0], incx, &y[0], incy, &a[0],
 		lda)}
 }
@@ -158,7 +157,7 @@ pub fn dger(m, n int, alpha f64, x []f64, incx int, mut y []f64, incy int, a []f
 //
 // alpha and beta are scalars, and A, B and C are matrices, with op( A )
 // an m by k matrix,  op( B )  a  k by n matrix and  C an m by n matrix.
-pub fn dgemm(transA, transB bool, m, n, k int, alpha f64, a []f64, lda int, b []f64, ldb int, beta f64, c []f64, ldc int) {
+pub fn dgemm(transA bool, transB bool, m int, n int, k int, alpha f64, a []f64, lda int, b []f64, ldb int, beta f64, c []f64, ldc int) {
 	unsafe {C.cblas_dgemm(cblas_col_major, c_trans(transA), c_trans(transB), m, n, k,
 		alpha, &a[0], lda, &b[0], ldb, beta, &c[0], ldc)}
 }
@@ -202,7 +201,7 @@ pub fn dgemm(transA, transB bool, m, n, k int, alpha f64, a []f64, lda int, b []
 // system of equations A * X = B.
 //
 // NOTE: matrix 'a' will be modified
-pub fn dgesv(n, nrhs int, a []f64, lda int, ipiv []int, b []f64, ldb int) {
+pub fn dgesv(n int, nrhs int, a []f64, lda int, ipiv []int, b []f64, ldb int) {
 	if ipiv.len != n {
 		errno.vsl_panic('ipiv.len must be equal to n. $ipiv.len != $n\n', .efailed)
 	}
@@ -263,7 +262,7 @@ pub fn dgesv(n, nrhs int, a []f64, lda int, ipiv []int, b []f64, ldb int) {
 // Note that the routine returns V**T, not V.
 //
 // NOTE: matrix 'a' will be modified
-pub fn dgesvd(jobu, jobvt byte, m, n int, a []f64, lda int, s, u []f64, ldu int, vt []f64, ldvt int, superb []f64) {
+pub fn dgesvd(jobu byte, jobvt byte, m int, n int, a []f64, lda int, s []f64, u []f64, ldu int, vt []f64, ldvt int, superb []f64) {
 	info := C.LAPACKE_dgesvd(lapack_col_major, jobu, jobvt, m, n, &a[0], lda, &s[0], &u[0],
 		ldu, &vt[0], ldvt, &superb[0])
 	if info != 0 {
@@ -313,7 +312,7 @@ pub fn dgesvd(jobu, jobvt byte, m, n int, a []f64, lda int, s, u []f64, ldu int,
 //
 // NOTE: (1) matrix 'a' will be modified
 // (2) ipiv indices are 1-based (i.e. Fortran)
-pub fn dgetrf(m, n int, mut a []f64, lda int, ipiv []int) {
+pub fn dgetrf(m int, n int, mut a []f64, lda int, ipiv []int) {
 	unsafe {
 		info := C.LAPACKE_dgetrf(lapack_col_major, m, n, &a[0], lda, &ipiv[0])
 		if info != 0 {
@@ -390,7 +389,7 @@ pub fn dgetri(n int, mut a []f64, lda int, ipiv []int) {
 // where  alpha and beta  are scalars, C is an  n by n  symmetric matrix
 // and  A  is an  n by k  matrix in the first case and a  k by n  matrix
 // in the second case.
-pub fn dsyrk(up, trans bool, n, k int, alpha f64, a []f64, lda int, beta f64, mut c []f64, ldc int) {
+pub fn dsyrk(up bool, trans bool, n int, k int, alpha f64, a []f64, lda int, beta f64, mut c []f64, ldc int) {
 	unsafe {C.cblas_dsyrk(cblas_col_major, c_uplo(up), c_trans(trans), n, k, alpha, &a[0],
 		lda, beta, &c[0], ldc)}
 }
@@ -504,7 +503,7 @@ pub fn dpotrf(up bool, n int, mut a []f64, lda int) {
 //
 // The computed eigenvectors are normalized to have Euclidean norm
 // equal to 1 and largest component real.
-pub fn dgeev(calcVl, calcVr bool, n int, mut a []f64, lda int, wr, wi, vl []f64, ldvl_ int, vr []f64, ldvr_ int) {
+pub fn dgeev(calcVl bool, calcVr bool, n int, mut a []f64, lda int, wr []f64, wi []f64, vl []f64, ldvl_ int, vr []f64, ldvr_ int) {
 	mut vvl := 0.0
 	mut vvr := 0.0
 	mut ldvl := ldvl_

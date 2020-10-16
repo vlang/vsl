@@ -23,7 +23,7 @@ const (
  * @param tol on input gives the tolerance below with the algorithm stops. On
  * exit contains the maximum error made on the root.
 */
-pub fn brent(func vsl.Function, x1, x2, tol f64) ?(f64, f64) {
+pub fn brent(func vsl.Function, x1 f64, x2 f64, tol f64) ?(f64, f64) {
 	mut a := x1
 	mut b := x2
 	mut c := a

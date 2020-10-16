@@ -6,7 +6,7 @@ module math
 import vsl.errno
 
 // digits returns an array of the digits of n in the given base.
-pub fn digits(_n, base int) []int {
+pub fn digits(_n int, base int) []int {
 	if base < 2 {
 		errno.vsl_panic('cannot find digits of n with base $base', .edom)
 	}

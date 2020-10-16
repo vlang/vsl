@@ -7,7 +7,6 @@ import vsl.math
 import vsl.internal
 
 /*
-*
  * Compute the binomial coefficient
  *
  *      / n \        n!
@@ -18,7 +17,7 @@ import vsl.internal
  * @param p a non-negative integer smaller that n
  *
 */
-pub fn choose(n, p int) f64 {
+pub fn choose(n int, p int) f64 {
 	if n - p < 0 || n < 0 || p < 0 {
 		return 0.0
 	}
