@@ -1,5 +1,6 @@
-name: CI
+name: Build and Test with deps
 on: [push, pull_request]
+
 jobs:
   ubuntu:
     runs-on: ubuntu-latest
