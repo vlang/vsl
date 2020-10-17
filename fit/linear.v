@@ -3,7 +3,7 @@
 // that can be found in the LICENSE file.
 module fit
 
-import vsl.math
+import vsl.vmath
 
 // linear computes linear fitting parameters. Errors on y-direction only
 //
@@ -70,8 +70,8 @@ pub fn linear_sigma(x []f64, y []f64) (f64, f64, f64, f64, f64) {
 	// compute a
 	a := (sy - sx * b) / ss
 	// solve for sigma_a and sigma_b
-	mut sigma_a := math.sqrt((1.0 + sx * sx / (ss * st2)) / ss)
-	mut sigma_b := math.sqrt(1.0 / st2)
+	mut sigma_a := vmath.sqrt((1.0 + sx * sx / (ss * st2)) / ss)
+	mut sigma_b := vmath.sqrt(1.0 / st2)
 	// calculate χ².
 	mut chi_2 := 0.0
 	for i := 0; i < ndata; i++ {
@@ -82,7 +82,7 @@ pub fn linear_sigma(x []f64, y []f64) (f64, f64, f64, f64, f64) {
 	// and adjust the standard deviations.
 	mut sigma_dat := 0.0
 	if ndata > 2 {
-		sigma_dat = math.sqrt(chi_2 / f64(ndata - 2))
+		sigma_dat = vmath.sqrt(chi_2 / f64(ndata - 2))
 	}
 	sigma_a *= sigma_dat
 	sigma_b *= sigma_dat

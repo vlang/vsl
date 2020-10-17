@@ -3,7 +3,7 @@
 // that can be found in the LICENSE file.
 module specfunc
 
-import vsl.math
+import vsl.vmath
 import vsl.internal
 
 // data for a Chebyshev series over a given interval
@@ -25,11 +25,11 @@ pub fn (cs ChebSeries) eval_e(x f64) (f64, f64) {
 	for j := cs.order; j >= 1; j-- {
 		temp = d
 		d = y2 * d - dd + cs.c[j]
-		e += math.abs(y2 * temp) + math.abs(dd) + math.abs(cs.c[j])
+		e += vmath.abs(y2 * temp) + vmath.abs(dd) + vmath.abs(cs.c[j])
 		dd = temp
 	}
 	temp = d
 	d = y * d - dd + 0.5 * cs.c[0]
-	e += math.abs(y * temp) + math.abs(dd) + 0.5 * math.abs(cs.c[0])
-	return d, f64(internal.f64_epsilon) * e + math.abs(cs.c[cs.order])
+	e += vmath.abs(y * temp) + vmath.abs(dd) + 0.5 * vmath.abs(cs.c[0])
+	return d, f64(internal.f64_epsilon) * e + vmath.abs(cs.c[cs.order])
 }

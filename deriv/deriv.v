@@ -3,7 +3,7 @@
 // that can be found in the LICENSE file.
 module deriv
 
-import vsl.math
+import vsl.vmath
 import vsl
 import vsl.internal
 
@@ -21,9 +21,9 @@ fn central_deriv(f vsl.Function, x f64, h f64) (f64, f64, f64) {
 	fph := f.eval(x + h / 2)
 	r3 := 0.50 * (fp1 - fm1)
 	r5 := (4.0 / 3.00) * (fph - fmh) - (1.0 / 3.00) * r3
-	e3 := (math.abs(fp1) + math.abs(fm1)) * internal.f64_epsilon
-	e5 := 2.0 * (math.abs(fph) + math.abs(fmh)) * internal.f64_epsilon + e3 // The next term is due to finite precision in x+h = O(eps * x)
-	dy := math.max(math.abs(r3 / h), math.abs(r5 / h)) * (math.abs(x) / h) * internal.f64_epsilon
+	e3 := (vmath.abs(fp1) + vmath.abs(fm1)) * internal.f64_epsilon
+	e5 := 2.0 * (vmath.abs(fph) + vmath.abs(fmh)) * internal.f64_epsilon + e3 // The next term is due to finite precision in x+h = O(eps * x)
+	dy := vmath.max(vmath.abs(r3 / h), vmath.abs(r5 / h)) * (vmath.abs(x) / h) * internal.f64_epsilon
 	/*
 	The truncation error in the r5 approximation itself is O(h^4).
          * However, for safety, we estimate the error from r5-r3, which is
@@ -31,8 +31,8 @@ fn central_deriv(f vsl.Function, x f64, h f64) (f64, f64, f64) {
          * the actual truncation error in r5.
 	*/
 	result := r5 / h
-	abserr_trunc := math.abs((r5 - r3) / h) // Estimated truncation error O(h^2)
-	abserr_round := math.abs(e5 / h) + dy // Rounding error (cancellations)
+	abserr_trunc := vmath.abs((r5 - r3) / h) // Estimated truncation error O(h^2)
+	abserr_round := vmath.abs(e5 / h) + dy // Rounding error (cancellations)
 	return result, abserr_trunc, abserr_round
 }
 
@@ -46,14 +46,14 @@ pub fn central(f vsl.Function, x f64, h f64) (f64, f64) {
                  * using the scaling of the truncation error (O(h^2)) and
                  * rounding error (O(1/h)).
 		*/
-		h_opt := h * math.pow(round / (2.0 * trunc), 1.0 / 3.00)
+		h_opt := h * vmath.pow(round / (2.0 * trunc), 1.0 / 3.00)
 		r_opt, round_opt, trunc_opt := central_deriv(f, x, h_opt)
 		error_opt := round_opt + trunc_opt
 		/*
 		Check that the new error is smaller, and that the new derivative
                  * is consistent with the error bounds of the original estimate.
 		*/
-		if error_opt < error && math.abs(r_opt - r_0) < 4.0 * error {
+		if error_opt < error && vmath.abs(r_opt - r_0) < 4.0 * error {
 			result = r_opt
 			error = error_opt
 		}
@@ -75,8 +75,8 @@ fn forward_deriv(f vsl.Function, x f64, h f64) (f64, f64, f64) {
 	r2 := 2.0 * (f4 - f2)
 	r4 := (22.0 / 3.00) * (f4 - f3) - (62.0 / 3.00) * (f3 - f2) + (52.0 / 3.00) * (f2 - f1) // Estimate the rounding error for r4
 	e4 := 2.0 * 20.670 *
-		(math.abs(f4) + math.abs(f3) + math.abs(f2) + math.abs(f1)) * internal.f64_epsilon // The next term is due to finite precision in x+h = O(eps * x)
-	dy := math.max(math.abs(r2 / h), math.abs(r4 / h)) * math.abs(x / h) * internal.f64_epsilon
+		(vmath.abs(f4) + vmath.abs(f3) + vmath.abs(f2) + vmath.abs(f1)) * internal.f64_epsilon // The next term is due to finite precision in x+h = O(eps * x)
+	dy := vmath.max(vmath.abs(r2 / h), vmath.abs(r4 / h)) * vmath.abs(x / h) * internal.f64_epsilon
 	/*
 	The truncation error in the r4 approximation itself is O(h^3).
          * However, for safety, we estimate the error from r4-r2, which is
@@ -84,8 +84,8 @@ fn forward_deriv(f vsl.Function, x f64, h f64) (f64, f64, f64) {
          * the actual truncation error in r4.
 	*/
 	result := r4 / h
-	abserr_trunc := math.abs((r4 - r2) / h) // Estimated truncation error O(h)
-	abserr_round := math.abs(e4 / h) + dy
+	abserr_trunc := vmath.abs((r4 - r2) / h) // Estimated truncation error O(h)
+	abserr_round := vmath.abs(e4 / h) + dy
 	return result, abserr_trunc, abserr_round
 }
 
@@ -99,14 +99,14 @@ pub fn forward(f vsl.Function, x f64, h f64) (f64, f64) {
                  * using the scaling of the estimated truncation error (O(h)) and
                  * rounding error (O(1/h)).
 		*/
-		h_opt := h * math.pow(round / (trunc), 1.0 / 2.00)
+		h_opt := h * vmath.pow(round / (trunc), 1.0 / 2.00)
 		r_opt, round_opt, trunc_opt := forward_deriv(f, x, h_opt)
 		error_opt := round_opt + trunc_opt
 		/*
 		Check that the new error is smaller, and that the new derivative
                  * is consistent with the error bounds of the original estimate.
 		*/
-		if error_opt < error && math.abs(r_opt - r_0) < 4.0 * error {
+		if error_opt < error && vmath.abs(r_opt - r_0) < 4.0 * error {
 			result = r_opt
 			error = error_opt
 		}

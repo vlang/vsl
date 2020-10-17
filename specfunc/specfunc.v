@@ -3,11 +3,11 @@
 // that can be found in the LICENSE file.
 module specfunc
 
-import vsl.math
+import vsl.vmath
 
 fn is_neg_int(x f64) bool {
 	if x < 0 {
-		_, xf := math.modf(x)
+		_, xf := vmath.modf(x)
 		return xf == 0
 	}
 	return false

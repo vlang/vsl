@@ -11,18 +11,18 @@ More information is available in **[the documentation of this package](https://v
 ```v
 module diff
 
-import vsl.math
+import vsl.vmath
 import vsl.diff
 import vsl
 
 fn func(x f64, _ []f64) f64 {
-	return math.pow(x, 1.5)
+	return vmath.pow(x, 1.5)
 }
 
 fn main() {
 	f := vsl.Function{function: func}
 	println('f(x) = x^(3/2)')
-	mut expected := 1.5 * math.sqrt(2.0)
+	mut expected := 1.5 * vmath.sqrt(2.0)
 	mut result, mut abserr := diff.central(f, 2.0)
 	println('x = 2.0')
 	println("f'(x) = $result +/- $abserr")

@@ -55,7 +55,7 @@ On exit, the results is `(x_max + x_min) / 2`.
 module main
 
 import vsl
-import vsl.math
+import vsl.vmath
 import vsl.roots
 
 const (
@@ -65,7 +65,7 @@ const (
 )
 
 fn f_cos(x f64, _ []f64) f64 {
-	return math.cos(x)
+	return vmath.cos(x)
 }
 
 fn main() {
@@ -76,4 +76,4 @@ fn main() {
 }
 ```
 
-`result` will be `math.pi / 2.00`
+`result` will be `vmath.pi / 2.00`

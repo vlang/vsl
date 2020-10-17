@@ -2,7 +2,7 @@
 // Use of this source code is governed by an MIT license
 // that can be found in the LICENSE file.
 import fit
-import vsl.math
+import vsl.vmath
 
 fn test_linear_fit01() {
 	// data
@@ -37,9 +37,9 @@ fn compare(x f64, y f64) bool {
 	if x < tolerance && x > (-1.0 * tolerance) && y < tolerance && y > (-1.0 * tolerance) {
 		return true
 	}
-	diff := math.abs(x - y)
-	mean := math.abs(x + y) / 2.0
-	return if math.is_nan(diff / mean) {
+	diff := vmath.abs(x - y)
+	mean := vmath.abs(x + y) / 2.0
+	return if vmath.is_nan(diff / mean) {
 		true
 	} else {
 		((diff / mean) < tolerance)

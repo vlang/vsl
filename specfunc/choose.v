@@ -3,7 +3,7 @@
 // that can be found in the LICENSE file.
 module specfunc
 
-import vsl.math
+import vsl.vmath
 import vsl.internal
 
 /*
@@ -23,11 +23,11 @@ pub fn choose(n int, p int) f64 {
 	}
 	n_f64 := f64(n)
 	p_f64 := f64(p)
-	k := math.max(p_f64, n_f64 - p_f64)
+	k := vmath.max(p_f64, n_f64 - p_f64)
 	if k < internal.max_int_fact_arg {
-		return math.factorial(n_f64) / (math.factorial(p_f64) * math.factorial(n_f64 - p_f64))
+		return vmath.factorial(n_f64) / (vmath.factorial(p_f64) * vmath.factorial(n_f64 - p_f64))
 	}
-	log_choose := math.log_factorial(n_f64 + 1.0) - math.log_factorial(p_f64 + 1.0) - math.log_factorial(n_f64 -
+	log_choose := vmath.log_factorial(n_f64 + 1.0) - vmath.log_factorial(p_f64 + 1.0) - vmath.log_factorial(n_f64 -
 		p_f64 + 1.0)
-	return math.exp(log_choose)
+	return vmath.exp(log_choose)
 }

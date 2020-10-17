@@ -3,7 +3,7 @@
 // that can be found in the LICENSE file.
 module stats
 
-import vsl.math
+import vsl.vmath
 
 // Measure of Occurance
 // Frequency of a given number
@@ -49,7 +49,7 @@ pub fn geometric_mean(data []f64) f64 {
 	for v in data {
 		sum *= v
 	}
-	return math.pow(sum, 1.0 / f64(data.len))
+	return vmath.pow(sum, 1.0 / f64(data.len))
 }
 
 // Measure of Central Tendancy
@@ -113,9 +113,9 @@ pub fn rms(data []f64) f64 {
 	}
 	mut sum := 0.0
 	for v in data {
-		sum += math.pow(v, 2)
+		sum += vmath.pow(v, 2)
 	}
-	return math.sqrt(sum / f64(data.len))
+	return vmath.sqrt(sum / f64(data.len))
 }
 
 // Measure of Dispersion / Spread
@@ -188,7 +188,7 @@ pub fn population_stddev(data []f64) f64 {
 	if data.len == 0 {
 		return 0.0
 	}
-	return math.sqrt(population_variance(data))
+	return vmath.sqrt(population_variance(data))
 }
 
 // Measure of Dispersion / Spread
@@ -199,7 +199,7 @@ pub fn population_stddev_mean(data []f64, mean f64) f64 {
 	if data.len == 0 {
 		return 0.0
 	}
-	return math.sqrt(population_variance_mean(data, mean))
+	return vmath.sqrt(population_variance_mean(data, mean))
 }
 
 // Measure of Dispersion / Spread
@@ -210,7 +210,7 @@ pub fn sample_stddev(data []f64) f64 {
 	if data.len == 0 {
 		return 0.0
 	}
-	return math.sqrt(sample_variance(data))
+	return vmath.sqrt(sample_variance(data))
 }
 
 // Measure of Dispersion / Spread
@@ -221,7 +221,7 @@ pub fn sample_stddev_mean(data []f64, mean f64) f64 {
 	if data.len == 0 {
 		return 0.0
 	}
-	return math.sqrt(sample_variance_mean(data, mean))
+	return vmath.sqrt(sample_variance_mean(data, mean))
 }
 
 // Measure of Dispersion / Spread
@@ -235,7 +235,7 @@ pub fn absdev(data []f64) f64 {
 	data_mean := mean(data)
 	mut sum := 0.0
 	for v in data {
-		sum += math.abs(v - data_mean)
+		sum += vmath.abs(v - data_mean)
 	}
 	return sum / f64(data.len)
 }
@@ -250,7 +250,7 @@ pub fn absdev_mean(data []f64, mean f64) f64 {
 	}
 	mut sum := 0.0
 	for v in data {
-		sum += math.abs(v - mean)
+		sum += vmath.abs(v - mean)
 	}
 	return sum / f64(data.len)
 }
@@ -401,7 +401,7 @@ pub fn covariance(data1 []f64, data2 []f64) f64 {
 // Compute the covariance of a dataset using
 // the recurrence relation
 pub fn covariance_mean(data1 []f64, data2 []f64, mean1 f64, mean2 f64) f64 {
-	n := int(math.min(data1.len, data2.len))
+	n := int(vmath.min(data1.len, data2.len))
 	if n == 0 {
 		return 0.0
 	}

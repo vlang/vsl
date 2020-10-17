@@ -8,7 +8,7 @@ Complex Numbers
 .. done for the csc, sec, cot, csch, sech, coth functions
 
 The complex types, functions and arithmetic operations are defined in
-the module :file:`vsl.math.complex`.
+the module :file:`vsl.vmath.complex`.
 
 .. index::
    single: representations of complex numbers

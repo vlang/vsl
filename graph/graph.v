@@ -5,7 +5,7 @@
 module graph
 
 import strconv
-import vsl.math
+import vsl.vmath
 import vsl.errno
 
 // TODO: change map[string]* types to map[int]*
@@ -167,7 +167,7 @@ pub fn (g Graph) calc_dist() Graph {
 			if i == j {
 				dist[i][j] = 0
 			} else {
-				dist[i][j] = math.max_f64
+				dist[i][j] = vmath.max_f64
 			}
 			next[i][j] = -1
 		}
@@ -181,9 +181,9 @@ pub fn (g Graph) calc_dist() Graph {
 			xa := verts[i]
 			xb := verts[j]
 			for dim := 0; dim < xa.len; dim++ {
-				d += math.pow(xa[dim] - xb[dim], 2.0)
+				d += vmath.pow(xa[dim] - xb[dim], 2.0)
 			}
-			d = math.sqrt(d)
+			d = vmath.sqrt(d)
 		}
 		if weights_e.len != 0 {
 			d *= weights_e[k]
@@ -214,20 +214,20 @@ pub fn (g Graph) str_dist_matrix() string {
 	for i := 0; i < nv; i++ {
 		for j := 0; j < nv; j++ {
 			i_dist := g.dist[i]
-			if i_dist[j] < math.max_f64 {
+			if i_dist[j] < vmath.max_f64 {
 				i_dist_str := strconv.v_sprintf('%g', i_dist[j])
-				maxlen = int(math.max(maxlen, i_dist_str.len))
+				maxlen = int(vmath.max(maxlen, i_dist_str.len))
 			}
 		}
 	}
 	mut l := ''
-	maxlen = int(math.max(3, maxlen))
+	maxlen = int(vmath.max(3, maxlen))
 	fmts := strconv.v_sprintf('%%d', maxlen + 1)
 	fmtn := strconv.v_sprintf('%%%dg', maxlen + 1)
 	for i := 0; i < nv; i++ {
 		for j := 0; j < nv; j++ {
 			i_dist := g.dist[i]
-			if i_dist[j] < math.max_f64 {
+			if i_dist[j] < vmath.max_f64 {
 				l += strconv.v_sprintf(fmtn, i_dist[j])
 			} else {
 				l += strconv.v_sprintf(fmts) + '∞'

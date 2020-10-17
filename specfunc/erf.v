@@ -3,7 +3,7 @@
 // that can be found in the LICENsE file.
 module specfunc
 
-import vsl.math
+import vsl.vmath
 
 // x
 // 2      |\
@@ -168,13 +168,13 @@ pub fn erf(x_ f64) f64 {
 	mut x := x_
 	very_tiny := 2.848094538889218e-306 // 0x0080000000000000
 	small := f64(1.0) / (1 << 28) // 2**-28
-	if math.is_nan(x) {
-		return math.nan()
+	if vmath.is_nan(x) {
+		return vmath.nan()
 	}
-	if math.is_inf(x, 1) {
+	if vmath.is_inf(x, 1) {
 		return 1.0
 	}
-	if math.is_inf(x, -1) {
+	if vmath.is_inf(x, -1) {
 		return f64(-1)
 	}
 	mut sign := false
@@ -234,8 +234,8 @@ pub fn erf(x_ f64) f64 {
 		s = 1.0 + s_ *
 			(sb1 + s_ * (sb2 + s_ * (sb3 + s_ * (sb4 + s_ * (sb5 + s_ * (sb6 + s_ * sb7))))))
 	}
-	z := math.f64_from_bits(math.f64_bits(x) & 0xffffffff00000000) // pseudo-single (20-bit) precision x
-	r_ := math.exp(-z * z - 0.5625) * math.exp((z - x) * (z + x) + r / s)
+	z := vmath.f64_from_bits(vmath.f64_bits(x) & 0xffffffff00000000) // pseudo-single (20-bit) precision x
+	r_ := vmath.exp(-z * z - 0.5625) * vmath.exp((z - x) * (z + x) + r / s)
 	if sign {
 		return r_ / x - 1.0
 	}
@@ -252,13 +252,13 @@ pub fn erfc(x_ f64) f64 {
 	mut x := x_
 	tiny := f64(1.0) / (1 << 56) // 2**-56
 	// special cases
-	if math.is_nan(x) {
-		return math.nan()
+	if vmath.is_nan(x) {
+		return vmath.nan()
 	}
-	if math.is_inf(x, 1) {
+	if vmath.is_inf(x, 1) {
 		return 0.0
 	}
-	if math.is_inf(x, -1) {
+	if vmath.is_inf(x, -1) {
 		return f64(2)
 	}
 	mut sign := false
@@ -318,8 +318,8 @@ pub fn erfc(x_ f64) f64 {
 			s = 1.0 + s_ *
 				(sb1 + s_ * (sb2 + s_ * (sb3 + s_ * (sb4 + s_ * (sb5 + s_ * (sb6 + s_ * sb7))))))
 		}
-		z := math.f64_from_bits(math.f64_bits(x) & 0xffffffff00000000) // pseudo-single (20-bit) precision x
-		r_ := math.exp(-z * z - 0.5625) * math.exp((z - x) * (z + x) + r / s)
+		z := vmath.f64_from_bits(vmath.f64_bits(x) & 0xffffffff00000000) // pseudo-single (20-bit) precision x
+		r_ := vmath.exp(-z * z - 0.5625) * vmath.exp((z - x) * (z + x) + r / s)
 		if sign {
 			return f64(2) - r_ / x
 		}

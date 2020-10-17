@@ -3,19 +3,19 @@
 // that can be found in the LICENSE file.
 import deriv
 import vsl
-import vsl.math
+import vsl.vmath
 
 fn f1(x f64, _ []f64) f64 {
-	return math.exp(x)
+	return vmath.exp(x)
 }
 
 fn df1(x f64, _ []f64) f64 {
-	return math.exp(x)
+	return vmath.exp(x)
 }
 
 fn f2(x f64, _ []f64) f64 {
 	if x >= 0.0 {
-		return x * math.sqrt(x)
+		return x * vmath.sqrt(x)
 	} else {
 		return 0.00
 	}
@@ -23,7 +23,7 @@ fn f2(x f64, _ []f64) f64 {
 
 fn df2(x f64, _ []f64) f64 {
 	if x >= 0.0 {
-		return 1.50 * math.sqrt(x)
+		return 1.50 * vmath.sqrt(x)
 	} else {
 		return 0.00
 	}
@@ -31,7 +31,7 @@ fn df2(x f64, _ []f64) f64 {
 
 fn f3(x f64, _ []f64) f64 {
 	if x != 0.0 {
-		return math.sin(1.0 / x)
+		return vmath.sin(1.0 / x)
 	} else {
 		return 0.00
 	}
@@ -39,18 +39,18 @@ fn f3(x f64, _ []f64) f64 {
 
 fn df3(x f64, _ []f64) f64 {
 	if x != 0.0 {
-		return -math.cos(1.0 / x) / (x * x)
+		return -vmath.cos(1.0 / x) / (x * x)
 	} else {
 		return 0.00
 	}
 }
 
 fn f4(x f64, _ []f64) f64 {
-	return math.exp(-x * x)
+	return vmath.exp(-x * x)
 }
 
 fn df4(x f64, _ []f64) f64 {
-	return -2.0 * x * math.exp(-x * x)
+	return -2.0 * x * vmath.exp(-x * x)
 }
 
 fn f5(x f64, _ []f64) f64 {
@@ -163,9 +163,9 @@ fn compare_near(x f64, y f64, tolerance f64) bool {
 	if x < tolerance && x > (-1.0 * tolerance) && y < tolerance && y > (-1.0 * tolerance) {
 		return true
 	}
-	deriv := math.abs(x - y)
-	mean := math.abs(x + y) / 2.0
-	return if math.is_nan(deriv / mean) {
+	deriv := vmath.abs(x - y)
+	mean := vmath.abs(x + y) / 2.0
+	return if vmath.is_nan(deriv / mean) {
 		true
 	} else {
 		((deriv / mean) < tolerance)

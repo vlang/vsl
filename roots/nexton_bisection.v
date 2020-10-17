@@ -3,7 +3,7 @@
 // that can be found in the LICENSE file.
 module roots
 
-import vsl.math
+import vsl.vmath
 import vsl.errno
 import vsl
 
@@ -43,13 +43,13 @@ pub fn newton_bisection(func vsl.FunctionFdf, x_min f64, x_max f64, tol f64, max
 		xh = x_min
 	}
 	mut rts := f64(0.5) * (x_min + x_max)
-	mut dx_anc := math.abs(x_max - x_min)
+	mut dx_anc := vmath.abs(x_max - x_min)
 	mut dx := dx_anc
 	mut func_current, mut diff_func_current := func.eval_f_df(rts)
 	for i := 0; i < max_iter; i++ {
 		if (((rts - xh) * diff_func_current - func_current) *
 			((rts - xl) * diff_func_current - func_current) >= 0.0) ||
-			math.abs(2.0 * func_current) > math.abs(dx_anc * diff_func_current) {
+			vmath.abs(2.0 * func_current) > vmath.abs(dx_anc * diff_func_current) {
 			dx_anc = dx
 			dx = 0.5 * (xh - xl)
 			rts = xl + dx
@@ -58,7 +58,7 @@ pub fn newton_bisection(func vsl.FunctionFdf, x_min f64, x_max f64, tol f64, max
 			dx = func_current / diff_func_current
 			rts -= dx
 		}
-		if math.abs(dx) < tol {
+		if vmath.abs(dx) < tol {
 			return rts
 		}
 		func_current, diff_func_current = func.eval_f_df(rts)

@@ -3,7 +3,7 @@
 // that can be found in the LICENSE file.
 module diff
 
-import vsl.math
+import vsl.vmath
 import vsl
 import vsl.internal
 
@@ -35,15 +35,15 @@ pub fn backward(f vsl.Function, x f64) (f64, f64) {
 	Adapt procedure described on pg. 282 of CdB to find best value of
          * step size.
 	*/
-	mut a2 := math.abs(d[0] + d[1] + d[2])
+	mut a2 := vmath.abs(d[0] + d[1] + d[2])
 	if a2 < 100.0 * internal.sqrt_f64_epsilon {
 		a2 = 100.0 * internal.sqrt_f64_epsilon
 	}
-	h = math.sqrt(internal.sqrt_f64_epsilon / (2.0 * a2))
+	h = vmath.sqrt(internal.sqrt_f64_epsilon / (2.0 * a2))
 	if h > 100.0 * internal.sqrt_f64_epsilon {
 		h = 100.0 * internal.sqrt_f64_epsilon
 	}
-	return (f.eval(x) - f.eval(x - h)) / h, math.abs(10.0 * a2 * h)
+	return (f.eval(x) - f.eval(x - h)) / h, vmath.abs(10.0 * a2 * h)
 }
 
 pub fn forward(f vsl.Function, x f64) (f64, f64) {
@@ -74,15 +74,15 @@ pub fn forward(f vsl.Function, x f64) (f64, f64) {
 	Adapt procedure described on pg. 282 of CdB to find best value of
          * step size.
 	*/
-	mut a2 := math.abs(d[0] + d[1] + d[2])
+	mut a2 := vmath.abs(d[0] + d[1] + d[2])
 	if a2 < 100.0 * internal.sqrt_f64_epsilon {
 		a2 = 100.0 * internal.sqrt_f64_epsilon
 	}
-	h = math.sqrt(internal.sqrt_f64_epsilon / (2.0 * a2))
+	h = vmath.sqrt(internal.sqrt_f64_epsilon / (2.0 * a2))
 	if h > 100.0 * internal.sqrt_f64_epsilon {
 		h = 100.0 * internal.sqrt_f64_epsilon
 	}
-	return (f.eval(x + h) - f.eval(x)) / h, math.abs(10.0 * a2 * h)
+	return (f.eval(x + h) - f.eval(x)) / h, vmath.abs(10.0 * a2 * h)
 }
 
 pub fn central(f vsl.Function, x f64) (f64, f64) {
@@ -113,13 +113,13 @@ pub fn central(f vsl.Function, x f64) (f64, f64) {
 	Adapt procedure described on pg. 282 of CdB to find best value of
          * step size.
 	*/
-	mut a3 := math.abs(d[0] + d[1] + d[2] + d[3])
+	mut a3 := vmath.abs(d[0] + d[1] + d[2] + d[3])
 	if a3 < 100.0 * internal.sqrt_f64_epsilon {
 		a3 = 100.0 * internal.sqrt_f64_epsilon
 	}
-	h = math.pow(internal.sqrt_f64_epsilon / (2.0 * a3), 1.0 / 3.0)
+	h = vmath.pow(internal.sqrt_f64_epsilon / (2.0 * a3), 1.0 / 3.0)
 	if h > 100.0 * internal.sqrt_f64_epsilon {
 		h = 100.0 * internal.sqrt_f64_epsilon
 	}
-	return (f.eval(x + h) - f.eval(x - h)) / (2.0 * h), math.abs(100.0 * a3 * h * h)
+	return (f.eval(x + h) - f.eval(x - h)) / (2.0 * h), vmath.abs(100.0 * a3 * h * h)
 }

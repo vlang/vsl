@@ -3,7 +3,7 @@
 // that can be found in the LICENSE file.
 module roots
 
-import vsl.math
+import vsl.vmath
 import vsl.errno
 import vsl
 
@@ -41,19 +41,19 @@ pub fn newton(func vsl.FunctionFdf, x0 f64, x_eps f64, fx_eps f64, n_max int) ?f
 			errno.vsl_panic('div by zero', .ezerodiv)
 		}
 		dx := f / df
-		norm0 := math.abs(f)
+		norm0 := vmath.abs(f)
 		mut norm := 0.0 // Armijo line search
 		for t != 0.0 {
 			x_linesearch := root - t * dx
 			f, df = func.eval_f_df(x_linesearch)
-			norm = math.abs(f)
+			norm = vmath.abs(f)
 			if norm < norm0 * (1.0 - omega * t) {
 				root = x_linesearch
 				break
 			}
 			t *= gamma
 		}
-		if math.abs(dx) < x_eps * math.abs(root) || norm < fx_eps {
+		if vmath.abs(dx) < x_eps * vmath.abs(root) || norm < fx_eps {
 			break
 		}
 		i++

@@ -4,7 +4,7 @@
 module stats
 
 import vsl.la
-import vsl.math
+import vsl.vmath
 
 // Stat holds statistics about data
 //
@@ -55,8 +55,8 @@ pub fn (mut o Stat) update() {
 		o.sum_x[j] = 0.0
 		for i := 0; i < m; i++ {
 			xval := o.data.x.get(i, j)
-			o.min_x[j] = math.min(o.min_x[j], xval)
-			o.max_x[j] = math.max(o.max_x[j], xval)
+			o.min_x[j] = vmath.min(o.min_x[j], xval)
+			o.max_x[j] = vmath.max(o.max_x[j], xval)
 			o.sum_x[j] += xval
 		}
 		o.mean_x[j] = o.sum_x[j] / mf
@@ -69,8 +69,8 @@ pub fn (mut o Stat) update() {
 		o.max_y = o.min_y
 		o.sum_y = 0.0
 		for i := 0; i < m; i++ {
-			o.min_y = math.min(o.min_y, o.data.y[i])
-			o.max_y = math.max(o.max_y, o.data.y[i])
+			o.min_y = vmath.min(o.min_y, o.data.y[i])
+			o.max_y = vmath.max(o.max_y, o.data.y[i])
 			o.sum_y += o.data.y[i]
 		}
 		o.mean_y = o.sum_y / mf

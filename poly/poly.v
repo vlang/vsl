@@ -3,7 +3,7 @@
 // that can be found in the LICENSE file.
 module poly
 
-import vsl.math
+import vsl.vmath
 
 const (
 	radix  = 2
@@ -64,11 +64,11 @@ pub fn solve_quadratic(a f64, b f64, c f64) []f64 { // Handle linear case
 	disc := b * b - f64(4) * a * c
 	if disc > 0 {
 		if b == 0 {
-			r := math.sqrt(-c / a)
+			r := vmath.sqrt(-c / a)
 			return [-r, r]
 		} else {
 			sgnb := if b > 0 { 1 } else { -1 }
-			temp := -0.5 * (b + f64(sgnb) * math.sqrt(disc))
+			temp := -0.5 * (b + f64(sgnb) * vmath.sqrt(disc))
 			r1 := temp / a
 			r2 := c / temp
 			return if r1 < r2 {
@@ -105,7 +105,7 @@ pub fn solve_cubic(a f64, b f64, c f64) []f64 {
                         considered to be a pair of complex roots z = x +/- epsilon i
                         close to the real axis.
 		*/
-		sqrt_q := math.sqrt(q)
+		sqrt_q := vmath.sqrt(q)
 		if r > 0.0 {
 			return [-2.0 * sqrt_q - a / 3.0, sqrt_q - a / 3.0, sqrt_q - a / 3.0]
 		} else {
@@ -113,17 +113,17 @@ pub fn solve_cubic(a f64, b f64, c f64) []f64 {
 		}
 	} else if r2 < q3 {
 		sgnr := if r >= 0.0 { 1.0 } else { -1.0 }
-		ratio := sgnr * math.sqrt(r2 / q3)
-		theta := math.acos(ratio)
-		norm := f64(-2.0 * math.sqrt(q))
-		mut x0 := norm * math.cos(theta / 3.0) - a / 3.0
-		mut x1 := norm * math.cos((theta + 2.0 * math.pi) / 3.0) - a / 3.0
-		mut x2 := norm * math.cos((theta - 2.0 * math.pi) / 3.0) - a / 3.0
+		ratio := sgnr * vmath.sqrt(r2 / q3)
+		theta := vmath.acos(ratio)
+		norm := f64(-2.0 * vmath.sqrt(q))
+		mut x0 := norm * vmath.cos(theta / 3.0) - a / 3.0
+		mut x1 := norm * vmath.cos((theta + 2.0 * vmath.pi) / 3.0) - a / 3.0
+		mut x2 := norm * vmath.cos((theta - 2.0 * vmath.pi) / 3.0) - a / 3.0
 		x0, x1, x2 = sorted_3_(x0, x1, x2)
 		return [x0, x1, x2]
 	} else {
 		sgnr := if r >= 0.0 { 1.0 } else { -1.0 }
-		a_ := -sgnr * math.pow(math.abs(r) + math.sqrt(r2 - q3), 1.0 / 3.0)
+		a_ := -sgnr * vmath.pow(vmath.abs(r) + vmath.sqrt(r2 - q3), 1.0 / 3.0)
 		b_ := q / a_
 		return [a_ + b_ - a / 3]
 	}
@@ -182,19 +182,19 @@ pub fn balance_companion_matrix(cm [][]f64) [][]f64 {
 		not_converged = false
 		for i := 0; i < nc; i++ { // column norm, excluding the diagonal
 			if i != nc - 1 {
-				col_norm = math.abs(m[i + 1][i])
+				col_norm = vmath.abs(m[i + 1][i])
 			} else {
 				col_norm = 0.0
 				for j := 0; j < nc - 1; j++ {
-					col_norm += math.abs(m[j][nc - 1])
+					col_norm += vmath.abs(m[j][nc - 1])
 				}
 			} // row norm, excluding the diagonal
 			if i == 0 {
-				row_norm = math.abs(m[0][nc - 1])
+				row_norm = vmath.abs(m[0][nc - 1])
 			} else if i == nc - 1 {
-				row_norm = math.abs(m[i][i - 1])
+				row_norm = vmath.abs(m[i][i - 1])
 			} else {
-				row_norm = (math.abs(m[i][i - 1]) + math.abs(m[i][nc - 1]))
+				row_norm = (vmath.abs(m[i][i - 1]) + vmath.abs(m[i][nc - 1]))
 			}
 			if col_norm == 0.0 || row_norm == 0.0 {
 				continue
@@ -274,7 +274,7 @@ pub fn balance_companion_matrix(cm [][]f64) [][]f64 {
 pub fn add(a []f64, b []f64) []f64 {
 	na := a.len
 	nb := b.len
-	nc := int(math.max(na, nb))
+	nc := int(vmath.max(na, nb))
 	mut c := [0.0].repeat(nc)
 	for i := 0; i < nc; i++ {
 		if i > na {
@@ -291,7 +291,7 @@ pub fn add(a []f64, b []f64) []f64 {
 pub fn substract(a []f64, b []f64) []f64 {
 	na := a.len
 	nb := b.len
-	nc := int(math.max(na, nb))
+	nc := int(vmath.max(na, nb))
 	mut c := [0.0].repeat(nc)
 	for i := 0; i < nc; i++ {
 		if i > na {

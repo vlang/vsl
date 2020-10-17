@@ -3,7 +3,7 @@
 // that can be found in the LICENSE file.
 module vsl
 
-import vsl.math
+import vsl.vmath
 import vsl.errno
 
 // TODO: change params type from []f64 to []T
@@ -13,7 +13,7 @@ pub type DfFn = fn (x f64, params []f64) f64
 
 pub type FdfFn = fn (x f64, params []f64) (f64, f64)
 
-pub type VectorValuedFn = fn (x f64, y, params []f64) f64
+pub type VectorValuedFn = fn (x f64, y []f64, params []f64) f64
 
 // Definition of an arbitrary function with parameters
 pub struct Function {
@@ -29,7 +29,7 @@ pub fn (f Function) eval(x f64) f64 {
 }
 
 fn is_finite(a f64) bool {
-	return !math.is_nan(a) && !math.is_inf(a, 0)
+	return !vmath.is_nan(a) && !vmath.is_inf(a, 0)
 }
 
 // Call the pointed-to function with argument x, put its result in y, and

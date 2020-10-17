@@ -4,8 +4,8 @@
 module blas
 
 import strconv
-import vsl.math
-import vsl.math.complex
+import vsl.vmath
+import vsl.vmath.complex
 import vsl.errno
 
 // slice_to_col_major converts nested slice into an array representing a col-major matrix
@@ -320,7 +320,7 @@ pub fn eigenvecs_build(mut vv []complex.Complex, wr []f64, wi []f64, v []f64) {
 	mut dj := 1 // increment for next conjugate pair
 	for j := 0; j < n; j += dj {
 		// loop over columns == eigenvalues
-		if math.abs(wi[j]) > 0.0 {
+		if vmath.abs(wi[j]) > 0.0 {
 			// eigenvalue is complex
 			if j > n - 2 {
 				errno.vsl_panic('last eigenvalue cannot be complex', .efailed)
@@ -358,7 +358,7 @@ pub fn eigenvecs_build_both(mut vvl []complex.Complex, mut vvr []complex.Complex
 	mut dj := 1 // increment for next conjugate pair
 	for j := 0; j < n; j += dj {
 		// loop over columns == eigenvalues
-		if math.abs(wi[j]) > 0.0 {
+		if vmath.abs(wi[j]) > 0.0 {
 			// eigenvalue is complex
 			if j > n - 2 {
 				errno.vsl_panic('last eigenvalue cannot be complex', .efailed)

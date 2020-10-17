@@ -3,7 +3,7 @@
 // that can be found in the LICENSE file.
 module specfunc
 
-import vsl.math
+import vsl.vmath
 import vsl.poly
 
 [inline]
@@ -19,9 +19,9 @@ pub fn psi(x_ f64) f64 {
 	if x <= 0.0 {
 		negative = true
 		q := x
-		mut p := math.floor(q)
+		mut p := vmath.floor(q)
 		if p == q {
-			return math.max_f64
+			return vmath.max_f64
 		}
 		// Remove the zeros of tan(PI x)
 		// by subtracting the nearest integer from x
@@ -31,14 +31,14 @@ pub fn psi(x_ f64) f64 {
 				p += 1.0
 				nz = q - p
 			}
-			nz = math.pi / math.tan(math.pi * nz)
+			nz = vmath.pi / vmath.tan(vmath.pi * nz)
 		} else {
 			nz = 0.0
 		}
 		x = 1.0 - x
 	}
 	// check for positive integer up to 10
-	if (x <= 10.0) && (x == math.floor(x)) {
+	if (x <= 10.0) && (x == vmath.floor(x)) {
 		y = 0.0
 		n := int(x)
 		for i := 1; i < n; i++ {
@@ -60,7 +60,7 @@ pub fn psi(x_ f64) f64 {
 	} else {
 		y = 0.0
 	}
-	y = math.log(s) - (0.5 / s) - y - w
+	y = vmath.log(s) - (0.5 / s) - y - w
 	done:
 	if negative {
 		y -= nz

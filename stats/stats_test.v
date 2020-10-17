@@ -1,7 +1,7 @@
 // Copyright (c) 2019-2020 Ulises Jeremias Cornejo Fandos. All rights reserved.
 // Use of this source code is governed by an MIT license
 // that can be found in the LICENSE file.
-import vsl.math
+import vsl.vmath
 import vsl.stats
 
 fn test_freq() {
@@ -16,7 +16,7 @@ fn test_freq() {
 }
 
 fn tst_res(str1 string, str2 string) bool {
-	if (math.abs(str1.f64() - str2.f64())) < 1e-5 {
+	if (vmath.abs(str1.f64() - str2.f64())) < 1e-5 {
 		return true
 	}
 	return false

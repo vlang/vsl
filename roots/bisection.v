@@ -3,7 +3,7 @@
 // that can be found in the LICENSE file.
 module roots
 
-import vsl.math
+import vsl.vmath
 import vsl.errno
 import vsl
 
@@ -46,7 +46,7 @@ pub fn bisection(func vsl.Function, xmin f64, xmax f64, epsrel f64, epsabs f64, 
 			b = c
 			fb = fc
 		}
-		if math.abs(b - a) < epsabs + epsrel * math.abs(a) {
+		if vmath.abs(b - a) < epsabs + epsrel * vmath.abs(a) {
 			break
 		}
 		i++

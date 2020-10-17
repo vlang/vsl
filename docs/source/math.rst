@@ -13,7 +13,7 @@ option for when they are not present.
 This chapter describes basic mathematical functions.
 
 The functions and macros described in this chapter are defined in the
-module :file:`vsl.math`.
+module :file:`vsl.vmath`.
 
 .. index::
    single: mathematical constants, defined as macros
