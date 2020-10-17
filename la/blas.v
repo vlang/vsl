@@ -6,18 +6,19 @@ module la
 import vsl.blas
 import vsl.math
 
-// vector_rms_error returns the scaled root-mean-square of the difference between two vectors
-// with components normalised by a scaling factor
-//                __________________________
-//               /     ————              2
-//              /  1   \    /  error[i]  \
-//   rms =  \  /  ———  /    | —————————— |
-//           \/    N   ———— \  scale[i]  /
-//
-//   error[i] = |u[i] - v[i]|
-//
-//   scale[i] = a + m*|s[i]|
-//
+/*
+ * vector_rms_error returns the scaled root-mean-square of the difference between two vectors
+ * with components normalised by a scaling factor
+ *                __________________________
+ *               /     ————              2
+ *              /  1   \    /  error[i]  \
+ *   rms =  \  /  ———  /    | —————————— |
+ *           \/    N   ———— \  scale[i]  /
+ *
+ *   error[i] = |u[i] - v[i]|
+ *
+ *   scale[i] = a + m*|s[i]|
+ */
 pub fn vector_rms_error(u []f64, v []f64, a f64, m f64, s []f64) f64 {
 	mut rms := 0.0
 	for i := 0; i < u.len; i++ {

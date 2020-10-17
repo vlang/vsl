@@ -131,12 +131,13 @@ pub fn (mut o Matrix) fill(val f64) {
 	}
 }
 
-// clear_rc clear rows and columns and set diagonal components
-//                _         _                                     _         _
-// Example:      |  1 2 3 4  |                                   |  1 2 3 4  |
-// A =           |  5 6 7 8  |  ⇒  clear([1,2], [], 1.0)  ⇒  A = |  0 1 0 0  |
-//               |_ 4 3 2 1 _|                                   |_ 0 0 1 0 _|
-//
+/*
+ * clear_rc clear rows and columns and set diagonal components
+ *                _         _                                     _         _
+ * Example:      |  1 2 3 4  |                                   |  1 2 3 4  |
+ * A =           |  5 6 7 8  |  ⇒  clear([1,2], [], 1.0)  ⇒  A = |  0 1 0 0  |
+ *               |_ 4 3 2 1 _|                                   |_ 0 0 1 0 _|
+ */
 pub fn (mut o Matrix) clear_rc(rows []int, cols []int, diag f64) {
 	for r in rows {
 		for j := 0; j < o.n; j++ {
@@ -158,12 +159,13 @@ pub fn (mut o Matrix) clear_rc(rows []int, cols []int, diag f64) {
 	}
 }
 
-// clear_bry clears boundaries
-//                _       _                          _       _
-// Example:      |  1 2 3  |                        |  1 0 0  |
-// A =           |  4 5 6  |  ⇒  clear(1.0)  ⇒  A = |  0 5 0  |
-//               |_ 7 8 9 _|                        |_ 0 0 1 _|
-//
+/*
+ * clear_bry clears boundaries
+ *                _       _                          _       _
+ * Example:      |  1 2 3  |                        |  1 0 0  |
+ * A =           |  4 5 6  |  ⇒  clear(1.0)  ⇒  A = |  0 5 0  |
+ *               |_ 7 8 9 _|                        |_ 0 0 1 _|
+ */
 pub fn (mut o Matrix) clear_bry(diag f64) {
 	o.clear_rc([0, o.m - 1], [0, o.n - 1], diag)
 }

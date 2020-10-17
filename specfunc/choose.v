@@ -7,7 +7,7 @@ import vsl.math
 import vsl.internal
 
 /*
- * Compute the binomial coefficient
+* Compute the binomial coefficient
  *
  *      / n \        n!
  *      |   |  = ---------

@@ -5,15 +5,16 @@ module graph
 
 // FIXME: g.path(source, dest) not working.
 fn test_graph01() {
-	//           [10]
-	//      0 ––––––––→ 3      numbers in parentheses
-	//      |    (1)    ↑      indicate edge ids
-	//   [5]|(0)        |
-	//      |        (3)|[1]
-	//      ↓    (2)    |      numbers in brackets
-	//      1 ––––––––→ 2      indicate weights
-	//           [3]
-
+        /*
+	 *           [10]
+	 *      0 ––––––––→ 3      numbers in parentheses
+	 *      |    (1)    ↑      indicate edge ids
+	 *   [5]|(0)        |
+	 *      |        (3)|[1]
+	 *      ↓    (2)    |      numbers in brackets
+	 *      1 ––––––––→ 2      indicate weights
+	 *           [3]
+         */
 	g := new_graph([[0, 1], [0, 3], [1, 2], [2, 3]], [f64(5), 10, 3, 1], [], [])
 	assert g.shares.keys().len == 4 // nverts
 	assert g.key2edge.keys().len == 4 // nedges
@@ -64,17 +65,18 @@ fn test_graph01() {
 }
 
 fn test_graph02() {
-	//             [3]
-	//      4 –––––––––––→ 5 .  [4]      numbers in parentheses
-	//      ↑      (0)     |  `.         indicate edge ids
-	//      |           (4)| (6)`.v
-	//      |              |       3
-	//  [11]|(1)        [7]|  (5),^      numbers in brackets
-	//      |              |   ,' [9]    indicate weights
-	//      |   (2)    (3) ↓ ,'
-	//      1 ←–––– 0 ––––→ 2
-	//          [6]    [8]
-
+	/*
+         *             [3]
+	 *      4 –––––––––––→ 5 .  [4]      numbers in parentheses
+	 *      ↑      (0)     |  `.         indicate edge ids
+	 *      |           (4)| (6)`.v
+	 *      |              |       3
+	 *  [11]|(1)        [7]|  (5),^      numbers in brackets
+	 *      |              |   ,' [9]    indicate weights
+	 *      |   (2)    (3) ↓ ,'
+	 *      1 ←–––– 0 ––––→ 2
+	 *          [6]    [8]
+         */
 	g := new_graph([[4, 5], [1, 4], [0, 1], [0, 2], [5, 2], [2, 3], [5, 3]], [f64(3), 11, 6, 8, 7, 9, 4], [], [])
 	assert g.shares.keys().len == 6 // nverts
 	assert g.key2edge.keys().len == 7 // nedges

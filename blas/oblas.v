@@ -5,7 +5,7 @@ module blas
 
 import vsl.errno
 
-#include "openblas_cblas.h"
+#include <cblas.h>
 #include <lapacke.h>
 
 fn C.openblas_set_num_threads(n int)

@@ -7,18 +7,20 @@ import vsl.util
 import vsl.la
 import vsl.errno
 
-// Data holds data in matrix format; e.g. for regression computations
-//
-//   Example:
-//          _          _                                     _   _
-//         |  -1  0 -3  |                                   |  0  |
-//         |  -2  3  3  |                       (optional)  |  1  |
-//     x = |   3  1  4  |                               y = |  1  |
-//         |  -4  5  0  |                                   |  0  |
-//         |_  1 -8  5 _|(nb_samples x nb_features)         |_ 1 _|(nb_samples)
-//
-//   NOTE: remember to call data.notify_update() after changing x or y components
-//
+/*
+ * Data holds data in matrix format; e.g. for regression computations
+ *
+ *   Example:
+ *          _          _                                     _   _
+ *         |  -1  0 -3  |                                   |  0  |
+ *         |  -2  3  3  |                       (optional)  |  1  |
+ *     x = |   3  1  4  |                               y = |  1  |
+ *         |  -4  5  0  |                                   |  0  |
+ *         |_  1 -8  5 _|(nb_samples x nb_features)         |_ 1 _|(nb_samples)
+ *
+ *   NOTE: remember to call data.notify_update() after changing x or y components
+ *
+ */
 pub struct Data {
 pub mut:
 	observers   []util.Observer // list of interested parties

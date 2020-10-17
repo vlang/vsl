@@ -5,96 +5,96 @@ module specfunc
 
 import vsl.math
 
-//                           x
-//                    2      |\
-//     erf(x)  =  ---------  | exp(-t*t)dt
-//                 sqrt(pi) \|
-//                           0
+// x
+// 2      |\
+// erf(x)  =  ---------  | exp(-t*t)dt
+// sqrt(pi) \|
+// 0
 //
-//     erfc(x) =  1-erf(x)
-//  Note that
-//              erf(-x) = -erf(x)
-//              erfc(-x) = 2 - erfc(x)
+// erfc(x) =  1-erf(x)
+// Note that
+// erf(-x) = -erf(x)
+// erfc(-x) = 2 - erfc(x)
 //
 // Method:
-//      1. For |x| in [0, 0.84375]
-//          erf(x)  = x + x*R(x**2)
-//          erfc(x) = 1 - erf(x)           if x in [-.84375,0.25]
-//                  = 0.5 + ((0.5-x)-x*R)  if x in [0.25,0.84375]
-//         where R = P/Q where P is an odd poly of degree 8 and
-//         Q is an odd poly of degree 10.
-//                                               -57.90
-//                      | R - (erf(x)-x)/x | <= 2
+// 1. For |x| in [0, 0.84375]
+// erf(x)  = x + x*R(x**2)
+// erfc(x) = 1 - erf(x)           if x in [-.84375,0.25]
+// = 0.5 + ((0.5-x)-x*R)  if x in [0.25,0.84375]
+// where R = P/Q where P is an odd poly of degree 8 and
+// Q is an odd poly of degree 10.
+// -57.90
+// | R - (erf(x)-x)/x | <= 2
 //
 //
-//         Remark. The formula is derived by noting
-//          erf(x) = (2/sqrt(pi))*(x - x**3/3 + x**5/10 - x**7/42 + ....)
-//         and that
-//          2/sqrt(pi) = 1.128379167095512573896158903121545171688
-//         is close to one. The interval is chosen because the fix
-//         point of erf(x) is near 0.6174 (i.e., erf(x)=x when x is
-//         near 0.6174), and by some experiment, 0.84375 is chosen to
-//         guarantee the error is less than one ulp for erf.
+// Remark. The formula is derived by noting
+// erf(x) = (2/sqrt(pi))*(x - x**3/3 + x**5/10 - x**7/42 + ....)
+// and that
+// 2/sqrt(pi) = 1.128379167095512573896158903121545171688
+// is close to one. The interval is chosen because the fix
+// point of erf(x) is near 0.6174 (i.e., erf(x)=x when x is
+// near 0.6174), and by some experiment, 0.84375 is chosen to
+// guarantee the error is less than one ulp for erf.
 //
-//      2. For |x| in [0.84375,1.25], let s_ = |x| - 1, and
-//         c = 0.84506291151 rounded to single (24 bits)
-//              erf(x)  = sign(x) * (c  + P1(s_)/Q1(s_))
-//              erfc(x) = (1-c)  - P1(s_)/Q1(s_) if x > 0
-//                        1+(c+P1(s_)/Q1(s_))    if x < 0
-//              |P1/Q1 - (erf(|x|)-c)| <= 2**-59.06
-//         Remark: here we use the taylor series expansion at x=1.
-//              erf(1+s_) = erf(1) + s_*Poly(s_)
-//                       = 0.845.. + P1(s_)/Q1(s_)
-//         That is, we use rational approximation to approximate
-//                      erf(1+s_) - (c = (single)0.84506291151)
-//         Note that |P1/Q1|< 0.078 for x in [0.84375,1.25]
-//         where
-//              P1(s_) = degree 6 poly in s_
-//              Q1(s_) = degree 6 poly in s_
+// 2. For |x| in [0.84375,1.25], let s_ = |x| - 1, and
+// c = 0.84506291151 rounded to single (24 bits)
+// erf(x)  = sign(x) * (c  + P1(s_)/Q1(s_))
+// erfc(x) = (1-c)  - P1(s_)/Q1(s_) if x > 0
+// 1+(c+P1(s_)/Q1(s_))    if x < 0
+// |P1/Q1 - (erf(|x|)-c)| <= 2**-59.06
+// Remark: here we use the taylor series expansion at x=1.
+// erf(1+s_) = erf(1) + s_*Poly(s_)
+// = 0.845.. + P1(s_)/Q1(s_)
+// That is, we use rational approximation to approximate
+// erf(1+s_) - (c = (single)0.84506291151)
+// Note that |P1/Q1|< 0.078 for x in [0.84375,1.25]
+// where
+// P1(s_) = degree 6 poly in s_
+// Q1(s_) = degree 6 poly in s_
 //
-//      3. For x in [1.25,1/0.35(~2.857143)],
-//              erfc(x) = (1/x)*exp(-x*x-0.5625+R1/s1)
-//              erf(x)  = 1 - erfc(x)
-//         where
-//              R1(z) = degree 7 poly in z, (z=1/x**2)
-//              s1(z) = degree 8 poly in z
+// 3. For x in [1.25,1/0.35(~2.857143)],
+// erfc(x) = (1/x)*exp(-x*x-0.5625+R1/s1)
+// erf(x)  = 1 - erfc(x)
+// where
+// R1(z) = degree 7 poly in z, (z=1/x**2)
+// s1(z) = degree 8 poly in z
 //
-//      4. For x in [1/0.35,28]
-//              erfc(x) = (1/x)*exp(-x*x-0.5625+R2/s2) if x > 0
-//                      = 2.0 - (1/x)*exp(-x*x-0.5625+R2/s2) if -6<x<0
-//                      = 2.0 - tiny            (if x <= -6)
-//              erf(x)  = sign(x)*(1.0 - erfc(x)) if x < 6, else
-//              erf(x)  = sign(x)*(1.0 - tiny)
-//         where
-//              R2(z) = degree 6 poly in z, (z=1/x**2)
-//              s2(z) = degree 7 poly in z
+// 4. For x in [1/0.35,28]
+// erfc(x) = (1/x)*exp(-x*x-0.5625+R2/s2) if x > 0
+// = 2.0 - (1/x)*exp(-x*x-0.5625+R2/s2) if -6<x<0
+// = 2.0 - tiny            (if x <= -6)
+// erf(x)  = sign(x)*(1.0 - erfc(x)) if x < 6, else
+// erf(x)  = sign(x)*(1.0 - tiny)
+// where
+// R2(z) = degree 6 poly in z, (z=1/x**2)
+// s2(z) = degree 7 poly in z
 //
-//      Note1:
-//         To compute exp(-x*x-0.5625+R/s), let s_ be a single
-//         precision number and s_ := x; then
-//              -x*x = -s_*s_ + (s_-x)*(s_+x)
-//              exp(-x*x-0.5626+R/s) =
-//                      exp(-s_*s_-0.5625)*exp((s_-x)*(s_+x)+R/s);
-//      Note2:
-//         Here 4 and 5 make use of the asymptotic series
-//                        exp(-x*x)
-//              erfc(x) ~ ---------- * ( 1 + Poly(1/x**2) )
-//                        x*sqrt(pi)
-//         We use rational approximation to approximate
-//              g(s_)=f(1/x**2) = log(erfc(x)*x) - x*x + 0.5625
-//         Here is the error bound for R1/s1 and R2/s2
-//              |R1/s1 - f(x)|  < 2**(-62.57)
-//              |R2/s2 - f(x)|  < 2**(-61.52)
+// Note1:
+// To compute exp(-x*x-0.5625+R/s), let s_ be a single
+// precision number and s_ := x; then
+// -x*x = -s_*s_ + (s_-x)*(s_+x)
+// exp(-x*x-0.5626+R/s) =
+// exp(-s_*s_-0.5625)*exp((s_-x)*(s_+x)+R/s);
+// Note2:
+// Here 4 and 5 make use of the asymptotic series
+// exp(-x*x)
+// erfc(x) ~ ---------- * ( 1 + Poly(1/x**2) )
+// x*sqrt(pi)
+// We use rational approximation to approximate
+// g(s_)=f(1/x**2) = log(erfc(x)*x) - x*x + 0.5625
+// Here is the error bound for R1/s1 and R2/s2
+// |R1/s1 - f(x)|  < 2**(-62.57)
+// |R2/s2 - f(x)|  < 2**(-61.52)
 //
-//      5. For inf > x >= 28
-//              erf(x)  = sign(x) *(1 - tiny)  (raise inexact)
-//              erfc(x) = tiny*tiny (raise underflow) if x > 0
-//                      = 2 - tiny if x<0
+// 5. For inf > x >= 28
+// erf(x)  = sign(x) *(1 - tiny)  (raise inexact)
+// erfc(x) = tiny*tiny (raise underflow) if x > 0
+// = 2 - tiny if x<0
 //
-//      7. special case:
-//              erf(0)  = 0, erf(inf)  = 1, erf(-inf) = -1,
-//              erfc(0) = 1, erfc(inf) = 0, erfc(-inf) = 2,
-//              erfc/erf(nan) is nan
+// 7. special case:
+// erf(0)  = 0, erf(inf)  = 1, erf(-inf) = -1,
+// erfc(0) = 1, erfc(inf) = 0, erfc(-inf) = 2,
+// erfc/erf(nan) is nan
 const (
 	erx  = 8.45062911510467529297e-01 // 0x3FEB0AC160000000
 	// Coefficients for approximation to  erf in [0, 0.84375]

@@ -90,24 +90,26 @@ pub fn (g Graph) get_edge(i int, j int) ?int {
 	return error(errno.vsl_error_message('cannot find edge from $i to $j', .efailed))
 }
 
-// shortest_paths computes the shortest paths in a graph defined as follows
-//
-//          [10]
-//       0 ––––––→ 3            numbers in brackets
-//       |         ↑            indicate weights
-//   [5] |         | [1]
-//       ↓         |
-//       1 ––––––→ 2
-//           [3]                ∞ means that there are no
-//                              connections from i to j
-//   graph:  j= 0  1  2  3
-//              -----------  i=
-//              0  5  ∞ 10 |  0  ⇒  w(0→1)=5, w(0→3)=10
-//              ∞  0  3  ∞ |  1  ⇒  w(1→2)=3
-//              ∞  ∞  0  1 |  2  ⇒  w(2→3)=1
-//              ∞  ∞  ∞  0 |  3
-//  Input:
-//   method -- FW: Floyd-Warshall method
+/*
+ * shortest_paths computes the shortest paths in a graph defined as follows
+ *
+ *          [10]
+ *       0 ––––––→ 3            numbers in brackets
+ *       |         ↑            indicate weights
+ *   [5] |         | [1]
+ *       ↓         |
+ *       1 ––––––→ 2
+ *           [3]                ∞ means that there are no
+ *                              connections from i to j
+ *   graph:  j= 0  1  2  3
+ *              -----------  i=
+ *              0  5  ∞ 10 |  0  ⇒  w(0→1)=5, w(0→3)=10
+ *              ∞  0  3  ∞ |  1  ⇒  w(1→2)=3
+ *              ∞  ∞  0  1 |  2  ⇒  w(2→3)=1
+ *              ∞  ∞  ∞  0 |  3
+ *  Input:
+ *   method -- FW: Floyd-Warshall method
+ */
 pub fn (g Graph) shortest_paths(method SorthestPaths) Graph {
 	if method != .fw {
 		panic('shortest_paths works with FW (Floyd-Warshall) method only for now')
