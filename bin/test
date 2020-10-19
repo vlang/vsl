@@ -2,18 +2,10 @@
 
 set -euo pipefail
 
-if [ -d ~/.vmodules/vsl ]; then
-    mv ~/.vmodules/vsl ~/.vmodules/old_vsl
-    rm -rf ~/.vmodules/vsl
-fi
-
-mkdir -p ~/.vmodules/vsl
-cp -r ./* ~/.vmodules/vsl
+rm -f vsl 
+ln -s . vsl
 
 v test .
-find . -name '*_test' -exec rm -f {} +
 
-rm -rf ~/.vmodules/vsl
-if [ -d ~/.vmodules/old_vsl ]; then
-    mv ~/.vmodules/old_vsl ~/.vmodules/vsl
-fi
+find . -name '*_test' -exec rm -f {} +
+rm -f vsl
