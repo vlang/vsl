@@ -10,7 +10,7 @@ For the development of this module, the functions present in many of the system
 libraries are taken as reference with the idea of offering them in VSL as an 
 option for when they are not present.
 
-This chapter describes basic mathematical functions.
+This chapter describes basic mathematical functions implemented in Pure V.
 
 The functions and macros described in this chapter are defined in the
 module :file:`vsl.vmath`.

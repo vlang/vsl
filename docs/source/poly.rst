@@ -48,7 +48,7 @@ using Horner's method for stability.
 Quadratic Equations
 ===================
 
-.. function:: solve_quadratic(a, b, c f64) []f64
+.. function:: solve_quadratic(a f64, b f64, c f64) []f64
 
    This function finds the real roots of the quadratic equation,
 
@@ -79,7 +79,7 @@ Quadratic Equations
 Cubic Equations
 ===============
 
-.. function:: solve_cubic(a, b, c f64) []f64
+.. function:: solve_cubic(a f64, b f64, c f64) []f64
 
    This function finds the real roots of the cubic equation,
 

@@ -48,7 +48,7 @@ provides the individual functions necessary for each of the steps.
 Functions
 =========
 
-.. function:: fn brent (f vsl.Function, x1, x2, tol f64) ?(f64, f64)
+.. function:: fn brent (f vsl.Function, x1 f64, x2 f64, tol f64) ?(f64, f64)
 
   Find th root of :data:`f` between :data:`x1` and :data:`x1` with an accuracy
   of order :data:`tol`. The result will be the root and an upper bound of the error.
@@ -61,7 +61,7 @@ Functions
   Note that the function must also compute the first derivate of the function. This function
   relies on combining Newton's approach with a bisection technique.
 
-.. function:: fn newton (f vsl.FunctionFdf, x0, x_eps, fx_eps f64, n_max int) ?f64
+.. function:: fn newton (f vsl.FunctionFdf, x0 f64, x_eps f64, fx_eps f64, n_max int) ?f64
 
   Find the root of :data:`f` starting from :data:`x0` using Newton’s method with
   descent direction given by the inverse of the derivative,
@@ -80,7 +80,7 @@ Functions
     * the last improvement over :data:`x` is smaller than :math:`x . x\_eps`
     * at the current position :math:`|f(x)| < fx\_eps`
 
-.. function:: fn bisection(f vsl.Function, xmin, xmax, epsrel, epsabs f64, n_max int) ?f64
+.. function:: fn bisection(f vsl.Function, xmin f64, xmax f64, epsrel f64, epsabs f64, n_max int) ?f64
 
   Find the root of :data:`f` between :data:`x_min` and :data:`x_max` with the accuracy
   

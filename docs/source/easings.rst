@@ -38,7 +38,7 @@ to interpolate any quantity.
 Functions
 =========
 
-.. function:: easings.animate(easing fn(f64) f64, from f64, to f64, frames int) []f64
+.. function:: easings.animate(easing fn(p f64) f64, from f64, to f64, frames int) []f64
 
 .. function:: easings.linear_interpolation(p f64) f64
 
