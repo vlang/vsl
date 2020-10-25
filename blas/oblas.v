@@ -138,6 +138,10 @@ pub fn dger(m int, n int, alpha f64, x []f64, incx int, mut y []f64, incy int, a
 		lda)}
 }
 
+pub fn dnrm2(n int, x []f64, incx int) f64 {
+        return unsafe {C.cblas_dnrm2(n, &x[0], incx)}
+}
+
 // dgemm performs one of the matrix-matrix operations
 //
 // false,false:  C_{m,n} := α ⋅ A_{m,k} ⋅ B_{k,n}  +  β ⋅ C_{m,n}
@@ -157,7 +161,7 @@ pub fn dger(m int, n int, alpha f64, x []f64, incx int, mut y []f64, incy int, a
 //
 // alpha and beta are scalars, and A, B and C are matrices, with op( A )
 // an m by k matrix,  op( B )  a  k by n matrix and  C an m by n matrix.
-pub fn dgemm(transA bool, transB bool, m int, n int, k int, alpha f64, a []f64, lda int, b []f64, ldb int, beta f64, c []f64, ldc int) {
+pub fn dgemm(transA bool, transB bool, m int, n int, k int, alpha f64, a []f64, lda int, b []f64, ldb int, beta f64, mut c []f64, ldc int) {
 	unsafe {C.cblas_dgemm(cblas_col_major, c_trans(transA), c_trans(transB), m, n, k,
 		alpha, &a[0], lda, &b[0], ldb, beta, &c[0], ldc)}
 }
@@ -526,6 +530,11 @@ pub fn dgeev(calcVl bool, calcVr bool, n int, mut a []f64, lda int, wr []f64, wi
 		}
 	}
 }
+
+pub fn dlange(norm byte, m int, n int, a []f64, lda int, work []f64) f64 {
+        return unsafe {C.LAPACKE_dlange(norm, m, n, &a[0], lda, &work[0])}
+}
+
 
 // auxiliary //////////////////////////////////////////////////////////////////////////////////////
 // constants
