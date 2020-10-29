@@ -133,7 +133,7 @@ pub fn dgemv(trans bool, m int, n int, alpha f64, a []f64, lda int, x []f64, inc
 //
 // where alpha is a scalar, x is an m element vector, y is an n element
 // vector and A is an m by n matrix.
-pub fn dger(m int, n int, alpha f64, x []f64, incx int, mut y []f64, incy int, a []f64, lda int) {
+pub fn dger(m int, n int, alpha f64, x []f64, incx int, y []f64, incy int, mut a []f64, lda int) {
 	unsafe {C.cblas_dger(cblas_col_major, m, n, alpha, &x[0], incx, &y[0], incy, &a[0],
 		lda)}
 }

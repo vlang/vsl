@@ -95,7 +95,7 @@ pub fn vector_scale_abs(a f64, m f64, x []f64) []f64 {
 // v = alpha⋅a⋅u    ⇒    vi = alpha * aij * uj
 //
 pub fn matrix_vector_mul(alpha f64, a Matrix, u []f64) []f64 {
-	mut v := [0.0].repeat(a.m)
+	mut v := []f64{len: a.m}
 	if a.m < 9 && a.n < 9 {
 		for i := 0; i < a.m; i++ {
 			v[i] = 0.0
@@ -133,18 +133,19 @@ pub fn matrix_tr_vector_mul(alpha f64, a Matrix, u []f64) []f64 {
 //
 // a = alpha⋅u⋅vᵀ    ⇒    aij = alpha * ui * vj
 //
-pub fn vector_vector_tr_mul(alpha f64, u []f64, mut v []f64) Matrix {
-	mut a := matrix(u.len, v.len)
-	if a.m < 9 && a.n < 9 {
-		for i := 0; i < a.m; i++ {
-			for j := 0; j < a.n; j++ {
-				a.set(i, j, alpha * u[i] * v[j])
+pub fn vector_vector_tr_mul(alpha f64, u []f64, v []f64) Matrix {
+	mut m := matrix(u.len, v.len)
+	if m.m < 9 && m.n < 9 {
+		for i := 0; i < m.m; i++ {
+			for j := 0; j < m.n; j++ {
+				m.set(i, j, alpha * u[i] * v[j])
 			}
 		}
-		return a
+		return m
 	}
-	blas.dger(a.m, a.n, alpha, u, 1, mut v, 1, a.data, int(vmath.max(a.m, a.n)))
-	return a
+        mut a := []f64{len: u.len * v.len}
+	blas.dger(m.m, m.n, alpha, u, 1, v, 1, mut a, int(vmath.max(m.m, m.n)))
+	return matrix_raw(u.len, v.len, a)
 }
 
 // matrix_vector_mul_add returns the matrix-vector multiplication with addition
@@ -152,7 +153,7 @@ pub fn vector_vector_tr_mul(alpha f64, u []f64, mut v []f64) Matrix {
 // v += alpha⋅a⋅u    ⇒    vi += alpha * aij * uj
 //
 pub fn matrix_vector_mul_add(alpha f64, a Matrix, u []f64) []f64 {
-	mut v := [0.0].repeat(a.m)
+	mut v := []f64{len: a.m}
 	blas.dgemv(false, a.m, a.n, alpha, a.data, a.m, u, 1, 1.0, mut v, 1)
 	return v
 }
