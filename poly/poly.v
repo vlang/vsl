@@ -153,12 +153,9 @@ fn sorted_3_(x_ f64, y_ f64, z_ f64) (f64, f64, f64) {
 
 pub fn companion_matrix(a []f64) [][]f64 {
 	nc := a.len - 1
-	mut cm := [[]f64{}].repeat(nc)
+	mut cm := [][]f64{len: nc, init: []f64{len: nc}}
 	mut i := 0
 	for ; i < nc; i++ {
-		cm[i] = [0.0].repeat(nc)
-	}
-	for i = 0; i < nc; i++ {
 		for j := 0; j < nc; j++ {
 			cm[i][j] = 0.0
 		}
@@ -275,7 +272,7 @@ pub fn add(a []f64, b []f64) []f64 {
 	na := a.len
 	nb := b.len
 	nc := int(vmath.max(na, nb))
-	mut c := [0.0].repeat(nc)
+	mut c := []f64{len: nc}
 	for i := 0; i < nc; i++ {
 		if i > na {
 			c[i] = b[i]
@@ -292,7 +289,7 @@ pub fn substract(a []f64, b []f64) []f64 {
 	na := a.len
 	nb := b.len
 	nc := int(vmath.max(na, nb))
-	mut c := [0.0].repeat(nc)
+	mut c := []f64{len: nc}
 	for i := 0; i < nc; i++ {
 		if i > na {
 			c[i] = -b[i]
@@ -309,7 +306,7 @@ pub fn multiply(a []f64, b []f64) []f64 {
 	na := a.len
 	nb := b.len
 	nc := na + nb
-	mut c := [0.0].repeat(nc)
+	mut c := []f64{len: nc}
 	for i := 0; i < na; i++ {
 		x := a[i]
 		for j := 0; j < nb; j++ {

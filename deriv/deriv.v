@@ -23,7 +23,8 @@ fn central_deriv(f vsl.Function, x f64, h f64) (f64, f64, f64) {
 	r5 := (4.0 / 3.00) * (fph - fmh) - (1.0 / 3.00) * r3
 	e3 := (vmath.abs(fp1) + vmath.abs(fm1)) * internal.f64_epsilon
 	e5 := 2.0 * (vmath.abs(fph) + vmath.abs(fmh)) * internal.f64_epsilon + e3 // The next term is due to finite precision in x+h = O(eps * x)
-	dy := vmath.max(vmath.abs(r3 / h), vmath.abs(r5 / h)) * (vmath.abs(x) / h) * internal.f64_epsilon
+	dy := vmath.max(vmath.abs(r3 / h), vmath.abs(r5 / h)) *
+		(vmath.abs(x) / h) * internal.f64_epsilon
 	/*
 	The truncation error in the r5 approximation itself is O(h^4).
          * However, for safety, we estimate the error from r5-r3, which is

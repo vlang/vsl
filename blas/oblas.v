@@ -7,7 +7,6 @@ import vsl.errno
 
 #include <cblas.h>
 #include <lapacke.h>
-
 fn C.openblas_set_num_threads(n int)
 
 fn C.cblas_ddot(n int, dx &f64, incx int, dy &f64, incy int) f64
@@ -139,7 +138,7 @@ pub fn dger(m int, n int, alpha f64, x []f64, incx int, y []f64, incy int, mut a
 }
 
 pub fn dnrm2(n int, x []f64, incx int) f64 {
-        return unsafe {C.cblas_dnrm2(n, &x[0], incx)}
+	return unsafe {C.cblas_dnrm2(n, &x[0], incx)}
 }
 
 // dgemm performs one of the matrix-matrix operations
@@ -532,9 +531,8 @@ pub fn dgeev(calcVl bool, calcVr bool, n int, mut a []f64, lda int, wr []f64, wi
 }
 
 pub fn dlange(norm byte, m int, n int, a []f64, lda int, work []f64) f64 {
-        return unsafe {C.LAPACKE_dlange(norm, m, n, &a[0], lda, &work[0])}
+	return unsafe {C.LAPACKE_dlange(norm, m, n, &a[0], lda, &work[0])}
 }
-
 
 // auxiliary //////////////////////////////////////////////////////////////////////////////////////
 // constants

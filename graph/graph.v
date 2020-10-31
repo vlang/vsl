@@ -58,12 +58,8 @@ pub fn new_graph(edges [][]int, weights_e []f64, verts [][]f64, weights_v []f64)
 		key2edge[hash_edge_key(i, j)] = k
 	}
 	nv := shares.keys().len
-	mut dist := [[]f64{}].repeat(nv)
-	mut next := [[]int{}].repeat(nv)
-	for i := 0; i < nv; i++ {
-		dist[i] = [0.0].repeat(nv)
-		next[i] = [0].repeat(nv)
-	}
+	mut dist := [][]f64{len: nv, init: []f64{len: nv}}
+	mut next := [][]int{len: nv, init: []int{len: nv}}
 	return Graph{
 		edges: edges
 		weights_e: weights_e
@@ -245,8 +241,8 @@ pub fn (g Graph) get_adj() ([]int, []int) {
 	for vid := 0; vid < nv; vid++ {
 		szadj += g.shares[vid.str()].len // = number of connected vertices
 	}
-	mut xadj := [0].repeat(nv + 1)
-	mut adjncy := [0].repeat(szadj)
+	mut xadj := []int{len: nv + 1}
+	mut adjncy := []int{len: szadj}
 	mut k := 0
 	for vid := 0; vid < nv; vid++ {
 		edges := g.shares[vid.str()]

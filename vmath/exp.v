@@ -31,42 +31,38 @@ const (
 // Very large values overflow to 0 or +inf.
 // Very small values underflow to 1.
 pub fn exp(x f64) f64 {
-        ln2hi := 6.93147180369123816490e-01
-        ln2lo := 1.90821492927058770002e-10
-        log2e := 1.44269504088896338700e+00
-
-        overflow  := 7.09782712893383973096e+02
-        underflow := -7.45133219101941108420e+02
-        near_zero  := 1.0 / (1 << 28) // 2**-28
-
+	ln2hi := 6.93147180369123816490e-01
+	ln2lo := 1.90821492927058770002e-10
+	log2e := 1.44269504088896338700e+00
+	overflow := 7.09782712893383973096e+02
+	underflow := -7.45133219101941108420e+02
+	near_zero := 1.0 / (1 << 28) // 2**-28
 	// special cases
 	if is_nan(x) || is_inf(x, 1) {
 		return x
-        }
+	}
 	if is_inf(x, -1) {
 		return 0.0
-        }
+	}
 	if x > overflow {
 		return inf(1)
-        }
+	}
 	if x < underflow {
 		return 0.0
-        }
+	}
 	if -near_zero < x && x < near_zero {
 		return 1.0 + x
 	}
-
 	// reduce; computed as r = hi - lo for extra precision.
 	mut k := 0
 	if x < 0 {
-		k = int(log2e*x - 0.5)
-        }
+		k = int(log2e * x - 0.5)
+	}
 	if x > 0 {
-		k = int(log2e*x + 0.5)
+		k = int(log2e * x + 0.5)
 	}
 	hi := x - f64(k) * ln2hi
 	lo := f64(k) * ln2lo
-
 	// compute
 	return expmulti(hi, lo, k)
 }
@@ -77,7 +73,6 @@ pub fn exp(x f64) f64 {
 pub fn exp2(x f64) f64 {
 	overflow := 1.0239999999999999e+03
 	underflow := -1.0740e+03
-
 	if is_nan(x) || is_inf(x, 1) {
 		return x
 	}
@@ -102,8 +97,7 @@ pub fn exp2(x f64) f64 {
 	mut t := x - f64(k)
 	hi := t * ln2hi
 	lo := -t * ln2lo
-
-        // compute
+	// compute
 	return expmulti(hi, lo, k)
 }
 
@@ -134,13 +128,13 @@ pub fn ldexp(x f64, e int) f64 {
 // frexp(±0) = ±0, 0
 // frexp(±inf) = ±inf, 0
 // frexp(nan) = nan, 0
-//pub fn frexp(f f64) (f64, int) {
+// pub fn frexp(f f64) (f64, int) {
 // // special cases
 // if f == 0.0 {
-// 	return f, 0 // correctly return -0
+// return f, 0 // correctly return -0
 // }
 // if is_inf(f, 0) || is_nan(f) {
-// 	return f, 0
+// return f, 0
 // }
 // f_norm, mut exp := normalize(f)
 // mut x := f64_bits(f_norm)
@@ -212,17 +206,15 @@ pub fn expm1(x f64) f64 {
 
 // exp1 returns e**r × 2**k where r = hi - lo and |r| ≤ ln(2)/2.
 fn expmulti(hi f64, lo f64, k int) f64 {
-        p1 := 1.66666666666666657415e-01 // 0x3FC55555; 0x55555555
+	p1 := 1.66666666666666657415e-01 // 0x3FC55555; 0x55555555
 	p2 := -2.77777777770155933842e-03 // 0xBF66C16C; 0x16BEBD93
 	p3 := 6.61375632143793436117e-05 // 0x3F11566A; 0xAF25DE2C
 	p4 := -1.65339022054652515390e-06 // 0xBEBBBD41; 0xC5D26BF1
 	p5 := 4.13813679705723846039e-08 // 0x3E663769; 0x72BEA4D0
-
 	r := hi - lo
 	t := r * r
-	c := r - t*(p1+t*(p2+t*(p3+t*(p4+t*p5))))
-	y := 1 - ((lo - (r*c)/(2-c)) - hi)
-
+	c := r - t * (p1 + t * (p2 + t * (p3 + t * (p4 + t * p5))))
+	y := 1 - ((lo - (r * c) / (2 - c)) - hi)
 	// TODO(rsc): make sure ldexp can handle boundary k
 	return ldexp(y, k)
 }

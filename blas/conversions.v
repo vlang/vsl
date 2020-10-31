@@ -15,7 +15,7 @@ import vsl.errno
 pub fn slice_to_col_major(a [][]f64) []f64 {
 	m := a.len
 	n := a[0].len
-	mut data := [0.0].repeat(m * n)
+	mut data := []f64{len: m * n}
 	mut k := 0
 	for j := 0; j < n; j++ {
 		for i := 0; i < m; i++ {
@@ -28,9 +28,8 @@ pub fn slice_to_col_major(a [][]f64) []f64 {
 
 // col_major_to_slice converts col-major matrix to nested slice
 pub fn col_major_to_slice(m int, n int, data []f64) [][]f64 {
-	mut a := [[]f64{}].repeat(n)
+	mut a := [][]f64{len: n, init: []f64{len: n}}
 	for i := 0; i < m; i++ {
-		a[i] = [0.0].repeat(n)
 		for j := 0; j < n; j++ {
 			a[i][j] = data[i + j * m]
 		}
@@ -127,9 +126,8 @@ pub fn slice_to_col_major_complex(a [][]complex.Complex) []complex.Complex {
 
 // col_major_complex_to_slice converts col-major matrix to nested slice
 pub fn col_major_complex_to_slice(m int, n int, data []complex.Complex) [][]complex.Complex {
-	mut a := [[]complex.Complex{}].repeat(m)
+	mut a := [][]complex.Complex{len: m, init: []complex.Complex{len: n}}
 	for i := 0; i < m; i++ {
-		a[i] = []complex.Complex{len: n}
 		for j := 0; j < n; j++ {
 			a[i][j] = data[i + j * m]
 		}
@@ -239,8 +237,8 @@ pub fn get_join_complex(v_real []f64, v_imag []f64) []complex.Complex {
 
 // get_split_complex splits real and imag parts of array
 pub fn get_split_complex(v []complex.Complex) ([]f64, []f64) {
-	mut v_real := [0.0].repeat(v.len)
-	mut v_imag := [0.0].repeat(v.len)
+	mut v_real := []f64{len: v.len}
+	mut v_imag := []f64{len: v.len}
 	for i := 0; i < v.len; i++ {
 		v_real[i] = v[i].re
 		v_imag[i] = v[i].im
@@ -259,8 +257,8 @@ pub fn join_complex(v_real []f64, v_imag []f64) []complex.Complex {
 
 // split_complex splits real and imag parts of array
 pub fn split_complex(v []complex.Complex) ([]f64, []f64) {
-	mut v_real := [0.0].repeat(v.len)
-	mut v_imag := [0.0].repeat(v.len)
+	mut v_real := []f64{len: v.len}
+	mut v_imag := []f64{len: v.len}
 	for i := 0; i < v.len; i++ {
 		v_real[i] = v[i].re
 		v_imag[i] = v[i].im
@@ -271,7 +269,7 @@ pub fn split_complex(v []complex.Complex) ([]f64, []f64) {
 // extraction //////////////////////////////////////////////////////////////////////////////////////
 // extract_row extracts i row from (m,n) col-major matrix
 pub fn extract_row(i int, m int, n int, A []f64) []f64 {
-	mut rowi := [0.0].repeat(n)
+	mut rowi := []f64{len: n}
 	for j := 0; j < n; j++ {
 		rowi[j] = A[i + j * m]
 	}
@@ -280,7 +278,7 @@ pub fn extract_row(i int, m int, n int, A []f64) []f64 {
 
 // extract_col extracts j column from (m,n) col-major matrix
 pub fn extract_col(j int, m int, n int, A []f64) []f64 {
-	mut colj := [0.0].repeat(m)
+	mut colj := []f64{len: m}
 	for i := 0; i < m; i++ {
 		colj[i] = A[i + j * m]
 	}

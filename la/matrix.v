@@ -16,7 +16,7 @@ pub mut:
 
 // matrix allocates a new (empty) Matrix with given (m,n) (row/col sizes)
 pub fn matrix(m int, n int) Matrix {
-	data := [0.0].repeat(m * n)
+	data := []f64{len: m * n}
 	return Matrix{
 		m: m
 		n: n
@@ -82,9 +82,8 @@ pub fn (o Matrix) get(i int, j int) f64 {
 
 // get_deep2 returns nested slice representation
 pub fn (o Matrix) get_deep2() [][]f64 {
-	mut m := [[]f64{}].repeat(o.m)
+	mut m := [][]f64{len: o.m, init: []f64{len: o.n}}
 	for i := 0; i < o.m; i++ {
-		m[i] = [0.0].repeat(o.n)
 		for j := 0; j < o.n; j++ {
 			m[i][j] = o.data[i + j * o.m]
 		}
@@ -132,12 +131,12 @@ pub fn (mut o Matrix) fill(val f64) {
 }
 
 /*
- * clear_rc clear rows and columns and set diagonal components
+* clear_rc clear rows and columns and set diagonal components
  *                _         _                                     _         _
  * Example:      |  1 2 3 4  |                                   |  1 2 3 4  |
  * A =           |  5 6 7 8  |  ⇒  clear([1,2], [], 1.0)  ⇒  A = |  0 1 0 0  |
  *               |_ 4 3 2 1 _|                                   |_ 0 0 1 0 _|
- */
+*/
 pub fn (mut o Matrix) clear_rc(rows []int, cols []int, diag f64) {
 	for r in rows {
 		for j := 0; j < o.n; j++ {
@@ -160,12 +159,12 @@ pub fn (mut o Matrix) clear_rc(rows []int, cols []int, diag f64) {
 }
 
 /*
- * clear_bry clears boundaries
+* clear_bry clears boundaries
  *                _       _                          _       _
  * Example:      |  1 2 3  |                        |  1 0 0  |
  * A =           |  4 5 6  |  ⇒  clear(1.0)  ⇒  A = |  0 5 0  |
  *               |_ 7 8 9 _|                        |_ 0 0 1 _|
- */
+*/
 pub fn (mut o Matrix) clear_bry(diag f64) {
 	o.clear_rc([0, o.m - 1], [0, o.n - 1], diag)
 }
@@ -204,7 +203,7 @@ pub fn (o Matrix) col(j int) []f64 {
 
 // get_row returns row i of this matrix
 pub fn (o Matrix) get_row(i int) []f64 {
-	mut row := [0.0].repeat(o.n)
+	mut row := []f64{len: o.n}
 	for j := 0; j < o.n; j++ {
 		row[j] = o.data[i + j * o.m]
 	}
@@ -284,7 +283,7 @@ pub fn (o Matrix) det() f64 {
 			.efailed)
 	}
 	mut ai := o.data.clone()
-	ipiv := [0].repeat(int(vmath.min(o.m, o.n)))
+	ipiv := []int{len: int(vmath.min(o.m, o.n))}
 	blas.dgetrf(o.m, o.n, mut ai, o.m, ipiv) // NOTE: ipiv are 1-based indices
 	mut det := 1.0
 	for i := 0; i < o.m; i++ {

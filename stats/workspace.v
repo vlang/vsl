@@ -13,12 +13,12 @@ import vsl.vmath
 pub struct Stat {
 pub mut:
 	data   &Data // data
-	min_x  []f64 // [nFeatures] min x values
-	max_x  []f64 // [nFeatures] max x values
-	sum_x  []f64 // [nFeatures] sum of x values
-	mean_x []f64 // [nFeatures] mean of x values
-	sig_x  []f64 // [nFeatures] standard deviations of x
-	del_x  []f64 // [nFeatures] difference: max(x) - min(x)
+	min_x  []f64 // [n_features] min x values
+	max_x  []f64 // [n_features] max x values
+	sum_x  []f64 // [n_features] sum of x values
+	mean_x []f64 // [n_features] mean of x values
+	sig_x  []f64 // [n_features] standard deviations of x
+	del_x  []f64 // [n_features] difference: max(x) - min(x)
 	min_y  f64 // min of y values
 	max_y  f64 // max of y values
 	sum_y  f64 // sum of y values
@@ -32,12 +32,12 @@ pub fn stat_from_data(mut data Data) Stat {
 	mut o := Stat{
 		data: data
 	}
-	o.min_x = [0.0].repeat(data.nb_features)
-	o.max_x = [0.0].repeat(data.nb_features)
-	o.sum_x = [0.0].repeat(data.nb_features)
-	o.mean_x = [0.0].repeat(data.nb_features)
-	o.sig_x = [0.0].repeat(data.nb_features)
-	o.del_x = [0.0].repeat(data.nb_features)
+	o.min_x = []f64{len: data.nb_features}
+	o.max_x = []f64{len: data.nb_features}
+	o.sum_x = []f64{len: data.nb_features}
+	o.mean_x = []f64{len: data.nb_features}
+	o.sig_x = []f64{len: data.nb_features}
+	o.del_x = []f64{len: data.nb_features}
 	data.add_observer(o)
 	return o
 }
@@ -82,9 +82,9 @@ pub fn (mut o Stat) update() {
 // sum_vars computes the sums along the columns of X and y
 // Output:
 // t -- scalar t = oᵀy  sum of columns of the y vector: t = Σ_i^m o_i y_i
-// s -- vector s = Xᵀo  sum of columns of the X matrix: s_j = Σ_i^m o_i X_ij  [nFeatures]
+// s -- vector s = Xᵀo  sum of columns of the X matrix: s_j = Σ_i^m o_i X_ij  [n_features]
 pub fn (mut o Stat) sum_vars() ([]f64, f64) {
-	one := [1.0].repeat(o.data.x.m)
+	one := []f64{len: o.data.x.m, init: 1.0}
 	s := la.matrix_tr_vector_mul(1, o.data.x, one)
 	mut t := 0.0
 	if o.data.y.len > 0 {

@@ -46,7 +46,7 @@ pub fn vector_dot(u []f64, v []f64) f64 {
 // vector_add adds the scaled components of two vectors
 // res := alpha⋅u + beta⋅v   ⇒   result[i] := alpha⋅u[i] + beta⋅v[i]
 pub fn vector_add(alpha f64, u []f64, beta f64, v []f64) []f64 {
-	mut res := [0.0].repeat(v.len)
+	mut res := []f64{len: v.len}
 	n := u.len
 	cutoff := 150
 	if beta == 1 && n > cutoff {
@@ -83,7 +83,7 @@ pub fn vector_max_diff(u []f64, v []f64) f64 {
 // vector_scale_abs creates a "scale" vector using the absolute value of another vector
 // scale := a + m ⋅ |x|     ⇒      scale[i] := a + m ⋅ |x[i]|
 pub fn vector_scale_abs(a f64, m f64, x []f64) []f64 {
-	mut scale := [0.0].repeat(x.len)
+	mut scale := []f64{len: x.len}
 	for i := 0; i < x.len; i++ {
 		scale[i] = a + m * vmath.abs(x[i])
 	}
@@ -114,7 +114,7 @@ pub fn matrix_vector_mul(alpha f64, a Matrix, u []f64) []f64 {
 // v = alpha⋅aᵀ⋅u    ⇒    vi = alpha * aji * uj = alpha * uj * aji
 //
 pub fn matrix_tr_vector_mul(alpha f64, a Matrix, u []f64) []f64 {
-	mut v := [0.0].repeat(a.n)
+	mut v := []f64{len: a.n}
 	if a.m < 9 && a.n < 9 {
 		for i := 0; i < a.n; i++ {
 			v[i] = 0.0
@@ -143,7 +143,7 @@ pub fn vector_vector_tr_mul(alpha f64, u []f64, v []f64) Matrix {
 		}
 		return m
 	}
-        mut a := []f64{len: u.len * v.len}
+	mut a := []f64{len: u.len * v.len}
 	blas.dger(m.m, m.n, alpha, u, 1, v, 1, mut a, int(vmath.max(m.m, m.n)))
 	return matrix_raw(u.len, v.len, a)
 }

@@ -68,7 +68,7 @@ pub fn matrix_inv_small(mut ai Matrix, mut a Matrix, tol f64) f64 {
 // u  -- left matrix [must be pre-allocated] u is (a.m x a.m)
 // vt -- transposed right matrix [must be pre-allocated] vt is (a.n x a.n)
 pub fn matrix_svd(s []f64, u Matrix, vt Matrix, a Matrix, copy_a bool) {
-	superb := [0.0].repeat(int(vmath.min(a.m, a.n)))
+	superb := []f64{len: int(vmath.min(a.m, a.n))}
 	mut acpy := a
 	if copy_a {
 		acpy = a.clone()
@@ -90,7 +90,7 @@ pub fn matrix_inv(mut ai Matrix, mut a Matrix, calc_det bool) f64 {
 	// square inverse
 	if a.m == a.n {
 		ai.data = a.data.clone()
-		ipiv := [0].repeat(int(vmath.min(a.m, a.n)))
+		ipiv := []int{len: int(vmath.min(a.m, a.n))}
 		blas.dgetrf(a.m, a.n, mut ai.data, a.m, ipiv) // NOTE: ipiv are 1-based indices
 		if calc_det {
 			det = 1.0
@@ -106,7 +106,7 @@ pub fn matrix_inv(mut ai Matrix, mut a Matrix, calc_det bool) f64 {
 		return det
 	}
 	// singular value decomposition
-	s := [0.0].repeat(int(vmath.min(a.m, a.n)))
+	s := []f64{len: int(vmath.min(a.m, a.n))}
 	u := matrix(a.m, a.m)
 	vt := matrix(a.n, a.n)
 	matrix_svd(s, u, vt, a, true)
