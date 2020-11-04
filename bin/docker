@@ -45,7 +45,7 @@ docker_ini() {
 
     if [[ -n "${build}" ]] || [[ "$(docker images ${IMAGE_NAME_ARRAY[0]} | grep ${IMAGE_NAME_ARRAY[1]} 2> /dev/null)" = "" ]]; then
         docker build -f Dockerfile -t "${IMAGE_NAME}" \
-            --build-arg USER=${USER} \
+            --build-arg USERNAME=${USER} \
             .
     fi
 }
