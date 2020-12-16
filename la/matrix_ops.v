@@ -130,10 +130,10 @@ pub fn matrix_inv(mut ai Matrix, a Matrix, calc_det bool) f64 {
 // normtype -- Type of norm to use:
 // "F" or "" => Frobenius
 // "I"       => Infinite
-pub fn matrix_cond_num(mut a Matrix, normtype string) f64 {
+pub fn matrix_cond_num(a Matrix, normtype string) f64 {
 	mut res := 0.0
 	mut ai := new_matrix(a.m, a.n)
-	matrix_inv(mut ai, mut a, false)
+	matrix_inv(mut ai, a, false)
 	if normtype == 'I' {
 		res = a.norm_inf() * ai.norm_inf()
 		return res
