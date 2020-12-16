@@ -13,13 +13,14 @@ import vsl.stats
 //
 pub struct Stat {
 pub mut:
-	data   &Data // data
-	min_x  []f64 // [n_features] min x values
-	max_x  []f64 // [n_features] max x values
-	sum_x  []f64 // [n_features] sum of x values
-	mean_x []f64 // [n_features] mean of x values
-	sig_x  []f64 // [n_features] standard deviations of x
-	del_x  []f64 // [n_features] difference: max(x) - min(x)
+	data   &Data  // data
+        name   string // name of this object
+	min_x  []f64  // [n_features] min x values
+	max_x  []f64  // [n_features] max x values
+	sum_x  []f64  // [n_features] sum of x values
+	mean_x []f64  // [n_features] mean of x values
+	sig_x  []f64  // [n_features] standard deviations of x
+	del_x  []f64  // [n_features] difference: max(x) - min(x)
 	min_y  f64 // min of y values
 	max_y  f64 // max of y values
 	sum_y  f64 // sum of y values
@@ -29,7 +30,7 @@ pub mut:
 }
 
 // stat returns a new Stat object
-pub fn stat_from_data(mut data Data) Stat {
+pub fn stat_from_data(mut data Data, name string) Stat {
 	mut o := Stat{
 		data: data
 	}
@@ -41,6 +42,11 @@ pub fn stat_from_data(mut data Data) Stat {
 	o.del_x = []f64{len: data.nb_features}
 	data.add_observer(o)
 	return o
+}
+
+// name returns the name of this stat object (thus defining the Observer interface)
+pub fn (o Stat) name() string {
+	return o.name
 }
 
 // update compute statistics for given data (an Observer of Data)

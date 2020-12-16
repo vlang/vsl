@@ -15,7 +15,7 @@ pub mut:
 }
 
 // matrix allocates a new (empty) Matrix with given (m,n) (row/col sizes)
-pub fn matrix(m int, n int) Matrix {
+pub fn new_matrix(m int, n int) Matrix {
 	data := []f64{len: m * n}
 	return Matrix{
 		m: m
@@ -27,7 +27,7 @@ pub fn matrix(m int, n int) Matrix {
 // matrix_deep2 allocates a new Matrix from given (Deep2) nested slice.
 // NOTE: make sure to have at least 1x1 item
 pub fn matrix_deep2(a [][]f64) Matrix {
-	mut o := matrix(a.len, a[0].len)
+	mut o := new_matrix(a.len, a[0].len)
 	o.set_from_deep2(a)
 	return o
 }
@@ -93,14 +93,14 @@ pub fn (o Matrix) get_deep2() [][]f64 {
 
 // clone returns a copy of this matrix
 pub fn (o Matrix) clone() Matrix {
-	mut clone := matrix(o.m, o.n)
+	mut clone := new_matrix(o.m, o.n)
 	clone.data = o.data.clone()
 	return clone
 }
 
 // transpose returns the tranpose matrix
 pub fn (o Matrix) transpose() Matrix {
-	mut tran := matrix(o.n, o.m)
+	mut tran := new_matrix(o.n, o.m)
 	for i := 0; i < o.n; i++ {
 		for j := 0; j < o.m; j++ {
 			tran.set(i, j, o.get(j, i))
@@ -224,7 +224,7 @@ pub fn (o Matrix) extract_cols(start int, endp1 int) Matrix {
 			.efailed)
 	}
 	ncol := endp1 - start
-	mut reduced := matrix(o.m, ncol)
+	mut reduced := new_matrix(o.m, ncol)
 	reduced.data = o.data[start * o.m..endp1 * o.m]
 	return reduced
 }

@@ -1,0 +1,151 @@
+module ml
+
+import vsl.la
+import vsl.util
+
+// LinReg implements a linear regression model
+pub struct LinReg {
+mut:
+	// main
+	data   &Data      // x-y data
+	params &ParamsReg // parameters: theta, b, lambda
+	stat   &Stat      // statistics
+
+	// workspace
+	e []f64 // vector e = b⋅o + x⋅theta - y [nSamples]
+}
+
+// new_lin_reg returns a new LinReg object
+//   Input:
+//     data   -- x,y data
+//     params -- theta, b, lambda
+//     name   -- unique name of this (observer) object
+pub fn new_lin_reg(mut data &Data, params &ParamsReg, name string) LinReg {
+        mut stat := stat_from_data(mut data, name)
+        stat.update()
+	return LinReg{
+                data: data
+                params: params
+                stat: &stat
+                e: []f64{len: data.nb_samples}
+        }
+}
+
+// predict returns the model evaluation @ {x;theta,b}
+//   Input:
+//     x -- vector of features
+//   Output:
+//     y -- model prediction y(x)
+pub fn (o LinReg) predict(x []f64) f64 {
+	theta := o.params.access_thetas()
+	b := o.params.get_bias()
+	return b + la.vector_dot(x, theta) // b + xᵀtheta
+}
+
+// cost returns the cost c(x;theta,b)
+//   Input:
+//     data -- x,y data
+//     params -- theta and b
+//     x -- vector of features
+//   Output:
+//     c -- total cost (model error)
+pub fn (mut o LinReg) cost() f64 {
+	// auxiliary
+	m := f64(o.data.nb_samples)
+	lambda := o.params.get_lambda()
+	theta := o.params.access_thetas()
+
+	// cost
+	o.calce()                                        // e := b⋅o + x⋅theta - y
+	mut c := (0.5 / m) * la.vector_dot(o.e, o.e)     // C := (0.5/m) eᵀe
+	if lambda > 0 {
+		c += (0.5 * lambda / m) * la.vector_dot(theta, theta) // c += (0.5lambda/m) thetaᵀtheta
+	}
+	return c
+}
+
+// gradients returns ∂C/∂theta and ∂C/∂b
+//   Output:
+//     dcdtheta -- ∂C/∂theta
+//     dcdb -- ∂C/∂b
+pub fn (mut o LinReg) gradients() ([]f64, f64) {
+
+	// auxiliary
+	m := f64(o.data.nb_samples)
+	lambda := o.params.get_lambda()
+	theta := o.params.access_thetas()
+	x := o.data.x
+
+	// dcdtheta
+	o.calce()                           // e := b⋅o + x⋅theta - y
+	mut dcdtheta := la.matrix_tr_vector_mul(1.0/m, x, o.e) // dcdtheta := (1/m) xᵀe
+	if lambda > 0 {
+		dcdtheta = la.vector_add(1, dcdtheta, lambda/m, theta) // dcdtheta += (1/m) theta
+	}
+
+	// dcdb
+	return dcdtheta, (1.0 / m) * la.vector_accum(o.e) // dcdb = (1/m) oᵀe
+}
+
+// train finds theta and b using closed-form solution
+//   Input:
+//     data -- x,y data
+//   Output:
+//     params -- theta and b
+pub fn (mut o LinReg) train() {
+
+	// auxiliary
+	lambda := o.params.get_lambda()
+	x, y := o.data.x, o.data.y
+	s, t := o.stat.sum_vars()
+
+	// r vector
+	m := f64(o.data.nb_samples)
+	n := o.data.nb_features
+	mut r := []f64{len: n}
+	r = la.matrix_tr_vector_mul(1, x, y)  // r := a = xᵀy
+	r = la.vector_add(1.0, r, -t/m, s) // r := a - (t/m)s
+
+	// K matrix
+	mut b := la.new_matrix(n, n)
+	mut k := la.new_matrix(n, n)
+	b = la.vector_vector_tr_mul(1.0/m, s, s) // b := (1/m) ssᵀ
+	la.matrix_tr_matrix_mul(mut k, 1, x, x)     // k := A = xᵀx
+	la.matrix_add(mut k, 1, k, -1, b)      // k := A - b
+	if lambda > 0 {
+		for i := 0; i < n; i++ {
+			k.set(i, i, k.get(i, i) + lambda) // k := A - b + lambdaI
+		}
+	}
+
+	// solve system
+	mut theta := o.params.access_thetas()
+	la.den_solve(mut theta, k, r, false)
+	b_ := (t - la.vector_dot(s, theta)) / m
+	o.params.set_bias(b_)
+}
+
+// add_observer adds an object to the list of interested observers
+pub fn (mut o LinReg) add_observer(obs util.Observer) {
+	o.data.observers << obs
+}
+
+// notify_update notifies observers of updates
+pub fn (o LinReg) notify_update() {
+	for obs in o.data.observers {
+		obs.update()
+	}
+}
+
+// auxiliary ///////////////////////////////////////////////////////////////////////////////////////
+
+// calce calculates e vector (save into o.e)
+//  Output: e = b⋅o + x⋅theta - y
+pub fn (mut o LinReg) calce() {
+	theta := o.params.access_thetas()
+	b := o.params.get_bias()
+	x, y := o.data.x, o.data.y
+	o.e = [b]{len: o.e.len}                  // e := b⋅o
+	o.e = la.matrix_vector_mul_add(1, x, theta) // e := b⋅o + x⋅theta
+	o.e = la.vector_add(1, o.e, -1, y) // e := b⋅o + x⋅theta - y
+}

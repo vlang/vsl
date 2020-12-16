@@ -204,11 +204,11 @@ pub fn dgemm(transA bool, transB bool, m int, n int, k int, alpha f64, a []f64, 
 // system of equations A * X = B.
 //
 // NOTE: matrix 'a' will be modified
-pub fn dgesv(n int, nrhs int, a []f64, lda int, ipiv []int, b []f64, ldb int) {
+pub fn dgesv(n int, nrhs int, mut a []f64, lda int, ipiv []int, mut b []f64, ldb int) {
 	if ipiv.len != n {
 		errno.vsl_panic('ipiv.len must be equal to n. $ipiv.len != $n\n', .efailed)
 	}
-	info := C.LAPACKE_dgesv(lapack_col_major, n, nrhs, &a[0], lda, &ipiv[0], &b[0], ldb)
+	info := C.LAPACKE_dgesv(lapack_col_major, n, nrhs, unsafe {&a[0]}, lda, &ipiv[0], unsafe {&b[0]}, ldb)
 	if info != 0 {
 		errno.vsl_panic('lapack failed', .efailed)
 	}
