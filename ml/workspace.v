@@ -1,10 +1,11 @@
 // Copyright (c) 2019-2020 Ulises Jeremias Cornejo Fandos. All rights reserved.
 // Use of this source code is governed by an MIT license
 // that can be found in the LICENSE file.
-module stats
+module ml
 
 import vsl.la
 import vsl.vmath
+import vsl.stats
 
 // Stat holds statistics about data
 //
@@ -60,7 +61,7 @@ pub fn (mut o Stat) update() {
 			o.sum_x[j] += xval
 		}
 		o.mean_x[j] = o.sum_x[j] / mf
-		o.sig_x[j] = sample_stddev_mean(o.data.x.col(j), o.mean_x[j])
+		o.sig_x[j] = stats.sample_stddev_mean(o.data.x.col(j), o.mean_x[j])
 		o.del_x[j] = o.max_x[j] - o.min_x[j]
 	}
 	// y values
@@ -74,7 +75,7 @@ pub fn (mut o Stat) update() {
 			o.sum_y += o.data.y[i]
 		}
 		o.mean_y = o.sum_y / mf
-		o.sig_y = sample_stddev_mean(o.data.y, o.mean_y)
+		o.sig_y = stats.sample_stddev_mean(o.data.y, o.mean_y)
 		o.del_y = o.max_y - o.min_y
 	}
 }

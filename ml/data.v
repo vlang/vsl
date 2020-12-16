@@ -1,7 +1,7 @@
 // Copyright (c) 2019-2020 Ulises Jeremias Cornejo Fandos. All rights reserved.
 // Use of this source code is governed by an MIT license
 // that can be found in the LICENSE file.
-module stats
+module ml
 
 import vsl.util
 import vsl.la
@@ -39,7 +39,7 @@ pub mut:
 // x and y must be set using set() method
 // Output:
 // new object
-pub fn data(nb_samples int, nb_features int, use_y bool, allocate bool) Data {
+pub fn new_data(nb_samples int, nb_features int, use_y bool, allocate bool) Data {
 	x := if allocate { la.matrix(nb_samples, nb_features) } else { la.matrix(0, 0) }
 	mut y := []f64{}
 	if allocate && use_y {
@@ -77,7 +77,7 @@ pub fn data_given_raw_x(xraw [][]f64) Data {
 	}
 	// allocate new object
 	nb_features := xraw[0].len
-	mut o := data(nb_samples, nb_features, true, true)
+	mut o := new_data(nb_samples, nb_features, true, true)
 	// copy data from raw table to x matrix
 	for i := 0; i < nb_samples; i++ {
 		for j := 0; j < nb_features; j++ {
@@ -101,7 +101,7 @@ pub fn data_give_raw_xy(xyraw [][]f64) Data {
 	}
 	// allocate new object
 	nb_features := xyraw[0].len - 1 // -1 because of y column
-	mut o := data(nb_samples, nb_features, true, true)
+	mut o := new_data(nb_samples, nb_features, true, true)
 	// copy data from raw table to x and y arrays
 	for i := 0; i < nb_samples; i++ {
 		for j := 0; j < nb_features; j++ {
@@ -115,7 +115,7 @@ pub fn data_give_raw_xy(xyraw [][]f64) Data {
 // clone returns a deep copy of this object
 pub fn (o Data) clone() Data {
 	use_y := o.y.len > 0
-	mut p := data(o.nb_samples, o.nb_features, use_y, true)
+	mut p := new_data(o.nb_samples, o.nb_features, use_y, true)
 	o.x.copy_into(mut p.x, 1)
 	if use_y {
 		p.y = o.y.clone()
