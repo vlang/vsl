@@ -161,7 +161,7 @@ pub fn companion_matrix(a []f64) [][]f64 {
 		}
 	}
 	for i = 1; i < nc; i++ {
-		cm[i][i - 1] = f64(1.0)
+		cm[i][i - 1] = 1.0
 	}
 	for i = 0; i < nc; i++ {
 		cm[i][nc - 1] = -a[i] / a[nc]

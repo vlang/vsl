@@ -36,7 +36,7 @@ pub fn newton(func vsl.FunctionFdf, x0 f64, x_eps f64, fx_eps f64, n_max int) ?f
 	mut f, mut df := func.eval_f_df(root)
 	mut i := 0
 	for i < n_max {
-		mut t := f64(1.0)
+		mut t := 1.0
 		if df == 0.0 {
 			errno.vsl_panic('div by zero', .ezerodiv)
 		}

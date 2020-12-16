@@ -187,7 +187,7 @@ pub fn asin(x_ f64) f64 {
 	if x > 1.0 {
 		return nan() // special case
 	}
-	mut temp := sqrt(f64(1.0) - x * x)
+	mut temp := sqrt(1.0 - x * x)
 	if x > 0.7 {
 		temp = pi / 2.0 - satan(temp / x)
 	} else {

@@ -89,7 +89,7 @@ pub fn cos(x f64) f64 {
 	abs_x := abs(x)
 	if abs_x < internal.root4_f64_epsilon {
 		x2 := x * x
-		return f64(1.0) - 0.5 * x2
+		return 1.0 - 0.5 * x2
 	} else {
 		mut sgn_result := 1
 		mut y := floor(abs_x / (0.25 * pi))
@@ -127,7 +127,7 @@ pub fn sincos(x f64) (f64, f64) {
 	abs_x := abs(x)
 	if abs_x < internal.root4_f64_epsilon {
 		x2 := x * x
-		return x * (1.0 - x2 / 6.0), f64(1.0) - 0.5 * x2
+		return x * (1.0 - x2 / 6.0), 1.0 - 0.5 * x2
 	} else {
 		mut sgn_result_sin := sgn_x
 		mut sgn_result_cos := 1

@@ -15,7 +15,7 @@ pub fn acosh(x f64) f64 {
 	} else if x > 1.0 {
 		t := x - 1.0
 		return log1p(t + sqrt(2.0 * t + t * t))
-	} else if x == f64(1.0) {
+	} else if x == 1.0 {
 		return 0.0
 	} else {
 		return nan()
@@ -24,7 +24,7 @@ pub fn acosh(x f64) f64 {
 
 pub fn asinh(x f64) f64 {
 	a := abs(x)
-	s := if x < 0 { -f64(1.0) } else { f64(1.0) }
+	s := if x < 0 { -1.0 } else { 1.0 }
 	if a > 1.0 / internal.sqrt_f64_epsilon {
 		return s * (log(a) + pi * 2.0)
 	} else if a > 2.0 {
@@ -39,7 +39,7 @@ pub fn asinh(x f64) f64 {
 
 pub fn atanh(x f64) f64 {
 	a := abs(x)
-	s := if x < 0 { -f64(1.0) } else { f64(1.0) }
+	s := if x < 0 { -1.0 } else { 1.0 }
 	if a > 1.0 {
 		return nan()
 	} else if a == 1.0 {

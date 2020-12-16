@@ -69,7 +69,7 @@ pub fn bessel_j0(x_ f64) f64 {
 		return 0
 	}
 	if x == 0.0 {
-		return f64(1.0)
+		return 1.0
 	}
 	x = vmath.abs(x)
 	if x >= 2.0 {
@@ -90,11 +90,11 @@ pub fn bessel_j0(x_ f64) f64 {
 		mut z := 0.0
 		if x > two129 {
 			// |x| > ~6.8056e+38
-			z = (f64(1.0) / vmath.sqrt_pi) * cc / vmath.sqrt(x)
+			z = (1.0 / vmath.sqrt_pi) * cc / vmath.sqrt(x)
 		} else {
 			u := pzero(x)
 			v := qzero(x)
-			z = (f64(1.0) / vmath.sqrt_pi) * (u * cc - v * ss) / vmath.sqrt(x)
+			z = (1.0 / vmath.sqrt_pi) * (u * cc - v * ss) / vmath.sqrt(x)
 		}
 		return z
 		// x| >= 2.0
@@ -102,20 +102,20 @@ pub fn bessel_j0(x_ f64) f64 {
 	if x < two_m13 {
 		// |x| < ~1.2207e-4
 		if x < two_m27 {
-			return f64(1.0)
+			return 1.0
 			// x| < ~7.4506e-9
 		}
-		return f64(1.0) - 0.25 * x * x // ~7.4506e-9 < |x| < ~1.2207e-4
+		return 1.0 - 0.25 * x * x // ~7.4506e-9 < |x| < ~1.2207e-4
 	}
 	z := x * x
 	r := z * (j0r02 + z * (j0r03 + z * (j0r04 + z * j0r05)))
-	s := f64(1.0) + z * (j0s01 + z * (j0s02 + z * (j0s03 + z * j0s04)))
+	s := 1.0 + z * (j0s01 + z * (j0s02 + z * (j0s03 + z * j0s04)))
 	if x < 1.0 {
-		return f64(1.0) + z * (-0.25 + (r / s))
+		return 1.0 + z * (-0.25 + (r / s))
 		// x| < 1.00
 	}
 	u := f64(0.5) * x
-	return (f64(1.0) + u) * (f64(1.0) - u) + z * (r / s) // 1.0 < |x| < 2.0
+	return (1.0 + u) * (1.0 - u) + z * (r / s) // 1.0 < |x| < 2.0
 }
 
 // bessel_j1 returns the order-one Bessel function of the first kind.
@@ -153,11 +153,11 @@ pub fn bessel_j1(x_ f64) f64 {
 		// y1(x) = 1/sqrt(pi) * (P(1,x)*ss + Q(1,x)*cc) / sqrt(x)
 		mut z := 0.0
 		if x > two129 {
-			z = (f64(1.0) / vmath.sqrt_pi) * cc / vmath.sqrt(x)
+			z = (1.0 / vmath.sqrt_pi) * cc / vmath.sqrt(x)
 		} else {
 			u := pone(x)
 			v := qone(x)
-			z = (f64(1.0) / vmath.sqrt_pi) * (u * cc - v * ss) / vmath.sqrt(x)
+			z = (1.0 / vmath.sqrt_pi) * (u * cc - v * ss) / vmath.sqrt(x)
 		}
 		if sign {
 			return -z
@@ -170,7 +170,7 @@ pub fn bessel_j1(x_ f64) f64 {
 	}
 	mut z := x * x
 	mut r := z * (j1r00 + z * (j1r01 + z * (j1r02 + z * j1r03)))
-	s := f64(1.0) + z * (j1s01 + z * (j1s02 + z * (j1s03 + z * (j1s04 + z * j1s05))))
+	s := 1.0 + z * (j1s01 + z * (j1s02 + z * (j1s03 + z * (j1s04 + z * j1s05))))
 	r *= x
 	z = f64(0.5) * x + r / s
 	if sign {
@@ -247,7 +247,7 @@ pub fn bessel_jn(n_ int, x_ f64) f64 {
 			if n3 == 3 {
 				temp = c - s
 			}
-			b = (f64(1.0) / vmath.sqrt_pi) * temp / vmath.sqrt(x)
+			b = (1.0 / vmath.sqrt_pi) * temp / vmath.sqrt(x)
 		} else {
 			b = bessel_j1(x)
 			mut i := 1
@@ -269,7 +269,7 @@ pub fn bessel_jn(n_ int, x_ f64) f64 {
 			} else {
 				temp := x * 0.5
 				b = temp
-				mut a := f64(1.0)
+				mut a := 1.0
 				for i := 2; i <= n; i++ {
 					a *= f64(i) // a = n!
 					b *= temp // b = (x/2)**n
@@ -321,7 +321,7 @@ pub fn bessel_jn(n_ int, x_ f64) f64 {
 			m := n + n
 			mut t := 0.0
 			for i := 2 * (n + k); i >= m; i -= 2 {
-				t = f64(1.0) / (f64(i) / x - t)
+				t = 1.0 / (f64(i) / x - t)
 			}
 			mut a := t
 			b = 1
@@ -412,11 +412,11 @@ pub fn bessel_y0(x f64) f64 {
 		mut z := 0.0
 		if x > two129 {
 			// |x| > ~6.8056e+38
-			z = (f64(1.0) / vmath.sqrt_pi) * ss / vmath.sqrt(x)
+			z = (1.0 / vmath.sqrt_pi) * ss / vmath.sqrt(x)
 		} else {
 			u := pzero(x)
 			v := qzero(x)
-			z = (f64(1.0) / vmath.sqrt_pi) * (u * ss + v * cc) / vmath.sqrt(x)
+			z = (1.0 / vmath.sqrt_pi) * (u * ss + v * cc) / vmath.sqrt(x)
 		}
 		return z
 		// x| >= 2.0
@@ -427,7 +427,7 @@ pub fn bessel_y0(x f64) f64 {
 	}
 	z := x * x
 	u := y0u00 + z * (y0u01 + z * (y0u02 + z * (y0u03 + z * (y0u04 + z * (y0u05 + z * y0u06)))))
-	v := f64(1.0) + z * (y0v01 + z * (y0v02 + z * (y0v03 + z * y0v04)))
+	v := 1.0 + z * (y0v01 + z * (y0v02 + z * (y0v03 + z * y0v04)))
 	return u / v + (f64(2.0) / vmath.pi) * bessel_j0(x) * vmath.log(x) // ~7.4506e-9 < |x| < 2.0
 }
 
@@ -473,11 +473,11 @@ pub fn bessel_y1(x f64) f64 {
 		// to compute the worse one.
 		mut z := 0.0
 		if x > two129 {
-			z = (f64(1.0) / vmath.sqrt_pi) * ss / vmath.sqrt(x)
+			z = (1.0 / vmath.sqrt_pi) * ss / vmath.sqrt(x)
 		} else {
 			u := pone(x)
 			v := qone(x)
-			z = (f64(1.0) / vmath.sqrt_pi) * (u * ss + v * cc) / vmath.sqrt(x)
+			z = (1.0 / vmath.sqrt_pi) * (u * ss + v * cc) / vmath.sqrt(x)
 		}
 		return z
 	}
@@ -487,7 +487,7 @@ pub fn bessel_y1(x f64) f64 {
 	}
 	z := x * x
 	u := y1u00 + z * (y1u01 + z * (y1u02 + z * (y1u03 + z * y1u04)))
-	v := f64(1.0) + z * (y1v00 + z * (y1v01 + z * (y1v02 + z * (y1v03 + z * y1v04))))
+	v := 1.0 + z * (y1v00 + z * (y1v01 + z * (y1v02 + z * (y1v03 + z * y1v04))))
 	return x * (u / v) + (2.0 / vmath.pi) * (bessel_j1(x) * vmath.log(x) - 1.0 / x)
 }
 
@@ -559,7 +559,7 @@ pub fn bessel_yn(n_ int, x f64) f64 {
 		if n3 == 3 {
 			temp = s + c
 		}
-		b = (f64(1.0) / vmath.sqrt_pi) * temp / vmath.sqrt(x)
+		b = (1.0 / vmath.sqrt_pi) * temp / vmath.sqrt(x)
 	} else {
 		mut a := bessel_y0(x)
 		b = bessel_y1(x)
@@ -600,10 +600,10 @@ pub fn pzero(x f64) f64 {
 		p = p0r2
 		q = p0s2
 	}
-	z := f64(1.0) / (x * x)
+	z := 1.0 / (x * x)
 	r := p[0] + z * (p[1] + z * (p[2] + z * (p[3] + z * (p[4] + z * p[5]))))
-	s := f64(1.0) + z * (q[0] + z * (q[1] + z * (q[2] + z * (q[3] + z * q[4]))))
-	return f64(1.0) + r / s
+	s := 1.0 + z * (q[0] + z * (q[1] + z * (q[2] + z * (q[3] + z * q[4]))))
+	return 1.0 + r / s
 }
 
 // For x >= 8, the asymptotic expansions of pone is
@@ -630,10 +630,10 @@ pub fn pone(x f64) f64 {
 		p = p1r2
 		q = p1s2
 	}
-	z := f64(1.0) / (x * x)
+	z := 1.0 / (x * x)
 	r := p[0] + z * (p[1] + z * (p[2] + z * (p[3] + z * (p[4] + z * p[5]))))
-	s := f64(1.0) + z * (q[0] + z * (q[1] + z * (q[2] + z * (q[3] + z * q[4]))))
-	return f64(1.0) + r / s
+	s := 1.0 + z * (q[0] + z * (q[1] + z * (q[2] + z * (q[3] + z * q[4]))))
+	return 1.0 + r / s
 }
 
 // For x >= 8, the asymptotic expansions of qzero is
@@ -660,9 +660,9 @@ pub fn qzero(x f64) f64 {
 		p = q0r2
 		q = q0s2
 	}
-	z := f64(1.0) / (x * x)
+	z := 1.0 / (x * x)
 	r := p[0] + z * (p[1] + z * (p[2] + z * (p[3] + z * (p[4] + z * p[5]))))
-	s := f64(1.0) + z * (q[0] + z * (q[1] + z * (q[2] + z * (q[3] + z * (q[4] + z * q[5])))))
+	s := 1.0 + z * (q[0] + z * (q[1] + z * (q[2] + z * (q[3] + z * (q[4] + z * q[5])))))
 	return (f64(-0.125) + r / s) / x
 }
 
@@ -690,8 +690,8 @@ pub fn qone(x f64) f64 {
 		p = q1r2
 		q = q1s2
 	}
-	z := f64(1.0) / (x * x)
+	z := 1.0 / (x * x)
 	r := p[0] + z * (p[1] + z * (p[2] + z * (p[3] + z * (p[4] + z * p[5]))))
-	s := f64(1.0) + z * (q[0] + z * (q[1] + z * (q[2] + z * (q[3] + z * (q[4] + z * q[5])))))
+	s := 1.0 + z * (q[0] + z * (q[1] + z * (q[2] + z * (q[3] + z * (q[4] + z * q[5])))))
 	return (f64(0.375) + r / s) / x
 }

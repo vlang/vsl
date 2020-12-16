@@ -19,7 +19,7 @@ pub fn log_n(x f64, b f64) f64 {
 // log10 returns the decimal logarithm of x.
 // The special cases are the same as for log.
 pub fn log10(x f64) f64 {
-	return log(x) * (f64(1.0) / ln10)
+	return log(x) * (1.0 / ln10)
 }
 
 // log2 returns the binary logarithm of x.
@@ -31,12 +31,12 @@ pub fn log2(x f64) f64 {
 	if frac == 0.5 {
 		return f64(exp - 1)
 	}
-	return log(frac) * (f64(1.0) / ln2) + f64(exp)
+	return log(frac) * (1.0 / ln2) + f64(exp)
 }
 
 pub fn log1p(x f64) f64 {
-	y := f64(1.0) + x
-	z := y - f64(1.0)
+	y := 1.0 + x
+	z := y - 1.0
 	return log(y) - (z - x) / y // cancels errors with IEEE arithmetic
 }
 

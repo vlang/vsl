@@ -12,7 +12,7 @@ module vmath
 // masks any imprecision in the polynomial.
 fn stirling(x f64) (f64, f64) {
 	if x > 200 {
-		return inf(1), f64(1.0)
+		return inf(1), 1.0
 	}
 	sqrt_two_pi := 2.506628274631000502417
 	max_stirling := 143.01608

@@ -167,7 +167,7 @@ const (
 pub fn erf(x_ f64) f64 {
 	mut x := x_
 	very_tiny := 2.848094538889218e-306 // 0x0080000000000000
-	small := f64(1.0) / (1 << 28) // 2**-28
+	small := 1.0 / (1 << 28) // 2**-28
 	if is_nan(x) {
 		return nan()
 	}
@@ -246,7 +246,7 @@ pub fn erf(x_ f64) f64 {
 // erfc(nan) = nan
 pub fn erfc(x_ f64) f64 {
 	mut x := x_
-	tiny := f64(1.0) / (1 << 56) // 2**-56
+	tiny := 1.0 / (1 << 56) // 2**-56
 	// special cases
 	if is_nan(x) {
 		return nan()

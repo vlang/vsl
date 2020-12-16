@@ -21,7 +21,7 @@ pub fn hypot(x f64, y f64) f64 {
 		min := vmath.min(a, b)
 		max := vmath.max(a, b)
 		rat := min / max
-		root_term := vmath.sqrt(f64(1.0) + rat * rat)
+		root_term := vmath.sqrt(1.0 + rat * rat)
 		if max < vmath.max_f64 / root_term {
 			result = max * root_term
 		} else {
@@ -46,7 +46,7 @@ pub fn hypot_e(x f64, y f64) (f64, f64) {
 		min := vmath.min(a, b)
 		max := vmath.max(a, b)
 		rat := min / max
-		root_term := vmath.sqrt(f64(1.0) + rat * rat)
+		root_term := vmath.sqrt(1.0 + rat * rat)
 		if max < vmath.max_f64 / root_term {
 			result = max * root_term
 			result_err = f64(2.0) * internal.f64_epsilon * vmath.abs(result)

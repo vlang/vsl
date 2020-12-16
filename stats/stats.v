@@ -489,6 +489,6 @@ pub fn quantile_for_sorted_data(sorted_data []f64, f f64) f64 {
 	return if lhs == sorted_data.len - 1 {
 		sorted_data[lhs]
 	} else {
-		(f64(1.0) - delta) * sorted_data[lhs] + delta * sorted_data[(lhs + 1)]
+		(1.0 - delta) * sorted_data[lhs] + delta * sorted_data[(lhs + 1)]
 	}
 }
