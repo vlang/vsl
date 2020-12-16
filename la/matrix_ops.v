@@ -85,7 +85,7 @@ pub fn matrix_svd(s []f64, u Matrix, vt Matrix, a Matrix, copy_a bool) {
 // ai -- inverse matrix (N x M)
 // det -- determinant of matrix (ONLY if calc_det == true and the matrix is square)
 // NOTE: the dimension of the ai matrix must be N x M for the pseudo-inverse
-pub fn matrix_inv(mut ai Matrix, mut a Matrix, calc_det bool) f64 {
+pub fn matrix_inv(mut ai Matrix, a Matrix, calc_det bool) f64 {
 	mut det := 0.0
 	// square inverse
 	if a.m == a.n {
