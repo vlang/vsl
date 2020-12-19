@@ -29,7 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Install Archlinux
-      run: curl -L https://github.com/zaoqi/github-actions-archlinux/raw/master/install.sh | sh
+      run: curl -L https://github.com/zaoqi/github-actions-archlinux/raw/master/install.sh | bash
     - name: Checkout Latest V
       uses: actions/checkout@v2
       with:
