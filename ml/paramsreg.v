@@ -28,6 +28,12 @@ pub fn new_params_reg(nb_features int) ParamsReg {
 	}
 }
 
+// init initializes ParamsReg with nb_features (number of features)
+pub fn (mut o ParamsReg) init(nb_features int) {
+	o.theta = []f64{len: nb_features}
+	o.bkp_theta = []f64{len: nb_features}
+}
+
 // backup creates an internal copy of parameters
 pub fn (mut o ParamsReg) backup() {
 	o.bkp_theta = o.theta.clone()

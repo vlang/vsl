@@ -57,14 +57,14 @@ pub fn (o LinReg) predict(x []f64) f64 {
 //     c -- total cost (model error)
 pub fn (mut o LinReg) cost() f64 {
 	// auxiliary
-	m := f64(o.data.nb_samples)
+	m_1 := 1.0 / f64(o.data.nb_samples)
 	lambda := o.params.get_lambda()
 	theta := o.params.access_thetas()
 	// cost
 	o.calce() // e := b⋅o + x⋅theta - y
-	mut c := (0.5 / m) * la.vector_dot(o.e, o.e) // C := (0.5/m) eᵀe
+	mut c := (0.5 * m_1) * la.vector_dot(o.e, o.e) // C := (0.5/m) eᵀe
 	if lambda > 0 {
-		c += (0.5 * lambda / m) * la.vector_dot(theta, theta) // c += (0.5lambda/m) thetaᵀtheta
+		c += (0.5 * lambda * m_1) * la.vector_dot(theta, theta) // c += (0.5lambda/m) thetaᵀtheta
 	}
 	return c
 }
@@ -75,18 +75,18 @@ pub fn (mut o LinReg) cost() f64 {
 //     dcdb -- ∂C/∂b
 pub fn (mut o LinReg) gradients() ([]f64, f64) {
 	// auxiliary
-	m := f64(o.data.nb_samples)
+	m_1 := 1.0 / f64(o.data.nb_samples)
 	lambda := o.params.get_lambda()
 	theta := o.params.access_thetas()
 	x := o.data.x
 	// dcdtheta
 	o.calce() // e := b⋅o + x⋅theta - y
-	mut dcdtheta := la.matrix_tr_vector_mul(1.0 / m, x, o.e) // dcdtheta := (1/m) xᵀe
+	mut dcdtheta := la.matrix_tr_vector_mul(1.0 * m_1, x, o.e) // dcdtheta := (1/m) xᵀe
 	if lambda > 0 {
-		dcdtheta = la.vector_add(1, dcdtheta, lambda / m, theta) // dcdtheta += (1/m) theta
+		dcdtheta = la.vector_add(1, dcdtheta, lambda * m_1, theta) // dcdtheta += (1/m) theta
 	}
 	// dcdb
-	return dcdtheta, (1.0 / m) * la.vector_accum(o.e) // dcdb = (1/m) oᵀe
+	return dcdtheta, (1.0 * m_1) * la.vector_accum(o.e) // dcdb = (1/m) oᵀe
 }
 
 // train finds theta and b using closed-form solution
@@ -100,15 +100,15 @@ pub fn (mut o LinReg) train() {
 	x, y := o.data.x, o.data.y
 	s, t := o.stat.sum_vars()
 	// r vector
-	m := f64(o.data.nb_samples)
+	m_1 := 1.0 / f64(o.data.nb_samples)
 	n := o.data.nb_features
 	mut r := []f64{len: n}
 	r = la.matrix_tr_vector_mul(1, x, y) // r := a = xᵀy
-	r = la.vector_add(1.0, r, -t / m, s) // r := a - (t/m)s
+	r = la.vector_add(1.0, r, -t * m_1, s) // r := a - (t/m)s
 	// K matrix
 	mut b := la.new_matrix(n, n)
 	mut k := la.new_matrix(n, n)
-	b = la.vector_vector_tr_mul(1.0 / m, s, s) // b := (1/m) ssᵀ
+	b = la.vector_vector_tr_mul(1.0 * m_1, s, s) // b := (1/m) ssᵀ
 	la.matrix_tr_matrix_mul(mut k, 1, x, x) // k := A = xᵀx
 	la.matrix_add(mut k, 1, k, -1, b) // k := A - b
 	if lambda > 0 {
@@ -119,7 +119,7 @@ pub fn (mut o LinReg) train() {
 	// solve system
 	mut theta := o.params.access_thetas()
 	la.den_solve(mut theta, k, r, false)
-	b_ := (t - la.vector_dot(s, theta)) / m
+	b_ := (t - la.vector_dot(s, theta)) * m_1
 	o.params.set_bias(b_)
 }
 

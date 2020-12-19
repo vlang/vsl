@@ -1,4 +1,4 @@
-module vtl
+module ml
 
 import vsl.vmath as math
 import vsl.la
@@ -25,7 +25,7 @@ mut:
 pub fn new_log_reg(mut data Data, params &ParamsReg, name string) LogReg {
 	mut stat := stat_from_data(mut data, "stat_" + name)
 	stat.update()
-	log_reg := LogReg{
+	mut log_reg := LogReg{
                 name: name
 		data: data
 		params: params
@@ -45,9 +45,9 @@ pub fn (o LogReg) name() string {
 }
 
 // Update perform updates after data has been changed (as an Observer)
-pub fn (o LogReg) update() {
-        m := f64(o.data.nb_samples)
+pub fn (mut o LogReg) update() {
+        m_1 := 1.0 / f64(o.data.nb_samples)
         for i in 0 .. o.data.nb_samples {
-                o.ybar[i] = (1.0 - o.data.y[i]) / m
+                o.ybar[i] = (1.0 - o.data.y[i]) * m_1
         }
 }
