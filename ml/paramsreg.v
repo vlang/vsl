@@ -5,19 +5,17 @@ import vsl.util
 
 pub struct ParamsReg {
 pub mut:
-	observers   []util.Observer // list of interested parties
-
-        // main
-	theta  []f64     // theta parameter [nb_features]
-	bias   f64       // bias parameter
-	lambda f64       // regularization parameter
-	degree int       // degree of polynomial
-
+	observers  []util.Observer // list of interested parties
+	// main
+	theta      []f64 // theta parameter [nb_features]
+	bias       f64 // bias parameter
+	lambda     f64 // regularization parameter
+	degree     int // degree of polynomial
 	// backup
-	bkp_theta  []f64     // copy of theta
-	bkp_bias   f64       // copy of b
-	bkp_lambda f64       // copy of lambda
-	bkp_degree int       // copy of degree
+	bkp_theta  []f64 // copy of theta
+	bkp_bias   f64 // copy of b
+	bkp_lambda f64 // copy of lambda
+	bkp_degree int // copy of degree
 }
 
 // new_params_reg returns a new object to hold regression parameters
@@ -25,9 +23,9 @@ pub fn new_params_reg(nb_features int) ParamsReg {
 	theta := []f64{len: nb_features}
 	bkp_theta := []f64{len: nb_features}
 	return ParamsReg{
-                theta: theta
-                bkp_theta: bkp_theta
-        }
+		theta: theta
+		bkp_theta: bkp_theta
+	}
 }
 
 // backup creates an internal copy of parameters
@@ -59,7 +57,9 @@ pub fn (mut o ParamsReg) set_params(theta []f64, b f64) {
 // set_param sets either theta or b (use negative indices for b). Notifies observers
 //  i -- index of theta or -1 for bias
 pub fn (mut o ParamsReg) set_param(i int, value f64) {
-	defer { o.notify_update() }
+	defer {
+		o.notify_update()
+	}
 	if i < 0 {
 		o.bias = value
 		return
