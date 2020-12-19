@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 set -e
 wget -O /tmp/undocker.py https://github.com/larsks/undocker/raw/c951f021e701b4ce61de03eb668a440e69646889/undocker.py
@@ -13,7 +13,7 @@ mkdir /rootfs/old.rootfs
 mount --bind / /rootfs/old.rootfs
 mkdir -p /rootfs/usr/lib/modules/
 cp -Lfr /lib/modules/* /rootfs/usr/lib/modules/
-chroot /rootfs /bin/sh -c '
+chroot /rootfs /usr/bin/sh -c '
 cd /old.rootfs/etc/ &&
 cp -Pfr passwd group shadow hosts resolv.conf hostname sudoers sudoers.d /etc/ &&
 cd /old.rootfs &&

@@ -26,10 +26,10 @@ jobs:
       run: cd vsl; make test
 
   arch-linux:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
     - name: Install Archlinux
-      run: curl -L https://github.com/vlang/vsl/raw/master/bin/install-arch-linux.sh | bash
+      run: curl -L https://github.com/vlang/vsl/raw/master/bin/install-arch-linux.sh | sh
     - name: Checkout Latest V
       uses: actions/checkout@v2
       with:
