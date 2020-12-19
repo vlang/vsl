@@ -7,8 +7,9 @@ import vsl.util
 pub struct LinReg {
 mut:
 	// main
+        name   string // name of this "observer"
 	data   &Data // x-y data
-	params &ParamsReg // parameters: theta, b, lambda
+	params &ParamsReg // parameters: θ, b, λ
 	stat   &Stat // statistics
 	// workspace
 	e      []f64 // vector e = b⋅o + x⋅theta - y [nb_samples]
@@ -17,17 +18,23 @@ mut:
 // new_lin_reg returns a new LinReg object
 //   Input:
 //     data   -- x,y data
-//     params -- theta, b, lambda
+//     params -- θ, b, λ
 //     name   -- unique name of this (observer) object
 pub fn new_lin_reg(mut data Data, params &ParamsReg, name string) LinReg {
-	mut stat := stat_from_data(mut data, name)
+	mut stat := stat_from_data(mut data, "stat_" + name)
 	stat.update()
 	return LinReg{
+                name: name
 		data: data
 		params: params
 		stat: &stat
 		e: []f64{len: data.nb_samples}
 	}
+}
+
+// name returns the name of this LinReg object (thus defining the Observer interface)
+pub fn (o LinReg) name() string {
+	return o.name
 }
 
 // predict returns the model evaluation @ {x;theta,b}
