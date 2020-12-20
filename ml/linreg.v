@@ -7,7 +7,7 @@ import vsl.util
 pub struct LinReg {
 mut:
 	// main
-        name   string // name of this "observer"
+	name   string // name of this "observer"
 	data   &Data // x-y data
 	params &ParamsReg // parameters: θ, b, λ
 	stat   &Stat // statistics
@@ -21,10 +21,10 @@ mut:
 //     params -- θ, b, λ
 //     name   -- unique name of this (observer) object
 pub fn new_lin_reg(mut data Data, params &ParamsReg, name string) LinReg {
-	mut stat := stat_from_data(mut data, "stat_" + name)
+	mut stat := stat_from_data(mut data, 'stat_' + name)
 	stat.update()
 	return LinReg{
-                name: name
+		name: name
 		data: data
 		params: params
 		stat: &stat
