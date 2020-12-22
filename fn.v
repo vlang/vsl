@@ -6,7 +6,6 @@ module vsl
 import vsl.vmath
 import vsl.errno
 
-// TODO: change params type from []f64 to []T
 pub type ArbitraryFn = fn (x f64, params []f64) f64
 
 pub type DfFn = fn (x f64, params []f64) f64
