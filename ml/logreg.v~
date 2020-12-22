@@ -1,0 +1,300 @@
+module ml
+
+import vsl.vmath as math
+import vsl.fun
+import vsl.la
+
+// LogReg implements a logistic regression model (Observer of Data)
+pub struct LogReg {
+mut:
+	// main
+        name   string // name of this "observer"
+	data   &Data // x-y data
+	params &ParamsReg // parameters: θ, b, λ
+	stat   &Stat // statistics
+	// workspace
+	ybar      []f64 // bar{y}: yb[i] = (1 - y[i]) / m
+        l         []f64 // vector l = b⋅o + x⋅θ [nb_samples]
+	hmy       []f64 // vector e = h(l) - y [nb_samples]
+}
+
+// new_log_reg returns a new LogReg object
+//   Input:
+//     data   -- x,y data
+//     params -- θ, b, λ
+//     name   -- unique name of this (observer) object
+pub fn new_log_reg(mut data Data, params &ParamsReg, name string) LogReg {
+	mut stat := stat_from_data(mut data, "stat_" + name)
+	stat.update()
+	mut log_reg := LogReg{
+                name: name
+		data: data
+		params: params
+		stat: &stat
+		ybar: []f64{len: data.nb_samples}
+                l: []f64{len: data.nb_samples}
+                hmy: []f64{len: data.nb_samples}
+	}
+        data.add_observer(log_reg) // need to recompute yb upon changes on y
+        log_reg.update() // compute first ybar
+        return log_reg
+}
+
+// name returns the name of this LogReg object (thus defining the Observer interface)
+pub fn (o LogReg) name() string {
+	return o.name
+}
+
+// Update perform updates after data has been changed (as an Observer)
+pub fn (mut o LogReg) update() {
+        m_1 := 1.0 / f64(o.data.nb_samples)
+        for i in 0 .. o.data.nb_samples {
+                o.ybar[i] = (1.0 - o.data.y[i]) * m_1
+        }
+}
+
+// predict returns the model evaluation @ {x;θ,b}
+//   Input:
+//     x -- vector of features
+//   Output:
+//     y -- model prediction y(x)
+pub fn (o LogReg) predict(x []f64) f64 {
+	theta := o.params.access_thetas()
+	b := o.params.get_bias()
+	return fun.logistic(b + la.vector_dot(x, theta)) // g(b + xᵀθ) where g is logistic
+}
+
+// cost returns the cost c(x;θ,b)
+//   Input:
+//     data -- x,y data
+//     params -- θ and b
+//     x -- vector of features
+//   Output:
+//     c -- total cost (model error)
+pub fn (mut o LogReg) cost() f64 {
+
+	// auxiliary
+	m_1 := 1.0 / f64(o.data.nb_samples)
+	lambda := o.params.get_lambda()
+	theta := o.params.access_thetas()
+
+	// cost
+	o.calcl()
+	sq := o.calcsumq()
+	mut c := sq * m_1 + la.vector_dot(o.ybar, o.l)
+	if lambda > 0 {
+		c += (0.5 * lambda * m_1) * la.vector_dot(theta, theta) // c += (0.5λ/m) θᵀθ
+	}
+	return c
+}
+
+// allocate_gradient allocate object to compute gradients
+pub fn (o LogReg) allocate_gradient() f64 {
+	return []f64{len: o.data.nb_features}
+}
+
+// gradients returns ∂C/∂θ and ∂C/∂b
+//   Output:
+//     dcdtheta -- ∂C/∂θ
+//     dcdb -- ∂C/∂b
+pub fn (mut o LogReg) gradients() ([]f64, f64) {
+
+	// auxiliary
+	m_1 := 1.0 / f64(o.data.nb_samples)
+	lambda := o.get_lambda()
+	theta := o.params.access_thetas()
+	x := o.data.x
+
+	// dcdtheta
+	o.calcl()                             // l := b + x⋅θ
+	o.calchmy()                           // hmy := h(l) - y
+	mut dcdtheta := la.matrix_tr_vector_mul(1.0 * m_1, x, o.hmy) // dcdtheta := (1/m) xᵀhmy
+	if lambda > 0 {
+		dcdtheta = la.vector_add(1, dcdtheta, lambda * m_1, theta) // dcdtheta += (1/m) θ
+	}
+
+	// dcdb
+	return dcdtheta, m_1 * o.hmy.Accum() // dcdb = (1/m) oᵀhmy
+}
+
+// allocate_hessian allocate objects to compute hessian
+pub fn (o LogReg) allocate_hessian() ([]f64, []f64, la.Matrix, la.Matrix) {
+	m := o.data.nb_samples
+	n := o.data.nb_features
+	d := []f64{len: m}
+	v := []f64{len: n}
+	dm := la.new_matrix(m, n)
+	hm := la.new_matrix(n, n)
+        return d, v, dm, hm
+}
+
+// hessian computes the hessian matrix and other partial derivatives
+//
+//   Input:
+//     d -- [nSamples]  d[i] = g(l[i]) * [ 1 - g(l[i]) ]  auxiliary vector
+//     v -- [nFeatures] v = ∂²C/∂θ∂b second order partial derivative
+//     dm -- [nSamples][nFeatures]  dm[i][j] = d[i]*x[i][j]  auxiliary matrix
+//     hm -- [nFeatures][nFeatures]  hm = ∂²C/∂θ² hessian matrix
+//
+//   Output, either new objectos or pointers to the input ones:
+//     dNew := d
+//     vNew := v
+//     dmnew := dm
+//     hmnew := hm
+//     w -- hm = ∂²C/∂b²
+//
+pub fn (mut o LogReg) hessian(mut d []f64, mut v []f64, mut dm la.Matrix, mut hm la.Matrix) f64 {
+
+	// auxiliary
+	m := o.data.nb_samples
+	n := o.data.nb_features
+	x := o.data.x
+	lambda := o.get_lambda()
+	mm_1 := 1.0 / f64(m)
+
+	// calc d vector and dm matrix
+	o.calcl()
+	for i in 0 .. m {
+		d[i] = fun.logistic_d1(o.l[i]) // d vector
+		for j in 0 .. n {
+			dm.set(i, j, d[i]*x.get(i, j)) // dm matrix   (TODO: optimize this)
+		}
+	}
+
+	// calc hm matrix
+	hm = la.matrix_tr_vector_mul(1.0 * mm_1, x, dm)
+	if lambda > 0 {
+		for i := 0; i < n; i++ {
+			hm.set(i, i, hm.get(i, i) + lambda * mm_1) // dm += (λ/m) I   (TODO: optimize here?)
+		}
+	}
+
+	// calc v
+	v = la.matrix_tr_vector_mul(1.0 * mm_1, x, d) // v := (1/m) xᵀd
+
+	// calc w
+	w = la.vector_accum(d) * mm_1
+	return w
+}
+
+// train finds θ and b using Newton's method
+//   Input:
+//     data -- x,y data
+//   Output:
+//     params -- θ and b
+// pub fn (mut o LogReg) train() {
+
+// 	// auxiliary
+// 	// m := o.data.nb_samples
+// 	n := o.data.nb_features
+
+// 	// allocate arrays
+// 	// dcdtheta := []f64{len: o.data.nb_features}
+// 	mut w := 0.0
+// 	d, v, dm, hm := o.allocate_hessian()
+
+// 	// objective function where z={θ,b} and fz={dcdtheta,dcdb}
+// 	ffcn := fn(fz, z []f64) {
+// 		o.backup()
+// 		o.params.set_thetas(z[:n])
+// 		o.params.set_bias(z[n])
+// 		dcdb := o.gradients(fz[:n])
+// 		fz[n] = dcdb
+// 		o.params.restore(false)
+// 	}
+
+// 	// Jacobian function
+// 	Jfcn := fn(dfdz *la.Matrix, z []f64) {
+// 		o.backup()
+// 		o.params.set_thetas(z[:n])
+// 		o.params.set_bias(z[n])
+// 		w = o.hessian(d, v, dm, hm)
+// 		for j in 0 .. n { // TODO: optimize here
+// 			for i in 0 .. n { //
+// 				dfdz.set(i, j, hm.get(i, j))
+// 			}
+// 			dfdz.set(n, j, v[j])
+// 			dfdz.set(j, n, v[j])
+// 		}
+// 		dfdz.set(n, n, w)
+// 	}
+
+// 	// initial values
+// 	z := o.params.access_thetas().clone() // {θ, b}
+// 	z[n] = o.params.get_bias()
+
+// 	// solver parameters
+// 	solverParams := map[string]f64{
+// 		"atol":    1e-4,
+// 		"rtol":    1e-4,
+// 		"ftol":    1e-4,
+// 		"chkConv": 0,
+// 	}
+
+// 	// solve nonlinear problem
+// 	silent := false
+// 	use_dense_jacobian := true
+// 	numericalJacobian := false
+// 	var solver num.NlSolver
+// 	defer solver.free()
+// 	solver.init(n+1, ffcn, nil, Jfcn, use_dense_jacobian, numericalJacobian, solverParams)
+// 	solver.solve(z, silent)
+
+// 	// results
+// 	o.params.set_thetas(z[:n])
+// 	o.params.set_bias(z[n])
+// }
+
+// trainNumerical trains model using numerical optimizer
+//   θini -- initial (trial) θ values
+//   bini -- initial (trial) bias
+//   method -- method/kind of numerical solver. e.g. conjgrad, powel, graddesc
+//   saveHist -- save history
+//   control -- parameters to numerical solver. See package 'opt'
+// pub fn (mut o LogReg) trainNumerical(thetaini []f64, bini f64, method string, saveHist bool, control dbf.Params) f64 {
+// }
+
+// auxiliary ///////////////////////////////////////////////////////////////////////////////////////
+
+// calce calculates l vector (saves into o.l) (linear model)
+//  Output: l = b⋅o + x⋅θ
+pub fn (mut o LogReg) calcl() {
+	theta := o.params.access_thetas()
+	b := o.params.get_bias()
+	x := o.data.x
+	o.l.fill(b)                   // l := b⋅o
+	o.l = la.matrix_tr_vector_add(1, x, theta) // l := b⋅o + x⋅θ
+}
+
+// calcsumq calculates Σq[i]
+//  Input:
+//    l -- precomputed o.l
+//  Output:
+//    sq -- sum(q)
+pub fn (mut o LogReg) calcsumq() f64 {
+        mut sq := 0.0
+	for i := 0; i < o.data.nb_samples; i++ {
+		sq += safe_log_1p_exp(o.l[i])
+	}
+	return sq
+}
+
+// calchmy calculates h(l) - y vector (saves into o.hmy)
+//  Input:
+//    l -- precomputed o.l
+//  Output:
+//    hmy -- computes hmy = h(l) - y
+pub fn (mut o LogReg) calchmy() {
+	for i := 0; i < o.data.nb_samples; i++ {
+		o.hmy[i] = fun.logistic(o.l[i]) - o.data.Y[i]
+	}
+}
+
+// safe_log_1p_exp computes log(1+exp(-z)) safely by checking if exp(-z) is >> 1,
+// thus returning -z. This is the case when z<0 and |z| is too large
+pub fn safe_log_1p_exp(z f64) f64 {
+	if z < -500 {
+		return -z
+	}
+	return math.Log(1.0 + math.Exp(-z))
+}
