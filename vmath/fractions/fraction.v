@@ -29,7 +29,7 @@ pub fn (f Fraction) str() string {
 }
 
 // Fraction add using operator overloading
-pub fn (f1 Fraction) +(f2 Fraction) Fraction {
+pub fn (f1 Fraction) + (f2 Fraction) Fraction {
 	if f1.d == f2.d {
 		return Fraction{
 			n: f1.n + f2.n
@@ -44,7 +44,7 @@ pub fn (f1 Fraction) +(f2 Fraction) Fraction {
 }
 
 // Fraction subtract using operator overloading
-pub fn (f1 Fraction) -(f2 Fraction) Fraction {
+pub fn (f1 Fraction) - (f2 Fraction) Fraction {
 	if f1.d == f2.d {
 		return Fraction{
 			n: f1.n - f2.n
@@ -59,7 +59,7 @@ pub fn (f1 Fraction) -(f2 Fraction) Fraction {
 }
 
 // Fraction multiply using operator overloading
-pub fn (f1 Fraction) *(f2 Fraction) Fraction {
+pub fn (f1 Fraction) * (f2 Fraction) Fraction {
 	return Fraction{
 		n: f1.n * f2.n
 		d: f1.d * f2.d
@@ -67,7 +67,7 @@ pub fn (f1 Fraction) *(f2 Fraction) Fraction {
 }
 
 // Fraction divide using operator overloading
-pub fn (f1 Fraction) /(f2 Fraction) Fraction {
+pub fn (f1 Fraction) / (f2 Fraction) Fraction {
 	return Fraction{
 		n: f1.n * f2.d
 		d: f1.d * f2.n

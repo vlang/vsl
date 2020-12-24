@@ -365,6 +365,6 @@ pub fn (o Matrix) print_py(nfmt_ string) string {
 pub fn safe_print<T>(format string, message T) string {
 	buf := [byte(0)]
 	mut ptr := &buf[0]
-	unsafe {C.sprintf(charptr(ptr), charptr(format.str), message)}
+	unsafe { C.sprintf(charptr(ptr), charptr(format.str), message) }
 	return tos(buf.data, vstrlen(buf.data)).trim_space()
 }

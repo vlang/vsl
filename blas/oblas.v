@@ -75,7 +75,7 @@ pub fn dscal(n int, alpha f64, x []f64, incx int) {
 // y += alpha*x + y
 //
 pub fn daxpy(n int, alpha f64, x []f64, incx int, mut y []f64, incy int) {
-	unsafe {C.cblas_daxpy(n, alpha, &x[0], incx, &y[0], incy)}
+	unsafe { C.cblas_daxpy(n, alpha, &x[0], incx, &y[0], incy) }
 }
 
 // zaxpy computes constant times a vector plus a vector.
@@ -103,8 +103,8 @@ pub fn daxpy(n int, alpha f64, x []f64, incx int, mut y []f64, incy int) {
 //
 // trans=true      y := alpha*A**T*x + beta*y.
 pub fn dgemv(trans bool, m int, n int, alpha f64, a []f64, lda int, x []f64, incx int, beta f64, mut y []f64, incy int) {
-	unsafe {C.cblas_dgemv(cblas_col_major, c_trans(trans), m, n, alpha, &a[0], lda, &x[0],
-		incx, beta, &y[0], incy)}
+	unsafe { C.cblas_dgemv(cblas_col_major, c_trans(trans), m, n, alpha, &a[0], lda, &x[0],
+		incx, beta, &y[0], incy) }
 }
 
 // zgemv performs one of the matrix-vector operations.
@@ -133,12 +133,12 @@ pub fn dgemv(trans bool, m int, n int, alpha f64, a []f64, lda int, x []f64, inc
 // where alpha is a scalar, x is an m element vector, y is an n element
 // vector and A is an m by n matrix.
 pub fn dger(m int, n int, alpha f64, x []f64, incx int, y []f64, incy int, mut a []f64, lda int) {
-	unsafe {C.cblas_dger(cblas_col_major, m, n, alpha, &x[0], incx, &y[0], incy, &a[0],
-		lda)}
+	unsafe { C.cblas_dger(cblas_col_major, m, n, alpha, &x[0], incx, &y[0], incy, &a[0],
+		lda) }
 }
 
 pub fn dnrm2(n int, x []f64, incx int) f64 {
-	return unsafe {C.cblas_dnrm2(n, &x[0], incx)}
+	return unsafe { C.cblas_dnrm2(n, &x[0], incx) }
 }
 
 // dgemm performs one of the matrix-matrix operations
@@ -161,8 +161,8 @@ pub fn dnrm2(n int, x []f64, incx int) f64 {
 // alpha and beta are scalars, and A, B and C are matrices, with op( A )
 // an m by k matrix,  op( B )  a  k by n matrix and  C an m by n matrix.
 pub fn dgemm(transA bool, transB bool, m int, n int, k int, alpha f64, a []f64, lda int, b []f64, ldb int, beta f64, mut c []f64, ldc int) {
-	unsafe {C.cblas_dgemm(cblas_col_major, c_trans(transA), c_trans(transB), m, n, k,
-		alpha, &a[0], lda, &b[0], ldb, beta, &c[0], ldc)}
+	unsafe { C.cblas_dgemm(cblas_col_major, c_trans(transA), c_trans(transB), m, n, k,
+		alpha, &a[0], lda, &b[0], ldb, beta, &c[0], ldc) }
 }
 
 // zgemm performs one of the matrix-matrix operations
@@ -208,8 +208,8 @@ pub fn dgesv(n int, nrhs int, mut a []f64, lda int, ipiv []int, mut b []f64, ldb
 	if ipiv.len != n {
 		errno.vsl_panic('ipiv.len must be equal to n. $ipiv.len != $n\n', .efailed)
 	}
-	info := C.LAPACKE_dgesv(lapack_col_major, n, nrhs, unsafe {&a[0]}, lda, &ipiv[0],
-		unsafe {&b[0]}, ldb)
+	info := C.LAPACKE_dgesv(lapack_col_major, n, nrhs, unsafe { &a[0] }, lda, &ipiv[0],
+		unsafe { &b[0] }, ldb)
 	if info != 0 {
 		errno.vsl_panic('lapack failed', .efailed)
 	}
@@ -394,8 +394,8 @@ pub fn dgetri(n int, mut a []f64, lda int, ipiv []int) {
 // and  A  is an  n by k  matrix in the first case and a  k by n  matrix
 // in the second case.
 pub fn dsyrk(up bool, trans bool, n int, k int, alpha f64, a []f64, lda int, beta f64, mut c []f64, ldc int) {
-	unsafe {C.cblas_dsyrk(cblas_col_major, c_uplo(up), c_trans(trans), n, k, alpha, &a[0],
-		lda, beta, &c[0], ldc)}
+	unsafe { C.cblas_dsyrk(cblas_col_major, c_uplo(up), c_trans(trans), n, k, alpha, &a[0],
+		lda, beta, &c[0], ldc) }
 }
 
 // zsyrk performs one of the symmetric rank k operations
@@ -532,7 +532,7 @@ pub fn dgeev(calcVl bool, calcVr bool, n int, mut a []f64, lda int, wr []f64, wi
 }
 
 pub fn dlange(norm byte, m int, n int, a []f64, lda int, work []f64) f64 {
-	return unsafe {C.LAPACKE_dlange(norm, m, n, &a[0], lda, &work[0])}
+	return unsafe { C.LAPACKE_dlange(norm, m, n, &a[0], lda, &work[0]) }
 }
 
 // auxiliary //////////////////////////////////////////////////////////////////////////////////////
