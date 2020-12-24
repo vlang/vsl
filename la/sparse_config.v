@@ -22,7 +22,7 @@ pub mut:
 // Input:
 //  comm -- may be nil
 pub fn new_sparse_config() SparseConfig {
-	o := SparseConfig{
+	mut o := SparseConfig{
 		mumps_increase_of_working_space_pct: 100
 		mumps_max_memory_per_processor: 2000
 	}
