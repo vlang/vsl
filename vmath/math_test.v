@@ -1727,10 +1727,10 @@ fn test_atan2() {
 		f := atan2(10, vf_[i])
 		assert veryclose(atan2_[i], f)
 	}
-	/*for i := 0; i < vfatan2_sc_.len; i++ {
+	for i := 0; i < vfatan2_sc_.len; i++ {
 		f := atan2(vfatan2_sc_[i][0], vfatan2_sc_[i][1])
                 assert alike(atan2_sc_[i], f)
-	}*/
+	}
 
 }
 
@@ -1811,14 +1811,14 @@ fn test_max() {
 		f := max(vf_[i], ceil_[i])
 		assert ceil_[i] == f
 	}
-	/*for i := 0; i < vffdim_sc_.len; i++ {
+	for i := 0; i < vffdim_sc_.len; i++ {
 		f := max(vffdim_sc_[i][0], vffdim_sc_[i][1])
                 assert alike(fmax_sc_[i], f)
 	}
 	for i := 0; i < vffdim2_sc_.len; i++ {
 		f := max(vffdim2_sc_[i][0], vffdim2_sc_[i][1])
                 assert alike(fmax_sc_[i], f)
-	}*/
+	}
 
 }
 
@@ -1827,14 +1827,14 @@ fn test_min() {
 		f := min(vf_[i], floor_[i])
 		assert floor_[i] == f
 	}
-	/*for i := 0; i < vffdim_sc_.len; i++ {
+	for i := 0; i < vffdim_sc_.len; i++ {
 		f := min(vffdim_sc_[i][0], vffdim_sc_[i][1])
                 assert alike(fmin_sc_[i], f)
 	}
 	for i := 0; i < vffdim2_sc_.len; i++ {
 		f := min(vffdim2_sc_[i][0], vffdim2_sc_[i][1])
                 assert alike(fmin_sc_[i], f)
-	}*/
+	}
 
 }
 
