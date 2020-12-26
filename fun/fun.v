@@ -299,12 +299,12 @@ pub fn sabs_d2(x f64, eps f64) f64 {
 }
 
 // exp_pix uses euler's formula to compute exp(+i⋅x) = cos(x) + i⋅sin(x)
-pub fn exp_pix(x f64) complex.Complex {
+pub fn exp_pix(x f64) cmplx.Complex {
 	return cmplx.complex(math.cos(x), math.sin(x))
 }
 
 // exp_mix uses euler's formula to compute exp(-i⋅x) = cos(x) - i⋅sin(x)
-pub fn exp_mix(x f64) complex.Complex {
+pub fn exp_mix(x f64) cmplx.Complex {
 	return cmplx.complex(math.cos(x), -math.sin(x))
 }
 
@@ -334,7 +334,7 @@ pub fn neg_one_pow_n(n int) f64 {
 //   i⁵ = i      i⁶  = -1      i⁷  = -i      i⁸  = 1
 //   i⁹ = i      i¹⁰ = -1      i¹¹ = -i      i¹² = 1
 //
-pub fn imag_pow_n(n int) complex.Complex {
+pub fn imag_pow_n(n int) cmplx.Complex {
 	if n == 0 {
 		return cmplx.complex(1.0, 0.0)
 	}
@@ -353,7 +353,7 @@ pub fn imag_pow_n(n int) complex.Complex {
 //   (x⋅i)⁵ = x⁵⋅i      (x⋅i)⁶  = -x⁶       (x⋅i)⁷  = -x⁷ ⋅i      (x⋅i)⁸  = x⁸
 //   (x⋅i)⁹ = x⁹⋅i      (x⋅i)¹⁰ = -x¹⁰      (x⋅i)¹¹ = -x¹¹⋅i      (x⋅i)¹² = x¹²
 //
-pub fn imag_x_pow_n(x f64, n int) complex.Complex {
+pub fn imag_x_pow_n(x f64, n int) cmplx.Complex {
 	if n == 0 {
 		return cmplx.complex(1.0, 0.0)
 	}
