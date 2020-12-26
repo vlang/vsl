@@ -108,7 +108,7 @@ pub fn dist_point_line(p &Point, a &Point, b &Point, tol f64) f64 {
 	n := ns.vector(1.0 / nn)
 	v := vs.vector(1.0)
 	s := vector_dot(v, n)
-	l := vector_add(1, v, -s, n) // l := v - dot(v,n) * n
+	l := vector_add(1.0, v, -s, n) // l := v - dot(v,n) * n
 	return vector_norm(l)
 }
 
