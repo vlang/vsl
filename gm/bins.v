@@ -135,3 +135,254 @@ pub fn (mut o Bins) calc_index(x []f64) int {
 	}
 	return idx
 }
+
+// high-level functions ///////////////////////////////////////////////////////////////////////////
+// find_closest returns the id of the entry whose coordinates are closest to x
+//   id_closest  -- the id of the closest entity. return -1 if out-of-range or not found
+//   sq_dist_min -- the minimum distance (squared) between x and the closest entity in the same bin
+//
+//  NOTE: find_closest does search the whole area.
+//        It only locates neighbours in the same bin where the given x is located.
+//        So, if there area no entries in the bin containing x, no entry will be found.
+//
+pub fn (mut o Bins) find_closest(x []f64) (int, f64) {
+	// set "not-found" results
+	mut id_closest := -1
+	mut sq_dist_min := math.inf(1)
+	// index and check
+	idx := o.calc_index(x)
+	if idx < 0 {
+		// out of range
+		return id_closest, sq_dist_min
+	}
+	// search for the closest point
+	bin := o.find_bin_by_index(idx)
+	for entry in bin.entries {
+		mut d := 0.0
+		for k in 0 .. o.ndim {
+			d += math.pow(x[k] - entry.x[k], 2.0)
+		}
+		if d < sq_dist_min {
+			id_closest = entry.id
+			sq_dist_min = d
+		}
+	}
+	return id_closest, sq_dist_min
+}
+
+pub type PointsDiffFn = fn (is_old int, x_new []f64) bool
+
+// find_closest_and_append finds closest point and, if not found, append to bins with a new Id
+//   input:
+//     next_id -- is the Id of the next point. Will be incremented if x is a new point to be added.
+//     x       -- is the point to be added
+//     extra   -- extra information attached to point
+//     rad_tol -- is the tolerance for the radial distance (i.e. NOT squared) to decide
+//                whether a new point will be appended or not.
+//     diff    -- [optional] a function for further check that the new and an eventual existent
+//                points are really different, even after finding that they coincide (within tol)
+//   output:
+//     id       -- the id attached to x
+//     existent -- flag telling if x was found, based on given tolerance
+pub fn (mut o Bins) find_closest_and_append(mut next_id int, x []f64, extra voidptr, rad_tol f64, diff PointsDiffFn) (int, bool) {
+	// try to find another close point
+	id_closest, sq_dist_min := o.find_closest(x)
+	// new point for sure; i.e no other point was found
+	id := *next_id
+	if id_closest < 0 {
+		o.append(x, id, extra)
+		(*next_id)++
+		return id, false
+	}
+	// new point, distant from the point just found
+	dist := math.sqrt(sq_dist_min)
+	if dist > rad_tol {
+		o.append(x, id, extra)
+		(*next_id)++
+		return id, false
+	}
+	// further check
+	if !isnil(diff) {
+		if diff(id_closest, x) {
+			o.append(x, id, extra)
+			(*next_id)++
+			return id, false
+		}
+	}
+	// existent point
+	return id_closest, true
+}
+
+// find_along_segment gets the ids of entries that lie close to a segment
+//  Note: the initial (xi) and final (xf) points on segment define a bounding box to filter points
+pub fn (mut o Bins) find_along_segment(xi_ []f64, xf_ []f64, tol f64) []int {
+	mut xi := xi_.clone()
+	mut xf := xf_.clone()
+	// auxiliary variables
+	mut sbins := []&Bin{} // selected bins
+	mut lmax := math.max(o.size[0], o.size[1])
+	if o.ndim == 3 {
+		lmax = math.max(f64(lmax), o.size[2])
+	}
+	btol := 0.9 * lmax // tolerance for bins
+	pi := point_from_vector(xi, o.ndim)
+	pf := point_from_vector(xf, o.ndim)
+	if o.ndim != 3 {
+		xi = [xi[0], xi[1], -1.0]
+		xf = [xf[0], xf[1], 1.0]
+	}
+	// loop along all bins
+	nxy := o.ndiv[0] * o.ndiv[1]
+	for idx, bin in o.all {
+		// skip empty bins
+		if isnil(bin) {
+			continue
+		}
+		// coordinates of bin center
+		i := idx % o.ndiv[0] // indices representing bin
+		j := (idx % nxy) / o.ndiv[0]
+		mut x := o.xmin[0] + f64(i) * o.size[0] // coordinates of bin corner
+		mut y := o.xmin[1] + f64(j) * o.size[1]
+		mut z := 0.0
+		x += o.size[0] / 2.0
+		y += o.size[1] / 2.0
+		if o.ndim == 3 {
+			k := idx / nxy
+			z = o.xmin[2] + f64(k) * o.size[2]
+			z += o.size[2] / 2.0
+		}
+		// check if bin is near line
+		p := new_point(x, y, z)
+		d := dist_point_line(p, pi, pf, tol)
+		if d <= btol {
+			sbins << bin
+		}
+	}
+	// entries ids
+	mut ids := []int{}
+	// find closest points
+	for bin in sbins {
+		for entry in bin.entries {
+			x := entry.x[0]
+			y := entry.x[1]
+			mut z := 0.0
+			if o.ndim == 3 {
+				z = entry.x[0]
+			}
+			p := &Point{x, y, z}
+			d := dist_point_line(p, pi, pf, tol)
+			if d <= tol {
+				if is_point_in(p, xi, xf, tol) {
+					ids << entry.id
+				}
+			}
+		}
+	}
+	return ids
+}
+
+// get_limits returns limigs of a specific bin
+pub fn (o Bins) get_limits(idx_bin int) ([]f64, []f64) {
+	mut xmin := []f64{}
+	mut xmax := []f64{}
+	nxy := o.ndiv[0] * o.ndiv[1]
+	i := idx_bin % o.ndiv[0]
+	j := (idx_bin % nxy) / o.ndiv[0]
+	if o.ndim == 2 {
+		xmin = [o.xmin[0] + f64(i + 0) * o.size[0], o.xmin[1] + f64(j + 0) * o.size[1]]
+		xmax = [o.xmin[0] + f64(i + 1) * o.size[0], o.xmin[1] + f64(j + 1) * o.size[1]]
+	} else {
+		k := idx_bin / nxy
+		xmin = [o.xmin[0] + f64(i + 0) * o.size[0], o.xmin[1] + f64(j + 0) * o.size[1], o.xmin[2] +
+			f64(k + 0) * o.size[2]]
+		xmax = [o.xmin[0] + f64(i + 1) * o.size[0], o.xmin[1] + f64(j + 1) * o.size[1], o.xmin[2] +
+			f64(k + 1) * o.size[2]]
+	}
+	return xmin, xmax
+}
+
+fn point_from_vector(v []f64, dim int) &Point {
+	x := v[0]
+	y := v[1]
+	mut z := 0.0
+	if dim == 3 {
+		z = v[3]
+	}
+	return new_point(x, y, z)
+}
+
+// information ////////////////////////////////////////////////////////////////////////////////////
+// nactive returns the number of active bins; i.e. non-nil bins
+pub fn (o Bins) nactive() int {
+	mut nactive := 0
+	for bin in o.all {
+		if !isnil(bin) {
+			nactive++
+		}
+	}
+	return nactive
+}
+
+// nentries returns the total number of entries (in active bins)
+pub fn (o Bins) nentries() int {
+	mut nentries := 0
+	for bin in o.all {
+		if !isnil(bin) {
+			nentries += bin.entries.len
+		}
+	}
+	return nentries
+}
+
+// summary returns the summary of this Bins' data
+pub fn (o Bins) summary() string {
+	mut l := ''
+	l += 'ndim        = $o.ndim\n'
+	l += 'xmin        = $o.xmin\n'
+	l += 'xmax        = $o.xmax\n'
+	l += 'xdel        = $o.xdel\n'
+	l += 'size        = $o.size\n'
+	l += 'ndiv        = $o.ndiv\n'
+	l += 'nall        = $o.all.len\n'
+	l += 'nactivebins = $o.nactive()\n'
+	l += 'nentries    = $o.nentries()\n'
+	return l
+}
+
+// str returns the string representation of one Bin
+pub fn (o Bin) str() string {
+	mut l := '{\"idx\":$o.index, \"entries\":['
+	for i, entry in o.entries {
+		if i > 0 {
+			l += ', '
+		}
+		l += '{\"id\":$entry.id, \"x\":[$entry.x[0],$entry.x[1]'
+		if entry.x.len > 2 {
+			l += ',$entry.x[2]'
+		}
+		l += ']'
+		if !isnil(entry.extra) {
+			l += ', \"extra\":true'
+		}
+		l += '}'
+	}
+	l += ']}'
+	return l
+}
+
+// str returns the string representation of a set of Bins
+pub fn (o Bins) str() string {
+	mut l := '[\n'
+	mut k := 0
+	for bin in o.all {
+		if !isnil(bin) {
+			if k > 0 {
+				l += ',\n'
+			}
+			l += '  $bin'
+			k++
+		}
+	}
+	l += '\n]'
+	return l
+}

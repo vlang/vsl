@@ -4,7 +4,7 @@ import vsl.vmath as math
 
 // Point holds the Cartesian coordinates of a point in 3D space
 pub struct Point {
-pub:
+pub mut:
 	x f64
 	y f64
 	z f64
