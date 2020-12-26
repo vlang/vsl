@@ -1,0 +1,121 @@
+module ml
+
+import vsl.vmath as math
+import vsl.gm
+import vsl.la
+
+// Kmeans implements the K-means model (Observer of Data)
+pub struct Kmeans {
+mut:
+	data       &Data // x data
+	nb_classes int // expected number of classes
+	bins       &gm.Bins // "bins" to speed up searching for data points given their coordinates (2D or 3D only at the moment)
+pub mut:
+	classes    []int // [nSamples] indices of classes of each sample
+	centroids  [][]f64 // [nb_classes][nb_features] coordinates of centroids
+	nb_members []int // [nb_classes] number of members in each class
+}
+
+// new_kmeans returns a new K-means model
+pub fn new_kmeans(mut data Data, nb_classes int) &Kmeans {
+	// classes
+	classes := []int{len: data.nb_samples}
+	centroids := [][]f64{len: nb_classes}
+	nb_members := []int{len: nb_classes}
+	// bins
+	ndiv := [10, 10] // TODO: make this a parameter
+	bins := gm.new_bins(data.stat.min_x, data.stat.max_x, ndiv) // TODO: make sure minx and maxx are 2D or 3D; i.e. nb_features ≤ 2
+	mut o := Kmeans{
+		data: data
+		nb_classes: nb_classes
+		classes: classes
+		centroids: centroids
+		nb_members: nb_members
+		bins: &bins
+	}
+	data.add_observer(o) // need to recompute bins upon data changes
+	o.update() // compute first bins
+	return &o
+}
+
+// update perform updates after data has been changed (as an Observer)
+pub fn (mut o Kmeans) update() {
+	for i := 0; i < o.data.nb_samples; i++ {
+		o.bins.append([o.data.x.get(i, 0),
+			o.data.x.get(i, 1),
+		], i, voidptr(0))
+	}
+}
+
+// nb_classes returns the number of classes
+pub fn (o Kmeans) nb_classes() int {
+	return o.nb_classes
+}
+
+// set_centroids sets centroids; e.g. trial centroids
+//   xc -- [nb_class][nb_features]
+pub fn (mut o Kmeans) set_centroids(xc [][]f64) {
+	for i := 0; i < o.nb_classes; i++ {
+		o.centroids[i] = xc[i]
+	}
+}
+
+// find_closest_centroids finds closest centroids to each sample
+pub fn (mut o Kmeans) find_closest_centroids() {
+	// loop over all samples
+	mut del := []f64{len: o.data.nb_features}
+	for i := 0; i < o.data.nb_samples; i++ {
+		// set min distance to max value possible
+		mut dist_min := math.max_f64
+		xi := o.data.x.get_row(i) // optimize here by using a row-major matrix
+		// for each class
+		for j := 0; j < o.nb_classes; j++ {
+			xc := o.centroids[j]
+			del = la.vector_add(1.0, xi, -1.0, xc) // del := xi - xc
+			dist := la.vector_norm(del)
+			if dist < dist_min {
+				dist_min = dist
+				o.classes[i] = j
+			}
+		}
+	}
+}
+
+// compute_centroids update centroids based on new classes information (from find_closest_centroids)
+pub fn (mut o Kmeans) compute_centroids() {
+	// clear centroids and number of nb_members
+	for k := 0; k < o.nb_classes; k++ {
+		o.centroids[k] = []f64{len: o.centroids[k].len}
+		o.nb_members[k] = 0
+	}
+	// add contributions to centroids and nb_members
+	for i := 0; i < o.data.nb_samples; i++ {
+		xi := o.data.x.get_row(i) // optimize here by using a row-major matrix
+		k := o.classes[i]
+		o.centroids[k] = la.vector_add(1.0, o.centroids[k], 1.0, xi)
+		o.nb_members[k]++
+	}
+	// scale centroids based on number of members
+	for k := 0; k < o.nb_classes; k++ {
+		den := f64(o.nb_members[k])
+		for j := 0; j < o.data.nb_features; j++ {
+			o.centroids[k][j] /= den
+		}
+	}
+}
+
+pub struct TrainConfig {
+	epochs          int
+	tol_norm_change f64
+}
+
+// train trains model
+pub fn (mut o Kmeans) train(config TrainConfig) int {
+	mut nb_iter := 0
+	for nb_iter < config.epochs {
+		o.find_closest_centroids()
+		o.compute_centroids()
+		nb_iter++
+	}
+	return nb_iter
+}

@@ -28,6 +28,7 @@ pub mut:
 	nb_features int // number of features. number of columns in x
 	x           &la.Matrix // [nb_samples][nb_features] x values
 	y           []f64 // [nb_samples] y values [optional]
+	stat        &Stat = voidptr(0) // statistics about this data
 }
 
 // data returns a new object to hold ML data
@@ -40,18 +41,22 @@ pub mut:
 // Output:
 // new object
 pub fn new_data(nb_samples int, nb_features int, use_y bool, allocate bool) Data {
-	x := if allocate { la.new_matrix(nb_samples, nb_features) } else { la.new_matrix(0, 0) }
+	x := if allocate { la.new_matrix(nb_samples, nb_features) } else { la.new_matrix(0,
+			0) }
 	mut y := []f64{}
 	if allocate && use_y {
 		y = []f64{len: nb_samples}
 	}
-	return Data{
+	mut o := Data{
 		x: &x
 		y: y
 		observers: []
 		nb_samples: nb_samples
 		nb_features: nb_features
 	}
+	stat := stat_from_data(mut o, 'stat_for_data')
+	o.stat = &stat
+	return o
 }
 
 // set sets x matrix and y vector [optional] and notify observers
