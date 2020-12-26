@@ -2,8 +2,6 @@
 
 The module `vsl.roots` contains functions for the root finding methods and related declarations.
 
-More information is available in **[the documentation of this package](https://vsl.readthedocs.io/en/latest/roots.html).**
-
 ## Functions
 
 ```v

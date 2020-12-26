@@ -4,12 +4,10 @@ The functions described in this chapter compute numerical derivatives by
 finite differencing. An adaptive algorithm is used to find the best
 choice of finite difference and to estimate the error in the derivative.
 
-More information is available in **[the documentation of this package](https://vsl.readthedocs.io/en/latest/diff.html).**
-
 ## Usage example
 
 ```v
-module diff
+module main
 
 import vsl.vmath
 import vsl.diff

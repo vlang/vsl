@@ -1,8 +1,8 @@
-<img width="155" src="./static/vsl-logo.png">
+<img width="155" src="https://github.com/vlang/vsl/blob/master/static/vsl-logo.png">
 
 [![Mentioned in Awesome V](https://awesome.re/mentioned-badge.svg)](https://github.com/vlang/awesome-v/blob/master/README.md#scientific-computing)
 [![Build Status](https://github.com/vlang/vsl/workflows/CI/badge.svg)](https://github.com/vlang/vsl/commits/master)
-[![Documentation Status](https://readthedocs.org/projects/vsl/badge/?version=latest)](http://vsl.readthedocs.io/en/latest/?badge=latest) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 # V Scientific Library
 
@@ -10,7 +10,7 @@ VSL is a Scientific Library with a great variety of different modules. Although 
 
 ## Docs
 
-Visit [vsl docs](https://vsl.readthedocs.io/) to know more about the supported features.
+Visit [vsl docs](https://vlang.github.io/vsl) to know more about the supported features.
 
 This library contains essential functions for linear algebra computations (operations between all combinations of vectors and matrices, eigenvalues and eigenvectors, linear solvers) and the development of numerical methods (e.g. numerical quadrature).
 
@@ -30,11 +30,11 @@ Because of C dependencies and other libraries, the easiest way to work with VSL 
 
 Done. And your system will remain "clean".
 
-![](static/vscode-open-in-container.gif)
+![](https://github.com/vlang/vsl/blob/master/static/vscode-open-in-container.gif)
 
 Our [Docker Image](https://hub.docker.com/repository/docker/vsl/vsl) also contains V and the V Tools for working with VS Code (or not). Below is a video showing the convenience of VS Code + the V tools + VSL.
 
-![](static/container.gif)
+![](https://github.com/vlang/vsl/blob/master/static/container.gif)
 
 ## Install VSL locally
 
