@@ -1597,7 +1597,7 @@ const (
 	]
 )
 
-fn tolerance(a, b, tol f64) bool {
+fn tolerance(a f64, b f64, tol f64) bool {
 	mut e := tol
 	// Multiplying by e here can underflow denormal values to zero.
 	// Check a==b so that at least if a and b are small and identical
@@ -1620,19 +1620,19 @@ fn tolerance(a, b, tol f64) bool {
 	return d < e
 }
 
-fn close(a, b f64) bool {
+fn close(a f64, b f64) bool {
 	return tolerance(a, b, 1e-14)
 }
 
-fn veryclose(a, b f64) bool {
+fn veryclose(a f64, b f64) bool {
 	return tolerance(a, b, 4e-6)
 }
 
-fn soclose(a, b, e f64) bool {
+fn soclose(a f64, b f64, e f64) bool {
 	return tolerance(a, b, e)
 }
 
-fn alike(a, b f64) bool {
+fn alike(a f64, b f64) bool {
         // @todo: FIX THIS. It is not working for consts using nan
         return true
 
