@@ -8,8 +8,6 @@
 
 VSL is a Scientific Library with a great variety of different modules. Although most modules offer pure-V definitions, VSL also provides modules that wrap known C libraries that allow high performance computing as an alternative.
 
-> The version of this module will remain in `0.x.x` unless the language API's are finalized and implemented.
-
 ## Docs
 
 Visit [vsl docs](https://vsl.readthedocs.io/) to know more about the supported features.
