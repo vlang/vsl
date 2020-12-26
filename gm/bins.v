@@ -1,4 +1,4 @@
-module util
+module gm
 
 import vsl.vmath as math
 import vsl.errno
