@@ -184,7 +184,7 @@ pub type PointsDiffFn = fn (is_old int, x_new []f64) bool
 //   output:
 //     id       -- the id attached to x
 //     existent -- flag telling if x was found, based on given tolerance
-pub fn (mut o Bins) find_closest_and_append(mut next_id int, x []f64, extra voidptr, rad_tol f64, diff PointsDiffFn) (int, bool) {
+pub fn (mut o Bins) find_closest_and_append(mut next_id &int, x []f64, extra voidptr, rad_tol f64, diff PointsDiffFn) (int, bool) {
 	// try to find another close point
 	id_closest, sq_dist_min := o.find_closest(x)
 	// new point for sure; i.e no other point was found
