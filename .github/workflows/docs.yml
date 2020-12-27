@@ -26,7 +26,7 @@ jobs:
     - name: Build docs
       run: |
         v doc -m -f html vsl/
-        ln -s ./vsl/_docs/vsl.html ./vsl/_docs/index.html
+        cp ./vsl/_docs/vsl.html ./vsl/_docs/index.html
     - name: Deploy to gh-pages
       uses: peaceiris/actions-gh-pages@v3
       with:
