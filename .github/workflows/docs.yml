@@ -22,7 +22,7 @@ jobs:
     - name: Build docs
       run: ./v doc -m -f html vsl/
     - name: Deploy to gh-pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./vsl/_docs/
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./vsl/_docs/
