@@ -16,13 +16,13 @@ P(x) = c[0] + c[1] x + c[2] x^2 + . . . + c[len-1] x^(len-1)
 
 using Horner's method for stability.
 
-```v
+```
 fn eval(c []f64, x f64) f64
 ```
 
 This function evaluates a polynomial with real coefficients for the real variable `x`.
 
-```v
+```
 fn eval_derivs(c []f64, x f64, lenres u64) []f64
 ```
 
@@ -33,7 +33,7 @@ contains the values of `d^k P(x)/d x^k` for the specified value of
 
 # Quadratic Equations
 
-```v
+```
 fn solve_quadratic(a f64, b f64, c f64) []f64
 ```
 
@@ -62,7 +62,7 @@ be computed exactly.
 
 # Cubic Equations
 
-```v
+```
 fn solve_cubic(a f64, b f64, c f64) []f64
 ```
 

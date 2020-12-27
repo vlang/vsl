@@ -18,7 +18,9 @@ fn func(x f64, _ []f64) f64 {
 }
 
 fn main() {
-	f := vsl.Function{function: func}
+	f := vsl.Function{
+		function: func
+	}
 	println('f(x) = x^(3/2)')
 	mut expected := 1.5 * vmath.sqrt(2.0)
 	mut result, mut abserr := diff.central(f, 2.0)

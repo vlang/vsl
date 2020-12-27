@@ -23,7 +23,9 @@ fn func(x f64, _ []f64) f64 {
 }
 
 fn main() {
-	f := vsl.Function{function: func}
+	f := vsl.Function{
+		function: func
+	}
 	println('f(x) = x^(3/2)')
 	mut expected := 1.5 * vmath.sqrt(2.0)
 	mut result, mut abserr := deriv.central(f, 2.0, 1e-8)
@@ -53,7 +55,7 @@ exact = 0.0000000000
 
 # Functions
 
-```v
+```
 fn central (f vsl.Function, x, h f64) (f64, f64)
 ```
 
@@ -72,7 +74,7 @@ between the 5-point rule and the corresponding 3-point rule `x-h`,
 does not contribute to the derivative calculation, so only 4-points are
 actually used.
 
-```v
+```
 fn forward (f vsl.Function, x, h f64) (f64, f64)
 ```
 
@@ -92,7 +94,7 @@ derivative calculation. The derivative at `x` is computed using an
 from the difference between the 4-point rule and the corresponding
 2-point rule `x+h/2`, `x+h`.
 
-```v
+```
 fn backward (f vsl.Function, x, h f64) (f64, f64)
 ```
 

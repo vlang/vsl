@@ -22,12 +22,21 @@ well. For example, the graph below:
 is defined with the following code:
 
 ```v
-edges := [[0, 1], [0, 3], [1, 2], [2, 3]]
-weights_e := [f64(5), 10, 3, 1]
-verts := []
-weights_v := []
+module main
 
-g := graph(edges, weights_e, verts, weights_v)
+import vsl.graph
+
+fn main() {
+	edges := [[0, 1], [0, 3], [1, 2],
+		[2, 3],
+	]
+	weights_e := [5.0, 10.0, 3.0, 1.0]
+	verts := [][]f64{}
+	weights_v := []f64{}
+	g := graph.new_graph(edges, weights_e, verts, weights_v)
+	// print distance matrix
+	print(g.str_dist_matrix())
+}
 ```
 
 Vertex coordinates can be specified as well. Furthermore, weights can be assigned to vertices. These
@@ -55,38 +64,44 @@ graph:  j= 0  1  2  3
            ∞  ∞  ∞  0 |  3
 ```
 
-After running the `shortest_paths` command, paths from source (s) to destination (t) can be extracted
+After running the `shortest_paths` command,
+paths from source (s) to destination (t) can be extracted
 with the `path` method.
 
 ### Example: Small graph
 
+```
+         [10]
+    0 ––––––––→ 3      numbers in parentheses
+    |    (1)    ↑      indicate edge ids
+ [5]|(0)        |
+    |        (3)|[1]
+    ↓    (2)    |      numbers in brackets
+    1 ––––––––→ 2      indicate weights
+         [3]
+```
+
 ```v
-//           [10]
-//      0 ––––––––→ 3      numbers in parentheses
-//      |    (1)    ↑      indicate edge ids
-//   [5]|(0)        |
-//      |        (3)|[1]
-//      ↓    (2)    |      numbers in brackets
-//      1 ––––––––→ 2      indicate weights
-//           [3]
+module main
 
-// initialise graph
-edges := [[0, 1], [0, 3], [1, 2], [2, 3]]
-weights_e := [f64(5), 10, 3, 1]
-verts := []
-weights_v := []
+import vsl.graph
 
-g := graph(edges, weights_e, verts, weights_v)
-
-// compute paths
-g.shortest_paths(.fw)
-
-// print shortest path from 0 to 2
-print(g.path(0, 2))
-
-// print shortest path from 0 to 3
-print(g.path(0, 3))
-
-// print distance matrix
-print(g.str_dist_matrix())
+fn main() {
+	// initialise graph
+	edges := [[0, 1], [0, 3], [1, 2],
+		[2, 3],
+	]
+	weights_e := [5.0, 10.0, 3.0, 1.0]
+	verts := [][]f64{}
+	weights_v := []f64{}
+	g := graph.new_graph(edges, weights_e, verts, weights_v)
+	// compute paths
+	g.shortest_paths(.fw)
+	// print shortest path from 0 to 2
+	print(g.path(0, 2))
+	// print shortest path from 0 to 3
+	print(g.path(0, 3))
+	// print distance matrix
+	print(g.str_dist_matrix())
+}
 ```

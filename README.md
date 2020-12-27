@@ -6,19 +6,30 @@
 
 # V Scientific Library
 
-VSL is a Scientific Library with a great variety of different modules. Although most modules offer pure-V definitions, VSL also provides modules that wrap known C libraries that allow high performance computing as an alternative.
+VSL is a Scientific Library with a great variety of different modules.
+Although most modules offer pure-V definitions, VSL also provides modules
+that wrap known C libraries that allow high performance computing
+as an alternative.
 
 ## Docs
 
 Visit [vsl docs](https://vlang.github.io/vsl) to know more about the supported features.
 
-This library contains essential functions for linear algebra computations (operations between all combinations of vectors and matrices, eigenvalues and eigenvectors, linear solvers) and the development of numerical methods (e.g. numerical quadrature).
+This library contains essential functions for linear algebra computations
+(operations between all combinations of vectors and matrices, eigenvalues and eigenvectors,
+linear solvers) and the development of numerical methods (e.g. numerical quadrature).
 
-We link VSL with existent libraries written in C and Fortran, such as OpenBLAS and LAPACK. These existing libraries have been fundamental for the development of high-performant simulations over many years. We believe that it is nearly impossible to rewrite these libraries in native V and at the same time achieve the same speed delivered by them.
+We link VSL with existent libraries written in C and Fortran, such as OpenBLAS and LAPACK.
+These existing libraries have been fundamental for the development of high-performant
+simulations over many years. We believe that it is nearly impossible to rewrite these
+libraries in native V and at the same time achieve the same speed delivered by them.
 
 ## Installation
 
-Because of C dependencies and other libraries, the easiest way to work with VSL is via Docker. Having Docker and VS Code installed, you can start developing powerful numerical simulations using VSL in a matter of seconds. Furthermore, the best part of it is that it works on Windows, Linux, and macOS out of the box.
+Because of C dependencies and other libraries, the easiest way to work with VSL is via Docker.
+Having Docker and VS Code installed, you can start developing powerful numerical simulations
+using VSL in a matter of seconds. Furthermore, the best part of it is that it works on
+Windows, Linux, and macOS out of the box.
 
 ### Quick, containerized (recommended)
 
@@ -38,7 +49,9 @@ Our [Docker Image](https://hub.docker.com/repository/docker/vsl/vsl) also contai
 
 ## Install VSL locally
 
-Because we use CV for linking VSL with many libraries, it is not enough to use the so convenient `v install` _or_ `vpkg get` functionality for installing VSL. First we need to install some dependencies in order to have VSL working as expected.
+Because we use CV for linking VSL with many libraries, it is not enough to use the
+so convenient `v install` _or_ `vpkg get` functionality for installing VSL.
+First we need to install some dependencies in order to have VSL working as expected.
 
 ### Install dependencies
 

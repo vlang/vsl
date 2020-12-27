@@ -11,12 +11,8 @@ module main
 
 import vsl.easings
 
-fn main () {
-  println(easings.animate(easings.bounce_ease_out, 0, 100, 100))
-  //      easing function ^
-  //                                  lower bounds ^
-  //                                     upper bounds ^
-  //               number of frames/length of return array ^
+fn main() {
+	println(easings.animate(easings.bounce_ease_out, 0, 100, 100))
 }
 ```
 
@@ -30,4 +26,3 @@ Based on the works of:
 - [George McGinley Smith](http://gsgd.co.uk/sandbox/jquery/easing/)
 - [James Padolsey](http://james.padolsey.com/demos/jquery/easing/)
 - [Matt Gallagher](http://cocoawithlove.com/2008/09/parametric-acceleration-curves-in-core.html)
-- [Jesse Crossen](http://stackoverflow.com/questions/5161465/how-to-create-custom-easing-function-with-core-animation)
