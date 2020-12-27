@@ -69,12 +69,12 @@ pub fn (mut o Data) set(x &la.Matrix, y []f64) {
 	o.notify_update()
 }
 
-// data_give_raw_x returns a new object with data set from raw x values
+// data_from_raw_x returns a new object with data set from raw x values
 // Input:
 // xraw -- [nb_samples][nb_features] table with x values (NO y values)
 // Output:
 // new object
-pub fn data_given_raw_x(xraw [][]f64) Data {
+pub fn data_from_raw_x(xraw [][]f64) Data {
 	// check
 	nb_samples := xraw.len
 	if nb_samples < 1 {
@@ -92,13 +92,13 @@ pub fn data_given_raw_x(xraw [][]f64) Data {
 	return o
 }
 
-// data_give_raw_xy returns a new object with data set from raw Xy values
+// data_from_raw_xy returns a new object with data set from raw Xy values
 // Input:
 // Xyraw -- [nb_samples][nb_features+1] table with x and y raw values,
 // where the last column contains y-values
 // Output:
 // new object
-pub fn data_give_raw_xy(xyraw [][]f64) Data {
+pub fn data_from_raw_xy(xyraw [][]f64) Data {
 	// check
 	nb_samples := xyraw.len
 	if nb_samples < 1 {
