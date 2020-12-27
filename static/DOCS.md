@@ -7,7 +7,7 @@
 [vlang.io](https://vlang.io) |
 [Docs](https://vlang.github.io/vsl) |
 [Changelog](#) |
-[Contributing & compiler design](#)
+[Contributing](#)
 
 </div>
 
