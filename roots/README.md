@@ -4,14 +4,14 @@ The module `vsl.roots` contains functions for the root finding methods and relat
 
 ## Functions
 
-```
+```v nofmt
 fn brent (f vsl.Function, x1, x2, tol f64) ?(f64, f64)
 ```
 
 Find th root of `f` between `x1` and `x1` with an accuracy
 of order `tol`. The result will be the root and an upper bound of the error.
 
-```
+```v nofmt
 fn newton_bisection (f vsl.FunctionFdf, x_min, x_max, tol f64, n_max int) ?f64
 ```
 
@@ -21,7 +21,7 @@ of order `tol` and a maximum of n_max iterations. The result will be the found r
 Note that the function must also compute the first derivate of the function. This function
 relies on combining Newton's approach with a bisection technique.
 
-```
+```v nofmt
 fn newton (f vsl.FunctionFdf, x0, x_eps, fx_eps f64, n_max int) ?f64
 ```
 
@@ -33,7 +33,7 @@ The algorithm stops when one of the three following conditions is met:
 - the last improvement over `x` is smaller than `x . x_eps`
 - at the current position `|f(x)| < fx_eps`
 
-```
+```v nofmt
 fn bisection(f vsl.Function, xmin, xmax, epsrel, epsabs f64, n_max int) ?f64
 ```
 
@@ -45,7 +45,7 @@ On exit, the results is `(x_max + x_min) / 2`.
 
 ## Usage example
 
-```
+```v
 module main
 
 import vsl
@@ -66,7 +66,7 @@ fn main() {
 	func := vsl.Function{
 		function: f_cos
 	}
-	result := roots.bisection(func, 0.0, 3.0, epsrel, epsabs, n_max)?
+	result := roots.bisection(func, 0.0, 3.0, epsrel, epsabs, n_max) ?
 }
 ```
 
