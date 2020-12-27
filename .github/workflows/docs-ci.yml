@@ -25,5 +25,6 @@ jobs:
       run: v doctor
     - name: Validate docs
       run: |
+        v install vsl
         cd vsl
         v run ../cmd/tools/check-md.v -all
