@@ -1,4 +1,4 @@
-<img width="155" src="https://github.com/vlang/vsl/blob/master/static/vsl-logo.png">
+<img width="155" src="https://raw.githubusercontent.com/vlang/vsl/master/static/vsl-logo.png">
 
 [![Mentioned in Awesome V](https://awesome.re/mentioned-badge.svg)](https://github.com/vlang/awesome-v/blob/master/README.md#scientific-computing)
 [![Build Status](https://github.com/vlang/vsl/workflows/CI/badge.svg)](https://github.com/vlang/vsl/commits/master)
@@ -41,11 +41,11 @@ Windows, Linux, and macOS out of the box.
 
 Done. And your system will remain "clean".
 
-![](https://github.com/vlang/vsl/blob/master/static/vscode-open-in-container.gif)
+![](https://raw.githubusercontent.com/vlang/vsl/master/static/vscode-open-in-container.gif)
 
 Our [Docker Image](https://hub.docker.com/repository/docker/vsl/vsl) also contains V and the V Tools for working with VS Code (or not). Below is a video showing the convenience of VS Code + the V tools + VSL.
 
-![](https://github.com/vlang/vsl/blob/master/static/container.gif)
+![](https://raw.githubusercontent.com/vlang/vsl/master/static/container.gif)
 
 ## Install VSL locally
 
