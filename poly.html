@@ -56,17 +56,17 @@ coefficients (of any order). The functions are declared in the module <code>vsl.
 <pre><code>P(x) = c[0] + c[1] x + c[2] x^2 + . . . + c[len-1] x^(len-1)
 </code></pre>
 <p>using Horner's method for stability.</p>
-<pre><code>fn eval(c []f64, x f64) f64
+<pre><code class="language-v">fn eval(c []f64, x f64) f64
 </code></pre>
 <p>This function evaluates a polynomial with real coefficients for the real variable <code>x</code>.</p>
-<pre><code>fn eval_derivs(c []f64, x f64, lenres u64) []f64
+<pre><code class="language-v">fn eval_derivs(c []f64, x f64, lenres u64) []f64
 </code></pre>
 <p>This function evaluates a polynomial and its derivatives storing the
 results in the array <code>res</code> of size <code>lenres</code>. The output array
 contains the values of <code>d^k P(x)/d x^k</code> for the specified value of
 <code>x</code> starting with <code>k = 0</code>.</p>
 <h1>Quadratic Equations</h1>
-<pre><code>fn solve_quadratic(a f64, b f64, c f64) []f64
+<pre><code class="language-v">fn solve_quadratic(a f64, b f64, c f64) []f64
 </code></pre>
 <p>This function finds the real roots of the quadratic equation,</p>
 <pre><code>a x^2 + b x + c = 0
@@ -87,7 +87,7 @@ may cause a discrete change in the number of roots. However, for
 polynomials with small integer coefficients the discriminant can always
 be computed exactly.</p>
 <h1>Cubic Equations</h1>
-<pre><code>fn solve_cubic(a f64, b f64, c f64) []f64
+<pre><code class="language-v">fn solve_cubic(a f64, b f64, c f64) []f64
 </code></pre>
 <p>This function finds the real roots of the cubic equation,</p>
 <pre><code>x^3 + a x^2 + b x + c = 0
@@ -142,7 +142,7 @@ plane, leading to a discrete change in the number of real roots.</p>
 </section>
 
 					<div class="footer">
-						Powered by vdoc. Generated on: 27 Dec 2020 04:27:06
+						Powered by vdoc. Generated on: 27 Dec 2020 04:31:00
 					</div>
 				</div>
 				<div class="doc-toc"><ul><li class="open"><a href="#add">fn add</a>        <ul>
