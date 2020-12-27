@@ -212,8 +212,6 @@ pub fn matrix_tr_matrix_tr_mul(mut c Matrix, alpha f64, a Matrix, b Matrix) {
 	blas.dgemm(true, true, a.n, b.m, a.m, alpha, a.data, a.m, b.data, b.m, 0.0, mut c.data, c.m)
 }
 
-// mat mul add ////////////////////////////////////////////////////////////////////////////////////
-
 // matrix_matrix_muladd returns the matrix multiplication (scaled)
 //
 //  c += alpha⋅a⋅b    ⇒    cij += alpha * aik * bkj
@@ -245,8 +243,6 @@ pub fn matrix_matrix_tr_muladd(mut c Matrix, alpha f64, a Matrix, b Matrix) {
 pub fn matrix_tr_matrix_tr_mul_add(mut c Matrix, alpha f64, a Matrix, b Matrix) {
 	blas.dgemm(true, true, a.n, b.m, a.m, alpha, a.data, a.m, b.data, b.m, 1.0, mut c.data, c.m)
 }
-
-// matrix addition ////////////////////////////////////////////////////////////////////////////////
 
 // matrix_add adds the scaled components of two matrices
 //   res := alpha⋅a + beta⋅b   ⇒   result[i][j] := alpha⋅a[i][j] + beta⋅b[i][j]

@@ -135,7 +135,6 @@ pub fn (o LinReg) notify_update() {
 	}
 }
 
-// auxiliary ///////////////////////////////////////////////////////////////////////////////////////
 // calce calculates e vector (save into o.e)
 //  Output: e = b⋅o + x⋅theta - y
 pub fn (mut o LinReg) calce() {

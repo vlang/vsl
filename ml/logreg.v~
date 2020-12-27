@@ -254,8 +254,6 @@ pub fn (mut o LogReg) hessian(mut d []f64, mut v []f64, mut dm la.Matrix, mut hm
 // pub fn (mut o LogReg) trainNumerical(thetaini []f64, bini f64, method string, saveHist bool, control dbf.Params) f64 {
 // }
 
-// auxiliary ///////////////////////////////////////////////////////////////////////////////////////
-
 // calce calculates l vector (saves into o.l) (linear model)
 //  Output: l = b⋅o + x⋅θ
 pub fn (mut o LogReg) calcl() {
