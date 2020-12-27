@@ -4,6 +4,7 @@
 
 [![Mentioned in Awesome V](https://awesome.re/mentioned-badge.svg)](https://github.com/vlang/awesome-v/blob/master/README.md#scientific-computing)
 [![Build Status](https://github.com/vlang/vsl/workflows/CI/badge.svg)](https://github.com/vlang/vsl/commits/master)
+[![Valid Docs](https://github.com/vlang/vsl/workflows/Validate%20Docs/badge.svg)](https://github.com/vlang/vsl/commits/master)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 </div>
