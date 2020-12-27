@@ -3,7 +3,7 @@
 // that can be found in the LICENSE file.
 module la
 
-import vsl.blas
+import vsl.la.blas
 import vsl.vmath
 
 /*

@@ -1,6 +1,6 @@
 module la
 
-import vsl.blas
+import vsl.la.blas
 
 // den_solve solves dense linear system using LAPACK (OpenBLaS)
 //
