@@ -19,8 +19,6 @@
 
 </div>
 
-# V Scientific Library
-
 VSL is a Scientific Library with a great variety of different modules.
 Although most modules offer pure-V definitions, VSL also provides modules
 that wrap known C libraries that allow high performance computing
