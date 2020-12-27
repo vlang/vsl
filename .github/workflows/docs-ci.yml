@@ -1,0 +1,29 @@
+name: Validate Docs
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Latest V
+      uses: actions/checkout@v2
+      with:
+        repository: vlang/v
+    - name: Checkout VSL
+      uses: actions/checkout@v2
+      with:
+        path: vsl
+    - name: Build V
+      run: |
+        make
+        sudo ./v symlink
+    - name: V doctor
+      run: v doctor
+    - name: Validate docs
+      run: |
+        cd vsl
+        v run ../cmd/tools/check-md.v -all
