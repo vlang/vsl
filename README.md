@@ -1,6 +1,6 @@
-<img style="width: 200px" src="https://raw.githubusercontent.com/vlang/vsl/master/static/vsl-logo.png">
+<img style="width: 200px" width="200" src="https://raw.githubusercontent.com/vlang/vsl/master/static/vsl-logo.png">
 
-<div style="float: right; padding-top: 15%">
+<div style="float: right">
 
 [![Mentioned in Awesome V](https://awesome.re/mentioned-badge.svg)](https://github.com/vlang/awesome-v/blob/master/README.md#scientific-computing)
 [![Build Status](https://github.com/vlang/vsl/workflows/CI/badge.svg)](https://github.com/vlang/vsl/commits/master)
