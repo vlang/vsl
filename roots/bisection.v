@@ -7,20 +7,7 @@ import vsl.vmath
 import vsl.errno
 import vsl
 
-/*
-*
- * Find the root of a function using a bisection method
- *
- * @param func a function pointer
- * @param xmin lower bound
- * @param xmax upper bound
- * @param epsrel if the relative improvement over the root is less than this value,
- * then break
- * @param epsabs if the absolute improvement over the root is less than this value,
- * then break
- * @param n_max maximum number of iterations
- *
-*/
+// Find the root of a function using a bisection method
 pub fn bisection(func vsl.Function, xmin f64, xmax f64, epsrel f64, epsabs f64, n_max int) ?f64 {
 	fxmin := func.safe_eval(xmin) ?
 	fxmax := func.safe_eval(xmax) ?

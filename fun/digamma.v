@@ -1,9 +1,9 @@
 // Copyright (c) 2019-2020 Ulises Jeremias Cornejo Fandos. All rights reserved.
 // Use of this source code is governed by an MIT license
 // that can be found in the LICENSE file.
-module specfunc
+module fun
 
-import vsl.vmath
+import vsl.vmath as math
 import vsl.poly
 
 [inline]
@@ -19,9 +19,9 @@ pub fn psi(x_ f64) f64 {
 	if x <= 0.0 {
 		negative = true
 		q := x
-		mut p := vmath.floor(q)
+		mut p := math.floor(q)
 		if p == q {
-			return vmath.max_f64
+			return math.max_f64
 		}
 		// Remove the zeros of tan(PI x)
 		// by subtracting the nearest integer from x
@@ -31,14 +31,14 @@ pub fn psi(x_ f64) f64 {
 				p += 1.0
 				nz = q - p
 			}
-			nz = vmath.pi / vmath.tan(vmath.pi * nz)
+			nz = math.pi / math.tan(math.pi * nz)
 		} else {
 			nz = 0.0
 		}
 		x = 1.0 - x
 	}
 	// check for positive integer up to 10
-	if (x <= 10.0) && (x == vmath.floor(x)) {
+	if (x <= 10.0) && (x == math.floor(x)) {
 		y = 0.0
 		n := int(x)
 		for i := 1; i < n; i++ {
@@ -60,7 +60,7 @@ pub fn psi(x_ f64) f64 {
 	} else {
 		y = 0.0
 	}
-	y = vmath.log(s) - (0.5 / s) - y - w
+	y = math.log(s) - (0.5 / s) - y - w
 	done:
 	if negative {
 		y -= nz

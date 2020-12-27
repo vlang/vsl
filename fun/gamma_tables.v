@@ -1,7 +1,7 @@
 // Copyright (c) 2019-2020 Ulises Jeremias Cornejo Fandos. All rights reserved.
 // Use of this source code is governed by an MIT license
 // that can be found in the LICENSE file.
-module specfunc
+module fun
 
 const (
 	gamma_p = [f64(1.60119522476751861407e-04),

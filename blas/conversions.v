@@ -10,8 +10,7 @@ import vsl.errno
 
 // slice_to_col_major converts nested slice into an array representing a col-major matrix
 //
-//
-// NOTE: make sure to have at least 1x1 item
+// _**NOTE**: make sure to have at least 1x1 item_
 pub fn slice_to_col_major(a [][]f64) []f64 {
 	m := a.len
 	n := a[0].len
@@ -97,19 +96,12 @@ pub fn print_col_major_py(m int, n int, data []f64, nfmt_ string) string {
 	return l
 }
 
-// complex ///////////////////////////////////////////////////////////////////////////////////////
 // slice_to_col_major_complex converts nested slice into an array representing a col-major matrix of
 // complex numbers.
 //
-// Example:
-// _            _
-// |  0+0i  3+3i  |
-// a =  |  1+1i  4+4i  |          ⇒   data = [0+0i, 1+1i, 2+2i, 3+3i, 4+4i, 5+5i]
-// |_ 2+2i  5+5i _|(m x n)
+// `data[i+j*m] = a[i][j]`
 //
-// data[i+j*m] = a[i][j]
-//
-// NOTE: make sure to have at least 1x1 item
+// _**NOTE**: make sure to have at least 1x1 item_
 pub fn slice_to_col_major_complex(a [][]complex.Complex) []complex.Complex {
 	m := a.len
 	n := a[0].len
@@ -136,7 +128,7 @@ pub fn col_major_complex_to_slice(m int, n int, data []complex.Complex) [][]comp
 }
 
 // print_col_major_complex prints matrix (without commas or brackets).
-// NOTE: if non-empty, nfmt_i must have '+' e.g. %+g
+// _**NOTE**: if non-empty, nfmt_i must have '+' e.g. %+g_
 pub fn print_col_major_complex(m int, n int, data []complex.Complex, nfmt_r_ string, nfmt_i_ string) string {
 	mut nfmt_r := nfmt_r_
 	mut nfmt_i := nfmt_i_
@@ -166,7 +158,7 @@ pub fn print_col_major_complex(m int, n int, data []complex.Complex, nfmt_r_ str
 }
 
 // print_col_major_complex_v prints matrix in v format
-// NOTE: if non-empty, nfmt_i must have '+' e.g. %+g
+// _**NOTE**: if non-empty, nfmt_i must have '+' e.g. %+g_
 pub fn print_col_major_complex_v(m int, n int, data []complex.Complex, nfmt_r_ string, nfmt_i_ string) string {
 	mut nfmt_r := nfmt_r_
 	mut nfmt_i := nfmt_i_
@@ -196,7 +188,7 @@ pub fn print_col_major_complex_v(m int, n int, data []complex.Complex, nfmt_r_ s
 }
 
 // print_col_major_omplex_py prints matrix in Python format
-// NOTE: if non-empty, nfmt_i must have '+' e.g. %+g
+// _**NOTE**: if non-empty, nfmt_i must have '+' e.g. %+g_
 pub fn print_col_major_omplex_py(m int, n int, data []complex.Complex, nfmt_r_ string, nfmt_i_ string) string {
 	mut nfmt_r := nfmt_r_
 	mut nfmt_i := nfmt_i_
@@ -225,7 +217,6 @@ pub fn print_col_major_omplex_py(m int, n int, data []complex.Complex, nfmt_r_ s
 	return l
 }
 
-// complex arrays //////////////////////////////////////////////////////////////////////////////////
 // get_join_complex joins real and imag parts of array
 pub fn get_join_complex(v_real []f64, v_imag []f64) []complex.Complex {
 	mut v := []complex.Complex{len: v_real.len}
@@ -266,7 +257,6 @@ pub fn split_complex(v []complex.Complex) ([]f64, []f64) {
 	return v_real, v_imag
 }
 
-// extraction //////////////////////////////////////////////////////////////////////////////////////
 // extract_row extracts i row from (m,n) col-major matrix
 pub fn extract_row(i int, m int, n int, A []f64) []f64 {
 	mut rowi := []f64{len: n}
@@ -303,16 +293,19 @@ pub fn extract_col_complex(j int, m int, n int, A []complex.Complex) []complex.C
 	return colj
 }
 
-// eigenvector matrices ////////////////////////////////////////////////////////////////////////////
 // eigenvecs_build builds complex eigenvectros created by Dgeev function
-// INPUT:
-// wr, wi -- real and imag parts of eigenvalues
-// v      -- left or right eigenvectors from Dgeev
-// OUTPUT:
-// vv -- complex version of left or right eigenvector [pre-allocated]
-// NOTE (no checks made)
-// n = wr.len = wi.len = v.len
-// 2 * n = len(vv)
+// 
+// **input:**
+// `wr`, `wi`: real and imag parts of eigenvalues.
+// `v`: left or right eigenvectors from Dgeev.
+//
+// **output:**
+// `vv`: complex version of left or right eigenvector [pre-allocated].
+//
+// _**NOTE**: (no checks made)_.
+//
+// `n = wr.len = wi.len = v.len`
+// `2 * n = vv.len`
 pub fn eigenvecs_build(mut vv []complex.Complex, wr []f64, wi []f64, v []f64) {
 	n := wr.len
 	mut dj := 1 // increment for next conjugate pair
@@ -343,14 +336,18 @@ pub fn eigenvecs_build(mut vv []complex.Complex, wr []f64, wi []f64, v []f64) {
 }
 
 // eigenvecs_build_both builds complex left and right eigenvectros created by Dgeev function
-// INPUT:
-// wr, wi -- real and imag parts of eigenvalues
-// vl, vr -- left and right eigenvectors from Dgeev
-// OUTPUT:
-// vvl, vvr -- complex version of left and right eigenvectors [pre-allocated]
-// NOTE (no checks made)
-// n = wr.len = wi.len = len(vl) = len(vr)
-// 2 * n = len(vvl) = len(vvr)
+// 
+// **input:**
+// `wr`, `wi`:real and imag parts of eigenvalues.
+// `vl`, `vr`:left and right eigenvectors from Dgeev.
+// 
+// **output:**
+// `vvl`, `vvr`:complex version of left and right eigenvectors [pre-allocated].
+// 
+// _**NOTE**: (no checks made)_.
+//
+// `n = wr.len = wi.len = vl.len = vr.len`
+// `2 * n = vvl.len = vvr.len`
 pub fn eigenvecs_build_both(mut vvl []complex.Complex, mut vvr []complex.Complex, wr []f64, wi []f64, vl []f64, vr []f64) {
 	n := wr.len
 	mut dj := 1 // increment for next conjugate pair

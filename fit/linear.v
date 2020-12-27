@@ -7,7 +7,7 @@ import vsl.vmath
 
 // linear computes linear fitting parameters. Errors on y-direction only
 //
-// y(x) = a + b⋅x
+// `y(x) = a + b⋅x`
 //
 // See page 780 of [1]
 // Reference:
@@ -38,10 +38,10 @@ pub fn linear(x []f64, y []f64) (f64, f64) {
 	return a, b
 }
 
-// linear_sigma computes linear fitting parameters and variances (sigma_a,sigma_b) in the estimates of a and b
+// linear_sigma computes linear fitting parameters and variances (sigma_a, sigma_b) in the estimates of a and b
 // Errors on y-direction only
 //
-// y(x) = a + b⋅x
+// `y(x) = a + b⋅x`
 //
 // See page 780 of [1]
 // Reference:

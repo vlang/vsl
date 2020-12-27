@@ -140,11 +140,6 @@ pub fn heav(x f64) f64 {
 }
 
 // sign implements the sign function
-//
-//             │ -1   if x < 0
-//   sign(x) = ┤  0   if x = 0
-//             │  1   if x > 0
-//
 pub fn sign(x f64) f64 {
 	if x < 0.0 {
 		return -1.0
@@ -157,14 +152,9 @@ pub fn sign(x f64) f64 {
 
 // boxcar implements the boxcar function
 //
-//   boxcar(x;a,b) = heav(x-a) - heav(x-b)
+// `boxcar(x;a,b) = heav(x-a) - heav(x-b)`
 //
-//                   │ 0    if x < a or  x > b
-//   boxcar(x;a,b) = ┤ 1/2  if x = a or  x = b
-//                   │ 1    if x > a and x < b
-//
-//   note: a ≤ x ≤ b; i.e. b ≥ a (not checked)
-//
+// _**NOTE**: a ≤ x ≤ b; i.e. b ≥ a (not checked)_
 pub fn boxcar(x f64, a f64, b f64) f64 {
 	if x < a || x > b {
 		return 0
@@ -177,12 +167,7 @@ pub fn boxcar(x f64, a f64, b f64) f64 {
 
 // rect implements the rectangular function
 //
-//   rect(x) = boxcar(x;-0.5,0.5)
-//
-//             │ 0    if |x| > 1/2
-//   rect(x) = ┤ 1/2  if |x| = 1/2
-//             │ 1    if |x| < 1/2
-//
+// `rect(x) = boxcar(x;-0.5,0.5)`
 pub fn rect(x f64) f64 {
 	if x < -0.5 || x > 0.5 {
 		return 0
@@ -194,15 +179,6 @@ pub fn rect(x f64) f64 {
 }
 
 // hat implements the hat function
-//
-//      --———--   o (xc,y0+h)
-//         |     / \
-//         h    /   \    m = h/l
-//         |   /m    \
-//   y0 ——————o       o—————————
-//
-//            |<  2l >|
-//
 pub fn hat(x f64, xc f64, y0 f64, h f64, l f64) f64 {
 	if x <= xc - l || x >= xc + l {
 		return y0
@@ -214,7 +190,7 @@ pub fn hat(x f64, xc f64, y0 f64, h f64, l f64) f64 {
 }
 
 // hatd1 returns the first derivative of the hat function
-// note: the discontinuity is ignored ⇒ d1(xc-l)=d1(xc+l)=d1(xc)=0
+// _**NOTE**: the discontinuity is ignored ⇒ d1(xc-l)=d1(xc+l)=d1(xc)=0_
 pub fn hatd1(x f64, xc f64, y0 f64, h f64, l f64) f64 {
 	if x <= xc - l || x >= xc + l || x == xc {
 		return 0
@@ -329,11 +305,6 @@ pub fn neg_one_pow_n(n int) f64 {
 }
 
 // imag_pow_n computes iⁿ = (√-1)ⁿ
-//
-//   i¹ = i      i²  = -1      i³  = -i      i⁴  = 1
-//   i⁵ = i      i⁶  = -1      i⁷  = -i      i⁸  = 1
-//   i⁹ = i      i¹⁰ = -1      i¹¹ = -i      i¹² = 1
-//
 pub fn imag_pow_n(n int) cmplx.Complex {
 	if n == 0 {
 		return cmplx.complex(1.0, 0.0)
@@ -348,11 +319,6 @@ pub fn imag_pow_n(n int) cmplx.Complex {
 }
 
 // imag_x_pow_n computes (x⋅i)ⁿ
-//
-//   (x⋅i)¹ = x¹⋅i      (x⋅i)²  = -x²       (x⋅i)³  = -x³ ⋅i      (x⋅i)⁴  = x⁴
-//   (x⋅i)⁵ = x⁵⋅i      (x⋅i)⁶  = -x⁶       (x⋅i)⁷  = -x⁷ ⋅i      (x⋅i)⁸  = x⁸
-//   (x⋅i)⁹ = x⁹⋅i      (x⋅i)¹⁰ = -x¹⁰      (x⋅i)¹¹ = -x¹¹⋅i      (x⋅i)¹² = x¹²
-//
 pub fn imag_x_pow_n(x f64, n int) cmplx.Complex {
 	if n == 0 {
 		return cmplx.complex(1.0, 0.0)
@@ -428,4 +394,12 @@ pub fn pow2(x f64) f64 {
 // pow3 computes x³
 pub fn pow3(x f64) f64 {
 	return x * x * x
+}
+
+fn is_neg_int(x f64) bool {
+	if x < 0 {
+		_, xf := math.modf(x)
+		return xf == 0
+	}
+	return false
 }

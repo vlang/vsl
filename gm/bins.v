@@ -136,7 +136,6 @@ pub fn (mut o Bins) calc_index(x []f64) int {
 	return idx
 }
 
-// high-level functions ///////////////////////////////////////////////////////////////////////////
 // find_closest returns the id of the entry whose coordinates are closest to x
 //   id_closest  -- the id of the closest entity. return -1 if out-of-range or not found
 //   sq_dist_min -- the minimum distance (squared) between x and the closest entity in the same bin
@@ -311,7 +310,6 @@ fn point_from_vector(v []f64, dim int) &Point {
 	return new_point(x, y, z)
 }
 
-// information ////////////////////////////////////////////////////////////////////////////////////
 // nactive returns the number of active bins; i.e. non-nil bins
 pub fn (o Bins) nactive() int {
 	mut nactive := 0

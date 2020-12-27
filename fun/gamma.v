@@ -1,9 +1,9 @@
 // Copyright (c) 2019-2020 Ulises Jeremias Cornejo Fandos. All rights reserved.
 // Use of this source code is governed by an MIT license
 // that can be found in the LICENSE file.
-module specfunc
+module fun
 
-import vsl.vmath
+import vsl.vmath as math
 
 // gamma function computed by Stirling's formula.
 // The pair of results must be multiplied together to get the actual answer.
@@ -14,23 +14,23 @@ import vsl.vmath
 // masks any imprecision in the polynomial.
 fn stirling(x f64) (f64, f64) {
 	if x > 200 {
-		return vmath.inf(1), 1.0
+		return math.inf(1), 1.0
 	}
 	sqrt_two_pi := 2.506628274631000502417
 	max_stirling := 143.01608
 	mut w := 1.0 / x
 	w = 1.0 + w *
 		((((gamma_s[0] * w + gamma_s[1]) * w + gamma_s[2]) * w + gamma_s[3]) * w + gamma_s[4])
-	mut y1 := vmath.exp(x)
+	mut y1 := math.exp(x)
 	mut y2 := 1.0
 	if x > max_stirling {
 		// avoid Pow() overflow
-		v := vmath.pow(x, 0.5 * x - 0.25)
+		v := math.pow(x, 0.5 * x - 0.25)
 		y1_ := y1
 		y1 = v
 		y2 = v / y1_
 	} else {
-		y1 = vmath.pow(x, x - 0.5) / y1
+		y1 = math.pow(x, x - 0.5) / y1
 	}
 	return y1, f64(sqrt_two_pi) * w * y2
 }
@@ -47,17 +47,17 @@ fn stirling(x f64) (f64, f64) {
 pub fn gamma(x_ f64) f64 {
 	mut x := x_
 	euler := 0.57721566490153286060651209008240243104215933593992 // A001620
-	if is_neg_int(x) || vmath.is_inf(x, -1) || vmath.is_nan(x) {
-		return vmath.nan()
+	if is_neg_int(x) || math.is_inf(x, -1) || math.is_nan(x) {
+		return math.nan()
 	}
-	if vmath.is_inf(x, 1) {
-		return vmath.inf(1)
+	if math.is_inf(x, 1) {
+		return math.inf(1)
 	}
 	if x == 0.0 {
-		return vmath.copysign(vmath.inf(1), x)
+		return math.copysign(math.inf(1), x)
 	}
-	mut q := vmath.abs(x)
-	mut p := vmath.floor(q)
+	mut q := math.abs(x)
+	mut p := math.floor(q)
 	if q > 33 {
 		if x >= 0 {
 			y1, y2 := stirling(x)
@@ -76,17 +76,17 @@ pub fn gamma(x_ f64) f64 {
 			p = p + 1
 			z = q - p
 		}
-		z = q * vmath.sin(vmath.pi * z)
+		z = q * math.sin(math.pi * z)
 		if z == 0 {
-			return vmath.inf(signgam)
+			return math.inf(signgam)
 		}
 		sq1, sq2 := stirling(q)
-		absz := vmath.abs(z)
+		absz := math.abs(z)
 		d := absz * sq1 * sq2
-		if vmath.is_inf(d, 0) {
-			z = vmath.pi / absz / sq1 / sq2
+		if math.is_inf(d, 0) {
+			z = math.pi / absz / sq1 / sq2
 		} else {
-			z = vmath.pi / d
+			z = math.pi / d
 		}
 		return f64(signgam) * z
 	}
@@ -127,7 +127,7 @@ pub fn gamma(x_ f64) f64 {
 	}
 	small:
 	if x == 0 {
-		return vmath.inf(1)
+		return math.inf(1)
 	}
 	return z / ((1.0 + euler * x) * x)
 }
@@ -148,22 +148,22 @@ pub fn log_gamma(x f64) f64 {
 pub fn log_gamma_sign(x_ f64) (f64, int) {
 	mut x := x_
 	ymin := 1.461632144968362245
-	tiny := vmath.exp2(-70)
-	two52 := vmath.exp2(52) // 0x4330000000000000 ~4.5036e+15
-	two58 := vmath.exp2(58) // 0x4390000000000000 ~2.8823e+17
+	tiny := math.exp2(-70)
+	two52 := math.exp2(52) // 0x4330000000000000 ~4.5036e+15
+	two58 := math.exp2(58) // 0x4390000000000000 ~2.8823e+17
 	tc := 1.46163214496836224576e+00 // 0x3FF762D86356BE3F
 	tf := -1.21486290535849611461e-01 // 0xBFBF19B9BCC38A42
 	// tt := -(tail of tf)
 	tt := -3.63867699703950536541e-18 // 0xBC50C7CAA48A971F
 	mut sign := 1
-	if vmath.is_nan(x) {
+	if math.is_nan(x) {
 		return x, sign
 	}
-	if vmath.is_inf(x, 1) {
+	if math.is_inf(x, 1) {
 		return x, sign
 	}
 	if x == 0.0 {
-		return vmath.inf(1), sign
+		return math.inf(1), sign
 	}
 	mut neg := false
 	if x < 0 {
@@ -175,19 +175,19 @@ pub fn log_gamma_sign(x_ f64) (f64, int) {
 		if neg {
 			sign = -1
 		}
-		return -vmath.log(x), sign
+		return -math.log(x), sign
 	}
 	mut nadj := 0.0
 	if neg {
 		if x >= two52 {
 			// |x| >= 2**52, must be -integer
-			return vmath.inf(1), sign
+			return math.inf(1), sign
 		}
 		t := sin_pi(x)
 		if t == 0 {
-			return vmath.inf(1), sign
+			return math.inf(1), sign
 		}
-		nadj = vmath.log(vmath.pi / vmath.abs(t * x))
+		nadj = math.log(math.pi / math.abs(t * x))
 		if t < 0 {
 			sign = -1
 		}
@@ -197,11 +197,11 @@ pub fn log_gamma_sign(x_ f64) (f64, int) {
 		// purge off 1 and 2
 		return 0.0, sign
 	} else if x < 2 {
-		// use lgamma(x) = lgamma(x+1) - vmath.log(x)
+		// use lgamma(x) = lgamma(x+1) - math.log(x)
 		mut y := 0.0
 		mut i := 0
 		if x <= 0.9 {
-			lgamma = -vmath.log(x)
+			lgamma = -math.log(x)
 			if x >= (ymin - 1 + 0.27) {
 				// 0.7316 <= x <=  0.9
 				y = 1.0 - x
@@ -267,36 +267,36 @@ pub fn log_gamma_sign(x_ f64) (f64, int) {
 		q := 1.0 + y * (lgamma_r[1] + y *
 			(lgamma_r[2] + y * (lgamma_r[3] + y * (lgamma_r[4] + y * (lgamma_r[5] + y * lgamma_r[6])))))
 		lgamma = 0.5 * y + p / q
-		mut z := 1.0 // lgamma(1+s) = vmath.log(s) + lgamma(s)
+		mut z := 1.0 // lgamma(1+s) = math.log(s) + lgamma(s)
 		if i == 7 {
 			z *= (y + 6)
 			z *= (y + 5)
 			z *= (y + 4)
 			z *= (y + 3)
 			z *= (y + 2)
-			lgamma += vmath.log(z)
+			lgamma += math.log(z)
 		} else if i == 6 {
 			z *= (y + 5)
 			z *= (y + 4)
 			z *= (y + 3)
 			z *= (y + 2)
-			lgamma += vmath.log(z)
+			lgamma += math.log(z)
 		} else if i == 5 {
 			z *= (y + 4)
 			z *= (y + 3)
 			z *= (y + 2)
-			lgamma += vmath.log(z)
+			lgamma += math.log(z)
 		} else if i == 4 {
 			z *= (y + 3)
 			z *= (y + 2)
-			lgamma += vmath.log(z)
+			lgamma += math.log(z)
 		} else if i == 3 {
 			z *= (y + 2)
-			lgamma += vmath.log(z)
+			lgamma += math.log(z)
 		}
 	} else if x < two58 {
 		// 8 <= x < 2**58
-		t := vmath.log(x)
+		t := math.log(x)
 		z := 1.0 / x
 		y := z * z
 		w := lgamma_w[0] + z * (lgamma_w[1] + y *
@@ -304,7 +304,7 @@ pub fn log_gamma_sign(x_ f64) (f64, int) {
 		lgamma = (x - 0.5) * (t - 1.0) + w
 	} else {
 		// 2**58 <= x <= Inf
-		lgamma = x * (vmath.log(x) - 1.0)
+		lgamma = x * (math.log(x) - 1.0)
 	}
 	if neg {
 		lgamma = nadj - lgamma
@@ -315,17 +315,17 @@ pub fn log_gamma_sign(x_ f64) (f64, int) {
 // sin_pi(x) is a helper function for negative x
 fn sin_pi(x_ f64) f64 {
 	mut x := x_
-	two52 := vmath.exp2(52) // 0x4330000000000000 ~4.5036e+15
-	two53 := vmath.exp2(53) // 0x4340000000000000 ~9.0072e+15
+	two52 := math.exp2(52) // 0x4330000000000000 ~4.5036e+15
+	two53 := math.exp2(53) // 0x4340000000000000 ~9.0072e+15
 	if x < 0.25 {
-		return -sin(vmath.pi * x)
+		return -sin(math.pi * x)
 	}
 	// argument reduction
-	mut z := vmath.floor(x)
+	mut z := math.floor(x)
 	mut n := 0
 	if z != x {
 		// inexact
-		x = vmath.mod(x, 2)
+		x = math.mod(x, 2)
 		n = int(x * 4)
 	} else {
 		if x >= two53 {
@@ -336,21 +336,21 @@ fn sin_pi(x_ f64) f64 {
 			if x < two52 {
 				z = x + two52 // exact
 			}
-			n = int(1 & vmath.f64_bits(z))
+			n = int(1 & math.f64_bits(z))
 			x = f64(n)
 			n <<= 2
 		}
 	}
 	if n == 0 {
-		x = sin(vmath.pi * x)
+		x = sin(math.pi * x)
 	} else if n == 1 || n == 2 {
-		x = cos(vmath.pi * (0.5 - x))
+		x = cos(math.pi * (0.5 - x))
 	} else if n == 3 || n == 4 {
-		x = sin(vmath.pi * (1.0 - x))
+		x = sin(math.pi * (1.0 - x))
 	} else if n == 5 || n == 6 {
-		x = -cos(vmath.pi * (x - 1.5))
+		x = -cos(math.pi * (x - 1.5))
 	} else {
-		x = sin(vmath.pi * (x - 2))
+		x = sin(math.pi * (x - 2))
 	}
 	return -x
 }

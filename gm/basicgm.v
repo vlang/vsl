@@ -17,7 +17,6 @@ pub:
 	b &Point
 }
 
-// Point methods /////////////////////////////////////////////////////////////////////////////////////
 // new_point creates a new point
 pub fn new_point(x f64, y f64, z f64) &Point {
 	return &Point{x, y, z}
@@ -44,7 +43,6 @@ pub fn dist_point_point(a &Point, b &Point) f64 {
 		(a.y - b.y) * (a.y - b.y) + (a.z - b.z) * (a.z - b.z))
 }
 
-// Segment methods ///////////////////////////////////////////////////////////////////////////////////
 // len computes the length of Segment == Euclidean norm
 pub fn (o &Segment) len() f64 {
 	return dist_point_point(o.a, o.b)
@@ -71,7 +69,6 @@ pub fn new_segment(a &Point, b &Point) &Segment {
 	return &Segment{a, b}
 }
 
-// Vector ////////////////////////////////////////////////////////////////////////////////////////////
 // vector_dot returns the dot product between two vectors
 pub fn vector_dot(u []f64, v []f64) f64 {
 	return u[0] * v[0] + u[1] * v[1] + u[2] * v[2]
@@ -93,7 +90,6 @@ pub fn vector_add(alpha f64, u []f64, beta f64, v []f64) []f64 {
 	return [alpha * u[0] + beta * v[0], alpha * u[1] + beta * v[1], alpha * u[2] + beta * v[2]]
 }
 
-// distance functions ////////////////////////////////////////////////////////////////////////////////
 // dist_point_line computes the distance from p to line passing through a -> b
 pub fn dist_point_line(p &Point, a &Point, b &Point, tol f64) f64 {
 	ns := new_segment(a, b)
@@ -112,7 +108,6 @@ pub fn dist_point_line(p &Point, a &Point, b &Point, tol f64) f64 {
 	return vector_norm(l)
 }
 
-// locate functions //////////////////////////////////////////////////////////////////////////////////
 // points_lims returns the limits of a set of points
 pub fn points_lims(pp []&Point) ([]f64, []f64) {
 	if pp.len < 1 {

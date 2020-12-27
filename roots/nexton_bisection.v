@@ -7,18 +7,8 @@ import vsl.vmath
 import vsl.errno
 import vsl
 
-/*
-*
- * Find the root of a function by combining Newton's method with the bisection
- * method
- *
- * @param func a function pointer which computes f(x_anc) df(x_anc)
- * @param x_min a double pointer to an already existing PnlVect
- * @param x_max a double the root is suppose to be in [x_min, x_max]
- * @param tol a double speed of derivative decrease, if derivative is less
- * than tolerance, then it is converged
- * @param max_iter a int maximal number of iteration
-*/
+// Find the root of a function by combining Newton's method with the bisection
+// method
 pub fn newton_bisection(func vsl.FunctionFdf, x_min f64, x_max f64, tol f64, max_iter int) ?f64 {
 	func_low, _ := func.eval_f_df(x_min)
 	if func_low == 0.0 {

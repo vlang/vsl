@@ -171,7 +171,7 @@ pub fn companion_matrix(a []f64) [][]f64 {
 
 pub fn balance_companion_matrix(cm [][]f64) [][]f64 {
 	nc := cm.len
-	mut m := cm
+	mut m := cm.clone()
 	mut not_converged := true
 	mut row_norm := 0.0
 	mut col_norm := 0.0

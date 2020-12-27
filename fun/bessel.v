@@ -1,9 +1,9 @@
 // Copyright (c) 2019-2020 Ulises Jeremias Cornejo Fandos. All rights reserved.
 // Use of this source code is governed by an MIT license
 // that can be found in the LICENSE file.
-module specfunc
+module fun
 
-import vsl.vmath
+import vsl.vmath as math
 
 const (
 	huge    = 1e+300
@@ -62,23 +62,23 @@ const (
 // bessel_j0(nan) = nan
 pub fn bessel_j0(x_ f64) f64 {
 	mut x := x_
-	if vmath.is_nan(x) {
+	if math.is_nan(x) {
 		return x
 	}
-	if vmath.is_inf(x, 0) {
+	if math.is_inf(x, 0) {
 		return 0
 	}
 	if x == 0.0 {
 		return 1.0
 	}
-	x = vmath.abs(x)
+	x = math.abs(x)
 	if x >= 2.0 {
-		s, c := vmath.sincos(x)
+		s, c := math.sincos(x)
 		mut ss := s - c
 		mut cc := s + c
 		// make sure x+x does not overflow
-		if x < vmath.max_f64 / 2.0 {
-			z := -vmath.cos(x + x)
+		if x < math.max_f64 / 2.0 {
+			z := -math.cos(x + x)
 			if s * c < 0.0 {
 				cc = z / ss
 			} else {
@@ -90,11 +90,11 @@ pub fn bessel_j0(x_ f64) f64 {
 		mut z := 0.0
 		if x > two129 {
 			// |x| > ~6.8056e+38
-			z = (1.0 / vmath.sqrt_pi) * cc / vmath.sqrt(x)
+			z = (1.0 / math.sqrt_pi) * cc / math.sqrt(x)
 		} else {
 			u := pzero(x)
 			v := qzero(x)
-			z = (1.0 / vmath.sqrt_pi) * (u * cc - v * ss) / vmath.sqrt(x)
+			z = (1.0 / math.sqrt_pi) * (u * cc - v * ss) / math.sqrt(x)
 		}
 		return z
 		// x| >= 2.0
@@ -125,10 +125,10 @@ pub fn bessel_j0(x_ f64) f64 {
 // bessel_j1(nan) = nan
 pub fn bessel_j1(x_ f64) f64 {
 	mut x := x_
-	if vmath.is_nan(x) {
+	if math.is_nan(x) {
 		return x
 	}
-	if vmath.is_inf(x, 0) || x == 0 {
+	if math.is_inf(x, 0) || x == 0 {
 		return 0.0
 	}
 	mut sign := false
@@ -137,12 +137,12 @@ pub fn bessel_j1(x_ f64) f64 {
 		sign = true
 	}
 	if x >= 2 {
-		s, c := vmath.sincos(x)
+		s, c := math.sincos(x)
 		mut ss := -s - c
 		mut cc := s - c
 		// make sure x+x does not overflow
-		if x < vmath.max_f64 / 2 {
-			z := vmath.cos(x + x)
+		if x < math.max_f64 / 2 {
+			z := math.cos(x + x)
 			if s * c > 0 {
 				cc = z / ss
 			} else {
@@ -153,11 +153,11 @@ pub fn bessel_j1(x_ f64) f64 {
 		// y1(x) = 1/sqrt(pi) * (P(1,x)*ss + Q(1,x)*cc) / sqrt(x)
 		mut z := 0.0
 		if x > two129 {
-			z = (1.0 / vmath.sqrt_pi) * cc / vmath.sqrt(x)
+			z = (1.0 / math.sqrt_pi) * cc / math.sqrt(x)
 		} else {
 			u := pone(x)
 			v := qone(x)
-			z = (1.0 / vmath.sqrt_pi) * (u * cc - v * ss) / vmath.sqrt(x)
+			z = (1.0 / math.sqrt_pi) * (u * cc - v * ss) / math.sqrt(x)
 		}
 		if sign {
 			return -z
@@ -187,10 +187,10 @@ pub fn bessel_j1(x_ f64) f64 {
 pub fn bessel_jn(n_ int, x_ f64) f64 {
 	mut n := n_
 	mut x := x_
-	if vmath.is_nan(x) {
+	if math.is_nan(x) {
 		return x
 	}
-	if vmath.is_inf(x, 0) {
+	if math.is_inf(x, 0) {
 		return 0.0
 	}
 	// J(-n, x) = (-1)**n * J(n, x), J(n, -x) = (-1)**n * J(n, x)
@@ -233,7 +233,7 @@ pub fn bessel_jn(n_ int, x_ f64) f64 {
 			// 2    -s+c            -c-s
 			// 3     s+c             c-s
 			mut temp := 0.0
-			s, c := vmath.sincos(x)
+			s, c := math.sincos(x)
 			n3 := n & 3
 			if n3 == 0 {
 				temp = c + s
@@ -247,7 +247,7 @@ pub fn bessel_jn(n_ int, x_ f64) f64 {
 			if n3 == 3 {
 				temp = c - s
 			}
-			b = (1.0 / vmath.sqrt_pi) * temp / vmath.sqrt(x)
+			b = (1.0 / math.sqrt_pi) * temp / math.sqrt(x)
 		} else {
 			b = bessel_j1(x)
 			mut i := 1
@@ -334,7 +334,7 @@ pub fn bessel_jn(n_ int, x_ f64) f64 {
 			// likely underflow to zero
 			mut tmp := f64(n)
 			v := f64(2.0) / x
-			tmp = tmp * vmath.log(vmath.abs(v * tmp))
+			tmp = tmp * math.log(math.abs(v * tmp))
 			if tmp < 7.09782712893383973096e+02 {
 				for i := n - 1; i > 0; i-- {
 					di := f64(i + i)
@@ -374,14 +374,14 @@ pub fn bessel_jn(n_ int, x_ f64) f64 {
 // bessel_y0(nan) = nan
 pub fn bessel_y0(x f64) f64 {
 	// special cases
-	if x < 0 || vmath.is_nan(x) {
-		return vmath.nan()
+	if x < 0 || math.is_nan(x) {
+		return math.nan()
 	}
-	if vmath.is_inf(x, 1) {
+	if math.is_inf(x, 1) {
 		return 0.0
 	}
 	if x == 0 {
-		return vmath.inf(-1)
+		return math.inf(-1)
 	}
 	if x >= 2.0 {
 		// |x| >= 2.0
@@ -395,14 +395,14 @@ pub fn bessel_y0(x f64) f64 {
 		// To avoid cancellation, use
 		// sin(x) +- cos(x) = -cos(2x)/(sin(x) -+ cos(x))
 		// to compute the worse one.
-		s, c := vmath.sincos(x)
+		s, c := math.sincos(x)
 		mut ss := s - c
 		mut cc := s + c
 		// j0(x) = 1/sqrt(pi) * (P(0,x)*cc - Q(0,x)*ss) / sqrt(x)
 		// y0(x) = 1/sqrt(pi) * (P(0,x)*ss + Q(0,x)*cc) / sqrt(x)
 		// make sure x+x does not overflow
-		if x < vmath.max_f64 / 2.0 {
-			z := -vmath.cos(x + x)
+		if x < math.max_f64 / 2.0 {
+			z := -math.cos(x + x)
 			if s * c < 0.0 {
 				cc = z / ss
 			} else {
@@ -412,23 +412,23 @@ pub fn bessel_y0(x f64) f64 {
 		mut z := 0.0
 		if x > two129 {
 			// |x| > ~6.8056e+38
-			z = (1.0 / vmath.sqrt_pi) * ss / vmath.sqrt(x)
+			z = (1.0 / math.sqrt_pi) * ss / math.sqrt(x)
 		} else {
 			u := pzero(x)
 			v := qzero(x)
-			z = (1.0 / vmath.sqrt_pi) * (u * ss + v * cc) / vmath.sqrt(x)
+			z = (1.0 / math.sqrt_pi) * (u * ss + v * cc) / math.sqrt(x)
 		}
 		return z
 		// x| >= 2.0
 	}
 	if x <= two_m27 {
-		return y0u00 + (f64(2.0) / vmath.pi) * vmath.log(x)
+		return y0u00 + (f64(2.0) / math.pi) * math.log(x)
 		// x| < ~7.4506e-9
 	}
 	z := x * x
 	u := y0u00 + z * (y0u01 + z * (y0u02 + z * (y0u03 + z * (y0u04 + z * (y0u05 + z * y0u06)))))
 	v := 1.0 + z * (y0v01 + z * (y0v02 + z * (y0v03 + z * y0v04)))
-	return u / v + (f64(2.0) / vmath.pi) * bessel_j0(x) * vmath.log(x) // ~7.4506e-9 < |x| < 2.0
+	return u / v + (f64(2.0) / math.pi) * bessel_j0(x) * math.log(x) // ~7.4506e-9 < |x| < 2.0
 }
 
 // bessel_y1 returns the order-one Bessel function of the second kind.
@@ -439,22 +439,22 @@ pub fn bessel_y0(x f64) f64 {
 // bessel_y1(x < 0) = nan
 // bessel_y1(nan) = nan
 pub fn bessel_y1(x f64) f64 {
-	if x < 0 || vmath.is_nan(x) {
-		return vmath.nan()
+	if x < 0 || math.is_nan(x) {
+		return math.nan()
 	}
-	if vmath.is_inf(x, 1) {
+	if math.is_inf(x, 1) {
 		return 0.0
 	}
 	if x == 0 {
-		return vmath.inf(-1)
+		return math.inf(-1)
 	}
 	if x >= 2.0 {
-		s, c := vmath.sincos(x)
+		s, c := math.sincos(x)
 		mut ss := -s - c
 		mut cc := s - c
 		// make sure x+x does not overflow
-		if x < vmath.max_f64 / 2.0 {
-			z := vmath.cos(x + x)
+		if x < math.max_f64 / 2.0 {
+			z := math.cos(x + x)
 			if s * c > 0.0 {
 				cc = z / ss
 			} else {
@@ -473,22 +473,22 @@ pub fn bessel_y1(x f64) f64 {
 		// to compute the worse one.
 		mut z := 0.0
 		if x > two129 {
-			z = (1.0 / vmath.sqrt_pi) * ss / vmath.sqrt(x)
+			z = (1.0 / math.sqrt_pi) * ss / math.sqrt(x)
 		} else {
 			u := pone(x)
 			v := qone(x)
-			z = (1.0 / vmath.sqrt_pi) * (u * ss + v * cc) / vmath.sqrt(x)
+			z = (1.0 / math.sqrt_pi) * (u * ss + v * cc) / math.sqrt(x)
 		}
 		return z
 	}
 	if x <= two_m54 {
 		// x < 2**-54
-		return -(f64(2.0) / vmath.pi) / x
+		return -(f64(2.0) / math.pi) / x
 	}
 	z := x * x
 	u := y1u00 + z * (y1u01 + z * (y1u02 + z * (y1u03 + z * y1u04)))
 	v := 1.0 + z * (y1v00 + z * (y1v01 + z * (y1v02 + z * (y1v03 + z * y1v04))))
-	return x * (u / v) + (2.0 / vmath.pi) * (bessel_j1(x) * vmath.log(x) - 1.0 / x)
+	return x * (u / v) + (2.0 / math.pi) * (bessel_j1(x) * math.log(x) - 1.0 / x)
 }
 
 // bessel_yn returns the order-n Bessel function of the second kind.
@@ -501,10 +501,10 @@ pub fn bessel_y1(x f64) f64 {
 // bessel_yn(n, nan) = nan
 pub fn bessel_yn(n_ int, x f64) f64 {
 	mut n := n_
-	if x < 0.0 || vmath.is_nan(x) {
-		return vmath.nan()
+	if x < 0.0 || math.is_nan(x) {
+		return math.nan()
 	}
-	if vmath.is_inf(x, 1) {
+	if math.is_inf(x, 1) {
 		return 0.0
 	}
 	if n == 0 {
@@ -512,9 +512,9 @@ pub fn bessel_yn(n_ int, x f64) f64 {
 	}
 	if x == 0 {
 		if n < 0 && n & 1 == 1 {
-			return vmath.inf(1)
+			return math.inf(1)
 		}
-		return vmath.inf(-1)
+		return math.inf(-1)
 	}
 	mut sign := false
 	if n < 0 {
@@ -545,7 +545,7 @@ pub fn bessel_yn(n_ int, x f64) f64 {
 		// 2	-s+c		-c-s
 		// 3	 s+c		 c-s
 		mut temp := 0.0
-		s, c := vmath.sincos(x)
+		s, c := math.sincos(x)
 		n3 := n & 3
 		if n3 == 0 {
 			temp = s - c
@@ -559,12 +559,12 @@ pub fn bessel_yn(n_ int, x f64) f64 {
 		if n3 == 3 {
 			temp = s + c
 		}
-		b = (1.0 / vmath.sqrt_pi) * temp / vmath.sqrt(x)
+		b = (1.0 / math.sqrt_pi) * temp / math.sqrt(x)
 	} else {
 		mut a := bessel_y0(x)
 		b = bessel_y1(x)
 		// quit if b is -inf
-		for i := 1; i < n && !vmath.is_inf(b, -1); i++ {
+		for i := 1; i < n && !math.is_inf(b, -1); i++ {
 			a_ := a
 			a = b
 			b = (f64(i + i) / x) * b - a_
@@ -588,17 +588,17 @@ pub fn pzero(x f64) f64 {
 	mut p := []f64{}
 	mut q := []f64{}
 	if x >= 8.0 {
-		p = p0r8
-		q = p0s8
+		p = p0r8.clone()
+		q = p0s8.clone()
 	} else if x >= 4.5454 {
-		p = p0r5
-		q = p0s5
+		p = p0r5.clone()
+		q = p0s5.clone()
 	} else if x >= 2.8571 {
-		p = p0r3
-		q = p0s3
+		p = p0r3.clone()
+		q = p0s3.clone()
 	} else if x >= 2 {
-		p = p0r2
-		q = p0s2
+		p = p0r2.clone()
+		q = p0s2.clone()
 	}
 	z := 1.0 / (x * x)
 	r := p[0] + z * (p[1] + z * (p[2] + z * (p[3] + z * (p[4] + z * p[5]))))
@@ -618,17 +618,17 @@ pub fn pone(x f64) f64 {
 	mut p := []f64{}
 	mut q := []f64{}
 	if x >= 8.0 {
-		p = p1r8
-		q = p1s8
+		p = p1r8.clone()
+		q = p1s8.clone()
 	} else if x >= 4.5454 {
-		p = p1r5
-		q = p1s5
+		p = p1r5.clone()
+		q = p1s5.clone()
 	} else if x >= 2.8571 {
-		p = p1r3
-		q = p1s3
+		p = p1r3.clone()
+		q = p1s3.clone()
 	} else if x >= 2 {
-		p = p1r2
-		q = p1s2
+		p = p1r2.clone()
+		q = p1s2.clone()
 	}
 	z := 1.0 / (x * x)
 	r := p[0] + z * (p[1] + z * (p[2] + z * (p[3] + z * (p[4] + z * p[5]))))
@@ -648,17 +648,17 @@ pub fn qzero(x f64) f64 {
 	mut p := []f64{}
 	mut q := []f64{}
 	if x >= 8.0 {
-		p = q0r8
-		q = q0s8
+		p = q0r8.clone()
+		q = q0s8.clone()
 	} else if x >= 4.5454 {
-		p = q0r5
-		q = q0s5
+		p = q0r5.clone()
+		q = q0s5.clone()
 	} else if x >= 2.8571 {
-		p = q0r3
-		q = q0s3
+		p = q0r3.clone()
+		q = q0s3.clone()
 	} else if x >= 2 {
-		p = q0r2
-		q = q0s2
+		p = q0r2.clone()
+		q = q0s2.clone()
 	}
 	z := 1.0 / (x * x)
 	r := p[0] + z * (p[1] + z * (p[2] + z * (p[3] + z * (p[4] + z * p[5]))))
@@ -678,17 +678,17 @@ pub fn qone(x f64) f64 {
 	mut p := []f64{}
 	mut q := []f64{}
 	if x >= 8 {
-		p = q1r8
-		q = q1s8
+		p = q1r8.clone()
+		q = q1s8.clone()
 	} else if x >= 4.5454 {
-		p = q1r5
-		q = q1s5
+		p = q1r5.clone()
+		q = q1s5.clone()
 	} else if x >= 2.8571 {
-		p = q1r3
-		q = q1s3
+		p = q1r3.clone()
+		q = q1s3.clone()
 	} else if x >= 2 {
-		p = q1r2
-		q = q1s2
+		p = q1r2.clone()
+		q = q1s2.clone()
 	}
 	z := 1.0 / (x * x)
 	r := p[0] + z * (p[1] + z * (p[2] + z * (p[3] + z * (p[4] + z * p[5]))))

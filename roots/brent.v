@@ -12,17 +12,8 @@ const (
 	itmax = 100
 )
 
-/*
-*
- * Search for the root of func in the interval [x1, x2] with a
- * given tolerance
- *
- * @param func a cml_function_t wrapper for the true function under investigation
- * @param x1 lower bound for the root
- * @param x2 upper bound for the root
- * @param tol on input gives the tolerance below with the algorithm stops. On
- * exit contains the maximum error made on the root.
-*/
+// Search for the root of func in the interval [x1, x2] with a
+// given tolerance
 pub fn brent(func vsl.Function, x1 f64, x2 f64, tol f64) ?(f64, f64) {
 	mut a := x1
 	mut b := x2

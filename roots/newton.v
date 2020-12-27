@@ -7,28 +7,9 @@ import vsl.vmath
 import vsl.errno
 import vsl
 
-/*
-*
- * Find the root of a function using Newton's algorithm with the Armijo line
- * search to ensure the absolute value of the function decreases along the
- * iterations.  The descent direction at step k is given by
- *
- *     d_k = f(x_k) / f'(x_k)
- *
- * Determine alpha_k = max{2^{-j}, j ge 0} f s.t.
- *
- *   f(x_k + alpha_k d_k) le f(x_k) (1 - omega alpha_k)
- *
- * where in this implementation f omega = 10^{-4} f.
- *
- * @param Function
- * @param x0 initial guess
- * @param x_eps if the relative improvement over the root is less than this value,
- * then stop;
- * @param fx_eps if |f(x)| < fx_eps * then stop;
- * @param n_max maximum number of iterations
- *
-*/
+// Find the root of a function using Newton's algorithm with the Armijo line
+// search to ensure the absolute value of the function decreases along the
+// iterations.
 pub fn newton(func vsl.FunctionFdf, x0 f64, x_eps f64, fx_eps f64, n_max int) ?f64 {
 	omega := 1e-4
 	gamma := 0.5
