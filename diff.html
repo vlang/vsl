@@ -61,7 +61,9 @@ fn func(x f64, _ []f64) f64 {
 }
 
 fn main() {
-    f := vsl.Function{function: func}
+    f := vsl.Function{
+        function: func
+    }
     println('f(x) = x^(3/2)')
     mut expected := 1.5 * vmath.sqrt(2.0)
     mut result, mut abserr := diff.central(f, 2.0)
@@ -91,7 +93,7 @@ fn main() {
 </section>
 
 					<div class="footer">
-						Powered by vdoc. Generated on: 27 Dec 2020 00:18:23
+						Powered by vdoc. Generated on: 27 Dec 2020 01:19:58
 					</div>
 				</div>
 				<div class="doc-toc"><ul><li class="open"><a href="#backward">fn backward</a>        <ul>

@@ -50,13 +50,24 @@
 <a href="https://github.com/vlang/vsl/commits/master"><img src="https://github.com/vlang/vsl/workflows/CI/badge.svg" alt="Build Status"></a>
 <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"></a></p>
 <h1>V Scientific Library</h1>
-<p>VSL is a Scientific Library with a great variety of different modules. Although most modules offer pure-V definitions, VSL also provides modules that wrap known C libraries that allow high performance computing as an alternative.</p>
+<p>VSL is a Scientific Library with a great variety of different modules.
+Although most modules offer pure-V definitions, VSL also provides modules
+that wrap known C libraries that allow high performance computing
+as an alternative.</p>
 <h2>Docs</h2>
 <p>Visit <a href="https://vlang.github.io/vsl">vsl docs</a> to know more about the supported features.</p>
-<p>This library contains essential functions for linear algebra computations (operations between all combinations of vectors and matrices, eigenvalues and eigenvectors, linear solvers) and the development of numerical methods (e.g. numerical quadrature).</p>
-<p>We link VSL with existent libraries written in C and Fortran, such as OpenBLAS and LAPACK. These existing libraries have been fundamental for the development of high-performant simulations over many years. We believe that it is nearly impossible to rewrite these libraries in native V and at the same time achieve the same speed delivered by them.</p>
+<p>This library contains essential functions for linear algebra computations
+(operations between all combinations of vectors and matrices, eigenvalues and eigenvectors,
+linear solvers) and the development of numerical methods (e.g. numerical quadrature).</p>
+<p>We link VSL with existent libraries written in C and Fortran, such as OpenBLAS and LAPACK.
+These existing libraries have been fundamental for the development of high-performant
+simulations over many years. We believe that it is nearly impossible to rewrite these
+libraries in native V and at the same time achieve the same speed delivered by them.</p>
 <h2>Installation</h2>
-<p>Because of C dependencies and other libraries, the easiest way to work with VSL is via Docker. Having Docker and VS Code installed, you can start developing powerful numerical simulations using VSL in a matter of seconds. Furthermore, the best part of it is that it works on Windows, Linux, and macOS out of the box.</p>
+<p>Because of C dependencies and other libraries, the easiest way to work with VSL is via Docker.
+Having Docker and VS Code installed, you can start developing powerful numerical simulations
+using VSL in a matter of seconds. Furthermore, the best part of it is that it works on
+Windows, Linux, and macOS out of the box.</p>
 <h3>Quick, containerized (recommended)</h3>
 <ol>
 <li>Install Docker</li>
@@ -70,7 +81,9 @@
 <p>Our <a href="https://hub.docker.com/repository/docker/vsl/vsl">Docker Image</a> also contains V and the V Tools for working with VS Code (or not). Below is a video showing the convenience of VS Code + the V tools + VSL.</p>
 <p><img src="https://github.com/vlang/vsl/blob/master/static/container.gif" alt=""></p>
 <h2>Install VSL locally</h2>
-<p>Because we use CV for linking VSL with many libraries, it is not enough to use the so convenient <code>v install</code> <em>or</em> <code>vpkg get</code> functionality for installing VSL. First we need to install some dependencies in order to have VSL working as expected.</p>
+<p>Because we use CV for linking VSL with many libraries, it is not enough to use the
+so convenient <code>v install</code> <em>or</em> <code>vpkg get</code> functionality for installing VSL.
+First we need to install some dependencies in order to have VSL working as expected.</p>
 <h3>Install dependencies</h3>
 <p><strong>Debian/Ubuntu GNU Linux</strong></p>
 <pre><code class="language-sh">$ sudo apt-get install -y --no-install-recommends \
@@ -179,7 +192,7 @@
 </section>
 
 					<div class="footer">
-						Powered by vdoc. Generated on: 27 Dec 2020 00:18:23
+						Powered by vdoc. Generated on: 27 Dec 2020 01:19:58
 					</div>
 				</div>
 				<div class="doc-toc"><ul><li class="open"><a href="#Constants.">Constants</a></li>

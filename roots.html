@@ -48,19 +48,17 @@
 <div class="title"><h1> roots</h1></div><h1>One Dimensional Root-Finding</h1>
 <p>The module <code>vsl.roots</code> contains functions for the root finding methods and related declarations.</p>
 <h2>Functions</h2>
-<pre><code class="language-v">fn brent (f vsl.Function, x1, x2, tol f64) ?(f64, f64)
+<pre><code>fn brent (f vsl.Function, x1, x2, tol f64) ?(f64, f64)
 </code></pre>
 <p>Find th root of <code>f</code> between <code>x1</code> and <code>x1</code> with an accuracy
 of order <code>tol</code>. The result will be the root and an upper bound of the error.</p>
-<hr>
-<pre><code class="language-v">fn newton_bisection (f vsl.FunctionFdf, x_min, x_max, tol f64, n_max int) ?f64
+<pre><code>fn newton_bisection (f vsl.FunctionFdf, x_min, x_max, tol f64, n_max int) ?f64
 </code></pre>
 <p>Find th root of <code>f</code> between <code>x_min</code> and <code>x_max</code> with an accuracy
 of order <code>tol</code> and a maximum of n_max iterations. The result will be the found root.</p>
 <p>Note that the function must also compute the first derivate of the function. This function
 relies on combining Newton's approach with a bisection technique.</p>
-<hr>
-<pre><code class="language-v">fn newton (f vsl.FunctionFdf, x0, x_eps, fx_eps f64, n_max int) ?f64
+<pre><code>fn newton (f vsl.FunctionFdf, x0, x_eps, fx_eps f64, n_max int) ?f64
 </code></pre>
 <p>Find the root of <code>f</code> starting from <code>x0</code> using Newton’s method with
 descent direction given by the inverse of the derivative.
@@ -70,13 +68,14 @@ The algorithm stops when one of the three following conditions is met:</p>
 <li>the last improvement over <code>x</code> is smaller than <code>x . x_eps</code></li>
 <li>at the current position <code>|f(x)| &lt; fx_eps</code></li>
 </ul>
-<hr>
-<pre><code class="language-v">fn bisection(f vsl.Function, xmin, xmax, epsrel, epsabs f64, n_max int) ?f64
+<pre><code>fn bisection(f vsl.Function, xmin, xmax, epsrel, epsabs f64, n_max int) ?f64
 </code></pre>
-<p>Find the root of <code>f</code> between <code>x_min</code> and <code>x_max</code> with the accuracy <code>|x_max - x_min| &lt; epsrel * x_min + epsabs</code> , or with the maximum number of iterations <code>n_max</code>.</p>
+<p>Find the root of <code>f</code> between <code>x_min</code> and <code>x_max</code> with the accuracy
+<code>|x_max - x_min| &lt; epsrel * x_min + epsabs</code>,
+or with the maximum number of iterations <code>n_max</code>.</p>
 <p>On exit, the results is <code>(x_max + x_min) / 2</code>.</p>
 <h2>Usage example</h2>
-<pre><code class="language-v">module main
+<pre><code>module main
 
 import vsl
 import vsl.vmath
@@ -120,7 +119,7 @@ fn main() {
 </section>
 
 					<div class="footer">
-						Powered by vdoc. Generated on: 27 Dec 2020 00:18:23
+						Powered by vdoc. Generated on: 27 Dec 2020 01:19:58
 					</div>
 				</div>
 				<div class="doc-toc"><ul><li class="open"><a href="#bisection">fn bisection</a>        <ul>

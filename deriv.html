@@ -64,7 +64,9 @@ fn func(x f64, _ []f64) f64 {
 }
 
 fn main() {
-    f := vsl.Function{function: func}
+    f := vsl.Function{
+        function: func
+    }
     println('f(x) = x^(3/2)')
     mut expected := 1.5 * vmath.sqrt(2.0)
     mut result, mut abserr := deriv.central(f, 2.0, 1e-8)
@@ -89,7 +91,7 @@ f'(x) = 0.0000000160 +/- 0.0000000339
 exact = 0.0000000000
 </code></pre>
 <h1>Functions</h1>
-<pre><code class="language-v">fn central (f vsl.Function, x, h f64) (f64, f64)
+<pre><code>fn central (f vsl.Function, x, h f64) (f64, f64)
 </code></pre>
 <p>This function computes the numerical derivative of the function <code>f</code>
 at the point <code>x</code> using an adaptive central difference algorithm with
@@ -104,7 +106,7 @@ between the 5-point rule and the corresponding 3-point rule <code>x-h</code>,
 <code>x</code>, <code>x+h</code>. Note that the value of the function at <code>x</code>
 does not contribute to the derivative calculation, so only 4-points are
 actually used.</p>
-<pre><code class="language-v">fn forward (f vsl.Function, x, h f64) (f64, f64)
+<pre><code>fn forward (f vsl.Function, x, h f64) (f64, f64)
 </code></pre>
 <p>This function computes the numerical derivative of the function <code>f</code>
 at the point <code>x</code> using an adaptive forward difference algorithm with
@@ -120,7 +122,7 @@ derivative calculation. The derivative at <code>x</code> is computed using an
 <code>x + h/2</code>, <code>x + 3h/4</code>, <code>x+h</code>, with an error estimate taken
 from the difference between the 4-point rule and the corresponding
 2-point rule <code>x+h/2</code>, <code>x+h</code>.</p>
-<pre><code class="language-v">fn backward (f vsl.Function, x, h f64) (f64, f64)
+<pre><code>fn backward (f vsl.Function, x, h f64) (f64, f64)
 </code></pre>
 <p>This function computes the numerical derivative of the function <code>f</code>
 at the point <code>x</code> using an adaptive backward difference algorithm
@@ -150,7 +152,7 @@ negative step-size.</p>
 </section>
 
 					<div class="footer">
-						Powered by vdoc. Generated on: 27 Dec 2020 00:18:23
+						Powered by vdoc. Generated on: 27 Dec 2020 01:19:58
 					</div>
 				</div>
 				<div class="doc-toc"><ul><li class="open"><a href="#backward">fn backward</a>        <ul>
