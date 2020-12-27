@@ -10,14 +10,6 @@
 [Contributing & compiler design](#)
 
 </div>
-<div align="center">
-
-[![Mentioned in Awesome V][awesomevbadge]][awesomevurl]
-[![Build Status][workflowbadge]][workflowurl]
-[![Docs Validation][validatedocsbadge]][validatedocsurl]
-[![License: MIT][licensebadge]][licenseurl]
-
-</div>
 
 VSL is a Scientific Library with a great variety of different modules.
 Although most modules offer pure-V definitions, VSL also provides modules
