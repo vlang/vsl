@@ -1,9 +1,6 @@
 name: Validate Docs
 
-on:
-  push:
-    branches:
-      - master
+on: [push, pull_request]
 
 jobs:
   ubuntu:
@@ -25,6 +22,6 @@ jobs:
       run: v doctor
     - name: Validate docs
       run: |
-        v install vsl
+        ln -s vsl/ ~/.vmodules/vsl
         cd vsl
         v run ../cmd/tools/check-md.v -all
