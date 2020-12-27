@@ -1,11 +1,21 @@
-<img style="width: 200px" width="200" src="https://raw.githubusercontent.com/vlang/vsl/master/static/vsl-logo.png">
+<div align="center">
+<p>
+    <img style="width: 200px" width="200" src="https://raw.githubusercontent.com/vlang/vsl/master/static/vsl-logo.png?sanitize=true">
+</p>
+<h1>The V Scientific Library</h1>
 
-<div style="float: right">
+[vlang.io](https://vlang.io) |
+[Docs](https://vlang.github.io/vsl) |
+[Changelog](#) |
+[Contributing & compiler design](#)
 
-[![Mentioned in Awesome V](https://awesome.re/mentioned-badge.svg)](https://github.com/vlang/awesome-v/blob/master/README.md#scientific-computing)
-[![Build Status](https://github.com/vlang/vsl/workflows/CI/badge.svg)](https://github.com/vlang/vsl/commits/master)
-[![Valid Docs](https://github.com/vlang/vsl/workflows/Validate%20Docs/badge.svg)](https://github.com/vlang/vsl/commits/master)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+</div>
+<div align="center">
+
+[![Mentioned in Awesome V][AwesomeVBadge]][AwesomeVUrl]
+[![Build Status][WorkflowBadge]][WorkflowUrl]
+[![Docs Validation][ValidateDocsBadge]][ValidateDocsUrl]
+[![License: MIT][LicenseBadge]][LicenseUrl]
 
 </div>
 
@@ -107,3 +117,13 @@ $ make test # or ./bin/test
 ## Contributors
 
 - [Ulises Jeremias Cornejo Fandos](https://github.com/ulises-jeremias) - creator and maintainer
+
+[AwesomeVBadge]: https://awesome.re/mentioned-badge.svg
+[WorkflowBadge]: https://github.com/vlang/vsl/workflows/CI/badge.svg
+[ValidateDocsBadge]: https://github.com/vlang/vsl/workflows/Validate%20Docs/badge.svg
+[LicenseBadge]: https://img.shields.io/badge/License-MIT-blue.svg
+
+[AwesomeVUrl]: https://github.com/vlang/awesome-v/blob/master/README.md#scientific-computing
+[WorkflowUrl]: https://github.com/vlang/vsl/commits/master
+[ValidateDocsUrl]: https://github.com/vlang/vsl/commits/master
+[LicenseUrl]: https://opensource.org/licenses/MIT
