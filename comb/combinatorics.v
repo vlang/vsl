@@ -1,19 +1,6 @@
-module combinatorics
+module comb
 
-import math.factorial
-
-// n_choose_k calculates the [binomial coefficient](https://mathworld.wolfram.com/BinomialCoefficient.html)
-pub fn n_choose_k(n f64, k f64) int {
-	if (k < 0.0) || (k > n) {
-		eprintln('k is outside range 0 <= k < n')
-		return 0
-	} else if k == n {
-		return 1
-	}
-	numerator := factorial.factorial(n)
-	denominator := factorial.factorial(k) * factorial.factorial(n - k)
-	return int(numerator / denominator)
-}
+import vsl.fun
 
 // combinations will return an array of all length `r` combinations of `data`
 // This is as close a translation of the example algorithm listed with python's 
@@ -22,17 +9,17 @@ pub fn n_choose_k(n f64, k f64) int {
 // as I could manage
 // While waiting on https://github.com/vlang/v/issues/7753 to be fixed, the function 
 // assumes int array input. Will be easy to change to generic later
-pub fn combinations(data []int, r int) [][]int {
+pub fn combinations(data []f64, r int) [][]f64 {
 	// Return quickly when possible
 	n := data.len
 	if r > n {
-		return [][]int{}
+		return [][]f64{}
 	} else if r == 1 {
 		return data.map([it])
 	}
 	// Create the empty result with correct capacity
-	n_combos := n_choose_k(n, r)
-	mut result := [][]int{cap: n_combos}
+	n_combos := int(fun.choose(n, r))
+	mut result := [][]f64{cap: n_combos}
 	// Fill the first row of the result
 	result << data[0..r]
 	// Fill the rest of the rows
