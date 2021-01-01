@@ -8,7 +8,7 @@ import vsl.fun
 // (https://docs.python.org/3.9/library/itertools.html?highlight=combinations#itertools.combinations)
 // as I could manage
 // While waiting on https://github.com/vlang/v/issues/7753 to be fixed, the function 
-// assumes int array input. Will be easy to change to generic later
+// assumes f64 array input. Will be easy to change to generic later
 pub fn combinations(data []f64, r int) [][]f64 {
 	// Return quickly when possible
 	n := data.len
