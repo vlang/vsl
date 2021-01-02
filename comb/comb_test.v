@@ -1,32 +1,5 @@
 module comb
 
-import vsl.fun
-
-fn test_n_choose_k() {
-	assert fun.choose(4, 2) == 6
-	assert fun.choose(3, 3) == 1
-	assert fun.choose(5, 2) == 10
-	assert fun.choose(10, 6) == 210
-	assert fun.choose(0, 3) == 0
-}
-
-fn test_arange() {
-	assert arange(3) == [0, 1, 2]
-}
-
-fn test_range() {
-	assert range(2, 5) == [2, 3, 4]
-	assert range(0, 3) == [0, 1, 2]
-	assert range(3, 2) == []int{}
-	assert range(1, 1) == []int{}
-}
-
-fn test_get_many() {
-	assert get_many([1, 2, 3], [0, 2]) == [1, 3]
-	assert get_many([1, 2, 3], []int{}) == []int{}
-	assert get_many([1, 2, 3], [0, 0, 0]) == [1, 1, 1]
-}
-
 fn test_combinations_choose_1() {
 	data := [1., 2., 3.]
 	expected := [[1.], [2.], [3.]]

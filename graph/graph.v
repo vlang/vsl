@@ -7,6 +7,7 @@ module graph
 import strconv
 import vsl.vmath
 import vsl.errno
+import vsl.util
 
 pub enum SorthestPaths {
 	fw // FW: Floyd-Warshall method
@@ -27,20 +28,6 @@ pub:
 	next      [][]int // [nverts][nverts] next tree connection. -1 means no connection
 }
 
-// int_ints_map_append appends a new item to a map of slice.
-// Note: this function creates a new slice in the map if key is not found.
-fn int_ints_map_append(o map[int][]int, key, item int) map[int][]int {
-	mut m := o
-	if key in m {
-		mut slice := m[key]
-		slice << item
-		m[key] = slice
-	} else {
-		m[key] = [item]
-	}
-	return m
-}
-
 // new_graph initialises graph
 // edges    -- [nedges][2] edges (connectivity)
 // weights_e -- [nedges] weights of edges
@@ -52,8 +39,8 @@ pub fn new_graph(edges [][]int, weights_e []f64, verts [][]f64, weights_v []f64)
 	for k, edge in edges {
 		i := edge[0]
 		j := edge[1]
-		shares = int_ints_map_append(shares, i, k)
-		shares = int_ints_map_append(shares, j, k)
+		shares = util.int_ints_map_append(shares, i, k)
+		shares = util.int_ints_map_append(shares, j, k)
 		key2edge[hash_edge_key(i, j)] = k
 	}
 	nv := shares.keys().len
@@ -86,7 +73,7 @@ pub fn (g Graph) get_edge(i int, j int) ?int {
 }
 
 /*
- * shortest_paths computes the shortest paths in a graph defined as follows
+* shortest_paths computes the shortest paths in a graph defined as follows
  *
  *          [10]
  *       0 ––––––→ 3            numbers in brackets

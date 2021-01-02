@@ -1,6 +1,7 @@
 module comb
 
 import vsl.fun
+import vsl.util
 
 pub struct CombinationsIter {
 mut:
@@ -23,7 +24,7 @@ pub fn new_combinations_iter(data []f64, r int) CombinationsIter {
 		}
 	}
 	size := int(fun.choose(n, r))
-	idxs := arange(r)
+	idxs := util.arange(r)
 	return CombinationsIter{
 		data: data
 		repeat: r
@@ -48,7 +49,7 @@ pub fn (mut o CombinationsIter) next() ?[]f64 {
 	if o.pos == 1 {
 		return o.data[0..r]
 	}
-	rev_range := arange(r).reverse()
+	rev_range := util.arange(r).reverse()
 	mut what_is_i := -1
 	for i in rev_range {
 		if o.idxs[i] != i + n - r {
@@ -59,8 +60,8 @@ pub fn (mut o CombinationsIter) next() ?[]f64 {
 		}
 	}
 	o.idxs[what_is_i] = o.idxs[what_is_i] + 1
-	for j in range(what_is_i + 1, r) {
+	for j in util.range(what_is_i + 1, r) {
 		o.idxs[j] = o.idxs[j - 1] + 1
 	}
-	return get_many(o.data, o.idxs)
+	return util.get_many(o.data, o.idxs)
 }
