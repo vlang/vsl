@@ -8,7 +8,6 @@ import strconv
 import vsl.vmath
 import vsl.errno
 
-// TODO: change map[string]* types to map[int]*
 pub enum SorthestPaths {
 	fw // FW: Floyd-Warshall method
 }
@@ -22,15 +21,15 @@ pub:
 	verts     [][]f64 // [nverts][ndim] vertices
 	weights_v []f64 // [nverts] weights of vertices
 	// auxiliary
-	shares    map[string][]int // [nverts] edges sharing a vertex
-	key2edge  map[string]int // maps (i,j) vertex to edge index
+	shares    map[int][]int // [nverts] edges sharing a vertex
+	key2edge  map[int]int // maps (i,j) vertex to edge index
 	dist      [][]f64 // [nverts][nverts] distances
 	next      [][]int // [nverts][nverts] next tree connection. -1 means no connection
 }
 
-// str_ints_map_append appends a new item to a map of slice.
+// int_ints_map_append appends a new item to a map of slice.
 // Note: this function creates a new slice in the map if key is not found.
-fn str_ints_map_append(o map[string][]int, key string, item int) map[string][]int {
+fn int_ints_map_append(o map[int][]int, key, item int) map[int][]int {
 	mut m := o
 	if key in m {
 		mut slice := m[key]
@@ -48,13 +47,13 @@ fn str_ints_map_append(o map[string][]int, key string, item int) map[string][]in
 // verts    -- [nverts][ndim] vertices
 // weights_v -- [nverts] weights of vertices
 pub fn new_graph(edges [][]int, weights_e []f64, verts [][]f64, weights_v []f64) Graph {
-	mut key2edge := map[string]int{}
-	mut shares := map[string][]int{}
+	mut key2edge := map[int]int{}
+	mut shares := map[int][]int{}
 	for k, edge in edges {
 		i := edge[0]
 		j := edge[1]
-		shares = str_ints_map_append(shares, i.str(), k)
-		shares = str_ints_map_append(shares, j.str(), k)
+		shares = int_ints_map_append(shares, i, k)
+		shares = int_ints_map_append(shares, j, k)
 		key2edge[hash_edge_key(i, j)] = k
 	}
 	nv := shares.keys().len
@@ -198,9 +197,9 @@ pub fn (g Graph) calc_dist() Graph {
 }
 
 // hash_edge_key creates a unique hash key identifying an edge
-fn hash_edge_key(i int, j int) string {
+fn hash_edge_key(i int, j int) int {
 	key := i + 10000001 * j
-	return key.str()
+	return key
 }
 
 // str_dist_matrix returns a string representation of dist matrix
@@ -239,13 +238,13 @@ pub fn (g Graph) get_adj() ([]int, []int) {
 	nv := g.nverts()
 	mut szadj := 0
 	for vid := 0; vid < nv; vid++ {
-		szadj += g.shares[vid.str()].len // = number of connected vertices
+		szadj += g.shares[vid].len // = number of connected vertices
 	}
 	mut xadj := []int{len: nv + 1}
 	mut adjncy := []int{len: szadj}
 	mut k := 0
 	for vid := 0; vid < nv; vid++ {
-		edges := g.shares[vid.str()]
+		edges := g.shares[vid]
 		for eid in edges {
 			edge := g.edges[eid]
 			mut other_vid := edge[0]

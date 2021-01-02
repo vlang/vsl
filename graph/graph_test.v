@@ -3,7 +3,6 @@
 // that can be found in the LICENSE file.
 module graph
 
-// FIXME: g.path(source, dest) not working.
 fn test_graph01() {
 	/*
 	 *           [10]
@@ -26,7 +25,7 @@ fn test_graph01() {
 		[1, 3],
 	]
 	for k, share in shares {
-		for i, s in g.shares[k.str()] {
+		for i, s in g.shares[k] {
 			assert s == shares[k][i]
 		}
 	}
@@ -80,7 +79,7 @@ fn test_graph02() {
 	assert g.next.len == 6 // nverts
 	shares := [[2, 3], [1, 2], [3, 4, 5], [5, 6], [0, 1], [0, 4, 6]]
 	for k, share in shares {
-		for i, s in g.shares[k.str()] {
+		for i, s in g.shares[k] {
 			assert s == shares[k][i]
 		}
 	}
