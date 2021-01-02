@@ -14,11 +14,11 @@ fn test_arange() {
 	assert arange(3) == [0, 1, 2]
 }
 
-fn test_arange_start_stop() {
-	assert arange_start_stop(2, 5) == [2, 3, 4]
-	assert arange_start_stop(0, 3) == [0, 1, 2]
-	assert arange_start_stop(3, 2) == []int{}
-	assert arange_start_stop(1, 1) == []int{}
+fn test_range() {
+	assert range(2, 5) == [2, 3, 4]
+	assert range(0, 3) == [0, 1, 2]
+	assert range(3, 2) == []int{}
+	assert range(1, 1) == []int{}
 }
 
 fn test_get_many() {
@@ -27,12 +27,6 @@ fn test_get_many() {
 	assert get_many([1, 2, 3], [0, 0, 0]) == [1, 1, 1]
 }
 
-// fn test_combinations_str() {
-// 	data := 'hi you'.split(' ')
-// 	expected := [['hi'], ['you']]
-// 	result := combinations(data, 1)
-// 	assert expected == result
-// }
 fn test_combinations_choose_1() {
 	data := [1., 2., 3.]
 	expected := [[1.], [2.], [3.]]

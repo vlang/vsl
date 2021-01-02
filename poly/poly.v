@@ -230,7 +230,6 @@ pub fn balance_companion_matrix(cm [][]f64) [][]f64 {
 	return m
 }
 
-
 // Arithmetic operations on polynomials
 //
 // In the following descriptions a, b, c are polynomials of degree
