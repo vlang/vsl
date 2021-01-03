@@ -1,6 +1,7 @@
 # Combinatorics
 
-This module provides two different ways of managing combinatorics. Let see an example for `combinations`.
+This module provides two different ways of managing combinatorics.
+Let see an example for `combinations`.
 
 ## Fully formed array of all Combinations
 
