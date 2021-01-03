@@ -2,9 +2,7 @@
 
 This module provides two different ways of managing combinatorics. Let see an example for `combinations`.
 
-## Combinations
-
-### Fully formed array of all Combinations
+## Fully formed array of all Combinations
 
 ```v nofmt
 // combinations will return an array of all length `r` combinations of `data`
@@ -26,7 +24,7 @@ fn main() {
 }
 ```
 
-### Lazy generation
+## Lazy generation
 
 This case is optimal to generate combinations in a lazy way, optimizing memory use:
 
