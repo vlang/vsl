@@ -19,7 +19,7 @@ module main
 import vsl.comb
 
 fn main() {
-	combs := combinations(data, r)
+	combs := comb.combinations(data, r)
 	print(combs)
 }
 ```
