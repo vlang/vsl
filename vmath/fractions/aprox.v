@@ -4,7 +4,7 @@ import vsl.vmath as math
 import vsl.errno
 
 const (
-	default_eps    = 1.0e-5
+	default_eps    = 1.0e-4
 	max_iterations = 50
 	zero           = fraction(0, 1)
 )
