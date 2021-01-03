@@ -47,8 +47,7 @@
 						<section id="comb" class="doc-node">
 							<div class="title"><h1> comb</h1></div><h1>Combinatorics</h1>
 <p>This module provides two different ways of managing combinatorics. Let see an example for <code>combinations</code>.</p>
-<h2>Combinations</h2>
-<h3>Fully formed array of all Combinations</h3>
+<h2>Fully formed array of all Combinations</h2>
 <pre><code class="language-v">// combinations will return an array of all length `r` combinations of `data`
 // While waiting on https://github.com/vlang/v/issues/7753 to be fixed, the function 
 // assumes f64 array input. Will be easy to change to generic later
@@ -64,7 +63,7 @@ fn main() {
     print(combs)
 }
 </code></pre>
-<h3>Lazy generation</h3>
+<h2>Lazy generation</h2>
 <p>This case is optimal to generate combinations in a lazy way, optimizing memory use:</p>
 <pre><code class="language-v">// new_combinations_iter will return an iterator that allows
 // lazy computation for all length `r` combinations of `data`
@@ -116,7 +115,7 @@ fn main() {
 </section>
 
 						<div class="footer">
-							Powered by vdoc. Generated on: 3 Jan 2021 16:34:48
+							Powered by vdoc. Generated on: 3 Jan 2021 16:37:17
 						</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#combinations">fn combinations</a>        <ul>
