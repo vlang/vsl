@@ -44,7 +44,7 @@
 			<div class="doc-scrollview">
 				<div class="doc-container">
 					<div class="doc-content">
-						<section id="comb" class="doc-node">
+						<section id="head_comb" class="doc-node">
 							<div class="title"><h1> comb</h1></div><h1>Combinatorics</h1>
 <p>This module provides two different ways of managing combinatorics.
 Let see an example for <code>combinations</code>.</p>
@@ -97,9 +97,17 @@ fn main() {
 							<div class="title"><h2>fn combinations <a href="#combinations">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/comb/comb.v#L9"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">combinations</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> r <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 <p>combinations will return an array of all length <code>r</code> combinations of <code>data</code>  While waiting on <a href="https://github.com/vlang/v/issues/7753">https://github.com/vlang/v/issues/7753</a> to be fixed, the function   assumes f64 array input. Will be easy to change to generic later</p>
 </section>
+						<section id="combinations_with_replacement" class="doc-node">
+							<div class="title"><h2>fn combinations_with_replacement <a href="#combinations_with_replacement">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/comb/comb.v#L89"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">combinations_with_replacement</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> r <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>combinations_with_replacement will return r length subsequences of elements from the  input <code>data</code> allowing individual elements to be repeated more than once.  This is as close a translation of python's [itertools.combinations_with_replacement]  (<a href="https://docs.python.org/3.9/library/itertools.html#itertools.combinations_with_replacement">https://docs.python.org/3.9/library/itertools.html#itertools.combinations_with_replacement</a>)  as I could manage.  Using f64 array instead of generic while waiting on <a href="https://github.com/vlang/v/issues/7753">https://github.com/vlang/v/issues/7753</a></p>
+</section>
 						<section id="new_combinations_iter" class="doc-node">
 							<div class="title"><h2>fn new_combinations_iter <a href="#new_combinations_iter">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/comb/comb.v#L32"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">new_combinations_iter</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> r <span class="token builtin">int</span><span class="token punctuation">)</span> CombinationsIter</code></pre>
 <p>new_combinations_iter will return an iterator that allows  lazy computation for all length <code>r</code> combinations of <code>data</code></p>
+</section>
+						<section id="new_combinations_with_replacement_iter" class="doc-node">
+							<div class="title"><h2>fn new_combinations_with_replacement_iter <a href="#new_combinations_with_replacement_iter">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/comb/comb.v#L112"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">new_combinations_with_replacement_iter</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> r <span class="token builtin">int</span><span class="token punctuation">)</span> CombinationsWithReplacementIter</code></pre>
+<p>new_combinations_with_replacement_iter will return an iterator that allows  lazy computation for all length <code>r</code> combinations with replacement of <code>data</code></p>
 </section>
 						<section id="CombinationsIter" class="doc-node">
 							<div class="title"><h2>struct CombinationsIter <a href="#CombinationsIter">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/comb/comb.v#L20"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">CombinationsIter</span> <span class="token punctuation">{</span>
@@ -117,19 +125,45 @@ fn main() {
 							<div class="title"><h2>fn (CombinationsIter) next <a href="#CombinationsIter.next">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/comb/comb.v#L51"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o CombinationsIter<span class="token punctuation">)</span> <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span> ?<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 <p>next will return next combination if possible</p>
 </section>
+						<section id="CombinationsWithReplacementIter" class="doc-node">
+							<div class="title"><h2>struct CombinationsWithReplacementIter <a href="#CombinationsWithReplacementIter">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/comb/comb.v#L100"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">CombinationsWithReplacementIter</span> <span class="token punctuation">{</span>
+<span class="token keyword">mut</span><span class="token punctuation">:</span>
+	pos    <span class="token builtin">u64</span>
+	idxs   <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>
+<span class="token keyword">pub</span><span class="token punctuation">:</span>
+	repeat <span class="token builtin">int</span>
+	size   <span class="token builtin">u64</span>
+	data   <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
+<span class="token punctuation">}</span></code></pre>
+
+</section>
+						<section id="CombinationsWithReplacementIter.next" class="doc-node">
+							<div class="title"><h2>fn (CombinationsWithReplacementIter) next <a href="#CombinationsWithReplacementIter.next">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/comb/comb.v#L131"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o CombinationsWithReplacementIter<span class="token punctuation">)</span> <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span> ?<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>next will return next combination if possible</p>
+</section>
 
 						<div class="footer">
-							Powered by vdoc. Generated on: 4 Jan 2021 01:01:03
+							Powered by vdoc. Generated on: 4 Jan 2021 22:33:37
 						</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#combinations">fn combinations</a>        <ul>
 </ul>
 </li>
+<li class="open"><a href="#combinations_with_replacement">fn combinations_with_replacement</a>        <ul>
+</ul>
+</li>
 <li class="open"><a href="#new_combinations_iter">fn new_combinations_iter</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#new_combinations_with_replacement_iter">fn new_combinations_with_replacement_iter</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#CombinationsIter">struct CombinationsIter</a>        <ul>
 <li><a href="#CombinationsIter.next">fn next</a></li>
+</ul>
+</li>
+<li class="open"><a href="#CombinationsWithReplacementIter">struct CombinationsWithReplacementIter</a>        <ul>
+<li><a href="#CombinationsWithReplacementIter.next">fn next</a></li>
 </ul>
 </li>
 </ul></div>
