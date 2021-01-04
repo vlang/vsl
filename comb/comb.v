@@ -79,3 +79,83 @@ pub fn (mut o CombinationsIter) next() ?[]f64 {
 	}
 	return util.get_many(o.data, o.idxs)
 }
+
+// combinations_with_replacement will return r length subsequences of elements from the
+// input `data` allowing individual elements to be repeated more than once.
+// This is as close a translation of python's [itertools.combinations_with_replacement]
+// (https://docs.python.org/3.9/library/itertools.html#itertools.combinations_with_replacement)
+// as I could manage.
+// Using f64 array instead of generic while waiting on https://github.com/vlang/v/issues/7753
+pub fn combinations_with_replacement(data []f64, r int) [][]f64 {
+	mut iter := new_combinations_with_replacement_iter(data, r)
+	mut result := [][]f64{cap: int(iter.size)}
+	for _ in 0 .. iter.size {
+		if comb := iter.next() {
+			result << comb
+		}
+	}
+	return result
+}
+
+pub struct CombinationsWithReplacementIter {
+mut:
+	pos    u64
+	idxs   []int
+pub:
+	repeat int
+	size   u64
+	data   []f64
+}
+
+// new_combinations_with_replacement_iter will return an iterator that allows
+// lazy computation for all length `r` combinations with replacement of `data`
+pub fn new_combinations_with_replacement_iter(data []f64, r int) CombinationsWithReplacementIter {
+	n := data.len
+	if r > n {
+		return CombinationsWithReplacementIter{
+			data: data
+			repeat: r
+		}
+	}
+	size := fun.n_combos_w_replacement(n, r)
+	idxs := []int{len: r, init: 0}
+	return CombinationsWithReplacementIter{
+		data: data
+		repeat: r
+		size: size
+		idxs: idxs
+	}
+}
+
+// next will return next combination if possible
+pub fn (mut o CombinationsWithReplacementIter) next() ?[]f64 {
+	// base case for every iterator
+	if o.pos == o.size {
+		return none
+	}
+	o.pos++
+	if o.pos == 1 {
+		return util.get_many(o.data, o.idxs)
+	}
+	if o.repeat == 1 {
+		return [o.data[o.pos - 1]]
+	}
+	r := o.repeat
+	n := o.data.len
+	rev_range := util.arange(r).reverse()
+	mut what_is_i := -1
+	for i in rev_range {
+		if o.idxs[i] != n - 1 {
+			what_is_i = i
+			break
+		} else if i == 0 {
+			return none
+		}
+	}
+	// This for loop mimics the python list slice
+	new_val := o.idxs[what_is_i] + 1
+	for idx in what_is_i .. (o.idxs.len) {
+		o.idxs[idx] = new_val
+	}
+	return util.get_many(o.data, o.idxs)
+}
