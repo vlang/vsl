@@ -6,10 +6,10 @@ rm -f vsl
 ln -s . vsl
 
 echo "Running tests without -autofree"
-v test .
+v test -stats .
 
 echo "Running tests with -autofree"
-v test -autofree .
+v test -stats -autofree .
 
 find . -name '*_test' -exec rm -f {} +
 rm -f vsl
