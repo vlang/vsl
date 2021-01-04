@@ -14,14 +14,14 @@ pub fn combinations(data []f64, r int) [][]f64
 
 **Usage example**
 
-```v nofmt
+```v
 module main
 
 import vsl.comb
 
 fn main() {
-        data := [1., 2., 3.]
-        r := 3
+    data := [1., 2., 3.]
+    r := 3
 	combs := comb.combinations(data, r)
 	print(combs)
 }
@@ -42,7 +42,7 @@ pub fn (mut o CombinationsIter) next() ?[]f64
 
 **Usage example**
 
-```v nofmt
+```v
 module main
 
 import vsl.comb
