@@ -50,7 +50,7 @@
 Let see an example for <code>combinations</code>.</p>
 <h2>Fully formed array of all Combinations</h2>
 <pre><code class="language-v">// combinations will return an array of all length `r` combinations of `data`
-// While waiting on https://github.com/vlang/v/issues/7753 to be fixed, the function 
+// While waiting on https://github.com/vlang/v/issues/7753 to be fixed, the function
 // assumes f64 array input. Will be easy to change to generic later
 pub fn combinations(data []f64, r int) [][]f64
 </code></pre>
@@ -75,6 +75,7 @@ pub fn new_combinations_iter(data []f64, r int) CombinationsIter
 // next will return next combination if possible
 pub fn (mut o CombinationsIter) next() ?[]f64
 </code></pre>
+<p><strong>Usage example</strong></p>
 <pre><code class="language-v">module main
 
 import vsl.comb
@@ -118,7 +119,7 @@ fn main() {
 </section>
 
 						<div class="footer">
-							Powered by vdoc. Generated on: 3 Jan 2021 23:48:31
+							Powered by vdoc. Generated on: 4 Jan 2021 00:19:07
 						</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#combinations">fn combinations</a>        <ul>
