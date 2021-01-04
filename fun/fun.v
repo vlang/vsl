@@ -87,6 +87,16 @@ pub fn rbinomial(x f64, y f64) f64 {
 	return a / (b * c)
 }
 
+// (n+r-1)! / r! / (n-1)! when n > 0.
+pub fn n_combos_w_replacement(n f64, r f64) u64 {
+	if n <= 0 {
+		return 0
+	}
+	numerator := math.factorial(n + r - 1)
+	denominator := math.factorial(r) * math.factorial(n - 1)
+	return u64(numerator / denominator)
+}
+
 // suqcos implements the superquadric auxiliary function that uses cos(x)
 pub fn suqcos(angle f64, expon f64) f64 {
 	return sign(math.cos(angle)) * math.pow(math.abs(math.cos(angle)), expon)
