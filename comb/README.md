@@ -20,8 +20,8 @@ module main
 import vsl.comb
 
 fn main() {
-    data := [1., 2., 3.]
-    r := 3
+	data := [1., 2., 3.]
+	r := 3
 	combs := comb.combinations(data, r)
 	print(combs)
 }
