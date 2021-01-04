@@ -5,7 +5,11 @@ set -euo pipefail
 rm -f vsl 
 ln -s . vsl
 
+echo "Running tests without -autofree"
 v test .
+
+echo "Running tests with -autofree"
+v test -autofree .
 
 find . -name '*_test' -exec rm -f {} +
 rm -f vsl
