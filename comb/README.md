@@ -7,14 +7,14 @@ Let see an example for `combinations`.
 
 ```v nofmt
 // combinations will return an array of all length `r` combinations of `data`
-// While waiting on https://github.com/vlang/v/issues/7753 to be fixed, the function 
+// While waiting on https://github.com/vlang/v/issues/7753 to be fixed, the function
 // assumes f64 array input. Will be easy to change to generic later
 pub fn combinations(data []f64, r int) [][]f64
 ```
 
 **Usage example**
 
-```v
+```v nofmt
 module main
 
 import vsl.comb
@@ -40,7 +40,9 @@ pub fn new_combinations_iter(data []f64, r int) CombinationsIter
 pub fn (mut o CombinationsIter) next() ?[]f64
 ```
 
-```v
+**Usage example**
+
+```v nofmt
 module main
 
 import vsl.comb
