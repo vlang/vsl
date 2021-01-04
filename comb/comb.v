@@ -87,39 +87,75 @@ pub fn (mut o CombinationsIter) next() ?[]f64 {
 // as I could manage.
 // Using f64 array instead of generic while waiting on https://github.com/vlang/v/issues/7753
 pub fn combinations_with_replacement(data []f64, r int) [][]f64 {
-	n := data.len
-	if (n == 0) && (r == 0) {
-		return [][]f64{}
-	} else if r > n {
-		return [][]f64{}
-	} else if r == 1 {
-		return data.map([it])
-	}
-	mut indices := []int{len: r, init: 0}
-	// Create the result
-	n_combos := fun.n_combos_w_replacement(n, r)
-	mut result := [][]f64{cap: int(n_combos)}
-	// Add the first row
-	result << util.get_many(data, indices)
-	// Add the rest
-	rev_range := util.arange(r).reverse()
-	mut what_is_i := -1
-	for {
-		for i in rev_range {
-			if indices[i] != n - 1 {
-				what_is_i = i
-				break
-			} else if i == 0 {
-				return result
-			}
+	mut iter := new_combinations_with_replacement_iter(data, r)
+	mut result := [][]f64{cap: iter.size}
+	for _ in 0 .. iter.size {
+		if comb := iter.next() {
+			result << comb
 		}
-		// This for loop mimics the python list slice
-		new_val := indices[what_is_i] + 1
-		for idx in what_is_i .. (indices.len) {
-			indices[idx] = new_val
-		}
-		result << util.get_many(data, indices)
 	}
 	return result
 }
 
+pub struct CombinationsWithReplacementIter {
+mut:
+	pos    int
+	idxs   []int
+pub:
+	repeat int
+	size   int
+	data   []f64
+}
+
+// new_combinations_with_replacement_iter will return an iterator that allows
+// lazy computation for all length `r` combinations with replacement of `data`
+pub fn new_combinations_with_replacement_iter(data []f64, r int) CombinationsWithReplacementIter {
+	n := data.len
+	if r > n {
+		return CombinationsWithReplacementIter{
+			data: data
+			repeat: r
+		}
+	}
+	size := int(fun.n_combos_w_replacement(n, r))
+	idxs := []int{len: r, init: 0}
+	return CombinationsWithReplacementIter{
+		data: data
+		repeat: r
+		size: size
+		idxs: idxs
+	}
+}
+
+// next will return next combination if possible
+pub fn (mut o CombinationsWithReplacementIter) next() ?[]f64 {
+	// base case for every iterator
+	if o.pos == o.size {
+		return none
+	}
+	o.pos++
+	if o.pos == 1 {
+		return util.get_many(o.data, o.idxs)
+	}
+	if o.repeat == 1 {
+		return [o.data[o.pos - 1]]
+	}
+	r := o.repeat
+	n := o.data.len
+	rev_range := util.arange(r).reverse()
+	mut what_is_i := -1
+	for i in rev_range {
+		if o.idxs[i] != n - 1 {
+			what_is_i = i
+			break
+		} else if i == 0 {
+			return none
+		}
+	}
+	// This for loop mimics the python list slice
+	new_val := o.idxs[what_is_i] + 1
+	for idx in what_is_i .. (o.idxs.len) {
+		o.idxs[idx] = new_val
+	}
+	return util.get_many(o.data, o.idxs)
+}
