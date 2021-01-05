@@ -50,11 +50,9 @@ import vsl.comb
 fn main() {
 	data := [1., 2., 3.]
 	r := 3
-	mut iter := comb.new_combinations_iter(data, r)
-	for _ in 0 .. iter.size {
-		if comb := iter.next() {
-			print(comb)
-		}
+	mut combinations := comb.new_combinations_iter(data, r)
+	for comb in combinations {
+		print(comb)
 	}
 }
 ```

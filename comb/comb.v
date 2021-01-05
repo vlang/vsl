@@ -7,12 +7,10 @@ import vsl.util
 // While waiting on https://github.com/vlang/v/issues/7753 to be fixed, the function 
 // assumes f64 array input. Will be easy to change to generic later
 pub fn combinations(data []f64, r int) [][]f64 {
-	mut iter := new_combinations_iter(data, r)
-	mut result := [][]f64{cap: iter.size}
-	for _ in 0 .. iter.size {
-		if comb := iter.next() {
-			result << comb
-		}
+	mut combinations := new_combinations_iter(data, r)
+	mut result := [][]f64{cap: combinations.size}
+	for comb in combinations {
+                result << comb
 	}
 	return result
 }
@@ -87,12 +85,10 @@ pub fn (mut o CombinationsIter) next() ?[]f64 {
 // as I could manage.
 // Using f64 array instead of generic while waiting on https://github.com/vlang/v/issues/7753
 pub fn combinations_with_replacement(data []f64, r int) [][]f64 {
-	mut iter := new_combinations_with_replacement_iter(data, r)
-	mut result := [][]f64{cap: int(iter.size)}
-	for _ in 0 .. iter.size {
-		if comb := iter.next() {
-			result << comb
-		}
+	mut combinations := new_combinations_with_replacement_iter(data, r)
+	mut result := [][]f64{cap: int(combinations.size)}
+	for comb in combinations {
+                result << comb
 	}
 	return result
 }
