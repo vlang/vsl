@@ -83,8 +83,8 @@ import vsl.comb
 fn main() {
     data := [1., 2., 3.]
     r := 3
-    mut combinations := comb.new_combinations_iter(data, r)
-    for comb in combinations {
+    mut combs := comb.new_combinations_iter(data, r)
+    for comb in combs {
         print(comb)
     }
 }
@@ -141,7 +141,7 @@ fn main() {
 </section>
 
 						<div class="footer">
-							Powered by vdoc. Generated on: 5 Jan 2021 04:02:36
+							Powered by vdoc. Generated on: 5 Jan 2021 04:04:13
 						</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_comb">README</a></li>
