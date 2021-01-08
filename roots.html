@@ -66,12 +66,12 @@ The algorithm stops when one of the three following conditions is met:</p>
 <ul>
 <li>the maximum number of iterations <code>n_max</code> is reached</li>
 <li>the last improvement over <code>x</code> is smaller than <code>x . x_eps</code></li>
-<li>at the current position <code>|f(x)| &amp;lt; fx_eps</code></li>
+<li>at the current position <code>|f(x)| &lt; fx_eps</code></li>
 </ul>
 <pre><code class="language-v">fn bisection(f vsl.Function, xmin, xmax, epsrel, epsabs f64, n_max int) ?f64
 </code></pre>
 <p>Find the root of <code>f</code> between <code>x_min</code> and <code>x_max</code> with the accuracy
-<code>|x_max - x_min| &amp;lt; epsrel * x_min + epsabs</code>,
+<code>|x_max - x_min| &lt; epsrel * x_min + epsabs</code>,
 or with the maximum number of iterations <code>n_max</code>.</p>
 <p>On exit, the results is <code>(x_max + x_min) / 2</code>.</p>
 <h2>Usage example</h2>
@@ -124,7 +124,7 @@ fn main() {
 </section>
 
 						<div class="footer">
-							Powered by vdoc. Generated on: 8 Jan 2021 03:43:09
+							Powered by vdoc. Generated on: 8 Jan 2021 16:58:40
 						</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_roots">README</a></li>
