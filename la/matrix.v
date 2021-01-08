@@ -98,7 +98,7 @@ pub fn (o Matrix) clone() Matrix {
 	return clone
 }
 
-// transpose returns the tranpose matrix
+// transpose returns the transpose matrix
 pub fn (o Matrix) transpose() Matrix {
 	mut tran := new_matrix(o.n, o.m)
 	for i := 0; i < o.n; i++ {
@@ -236,7 +236,7 @@ pub fn (mut o Matrix) set_col(j int, value f64) {
 	}
 }
 
-// norm_frob returns the Frobenious norm of this matrix
+// norm_frob returns the Frobenius norm of this matrix
 // nrm := ‖a‖_F = sqrt(Σ_i Σ_j a[ij]⋅a[ij]) = ‖a‖_2
 pub fn (o Matrix) norm_frob() f64 {
 	mut nrm := 0.0
