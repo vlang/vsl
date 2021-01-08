@@ -67,13 +67,14 @@ $ sudo apt-get install -y --no-install-recommends \
     gcc \
     gfortran \
     liblapacke-dev \
+    libblas-dev \
     libopenblas-dev \
 ```
 
 **Arch Linux/Manjaro GNU Linux**
 
 ```sh
-$ sudo pacman -S lapack lapacke openblas
+$ sudo pacman -S lapack lapacke cblas openblas openssl
 ```
 
 ### Install VSL

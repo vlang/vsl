@@ -75,6 +75,7 @@ $ sudo apt-get install -y --no-install-recommends \
     gcc \
     gfortran \
     liblapacke-dev \
+    libblas-dev \
     libopenblas-dev \
     libssl-dev \
 ```
