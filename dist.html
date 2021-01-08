@@ -49,7 +49,7 @@
 <h2>Histograms</h2>
 <pre><code class="language-v">// Histogram holds data for computing/plotting histograms
 //
-//  bin[i] corresponds to station[i] &lt;= x &lt; station[i+1]
+//  bin[i] corresponds to station[i] &amp;lt;= x &amp;lt; station[i+1]
 //
 //       [ bin[0] )[ bin[1] )[ bin[2] )[ bin[3] )[ bin[4] )
 //    ---|---------|---------|---------|---------|---------|---  x
@@ -61,19 +61,23 @@ pub mut:
     counts   []int     // counts
 }
 </code></pre>
+
 </section>
 
 						<section id="build_text_hist" class="doc-node">
 							<div class="title"><h2>fn build_text_hist <a href="#build_text_hist">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/dist/hist.v#L50"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">build_text_hist</span><span class="token punctuation">(</span>xmin <span class="token builtin">f64</span><span class="token punctuation">,</span> xmax <span class="token builtin">f64</span><span class="token punctuation">,</span> nstations <span class="token builtin">int</span><span class="token punctuation">,</span> values <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> numfmt <span class="token builtin">string</span><span class="token punctuation">,</span> barlen <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">string</span></code></pre>
 <p>build_text_hist builds a text histogram</p>
+
 </section>
 						<section id="new_histogram" class="doc-node">
 							<div class="title"><h2>fn new_histogram <a href="#new_histogram">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/dist/hist.v#L66"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">new_histogram</span><span class="token punctuation">(</span>stations <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> Histogram</code></pre>
 <p>new_histogram returns an histogram struct from a given list of stations</p>
+
 </section>
 						<section id="text_hist" class="doc-node">
 							<div class="title"><h2>fn text_hist <a href="#text_hist">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/dist/hist.v#L8"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">text_hist</span><span class="token punctuation">(</span>labels <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">,</span> counts <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> barlen <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">string</span></code></pre>
 <p>text_hist prints a text histogram</p>
+
 </section>
 						<section id="Histogram" class="doc-node">
 							<div class="title"><h2>struct Histogram <a href="#Histogram">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/dist/hist.v#L59"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">Histogram</span> <span class="token punctuation">{</span>
@@ -82,26 +86,31 @@ pub mut:
 	counts   <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>
 <span class="token punctuation">}</span></code></pre>
 <p>Histogram holds data for computing/plotting histograms</p>
+
 </section>
 						<section id="Histogram.find_bin" class="doc-node">
 							<div class="title"><h2>fn (Histogram) find_bin <a href="#Histogram.find_bin">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/dist/hist.v#L74"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o Histogram<span class="token punctuation">)</span> <span class="token function">find_bin</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>find_bin finds where x falls in  returns -1 if x is outside the range</p>
+
 </section>
 						<section id="Histogram.count" class="doc-node">
 							<div class="title"><h2>fn (Histogram) count <a href="#Histogram.count">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/dist/hist.v#L101"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o Histogram<span class="token punctuation">)</span> <span class="token function">count</span><span class="token punctuation">(</span>vals <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> clear <span class="token builtin">bool</span><span class="token punctuation">)</span></code></pre>
 <p>count counts how many items fall within each bin</p>
+
 </section>
 						<section id="Histogram.gen_labels" class="doc-node">
 							<div class="title"><h2>fn (Histogram) gen_labels <a href="#Histogram.gen_labels">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/dist/hist.v#L125"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o Histogram<span class="token punctuation">)</span> <span class="token function">gen_labels</span><span class="token punctuation">(</span>numfmt <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span></code></pre>
 <p>gen_labels generate nice labels identifying bins</p>
+
 </section>
 						<section id="Histogram.density_area" class="doc-node">
 							<div class="title"><h2>fn (Histogram) density_area <a href="#Histogram.density_area">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/dist/hist.v#L139"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o Histogram<span class="token punctuation">)</span> <span class="token function">density_area</span><span class="token punctuation">(</span>nsamples <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
 <p>density_area computes the area of the density diagram   nsamples -- number of samples used when generating pseudo-random numbers</p>
+
 </section>
 
 						<div class="footer">
-							Powered by vdoc. Generated on: 5 Jan 2021 04:04:13
+							Powered by vdoc. Generated on: 8 Jan 2021 03:13:26
 						</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_dist">README</a></li>

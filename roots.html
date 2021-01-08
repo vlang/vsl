@@ -66,12 +66,12 @@ The algorithm stops when one of the three following conditions is met:</p>
 <ul>
 <li>the maximum number of iterations <code>n_max</code> is reached</li>
 <li>the last improvement over <code>x</code> is smaller than <code>x . x_eps</code></li>
-<li>at the current position <code>|f(x)| &lt; fx_eps</code></li>
+<li>at the current position <code>|f(x)| &amp;lt; fx_eps</code></li>
 </ul>
 <pre><code class="language-v">fn bisection(f vsl.Function, xmin, xmax, epsrel, epsabs f64, n_max int) ?f64
 </code></pre>
 <p>Find the root of <code>f</code> between <code>x_min</code> and <code>x_max</code> with the accuracy
-<code>|x_max - x_min| &lt; epsrel * x_min + epsabs</code>,
+<code>|x_max - x_min| &amp;lt; epsrel * x_min + epsabs</code>,
 or with the maximum number of iterations <code>n_max</code>.</p>
 <p>On exit, the results is <code>(x_max + x_min) / 2</code>.</p>
 <h2>Usage example</h2>
@@ -99,27 +99,32 @@ fn main() {
 }
 </code></pre>
 <p><code>result</code> will be <code>vmath.pi / 2.00</code></p>
+
 </section>
 
 						<section id="bisection" class="doc-node">
 							<div class="title"><h2>fn bisection <a href="#bisection">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/roots/bisection.v#L11"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">bisection</span><span class="token punctuation">(</span>func vsl<span class="token punctuation">.</span>Function<span class="token punctuation">,</span> xmin <span class="token builtin">f64</span><span class="token punctuation">,</span> xmax <span class="token builtin">f64</span><span class="token punctuation">,</span> epsrel <span class="token builtin">f64</span><span class="token punctuation">,</span> epsabs <span class="token builtin">f64</span><span class="token punctuation">,</span> n_max <span class="token builtin">int</span><span class="token punctuation">)</span> ?<span class="token builtin">f64</span></code></pre>
 <p>Find the root of a function using a bisection method</p>
+
 </section>
 						<section id="brent" class="doc-node">
 							<div class="title"><h2>fn brent <a href="#brent">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/roots/brent.v#L17"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">brent</span><span class="token punctuation">(</span>func vsl<span class="token punctuation">.</span>Function<span class="token punctuation">,</span> x1 <span class="token builtin">f64</span><span class="token punctuation">,</span> x2 <span class="token builtin">f64</span><span class="token punctuation">,</span> tol <span class="token builtin">f64</span><span class="token punctuation">)</span> ?<span class="token punctuation">(</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
 <p>Search for the root of func in the interval [x1, x2] with a  given tolerance</p>
+
 </section>
 						<section id="newton" class="doc-node">
 							<div class="title"><h2>fn newton <a href="#newton">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/roots/newton.v#L13"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">newton</span><span class="token punctuation">(</span>func vsl<span class="token punctuation">.</span>FunctionFdf<span class="token punctuation">,</span> x0 <span class="token builtin">f64</span><span class="token punctuation">,</span> x_eps <span class="token builtin">f64</span><span class="token punctuation">,</span> fx_eps <span class="token builtin">f64</span><span class="token punctuation">,</span> n_max <span class="token builtin">int</span><span class="token punctuation">)</span> ?<span class="token builtin">f64</span></code></pre>
 <p>Find the root of a function using Newton's algorithm with the Armijo line  search to ensure the absolute value of the function decreases along the  iterations.</p>
+
 </section>
 						<section id="newton_bisection" class="doc-node">
 							<div class="title"><h2>fn newton_bisection <a href="#newton_bisection">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/roots/nexton_bisection.v#L12"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">newton_bisection</span><span class="token punctuation">(</span>func vsl<span class="token punctuation">.</span>FunctionFdf<span class="token punctuation">,</span> x_min <span class="token builtin">f64</span><span class="token punctuation">,</span> x_max <span class="token builtin">f64</span><span class="token punctuation">,</span> tol <span class="token builtin">f64</span><span class="token punctuation">,</span> max_iter <span class="token builtin">int</span><span class="token punctuation">)</span> ?<span class="token builtin">f64</span></code></pre>
 <p>Find the root of a function by combining Newton's method with the bisection  method</p>
+
 </section>
 
 						<div class="footer">
-							Powered by vdoc. Generated on: 5 Jan 2021 04:04:13
+							Powered by vdoc. Generated on: 8 Jan 2021 03:13:26
 						</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_roots">README</a></li>

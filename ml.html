@@ -44,37 +44,45 @@
 			<div class="doc-scrollview">
 				<div class="doc-container">
 					<div class="doc-content">
-						<section id="ml" class="doc-node">
-							<div class="title"><h1> ml</h1></div>
+						<section id="readme_ml" class="doc-node">
+							<div class="title"><h1> ml <a href="#readme_ml">#</a></h1></div>
+
 </section>
 
 						<section id="data_from_raw_x" class="doc-node">
 							<div class="title"><h2>fn data_from_raw_x <a href="#data_from_raw_x">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/data.v#L77"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">data_from_raw_x</span><span class="token punctuation">(</span>xraw <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> Data</code></pre>
 <p>data_from_raw_x returns a new object with data set from raw x values  Input:  xraw -- [nb_samples][nb_features] table with x values (NO y values)  Output:  new object</p>
+
 </section>
 						<section id="data_from_raw_xy" class="doc-node">
 							<div class="title"><h2>fn data_from_raw_xy <a href="#data_from_raw_xy">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/data.v#L101"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">data_from_raw_xy</span><span class="token punctuation">(</span>xyraw <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> Data</code></pre>
 <p>data_from_raw_xy returns a new object with data set from raw Xy values  Input:  Xyraw -- [nb_samples][nb_features+1] table with x and y raw values,  where the last column contains y-values  Output:  new object</p>
+
 </section>
 						<section id="new_data" class="doc-node">
 							<div class="title"><h2>fn new_data <a href="#new_data">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/data.v#L43"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">new_data</span><span class="token punctuation">(</span>nb_samples <span class="token builtin">int</span><span class="token punctuation">,</span> nb_features <span class="token builtin">int</span><span class="token punctuation">,</span> use_y <span class="token builtin">bool</span><span class="token punctuation">,</span> allocate <span class="token builtin">bool</span><span class="token punctuation">)</span> Data</code></pre>
 <p>data returns a new object to hold ML data  Input:  nb_samples  -- number of data samples (rows in x)  nb_features -- number of features (columns in x)  use_y       -- use y data vector  allocate    -- allocates x (and y); otherwise,  x and y must be set using set() method  Output:  new object</p>
+
 </section>
 						<section id="new_kmeans" class="doc-node">
 							<div class="title"><h2>fn new_kmeans <a href="#new_kmeans">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/kmeans.v#L20"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">new_kmeans</span><span class="token punctuation">(</span><span class="token keyword">mut</span> data Data<span class="token punctuation">,</span> nb_classes <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">&</span>Kmeans</code></pre>
 <p>new_kmeans returns a new K-means model</p>
+
 </section>
 						<section id="new_lin_reg" class="doc-node">
 							<div class="title"><h2>fn new_lin_reg <a href="#new_lin_reg">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/linreg.v#L23"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">new_lin_reg</span><span class="token punctuation">(</span><span class="token keyword">mut</span> data Data<span class="token punctuation">,</span> params <span class="token operator">&</span>ParamsReg<span class="token punctuation">,</span> name <span class="token builtin">string</span><span class="token punctuation">)</span> LinReg</code></pre>
 <p>new_lin_reg returns a new LinReg object    Input:      data   -- x,y data      params -- θ, b, λ      name   -- unique name of this (observer) object</p>
+
 </section>
 						<section id="new_params_reg" class="doc-node">
 							<div class="title"><h2>fn new_params_reg <a href="#new_params_reg">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/paramsreg.v#L22"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">new_params_reg</span><span class="token punctuation">(</span>nb_features <span class="token builtin">int</span><span class="token punctuation">)</span> ParamsReg</code></pre>
 <p>new_params_reg returns a new object to hold regression parameters</p>
+
 </section>
 						<section id="stat_from_data" class="doc-node">
 							<div class="title"><h2>fn stat_from_data <a href="#stat_from_data">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/workspace.v#L33"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">stat_from_data</span><span class="token punctuation">(</span><span class="token keyword">mut</span> data Data<span class="token punctuation">,</span> name <span class="token builtin">string</span><span class="token punctuation">)</span> Stat</code></pre>
 <p>stat returns a new Stat object</p>
+
 </section>
 						<section id="Data" class="doc-node">
 							<div class="title"><h2>struct Data <a href="#Data">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/data.v#L24"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">Data</span> <span class="token punctuation">{</span>
@@ -87,22 +95,27 @@
 	stat        <span class="token operator">&</span>Stat <span class="token operator">=</span> <span class="token builtin">voidptr</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span></code></pre>
 
+
 </section>
 						<section id="Data.set" class="doc-node">
 							<div class="title"><h2>fn (Data) set <a href="#Data.set">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/data.v#L66"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o Data<span class="token punctuation">)</span> <span class="token function">set</span><span class="token punctuation">(</span>x <span class="token operator">&</span>la<span class="token punctuation">.</span>Matrix<span class="token punctuation">,</span> y <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
 <p>set sets x matrix and y vector [optional] and notify observers  Input:  x -- x values  y -- y values [optional]</p>
+
 </section>
 						<section id="Data.clone" class="doc-node">
 							<div class="title"><h2>fn (Data) clone <a href="#Data.clone">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/data.v#L121"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o Data<span class="token punctuation">)</span> <span class="token function">clone</span><span class="token punctuation">(</span><span class="token punctuation">)</span> Data</code></pre>
 <p>clone returns a deep copy of this object</p>
+
 </section>
 						<section id="Data.add_observer" class="doc-node">
 							<div class="title"><h2>fn (Data) add_observer <a href="#Data.add_observer">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/data.v#L132"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o Data<span class="token punctuation">)</span> <span class="token function">add_observer</span><span class="token punctuation">(</span>obs util<span class="token punctuation">.</span>Observer<span class="token punctuation">)</span></code></pre>
 <p>add_observer adds an object to the list of interested observers</p>
+
 </section>
 						<section id="Data.notify_update" class="doc-node">
 							<div class="title"><h2>fn (Data) notify_update <a href="#Data.notify_update">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/data.v#L137"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o Data<span class="token punctuation">)</span> <span class="token function">notify_update</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <p>notify_update notifies observers of updates</p>
+
 </section>
 						<section id="Kmeans" class="doc-node">
 							<div class="title"><h2>struct Kmeans <a href="#Kmeans">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/kmeans.v#L8"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">Kmeans</span> <span class="token punctuation">{</span>
@@ -116,30 +129,37 @@
 	nb_members <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>
 <span class="token punctuation">}</span></code></pre>
 <p>Kmeans implements the K-means model (Observer of Data)</p>
+
 </section>
 						<section id="Kmeans.update" class="doc-node">
 							<div class="title"><h2>fn (Kmeans) update <a href="#Kmeans.update">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/kmeans.v#L42"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o Kmeans<span class="token punctuation">)</span> <span class="token function">update</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <p>update perform updates after data has been changed (as an Observer)</p>
+
 </section>
 						<section id="Kmeans.nb_classes" class="doc-node">
 							<div class="title"><h2>fn (Kmeans) nb_classes <a href="#Kmeans.nb_classes">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/kmeans.v#L51"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o Kmeans<span class="token punctuation">)</span> <span class="token function">nb_classes</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>nb_classes returns the number of classes</p>
+
 </section>
 						<section id="Kmeans.set_centroids" class="doc-node">
 							<div class="title"><h2>fn (Kmeans) set_centroids <a href="#Kmeans.set_centroids">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/kmeans.v#L57"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o Kmeans<span class="token punctuation">)</span> <span class="token function">set_centroids</span><span class="token punctuation">(</span>xc <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
 <p>set_centroids sets centroids; e.g. trial centroids    xc -- [nb_class][nb_features]</p>
+
 </section>
 						<section id="Kmeans.find_closest_centroids" class="doc-node">
 							<div class="title"><h2>fn (Kmeans) find_closest_centroids <a href="#Kmeans.find_closest_centroids">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/kmeans.v#L64"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o Kmeans<span class="token punctuation">)</span> <span class="token function">find_closest_centroids</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <p>find_closest_centroids finds closest centroids to each sample</p>
+
 </section>
 						<section id="Kmeans.compute_centroids" class="doc-node">
 							<div class="title"><h2>fn (Kmeans) compute_centroids <a href="#Kmeans.compute_centroids">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/kmeans.v#L85"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o Kmeans<span class="token punctuation">)</span> <span class="token function">compute_centroids</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <p>compute_centroids update centroids based on new classes information (from find_closest_centroids)</p>
+
 </section>
 						<section id="Kmeans.train" class="doc-node">
 							<div class="title"><h2>fn (Kmeans) train <a href="#Kmeans.train">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/kmeans.v#L113"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o Kmeans<span class="token punctuation">)</span> <span class="token function">train</span><span class="token punctuation">(</span>config TrainConfig<span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>train trains model</p>
+
 </section>
 						<section id="LinReg" class="doc-node">
 							<div class="title"><h2>struct LinReg <a href="#LinReg">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/linreg.v#L7"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">LinReg</span> <span class="token punctuation">{</span>
@@ -151,38 +171,47 @@
 	e      <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
 <span class="token punctuation">}</span></code></pre>
 <p>LinReg implements a linear regression model</p>
+
 </section>
 						<section id="LinReg.name" class="doc-node">
 							<div class="title"><h2>fn (LinReg) name <a href="#LinReg.name">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/linreg.v#L36"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o LinReg<span class="token punctuation">)</span> <span class="token function">name</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">string</span></code></pre>
 <p>name returns the name of this LinReg object (thus defining the Observer interface)</p>
+
 </section>
 						<section id="LinReg.predict" class="doc-node">
 							<div class="title"><h2>fn (LinReg) predict <a href="#LinReg.predict">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/linreg.v#L45"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o LinReg<span class="token punctuation">)</span> <span class="token function">predict</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
 <p>predict returns the model evaluation @ {x;theta,b}    Input:      x -- vector of features    Output:      y -- model prediction y(x)</p>
+
 </section>
 						<section id="LinReg.cost" class="doc-node">
 							<div class="title"><h2>fn (LinReg) cost <a href="#LinReg.cost">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/linreg.v#L58"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o LinReg<span class="token punctuation">)</span> <span class="token function">cost</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
 <p>cost returns the cost c(x;theta,b)    Input:      data -- x,y data      params -- theta and b      x -- vector of features    Output:      c -- total cost (model error)</p>
+
 </section>
 						<section id="LinReg.gradients" class="doc-node">
 							<div class="title"><h2>fn (LinReg) gradients <a href="#LinReg.gradients">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/linreg.v#L76"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o LinReg<span class="token punctuation">)</span> <span class="token function">gradients</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
 <p>gradients returns ∂C/∂theta and ∂C/∂b    Output:      dcdtheta -- ∂C/∂theta      dcdb -- ∂C/∂b</p>
+
 </section>
 						<section id="LinReg.train" class="doc-node">
 							<div class="title"><h2>fn (LinReg) train <a href="#LinReg.train">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/linreg.v#L97"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o LinReg<span class="token punctuation">)</span> <span class="token function">train</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <p>train finds theta and b using closed-form solution    Input:      data -- x,y data    Output:      params -- theta and b</p>
+
 </section>
 						<section id="LinReg.add_observer" class="doc-node">
 							<div class="title"><h2>fn (LinReg) add_observer <a href="#LinReg.add_observer">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/linreg.v#L127"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o LinReg<span class="token punctuation">)</span> <span class="token function">add_observer</span><span class="token punctuation">(</span>obs util<span class="token punctuation">.</span>Observer<span class="token punctuation">)</span></code></pre>
 <p>add_observer adds an object to the list of interested observers</p>
+
 </section>
 						<section id="LinReg.notify_update" class="doc-node">
 							<div class="title"><h2>fn (LinReg) notify_update <a href="#LinReg.notify_update">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/linreg.v#L132"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o LinReg<span class="token punctuation">)</span> <span class="token function">notify_update</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <p>notify_update notifies observers of updates</p>
+
 </section>
 						<section id="LinReg.calce" class="doc-node">
 							<div class="title"><h2>fn (LinReg) calce <a href="#LinReg.calce">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/linreg.v#L140"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o LinReg<span class="token punctuation">)</span> <span class="token function">calce</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <p>calce calculates e vector (save into o.e)   Output: e = b⋅o + x⋅theta - y</p>
+
 </section>
 						<section id="ParamsReg" class="doc-node">
 							<div class="title"><h2>struct ParamsReg <a href="#ParamsReg">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/paramsreg.v#L6"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">ParamsReg</span> <span class="token punctuation">{</span>
@@ -198,86 +227,107 @@
 	bkp_degree <span class="token builtin">int</span>
 <span class="token punctuation">}</span></code></pre>
 
+
 </section>
 						<section id="ParamsReg.init" class="doc-node">
 							<div class="title"><h2>fn (ParamsReg) init <a href="#ParamsReg.init">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/paramsreg.v#L32"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o ParamsReg<span class="token punctuation">)</span> <span class="token function">init</span><span class="token punctuation">(</span>nb_features <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
 <p>init initializes ParamsReg with nb_features (number of features)</p>
+
 </section>
 						<section id="ParamsReg.backup" class="doc-node">
 							<div class="title"><h2>fn (ParamsReg) backup <a href="#ParamsReg.backup">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/paramsreg.v#L38"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o ParamsReg<span class="token punctuation">)</span> <span class="token function">backup</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <p>backup creates an internal copy of parameters</p>
+
 </section>
 						<section id="ParamsReg.restore" class="doc-node">
 							<div class="title"><h2>fn (ParamsReg) restore <a href="#ParamsReg.restore">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/paramsreg.v#L46"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o ParamsReg<span class="token punctuation">)</span> <span class="token function">restore</span><span class="token punctuation">(</span>skip_notification <span class="token builtin">bool</span><span class="token punctuation">)</span></code></pre>
 <p>restore restores an internal copy of parameters and notifies observers</p>
+
 </section>
 						<section id="ParamsReg.set_params" class="doc-node">
 							<div class="title"><h2>fn (ParamsReg) set_params <a href="#ParamsReg.set_params">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/paramsreg.v#L57"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o ParamsReg<span class="token punctuation">)</span> <span class="token function">set_params</span><span class="token punctuation">(</span>theta <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> b <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
 <p>set_params sets theta and b and notifies observers</p>
+
 </section>
 						<section id="ParamsReg.set_param" class="doc-node">
 							<div class="title"><h2>fn (ParamsReg) set_param <a href="#ParamsReg.set_param">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/paramsreg.v#L65"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o ParamsReg<span class="token punctuation">)</span> <span class="token function">set_param</span><span class="token punctuation">(</span>i <span class="token builtin">int</span><span class="token punctuation">,</span> value <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
 <p>set_param sets either theta or b (use negative indices for b). Notifies observers   i -- index of theta or -1 for bias</p>
+
 </section>
 						<section id="ParamsReg.get_param" class="doc-node">
 							<div class="title"><h2>fn (ParamsReg) get_param <a href="#ParamsReg.get_param">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/paramsreg.v#L78"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o ParamsReg<span class="token punctuation">)</span> <span class="token function">get_param</span><span class="token punctuation">(</span>i <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
 <p>get_param returns either theta or b (use negative indices for b)   i -- index of theta or -1 for bias</p>
+
 </section>
 						<section id="ParamsReg.set_thetas" class="doc-node">
 							<div class="title"><h2>fn (ParamsReg) set_thetas <a href="#ParamsReg.set_thetas">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/paramsreg.v#L86"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o ParamsReg<span class="token punctuation">)</span> <span class="token function">set_thetas</span><span class="token punctuation">(</span>theta <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
 <p>set_thetas sets the whole vector theta and notifies observers</p>
+
 </section>
 						<section id="ParamsReg.get_thetas" class="doc-node">
 							<div class="title"><h2>fn (ParamsReg) get_thetas <a href="#ParamsReg.get_thetas">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/paramsreg.v#L92"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o ParamsReg<span class="token punctuation">)</span> <span class="token function">get_thetas</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 <p>get_thetas gets a copy of theta</p>
+
 </section>
 						<section id="ParamsReg.access_thetas" class="doc-node">
 							<div class="title"><h2>fn (ParamsReg) access_thetas <a href="#ParamsReg.access_thetas">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/paramsreg.v#L97"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o ParamsReg<span class="token punctuation">)</span> <span class="token function">access_thetas</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 <p>access_thetas returns access (slice) to theta</p>
+
 </section>
 						<section id="ParamsReg.access_bias" class="doc-node">
 							<div class="title"><h2>fn (ParamsReg) access_bias <a href="#ParamsReg.access_bias">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/paramsreg.v#L102"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o ParamsReg<span class="token punctuation">)</span> <span class="token function">access_bias</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&</span><span class="token builtin">f64</span></code></pre>
 <p>access_bias returns access (pointer) to b</p>
+
 </section>
 						<section id="ParamsReg.set_theta" class="doc-node">
 							<div class="title"><h2>fn (ParamsReg) set_theta <a href="#ParamsReg.set_theta">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/paramsreg.v#L107"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o ParamsReg<span class="token punctuation">)</span> <span class="token function">set_theta</span><span class="token punctuation">(</span>i <span class="token builtin">int</span><span class="token punctuation">,</span> thetai <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
 <p>set_theta sets one component of theta and notifies observers</p>
+
 </section>
 						<section id="ParamsReg.get_theta" class="doc-node">
 							<div class="title"><h2>fn (ParamsReg) get_theta <a href="#ParamsReg.get_theta">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/paramsreg.v#L113"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o ParamsReg<span class="token punctuation">)</span> <span class="token function">get_theta</span><span class="token punctuation">(</span>i <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
 <p>get_theta returns the value of theta[i]</p>
+
 </section>
 						<section id="ParamsReg.set_bias" class="doc-node">
 							<div class="title"><h2>fn (ParamsReg) set_bias <a href="#ParamsReg.set_bias">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/paramsreg.v#L118"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o ParamsReg<span class="token punctuation">)</span> <span class="token function">set_bias</span><span class="token punctuation">(</span>b <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
 <p>set_bias sets b and notifies observers</p>
+
 </section>
 						<section id="ParamsReg.get_bias" class="doc-node">
 							<div class="title"><h2>fn (ParamsReg) get_bias <a href="#ParamsReg.get_bias">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/paramsreg.v#L124"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o ParamsReg<span class="token punctuation">)</span> <span class="token function">get_bias</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
 <p>get_bias gets a copy of b</p>
+
 </section>
 						<section id="ParamsReg.set_lambda" class="doc-node">
 							<div class="title"><h2>fn (ParamsReg) set_lambda <a href="#ParamsReg.set_lambda">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/paramsreg.v#L129"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o ParamsReg<span class="token punctuation">)</span> <span class="token function">set_lambda</span><span class="token punctuation">(</span>lambda <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
 <p>set_lambda sets lambda and notifies observers</p>
+
 </section>
 						<section id="ParamsReg.get_lambda" class="doc-node">
 							<div class="title"><h2>fn (ParamsReg) get_lambda <a href="#ParamsReg.get_lambda">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/paramsreg.v#L135"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o ParamsReg<span class="token punctuation">)</span> <span class="token function">get_lambda</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
 <p>get_lambda gets a copy of lambda</p>
+
 </section>
 						<section id="ParamsReg.set_degree" class="doc-node">
 							<div class="title"><h2>fn (ParamsReg) set_degree <a href="#ParamsReg.set_degree">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/paramsreg.v#L140"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o ParamsReg<span class="token punctuation">)</span> <span class="token function">set_degree</span><span class="token punctuation">(</span>p <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
 <p>set_degree sets p and notifies observers</p>
+
 </section>
 						<section id="ParamsReg.get_degree" class="doc-node">
 							<div class="title"><h2>fn (ParamsReg) get_degree <a href="#ParamsReg.get_degree">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/paramsreg.v#L146"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o ParamsReg<span class="token punctuation">)</span> <span class="token function">get_degree</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>get_degree gets a copy of p</p>
+
 </section>
 						<section id="ParamsReg.add_observer" class="doc-node">
 							<div class="title"><h2>fn (ParamsReg) add_observer <a href="#ParamsReg.add_observer">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/paramsreg.v#L151"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o ParamsReg<span class="token punctuation">)</span> <span class="token function">add_observer</span><span class="token punctuation">(</span>obs util<span class="token punctuation">.</span>Observer<span class="token punctuation">)</span></code></pre>
 <p>add_observer adds an object to the list of interested observers</p>
+
 </section>
 						<section id="ParamsReg.notify_update" class="doc-node">
 							<div class="title"><h2>fn (ParamsReg) notify_update <a href="#ParamsReg.notify_update">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/paramsreg.v#L156"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o ParamsReg<span class="token punctuation">)</span> <span class="token function">notify_update</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <p>notify_update notifies observers of updates</p>
+
 </section>
 						<section id="Stat" class="doc-node">
 							<div class="title"><h2>struct Stat <a href="#Stat">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/workspace.v#L14"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">Stat</span> <span class="token punctuation">{</span>
@@ -298,22 +348,27 @@
 	del_y  <span class="token builtin">f64</span>
 <span class="token punctuation">}</span></code></pre>
 <p>Stat holds statistics about data   NOTE: Stat is an Observer of Data; thus, data.notify_update() will recompute stat</p>
+
 </section>
 						<section id="Stat.name" class="doc-node">
 							<div class="title"><h2>fn (Stat) name <a href="#Stat.name">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/workspace.v#L48"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o Stat<span class="token punctuation">)</span> <span class="token function">name</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">string</span></code></pre>
 <p>name returns the name of this stat object (thus defining the Observer interface)</p>
+
 </section>
 						<section id="Stat.update" class="doc-node">
 							<div class="title"><h2>fn (Stat) update <a href="#Stat.update">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/workspace.v#L53"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o Stat<span class="token punctuation">)</span> <span class="token function">update</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <p>update compute statistics for given data (an Observer of Data)</p>
+
 </section>
 						<section id="Stat.sum_vars" class="doc-node">
 							<div class="title"><h2>fn (Stat) sum_vars <a href="#Stat.sum_vars">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/workspace.v#L93"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o Stat<span class="token punctuation">)</span> <span class="token function">sum_vars</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
 <p>sum_vars computes the sums along the columns of X and y  Output:  t -- scalar t = oᵀy  sum of columns of the y vector: t = Σ_i^m o_i y_i  s -- vector s = Xᵀo  sum of columns of the X matrix: s_j = Σ_i^m o_i X_ij  [n_features]</p>
+
 </section>
 						<section id="Stat.copy_into" class="doc-node">
 							<div class="title"><h2>fn (Stat) copy_into <a href="#Stat.copy_into">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/workspace.v#L104"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o Stat<span class="token punctuation">)</span> <span class="token function">copy_into</span><span class="token punctuation">(</span><span class="token keyword">mut</span> p Stat<span class="token punctuation">)</span></code></pre>
 <p>copy_into copies stat into p</p>
+
 </section>
 						<section id="TrainConfig" class="doc-node">
 							<div class="title"><h2>struct TrainConfig <a href="#TrainConfig">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/kmeans.v#L107"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">TrainConfig</span> <span class="token punctuation">{</span>
@@ -321,13 +376,15 @@
 	tol_norm_change <span class="token builtin">f64</span>
 <span class="token punctuation">}</span></code></pre>
 
+
 </section>
 
 						<div class="footer">
-							Powered by vdoc. Generated on: 5 Jan 2021 04:04:13
+							Powered by vdoc. Generated on: 8 Jan 2021 03:13:26
 						</div>
 					</div>
-					<div class="doc-toc"><ul><li class="open"><a href="#data_from_raw_x">fn data_from_raw_x</a>        <ul>
+					<div class="doc-toc"><ul><li class="open"><a href="#readme_ml">README</a></li>
+<li class="open"><a href="#data_from_raw_x">fn data_from_raw_x</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#data_from_raw_xy">fn data_from_raw_xy</a>        <ul>
