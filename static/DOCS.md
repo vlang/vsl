@@ -73,7 +73,21 @@ $ sudo apt-get install -y --no-install-recommends \
 **Arch Linux/Manjaro GNU Linux**
 
 ```sh
-$ sudo pacman -S lapack lapacke openblas openssl
+$ sudo pacman -S openssl
+```
+
+The best way of installing OpenBlas/LAPACK is using [openblas-lapack](https://aur.archlinux.org/packages/openblas-lapack/).
+
+```sh
+$ yay -S openblas-lapack
+```
+
+_or_
+
+```sh
+$ git clone https://aur.archlinux.org/openblas-lapack.git /tmp/openblas-lapack
+$ cd /tmp/openblas-lapack
+$ makepkg -si
 ```
 
 ### Install VSL
