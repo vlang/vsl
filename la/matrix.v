@@ -98,7 +98,7 @@ pub fn (o Matrix) clone() Matrix {
 	return clone
 }
 
-// transpose returns the tranpose matrix
+// transpose returns the transpose matrix
 pub fn (o Matrix) transpose() Matrix {
 	mut tran := new_matrix(o.n, o.m)
 	for i := 0; i < o.n; i++ {
