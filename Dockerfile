@@ -36,7 +36,6 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
     libopenmpi-dev \
     libhwloc-dev \
     liblapacke-dev \
-    libblas-dev \
     libopenblas-dev \
     libmetis-dev \
     libsuitesparse-dev \
