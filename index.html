@@ -98,7 +98,15 @@ First we need to install some dependencies in order to have VSL working as expec
     libopenblas-dev \
 </code></pre>
 <p><strong>Arch Linux/Manjaro GNU Linux</strong></p>
-<pre><code class="language-sh">$ sudo pacman -S lapack lapacke openblas openssl
+<pre><code class="language-sh">$ sudo pacman -S openssl
+</code></pre>
+<p>The best way of installing OpenBlas/LAPACK is using <a href="https://aur.archlinux.org/packages/openblas-lapack/">openblas-lapack</a>.</p>
+<pre><code class="language-sh">$ yay -S openblas-lapack
+</code></pre>
+<p><em>or</em></p>
+<pre><code class="language-sh">$ git clone https://aur.archlinux.org/openblas-lapack.git /tmp/openblas-lapack
+$ cd /tmp/openblas-lapack
+$ makepkg -si
 </code></pre>
 <h3>Install VSL</h3>
 <p><strong>Via vpm</strong></p>
@@ -211,7 +219,7 @@ First we need to install some dependencies in order to have VSL working as expec
 </section>
 
 						<div class="footer">
-							Powered by vdoc. Generated on: 8 Jan 2021 03:33:22
+							Powered by vdoc. Generated on: 8 Jan 2021 03:43:09
 						</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_vsl">README</a></li>
