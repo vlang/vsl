@@ -82,7 +82,7 @@ $ sudo apt-get install -y --no-install-recommends \
 **Arch Linux/Manjaro GNU Linux**
 
 ```sh
-$ sudo pacman -S lapack lapacke openblas openssl
+$ sudo pacman -S lapack lapacke cblas openblas openssl
 ```
 
 ### Install VSL
