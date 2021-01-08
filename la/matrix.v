@@ -313,7 +313,7 @@ pub fn (o Matrix) print(nfmt_ string) string {
 			l += '\n'
 		}
 		for j := 0; j < o.n; j++ {
-			l += safe_print<int>(nfmt, o.get(i, j))
+			l += safe_print(nfmt, o.get(i, j))
 		}
 	}
 	return l
@@ -332,7 +332,7 @@ pub fn (o Matrix) print_v(nfmt_ string) string {
 			if j > 0 {
 				l += ','
 			}
-			l += safe_print<int>(nfmt, o.get(i, j))
+			l += safe_print(nfmt, o.get(i, j))
 		}
 		l += '},\n'
 	}
@@ -353,7 +353,7 @@ pub fn (o Matrix) print_py(nfmt_ string) string {
 			if j > 0 {
 				l += ','
 			}
-			l += safe_print<int>(nfmt, o.get(i, j))
+			l += safe_print(nfmt, o.get(i, j))
 		}
 		l += '],\n'
 	}
