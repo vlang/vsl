@@ -22,6 +22,6 @@ jobs:
       run: v doctor
     - name: Install VSL dependencies
       run: |
-        sudo apt-get install --quiet -y --no-install-recommends gfortran liblapacke-dev libopenblas-dev
+        sudo apt-get install --quiet -y --no-install-recommends gfortran liblapacke-dev libblas-dev libopenblas-dev
     - name: Execute Tests
       run: cd vsl; make test
