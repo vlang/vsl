@@ -1,4 +1,3 @@
-
 module blas
 
 import vsl.errno

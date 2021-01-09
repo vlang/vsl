@@ -1,4 +1,3 @@
-
 module fit
 
 import vsl.vmath

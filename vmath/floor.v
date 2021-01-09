@@ -1,4 +1,3 @@
-
 module vmath
 
 // floor returns the greatest integer value less than or equal to x.

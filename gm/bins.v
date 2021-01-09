@@ -10,8 +10,8 @@ pub const (
 // BinEntry holds data of an entry to bin
 pub struct BinEntry {
 pub mut:
-	id    int // object Id
-	x     []f64 // entry coordinate (read only)
+	id    int     // object Id
+	x     []f64   // entry coordinate (read only)
 	extra voidptr // any entity attached to this entry
 }
 
@@ -27,12 +27,12 @@ pub struct Bins {
 mut:
 	tmp  []int // [ndim] temporary (auxiliary) slice
 pub mut:
-	ndim int // space dimension
-	xmin []f64 // [ndim] left/lower-most point
-	xmax []f64 // [ndim] right/upper-most point
-	xdel []f64 // [ndim] the lengths along each direction (whole box)
-	size []f64 // size of bins
-	ndiv []int // [ndim] number of divisions along each direction
+	ndim int    // space dimension
+	xmin []f64  // [ndim] left/lower-most point
+	xmax []f64  // [ndim] right/upper-most point
+	xdel []f64  // [ndim] the lengths along each direction (whole box)
+	size []f64  // size of bins
+	ndiv []int  // [ndim] number of divisions along each direction
 	all  []&Bin // [nbins] all bins (there will be an extra "ghost" bin along each dimension)
 }
 
@@ -183,7 +183,7 @@ pub type PointsDiffFn = fn (is_old int, x_new []f64) bool
 //   output:
 //     id       -- the id attached to x
 //     existent -- flag telling if x was found, based on given tolerance
-pub fn (mut o Bins) find_closest_and_append(mut next_id &int, x []f64, extra voidptr, rad_tol f64, diff PointsDiffFn) (int, bool) {
+pub fn (mut o Bins) find_closest_and_append(mut next_id int, x []f64, extra voidptr, rad_tol f64, diff PointsDiffFn) (int, bool) {
 	// try to find another close point
 	id_closest, sq_dist_min := o.find_closest(x)
 	// new point for sure; i.e no other point was found

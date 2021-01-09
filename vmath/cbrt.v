@@ -1,4 +1,3 @@
-
 module vmath
 
 // cbrt returns the cube root of x.

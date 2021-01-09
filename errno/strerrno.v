@@ -1,4 +1,3 @@
-
 module errno
 
 pub fn str_error(errno Errno) string {

@@ -7,10 +7,10 @@ import vsl.util
 pub struct LinReg {
 mut:
 	// main
-	name   string // name of this "observer"
-	data   &Data // x-y data
+	name   string     // name of this "observer"
+	data   &Data      // x-y data
 	params &ParamsReg // parameters: θ, b, λ
-	stat   &Stat // statistics
+	stat   &Stat      // statistics
 	// workspace
 	e      []f64 // vector e = b⋅o + x⋅theta - y [nb_samples]
 }

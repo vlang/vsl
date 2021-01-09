@@ -1,4 +1,3 @@
-
 module blas
 
 import strconv

@@ -1,4 +1,3 @@
-
 import vsl.vmath.fractions
 
 // (Old) results are verified using https://www.calculatorsoup.com/calculators/math/fractions.php

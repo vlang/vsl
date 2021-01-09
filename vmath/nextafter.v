@@ -1,4 +1,3 @@
-
 module vmath
 
 // nextafter32 returns the next representable f32 value after x towards y.

@@ -68,7 +68,7 @@ pub fn (mut o Triplet) put(i int, j int, x f64) {
 }
 
 /*
-* put_matrix_and_matrix_t adds the content of a matrix "a" and its transpose "at" to triplet "o"
+ * put_matrix_and_matrix_t adds the content of a matrix "a" and its transpose "at" to triplet "o"
  * ex:    0   1   2   3   4   5
  *      [... ... ... a00 a10 ...] 0
  *      [... ... ... a01 a11 ...] 1
@@ -89,7 +89,7 @@ pub fn (mut o Triplet) put_matrix_and_matrix_t(a Triplet) {
 }
 
 /*
-* put_cc_matrix_and_matrix_t adds the content of a compressed-column matrix "a" and its transpose "at" to triplet "o"
+ * put_cc_matrix_and_matrix_t adds the content of a compressed-column matrix "a" and its transpose "at" to triplet "o"
  * ex:    0   1   2   3   4   5
  *      [... ... ... a00 a10 ...] 0
  *      [... ... ... a01 a11 ...] 1

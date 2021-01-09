@@ -1,4 +1,3 @@
-
 module vmath
 
 // gamma function computed by Stirling's formula.

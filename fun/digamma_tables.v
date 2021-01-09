@@ -1,4 +1,3 @@
-
 module fun
 
 const (

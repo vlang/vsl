@@ -1,4 +1,3 @@
-
 module ml
 
 import vsl.util
@@ -18,14 +17,14 @@ import vsl.errno
  *
  *   NOTE: remember to call data.notify_update() after changing x or y components
  *
- */
+*/
 pub struct Data {
 pub mut:
 	observers   []util.Observer // list of interested parties
-	nb_samples  int // number of data points (samples). number of rows in x and y
-	nb_features int // number of features. number of columns in x
+	nb_samples  int        // number of data points (samples). number of rows in x and y
+	nb_features int        // number of features. number of columns in x
 	x           &la.Matrix // [nb_samples][nb_features] x values
-	y           []f64 // [nb_samples] y values [optional]
+	y           []f64      // [nb_samples] y values [optional]
 	stat        &Stat = voidptr(0) // statistics about this data
 }
 

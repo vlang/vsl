@@ -1,4 +1,3 @@
-
 module vmath
 
 pub const (

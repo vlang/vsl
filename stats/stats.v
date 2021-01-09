@@ -1,4 +1,3 @@
-
 module stats
 
 import vsl.vmath

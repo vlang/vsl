@@ -1,4 +1,3 @@
-
 module consts
 
 pub const (

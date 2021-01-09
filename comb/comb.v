@@ -10,7 +10,7 @@ pub fn combinations(data []f64, r int) [][]f64 {
 	mut combinations := new_combinations_iter(data, r)
 	mut result := [][]f64{cap: combinations.size}
 	for comb in combinations {
-                result << comb
+		result << comb
 	}
 	return result
 }
@@ -88,7 +88,7 @@ pub fn combinations_with_replacement(data []f64, r int) [][]f64 {
 	mut combinations := new_combinations_with_replacement_iter(data, r)
 	mut result := [][]f64{cap: int(combinations.size)}
 	for comb in combinations {
-                result << comb
+		result << comb
 	}
 	return result
 }

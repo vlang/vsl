@@ -1,4 +1,3 @@
-
 module quaternion
 
 import vsl.vmath

@@ -1,4 +1,3 @@
-
 module blas
 
 #flag linux -O2 -I/usr/local/include -I/usr/lib -I@VROOT/la/blas

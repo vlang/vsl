@@ -1,4 +1,3 @@
-
 module complex
 
 import vsl.vmath

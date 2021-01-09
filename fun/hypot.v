@@ -1,4 +1,3 @@
-
 module fun
 
 import vsl.vmath as math

@@ -1,4 +1,3 @@
-
 module quaternion
 
 pub fn (q Quaternion) parity_conjugate() Quaternion {

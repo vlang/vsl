@@ -1,4 +1,3 @@
-
 module la
 
 import vsl.la.blas
@@ -166,13 +165,14 @@ pub fn matrix_matrix_mul(mut c Matrix, alpha f64, a Matrix, b Matrix) {
 			for j := 0; j < c.n; j++ {
 				c.set(i, j, 0.0)
 				for k := 0; k < a.n; k++ {
-					c.add(i, j, alpha*a.get(i, k)*b.get(k, j))
+					c.add(i, j, alpha * a.get(i, k) * b.get(k, j))
 				}
 			}
 		}
 		return
 	}
-	blas.dgemm(false, false, a.m, b.n, a.n, alpha, a.data, a.m, b.data, b.m, 0.0, mut c.data, c.m)
+	blas.dgemm(false, false, a.m, b.n, a.n, alpha, a.data, a.m, b.data, b.m, 0.0, mut
+		c.data, c.m)
 }
 
 // matrix_tr_matrix_mul returns the matrix multiplication (scaled) with transposed(a)
@@ -185,13 +185,14 @@ pub fn matrix_tr_matrix_mul(mut c Matrix, alpha f64, a Matrix, b Matrix) {
 			for j := 0; j < c.n; j++ {
 				c.set(i, j, 0.0)
 				for k := 0; k < a.m; k++ {
-					c.add(i, j, alpha*a.get(k, i)*b.get(k, j))
+					c.add(i, j, alpha * a.get(k, i) * b.get(k, j))
 				}
 			}
 		}
 		return
 	}
-	blas.dgemm(true, false, a.n, b.n, a.m, alpha, a.data, a.m, b.data, b.m, 0.0, mut c.data, c.m)
+	blas.dgemm(true, false, a.n, b.n, a.m, alpha, a.data, a.m, b.data, b.m, 0.0, mut c.data,
+		c.m)
 }
 
 // matrix_matrix_tr_mul returns the matrix multiplication (scaled) with transposed(b)
@@ -199,7 +200,8 @@ pub fn matrix_tr_matrix_mul(mut c Matrix, alpha f64, a Matrix, b Matrix) {
 //  c := alpha⋅a⋅bᵀ    ⇒    cij := alpha * aik * bjk
 //
 pub fn matrix_matrix_tr_mul(mut c Matrix, alpha f64, a Matrix, b Matrix) {
-	blas.dgemm(false, true, a.m, b.m, a.n, alpha, a.data, a.m, b.data, b.m, 0.0, mut c.data, c.m)
+	blas.dgemm(false, true, a.m, b.m, a.n, alpha, a.data, a.m, b.data, b.m, 0.0, mut c.data,
+		c.m)
 }
 
 // matrix_tr_matrix_tr_mul returns the matrix multiplication (scaled) with transposed(a) and transposed(b)
@@ -207,7 +209,8 @@ pub fn matrix_matrix_tr_mul(mut c Matrix, alpha f64, a Matrix, b Matrix) {
 //  c := alpha⋅aᵀ⋅bᵀ    ⇒    cij := alpha * aki * bjk
 //
 pub fn matrix_tr_matrix_tr_mul(mut c Matrix, alpha f64, a Matrix, b Matrix) {
-	blas.dgemm(true, true, a.n, b.m, a.m, alpha, a.data, a.m, b.data, b.m, 0.0, mut c.data, c.m)
+	blas.dgemm(true, true, a.n, b.m, a.m, alpha, a.data, a.m, b.data, b.m, 0.0, mut c.data,
+		c.m)
 }
 
 // matrix_matrix_muladd returns the matrix multiplication (scaled)
@@ -215,7 +218,8 @@ pub fn matrix_tr_matrix_tr_mul(mut c Matrix, alpha f64, a Matrix, b Matrix) {
 //  c += alpha⋅a⋅b    ⇒    cij += alpha * aik * bkj
 //
 pub fn matrix_matrix_muladd(mut c Matrix, alpha f64, a Matrix, b Matrix) {
-	blas.dgemm(false, false, a.m, b.n, a.n, alpha, a.data, a.m, b.data, b.m, 1.0, mut c.data, c.m)
+	blas.dgemm(false, false, a.m, b.n, a.n, alpha, a.data, a.m, b.data, b.m, 1.0, mut
+		c.data, c.m)
 }
 
 // matrix_tr_matrix_muladd returns the matrix multiplication (scaled) with transposed(a)
@@ -223,7 +227,8 @@ pub fn matrix_matrix_muladd(mut c Matrix, alpha f64, a Matrix, b Matrix) {
 //  c += alpha⋅aᵀ⋅b    ⇒    cij += alpha * aki * bkj
 //
 pub fn matrix_tr_matrix_muladd(mut c Matrix, alpha f64, a Matrix, b Matrix) {
-	blas.dgemm(true, false, a.n, b.n, a.m, alpha, a.data, a.m, b.data, b.m, 1.0, mut c.data, c.m)
+	blas.dgemm(true, false, a.n, b.n, a.m, alpha, a.data, a.m, b.data, b.m, 1.0, mut c.data,
+		c.m)
 }
 
 // matrix_matrix_tr_muladd returns the matrix multiplication (scaled) with transposed(b)
@@ -231,7 +236,8 @@ pub fn matrix_tr_matrix_muladd(mut c Matrix, alpha f64, a Matrix, b Matrix) {
 //  c += alpha⋅a⋅bᵀ    ⇒    cij += alpha * aik * bjk
 //
 pub fn matrix_matrix_tr_muladd(mut c Matrix, alpha f64, a Matrix, b Matrix) {
-	blas.dgemm(false, true, a.m, b.m, a.n, alpha, a.data, a.m, b.data, b.m, 1.0, mut c.data, c.m)
+	blas.dgemm(false, true, a.m, b.m, a.n, alpha, a.data, a.m, b.data, b.m, 1.0, mut c.data,
+		c.m)
 }
 
 // matrix_tr_matrix_tr_mul_add returns the matrix multiplication (scaled) with transposed(a) and transposed(b)
@@ -239,7 +245,8 @@ pub fn matrix_matrix_tr_muladd(mut c Matrix, alpha f64, a Matrix, b Matrix) {
 //  c += alpha⋅aᵀ⋅bᵀ    ⇒    cij += alpha * aki * bjk
 //
 pub fn matrix_tr_matrix_tr_mul_add(mut c Matrix, alpha f64, a Matrix, b Matrix) {
-	blas.dgemm(true, true, a.n, b.m, a.m, alpha, a.data, a.m, b.data, b.m, 1.0, mut c.data, c.m)
+	blas.dgemm(true, true, a.n, b.m, a.m, alpha, a.data, a.m, b.data, b.m, 1.0, mut c.data,
+		c.m)
 }
 
 // matrix_add adds the scaled components of two matrices
@@ -254,13 +261,13 @@ pub fn matrix_add(mut res Matrix, alpha f64, a Matrix, beta f64, b Matrix) {
 	}
 	m := n % 4
 	for i := 0; i < m; i++ {
-		res.data[i] = alpha*a.data[i] + beta*b.data[i]
+		res.data[i] = alpha * a.data[i] + beta * b.data[i]
 	}
 	for i := m; i < n; i += 4 {
-		res.data[i+0] = alpha*a.data[i+0] + beta*b.data[i+0]
-		res.data[i+1] = alpha*a.data[i+1] + beta*b.data[i+1]
-		res.data[i+2] = alpha*a.data[i+2] + beta*b.data[i+2]
-		res.data[i+3] = alpha*a.data[i+3] + beta*b.data[i+3]
+		res.data[i + 0] = alpha * a.data[i + 0] + beta * b.data[i + 0]
+		res.data[i + 1] = alpha * a.data[i + 1] + beta * b.data[i + 1]
+		res.data[i + 2] = alpha * a.data[i + 2] + beta * b.data[i + 2]
+		res.data[i + 3] = alpha * a.data[i + 3] + beta * b.data[i + 3]
 	}
 	return
 }

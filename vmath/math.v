@@ -1,4 +1,3 @@
-
 module vmath
 
 // degrees convert from degrees to radians.

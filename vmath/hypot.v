@@ -1,4 +1,3 @@
-
 module vmath
 
 import vsl.errno

@@ -1,4 +1,3 @@
-
 module diff
 
 import vsl.vmath

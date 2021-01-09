@@ -8,14 +8,14 @@ pub mut:
 	observers  []util.Observer // list of interested parties
 	// main
 	theta      []f64 // theta parameter [nb_features]
-	bias       f64 // bias parameter
-	lambda     f64 // regularization parameter
-	degree     int // degree of polynomial
+	bias       f64   // bias parameter
+	lambda     f64   // regularization parameter
+	degree     int   // degree of polynomial
 	// backup
 	bkp_theta  []f64 // copy of theta
-	bkp_bias   f64 // copy of b
-	bkp_lambda f64 // copy of lambda
-	bkp_degree int // copy of degree
+	bkp_bias   f64   // copy of b
+	bkp_lambda f64   // copy of lambda
+	bkp_degree int   // copy of degree
 }
 
 // new_params_reg returns a new object to hold regression parameters

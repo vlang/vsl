@@ -1,4 +1,3 @@
-
 module poly
 
 import vsl.vmath

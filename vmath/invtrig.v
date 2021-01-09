@@ -1,4 +1,3 @@
-
 module vmath
 
 // The original C code, the long comment, and the constants below were

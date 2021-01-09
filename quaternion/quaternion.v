@@ -1,4 +1,3 @@
-
 module quaternion
 
 import vsl.vmath
@@ -22,7 +21,7 @@ pub fn quaternion(w f64, x f64, y f64, z f64) Quaternion {
 }
 
 /*
-*
+ *
  * Initializes the vector portion of the quaternion with 0.0 and the
  * scalar portion with 1.0.
  * The resulting quaternion has a norm of 1.0
@@ -39,7 +38,7 @@ pub fn id() Quaternion {
 }
 
 /*
-*
+ *
  * Sets the values in the quaternion, in place, based on the axis and
  * angle.
  *

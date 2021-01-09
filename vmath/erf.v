@@ -1,4 +1,3 @@
-
 module vmath
 
 /*
@@ -92,7 +91,7 @@ module vmath
  *              erf(0)  = 0, erf(inf)  = 1, erf(-inf) = -1,
  *              erfc(0) = 1, erfc(inf) = 0, erfc(-inf) = 2,
  *              erfc/erf(nan) is nan
- */
+*/
 const (
 	erx  = 8.45062911510467529297e-01 // 0x3FEB0AC160000000
 	// Coefficients for approximation to  erf in [0, 0.84375]

@@ -1,4 +1,3 @@
-
 module ml
 
 import vsl.la
@@ -11,20 +10,20 @@ import vsl.stats
 //
 pub struct Stat {
 pub mut:
-	data   &Data // data
+	data   &Data  // data
 	name   string // name of this object
-	min_x  []f64 // [n_features] min x values
-	max_x  []f64 // [n_features] max x values
-	sum_x  []f64 // [n_features] sum of x values
-	mean_x []f64 // [n_features] mean of x values
-	sig_x  []f64 // [n_features] standard deviations of x
-	del_x  []f64 // [n_features] difference: max(x) - min(x)
-	min_y  f64 // min of y values
-	max_y  f64 // max of y values
-	sum_y  f64 // sum of y values
-	mean_y f64 // mean of y values
-	sig_y  f64 // standard deviation of y
-	del_y  f64 // difference: max(y) - min(y)
+	min_x  []f64  // [n_features] min x values
+	max_x  []f64  // [n_features] max x values
+	sum_x  []f64  // [n_features] sum of x values
+	mean_x []f64  // [n_features] mean of x values
+	sig_x  []f64  // [n_features] standard deviations of x
+	del_x  []f64  // [n_features] difference: max(x) - min(x)
+	min_y  f64    // min of y values
+	max_y  f64    // max of y values
+	sum_y  f64    // sum of y values
+	mean_y f64    // mean of y values
+	sig_y  f64    // standard deviation of y
+	del_y  f64    // difference: max(y) - min(y)
 }
 
 // stat returns a new Stat object

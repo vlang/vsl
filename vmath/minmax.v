@@ -1,4 +1,3 @@
-
 module vmath
 
 // max returns the maximum value of the two provided.

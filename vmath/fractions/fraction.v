@@ -1,4 +1,3 @@
-
 module fractions
 
 import vsl.vmath as math

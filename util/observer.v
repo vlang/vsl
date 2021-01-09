@@ -1,4 +1,3 @@
-
 module util
 
 // Observer is an interface to objects that need to observe something

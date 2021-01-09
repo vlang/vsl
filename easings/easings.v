@@ -1,4 +1,3 @@
-
 module easings
 
 import vsl.vmath

@@ -1,4 +1,3 @@
-
 module vmath
 
 // Returns the absolute value.

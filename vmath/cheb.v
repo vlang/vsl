@@ -1,4 +1,3 @@
-
 module vmath
 
 import vsl.internal
@@ -7,9 +6,9 @@ import vsl.internal
 pub struct ChebSeries {
 pub:
 	c     []f64 // coefficients
-	order int // order of expansion
-	a     f64 // lower interval point
-	b     f64 // upper interval point
+	order int   // order of expansion
+	a     f64   // lower interval point
+	b     f64   // upper interval point
 }
 
 fn (cs ChebSeries) eval_e(x f64) (f64, f64) {

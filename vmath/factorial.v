@@ -1,4 +1,3 @@
-
 module vmath
 
 // factorial calculates the factorial of the provided value.

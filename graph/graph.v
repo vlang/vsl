@@ -1,4 +1,3 @@
-
 // Module graph implements solvers based on Graph theory
 module graph
 
@@ -16,14 +15,14 @@ pub struct Graph {
 pub:
 	// input
 	edges     [][]int // [nedges][2] edges (connectivity)
-	weights_e []f64 // [nedges] weights of edges
+	weights_e []f64   // [nedges] weights of edges
 	verts     [][]f64 // [nverts][ndim] vertices
-	weights_v []f64 // [nverts] weights of vertices
+	weights_v []f64   // [nverts] weights of vertices
 	// auxiliary
 	shares    map[int][]int // [nverts] edges sharing a vertex
-	key2edge  map[int]int // maps (i,j) vertex to edge index
-	dist      [][]f64 // [nverts][nverts] distances
-	next      [][]int // [nverts][nverts] next tree connection. -1 means no connection
+	key2edge  map[int]int   // maps (i,j) vertex to edge index
+	dist      [][]f64       // [nverts][nverts] distances
+	next      [][]int       // [nverts][nverts] next tree connection. -1 means no connection
 }
 
 // new_graph initialises graph
@@ -71,7 +70,7 @@ pub fn (g Graph) get_edge(i int, j int) ?int {
 }
 
 /*
-* shortest_paths computes the shortest paths in a graph defined as follows
+ * shortest_paths computes the shortest paths in a graph defined as follows
  *
  *          [10]
  *       0 ––––––→ 3            numbers in brackets
@@ -89,7 +88,7 @@ pub fn (g Graph) get_edge(i int, j int) ?int {
  *              ∞  ∞  ∞  0 |  3
  *  Input:
  *   method -- FW: Floyd-Warshall method
- */
+*/
 pub fn (g Graph) shortest_paths(method SorthestPaths) Graph {
 	if method != .fw {
 		panic('shortest_paths works with FW (Floyd-Warshall) method only for now')

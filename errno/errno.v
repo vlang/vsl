@@ -1,4 +1,3 @@
-
 module errno
 
 // success = 0

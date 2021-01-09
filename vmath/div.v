@@ -1,4 +1,3 @@
-
 module vmath
 
 // Floating-point mod function.
