@@ -1,3 +1,5 @@
+module comb
+
 fn test_permutations_simple_1() {
 	data := [1., 2.]
 	expected := [[1., 2.], [2., 1.]]

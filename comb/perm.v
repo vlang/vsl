@@ -1,3 +1,8 @@
+module comb
+
+import vsl.util
+import vsl.vmath as math
+
 // permutations returns successive `r` length permutations of elements in `data`
 pub fn permutations(data []f64, r int) [][]f64 {
 	n := data.len
@@ -16,7 +21,7 @@ pub fn permutations(data []f64, r int) [][]f64 {
 		for i in rev_range {
 			cycles[i]--
 			if cycles[i] == 0 {
-				move_ith_to_end(mut indices, i)
+				util.move_ith_to_end(mut indices, i)
 				cycles[i] = n - 1
 			} else {
 				j := cycles[i]
