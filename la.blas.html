@@ -49,6 +49,52 @@
 <p>This package implements a light wrapper to OpenBLAS. Therefore, its routines are a little more
 <em>lower level</em> than the ones in the package <code>vsl.la</code>.</p>
 <p><a href="https://github.com/xianyi/OpenBLAS">Check also OpenBLAS</a>.</p>
+<h2>Usage Example</h2>
+<pre><code class="language-v">module main
+
+import vsl.la.blas
+import vsl.la
+
+// matrix_matrix_mul returns the matrix multiplication (scaled)
+//
+//  c := alpha⋅a⋅b    ⇒    cij := alpha * aik * bkj
+//
+pub fn matrix_matrix_mul(mut c la.Matrix, alpha f64, a la.Matrix, b la.Matrix) {
+    if c.m &lt; 6 &amp;&amp; c.n &lt; 6 &amp;&amp; a.n &lt; 30 {
+        for i := 0; i &lt; c.m; i++ {
+            for j := 0; j &lt; c.n; j++ {
+                c.set(i, j, 0.0)
+                for k := 0; k &lt; a.n; k++ {
+                   c.add(i, j, alpha * a.get(i, k) * b.get(k, j))
+                }
+            }
+        }
+        return
+    }
+    blas.dgemm(false, false, a.m, b.n, a.n, alpha, a.data, a.m, b.data, b.m, 0.0, mut
+        c.data, c.m)
+}
+</code></pre>
+<h2>Install dependencies</h2>
+<p><strong>Debian/Ubuntu GNU Linux</strong></p>
+<pre><code class="language-sh">$ sudo apt-get install -y --no-install-recommends \
+    gcc \
+    gfortran \
+    liblapacke-dev \
+    libopenblas-dev \
+    libssl-dev \
+</code></pre>
+<p><strong>Arch Linux/Manjaro GNU Linux</strong></p>
+<pre><code class="language-sh">$ sudo pacman -S openssl
+</code></pre>
+<p>The best way of installing OpenBlas/LAPACK is using <a href="https://aur.archlinux.org/packages/openblas-lapack/">openblas-lapack</a>.</p>
+<pre><code class="language-sh">$ yay -S openblas-lapack
+</code></pre>
+<p><em>or</em></p>
+<pre><code class="language-sh">$ git clone https://aur.archlinux.org/openblas-lapack.git /tmp/openblas-lapack
+$ cd /tmp/openblas-lapack
+$ makepkg -si
+</code></pre>
 
 </section>
 
@@ -278,7 +324,7 @@
 </section>
 
 						<div class="footer">
-							Powered by vdoc. Generated on: 9 Jan 2021 20:16:03
+							Powered by vdoc. Generated on: 9 Jan 2021 20:21:26
 						</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_la.blas">README</a></li>
