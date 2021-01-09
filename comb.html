@@ -112,6 +112,16 @@ fn main() {
 <p>new_combinations_with_replacement_iter will return an iterator that allows  lazy computation for all length <code>r</code> combinations with replacement of <code>data</code></p>
 
 </section>
+						<section id="new_permutations_iter" class="doc-node">
+							<div class="title"><h2>fn new_permutations_iter <a href="#new_permutations_iter">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/comb/perm.v#L19"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">new_permutations_iter</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> r <span class="token builtin">int</span><span class="token punctuation">)</span> PermutationsIter</code></pre>
+<p>new_permutations_iter will return an iterator that allows  lazy computation for all length <code>r</code> permutations of <code>data</code></p>
+
+</section>
+						<section id="permutations" class="doc-node">
+							<div class="title"><h2>fn permutations <a href="#permutations">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/comb/perm.v#L74"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">permutations</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> r <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>permutations returns successive <code>r</code> length permutations of elements in <code>data</code></p>
+
+</section>
 						<section id="CombinationsIter" class="doc-node">
 							<div class="title"><h2>struct CombinationsIter <a href="#CombinationsIter">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/comb/comb.v#L18"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">CombinationsIter</span> <span class="token punctuation">{</span>
 <span class="token keyword">mut</span><span class="token punctuation">:</span>
@@ -148,9 +158,28 @@ fn main() {
 <p>next will return next combination if possible</p>
 
 </section>
+						<section id="PermutationsIter" class="doc-node">
+							<div class="title"><h2>struct PermutationsIter <a href="#PermutationsIter">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/comb/perm.v#L6"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">PermutationsIter</span> <span class="token punctuation">{</span>
+<span class="token keyword">mut</span><span class="token punctuation">:</span>
+	pos    <span class="token builtin">u64</span>
+	idxs   <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>
+	cycles <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>
+<span class="token keyword">pub</span><span class="token punctuation">:</span>
+	repeat <span class="token builtin">int</span>
+	size   <span class="token builtin">u64</span>
+	data   <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+						<section id="PermutationsIter.next" class="doc-node">
+							<div class="title"><h2>fn (PermutationsIter) next <a href="#PermutationsIter.next">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/comb/perm.v#L40"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o PermutationsIter<span class="token punctuation">)</span> <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span> ?<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>next will return next permutation if possible</p>
+
+</section>
 
 						<div class="footer">
-							Powered by vdoc. Generated on: 9 Jan 2021 20:21:26
+							Powered by vdoc. Generated on: 9 Jan 2021 20:22:55
 						</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_comb">README</a></li>
@@ -166,12 +195,22 @@ fn main() {
 <li class="open"><a href="#new_combinations_with_replacement_iter">fn new_combinations_with_replacement_iter</a>        <ul>
 </ul>
 </li>
+<li class="open"><a href="#new_permutations_iter">fn new_permutations_iter</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#permutations">fn permutations</a>        <ul>
+</ul>
+</li>
 <li class="open"><a href="#CombinationsIter">struct CombinationsIter</a>        <ul>
 <li><a href="#CombinationsIter.next">fn next</a></li>
 </ul>
 </li>
 <li class="open"><a href="#CombinationsWithReplacementIter">struct CombinationsWithReplacementIter</a>        <ul>
 <li><a href="#CombinationsWithReplacementIter.next">fn next</a></li>
+</ul>
+</li>
+<li class="open"><a href="#PermutationsIter">struct PermutationsIter</a>        <ul>
+<li><a href="#PermutationsIter.next">fn next</a></li>
 </ul>
 </li>
 </ul></div>
