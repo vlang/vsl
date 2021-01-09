@@ -64,7 +64,7 @@ pub fn matrix_inv_small(mut ai Matrix, mut a Matrix, tol f64) f64 {
 // s  -- diagonal terms [must be pre-allocated] s.len = imin(a.m, a.n)
 // u  -- left matrix [must be pre-allocated] u is (a.m x a.m)
 // vt -- transposed right matrix [must be pre-allocated] vt is (a.n x a.n)
-pub fn matrix_svd(s []f64, u Matrix, vt Matrix, a Matrix, copy_a bool) {
+pub fn matrix_svd(mut s []f64, mut u Matrix, mut vt Matrix, a Matrix, copy_a bool) {
 	superb := []f64{len: int(vmath.min(a.m, a.n))}
 	mut acpy := a
 	if copy_a {
@@ -103,10 +103,10 @@ pub fn matrix_inv(mut ai Matrix, a Matrix, calc_det bool) f64 {
 		return det
 	}
 	// singular value decomposition
-	s := []f64{len: int(vmath.min(a.m, a.n))}
-	u := new_matrix(a.m, a.m)
-	vt := new_matrix(a.n, a.n)
-	matrix_svd(s, u, vt, a, true)
+	mut s := []f64{len: int(vmath.min(a.m, a.n))}
+	mut u := new_matrix(a.m, a.m)
+	mut vt := new_matrix(a.n, a.n)
+	matrix_svd(mut s, mut u, mut vt, a, true)
 	// pseudo inverse
 	tol_s := 1e-8 // TODO: improve this tolerance with a better estimate
 	for i := 0; i < a.n; i++ {
