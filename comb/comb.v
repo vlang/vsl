@@ -61,9 +61,8 @@ pub fn (mut o CombinationsIter) next() ?[]f64 {
 	if o.pos == 1 {
 		return o.data[0..r]
 	}
-	rev_range := util.arange(r).reverse()
 	mut what_is_i := -1
-	for i in rev_range {
+	for i := r - 1; r >= 0; i-- {
 		if o.idxs[i] != i + n - r {
 			what_is_i = i
 			break
@@ -138,9 +137,8 @@ pub fn (mut o CombinationsWithReplacementIter) next() ?[]f64 {
 	}
 	r := o.repeat
 	n := o.data.len
-	rev_range := util.arange(r).reverse()
 	mut what_is_i := -1
-	for i in rev_range {
+	for i := r - 1; r >= 0; i-- {
 		if o.idxs[i] != n - 1 {
 			what_is_i = i
 			break
