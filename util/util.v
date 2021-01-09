@@ -67,9 +67,30 @@ pub fn lin_space(start f64, stop f64, num int) []f64 {
 	return res
 }
 
+// Mimics python's range() with a step argument
+pub fn stepped_range(start int, stop int, step int) []int {
+	if step == 0 {
+		return []int{}
+	}
+	mut result := []int{}
+	mut val := -1
+	for {
+		val++
+		new_val := start + (val * step)
+		if (step > 0) && (new_val >= stop) {
+			break
+		} else if (step < 0) && (new_val <= stop) {
+			break
+		} else {
+			result << new_val
+		}
+	}
+	return result
+}
+
 // move_ith_to_end removes element at i from the array, and puts it at the end
 // is O(n)(?) because we have to potentially shift all the elements if we remove the first
-fn move_ith_to_end(mut arr []int, i int) {
+pub fn move_ith_to_end(mut arr []int, i int) {
 	elt_t := arr[i]
 	arr.delete(i)
 	arr << elt_t
