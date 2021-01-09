@@ -4,15 +4,14 @@ import vsl.util
 import vsl.vmath as math
 
 pub struct PermutationsIter {
-	rev_range []int
 mut:
-	pos       u64
-	idxs      []int
-	cycles    []int
+	pos    u64
+	idxs   []int
+	cycles []int
 pub:
-	repeat    int
-	size      u64
-	data      []f64
+	repeat int
+	size   u64
+	data   []f64
 }
 
 // new_permutations_iter will return an iterator that allows
@@ -34,7 +33,6 @@ pub fn new_permutations_iter(data []f64, r int) PermutationsIter {
 		size: size
 		idxs: idxs
 		cycles: cycles
-		rev_range: util.arange(r).reverse()
 	}
 }
 
@@ -53,8 +51,7 @@ pub fn (mut o PermutationsIter) next() ?[]f64 {
 	}
 	r := o.repeat
 	n := o.data.len
-	mut what_is_i := -1
-	for i in o.rev_range {
+	for i := r - 1; r >= 0; i-- {
 		o.cycles[i]--
 		if o.cycles[i] == 0 {
 			util.move_ith_to_end(mut o.idxs, i)
