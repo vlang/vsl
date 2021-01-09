@@ -187,24 +187,24 @@ pub fn (mut o Bins) find_closest_and_append(mut next_id int, x []f64, extra void
 	// try to find another close point
 	id_closest, sq_dist_min := o.find_closest(x)
 	// new point for sure; i.e no other point was found
-	id := *next_id
+	id := next_id
 	if id_closest < 0 {
 		o.append(x, id, extra)
-		(*next_id)++
+		next_id++
 		return id, false
 	}
 	// new point, distant from the point just found
 	dist := math.sqrt(sq_dist_min)
 	if dist > rad_tol {
 		o.append(x, id, extra)
-		(*next_id)++
+		next_id++
 		return id, false
 	}
 	// further check
 	if !isnil(diff) {
 		if diff(id_closest, x) {
 			o.append(x, id, extra)
-			(*next_id)++
+			next_id++
 			return id, false
 		}
 	}
