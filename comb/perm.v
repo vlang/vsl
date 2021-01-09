@@ -3,6 +3,41 @@ module comb
 import vsl.util
 import vsl.vmath as math
 
+pub struct PermutationsIter {
+	rev_range []int
+mut:
+	pos       u64
+	idxs      []int
+	cycles    []int
+pub:
+	repeat    int
+	size      u64
+	data      []f64
+}
+
+// new_permutations_iter will return an iterator that allows
+// lazy computation for all length `r` permutations of `data`
+pub fn new_permutations_iter(data []f64, r int) PermutationsIter {
+	n := data.len
+	if r > n {
+		return PermutationsIter{
+			data: data
+			repeat: r
+		}
+	}
+	size := u64(math.factorial(n) / math.factorial(n - r))
+	idxs := util.arange(n)
+	cycles := util.stepped_range(n, n - r, -1)
+	return PermutationsIter{
+		data: data
+		repeat: r
+		size: size
+		idxs: idxs
+		cycles: cycles
+		rev_range: util.arange(r).reverse()
+	}
+}
+
 // permutations returns successive `r` length permutations of elements in `data`
 pub fn permutations(data []f64, r int) [][]f64 {
 	n := data.len
