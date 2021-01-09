@@ -1,5 +1,3 @@
-
-
 #ifndef CBLAS_H
 #define CBLAS_H
 
