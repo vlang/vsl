@@ -1,6 +1,4 @@
-// Copyright (c) 2019-2020 Ulises Jeremias Cornejo Fandos. All rights reserved.
-// Use of this source code is governed by an MIT license
-// that can be found in the LICENSE file.
+
 module blas
 
 #flag linux -O2 -I/usr/local/include -I/usr/lib -I@VROOT/la/blas
