@@ -72,9 +72,9 @@ pub fn (mut o PermutationsIter) next() ?[]f64 {
 
 // permutations returns successive `r` length permutations of elements in `data`
 pub fn permutations(data []f64, r int) [][]f64 {
-	mut permutationsiter := new_permutations_iter(data, r)
-	mut result := [][]f64{cap: int(permutationsiter.size)}
-	for perm in permutationsiter {
+	mut perms := new_permutations_iter(data, r)
+	mut result := [][]f64{cap: int(perms.size)}
+	for perm in perms {
 		result << perm
 	}
 	return result

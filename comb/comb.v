@@ -8,7 +8,7 @@ import vsl.util
 // assumes f64 array input. Will be easy to change to generic later
 pub fn combinations(data []f64, r int) [][]f64 {
 	mut combinations := new_combinations_iter(data, r)
-	mut result := [][]f64{cap: combinations.size}
+	mut result := [][]f64{cap: int(combinations.size)}
 	for comb in combinations {
 		result << comb
 	}
@@ -21,7 +21,7 @@ mut:
 	idxs   []int
 pub:
 	repeat int
-	size   int
+	size   u64
 	data   []f64
 }
 
@@ -35,7 +35,7 @@ pub fn new_combinations_iter(data []f64, r int) CombinationsIter {
 			repeat: r
 		}
 	}
-	size := int(fun.choose(n, r))
+	size := u64(fun.choose(n, r))
 	idxs := util.arange(r)
 	return CombinationsIter{
 		data: data
