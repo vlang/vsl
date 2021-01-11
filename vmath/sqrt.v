@@ -13,15 +13,15 @@ pub fn sqrt(x_ f64) f64 {
 	if x < 0.0 {
 		return nan()
 	}
-	z, e := frexp(x)
+	z, ex := frexp(x)
 	w := x
 	// approximate square root of number between 0.5 and 1
 	// relative error of approximation = 7.47e-3
 	x = 4.173075996388649989089e-1 + 5.9016206709064458299663e-1 * z // adjust for odd powers of 2
-	if (e & 1) != 0 {
+	if (ex & 1) != 0 {
 		x *= sqrt2
 	}
-	x = ldexp(x, e >> 1)
+	x = ldexp(x, ex >> 1)
 	// newton iterations
 	x = 0.5 * (x + w / x)
 	x = 0.5 * (x + w / x)

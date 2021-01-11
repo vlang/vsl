@@ -28,8 +28,6 @@ const (
 // Very large values overflow to 0 or +inf.
 // Very small values underflow to 1.
 pub fn exp(x f64) f64 {
-	ln2hi := 6.93147180369123816490e-01
-	ln2lo := 1.90821492927058770002e-10
 	log2e := 1.44269504088896338700e+00
 	overflow := 7.09782712893383973096e+02
 	underflow := -7.45133219101941108420e+02

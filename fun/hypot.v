@@ -13,10 +13,9 @@ pub fn hypot(x f64, y f64) f64 {
 	}
 	mut result := 0.0
 	if x != 0.0 || y != 0.0 {
-		a := math.abs(x)
-		b := math.abs(y)
-		min := math.min(a, b)
-		max := math.max(a, b)
+		abs_x := math.abs(x)
+		abs_y := math.abs(y)
+		min, max := math.minmax(abs_x, abs_y)
 		rat := min / max
 		root_term := math.sqrt(1.0 + rat * rat)
 		if max < math.max_f64 / root_term {
@@ -38,10 +37,9 @@ pub fn hypot_e(x f64, y f64) (f64, f64) {
 	mut result := 0.0
 	mut result_err := 0.0
 	if x != 0.0 || y != 0.0 {
-		a := math.abs(x)
-		b := math.abs(y)
-		min := math.min(a, b)
-		max := math.max(a, b)
+		abs_x := math.abs(x)
+		abs_y := math.abs(y)
+		min, max := math.minmax(abs_x, abs_y)
 		rat := min / max
 		root_term := math.sqrt(1.0 + rat * rat)
 		if max < math.max_f64 / root_term {

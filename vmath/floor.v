@@ -81,18 +81,18 @@ pub fn round(x f64) f64 {
 // round_to_even(nan) = nan
 pub fn round_to_even(x f64) f64 {
 	mut bits := f64_bits(x)
-	mut e := (bits >> shift) & mask
-	if e >= bias {
+	mut e_ := (bits >> shift) & mask
+	if e_ >= bias {
 		// round abs(x) >= 1.
 		// - Large numbers without fractional components, infinity, and nan are unchanged.
 		// - Add 0.499.. or 0.5 before truncating depending on whether the truncated
 		// number is even or odd (respectively).
 		half_minus_ulp := u64(1 << (shift - 1)) - 1
-		e -= u64(bias)
-		bits += (half_minus_ulp + (bits >> (shift - e)) & 1) >> e
-		bits &= frac_mask >> e
-		bits ^= frac_mask >> e
-	} else if e == bias - 1 && bits & frac_mask != 0 {
+		e_ -= u64(bias)
+		bits += (half_minus_ulp + (bits >> (shift - e_)) & 1) >> e_
+		bits &= frac_mask >> e_
+		bits ^= frac_mask >> e_
+	} else if e_ == bias - 1 && bits & frac_mask != 0 {
 		// round 0.5 < abs(x) < 1.
 		bits = bits & sign_mask | uvone // +-1
 	} else {

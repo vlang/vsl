@@ -64,12 +64,12 @@ pub fn uint_binomial(n_ u64, k_ u64) u64 {
 	}
 	mut c := u64(1)
 	for i := u64(1); i <= k; i++ {
-		if c / i > math.max_u64 / n {
-			a := c / i
-			b := math.max_u64 / n
-			errno.vsl_panic('overflow in uint_binomial: $a > $b', .eovrflw)
+                c_i := c / i
+                max_n := math.max_u64 / n
+		if c_i > max_n / n {
+			errno.vsl_panic('overflow in uint_binomial: $c_i > $max_n', .eovrflw)
 		}
-		c = c / i * n + c % i * n / i // split c*n/i into (c/i*i + c%i)*n/i
+		c = c_i * n + c % i * n / i // split c*n/i into (c/i*i + c%i)*n/i
 		n = n - 1
 	}
 	return c
@@ -81,10 +81,10 @@ pub fn rbinomial(x f64, y f64) f64 {
 		errno.vsl_panic('rbinomial requires x and y to be non-negative, at this moment',
 			.erange)
 	}
-	a := math.gamma(x + 1.0)
-	b := math.gamma(y + 1.0)
-	c := math.gamma(x - y + 1.0)
-	return a / (b * c)
+	ga := math.gamma(x + 1.0)
+	gb := math.gamma(y + 1.0)
+	gc := math.gamma(x - y + 1.0)
+	return ga / (gb * gc)
 }
 
 // (n+r-1)! / r! / (n-1)! when n > 0.
