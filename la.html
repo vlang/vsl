@@ -245,12 +245,12 @@
 						<section id="CCMatrix" class="doc-node">
 							<div class="title"><h2>struct CCMatrix <a href="#CCMatrix">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/sparse_matrix.v#L23"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">CCMatrix</span> <span class="token punctuation">{</span>
 <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	m   <span class="token builtin">int</span>
-	n   <span class="token builtin">int</span>
+	m <span class="token builtin">int</span>
+	n <span class="token builtin">int</span>
 	nnz <span class="token builtin">int</span>
-	p   <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>
-	i   <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>
-	x   <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
+	p <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>
+	i <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>
+	x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
 <span class="token punctuation">}</span></code></pre>
 <p>CCMatrix represents a sparse matrix using the so-called &quot;column-compressed format&quot;.</p>
 
@@ -403,12 +403,12 @@
 						<section id="SparseConfig" class="doc-node">
 							<div class="title"><h2>struct SparseConfig <a href="#SparseConfig">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/sparse_config.v#L6"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">SparseConfig</span> <span class="token punctuation">{</span>
 <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	mumps_ordering                      <span class="token builtin">int</span>
-	mumps_scaling                       <span class="token builtin">int</span>
-	symmetric                           <span class="token builtin">bool</span>
-	sym_pos_def                         <span class="token builtin">bool</span>
+	mumps_ordering <span class="token builtin">int</span>
+	mumps_scaling  <span class="token builtin">int</span>
+	symmetric   <span class="token builtin">bool</span>
+	sym_pos_def <span class="token builtin">bool</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	verbose                             <span class="token builtin">bool</span>
+	verbose <span class="token builtin">bool</span>
 	mumps_increase_of_working_space_pct <span class="token builtin">int</span>
 	mumps_max_memory_per_processor      <span class="token builtin">int</span>
 <span class="token punctuation">}</span></code></pre>
@@ -438,13 +438,13 @@
 						<section id="Triplet" class="doc-node">
 							<div class="title"><h2>struct Triplet <a href="#Triplet">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/sparse_matrix.v#L7"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">Triplet</span> <span class="token punctuation">{</span>
 <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	m   <span class="token builtin">int</span>
-	n   <span class="token builtin">int</span>
+	m <span class="token builtin">int</span>
+	n <span class="token builtin">int</span>
 	pos <span class="token builtin">int</span>
 	max <span class="token builtin">int</span>
-	i   <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>
-	j   <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>
-	x   <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
+	i <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>
+	j <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>
+	x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
 <span class="token punctuation">}</span></code></pre>
 <p>Triplet is a simple representation of a sparse matrix, where the indices and values  of this matrix are stored directly.</p>
 
@@ -496,7 +496,7 @@
 </section>
 
 						<div class="footer">
-							Powered by vdoc. Generated on: 11 Jan 2021 12:56:32
+							Powered by vdoc. Generated on: 12 Jan 2021 23:01:37
 						</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_la">README</a></li>
