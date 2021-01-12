@@ -1,4 +1,4 @@
-# Combinatorics
+# Iterator Tools
 
 This module provides two different ways of managing combinatorics.
 Let see an example for `combinations`.

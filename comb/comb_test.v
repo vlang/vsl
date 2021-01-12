@@ -1,4 +1,4 @@
-module comb
+module itertools
 
 fn test_combinations_choose_1() {
 	data := [1., 2., 3.]

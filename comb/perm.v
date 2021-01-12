@@ -1,4 +1,4 @@
-module comb
+module itertools
 
 import vsl.util
 import vsl.vmath as math
