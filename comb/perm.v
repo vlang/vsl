@@ -51,7 +51,7 @@ pub fn (mut o PermutationsIter) next() ?[]f64 {
 	}
 	r := o.repeat
 	n := o.data.len
-	for i := r - 1; r >= 0; i-- {
+	for i := r - 1; i >= 0; i-- {
 		o.cycles[i]--
 		if o.cycles[i] == 0 {
 			util.move_ith_to_end(mut o.idxs, i)
@@ -64,10 +64,8 @@ pub fn (mut o PermutationsIter) next() ?[]f64 {
 			o.idxs[o.idxs.len - j] = new_at_minus_j
 			return util.get_many(o.data, o.idxs[..r])
 		}
-		if i == 0 {
-			return none
-		}
 	}
+        return none
 }
 
 // permutations returns successive `r` length permutations of elements in `data`
