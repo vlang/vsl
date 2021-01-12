@@ -1,4 +1,4 @@
-module itertools
+module iter
 
 fn test_permutations_simple_1() {
 	data := [1., 2.]

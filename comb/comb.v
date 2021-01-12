@@ -1,4 +1,4 @@
-module itertools
+module iter
 
 import vsl.fun
 import vsl.util
