@@ -17,12 +17,12 @@ pub fn combinations(data []f64, r int) [][]f64
 ```v
 module main
 
-import vsl.comb
+import vsl.iter
 
 fn main() {
 	data := [1., 2., 3.]
 	r := 3
-	combs := comb.combinations(data, r)
+	combs := iter.combinations(data, r)
 	print(combs)
 }
 ```
@@ -45,12 +45,12 @@ pub fn (mut o CombinationsIter) next() ?[]f64
 ```v
 module main
 
-import vsl.comb
+import vsl.iter
 
 fn main() {
 	data := [1., 2., 3.]
 	r := 3
-	mut combs := comb.new_combinations_iter(data, r)
+	mut combs := iter.new_combinations_iter(data, r)
 	for comb in combs {
 		print(comb)
 	}
