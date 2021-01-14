@@ -60,12 +60,12 @@ pub fn combinations(data []f64, r int) [][]f64
 <p><strong>Usage example</strong></p>
 <pre><code class="language-v">module main
 
-import vsl.comb
+import vsl.iter
 
 fn main() {
     data := [1., 2., 3.]
     r := 3
-    combs := comb.combinations(data, r)
+    combs := iter.combinations(data, r)
     print(combs)
 }
 </code></pre>
@@ -81,12 +81,12 @@ pub fn (mut o CombinationsIter) next() ?[]f64
 <p><strong>Usage example</strong></p>
 <pre><code class="language-v">module main
 
-import vsl.comb
+import vsl.iter
 
 fn main() {
     data := [1., 2., 3.]
     r := 3
-    mut combs := comb.new_combinations_iter(data, r)
+    mut combs := iter.new_combinations_iter(data, r)
     for comb in combs {
         print(comb)
     }
@@ -182,7 +182,7 @@ fn main() {
 </section>
 
 						<div class="footer">
-							Powered by vdoc. Generated on: 12 Jan 2021 23:07:46
+							Powered by vdoc. Generated on: 14 Jan 2021 03:59:29
 						</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_iter">README</a></li>
