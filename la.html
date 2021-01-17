@@ -64,7 +64,7 @@
 </section>
 						<section id="matrix_cond_num" class="doc-node">
 							<div class="title"><h2>fn matrix_cond_num <a href="#matrix_cond_num">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/matrix_ops.v#L130"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">matrix_cond_num</span><span class="token punctuation">(</span>a Matrix<span class="token punctuation">,</span> normtype <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
-<p>matrix_cond_num returns the condition number of a square matrix using the inverse of this matrix;  thus it is not as efficient as it could be, e.g. by using the SV decomposition.  normtype -- Type of norm to use:  &quot;F&quot; or &quot;&quot; =&gt; Frobenius  &quot;I&quot;       =&gt; Infinite</p>
+<p>matrix_cond_num returns the condition number of a square matrix using the inverse of this matrix;  thus it is not as efficient as it could be, e.g. by using the SV decomposition.  normtype -- Type of norm to use:  &quot;I&quot;                 =&gt; Infinite  &quot;F&quot; or &quot;&quot; (default) =&gt; Frobenius</p>
 
 </section>
 						<section id="matrix_deep2" class="doc-node">
@@ -78,7 +78,7 @@
 
 </section>
 						<section id="matrix_inv_small" class="doc-node">
-							<div class="title"><h2>fn matrix_inv_small <a href="#matrix_inv_small">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/matrix_ops.v#L15"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">matrix_inv_small</span><span class="token punctuation">(</span><span class="token keyword">mut</span> ai Matrix<span class="token punctuation">,</span> <span class="token keyword">mut</span> a Matrix<span class="token punctuation">,</span> tol <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+							<div class="title"><h2>fn matrix_inv_small <a href="#matrix_inv_small">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/matrix_ops.v#L15"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">matrix_inv_small</span><span class="token punctuation">(</span><span class="token keyword">mut</span> ai Matrix<span class="token punctuation">,</span> a Matrix<span class="token punctuation">,</span> tol <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
 <p>matrix_inv_small computes the inverse of small matrices of size 1x1, 2x2, or 3x3.  It also returns the determinant.  Input:  a   -- the matrix  tol -- tolerance to assume zero determinant  Output:  ai  -- the inverse matrix  det -- determinant of a</p>
 
 </section>
@@ -496,7 +496,7 @@
 </section>
 
 						<div class="footer">
-							Powered by vdoc. Generated on: 14 Jan 2021 03:59:29
+							Powered by vdoc. Generated on: 17 Jan 2021 14:23:28
 						</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_la">README</a></li>
