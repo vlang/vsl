@@ -12,7 +12,7 @@ import vsl.vmath
 // Output:
 // ai  -- the inverse matrix
 // det -- determinant of a
-pub fn matrix_inv_small(mut ai Matrix, mut a Matrix, tol f64) f64 {
+pub fn matrix_inv_small(mut ai Matrix, a Matrix, tol f64) f64 {
 	mut det := 0.0
 	if a.m == 1 && a.n == 1 {
 		det = a.get(0, 0)
@@ -125,8 +125,8 @@ pub fn matrix_inv(mut ai Matrix, a Matrix, calc_det bool) f64 {
 // matrix_cond_num returns the condition number of a square matrix using the inverse of this matrix;
 // thus it is not as efficient as it could be, e.g. by using the SV decomposition.
 // normtype -- Type of norm to use:
-// "F" or "" => Frobenius
-// "I"       => Infinite
+// "I"                 => Infinite
+// "F" or "" (default) => Frobenius
 pub fn matrix_cond_num(a Matrix, normtype string) f64 {
 	mut res := 0.0
 	mut ai := new_matrix(a.m, a.n)
