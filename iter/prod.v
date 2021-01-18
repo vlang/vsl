@@ -6,7 +6,6 @@ pub struct ProductIterator {
 mut:
 	indices_to_grab []int
 	idx             u64
-	this_row        []f64
 pub:
 	data [][]f64
 }
@@ -17,7 +16,6 @@ pub fn new_product_iterator(data [][]f64) ProductIterator {
 		indices_to_grab: []int{len: data.len, init: -1}
 		data: data
 		size: u64(data.map(it.len).reduce(int_prod, 1))
-		this_row: []f64{len: data.len}
 	}
 }
 
@@ -25,16 +23,16 @@ pub fn (mut o ProductIterator) next() ?[]f64 {
 	if o.idx == o.size {
 		return none
 	}
-	o.this_row.clear()
+	mut result := []f64{cap: o.data.len}
 	is_time_to_inc := o.repeat_lengths.map(o.idx % it == 0)
 	o.idx++
 	for inc_idx, change in is_time_to_inc {
 		if change {
 			o.indices_to_grab[inc_idx]++
 		}
-		o.this_row << o.data[inc_idx][o.indices_to_grab[inc_idx] % o.data[inc_idx].len]
+		result << o.data[inc_idx][o.indices_to_grab[inc_idx] % o.data[inc_idx].len]
 	}
-	return o.this_row
+	return result
 }
 
 // Cartesian product of the arrays in `data`
@@ -42,9 +40,7 @@ pub fn product(data [][]f64) [][]f64 {
 	products := new_product_iterator(data)
 	mut result := [][]f64{cap: int(products.size)}
 	for prod in products {
-		println('$prod')
 		result << prod
-		println('$result')
 	}
 	return result
 }
