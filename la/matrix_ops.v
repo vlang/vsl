@@ -66,7 +66,7 @@ pub fn matrix_inv_small(mut ai Matrix, a Matrix, tol f64) f64 {
 // vt -- transposed right matrix [must be pre-allocated] vt is (a.n x a.n)
 pub fn matrix_svd(mut s []f64, mut u Matrix, mut vt Matrix, mut a Matrix, copy_a bool) {
 	superb := []f64{len: int(vmath.min(a.m, a.n))}
-	mut acpy := a
+	mut acpy := *a
 	if copy_a {
 		acpy = a.clone()
 	}
@@ -127,10 +127,10 @@ pub fn matrix_inv(mut ai Matrix, mut a Matrix, calc_det bool) f64 {
 // normtype -- Type of norm to use:
 // "I"                 => Infinite
 // "F" or "" (default) => Frobenius
-pub fn matrix_cond_num(a Matrix, normtype string) f64 {
+pub fn matrix_cond_num(mut a Matrix, normtype string) f64 {
 	mut res := 0.0
 	mut ai := new_matrix(a.m, a.n)
-	matrix_inv(mut ai, a, false)
+	matrix_inv(mut ai, mut a, false)
 	if normtype == 'I' {
 		res = a.norm_inf() * ai.norm_inf()
 		return res
