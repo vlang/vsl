@@ -1,6 +1,10 @@
 <div align="center">
 <p>
-    <img style="width: 200px" width="200" src="https://raw.githubusercontent.com/vlang/vsl/master/static/vsl-logo.png?sanitize=true">
+    <img
+        style="width: 200px"
+        width="200"
+        src="https://raw.githubusercontent.com/vlang/vsl/master/static/vsl-logo.png?sanitize=true"
+    >
 </p>
 <h1>The V Scientific Library</h1>
 
@@ -56,7 +60,10 @@ Done. And your system will remain "clean".
 
 ![](https://raw.githubusercontent.com/vlang/vsl/master/static/vscode-open-in-container.gif)
 
-Our [Docker Image](https://hub.docker.com/repository/docker/vsl/vsl) also contains V and the V Tools for working with VS Code (or not). Below is a video showing the convenience of VS Code + the V tools + VSL.
+Our [Docker Image](https://hub.docker.com/repository/docker/vsl/vsl)
+also contains V and the V Tools for working with VS Code (or not).
+Below is a video showing the convenience of
+VS Code + the V tools + VSL.
 
 ![](https://raw.githubusercontent.com/vlang/vsl/master/static/container.gif)
 
@@ -85,7 +92,8 @@ $ sudo apt-get install -y --no-install-recommends \
 $ sudo pacman -S openssl
 ```
 
-The best way of installing OpenBlas/LAPACK is using [openblas-lapack](https://aur.archlinux.org/packages/openblas-lapack/).
+The best way of installing OpenBlas/LAPACK is using
+[openblas-lapack](https://aur.archlinux.org/packages/openblas-lapack/).
 
 ```sh
 $ yay -S openblas-lapack

@@ -27,9 +27,7 @@ module main
 import vsl.graph
 
 fn main() {
-	edges := [[0, 1], [0, 3], [1, 2],
-		[2, 3],
-	]
+	edges := [[0, 1], [0, 3], [1, 2], [2, 3]]
 	weights_e := [5.0, 10.0, 3.0, 1.0]
 	verts := [][]f64{}
 	weights_v := []f64{}
@@ -88,9 +86,7 @@ import vsl.graph
 
 fn main() {
 	// initialise graph
-	edges := [[0, 1], [0, 3], [1, 2],
-		[2, 3],
-	]
+	edges := [[0, 1], [0, 3], [1, 2], [2, 3]]
 	weights_e := [5.0, 10.0, 3.0, 1.0]
 	verts := [][]f64{}
 	weights_v := []f64{}

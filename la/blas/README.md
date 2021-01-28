@@ -53,7 +53,8 @@ $ sudo apt-get install -y --no-install-recommends \
 $ sudo pacman -S openssl
 ```
 
-The best way of installing OpenBlas/LAPACK is using [openblas-lapack](https://aur.archlinux.org/packages/openblas-lapack/).
+The best way of installing OpenBlas/LAPACK is using
+[openblas-lapack](https://aur.archlinux.org/packages/openblas-lapack/).
 
 ```sh
 $ yay -S openblas-lapack
