@@ -33,7 +33,7 @@ pub fn brent(func vsl.Function, x1 f64, x2 f64, tol f64) ?(f64, f64) {
 	mut p := 0.0
 	mut q := 0.0
 	mut r := 0.0
-	for iter := 1; iter <= itmax; iter++ {
+	for iter := 1; iter <= roots.itmax; iter++ {
 		prev_step = b - a
 		if vmath.abs(fc) < vmath.abs(fb) {
 			a = b
@@ -73,8 +73,8 @@ pub fn brent(func vsl.Function, x1 f64, x2 f64, tol f64) ?(f64, f64) {
 			// if b+p/q falls in [b,c] and isn't too large, it is accepted. If
 			// p/q is too large the the bisection procedure can reduce [b,c] more
 			// significantly
-			if 2.0 * p < 3.0 * new_step * q - vmath.abs(tol1 * q) &&
-				2.0 * p < vmath.abs(prev_step * q) {
+			if 2.0 * p < 3.0 * new_step * q - vmath.abs(tol1 * q)
+				&& 2.0 * p < vmath.abs(prev_step * q) {
 				new_step = p / q
 			} else {
 				new_step = 0.5 * (c - b)

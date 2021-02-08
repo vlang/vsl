@@ -56,8 +56,8 @@ pub fn exp(x f64) f64 {
 	if x > 0 {
 		k = int(log2e * x + 0.5)
 	}
-	hi := x - f64(k) * ln2hi
-	lo := f64(k) * ln2lo
+	hi := x - f64(k) * vmath.ln2hi
+	lo := f64(k) * vmath.ln2lo
 	// compute
 	return expmulti(hi, lo, k)
 }
@@ -90,8 +90,8 @@ pub fn exp2(x f64) f64 {
 		k = int(x - 0.5)
 	}
 	mut t := x - f64(k)
-	hi := t * ln2hi
-	lo := -t * ln2lo
+	hi := t * vmath.ln2hi
+	lo := -t * vmath.ln2lo
 	// compute
 	return expmulti(hi, lo, k)
 }
@@ -102,12 +102,12 @@ pub fn ldexp(x f64, e int) f64 {
 	} else {
 		mut y, ex := frexp(x)
 		mut e2 := f64(e + ex)
-		if e2 >= f64_max_exp {
-			y *= pow(2.0, e2 - f64_max_exp + 1.0)
-			e2 = f64_max_exp - 1.0
-		} else if e2 <= f64_min_exp {
-			y *= pow(2.0, e2 - f64_min_exp - 1.0)
-			e2 = f64_min_exp + 1.0
+		if e2 >= vmath.f64_max_exp {
+			y *= pow(2.0, e2 - vmath.f64_max_exp + 1.0)
+			e2 = vmath.f64_max_exp - 1.0
+		} else if e2 <= vmath.f64_min_exp {
+			y *= pow(2.0, e2 - vmath.f64_min_exp - 1.0)
+			e2 = vmath.f64_min_exp + 1.0
 		}
 		p2 := pow(2.0, e2)
 		return y * p2
@@ -147,11 +147,11 @@ pub fn frexp(x f64) (f64, int) {
 	} else {
 		ex := ceil(log(abs(x)) / ln2)
 		mut ei := int(ex) // Prevent underflow and overflow of 2**(-ei)
-		if ei < int(f64_min_exp) {
-			ei = int(f64_min_exp)
+		if ei < int(vmath.f64_min_exp) {
+			ei = int(vmath.f64_min_exp)
 		}
-		if ei > -int(f64_min_exp) {
-			ei = -int(f64_min_exp)
+		if ei > -int(vmath.f64_min_exp) {
+			ei = -int(vmath.f64_min_exp)
 		}
 		mut f := x * pow(2.0, -ei)
 		if !is_finite(f) { // This should not happen

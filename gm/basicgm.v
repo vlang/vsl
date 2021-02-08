@@ -39,8 +39,8 @@ pub fn (o &Point) str() string {
 
 // dist_point_point computes the unsigned distance from a to b
 pub fn dist_point_point(a &Point, b &Point) f64 {
-	return math.sqrt((a.x - b.x) * (a.x - b.x) +
-		(a.y - b.y) * (a.y - b.y) + (a.z - b.z) * (a.z - b.z))
+	return math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) +
+		(a.z - b.z) * (a.z - b.z))
 }
 
 // len computes the length of Segment == Euclidean norm
@@ -50,8 +50,8 @@ pub fn (o &Segment) len() f64 {
 
 // New creates a new Segment scaled by m and starting from A
 pub fn (o &Segment) new_scaled(m f64) &Segment {
-	return new_segment(o.a.clone(), new_point(o.a.x + m * (o.b.x - o.a.x), o.a.y + m *
-		(o.b.y - o.a.y), o.a.z + m * (o.b.z - o.a.z)))
+	return new_segment(o.a.clone(), new_point(o.a.x + m * (o.b.x - o.a.x), o.a.y +
+		m * (o.b.y - o.a.y), o.a.z + m * (o.b.z - o.a.z)))
 }
 
 // vector returns the vector representing Segment from A to B (scaled by m)

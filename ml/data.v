@@ -5,7 +5,7 @@ import vsl.la
 import vsl.errno
 
 /*
- * Data holds data in matrix format; e.g. for regression computations
+* Data holds data in matrix format; e.g. for regression computations
  *
  *   Example:
  *          _          _                                     _   _
@@ -38,8 +38,7 @@ pub mut:
 // Output:
 // new object
 pub fn new_data(nb_samples int, nb_features int, use_y bool, allocate bool) Data {
-	x := if allocate { la.new_matrix(nb_samples, nb_features) } else { la.new_matrix(0,
-			0) }
+	x := if allocate { la.new_matrix(nb_samples, nb_features) } else { la.new_matrix(0, 0) }
 	mut y := []f64{}
 	if allocate && use_y {
 		y = []f64{len: nb_samples}

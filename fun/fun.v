@@ -28,8 +28,8 @@ pub fn binomial(n int, k_ int) f64 {
 	// use fast table lookup. see [1] page 258
 	if n <= 22 {
 		// the floor function cleans up roundoff error for smaller values of n and k.
-		return math.floor(0.5 + math.factorial(f64(n)) /
-			(math.factorial(f64(k)) * math.factorial(f64(n - k))))
+		return math.floor(0.5 +
+			math.factorial(f64(n)) / (math.factorial(f64(k)) * math.factorial(f64(n - k))))
 	}
 	// use beta function
 	if k > n - k {
@@ -64,8 +64,8 @@ pub fn uint_binomial(n_ u64, k_ u64) u64 {
 	}
 	mut c := u64(1)
 	for i := u64(1); i <= k; i++ {
-                c_i := c / i
-                max_n := math.max_u64 / n
+		c_i := c / i
+		max_n := math.max_u64 / n
 		if c_i > max_n / n {
 			errno.vsl_panic('overflow in uint_binomial: $c_i > $max_n', .eovrflw)
 		}

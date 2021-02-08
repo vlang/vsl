@@ -65,7 +65,7 @@ pub fn (mut o PermutationsIter) next() ?[]f64 {
 			return util.get_many(o.data, o.idxs[..r])
 		}
 	}
-        return none
+	return none
 }
 
 // permutations returns successive `r` length permutations of elements in `data`

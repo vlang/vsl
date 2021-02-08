@@ -85,7 +85,7 @@ pub fn bessel_j0(x_ f64) f64 {
 		// j0(x) = 1/sqrt(pi) * (P(0,x)*cc - Q(0,x)*ss) / sqrt(x)
 		// y0(x) = 1/sqrt(pi) * (P(0,x)*ss + Q(0,x)*cc) / sqrt(x)
 		mut z := 0.0
-		if x > two129 {
+		if x > fun.two129 {
 			// |x| > ~6.8056e+38
 			z = (1.0 / math.sqrt_pi) * cc / math.sqrt(x)
 		} else {
@@ -96,17 +96,17 @@ pub fn bessel_j0(x_ f64) f64 {
 		return z
 		// x| >= 2.0
 	}
-	if x < two_m13 {
+	if x < fun.two_m13 {
 		// |x| < ~1.2207e-4
-		if x < two_m27 {
+		if x < fun.two_m27 {
 			return 1.0
 			// x| < ~7.4506e-9
 		}
 		return 1.0 - 0.25 * x * x // ~7.4506e-9 < |x| < ~1.2207e-4
 	}
 	z := x * x
-	r := z * (j0r02 + z * (j0r03 + z * (j0r04 + z * j0r05)))
-	s := 1.0 + z * (j0s01 + z * (j0s02 + z * (j0s03 + z * j0s04)))
+	r := z * (fun.j0r02 + z * (fun.j0r03 + z * (fun.j0r04 + z * fun.j0r05)))
+	s := 1.0 + z * (fun.j0s01 + z * (fun.j0s02 + z * (fun.j0s03 + z * fun.j0s04)))
 	if x < 1.0 {
 		return 1.0 + z * (-0.25 + (r / s))
 		// x| < 1.00
@@ -149,7 +149,7 @@ pub fn bessel_j1(x_ f64) f64 {
 		// j1(x) = 1/sqrt(pi) * (P(1,x)*cc - Q(1,x)*ss) / sqrt(x)
 		// y1(x) = 1/sqrt(pi) * (P(1,x)*ss + Q(1,x)*cc) / sqrt(x)
 		mut z := 0.0
-		if x > two129 {
+		if x > fun.two129 {
 			z = (1.0 / math.sqrt_pi) * cc / math.sqrt(x)
 		} else {
 			u := pone(x)
@@ -161,13 +161,13 @@ pub fn bessel_j1(x_ f64) f64 {
 		}
 		return z
 	}
-	if x < two_m27 {
+	if x < fun.two_m27 {
 		// |x|<2**-27
 		return f64(0.5) * x // inexact if x!=0 necessary
 	}
 	mut z := x * x
-	mut r := z * (j1r00 + z * (j1r01 + z * (j1r02 + z * j1r03)))
-	s := 1.0 + z * (j1s01 + z * (j1s02 + z * (j1s03 + z * (j1s04 + z * j1s05))))
+	mut r := z * (fun.j1r00 + z * (fun.j1r01 + z * (fun.j1r02 + z * fun.j1r03)))
+	s := 1.0 + z * (fun.j1s01 + z * (fun.j1s02 + z * (fun.j1s03 + z * (fun.j1s04 + z * fun.j1s05))))
 	r *= x
 	z = f64(0.5) * x + r / s
 	if sign {
@@ -215,7 +215,7 @@ pub fn bessel_jn(n_ int, x_ f64) f64 {
 	mut b := 0.0
 	if f64(n) <= x {
 		// Safe to use J(n+1,x)=2n/x *J(n,x)-J(n-1,x)
-		if x >= two302 {
+		if x >= fun.two302 {
 			// x > 2**302
 			// (x >> n**2)
 			// Jn(x) = cos(x-(2n+1)*pi/4)*sqrt(2/x*pi)
@@ -256,7 +256,7 @@ pub fn bessel_jn(n_ int, x_ f64) f64 {
 			}
 		}
 	} else {
-		if x < two_m29 {
+		if x < fun.two_m29 {
 			// x < 2**-29
 			// x is tiny, return the first Taylor expansion of J(n,x)
 			// J(n,x) = 1/n!*(x/2)**n  - ...
@@ -407,7 +407,7 @@ pub fn bessel_y0(x f64) f64 {
 			}
 		}
 		mut z := 0.0
-		if x > two129 {
+		if x > fun.two129 {
 			// |x| > ~6.8056e+38
 			z = (1.0 / math.sqrt_pi) * ss / math.sqrt(x)
 		} else {
@@ -418,13 +418,14 @@ pub fn bessel_y0(x f64) f64 {
 		return z
 		// x| >= 2.0
 	}
-	if x <= two_m27 {
-		return y0u00 + (f64(2.0) / math.pi) * math.log(x)
+	if x <= fun.two_m27 {
+		return fun.y0u00 + (f64(2.0) / math.pi) * math.log(x)
 		// x| < ~7.4506e-9
 	}
 	z := x * x
-	u := y0u00 + z * (y0u01 + z * (y0u02 + z * (y0u03 + z * (y0u04 + z * (y0u05 + z * y0u06)))))
-	v := 1.0 + z * (y0v01 + z * (y0v02 + z * (y0v03 + z * y0v04)))
+	u := fun.y0u00 + z * (fun.y0u01 + z * (fun.y0u02 + z * (fun.y0u03 + z * (fun.y0u04 +
+		z * (fun.y0u05 + z * fun.y0u06)))))
+	v := 1.0 + z * (fun.y0v01 + z * (fun.y0v02 + z * (fun.y0v03 + z * fun.y0v04)))
 	return u / v + (f64(2.0) / math.pi) * bessel_j0(x) * math.log(x) // ~7.4506e-9 < |x| < 2.0
 }
 
@@ -469,7 +470,7 @@ pub fn bessel_y1(x f64) f64 {
 		// sin(x) +- cos(x) = -cos(2x)/(sin(x) -+ cos(x))
 		// to compute the worse one.
 		mut z := 0.0
-		if x > two129 {
+		if x > fun.two129 {
 			z = (1.0 / math.sqrt_pi) * ss / math.sqrt(x)
 		} else {
 			u := pone(x)
@@ -478,13 +479,13 @@ pub fn bessel_y1(x f64) f64 {
 		}
 		return z
 	}
-	if x <= two_m54 {
+	if x <= fun.two_m54 {
 		// x < 2**-54
 		return -(f64(2.0) / math.pi) / x
 	}
 	z := x * x
-	u := y1u00 + z * (y1u01 + z * (y1u02 + z * (y1u03 + z * y1u04)))
-	v := 1.0 + z * (y1v00 + z * (y1v01 + z * (y1v02 + z * (y1v03 + z * y1v04))))
+	u := fun.y1u00 + z * (fun.y1u01 + z * (fun.y1u02 + z * (fun.y1u03 + z * fun.y1u04)))
+	v := 1.0 + z * (fun.y1v00 + z * (fun.y1v01 + z * (fun.y1v02 + z * (fun.y1v03 + z * fun.y1v04))))
 	return x * (u / v) + (2.0 / math.pi) * (bessel_j1(x) * math.log(x) - 1.0 / x)
 }
 
@@ -527,7 +528,7 @@ pub fn bessel_yn(n_ int, x f64) f64 {
 		return bessel_y1(x)
 	}
 	mut b := 0.0
-	if x >= two302 {
+	if x >= fun.two302 {
 		// x > 2**302
 		// (x >> n**2)
 		// bessel_jn(x) = cos(x-(2n+1)*pi/4)*sqrt(2/x*pi)

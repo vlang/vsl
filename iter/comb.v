@@ -17,8 +17,8 @@ pub fn combinations(data []f64, r int) [][]f64 {
 
 pub struct CombinationsIter {
 mut:
-	pos    int
-	idxs   []int
+	pos  int
+	idxs []int
 pub:
 	repeat int
 	size   u64
@@ -94,8 +94,8 @@ pub fn combinations_with_replacement(data []f64, r int) [][]f64 {
 
 pub struct CombinationsWithReplacementIter {
 mut:
-	pos    u64
-	idxs   []int
+	pos  u64
+	idxs []int
 pub:
 	repeat int
 	size   u64

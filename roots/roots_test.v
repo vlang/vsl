@@ -23,7 +23,7 @@ fn test_root_bisection() {
 	func := vsl.Function{
 		function: f_cos
 	}
-	result := bisection(func, x1, x2, epsrel, epsabs, n_max) or { panic(err) }
+	result := bisection(func, x1, x2, roots.epsrel, roots.epsabs, roots.n_max) or { panic(err) }
 	assert compare(result, vmath.pi / 2.00)
 }
 
@@ -32,13 +32,13 @@ fn test_root_newton() {
 	func := vsl.FunctionFdf{
 		fdf: fdf_cos
 	}
-	result := newton(func, x0, epsrel, epsabs, n_max) or { panic(err) }
+	result := newton(func, x0, roots.epsrel, roots.epsabs, roots.n_max) or { panic(err) }
 	assert compare(result, vmath.pi / 2.00)
 }
 
 // Helper method for comparing floats
 fn compare(x f64, y f64) bool {
-	tolerance := epsabs
+	tolerance := roots.epsabs
 	// Special case for zeroes
 	if x < tolerance && x > (-1.0 * tolerance) && y < tolerance && y > (-1.0 * tolerance) {
 		return true

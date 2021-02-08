@@ -32,10 +32,9 @@ pub fn matrix_inv_small(mut ai Matrix, a Matrix, tol f64) f64 {
 		ai.set(1, 0, -(a.get(1, 0)) / det)
 		ai.set(1, 1, a.get(0, 0) / det)
 	} else if a.m == 3 && a.n == 3 {
-		det = a.get(0, 0) * (a.get(1, 1) * a.get(2, 2) -
-			a.get(1, 2) * a.get(2, 1)) - (a.get(0, 1)) *
-			(a.get(1, 0) * a.get(2, 2) - a.get(1, 2) * a.get(2, 0)) + a.get(0, 2) *
-			(a.get(1, 0) * a.get(2, 1) - a.get(1, 1) * a.get(2, 0))
+		det = 
+			a.get(0, 0) * (a.get(1, 1) * a.get(2, 2) - a.get(1, 2) * a.get(2, 1)) - (a.get(0, 1)) * (a.get(1, 0) * a.get(2, 2) - a.get(1, 2) * a.get(2, 0)) +
+			a.get(0, 2) * (a.get(1, 0) * a.get(2, 1) - a.get(1, 1) * a.get(2, 0))
 		if vmath.abs(det) < tol {
 			errno.vsl_panic('inverse of ($a.m x $a.n) matrix failed with zero determinant: |det(a)| = $det < $tol',
 				.efailed)

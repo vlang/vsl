@@ -20,8 +20,7 @@ fn test_matrix_deep2() {
 	assert mat.m == 3
 	assert mat.n == 4
 	// The data is stored in column-major format
-	assert mat.data ==
-		[11.0, 21.0, 31.0, 12.0, 22.0, 32.0, 13.0, 23.0, 33.0, 14.0, 24.0, 34.0]
+	assert mat.data == [11.0, 21.0, 31.0, 12.0, 22.0, 32.0, 13.0, 23.0, 33.0, 14.0, 24.0, 34.0]
 }
 
 fn test_set_from_deep2() {

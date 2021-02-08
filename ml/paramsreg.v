@@ -5,12 +5,12 @@ import vsl.util
 
 pub struct ParamsReg {
 pub mut:
-	observers  []util.Observer // list of interested parties
+	observers []util.Observer // list of interested parties
 	// main
-	theta      []f64 // theta parameter [nb_features]
-	bias       f64   // bias parameter
-	lambda     f64   // regularization parameter
-	degree     int   // degree of polynomial
+	theta  []f64 // theta parameter [nb_features]
+	bias   f64   // bias parameter
+	lambda f64   // regularization parameter
+	degree int   // degree of polynomial
 	// backup
 	bkp_theta  []f64 // copy of theta
 	bkp_bias   f64   // copy of b

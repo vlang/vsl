@@ -32,7 +32,7 @@ pub fn tan(x_ f64) f64 {
 		x = -x
 		sign = -1
 	}
-	if x > tan_lossth {
+	if x > vmath.tan_lossth {
 		return 0.0
 	}
 	// compute x mod pi_4
@@ -45,12 +45,12 @@ pub fn tan(x_ f64) f64 {
 		octant++
 		y += 1.0
 	}
-	z = ((x - y * tan_dp1) - y * tan_dp2) - y * tan_dp3
+	z = ((x - y * vmath.tan_dp1) - y * vmath.tan_dp2) - y * vmath.tan_dp3
 	zz := z * z
 	if zz > 1.0e-14 {
-		y = z + z * (zz *
-			(((tan_p[0] * zz) + tan_p[1]) * zz + tan_p[2]) /
-			((((zz + tan_q[1]) * zz + tan_q[2]) * zz + tan_q[3]) * zz + tan_q[4]))
+		y = z + z * (zz * (((vmath.tan_p[0] * zz) + vmath.tan_p[1]) * zz +
+			vmath.tan_p[2]) / ((((zz + vmath.tan_q[1]) * zz + vmath.tan_q[2]) * zz +
+			vmath.tan_q[3]) * zz + vmath.tan_q[4]))
 	} else {
 		y = z
 	}
@@ -73,7 +73,7 @@ pub fn cot(x_ f64) f64 {
 		x = -x
 		sign = -1
 	}
-	if x > tan_lossth {
+	if x > vmath.tan_lossth {
 		return 0.0
 	}
 	// compute x mod pi_4
@@ -86,12 +86,12 @@ pub fn cot(x_ f64) f64 {
 		octant++
 		y += 1.0
 	}
-	z = ((x - y * tan_dp1) - y * tan_dp2) - y * tan_dp3
+	z = ((x - y * vmath.tan_dp1) - y * vmath.tan_dp2) - y * vmath.tan_dp3
 	zz := z * z
 	if zz > 1.0e-14 {
-		y = z + z * (zz *
-			(((tan_p[0] * zz) + tan_p[1]) * zz + tan_p[2]) /
-			((((zz + tan_q[1]) * zz + tan_q[2]) * zz + tan_q[3]) * zz + tan_q[4]))
+		y = z + z * (zz * (((vmath.tan_p[0] * zz) + vmath.tan_p[1]) * zz +
+			vmath.tan_p[2]) / ((((zz + vmath.tan_q[1]) * zz + vmath.tan_q[2]) * zz +
+			vmath.tan_q[3]) * zz + vmath.tan_q[4]))
 	} else {
 		y = z
 	}

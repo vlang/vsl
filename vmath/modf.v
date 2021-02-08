@@ -13,11 +13,11 @@ const (
 pub fn modf(f f64) (f64, f64) {
 	abs_f := abs(f)
 	mut i := 0.0
-	if abs_f >= _maxpowtwo {
+	if abs_f >= vmath._maxpowtwo {
 		i = f // it must be an integer
 	} else {
-		i = abs_f + _maxpowtwo // shift fraction off right
-		i -= _maxpowtwo // shift back without fraction
+		i = abs_f + vmath._maxpowtwo // shift fraction off right
+		i -= vmath._maxpowtwo // shift back without fraction
 		for i > abs_f { // above arithmetic might round
 			i -= 1.0 // test again just to be sure
 		}

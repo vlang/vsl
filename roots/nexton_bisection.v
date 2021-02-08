@@ -34,9 +34,9 @@ pub fn newton_bisection(func vsl.FunctionFdf, x_min f64, x_max f64, tol f64, max
 	mut dx := dx_anc
 	mut func_current, mut diff_func_current := func.eval_f_df(rts)
 	for i := 0; i < max_iter; i++ {
-		if (((rts - xh) * diff_func_current - func_current) *
-			((rts - xl) * diff_func_current - func_current) >= 0.0) ||
-			vmath.abs(2.0 * func_current) > vmath.abs(dx_anc * diff_func_current) {
+		if 
+			(((rts - xh) * diff_func_current - func_current) * ((rts - xl) * diff_func_current - func_current) >= 0.0)
+			|| vmath.abs(2.0 * func_current) > vmath.abs(dx_anc * diff_func_current) {
 			dx_anc = dx
 			dx = 0.5 * (xh - xl)
 			rts = xl + dx

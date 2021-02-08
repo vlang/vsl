@@ -12,7 +12,7 @@ mut:
 	params &ParamsReg // parameters: θ, b, λ
 	stat   &Stat      // statistics
 	// workspace
-	e      []f64 // vector e = b⋅o + x⋅theta - y [nb_samples]
+	e []f64 // vector e = b⋅o + x⋅theta - y [nb_samples]
 }
 
 // new_lin_reg returns a new LinReg object

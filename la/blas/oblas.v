@@ -4,6 +4,7 @@ import vsl.errno
 
 #include <cblas.h>
 #include <lapacke.h>
+
 fn C.openblas_set_num_threads(n int)
 
 fn C.cblas_ddot(n int, dx &f64, incx int, dy &f64, incy int) f64
@@ -90,7 +91,7 @@ pub fn daxpy(n int, alpha f64, x []f64, incx int, mut y []f64, incy int) {
 // trans=true      y := alpha*A**T*x + beta*y.
 pub fn dgemv(trans bool, m int, n int, alpha f64, a []f64, lda int, x []f64, incx int, beta f64, mut y []f64, incy int) {
 	unsafe {
-		C.cblas_dgemv(cblas_col_major, c_trans(trans), m, n, alpha, &a[0], lda, &x[0],
+		C.cblas_dgemv(blas.cblas_col_major, c_trans(trans), m, n, alpha, &a[0], lda, &x[0],
 			incx, beta, &y[0], incy)
 	}
 }
@@ -107,7 +108,8 @@ pub fn dgemv(trans bool, m int, n int, alpha f64, a []f64, lda int, x []f64, inc
 // vector and A is an m by n matrix.
 pub fn dger(m int, n int, alpha f64, x []f64, incx int, y []f64, incy int, mut a []f64, lda int) {
 	unsafe {
-		C.cblas_dger(cblas_col_major, m, n, alpha, &x[0], incx, &y[0], incy, &a[0], lda)
+		C.cblas_dger(blas.cblas_col_major, m, n, alpha, &x[0], incx, &y[0], incy, &a[0],
+			lda)
 	}
 }
 
@@ -136,8 +138,8 @@ pub fn dnrm2(n int, x []f64, incx int) f64 {
 // an m by k matrix,  op( B )  a  k by n matrix and  C an m by n matrix.
 pub fn dgemm(transA bool, transB bool, m int, n int, k int, alpha f64, a []f64, lda int, b []f64, ldb int, beta f64, mut c []f64, ldc int) {
 	unsafe {
-		C.cblas_dgemm(cblas_col_major, c_trans(transA), c_trans(transB), m, n, k, alpha,
-			&a[0], lda, &b[0], ldb, beta, &c[0], ldc)
+		C.cblas_dgemm(blas.cblas_col_major, c_trans(transA), c_trans(transB), m, n, k,
+			alpha, &a[0], lda, &b[0], ldb, beta, &c[0], ldc)
 	}
 }
 
@@ -167,7 +169,7 @@ pub fn dgesv(n int, nrhs int, mut a []f64, lda int, ipiv []int, mut b []f64, ldb
 	if ipiv.len != n {
 		errno.vsl_panic('ipiv.len must be equal to n. $ipiv.len != $n\n', .efailed)
 	}
-	info := C.LAPACKE_dgesv(lapack_col_major, n, nrhs, unsafe { &a[0] }, lda, &ipiv[0],
+	info := C.LAPACKE_dgesv(blas.lapack_col_major, n, nrhs, unsafe { &a[0] }, lda, &ipiv[0],
 		unsafe { &b[0] }, ldb)
 	if info != 0 {
 		errno.vsl_panic('lapack failed', .efailed)
@@ -195,8 +197,8 @@ pub fn dgesv(n int, nrhs int, mut a []f64, lda int, ipiv []int, mut b []f64, ldb
 //
 // NOTE: matrix 'a' will be modified
 pub fn dgesvd(jobu byte, jobvt byte, m int, n int, a []f64, lda int, s []f64, u []f64, ldu int, vt []f64, ldvt int, superb []f64) {
-	info := C.LAPACKE_dgesvd(lapack_col_major, jobu, jobvt, m, n, &a[0], lda, &s[0], &u[0],
-		ldu, &vt[0], ldvt, &superb[0])
+	info := C.LAPACKE_dgesvd(blas.lapack_col_major, jobu, jobvt, m, n, &a[0], lda, &s[0],
+		&u[0], ldu, &vt[0], ldvt, &superb[0])
 	if info != 0 {
 		errno.vsl_panic('lapack failed', .efailed)
 	}
@@ -220,7 +222,7 @@ pub fn dgesvd(jobu byte, jobvt byte, m int, n int, a []f64, lda int, s []f64, u 
 // (2) ipiv indices are 1-based (i.e. Fortran)
 pub fn dgetrf(m int, n int, mut a []f64, lda int, ipiv []int) {
 	unsafe {
-		info := C.LAPACKE_dgetrf(lapack_col_major, m, n, &a[0], lda, &ipiv[0])
+		info := C.LAPACKE_dgetrf(blas.lapack_col_major, m, n, &a[0], lda, &ipiv[0])
 		if info != 0 {
 			errno.vsl_panic('lapack failed', .efailed)
 		}
@@ -237,7 +239,7 @@ pub fn dgetrf(m int, n int, mut a []f64, lda int, ipiv []int) {
 // inv(A)*L = inv(U) for inv(A).
 pub fn dgetri(n int, mut a []f64, lda int, ipiv []int) {
 	unsafe {
-		info := C.LAPACKE_dgetri(lapack_col_major, n, &a[0], lda, &ipiv[0])
+		info := C.LAPACKE_dgetri(blas.lapack_col_major, n, &a[0], lda, &ipiv[0])
 		if info != 0 {
 			errno.vsl_panic('lapack failed', .efailed)
 		}
@@ -261,7 +263,7 @@ pub fn dgetri(n int, mut a []f64, lda int, ipiv []int) {
 // in the second case.
 pub fn dsyrk(up bool, trans bool, n int, k int, alpha f64, a []f64, lda int, beta f64, mut c []f64, ldc int) {
 	unsafe {
-		C.cblas_dsyrk(cblas_col_major, c_uplo(up), c_trans(trans), n, k, alpha, &a[0],
+		C.cblas_dsyrk(blas.cblas_col_major, c_uplo(up), c_trans(trans), n, k, alpha, &a[0],
 			lda, beta, &c[0], ldc)
 	}
 }
@@ -285,7 +287,7 @@ pub fn dsyrk(up bool, trans bool, n int, k int, alpha f64, a []f64, lda int, bet
 // This is the block version of the algorithm, calling Level 3 BLAS.
 pub fn dpotrf(up bool, n int, mut a []f64, lda int) {
 	unsafe {
-		info := C.LAPACKE_dpotrf(lapack_col_major, l_uplo(up), n, &a[0], lda)
+		info := C.LAPACKE_dpotrf(blas.lapack_col_major, l_uplo(up), n, &a[0], lda)
 		if info != 0 {
 			errno.vsl_panic('lapack failed', .efailed)
 		}
@@ -331,8 +333,8 @@ pub fn dgeev(calcVl bool, calcVr bool, n int, mut a []f64, lda int, wr []f64, wi
 		ldvr = 1
 	}
 	unsafe {
-		info := C.LAPACKE_dgeev(lapack_col_major, job_vlr(calcVl), job_vlr(calcVr), n,
-			&a[0], lda, &wr[0], &wi[0], &vvl, ldvl, &vvr, ldvr)
+		info := C.LAPACKE_dgeev(blas.lapack_col_major, job_vlr(calcVl), job_vlr(calcVr),
+			n, &a[0], lda, &wr[0], &wi[0], &vvl, ldvl, &vvr, ldvr)
 		if info != 0 {
 			errno.vsl_panic('lapack failed', .efailed)
 		}
@@ -362,16 +364,16 @@ pub const (
 
 pub fn c_trans(trans bool) u32 {
 	if trans {
-		return cblas_trans
+		return blas.cblas_trans
 	}
-	return cblas_no_trans
+	return blas.cblas_no_trans
 }
 
 pub fn c_uplo(up bool) u32 {
 	if up {
-		return cblas_upper
+		return blas.cblas_upper
 	}
-	return cblas_lower
+	return blas.cblas_lower
 }
 
 pub fn l_uplo(up bool) byte {

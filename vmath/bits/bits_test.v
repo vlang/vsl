@@ -219,8 +219,7 @@ fn test_bits() {
 		hi, lo := mul_64(v0, v1)
 		// C.printf("v0: %llu v1: %llu [%llu,%llu] tt: %llu\n", v0, v1, hi, lo, (v0 >> 32) * (v1 >> 32))
 		assert (hi & 0xFFFFFFFF00000000) == (((v0 >> 32) * (v1 >> 32)) & 0xFFFFFFFF00000000)
-		assert (lo & 0x00000000FFFFFFFF) ==
-			(((v0 & 0x00000000FFFFFFFF) * (v1 & 0x00000000FFFFFFFF)) & 0x00000000FFFFFFFF)
+		assert (lo & 0x00000000FFFFFFFF) == (((v0 & 0x00000000FFFFFFFF) * (v1 & 0x00000000FFFFFFFF)) & 0x00000000FFFFFFFF)
 	}
 	//
 	// --- div ---

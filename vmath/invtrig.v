@@ -2,7 +2,7 @@ module vmath
 
 // The original C code, the long comment, and the constants below were
 // from http://netlib.sandia.gov/cephes/cmath/atan.c, available from
-// http://www.netlib.org/cephes/cvmath.tgz.
+// http://www.netlib.org/cephes/ctgz.
 // The go code is a version of the original C.
 //
 // atan.c
@@ -63,9 +63,8 @@ fn xatan(x f64) f64 {
 	q3 := 4.853903996359136964868e+02
 	q4 := 1.945506571482613964425e+02
 	mut z := x * x
-	z = z *
-		((((p0 * z + p1) * z + p2) * z + p3) * z + p4) /
-		(((((z + q0) * z + q1) * z + q2) * z + q3) * z + q4)
+	z = z * ((((p0 * z + p1) * z + p2) * z + p3) * z + p4) / (((((z + q0) * z + q1) * z + q2) * z +
+		q3) * z + q4)
 	z = x * z + x
 	return z
 }
@@ -77,10 +76,10 @@ fn satan(x f64) f64 {
 	if x <= 0.66 {
 		return xatan(x)
 	}
-	if x > tan3pio8 {
-		return pi / 2.0 - xatan(1.0 / x) + f64(morebits)
+	if x > vmath.tan3pio8 {
+		return pi / 2.0 - xatan(1.0 / x) + f64(vmath.morebits)
 	}
-	return pi / 4 + xatan((x - 1.0) / (x + 1.0)) + 0.5 * f64(morebits)
+	return pi / 4 + xatan((x - 1.0) / (x + 1.0)) + 0.5 * f64(vmath.morebits)
 }
 
 // atan returns the arctangent, in radians, of x.
@@ -212,7 +211,7 @@ pub fn acos(x f64) f64 {
 		return f64(2.0) * asin(sqrt(0.5 - 0.5 * x))
 	}
 	mut z := pi / f64(4.0) - asin(x)
-	z = z + morebits
+	z = z + vmath.morebits
 	z = z + pi / f64(4.0)
 	return z
 }

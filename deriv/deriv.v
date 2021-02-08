@@ -20,8 +20,7 @@ fn central_deriv(f vsl.Function, x f64, h f64) (f64, f64, f64) {
 	r5 := (4.0 / 3.00) * (fph - fmh) - (1.0 / 3.00) * r3
 	e3 := (vmath.abs(fp1) + vmath.abs(fm1)) * internal.f64_epsilon
 	e5 := 2.0 * (vmath.abs(fph) + vmath.abs(fmh)) * internal.f64_epsilon + e3 // The next term is due to finite precision in x+h = O(eps * x)
-	dy := vmath.max(vmath.abs(r3 / h), vmath.abs(r5 / h)) *
-		(vmath.abs(x) / h) * internal.f64_epsilon
+	dy := vmath.max(vmath.abs(r3 / h), vmath.abs(r5 / h)) * (vmath.abs(x) / h) * internal.f64_epsilon
 	/*
 	The truncation error in the r5 approximation itself is O(h^4).
          * However, for safety, we estimate the error from r5-r3, which is
@@ -72,8 +71,7 @@ fn forward_deriv(f vsl.Function, x f64, h f64) (f64, f64, f64) {
 	f4 := f.eval(x + h)
 	r2 := 2.0 * (f4 - f2)
 	r4 := (22.0 / 3.00) * (f4 - f3) - (62.0 / 3.00) * (f3 - f2) + (52.0 / 3.00) * (f2 - f1) // Estimate the rounding error for r4
-	e4 := 2.0 * 20.670 *
-		(vmath.abs(f4) + vmath.abs(f3) + vmath.abs(f2) + vmath.abs(f1)) * internal.f64_epsilon // The next term is due to finite precision in x+h = O(eps * x)
+	e4 := 2.0 * 20.670 * (vmath.abs(f4) + vmath.abs(f3) + vmath.abs(f2) + vmath.abs(f1)) * internal.f64_epsilon // The next term is due to finite precision in x+h = O(eps * x)
 	dy := vmath.max(vmath.abs(r2 / h), vmath.abs(r4 / h)) * vmath.abs(x / h) * internal.f64_epsilon
 	/*
 	The truncation error in the r4 approximation itself is O(h^3).

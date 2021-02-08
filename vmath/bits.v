@@ -14,13 +14,13 @@ const (
 
 // inf returns positive infinity if sign >= 0, negative infinity if sign < 0.
 pub fn inf(sign int) f64 {
-	v := if sign >= 0 { uvinf } else { uvneginf }
+	v := if sign >= 0 { vmath.uvinf } else { vmath.uvneginf }
 	return f64_from_bits(v)
 }
 
 // nan returns an IEEE 754 ``not-a-number'' value.
 pub fn nan() f64 {
-	return f64_from_bits(uvnan)
+	return f64_from_bits(vmath.uvnan)
 }
 
 // is_nan reports whether f is an IEEE 754 ``not-a-number'' value.
@@ -28,7 +28,8 @@ pub fn is_nan(f f64) bool {
 	// IEEE 754 says that only NaNs satisfy f != f.
 	// To avoid the floating-point hardware, could use:
 	x := f64_bits(f)
-	return u32(x >> shift) & mask == mask && x != uvinf && x != uvneginf
+	return u32(x >> vmath.shift) & vmath.mask == vmath.mask && x != vmath.uvinf
+		&& x != vmath.uvneginf
 }
 
 // is_inf reports whether f is an infinity, according to sign.

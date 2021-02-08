@@ -54,8 +54,7 @@ pub fn (c1 Complex) * (c2 Complex) Complex {
 pub fn (c1 Complex) / (c2 Complex) Complex {
 	denom := (c2.re * c2.re) + (c2.im * c2.im)
 	return Complex{((c1.re * c2.re) + ((c1.im * -c2.im) * -1)) / denom, ((c1.re * -c2.im) +
-		(c1.im * c2.re)) /
-		denom}
+		(c1.im * c2.re)) / denom}
 }
 
 // Complex Addition c1.add(c2)
@@ -77,8 +76,7 @@ pub fn (c1 Complex) multiply(c2 Complex) Complex {
 pub fn (c1 Complex) divide(c2 Complex) Complex {
 	denom := (c2.re * c2.re) + (c2.im * c2.im)
 	return Complex{((c1.re * c2.re) + ((c1.im * -c2.im) * -1)) / denom, ((c1.re * -c2.im) +
-		(c1.im * c2.re)) /
-		denom}
+		(c1.im * c2.re)) / denom}
 }
 
 // Complex Conjugate

@@ -7,31 +7,31 @@ import vsl.errno
 pub struct Triplet {
 mut:
 	// matrix dimension (rows, columns)
-	m   int
-	n   int
+	m int
+	n int
 	// current position and max number of entries allowed (non-zeros, including repetitions)      
 	pos int
 	max int
 	// indices for each x values (size=max)     
-	i   []int
-	j   []int
+	i []int
+	j []int
 	// values for each i, j (size=max)    
-	x   []f64
+	x []f64
 }
 
 // CCMatrix represents a sparse matrix using the so-called "column-compressed format".
 pub struct CCMatrix {
 mut:
 	// matrix dimension (rows, columns)
-	m   int
-	n   int
+	m int
+	n int
 	// number of non-zeros
 	nnz int
 	// pointers and row indices (len(p)=n+1, len(i)=nnz)   
-	p   []int
-	i   []int
+	p []int
+	i []int
 	// values (len(x)=nnz)
-	x   []f64
+	x []f64
 }
 
 // new_triplet returns a new Triplet. This is a wrapper to new(Triplet) followed by init()
@@ -68,7 +68,7 @@ pub fn (mut o Triplet) put(i int, j int, x f64) {
 }
 
 /*
- * put_matrix_and_matrix_t adds the content of a matrix "a" and its transpose "at" to triplet "o"
+* put_matrix_and_matrix_t adds the content of a matrix "a" and its transpose "at" to triplet "o"
  * ex:    0   1   2   3   4   5
  *      [... ... ... a00 a10 ...] 0
  *      [... ... ... a01 a11 ...] 1
@@ -89,7 +89,7 @@ pub fn (mut o Triplet) put_matrix_and_matrix_t(a Triplet) {
 }
 
 /*
- * put_cc_matrix_and_matrix_t adds the content of a compressed-column matrix "a" and its transpose "at" to triplet "o"
+* put_cc_matrix_and_matrix_t adds the content of a compressed-column matrix "a" and its transpose "at" to triplet "o"
  * ex:    0   1   2   3   4   5
  *      [... ... ... a00 a10 ...] 0
  *      [... ... ... a01 a11 ...] 1

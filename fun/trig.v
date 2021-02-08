@@ -16,8 +16,8 @@ fn sinh_series(x f64) f64 {
 	c5 := 1.0 / 6227020800.0
 	c6 := 1.0 / 1307674368000.0
 	c7 := 1.0 / 355687428096000.0
-	return x *
-		(1.0 + y * (c0 + y * (c1 + y * (c2 + y * (c3 + y * (c4 + y * (c5 + y * (c6 + y * c7))))))))
+	return x * (1.0 + y * (c0 + y * (c1 + y * (c2 + y * (c3 + y * (c4 + y * (c5 + y * (c6 +
+		y * c7))))))))
 }
 
 // cosh(x)-1 series
@@ -34,8 +34,8 @@ fn cosh_m1_series(x f64) f64 {
 	c6 := 1.0 / 87178291200.0
 	c7 := 1.0 / 20922789888000.0
 	c8 := 1.0 / 6402373705728000.0
-	return y *
-		(c0 + y * (c1 + y * (c2 + y * (c3 + y * (c4 + y * (c5 + y * (c6 + y * (c7 + y * c8))))))))
+	return y * (c0 + y * (c1 + y * (c2 + y * (c3 + y * (c4 + y * (c5 + y * (c6 + y * (c7 +
+		y * c8))))))))
 }
 
 const (
@@ -102,16 +102,16 @@ pub fn sin_e(x f64) (f64, f64) {
 			octant -= 4
 			sgn_result = -sgn_result
 		}
-		z := ((abs_x - y * p1) - y * p2) - y * p3
+		z := ((abs_x - y * fun.p1) - y * fun.p2) - y * fun.p3
 		mut result := 0.0
 		mut result_err := 0.0
 		if octant == 0 {
 			t := 8.0 * math.abs(z) / math.pi - 1.0
-			sin_cs_val, _ := sin_cs.eval_e(t)
+			sin_cs_val, _ := fun.sin_cs.eval_e(t)
 			result = z * (1.0 + z * z * sin_cs_val)
 		} else {
 			t := 8.0 * math.abs(z) / math.pi - 1.0
-			cos_cs_val, _ := cos_cs.eval_e(t)
+			cos_cs_val, _ := fun.cos_cs.eval_e(t)
 			result = 1.0 - 0.5 * z * z * (1.0 - z * z * cos_cs_val)
 		}
 		result *= sgn_result
@@ -149,16 +149,16 @@ pub fn cos_e(x f64) (f64, f64) {
 		if octant > 1 {
 			sgn_result = -sgn_result
 		}
-		z := ((abs_x - y * p1) - y * p2) - y * p3
+		z := ((abs_x - y * fun.p1) - y * fun.p2) - y * fun.p3
 		mut result := 0.0
 		mut result_err := 0.0
 		if octant == 0 {
 			t := 8.0 * math.abs(z) / math.pi - 1.0
-			cos_cs_val, _ := cos_cs.eval_e(t)
+			cos_cs_val, _ := fun.cos_cs.eval_e(t)
 			result = 1.0 - 0.5 * z * z * (1.0 - z * z * cos_cs_val)
 		} else {
 			t := 8.0 * math.abs(z) / math.pi - 1.0
-			sin_cs_val, _ := sin_cs.eval_e(t)
+			sin_cs_val, _ := fun.sin_cs.eval_e(t)
 			result = z * (1.0 + z * z * sin_cs_val)
 		}
 		result *= sgn_result
@@ -194,15 +194,15 @@ pub fn sin(x f64) f64 {
 			octant -= 4
 			sgn_result = -sgn_result
 		}
-		z := ((abs_x - y * p1) - y * p2) - y * p3
+		z := ((abs_x - y * fun.p1) - y * fun.p2) - y * fun.p3
 		mut result := 0.0
 		if octant == 0 {
 			t := 8.0 * math.abs(z) / math.pi - 1.0
-			sin_cs_val, _ := sin_cs.eval_e(t)
+			sin_cs_val, _ := fun.sin_cs.eval_e(t)
 			result = z * (1.0 + z * z * sin_cs_val)
 		} else {
 			t := 8.0 * math.abs(z) / math.pi - 1.0
-			cos_cs_val, _ := cos_cs.eval_e(t)
+			cos_cs_val, _ := fun.cos_cs.eval_e(t)
 			result = 1.0 - 0.5 * z * z * (1.0 - z * z * cos_cs_val)
 		}
 		result *= sgn_result
@@ -231,15 +231,15 @@ pub fn cos(x f64) f64 {
 		if octant > 1 {
 			sgn_result = -sgn_result
 		}
-		z := ((abs_x - y * p1) - y * p2) - y * p3
+		z := ((abs_x - y * fun.p1) - y * fun.p2) - y * fun.p3
 		mut result := 0.0
 		if octant == 0 {
 			t := 8.0 * math.abs(z) / math.pi - 1.0
-			cos_cs_val, _ := cos_cs.eval_e(t)
+			cos_cs_val, _ := fun.cos_cs.eval_e(t)
 			result = 1.0 - 0.5 * z * z * (1.0 - z * z * cos_cs_val)
 		} else {
 			t := 8.0 * math.abs(z) / math.pi - 1.0
-			sin_cs_val, _ := sin_cs.eval_e(t)
+			sin_cs_val, _ := fun.sin_cs.eval_e(t)
 			result = z * (1.0 + z * z * sin_cs_val)
 		}
 		result *= sgn_result

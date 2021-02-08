@@ -1,7 +1,7 @@
 module vmath
 
 /*
- *                           x
+*                           x
  *                    2      |\
  *     erf(x)  =  ---------  | exp(-t*t)dt
  *                 sqrt(pi) \|
@@ -183,14 +183,15 @@ pub fn erf(x_ f64) f64 {
 		mut temp := 0.0
 		if x < small { // |x| < 2**-28
 			if x < very_tiny {
-				temp = 0.125 * (8.0 * x + efx8 * x) // avoid underflow
+				temp = 0.125 * (8.0 * x + vmath.efx8 * x) // avoid underflow
 			} else {
-				temp = x + efx * x
+				temp = x + vmath.efx * x
 			}
 		} else {
 			z := x * x
-			r := pp0 + z * (pp1 + z * (pp2 + z * (pp3 + z * pp4)))
-			s_ := 1.0 + z * (qq1 + z * (qq2 + z * (qq3 + z * (qq4 + z * qq5))))
+			r := vmath.pp0 + z * (vmath.pp1 + z * (vmath.pp2 + z * (vmath.pp3 + z * vmath.pp4)))
+			s_ := 1.0 + z * (vmath.qq1 + z * (vmath.qq2 + z * (vmath.qq3 + z * (vmath.qq4 +
+				z * vmath.qq5))))
 			y := r / s_
 			temp = x + x * y
 		}
@@ -201,12 +202,14 @@ pub fn erf(x_ f64) f64 {
 	}
 	if x < 1.25 { // 0.84375 <= |x| < 1.25
 		s_ := x - 1
-		p := pa0 + s_ * (pa1 + s_ * (pa2 + s_ * (pa3 + s_ * (pa4 + s_ * (pa5 + s_ * pa6)))))
-		q := 1.0 + s_ * (qa1 + s_ * (qa2 + s_ * (qa3 + s_ * (qa4 + s_ * (qa5 + s_ * qa6)))))
+		p := vmath.pa0 + s_ * (vmath.pa1 + s_ * (vmath.pa2 + s_ * (vmath.pa3 + s_ * (vmath.pa4 +
+			s_ * (vmath.pa5 + s_ * vmath.pa6)))))
+		q := 1.0 + s_ * (vmath.qa1 + s_ * (vmath.qa2 + s_ * (vmath.qa3 + s_ * (vmath.qa4 +
+			s_ * (vmath.qa5 + s_ * vmath.qa6)))))
 		if sign {
-			return -erx - p / q
+			return -vmath.erx - p / q
 		}
-		return erx + p / q
+		return vmath.erx + p / q
 	}
 	if x >= 6 { // inf > |x| >= 6
 		if sign {
@@ -218,14 +221,15 @@ pub fn erf(x_ f64) f64 {
 	mut r := 0.0
 	mut s := 0.0
 	if x < 1.0 / 0.35 { // |x| < 1 / 0.35  ~ 2.857143
-		r = ra0 + s_ *
-			(ra1 + s_ * (ra2 + s_ * (ra3 + s_ * (ra4 + s_ * (ra5 + s_ * (ra6 + s_ * ra7))))))
-		s = 1.0 + s_ *
-			(sa1 + s_ * (sa2 + s_ * (sa3 + s_ * (sa4 + s_ * (sa5 + s_ * (sa6 + s_ * (sa7 + s_ * sa8)))))))
+		r = vmath.ra0 + s_ * (vmath.ra1 + s_ * (vmath.ra2 + s_ * (vmath.ra3 + s_ * (vmath.ra4 +
+			s_ * (vmath.ra5 + s_ * (vmath.ra6 + s_ * vmath.ra7))))))
+		s = 1.0 + s_ * (vmath.sa1 + s_ * (vmath.sa2 + s_ * (vmath.sa3 + s_ * (vmath.sa4 +
+			s_ * (vmath.sa5 + s_ * (vmath.sa6 + s_ * (vmath.sa7 + s_ * vmath.sa8)))))))
 	} else { // |x| >= 1 / 0.35  ~ 2.857143
-		r = rb0 + s_ * (rb1 + s_ * (rb2 + s_ * (rb3 + s_ * (rb4 + s_ * (rb5 + s_ * rb6)))))
-		s = 1.0 + s_ *
-			(sb1 + s_ * (sb2 + s_ * (sb3 + s_ * (sb4 + s_ * (sb5 + s_ * (sb6 + s_ * sb7))))))
+		r = vmath.rb0 + s_ * (vmath.rb1 + s_ * (vmath.rb2 + s_ * (vmath.rb3 + s_ * (vmath.rb4 +
+			s_ * (vmath.rb5 + s_ * vmath.rb6)))))
+		s = 1.0 + s_ * (vmath.sb1 + s_ * (vmath.sb2 + s_ * (vmath.sb3 + s_ * (vmath.sb4 +
+			s_ * (vmath.sb5 + s_ * (vmath.sb6 + s_ * vmath.sb7))))))
 	}
 	z := f64_from_bits(f64_bits(x) & 0xffffffff00000000) // pseudo-single (20-bit) precision x
 	r_ := exp(-z * z - 0.5625) * exp((z - x) * (z + x) + r / s)
@@ -252,7 +256,7 @@ pub fn erfc(x_ f64) f64 {
 		return 0.0
 	}
 	if is_inf(x, -1) {
-		return f64(2)
+		return 2.0
 	}
 	mut sign := false
 	if x < 0 {
@@ -265,8 +269,9 @@ pub fn erfc(x_ f64) f64 {
 			temp = x
 		} else {
 			z := x * x
-			r := pp0 + z * (pp1 + z * (pp2 + z * (pp3 + z * pp4)))
-			s_ := 1.0 + z * (qq1 + z * (qq2 + z * (qq3 + z * (qq4 + z * qq5))))
+			r := vmath.pp0 + z * (vmath.pp1 + z * (vmath.pp2 + z * (vmath.pp3 + z * vmath.pp4)))
+			s_ := 1.0 + z * (vmath.qq1 + z * (vmath.qq2 + z * (vmath.qq3 + z * (vmath.qq4 +
+				z * vmath.qq5))))
 			y := r / s_
 			if x < 0.25 { // |x| < 1.0/4
 				temp = x + x * y
@@ -281,39 +286,42 @@ pub fn erfc(x_ f64) f64 {
 	}
 	if x < 1.25 { // 0.84375 <= |x| < 1.25
 		s_ := x - 1
-		p := pa0 + s_ * (pa1 + s_ * (pa2 + s_ * (pa3 + s_ * (pa4 + s_ * (pa5 + s_ * pa6)))))
-		q := 1.0 + s_ * (qa1 + s_ * (qa2 + s_ * (qa3 + s_ * (qa4 + s_ * (qa5 + s_ * qa6)))))
+		p := vmath.pa0 + s_ * (vmath.pa1 + s_ * (vmath.pa2 + s_ * (vmath.pa3 + s_ * (vmath.pa4 +
+			s_ * (vmath.pa5 + s_ * vmath.pa6)))))
+		q := 1.0 + s_ * (vmath.qa1 + s_ * (vmath.qa2 + s_ * (vmath.qa3 + s_ * (vmath.qa4 +
+			s_ * (vmath.qa5 + s_ * vmath.qa6)))))
 		if sign {
-			return 1.0 + erx + p / q
+			return 1.0 + vmath.erx + p / q
 		}
-		return 1.0 - erx - p / q
+		return 1.0 - vmath.erx - p / q
 	}
 	if x < 28 { // |x| < 28
 		s_ := 1.0 / (x * x)
 		mut r := 0.0
 		mut s := 0.0
 		if x < 1.0 / 0.35 { // |x| < 1 / 0.35 ~ 2.857143
-			r = ra0 + s_ *
-				(ra1 + s_ * (ra2 + s_ * (ra3 + s_ * (ra4 + s_ * (ra5 + s_ * (ra6 + s_ * ra7))))))
-			s = 1.0 + s_ *
-				(sa1 + s_ * (sa2 + s_ * (sa3 + s_ * (sa4 + s_ * (sa5 + s_ * (sa6 + s_ * (sa7 + s_ * sa8)))))))
+			r = vmath.ra0 + s_ * (vmath.ra1 + s_ * (vmath.ra2 + s_ * (vmath.ra3 + s_ * (vmath.ra4 +
+				s_ * (vmath.ra5 + s_ * (vmath.ra6 + s_ * vmath.ra7))))))
+			s = 1.0 + s_ * (vmath.sa1 + s_ * (vmath.sa2 + s_ * (vmath.sa3 + s_ * (vmath.sa4 +
+				s_ * (vmath.sa5 + s_ * (vmath.sa6 + s_ * (vmath.sa7 + s_ * vmath.sa8)))))))
 		} else { // |x| >= 1 / 0.35 ~ 2.857143
 			if sign && x > 6 {
-				return f64(2) // x < -6
+				return 2.0 // x < -6
 			}
-			r = rb0 + s_ * (rb1 + s_ * (rb2 + s_ * (rb3 + s_ * (rb4 + s_ * (rb5 + s_ * rb6)))))
-			s = 1.0 + s_ *
-				(sb1 + s_ * (sb2 + s_ * (sb3 + s_ * (sb4 + s_ * (sb5 + s_ * (sb6 + s_ * sb7))))))
+			r = vmath.rb0 + s_ * (vmath.rb1 + s_ * (vmath.rb2 + s_ * (vmath.rb3 + s_ * (vmath.rb4 +
+				s_ * (vmath.rb5 + s_ * vmath.rb6)))))
+			s = 1.0 + s_ * (vmath.sb1 + s_ * (vmath.sb2 + s_ * (vmath.sb3 + s_ * (vmath.sb4 +
+				s_ * (vmath.sb5 + s_ * (vmath.sb6 + s_ * vmath.sb7))))))
 		}
 		z := f64_from_bits(f64_bits(x) & 0xffffffff00000000) // pseudo-single (20-bit) precision x
 		r_ := exp(-z * z - 0.5625) * exp((z - x) * (z + x) + r / s)
 		if sign {
-			return f64(2) - r_ / x
+			return 2.0 - r_ / x
 		}
 		return r_ / x
 	}
 	if sign {
-		return f64(2)
+		return 2.0
 	}
 	return 0.0
 }

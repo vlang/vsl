@@ -25,7 +25,7 @@ pub mut:
 // Bins implements a set of bins holding entries and is used to fast search entries by given coordinates.
 pub struct Bins {
 mut:
-	tmp  []int // [ndim] temporary (auxiliary) slice
+	tmp []int // [ndim] temporary (auxiliary) slice
 pub mut:
 	ndim int    // space dimension
 	xmin []f64  // [ndim] left/lower-most point
@@ -62,8 +62,8 @@ pub fn new_bins(xmin []f64, xmax []f64, ndiv_ []int) Bins {
 		}
 		o.xdel[k] = o.xmax[k] - o.xmin[k]
 		o.size[k] = o.xdel[k] / f64(ndiv[k])
-		if o.xdel[k] < xdelzero {
-			errno.vsl_panic('xmax[$k]-xmin[$k]=${o.xdel[k]} must be greater than $xdelzero',
+		if o.xdel[k] < gm.xdelzero {
+			errno.vsl_panic('xmax[$k]-xmin[$k]=${o.xdel[k]} must be greater than $gm.xdelzero',
 				.efailed)
 		}
 	}
@@ -360,7 +360,7 @@ pub fn (o Bin) str() string {
 		}
 		l += ']'
 		if !isnil(entry.extra) {
-			l += ', \"extra\":true'
+			l += ', "extra":true'
 		}
 		l += '}'
 	}

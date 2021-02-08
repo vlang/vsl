@@ -70,7 +70,7 @@ pub fn (g Graph) get_edge(i int, j int) ?int {
 }
 
 /*
- * shortest_paths computes the shortest paths in a graph defined as follows
+* shortest_paths computes the shortest paths in a graph defined as follows
  *
  *          [10]
  *       0 ––––––→ 3            numbers in brackets
