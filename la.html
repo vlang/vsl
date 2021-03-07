@@ -249,9 +249,12 @@
 <span class="token keyword">mut</span><span class="token punctuation">:</span>
 	m <span class="token builtin">int</span>
 	n <span class="token builtin">int</span>
+
 	nnz <span class="token builtin">int</span>
+
 	p <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>
 	i <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>
+
 	x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
 <span class="token punctuation">}</span></code></pre>
 <p>CCMatrix represents a sparse matrix using the so-called &quot;column-compressed format&quot;.</p>
@@ -407,10 +410,12 @@
 <span class="token keyword">mut</span><span class="token punctuation">:</span>
 	mumps_ordering <span class="token builtin">int</span>
 	mumps_scaling  <span class="token builtin">int</span>
+
 	symmetric   <span class="token builtin">bool</span>
 	sym_pos_def <span class="token builtin">bool</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
 	verbose <span class="token builtin">bool</span>
+
 	mumps_increase_of_working_space_pct <span class="token builtin">int</span>
 	mumps_max_memory_per_processor      <span class="token builtin">int</span>
 <span class="token punctuation">}</span></code></pre>
@@ -442,10 +447,13 @@
 <span class="token keyword">mut</span><span class="token punctuation">:</span>
 	m <span class="token builtin">int</span>
 	n <span class="token builtin">int</span>
+
 	pos <span class="token builtin">int</span>
 	max <span class="token builtin">int</span>
+
 	i <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>
 	j <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>
+
 	x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
 <span class="token punctuation">}</span></code></pre>
 <p>Triplet is a simple representation of a sparse matrix, where the indices and values  of this matrix are stored directly.</p>
@@ -498,11 +506,10 @@
 </section>
 
 						<div class="footer">
-							Powered by vdoc. Generated on: 16 Feb 2021 14:38:16
+							Powered by vdoc. Generated on: 7 Mar 2021 05:48:42
 						</div>
 					</div>
-					<div class="doc-toc"><ul><li class="open"><a href="#readme_la">README</a></li>
-<li class="open"><a href="#den_solve">fn den_solve</a>        <ul>
+					<div class="doc-toc"><ul><li class="open"><a href="#den_solve">fn den_solve</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#matrix_add">fn matrix_add</a>        <ul>
