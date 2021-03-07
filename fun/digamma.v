@@ -43,7 +43,7 @@ pub fn psi(x_ f64) f64 {
 			y += 1.0 / w
 		}
 		y -= eul
-		goto done
+		unsafe { goto done }
 	}
 	mut s := x
 	mut w := 0.0
