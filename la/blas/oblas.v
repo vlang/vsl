@@ -9,7 +9,7 @@ fn C.openblas_set_num_threads(n int)
 
 fn C.cblas_ddot(n int, dx &f64, incx int, dy &f64, incy int) f64
 
-fn C.cblas_dscal(n int, alpha f64, x []f64, incx int) f64
+fn C.cblas_dscal(n int, alpha f64, x &f64, incx int) f64
 
 fn C.cblas_dger(cblas_col_major u32, m int, n int, alpha f64, x &f64, incx int, y &f64, incy int, a &f64, lda int)
 
@@ -21,7 +21,7 @@ fn C.cblas_daxpy(n int, alpha f64, x &f64, incx int, y &f64, incy int)
 
 fn C.cblas_dgemv(cblas_col_major u32, trans byte, m int, n int, alpha f64, a &f64, lda int, x &f64, incx int, beta f64, y &f64, incy int)
 
-fn C.cblas_dgemm(cblas_col_major u32, trans byte, m int, n int, k int, alpha f64, a &f64, lda int, b &f64, ldb int, c &f64, ldc int)
+fn C.cblas_dgemm(cblas_col_major u32, transA byte, transB byte, m int, n int, k int, alpha f64, a &f64, lda int, b &f64, ldb int, beta f64, c &f64, ldc int)
 
 fn C.cblas_dsyrk(cblas_col_major u32, up u32, trans u32, n int, k int, alpha f64, a &f64, lda int, beta f64, c &f64, ldc int)
 
@@ -169,7 +169,7 @@ pub fn dgesv(n int, nrhs int, mut a []f64, lda int, ipiv []int, mut b []f64, ldb
 	if ipiv.len != n {
 		errno.vsl_panic('ipiv.len must be equal to n. $ipiv.len != $n\n', .efailed)
 	}
-	info := C.LAPACKE_dgesv(blas.lapack_col_major, n, nrhs, unsafe { &a[0] }, lda, &ipiv[0],
+	info := C.LAPACKE_dgesv(n, nrhs, unsafe { &a[0] }, lda, &ipiv[0],
 		unsafe { &b[0] }, ldb)
 	if info != 0 {
 		errno.vsl_panic('lapack failed', .efailed)
@@ -197,7 +197,7 @@ pub fn dgesv(n int, nrhs int, mut a []f64, lda int, ipiv []int, mut b []f64, ldb
 //
 // NOTE: matrix 'a' will be modified
 pub fn dgesvd(jobu byte, jobvt byte, m int, n int, a []f64, lda int, s []f64, u []f64, ldu int, vt []f64, ldvt int, superb []f64) {
-	info := C.LAPACKE_dgesvd(blas.lapack_col_major, jobu, jobvt, m, n, &a[0], lda, &s[0],
+	info := C.LAPACKE_dgesvd(jobu, jobvt, m, n, &a[0], lda, &s[0],
 		&u[0], ldu, &vt[0], ldvt, &superb[0])
 	if info != 0 {
 		errno.vsl_panic('lapack failed', .efailed)
@@ -222,7 +222,7 @@ pub fn dgesvd(jobu byte, jobvt byte, m int, n int, a []f64, lda int, s []f64, u 
 // (2) ipiv indices are 1-based (i.e. Fortran)
 pub fn dgetrf(m int, n int, mut a []f64, lda int, ipiv []int) {
 	unsafe {
-		info := C.LAPACKE_dgetrf(blas.lapack_col_major, m, n, &a[0], lda, &ipiv[0])
+		info := C.LAPACKE_dgetrf(m, n, &a[0], lda, &ipiv[0])
 		if info != 0 {
 			errno.vsl_panic('lapack failed', .efailed)
 		}
@@ -239,7 +239,7 @@ pub fn dgetrf(m int, n int, mut a []f64, lda int, ipiv []int) {
 // inv(A)*L = inv(U) for inv(A).
 pub fn dgetri(n int, mut a []f64, lda int, ipiv []int) {
 	unsafe {
-		info := C.LAPACKE_dgetri(blas.lapack_col_major, n, &a[0], lda, &ipiv[0])
+		info := C.LAPACKE_dgetri(n, &a[0], lda, &ipiv[0])
 		if info != 0 {
 			errno.vsl_panic('lapack failed', .efailed)
 		}
