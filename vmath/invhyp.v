@@ -40,11 +40,7 @@ pub fn atanh(x f64) f64 {
 	if a > 1.0 {
 		return nan()
 	} else if a == 1.0 {
-		return if x < 0 {
-			inf(-1)
-		} else {
-			inf(1)
-		}
+		return if x < 0 { inf(-1) } else { inf(1) }
 	} else if a >= 0.5 {
 		return s * 0.5 * log1p(2.0 * a / (1.0 - a))
 	} else if a > internal.f64_epsilon {

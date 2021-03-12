@@ -84,11 +84,7 @@ pub fn (q Quaternion) copy() Quaternion {
 }
 
 fn cof_str(a f64) string {
-	return if a >= 0.0 {
-		'+$a'
-	} else {
-		'$a'
-	}
+	return if a >= 0.0 { '+$a' } else { '$a' }
 }
 
 // To String method

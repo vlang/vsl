@@ -19,10 +19,10 @@ pub:
 	verts     [][]f64 // [nverts][ndim] vertices
 	weights_v []f64   // [nverts] weights of vertices
 	// auxiliary
-	shares    map[int][]int // [nverts] edges sharing a vertex
-	key2edge  map[int]int   // maps (i,j) vertex to edge index
-	dist      [][]f64       // [nverts][nverts] distances
-	next      [][]int       // [nverts][nverts] next tree connection. -1 means no connection
+	shares   map[int][]int // [nverts] edges sharing a vertex
+	key2edge map[int]int   // maps (i,j) vertex to edge index
+	dist     [][]f64       // [nverts][nverts] distances
+	next     [][]int       // [nverts][nverts] next tree connection. -1 means no connection
 }
 
 // new_graph initialises graph

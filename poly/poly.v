@@ -68,11 +68,7 @@ pub fn solve_quadratic(a f64, b f64, c f64) []f64 { // Handle linear case
 			temp := -0.5 * (b + f64(sgnb) * vmath.sqrt(disc))
 			r1 := temp / a
 			r2 := c / temp
-			return if r1 < r2 {
-				[r1, r2]
-			} else {
-				[r2, r1]
-			}
+			return if r1 < r2 { [r1, r2] } else { [r2, r1] }
 		}
 	} else if disc == 0 {
 		return [-0.5 * b / a, -0.5 * b / a]

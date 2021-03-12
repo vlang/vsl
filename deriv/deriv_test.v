@@ -162,9 +162,5 @@ fn compare_near(x f64, y f64, tolerance f64) bool {
 	}
 	deriv := vmath.abs(x - y)
 	mean := vmath.abs(x + y) / 2.0
-	return if vmath.is_nan(deriv / mean) {
-		true
-	} else {
-		((deriv / mean) < tolerance)
-	}
+	return if vmath.is_nan(deriv / mean) { true } else { ((deriv / mean) < tolerance) }
 }

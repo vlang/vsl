@@ -45,9 +45,5 @@ fn compare(x f64, y f64) bool {
 	}
 	diff := vmath.abs(x - y)
 	mean := vmath.abs(x + y) / 2.0
-	return if vmath.is_nan(diff / mean) {
-		true
-	} else {
-		((diff / mean) < tolerance)
-	}
+	return if vmath.is_nan(diff / mean) { true } else { ((diff / mean) < tolerance) }
 }

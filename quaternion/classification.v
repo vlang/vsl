@@ -7,11 +7,7 @@ pub fn (q Quaternion) is_nan() bool {
 }
 
 pub fn (q Quaternion) is_zero() bool {
-	return if q.is_nan() {
-		true
-	} else {
-		q.w == 0.0 && q.x == 0.0 && q.y == 0.0 && q.z == 0.0
-	}
+	return if q.is_nan() { true } else { q.w == 0.0 && q.x == 0.0 && q.y == 0.0 && q.z == 0.0 }
 }
 
 pub fn (q Quaternion) is_inf() bool {
@@ -33,11 +29,7 @@ pub fn (q1 Quaternion) equal(q2 Quaternion) bool {
 }
 
 fn choose(c bool, a bool, b bool) bool {
-	return if c {
-		a
-	} else {
-		b
-	}
+	return if c { a } else { b }
 }
 
 pub fn (q1 Quaternion) is_less(q2 Quaternion) bool {

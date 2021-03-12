@@ -90,9 +90,5 @@ pub fn (q Quaternion) angle() f64 {
 
 pub fn (q Quaternion) normalized() Quaternion {
 	qabs := q.abs()
-	return if qabs == 0.0 {
-		q
-	} else {
-		quaternion(q.w / qabs, q.x / qabs, q.y / qabs, q.z / qabs)
-	}
+	return if qabs == 0.0 { q } else { quaternion(q.w / qabs, q.x / qabs, q.y / qabs, q.z / qabs) }
 }

@@ -147,21 +147,13 @@ pub fn circular_ease_in_out(p f64) f64 {
 // exponential_ease_in accelerates using an exponential formula
 [inline]
 pub fn exponential_ease_in(p f64) f64 {
-	return if p == 0.0 {
-		p
-	} else {
-		vmath.pow(2, 10.0 * (p - 1.0))
-	}
+	return if p == 0.0 { p } else { vmath.pow(2, 10.0 * (p - 1.0)) }
 }
 
 // exponential_ease_out decelerates using an exponential formula
 [inline]
 pub fn exponential_ease_out(p f64) f64 {
-	return if p == 1.0 {
-		p
-	} else {
-		1.0 - vmath.pow(2, -10.0 * p)
-	}
+	return if p == 1.0 { p } else { 1.0 - vmath.pow(2, -10.0 * p) }
 }
 
 // exponential_ease_in_out accelerates and decelerates using an exponential formula

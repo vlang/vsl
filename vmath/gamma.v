@@ -92,14 +92,18 @@ pub fn gamma(x_ f64) f64 {
 	}
 	for x < 0 {
 		if x > -1e-09 {
-			unsafe { goto small }
+			unsafe {
+				goto small
+			}
 		}
 		z = z / x
 		x = x + 1
 	}
 	for x < 2 {
 		if x < 1e-09 {
-			unsafe { goto small }
+			unsafe {
+				goto small
+			}
 		}
 		z = z / x
 		x = x + 1

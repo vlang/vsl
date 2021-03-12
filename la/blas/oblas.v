@@ -169,8 +169,8 @@ pub fn dgesv(n int, nrhs int, mut a []f64, lda int, ipiv []int, mut b []f64, ldb
 	if ipiv.len != n {
 		errno.vsl_panic('ipiv.len must be equal to n. $ipiv.len != $n\n', .efailed)
 	}
-	info := C.LAPACKE_dgesv(n, nrhs, unsafe { &a[0] }, lda, &ipiv[0],
-		unsafe { &b[0] }, ldb)
+	info := C.LAPACKE_dgesv(n, nrhs, unsafe { &a[0] }, lda, &ipiv[0], unsafe { &b[0] },
+		ldb)
 	if info != 0 {
 		errno.vsl_panic('lapack failed', .efailed)
 	}
@@ -197,8 +197,8 @@ pub fn dgesv(n int, nrhs int, mut a []f64, lda int, ipiv []int, mut b []f64, ldb
 //
 // NOTE: matrix 'a' will be modified
 pub fn dgesvd(jobu byte, jobvt byte, m int, n int, a []f64, lda int, s []f64, u []f64, ldu int, vt []f64, ldvt int, superb []f64) {
-	info := C.LAPACKE_dgesvd(jobu, jobvt, m, n, &a[0], lda, &s[0],
-		&u[0], ldu, &vt[0], ldvt, &superb[0])
+	info := C.LAPACKE_dgesvd(jobu, jobvt, m, n, &a[0], lda, &s[0], &u[0], ldu, &vt[0],
+		ldvt, &superb[0])
 	if info != 0 {
 		errno.vsl_panic('lapack failed', .efailed)
 	}
