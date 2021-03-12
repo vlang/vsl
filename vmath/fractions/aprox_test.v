@@ -21,9 +21,7 @@ fn test_minus_one_twelfth() {
 
 fn test_zero() {
 	float_val := 0.0
-	println('Pre')
 	fract_val := fractions.approximate(float_val)
-	println('Post')
 	assert fract_val.equals(fractions.fraction(0, 1))
 }
 
