@@ -174,7 +174,7 @@ pub fn (g Graph) calc_dist() Graph {
 		}
 	}
 	return {
-		g |
+		...g
 		dist: dist
 		next: next
 	}
