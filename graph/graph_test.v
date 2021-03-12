@@ -42,7 +42,7 @@ fn test_graph01() {
 	mut weights_e := g2.weights_e
 	weights_e[3] = 13
 	g3 := {
-		g2 |
+		...g2
 		weights_e: weights_e
 	}
 	g4 := g3.shortest_paths(.fw)

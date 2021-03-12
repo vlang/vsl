@@ -109,7 +109,7 @@ pub fn (g Graph) shortest_paths(method SorthestPaths) Graph {
 		}
 	}
 	return {
-		g2 |
+		...g2
 		dist: dist
 		next: next
 	}
