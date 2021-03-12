@@ -480,7 +480,7 @@ fn test_exp() {
 	}
 	vfexp_sc_ := [inf(-1), -2000, 2000, inf(1), nan(), /* smallest f64 that overflows Exp(x) */
 		7.097827128933841e+02, 1.48852223e+09, 1.4885222e+09, 1, /* near zero */ 3.725290298461915e-09,
-		// denormal -740]
+		/* denormal */ -740]
 	exp_sc_ := [f64(0), 0, inf(1), inf(1), nan(), inf(1), inf(1),
 		inf(1), 2.718281828459045, 1.0000000037252903, 4.2e-322]
 	for i := 0; i < vfexp_sc_.len; i++ {
