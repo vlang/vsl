@@ -353,22 +353,22 @@ fn test_atan2() {
 		], [nan(), nan()]]
 	atan2_sc_ := [f64(-3.0) * pi / 4.0, /* atan2(-inf, -inf) */ -pi / 2, /* atan2(-inf, -pi) */
 		-pi / 2,
-		// atan2(-inf, +0) -pi / 2, /* atan2(-inf, pi) */ -pi / 4, /* atan2(-inf, +inf) */
+		/* atan2(-inf, +0) */ -pi / 2, /* atan2(-inf, pi) */ -pi / 4, /* atan2(-inf, +inf) */
 		nan(), /* atan2(-inf, nan) */ -pi, /* atan2(-pi, -inf) */ -pi / 2, /* atan2(-pi, +0) */
 		-0.0,
-		// atan2(-pi, inf) nan(), /* atan2(-pi, nan) */ -pi, /* atan2(-0, -inf) */ -pi,
-		// atan2(-0, -pi) -pi, /* atan2(-0, -0) */ -0.0, /* atan2(-0, +0) */ -0.0, /* atan2(-0, pi) */
+		/* atan2(-pi, inf) */ nan(), /* atan2(-pi, nan) */ -pi, /* atan2(-0, -inf) */ -pi,
+		/* atan2(-0, -pi) */ -pi, /* atan2(-0, -0) */ -0.0, /* atan2(-0, +0) */ -0.0, /* atan2(-0, pi) */
 		-0.0,
-		// atan2(-0, +inf) nan(), /* atan2(-0, nan) */ pi, /* atan2(+0, -inf) */ pi, /* atan2(+0, -pi) */
+		/* atan2(-0, +inf) */ nan(), /* atan2(-0, nan) */ pi, /* atan2(+0, -inf) */ pi, /* atan2(+0, -pi) */
 		pi, /* atan2(+0, -0) */ 0, /* atan2(+0, +0) */ 0, /* atan2(+0, pi) */ 0, /* atan2(+0, +inf) */
 		nan(), /* atan2(+0, nan) */ pi, /* atan2(pi, -inf) */ pi / 2, /* atan2(pi, +0) */ 0,
-		// atan2(pi, +inf) nan(), /* atan2(pi, nan) */ 3.0 * pi / 4, /* atan2(+inf, -inf) */ pi / 2, /* atan2(+inf, -pi) */
+		/* atan2(pi, +inf) */ nan(), /* atan2(pi, nan) */ 3.0 * pi / 4, /* atan2(+inf, -inf) */ pi / 2, /* atan2(+inf, -pi) */
 		pi / 2, /* atan2(+inf, +0) */ pi / 2, /* atan2(+inf, pi) */ pi / 4, /* atan2(+inf, +inf) */
 		nan(), /* atan2(+inf, nan) */ nan(), /* atan2(nan, nan) */]
-	// for i := 0; i < vfatan2_sc_.len; i++ {
-	// 	f := atan2(vfatan2_sc_[i][0], vfatan2_sc_[i][1])
-	// 	assert alike(atan2_sc_[i], f)
-	// }
+	for i := 0; i < vfatan2_sc_.len; i++ {
+		f := atan2(vfatan2_sc_[i][0], vfatan2_sc_[i][1])
+		assert alike(atan2_sc_[i], f)
+	}
 }
 
 fn test_ceil() {
@@ -711,7 +711,7 @@ fn test_pow() {
 		0, /* pow(-0, 0.5) */ 0, /* pow(-0, +inf) */ inf(1), /* pow(+0, -inf) */
 		inf(1), /* pow(+0, -pi) */ inf(1), /* pow(+0, -3) */ 1, /* pow(+0, -0) */ 1, /* pow(+0, +0) */
 		0, /* pow(+0, 3) */ 0,
-		// pow(+0, pi) 0, /* pow(+0, +inf) */ nan(), /* pow(+0, nan) */
+		/* pow(+0, pi) */ 0, /* pow(+0, +inf) */ nan(), /* pow(+0, nan) */
 		inf(1), /* pow(1/2, -inf) */ 0, /* pow(1/2, +inf) */ 1, /* pow(1, -inf) IEEE 754-2008 */
 		1, /* pow(1, +inf) IEEE 754-2008 */ 1, /* pow(1, nan) IEEE 754-2008 */ 0, /* pow(pi, -inf) */
 		1, /* pow(pi, -0) */ 1, /* pow(pi, +0) */ pi, /* pow(pi, 1) */ inf(1), /* pow(pi, +inf) */
@@ -719,10 +719,10 @@ fn test_pow() {
 		inf(1), /* pow(+inf, 1) */ inf(1), /* pow(+inf, pi) */
 		nan(), /* pow(+inf, nan) */ nan(), /* pow(nan, -pi) */ 1, /* pow(nan, -0) */ 1, /* pow(nan, +0) */
 		nan(), /* pow(nan, 1) */ nan(), /* pow(nan, pi) */ nan(), /* pow(nan, nan) */]
-	// for i := 0; i < vfpow_sc_.len; i++ {
-	// 	f := pow(vfpow_sc_[i][0], vfpow_sc_[i][1])
-	// 	assert alike(pow_sc_[i], f)
-	// }
+	for i := 0; i < vfpow_sc_.len; i++ {
+		f := pow(vfpow_sc_[i][0], vfpow_sc_[i][1])
+		assert alike(pow_sc_[i], f)
+	}
 }
 
 fn test_round() {
