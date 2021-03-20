@@ -5,6 +5,51 @@ import vsl.vmath
 import vsl.vmath.complex
 import vsl.errno
 
+pub const (
+	lapack_row_major    = 101
+	lapack_col_major    = 102
+	cblas_row_major     = u32(101)
+	cblas_col_major     = u32(102)
+	cblas_no_trans      = u32(111)
+	cblas_trans         = u32(112)
+	cblas_conj_trans    = u32(113)
+	cblas_conj_no_trans = u32(114)
+	cblas_upper         = u32(121)
+	cblas_lower         = u32(122)
+	cblas_non_unit      = u32(131)
+	cblas_unit          = u32(132)
+	cblas_left          = u32(141)
+	cblas_right         = u32(142)
+)
+
+pub fn c_trans(trans bool) u32 {
+	if trans {
+		return blas.cblas_trans
+	}
+	return blas.cblas_no_trans
+}
+
+pub fn c_uplo(up bool) u32 {
+	if up {
+		return blas.cblas_upper
+	}
+	return blas.cblas_lower
+}
+
+pub fn l_uplo(up bool) byte {
+	if up {
+		return `U`
+	}
+	return `L`
+}
+
+pub fn job_vlr(doCalc bool) byte {
+	if doCalc {
+		return `V`
+	}
+	return `N`
+}
+
 // slice_to_col_major converts nested slice into an array representing a col-major matrix
 //
 // _**NOTE**: make sure to have at least 1x1 item_

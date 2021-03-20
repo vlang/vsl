@@ -1,5 +1,3 @@
-
-
 #ifndef OPENBLAS_CONFIG_H
 #define OPENBLAS_CONFIG_H
 #define OPENBLAS_OS_LINUX 1
