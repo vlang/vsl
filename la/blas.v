@@ -1,6 +1,6 @@
 module la
 
-import vsl.la.blas
+import vsl.blas
 import vsl.vmath
 
 /*

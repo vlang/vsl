@@ -1,7 +1,7 @@
 module blas
 
 import vsl.errno
-import vsl.la.blas.vlas
+import vsl.blas.vlas
 
 #include <cblas.h>
 #include <lapacke.h>

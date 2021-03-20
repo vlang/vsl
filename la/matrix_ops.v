@@ -1,7 +1,7 @@
 module la
 
 import vsl.errno
-import vsl.la.blas
+import vsl.blas
 import vsl.vmath
 
 // matrix_inv_small computes the inverse of small matrices of size 1x1, 2x2, or 3x3.

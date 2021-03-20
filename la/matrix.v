@@ -1,7 +1,7 @@
 module la
 
 import vsl.errno
-import vsl.la.blas
+import vsl.blas
 import vsl.vmath
 
 pub struct Matrix {

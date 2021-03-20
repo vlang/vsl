@@ -10,7 +10,7 @@ _lower level_ than the ones in the package `vsl.la`.
 ```v
 module main
 
-import vsl.la.blas
+import vsl.blas
 import vsl.la
 
 // matrix_matrix_mul returns the matrix multiplication (scaled)
