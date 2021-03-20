@@ -43,8 +43,8 @@ pub fn l_uplo(up bool) byte {
 	return `L`
 }
 
-pub fn job_vlr(doCalc bool) byte {
-	if doCalc {
+pub fn job_vlr(do_calc bool) byte {
+	if do_calc {
 		return `V`
 	}
 	return `N`

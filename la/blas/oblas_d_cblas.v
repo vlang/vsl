@@ -1,6 +1,7 @@
 module blas
 
 import vsl.errno
+import vsl.la.blas.vlas
 
 #include <cblas.h>
 #include <lapacke.h>
@@ -137,7 +138,7 @@ pub fn dnrm2(n int, x []f64, incx int) f64 {
 // alpha and beta are scalars, and A, B and C are matrices, with op( A )
 // an m by k matrix,  op( B )  a  k by n matrix and  C an m by n matrix.
 pub fn dgemm(transA bool, transB bool, m int, n int, k int, alpha f64, a []f64, lda int, b []f64, ldb int, beta f64, mut c []f64, ldc int) {
-	unsafe {
+        unsafe {
 		C.cblas_dgemm(blas.cblas_col_major, c_trans(transA), c_trans(transB), m, n, k,
 			alpha, &a[0], lda, &b[0], ldb, beta, &c[0], ldc)
 	}
