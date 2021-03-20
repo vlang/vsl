@@ -160,6 +160,9 @@ fn dgemm_parallel(a_trans bool, b_trans bool, m int, n int, k int, a []f64, lda 
 	// wg is used to wait for all
 	mut wg := sync.new_waitgroup()
 	wg.add(par_blocks)
+        defer {
+                wg.wait()
+        }
 
         for i := 0; i < m; i += block_size {
 		for j := 0; j < n; j += block_size {
@@ -204,8 +207,6 @@ fn dgemm_parallel(a_trans bool, b_trans bool, m int, n int, k int, a []f64, lda 
 			}(a_trans, b_trans, m, n, max_k_len, a, lda, b, ldb, mut c, ldc, alpha, i, j, mut wg /*, worker_limit */)
 		}
 	}
-
-        defer { wg.wait() }
 }
 
 // dgemm_serial is serial matrix multiply
