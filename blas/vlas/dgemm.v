@@ -2,10 +2,10 @@ module vlas
 
 import runtime
 import sync
-import vsl.internal.float64
+import vsl.blas.vlas.internal.float64
 import vsl.util
 
-// Dgemm performs one of the matrix-matrix operations
+// dgemm performs one of the matrix-matrix operations
 //  C = alpha * A * B + beta * C
 //  C = alpha * Aᵀ * B + beta * C
 //  C = alpha * A * Bᵀ + beta * C
@@ -289,6 +289,6 @@ fn dgemm_serial_trans_trans(m int, n int, k int, a []f64, lda int, b []f64, ldb 
 	}
 }
 
-fn slice_view_f64(a []f64, lda, i int, j int, r int, c int) []f64 {
+fn slice_view_f64(a []f64, lda int, i int, j int, r int, c int) []f64 {
 	return a[i*lda+j..(i+r-1)*lda+j+c]
 }
