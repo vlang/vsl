@@ -289,6 +289,6 @@ fn dgemm_serial_trans_trans(m int, n int, k int, a []f64, lda int, b []f64, ldb 
 	}
 }
 
-fn slice_view_f64(a []f64, lda, i, j, r, c int) []f64 {
+fn slice_view_f64(a []f64, lda, i int, j int, r int, c int) []f64 {
 	return a[i*lda+j..(i+r-1)*lda+j+c]
 }

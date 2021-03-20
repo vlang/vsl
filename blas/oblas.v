@@ -1,6 +1,6 @@
 module blas
 
-import vls.blas.vlas
+import vsl.blas.vlas
 
 // dgemm performs one of the matrix-matrix operations
 //
