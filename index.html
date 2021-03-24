@@ -42,7 +42,7 @@
 				<nav class="search hidden"></nav>
 				<nav class="content hidden">
 					<ul>
-						<li class="open active"><div class="menu-row"><a href="./vsl.html">vsl</a></div></li><li class="open"><div class="menu-row"><a href="./consts.html">consts</a></div></li><li class="open"><div class="menu-row"><a href="./deriv.html">deriv</a></div></li><li class="open"><div class="menu-row"><a href="./diff.html">diff</a></div></li><li class="open"><div class="menu-row"><a href="./dist.html">dist</a></div></li><li class="open"><div class="menu-row"><a href="./easings.html">easings</a></div></li><li class="open"><div class="menu-row"><a href="./errno.html">errno</a></div></li><li class="open"><div class="menu-row"><a href="./fit.html">fit</a></div></li><li class="open"><div class="menu-row"><a href="./fun.html">fun</a></div></li><li class="open"><div class="menu-row"><a href="./gm.html">gm</a></div></li><li class="open"><div class="menu-row"><a href="./graph.html">graph</a></div></li><li class="open"><div class="menu-row"><a href="./internal.html">internal</a></div></li><li class="open"><div class="menu-row"><a href="./iter.html">iter</a></div></li><li class="open"><div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="./la.html">la</a></div><ul><li><a href="./la.blas.html">blas</a></li></ul></li><li class="open"><div class="menu-row"><a href="./ml.html">ml</a></div></li><li class="open"><div class="menu-row"><a href="./poly.html">poly</a></div></li><li class="open"><div class="menu-row"><a href="./quaternion.html">quaternion</a></div></li><li class="open"><div class="menu-row"><a href="./roots.html">roots</a></div></li><li class="open"><div class="menu-row"><a href="./stats.html">stats</a></div></li><li class="open"><div class="menu-row"><a href="./util.html">util</a></div></li><li class="open"><div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="./vmath.html">vmath</a></div><ul><li><a href="./vmath.bits.html">bits</a></li><li><a href="./vmath.complex.html">complex</a></li><li><a href="./vmath.fractions.html">fractions</a></li></ul></li>
+						<li class="open active"><div class="menu-row"><a href="./vsl.html">vsl</a></div></li><li class="open"><div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="./blas.html">blas</a></div><ul><li><a href="./blas.vlas.html">vlas</a></li><li><a href="./blas.vlas.internal.float64.html">vlas.internal.float64</a></li></ul></li><li class="open"><div class="menu-row"><a href="./consts.html">consts</a></div></li><li class="open"><div class="menu-row"><a href="./deriv.html">deriv</a></div></li><li class="open"><div class="menu-row"><a href="./diff.html">diff</a></div></li><li class="open"><div class="menu-row"><a href="./dist.html">dist</a></div></li><li class="open"><div class="menu-row"><a href="./easings.html">easings</a></div></li><li class="open"><div class="menu-row"><a href="./errno.html">errno</a></div></li><li class="open"><div class="menu-row"><a href="./fit.html">fit</a></div></li><li class="open"><div class="menu-row"><a href="./fun.html">fun</a></div></li><li class="open"><div class="menu-row"><a href="./gm.html">gm</a></div></li><li class="open"><div class="menu-row"><a href="./graph.html">graph</a></div></li><li class="open"><div class="menu-row"><a href="./internal.html">internal</a></div></li><li class="open"><div class="menu-row"><a href="./iter.html">iter</a></div></li><li class="open"><div class="menu-row"><a href="./la.html">la</a></div></li><li class="open"><div class="menu-row"><a href="./ml.html">ml</a></div></li><li class="open"><div class="menu-row"><a href="./poly.html">poly</a></div></li><li class="open"><div class="menu-row"><a href="./quaternion.html">quaternion</a></div></li><li class="open"><div class="menu-row"><a href="./roots.html">roots</a></div></li><li class="open"><div class="menu-row"><a href="./stats.html">stats</a></div></li><li class="open"><div class="menu-row"><a href="./util.html">util</a></div></li><li class="open"><div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="./vmath.html">vmath</a></div><ul><li><a href="./vmath.bits.html">bits</a></li><li><a href="./vmath.complex.html">complex</a></li><li><a href="./vmath.fractions.html">fractions</a></li></ul></li>
 					</ul>
 				</nav>
 			</header>
@@ -73,10 +73,13 @@ as an alternative.</p>
 <p>This library contains essential functions for linear algebra computations
 (operations between all combinations of vectors and matrices, eigenvalues and eigenvectors,
 linear solvers) and the development of numerical methods (e.g. numerical quadrature).</p>
-<p>We link VSL with existent libraries written in C and Fortran, such as OpenBLAS and LAPACK.
+<p>Optionally, we link VSL with existent libraries written in C and Fortran, such as Open BLAS and LAPACK.
 These existing libraries have been fundamental for the development of high-performant
-simulations over many years. We believe that it is nearly impossible to rewrite these
-libraries in native V and at the same time achieve the same speed delivered by them.</p>
+simulations over many years. We believe that it is possible to rewrite these
+libraries in native V and at the same time achieve the same speed delivered by them, but at the same
+time, we want to allow to the users of VSL the possibility to choose when to use these libraries
+as backend and when not. That is why each module documents the flags that allow this at the
+time of use.</p>
 <h2>Installation</h2>
 <p>Because of C dependencies and other libraries, the easiest way to work with VSL is via Docker.
 Having Docker and VS Code installed, you can start developing powerful numerical simulations
@@ -103,11 +106,13 @@ so convenient <code>v install</code> <em>or</em> <code>vpkg get</code> functiona
 First we need to install some dependencies in order to have VSL working as expected.</p>
 <h3>Install dependencies</h3>
 <p><strong>Debian/Ubuntu GNU Linux</strong></p>
+<p><code>libopenblas-dev</code> is not needed when using the pure V backend.</p>
 <pre><code class="language-sh">$ sudo apt-get install -y --no-install-recommends \
     gcc \
     gfortran \
     liblapacke-dev \
     libopenblas-dev \
+    libssl-dev \
 </code></pre>
 <p><strong>Arch Linux/Manjaro GNU Linux</strong></p>
 <pre><code class="language-sh">$ sudo pacman -S openssl
@@ -232,7 +237,7 @@ $ makepkg -si
 </section>
 
 						<div class="footer">
-							Powered by vdoc. Generated on: 13 Mar 2021 01:43:10
+							Powered by vdoc. Generated on: 24 Mar 2021 06:48:09
 						</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_vsl">README</a></li>
