@@ -3,8 +3,8 @@ module vlas
 // Panic strings used during parameter checks.
 // This list is duplicated in netlib/blas/netlib. Keep in sync.
 pub const (
-	zero_inc_x = "blas: zero x index increment"
-	zero_inc_y = "blas: zero y index increment"
+	zero_incx = "blas: zero x index increment"
+	zero_incy = "blas: zero y index increment"
 
 	mlt0  = "blas: m < 0"
 	nlt0  = "blas: n < 0"
@@ -24,7 +24,7 @@ pub const (
 
 	short_x   = "blas: insufficient length of x"
 	short_y   = "blas: insufficient length of y"
-	short_a_p = "blas: insufficient length of ap"
+	short_ap  = "blas: insufficient length of ap"
 	short_a   = "blas: insufficient length of a"
 	short_b   = "blas: insufficient length of b"
 	short_c   = "blas: insufficient length of c"

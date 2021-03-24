@@ -1,18 +1,24 @@
 module vlas
 
+pub type Transpose = u32
+
+pub type Uplo = u32
+
+pub type Diagonal = u32
+
 pub const (
 	lapack_row_major    = 101
 	lapack_col_major    = 102
-	cblas_row_major     = u32(101)
-	cblas_col_major     = u32(102)
-	cblas_no_trans      = u32(111)
-	cblas_trans         = u32(112)
-	cblas_conj_trans    = u32(113)
-	cblas_conj_no_trans = u32(114)
-	cblas_upper         = u32(121)
-	cblas_lower         = u32(122)
-	cblas_non_unit      = u32(131)
-	cblas_unit          = u32(132)
-	cblas_left          = u32(141)
-	cblas_right         = u32(142)
+	blas_row_major     = u32(101)
+	blas_col_major     = u32(102)
+	blas_no_trans      = Transpose(111)
+	blas_trans         = Transpose(112)
+	blas_conj_trans    = Transpose(113)
+	blas_conj_no_trans = Transpose(114)
+	blas_upper         = Uplo(121)
+	blas_lower         = Uplo(122)
+	blas_non_unit      = Diagonal(131)
+	blas_unit          = Diagonal(132)
+	blas_left          = u32(141)
+	blas_right         = u32(142)
 )
