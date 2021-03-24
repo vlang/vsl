@@ -27,17 +27,17 @@ pub fn ddot(n int, x []f64, incx int, y []f64, incy int) f64 {
 		return float64.dot_unitary(x[..n], y[..n])
 	}
 	mut ix := 0
-        mut iy := 0
+	mut iy := 0
 	if incx < 0 {
 		ix = (-n + 1) * incx
 	}
 	if incy < 0 {
 		iy = (-n + 1) * incy
 	}
-	if ix >= x.len || ix+(n-1)*incx >= x.len {
+	if ix >= x.len || ix + (n - 1) * incx >= x.len {
 		panic(short_x)
 	}
-	if iy >= y.len || iy+(n-1)*incy >= y.len {
+	if iy >= y.len || iy + (n - 1) * incy >= y.len {
 		panic(short_y)
 	}
 	return float64.dot_inc(x, y, u32(n), u32(incx), u32(incy), u32(ix), u32(iy))

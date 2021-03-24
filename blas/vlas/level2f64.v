@@ -30,13 +30,13 @@ pub fn dger(m int, n int, alpha f64, x []f64, incx int, y []f64, incy int, mut a
 	}
 
 	// For zero matrix size the following slice length checks are trivially satisfied.
-	if (incx > 0 && x.len <= (m-1)*incx) || (incx < 0 && x.len <= (1-m)*incx) {
+	if (incx > 0 && x.len <= (m - 1) * incx) || (incx < 0 && x.len <= (1 - m) * incx) {
 		panic(short_x)
 	}
-	if (incy > 0 && y.len <= (n-1)*incy) || (incy < 0 && y.len <= (1-n)*incy) {
+	if (incy > 0 && y.len <= (n - 1) * incy) || (incy < 0 && y.len <= (1 - n) * incy) {
 		panic(short_y)
 	}
-	if a.len < lda*(m-1)+n {
+	if a.len < lda * (m - 1) + n {
 		panic(short_a)
 	}
 
@@ -44,11 +44,7 @@ pub fn dger(m int, n int, alpha f64, x []f64, incx int, y []f64, incy int, mut a
 	if alpha == 0 {
 		return
 	}
-	float64.ger(u32(m), u32(n),
-		alpha,
-		x, u32(incx),
-		y, u32(incy),
-		mut a, u32(lda))
+	float64.ger(u32(m), u32(n), alpha, x, u32(incx), y, u32(incy), mut a, u32(lda))
 }
 
 // dgbmv performs one of the matrix-vector operations
@@ -72,7 +68,7 @@ pub fn dgbmv(trans_a Transpose, m int, n int, kl int, ku int, alpha f64, a []f64
 	if ku < 0 {
 		panic(kult0)
 	}
-	if lda < kl+ku+1 {
+	if lda < kl + ku + 1 {
 		panic(bad_ld_a)
 	}
 	if incx == 0 {
@@ -88,7 +84,7 @@ pub fn dgbmv(trans_a Transpose, m int, n int, kl int, ku int, alpha f64, a []f64
 	}
 
 	// For zero matrix size the following slice length checks are trivially satisfied.
-	if a.len < lda*(util.imin(m, n+kl)-1)+kl+ku+1 {
+	if a.len < lda * (util.imin(m, n + kl) - 1) + kl + ku + 1 {
 		panic(short_a)
 	}
 	mut len_x := m
@@ -97,10 +93,10 @@ pub fn dgbmv(trans_a Transpose, m int, n int, kl int, ku int, alpha f64, a []f64
 		len_x = n
 		len_y = m
 	}
-	if (incx > 0 && x.len <= (len_x-1)*incx) || (incx < 0 && x.len <= (1-len_x)*incx) {
+	if (incx > 0 && x.len <= (len_x - 1) * incx) || (incx < 0 && x.len <= (1 - len_x) * incx) {
 		panic(short_x)
 	}
-	if (incy > 0 && y.len <= (len_y-1)*incy) || (incy < 0 && y.len <= (1-len_y)*incy) {
+	if (incy > 0 && y.len <= (len_y - 1) * incy) || (incy < 0 && y.len <= (1 - len_y) * incy) {
 		panic(short_y)
 	}
 
@@ -110,7 +106,7 @@ pub fn dgbmv(trans_a Transpose, m int, n int, kl int, ku int, alpha f64, a []f64
 	}
 
 	mut kx := 0
-        mut ky := 0
+	mut ky := 0
 	if incx < 0 {
 		kx = -(len_x - 1) * incx
 	}
@@ -155,12 +151,12 @@ pub fn dgbmv(trans_a Transpose, m int, n int, kl int, ku int, alpha f64, a []f64
 	if trans_a == blas_no_trans {
 		mut iy := ky
 		if incx == 1 {
-			for i in 0 .. util.imin(m, n+kl) {
-				l := util.imax(0, kl-i)
-				u := util.imin(n_col, n+kl-i)
-				off := util.imax(0, i-kl)
-				atmp := a[i*lda+l..i*lda+u]
-				xtmp := x[off..off+u-l]
+			for i in 0 .. util.imin(m, n + kl) {
+				l := util.imax(0, kl - i)
+				u := util.imin(n_col, n + kl - i)
+				off := util.imax(0, i - kl)
+				atmp := a[i * lda + l..i * lda + u]
+				xtmp := x[off..off + u - l]
 				mut sum := 0.0
 				for j, v in atmp {
 					sum += xtmp[j] * v
@@ -170,15 +166,15 @@ pub fn dgbmv(trans_a Transpose, m int, n int, kl int, ku int, alpha f64, a []f64
 			}
 			return
 		}
-		for i in 0 .. util.imin(m, n+kl) {
-			l := util.imax(0, kl-i)
-			u := util.imin(n_col, n+kl-i)
-			off := util.imax(0, i-kl)
-			atmp := a[i*lda+l..i*lda+u]
+		for i in 0 .. util.imin(m, n + kl) {
+			l := util.imax(0, kl - i)
+			u := util.imin(n_col, n + kl - i)
+			off := util.imax(0, i - kl)
+			atmp := a[i * lda + l..i * lda + u]
 			mut jx := kx
 			mut sum := 0.0
 			for v in atmp {
-				sum += x[off*incx+jx] * v
+				sum += x[off * incx + jx] * v
 				jx += incx
 			}
 			y[iy] += sum * alpha
@@ -187,30 +183,30 @@ pub fn dgbmv(trans_a Transpose, m int, n int, kl int, ku int, alpha f64, a []f64
 		return
 	}
 	if incx == 1 {
-		for i in 0 .. util.imin(m, n+kl) {
-			l := util.imax(0, kl-i)
-			u := util.imin(n_col, n+kl-i)
-			off := util.imax(0, i-kl)
-			atmp := a[i*lda+l..i*lda+u]
+		for i in 0 .. util.imin(m, n + kl) {
+			l := util.imax(0, kl - i)
+			u := util.imin(n_col, n + kl - i)
+			off := util.imax(0, i - kl)
+			atmp := a[i * lda + l..i * lda + u]
 			tmp := alpha * x[i]
 			mut jy := ky
 			for v in atmp {
-				y[jy+off*incy] += tmp * v
+				y[jy + off * incy] += tmp * v
 				jy += incy
 			}
 		}
 		return
 	}
 	mut ix := kx
-	for i in 0 .. util.imin(m, n+kl) {
-		l := util.imax(0, kl-i)
-		u := util.imin(n_col, n+kl-i)
-		off := util.imax(0, i-kl)
-		atmp := a[i*lda+l..i*lda+u]
+	for i in 0 .. util.imin(m, n + kl) {
+		l := util.imax(0, kl - i)
+		u := util.imin(n_col, n + kl - i)
+		off := util.imax(0, i - kl)
+		atmp := a[i * lda + l..i * lda + u]
 		tmp := alpha * x[ix]
 		mut jy := ky
 		for v in atmp {
-			y[jy+off*incy] += tmp * v
+			y[jy + off * incy] += tmp * v
 			jy += incy
 		}
 		ix += incx
@@ -247,10 +243,10 @@ pub fn dtrmv(ul Uplo, trans_a Transpose, d Diagonal, n int, a []f64, lda int, mu
 	}
 
 	// For zero matrix size the following slice length checks are trivially satisfied.
-	if a.len < lda*(n-1)+n {
+	if a.len < lda * (n - 1) + n {
 		panic(short_a)
 	}
-	if (incx > 0 && x.len <= (n-1)*incx) || (incx < 0 && x.len <= (1-n)*incx) {
+	if (incx > 0 && x.len <= (n - 1) * incx) || (incx < 0 && x.len <= (1 - n) * incx) {
 		panic(short_x)
 	}
 
@@ -272,11 +268,11 @@ pub fn dtrmv(ul Uplo, trans_a Transpose, d Diagonal, n int, a []f64, lda int, mu
 					ilda := i * lda
 					mut tmp := 0.0
 					if non_unit {
-						tmp = a[ilda+i] * x[i]
+						tmp = a[ilda + i] * x[i]
 					} else {
 						tmp = x[i]
 					}
-					x[i] = tmp + float64.dot_unitary(a[ilda+i+1..ilda+n], x[i+1..n])
+					x[i] = tmp + float64.dot_unitary(a[ilda + i + 1..ilda + n], x[i + 1..n])
 				}
 				return
 			}
@@ -285,11 +281,12 @@ pub fn dtrmv(ul Uplo, trans_a Transpose, d Diagonal, n int, a []f64, lda int, mu
 				ilda := i * lda
 				mut tmp := 0.0
 				if non_unit {
-					tmp = a[ilda+i] * x[ix]
+					tmp = a[ilda + i] * x[ix]
 				} else {
 					tmp = x[ix]
 				}
-				x[ix] = tmp + float64.dot_inc(x, a[ilda+i+1..ilda+n], u32(n-i-1), u32(incx), 1, u32(ix+incx), 0)
+				x[ix] = tmp + float64.dot_inc(x, a[ilda + i + 1..ilda +
+					n], u32(n - i - 1), u32(incx), 1, u32(ix + incx), 0)
 				ix += incx
 			}
 			return
@@ -299,24 +296,24 @@ pub fn dtrmv(ul Uplo, trans_a Transpose, d Diagonal, n int, a []f64, lda int, mu
 				ilda := i * lda
 				mut tmp := 0.0
 				if non_unit {
-					tmp += a[ilda+i] * x[i]
+					tmp += a[ilda + i] * x[i]
 				} else {
 					tmp = x[i]
 				}
-				x[i] = tmp + float64.dot_unitary(a[ilda..ilda+i], x[..i])
+				x[i] = tmp + float64.dot_unitary(a[ilda..ilda + i], x[..i])
 			}
 			return
 		}
-		mut ix := kx + (n-1)*incx
+		mut ix := kx + (n - 1) * incx
 		for i := n - 1; i >= 0; i-- {
 			ilda := i * lda
 			mut tmp := 0.0
 			if non_unit {
-				tmp = a[ilda+i] * x[ix]
+				tmp = a[ilda + i] * x[ix]
 			} else {
 				tmp = x[ix]
 			}
-			x[ix] = tmp + float64.dot_inc(x, a[ilda..ilda+i], u32(i), u32(incx), 1, u32(kx), 0)
+			x[ix] = tmp + float64.dot_inc(x, a[ilda..ilda + i], u32(i), u32(incx), 1, u32(kx), 0)
 			ix -= incx
 		}
 		return
@@ -327,20 +324,21 @@ pub fn dtrmv(ul Uplo, trans_a Transpose, d Diagonal, n int, a []f64, lda int, mu
 			for i := n - 1; i >= 0; i-- {
 				ilda := i * lda
 				xi := x[i]
-				float64.axpy_unitary(xi, a[ilda+i+1..ilda+n], mut x[i+1..n])
+				float64.axpy_unitary(xi, a[ilda + i + 1..ilda + n], mut x[i + 1..n])
 				if non_unit {
-					x[i] *= a[ilda+i]
+					x[i] *= a[ilda + i]
 				}
 			}
 			return
 		}
-		mut ix := kx + (n-1)*incx
+		mut ix := kx + (n - 1) * incx
 		for i := n - 1; i >= 0; i-- {
 			ilda := i * lda
 			xi := x[ix]
-			float64.axpy_inc(xi, a[ilda+i+1..ilda+n], mut x, u32(n-i-1), 1, u32(incx), 0, u32(kx+(i+1)*incx))
+			float64.axpy_inc(xi, a[ilda + i + 1..ilda + n], mut x, u32(n - i - 1), 1,
+				u32(incx), 0, u32(kx + (i + 1) * incx))
 			if non_unit {
-				x[ix] *= a[ilda+i]
+				x[ix] *= a[ilda + i]
 			}
 			ix -= incx
 		}
@@ -350,9 +348,9 @@ pub fn dtrmv(ul Uplo, trans_a Transpose, d Diagonal, n int, a []f64, lda int, mu
 		for i in 0 .. n {
 			ilda := i * lda
 			xi := x[i]
-			float64.axpy_unitary(xi, a[ilda..ilda+i], mut x[..i])
+			float64.axpy_unitary(xi, a[ilda..ilda + i], mut x[..i])
 			if non_unit {
-				x[i] *= a[i*lda+i]
+				x[i] *= a[i * lda + i]
 			}
 		}
 		return
@@ -361,9 +359,9 @@ pub fn dtrmv(ul Uplo, trans_a Transpose, d Diagonal, n int, a []f64, lda int, mu
 	for i in 0 .. n {
 		ilda := i * lda
 		xi := x[ix]
-		float64.axpy_inc(xi, a[ilda..ilda+i], mut x, u32(i), 1, u32(incx), 0, u32(kx))
+		float64.axpy_inc(xi, a[ilda..ilda + i], mut x, u32(i), 1, u32(incx), 0, u32(kx))
 		if non_unit {
-			x[ix] *= a[ilda+i]
+			x[ix] *= a[ilda + i]
 		}
 		ix += incx
 	}
@@ -405,10 +403,10 @@ pub fn dtrsv(ul Uplo, trans_a Transpose, d Diagonal, n int, a []f64, lda int, mu
 	}
 
 	// For zero matrix size the following slice length checks are trivially satisfied.
-	if a.len < lda*(n-1)+n {
+	if a.len < lda * (n - 1) + n {
 		panic(short_a)
 	}
-	if (incx > 0 && x.len <= (n-1)*incx) || (incx < 0 && x.len <= (1-n)*incx) {
+	if (incx > 0 && x.len <= (n - 1) * incx) || (incx < 0 && x.len <= (1 - n) * incx) {
 		panic(short_x)
 	}
 
@@ -429,30 +427,30 @@ pub fn dtrsv(ul Uplo, trans_a Transpose, d Diagonal, n int, a []f64, lda int, mu
 			if incx == 1 {
 				for i := n - 1; i >= 0; i-- {
 					mut sum := 0.0
-					atmp := a[i*lda+i+1..i*lda+n]
+					atmp := a[i * lda + i + 1..i * lda + n]
 					for j, v in atmp {
 						jv := i + j + 1
 						sum += x[jv] * v
 					}
 					x[i] -= sum
 					if non_unit {
-						x[i] /= a[i*lda+i]
+						x[i] /= a[i * lda + i]
 					}
 				}
 				return
 			}
-			mut ix := kx + (n-1)*incx
+			mut ix := kx + (n - 1) * incx
 			for i := n - 1; i >= 0; i-- {
 				mut sum := 0.0
 				mut jx := ix + incx
-				atmp := a[i*lda+i+1..i*lda+n]
+				atmp := a[i * lda + i + 1..i * lda + n]
 				for v in atmp {
 					sum += x[jx] * v
 					jx += incx
 				}
 				x[ix] -= sum
 				if non_unit {
-					x[ix] /= a[i*lda+i]
+					x[ix] /= a[i * lda + i]
 				}
 				ix -= incx
 			}
@@ -461,13 +459,13 @@ pub fn dtrsv(ul Uplo, trans_a Transpose, d Diagonal, n int, a []f64, lda int, mu
 		if incx == 1 {
 			for i in 0 .. n {
 				mut sum := 0.0
-				atmp := a[i*lda..i*lda+i]
+				atmp := a[i * lda..i * lda + i]
 				for j, v in atmp {
 					sum += x[j] * v
 				}
 				x[i] -= sum
 				if non_unit {
-					x[i] /= a[i*lda+i]
+					x[i] /= a[i * lda + i]
 				}
 			}
 			return
@@ -476,14 +474,14 @@ pub fn dtrsv(ul Uplo, trans_a Transpose, d Diagonal, n int, a []f64, lda int, mu
 		for i in 0 .. n {
 			mut jx := kx
 			mut sum := 0.0
-			atmp := a[i*lda..i*lda+i]
+			atmp := a[i * lda..i * lda + i]
 			for v in atmp {
 				sum += x[jx] * v
 				jx += incx
 			}
 			x[ix] -= sum
 			if non_unit {
-				x[ix] /= a[i*lda+i]
+				x[ix] /= a[i * lda + i]
 			}
 			ix += incx
 		}
@@ -494,10 +492,10 @@ pub fn dtrsv(ul Uplo, trans_a Transpose, d Diagonal, n int, a []f64, lda int, mu
 		if incx == 1 {
 			for i in 0 .. n {
 				if non_unit {
-					x[i] /= a[i*lda+i]
+					x[i] /= a[i * lda + i]
 				}
 				xi := x[i]
-				atmp := a[i*lda+i+1..i*lda+n]
+				atmp := a[i * lda + i + 1..i * lda + n]
 				for j, v in atmp {
 					jv := j + i + 1
 					x[jv] -= v * xi
@@ -508,11 +506,11 @@ pub fn dtrsv(ul Uplo, trans_a Transpose, d Diagonal, n int, a []f64, lda int, mu
 		mut ix := kx
 		for i in 0 .. n {
 			if non_unit {
-				x[ix] /= a[i*lda+i]
+				x[ix] /= a[i * lda + i]
 			}
 			xi := x[ix]
-			mut jx := kx + (i+1)*incx
-			atmp := a[i*lda+i+1..i*lda+n]
+			mut jx := kx + (i + 1) * incx
+			atmp := a[i * lda + i + 1..i * lda + n]
 			for v in atmp {
 				x[jx] -= v * xi
 				jx += incx
@@ -524,24 +522,24 @@ pub fn dtrsv(ul Uplo, trans_a Transpose, d Diagonal, n int, a []f64, lda int, mu
 	if incx == 1 {
 		for i := n - 1; i >= 0; i-- {
 			if non_unit {
-				x[i] /= a[i*lda+i]
+				x[i] /= a[i * lda + i]
 			}
 			xi := x[i]
-			atmp := a[i*lda..i*lda+i]
+			atmp := a[i * lda..i * lda + i]
 			for j, v in atmp {
 				x[j] -= v * xi
 			}
 		}
 		return
 	}
-	mut ix := kx + (n-1)*incx
+	mut ix := kx + (n - 1) * incx
 	for i := n - 1; i >= 0; i-- {
 		if non_unit {
-			x[ix] /= a[i*lda+i]
+			x[ix] /= a[i * lda + i]
 		}
 		xi := x[ix]
 		mut jx := kx
-		atmp := a[i*lda..i*lda+i]
+		atmp := a[i * lda..i * lda + i]
 		for v in atmp {
 			x[jx] -= v * xi
 			jx += incx
@@ -577,13 +575,13 @@ pub fn dsymv(ul Uplo, n int, alpha f64, a []f64, lda int, x []f64, incx int, bet
 	}
 
 	// For zero matrix size the following slice length checks are trivially satisfied.
-	if a.len < lda*(n-1)+n {
+	if a.len < lda * (n - 1) + n {
 		panic(short_a)
 	}
-	if (incx > 0 && x.len <= (n-1)*incx) || (incx < 0 && x.len <= (1-n)*incx) {
+	if (incx > 0 && x.len <= (n - 1) * incx) || (incx < 0 && x.len <= (1 - n) * incx) {
 		panic(short_x)
 	}
-	if (incy > 0 && y.len <= (n-1)*incy) || (incy < 0 && y.len <= (1-n)*incy) {
+	if (incy > 0 && y.len <= (n - 1) * incy) || (incy < 0 && y.len <= (1 - n) * incy) {
 		panic(short_y)
 	}
 
@@ -594,7 +592,7 @@ pub fn dsymv(ul Uplo, n int, alpha f64, a []f64, lda int, x []f64, incx int, bet
 
 	// Set up start points
 	mut kx := 0
-        mut ky := 0
+	mut ky := 0
 	if incx < 0 {
 		kx = -(n - 1) * incx
 	}
@@ -643,9 +641,9 @@ pub fn dsymv(ul Uplo, n int, alpha f64, a []f64, lda int, x []f64, incx int, bet
 			mut iy := ky
 			for i in 0 .. n {
 				xv := x[i] * alpha
-				mut sum := x[i] * a[i*lda+i]
-				mut jy := ky + (i+1)*incy
-				atmp := a[i*lda+i+1..i*lda+n]
+				mut sum := x[i] * a[i * lda + i]
+				mut jy := ky + (i + 1) * incy
+				atmp := a[i * lda + i + 1..i * lda + n]
 				for j, v in atmp {
 					jp := j + i + 1
 					sum += x[jp] * v
@@ -661,10 +659,10 @@ pub fn dsymv(ul Uplo, n int, alpha f64, a []f64, lda int, x []f64, incx int, bet
 		mut iy := ky
 		for i in 0 .. n {
 			xv := x[ix] * alpha
-			mut sum := x[ix] * a[i*lda+i]
-			mut jx := kx + (i+1)*incx
-			mut jy := ky + (i+1)*incy
-			atmp := a[i*lda+i+1..i*lda+n]
+			mut sum := x[ix] * a[i * lda + i]
+			mut jx := kx + (i + 1) * incx
+			mut jy := ky + (i + 1) * incy
+			atmp := a[i * lda + i + 1..i * lda + n]
 			for v in atmp {
 				sum += x[jx] * v
 				y[jy] += xv * v
@@ -683,14 +681,14 @@ pub fn dsymv(ul Uplo, n int, alpha f64, a []f64, lda int, x []f64, incx int, bet
 		for i in 0 .. n {
 			mut jy := ky
 			xv := alpha * x[i]
-			atmp := a[i*lda..i*lda+i]
+			atmp := a[i * lda..i * lda + i]
 			mut sum := 0.0
 			for j, v in atmp {
 				sum += x[j] * v
 				y[jy] += xv * v
 				jy += incy
 			}
-			sum += x[i] * a[i*lda+i]
+			sum += x[i] * a[i * lda + i]
 			sum *= alpha
 			y[iy] += sum
 			iy += incy
@@ -703,7 +701,7 @@ pub fn dsymv(ul Uplo, n int, alpha f64, a []f64, lda int, x []f64, incx int, bet
 		mut jx := kx
 		mut jy := ky
 		xv := alpha * x[ix]
-		atmp := a[i*lda..i*lda+i]
+		atmp := a[i * lda..i * lda + i]
 		mut sum := 0.0
 		for v in atmp {
 			sum += x[jx] * v
@@ -711,7 +709,7 @@ pub fn dsymv(ul Uplo, n int, alpha f64, a []f64, lda int, x []f64, incx int, bet
 			jx += incx
 			jy += incy
 		}
-		sum += x[ix] * a[i*lda+i]
+		sum += x[ix] * a[i * lda + i]
 		sum *= alpha
 		y[iy] += sum
 		ix += incx
@@ -739,7 +737,7 @@ pub fn dtbmv(ul Uplo, trans_a Transpose, d Diagonal, n int, k int, a []f64, lda 
 	if k < 0 {
 		panic(klt0)
 	}
-	if lda < k+1 {
+	if lda < k + 1 {
 		panic(bad_ld_a)
 	}
 	if incx == 0 {
@@ -752,10 +750,10 @@ pub fn dtbmv(ul Uplo, trans_a Transpose, d Diagonal, n int, k int, a []f64, lda 
 	}
 
 	// For zero matrix size the following slice length checks are trivially satisfied.
-	if a.len < lda*(n-1)+k+1 {
+	if a.len < lda * (n - 1) + k + 1 {
 		panic(short_a)
 	}
-	if (incx > 0 && x.len <= (n-1)*incx) || (incx < 0 && x.len <= (1-n)*incx) {
+	if (incx > 0 && x.len <= (n - 1) * incx) || (incx < 0 && x.len <= (1 - n) * incx) {
 		panic(short_x)
 	}
 
@@ -770,9 +768,9 @@ pub fn dtbmv(ul Uplo, trans_a Transpose, d Diagonal, n int, k int, a []f64, lda 
 		if ul == blas_upper {
 			if incx == 1 {
 				for i in 0 .. n {
-					u := util.imin(1+k, n-i)
+					u := util.imin(1 + k, n - i)
 					mut sum := 0.0
-					mut atmp := a[i*lda..]
+					mut atmp := a[i * lda..]
 					xtmp := x[i..]
 					for j := 1; j < u; j++ {
 						sum += xtmp[j] * atmp[j]
@@ -788,12 +786,12 @@ pub fn dtbmv(ul Uplo, trans_a Transpose, d Diagonal, n int, k int, a []f64, lda 
 			}
 			mut ix := kx
 			for i in 0 .. n {
-				u := util.imin(1+k, n-i)
+				u := util.imin(1 + k, n - i)
 				mut sum := 0.0
-				atmp := a[i*lda..]
+				atmp := a[i * lda..]
 				mut jx := incx
 				for j := 1; j < u; j++ {
-					sum += x[ix+jx] * atmp[j]
+					sum += x[ix + jx] * atmp[j]
 					jx += incx
 				}
 				if nonunit {
@@ -808,11 +806,11 @@ pub fn dtbmv(ul Uplo, trans_a Transpose, d Diagonal, n int, k int, a []f64, lda 
 		}
 		if incx == 1 {
 			for i := n - 1; i >= 0; i-- {
-				l := util.imax(0, k-i)
-				atmp := a[i*lda..]
+				l := util.imax(0, k - i)
+				atmp := a[i * lda..]
 				mut sum := 0.0
 				for j := l; j < k; j++ {
-					sum += x[i-k+j] * atmp[j]
+					sum += x[i - k + j] * atmp[j]
 				}
 				if nonunit {
 					sum += x[i] * atmp[k]
@@ -823,14 +821,14 @@ pub fn dtbmv(ul Uplo, trans_a Transpose, d Diagonal, n int, k int, a []f64, lda 
 			}
 			return
 		}
-		mut ix := kx + (n-1)*incx
+		mut ix := kx + (n - 1) * incx
 		for i := n - 1; i >= 0; i-- {
-			l := util.imax(0, k-i)
-			atmp := a[i*lda..]
+			l := util.imax(0, k - i)
+			atmp := a[i * lda..]
 			mut sum := 0.0
 			mut jx := l * incx
 			for j := l; j < k; j++ {
-				sum += x[ix-k*incx+jx] * atmp[j]
+				sum += x[ix - k * incx + jx] * atmp[j]
 				jx += incx
 			}
 			if nonunit {
@@ -852,10 +850,10 @@ pub fn dtbmv(ul Uplo, trans_a Transpose, d Diagonal, n int, k int, a []f64, lda 
 				}
 				mut sum := 0.0
 				for j := 1; j < u; j++ {
-					sum += x[i-j] * a[(i-j)*lda+j]
+					sum += x[i - j] * a[(i - j) * lda + j]
 				}
 				if nonunit {
-					sum += x[i] * a[i*lda]
+					sum += x[i] * a[i * lda]
 				} else {
 					sum += x[i]
 				}
@@ -863,7 +861,7 @@ pub fn dtbmv(ul Uplo, trans_a Transpose, d Diagonal, n int, k int, a []f64, lda 
 			}
 			return
 		}
-		mut ix := kx + (n-1)*incx
+		mut ix := kx + (n - 1) * incx
 		for i := n - 1; i >= 0; i-- {
 			mut u := k + 1
 			if i < u {
@@ -872,11 +870,11 @@ pub fn dtbmv(ul Uplo, trans_a Transpose, d Diagonal, n int, k int, a []f64, lda 
 			mut sum := 0.0
 			mut jx := incx
 			for j := 1; j < u; j++ {
-				sum += x[ix-jx] * a[(i-j)*lda+j]
+				sum += x[ix - jx] * a[(i - j) * lda + j]
 				jx += incx
 			}
 			if nonunit {
-				sum += x[ix] * a[i*lda]
+				sum += x[ix] * a[i * lda]
 			} else {
 				sum += x[ix]
 			}
@@ -888,15 +886,15 @@ pub fn dtbmv(ul Uplo, trans_a Transpose, d Diagonal, n int, k int, a []f64, lda 
 	if incx == 1 {
 		for i in 0 .. n {
 			mut u := k
-			if i+k >= n {
+			if i + k >= n {
 				u = n - i - 1
 			}
 			mut sum := 0.0
 			for j := 0; j < u; j++ {
-				sum += x[i+j+1] * a[(i+j+1)*lda+k-j-1]
+				sum += x[i + j + 1] * a[(i + j + 1) * lda + k - j - 1]
 			}
 			if nonunit {
-				sum += x[i] * a[i*lda+k]
+				sum += x[i] * a[i * lda + k]
 			} else {
 				sum += x[i]
 			}
@@ -907,17 +905,17 @@ pub fn dtbmv(ul Uplo, trans_a Transpose, d Diagonal, n int, k int, a []f64, lda 
 	mut ix := kx
 	for i in 0 .. n {
 		mut u := k
-		if i+k >= n {
+		if i + k >= n {
 			u = n - i - 1
 		}
-                mut sum := 0.0
-                mut jx := 0
+		mut sum := 0.0
+		mut jx := 0
 		for j := 0; j < u; j++ {
-			sum += x[ix+jx+incx] * a[(i+j+1)*lda+k-j-1]
+			sum += x[ix + jx + incx] * a[(i + j + 1) * lda + k - j - 1]
 			jx += incx
 		}
 		if nonunit {
-			sum += x[ix] * a[i*lda+k]
+			sum += x[ix] * a[i * lda + k]
 		} else {
 			sum += x[ix]
 		}
@@ -953,10 +951,10 @@ pub fn dtpmv(ul Uplo, trans_a Transpose, d Diagonal, n int, ap []f64, mut x []f6
 	}
 
 	// For zero matrix size the following slice length checks are trivially satisfied.
-	if ap.len < n*(n+1)/2 {
+	if ap.len < n * (n + 1) / 2 {
 		panic(short_ap)
 	}
-	if (incx > 0 && x.len <= (n-1)*incx) || (incx < 0 && x.len <= (1-n)*incx) {
+	if (incx > 0 && x.len <= (n - 1) * incx) || (incx < 0 && x.len <= (1 - n) * incx) {
 		panic(short_x)
 	}
 
@@ -975,8 +973,8 @@ pub fn dtpmv(ul Uplo, trans_a Transpose, d Diagonal, n int, ap []f64, mut x []f6
 					if non_unit {
 						xi *= ap[offset]
 					}
-					atmp := ap[offset+1..offset+n-i]
-					xtmp := x[i+1..]
+					atmp := ap[offset + 1..offset + n - i]
+					xtmp := x[i + 1..]
 					for j, v in atmp {
 						xi += v * xtmp[j]
 					}
@@ -991,8 +989,8 @@ pub fn dtpmv(ul Uplo, trans_a Transpose, d Diagonal, n int, ap []f64, mut x []f6
 				if non_unit {
 					xix *= ap[offset]
 				}
-				atmp := ap[offset+1..offset+n-i]
-				mut jx := kx + (i+1)*incx
+				atmp := ap[offset + 1..offset + n - i]
+				mut jx := kx + (i + 1) * incx
 				for v in atmp {
 					xix += v * x[jx]
 					jx += incx
@@ -1004,13 +1002,13 @@ pub fn dtpmv(ul Uplo, trans_a Transpose, d Diagonal, n int, ap []f64, mut x []f6
 			return
 		}
 		if incx == 1 {
-			offset = n*(n+1)/2 - 1
+			offset = n * (n + 1) / 2 - 1
 			for i := n - 1; i >= 0; i-- {
 				mut xi := x[i]
 				if non_unit {
 					xi *= ap[offset]
 				}
-				atmp := ap[offset-i..offset]
+				atmp := ap[offset - i..offset]
 				for j, v in atmp {
 					xi += v * x[j]
 				}
@@ -1019,14 +1017,14 @@ pub fn dtpmv(ul Uplo, trans_a Transpose, d Diagonal, n int, ap []f64, mut x []f6
 			}
 			return
 		}
-		mut ix := kx + (n-1)*incx
-		offset = n*(n+1)/2 - 1
+		mut ix := kx + (n - 1) * incx
+		offset = n * (n + 1) / 2 - 1
 		for i := n - 1; i >= 0; i-- {
 			mut xix := x[ix]
 			if non_unit {
 				xix *= ap[offset]
 			}
-			atmp := ap[offset-i..offset]
+			atmp := ap[offset - i..offset]
 			mut jx := kx
 			for v in atmp {
 				xix += v * x[jx]
@@ -1041,11 +1039,11 @@ pub fn dtpmv(ul Uplo, trans_a Transpose, d Diagonal, n int, ap []f64, mut x []f6
 	// Cases where ap is transposed.
 	if ul == blas_upper {
 		if incx == 1 {
-			offset = n*(n+1)/2 - 1
+			offset = n * (n + 1) / 2 - 1
 			for i := n - 1; i >= 0; i-- {
 				xi := x[i]
-				atmp := ap[offset+1..offset+n-i]
-				mut xtmp := x[i+1..]
+				atmp := ap[offset + 1..offset + n - i]
+				mut xtmp := x[i + 1..]
 				for j, v in atmp {
 					xtmp[j] += v * xi
 				}
@@ -1056,12 +1054,12 @@ pub fn dtpmv(ul Uplo, trans_a Transpose, d Diagonal, n int, ap []f64, mut x []f6
 			}
 			return
 		}
-		mut ix := kx + (n-1)*incx
-		offset = n*(n+1)/2 - 1
+		mut ix := kx + (n - 1) * incx
+		offset = n * (n + 1) / 2 - 1
 		for i := n - 1; i >= 0; i-- {
 			xix := x[ix]
-			mut jx := kx + (i+1)*incx
-			atmp := ap[offset+1..offset+n-i]
+			mut jx := kx + (i + 1) * incx
+			atmp := ap[offset + 1..offset + n - i]
 			for v in atmp {
 				x[jx] += v * xix
 				jx += incx
@@ -1077,7 +1075,7 @@ pub fn dtpmv(ul Uplo, trans_a Transpose, d Diagonal, n int, ap []f64, mut x []f6
 	if incx == 1 {
 		for i in 0 .. n {
 			xi := x[i]
-			atmp := ap[offset-i..offset]
+			atmp := ap[offset - i..offset]
 			for j, v in atmp {
 				x[j] += v * xi
 			}
@@ -1092,7 +1090,7 @@ pub fn dtpmv(ul Uplo, trans_a Transpose, d Diagonal, n int, ap []f64, mut x []f6
 	for i in 0 .. n {
 		xix := x[ix]
 		mut jx := kx
-		atmp := ap[offset-i..offset]
+		atmp := ap[offset - i..offset]
 		for v in atmp {
 			x[jx] += v * xix
 			jx += incx
@@ -1132,7 +1130,7 @@ pub fn dtbsv(ul Uplo, trans_a Transpose, d Diagonal, n int, k int, a []f64, lda 
 	if k < 0 {
 		panic(klt0)
 	}
-	if lda < k+1 {
+	if lda < k + 1 {
 		panic(bad_ld_a)
 	}
 	if incx == 0 {
@@ -1145,10 +1143,10 @@ pub fn dtbsv(ul Uplo, trans_a Transpose, d Diagonal, n int, k int, a []f64, lda 
 	}
 
 	// For zero matrix size the following slice length checks are trivially satisfied.
-	if a.len < lda*(n-1)+k+1 {
+	if a.len < lda * (n - 1) + k + 1 {
 		panic(short_a)
 	}
-	if (incx > 0 && x.len <= (n-1)*incx) || (incx < 0 && x.len <= (1-n)*incx) {
+	if (incx > 0 && x.len <= (n - 1) * incx) || (incx < 0 && x.len <= (1 - n) * incx) {
 		panic(short_x)
 	}
 
@@ -1165,34 +1163,34 @@ pub fn dtbsv(ul Uplo, trans_a Transpose, d Diagonal, n int, k int, a []f64, lda 
 			if incx == 1 {
 				for i := n - 1; i >= 0; i-- {
 					mut bands := k
-					if i+bands >= n {
+					if i + bands >= n {
 						bands = n - i - 1
 					}
-					atmp := a[i*lda+1..]
-					xtmp := x[i+1..i+bands+1]
+					atmp := a[i * lda + 1..]
+					xtmp := x[i + 1..i + bands + 1]
 					mut sum := 0.0
 					for j, v in xtmp {
 						sum += v * atmp[j]
 					}
 					x[i] -= sum
 					if non_unit {
-						x[i] /= a[i*lda]
+						x[i] /= a[i * lda]
 					}
 				}
 				return
 			}
-			mut ix := kx + (n-1)*incx
+			mut ix := kx + (n - 1) * incx
 			for i := n - 1; i >= 0; i-- {
 				mut max := k + 1
-				if i+max > n {
+				if i + max > n {
 					max = n - i
 				}
-				atmp := a[i*lda..]
-                                mut sum := 0.0
-                                mut jx := 0
+				atmp := a[i * lda..]
+				mut sum := 0.0
+				mut jx := 0
 				for j := 1; j < max; j++ {
 					jx += incx
-					sum += x[ix+jx] * atmp[j]
+					sum += x[ix + jx] * atmp[j]
 				}
 				x[ix] -= sum
 				if non_unit {
@@ -1205,11 +1203,11 @@ pub fn dtbsv(ul Uplo, trans_a Transpose, d Diagonal, n int, k int, a []f64, lda 
 		if incx == 1 {
 			for i in 0 .. n {
 				mut bands := k
-				if i-k < 0 {
+				if i - k < 0 {
 					bands = i
 				}
-				atmp := a[i*lda+k-bands..]
-				xtmp := x[i-bands..i]
+				atmp := a[i * lda + k - bands..]
+				xtmp := x[i - bands..i]
 				mut sum := 0.0
 				for j, v in xtmp {
 					sum += v * atmp[j]
@@ -1224,14 +1222,14 @@ pub fn dtbsv(ul Uplo, trans_a Transpose, d Diagonal, n int, k int, a []f64, lda 
 		mut ix := kx
 		for i in 0 .. n {
 			mut bands := k
-			if i-k < 0 {
+			if i - k < 0 {
 				bands = i
 			}
-			atmp := a[i*lda+k-bands..]
-                        mut sum := 0.0
-                        mut jx := 0
+			atmp := a[i * lda + k - bands..]
+			mut sum := 0.0
+			mut jx := 0
 			for j := 0; j < bands; j++ {
-				sum += x[ix-bands*incx+jx] * atmp[j]
+				sum += x[ix - bands * incx + jx] * atmp[j]
 				jx += incx
 			}
 			x[ix] -= sum
@@ -1247,16 +1245,16 @@ pub fn dtbsv(ul Uplo, trans_a Transpose, d Diagonal, n int, k int, a []f64, lda 
 		if incx == 1 {
 			for i in 0 .. n {
 				mut bands := k
-				if i-k < 0 {
+				if i - k < 0 {
 					bands = i
 				}
 				mut sum := 0.0
 				for j := 0; j < bands; j++ {
-					sum += x[i-bands+j] * a[(i-bands+j)*lda+bands-j]
+					sum += x[i - bands + j] * a[(i - bands + j) * lda + bands - j]
 				}
 				x[i] -= sum
 				if non_unit {
-					x[i] /= a[i*lda]
+					x[i] /= a[i * lda]
 				}
 			}
 			return
@@ -1264,18 +1262,18 @@ pub fn dtbsv(ul Uplo, trans_a Transpose, d Diagonal, n int, k int, a []f64, lda 
 		mut ix := kx
 		for i in 0 .. n {
 			mut bands := k
-			if i-k < 0 {
+			if i - k < 0 {
 				bands = i
 			}
-                        mut sum := 0.0
-                        mut jx := 0
+			mut sum := 0.0
+			mut jx := 0
 			for j := 0; j < bands; j++ {
-				sum += x[ix-bands*incx+jx] * a[(i-bands+j)*lda+bands-j]
+				sum += x[ix - bands * incx + jx] * a[(i - bands + j) * lda + bands - j]
 				jx += incx
 			}
 			x[ix] -= sum
 			if non_unit {
-				x[ix] /= a[i*lda]
+				x[ix] /= a[i * lda]
 			}
 			ix += incx
 		}
@@ -1284,36 +1282,36 @@ pub fn dtbsv(ul Uplo, trans_a Transpose, d Diagonal, n int, k int, a []f64, lda 
 	if incx == 1 {
 		for i := n - 1; i >= 0; i-- {
 			mut bands := k
-			if i+bands >= n {
+			if i + bands >= n {
 				bands = n - i - 1
 			}
 			mut sum := 0.0
-			xtmp := x[i+1..i+1+bands]
+			xtmp := x[i + 1..i + 1 + bands]
 			for j, v in xtmp {
-				sum += v * a[(i+j+1)*lda+k-j-1]
+				sum += v * a[(i + j + 1) * lda + k - j - 1]
 			}
 			x[i] -= sum
 			if non_unit {
-				x[i] /= a[i*lda+k]
+				x[i] /= a[i * lda + k]
 			}
 		}
 		return
 	}
-	mut ix := kx + (n-1)*incx
+	mut ix := kx + (n - 1) * incx
 	for i := n - 1; i >= 0; i-- {
 		mut bands := k
-		if i+bands >= n {
+		if i + bands >= n {
 			bands = n - i - 1
 		}
-                mut sum := 0.0
-                mut jx := 0
+		mut sum := 0.0
+		mut jx := 0
 		for j := 0; j < bands; j++ {
-			sum += x[ix+jx+incx] * a[(i+j+1)*lda+k-j-1]
+			sum += x[ix + jx + incx] * a[(i + j + 1) * lda + k - j - 1]
 			jx += incx
 		}
 		x[ix] -= sum
 		if non_unit {
-			x[ix] /= a[i*lda+k]
+			x[ix] /= a[i * lda + k]
 		}
 		ix -= incx
 	}
@@ -1333,7 +1331,7 @@ pub fn dsbmv(ul Uplo, n int, k int, alpha f64, a []f64, lda int, x []f64, incx i
 	if k < 0 {
 		panic(klt0)
 	}
-	if lda < k+1 {
+	if lda < k + 1 {
 		panic(bad_ld_a)
 	}
 	if incx == 0 {
@@ -1349,13 +1347,13 @@ pub fn dsbmv(ul Uplo, n int, k int, alpha f64, a []f64, lda int, x []f64, incx i
 	}
 
 	// For zero matrix size the following slice length checks are trivially satisfied.
-	if a.len < lda*(n-1)+k+1 {
+	if a.len < lda * (n - 1) + k + 1 {
 		panic(short_a)
 	}
-	if (incx > 0 && x.len <= (n-1)*incx) || (incx < 0 && x.len <= (1-n)*incx) {
+	if (incx > 0 && x.len <= (n - 1) * incx) || (incx < 0 && x.len <= (1 - n) * incx) {
 		panic(short_x)
 	}
-	if (incy > 0 && y.len <= (n-1)*incy) || (incy < 0 && y.len <= (1-n)*incy) {
+	if (incy > 0 && y.len <= (n - 1) * incy) || (incy < 0 && y.len <= (1 - n) * incy) {
 		panic(short_y)
 	}
 
@@ -1368,7 +1366,7 @@ pub fn dsbmv(ul Uplo, n int, k int, alpha f64, a []f64, lda int, x []f64, incx i
 	len_x := n
 	len_y := n
 	mut kx := 0
-        mut ky := 0
+	mut ky := 0
 	if incx < 0 {
 		kx = -(len_x - 1) * incx
 	}
@@ -1411,15 +1409,15 @@ pub fn dsbmv(ul Uplo, n int, k int, alpha f64, a []f64, lda int, x []f64, incx i
 		if incx == 1 {
 			mut iy := ky
 			for i in 0 .. n {
-				atmp := a[i*lda..]
+				atmp := a[i * lda..]
 				tmp := alpha * x[i]
 				mut sum := tmp * atmp[0]
-				u := util.imin(k, n-i-1)
+				u := util.imin(k, n - i - 1)
 				mut jy := incy
 				for j := 1; j <= u; j++ {
 					v := atmp[j]
-					sum += alpha * x[i+j] * v
-					y[iy+jy] += tmp * v
+					sum += alpha * x[i + j] * v
+					y[iy + jy] += tmp * v
 					jy += incy
 				}
 				y[iy] += sum
@@ -1430,16 +1428,16 @@ pub fn dsbmv(ul Uplo, n int, k int, alpha f64, a []f64, lda int, x []f64, incx i
 		mut ix := kx
 		mut iy := ky
 		for i in 0 .. n {
-			atmp := a[i*lda..]
+			atmp := a[i * lda..]
 			tmp := alpha * x[ix]
 			mut sum := tmp * atmp[0]
-			u := util.imin(k, n-i-1)
+			u := util.imin(k, n - i - 1)
 			mut jx := incx
 			mut jy := incy
 			for j := 1; j <= u; j++ {
 				v := atmp[j]
-				sum += alpha * x[ix+jx] * v
-				y[iy+jy] += tmp * v
+				sum += alpha * x[ix + jx] * v
+				y[iy + jy] += tmp * v
 				jx += incx
 				jy += incy
 			}
@@ -1454,14 +1452,14 @@ pub fn dsbmv(ul Uplo, n int, k int, alpha f64, a []f64, lda int, x []f64, incx i
 	if incx == 1 {
 		mut iy := ky
 		for i in 0 .. n {
-			l := util.imax(0, k-i)
+			l := util.imax(0, k - i)
 			tmp := alpha * x[i]
 			mut jy := l * incy
-			atmp := a[i*lda..]
+			atmp := a[i * lda..]
 			for j := l; j < k; j++ {
 				v := atmp[j]
-				y[iy] += alpha * v * x[i-k+j]
-				y[iy-k*incy+jy] += tmp * v
+				y[iy] += alpha * v * x[i - k + j]
+				y[iy - k * incy + jy] += tmp * v
 				jy += incy
 			}
 			y[iy] += tmp * atmp[k]
@@ -1472,15 +1470,15 @@ pub fn dsbmv(ul Uplo, n int, k int, alpha f64, a []f64, lda int, x []f64, incx i
 	mut ix := kx
 	mut iy := ky
 	for i in 0 .. n {
-		l := util.imax(0, k-i)
+		l := util.imax(0, k - i)
 		tmp := alpha * x[ix]
 		mut jx := l * incx
 		mut jy := l * incy
-		atmp := a[i*lda..]
+		atmp := a[i * lda..]
 		for j := l; j < k; j++ {
 			v := atmp[j]
-			y[iy] += alpha * v * x[ix-k*incx+jx]
-			y[iy-k*incy+jy] += tmp * v
+			y[iy] += alpha * v * x[ix - k * incx + jx]
+			y[iy - k * incy + jy] += tmp * v
 			jx += incx
 			jy += incy
 		}
@@ -1513,10 +1511,10 @@ pub fn dsyr(ul Uplo, n int, alpha f64, x []f64, incx int, mut a []f64, lda int) 
 	}
 
 	// For zero matrix size the following slice length checks are trivially satisfied.
-	if (incx > 0 && x.len <= (n-1)*incx) || (incx < 0 && x.len <= (1-n)*incx) {
+	if (incx > 0 && x.len <= (n - 1) * incx) || (incx < 0 && x.len <= (1 - n) * incx) {
 		panic(short_x)
 	}
-	if a.len < lda*(n-1)+n {
+	if a.len < lda * (n - 1) + n {
 		panic(short_a)
 	}
 
@@ -1535,7 +1533,7 @@ pub fn dsyr(ul Uplo, n int, alpha f64, x []f64, incx int, mut a []f64, lda int) 
 			for i in 0 .. n {
 				tmp := x[i] * alpha
 				if tmp != 0 {
-					mut atmp := a[i*lda+i..i*lda+n]
+					mut atmp := a[i * lda + i..i * lda + n]
 					xtmp := x[i..n]
 					for j, v in xtmp {
 						atmp[j] += v * tmp
@@ -1549,7 +1547,7 @@ pub fn dsyr(ul Uplo, n int, alpha f64, x []f64, incx int, mut a []f64, lda int) 
 			tmp := x[ix] * alpha
 			if tmp != 0 {
 				mut jx := ix
-				mut atmp := a[i*lda..]
+				mut atmp := a[i * lda..]
 				for j := i; j < n; j++ {
 					atmp[j] += x[jx] * tmp
 					jx += incx
@@ -1564,8 +1562,8 @@ pub fn dsyr(ul Uplo, n int, alpha f64, x []f64, incx int, mut a []f64, lda int) 
 		for i in 0 .. n {
 			tmp := x[i] * alpha
 			if tmp != 0 {
-				mut atmp := a[i*lda..]
-				xtmp := x[..i+1]
+				mut atmp := a[i * lda..]
+				xtmp := x[..i + 1]
 				for j, v in xtmp {
 					atmp[j] += tmp * v
 				}
@@ -1577,9 +1575,9 @@ pub fn dsyr(ul Uplo, n int, alpha f64, x []f64, incx int, mut a []f64, lda int) 
 	for i in 0 .. n {
 		tmp := x[ix] * alpha
 		if tmp != 0 {
-			mut atmp := a[i*lda..]
+			mut atmp := a[i * lda..]
 			mut jx := kx
-			for j := 0; j < i+1; j++ {
+			for j := 0; j < i + 1; j++ {
 				atmp[j] += tmp * x[jx]
 				jx += incx
 			}
@@ -1614,13 +1612,13 @@ pub fn dsyr2(ul Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, mu
 	}
 
 	// For zero matrix size the following slice length checks are trivially satisfied.
-	if (incx > 0 && x.len <= (n-1)*incx) || (incx < 0 && x.len <= (1-n)*incx) {
+	if (incx > 0 && x.len <= (n - 1) * incx) || (incx < 0 && x.len <= (1 - n) * incx) {
 		panic(short_x)
 	}
-	if (incy > 0 && y.len <= (n-1)*incy) || (incy < 0 && y.len <= (1-n)*incy) {
+	if (incy > 0 && y.len <= (n - 1) * incy) || (incy < 0 && y.len <= (1 - n) * incy) {
 		panic(short_y)
 	}
-	if a.len < lda*(n-1)+n {
+	if a.len < lda * (n - 1) + n {
 		panic(short_a)
 	}
 
@@ -1630,7 +1628,7 @@ pub fn dsyr2(ul Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, mu
 	}
 
 	mut ky := 0
-        mut kx := 0
+	mut kx := 0
 	if incy < 0 {
 		ky = -(n - 1) * incy
 	}
@@ -1642,9 +1640,9 @@ pub fn dsyr2(ul Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, mu
 			for i in 0 .. n {
 				xi := x[i]
 				yi := y[i]
-				mut atmp := a[i*lda..]
+				mut atmp := a[i * lda..]
 				for j := i; j < n; j++ {
-					atmp[j] += alpha * (xi*y[j] + x[j]*yi)
+					atmp[j] += alpha * (xi * y[j] + x[j] * yi)
 				}
 			}
 			return
@@ -1652,13 +1650,13 @@ pub fn dsyr2(ul Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, mu
 		mut ix := kx
 		mut iy := ky
 		for i in 0 .. n {
-			mut jx := kx + i*incx
-			mut jy := ky + i*incy
+			mut jx := kx + i * incx
+			mut jy := ky + i * incy
 			xi := x[ix]
 			yi := y[iy]
-			mut atmp := a[i*lda..]
+			mut atmp := a[i * lda..]
 			for j := i; j < n; j++ {
-				atmp[j] += alpha * (xi*y[jy] + x[jx]*yi)
+				atmp[j] += alpha * (xi * y[jy] + x[jx] * yi)
 				jx += incx
 				jy += incy
 			}
@@ -1671,9 +1669,9 @@ pub fn dsyr2(ul Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, mu
 		for i in 0 .. n {
 			xi := x[i]
 			yi := y[i]
-			mut atmp := a[i*lda..]
+			mut atmp := a[i * lda..]
 			for j := 0; j <= i; j++ {
-				atmp[j] += alpha * (xi*y[j] + x[j]*yi)
+				atmp[j] += alpha * (xi * y[j] + x[j] * yi)
 			}
 		}
 		return
@@ -1685,9 +1683,9 @@ pub fn dsyr2(ul Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, mu
 		mut jy := ky
 		xi := x[ix]
 		yi := y[iy]
-		mut atmp := a[i*lda..]
+		mut atmp := a[i * lda..]
 		for j := 0; j <= i; j++ {
-			atmp[j] += alpha * (xi*y[jy] + x[jx]*yi)
+			atmp[j] += alpha * (xi * y[jy] + x[jx] * yi)
 			jx += incx
 			jy += incy
 		}
@@ -1729,10 +1727,10 @@ pub fn dtpsv(ul Uplo, trans_a Transpose, d Diagonal, n int, ap []f64, mut x []f6
 	}
 
 	// For zero matrix size the following slice length checks are trivially satisfied.
-	if ap.len < n*(n+1)/2 {
+	if ap.len < n * (n + 1) / 2 {
 		panic(short_ap)
 	}
-	if (incx > 0 && x.len <= (n-1)*incx) || (incx < 0 && x.len <= (1-n)*incx) {
+	if (incx > 0 && x.len <= (n - 1) * incx) || (incx < 0 && x.len <= (1 - n) * incx) {
 		panic(short_x)
 	}
 
@@ -1745,11 +1743,11 @@ pub fn dtpsv(ul Uplo, trans_a Transpose, d Diagonal, n int, ap []f64, mut x []f6
 	mut offset := 0 // Offset is the index of (i,i)
 	if trans_a == blas_no_trans {
 		if ul == blas_upper {
-			offset = n*(n+1)/2 - 1
+			offset = n * (n + 1) / 2 - 1
 			if incx == 1 {
 				for i := n - 1; i >= 0; i-- {
-					atmp := ap[offset+1..offset+n-i]
-					xtmp := x[i+1..]
+					atmp := ap[offset + 1..offset + n - i]
+					xtmp := x[i + 1..]
 					mut sum := 0.0
 					for j, v in atmp {
 						sum += v * xtmp[j]
@@ -1762,10 +1760,10 @@ pub fn dtpsv(ul Uplo, trans_a Transpose, d Diagonal, n int, ap []f64, mut x []f6
 				}
 				return
 			}
-			mut ix := kx + (n-1)*incx
+			mut ix := kx + (n - 1) * incx
 			for i := n - 1; i >= 0; i-- {
-				atmp := ap[offset+1..offset+n-i]
-				mut jx := kx + (i+1)*incx
+				atmp := ap[offset + 1..offset + n - i]
+				mut jx := kx + (i + 1) * incx
 				mut sum := 0.0
 				for v in atmp {
 					sum += v * x[jx]
@@ -1782,7 +1780,7 @@ pub fn dtpsv(ul Uplo, trans_a Transpose, d Diagonal, n int, ap []f64, mut x []f6
 		}
 		if incx == 1 {
 			for i in 0 .. n {
-				atmp := ap[offset-i..offset]
+				atmp := ap[offset - i..offset]
 				mut sum := 0.0
 				for j, v in atmp {
 					sum += v * x[j]
@@ -1798,7 +1796,7 @@ pub fn dtpsv(ul Uplo, trans_a Transpose, d Diagonal, n int, ap []f64, mut x []f6
 		mut ix := kx
 		for i in 0 .. n {
 			mut jx := kx
-			atmp := ap[offset-i..offset]
+			atmp := ap[offset - i..offset]
 			mut sum := 0.0
 			for v in atmp {
 				sum += v * x[jx]
@@ -1821,8 +1819,8 @@ pub fn dtpsv(ul Uplo, trans_a Transpose, d Diagonal, n int, ap []f64, mut x []f6
 					x[i] /= ap[offset]
 				}
 				xi := x[i]
-				atmp := ap[offset+1..offset+n-i]
-				mut xtmp := x[i+1..]
+				atmp := ap[offset + 1..offset + n - i]
+				mut xtmp := x[i + 1..]
 				for j, v in atmp {
 					xtmp[j] -= v * xi
 				}
@@ -1836,8 +1834,8 @@ pub fn dtpsv(ul Uplo, trans_a Transpose, d Diagonal, n int, ap []f64, mut x []f6
 				x[ix] /= ap[offset]
 			}
 			xix := x[ix]
-			atmp := ap[offset+1..offset+n-i]
-			mut jx := kx + (i+1)*incx
+			atmp := ap[offset + 1..offset + n - i]
+			mut jx := kx + (i + 1) * incx
 			for v in atmp {
 				x[jx] -= v * xix
 				jx += incx
@@ -1848,13 +1846,13 @@ pub fn dtpsv(ul Uplo, trans_a Transpose, d Diagonal, n int, ap []f64, mut x []f6
 		return
 	}
 	if incx == 1 {
-		offset = n*(n+1)/2 - 1
+		offset = n * (n + 1) / 2 - 1
 		for i := n - 1; i >= 0; i-- {
 			if non_unit {
 				x[i] /= ap[offset]
 			}
 			xi := x[i]
-			atmp := ap[offset-i..offset]
+			atmp := ap[offset - i..offset]
 			for j, v in atmp {
 				x[j] -= v * xi
 			}
@@ -1862,14 +1860,14 @@ pub fn dtpsv(ul Uplo, trans_a Transpose, d Diagonal, n int, ap []f64, mut x []f6
 		}
 		return
 	}
-	mut ix := kx + (n-1)*incx
-	offset = n*(n+1)/2 - 1
+	mut ix := kx + (n - 1) * incx
+	offset = n * (n + 1) / 2 - 1
 	for i := n - 1; i >= 0; i-- {
 		if non_unit {
 			x[ix] /= ap[offset]
 		}
 		xix := x[ix]
-		atmp := ap[offset-i..offset]
+		atmp := ap[offset - i..offset]
 		mut jx := kx
 		for v in atmp {
 			x[jx] -= v * xix
@@ -1904,13 +1902,13 @@ pub fn dspmv(ul Uplo, n int, alpha f64, ap []f64, x []f64, incx int, beta f64, m
 	}
 
 	// For zero matrix size the following slice length checks are trivially satisfied.
-	if ap.len < n*(n+1)/2 {
+	if ap.len < n * (n + 1) / 2 {
 		panic(short_ap)
 	}
-	if (incx > 0 && x.len <= (n-1)*incx) || (incx < 0 && x.len <= (1-n)*incx) {
+	if (incx > 0 && x.len <= (n - 1) * incx) || (incx < 0 && x.len <= (1 - n) * incx) {
 		panic(short_x)
 	}
-	if (incy > 0 && y.len <= (n-1)*incy) || (incy < 0 && y.len <= (1-n)*incy) {
+	if (incy > 0 && y.len <= (n - 1) * incy) || (incy < 0 && y.len <= (1 - n) * incy) {
 		panic(short_y)
 	}
 
@@ -1921,7 +1919,7 @@ pub fn dspmv(ul Uplo, n int, alpha f64, ap []f64, x []f64, incx int, beta f64, m
 
 	// Set up start points
 	mut kx := 0
-        mut ky := 0
+	mut ky := 0
 	if incx < 0 {
 		kx = -(n - 1) * incx
 	}
@@ -1971,9 +1969,9 @@ pub fn dspmv(ul Uplo, n int, alpha f64, ap []f64, x []f64, incx int, beta f64, m
 			for i in 0 .. n {
 				xv := x[i] * alpha
 				mut sum := ap[offset] * x[i]
-				atmp := ap[offset+1..offset+n-i]
-				xtmp := x[i+1..]
-				mut jy := ky + (i+1)*incy
+				atmp := ap[offset + 1..offset + n - i]
+				xtmp := x[i + 1..]
+				mut jy := ky + (i + 1) * incy
 				for j, v in atmp {
 					sum += v * xtmp[j]
 					y[jy] += v * xv
@@ -1990,9 +1988,9 @@ pub fn dspmv(ul Uplo, n int, alpha f64, ap []f64, x []f64, incx int, beta f64, m
 		for i in 0 .. n {
 			xv := x[ix] * alpha
 			mut sum := ap[offset] * x[ix]
-			atmp := ap[offset+1..offset+n-i]
-			mut jx := kx + (i+1)*incx
-			mut jy := ky + (i+1)*incy
+			atmp := ap[offset + 1..offset + n - i]
+			mut jx := kx + (i + 1) * incx
+			mut jy := ky + (i + 1) * incy
 			for v in atmp {
 				sum += v * x[jx]
 				y[jy] += v * xv
@@ -2010,7 +2008,7 @@ pub fn dspmv(ul Uplo, n int, alpha f64, ap []f64, x []f64, incx int, beta f64, m
 		mut iy := ky
 		for i in 0 .. n {
 			xv := x[i] * alpha
-			atmp := ap[offset-i..offset]
+			atmp := ap[offset - i..offset]
 			mut jy := ky
 			mut sum := 0.0
 			for j, v in atmp {
@@ -2029,7 +2027,7 @@ pub fn dspmv(ul Uplo, n int, alpha f64, ap []f64, x []f64, incx int, beta f64, m
 	mut iy := ky
 	for i in 0 .. n {
 		xv := x[ix] * alpha
-		atmp := ap[offset-i..offset]
+		atmp := ap[offset - i..offset]
 		mut jx := kx
 		mut jy := ky
 		mut sum := 0.0
@@ -2069,10 +2067,10 @@ pub fn dspr(ul Uplo, n int, alpha f64, x []f64, incx int, mut ap []f64) {
 	}
 
 	// For zero matrix size the following slice length checks are trivially satisfied.
-	if (incx > 0 && x.len <= (n-1)*incx) || (incx < 0 && x.len <= (1-n)*incx) {
+	if (incx > 0 && x.len <= (n - 1) * incx) || (incx < 0 && x.len <= (1 - n) * incx) {
 		panic(short_x)
 	}
-	if ap.len < n*(n+1)/2 {
+	if ap.len < n * (n + 1) / 2 {
 		panic(short_ap)
 	}
 
@@ -2102,10 +2100,10 @@ pub fn dspr(ul Uplo, n int, alpha f64, x []f64, incx int, mut ap []f64) {
 		}
 		mut ix := kx
 		for i in 0 .. n {
-			mut jx := kx + i*incx
+			mut jx := kx + i * incx
 			mut atmp := ap[offset..]
 			xv := alpha * x[ix]
-			for j := 0; j < n-i; j++ {
+			for j := 0; j < n - i; j++ {
 				atmp[j] += xv * x[jx]
 				jx += incx
 			}
@@ -2116,9 +2114,9 @@ pub fn dspr(ul Uplo, n int, alpha f64, x []f64, incx int, mut ap []f64) {
 	}
 	if incx == 1 {
 		for i in 0 .. n {
-			mut atmp := ap[offset-i..]
+			mut atmp := ap[offset - i..]
 			xv := alpha * x[i]
-			xtmp := x[..i+1]
+			xtmp := x[..i + 1]
 			for j, v in xtmp {
 				atmp[j] += xv * v
 			}
@@ -2129,7 +2127,7 @@ pub fn dspr(ul Uplo, n int, alpha f64, x []f64, incx int, mut ap []f64) {
 	mut ix := kx
 	for i in 0 .. n {
 		mut jx := kx
-		mut atmp := ap[offset-i..]
+		mut atmp := ap[offset - i..]
 		xv := alpha * x[ix]
 		for j := 0; j <= i; j++ {
 			atmp[j] += xv * x[jx]
@@ -2164,13 +2162,13 @@ pub fn dspr2(ul Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, mu
 	}
 
 	// For zero matrix size the following slice length checks are trivially satisfied.
-	if (incx > 0 && x.len <= (n-1)*incx) || (incx < 0 && x.len <= (1-n)*incx) {
+	if (incx > 0 && x.len <= (n - 1) * incx) || (incx < 0 && x.len <= (1 - n) * incx) {
 		panic(short_x)
 	}
-	if (incy > 0 && y.len <= (n-1)*incy) || (incy < 0 && y.len <= (1-n)*incy) {
+	if (incy > 0 && y.len <= (n - 1) * incy) || (incy < 0 && y.len <= (1 - n) * incy) {
 		panic(short_y)
 	}
-	if ap.len < n*(n+1)/2 {
+	if ap.len < n * (n + 1) / 2 {
 		panic(short_ap)
 	}
 
@@ -2180,7 +2178,7 @@ pub fn dspr2(ul Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, mu
 	}
 
 	mut ky := 0
-        mut kx := 0
+	mut kx := 0
 	if incy < 0 {
 		ky = -(n - 1) * incy
 	}
@@ -2197,7 +2195,7 @@ pub fn dspr2(ul Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, mu
 				xtmp := x[i..n]
 				ytmp := y[i..n]
 				for j, v in xtmp {
-					atmp[j] += alpha * (xi*ytmp[j] + v*yi)
+					atmp[j] += alpha * (xi * ytmp[j] + v * yi)
 				}
 				offset += n - i
 			}
@@ -2206,13 +2204,13 @@ pub fn dspr2(ul Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, mu
 		mut ix := kx
 		mut iy := ky
 		for i in 0 .. n {
-			mut jx := kx + i*incx
-			mut jy := ky + i*incy
+			mut jx := kx + i * incx
+			mut jy := ky + i * incy
 			mut atmp := ap[offset..]
 			xi := x[ix]
 			yi := y[iy]
-			for j := 0; j < n-i; j++ {
-				atmp[j] += alpha * (xi*y[jy] + x[jx]*yi)
+			for j := 0; j < n - i; j++ {
+				atmp[j] += alpha * (xi * y[jy] + x[jx] * yi)
 				jx += incx
 				jy += incy
 			}
@@ -2224,12 +2222,12 @@ pub fn dspr2(ul Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, mu
 	}
 	if incx == 1 && incy == 1 {
 		for i in 0 .. n {
-			mut atmp := ap[offset-i..]
+			mut atmp := ap[offset - i..]
 			xi := x[i]
 			yi := y[i]
-			xtmp := x[..i+1]
+			xtmp := x[..i + 1]
 			for j, v in xtmp {
-				atmp[j] += alpha * (xi*y[j] + v*yi)
+				atmp[j] += alpha * (xi * y[j] + v * yi)
 			}
 			offset += i + 2
 		}
@@ -2240,9 +2238,9 @@ pub fn dspr2(ul Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, mu
 	for i in 0 .. n {
 		mut jx := kx
 		mut jy := ky
-		mut atmp := ap[offset-i..]
+		mut atmp := ap[offset - i..]
 		for j := 0; j <= i; j++ {
-			atmp[j] += alpha * (x[ix]*y[jy] + x[jx]*y[iy])
+			atmp[j] += alpha * (x[ix] * y[jy] + x[jx] * y[iy])
 			jx += incx
 			jy += incy
 		}

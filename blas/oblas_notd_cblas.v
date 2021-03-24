@@ -70,7 +70,8 @@ pub fn dgemv(trans bool, m int, n int, alpha f64, a []f64, lda int, x []f64, inc
 // an m by k matrix,  op( B )  a  k by n matrix and  C an m by n matrix.
 [inline]
 pub fn dgemm(trans_a bool, trans_b bool, m int, n int, k int, alpha f64, a []f64, lda int, b []f64, ldb int, beta f64, mut c []f64, ldc int) {
-        vlas.dgemm(c_trans(trans_a), c_trans(trans_b), m, n, k, alpha, a, lda, b, ldb, beta, mut c, ldc)   
+	vlas.dgemm(c_trans(trans_a), c_trans(trans_b), m, n, k, alpha, a, lda, b, ldb, beta, mut
+		c, ldc)
 }
 
 // dger performs the rank 1 operation
@@ -108,5 +109,5 @@ pub fn dnrm2(n int, x []f64, incx int) f64 {
 // and  A  is an  n by k  matrix in the first case and a  k by n  matrix
 // in the second case.
 pub fn dsyrk(up bool, trans bool, n int, k int, alpha f64, a []f64, lda int, beta f64, mut c []f64, ldc int) {
-        vlas.dsyrk(c_uplo(up), c_trans(trans), n, k, alpha, a, lda, beta, mut c, ldc)
+	vlas.dsyrk(c_uplo(up), c_trans(trans), n, k, alpha, a, lda, beta, mut c, ldc)
 }

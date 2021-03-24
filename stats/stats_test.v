@@ -101,7 +101,9 @@ fn test_mode() {
 	mut data := [f64(2.7), f64(2.7), f64(4.45), f64(5.9), f64(10.0)]
 	mut o := stats.mode(data)
 	assert o == f64(2.7)
-	data = [f64(-3.0), f64(1.89), f64(1.89), f64(1.89), f64(9), f64(4.4), f64(4.4), f64(9), f64(67.31)]
+	data = [f64(-3.0), f64(1.89), f64(1.89), f64(1.89), f64(9), f64(4.4), f64(4.4), f64(9),
+		f64(67.31),
+	]
 	o = stats.mode(data)
 	assert o == f64(1.89)
 	// Testing greedy nature

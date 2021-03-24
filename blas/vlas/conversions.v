@@ -7,8 +7,8 @@ pub type Uplo = u32
 pub type Diagonal = u32
 
 pub const (
-	lapack_row_major    = 101
-	lapack_col_major    = 102
+	lapack_row_major   = 101
+	lapack_col_major   = 102
 	blas_row_major     = u32(101)
 	blas_col_major     = u32(102)
 	blas_no_trans      = Transpose(111)

@@ -39,13 +39,13 @@ pub fn dgemv(trans_a Transpose, m int, n int, alpha f64, a []f64, lda int, x []f
 		return
 	}
 
-	if (incx > 0 && (len_x-1)*incx >= x.len) || (incx < 0 && (1-len_x)*incx >= x.len) {
+	if (incx > 0 && (len_x - 1) * incx >= x.len) || (incx < 0 && (1 - len_x) * incx >= x.len) {
 		panic(short_x)
 	}
-	if (incy > 0 && (len_y-1)*incy >= y.len) || (incy < 0 && (1-len_y)*incy >= y.len) {
+	if (incy > 0 && (len_y - 1) * incy >= y.len) || (incy < 0 && (1 - len_y) * incy >= y.len) {
 		panic(short_y)
 	}
-	if a.len < lda*(m-1)+n {
+	if a.len < lda * (m - 1) + n {
 		panic(short_a)
 	}
 
@@ -66,7 +66,8 @@ pub fn dgemv(trans_a Transpose, m int, n int, alpha f64, a []f64, lda int, x []f
 
 	// Form y = alpha * A * x + y
 	if trans_a == blas_no_trans {
-		float64.gemv_n(u32(m), u32(n), alpha, a, u32(lda), x, u32(incx), beta, mut y, u32(incy))
+		float64.gemv_n(u32(m), u32(n), alpha, a, u32(lda), x, u32(incx), beta, mut y,
+			u32(incy))
 		return
 	}
 	// Cases where a is transposed.

@@ -68,7 +68,7 @@ pub fn daxpy(n int, alpha f64, x []f64, incx int, mut y []f64, incy int) {
 // trans=true      y := alpha*A**T*x + beta*y.
 pub fn dgemv(trans bool, m int, n int, alpha f64, a []f64, lda int, x []f64, incx int, beta f64, mut y []f64, incy int) {
 	unsafe {
-		C.cblas_dgemv(blas.cblas_col_major, c_trans(trans), m, n, alpha, &a[0], lda, &x[0],
+		C.cblas_dgemv(cblas_col_major, c_trans(trans), m, n, alpha, &a[0], lda, &x[0],
 			incx, beta, &y[0], incy)
 	}
 }
@@ -85,8 +85,7 @@ pub fn dgemv(trans bool, m int, n int, alpha f64, a []f64, lda int, x []f64, inc
 // vector and A is an m by n matrix.
 pub fn dger(m int, n int, alpha f64, x []f64, incx int, y []f64, incy int, mut a []f64, lda int) {
 	unsafe {
-		C.cblas_dger(blas.cblas_col_major, m, n, alpha, &x[0], incx, &y[0], incy, &a[0],
-			lda)
+		C.cblas_dger(cblas_col_major, m, n, alpha, &x[0], incx, &y[0], incy, &a[0], lda)
 	}
 }
 
@@ -114,9 +113,9 @@ pub fn dnrm2(n int, x []f64, incx int) f64 {
 // alpha and beta are scalars, and A, B and C are matrices, with op( A )
 // an m by k matrix,  op( B )  a  k by n matrix and  C an m by n matrix.
 pub fn dgemm(trans_a bool, trans_b bool, m int, n int, k int, alpha f64, a []f64, lda int, b []f64, ldb int, beta f64, mut c []f64, ldc int) {
-        unsafe {
-		C.cblas_dgemm(blas.cblas_col_major, c_trans(trans_a), c_trans(trans_b), m, n, k,
-			alpha, &a[0], lda, &b[0], ldb, beta, &c[0], ldc)
+	unsafe {
+		C.cblas_dgemm(cblas_col_major, c_trans(trans_a), c_trans(trans_b), m, n, k, alpha,
+			&a[0], lda, &b[0], ldb, beta, &c[0], ldc)
 	}
 }
 
@@ -137,7 +136,7 @@ pub fn dgemm(trans_a bool, trans_b bool, m int, n int, k int, alpha f64, a []f64
 // in the second case.
 pub fn dsyrk(up bool, trans bool, n int, k int, alpha f64, a []f64, lda int, beta f64, mut c []f64, ldc int) {
 	unsafe {
-		C.cblas_dsyrk(blas.cblas_col_major, c_uplo(up), c_trans(trans), n, k, alpha, &a[0],
+		C.cblas_dsyrk(cblas_col_major, c_uplo(up), c_trans(trans), n, k, alpha, &a[0],
 			lda, beta, &c[0], ldc)
 	}
 }

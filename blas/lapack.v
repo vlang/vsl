@@ -103,7 +103,7 @@ pub fn dgesvd(jobu byte, jobvt byte, m int, n int, a []f64, lda int, s []f64, u 
 // (2) ipiv indices are 1-based (i.e. Fortran)
 pub fn dgetrf(m int, n int, mut a []f64, lda int, ipiv []int) {
 	unsafe {
-		info := C.LAPACKE_dgetrf(blas.lapack_col_major, m, n, &a[0], lda, &ipiv[0])
+		info := C.LAPACKE_dgetrf(lapack_col_major, m, n, &a[0], lda, &ipiv[0])
 		if info != 0 {
 			errno.vsl_panic('lapack failed', .efailed)
 		}
@@ -146,7 +146,7 @@ pub fn dgetri(n int, mut a []f64, lda int, ipiv []int) {
 // This is the block version of the algorithm, calling Level 3 BLAS.
 pub fn dpotrf(up bool, n int, mut a []f64, lda int) {
 	unsafe {
-		info := C.LAPACKE_dpotrf(blas.lapack_col_major, l_uplo(up), n, &a[0], lda)
+		info := C.LAPACKE_dpotrf(lapack_col_major, l_uplo(up), n, &a[0], lda)
 		if info != 0 {
 			errno.vsl_panic('lapack failed', .efailed)
 		}
@@ -192,7 +192,7 @@ pub fn dgeev(calc_vl bool, calc_vr bool, n int, mut a []f64, lda int, wr []f64, 
 		ldvr = 1
 	}
 	unsafe {
-		info := C.LAPACKE_dgeev(blas.lapack_col_major, job_vlr(calc_vl), job_vlr(calc_vr),
+		info := C.LAPACKE_dgeev(lapack_col_major, job_vlr(calc_vl), job_vlr(calc_vr),
 			n, &a[0], lda, &wr[0], &wi[0], &vvl, ldvl, &vvr, ldvr)
 		if info != 0 {
 			errno.vsl_panic('lapack failed', .efailed)

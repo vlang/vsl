@@ -7,73 +7,73 @@ import vsl.vmath as math
 //  sqrt(\sum_i x[i] * x[i]).
 // This function returns 0 if incx is negative.
 pub fn dnrm2(n int, x []f64, incx int) f64 {
-        if incx < 1 {
-                if incx == 0 {
-                        panic(zero_incx)
-                }
-                return 0.0
-        }
-        if x.len <= (n-1)*incx {
-                panic(short_x)
-        }
-        if n < 2 {
-                if n == 1 {
-                        return math.abs(x[0])
-                }
-                if n == 0 {
-                        return 0.0
-                }
-                panic(nlt0)
-        }
-        if incx == 1 {
-                return float64.l2_norm_unitary(x[..n])
-        }
-        return float64.l2_norm_inc(x, u32(n), u32(incx))
+	if incx < 1 {
+		if incx == 0 {
+			panic(zero_incx)
+		}
+		return 0.0
+	}
+	if x.len <= (n - 1) * incx {
+		panic(short_x)
+	}
+	if n < 2 {
+		if n == 1 {
+			return math.abs(x[0])
+		}
+		if n == 0 {
+			return 0.0
+		}
+		panic(nlt0)
+	}
+	if incx == 1 {
+		return float64.l2_norm_unitary(x[..n])
+	}
+	return float64.l2_norm_inc(x, u32(n), u32(incx))
 }
 
 // dasum computes the sum of the absolute values of the elements of x.
 //  \sum_i |x[i]|
 // dasum returns 0 if incx is negative.
 pub fn dasum(n int, x []f64, incx int) f64 {
-        mut sum := 0.0
-        if n < 0 {
-                panic(nlt0)
-        }
-        if incx < 1 {
-                if incx == 0 {
-                        panic(zero_incx)
-                }
-                return 0.0
-        }
-        if x.len <= (n-1)*incx {
-                panic(short_x)
-        }
-        if incx == 1 {
-                for v in x[..n] {
-                        sum += math.abs(v)
-                }
-                return sum
-        }
-        for i in 0 .. n {
-                sum += math.abs(x[i*incx])
-        }
-        return sum
+	mut sum := 0.0
+	if n < 0 {
+		panic(nlt0)
+	}
+	if incx < 1 {
+		if incx == 0 {
+			panic(zero_incx)
+		}
+		return 0.0
+	}
+	if x.len <= (n - 1) * incx {
+		panic(short_x)
+	}
+	if incx == 1 {
+		for v in x[..n] {
+			sum += math.abs(v)
+		}
+		return sum
+	}
+	for i in 0 .. n {
+		sum += math.abs(x[i * incx])
+	}
+	return sum
 }
 
 // idamax returns the index of an element of x with the largest absolute value.
 // If there are multiple such indices the earliest is returned.
 // idamax returns -1 if n == 0.
 pub fn idamax(n int, x []f64, incx int) int {
-        if incx < 1 {
-                if incx == 0 {
-                        panic(zero_incx)
-                }
-                return 0
-        }
-        if x.len <= (n-1)*incx {
-                panic(short_x)
-        }
-        if n < 2 {
+	if incx < 1 {
+		if incx == 0 {
+			panic(zero_incx)
+		}
+		return 0
+	}
+	if x.len <= (n - 1) * incx {
+		panic(short_x)
+	}
+	if n < 2 {
 		if n == 1 {
 			return 0
 		}
@@ -82,7 +82,7 @@ pub fn idamax(n int, x []f64, incx int) int {
 		}
 		panic(nlt0)
 	}
-        mut idx := 0
+	mut idx := 0
 	mut max := math.abs(x[0])
 	if incx == 1 {
 		for i, v in x[..n] {
@@ -122,10 +122,10 @@ pub fn dswap(n int, mut x []f64, incx int, mut y []f64, incy int) {
 		}
 		panic(nlt0)
 	}
-	if (incx > 0 && x.len <= (n-1)*incx) || (incx < 0 && x.len <= (1-n)*incx) {
+	if (incx > 0 && x.len <= (n - 1) * incx) || (incx < 0 && x.len <= (1 - n) * incx) {
 		panic(short_x)
 	}
-	if (incy > 0 && y.len <= (n-1)*incy) || (incy < 0 && y.len <= (1-n)*incy) {
+	if (incy > 0 && y.len <= (n - 1) * incy) || (incy < 0 && y.len <= (1 - n) * incy) {
 		panic(short_y)
 	}
 	if incx == 1 && incy == 1 {
@@ -135,7 +135,7 @@ pub fn dswap(n int, mut x []f64, incx int, mut y []f64, incy int) {
 		return
 	}
 	mut ix := 0
-        mut iy := 0
+	mut iy := 0
 	if incx < 0 {
 		ix = (-n + 1) * incx
 	}
@@ -143,9 +143,9 @@ pub fn dswap(n int, mut x []f64, incx int, mut y []f64, incy int) {
 		iy = (-n + 1) * incy
 	}
 	for i := 0; i < n; i++ {
-                tmp := x[ix]
+		tmp := x[ix]
 		x[ix] = y[iy]
-                y[iy] = tmp
+		y[iy] = tmp
 		ix += incx
 		iy += incy
 	}
@@ -166,20 +166,20 @@ pub fn dcopy(n int, x []f64, incx int, mut y []f64, incy int) {
 		}
 		panic(nlt0)
 	}
-	if (incx > 0 && x.len <= (n-1)*incx) || (incx < 0 && x.len <= (1-n)*incx) {
+	if (incx > 0 && x.len <= (n - 1) * incx) || (incx < 0 && x.len <= (1 - n) * incx) {
 		panic(short_x)
 	}
-	if (incy > 0 && y.len <= (n-1)*incy) || (incy < 0 && y.len <= (1-n)*incy) {
+	if (incy > 0 && y.len <= (n - 1) * incy) || (incy < 0 && y.len <= (1 - n) * incy) {
 		panic(short_y)
 	}
 	if incx == 1 && incy == 1 {
-                for i, v in x[..n] {
-                        y[i] = x[i]
-                }
+		for i, v in x[..n] {
+			y[i] = x[i]
+		}
 		return
 	}
 	mut ix := 0
-        mut iy := 0
+	mut iy := 0
 	if incx < 0 {
 		ix = (-n + 1) * incx
 	}
@@ -208,10 +208,10 @@ pub fn daxpy(n int, alpha f64, x []f64, incx int, mut y []f64, incy int) {
 		}
 		panic(nlt0)
 	}
-	if (incx > 0 && x.len <= (n-1)*incx) || (incx < 0 && x.len <= (1-n)*incx) {
+	if (incx > 0 && x.len <= (n - 1) * incx) || (incx < 0 && x.len <= (1 - n) * incx) {
 		panic(short_x)
 	}
-	if (incy > 0 && y.len <= (n-1)*incy) || (incy < 0 && y.len <= (1-n)*incy) {
+	if (incy > 0 && y.len <= (n - 1) * incy) || (incy < 0 && y.len <= (1 - n) * incy) {
 		panic(short_y)
 	}
 	if alpha == 0 {
@@ -222,7 +222,7 @@ pub fn daxpy(n int, alpha f64, x []f64, incx int, mut y []f64, incy int) {
 		return
 	}
 	mut ix := 0
-        mut iy := 0
+	mut iy := 0
 	if incx < 0 {
 		ix = (-n + 1) * incx
 	}
@@ -261,11 +261,11 @@ pub fn drotg(a f64, b f64) (f64, f64, f64, f64) {
 	}
 	mut c := a / r
 	mut s := b / r
-        mut z := 0.0
+	mut z := 0.0
 	if agtb {
 		z = s
 	} else if c != 0 {
-                // r == 0 case handled above
+		// r == 0 case handled above
 		z = 1 / c
 	} else {
 		z = 1
@@ -289,22 +289,22 @@ pub fn drot(n int, mut x []f64, incx int, mut y []f64, incy int, c f64, s f64) {
 		}
 		panic(nlt0)
 	}
-	if (incx > 0 && x.len <= (n-1)*incx) || (incx < 0 && x.len <= (1-n)*incx) {
+	if (incx > 0 && x.len <= (n - 1) * incx) || (incx < 0 && x.len <= (1 - n) * incx) {
 		panic(short_x)
 	}
-	if (incy > 0 && y.len <= (n-1)*incy) || (incy < 0 && y.len <= (1-n)*incy) {
+	if (incy > 0 && y.len <= (n - 1) * incy) || (incy < 0 && y.len <= (1 - n) * incy) {
 		panic(short_y)
 	}
 	if incx == 1 && incy == 1 {
 		for i, vx in x[..n] {
 			vy := y[i]
-			x[i] = c*vx+s*vy
-                        y[i] = c*vy-s*vx
+			x[i] = c * vx + s * vy
+			y[i] = c * vy - s * vx
 		}
 		return
 	}
 	mut ix := 0
-        mut iy := 0
+	mut iy := 0
 	if incx < 0 {
 		ix = (-n + 1) * incx
 	}
@@ -314,8 +314,8 @@ pub fn drot(n int, mut x []f64, incx int, mut y []f64, incy int, c f64, s f64) {
 	for i in 0 .. n {
 		vx := x[ix]
 		vy := y[iy]
-                x[i] = c*vx+s*vy
-                y[i] = c*vy-s*vx
+		x[i] = c * vx + s * vy
+		y[i] = c * vy - s * vx
 		ix += incx
 		iy += incy
 	}
@@ -337,7 +337,7 @@ pub fn dscal(n int, alpha f64, mut x []f64, incx int) {
 		}
 		panic(nlt0)
 	}
-	if (n-1)*incx >= x.len {
+	if (n - 1) * incx >= x.len {
 		panic(short_x)
 	}
 	if alpha == 0 {
@@ -347,7 +347,7 @@ pub fn dscal(n int, alpha f64, mut x []f64, incx int) {
 			}
 			return
 		}
-		for ix := 0; ix < n*incx; ix += incx {
+		for ix := 0; ix < n * incx; ix += incx {
 			x[ix] = 0
 		}
 		return

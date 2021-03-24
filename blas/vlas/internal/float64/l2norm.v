@@ -16,7 +16,7 @@ pub fn l2_norm_unitary(x []f64) f64 {
 		}
 		if scale < absxi {
 			s := scale / absxi
-			sum_squares = 1 + sum_squares*s*s
+			sum_squares = 1 + sum_squares * s * s
 			scale = absxi
 		} else {
 			s := absxi / scale
@@ -33,7 +33,7 @@ pub fn l2_norm_unitary(x []f64) f64 {
 pub fn l2_norm_inc(x []f64, n u32, incx u32) f64 {
 	mut scale := 0.0
 	mut sum_squares := 1.0
-	for ix := u32(0); ix < n*incx; ix += incx {
+	for ix := u32(0); ix < n * incx; ix += incx {
 		val := x[ix]
 		if val == 0 {
 			continue
@@ -44,7 +44,7 @@ pub fn l2_norm_inc(x []f64, n u32, incx u32) f64 {
 		}
 		if scale < absxi {
 			s := scale / absxi
-			sum_squares = 1 + sum_squares*s*s
+			sum_squares = 1 + sum_squares * s * s
 			scale = absxi
 		} else {
 			s := absxi / scale
@@ -62,7 +62,7 @@ pub fn l2_distance_unitary(x []f64, y []f64) f64 {
 	mut scale := 0.0
 	mut sum_squares := 1.0
 	for i, v in x {
-                mut dec_v := v
+		mut dec_v := v
 		dec_v -= y[i]
 		if dec_v == 0 {
 			continue
@@ -73,7 +73,7 @@ pub fn l2_distance_unitary(x []f64, y []f64) f64 {
 		}
 		if scale < absxi {
 			s := scale / absxi
-			sum_squares = 1 + sum_squares*s*s
+			sum_squares = 1 + sum_squares * s * s
 			scale = absxi
 		} else {
 			s := absxi / scale
