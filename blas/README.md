@@ -1,6 +1,11 @@
-# Wrapper to OpenBLAS
+# Basic Linear Algebra System
 
-This package implements a light wrapper to OpenBLAS. Therefore, its routines are a little more
+This package implements BLAS functions. It provides two different backends:
+
+- One using Open BLAS when using flas `-c cblas`
+- One using a pure V implementation called VLAS, *by default*. This implementation can be found on `vsl.blas.vlas`.
+
+Therefore, its routines are a little more
 _lower level_ than the ones in the package `vsl.la`.
 
 [Check also OpenBLAS](https://github.com/xianyi/OpenBLAS).
@@ -37,6 +42,8 @@ pub fn matrix_matrix_mul(mut c la.Matrix, alpha f64, a la.Matrix, b la.Matrix) {
 ## Install dependencies
 
 **Debian/Ubuntu GNU Linux**
+
+`libopenblas-dev` is not needed when using the pure V backend.
 
 ```sh
 $ sudo apt-get install -y --no-install-recommends \

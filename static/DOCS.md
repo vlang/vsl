@@ -28,10 +28,13 @@ This library contains essential functions for linear algebra computations
 (operations between all combinations of vectors and matrices, eigenvalues and eigenvectors,
 linear solvers) and the development of numerical methods (e.g. numerical quadrature).
 
-We link VSL with existent libraries written in C and Fortran, such as OpenBLAS and LAPACK.
+Optionally, we link VSL with existent libraries written in C and Fortran, such as Open BLAS and LAPACK.
 These existing libraries have been fundamental for the development of high-performant
-simulations over many years. We believe that it is nearly impossible to rewrite these
-libraries in native V and at the same time achieve the same speed delivered by them.
+simulations over many years. We believe that it is possible to rewrite these
+libraries in native V and at the same time achieve the same speed delivered by them, but at the same
+time, we want to allow to the users of VSL the possibility to choose when to use these libraries
+as backend and when not. That is why each module documents the flags that allow this at the
+time of use.
 
 ## Installation
 
@@ -69,12 +72,15 @@ First we need to install some dependencies in order to have VSL working as expec
 
 **Debian/Ubuntu GNU Linux**
 
+`libopenblas-dev` is not needed when using the pure V backend.
+
 ```sh
 $ sudo apt-get install -y --no-install-recommends \
     gcc \
     gfortran \
     liblapacke-dev \
     libopenblas-dev \
+    libssl-dev \
 ```
 
 **Arch Linux/Manjaro GNU Linux**
