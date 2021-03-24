@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+set -eo pipefail
 
 rm -f vsl 
 ln -s . vsl
 
-if [ -n "$CBLAS_BACKEND" ]; then
+if [[ -n "${CBLAS_BACKEND}" ]]; then
     echo "Running tests without -autofree using Open BLAS"
     v -d cblas -stats test .
 else
