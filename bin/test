@@ -6,8 +6,8 @@ rm -f vsl
 ln -s . vsl
 
 echo "Running tests without -autofree"
-v -d cblas -stats test .
-# v -stats test .
+# v -d cblas -stats test .
+v -stats test .
 
 # echo "Running tests with -autofree"
 # v -stats -autofree test .

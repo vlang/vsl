@@ -1,6 +1,5 @@
 module blas
 
-import vsl.errno
 import vsl.blas.vlas
 
 #include <cblas.h>
@@ -41,7 +40,7 @@ pub fn ddot(n int, x []f64, incx int, y []f64, incy int) f64 {
 //
 // See: http://www.netlib.org/lapack/explore-html/d4/dd0/dscal_8f.html
 pub fn dscal(n int, alpha f64, mut x []f64, incx int) {
-	C.cblas_dscal(n, alpha, &x[0], incx)
+	unsafe { C.cblas_dscal(n, alpha, &x[0], incx) }
 }
 
 // daxpy computes constant times a vector plus a vector.

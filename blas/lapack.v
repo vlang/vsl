@@ -2,13 +2,13 @@ module blas
 
 import vsl.errno
 
-#include <lapacke.h>
+#include <lapack.h>
 
 fn C.LAPACKE_dgesv(n int, nrhs int, a &f64, lda int, ipiv &int, b &f64, ldb int) int
 
 fn C.LAPACKE_dgesvd(jobu byte, jobvt byte, m int, n int, a &f64, lda int, s &f64, u &f64, ldu int, vt &f64, ldvt int, superb &f64) int
 
-fn C.LAPACKE_dgetrf(m int, n int, a &f64, lda int, ipiv &int) int
+fn C.LAPACKE_dgetrf(matrix_layout int, m int, n int, a &f64, lda int, ipiv &int) int
 
 fn C.LAPACKE_dgetri(n int, a &f64, lda int, ipiv &int) int
 
@@ -103,7 +103,7 @@ pub fn dgesvd(jobu byte, jobvt byte, m int, n int, a []f64, lda int, s []f64, u 
 // (2) ipiv indices are 1-based (i.e. Fortran)
 pub fn dgetrf(m int, n int, mut a []f64, lda int, ipiv []int) {
 	unsafe {
-		info := C.LAPACKE_dgetrf(m, n, &a[0], lda, &ipiv[0])
+		info := C.LAPACKE_dgetrf(blas.lapack_col_major, m, n, &a[0], lda, &ipiv[0])
 		if info != 0 {
 			errno.vsl_panic('lapack failed', .efailed)
 		}
