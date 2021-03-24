@@ -5,9 +5,11 @@ set -euo pipefail
 rm -f vsl 
 ln -s . vsl
 
-echo "Running tests without -autofree"
-# v -d cblas -stats test .
+echo "Running tests without -autofree using VLAS"
 v -stats test .
+
+echo "Running tests without -autofree using Open BLAS"
+v -d cblas -stats test .
 
 # echo "Running tests with -autofree"
 # v -stats -autofree test .
