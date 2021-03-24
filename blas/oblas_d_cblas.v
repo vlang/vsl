@@ -1,7 +1,5 @@
 module blas
 
-import vsl.blas.vlas
-
 #include <cblas.h>
 
 fn C.openblas_set_num_threads(n int)
