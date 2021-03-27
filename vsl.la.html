@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="x-ua-compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>vsl.la | vdoc</title>
+		<link rel="preconnect" href="https://fonts.gstatic.com">
+		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+		<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+		<link rel="manifest" href="site.webmanifest">
+		<link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
+		<meta name="msapplication-TileColor" content="#da532c">
+		<meta name="theme-color" content="#ffffff">
+		
+		<link rel="stylesheet" href="doc.css" />
+		<link rel="stylesheet" href="normalize.css" />
+		<script src="dark-mode.js"></script>
+	</head>
+	<body>
+		<div id="page">
+			<header class="doc-nav hidden">
+				<div class="heading-container">
+					<div class="heading">
+						<div class="info">
+							<div class="module">vsl</div>
+							<div class="toggle-version-container">
+								<span>0.1.35</span>
+								<div id="dark-mode-toggle" role="switch" aria-checked="false" aria-label="Toggle dark mode"><svg xmlns="http://www.w3.org/2000/svg" class="light-icon" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.7l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-5c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-1 16.95h2V19.5h-2v2.95zm-7.45-3.91l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8z"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" class="dark-icon" enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24"><g><rect fill="none" height="24" width="24"/></g><g><g><g><path d="M11.1,12.08C8.77,7.57,10.6,3.6,11.63,2.01C6.27,2.2,1.98,6.59,1.98,12c0,0.14,0.02,0.28,0.02,0.42 C2.62,12.15,3.29,12,4,12c1.66,0,3.18,0.83,4.1,2.15C9.77,14.63,11,16.17,11,18c0,1.52-0.87,2.83-2.12,3.51 c0.98,0.32,2.03,0.5,3.11,0.5c3.5,0,6.58-1.8,8.37-4.52C18,17.72,13.38,16.52,11.1,12.08z"/></g><path d="M7,16l-0.18,0C6.4,14.84,5.3,14,4,14c-1.66,0-3,1.34-3,3s1.34,3,3,3c0.62,0,2.49,0,3,0c1.1,0,2-0.9,2-2 C9,16.9,8.1,16,7,16z"/></g></g></svg>
+</div>
+							</div>
+							<svg xmlns="http://www.w3.org/2000/svg" id="toggle-menu" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+
+						</div>
+						<input type="text" id="search" placeholder="Search... (beta)" autocomplete="off">
+					</div>
+				</div>
+				<nav class="search hidden"></nav>
+				<nav class="content hidden">
+					<ul>
+						<li class="open"><div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="./vsl.html">vsl</a></div><ul><li><a href="./vsl.blas.html">blas</a></li><li><a href="./vsl.blas.vlas.html">blas.vlas</a></li><li><a href="./vsl.blas.vlas.internal.float64.html">blas.vlas.internal.float64</a></li><li><a href="./vsl.consts.html">consts</a></li><li><a href="./vsl.deriv.html">deriv</a></li><li><a href="./vsl.diff.html">diff</a></li><li><a href="./vsl.dist.html">dist</a></li><li><a href="./vsl.easings.html">easings</a></li><li><a href="./vsl.errno.html">errno</a></li><li><a href="./vsl.fit.html">fit</a></li><li><a href="./vsl.fun.html">fun</a></li><li><a href="./vsl.gm.html">gm</a></li><li><a href="./vsl.graph.html">graph</a></li><li><a href="./vsl.internal.html">internal</a></li><li><a href="./vsl.iter.html">iter</a></li><li class="active"><a href="./vsl.la.html">la</a></li><li><a href="./vsl.ml.html">ml</a></li><li><a href="./vsl.poly.html">poly</a></li><li><a href="./vsl.quaternion.html">quaternion</a></li><li><a href="./vsl.roots.html">roots</a></li><li><a href="./vsl.stats.html">stats</a></li><li><a href="./vsl.util.html">util</a></li><li><a href="./vsl.vmath.html">vmath</a></li><li><a href="./vsl.vmath.bits.html">vmath.bits</a></li><li><a href="./vsl.vmath.complex.html">vmath.complex</a></li><li><a href="./vsl.vmath.fractions.html">vmath.fractions</a></li></ul></li>
+					</ul>
+				</nav>
+			</header>
+			<div class="doc-scrollview">
+				<div class="doc-container">
+					<div class="doc-content">
+						<section id="readme_vsl.la" class="doc-node">
+							<div class="title"><h1> vsl.la <a href="#readme_vsl.la">#</a></h1></div>
+
+</section>
+
+						<section id="den_solve" class="doc-node">
+							<div class="title"><h2>fn den_solve <a href="#den_solve">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/densesol.v#L9"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">den_solve</span><span class="token punctuation">(</span><span class="token keyword">mut</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> a Matrix<span class="token punctuation">,</span> b <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> preserve_a <span class="token builtin">bool</span><span class="token punctuation">)</span></code></pre>
+<p>den_solve solves dense linear system using LAPACK (OpenBLaS)     Given:  a ⋅ x = b    find x   such that   x = a⁻¹ ⋅ b</p>
+
+</section>
+						<section id="matrix_add" class="doc-node">
+							<div class="title"><h2>fn matrix_add <a href="#matrix_add">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/blas.v#L254"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">matrix_add</span><span class="token punctuation">(</span><span class="token keyword">mut</span> res Matrix<span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> a Matrix<span class="token punctuation">,</span> beta <span class="token builtin">f64</span><span class="token punctuation">,</span> b Matrix<span class="token punctuation">)</span></code></pre>
+<p>matrix_add adds the scaled components of two matrices    res := alpha⋅a + beta⋅b   ⇒   result[i][j] := alpha⋅a[i][j] + beta⋅b[i][j]</p>
+
+</section>
+						<section id="matrix_cond_num" class="doc-node">
+							<div class="title"><h2>fn matrix_cond_num <a href="#matrix_cond_num">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/matrix_ops.v#L129"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">matrix_cond_num</span><span class="token punctuation">(</span><span class="token keyword">mut</span> a Matrix<span class="token punctuation">,</span> normtype <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>matrix_cond_num returns the condition number of a square matrix using the inverse of this matrix;  thus it is not as efficient as it could be, e.g. by using the SV decomposition.  normtype -- Type of norm to use:  &quot;I&quot;                 =&gt; Infinite  &quot;F&quot; or &quot;&quot; (default) =&gt; Frobenius</p>
+
+</section>
+						<section id="matrix_deep2" class="doc-node">
+							<div class="title"><h2>fn matrix_deep2 <a href="#matrix_deep2">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/matrix.v#L26"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">matrix_deep2</span><span class="token punctuation">(</span>a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> Matrix</code></pre>
+<p>matrix_deep2 allocates a new Matrix from given (Deep2) nested slice.  NOTE: make sure to have at least 1x1 item</p>
+
+</section>
+						<section id="matrix_inv" class="doc-node">
+							<div class="title"><h2>fn matrix_inv <a href="#matrix_inv">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/matrix_ops.v#L84"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">matrix_inv</span><span class="token punctuation">(</span><span class="token keyword">mut</span> ai Matrix<span class="token punctuation">,</span> <span class="token keyword">mut</span> a Matrix<span class="token punctuation">,</span> calc_det <span class="token builtin">bool</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>matrix_inv computes the inverse of a general matrix (square or not). It also computes the  pseudo-inverse if the matrix is not square.  Input:  a -- input matrix (M x N)  Output:  ai -- inverse matrix (N x M)  det -- determinant of matrix (ONLY if calc_det == true and the matrix is square)  NOTE: the dimension of the ai matrix must be N x M for the pseudo-inverse</p>
+
+</section>
+						<section id="matrix_inv_small" class="doc-node">
+							<div class="title"><h2>fn matrix_inv_small <a href="#matrix_inv_small">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/matrix_ops.v#L15"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">matrix_inv_small</span><span class="token punctuation">(</span><span class="token keyword">mut</span> ai Matrix<span class="token punctuation">,</span> a Matrix<span class="token punctuation">,</span> tol <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>matrix_inv_small computes the inverse of small matrices of size 1x1, 2x2, or 3x3.  It also returns the determinant.  Input:  a   -- the matrix  tol -- tolerance to assume zero determinant  Output:  ai  -- the inverse matrix  det -- determinant of a</p>
+
+</section>
+						<section id="matrix_matrix_mul" class="doc-node">
+							<div class="title"><h2>fn matrix_matrix_mul <a href="#matrix_matrix_mul">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/blas.v#L162"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">matrix_matrix_mul</span><span class="token punctuation">(</span><span class="token keyword">mut</span> c Matrix<span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> a Matrix<span class="token punctuation">,</span> b Matrix<span class="token punctuation">)</span></code></pre>
+<p>matrix_matrix_mul returns the matrix multiplication (scaled)    c := alpha⋅a⋅b    ⇒    cij := alpha * aik * bkj</p>
+
+</section>
+						<section id="matrix_matrix_muladd" class="doc-node">
+							<div class="title"><h2>fn matrix_matrix_muladd <a href="#matrix_matrix_muladd">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/blas.v#L220"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">matrix_matrix_muladd</span><span class="token punctuation">(</span><span class="token keyword">mut</span> c Matrix<span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> a Matrix<span class="token punctuation">,</span> b Matrix<span class="token punctuation">)</span></code></pre>
+<p>matrix_matrix_muladd returns the matrix multiplication (scaled)    c += alpha⋅a⋅b    ⇒    cij += alpha * aik * bkj</p>
+
+</section>
+						<section id="matrix_matrix_tr_mul" class="doc-node">
+							<div class="title"><h2>fn matrix_matrix_tr_mul <a href="#matrix_matrix_tr_mul">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/blas.v#L202"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">matrix_matrix_tr_mul</span><span class="token punctuation">(</span><span class="token keyword">mut</span> c Matrix<span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> a Matrix<span class="token punctuation">,</span> b Matrix<span class="token punctuation">)</span></code></pre>
+<p>matrix_matrix_tr_mul returns the matrix multiplication (scaled) with transposed(b)    c := alpha⋅a⋅bᵀ    ⇒    cij := alpha * aik * bjk</p>
+
+</section>
+						<section id="matrix_matrix_tr_muladd" class="doc-node">
+							<div class="title"><h2>fn matrix_matrix_tr_muladd <a href="#matrix_matrix_tr_muladd">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/blas.v#L238"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">matrix_matrix_tr_muladd</span><span class="token punctuation">(</span><span class="token keyword">mut</span> c Matrix<span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> a Matrix<span class="token punctuation">,</span> b Matrix<span class="token punctuation">)</span></code></pre>
+<p>matrix_matrix_tr_muladd returns the matrix multiplication (scaled) with transposed(b)    c += alpha⋅a⋅bᵀ    ⇒    cij += alpha * aik * bjk</p>
+
+</section>
+						<section id="matrix_raw" class="doc-node">
+							<div class="title"><h2>fn matrix_raw <a href="#matrix_raw">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/matrix.v#L38"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">matrix_raw</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> rawdata <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> Matrix</code></pre>
+<p>matrix_raw creates a new Matrix using given raw data  Input:  rawdata -- data organized as column-major; e.g. Fortran format  NOTE:  (1) rawdata is not copied!  (2) the external slice rawdata should not be changed or deleted</p>
+
+</section>
+						<section id="matrix_svd" class="doc-node">
+							<div class="title"><h2>fn matrix_svd <a href="#matrix_svd">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/matrix_ops.v#L66"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">matrix_svd</span><span class="token punctuation">(</span><span class="token keyword">mut</span> s <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> u Matrix<span class="token punctuation">,</span> <span class="token keyword">mut</span> vt Matrix<span class="token punctuation">,</span> <span class="token keyword">mut</span> a Matrix<span class="token punctuation">,</span> copy_a <span class="token builtin">bool</span><span class="token punctuation">)</span></code></pre>
+<p>matrix_svd performs the SVD decomposition  Input:  a     -- matrix a  copy_a -- creates a copy of a; otherwise 'a' is modified  Output:  s  -- diagonal terms [must be pre-allocated] s.len = imin(a.m, a.n)  u  -- left matrix [must be pre-allocated] u is (a.m x a.m)  vt -- transposed right matrix [must be pre-allocated] vt is (a.n x a.n)</p>
+
+</section>
+						<section id="matrix_tr_matrix_mul" class="doc-node">
+							<div class="title"><h2>fn matrix_tr_matrix_mul <a href="#matrix_tr_matrix_mul">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/blas.v#L182"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">matrix_tr_matrix_mul</span><span class="token punctuation">(</span><span class="token keyword">mut</span> c Matrix<span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> a Matrix<span class="token punctuation">,</span> b Matrix<span class="token punctuation">)</span></code></pre>
+<p>matrix_tr_matrix_mul returns the matrix multiplication (scaled) with transposed(a)    c := alpha⋅aᵀ⋅b    ⇒    cij := alpha * aki * bkj</p>
+
+</section>
+						<section id="matrix_tr_matrix_muladd" class="doc-node">
+							<div class="title"><h2>fn matrix_tr_matrix_muladd <a href="#matrix_tr_matrix_muladd">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/blas.v#L229"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">matrix_tr_matrix_muladd</span><span class="token punctuation">(</span><span class="token keyword">mut</span> c Matrix<span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> a Matrix<span class="token punctuation">,</span> b Matrix<span class="token punctuation">)</span></code></pre>
+<p>matrix_tr_matrix_muladd returns the matrix multiplication (scaled) with transposed(a)    c += alpha⋅aᵀ⋅b    ⇒    cij += alpha * aki * bkj</p>
+
+</section>
+						<section id="matrix_tr_matrix_tr_mul" class="doc-node">
+							<div class="title"><h2>fn matrix_tr_matrix_tr_mul <a href="#matrix_tr_matrix_tr_mul">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/blas.v#L211"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">matrix_tr_matrix_tr_mul</span><span class="token punctuation">(</span><span class="token keyword">mut</span> c Matrix<span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> a Matrix<span class="token punctuation">,</span> b Matrix<span class="token punctuation">)</span></code></pre>
+<p>matrix_tr_matrix_tr_mul returns the matrix multiplication (scaled) with transposed(a) and transposed(b)    c := alpha⋅aᵀ⋅bᵀ    ⇒    cij := alpha * aki * bjk</p>
+
+</section>
+						<section id="matrix_tr_matrix_tr_mul_add" class="doc-node">
+							<div class="title"><h2>fn matrix_tr_matrix_tr_mul_add <a href="#matrix_tr_matrix_tr_mul_add">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/blas.v#L247"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">matrix_tr_matrix_tr_mul_add</span><span class="token punctuation">(</span><span class="token keyword">mut</span> c Matrix<span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> a Matrix<span class="token punctuation">,</span> b Matrix<span class="token punctuation">)</span></code></pre>
+<p>matrix_tr_matrix_tr_mul_add returns the matrix multiplication (scaled) with transposed(a) and transposed(b)    c += alpha⋅aᵀ⋅bᵀ    ⇒    cij += alpha * aki * bjk</p>
+
+</section>
+						<section id="matrix_tr_vector_mul" class="doc-node">
+							<div class="title"><h2>fn matrix_tr_vector_mul <a href="#matrix_tr_vector_mul">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/blas.v#L113"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">matrix_tr_vector_mul</span><span class="token punctuation">(</span>alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> a Matrix<span class="token punctuation">,</span> u <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>matrix_tr_vector_mul returns the transpose(matrix)-vector multiplication   v = alpha⋅aᵀ⋅u    ⇒    vi = alpha * aji * uj = alpha * uj * aji</p>
+
+</section>
+						<section id="matrix_vector_mul" class="doc-node">
+							<div class="title"><h2>fn matrix_vector_mul <a href="#matrix_vector_mul">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/blas.v#L94"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">matrix_vector_mul</span><span class="token punctuation">(</span>alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> a Matrix<span class="token punctuation">,</span> u <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>matrix_vector_mul returns the matrix-vector multiplication   v = alpha⋅a⋅u    ⇒    vi = alpha * aij * uj</p>
+
+</section>
+						<section id="matrix_vector_mul_add" class="doc-node">
+							<div class="title"><h2>fn matrix_vector_mul_add <a href="#matrix_vector_mul_add">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/blas.v#L152"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">matrix_vector_mul_add</span><span class="token punctuation">(</span>alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> a Matrix<span class="token punctuation">,</span> u <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>matrix_vector_mul_add returns the matrix-vector multiplication with addition   v += alpha⋅a⋅u    ⇒    vi += alpha * aij * uj</p>
+
+</section>
+						<section id="new_matrix" class="doc-node">
+							<div class="title"><h2>fn new_matrix <a href="#new_matrix">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/matrix.v#L15"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">new_matrix</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">)</span> Matrix</code></pre>
+<p>matrix allocates a new (empty) Matrix with given (m,n) (row/col sizes)</p>
+
+</section>
+						<section id="new_sparse_config" class="doc-node">
+							<div class="title"><h2>fn new_sparse_config <a href="#new_sparse_config">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/sparse_config.v#L24"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">new_sparse_config</span><span class="token punctuation">(</span><span class="token punctuation">)</span> SparseConfig</code></pre>
+<p>new_sparse_config returns a new SparseConfig  Input:   comm -- may be nil</p>
+
+</section>
+						<section id="new_triplet" class="doc-node">
+							<div class="title"><h2>fn new_triplet <a href="#new_triplet">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/sparse_matrix.v#L38"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">new_triplet</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> max <span class="token builtin">int</span><span class="token punctuation">)</span> Triplet</code></pre>
+<p>new_triplet returns a new Triplet. This is a wrapper to new(Triplet) followed by init()</p>
+
+</section>
+						<section id="safe_print" class="doc-node">
+							<div class="title"><h2>fn safe_print <a href="#safe_print">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/matrix.v#L362"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> safe_print<span class="token operator"><</span><span class="token builtin">T</span><span class="token operator">></span><span class="token punctuation">(</span>format <span class="token builtin">string</span><span class="token punctuation">,</span> message <span class="token builtin">T</span><span class="token punctuation">)</span> <span class="token builtin">string</span></code></pre>
+
+
+</section>
+						<section id="vector_accum" class="doc-node">
+							<div class="title"><h2>fn vector_accum <a href="#vector_accum">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/vector.v#L37"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">vector_accum</span><span class="token punctuation">(</span>o <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>accum sum/accumulates all components in a []f64  sum := Σ_i v[i]</p>
+
+</section>
+						<section id="vector_add" class="doc-node">
+							<div class="title"><h2>fn vector_add <a href="#vector_add">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/blas.v#L45"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">vector_add</span><span class="token punctuation">(</span>alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> u <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> beta <span class="token builtin">f64</span><span class="token punctuation">,</span> v <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>vector_add adds the scaled components of two vectors  res := alpha⋅u + beta⋅v   ⇒   result[i] := alpha⋅u[i] + beta⋅v[i]</p>
+
+</section>
+						<section id="vector_apply" class="doc-node">
+							<div class="title"><h2>fn vector_apply <a href="#vector_apply">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/vector.v#L10"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">vector_apply</span><span class="token punctuation">(</span><span class="token keyword">mut</span> o <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> a <span class="token builtin">f64</span><span class="token punctuation">,</span> another <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+<p>apply sets this []f64 with the scaled components of another []f64  this := a * another   ⇒   this[i] := a * another[i]  NOTE: &quot;another&quot; may be &quot;this&quot;</p>
+
+</section>
+						<section id="vector_apply_func" class="doc-node">
+							<div class="title"><h2>fn vector_apply_func <a href="#vector_apply_func">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/vector.v#L18"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">vector_apply_func</span><span class="token punctuation">(</span><span class="token keyword">mut</span> o <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> f VectorApplyFn<span class="token punctuation">)</span></code></pre>
+<p>apply_func runs a function over all components of a []f64  vi = f(i,vi)</p>
+
+</section>
+						<section id="vector_dot" class="doc-node">
+							<div class="title"><h2>fn vector_dot <a href="#vector_dot">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/blas.v#L31"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">vector_dot</span><span class="token punctuation">(</span>u <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> v <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>vector_dot returns the dot product between two vectors:  s := u・v</p>
+
+</section>
+						<section id="vector_largest" class="doc-node">
+							<div class="title"><h2>fn vector_largest <a href="#vector_largest">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/vector.v#L75"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">vector_largest</span><span class="token punctuation">(</span>o <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> den <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>largest returns the largest component |u[i]| of this []f64, normalised by den  largest := |u[i]| / den</p>
+
+</section>
+						<section id="vector_max_diff" class="doc-node">
+							<div class="title"><h2>fn vector_max_diff <a href="#vector_max_diff">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/blas.v#L69"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">vector_max_diff</span><span class="token punctuation">(</span>u <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> v <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>vector_max_diff returns the maximum absolute difference between two vectors  maxdiff = max(|u - v|)</p>
+
+</section>
+						<section id="vector_norm" class="doc-node">
+							<div class="title"><h2>fn vector_norm <a href="#vector_norm">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/vector.v#L47"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">vector_norm</span><span class="token punctuation">(</span>o <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>norm returns the Euclidean norm of a []f64:  nrm := ‖v‖</p>
+
+</section>
+						<section id="vector_norm_diff" class="doc-node">
+							<div class="title"><h2>fn vector_norm_diff <a href="#vector_norm_diff">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/vector.v#L64"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">vector_norm_diff</span><span class="token punctuation">(</span>o <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> v <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>norm_diff returns the Euclidean norm of the difference:  nrm := ||u - v||</p>
+
+</section>
+						<section id="vector_rms" class="doc-node">
+							<div class="title"><h2>fn vector_rms <a href="#vector_rms">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/vector.v#L53"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">vector_rms</span><span class="token punctuation">(</span>o <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>rms returns the root-mean-square of this []f64</p>
+
+</section>
+						<section id="vector_rms_error" class="doc-node">
+							<div class="title"><h2>fn vector_rms_error <a href="#vector_rms_error">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/blas.v#L19"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">vector_rms_error</span><span class="token punctuation">(</span>u <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> v <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> a <span class="token builtin">f64</span><span class="token punctuation">,</span> m <span class="token builtin">f64</span><span class="token punctuation">,</span> s <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+
+
+</section>
+						<section id="vector_scale_abs" class="doc-node">
+							<div class="title"><h2>fn vector_scale_abs <a href="#vector_scale_abs">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/blas.v#L82"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">vector_scale_abs</span><span class="token punctuation">(</span>a <span class="token builtin">f64</span><span class="token punctuation">,</span> m <span class="token builtin">f64</span><span class="token punctuation">,</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>vector_scale_abs creates a &quot;scale&quot; vector using the absolute value of another vector  scale := a + m ⋅ |x|     ⇒      scale[i] := a + m ⋅ |x[i]|</p>
+
+</section>
+						<section id="vector_unit" class="doc-node">
+							<div class="title"><h2>fn vector_unit <a href="#vector_unit">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/vector.v#L26"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">vector_unit</span><span class="token punctuation">(</span><span class="token keyword">mut</span> o <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>unit returns the unit []f64 parallel to this []f64  b := a / norm(a)</p>
+
+</section>
+						<section id="vector_vector_tr_mul" class="doc-node">
+							<div class="title"><h2>fn vector_vector_tr_mul <a href="#vector_vector_tr_mul">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/blas.v#L133"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">vector_vector_tr_mul</span><span class="token punctuation">(</span>alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> u <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> v <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> Matrix</code></pre>
+<p>vector_vector_tr_mul returns the matrix = vector-transpose(vector) multiplication  (e.g. dyadic product)   a = alpha⋅u⋅vᵀ    ⇒    aij = alpha * ui * vj</p>
+
+</section>
+						<section id="VectorApplyFn" class="doc-node">
+							<div class="title"><h2>type VectorApplyFn <a href="#VectorApplyFn">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/vector.v#L5"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">type</span> VectorApplyFn <span class="token operator">=</span> <span class="token keyword">fn</span> <span class="token punctuation">(</span>i <span class="token builtin">int</span><span class="token punctuation">,</span> x <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+
+
+</section>
+						<section id="CCMatrix" class="doc-node">
+							<div class="title"><h2>struct CCMatrix <a href="#CCMatrix">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/sparse_matrix.v#L23"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">CCMatrix</span> <span class="token punctuation">{</span>
+<span class="token keyword">mut</span><span class="token punctuation">:</span>
+	m <span class="token builtin">int</span>
+	n <span class="token builtin">int</span>
+
+	nnz <span class="token builtin">int</span>
+
+	p <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>
+	i <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>
+
+	x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
+<span class="token punctuation">}</span></code></pre>
+<p>CCMatrix represents a sparse matrix using the so-called &quot;column-compressed format&quot;.</p>
+
+</section>
+						<section id="Matrix" class="doc-node">
+							<div class="title"><h2>struct Matrix <a href="#Matrix">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/matrix.v#L7"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">Matrix</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	m    <span class="token builtin">int</span>
+	n    <span class="token builtin">int</span>
+	data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
+						<section id="Matrix.set_from_deep2" class="doc-node">
+							<div class="title"><h2>fn (Matrix) set_from_deep2 <a href="#Matrix.set_from_deep2">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/matrix.v#L47"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o Matrix<span class="token punctuation">)</span> <span class="token function">set_from_deep2</span><span class="token punctuation">(</span>a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+<p>set_from_deep2 sets matrix with data from a nested slice (Deep2) structure</p>
+
+</section>
+						<section id="Matrix.set_diag" class="doc-node">
+							<div class="title"><h2>fn (Matrix) set_diag <a href="#Matrix.set_diag">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/matrix.v#L58"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o Matrix<span class="token punctuation">)</span> <span class="token function">set_diag</span><span class="token punctuation">(</span>val <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+<p>set_diag sets diagonal matrix with diagonal components equal to val</p>
+
+</section>
+						<section id="Matrix.set" class="doc-node">
+							<div class="title"><h2>fn (Matrix) set <a href="#Matrix.set">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/matrix.v#L71"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o Matrix<span class="token punctuation">)</span> <span class="token function">set</span><span class="token punctuation">(</span>i <span class="token builtin">int</span><span class="token punctuation">,</span> j <span class="token builtin">int</span><span class="token punctuation">,</span> val <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+<p>set sets value</p>
+
+</section>
+						<section id="Matrix.get" class="doc-node">
+							<div class="title"><h2>fn (Matrix) get <a href="#Matrix.get">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/matrix.v#L76"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o Matrix<span class="token punctuation">)</span> <span class="token function">get</span><span class="token punctuation">(</span>i <span class="token builtin">int</span><span class="token punctuation">,</span> j <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>get gets value</p>
+
+</section>
+						<section id="Matrix.get_deep2" class="doc-node">
+							<div class="title"><h2>fn (Matrix) get_deep2 <a href="#Matrix.get_deep2">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/matrix.v#L81"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o Matrix<span class="token punctuation">)</span> <span class="token function">get_deep2</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>get_deep2 returns nested slice representation</p>
+
+</section>
+						<section id="Matrix.clone" class="doc-node">
+							<div class="title"><h2>fn (Matrix) clone <a href="#Matrix.clone">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/matrix.v#L92"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o Matrix<span class="token punctuation">)</span> <span class="token function">clone</span><span class="token punctuation">(</span><span class="token punctuation">)</span> Matrix</code></pre>
+<p>clone returns a copy of this matrix</p>
+
+</section>
+						<section id="Matrix.transpose" class="doc-node">
+							<div class="title"><h2>fn (Matrix) transpose <a href="#Matrix.transpose">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/matrix.v#L99"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o Matrix<span class="token punctuation">)</span> <span class="token function">transpose</span><span class="token punctuation">(</span><span class="token punctuation">)</span> Matrix</code></pre>
+<p>transpose returns the transpose matrix</p>
+
+</section>
+						<section id="Matrix.copy_into" class="doc-node">
+							<div class="title"><h2>fn (Matrix) copy_into <a href="#Matrix.copy_into">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/matrix.v#L111"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o Matrix<span class="token punctuation">)</span> <span class="token function">copy_into</span><span class="token punctuation">(</span><span class="token keyword">mut</span> result Matrix<span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+<p>copy_into copies the scaled components of this matrix into another one (result)  result := alpha * this   ⇒   result[ij] := alpha * this[ij]</p>
+
+</section>
+						<section id="Matrix.add" class="doc-node">
+							<div class="title"><h2>fn (Matrix) add <a href="#Matrix.add">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/matrix.v#L118"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o Matrix<span class="token punctuation">)</span> <span class="token function">add</span><span class="token punctuation">(</span>i <span class="token builtin">int</span><span class="token punctuation">,</span> j <span class="token builtin">int</span><span class="token punctuation">,</span> val <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+<p>add adds value to (i,j) location</p>
+
+</section>
+						<section id="Matrix.fill" class="doc-node">
+							<div class="title"><h2>fn (Matrix) fill <a href="#Matrix.fill">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/matrix.v#L124"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o Matrix<span class="token punctuation">)</span> <span class="token function">fill</span><span class="token punctuation">(</span>val <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+<p>fill fills this matrix with a single number val  aij = val</p>
+
+</section>
+						<section id="Matrix.clear_rc" class="doc-node">
+							<div class="title"><h2>fn (Matrix) clear_rc <a href="#Matrix.clear_rc">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/matrix.v#L137"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o Matrix<span class="token punctuation">)</span> <span class="token function">clear_rc</span><span class="token punctuation">(</span>rows <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> cols <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> diag <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+						<section id="Matrix.clear_bry" class="doc-node">
+							<div class="title"><h2>fn (Matrix) clear_bry <a href="#Matrix.clear_bry">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/matrix.v#L165"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o Matrix<span class="token punctuation">)</span> <span class="token function">clear_bry</span><span class="token punctuation">(</span>diag <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+						<section id="Matrix.max_diff" class="doc-node">
+							<div class="title"><h2>fn (Matrix) max_diff <a href="#Matrix.max_diff">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/matrix.v#L170"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o Matrix<span class="token punctuation">)</span> <span class="token function">max_diff</span><span class="token punctuation">(</span>another Matrix<span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>max_diff returns the maximum difference between the components of this and another matrix</p>
+
+</section>
+						<section id="Matrix.largest" class="doc-node">
+							<div class="title"><h2>fn (Matrix) largest <a href="#Matrix.largest">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/matrix.v#L183"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o Matrix<span class="token punctuation">)</span> <span class="token function">largest</span><span class="token punctuation">(</span>den <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>largest returns the largest component |a[ij]| of this matrix, normalised by den  largest := |a[ij]| / den</p>
+
+</section>
+						<section id="Matrix.col" class="doc-node">
+							<div class="title"><h2>fn (Matrix) col <a href="#Matrix.col">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/matrix.v#L197"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o Matrix<span class="token punctuation">)</span> <span class="token function">col</span><span class="token punctuation">(</span>j <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>col access column j of this matrix. No copies are made since the internal data are in  col-major format already.  NOTE: this method can be used to modify the columns; e.g. with o.col(0)[0] = 123</p>
+
+</section>
+						<section id="Matrix.get_row" class="doc-node">
+							<div class="title"><h2>fn (Matrix) get_row <a href="#Matrix.get_row">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/matrix.v#L202"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o Matrix<span class="token punctuation">)</span> <span class="token function">get_row</span><span class="token punctuation">(</span>i <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>get_row returns row i of this matrix</p>
+
+</section>
+						<section id="Matrix.get_col" class="doc-node">
+							<div class="title"><h2>fn (Matrix) get_col <a href="#Matrix.get_col">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/matrix.v#L211"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o Matrix<span class="token punctuation">)</span> <span class="token function">get_col</span><span class="token punctuation">(</span>j <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>get_col returns column j of this matrix</p>
+
+</section>
+						<section id="Matrix.extract_cols" class="doc-node">
+							<div class="title"><h2>fn (Matrix) extract_cols <a href="#Matrix.extract_cols">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/matrix.v#L218"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o Matrix<span class="token punctuation">)</span> <span class="token function">extract_cols</span><span class="token punctuation">(</span>start <span class="token builtin">int</span><span class="token punctuation">,</span> endp1 <span class="token builtin">int</span><span class="token punctuation">)</span> Matrix</code></pre>
+<p>extract_cols returns columns from j=start to j=endp1-1  start -- first column  endp1 -- &quot;end-plus-one&quot;, the number of the last requested column + 1</p>
+
+</section>
+						<section id="Matrix.set_col" class="doc-node">
+							<div class="title"><h2>fn (Matrix) set_col <a href="#Matrix.set_col">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/matrix.v#L230"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o Matrix<span class="token punctuation">)</span> <span class="token function">set_col</span><span class="token punctuation">(</span>j <span class="token builtin">int</span><span class="token punctuation">,</span> value <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+<p>set_col sets the values of a column j with a single value</p>
+
+</section>
+						<section id="Matrix.norm_frob" class="doc-node">
+							<div class="title"><h2>fn (Matrix) norm_frob <a href="#Matrix.norm_frob">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/matrix.v#L238"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o Matrix<span class="token punctuation">)</span> <span class="token function">norm_frob</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>norm_frob returns the Frobenius norm of this matrix  nrm := ‖a‖_F = sqrt(Σ_i Σ_j a[ij]⋅a[ij]) = ‖a‖_2</p>
+
+</section>
+						<section id="Matrix.norm_inf" class="doc-node">
+							<div class="title"><h2>fn (Matrix) norm_inf <a href="#Matrix.norm_inf">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/matrix.v#L248"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o Matrix<span class="token punctuation">)</span> <span class="token function">norm_inf</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>norm_inf returns the infinite norm of this matrix  nrm := ‖a‖_∞ = max_i ( Σ_j a[ij] )</p>
+
+</section>
+						<section id="Matrix.apply" class="doc-node">
+							<div class="title"><h2>fn (Matrix) apply <a href="#Matrix.apply">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/matrix.v#L269"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o Matrix<span class="token punctuation">)</span> <span class="token function">apply</span><span class="token punctuation">(</span>alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> another Matrix<span class="token punctuation">)</span></code></pre>
+<p>apply sets this matrix with the scaled components of another matrix  this := alpha * another   ⇒   this[i] := alpha * another[i]  NOTE: &quot;another&quot; may be &quot;this&quot;</p>
+
+</section>
+						<section id="Matrix.det" class="doc-node">
+							<div class="title"><h2>fn (Matrix) det <a href="#Matrix.det">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/matrix.v#L277"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o Matrix<span class="token punctuation">)</span> <span class="token function">det</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>det computes the determinant of matrix using the LU factorization  NOTE: this method may fail due to overflow...</p>
+
+</section>
+						<section id="Matrix.str" class="doc-node">
+							<div class="title"><h2>fn (Matrix) str <a href="#Matrix.str">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/matrix.v#L297"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o Matrix<span class="token punctuation">)</span> <span class="token function">str</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">string</span></code></pre>
+
+
+</section>
+						<section id="Matrix.print" class="doc-node">
+							<div class="title"><h2>fn (Matrix) print <a href="#Matrix.print">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/matrix.v#L302"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o Matrix<span class="token punctuation">)</span> <span class="token function">print</span><span class="token punctuation">(</span>nfmt_ <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span></code></pre>
+<p>print prints matrix (without commas or brackets)</p>
+
+</section>
+						<section id="Matrix.print_v" class="doc-node">
+							<div class="title"><h2>fn (Matrix) print_v <a href="#Matrix.print_v">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/matrix.v#L320"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o Matrix<span class="token punctuation">)</span> <span class="token function">print_v</span><span class="token punctuation">(</span>nfmt_ <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span></code></pre>
+<p>print_v prints matrix in V format</p>
+
+</section>
+						<section id="Matrix.print_py" class="doc-node">
+							<div class="title"><h2>fn (Matrix) print_py <a href="#Matrix.print_py">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/matrix.v#L341"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o Matrix<span class="token punctuation">)</span> <span class="token function">print_py</span><span class="token punctuation">(</span>nfmt_ <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span></code></pre>
+<p>print_py prints matrix in Python format</p>
+
+</section>
+						<section id="SparseConfig" class="doc-node">
+							<div class="title"><h2>struct SparseConfig <a href="#SparseConfig">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/sparse_config.v#L6"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">SparseConfig</span> <span class="token punctuation">{</span>
+<span class="token keyword">mut</span><span class="token punctuation">:</span>
+	mumps_ordering <span class="token builtin">int</span>
+	mumps_scaling  <span class="token builtin">int</span>
+
+	symmetric   <span class="token builtin">bool</span>
+	sym_pos_def <span class="token builtin">bool</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	verbose <span class="token builtin">bool</span>
+
+	mumps_increase_of_working_space_pct <span class="token builtin">int</span>
+	mumps_max_memory_per_processor      <span class="token builtin">int</span>
+<span class="token punctuation">}</span></code></pre>
+<p>The SparseConfig structure holds configuration arguments for sparse solvers</p>
+
+</section>
+						<section id="SparseConfig.set_mumps_symmetry" class="doc-node">
+							<div class="title"><h2>fn (SparseConfig) set_mumps_symmetry <a href="#SparseConfig.set_mumps_symmetry">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/sparse_config.v#L35"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o SparseConfig<span class="token punctuation">)</span> <span class="token function">set_mumps_symmetry</span><span class="token punctuation">(</span>only_upper_or_lower_given <span class="token builtin">bool</span><span class="token punctuation">,</span> positive_defined <span class="token builtin">bool</span><span class="token punctuation">)</span></code></pre>
+<p>set_mumps_symmetry sets symmetry options for MUMPS solver</p>
+
+</section>
+						<section id="SparseConfig.set_umfpack_symmetry" class="doc-node">
+							<div class="title"><h2>fn (SparseConfig) set_umfpack_symmetry <a href="#SparseConfig.set_umfpack_symmetry">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/sparse_config.v#L47"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o SparseConfig<span class="token punctuation">)</span> <span class="token function">set_umfpack_symmetry</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<p>set_umfpack_symmetry sets symmetry options for UMFPACK solver</p>
+
+</section>
+						<section id="SparseConfig.set_mumps_ordering" class="doc-node">
+							<div class="title"><h2>fn (SparseConfig) set_mumps_ordering <a href="#SparseConfig.set_mumps_ordering">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/sparse_config.v#L63"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o SparseConfig<span class="token punctuation">)</span> <span class="token function">set_mumps_ordering</span><span class="token punctuation">(</span>ordering <span class="token builtin">string</span><span class="token punctuation">)</span></code></pre>
+<p>set_mumps_ordering sets ordering for MUMPS solver  ordering -- &quot;&quot; or &quot;amf&quot; [default]              &quot;amf&quot;, &quot;scotch&quot;, &quot;pord&quot;, &quot;metis&quot;, &quot;qamd&quot;, &quot;auto&quot;  ICNTL(7)    0: &quot;amd&quot; Approximate Minimum Degree (AMD)    2: &quot;amf&quot; Approximate Minimum Fill (AMF)    3: &quot;scotch&quot; SCOTCH5 package is used if previously installed by the user otherwise treated as 7.    4: &quot;pord&quot; PORD6 is used if previously installed by the user otherwise treated as 7.    5: &quot;metis&quot; Metis7 package is used if previously installed by the user otherwise treated as 7.    6: &quot;qamd&quot; Approximate Minimum Degree with automatic quasi-dense row detection (QAMD) is used.    7: &quot;auto&quot; automatic choice by the software during analysis phase. This choice will depend on the        ordering packages made available, on the matrix (type and size), and on the number of processors.</p>
+
+</section>
+						<section id="SparseConfig.set_mumps_scaling" class="doc-node">
+							<div class="title"><h2>fn (SparseConfig) set_mumps_scaling <a href="#SparseConfig.set_mumps_scaling">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/sparse_config.v#L90"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o SparseConfig<span class="token punctuation">)</span> <span class="token function">set_mumps_scaling</span><span class="token punctuation">(</span>scaling <span class="token builtin">string</span><span class="token punctuation">)</span></code></pre>
+<p>set_mumps_scaling sets scaling for MUMPS solver  scaling -- &quot;&quot; or &quot;rcit&quot; [default]             &quot;no&quot;, &quot;diag&quot;, &quot;col&quot;, &quot;rcinf&quot;, &quot;rcit&quot;, &quot;rrcit&quot;, &quot;auto&quot;  ICNTL(8)    0: &quot;no&quot; No scaling applied/computed.    1: &quot;diag&quot; Diagonal scaling computed during the numerical factorization phase,    3: &quot;col&quot; Column scaling computed during the numerical factorization phase,    4: &quot;rcinf&quot; Row and column scaling based on infinite row/column norms, computed during the numerical       factorization phase,    7: &quot;rcit&quot; Simultaneous row and column iterative scaling based on [41] and [15] computed during the       numerical factorization phase.    8: &quot;rrcit&quot; Similar to 7 but more rigorous and expensive to compute; computed during the numerical       factorization phase.    77: &quot;auto&quot; Automatic choice of the value of ICNTL(8) done during analy</p>
+
+</section>
+						<section id="Triplet" class="doc-node">
+							<div class="title"><h2>struct Triplet <a href="#Triplet">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/sparse_matrix.v#L7"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">Triplet</span> <span class="token punctuation">{</span>
+<span class="token keyword">mut</span><span class="token punctuation">:</span>
+	m <span class="token builtin">int</span>
+	n <span class="token builtin">int</span>
+
+	pos <span class="token builtin">int</span>
+	max <span class="token builtin">int</span>
+
+	i <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>
+	j <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>
+
+	x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Triplet is a simple representation of a sparse matrix, where the indices and values  of this matrix are stored directly.</p>
+
+</section>
+						<section id="Triplet.init" class="doc-node">
+							<div class="title"><h2>fn (Triplet) init <a href="#Triplet.init">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/sparse_matrix.v#L45"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o Triplet<span class="token punctuation">)</span> <span class="token function">init</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> max <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>init allocates all memory required to hold a sparse matrix in triplet form</p>
+
+</section>
+						<section id="Triplet.put" class="doc-node">
+							<div class="title"><h2>fn (Triplet) put <a href="#Triplet.put">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/sparse_matrix.v#L53"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o Triplet<span class="token punctuation">)</span> <span class="token function">put</span><span class="token punctuation">(</span>i <span class="token builtin">int</span><span class="token punctuation">,</span> j <span class="token builtin">int</span><span class="token punctuation">,</span> x <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+<p>put inserts an element to a pre-allocated (with init) triplet matrix</p>
+
+</section>
+						<section id="Triplet.put_matrix_and_matrix_t" class="doc-node">
+							<div class="title"><h2>fn (Triplet) put_matrix_and_matrix_t <a href="#Triplet.put_matrix_and_matrix_t">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/sparse_matrix.v#L80"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o Triplet<span class="token punctuation">)</span> <span class="token function">put_matrix_and_matrix_t</span><span class="token punctuation">(</span>a Triplet<span class="token punctuation">)</span></code></pre>
+
+
+</section>
+						<section id="Triplet.put_cc_matrix_and_matrix_t" class="doc-node">
+							<div class="title"><h2>fn (Triplet) put_cc_matrix_and_matrix_t <a href="#Triplet.put_cc_matrix_and_matrix_t">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/sparse_matrix.v#L101"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o Triplet<span class="token punctuation">)</span> <span class="token function">put_cc_matrix_and_matrix_t</span><span class="token punctuation">(</span>a CCMatrix<span class="token punctuation">)</span></code></pre>
+
+
+</section>
+						<section id="Triplet.start" class="doc-node">
+							<div class="title"><h2>fn (Triplet) start <a href="#Triplet.start">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/sparse_matrix.v#L115"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o Triplet<span class="token punctuation">)</span> <span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<p>start (re)starts index for inserting items using the put command</p>
+
+</section>
+						<section id="Triplet.len" class="doc-node">
+							<div class="title"><h2>fn (Triplet) len <a href="#Triplet.len">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/sparse_matrix.v#L120"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o Triplet<span class="token punctuation">)</span> <span class="token function">len</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>Len returns the number of items just inserted in the triplet</p>
+
+</section>
+						<section id="Triplet.max" class="doc-node">
+							<div class="title"><h2>fn (Triplet) max <a href="#Triplet.max">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/sparse_matrix.v#L125"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o Triplet<span class="token punctuation">)</span> <span class="token function">max</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>max returns the maximum number of items that can be inserted in the triplet</p>
+
+</section>
+						<section id="Triplet.size" class="doc-node">
+							<div class="title"><h2>fn (Triplet) size <a href="#Triplet.size">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/sparse_matrix.v#L130"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o Triplet<span class="token punctuation">)</span> <span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>size returns the row/column size of the matrix represented by the Triplet</p>
+
+</section>
+						<section id="Triplet.to_dense" class="doc-node">
+							<div class="title"><h2>fn (Triplet) to_dense <a href="#Triplet.to_dense">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/la/sparse_matrix.v#L135"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o Triplet<span class="token punctuation">)</span> <span class="token function">to_dense</span><span class="token punctuation">(</span><span class="token punctuation">)</span> Matrix</code></pre>
+<p>to_dense returns the dense matrix corresponding to this Triplet</p>
+
+</section>
+
+						<div class="footer">
+							Powered by vdoc. Generated on: 27 Mar 2021 03:22:56
+						</div>
+					</div>
+					<div class="doc-toc"><ul><li class="open"><a href="#den_solve">fn den_solve</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#matrix_add">fn matrix_add</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#matrix_cond_num">fn matrix_cond_num</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#matrix_deep2">fn matrix_deep2</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#matrix_inv">fn matrix_inv</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#matrix_inv_small">fn matrix_inv_small</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#matrix_matrix_mul">fn matrix_matrix_mul</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#matrix_matrix_muladd">fn matrix_matrix_muladd</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#matrix_matrix_tr_mul">fn matrix_matrix_tr_mul</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#matrix_matrix_tr_muladd">fn matrix_matrix_tr_muladd</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#matrix_raw">fn matrix_raw</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#matrix_svd">fn matrix_svd</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#matrix_tr_matrix_mul">fn matrix_tr_matrix_mul</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#matrix_tr_matrix_muladd">fn matrix_tr_matrix_muladd</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#matrix_tr_matrix_tr_mul">fn matrix_tr_matrix_tr_mul</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#matrix_tr_matrix_tr_mul_add">fn matrix_tr_matrix_tr_mul_add</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#matrix_tr_vector_mul">fn matrix_tr_vector_mul</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#matrix_vector_mul">fn matrix_vector_mul</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#matrix_vector_mul_add">fn matrix_vector_mul_add</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#new_matrix">fn new_matrix</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#new_sparse_config">fn new_sparse_config</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#new_triplet">fn new_triplet</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#safe_print">fn safe_print</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#vector_accum">fn vector_accum</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#vector_add">fn vector_add</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#vector_apply">fn vector_apply</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#vector_apply_func">fn vector_apply_func</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#vector_dot">fn vector_dot</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#vector_largest">fn vector_largest</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#vector_max_diff">fn vector_max_diff</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#vector_norm">fn vector_norm</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#vector_norm_diff">fn vector_norm_diff</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#vector_rms">fn vector_rms</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#vector_rms_error">fn vector_rms_error</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#vector_scale_abs">fn vector_scale_abs</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#vector_unit">fn vector_unit</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#vector_vector_tr_mul">fn vector_vector_tr_mul</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#VectorApplyFn">type VectorApplyFn</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#CCMatrix">struct CCMatrix</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#Matrix">struct Matrix</a>        <ul>
+<li><a href="#Matrix.set_from_deep2">fn set_from_deep2</a></li>
+<li><a href="#Matrix.set_diag">fn set_diag</a></li>
+<li><a href="#Matrix.set">fn set</a></li>
+<li><a href="#Matrix.get">fn get</a></li>
+<li><a href="#Matrix.get_deep2">fn get_deep2</a></li>
+<li><a href="#Matrix.clone">fn clone</a></li>
+<li><a href="#Matrix.transpose">fn transpose</a></li>
+<li><a href="#Matrix.copy_into">fn copy_into</a></li>
+<li><a href="#Matrix.add">fn add</a></li>
+<li><a href="#Matrix.fill">fn fill</a></li>
+<li><a href="#Matrix.clear_rc">fn clear_rc</a></li>
+<li><a href="#Matrix.clear_bry">fn clear_bry</a></li>
+<li><a href="#Matrix.max_diff">fn max_diff</a></li>
+<li><a href="#Matrix.largest">fn largest</a></li>
+<li><a href="#Matrix.col">fn col</a></li>
+<li><a href="#Matrix.get_row">fn get_row</a></li>
+<li><a href="#Matrix.get_col">fn get_col</a></li>
+<li><a href="#Matrix.extract_cols">fn extract_cols</a></li>
+<li><a href="#Matrix.set_col">fn set_col</a></li>
+<li><a href="#Matrix.norm_frob">fn norm_frob</a></li>
+<li><a href="#Matrix.norm_inf">fn norm_inf</a></li>
+<li><a href="#Matrix.apply">fn apply</a></li>
+<li><a href="#Matrix.det">fn det</a></li>
+<li><a href="#Matrix.str">fn str</a></li>
+<li><a href="#Matrix.print">fn print</a></li>
+<li><a href="#Matrix.print_v">fn print_v</a></li>
+<li><a href="#Matrix.print_py">fn print_py</a></li>
+</ul>
+</li>
+<li class="open"><a href="#SparseConfig">struct SparseConfig</a>        <ul>
+<li><a href="#SparseConfig.set_mumps_symmetry">fn set_mumps_symmetry</a></li>
+<li><a href="#SparseConfig.set_umfpack_symmetry">fn set_umfpack_symmetry</a></li>
+<li><a href="#SparseConfig.set_mumps_ordering">fn set_mumps_ordering</a></li>
+<li><a href="#SparseConfig.set_mumps_scaling">fn set_mumps_scaling</a></li>
+</ul>
+</li>
+<li class="open"><a href="#Triplet">struct Triplet</a>        <ul>
+<li><a href="#Triplet.init">fn init</a></li>
+<li><a href="#Triplet.put">fn put</a></li>
+<li><a href="#Triplet.put_matrix_and_matrix_t">fn put_matrix_and_matrix_t</a></li>
+<li><a href="#Triplet.put_cc_matrix_and_matrix_t">fn put_cc_matrix_and_matrix_t</a></li>
+<li><a href="#Triplet.start">fn start</a></li>
+<li><a href="#Triplet.len">fn len</a></li>
+<li><a href="#Triplet.max">fn max</a></li>
+<li><a href="#Triplet.size">fn size</a></li>
+<li><a href="#Triplet.to_dense">fn to_dense</a></li>
+</ul>
+</li>
+</ul></div>
+				</div>
+			</div>
+		</div>
+		<script src="doc.js"></script>
+		<script async src="search_index.js" type="text/javascript"></script>
+	</body>
+</html>
