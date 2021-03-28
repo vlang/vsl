@@ -27,5 +27,5 @@ jobs:
       run: cd vsl
     - name: Execute Tests using Pure V Backend
       run: make test
-    - name: Execute Tests using Open BLAS Backend
-      run: CBLAS_BACKEND=ON make test
+    # - name: Execute Tests using Open BLAS Backend
+    #   run: CBLAS_BACKEND=ON make test
