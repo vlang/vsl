@@ -75,9 +75,11 @@ VS Code + the V tools + VSL.
 
 ## Install VSL locally
 
-Because we use CV for linking VSL with many libraries, it is not enough to use the
-so convenient `v install` _or_ `vpkg get` functionality for installing VSL.
-First we need to install some dependencies in order to have VSL working as expected.
+It is enough to use the so convenient `v install` _or_ `vpkg get` functionality for installing VSL.
+Anyways, it is possible to optimize certain modules using different backends.
+For this there are some C dependencies that can be installed optionally.
+If you want to use these C dependencies and other libraries,
+first we need to install some dependencies in order to have VSL working as expected with these backends.
 
 ### Install dependencies
 
