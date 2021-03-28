@@ -108,8 +108,13 @@ pub fn (g Graph) shortest_paths(method SorthestPaths) Graph {
 			}
 		}
 	}
-	return {
-		...g2
+	return Graph{
+		edges: g2.edges
+		weights_e: g2.weights_e
+		verts: g2.verts
+		weights_v: g2.weights_v
+		shares: g2.shares
+		key2edge: g2.key2edge
 		dist: dist
 		next: next
 	}
@@ -173,8 +178,13 @@ pub fn (g Graph) calc_dist() Graph {
 			panic('distance between vertices cannot be negative: $dist[i][j]')
 		}
 	}
-	return {
-		...g
+	return Graph{
+		edges: g.edges
+		weights_e: g.weights_e
+		verts: g.verts
+		weights_v: g.weights_v
+		shares: g.shares
+		key2edge: g.key2edge
 		dist: dist
 		next: next
 	}
