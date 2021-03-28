@@ -46,7 +46,10 @@ time of use.
 
 ## Installation
 
-Because of C dependencies and other libraries, the easiest way to work with VSL is via Docker.
+It is possible to optimize certain modules using different backends.
+For this there are some C dependencies that can be installed optionally.
+If you want to use these C dependencies and other libraries,
+the easiest way to work with VSL is via Docker.
 Having Docker and VS Code installed, you can start developing powerful numerical simulations
 using VSL in a matter of seconds. Furthermore, the best part of it is that it works on
 Windows, Linux, and macOS out of the box.
