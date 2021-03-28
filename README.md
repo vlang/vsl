@@ -66,7 +66,7 @@ Done. And your system will remain "clean".
 
 ![](https://raw.githubusercontent.com/vlang/vsl/master/static/vscode-open-in-container.gif)
 
-Our [Docker Image](https://hub.docker.com/repository/docker/vsl/vsl)
+Our [Docker Image](https://hub.docker.com/repository/docker/ulisesjeremias/vsl)
 also contains V and the V Tools for working with VS Code (or not).
 Below is a video showing the convenience of
 VS Code + the V tools + VSL.
