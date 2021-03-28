@@ -1,4 +1,4 @@
-import diff
+import vsl.diff
 import vsl
 import vsl.vmath
 

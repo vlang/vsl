@@ -1,4 +1,4 @@
-import deriv
+import vsl.deriv
 import vsl
 import vsl.vmath
 

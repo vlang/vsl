@@ -1,4 +1,4 @@
-import easings
+import vsl.easings
 import vsl.vmath
 
 // Linear tests

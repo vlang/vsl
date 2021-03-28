@@ -1,4 +1,4 @@
-import fit
+import vsl.fit
 import vsl.vmath
 
 fn test_linear_fit01() {
