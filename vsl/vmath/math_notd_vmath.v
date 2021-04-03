@@ -100,11 +100,13 @@ pub fn exp2(a f64) f64 {
 }
 
 // factorial calculates the factorial of the provided value.
+[inline]
 pub fn factorial(n f64) f64 {
 	return factorial.factorial(n)
 }
 
 // log_factorial calculates the log-factorial of the provided value.
+[inline]
 pub fn log_factorial(n f64) f64 {
 	return factorial.log_factorial(n)
 }
