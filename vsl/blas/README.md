@@ -2,7 +2,7 @@
 
 This package implements BLAS functions. It provides two different backends:
 
-- One using Open BLAS when using flas `-c cblas`. [Check also OpenBLAS](https://github.com/xianyi/OpenBLAS).
+- One using Open BLAS when using flag `-d cblas`. [Check also OpenBLAS](https://github.com/xianyi/OpenBLAS).
 - One using a pure V implementation called VLAS, *by default*. This implementation can be found on `vsl.blas.vlas`.
 
 Therefore, its routines are a little more
