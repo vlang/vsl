@@ -25,7 +25,8 @@ jobs:
       run: v doctor
     - name: Build docs
       run: |
-        cd vsl
+        rm -f ./vsl/README.md
+        mv ./vsl/static/DOCS.md ./vsl/README.md
         v doc -m -f html vsl/
         mv ./vsl/_docs/vsl.html ./vsl/_docs/index.html
     - name: Deploy to gh-pages
