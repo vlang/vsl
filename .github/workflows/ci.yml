@@ -23,7 +23,11 @@ jobs:
     - name: Install VSL dependencies
       run: |
         sudo apt-get install --quiet -y --no-install-recommends gfortran liblapacke-dev libopenblas-dev
-    - name: Execute Tests using Pure V Backend
+    - name: Execute Tests using Pure V Backend with Vlib Math
       run: cd vsl; make test
-    # - name: Execute Tests using Open BLAS Backend
-    #   run: cd vsl; CBLAS_BACKEND=ON make test
+    - name: Execute Tests using Pure V Backend with Pure V Math
+      run: cd vsl; VMATH_BACKEND=ON make test
+    - name: Execute Tests using Open BLAS Backend
+      run: cd vsl; CBLAS_BACKEND=ON make test
+    - name: Execute Tests using Open BLAS Backend and Pure V Math
+      run: cd vsl; VMATH_BACKEND=ON CBLAS_BACKEND=ON make test

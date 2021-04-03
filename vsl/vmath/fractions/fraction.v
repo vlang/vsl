@@ -1,7 +1,7 @@
 module fractions
 
 import vsl.vmath as math
-import math.bits
+import vsl.vmath.bits
 
 // Fraction Struct
 // ---------------

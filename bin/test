@@ -2,15 +2,24 @@
 
 set -eo pipefail
 
+flags=""
+
 if [[ -n "${CBLAS_BACKEND}" ]]; then
-    echo "Running tests without -autofree using Open BLAS"
-    v -d cblas -stats test .
-else
-    echo "Running tests without -autofree using VLAS"
-    v -stats test .
+    echo "Running tests using Open BLAS"
+    flags="${flags} -d cblas"
 fi
 
-# echo "Running tests with -autofree"
-# v -stats -autofree test .
+if [[ -n "${VMATH_BACKEND}" ]]; then
+    echo "Running tests using V Math"
+    flags="${flags} -d vmath"
+fi
+
+if [[ -n "${AUTOFREE}" ]]; then
+    echo "Running tests using V Math"
+    flags="${flags} -autofree"
+fi
+
+echo "Executing tests with command: \"v ${flags} test .\""
+v ${flags} test .
 
 find . -name '*_test' -exec rm -f {} +
