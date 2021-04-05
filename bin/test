@@ -1,22 +1,45 @@
 #!/usr/bin/env bash
 
+## Copyright (C) 2019-2021 Ulises Jeremias Cornejo Fandos
+## Licensed under MIT
+##
+##     @script.name [OPTION] ARGUMENTS...
+##
+## Options:
+##     -h, --help                            Prints usage and example
+##         --stats                           Exeute with stats
+##         --use-cblas                       Execute tests using cblas
+##         --use-vmath                       Use pure V math library as backend
+##         --use-autofree                    Execute tests using atofree
+##
+
+ROOT=$(dirname "$0")
+
+source "${ROOT}/util/opts/opts.sh" || exit
+source "${ROOT}/util/logs.sh" || exit
+
 set -eo pipefail
 
 flags=""
 
-if [[ -n "${CBLAS_BACKEND}" ]]; then
+if [[ -n "${use_cblas}" ]]; then
     echo "Running tests using Open BLAS"
     flags="${flags} -d cblas"
 fi
 
-if [[ -n "${VMATH_BACKEND}" ]]; then
+if [[ -n "${use_vmath}" ]]; then
     echo "Running tests using V Math"
     flags="${flags} -d vmath"
 fi
 
-if [[ -n "${AUTOFREE}" ]]; then
+if [[ -n "${use_autofree}" ]]; then
     echo "Running tests using V Math"
     flags="${flags} -autofree"
+fi
+
+if [[ -n "${stats}" ]]; then
+    echo "Running tests with stats"
+    flags="${flags} -stats"
 fi
 
 echo "Executing tests with command: \"v ${flags} test .\""
