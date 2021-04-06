@@ -1,5 +1,6 @@
 module la
 
+import strconv
 import vsl.errno
 import vsl.blas
 import vsl.vmath
@@ -360,8 +361,5 @@ pub fn (o Matrix) print_py(nfmt_ string) string {
 
 [inline]
 pub fn safe_print<T>(format string, message T) string {
-	buf := [byte(0)]
-	mut ptr := &buf[0]
-	unsafe { C.sprintf(charptr(ptr), charptr(format.str), message) }
-	return unsafe { tos(buf.data, vstrlen(buf.data)) }
+        return strconv.v_sprintf(format, message)
 }
