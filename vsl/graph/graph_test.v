@@ -18,7 +18,7 @@ fn test_graph01() {
 	assert g.next.len == 4 // nverts
 	shares := [[0, 1], [0, 2], [2, 3], [1, 3]]
 	for k, share in shares {
-		for i, s in g.shares[k] {
+		for i, s in share {
 			assert s == shares[k][i]
 		}
 	}
@@ -35,9 +35,9 @@ fn test_graph01() {
 	edg3 := g.get_edge(2, 3) or { panic(err) }
 	assert edg3 == 3
 	g2 := g.shortest_paths(.fw)
-	mut path := g2.path(0, 3)
+	g2_path_0_3 := g2.path(0, 3)
 	for i, v in [0, 1, 2, 3] {
-		assert path[i] == v
+		assert g2_path_0_3[i] == v
 	}
 	mut weights_e := g2.weights_e
 	weights_e[3] = 13
@@ -52,9 +52,9 @@ fn test_graph01() {
 		next: g.next
 	}
 	g4 := g3.shortest_paths(.fw)
-	path = g4.path(0, 3)
+	g4_path_0_3 := g4.path(0, 3)
 	for i, v in [0, 3] {
-		assert path[i] == v
+		assert g4_path_0_3[i] == v
 	}
 }
 
@@ -80,7 +80,7 @@ fn test_graph02() {
 	assert g.next.len == 6 // nverts
 	shares := [[2, 3], [1, 2], [3, 4, 5], [5, 6], [0, 1], [0, 4, 6]]
 	for k, share in shares {
-		for i, s in g.shares[k] {
+		for i, s in share {
 			assert s == shares[k][i]
 		}
 	}
@@ -92,8 +92,8 @@ fn test_graph02() {
 	assert g.key2edge[hash_edge_key(2, 3)] == 5 // (2,3) → edge 5
 	assert g.key2edge[hash_edge_key(5, 3)] == 6 // (5,3) → edge 6
 	g2 := g.shortest_paths(.fw)
-	path := g2.path(1, 3)
+	g2_path_1_3 := g2.path(1, 3)
 	for i, v in [1, 4, 5, 3] {
-		assert path[i] == v
+		assert g2_path_1_3[i] == v
 	}
 }
