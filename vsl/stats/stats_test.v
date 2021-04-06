@@ -1,4 +1,4 @@
-import vsl.vmath
+import vsl.vmath as math
 import vsl.stats
 
 fn test_freq() {
@@ -13,7 +13,7 @@ fn test_freq() {
 }
 
 fn tst_res(str1 string, str2 string) bool {
-	if (vmath.abs(str1.f64() - str2.f64())) < 1e-5 {
+	if (math.abs(str1.f64() - str2.f64())) < 1e-5 {
 		return true
 	}
 	return false
@@ -36,20 +36,21 @@ fn test_mean() {
 }
 
 fn test_geometric_mean() {
-	// Tests were also verified on Wolfram Alpha
-	mut data := [f64(10.0), f64(4.45), f64(5.9), f64(2.7)]
-	mut o := stats.geometric_mean(data)
-	// Some issue with precision comparison in f64 using == operator hence serializing to string
-	assert tst_res(o.str(), '5.15993')
-	data = [f64(-3.0), f64(67.31), f64(4.4), f64(1.89)]
-	o = stats.geometric_mean(data)
-	// Some issue with precision comparison in f64 using == operator hence serializing to string
-	assert o.str().eq('nan') || o.str().eq('-nan') || o.str().eq('-1.#IND00') || o == f64(0)
-		|| o.str().eq('-nan(ind)') // Because in math it yields a complex number
-	data = [f64(12.0), f64(7.88), f64(76.122), f64(54.83)]
-	o = stats.geometric_mean(data)
-	// Some issue with precision comparison in f64 using == operator hence serializing to string
-	assert tst_res(o.str(), '25.064496')
+ 	// Tests were also verified on Wolfram Alpha
+ 	mut data := [f64(10.0), f64(4.45), f64(5.9), f64(2.7)]
+ 	mut o := stats.geometric_mean(data)
+ 	// Some issue with precision comparison in f64 using == operator hence serializing to string
+ 	assert tst_res(o.str(), '5.15993')
+ 	data = [f64(-3.0), f64(67.31), f64(4.4), f64(1.89)]
+ 	o = stats.geometric_mean(data)
+ 	// Some issue with precision comparison in f64 using == operator hence serializing to string
+ 	ok := o.str().eq('nan') || o.str().eq('-nan') || o.str().eq('-1.#IND00') || o == f64(0)
+ 		|| o.str().eq('-nan(ind)')
+        assert ok // Because in math it yields a complex number
+ 	data = [f64(12.0), f64(7.88), f64(76.122), f64(54.83)]
+ 	o = stats.geometric_mean(data)
+ 	// Some issue with precision comparison in f64 using == operator hence serializing to string
+ 	assert tst_res(o.str(), '25.064496')
 }
 
 fn test_harmonic_mean() {
@@ -68,9 +69,10 @@ fn test_harmonic_mean() {
 	assert tst_res(o.str(), '16.555477')
 }
 
-fn test_median() {
+fn test_median_for_sorted_data() {
 	// Tests were also verified on Wolfram Alpha
 	// Assumes sorted array
+
 	// Even
 	mut data := [f64(2.7), f64(4.45), f64(5.9), f64(10.0)]
 	mut o := stats.median_for_sorted_data(data)
@@ -84,6 +86,7 @@ fn test_median() {
 	o = stats.median_for_sorted_data(data)
 	// Some issue with precision comparison in f64 using == operator hence serializing to string
 	assert tst_res(o.str(), '33.415000')
+
 	// Odd
 	data = [f64(2.7), f64(4.45), f64(5.9), f64(10.0), f64(22)]
 	o = stats.median_for_sorted_data(data)
@@ -113,19 +116,19 @@ fn test_mode() {
 }
 
 fn test_rms() {
-	// Tests were also verified on Wolfram Alpha
-	mut data := [f64(10.0), f64(4.45), f64(5.9), f64(2.7)]
-	mut o := stats.rms(data)
-	// Some issue with precision comparison in f64 using == operator hence serializing to string
-	assert tst_res(o.str(), '6.362046')
-	data = [f64(-3.0), f64(67.31), f64(4.4), f64(1.89)]
-	o = stats.rms(data)
-	// Some issue with precision comparison in f64 using == operator hence serializing to string
-	assert tst_res(o.str(), '33.773393')
-	data = [f64(12.0), f64(7.88), f64(76.122), f64(54.83)]
-	o = stats.rms(data)
-	// Some issue with precision comparison in f64 using == operator hence serializing to string
-	assert tst_res(o.str(), '47.452561')
+        // Tests were also verified on Wolfram Alpha
+        mut data := [f64(10.0), f64(4.45), f64(5.9), f64(2.7)]
+        mut o := stats.rms(data)
+        // Some issue with precision comparison in f64 using == operator hence serializing to string
+        assert tst_res(o.str(), '6.362046')
+        data = [f64(-3.0), f64(67.31), f64(4.4), f64(1.89)]
+        o = stats.rms(data)
+        // Some issue with precision comparison in f64 using == operator hence serializing to string
+        assert tst_res(o.str(), '33.773393')
+        data = [f64(12.0), f64(7.88), f64(76.122), f64(54.83)]
+        o = stats.rms(data)
+        // Some issue with precision comparison in f64 using == operator hence serializing to string
+        assert tst_res(o.str(), '47.452561')
 }
 
 fn test_population_variance() {
