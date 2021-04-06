@@ -127,7 +127,7 @@ pub fn dgbmv(trans_a Transpose, m int, n int, kl int, ku int, alpha f64, a []f64
 		} else {
 			mut iy := ky
 			if beta == 0 {
-				for i in 0 .. len_y {
+				for _ in 0 .. len_y {
 					y[iy] = 0
 					iy += incy
 				}
@@ -613,7 +613,7 @@ pub fn dsymv(ul Uplo, n int, alpha f64, a []f64, lda int, x []f64, incx int, bet
 		} else {
 			mut iy := ky
 			if beta == 0 {
-				for i in 0 .. n {
+				for _ in 0 .. n {
 					y[iy] = 0
 					iy += incy
 				}
@@ -1387,7 +1387,7 @@ pub fn dsbmv(ul Uplo, n int, k int, alpha f64, a []f64, lda int, x []f64, incx i
 		} else {
 			mut iy := ky
 			if beta == 0 {
-				for i in 0 .. n {
+				for _ in 0 .. n {
 					y[iy] = 0
 					iy += incy
 				}
@@ -1940,7 +1940,7 @@ pub fn dspmv(ul Uplo, n int, alpha f64, ap []f64, x []f64, incx int, beta f64, m
 		} else {
 			mut iy := ky
 			if beta == 0 {
-				for i in 0 .. n {
+				for _ in 0 .. n {
 					y[iy] = 0
 					iy += incy
 				}

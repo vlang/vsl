@@ -173,7 +173,7 @@ pub fn dcopy(n int, x []f64, incx int, mut y []f64, incy int) {
 		panic(short_y)
 	}
 	if incx == 1 && incy == 1 {
-		for i, v in x[..n] {
+		for i in 0 .. n {
 			y[i] = x[i]
 		}
 		return
