@@ -2,7 +2,6 @@ module vlas
 
 import vsl.blas.vlas.internal.float64
 import vsl.util
-import vsl.vmath as math
 
 // dger performs the rank-one operation
 //  A += alpha * x * yᵀ

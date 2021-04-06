@@ -2,7 +2,6 @@ module vlas
 
 import vsl.blas.vlas.internal.float64
 import vsl.util
-import vsl.vmath as math
 
 // dsyrk performs one of the symmetric rank-k operations
 //  C = alpha * A * Aᵀ + beta * C  if trans_a == blas_no_trans
