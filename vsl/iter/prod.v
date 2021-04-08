@@ -50,11 +50,11 @@ fn int_prod(a int, b int) int {
 }
 
 // The idea here is that we pass in an array of the lengths of a bunch of arrays, and we
-// get how long an item from the i_th array should repeat before moving onto the next 
+// get how long an item from the i_th array should repeat before moving onto the next
 // item in that array
 // e.g. if our arrays are `data := [[1,2],[3,4,5],[6,7]]`
 // and the lengths are `data_lens := data.map(it.len)`
-// So the array [6,7] flips every time, the array [3,4,5] changes when the array [6,7] 
+// So the array [6,7] flips every time, the array [3,4,5] changes when the array [6,7]
 // has been fully iterated over, and finally the array [1,2] flips every 2*3=6 times
 // so `calc_repeat_lengths(data.map(it.len)) == [6, 2, 1]`
 // or if `data := [[1],[3,4],[2,3,4,5]]`, then

@@ -19,7 +19,7 @@ pub fn atanh(x f64) f64 {
 
 [inline]
 pub fn cot(x f64) f64 {
-        return vimpl.cot(x)
+	return vimpl.cot(x)
 }
 
 [inline]
@@ -29,7 +29,7 @@ pub fn expm1(x f64) f64 {
 
 [inline]
 pub fn ilog_b(x f64) int {
-        return vimpl.ilog_b(x)
+	return vimpl.ilog_b(x)
 }
 
 [inline]
@@ -44,12 +44,12 @@ pub fn ldexp(x f64, e int) f64 {
 
 [inline]
 pub fn log1p(x f64) f64 {
-        return vimpl.log1p(x)
+	return vimpl.log1p(x)
 }
 
 [inline]
 pub fn log_b(x f64) f64 {
-        return vimpl.log_b(x)
+	return vimpl.log_b(x)
 }
 
 [inline]
@@ -64,12 +64,12 @@ pub fn minmax(a f64, b f64) (f64, f64) {
 
 [inline]
 pub fn nextafter(x f64, y f64) f64 {
-        return vimpl.nextafter(x, y)
+	return vimpl.nextafter(x, y)
 }
 
 [inline]
 pub fn nextafter32(x f32, y f32) f32 {
-        return vimpl.nextafter32(x, y)
+	return vimpl.nextafter32(x, y)
 }
 
 // modf returns integer and fractional floating-point numbers
@@ -81,12 +81,12 @@ pub fn modf(f f64) (f64, f64) {
 
 [inline]
 pub fn round_to_even(x f64) f64 {
-        return vimpl.round_to_even(x)
+	return vimpl.round_to_even(x)
 }
 
 [inline]
 pub fn pow10(n int) f64 {
-        return vimpl.pow10(n)
+	return vimpl.pow10(n)
 }
 
 [inline]

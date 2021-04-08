@@ -336,7 +336,7 @@ pub fn extract_col_complex(j int, m int, n int, A []complex.Complex) []complex.C
 }
 
 // eigenvecs_build builds complex eigenvectros created by Dgeev function
-// 
+//
 // **input:**
 // `wr`, `wi`: real and imag parts of eigenvalues.
 // `v`: left or right eigenvectors from Dgeev.
@@ -378,14 +378,14 @@ pub fn eigenvecs_build(mut vv []complex.Complex, wr []f64, wi []f64, v []f64) {
 }
 
 // eigenvecs_build_both builds complex left and right eigenvectros created by Dgeev function
-// 
+//
 // **input:**
 // `wr`, `wi`:real and imag parts of eigenvalues.
 // `vl`, `vr`:left and right eigenvectors from Dgeev.
-// 
+//
 // **output:**
 // `vvl`, `vvr`:complex version of left and right eigenvectors [pre-allocated].
-// 
+//
 // _**NOTE**: (no checks made)_.
 //
 // `n = wr.len = wi.len = vl.len = vr.len`

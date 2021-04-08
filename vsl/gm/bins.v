@@ -292,10 +292,14 @@ pub fn (o Bins) get_limits(idx_bin int) ([]f64, []f64) {
 		xmax = [o.xmin[0] + f64(i + 1) * o.size[0], o.xmin[1] + f64(j + 1) * o.size[1]]
 	} else {
 		k := idx_bin / nxy
-		xmin = [o.xmin[0] + f64(i + 0) * o.size[0], o.xmin[1] + f64(j + 0) * o.size[1], o.xmin[2] +
-			f64(k + 0) * o.size[2]]
-		xmax = [o.xmin[0] + f64(i + 1) * o.size[0], o.xmin[1] + f64(j + 1) * o.size[1], o.xmin[2] +
-			f64(k + 1) * o.size[2]]
+		xmin = [o.xmin[0] + f64(i + 0) * o.size[0], o.xmin[1] + f64(j + 0) * o.size[1],
+			o.xmin[2] +
+			f64(k + 0) * o.size[2],
+		]
+		xmax = [o.xmin[0] + f64(i + 1) * o.size[0], o.xmin[1] + f64(j + 1) * o.size[1],
+			o.xmin[2] +
+			f64(k + 1) * o.size[2],
+		]
 	}
 	return xmin, xmax
 }

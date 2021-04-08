@@ -250,8 +250,8 @@ pub fn log_gamma_sign(x_ f64) (f64, int) {
 		} else if i == 2 {
 			gamma_p1 := y * (lgamma_u[0] + y * (lgamma_u[1] + y * (lgamma_u[2] + y * (lgamma_u[3] +
 				y * (lgamma_u[4] + y * lgamma_u[5])))))
-			gamma_p2 := 1.0 + y * (lgamma_v[1] + y * (lgamma_v[2] + y * (lgamma_v[3] + y * (lgamma_v[4] +
-				y * lgamma_v[5]))))
+			gamma_p2 := 1.0 + y * (lgamma_v[1] + y * (lgamma_v[2] + y * (lgamma_v[3] +
+				y * (lgamma_v[4] + y * lgamma_v[5]))))
 			lgamma += (-0.5 * y + gamma_p1 / gamma_p2)
 		}
 	} else if x < 8 {

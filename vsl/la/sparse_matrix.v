@@ -9,13 +9,13 @@ mut:
 	// matrix dimension (rows, columns)
 	m int
 	n int
-	// current position and max number of entries allowed (non-zeros, including repetitions)      
+	// current position and max number of entries allowed (non-zeros, including repetitions)
 	pos int
 	max int
-	// indices for each x values (size=max)     
+	// indices for each x values (size=max)
 	i []int
 	j []int
-	// values for each i, j (size=max)    
+	// values for each i, j (size=max)
 	x []f64
 }
 
@@ -27,7 +27,7 @@ mut:
 	n int
 	// number of non-zeros
 	nnz int
-	// pointers and row indices (len(p)=n+1, len(i)=nnz)   
+	// pointers and row indices (len(p)=n+1, len(i)=nnz)
 	p []int
 	i []int
 	// values (len(x)=nnz)

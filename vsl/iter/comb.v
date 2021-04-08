@@ -4,7 +4,7 @@ import vsl.fun
 import vsl.util
 
 // combinations will return an array of all length `r` combinations of `data`
-// While waiting on https://github.com/vlang/v/issues/7753 to be fixed, the function 
+// While waiting on https://github.com/vlang/v/issues/7753 to be fixed, the function
 // assumes f64 array input. Will be easy to change to generic later
 pub fn combinations(data []f64, r int) [][]f64 {
 	mut combinations := new_combinations_iter(data, r)
