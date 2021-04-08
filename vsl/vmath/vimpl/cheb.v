@@ -16,16 +16,16 @@ fn (cs ChebSeries) eval_e(x f64) (f64, f64) {
 	mut dd := 0.0
 	y := (2.0 * x - cs.a - cs.b) / (cs.b - cs.a)
 	y2 := 2.0 * y
-	mut e := 0.0
+	mut e_ := 0.0
 	mut temp := 0.0
 	for j := cs.order; j >= 1; j-- {
 		temp = d
 		d = y2 * d - dd + cs.c[j]
-		e += abs(y2 * temp) + abs(dd) + abs(cs.c[j])
+		e_ += abs(y2 * temp) + abs(dd) + abs(cs.c[j])
 		dd = temp
 	}
 	temp = d
 	d = y * d - dd + 0.5 * cs.c[0]
-	e += abs(y * temp) + abs(dd) + 0.5 * abs(cs.c[0])
-	return d, f64(internal.f64_epsilon) * e + abs(cs.c[cs.order])
+	e_ += abs(y * temp) + abs(dd) + 0.5 * abs(cs.c[0])
+	return d, f64(internal.f64_epsilon) * e_ + abs(cs.c[cs.order])
 }

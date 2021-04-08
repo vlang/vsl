@@ -248,11 +248,11 @@ pub fn bessel_jn(n_ int, x_ f64) f64 {
 		} else {
 			b = bessel_j1(x)
 			mut i := 1
-			mut a := bessel_j0(x)
+			mut bessel_j0_x := bessel_j0(x)
 			for ; i < n; i++ {
-				a_ := a
-				a = b
-				b = b * (f64(i + i) / x) - a_ // avoid underflow
+				prev_bessel_j0_x := bessel_j0_x
+				bessel_j0_x = b
+				b = b * (f64(i + i) / x) - prev_bessel_j0_x // avoid underflow
 			}
 		}
 	} else {
@@ -266,12 +266,12 @@ pub fn bessel_jn(n_ int, x_ f64) f64 {
 			} else {
 				temp := x * 0.5
 				b = temp
-				mut a := 1.0
+				mut a_ := 1.0
 				for i := 2; i <= n; i++ {
-					a *= f64(i) // a = n!
+					a_ *= f64(i) // a_ = n!
 					b *= temp // b = (x/2)**n
 				}
-				b /= a
+				b /= a_
 			}
 		} else {
 			// use backward recurrence
@@ -320,7 +320,7 @@ pub fn bessel_jn(n_ int, x_ f64) f64 {
 			for i := 2 * (n + k); i >= m; i -= 2 {
 				t = 1.0 / (f64(i) / x - t)
 			}
-			mut a := t
+			mut t_ := t
 			b = 1
 			// estimate log((2/x)**n*n!) = n*log(2/x)+n*ln(n)
 			// Hence, if n*(log(2n/x)) > ...
@@ -335,19 +335,19 @@ pub fn bessel_jn(n_ int, x_ f64) f64 {
 			if tmp < 7.09782712893383973096e+02 {
 				for i := n - 1; i > 0; i-- {
 					di := f64(i + i)
-					a_ := a
-					a = b
+					a_ := t_
+					t_ = b
 					b = b * di / x - a_
 				}
 			} else {
 				for i := n - 1; i > 0; i-- {
 					di := f64(i + i)
-					a_ := a
-					a = b
+					a_ := t_
+					t_ = b
 					b = b * di / x - a_
 					// scale b to avoid spurious overflow
 					if b > 1e+100 {
-						a /= b
+						t_ /= b
 						t /= b
 						b = 1
 					}
@@ -559,13 +559,13 @@ pub fn bessel_yn(n_ int, x f64) f64 {
 		}
 		b = (1.0 / math.sqrt_pi) * temp / math.sqrt(x)
 	} else {
-		mut a := bessel_y0(x)
+		mut bessel_y0_x := bessel_y0(x)
 		b = bessel_y1(x)
 		// quit if b is -inf
 		for i := 1; i < n && !math.is_inf(b, -1); i++ {
-			a_ := a
-			a = b
-			b = (f64(i + i) / x) * b - a_
+			prev_bessel_y0_x := bessel_y0_x
+			bessel_y0_x = b
+			b = (f64(i + i) / x) * b - prev_bessel_y0_x
 		}
 	}
 	if sign {

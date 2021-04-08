@@ -109,8 +109,7 @@ pub fn ldexp(x f64, e int) f64 {
 			y *= pow(2.0, e2 - vimpl.f64_min_exp - 1.0)
 			e2 = vimpl.f64_min_exp + 1.0
 		}
-		p2 := pow(2.0, e2)
-		return y * p2
+		return y * pow(2.0, e2)
 	}
 }
 
@@ -201,14 +200,14 @@ pub fn expm1(x f64) f64 {
 
 // exp1 returns e**r × 2**k where r = hi - lo and |r| ≤ ln(2)/2.
 fn expmulti(hi f64, lo f64, k int) f64 {
-	p1 := 1.66666666666666657415e-01 // 0x3FC55555; 0x55555555
-	p2 := -2.77777777770155933842e-03 // 0xBF66C16C; 0x16BEBD93
-	p3 := 6.61375632143793436117e-05 // 0x3F11566A; 0xAF25DE2C
-	p4 := -1.65339022054652515390e-06 // 0xBEBBBD41; 0xC5D26BF1
-	p5 := 4.13813679705723846039e-08 // 0x3E663769; 0x72BEA4D0
+	exp_p1 := 1.66666666666666657415e-01 // 0x3FC55555; 0x55555555
+	exp_p2 := -2.77777777770155933842e-03 // 0xBF66C16C; 0x16BEBD93
+	exp_p3 := 6.61375632143793436117e-05 // 0x3F11566A; 0xAF25DE2C
+	exp_p4 := -1.65339022054652515390e-06 // 0xBEBBBD41; 0xC5D26BF1
+	exp_p5 := 4.13813679705723846039e-08 // 0x3E663769; 0x72BEA4D0
 	r := hi - lo
 	t := r * r
-	c := r - t * (p1 + t * (p2 + t * (p3 + t * (p4 + t * p5))))
+	c := r - t * (exp_p1 + t * (exp_p2 + t * (exp_p3 + t * (exp_p4 + t * exp_p5))))
 	y := 1 - ((lo - (r * c) / (2 - c)) - hi)
 	// TODO(rsc): make sure ldexp can handle boundary k
 	return ldexp(y, k)

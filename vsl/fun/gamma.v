@@ -230,29 +230,29 @@ pub fn log_gamma_sign(x_ f64) (f64, int) {
 		}
 		if i == 0 {
 			z := y * y
-			p1 := lgamma_a[0] + z * (lgamma_a[2] + z * (lgamma_a[4] + z * (lgamma_a[6] +
+			gamma_p1 := lgamma_a[0] + z * (lgamma_a[2] + z * (lgamma_a[4] + z * (lgamma_a[6] +
 				z * (lgamma_a[8] + z * lgamma_a[10]))))
-			p2 := z * (lgamma_a[1] + z * (lgamma_a[3] + z * (lgamma_a[5] + z * (lgamma_a[7] +
+			gamma_p2 := z * (lgamma_a[1] + z * (lgamma_a[3] + z * (lgamma_a[5] + z * (lgamma_a[7] +
 				z * (lgamma_a[9] + z * lgamma_a[11])))))
-			p := y * p1 + p2
+			p := y * gamma_p1 + gamma_p2
 			lgamma += (p - 0.5 * y)
 		} else if i == 1 {
 			z := y * y
 			w := z * y
-			p1 := lgamma_t[0] + w * (lgamma_t[3] + w * (lgamma_t[6] + w * (lgamma_t[9] +
+			gamma_p1 := lgamma_t[0] + w * (lgamma_t[3] + w * (lgamma_t[6] + w * (lgamma_t[9] +
 				w * lgamma_t[12]))) // parallel comp
-			p2 := lgamma_t[1] + w * (lgamma_t[4] + w * (lgamma_t[7] + w * (lgamma_t[10] +
+			gamma_p2 := lgamma_t[1] + w * (lgamma_t[4] + w * (lgamma_t[7] + w * (lgamma_t[10] +
 				w * lgamma_t[13])))
-			p3 := lgamma_t[2] + w * (lgamma_t[5] + w * (lgamma_t[8] + w * (lgamma_t[11] +
+			gamma_p3 := lgamma_t[2] + w * (lgamma_t[5] + w * (lgamma_t[8] + w * (lgamma_t[11] +
 				w * lgamma_t[14])))
-			p := z * p1 - (tt - w * (p2 + y * p3))
+			p := z * gamma_p1 - (tt - w * (gamma_p2 + y * gamma_p3))
 			lgamma += (tf + p)
 		} else if i == 2 {
-			p1 := y * (lgamma_u[0] + y * (lgamma_u[1] + y * (lgamma_u[2] + y * (lgamma_u[3] +
+			gamma_p1 := y * (lgamma_u[0] + y * (lgamma_u[1] + y * (lgamma_u[2] + y * (lgamma_u[3] +
 				y * (lgamma_u[4] + y * lgamma_u[5])))))
-			p2 := 1.0 + y * (lgamma_v[1] + y * (lgamma_v[2] + y * (lgamma_v[3] + y * (lgamma_v[4] +
+			gamma_p2 := 1.0 + y * (lgamma_v[1] + y * (lgamma_v[2] + y * (lgamma_v[3] + y * (lgamma_v[4] +
 				y * lgamma_v[5]))))
-			lgamma += (-0.5 * y + p1 / p2)
+			lgamma += (-0.5 * y + gamma_p1 / gamma_p2)
 		}
 	} else if x < 8 {
 		// 2 <= x < 8

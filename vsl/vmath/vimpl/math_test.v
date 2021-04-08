@@ -220,8 +220,8 @@ const (
 )
 
 fn tolerance(a f64, b f64, tol f64) bool {
-	mut e := tol
-	// Multiplying by e here can underflow denormal values to zero.
+	mut e_ := tol
+	// Multiplying by e_ here can underflow denormal values to zero.
 	// Check a==b so that at least if a and b are small and identical
 	// we say they match.
 	if a == b {
@@ -234,12 +234,12 @@ fn tolerance(a f64, b f64, tol f64) bool {
 	// note: b is correct (expected) value, a is actual value.
 	// make error tolerance a fraction of b, not a.
 	if b != 0 {
-		e = e * b
-		if e < 0 {
-			e = -e
+		e_ = e_ * b
+		if e_ < 0 {
+			e_ = -e_
 		}
 	}
-	return d < e
+	return d < e_
 }
 
 fn close(a f64, b f64) bool {
@@ -250,8 +250,8 @@ fn veryclose(a f64, b f64) bool {
 	return tolerance(a, b, 4e-16)
 }
 
-fn soclose(a f64, b f64, e f64) bool {
-	return tolerance(a, b, e)
+fn soclose(a f64, b f64, e_ f64) bool {
+	return tolerance(a, b, e_)
 }
 
 fn alike(a f64, b f64) bool {
@@ -770,15 +770,15 @@ fn test_round() {
 		assert alike(vimpl.round_[i], f)
 	}
 	vfround_sc_ := [[f64(0), 0], [nan(), nan()], [inf(1), inf(1)]]
-	vfround_even_sc_ := [[f64(0), 0], [f64(1.390671161567e-309), 0], /* denormal */
-		[f64(0.49999999999999994), 0], /* 0.5-epsilon */ [f64(0.5), 0],
-		[f64(0.5000000000000001), 1], /* 0.5+epsilon */ [f64(-1.5), -2],
-		[f64(-2.5), -2], [nan(), nan()], [inf(1), inf(1)],
-		[f64(2251799813685249.5), 2251799813685250],
-		// 1 bit fractian [f64(2251799813685250.5), 2251799813685250],
-		[f64(4503599627370495.5), 4503599627370496], /* 1 bit fraction, rounding to 0 bit fractian */
-		[f64(4503599627370497), 4503599627370497], /* large integer */
-	]
+	// vfround_even_sc_ := [[f64(0), 0], [f64(1.390671161567e-309), 0], /* denormal */
+	// 	[f64(0.49999999999999994), 0], /* 0.5-epsilon */ [f64(0.5), 0],
+	// 	[f64(0.5000000000000001), 1], /* 0.5+epsilon */ [f64(-1.5), -2],
+	// 	[f64(-2.5), -2], [nan(), nan()], [inf(1), inf(1)],
+	// 	[f64(2251799813685249.5), 2251799813685250],
+	// 	// 1 bit fractian [f64(2251799813685250.5), 2251799813685250],
+	// 	[f64(4503599627370495.5), 4503599627370496], /* 1 bit fraction, rounding to 0 bit fractian */
+	// 	[f64(4503599627370497), 4503599627370497], /* large integer */
+	// ]
 	for i := 0; i < vfround_sc_.len; i++ {
 		f := round(vfround_sc_[i][0])
 		assert alike(vfround_sc_[i][1], f)
