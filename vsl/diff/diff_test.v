@@ -14,7 +14,7 @@ fn f2(x f64, _ []f64) f64 {
 	if x >= 0.0 {
 		return x * vmath.sqrt(x)
 	} else {
-		return 0.00
+		return 0.0
 	}
 }
 
@@ -22,7 +22,7 @@ fn df2(x f64, _ []f64) f64 {
 	if x >= 0.0 {
 		return 1.50 * vmath.sqrt(x)
 	} else {
-		return 0.00
+		return 0.0
 	}
 }
 
@@ -30,7 +30,7 @@ fn f3(x f64, _ []f64) f64 {
 	if x != 0.0 {
 		return vmath.sin(1.0 / x)
 	} else {
-		return 0.00
+		return 0.0
 	}
 }
 
@@ -38,7 +38,7 @@ fn df3(x f64, _ []f64) f64 {
 	if x != 0.0 {
 		return -vmath.cos(1.0 / x) / (x * x)
 	} else {
-		return 0.00
+		return 0.0
 	}
 }
 

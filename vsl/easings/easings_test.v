@@ -3,16 +3,16 @@ import vsl.vmath
 
 // Linear tests
 fn test_linear_interpolation() {
-	assert compare(easings.linear_interpolation(2), 2.00)
+	assert compare(easings.linear_interpolation(2), 2.0)
 }
 
 // Quadratic tests
 fn test_quadratic_ease_in() {
-	assert compare(easings.quadratic_ease_in(2), 4.00)
+	assert compare(easings.quadratic_ease_in(2), 4.0)
 }
 
 fn test_quadratic_ease_out() {
-	assert compare(easings.quadratic_ease_out(5), -15.00)
+	assert compare(easings.quadratic_ease_out(5), -15.0)
 }
 
 fn test_quadratic_ease_in_out() {
@@ -24,11 +24,11 @@ fn test_quadratic_ease_in_out() {
 
 // Cubic tests
 fn test_cubic_ease_in() {
-	assert compare(easings.cubic_ease_in(3), 27.00)
+	assert compare(easings.cubic_ease_in(3), 27.0)
 }
 
 fn test_cubic_ease_out() {
-	assert compare(easings.cubic_ease_out(4), 28.00)
+	assert compare(easings.cubic_ease_out(4), 28.0)
 }
 
 fn test_cubic_ease_in_out() {
@@ -40,11 +40,11 @@ fn test_cubic_ease_in_out() {
 
 // Quadratic tests
 fn test_quartic_ease_in() {
-	assert compare(easings.quartic_ease_in(3), 81.00)
+	assert compare(easings.quartic_ease_in(3), 81.0)
 }
 
 fn test_quartic_ease_out() {
-	assert compare(easings.quartic_ease_out(3), -15.00)
+	assert compare(easings.quartic_ease_out(3), -15.0)
 }
 
 fn test_quartic_ease_in_out() {
@@ -56,11 +56,11 @@ fn test_quartic_ease_in_out() {
 
 // Quintic tests
 fn test_quintic_ease_in() {
-	assert compare(easings.quintic_ease_in(4), 1024.00)
+	assert compare(easings.quintic_ease_in(4), 1024.0)
 }
 
 fn test_quintic_ease_out() {
-	assert compare(easings.quintic_ease_out(4), 244.00)
+	assert compare(easings.quintic_ease_out(4), 244.0)
 }
 
 fn test_quintic_ease_in_out() {
@@ -72,7 +72,7 @@ fn test_quintic_ease_in_out() {
 
 // Sine tests
 fn test_sine_ease_in() {
-	assert compare(easings.sine_ease_in(3), 1.00)
+	assert compare(easings.sine_ease_in(3), 1.0)
 }
 
 fn test_sine_ease_out() {
@@ -80,7 +80,7 @@ fn test_sine_ease_out() {
 }
 
 fn test_sine_ease_in_out() {
-	assert compare(easings.sine_ease_in_out(3), 1.00)
+	assert compare(easings.sine_ease_in_out(3), 1.0)
 }
 
 // Circular tests
@@ -101,7 +101,7 @@ fn test_circular_ease_in_out() {
 
 // Exponential tests
 fn test_exponential_ease_in() {
-	assert compare(easings.exponential_ease_in(2), 1024.00)
+	assert compare(easings.exponential_ease_in(2), 1024.0)
 }
 
 fn test_exponential_ease_out() {
@@ -110,9 +110,9 @@ fn test_exponential_ease_out() {
 
 fn test_exponential_ease_in_out() {
 	// p = 0
-	assert compare(easings.exponential_ease_in_out(0), 0.00)
+	assert compare(easings.exponential_ease_in_out(0), 0.0)
 	// p = 1
-	assert compare(easings.exponential_ease_in_out(1), 1.00)
+	assert compare(easings.exponential_ease_in_out(1), 1.0)
 	// p < 0.5
 	assert compare(easings.exponential_ease_in_out(0.4), 0.125)
 	// p >= 0.5
@@ -121,11 +121,11 @@ fn test_exponential_ease_in_out() {
 
 // Elastic tests
 fn test_elastic_ease_in() {
-	assert compare(easings.elastic_ease_in(2), 0.00)
+	assert compare(easings.elastic_ease_in(2), 0.0)
 }
 
 fn test_elastic_ease_out() {
-	assert compare(easings.elastic_ease_out(2), 1.00)
+	assert compare(easings.elastic_ease_out(2), 1.0)
 }
 
 fn test_elastic_ease_in_out() {
@@ -137,11 +137,11 @@ fn test_elastic_ease_in_out() {
 
 // Back tests
 fn test_back_ease_in() {
-	assert compare(easings.back_ease_in(2), 8.00)
+	assert compare(easings.back_ease_in(2), 8.0)
 }
 
 fn test_back_ease_out() {
-	assert compare(easings.back_ease_out(2), 2.00)
+	assert compare(easings.back_ease_out(2), 2.0)
 }
 
 fn test_back_ease_in_out() {

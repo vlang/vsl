@@ -17,7 +17,7 @@ fn central_deriv(f vsl.Function, x f64, h f64) (f64, f64, f64) {
 	fmh := f.eval(x - h / 2)
 	fph := f.eval(x + h / 2)
 	r3 := 0.50 * (fp1 - fm1)
-	r5 := (4.0 / 3.00) * (fph - fmh) - (1.0 / 3.00) * r3
+	r5 := (4.0 / 3.0) * (fph - fmh) - (1.0 / 3.0) * r3
 	e3 := (vmath.abs(fp1) + vmath.abs(fm1)) * internal.f64_epsilon
 	e5 := 2.0 * (vmath.abs(fph) + vmath.abs(fmh)) * internal.f64_epsilon + e3 // The next term is due to finite precision in x+h = O(eps * x)
 	dy := vmath.max(vmath.abs(r3 / h), vmath.abs(r5 / h)) * (vmath.abs(x) / h) * internal.f64_epsilon
@@ -37,13 +37,13 @@ pub fn central(f vsl.Function, x f64, h f64) (f64, f64) {
 	r_0, round, trunc := central_deriv(f, x, h)
 	mut error := round + trunc
 	mut result := r_0
-	if round < trunc && (round > 0.0 && trunc > 0.00) {
+	if round < trunc && (round > 0.0 && trunc > 0.0) {
 		/*
 		Compute an optimised stepsize to minimize the total error,
                  * using the scaling of the truncation error (O(h^2)) and
                  * rounding error (O(1/h)).
 		*/
-		h_opt := h * vmath.pow(round / (2.0 * trunc), 1.0 / 3.00)
+		h_opt := h * vmath.pow(round / (2.0 * trunc), 1.0 / 3.0)
 		r_opt, round_opt, trunc_opt := central_deriv(f, x, h_opt)
 		error_opt := round_opt + trunc_opt
 		/*
@@ -70,7 +70,7 @@ fn forward_deriv(f vsl.Function, x f64, h f64) (f64, f64, f64) {
 	f3 := f.eval(x + (3.0 / 4.0) * h)
 	f4 := f.eval(x + h)
 	r2 := 2.0 * (f4 - f2)
-	r4 := (22.0 / 3.00) * (f4 - f3) - (62.0 / 3.00) * (f3 - f2) + (52.0 / 3.00) * (f2 - f1) // Estimate the rounding error for r4
+	r4 := (22.0 / 3.0) * (f4 - f3) - (62.0 / 3.0) * (f3 - f2) + (52.0 / 3.0) * (f2 - f1) // Estimate the rounding error for r4
 	e4 := 2.0 * 20.670 * (vmath.abs(f4) + vmath.abs(f3) + vmath.abs(f2) + vmath.abs(f1)) * internal.f64_epsilon // The next term is due to finite precision in x+h = O(eps * x)
 	dy := vmath.max(vmath.abs(r2 / h), vmath.abs(r4 / h)) * vmath.abs(x / h) * internal.f64_epsilon
 	/*
@@ -89,13 +89,13 @@ pub fn forward(f vsl.Function, x f64, h f64) (f64, f64) {
 	r_0, round, trunc := forward_deriv(f, x, h)
 	mut error := round + trunc
 	mut result := r_0
-	if round < trunc && (round > 0.0 && trunc > 0.00) {
+	if round < trunc && (round > 0.0 && trunc > 0.0) {
 		/*
 		Compute an optimised stepsize to minimize the total error,
                  * using the scaling of the estimated truncation error (O(h)) and
                  * rounding error (O(1/h)).
 		*/
-		h_opt := h * vmath.pow(round / (trunc), 1.0 / 2.00)
+		h_opt := h * vmath.pow(round / trunc, 1.0 / 2.0)
 		r_opt, round_opt, trunc_opt := forward_deriv(f, x, h_opt)
 		error_opt := round_opt + trunc_opt
 		/*
