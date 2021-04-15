@@ -1,7 +1,7 @@
 module la
 
 import strconv
-import vsl.errno
+import vsl.errors
 import vsl.blas
 import vsl.vmath
 
@@ -218,7 +218,7 @@ pub fn (o Matrix) get_col(j int) []f64 {
 // endp1 -- "end-plus-one", the number of the last requested column + 1
 pub fn (o Matrix) extract_cols(start int, endp1 int) Matrix {
 	if endp1 <= start {
-		errno.vsl_panic("endp1 'end-plus-one' must be greater than start. start=$start, endp1=$endp1 invalid",
+		errors.vsl_panic("endp1 'end-plus-one' must be greater than start. start=$start, endp1=$endp1 invalid",
 			.efailed)
 	}
 	ncol := endp1 - start
@@ -277,7 +277,7 @@ pub fn (mut o Matrix) apply(alpha f64, another Matrix) {
 // NOTE: this method may fail due to overflow...
 pub fn (o Matrix) det() f64 {
 	if o.m != o.n {
-		errno.vsl_panic('matrix must be square to compute determinant. $o.m × $o.n is invalid\n',
+		errors.vsl_panic('matrix must be square to compute determinant. $o.m × $o.n is invalid\n',
 			.efailed)
 	}
 	mut ai := o.data.clone()

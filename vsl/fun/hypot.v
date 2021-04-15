@@ -1,7 +1,7 @@
 module fun
 
 import vsl.vmath as math
-import vsl.errno
+import vsl.errors
 import vsl.internal
 
 pub fn hypot(x f64, y f64) f64 {
@@ -21,7 +21,7 @@ pub fn hypot(x f64, y f64) f64 {
 		if max < math.max_f64 / root_term {
 			result = max * root_term
 		} else {
-			errno.vsl_panic('overflow in hypot_e function', .eovrflw)
+			errors.vsl_panic('overflow in hypot_e function', .eovrflw)
 		}
 	}
 	return result
@@ -46,7 +46,7 @@ pub fn hypot_e(x f64, y f64) (f64, f64) {
 			result = max * root_term
 			result_err = f64(2.0) * internal.f64_epsilon * math.abs(result)
 		} else {
-			errno.vsl_panic('overflow in hypot_e function', .eovrflw)
+			errors.vsl_panic('overflow in hypot_e function', .eovrflw)
 		}
 	}
 	return result, result_err

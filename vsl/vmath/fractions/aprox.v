@@ -1,7 +1,7 @@
 module fractions
 
 import vsl.vmath as math
-import vsl.errno
+import vsl.errors
 
 const (
 	default_eps    = 1.0e-4
@@ -80,10 +80,10 @@ pub fn approximate_with_eps(val f64, eps f64) Fraction {
 		return fractions.zero
 	}
 	if eps < 0.0 {
-		errno.vsl_panic('Epsilon value cannot be negative.', .erange)
+		errors.vsl_panic('Epsilon value cannot be negative.', .erange)
 	}
 	if math.abs(val) > math.max_i64 {
-		errno.vsl_panic('Value out of range.', .erange)
+		errors.vsl_panic('Value out of range.', .erange)
 	}
 	// The integer part is separated first. Then we process the fractional
 	// part to generate numerators and denominators in tandem.

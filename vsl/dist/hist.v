@@ -1,7 +1,7 @@
 module dist
 
 import strconv
-import vsl.errno
+import vsl.errors
 import vsl.util
 
 // text_hist prints a text histogram
@@ -9,7 +9,7 @@ pub fn text_hist(labels []string, counts []int, barlen int) string {
 	// check
 	assert labels.len == counts.len
 	if counts.len < 2 {
-		errno.vsl_panic('counts slice is too short', .efailed)
+		errors.vsl_panic('counts slice is too short', .efailed)
 	}
 	// scale
 	mut fmax := counts[0]
@@ -74,7 +74,7 @@ pub fn new_histogram(stations []f64) Histogram {
 pub fn (o Histogram) find_bin(x f64) int {
 	// check
 	if o.stations.len < 2 {
-		errno.vsl_panic('Histogram must have at least 2 stations', .efailed)
+		errors.vsl_panic('Histogram must have at least 2 stations', .efailed)
 	}
 	if x < o.stations[0] {
 		return -1
@@ -101,7 +101,7 @@ pub fn (o Histogram) find_bin(x f64) int {
 pub fn (mut o Histogram) count(vals []f64, clear bool) {
 	// check
 	if o.stations.len < 2 {
-		errno.vsl_panic('Histogram must have at least 2 stations', .efailed)
+		errors.vsl_panic('Histogram must have at least 2 stations', .efailed)
 	}
 	// allocate/clear counts
 	nbins := o.stations.len - 1
@@ -124,7 +124,7 @@ pub fn (mut o Histogram) count(vals []f64, clear bool) {
 // gen_labels generate nice labels identifying bins
 pub fn (o Histogram) gen_labels(numfmt string) []string {
 	if o.stations.len < 2 {
-		errno.vsl_panic('Histogram must have at least 2 stations', .efailed)
+		errors.vsl_panic('Histogram must have at least 2 stations', .efailed)
 	}
 	nbins := o.stations.len - 1
 	mut labels := []string{len: nbins}
@@ -139,7 +139,7 @@ pub fn (o Histogram) gen_labels(numfmt string) []string {
 pub fn (o Histogram) density_area(nsamples int) f64 {
 	nstations := o.stations.len
 	if nstations < 2 {
-		errno.vsl_panic('density area computation needs at least two stations', .efailed)
+		errors.vsl_panic('density area computation needs at least two stations', .efailed)
 	}
 	dx := (o.stations[nstations - 1] - o.stations[0]) / f64(nstations - 1)
 	mut prob := []f64{len: nstations}

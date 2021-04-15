@@ -1,6 +1,6 @@
 module vimpl
 
-import vsl.errno
+import vsl.errors
 
 pub fn hypot(x f64, y f64) f64 {
 	if is_inf(x, 0) || is_inf(y, 0) {
@@ -19,7 +19,7 @@ pub fn hypot(x f64, y f64) f64 {
 		if max < max_f64 / root_term {
 			result = max * root_term
 		} else {
-			errno.vsl_panic('overflow in hypot_e function', .eovrflw)
+			errors.vsl_panic('overflow in hypot_e function', .eovrflw)
 		}
 	}
 	return result

@@ -1,4 +1,4 @@
-module errno
+module errors
 
 // success = 0
 // failure = -1

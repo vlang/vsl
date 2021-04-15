@@ -1,4 +1,4 @@
-module errno
+module errors
 
 pub fn str_error(errno Errno) string {
 	return match errno {

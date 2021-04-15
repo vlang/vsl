@@ -1,7 +1,7 @@
 module roots
 
 import vsl.vmath
-import vsl.errno
+import vsl.errors
 import vsl
 
 // Find the root of a function using Newton's algorithm with the Armijo line
@@ -16,7 +16,7 @@ pub fn newton(func vsl.FunctionFdf, x0 f64, x_eps f64, fx_eps f64, n_max int) ?f
 	for i < n_max {
 		mut t := 1.0
 		if df == 0.0 {
-			errno.vsl_panic('div by zero', .ezerodiv)
+			errors.vsl_panic('div by zero', .ezerodiv)
 		}
 		dx := f / df
 		norm0 := vmath.abs(f)
@@ -37,7 +37,7 @@ pub fn newton(func vsl.FunctionFdf, x0 f64, x_eps f64, fx_eps f64, n_max int) ?f
 		i++
 	} // maximum number of iterations reached
 	if i == n_max {
-		return error(errno.vsl_error_message('maximum number of iterations reached', .emaxiter))
+		return error(errors.vsl_error_message('maximum number of iterations reached', .emaxiter))
 	}
 	return root
 }

@@ -2,7 +2,7 @@ module ml
 
 import vsl.util
 import vsl.la
-import vsl.errno
+import vsl.errors
 
 /*
 * Data holds data in matrix format; e.g. for regression computations
@@ -74,7 +74,7 @@ pub fn data_from_raw_x(xraw [][]f64) Data {
 	// check
 	nb_samples := xraw.len
 	if nb_samples < 1 {
-		errno.vsl_panic('at least one row of data in table must be provided', .efailed)
+		errors.vsl_panic('at least one row of data in table must be provided', .efailed)
 	}
 	// allocate new object
 	nb_features := xraw[0].len
@@ -98,7 +98,7 @@ pub fn data_from_raw_xy(xyraw [][]f64) Data {
 	// check
 	nb_samples := xyraw.len
 	if nb_samples < 1 {
-		errno.vsl_panic('at least one row of data in table must be provided', .efailed)
+		errors.vsl_panic('at least one row of data in table must be provided', .efailed)
 	}
 	// allocate new object
 	nb_features := xyraw[0].len - 1 // -1 because of y column

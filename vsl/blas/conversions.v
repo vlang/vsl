@@ -3,7 +3,7 @@ module blas
 import strconv
 import vsl.vmath
 import vsl.vmath.complex
-import vsl.errno
+import vsl.errors
 
 pub const (
 	lapack_row_major    = 101
@@ -356,7 +356,7 @@ pub fn eigenvecs_build(mut vv []complex.Complex, wr []f64, wi []f64, v []f64) {
 		if vmath.abs(wi[j]) > 0.0 {
 			// eigenvalue is complex
 			if j > n - 2 {
-				errno.vsl_panic('last eigenvalue cannot be complex', .efailed)
+				errors.vsl_panic('last eigenvalue cannot be complex', .efailed)
 			}
 			for i := 0; i < n; i++ {
 				// loop over rows
@@ -398,7 +398,7 @@ pub fn eigenvecs_build_both(mut vvl []complex.Complex, mut vvr []complex.Complex
 		if vmath.abs(wi[j]) > 0.0 {
 			// eigenvalue is complex
 			if j > n - 2 {
-				errno.vsl_panic('last eigenvalue cannot be complex', .efailed)
+				errors.vsl_panic('last eigenvalue cannot be complex', .efailed)
 			}
 			for i := 0; i < n; i++ {
 				// loop over rows

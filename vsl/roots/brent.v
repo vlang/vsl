@@ -1,6 +1,6 @@
 module roots
 
-import vsl.errno
+import vsl.errors
 import vsl.vmath
 import vsl.internal
 import vsl
@@ -19,7 +19,7 @@ pub fn brent(func vsl.Function, x1 f64, x2 f64, tol f64) ?(f64, f64) {
 	mut fb := func.eval(b)
 	mut fc := fa
 	if (fa > 0.0 && fb > 0.0) || (fa < 0.0 && fb < 0.0) {
-		return error(errno.vsl_error_message('roots must be bracketed', .einval))
+		return error(errors.vsl_error_message('roots must be bracketed', .einval))
 	}
 	// Test if one the endpoints is the root
 	if fa == 0.0 {

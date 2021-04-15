@@ -1,6 +1,6 @@
 module la
 
-import vsl.errno
+import vsl.errors
 import vsl.blas
 import vsl.vmath
 
@@ -17,14 +17,14 @@ pub fn matrix_inv_small(mut ai Matrix, a Matrix, tol f64) f64 {
 	if a.m == 1 && a.n == 1 {
 		det = a.get(0, 0)
 		if vmath.abs(det) < tol {
-			errno.vsl_panic('inverse of ($a.m x $a.n) matrix failed with zero determinant: |det(a)| = $det < $tol',
+			errors.vsl_panic('inverse of ($a.m x $a.n) matrix failed with zero determinant: |det(a)| = $det < $tol',
 				.efailed)
 		}
 		ai.set(0, 0, 1.0 / det)
 	} else if a.m == 2 && a.n == 2 {
 		det = a.get(0, 0) * a.get(1, 1) - (a.get(0, 1)) * a.get(1, 0)
 		if vmath.abs(det) < tol {
-			errno.vsl_panic('inverse of ($a.m x $a.n) matrix failed with zero determinant: |det(a)| = $det < $tol',
+			errors.vsl_panic('inverse of ($a.m x $a.n) matrix failed with zero determinant: |det(a)| = $det < $tol',
 				.efailed)
 		}
 		ai.set(0, 0, a.get(1, 1) / det)
@@ -36,7 +36,7 @@ pub fn matrix_inv_small(mut ai Matrix, a Matrix, tol f64) f64 {
 			a.get(0, 0) * (a.get(1, 1) * a.get(2, 2) - a.get(1, 2) * a.get(2, 1)) - (a.get(0, 1)) * (a.get(1, 0) * a.get(2, 2) - a.get(1, 2) * a.get(2, 0)) +
 			a.get(0, 2) * (a.get(1, 0) * a.get(2, 1) - a.get(1, 1) * a.get(2, 0))
 		if vmath.abs(det) < tol {
-			errno.vsl_panic('inverse of ($a.m x $a.n) matrix failed with zero determinant: |det(a)| = $det < $tol',
+			errors.vsl_panic('inverse of ($a.m x $a.n) matrix failed with zero determinant: |det(a)| = $det < $tol',
 				.efailed)
 		}
 		ai.set(0, 0, (a.get(1, 1) * a.get(2, 2) - a.get(1, 2) * a.get(2, 1)) / det)
@@ -49,7 +49,7 @@ pub fn matrix_inv_small(mut ai Matrix, a Matrix, tol f64) f64 {
 		ai.set(2, 1, (a.get(0, 1) * a.get(2, 0) - a.get(0, 0) * a.get(2, 1)) / det)
 		ai.set(2, 2, (a.get(0, 0) * a.get(1, 1) - a.get(0, 1) * a.get(1, 0)) / det)
 	} else {
-		errno.vsl_panic('cannot compute inverse of ($a.m x $a.n) matrix with this function',
+		errors.vsl_panic('cannot compute inverse of ($a.m x $a.n) matrix with this function',
 			.efailed)
 	}
 	return det

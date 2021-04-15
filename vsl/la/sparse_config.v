@@ -1,6 +1,6 @@
 module la
 
-import vsl.errno
+import vsl.errors
 
 // The SparseConfig structure holds configuration arguments for sparse solvers
 pub struct SparseConfig {
@@ -34,7 +34,7 @@ pub fn new_sparse_config() SparseConfig {
 // set_mumps_symmetry sets symmetry options for MUMPS solver
 pub fn (mut o SparseConfig) set_mumps_symmetry(only_upper_or_lower_given bool, positive_defined bool) {
 	if !only_upper_or_lower_given {
-		errno.vsl_panic('when using MUMPS, only the upper or the lower part of the matrix (including diagonal) must be given in the Triplet',
+		errors.vsl_panic('when using MUMPS, only the upper or the lower part of the matrix (including diagonal) must be given in the Triplet',
 			.efailed)
 	}
 	o.symmetric = true
@@ -69,7 +69,7 @@ pub fn (mut o SparseConfig) set_mumps_ordering(ordering string) {
 		'metis' { o.mumps_ordering = 5 }
 		'qamd' { o.mumps_ordering = 6 }
 		'auto' { o.mumps_ordering = 7 }
-		else { errno.vsl_panic('ordering scheme $ordering is not available\n', .efailed) }
+		else { errors.vsl_panic('ordering scheme $ordering is not available\n', .efailed) }
 	}
 }
 
@@ -96,6 +96,6 @@ pub fn (mut o SparseConfig) set_mumps_scaling(scaling string) {
 		'', 'rcit' { o.mumps_scaling = 7 } // row/col iterative
 		'rrcit' { o.mumps_scaling = 8 } // rigorous row/col it
 		'auto' { o.mumps_scaling = 77 } // automatic
-		else { errno.vsl_panic('scaling scheme $scaling is not available\n', .efailed) }
+		else { errors.vsl_panic('scaling scheme $scaling is not available\n', .efailed) }
 	}
 }

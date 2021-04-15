@@ -1,7 +1,7 @@
 module vsl
 
 import vsl.vmath
-import vsl.errno
+import vsl.errors
 
 pub type ArbitraryFn = fn (x f64, params []f64) f64
 
@@ -37,7 +37,7 @@ pub fn (f Function) safe_eval(x f64) ?f64 {
 	if is_finite(y) {
 		return y
 	}
-	return error(errno.vsl_error_message('function value is not finite', .ebadfunc))
+	return error(errors.vsl_error_message('function value is not finite', .ebadfunc))
 }
 
 // Definition of an arbitrary function returning two values, r1, r2

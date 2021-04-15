@@ -3,7 +3,7 @@ module graph
 
 import strconv
 import vsl.vmath
-import vsl.errno
+import vsl.errors
 import vsl.util
 
 pub enum SorthestPaths {
@@ -66,7 +66,7 @@ pub fn (g Graph) get_edge(i int, j int) ?int {
 	if key in g.key2edge {
 		return g.key2edge[key]
 	}
-	return error(errno.vsl_error_message('cannot find edge from $i to $j', .efailed))
+	return error(errors.vsl_error_message('cannot find edge from $i to $j', .efailed))
 }
 
 /*

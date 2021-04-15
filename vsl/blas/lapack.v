@@ -1,6 +1,6 @@
 module blas
 
-import vsl.errno
+import vsl.errors
 
 #include <lapack.h>
 
@@ -48,12 +48,12 @@ fn C.LAPACKE_dgehrd(n int, ilo int, ihi int, a &f64, lda int, tau &f64, work &f6
 // NOTE: matrix 'a' will be modified
 pub fn dgesv(n int, nrhs int, mut a []f64, lda int, ipiv []int, mut b []f64, ldb int) {
 	if ipiv.len != n {
-		errno.vsl_panic('ipiv.len must be equal to n. $ipiv.len != $n\n', .efailed)
+		errors.vsl_panic('ipiv.len must be equal to n. $ipiv.len != $n\n', .efailed)
 	}
 	info := C.LAPACKE_dgesv(n, nrhs, unsafe { &a[0] }, lda, &ipiv[0], unsafe { &b[0] },
 		ldb)
 	if info != 0 {
-		errno.vsl_panic('lapack failed', .efailed)
+		errors.vsl_panic('lapack failed', .efailed)
 	}
 }
 
@@ -81,7 +81,7 @@ pub fn dgesvd(jobu byte, jobvt byte, m int, n int, a []f64, lda int, s []f64, u 
 	info := C.LAPACKE_dgesvd(jobu, jobvt, m, n, &a[0], lda, &s[0], &u[0], ldu, &vt[0],
 		ldvt, &superb[0])
 	if info != 0 {
-		errno.vsl_panic('lapack failed', .efailed)
+		errors.vsl_panic('lapack failed', .efailed)
 	}
 }
 
@@ -105,7 +105,7 @@ pub fn dgetrf(m int, n int, mut a []f64, lda int, ipiv []int) {
 	unsafe {
 		info := C.LAPACKE_dgetrf(lapack_col_major, m, n, &a[0], lda, &ipiv[0])
 		if info != 0 {
-			errno.vsl_panic('lapack failed', .efailed)
+			errors.vsl_panic('lapack failed', .efailed)
 		}
 	}
 }
@@ -122,7 +122,7 @@ pub fn dgetri(n int, mut a []f64, lda int, ipiv []int) {
 	unsafe {
 		info := C.LAPACKE_dgetri(n, &a[0], lda, &ipiv[0])
 		if info != 0 {
-			errno.vsl_panic('lapack failed', .efailed)
+			errors.vsl_panic('lapack failed', .efailed)
 		}
 	}
 }
@@ -148,7 +148,7 @@ pub fn dpotrf(up bool, n int, mut a []f64, lda int) {
 	unsafe {
 		info := C.LAPACKE_dpotrf(lapack_col_major, l_uplo(up), n, &a[0], lda)
 		if info != 0 {
-			errno.vsl_panic('lapack failed', .efailed)
+			errors.vsl_panic('lapack failed', .efailed)
 		}
 	}
 }
@@ -195,7 +195,7 @@ pub fn dgeev(calc_vl bool, calc_vr bool, n int, mut a []f64, lda int, wr []f64, 
 		info := C.LAPACKE_dgeev(lapack_col_major, job_vlr(calc_vl), job_vlr(calc_vr),
 			n, &a[0], lda, &wr[0], &wi[0], &vvl, ldvl, &vvr, ldvr)
 		if info != 0 {
-			errno.vsl_panic('lapack failed', .efailed)
+			errors.vsl_panic('lapack failed', .efailed)
 		}
 	}
 }

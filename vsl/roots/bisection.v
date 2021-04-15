@@ -1,7 +1,7 @@
 module roots
 
 import vsl.vmath
-import vsl.errno
+import vsl.errors
 import vsl
 
 // Find the root of a function using a bisection method
@@ -9,7 +9,7 @@ pub fn bisection(func vsl.Function, xmin f64, xmax f64, epsrel f64, epsabs f64, 
 	fxmin := func.safe_eval(xmin) ?
 	fxmax := func.safe_eval(xmax) ?
 	if (fxmin < 0.0 && fxmax < 0.0) || (fxmin > 0.0 && fxmax > 0.0) {
-		return error(errno.vsl_error_message('endpoints do not straddle y=0', .einval))
+		return error(errors.vsl_error_message('endpoints do not straddle y=0', .einval))
 	}
 	mut a := xmin
 	mut b := xmax

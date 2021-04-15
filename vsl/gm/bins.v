@@ -1,7 +1,7 @@
 module gm
 
 import vsl.vmath as math
-import vsl.errno
+import vsl.errors
 
 pub const (
 	xdelzero = 1e-10 // minimum distance between coordinates; i.e. xmax[i]-xmin[i] mininum
@@ -50,7 +50,7 @@ pub fn new_bins(xmin []f64, xmax []f64, ndiv_ []int) Bins {
 	assert xmin.len == xmax.len
 	assert xmin.len == ndiv.len
 	if xmin.len < 2 || xmin.len > 3 {
-		errno.vsl_panic('sizes of xmin and xmax must be the same and equal to either 2 or 3',
+		errors.vsl_panic('sizes of xmin and xmax must be the same and equal to either 2 or 3',
 			.efailed)
 	}
 	// allocate slices with max lengths and number of division
@@ -63,7 +63,7 @@ pub fn new_bins(xmin []f64, xmax []f64, ndiv_ []int) Bins {
 		o.xdel[k] = o.xmax[k] - o.xmin[k]
 		o.size[k] = o.xdel[k] / f64(ndiv[k])
 		if o.xdel[k] < gm.xdelzero {
-			errno.vsl_panic('xmax[$k]-xmin[$k]=${o.xdel[k]} must be greater than $gm.xdelzero',
+			errors.vsl_panic('xmax[$k]-xmin[$k]=${o.xdel[k]} must be greater than $gm.xdelzero',
 				.efailed)
 		}
 	}
@@ -84,11 +84,11 @@ pub fn new_bins(xmin []f64, xmax []f64, ndiv_ []int) Bins {
 pub fn (mut o Bins) append(x []f64, id int, extra voidptr) {
 	idx := o.calc_index(x)
 	if idx < 0 {
-		errno.vsl_panic('coordinates $x are out of range', .erange)
+		errors.vsl_panic('coordinates $x are out of range', .erange)
 	}
 	bin := o.find_bin_by_index(idx)
 	if isnil(bin) {
-		errno.vsl_panic('bin index $idx is out of range', .erange)
+		errors.vsl_panic('bin index $idx is out of range', .erange)
 	}
 	xcopy := x.clone()
 	entry := BinEntry{id, xcopy, extra}
