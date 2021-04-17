@@ -37,7 +37,7 @@ pub fn (f Function) safe_eval(x f64) ?f64 {
 	if is_finite(y) {
 		return y
 	}
-	return error(errors.vsl_error_message('function value is not finite', .ebadfunc))
+	return errors.vsl_error('function value is not finite', .ebadfunc)
 }
 
 // Definition of an arbitrary function returning two values, r1, r2

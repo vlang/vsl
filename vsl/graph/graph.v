@@ -66,7 +66,7 @@ pub fn (g Graph) get_edge(i int, j int) ?int {
 	if key in g.key2edge {
 		return g.key2edge[key]
 	}
-	return error(errors.vsl_error_message('cannot find edge from $i to $j', .efailed))
+	return errors.vsl_error('cannot find edge from $i to $j', .efailed)
 }
 
 /*

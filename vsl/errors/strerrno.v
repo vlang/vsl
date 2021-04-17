@@ -1,6 +1,6 @@
 module errors
 
-pub fn str_error(errno Errno) string {
+pub fn str_error(errno ErrorCode) string {
 	return match errno {
 		.success { 'success' }
 		.failure { 'failure' }
@@ -37,6 +37,5 @@ pub fn str_error(errno Errno) string {
 		.etolx { 'cannot reach the specified tolerance in X' }
 		.etolg { 'cannot reach the specified tolerance in gradient' }
 		.eof { 'end of file' }
-		// else { 'unknown error code' }
 	}
 }
