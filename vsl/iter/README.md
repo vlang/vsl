@@ -5,7 +5,7 @@ Let see an example for `combinations`.
 
 ## Fully formed array of all Combinations
 
-```v nofmt
+```v ignore
 // combinations will return an array of all length `r` combinations of `data`
 // While waiting on https://github.com/vlang/v/issues/7753 to be fixed, the function
 // assumes f64 array input. Will be easy to change to generic later
@@ -31,7 +31,7 @@ fn main() {
 
 This case is optimal to generate combinations in a lazy way, optimizing memory use:
 
-```v nofmt
+```v ignore
 // new_combinations_iter will return an iterator that allows
 // lazy computation for all length `r` combinations of `data`
 pub fn new_combinations_iter(data []f64, r int) CombinationsIter

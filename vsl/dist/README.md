@@ -2,7 +2,7 @@
 
 ## Histograms
 
-```v nofmt
+```v ignore
 // Histogram holds data for computing/plotting histograms
 //
 //  bin[i] corresponds to station[i] <= x < station[i+1]

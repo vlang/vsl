@@ -36,7 +36,8 @@ This library contains essential functions for linear algebra computations
 (operations between all combinations of vectors and matrices, eigenvalues and eigenvectors,
 linear solvers) and the development of numerical methods (e.g. numerical quadrature).
 
-Optionally, we link VSL with existent libraries written in C and Fortran, such as Open BLAS and LAPACK.
+Optionally, we link VSL with existent libraries written 
+in C and Fortran, such as Open BLAS and LAPACK.
 These existing libraries have been fundamental for the development of high-performant
 simulations over many years. We believe that it is possible to rewrite these
 libraries in native V and at the same time achieve the same speed delivered by them, but at the same
@@ -79,7 +80,8 @@ It is enough to use the so convenient `v install` _or_ `vpkg get` functionality 
 Anyways, it is possible to optimize certain modules using different backends.
 For this there are some C dependencies that can be installed optionally.
 If you want to use these C dependencies and other libraries,
-first we need to install some dependencies in order to have VSL working as expected with these backends.
+first we need to install some dependencies in order to 
+have VSL working as expected with these backends.
 
 ### Install dependencies
 
