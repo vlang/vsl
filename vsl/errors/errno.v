@@ -9,7 +9,7 @@ pub enum ErrorCode {
 	can_continue = -2
 	// input domain error, e.g sqrt(-1)
 	edom = 1
-	// output range error, e.g. exp(1e100)
+	// output range error, e.g. exp(1e+100)
 	erange = 2
 	// invalid pointer
 	efault = 3
