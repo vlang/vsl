@@ -2,7 +2,7 @@ module fun
 
 import vsl.vmath as math
 
-// sinusoid implements the sinusoid equation:
+// Sinusoid implements the sinusoid equation:
 //
 //   y(t) = a0 + c1⋅cos(omega_0⋅t + theta)             [essential-form]
 //
