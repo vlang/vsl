@@ -3,11 +3,6 @@ module fun
 import vsl.vmath as math
 import vsl.errors
 
-const (
-	// default tolerance to avoid zero denominator
-	tol_den = 1e-15
-)
-
 // InterpQuad computes a quadratic polynomial to perform interpolation either using 3 points
 // or 2 points and a known derivative
 pub struct InterpQuad {
@@ -23,7 +18,7 @@ pub mut:
 // new_interp_quad returns a new InterpQuad instance
 pub fn new_interp_quad() &InterpQuad {
 	return &InterpQuad{
-		tol_den: fun.tol_den
+		tol_den: 1e-15
 	}
 }
 
