@@ -229,6 +229,26 @@
 <p>neg_one_pow_n computes (-1)ⁿ</p>
 
 </section>
+						<section id="new_interp_cubic" class="doc-node">
+							<div class="title"><h2>fn new_interp_cubic <a href="#new_interp_cubic">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/fun/interpcubic.v#L20"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">new_interp_cubic</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&</span>InterpCubic</code></pre>
+<p>new_interp_cubic returns a new InterpCubic instance</p>
+
+</section>
+						<section id="new_interp_quad" class="doc-node">
+							<div class="title"><h2>fn new_interp_quad <a href="#new_interp_quad">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/fun/interpquad.v#L19"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">new_interp_quad</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&</span>InterpQuad</code></pre>
+<p>new_interp_quad returns a new InterpQuad instance</p>
+
+</section>
+						<section id="new_sinusoid_basis" class="doc-node">
+							<div class="title"><h2>fn new_sinusoid_basis <a href="#new_sinusoid_basis">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/fun/sinusoid.v#L62"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">new_sinusoid_basis</span><span class="token punctuation">(</span>t <span class="token builtin">f64</span><span class="token punctuation">,</span> a0 <span class="token builtin">f64</span><span class="token punctuation">,</span> a1 <span class="token builtin">f64</span><span class="token punctuation">,</span> b1 <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">&</span>Sinusoid</code></pre>
+<p>new_sinusoid_basis creates a new sinusoid object with the &quot;basis&quot; parameters set    t  -- period; e.g. [s]    a0 -- mean value; e.g. [m]    a1 -- coefficient of the cos term    b1 -- coefficient of the sin term</p>
+
+</section>
+						<section id="new_sinusoid_essential" class="doc-node">
+							<div class="title"><h2>fn new_sinusoid_essential <a href="#new_sinusoid_essential">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/fun/sinusoid.v#L36"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">new_sinusoid_essential</span><span class="token punctuation">(</span>t <span class="token builtin">f64</span><span class="token punctuation">,</span> a0 <span class="token builtin">f64</span><span class="token punctuation">,</span> c1 <span class="token builtin">f64</span><span class="token punctuation">,</span> theta <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">&</span>Sinusoid</code></pre>
+<p>new_sinusoid_essential creates a new sinusoid object with the &quot;essential&quot; parameters set    t  -- period; e.g. [s]    a0 -- mean value; e.g. [m]    c1 -- amplitude; e.g. [m]    theta  -- phase shift; e.g. [rad]</p>
+
+</section>
 						<section id="pone" class="doc-node">
 							<div class="title"><h2>fn pone <a href="#pone">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/fun/bessel.v#L615"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">pone</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
 <p>For x &gt;= 8, the asymptotic expansions of pone is  1 + 15/128 s<strong>2 - 4725/2</strong>15 s<strong>4 - ..., where s = 1/x.  We approximate pone by  pone(x) = 1 + (R/S)  where R = pr0 + pr1*s</strong>2 + pr2<em>s**4 + ... + pr5</em>s<strong>10  S = 1 + ps0*s</strong>2 + ... + ps4*s<strong>10  and  | pone(x)-1-R/S | &lt;= 2</strong>(-60.06)</p>
@@ -365,9 +385,122 @@
 
 
 </section>
+						<section id="InterpCubic" class="doc-node">
+							<div class="title"><h2>struct InterpCubic <a href="#InterpCubic">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/fun/interpcubic.v#L8"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">InterpCubic</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	a <span class="token builtin">f64</span>
+	b <span class="token builtin">f64</span>
+	c <span class="token builtin">f64</span>
+	d <span class="token builtin">f64</span>
+
+	tol_den <span class="token builtin">f64</span>
+<span class="token punctuation">}</span></code></pre>
+<p>InterpCubic computes a cubic polynomial to perform interpolation either using 4 points  or 3 points and a known derivative</p>
+
+</section>
+						<section id="InterpCubic.f" class="doc-node">
+							<div class="title"><h2>fn (InterpCubic) f <a href="#InterpCubic.f">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/fun/interpcubic.v#L27"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o InterpCubic<span class="token punctuation">)</span> <span class="token function">f</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>f computes y = f(x) curve</p>
+
+</section>
+						<section id="InterpCubic.g" class="doc-node">
+							<div class="title"><h2>fn (InterpCubic) g <a href="#InterpCubic.g">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/fun/interpcubic.v#L32"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o InterpCubic<span class="token punctuation">)</span> <span class="token function">g</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>g computes y' = df/x|(x) curve</p>
+
+</section>
+						<section id="InterpCubic.critical" class="doc-node">
+							<div class="title"><h2>fn (InterpCubic) critical <a href="#InterpCubic.critical">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/fun/interpcubic.v#L41"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o InterpCubic<span class="token punctuation">)</span> <span class="token function">critical</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token builtin">bool</span><span class="token punctuation">,</span> <span class="token builtin">bool</span><span class="token punctuation">,</span> <span class="token builtin">bool</span><span class="token punctuation">)</span></code></pre>
+<p>critical returns the critical points    xmin -- x @ min and y(xmin)    xmax -- x @ max and y(xmax)    xifl -- x @ inflection point and y(ifl)    has_min, has_max, has_ifl -- flags telling what is available</p>
+
+</section>
+						<section id="InterpCubic.fit_4points" class="doc-node">
+							<div class="title"><h2>fn (InterpCubic) fit_4points <a href="#InterpCubic.fit_4points">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/fun/interpcubic.v#L70"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o InterpCubic<span class="token punctuation">)</span> <span class="token function">fit_4points</span><span class="token punctuation">(</span>x0 <span class="token builtin">f64</span><span class="token punctuation">,</span> y0 <span class="token builtin">f64</span><span class="token punctuation">,</span> x1 <span class="token builtin">f64</span><span class="token punctuation">,</span> y1 <span class="token builtin">f64</span><span class="token punctuation">,</span> x2 <span class="token builtin">f64</span><span class="token punctuation">,</span> y2 <span class="token builtin">f64</span><span class="token punctuation">,</span> x3 <span class="token builtin">f64</span><span class="token punctuation">,</span> y3 <span class="token builtin">f64</span><span class="token punctuation">)</span> ?</code></pre>
+<p>fit_4points fits polynomial to 3 points    (x0, y0) -- first point    (x1, y1) -- second point    (x2, y2) -- third point    (x3, y3) -- fourth point</p>
+
+</section>
+						<section id="InterpCubic.fit_3points_d" class="doc-node">
+							<div class="title"><h2>fn (InterpCubic) fit_3points_d <a href="#InterpCubic.fit_3points_d">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/fun/interpcubic.v#L100"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o InterpCubic<span class="token punctuation">)</span> <span class="token function">fit_3points_d</span><span class="token punctuation">(</span>x0 <span class="token builtin">f64</span><span class="token punctuation">,</span> y0 <span class="token builtin">f64</span><span class="token punctuation">,</span> x1 <span class="token builtin">f64</span><span class="token punctuation">,</span> y1 <span class="token builtin">f64</span><span class="token punctuation">,</span> x2 <span class="token builtin">f64</span><span class="token punctuation">,</span> y2 <span class="token builtin">f64</span><span class="token punctuation">,</span> x3 <span class="token builtin">f64</span><span class="token punctuation">,</span> d3 <span class="token builtin">f64</span><span class="token punctuation">)</span> ?</code></pre>
+<p>fit_3points_d fits polynomial to 3 points and known derivative    (x0, y0) -- first point    (x1, y1) -- second point    (x2, y2) -- third point    (x3, d3) -- derivative @ x3</p>
+
+</section>
+						<section id="InterpQuad" class="doc-node">
+							<div class="title"><h2>struct InterpQuad <a href="#InterpQuad">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/fun/interpquad.v#L8"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">InterpQuad</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	a <span class="token builtin">f64</span>
+	b <span class="token builtin">f64</span>
+	c <span class="token builtin">f64</span>
+
+	tol_den <span class="token builtin">f64</span>
+<span class="token punctuation">}</span></code></pre>
+<p>InterpQuad computes a quadratic polynomial to perform interpolation either using 3 points  or 2 points and a known derivative</p>
+
+</section>
+						<section id="InterpQuad.f" class="doc-node">
+							<div class="title"><h2>fn (InterpQuad) f <a href="#InterpQuad.f">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/fun/interpquad.v#L26"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o InterpQuad<span class="token punctuation">)</span> <span class="token function">f</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>f computes y = f(x) curve</p>
+
+</section>
+						<section id="InterpQuad.g" class="doc-node">
+							<div class="title"><h2>fn (InterpQuad) g <a href="#InterpQuad.g">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/fun/interpquad.v#L31"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o InterpQuad<span class="token punctuation">)</span> <span class="token function">g</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>g computes y' = df/x|(x) curve</p>
+
+</section>
+						<section id="InterpQuad.optimum" class="doc-node">
+							<div class="title"><h2>fn (InterpQuad) optimum <a href="#InterpQuad.optimum">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/fun/interpquad.v#L38"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o InterpQuad<span class="token punctuation">)</span> <span class="token function">optimum</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+<p>optimum returns the minimum or maximum point; i.e. the point with zero derivative    xopt -- x @ optimum    fopt -- f(xopt) = y @ optimum</p>
+
+</section>
+						<section id="InterpQuad.fit_3points" class="doc-node">
+							<div class="title"><h2>fn (InterpQuad) fit_3points <a href="#InterpQuad.fit_3points">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/fun/interpquad.v#L51"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o InterpQuad<span class="token punctuation">)</span> <span class="token function">fit_3points</span><span class="token punctuation">(</span>x0 <span class="token builtin">f64</span><span class="token punctuation">,</span> y0 <span class="token builtin">f64</span><span class="token punctuation">,</span> x1 <span class="token builtin">f64</span><span class="token punctuation">,</span> y1 <span class="token builtin">f64</span><span class="token punctuation">,</span> x2 <span class="token builtin">f64</span><span class="token punctuation">,</span> y2 <span class="token builtin">f64</span><span class="token punctuation">)</span> ?</code></pre>
+<p>fit_3points fits polynomial to 3 points    (x0, y0) -- first point    (x1, y1) -- second point    (x2, y2) -- third point</p>
+
+</section>
+						<section id="InterpQuad.fit_2points_d" class="doc-node">
+							<div class="title"><h2>fn (InterpQuad) fit_2points_d <a href="#InterpQuad.fit_2points_d">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/fun/interpquad.v#L67"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o InterpQuad<span class="token punctuation">)</span> <span class="token function">fit_2points_d</span><span class="token punctuation">(</span>x0 <span class="token builtin">f64</span><span class="token punctuation">,</span> y0 <span class="token builtin">f64</span><span class="token punctuation">,</span> x1 <span class="token builtin">f64</span><span class="token punctuation">,</span> y1 <span class="token builtin">f64</span><span class="token punctuation">,</span> x2 <span class="token builtin">f64</span><span class="token punctuation">,</span> d2 <span class="token builtin">f64</span><span class="token punctuation">)</span> ?</code></pre>
+<p>fit_2points_d fits polynomial to 2 points and known derivative    (x0, y0) -- first point    (x1, y1) -- second point    (x2, d2) -- derivate @ x2</p>
+
+</section>
+						<section id="Sinusoid" class="doc-node">
+							<div class="title"><h2>struct Sinusoid <a href="#Sinusoid">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/fun/sinusoid.v#L15"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">Sinusoid</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	period      <span class="token builtin">f64</span>
+	mean_value  <span class="token builtin">f64</span>
+	amplitude   <span class="token builtin">f64</span>
+	phase_shift <span class="token builtin">f64</span>
+
+	frequency    <span class="token builtin">f64</span>
+	angular_freq <span class="token builtin">f64</span>
+	time_shift   <span class="token builtin">f64</span>
+
+	a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
+	b <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Sinusoid implements the sinusoid equation:     y(t) = a0 + c1⋅cos(omega_0⋅t + theta)             [essential-form]     y(t) = a0 + a1⋅cos(omega_0⋅t) + b1⋅sin(omega_0⋅t)  [basis-form]     a1 =  c1⋅cos(theta)    b1 = -c1⋅sin(theta)    theta  = arctan(-b1 / a1)   if a1&lt;0, theta += π    c1 = sqrt(a1² + b1²)</p>
+
+</section>
+						<section id="Sinusoid.yessen" class="doc-node">
+							<div class="title"><h2>fn (Sinusoid) yessen <a href="#Sinusoid.yessen">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/fun/sinusoid.v#L86"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o Sinusoid<span class="token punctuation">)</span> <span class="token function">yessen</span><span class="token punctuation">(</span>t <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>yessen computes y(t) = a0 + c1⋅cos(omega_0⋅t + theta [essential-form]</p>
+
+</section>
+						<section id="Sinusoid.ybasis" class="doc-node">
+							<div class="title"><h2>fn (Sinusoid) ybasis <a href="#Sinusoid.ybasis">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/fun/sinusoid.v#L92"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o Sinusoid<span class="token punctuation">)</span> <span class="token function">ybasis</span><span class="token punctuation">(</span>t <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>ybasis computes y(t) = a0 + a1⋅cos(omega_0⋅t) + b1⋅sin(omega_0⋅t) [basis-form]</p>
+
+</section>
+						<section id="Sinusoid.approx_square_fourier" class="doc-node">
+							<div class="title"><h2>fn (Sinusoid) approx_square_fourier <a href="#Sinusoid.approx_square_fourier">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/fun/sinusoid.v#L103"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o Sinusoid<span class="token punctuation">)</span> <span class="token function">approx_square_fourier</span><span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>approx_square_fourier approximates sinusoid using Fourier series with n terms</p>
+
+</section>
+						<section id="Sinusoid.test_periodicity" class="doc-node">
+							<div class="title"><h2>fn (Sinusoid) test_periodicity <a href="#Sinusoid.test_periodicity">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/fun/sinusoid.v#L116"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o Sinusoid<span class="token punctuation">)</span> <span class="token function">test_periodicity</span><span class="token punctuation">(</span>tmin <span class="token builtin">f64</span><span class="token punctuation">,</span> tmax <span class="token builtin">f64</span><span class="token punctuation">,</span> npts <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">bool</span></code></pre>
+<p>test_periodicity tests that f(t) = f(t + t)</p>
+
+</section>
 
 						<div class="footer">
-							Powered by vdoc. Generated on: 17 Apr 2021 21:40:58
+							Powered by vdoc. Generated on: 23 Apr 2021 05:00:08
 						</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#atan2p">fn atan2p</a>        <ul>
@@ -475,6 +608,18 @@
 <li class="open"><a href="#neg_one_pow_n">fn neg_one_pow_n</a>        <ul>
 </ul>
 </li>
+<li class="open"><a href="#new_interp_cubic">fn new_interp_cubic</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#new_interp_quad">fn new_interp_quad</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#new_sinusoid_basis">fn new_sinusoid_basis</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#new_sinusoid_essential">fn new_sinusoid_essential</a>        <ul>
+</ul>
+</li>
 <li class="open"><a href="#pone">fn pone</a>        <ul>
 </ul>
 </li>
@@ -549,6 +694,29 @@
 </li>
 <li class="open"><a href="#ChebSeries">struct ChebSeries</a>        <ul>
 <li><a href="#ChebSeries.eval_e">fn eval_e</a></li>
+</ul>
+</li>
+<li class="open"><a href="#InterpCubic">struct InterpCubic</a>        <ul>
+<li><a href="#InterpCubic.f">fn f</a></li>
+<li><a href="#InterpCubic.g">fn g</a></li>
+<li><a href="#InterpCubic.critical">fn critical</a></li>
+<li><a href="#InterpCubic.fit_4points">fn fit_4points</a></li>
+<li><a href="#InterpCubic.fit_3points_d">fn fit_3points_d</a></li>
+</ul>
+</li>
+<li class="open"><a href="#InterpQuad">struct InterpQuad</a>        <ul>
+<li><a href="#InterpQuad.f">fn f</a></li>
+<li><a href="#InterpQuad.g">fn g</a></li>
+<li><a href="#InterpQuad.optimum">fn optimum</a></li>
+<li><a href="#InterpQuad.fit_3points">fn fit_3points</a></li>
+<li><a href="#InterpQuad.fit_2points_d">fn fit_2points_d</a></li>
+</ul>
+</li>
+<li class="open"><a href="#Sinusoid">struct Sinusoid</a>        <ul>
+<li><a href="#Sinusoid.yessen">fn yessen</a></li>
+<li><a href="#Sinusoid.ybasis">fn ybasis</a></li>
+<li><a href="#Sinusoid.approx_square_fourier">fn approx_square_fourier</a></li>
+<li><a href="#Sinusoid.test_periodicity">fn test_periodicity</a></li>
 </ul>
 </li>
 </ul></div>
