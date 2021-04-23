@@ -353,12 +353,12 @@ pub fn (o Bins) summary() string {
 
 // str returns the string representation of one Bin
 pub fn (o Bin) str() string {
-	mut l := '{\"idx\":$o.index, \"entries\":['
+	mut l := "{\"idx\":$o.index, \"entries\":["
 	for i, entry in o.entries {
 		if i > 0 {
 			l += ', '
 		}
-		l += '{\"id\":$entry.id, \"x\":[$entry.x[0],$entry.x[1]'
+		l += "{\"id\":$entry.id, \"x\":[$entry.x[0],$entry.x[1]"
 		if entry.x.len > 2 {
 			l += ',$entry.x[2]'
 		}
