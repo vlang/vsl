@@ -182,12 +182,12 @@ pub fn dgeev(calc_vl bool, calc_vr bool, n int, mut a []f64, lda int, wr []f64, 
 	mut ldvl := ldvl_
 	mut ldvr := ldvr_
 	if calc_vl {
-		vvl = &vl[0]
+		vvl = unsafe { &vl[0] }
 	} else {
 		ldvl = 1
 	}
 	if calc_vr {
-		vvr = &vr[0]
+		vvr = unsafe { &vr[0] }
 	} else {
 		ldvr = 1
 	}

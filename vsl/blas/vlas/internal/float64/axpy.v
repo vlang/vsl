@@ -31,7 +31,7 @@ pub fn axpy_inc_to(mut dst []f64, inc_dst u32, idst u32, alpha f64, x []f64, y [
 	mut iy_ := iy
 	mut idst_ := idst
 	for i := 0; i < int(n); i++ {
-		dst[idst] = alpha * x[ix_] + y[iy_]
+		dst[idst_] = alpha * x[ix_] + y[iy_]
 		ix_ += incX
 		iy_ += incY
 		idst_ += inc_dst
