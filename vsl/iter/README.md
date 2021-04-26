@@ -17,7 +17,7 @@ pub fn combinations(data []f64, r int) [][]f64
 ```v
 module main
 
-import vsl.vsl.iter
+import vsl.iter
 
 fn main() {
 	data := [1., 2., 3.]
@@ -45,7 +45,7 @@ pub fn (mut o CombinationsIter) next() ?[]f64
 ```v
 module main
 
-import vsl.vsl.iter
+import vsl.iter
 
 fn main() {
 	data := [1., 2., 3.]

@@ -24,7 +24,7 @@ is defined with the following code:
 ```v
 module main
 
-import vsl.vsl.graph
+import vsl.graph
 
 fn main() {
 	edges := [[0, 1], [0, 3], [1, 2], [2, 3]]
@@ -82,7 +82,7 @@ with the `path` method.
 ```v
 module main
 
-import vsl.vsl.graph
+import vsl.graph
 
 fn main() {
 	// initialise graph

@@ -14,9 +14,9 @@ The functions described in this chapter are declared in the module `vsl.deriv`
 ```v
 module main
 
-import vsl.vsl.vmath
-import vsl.vsl.deriv
-import vsl.vsl
+import vsl.vmath
+import vsl.deriv
+import vsl
 
 fn func(x f64, _ []f64) f64 {
 	return vmath.pow(x, 1.5)
