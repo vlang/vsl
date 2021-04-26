@@ -42,7 +42,7 @@
 				<nav class="search hidden"></nav>
 				<nav class="content hidden">
 					<ul>
-						<li class="open active"><div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="./vsl.html">vsl</a></div><ul><li><a href="./vsl.blas.html">blas</a></li><li><a href="./vsl.blas.vlas.html">blas.vlas</a></li><li><a href="./vsl.blas.vlas.internal.float64.html">blas.vlas.internal.float64</a></li><li><a href="./vsl.consts.html">consts</a></li><li><a href="./vsl.deriv.html">deriv</a></li><li><a href="./vsl.diff.html">diff</a></li><li><a href="./vsl.dist.html">dist</a></li><li><a href="./vsl.easings.html">easings</a></li><li><a href="./vsl.errors.html">errors</a></li><li><a href="./vsl.fit.html">fit</a></li><li><a href="./vsl.fun.html">fun</a></li><li><a href="./vsl.gm.html">gm</a></li><li><a href="./vsl.graph.html">graph</a></li><li><a href="./vsl.internal.html">internal</a></li><li><a href="./vsl.iter.html">iter</a></li><li><a href="./vsl.la.html">la</a></li><li><a href="./vsl.ml.html">ml</a></li><li><a href="./vsl.poly.html">poly</a></li><li><a href="./vsl.quaternion.html">quaternion</a></li><li><a href="./vsl.roots.html">roots</a></li><li><a href="./vsl.stats.html">stats</a></li><li><a href="./vsl.util.html">util</a></li><li><a href="./vsl.vmath.html">vmath</a></li><li><a href="./vsl.vmath.bits.html">vmath.bits</a></li><li><a href="./vsl.vmath.complex.html">vmath.complex</a></li><li><a href="./vsl.vmath.fractions.html">vmath.fractions</a></li><li><a href="./vsl.vmath.vimpl.html">vmath.vimpl</a></li></ul></li>
+						<li class="open active"><div class="menu-row"><a href="./vsl.html">vsl</a></div></li><li class="open"><div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="./blas.html">blas</a></div><ul><li><a href="./blas.vlas.html">vlas</a></li><li><a href="./blas.vlas.internal.float64.html">vlas.internal.float64</a></li></ul></li><li class="open"><div class="menu-row"><a href="./consts.html">consts</a></div></li><li class="open"><div class="menu-row"><a href="./deriv.html">deriv</a></div></li><li class="open"><div class="menu-row"><a href="./diff.html">diff</a></div></li><li class="open"><div class="menu-row"><a href="./dist.html">dist</a></div></li><li class="open"><div class="menu-row"><a href="./easings.html">easings</a></div></li><li class="open"><div class="menu-row"><a href="./errors.html">errors</a></div></li><li class="open"><div class="menu-row"><a href="./fit.html">fit</a></div></li><li class="open"><div class="menu-row"><a href="./fun.html">fun</a></div></li><li class="open"><div class="menu-row"><a href="./gm.html">gm</a></div></li><li class="open"><div class="menu-row"><a href="./graph.html">graph</a></div></li><li class="open"><div class="menu-row"><a href="./internal.html">internal</a></div></li><li class="open"><div class="menu-row"><a href="./iter.html">iter</a></div></li><li class="open"><div class="menu-row"><a href="./la.html">la</a></div></li><li class="open"><div class="menu-row"><a href="./ml.html">ml</a></div></li><li class="open"><div class="menu-row"><a href="./poly.html">poly</a></div></li><li class="open"><div class="menu-row"><a href="./quaternion.html">quaternion</a></div></li><li class="open"><div class="menu-row"><a href="./roots.html">roots</a></div></li><li class="open"><div class="menu-row"><a href="./stats.html">stats</a></div></li><li class="open"><div class="menu-row"><a href="./util.html">util</a></div></li><li class="open"><div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="./vmath.html">vmath</a></div><ul><li><a href="./vmath.bits.html">bits</a></li><li><a href="./vmath.complex.html">complex</a></li><li><a href="./vmath.fractions.html">fractions</a></li><li><a href="./vmath.vimpl.html">vimpl</a></li></ul></li>
 					</ul>
 				</nav>
 			</header>
@@ -50,7 +50,105 @@
 				<div class="doc-container">
 					<div class="doc-content">
 						<section id="readme_vsl" class="doc-node">
-							<div class="title"><h1> vsl <a href="#readme_vsl">#</a></h1></div>
+							<div class="title"><h1> vsl <a href="#readme_vsl">#</a></h1></div><div align="center">
+<p>
+    <img
+        style="width: 200px"
+        width="200"
+        src="https://raw.githubusercontent.com/vlang/vsl/master/static/vsl-logo.png?sanitize=true"
+    >
+</p>
+<h1>The V Scientific Library</h1>
+<p><a href="https://vlang.io">vlang.io</a> |
+<a href="https://vlang.github.io/vsl">Docs</a> |
+<a href="#">Changelog</a> |
+<a href="https://github.com/vlang/vsl/blob/master/CONTRIBUTING.md">Contributing</a></p>
+</div>
+<p>VSL is a Scientific Library with a great variety of different modules.
+Although most modules offer pure-V definitions, VSL also provides modules
+that wrap known C libraries that allow high performance computing
+as an alternative.</p>
+<h2>Docs</h2>
+<p>Visit <a href="https://vlang.github.io/vsl">vsl docs</a> to know more about the supported features.</p>
+<p>This library contains essential functions for linear algebra computations
+(operations between all combinations of vectors and matrices, eigenvalues and eigenvectors,
+linear solvers) and the development of numerical methods (e.g. numerical quadrature).</p>
+<p>Optionally, we link VSL with existent libraries written
+in C and Fortran, such as Open BLAS and LAPACK.
+These existing libraries have been fundamental for the development of high-performant
+simulations over many years. We believe that it is possible to rewrite these
+libraries in native V and at the same time achieve the same speed delivered by them, but at the same
+time, we want to allow to the users of VSL the possibility to choose when to use these libraries
+as backend and when not. That is why each module documents the flags that allow this at the
+time of use.</p>
+<h2>Installation</h2>
+<p>It is possible to optimize certain modules using different backends.
+For this there are some C dependencies that can be installed optionally.
+If you want to use these C dependencies and other libraries,
+the easiest way to work with VSL is via Docker.
+Having Docker and VS Code installed, you can start developing powerful numerical simulations
+using VSL in a matter of seconds. Furthermore, the best part of it is that it works on
+Windows, Linux, and macOS out of the box.</p>
+<h3>Quick, containerized (recommended)</h3>
+<ol>
+<li>Install Docker</li>
+<li>Install Visual Studio Code</li>
+<li>Install the Remote Development extension for VS Code</li>
+<li>Clone <a href="https://github.com/ulises-jeremias/hello-vsl">https://github.com/ulises-jeremias/hello-vsl</a></li>
+<li>Create your application within a container (see gif below)</li>
+</ol>
+<p>Done. And your system will remain &quot;clean&quot;.</p>
+<p><img src="https://raw.githubusercontent.com/vlang/vsl/master/static/vscode-open-in-container.gif" alt=""></p>
+<p>Our <a href="https://hub.docker.com/repository/docker/ulisesjeremias/vsl">Docker Image</a>
+also contains V and the V Tools for working with VS Code (or not).
+Below is a video showing the convenience of
+VS Code + the V tools + VSL.</p>
+<p><img src="https://raw.githubusercontent.com/vlang/vsl/master/static/container.gif" alt=""></p>
+<h2>Install VSL locally</h2>
+<p>It is enough to use the so convenient <code>v install</code> <em>or</em> <code>vpkg get</code> functionality for installing VSL.
+Anyways, it is possible to optimize certain modules using different backends.
+For this there are some C dependencies that can be installed optionally.
+If you want to use these C dependencies and other libraries,
+first we need to install some dependencies in order to
+have VSL working as expected with these backends.</p>
+<h3>Install dependencies</h3>
+<p><strong>Debian/Ubuntu GNU Linux</strong></p>
+<p><code>libopenblas-dev</code> is not needed when using the pure V backend.</p>
+<pre><code class="language-sh">$ sudo apt-get install -y --no-install-recommends \
+    gcc \
+    gfortran \
+    liblapacke-dev \
+    libopenblas-dev \
+    libssl-dev \
+</code></pre>
+<p><strong>Arch Linux/Manjaro GNU Linux</strong></p>
+<pre><code class="language-sh">$ sudo pacman -S openssl
+</code></pre>
+<p>The best way of installing OpenBlas/LAPACK is using
+<a href="https://aur.archlinux.org/packages/openblas-lapack/">openblas-lapack</a>.</p>
+<pre><code class="language-sh">$ yay -S openblas-lapack
+</code></pre>
+<p><em>or</em></p>
+<pre><code class="language-sh">$ git clone https://aur.archlinux.org/openblas-lapack.git /tmp/openblas-lapack
+$ cd /tmp/openblas-lapack
+$ makepkg -si
+</code></pre>
+<h3>Install VSL</h3>
+<p><strong>Via vpm</strong></p>
+<pre><code class="language-sh">$ v install vsl
+</code></pre>
+<p><strong>Via <a href="https://github.com/v-pkg/vpkg">vpkg</a></strong></p>
+<pre><code class="language-sh">$ vpkg get https://github.com/vlang/vsl
+</code></pre>
+<p>Done. Installation completed.</p>
+<h2>Testing</h2>
+<p>To test the module, just type the following command:</p>
+<pre><code class="language-sh">$ ./bin/test # execute `./bin/test -h` to know more about the test command
+</code></pre>
+<h2>Contributors</h2>
+<ul>
+<li><a href="https://github.com/ulises-jeremias">Ulises Jeremias Cornejo Fandos</a> - creator and maintainer</li>
+</ul>
 
 </section>
 
@@ -66,27 +164,27 @@
 
 </section>
 						<section id="ArbitraryFn" class="doc-node">
-							<div class="title"><h2>type ArbitraryFn <a href="#ArbitraryFn">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/fn.v#L6"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">type</span> ArbitraryFn <span class="token operator">=</span> <span class="token keyword">fn</span> <span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">,</span> params <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+							<div class="title"><h2>type ArbitraryFn <a href="#ArbitraryFn">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fn.v#L6"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">type</span> ArbitraryFn <span class="token operator">=</span> <span class="token keyword">fn</span> <span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">,</span> params <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
 
 
 </section>
 						<section id="DfFn" class="doc-node">
-							<div class="title"><h2>type DfFn <a href="#DfFn">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/fn.v#L8"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">type</span> DfFn <span class="token operator">=</span> <span class="token keyword">fn</span> <span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">,</span> params <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+							<div class="title"><h2>type DfFn <a href="#DfFn">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fn.v#L8"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">type</span> DfFn <span class="token operator">=</span> <span class="token keyword">fn</span> <span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">,</span> params <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
 
 
 </section>
 						<section id="FdfFn" class="doc-node">
-							<div class="title"><h2>type FdfFn <a href="#FdfFn">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/fn.v#L10"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">type</span> FdfFn <span class="token operator">=</span> <span class="token keyword">fn</span> <span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">,</span> params <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+							<div class="title"><h2>type FdfFn <a href="#FdfFn">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fn.v#L10"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">type</span> FdfFn <span class="token operator">=</span> <span class="token keyword">fn</span> <span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">,</span> params <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
 
 
 </section>
 						<section id="VectorValuedFn" class="doc-node">
-							<div class="title"><h2>type VectorValuedFn <a href="#VectorValuedFn">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/fn.v#L12"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">type</span> VectorValuedFn <span class="token operator">=</span> <span class="token keyword">fn</span> <span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">,</span> y <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> params <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+							<div class="title"><h2>type VectorValuedFn <a href="#VectorValuedFn">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fn.v#L12"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">type</span> VectorValuedFn <span class="token operator">=</span> <span class="token keyword">fn</span> <span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">,</span> y <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> params <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
 
 
 </section>
 						<section id="Fn" class="doc-node">
-							<div class="title"><h2>struct Fn <a href="#Fn">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/fn.v#L15"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">Fn</span> <span class="token punctuation">{</span>
+							<div class="title"><h2>struct Fn <a href="#Fn">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fn.v#L15"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">Fn</span> <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
 	f      ArbitraryFn
 	params <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
@@ -95,17 +193,17 @@
 
 </section>
 						<section id="Fn.eval" class="doc-node">
-							<div class="title"><h2>fn (Fn) eval <a href="#Fn.eval">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/fn.v#L22"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>f Fn<span class="token punctuation">)</span> <span class="token function">eval</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+							<div class="title"><h2>fn (Fn) eval <a href="#Fn.eval">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fn.v#L22"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>f Fn<span class="token punctuation">)</span> <span class="token function">eval</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
 
 
 </section>
 						<section id="Fn.safe_eval" class="doc-node">
-							<div class="title"><h2>fn (Fn) safe_eval <a href="#Fn.safe_eval">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/fn.v#L33"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>f Fn<span class="token punctuation">)</span> <span class="token function">safe_eval</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">)</span> ?<span class="token builtin">f64</span></code></pre>
+							<div class="title"><h2>fn (Fn) safe_eval <a href="#Fn.safe_eval">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fn.v#L33"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>f Fn<span class="token punctuation">)</span> <span class="token function">safe_eval</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">)</span> ?<span class="token builtin">f64</span></code></pre>
 <p>Call the pointed-to function with argument x, put its result in y, and  return an error if the function value is inf/nan.</p>
 
 </section>
 						<section id="FnFdf" class="doc-node">
-							<div class="title"><h2>struct FnFdf <a href="#FnFdf">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/fn.v#L42"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">FnFdf</span> <span class="token punctuation">{</span>
+							<div class="title"><h2>struct FnFdf <a href="#FnFdf">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fn.v#L42"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">FnFdf</span> <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
 	f      ArbitraryFn
 	df     DfFn
@@ -116,22 +214,22 @@
 
 </section>
 						<section id="FnFdf.eval_f" class="doc-node">
-							<div class="title"><h2>fn (FnFdf) eval_f <a href="#FnFdf.eval_f">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/fn.v#L51"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>fdf FnFdf<span class="token punctuation">)</span> <span class="token function">eval_f</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+							<div class="title"><h2>fn (FnFdf) eval_f <a href="#FnFdf.eval_f">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fn.v#L51"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>fdf FnFdf<span class="token punctuation">)</span> <span class="token function">eval_f</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
 
 
 </section>
 						<section id="FnFdf.eval_df" class="doc-node">
-							<div class="title"><h2>fn (FnFdf) eval_df <a href="#FnFdf.eval_df">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/fn.v#L56"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>fdf FnFdf<span class="token punctuation">)</span> <span class="token function">eval_df</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+							<div class="title"><h2>fn (FnFdf) eval_df <a href="#FnFdf.eval_df">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fn.v#L56"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>fdf FnFdf<span class="token punctuation">)</span> <span class="token function">eval_df</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
 
 
 </section>
 						<section id="FnFdf.eval_f_df" class="doc-node">
-							<div class="title"><h2>fn (FnFdf) eval_f_df <a href="#FnFdf.eval_f_df">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/fn.v#L61"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>fdf FnFdf<span class="token punctuation">)</span> <span class="token function">eval_f_df</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+							<div class="title"><h2>fn (FnFdf) eval_f_df <a href="#FnFdf.eval_f_df">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fn.v#L61"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>fdf FnFdf<span class="token punctuation">)</span> <span class="token function">eval_f_df</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
 
 
 </section>
 						<section id="FnVec" class="doc-node">
-							<div class="title"><h2>struct FnVec <a href="#FnVec">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/fn.v#L66"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">FnVec</span> <span class="token punctuation">{</span>
+							<div class="title"><h2>struct FnVec <a href="#FnVec">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fn.v#L66"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">FnVec</span> <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
 	f      VectorValuedFn
 	params <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
@@ -140,16 +238,17 @@
 
 </section>
 						<section id="FnVec.eval" class="doc-node">
-							<div class="title"><h2>fn (FnVec) eval <a href="#FnVec.eval">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/fn.v#L73"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>f FnVec<span class="token punctuation">)</span> <span class="token function">eval</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">,</span> y <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+							<div class="title"><h2>fn (FnVec) eval <a href="#FnVec.eval">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fn.v#L73"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>f FnVec<span class="token punctuation">)</span> <span class="token function">eval</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">,</span> y <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
 
 
 </section>
 
 						<div class="footer">
-							Powered by vdoc. Generated on: 26 Apr 2021 05:34:17
+							Powered by vdoc. Generated on: 26 Apr 2021 05:46:05
 						</div>
 					</div>
-					<div class="doc-toc"><ul><li class="open"><a href="#Constants">Constants</a></li>
+					<div class="doc-toc"><ul><li class="open"><a href="#readme_vsl">README</a></li>
+<li class="open"><a href="#Constants">Constants</a></li>
 <li class="open"><a href="#ArbitraryFn">type ArbitraryFn</a>        <ul>
 </ul>
 </li>
