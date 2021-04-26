@@ -23,8 +23,8 @@ fn func(x f64, _ []f64) f64 {
 }
 
 fn main() {
-	f := vsl.Function{
-		function: func
+	f := vsl.Fn{
+		f: func
 	}
 	println('f(x) = x^(3/2)')
 	mut expected := 1.5 * vmath.sqrt(2.0)
@@ -53,10 +53,10 @@ f'(x) = 0.0000000160 +/- 0.0000000339
 exact = 0.0000000000
 ```
 
-# Functions
+# Fns
 
 ```v ignore
-fn central (f vsl.Function, x, h f64) (f64, f64)
+fn central (f vsl.Fn, x, h f64) (f64, f64)
 ```
 
 This function computes the numerical derivative of the function `f`
@@ -75,7 +75,7 @@ does not contribute to the derivative calculation, so only 4-points are
 actually used.
 
 ```v ignore
-fn forward (f vsl.Function, x, h f64) (f64, f64)
+fn forward (f vsl.Fn, x, h f64) (f64, f64)
 ```
 
 This function computes the numerical derivative of the function `f`
@@ -95,7 +95,7 @@ from the difference between the 4-point rule and the corresponding
 2-point rule `x+h/2`, `x+h`.
 
 ```v ignore
-fn backward (f vsl.Function, x, h f64) (f64, f64)
+fn backward (f vsl.Fn, x, h f64) (f64, f64)
 ```
 
 This function computes the numerical derivative of the function `f`

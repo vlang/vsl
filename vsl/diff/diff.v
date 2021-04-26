@@ -4,7 +4,7 @@ import vsl.vmath
 import vsl
 import vsl.internal
 
-pub fn backward(f vsl.Function, x f64) (f64, f64) {
+pub fn backward(f vsl.Fn, x f64) (f64, f64) {
 	/*
 	Construct a divided difference table with a fairly large step
          * size to get a very rough estimate of f''. Use this to estimate
@@ -43,7 +43,7 @@ pub fn backward(f vsl.Function, x f64) (f64, f64) {
 	return (f.eval(x) - f.eval(x - h)) / h, vmath.abs(10.0 * a2 * h)
 }
 
-pub fn forward(f vsl.Function, x f64) (f64, f64) {
+pub fn forward(f vsl.Fn, x f64) (f64, f64) {
 	/*
 	Construct a divided difference table with a fairly large step
          * size to get a very rough estimate of f''. Use this to estimate
@@ -82,7 +82,7 @@ pub fn forward(f vsl.Function, x f64) (f64, f64) {
 	return (f.eval(x + h) - f.eval(x)) / h, vmath.abs(10.0 * a2 * h)
 }
 
-pub fn central(f vsl.Function, x f64) (f64, f64) {
+pub fn central(f vsl.Fn, x f64) (f64, f64) {
 	/*
 	Construct a divided difference table with a fairly large step
          * size to get a very rough estimate of f'''. Use this to estimate

@@ -246,7 +246,7 @@ pub fn logistic_d1(z f64) f64 {
 	return g * (1.0 - g)
 }
 
-// sabs implements a smooth abs function: sabs(x) = x*x / (sign(x)*x + eps)
+// sabs implements a smooth abs f: sabs(x) = x*x / (sign(x)*x + eps)
 pub fn sabs(x f64, eps f64) f64 {
 	mut s := 0.0
 	if x > 0.0 {

@@ -176,21 +176,21 @@ pub fn (c Complex) tan() Complex {
 
 // Complex Cotangent
 // Based on
-// http://www.suitcaseofdreams.net/Trigonometric_Functions.htm
+// http://www.suitcaseofdreams.net/Trigonometric_Fns.htm
 pub fn (c Complex) cot() Complex {
 	return c.cos().divide(c.sin())
 }
 
 // Complex Secant
 // Based on
-// http://www.suitcaseofdreams.net/Trigonometric_Functions.htm
+// http://www.suitcaseofdreams.net/Trigonometric_Fns.htm
 pub fn (c Complex) sec() Complex {
 	return complex(1, 0).divide(c.cos())
 }
 
 // Complex Cosecant
 // Based on
-// http://www.suitcaseofdreams.net/Trigonometric_Functions.htm
+// http://www.suitcaseofdreams.net/Trigonometric_Fns.htm
 pub fn (c Complex) csc() Complex {
 	return complex(1, 0).divide(c.sin())
 }
@@ -219,21 +219,21 @@ pub fn (c Complex) atan() Complex {
 
 // Complex Arc Cotangent / Cotangent Inverse
 // Based on
-// http://www.suitcaseofdreams.net/Inverse_Functions.htm
+// http://www.suitcaseofdreams.net/Inverse_Fns.htm
 pub fn (c Complex) acot() Complex {
 	return complex(1, 0).divide(c).atan()
 }
 
 // Complex Arc Secant / Secant Inverse
 // Based on
-// http://www.suitcaseofdreams.net/Inverse_Functions.htm
+// http://www.suitcaseofdreams.net/Inverse_Fns.htm
 pub fn (c Complex) asec() Complex {
 	return complex(1, 0).divide(c).acos()
 }
 
 // Complex Arc Cosecant / Cosecant Inverse
 // Based on
-// http://www.suitcaseofdreams.net/Inverse_Functions.htm
+// http://www.suitcaseofdreams.net/Inverse_Fns.htm
 pub fn (c Complex) acsc() Complex {
 	return complex(1, 0).divide(c).asin()
 }
@@ -261,35 +261,35 @@ pub fn (c Complex) tanh() Complex {
 
 // Complex Hyperbolic Cotangent
 // Based on
-// http://www.suitcaseofdreams.net/Hyperbolic_Functions.htm
+// http://www.suitcaseofdreams.net/Hyperbolic_Fns.htm
 pub fn (c Complex) coth() Complex {
 	return c.cosh().divide(c.sinh())
 }
 
 // Complex Hyperbolic Secant
 // Based on
-// http://www.suitcaseofdreams.net/Hyperbolic_Functions.htm
+// http://www.suitcaseofdreams.net/Hyperbolic_Fns.htm
 pub fn (c Complex) sech() Complex {
 	return complex(1, 0).divide(c.cosh())
 }
 
 // Complex Hyperbolic Cosecant
 // Based on
-// http://www.suitcaseofdreams.net/Hyperbolic_Functions.htm
+// http://www.suitcaseofdreams.net/Hyperbolic_Fns.htm
 pub fn (c Complex) csch() Complex {
 	return complex(1, 0).divide(c.sinh())
 }
 
 // Complex Hyperbolic Arc Sin / Sin Inverse
 // Based on
-// http://www.suitcaseofdreams.net/Inverse__Hyperbolic_Functions.htm
+// http://www.suitcaseofdreams.net/Inverse__Hyperbolic_Fns.htm
 pub fn (c Complex) asinh() Complex {
 	return c.add(c.pow(2).add(complex(1, 0)).root(2)).ln()
 }
 
 // Complex Hyperbolic Arc Consine / Consine Inverse
 // Based on
-// http://www.suitcaseofdreams.net/Inverse__Hyperbolic_Functions.htm
+// http://www.suitcaseofdreams.net/Inverse__Hyperbolic_Fns.htm
 pub fn (c Complex) acosh() Complex {
 	if c.re > 1 {
 		return c.add(c.pow(2).subtract(complex(1, 0)).root(2)).ln()
@@ -301,7 +301,7 @@ pub fn (c Complex) acosh() Complex {
 
 // Complex Hyperbolic Arc Tangent / Tangent Inverse
 // Based on
-// http://www.suitcaseofdreams.net/Inverse__Hyperbolic_Functions.htm
+// http://www.suitcaseofdreams.net/Inverse__Hyperbolic_Fns.htm
 pub fn (c Complex) atanh() Complex {
 	one := complex(1, 0)
 	if c.re < 1 {
@@ -313,7 +313,7 @@ pub fn (c Complex) atanh() Complex {
 
 // Complex Hyperbolic Arc Cotangent / Cotangent Inverse
 // Based on
-// http://www.suitcaseofdreams.net/Inverse__Hyperbolic_Functions.htm
+// http://www.suitcaseofdreams.net/Inverse__Hyperbolic_Fns.htm
 pub fn (c Complex) acoth() Complex {
 	one := complex(1, 0)
 	if c.re < 0 || c.re > 1 {
@@ -326,7 +326,7 @@ pub fn (c Complex) acoth() Complex {
 
 // Complex Hyperbolic Arc Secant / Secant Inverse
 // Based on
-// http://www.suitcaseofdreams.net/Inverse__Hyperbolic_Functions.htm
+// http://www.suitcaseofdreams.net/Inverse__Hyperbolic_Fns.htm
 // For certain scenarios, Result mismatch in crossverification with Wolfram Alpha - analysis pending
 // pub fn (c Complex) asech() Complex {
 // one := complex(1,0)
@@ -353,7 +353,7 @@ pub fn (c Complex) acoth() Complex {
 // }
 // Complex Hyperbolic Arc Cosecant / Cosecant Inverse
 // Based on
-// http://www.suitcaseofdreams.net/Inverse__Hyperbolic_Functions.htm
+// http://www.suitcaseofdreams.net/Inverse__Hyperbolic_Fns.htm
 pub fn (c Complex) acsch() Complex {
 	one := complex(1, 0)
 	if c.re < 0 {

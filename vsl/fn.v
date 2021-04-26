@@ -12,16 +12,15 @@ pub type FdfFn = fn (x f64, params []f64) (f64, f64)
 pub type VectorValuedFn = fn (x f64, y []f64, params []f64) f64
 
 // Definition of an arbitrary function with parameters
-pub struct Function {
+pub struct Fn {
 pub mut:
-	function ArbitraryFn
-	params   []f64
+	f      ArbitraryFn
+	params []f64
 }
 
 [inline]
-pub fn (f Function) eval(x f64) f64 {
-	function := f.function
-	return function(x, f.params)
+pub fn (f Fn) eval(x f64) f64 {
+	return f.f(x, f.params)
 }
 
 fn is_finite(a f64) bool {
@@ -31,9 +30,8 @@ fn is_finite(a f64) bool {
 // Call the pointed-to function with argument x, put its result in y, and
 // return an error if the function value is inf/nan.
 [inline]
-pub fn (f Function) safe_eval(x f64) ?f64 {
-	function := f.function
-	y := function(x, f.params)
+pub fn (f Fn) safe_eval(x f64) ?f64 {
+	y := f.f(x, f.params)
 	if is_finite(y) {
 		return y
 	}
@@ -41,7 +39,7 @@ pub fn (f Function) safe_eval(x f64) ?f64 {
 }
 
 // Definition of an arbitrary function returning two values, r1, r2
-pub struct FunctionFdf {
+pub struct FnFdf {
 pub mut:
 	f      ArbitraryFn
 	df     DfFn
@@ -50,32 +48,28 @@ pub mut:
 }
 
 [inline]
-pub fn (fdf FunctionFdf) eval_f(x f64) f64 {
-	function := fdf.f
-	return function(x, fdf.params)
+pub fn (fdf FnFdf) eval_f(x f64) f64 {
+	return fdf.f(x, fdf.params)
 }
 
 [inline]
-pub fn (fdf FunctionFdf) eval_df(x f64) f64 {
-	function := fdf.df
-	return function(x, fdf.params)
+pub fn (fdf FnFdf) eval_df(x f64) f64 {
+	return fdf.df(x, fdf.params)
 }
 
 [inline]
-pub fn (fdf FunctionFdf) eval_f_df(x f64) (f64, f64) {
-	function := fdf.fdf
-	return function(x, fdf.params)
+pub fn (fdf FnFdf) eval_f_df(x f64) (f64, f64) {
+	return fdf.fdf(x, fdf.params)
 }
 
 // Definition of an arbitrary vector-valued function with parameters
-pub struct FunctionVec {
+pub struct FnVec {
 pub mut:
-	function VectorValuedFn
-	params   []f64
+	f      VectorValuedFn
+	params []f64
 }
 
 [inline]
-pub fn (f FunctionVec) eval(x f64, y []f64) f64 {
-	function := f.function
-	return function(x, y, f.params)
+pub fn (f FnVec) eval(x f64, y []f64) f64 {
+	return f.f(x, y, f.params)
 }
