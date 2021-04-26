@@ -24,4 +24,4 @@ jobs:
       run: |
         v install vsl
         cd vsl
-        v check-md .
+        v run ../cmd/tools/vcheck-md.v -all
