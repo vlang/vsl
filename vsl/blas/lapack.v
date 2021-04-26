@@ -2,7 +2,7 @@ module blas
 
 import vsl.errors
 
-#include <lapack.h>
+// #include <lapack.h>
 
 fn C.LAPACKE_dgesv(n int, nrhs int, a &f64, lda int, ipiv &int, b &f64, ldb int) int
 
