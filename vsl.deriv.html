@@ -69,8 +69,8 @@ fn func(x f64, _ []f64) f64 {
 }
 
 fn main() {
-    f := vsl.Function{
-        function: func
+    f := vsl.Fn{
+        f: func
     }
     println('f(x) = x^(3/2)')
     mut expected := 1.5 * vmath.sqrt(2.0)
@@ -95,8 +95,8 @@ x = 0.0
 f'(x) = 0.0000000160 +/- 0.0000000339
 exact = 0.0000000000
 </code></pre>
-<h1>Functions</h1>
-<pre><code class="language-v">fn central (f vsl.Function, x, h f64) (f64, f64)
+<h1>Fns</h1>
+<pre><code class="language-v">fn central (f vsl.Fn, x, h f64) (f64, f64)
 </code></pre>
 <p>This function computes the numerical derivative of the function <code>f</code>
 at the point <code>x</code> using an adaptive central difference algorithm with
@@ -111,7 +111,7 @@ between the 5-point rule and the corresponding 3-point rule <code>x-h</code>,
 <code>x</code>, <code>x+h</code>. Note that the value of the function at <code>x</code>
 does not contribute to the derivative calculation, so only 4-points are
 actually used.</p>
-<pre><code class="language-v">fn forward (f vsl.Function, x, h f64) (f64, f64)
+<pre><code class="language-v">fn forward (f vsl.Fn, x, h f64) (f64, f64)
 </code></pre>
 <p>This function computes the numerical derivative of the function <code>f</code>
 at the point <code>x</code> using an adaptive forward difference algorithm with
@@ -127,7 +127,7 @@ derivative calculation. The derivative at <code>x</code> is computed using an
 <code>x + h/2</code>, <code>x + 3h/4</code>, <code>x+h</code>, with an error estimate taken
 from the difference between the 4-point rule and the corresponding
 2-point rule <code>x+h/2</code>, <code>x+h</code>.</p>
-<pre><code class="language-v">fn backward (f vsl.Function, x, h f64) (f64, f64)
+<pre><code class="language-v">fn backward (f vsl.Fn, x, h f64) (f64, f64)
 </code></pre>
 <p>This function computes the numerical derivative of the function <code>f</code>
 at the point <code>x</code> using an adaptive backward difference algorithm
@@ -145,23 +145,23 @@ negative step-size.</p>
 </section>
 
 						<section id="backward" class="doc-node">
-							<div class="title"><h2>fn backward <a href="#backward">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/deriv/deriv.v#L113"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">backward</span><span class="token punctuation">(</span>f vsl<span class="token punctuation">.</span>Function<span class="token punctuation">,</span> x <span class="token builtin">f64</span><span class="token punctuation">,</span> h <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+							<div class="title"><h2>fn backward <a href="#backward">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/deriv/deriv.v#L113"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">backward</span><span class="token punctuation">(</span>f vsl<span class="token punctuation">.</span>Fn<span class="token punctuation">,</span> x <span class="token builtin">f64</span><span class="token punctuation">,</span> h <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
 
 
 </section>
 						<section id="central" class="doc-node">
-							<div class="title"><h2>fn central <a href="#central">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/deriv/deriv.v#L36"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">central</span><span class="token punctuation">(</span>f vsl<span class="token punctuation">.</span>Function<span class="token punctuation">,</span> x <span class="token builtin">f64</span><span class="token punctuation">,</span> h <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+							<div class="title"><h2>fn central <a href="#central">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/deriv/deriv.v#L36"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">central</span><span class="token punctuation">(</span>f vsl<span class="token punctuation">.</span>Fn<span class="token punctuation">,</span> x <span class="token builtin">f64</span><span class="token punctuation">,</span> h <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
 
 
 </section>
 						<section id="forward" class="doc-node">
-							<div class="title"><h2>fn forward <a href="#forward">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/deriv/deriv.v#L88"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">forward</span><span class="token punctuation">(</span>f vsl<span class="token punctuation">.</span>Function<span class="token punctuation">,</span> x <span class="token builtin">f64</span><span class="token punctuation">,</span> h <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+							<div class="title"><h2>fn forward <a href="#forward">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vsl/deriv/deriv.v#L88"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">forward</span><span class="token punctuation">(</span>f vsl<span class="token punctuation">.</span>Fn<span class="token punctuation">,</span> x <span class="token builtin">f64</span><span class="token punctuation">,</span> h <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
 
 
 </section>
 
 						<div class="footer">
-							Powered by vdoc. Generated on: 26 Apr 2021 05:20:55
+							Powered by vdoc. Generated on: 26 Apr 2021 05:29:05
 						</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_vsl.deriv">README</a></li>
