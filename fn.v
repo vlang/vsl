@@ -18,6 +18,13 @@ pub mut:
 	params []f64
 }
 
+// new_func returns an arbitrary function with parameters
+pub fn new_func(f ArbitraryFn) Fn {
+	return Fn{
+		f: f
+	}
+}
+
 [inline]
 pub fn (f Fn) eval(x f64) f64 {
 	return f.f(x, f.params)
@@ -47,6 +54,11 @@ pub mut:
 	params []f64
 }
 
+// new_func_fdf returns an arbitrary function returning two values, r1, r2
+pub fn new_func_fdf(fn_fdf FnFdf) FnFdf {
+	return fn_fdf
+}
+
 [inline]
 pub fn (fdf FnFdf) eval_f(x f64) f64 {
 	return fdf.f(x, fdf.params)
@@ -67,6 +79,13 @@ pub struct FnVec {
 pub mut:
 	f      VectorValuedFn
 	params []f64
+}
+
+// new_func_vec returns an arbitrary vector-valued function with parameters
+pub fn new_func_vec(f VectorValuedFn) FnVec {
+	return FnVec{
+		f: f
+	}
 }
 
 [inline]

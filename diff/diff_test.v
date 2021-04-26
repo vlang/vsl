@@ -67,42 +67,19 @@ fn df6(x f64, _ []f64) f64 {
 }
 
 fn test_diff() {
-	f1_ := vsl.Fn{
-		f: f1
-	}
-	df1_ := vsl.Fn{
-		f: df1
-	}
-	f2_ := vsl.Fn{
-		f: f2
-	}
-	df2_ := vsl.Fn{
-		f: df2
-	}
-	f3_ := vsl.Fn{
-		f: f3
-	}
-	df3_ := vsl.Fn{
-		f: df3
-	}
-	f4_ := vsl.Fn{
-		f: f4
-	}
-	df4_ := vsl.Fn{
-		f: df4
-	}
-	f5_ := vsl.Fn{
-		f: f5
-	}
-	df5_ := vsl.Fn{
-		f: df5
-	}
-	f6_ := vsl.Fn{
-		f: f6
-	}
-	df6_ := vsl.Fn{
-		f: df6
-	}
+	f1_ := vsl.new_func(f1)
+	df1_ := vsl.new_func(df1)
+	f2_ := vsl.new_func(f2)
+	df2_ := vsl.new_func(df2)
+	f3_ := vsl.new_func(f3)
+	df3_ := vsl.new_func(df3)
+	f4_ := vsl.new_func(f4)
+	df4_ := vsl.new_func(df4)
+	f5_ := vsl.new_func(f5)
+	df5_ := vsl.new_func(df5)
+	f6_ := vsl.new_func(f6)
+	df6_ := vsl.new_func(df6)
+
 	assert diff_test('central', f1_, df1_, 1.0)
 	assert diff_test('forward', f1_, df1_, 1.0)
 	assert diff_test('backward', f1_, df1_, 1.0)

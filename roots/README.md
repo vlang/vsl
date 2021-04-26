@@ -58,14 +58,12 @@ const (
 	n_max  = 100
 )
 
-fn f_cos(x f64, _ []f64) f64 {
+fn cos(x f64, _ []f64) f64 {
 	return vmath.cos(x)
 }
 
 fn main() {
-	func := vsl.Fn{
-		f: f_cos
-	}
+	func := vsl.new_func(cos)
 	result := roots.bisection(func, 0.0, 3.0, epsrel, epsabs, n_max) ?
 }
 ```

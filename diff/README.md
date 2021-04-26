@@ -13,14 +13,12 @@ import vsl.vmath
 import vsl.diff
 import vsl
 
-fn func(x f64, _ []f64) f64 {
+fn pow(x f64, _ []f64) f64 {
 	return vmath.pow(x, 1.5)
 }
 
 fn main() {
-	f := vsl.Fn{
-		f: func
-	}
+	f := vsl.new_func(pow)
 	println('f(x) = x^(3/2)')
 	mut expected := 1.5 * vmath.sqrt(2.0)
 	mut result, mut abserr := diff.central(f, 2.0)
