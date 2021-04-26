@@ -1,13 +1,13 @@
 module roots
 
-import vsl.vmath
 import vsl.errors
-import vsl
+import vsl.func
+import vsl.vmath
 
 // Find the root of a function using Newton's algorithm with the Armijo line
 // search to ensure the absolute value of the function decreases along the
 // iterations.
-pub fn newton(func vsl.FnFdf, x0 f64, x_eps f64, fx_eps f64, n_max int) ?f64 {
+pub fn newton(func func.FnFdf, x0 f64, x_eps f64, fx_eps f64, n_max int) ?f64 {
 	omega := 1e-4
 	gamma := 0.5
 	mut root := x0

@@ -14,16 +14,16 @@ The functions described in this chapter are declared in the module `vsl.deriv`
 ```v
 module main
 
-import vsl.vmath
 import vsl.deriv
-import vsl
+import vsl.func
+import vsl.vmath
 
 fn pow(x f64, _ []f64) f64 {
 	return vmath.pow(x, 1.5)
 }
 
 fn main() {
-	f := vsl.new_func(pow)
+	f := func.new_func(pow)
 	println('f(x) = x^(3/2)')
 	mut expected := 1.5 * vmath.sqrt(2.0)
 	mut result, mut abserr := deriv.central(f, 2.0, 1e-8)
@@ -54,7 +54,7 @@ exact = 0.0000000000
 # Fns
 
 ```v ignore
-fn central (f vsl.Fn, x, h f64) (f64, f64)
+fn central (f func.Fn, x, h f64) (f64, f64)
 ```
 
 This function computes the numerical derivative of the function `f`
@@ -73,7 +73,7 @@ does not contribute to the derivative calculation, so only 4-points are
 actually used.
 
 ```v ignore
-fn forward (f vsl.Fn, x, h f64) (f64, f64)
+fn forward (f func.Fn, x, h f64) (f64, f64)
 ```
 
 This function computes the numerical derivative of the function `f`
@@ -93,7 +93,7 @@ from the difference between the 4-point rule and the corresponding
 2-point rule `x+h/2`, `x+h`.
 
 ```v ignore
-fn backward (f vsl.Fn, x, h f64) (f64, f64)
+fn backward (f func.Fn, x, h f64) (f64, f64)
 ```
 
 This function computes the numerical derivative of the function `f`

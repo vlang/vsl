@@ -1,6 +1,6 @@
 module roots
 
-import vsl
+import vsl.func
 import vsl.vmath
 
 const (
@@ -20,14 +20,14 @@ fn fdf_cos(x f64, _ []f64) (f64, f64) {
 fn test_root_bisection() {
 	x1 := 0.0
 	x2 := f64(3)
-	func := vsl.new_func(f_cos)
+	func := func.new_func(f_cos)
 	result := bisection(func, x1, x2, roots.epsrel, roots.epsabs, roots.n_max) or { panic(err) }
 	assert compare(result, vmath.pi / 2.00)
 }
 
 fn test_root_newton() {
 	x0 := f64(0.5)
-	func := vsl.new_func_fdf(fdf: fdf_cos)
+	func := func.new_func_fdf(fdf: fdf_cos)
 	result := newton(func, x0, roots.epsrel, roots.epsabs, roots.n_max) or { panic(err) }
 	assert compare(result, vmath.pi / 2.00)
 }

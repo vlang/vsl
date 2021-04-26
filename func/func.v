@@ -1,4 +1,4 @@
-module vsl
+module func
 
 import vsl.vmath
 import vsl.errors

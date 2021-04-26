@@ -1,5 +1,5 @@
 import vsl.diff
-import vsl
+import vsl.func
 import vsl.vmath
 
 fn f1(x f64, _ []f64) f64 {
@@ -67,18 +67,18 @@ fn df6(x f64, _ []f64) f64 {
 }
 
 fn test_diff() {
-	f1_ := vsl.new_func(f1)
-	df1_ := vsl.new_func(df1)
-	f2_ := vsl.new_func(f2)
-	df2_ := vsl.new_func(df2)
-	f3_ := vsl.new_func(f3)
-	df3_ := vsl.new_func(df3)
-	f4_ := vsl.new_func(f4)
-	df4_ := vsl.new_func(df4)
-	f5_ := vsl.new_func(f5)
-	df5_ := vsl.new_func(df5)
-	f6_ := vsl.new_func(f6)
-	df6_ := vsl.new_func(df6)
+	f1_ := func.new_func(f1)
+	df1_ := func.new_func(df1)
+	f2_ := func.new_func(f2)
+	df2_ := func.new_func(df2)
+	f3_ := func.new_func(f3)
+	df3_ := func.new_func(df3)
+	f4_ := func.new_func(f4)
+	df4_ := func.new_func(df4)
+	f5_ := func.new_func(f5)
+	df5_ := func.new_func(df5)
+	f6_ := func.new_func(f6)
+	df6_ := func.new_func(df6)
 
 	assert diff_test('central', f1_, df1_, 1.0)
 	assert diff_test('forward', f1_, df1_, 1.0)
@@ -100,7 +100,7 @@ fn test_diff() {
 	assert diff_test('backward', f6_, df6_, 10.0)
 }
 
-fn diff_test(diff_method string, f vsl.Fn, df vsl.Fn, x f64) bool {
+fn diff_test(diff_method string, f func.Fn, df func.Fn, x f64) bool {
 	expected := df.eval(x)
 	result, _ := if diff_method == 'backward' {
 		diff.backward(f, x)
@@ -112,7 +112,7 @@ fn diff_test(diff_method string, f vsl.Fn, df vsl.Fn, x f64) bool {
 	return compare(result, expected)
 }
 
-fn diff_near_test(diff_method string, f vsl.Fn, df vsl.Fn, x f64, tolerance f64) bool {
+fn diff_near_test(diff_method string, f func.Fn, df func.Fn, x f64, tolerance f64) bool {
 	expected := df.eval(x)
 	result, _ := if diff_method == 'backward' {
 		diff.backward(f, x)

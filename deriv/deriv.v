@@ -1,10 +1,10 @@
 module deriv
 
-import vsl.vmath
-import vsl
+import vsl.func
 import vsl.internal
+import vsl.vmath
 
-fn central_deriv(f vsl.Fn, x f64, h f64) (f64, f64, f64) {
+fn central_deriv(f func.Fn, x f64, h f64) (f64, f64, f64) {
 	/*
 	Compute the derivative using the 5-point rule (x-h, x-h/2, x,
          * x+h/2, x+h). Note that the central point is not used.
@@ -33,7 +33,7 @@ fn central_deriv(f vsl.Fn, x f64, h f64) (f64, f64, f64) {
 	return result, abserr_trunc, abserr_round
 }
 
-pub fn central(f vsl.Fn, x f64, h f64) (f64, f64) {
+pub fn central(f func.Fn, x f64, h f64) (f64, f64) {
 	r_0, round, trunc := central_deriv(f, x, h)
 	mut error := round + trunc
 	mut result := r_0
@@ -58,7 +58,7 @@ pub fn central(f vsl.Fn, x f64, h f64) (f64, f64) {
 	return result, error
 }
 
-fn forward_deriv(f vsl.Fn, x f64, h f64) (f64, f64, f64) {
+fn forward_deriv(f func.Fn, x f64, h f64) (f64, f64, f64) {
 	/*
 	Compute the derivative using the 4-point rule (x+h/4, x+h/2,
          * x+3h/4, x+h).
@@ -85,7 +85,7 @@ fn forward_deriv(f vsl.Fn, x f64, h f64) (f64, f64, f64) {
 	return result, abserr_trunc, abserr_round
 }
 
-pub fn forward(f vsl.Fn, x f64, h f64) (f64, f64) {
+pub fn forward(f func.Fn, x f64, h f64) (f64, f64) {
 	r_0, round, trunc := forward_deriv(f, x, h)
 	mut error := round + trunc
 	mut result := r_0
@@ -110,6 +110,6 @@ pub fn forward(f vsl.Fn, x f64, h f64) (f64, f64) {
 	return result, error
 }
 
-pub fn backward(f vsl.Fn, x f64, h f64) (f64, f64) {
+pub fn backward(f func.Fn, x f64, h f64) (f64, f64) {
 	return forward(f, x, -h)
 }

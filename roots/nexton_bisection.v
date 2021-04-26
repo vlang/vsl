@@ -1,12 +1,12 @@
 module roots
 
-import vsl.vmath
 import vsl.errors
-import vsl
+import vsl.func
+import vsl.vmath
 
 // Find the root of a function by combining Newton's method with the bisection
 // method
-pub fn newton_bisection(func vsl.FnFdf, x_min f64, x_max f64, tol f64, max_iter int) ?f64 {
+pub fn newton_bisection(func func.FnFdf, x_min f64, x_max f64, tol f64, max_iter int) ?f64 {
 	func_low, _ := func.eval_f_df(x_min)
 	if func_low == 0.0 {
 		return x_min

@@ -1,9 +1,9 @@
 module roots
 
 import vsl.errors
-import vsl.vmath
+import vsl.func
 import vsl.internal
-import vsl
+import vsl.vmath
 
 const (
 	itmax = 100
@@ -11,7 +11,7 @@ const (
 
 // Search for the root of func in the interval [x1, x2] with a
 // given tolerance
-pub fn brent(func vsl.Fn, x1 f64, x2 f64, tol f64) ?(f64, f64) {
+pub fn brent(func func.Fn, x1 f64, x2 f64, tol f64) ?(f64, f64) {
 	mut a := x1
 	mut b := x2
 	mut c := a

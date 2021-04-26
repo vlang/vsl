@@ -1,10 +1,10 @@
 module diff
 
-import vsl.vmath
-import vsl
+import vsl.func
 import vsl.internal
+import vsl.vmath
 
-pub fn backward(f vsl.Fn, x f64) (f64, f64) {
+pub fn backward(f func.Fn, x f64) (f64, f64) {
 	/*
 	Construct a divided difference table with a fairly large step
          * size to get a very rough estimate of f''. Use this to estimate
@@ -43,7 +43,7 @@ pub fn backward(f vsl.Fn, x f64) (f64, f64) {
 	return (f.eval(x) - f.eval(x - h)) / h, vmath.abs(10.0 * a2 * h)
 }
 
-pub fn forward(f vsl.Fn, x f64) (f64, f64) {
+pub fn forward(f func.Fn, x f64) (f64, f64) {
 	/*
 	Construct a divided difference table with a fairly large step
          * size to get a very rough estimate of f''. Use this to estimate
@@ -82,7 +82,7 @@ pub fn forward(f vsl.Fn, x f64) (f64, f64) {
 	return (f.eval(x + h) - f.eval(x)) / h, vmath.abs(10.0 * a2 * h)
 }
 
-pub fn central(f vsl.Fn, x f64) (f64, f64) {
+pub fn central(f func.Fn, x f64) (f64, f64) {
 	/*
 	Construct a divided difference table with a fairly large step
          * size to get a very rough estimate of f'''. Use this to estimate

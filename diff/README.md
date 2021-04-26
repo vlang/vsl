@@ -9,16 +9,16 @@ choice of finite difference and to estimate the error in the derivative.
 ```v
 module main
 
-import vsl.vmath
 import vsl.diff
-import vsl
+import vsl.func
+import vsl.vmath
 
 fn pow(x f64, _ []f64) f64 {
 	return vmath.pow(x, 1.5)
 }
 
 fn main() {
-	f := vsl.new_func(pow)
+	f := func.new_func(pow)
 	println('f(x) = x^(3/2)')
 	mut expected := 1.5 * vmath.sqrt(2.0)
 	mut result, mut abserr := diff.central(f, 2.0)
