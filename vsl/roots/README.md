@@ -48,9 +48,9 @@ On exit, the results is `(x_max + x_min) / 2`.
 ```v
 module main
 
-import vsl.roots
-import vsl.vmath
-import vsl
+import vsl.vsl.roots
+import vsl.vsl.vmath
+import vsl.vsl
 
 const (
 	epsabs = 0.0001

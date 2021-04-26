@@ -9,7 +9,7 @@ Use the `animate` function to apply an easing function over a range of numbers
 ```v
 module main
 
-import vsl.easings
+import vsl.vsl.easings
 
 fn main() {
 	println(easings.animate(easings.bounce_ease_out, 0, 100, 100))

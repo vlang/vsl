@@ -752,7 +752,7 @@ converted into minutes before being displayed.
 ```
 module main
 
-import vsl.consts
+import vsl.vsl.consts
 
 fn main() {
 	c := consts.mksa_speed_of_light
