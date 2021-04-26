@@ -1,3 +1,8 @@
 #!/usr/bin/env bash
 
+rm -f vsl 
+ln -s . vsl
+
 find . -name "*.v" -exec v fmt -w {} +
+
+rm -f vsl
