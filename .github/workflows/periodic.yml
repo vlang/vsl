@@ -22,8 +22,9 @@ jobs:
         sudo ./v symlink
     - name: V doctor
       run: v doctor
-    - name: Install VSL dependencies
+    - name: Install VSL and dependencies
       run: |
+        ln -s vsl ~/.vmodules/vsl
         sudo apt-get install --quiet -y --no-install-recommends gfortran liblapacke-dev libopenblas-dev
     - name: Execute Tests using Pure V Backend with Vlib Math
       run: cd vsl; ./bin/test
