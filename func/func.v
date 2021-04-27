@@ -13,12 +13,13 @@ pub type VectorValuedFn = fn (x f64, y []f64, params []f64) f64
 
 // Definition of an arbitrary function with parameters
 pub struct Fn {
-	f      ArbitraryFn
+	f ArbitraryFn
 mut:
 	params []f64
 }
 
 // new_func returns an arbitrary function with parameters
+[inline]
 pub fn new_func(f Fn) Fn {
 	return f
 }
@@ -45,14 +46,15 @@ pub fn (f Fn) safe_eval(x f64) ?f64 {
 
 // Definition of an arbitrary function returning two values, r1, r2
 pub struct FnFdf {
-	f      ArbitraryFn
-	df     DfFn
-	fdf    FdfFn
+	f   ArbitraryFn
+	df  DfFn
+	fdf FdfFn
 mut:
 	params []f64
 }
 
 // new_func_fdf returns an arbitrary function returning two values, r1, r2
+[inline]
 pub fn new_func_fdf(fn_fdf FnFdf) FnFdf {
 	return fn_fdf
 }
@@ -74,12 +76,13 @@ pub fn (fdf FnFdf) eval_f_df(x f64) (f64, f64) {
 
 // Definition of an arbitrary vector-valued function with parameters
 pub struct FnVec {
-	f      VectorValuedFn
+	f VectorValuedFn
 mut:
 	params []f64
 }
 
 // new_func_vec returns an arbitrary vector-valued function with parameters
+[inline]
 pub fn new_func_vec(f FnVec) FnVec {
 	return f
 }
