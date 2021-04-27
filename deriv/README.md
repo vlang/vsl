@@ -23,7 +23,7 @@ fn pow(x f64, _ []f64) f64 {
 }
 
 fn main() {
-	f := func.new_func(pow)
+	f := func.new_func(f: pow)
 	println('f(x) = x^(3/2)')
 	mut expected := 1.5 * vmath.sqrt(2.0)
 	mut result, mut abserr := deriv.central(f, 2.0, 1e-8)
