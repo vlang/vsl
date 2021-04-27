@@ -2,7 +2,7 @@
 
 The module `vsl.roots` contains functions for the root finding methods and related declarations.
 
-## Fns
+## Functions
 
 ```v ignore
 fn brent (f func.Fn, x1, x2, tol f64) ?(f64, f64)

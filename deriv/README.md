@@ -51,7 +51,7 @@ f'(x) = 0.0000000160 +/- 0.0000000339
 exact = 0.0000000000
 ```
 
-# Fns
+# Functions
 
 ```v ignore
 fn central (f func.Fn, x, h f64) (f64, f64)

@@ -1,4 +1,4 @@
-# Easing Fns
+# Easing Functions
 
 This is a pure V module that provides easing functions calculation.
 
