@@ -53,11 +53,11 @@ pub fn (mut o Stat) update() {
 	n := o.data.x.n // number of features
 	// x values
 	mf := f64(m)
-	for j := 0; j < n; j++ {
+	for j in 0 .. n {
 		o.min_x[j] = o.data.x.get(0, j)
 		o.max_x[j] = o.min_x[j]
 		o.sum_x[j] = 0.0
-		for i := 0; i < m; i++ {
+		for i in 0 .. m {
 			xval := o.data.x.get(i, j)
 			o.min_x[j] = vmath.min(o.min_x[j], xval)
 			o.max_x[j] = vmath.max(o.max_x[j], xval)
@@ -72,7 +72,7 @@ pub fn (mut o Stat) update() {
 		o.min_y = o.data.y[0]
 		o.max_y = o.min_y
 		o.sum_y = 0.0
-		for i := 0; i < m; i++ {
+		for i in 0 .. m {
 			o.min_y = vmath.min(o.min_y, o.data.y[i])
 			o.max_y = vmath.max(o.max_y, o.data.y[i])
 			o.sum_y += o.data.y[i]

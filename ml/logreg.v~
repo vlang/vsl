@@ -164,7 +164,7 @@ pub fn (mut o LogReg) hessian(mut d []f64, mut v []f64, mut dm la.Matrix, mut hm
 	// calc hm matrix
 	hm = la.matrix_tr_vector_mul(1.0 * mm_1, x, dm)
 	if lambda > 0 {
-		for i := 0; i < n; i++ {
+		for i in 0 .. n {
 			hm.set(i, i, hm.get(i, i) + lambda * mm_1) // dm += (λ/m) I   (TODO: optimize here?)
 		}
 	}

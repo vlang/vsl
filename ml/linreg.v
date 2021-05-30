@@ -112,7 +112,7 @@ pub fn (mut o LinReg) train() {
 	la.matrix_tr_matrix_mul(mut k, 1, x, x) // k := A = xᵀx
 	la.matrix_add(mut k, 1, k, -1, b) // k := A - b
 	if lambda > 0 {
-		for i := 0; i < n; i++ {
+		for i in 0 .. n {
 			k.set(i, i, k.get(i, i) + lambda) // k := A - b + lambdaI
 		}
 	}

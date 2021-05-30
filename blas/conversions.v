@@ -58,8 +58,8 @@ pub fn slice_to_col_major(a [][]f64) []f64 {
 	n := a[0].len
 	mut data := []f64{len: m * n}
 	mut k := 0
-	for j := 0; j < n; j++ {
-		for i := 0; i < m; i++ {
+	for j in 0 .. n {
+		for i in 0 .. m {
 			data[k] = a[i][j]
 			k++
 		}
@@ -70,8 +70,8 @@ pub fn slice_to_col_major(a [][]f64) []f64 {
 // col_major_to_slice converts col-major matrix to nested slice
 pub fn col_major_to_slice(m int, n int, data []f64) [][]f64 {
 	mut a := [][]f64{len: n, init: []f64{len: n}}
-	for i := 0; i < m; i++ {
-		for j := 0; j < n; j++ {
+	for i in 0 .. m {
+		for j in 0 .. n {
 			a[i][j] = data[i + j * m]
 		}
 	}
@@ -85,11 +85,11 @@ pub fn print_col_major(m int, n int, data []f64, nfmt_ string) string {
 		nfmt = '%g '
 	}
 	mut l := ''
-	for i := 0; i < m; i++ {
+	for i in 0 .. m {
 		if i > 0 {
 			l += '\n'
 		}
-		for j := 0; j < n; j++ {
+		for j in 0 .. n {
 			l += strconv.v_sprintf(nfmt, data[i + j * m])
 		}
 	}
@@ -103,9 +103,9 @@ pub fn print_col_major_v(m int, n int, data []f64, nfmt_ string) string {
 		nfmt = '%10g'
 	}
 	mut l := '[][]f64{\n'
-	for i := 0; i < m; i++ {
+	for i in 0 .. m {
 		l += '    {'
-		for j := 0; j < n; j++ {
+		for j in 0 .. n {
 			if j > 0 {
 				l += ','
 			}
@@ -124,9 +124,9 @@ pub fn print_col_major_py(m int, n int, data []f64, nfmt_ string) string {
 		nfmt = '%10g'
 	}
 	mut l := 'np.matrix([\n'
-	for i := 0; i < m; i++ {
+	for i in 0 .. m {
 		l += '    ['
-		for j := 0; j < n; j++ {
+		for j in 0 .. n {
 			if j > 0 {
 				l += ','
 			}
@@ -149,8 +149,8 @@ pub fn slice_to_col_major_complex(a [][]complex.Complex) []complex.Complex {
 	n := a[0].len
 	mut data := []complex.Complex{len: m * n}
 	mut k := 0
-	for j := 0; j < n; j++ {
-		for i := 0; i < m; i++ {
+	for j in 0 .. n {
+		for i in 0 .. m {
 			data[k] = a[i][j]
 			k++
 		}
@@ -161,8 +161,8 @@ pub fn slice_to_col_major_complex(a [][]complex.Complex) []complex.Complex {
 // col_major_complex_to_slice converts col-major matrix to nested slice
 pub fn col_major_complex_to_slice(m int, n int, data []complex.Complex) [][]complex.Complex {
 	mut a := [][]complex.Complex{len: m, init: []complex.Complex{len: n}}
-	for i := 0; i < m; i++ {
-		for j := 0; j < n; j++ {
+	for i in 0 .. m {
+		for j in 0 .. n {
 			a[i][j] = data[i + j * m]
 		}
 	}
@@ -184,11 +184,11 @@ pub fn print_col_major_complex(m int, n int, data []complex.Complex, nfmt_r_ str
 		nfmt_i = nfmt_i.replace('%', '%+')
 	}
 	mut l := ''
-	for i := 0; i < m; i++ {
+	for i in 0 .. m {
 		if i > 0 {
 			l += '\n'
 		}
-		for j := 0; j < n; j++ {
+		for j in 0 .. n {
 			if j > 0 {
 				l += ', '
 			}
@@ -214,9 +214,9 @@ pub fn print_col_major_complex_v(m int, n int, data []complex.Complex, nfmt_r_ s
 		nfmt_i = nfmt_i.replace('%', '%+')
 	}
 	mut l := '[][]cplx.Complex{\n'
-	for i := 0; i < m; i++ {
+	for i in 0 .. m {
 		l += '    {'
-		for j := 0; j < n; j++ {
+		for j in 0 .. n {
 			if j > 0 {
 				l += ','
 			}
@@ -244,9 +244,9 @@ pub fn print_col_major_omplex_py(m int, n int, data []complex.Complex, nfmt_r_ s
 		nfmt_i = nfmt_i.replace('%', '%+')
 	}
 	mut l := 'np.matrix([\n'
-	for i := 0; i < m; i++ {
+	for i in 0 .. m {
 		l += '    ['
-		for j := 0; j < n; j++ {
+		for j in 0 .. n {
 			if j > 0 {
 				l += ','
 			}
@@ -302,7 +302,7 @@ pub fn split_complex(v []complex.Complex) ([]f64, []f64) {
 // extract_row extracts i row from (m,n) col-major matrix
 pub fn extract_row(i int, m int, n int, A []f64) []f64 {
 	mut rowi := []f64{len: n}
-	for j := 0; j < n; j++ {
+	for j in 0 .. n {
 		rowi[j] = A[i + j * m]
 	}
 	return rowi
@@ -311,7 +311,7 @@ pub fn extract_row(i int, m int, n int, A []f64) []f64 {
 // extract_col extracts j column from (m,n) col-major matrix
 pub fn extract_col(j int, m int, n int, A []f64) []f64 {
 	mut colj := []f64{len: m}
-	for i := 0; i < m; i++ {
+	for i in 0 .. m {
 		colj[i] = A[i + j * m]
 	}
 	return colj
@@ -320,7 +320,7 @@ pub fn extract_col(j int, m int, n int, A []f64) []f64 {
 // extract_row_complex extracts i row from (m,n) col-major matrix (complex version)
 pub fn extract_row_complex(i int, m int, n int, A []complex.Complex) []complex.Complex {
 	mut rowi := []complex.Complex{len: n}
-	for j := 0; j < n; j++ {
+	for j in 0 .. n {
 		rowi[j] = A[i + j * m]
 	}
 	return rowi
@@ -329,7 +329,7 @@ pub fn extract_row_complex(i int, m int, n int, A []complex.Complex) []complex.C
 // extract_col_complex extracts j column from (m,n) col-major matrix (complex version)
 pub fn extract_col_complex(j int, m int, n int, A []complex.Complex) []complex.Complex {
 	mut colj := []complex.Complex{len: m}
-	for i := 0; i < m; i++ {
+	for i in 0 .. m {
 		colj[i] = A[i + j * m]
 	}
 	return colj
@@ -358,7 +358,7 @@ pub fn eigenvecs_build(mut vv []complex.Complex, wr []f64, wi []f64, v []f64) {
 			if j > n - 2 {
 				errors.vsl_panic('last eigenvalue cannot be complex', .efailed)
 			}
-			for i := 0; i < n; i++ {
+			for i in 0 .. n {
 				// loop over rows
 				p := i + j * n
 				q := i + (j + 1) * n
@@ -367,7 +367,7 @@ pub fn eigenvecs_build(mut vv []complex.Complex, wr []f64, wi []f64, v []f64) {
 			}
 			dj = 2
 		} else {
-			for i := 0; i < n; i++ {
+			for i in 0 .. n {
 				// loop over rows
 				p := i + j * n
 				vv[p] = complex.complex(v[p], 0.0)
@@ -400,7 +400,7 @@ pub fn eigenvecs_build_both(mut vvl []complex.Complex, mut vvr []complex.Complex
 			if j > n - 2 {
 				errors.vsl_panic('last eigenvalue cannot be complex', .efailed)
 			}
-			for i := 0; i < n; i++ {
+			for i in 0 .. n {
 				// loop over rows
 				p := i + j * n
 				q := i + (j + 1) * n
@@ -411,7 +411,7 @@ pub fn eigenvecs_build_both(mut vvl []complex.Complex, mut vvr []complex.Complex
 			}
 			dj = 2
 		} else {
-			for i := 0; i < n; i++ {
+			for i in 0 .. n {
 				// loop over rows
 				p := i + j * n
 				vvl[p] = complex.complex(vl[p], 0.0)

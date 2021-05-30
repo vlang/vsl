@@ -95,14 +95,14 @@ pub fn dgemm(trans_a u32, trans_b u32, m int, n int, k int, alpha f64, a []f64, 
 	// scale c
 	if beta != 1 {
 		if beta == 0 {
-			for i := 0; i < m; i++ {
+			for i in 0 .. m {
 				mut ctmp := c[i * ldc..i * ldc + n]
 				for j, _ in ctmp {
 					ctmp[j] = 0
 				}
 			}
 		} else {
-			for i := 0; i < m; i++ {
+			for i in 0 .. m {
 				mut ctmp := c[i * ldc..i * ldc + n]
 				for j, _ in ctmp {
 					ctmp[j] *= beta
@@ -236,7 +236,7 @@ fn dgemm_serial(a_trans bool, b_trans bool, m int, n int, k int, a []f64, lda in
 fn dgemm_serial_not_not(m int, n int, k int, a []f64, lda int, b []f64, ldb int, mut c []f64, ldc int, alpha f64) {
 	// This style is used instead of the literal [i*stride +j]) is used because
 	// approximately 5 times faster.
-	for i := 0; i < m; i++ {
+	for i in 0 .. m {
 		mut ctmp := c[i * ldc..i * ldc + n]
 		for l, v in a[i * lda..i * lda + k] {
 			tmp := alpha * v
@@ -267,10 +267,10 @@ fn dgemm_serial_trans_not(m int, n int, k int, a []f64, lda int, b []f64, ldb in
 fn dgemm_serial_not_trans(m int, n int, k int, a []f64, lda int, b []f64, ldb int, mut c []f64, ldc int, alpha f64) {
 	// This style is used instead of the literal [i*stride +j]) is used because
 	// approximately 5 times faster.
-	for i := 0; i < m; i++ {
+	for i in 0 .. m {
 		atmp := a[i * lda..i * lda + k]
 		mut ctmp := c[i * ldc..i * ldc + n]
-		for j := 0; j < n; j++ {
+		for j in 0 .. n {
 			ctmp[j] += alpha * float64.dot_unitary(atmp, b[j * ldb..j * ldb + k])
 		}
 	}

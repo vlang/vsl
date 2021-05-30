@@ -403,7 +403,7 @@ pub fn covariance_mean(data1 []f64, data2 []f64, mean1 f64, mean2 f64) f64 {
 		return 0.0
 	}
 	mut covariance := 0.0
-	for i := 0; i < n; i++ {
+	for i in 0 .. n {
 		delta1 := data1[i] - mean1
 		delta2 := data2[i] - mean2
 		covariance += (delta1 * delta2 - covariance) / (f64(i) + 1.0)

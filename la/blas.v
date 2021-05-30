@@ -52,7 +52,7 @@ pub fn vector_add(alpha f64, u []f64, beta f64, v []f64) []f64 {
 		return res
 	}
 	m := n % 4
-	for i := 0; i < m; i++ {
+	for i in 0 .. m {
 		res[i] = alpha * u[i] + beta * v[i]
 	}
 	for i := m; i < n; i += 4 {
@@ -133,8 +133,8 @@ pub fn matrix_tr_vector_mul(alpha f64, a Matrix, u []f64) []f64 {
 pub fn vector_vector_tr_mul(alpha f64, u []f64, v []f64) Matrix {
 	mut m := new_matrix(u.len, v.len)
 	if m.m < 9 && m.n < 9 {
-		for i := 0; i < m.m; i++ {
-			for j := 0; j < m.n; j++ {
+		for i in 0 .. m.m {
+			for j in 0 .. m.n {
 				m.set(i, j, alpha * u[i] * v[j])
 			}
 		}
@@ -260,7 +260,7 @@ pub fn matrix_add(mut res Matrix, alpha f64, a Matrix, beta f64, b Matrix) {
 		return
 	}
 	m := n % 4
-	for i := 0; i < m; i++ {
+	for i in 0 .. m {
 		res.data[i] = alpha * a.data[i] + beta * b.data[i]
 	}
 	for i := m; i < n; i += 4 {

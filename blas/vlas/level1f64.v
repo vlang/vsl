@@ -142,7 +142,7 @@ pub fn dswap(n int, mut x []f64, incx int, mut y []f64, incy int) {
 	if incy < 0 {
 		iy = (-n + 1) * incy
 	}
-	for i := 0; i < n; i++ {
+	for i in 0 .. n {
 		tmp := x[ix]
 		x[ix] = y[iy]
 		y[iy] = tmp
@@ -186,7 +186,7 @@ pub fn dcopy(n int, x []f64, incx int, mut y []f64, incy int) {
 	if incy < 0 {
 		iy = (-n + 1) * incy
 	}
-	for i := 0; i < n; i++ {
+	for i in 0 .. n {
 		y[iy] = x[ix]
 		ix += incx
 		iy += incy

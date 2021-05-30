@@ -50,7 +50,7 @@ pub fn dsyrk(ul Uplo, trans_a Transpose, n int, k int, alpha f64, a []f64, lda i
 	if alpha == 0 {
 		if beta == 0 {
 			if ul == blas_upper {
-				for i := 0; i < n; i++ {
+				for i in 0 .. n {
 					mut ctmp := c[i * ldc + i..i * ldc + n]
 					for j in 0 .. ctmp.len {
 						ctmp[j] = 0
@@ -58,7 +58,7 @@ pub fn dsyrk(ul Uplo, trans_a Transpose, n int, k int, alpha f64, a []f64, lda i
 				}
 				return
 			}
-			for i := 0; i < n; i++ {
+			for i in 0 .. n {
 				mut ctmp := c[i * ldc..i * ldc + i + 1]
 				for j in 0 .. ctmp.len {
 					ctmp[j] = 0
@@ -67,7 +67,7 @@ pub fn dsyrk(ul Uplo, trans_a Transpose, n int, k int, alpha f64, a []f64, lda i
 			return
 		}
 		if ul == blas_upper {
-			for i := 0; i < n; i++ {
+			for i in 0 .. n {
 				mut ctmp := c[i * ldc + i..i * ldc + n]
 				for j in 0 .. ctmp.len {
 					ctmp[j] *= beta
@@ -75,7 +75,7 @@ pub fn dsyrk(ul Uplo, trans_a Transpose, n int, k int, alpha f64, a []f64, lda i
 			}
 			return
 		}
-		for i := 0; i < n; i++ {
+		for i in 0 .. n {
 			mut ctmp := c[i * ldc..i * ldc + i + 1]
 			for j in 0 .. ctmp.len {
 				ctmp[j] *= beta
@@ -85,7 +85,7 @@ pub fn dsyrk(ul Uplo, trans_a Transpose, n int, k int, alpha f64, a []f64, lda i
 	}
 	if trans_a == blas_no_trans {
 		if ul == blas_upper {
-			for i := 0; i < n; i++ {
+			for i in 0 .. n {
 				mut ctmp := c[i * ldc + i..i * ldc + n]
 				atmp := a[i * lda..i * lda + k]
 				if beta == 0 {
@@ -103,7 +103,7 @@ pub fn dsyrk(ul Uplo, trans_a Transpose, n int, k int, alpha f64, a []f64, lda i
 			}
 			return
 		}
-		for i := 0; i < n; i++ {
+		for i in 0 .. n {
 			mut ctmp := c[i * ldc..i * ldc + i + 1]
 			atmp := a[i * lda..i * lda + k]
 			if beta == 0 {
@@ -120,7 +120,7 @@ pub fn dsyrk(ul Uplo, trans_a Transpose, n int, k int, alpha f64, a []f64, lda i
 	}
 	// Cases where a is transposed.
 	if ul == blas_upper {
-		for i := 0; i < n; i++ {
+		for i in 0 .. n {
 			mut ctmp := c[i * ldc + i..i * ldc + n]
 			if beta == 0 {
 				for j in 0 .. ctmp.len {
@@ -140,7 +140,7 @@ pub fn dsyrk(ul Uplo, trans_a Transpose, n int, k int, alpha f64, a []f64, lda i
 		}
 		return
 	}
-	for i := 0; i < n; i++ {
+	for i in 0 .. n {
 		mut ctmp := c[i * ldc..i * ldc + i + 1]
 		if beta != 1 {
 			for j in 0 .. ctmp.len {
