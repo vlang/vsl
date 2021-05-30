@@ -22,8 +22,8 @@ pub fn ger(m u32, n u32, alpha f64, x []f64, incx u32, y []f64, incy u32, mut a 
 
 	mut ix := kx
 	for i := 0; i < int(m); i++ {
-		axpy_inc(alpha * x[ix], y, mut a[u32(i) * lda..u32(i) * lda + n], n, incy,
-			1, ky, 0)
+		axpy_inc(alpha * x[ix], y, mut a[u32(i) * lda..u32(i) * lda + n], n, incy, 1,
+			ky, 0)
 		ix += incx
 	}
 }
@@ -56,15 +56,13 @@ pub fn gemv_n(m u32, n u32, alpha f64, a []f64, lda u32, x []f64, incx u32, beta
 	mut iy := ky
 	if beta == 0 {
 		for i in 0 .. m {
-			y[iy] = alpha * dot_inc(x, a[lda * i..lda * i + n], n, incx,
-				1, kx, 0)
+			y[iy] = alpha * dot_inc(x, a[lda * i..lda * i + n], n, incx, 1, kx, 0)
 			iy += incy
 		}
 		return
 	}
 	for i in 0 .. m {
-		y[iy] = y[iy] * beta + alpha * dot_inc(x, a[lda * i..lda * i +
-			n], n, incx, 1, kx, 0)
+		y[iy] = y[iy] * beta + alpha * dot_inc(x, a[lda * i..lda * i + n], n, incx, 1, kx, 0)
 		iy += incy
 	}
 }
@@ -104,15 +102,13 @@ pub fn gemv_t(m u32, n u32, alpha f64, a []f64, lda u32, x []f64, incx u32, beta
 
 	if incx == 1 && incy == 1 {
 		for i in 0 .. m {
-			axpy_unitary_to(mut y, alpha * x[i], a[lda * i..lda * i + n],
-				y)
+			axpy_unitary_to(mut y, alpha * x[i], a[lda * i..lda * i + n], y)
 		}
 		return
 	}
 	mut ix := kx
 	for i in 0 .. m {
-		axpy_inc(alpha * x[ix], a[lda * i..lda * i + n], mut y, n, 1, incy,
-			0, ky)
+		axpy_inc(alpha * x[ix], a[lda * i..lda * i + n], mut y, n, 1, incy, 0, ky)
 		ix += incx
 	}
 }
