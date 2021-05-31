@@ -5,6 +5,7 @@ import vsl.vmath as math
 import vsl.gm
 import vsl.la
 import vsl.blas.vlas.internal.float64 { l2_distance_unitary }
+import vsl.errors
 
 // KNN is the struct defining a K-Nearest Neighbors classifier.
 pub struct KNN {
@@ -31,10 +32,10 @@ mut:
 // to [10.0, 10.0] (which is class 1.0).
 pub fn new_knn(mut data Data) &KNN {
 	if data.x.data.len == 0 {
-		panic('vls.ml.knn.new_knn expects data.x to have at least one element.')
+		errors.vsl_panic('vls.ml.knn.new_knn expects data.x to have at least one element.', .efailed)
 	}
 	if data.y.len == 0 {
-		panic('vls.ml.knn.new_knn expects data.y to have at least one element.')
+		errors.vsl_panic('vls.ml.knn.new_knn expects data.y to have at least one element.', .efailed)
 	}
 	mut knn := KNN{
 		data: data
@@ -50,10 +51,10 @@ pub fn new_knn(mut data Data) &KNN {
 // scenario is `k` ending up as 1.
 pub fn (mut knn KNN) predict(k int, to_pred []f64) f64 {
 	if k <= 0 {
-		panic('KNN.predict expects k (int) to be >= 1.')
+		errors.vsl_panic('KNN.predict expects k (int) to be >= 1.', .failed)
 	}
 	if to_pred.len <= 0 {
-		panic('KNN.predict expects to_pred ([]f64) to have at least 1 element.')
+		errors.vsl_panic('KNN.predict expects to_pred ([]f64) to have at least 1 element.', .failed)
 	}
 	mut x := knn.data.x.get_deep2()
 	knn.neighbors = []&Neighbor{}
