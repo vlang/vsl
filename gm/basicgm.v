@@ -3,6 +3,7 @@ module gm
 import vsl.vmath as math
 
 // Point holds the Cartesian coordinates of a point in 3D space
+[heap]
 pub struct Point {
 pub mut:
 	x f64

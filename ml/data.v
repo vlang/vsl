@@ -18,6 +18,7 @@ import vsl.errors
  *   NOTE: remember to call data.notify_update() after changing x or y components
  *
 */
+[heap]
 pub struct Data {
 pub mut:
 	observers   []util.Observer // list of interested parties
@@ -84,6 +85,31 @@ pub fn data_from_raw_x(xraw [][]f64) Data {
 		for j := 0; j < nb_features; j++ {
 			o.x.set(i, j, xraw[i][j])
 		}
+	}
+	return o
+}
+
+// data_from_raw_xy_sep accepts two parameters: xraw [][]f64 and
+// yraw []f64. It acts similarly to data_from_raw_xy, but instead
+// of using the last column of xraw as the y data, it uses yraw
+// instead.
+pub fn data_from_raw_xy_sep(xraw [][]f64, yraw []f64) Data {
+	// check
+	nb_samples := xraw.len
+	if nb_samples < 1 {
+		errors.vsl_panic('at least one row of data in table must be provided', .efailed)
+	}
+	// allocate new object
+	nb_features := xraw[0].len
+	mut o := new_data(nb_samples, nb_features, false, true)
+	// copy data from raw table to x matrix
+	for i := 0; i < nb_samples; i++ {
+		for j := 0; j < nb_features; j++ {
+			o.x.set(i, j, xraw[i][j])
+		}
+	}
+	for i := 0; i < nb_samples; i++ {
+		o.y << yraw[i]
 	}
 	return o
 }
