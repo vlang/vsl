@@ -5,6 +5,7 @@ import vsl.errors
 import vsl.blas
 import vsl.vmath
 
+[heap]
 pub struct Matrix {
 pub mut:
 	m    int

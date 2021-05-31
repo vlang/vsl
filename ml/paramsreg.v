@@ -3,6 +3,7 @@ module ml
 import vsl.la
 import vsl.util
 
+[heap]
 pub struct ParamsReg {
 pub mut:
 	observers []util.Observer // list of interested parties
