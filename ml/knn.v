@@ -51,10 +51,10 @@ pub fn new_knn(mut data Data) &KNN {
 // scenario is `k` ending up as 1.
 pub fn (mut knn KNN) predict(k int, to_pred []f64) f64 {
 	if k <= 0 {
-		errors.vsl_panic('KNN.predict expects k (int) to be >= 1.', .failed)
+		errors.vsl_panic('KNN.predict expects k (int) to be >= 1.', .efailed)
 	}
 	if to_pred.len <= 0 {
-		errors.vsl_panic('KNN.predict expects to_pred ([]f64) to have at least 1 element.', .failed)
+		errors.vsl_panic('KNN.predict expects to_pred ([]f64) to have at least 1 element.', .efailed)
 	}
 	mut x := knn.data.x.get_deep2()
 	knn.neighbors = []&Neighbor{}
