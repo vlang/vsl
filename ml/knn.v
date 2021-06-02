@@ -32,10 +32,10 @@ mut:
 // to [10.0, 10.0] (which is class 1.0).
 pub fn new_knn(mut data Data) &KNN {
 	if data.x.data.len == 0 {
-		errors.vsl_panic('vls.ml.knn.new_knn expects data.x to have at least one element.', .efailed)
+		errors.vsl_panic('vls.ml.knn.new_knn expects data.x to have at least one element.', .einval)
 	}
 	if data.y.len == 0 {
-		errors.vsl_panic('vls.ml.knn.new_knn expects data.y to have at least one element.', .efailed)
+		errors.vsl_panic('vls.ml.knn.new_knn expects data.y to have at least one element.', .einval)
 	}
 	mut knn := KNN{
 		data: data
@@ -47,14 +47,15 @@ pub fn new_knn(mut data Data) &KNN {
 // If the value of `k` results in a draw - that is, a tie when determining
 // the most frequent class in those k nearest neighbors (example:
 // class 1 has 10 occurrences, class 2 has 5 and class 3 has 10) -,
-// `k` will be decreased until there is no more ties. The worst case
-// scenario is `k` ending up as 1.
+// `k` will be decreased until there are no more ties. The worst case
+// scenario is `k` ending up as 1. Also, it makes sure that if we do
+// have a tie when k = 1, we select the first closest neighbor.
 pub fn (mut knn KNN) predict(k int, to_pred []f64) f64 {
 	if k <= 0 {
-		errors.vsl_panic('KNN.predict expects k (int) to be >= 1.', .efailed)
+		errors.vsl_panic('KNN.predict expects k (int) to be >= 1.', .einval)
 	}
 	if to_pred.len <= 0 {
-		errors.vsl_panic('KNN.predict expects to_pred ([]f64) to have at least 1 element.', .efailed)
+		errors.vsl_panic('KNN.predict expects to_pred ([]f64) to have at least 1 element.', .einval)
 	}
 	mut x := knn.data.x.get_deep2()
 	knn.neighbors = []&Neighbor{}
@@ -96,6 +97,9 @@ pub fn (mut knn KNN) predict(k int, to_pred []f64) f64 {
 		}
 		if tied {
 			new_k--
+			if new_k < 0 {
+				break
+			}
 		} else {
 			break
 		}
