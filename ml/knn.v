@@ -15,7 +15,7 @@ pub mut:
 // Neighbor is a support struct to help organizing the code
 // and calculating distances, as well as sorting using array.sort.
 struct Neighbor {
-mut:
+	mut:
 	point    []f64
 	class    f64
 	distance f64
@@ -36,14 +36,7 @@ pub fn new_knn(mut data Data) &KNN {
 		errors.vsl_panic('vls.ml.knn.new_knn expects data.y to have at least one element.',
 			.einval)
 	}
-	mut weights := map[f64]f64{}
-	for class in data.y {
-		weights[class] = 1.0
-	}
-	mut knn := KNN{
-		data: data
-		weights: weights
-	}
+	mut knn := KNN{data: data}
 	data.add_observer(knn) // need to recompute neighbors upon data changes
 	knn.update() // compute first neighbors
 	return &knn
@@ -82,6 +75,11 @@ pub fn (mut knn KNN) update() {
 			class: knn.data.y[i]
 		}
 	}
+        mut weights := map[f64]f64{}
+	for class in knn.data.y {
+		weights[class] = 1.0
+	}
+        knn.weights = weights.clone()
 }
 
 // data needed for KNN.predict
