@@ -49,6 +49,25 @@ pub fn new_knn(mut data Data) &KNN {
 	return &knn
 }
 
+// set_weights will set the weights for the KNN. They default to
+// 1.0 for every class when this function is not called.
+pub fn (mut knn KNN) set_weights(weights map[f64]f64) {
+	mut new_weights := map[f64]f64{}
+	for k, v in weights {
+		if k !in knn.data.y {
+			errors.vsl_panic('KNN.set_weights expects weights (map[f64]f64) to have ' +
+				'all its keys present in the KNN\'s classes.', .einval)
+		}
+		new_weights[k] = v
+	}
+	for class in knn.data.y {
+		if class !in new_weights {
+			new_weights[class] = 1.0
+		}
+	}
+	knn.weights = new_weights.clone()
+}
+
 // update perform updates after data has been changed (as an Observer)
 pub fn (mut knn KNN) update() {
 	mut x := knn.data.x.get_deep2()
