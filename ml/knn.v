@@ -6,9 +6,10 @@ import vsl.errors
 // KNN is the struct defining a K-Nearest Neighbors classifier.
 pub struct KNN {
 mut:
-	data &Data
+	data		&Data
+	weights		map[f64]f64 // weights[class] = weight
 pub mut:
-	neighbors []&Neighbor
+	neighbors	[]&Neighbor
 }
 
 // Neighbor is a support struct to help organizing the code
@@ -35,8 +36,13 @@ pub fn new_knn(mut data Data) &KNN {
 		errors.vsl_panic('vls.ml.knn.new_knn expects data.y to have at least one element.',
 			.einval)
 	}
+	mut weights := map[f64]f64{}
+	for class in data.y {
+		weights[class] = 1.0
+	}
 	mut knn := KNN{
 		data: data
+		weights: weights
 	}
 	data.add_observer(knn) // need to recompute neighbors upon data changes
 	knn.update() // compute first neighbors
@@ -82,7 +88,8 @@ pub fn (mut knn KNN) predict(config PredictConfig) f64 {
 	}
 	mut x := knn.data.x.get_deep2()
 	for i := 0; i < x.len; i++ {
-		knn.neighbors[i].distance = l2_distance_unitary(to_pred, x[i])
+		knn.neighbors[i].distance = l2_distance_unitary(to_pred, x[i]) /
+									knn.weights[knn.neighbors[i].class]
 	}
 	knn.neighbors.sort(a.distance < b.distance)
 
@@ -129,7 +136,12 @@ pub fn (mut knn KNN) predict(config PredictConfig) f64 {
 			break
 		}
 
-		iter_number++
+		// Avoids overflow if for some reason this loop
+		// runs enough times to make iter_number go above
+		// int's max value.
+		if config.max_iter != 0 {
+			iter_number++
+		}
 	}
 
 	return most_shown
