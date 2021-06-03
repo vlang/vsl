@@ -1,9 +1,5 @@
 module ml
 
-// Euclidean distance:
-import vsl.vmath as math
-import vsl.gm
-import vsl.la
 import vsl.blas.vlas.internal.float64 { l2_distance_unitary }
 import vsl.errors
 
@@ -40,7 +36,28 @@ pub fn new_knn(mut data Data) &KNN {
 	mut knn := KNN{
 		data: data
 	}
+	data.add_observer(knn) // need to recompute neighbors upon data changes
+	knn.update() // compute first neighbors
 	return &knn
+}
+
+// update perform updates after data has been changed (as an Observer)
+pub fn (mut knn KNN) update() {
+	mut x := knn.data.x.get_deep2()
+	knn.neighbors = []&Neighbor{cap: x.len}
+	for i := 0; i < x.len; i++ {
+		knn.neighbors << &Neighbor{
+			point: x[i]
+			class: knn.data.y[i]
+		}
+	}
+}
+
+// data needed for KNN.predict
+pub struct PredictConfig {
+	max_iter          int
+	k                 int
+	to_pred           []f64
 }
 
 // predict will find the `k` points nearest to the specified `to_pred`.
@@ -50,7 +67,10 @@ pub fn new_knn(mut data Data) &KNN {
 // `k` will be decreased until there are no more ties. The worst case
 // scenario is `k` ending up as 1. Also, it makes sure that if we do
 // have a tie when k = 1, we select the first closest neighbor.
-pub fn (mut knn KNN) predict(k int, to_pred []f64) f64 {
+pub fn (mut knn KNN) predict(config PredictConfig) f64 {
+	k := config.k
+	to_pred := config.to_pred
+
 	if k <= 0 {
 		errors.vsl_panic('KNN.predict expects k (int) to be >= 1.', .einval)
 	}
@@ -58,13 +78,8 @@ pub fn (mut knn KNN) predict(k int, to_pred []f64) f64 {
 		errors.vsl_panic('KNN.predict expects to_pred ([]f64) to have at least 1 element.', .einval)
 	}
 	mut x := knn.data.x.get_deep2()
-	knn.neighbors = []&Neighbor{}
 	for i := 0; i < x.len; i++ {
-		knn.neighbors << &Neighbor{
-			point: x[i]
-			class: knn.data.y[i]
-			distance: l2_distance_unitary(to_pred, x[i])
-		}
+		knn.neighbors[i].distance = l2_distance_unitary(to_pred, x[i])
 	}
 	knn.neighbors.sort(a.distance < b.distance)
 
@@ -72,9 +87,16 @@ pub fn (mut knn KNN) predict(k int, to_pred []f64) f64 {
 	mut new_k := k
 	mut tied := true
 	mut most_shown := knn.data.y[0]
+	mut iter_number := 0
 	for tied {
+		if config.max_iter != 0 {
+			if iter_number >= config.max_iter {
+				break
+			}
+		}
+
 		tied = false
-		mut tmp_neighbors := knn.neighbors.clone()[0..new_k]
+		mut tmp_neighbors := knn.neighbors[0..new_k].clone()
 		mut freq := map[f64]int{}
 		for n in tmp_neighbors {
 			if n.class !in freq {
@@ -103,6 +125,8 @@ pub fn (mut knn KNN) predict(k int, to_pred []f64) f64 {
 		} else {
 			break
 		}
+
+		iter_number++
 	}
 
 	return most_shown
