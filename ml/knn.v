@@ -28,10 +28,12 @@ mut:
 // to [10.0, 10.0] (which is class 1.0).
 pub fn new_knn(mut data Data) &KNN {
 	if data.x.data.len == 0 {
-		errors.vsl_panic('vls.ml.knn.new_knn expects data.x to have at least one element.', .einval)
+		errors.vsl_panic('vls.ml.knn.new_knn expects data.x to have at least one element.',
+			.einval)
 	}
 	if data.y.len == 0 {
-		errors.vsl_panic('vls.ml.knn.new_knn expects data.y to have at least one element.', .einval)
+		errors.vsl_panic('vls.ml.knn.new_knn expects data.y to have at least one element.',
+			.einval)
 	}
 	mut knn := KNN{
 		data: data
@@ -55,9 +57,9 @@ pub fn (mut knn KNN) update() {
 
 // data needed for KNN.predict
 pub struct PredictConfig {
-	max_iter          int
-	k                 int
-	to_pred           []f64
+	max_iter int
+	k        int
+	to_pred  []f64
 }
 
 // predict will find the `k` points nearest to the specified `to_pred`.
@@ -75,7 +77,8 @@ pub fn (mut knn KNN) predict(config PredictConfig) f64 {
 		errors.vsl_panic('KNN.predict expects k (int) to be >= 1.', .einval)
 	}
 	if to_pred.len <= 0 {
-		errors.vsl_panic('KNN.predict expects to_pred ([]f64) to have at least 1 element.', .einval)
+		errors.vsl_panic('KNN.predict expects to_pred ([]f64) to have at least 1 element.',
+			.einval)
 	}
 	mut x := knn.data.x.get_deep2()
 	for i := 0; i < x.len; i++ {
