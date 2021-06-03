@@ -45,7 +45,7 @@ pub fn new_data(nb_samples int, nb_features int, use_y bool, allocate bool) Data
 		y = []f64{len: nb_samples}
 	}
 	mut o := Data{
-		x: &x
+		x: x
 		y: y
 		observers: []
 		nb_samples: nb_samples

@@ -14,9 +14,9 @@ pub mut:
 }
 
 // matrix allocates a new (empty) Matrix with given (m,n) (row/col sizes)
-pub fn new_matrix(m int, n int) Matrix {
+pub fn new_matrix(m int, n int) &Matrix {
 	data := []f64{len: m * n}
-	return Matrix{
+	return &Matrix{
 		m: m
 		n: n
 		data: data
@@ -25,7 +25,7 @@ pub fn new_matrix(m int, n int) Matrix {
 
 // matrix_deep2 allocates a new Matrix from given (Deep2) nested slice.
 // NOTE: make sure to have at least 1x1 item
-pub fn matrix_deep2(a [][]f64) Matrix {
+pub fn matrix_deep2(a [][]f64) &Matrix {
 	mut o := new_matrix(a.len, a[0].len)
 	o.set_from_deep2(a)
 	return o
@@ -37,8 +37,8 @@ pub fn matrix_deep2(a [][]f64) Matrix {
 // NOTE:
 // (1) rawdata is not copied!
 // (2) the external slice rawdata should not be changed or deleted
-pub fn matrix_raw(m int, n int, rawdata []f64) Matrix {
-	return Matrix{
+pub fn matrix_raw(m int, n int, rawdata []f64) &Matrix {
+	return &Matrix{
 		m: m
 		n: n
 		data: rawdata
@@ -75,12 +75,12 @@ pub fn (mut o Matrix) set(i int, j int, val f64) {
 }
 
 // get gets value
-pub fn (o Matrix) get(i int, j int) f64 {
+pub fn (o &Matrix) get(i int, j int) f64 {
 	return o.data[i + j * o.m] // col-major
 }
 
 // get_deep2 returns nested slice representation
-pub fn (o Matrix) get_deep2() [][]f64 {
+pub fn (o &Matrix) get_deep2() [][]f64 {
 	mut m := [][]f64{len: o.m, init: []f64{len: o.n}}
 	for i := 0; i < o.m; i++ {
 		for j := 0; j < o.n; j++ {
@@ -91,14 +91,14 @@ pub fn (o Matrix) get_deep2() [][]f64 {
 }
 
 // clone returns a copy of this matrix
-pub fn (o Matrix) clone() Matrix {
+pub fn (o &Matrix) clone() &Matrix {
 	mut clone := new_matrix(o.m, o.n)
 	clone.data = o.data.clone()
 	return clone
 }
 
 // transpose returns the transpose matrix
-pub fn (o Matrix) transpose() Matrix {
+pub fn (o &Matrix) transpose() &Matrix {
 	mut tran := new_matrix(o.n, o.m)
 	for i := 0; i < o.n; i++ {
 		for j := 0; j < o.m; j++ {
@@ -110,7 +110,7 @@ pub fn (o Matrix) transpose() Matrix {
 
 // copy_into copies the scaled components of this matrix into another one (result)
 // result := alpha * this   ⇒   result[ij] := alpha * this[ij]
-pub fn (o Matrix) copy_into(mut result Matrix, alpha f64) {
+pub fn (o &Matrix) copy_into(mut result Matrix, alpha f64) {
 	for k := 0; k < o.m * o.n; k++ {
 		result.data[k] = alpha * o.data[k]
 	}
@@ -169,7 +169,7 @@ pub fn (mut o Matrix) clear_bry(diag f64) {
 }
 
 // max_diff returns the maximum difference between the components of this and another matrix
-pub fn (o Matrix) max_diff(another Matrix) f64 {
+pub fn (o &Matrix) max_diff(another Matrix) f64 {
 	mut maxdiff := vmath.abs(o.data[0] - another.data[0])
 	for k := 1; k < o.m * o.n; k++ {
 		diff := vmath.abs(o.data[k] - another.data[k])
@@ -182,7 +182,7 @@ pub fn (o Matrix) max_diff(another Matrix) f64 {
 
 // largest returns the largest component |a[ij]| of this matrix, normalised by den
 // largest := |a[ij]| / den
-pub fn (o Matrix) largest(den f64) f64 {
+pub fn (o &Matrix) largest(den f64) f64 {
 	mut largest := vmath.abs(o.data[0])
 	for k := 1; k < o.m * o.n; k++ {
 		tmp := vmath.abs(o.data[k])
@@ -196,12 +196,12 @@ pub fn (o Matrix) largest(den f64) f64 {
 // col access column j of this matrix. No copies are made since the internal data are in
 // col-major format already.
 // NOTE: this method can be used to modify the columns; e.g. with o.col(0)[0] = 123
-pub fn (o Matrix) col(j int) []f64 {
+pub fn (o &Matrix) col(j int) []f64 {
 	return o.data[(j * o.m)..((j + 1) * o.m)]
 }
 
 // get_row returns row i of this matrix
-pub fn (o Matrix) get_row(i int) []f64 {
+pub fn (o &Matrix) get_row(i int) []f64 {
 	mut row := []f64{len: o.n}
 	for j := 0; j < o.n; j++ {
 		row[j] = o.data[i + j * o.m]
@@ -210,14 +210,14 @@ pub fn (o Matrix) get_row(i int) []f64 {
 }
 
 // get_col returns column j of this matrix
-pub fn (o Matrix) get_col(j int) []f64 {
+pub fn (o &Matrix) get_col(j int) []f64 {
 	return o.data[(j * o.m)..((j + 1) * o.m)]
 }
 
 // extract_cols returns columns from j=start to j=endp1-1
 // start -- first column
 // endp1 -- "end-plus-one", the number of the last requested column + 1
-pub fn (o Matrix) extract_cols(start int, endp1 int) Matrix {
+pub fn (o &Matrix) extract_cols(start int, endp1 int) &Matrix {
 	if endp1 <= start {
 		errors.vsl_panic("endp1 'end-plus-one' must be greater than start. start=$start, endp1=$endp1 invalid",
 			.efailed)
@@ -237,7 +237,7 @@ pub fn (mut o Matrix) set_col(j int, value f64) {
 
 // norm_frob returns the Frobenius norm of this matrix
 // nrm := ‖a‖_F = sqrt(Σ_i Σ_j a[ij]⋅a[ij]) = ‖a‖_2
-pub fn (o Matrix) norm_frob() f64 {
+pub fn (o &Matrix) norm_frob() f64 {
 	mut nrm := 0.0
 	for k := 0; k < o.m * o.n; k++ {
 		nrm += o.data[k] * o.data[k]
@@ -247,7 +247,7 @@ pub fn (o Matrix) norm_frob() f64 {
 
 // norm_inf returns the infinite norm of this matrix
 // nrm := ‖a‖_∞ = max_i ( Σ_j a[ij] )
-pub fn (o Matrix) norm_inf() f64 {
+pub fn (o &Matrix) norm_inf() f64 {
 	mut nrm := 0.0
 	for j := 0; j < o.n; j++ { // sum first row
 		nrm += vmath.abs(o.data[j * o.m])
@@ -276,7 +276,7 @@ pub fn (mut o Matrix) apply(alpha f64, another Matrix) {
 
 // det computes the determinant of matrix using the LU factorization
 // NOTE: this method may fail due to overflow...
-pub fn (o Matrix) det() f64 {
+pub fn (o &Matrix) det() f64 {
 	if o.m != o.n {
 		errors.vsl_panic('matrix must be square to compute determinant. $o.m × $o.n is invalid\n',
 			.efailed)
@@ -295,13 +295,12 @@ pub fn (o Matrix) det() f64 {
 	return det
 }
 
-[inline]
-pub fn (o Matrix) str() string {
+pub fn (o &Matrix) str() string {
 	return o.print('')
 }
 
 // print prints matrix (without commas or brackets)
-pub fn (o Matrix) print(nfmt_ string) string {
+pub fn (o &Matrix) print(nfmt_ string) string {
 	mut nfmt := nfmt_
 	if nfmt == '' {
 		nfmt = '%g '
@@ -319,7 +318,7 @@ pub fn (o Matrix) print(nfmt_ string) string {
 }
 
 // print_v prints matrix in V format
-pub fn (o Matrix) print_v(nfmt_ string) string {
+pub fn (o &Matrix) print_v(nfmt_ string) string {
 	mut nfmt := nfmt_
 	if nfmt == '' {
 		nfmt = '%10g'
@@ -340,7 +339,7 @@ pub fn (o Matrix) print_v(nfmt_ string) string {
 }
 
 // print_py prints matrix in Python format
-pub fn (o Matrix) print_py(nfmt_ string) string {
+pub fn (o &Matrix) print_py(nfmt_ string) string {
 	mut nfmt := nfmt_
 	if nfmt == '' {
 		nfmt = '%10g'

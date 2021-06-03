@@ -40,7 +40,7 @@ pub fn new_kmeans(mut data Data, nb_classes int) &Kmeans {
 
 // update perform updates after data has been changed (as an Observer)
 pub fn (mut o Kmeans) update() {
-	for i := 0; i < o.data.nb_samples; i++ {
+	for i in 0 .. o.data.nb_samples {
 		o.bins.append([o.data.x.get(i, 0), o.data.x.get(i, 1)], i, voidptr(0))
 	}
 }
