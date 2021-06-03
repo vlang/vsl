@@ -58,6 +58,10 @@ pub fn (mut knn KNN) set_weights(weights map[f64]f64) {
 			errors.vsl_panic('KNN.set_weights expects weights (map[f64]f64) to have ' +
 				'all its keys present in the KNN\'s classes.', .einval)
 		}
+		if v == 0.0 {
+			errors.vsl_panic('KNN.set_weights expects weights (map[f64]f64) to not have ' +
+				'zeroes, as it cannot divide by zero.', .ezerodiv)
+		}
 		new_weights[k] = v
 	}
 	for class in knn.data.y {
