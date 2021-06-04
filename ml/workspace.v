@@ -28,7 +28,7 @@ pub mut:
 }
 
 // stat returns a new Stat object
-pub fn stat_from_data(mut data Data, name string) Stat {
+pub fn stat_from_data(mut data Data, name string) &Stat {
 	mut o := Stat{
 		data: data
 	}
@@ -39,11 +39,11 @@ pub fn stat_from_data(mut data Data, name string) Stat {
 	o.sig_x = []f64{len: data.nb_features}
 	o.del_x = []f64{len: data.nb_features}
 	data.add_observer(o)
-	return o
+	return &o
 }
 
 // name returns the name of this stat object (thus defining the Observer interface)
-pub fn (o Stat) name() string {
+pub fn (o &Stat) name() string {
 	return o.name
 }
 
@@ -99,7 +99,7 @@ pub fn (mut o Stat) sum_vars() ([]f64, f64) {
 }
 
 // copy_into copies stat into p
-pub fn (o Stat) copy_into(mut p Stat) {
+pub fn (o &Stat) copy_into(mut p Stat) {
 	p.min_x = o.min_x.clone()
 	p.max_x = o.max_x.clone()
 	p.sum_x = o.sum_x.clone()

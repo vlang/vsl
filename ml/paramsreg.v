@@ -20,10 +20,10 @@ pub mut:
 }
 
 // new_params_reg returns a new object to hold regression parameters
-pub fn new_params_reg(nb_features int) ParamsReg {
+pub fn new_params_reg(nb_features int) &ParamsReg {
 	theta := []f64{len: nb_features}
 	bkp_theta := []f64{len: nb_features}
-	return ParamsReg{
+	return &ParamsReg{
 		theta: theta
 		bkp_theta: bkp_theta
 	}
@@ -76,7 +76,7 @@ pub fn (mut o ParamsReg) set_param(i int, value f64) {
 
 // get_param returns either theta or b (use negative indices for b)
 //  i -- index of theta or -1 for bias
-pub fn (o ParamsReg) get_param(i int) f64 {
+pub fn (o &ParamsReg) get_param(i int) f64 {
 	if i < 0 {
 		return o.bias
 	}
@@ -90,17 +90,17 @@ pub fn (mut o ParamsReg) set_thetas(theta []f64) {
 }
 
 // get_thetas gets a copy of theta
-pub fn (o ParamsReg) get_thetas() []f64 {
+pub fn (o &ParamsReg) get_thetas() []f64 {
 	return o.theta.clone()
 }
 
 // access_thetas returns access (slice) to theta
-pub fn (o ParamsReg) access_thetas() []f64 {
+pub fn (o &ParamsReg) access_thetas() []f64 {
 	return o.theta
 }
 
 // access_bias returns access (pointer) to b
-pub fn (o ParamsReg) access_bias() &f64 {
+pub fn (o &ParamsReg) access_bias() &f64 {
 	return &o.bias
 }
 
@@ -111,7 +111,7 @@ pub fn (mut o ParamsReg) set_theta(i int, thetai f64) {
 }
 
 // get_theta returns the value of theta[i]
-pub fn (o ParamsReg) get_theta(i int) f64 {
+pub fn (o &ParamsReg) get_theta(i int) f64 {
 	return o.theta[i]
 }
 
@@ -122,7 +122,7 @@ pub fn (mut o ParamsReg) set_bias(b f64) {
 }
 
 // get_bias gets a copy of b
-pub fn (o ParamsReg) get_bias() f64 {
+pub fn (o &ParamsReg) get_bias() f64 {
 	return o.bias
 }
 
@@ -133,7 +133,7 @@ pub fn (mut o ParamsReg) set_lambda(lambda f64) {
 }
 
 // get_lambda gets a copy of lambda
-pub fn (o ParamsReg) get_lambda() f64 {
+pub fn (o &ParamsReg) get_lambda() f64 {
 	return o.lambda
 }
 
@@ -144,7 +144,7 @@ pub fn (mut o ParamsReg) set_degree(p int) {
 }
 
 // get_degree gets a copy of p
-pub fn (o ParamsReg) get_degree() int {
+pub fn (o &ParamsReg) get_degree() int {
 	return o.degree
 }
 
@@ -154,7 +154,7 @@ pub fn (mut o ParamsReg) add_observer(obs util.Observer) {
 }
 
 // notify_update notifies observers of updates
-pub fn (o ParamsReg) notify_update() {
+pub fn (o &ParamsReg) notify_update() {
 	for obs in o.observers {
 		obs.update()
 	}

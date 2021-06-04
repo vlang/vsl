@@ -12,6 +12,7 @@ pub mut:
 }
 
 // Segment represents a directed segment from a to b
+[heap]
 pub struct Segment {
 pub:
 	a &Point

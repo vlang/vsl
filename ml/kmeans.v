@@ -5,6 +5,7 @@ import vsl.gm
 import vsl.la
 
 // Kmeans implements the K-means model (Observer of Data)
+[heap]
 pub struct Kmeans {
 mut:
 	data       &Data    // x data
@@ -46,7 +47,7 @@ pub fn (mut o Kmeans) update() {
 }
 
 // nb_classes returns the number of classes
-pub fn (o Kmeans) nb_classes() int {
+pub fn (o &Kmeans) nb_classes() int {
 	return o.nb_classes
 }
 

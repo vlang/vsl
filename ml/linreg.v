@@ -4,6 +4,7 @@ import vsl.la
 import vsl.util
 
 // LinReg implements a linear regression model
+[heap]
 pub struct LinReg {
 mut:
 	// main
@@ -20,20 +21,20 @@ mut:
 //     data   -- x,y data
 //     params -- θ, b, λ
 //     name   -- unique name of this (observer) object
-pub fn new_lin_reg(mut data Data, params &ParamsReg, name string) LinReg {
+pub fn new_lin_reg(mut data Data, params &ParamsReg, name string) &LinReg {
 	mut stat := stat_from_data(mut data, 'stat_' + name)
 	stat.update()
-	return LinReg{
+	return &LinReg{
 		name: name
 		data: data
 		params: params
-		stat: &stat
+		stat: stat
 		e: []f64{len: data.nb_samples}
 	}
 }
 
 // name returns the name of this LinReg object (thus defining the Observer interface)
-pub fn (o LinReg) name() string {
+pub fn (o &LinReg) name() string {
 	return o.name
 }
 
@@ -42,7 +43,7 @@ pub fn (o LinReg) name() string {
 //     x -- vector of features
 //   Output:
 //     y -- model prediction y(x)
-pub fn (o LinReg) predict(x []f64) f64 {
+pub fn (o &LinReg) predict(x []f64) f64 {
 	theta := o.params.access_thetas()
 	b := o.params.get_bias()
 	return b + la.vector_dot(x, theta) // b + xᵀtheta
@@ -129,7 +130,7 @@ pub fn (mut o LinReg) add_observer(obs util.Observer) {
 }
 
 // notify_update notifies observers of updates
-pub fn (o LinReg) notify_update() {
+pub fn (o &LinReg) notify_update() {
 	for obs in o.data.observers {
 		obs.update()
 	}

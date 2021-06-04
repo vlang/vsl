@@ -52,7 +52,7 @@ pub fn new_data(nb_samples int, nb_features int, use_y bool, allocate bool) Data
 		nb_features: nb_features
 	}
 	stat := stat_from_data(mut o, 'stat_for_data')
-	o.stat = &stat
+	o.stat = stat
 	return o
 }
 
