@@ -6,15 +6,16 @@ import vsl.errors
 // KNN is the struct defining a K-Nearest Neighbors classifier.
 pub struct KNN {
 mut:
-	data &Data
+	data		&Data
+	weights		map[f64]f64 // weights[class] = weight
 pub mut:
-	neighbors []&Neighbor
+	neighbors	[]&Neighbor
 }
 
 // Neighbor is a support struct to help organizing the code
 // and calculating distances, as well as sorting using array.sort.
 struct Neighbor {
-mut:
+	mut:
 	point    []f64
 	class    f64
 	distance f64
@@ -35,12 +36,33 @@ pub fn new_knn(mut data Data) &KNN {
 		errors.vsl_panic('vls.ml.knn.new_knn expects data.y to have at least one element.',
 			.einval)
 	}
-	mut knn := KNN{
-		data: data
-	}
+	mut knn := KNN{data: data}
 	data.add_observer(knn) // need to recompute neighbors upon data changes
 	knn.update() // compute first neighbors
 	return &knn
+}
+
+// set_weights will set the weights for the KNN. They default to
+// 1.0 for every class when this function is not called.
+pub fn (mut knn KNN) set_weights(weights map[f64]f64) {
+	mut new_weights := map[f64]f64{}
+	for k, v in weights {
+		if k !in knn.data.y {
+			errors.vsl_panic('KNN.set_weights expects weights (map[f64]f64) to have ' +
+				'all its keys present in the KNN\'s classes.', .einval)
+		}
+		if v == 0.0 {
+			errors.vsl_panic('KNN.set_weights expects weights (map[f64]f64) to not have ' +
+				'zeroes, as it cannot divide by zero.', .ezerodiv)
+		}
+		new_weights[k] = v
+	}
+	for class in knn.data.y {
+		if class !in new_weights {
+			new_weights[class] = 1.0
+		}
+	}
+	knn.weights = new_weights.clone()
 }
 
 // update perform updates after data has been changed (as an Observer)
@@ -53,6 +75,11 @@ pub fn (mut knn KNN) update() {
 			class: knn.data.y[i]
 		}
 	}
+        mut weights := map[f64]f64{}
+	for class in knn.data.y {
+		weights[class] = 1.0
+	}
+        knn.weights = weights.clone()
 }
 
 // data needed for KNN.predict
@@ -82,7 +109,8 @@ pub fn (mut knn KNN) predict(config PredictConfig) f64 {
 	}
 	mut x := knn.data.x.get_deep2()
 	for i := 0; i < x.len; i++ {
-		knn.neighbors[i].distance = l2_distance_unitary(to_pred, x[i])
+		knn.neighbors[i].distance = l2_distance_unitary(to_pred, x[i]) /
+									knn.weights[knn.neighbors[i].class]
 	}
 	knn.neighbors.sort(a.distance < b.distance)
 
@@ -129,7 +157,12 @@ pub fn (mut knn KNN) predict(config PredictConfig) f64 {
 			break
 		}
 
-		iter_number++
+		// Avoids overflow if for some reason this loop
+		// runs enough times to make iter_number go above
+		// int's max value.
+		if config.max_iter != 0 {
+			iter_number++
+		}
 	}
 
 	return most_shown
