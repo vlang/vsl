@@ -41,7 +41,7 @@ fn test_graph01() {
 	}
 	mut weights_e := g2.weights_e
 	weights_e[3] = 13
-	g3 := Graph{
+	g3 := &Graph{
 		edges: g.edges
 		weights_e: weights_e
 		verts: g.verts

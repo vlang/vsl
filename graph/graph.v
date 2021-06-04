@@ -11,6 +11,7 @@ pub enum SorthestPaths {
 }
 
 // Graph defines a graph structure
+[heap]
 pub struct Graph {
 pub:
 	// input
@@ -30,7 +31,7 @@ pub:
 // weights_e -- [nedges] weights of edges
 // verts    -- [nverts][ndim] vertices
 // weights_v -- [nverts] weights of vertices
-pub fn new_graph(edges [][]int, weights_e []f64, verts [][]f64, weights_v []f64) Graph {
+pub fn new_graph(edges [][]int, weights_e []f64, verts [][]f64, weights_v []f64) &Graph {
 	mut key2edge := map[int]int{}
 	mut shares := map[int][]int{}
 	for k, edge in edges {
@@ -43,7 +44,7 @@ pub fn new_graph(edges [][]int, weights_e []f64, verts [][]f64, weights_v []f64)
 	nv := shares.keys().len
 	mut dist := [][]f64{len: nv, init: []f64{len: nv}}
 	mut next := [][]int{len: nv, init: []int{len: nv}}
-	return Graph{
+	return &Graph{
 		edges: edges
 		weights_e: weights_e
 		verts: verts
@@ -56,12 +57,12 @@ pub fn new_graph(edges [][]int, weights_e []f64, verts [][]f64, weights_v []f64)
 }
 
 // nverts returns the number of vertices
-pub fn (g Graph) nverts() int {
+pub fn (g &Graph) nverts() int {
 	return g.shares.keys().len
 }
 
 // get_edge performs a lookup on key2edge map and returs id of edge for given nodes ides
-pub fn (g Graph) get_edge(i int, j int) ?int {
+pub fn (g &Graph) get_edge(i int, j int) ?int {
 	key := hash_edge_key(i, j)
 	if key in g.key2edge {
 		return g.key2edge[key]
@@ -89,7 +90,7 @@ pub fn (g Graph) get_edge(i int, j int) ?int {
  *  Input:
  *   method -- FW: Floyd-Warshall method
 */
-pub fn (g Graph) shortest_paths(method SorthestPaths) Graph {
+pub fn (g &Graph) shortest_paths(method SorthestPaths) Graph {
 	if method != .fw {
 		panic('shortest_paths works with FW (Floyd-Warshall) method only for now')
 	}
@@ -122,7 +123,7 @@ pub fn (g Graph) shortest_paths(method SorthestPaths) Graph {
 
 // path returns the path from source (s) to destination (t)
 // Note: shortest_paths method must be called first
-pub fn (g Graph) path(s int, t int) []int {
+pub fn (g &Graph) path(s int, t int) []int {
 	s_next := g.next[s]
 	n := s_next[t]
 	if n < 0 {
@@ -139,7 +140,7 @@ pub fn (g Graph) path(s int, t int) []int {
 }
 
 // calc_dist computes distances beetween all vertices and initialises 'next' matrix
-pub fn (g Graph) calc_dist() Graph {
+pub fn (g &Graph) calc_dist() Graph {
 	mut dist := g.dist
 	mut next := g.next
 	verts := g.verts
@@ -197,7 +198,7 @@ fn hash_edge_key(i int, j int) int {
 }
 
 // str_dist_matrix returns a string representation of dist matrix
-pub fn (g Graph) str_dist_matrix() string {
+pub fn (g &Graph) str_dist_matrix() string {
 	nv := g.dist.len
 	mut maxlen := 0
 	for i := 0; i < nv; i++ {
@@ -228,7 +229,7 @@ pub fn (g Graph) str_dist_matrix() string {
 }
 
 // get_adj returns adjacency list as a compressed storage format for METIS
-pub fn (g Graph) get_adj() ([]int, []int) {
+pub fn (g &Graph) get_adj() ([]int, []int) {
 	nv := g.nverts()
 	mut szadj := 0
 	for vid := 0; vid < nv; vid++ {
