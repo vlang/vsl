@@ -65,7 +65,7 @@ fn test_knn_predict_with_weights() {
 		[10.2],
 		[-100.4],
 		[-174.58883034],
-		[9.85]
+		[9.85],
 	]
 	y := [
 		1.,
@@ -74,12 +74,12 @@ fn test_knn_predict_with_weights() {
 		2,
 		3,
 		3,
-		3
+		3,
 	]
 	mut w := map{
 		1.: 1.
-		2: 1
-		3: 1
+		2:  1
+		3:  1
 	}
 	mut train_data := data_from_raw_xy_sep(x, y)
 	mut knn := new_knn(mut train_data)
