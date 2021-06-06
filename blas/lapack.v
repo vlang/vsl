@@ -18,11 +18,11 @@ fn C.LAPACKE_dgeev(matrix_layout int, calc_vl byte, calc_vr byte, n int, a &f64,
 
 fn C.LAPACKE_dlange(matrix_layout int, norm byte, m int, n int, a &f64, lda int, work &f64) f64
 
-fn C.LAPACKE_dsyev(matrix_layout int, jobz byte, uplo byte, n int, a &f64, lda int, w &f64, work &f64, lwork int, info &int)
+fn C.LAPACKE_dsyev(matrix_layout int, jobz byte, uplo byte, n int, a &f64, lda int, w &f64, work &f64, lwork int)
 
-fn C.LAPACKE_dgebal(matrix_layout int, job byte, n int, a &f64, lda int, ilo int, ihi int, scale &f64, info &int)
+fn C.LAPACKE_dgebal(matrix_layout int, job byte, n int, a &f64, lda int, ilo int, ihi int, scale &f64)
 
-fn C.LAPACKE_dgehrd(matrix_layout int, n int, ilo int, ihi int, a &f64, lda int, tau &f64, work &f64, lwork int, info &int)
+fn C.LAPACKE_dgehrd(matrix_layout int, n int, ilo int, ihi int, a &f64, lda int, tau &f64, work &f64, lwork int)
 
 // dgesv computes the solution to a real system of linear equations.
 //
@@ -50,7 +50,7 @@ pub fn dgesv(n int, nrhs int, mut a []f64, lda int, ipiv []int, mut b []f64, ldb
 	if ipiv.len != n {
 		errors.vsl_panic('ipiv.len must be equal to n. $ipiv.len != $n\n', .efailed)
 	}
-	info := C.LAPACKE_dgesv(lapack_col_major, n, nrhs, unsafe { &a[0] }, lda, &ipiv[0],
+	info := C.LAPACKE_dgesv(lapack_row_major, n, nrhs, unsafe { &a[0] }, lda, &ipiv[0],
 		unsafe { &b[0] }, ldb)
 	if info != 0 {
 		errors.vsl_panic('lapack failed', .efailed)
