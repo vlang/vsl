@@ -8,7 +8,7 @@ import vsl.la
 [heap]
 pub struct Kmeans {
 mut:
-	name    string      // name of this "observer"
+	name       string   // name of this "observer"
 	data       &Data    // x data
 	nb_classes int      // expected number of classes
 	bins       &gm.Bins // "bins" to speed up searching for data points given their coordinates (2D or 3D only at the moment)
@@ -137,5 +137,4 @@ pub fn (o &Kmeans) str() string {
 	res << '    nb_members: $o.nb_members'
 	res << '}'
 	return res.join('\n')
-} 
-
+}

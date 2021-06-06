@@ -161,4 +161,4 @@ pub fn (o &LinReg) str() string {
 	res << '    e: $o.e'
 	res << '}'
 	return res.join('\n')
-} 
+}
