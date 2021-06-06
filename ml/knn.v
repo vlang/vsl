@@ -7,7 +7,7 @@ import vsl.errors
 [heap]
 pub struct KNN {
 mut:
-	name    string      // name of this "observer"
+	name    string // name of this "observer"
 	data    &Data
 	weights map[f64]f64 // weights[class] = weight
 pub mut:
@@ -39,7 +39,7 @@ pub fn new_knn(mut data Data, name string) &KNN {
 			.einval)
 	}
 	mut knn := KNN{
-		name: name,
+		name: name
 		data: data
 	}
 	data.add_observer(knn) // need to recompute neighbors upon data changes
@@ -186,4 +186,4 @@ pub fn (o &KNN) str() string {
 	res << '    neighbors: $o.neighbors'
 	res << '}'
 	return res.join('\n')
-} 
+}

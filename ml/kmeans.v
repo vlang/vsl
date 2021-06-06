@@ -145,5 +145,4 @@ pub fn (o &Kmeans) str() string {
 	res << '    nb_members: $o.nb_members'
 	res << '}'
 	return res.join('\n')
-} 
-
+}

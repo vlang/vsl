@@ -133,4 +133,4 @@ pub fn (o &Stat) str() string {
 	res << '    del_y: $o.del_y'
 	res << '}'
 	return res.join('\n')
-} 
+}
