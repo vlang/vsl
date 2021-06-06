@@ -8,9 +8,9 @@ pub struct LinReg {
 	ParamsReg
 mut:
 	// main
-	name   string     // name of this "observer"
-	data   &Data      // x-y data
-	stat   &Stat      // statistics
+	name string // name of this "observer"
+	data &Data  // x-y data
+	stat &Stat  // statistics
 	// workspace
 	e []f64 // vector e = b⋅o + x⋅theta - y [nb_samples]
 }

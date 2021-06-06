@@ -25,7 +25,7 @@ fn test_lin_reg() {
 	]
 	mut data := data_from_raw_xy(xy)
 	mut reg := new_lin_reg(mut data, 'linear regression')
-	
+
 	reg.train()
 	// @todo: Fix this test
 	// assert tolerance(reg.cost(), 5.312454218805082e-01, 1e-15)
@@ -56,15 +56,14 @@ fn test_lin_reg_pred() {
 	]
 	mut data := data_from_raw_xy(xy)
 	mut reg := new_lin_reg(mut data, 'linear regression')
-	
+
 	// set regularization parameter
 	reg.set_lambda(1e12) // very high bias => constant line
 
 	reg.train()
-	
+
 	for x0 in [0.8, 1.2, 2.0] {
 		pred := reg.predict([x0])
 		assert tolerance(pred, reg.stat.mean_y, 1e-11)
 	}
 }
-
