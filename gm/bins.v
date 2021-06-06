@@ -8,6 +8,7 @@ pub const (
 )
 
 // BinEntry holds data of an entry to bin
+[heap]
 pub struct BinEntry {
 pub mut:
 	id    int     // object Id
@@ -16,6 +17,7 @@ pub mut:
 }
 
 // Bin defines one bin in Bins (holds entries for search)
+[heap]
 pub struct Bin {
 pub mut:
 	index   int // index of bin
@@ -23,6 +25,7 @@ pub mut:
 }
 
 // Bins implements a set of bins holding entries and is used to fast search entries by given coordinates.
+[heap]
 pub struct Bins {
 mut:
 	tmp []int // [ndim] temporary (auxiliary) slice
@@ -40,9 +43,9 @@ pub mut:
 //   xmin -- [ndim] min/initial coordinates of the whole space (box/cube)
 //   xmax -- [ndim] max/final coordinates of the whole space (box/cube)
 //   ndiv -- [ndim] number of divisions for xmax-xmin
-pub fn new_bins(xmin []f64, xmax []f64, ndiv_ []int) Bins {
+pub fn new_bins(xmin []f64, xmax []f64, ndiv_ []int) &Bins {
 	mut ndiv := ndiv_.clone()
-	mut o := Bins{}
+	mut o := &Bins{}
 	// check for out-of-range values
 	o.ndim = xmin.len
 	o.xmin = xmin
@@ -281,7 +284,7 @@ pub fn (mut o Bins) find_along_segment(xi_ []f64, xf_ []f64, tol f64) []int {
 }
 
 // get_limits returns limigs of a specific bin
-pub fn (o Bins) get_limits(idx_bin int) ([]f64, []f64) {
+pub fn (o &Bins) get_limits(idx_bin int) ([]f64, []f64) {
 	mut xmin := []f64{}
 	mut xmax := []f64{}
 	nxy := o.ndiv[0] * o.ndiv[1]
@@ -315,7 +318,7 @@ fn point_from_vector(v []f64, dim int) &Point {
 }
 
 // nactive returns the number of active bins; i.e. non-nil bins
-pub fn (o Bins) nactive() int {
+pub fn (o &Bins) nactive() int {
 	mut nactive := 0
 	for bin in o.all {
 		if !isnil(bin) {
@@ -326,7 +329,7 @@ pub fn (o Bins) nactive() int {
 }
 
 // nentries returns the total number of entries (in active bins)
-pub fn (o Bins) nentries() int {
+pub fn (o &Bins) nentries() int {
 	mut nentries := 0
 	for bin in o.all {
 		if !isnil(bin) {
@@ -337,7 +340,7 @@ pub fn (o Bins) nentries() int {
 }
 
 // summary returns the summary of this Bins' data
-pub fn (o Bins) summary() string {
+pub fn (o &Bins) summary() string {
 	mut l := ''
 	l += 'ndim        = $o.ndim\n'
 	l += 'xmin        = $o.xmin\n'
@@ -373,7 +376,7 @@ pub fn (o Bin) str() string {
 }
 
 // str returns the string representation of a set of Bins
-pub fn (o Bins) str() string {
+pub fn (o &Bins) str() string {
 	mut l := '[\n'
 	mut k := 0
 	for bin in o.all {

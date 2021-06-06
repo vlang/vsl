@@ -8,8 +8,9 @@ import vsl.la
 [heap]
 pub struct Kmeans {
 mut:
-	name    string      // name of this "observer"
+	name       string   // name of this "observer"
 	data       &Data    // x data
+	stat       &Stat    // statistics about x (data)
 	nb_classes int      // expected number of classes
 	bins       &gm.Bins // "bins" to speed up searching for data points given their coordinates (2D or 3D only at the moment)
 pub mut:
@@ -19,21 +20,28 @@ pub mut:
 }
 
 // new_kmeans returns a new K-means model
-pub fn new_kmeans(mut data Data, nb_classes int) &Kmeans {
+pub fn new_kmeans(mut data Data, nb_classes int, name string) &Kmeans {
 	// classes
 	classes := []int{len: data.nb_samples}
 	centroids := [][]f64{len: nb_classes}
 	nb_members := []int{len: nb_classes}
+
+	// stat
+	mut stat := stat_from_data(mut data, 'stat_$name')
+	stat.update()
+
 	// bins
 	ndiv := [10, 10] // TODO: make this a parameter
-	bins := gm.new_bins(data.stat.min_x, data.stat.max_x, ndiv) // TODO: make sure minx and maxx are 2D or 3D; i.e. nb_features ≤ 2
+	bins := gm.new_bins(stat.min_x, stat.max_x, ndiv) // TODO: make sure minx and maxx are 2D or 3D; i.e. nb_features ≤ 2
 	mut o := Kmeans{
+		name: name
 		data: data
+		stat: stat
 		nb_classes: nb_classes
 		classes: classes
 		centroids: centroids
 		nb_members: nb_members
-		bins: &bins
+		bins: bins
 	}
 	data.add_observer(o) // need to recompute bins upon data changes
 	o.update() // compute first bins
@@ -61,7 +69,7 @@ pub fn (o &Kmeans) nb_classes() int {
 //   xc -- [nb_class][nb_features]
 pub fn (mut o Kmeans) set_centroids(xc [][]f64) {
 	for i := 0; i < o.nb_classes; i++ {
-		o.centroids[i] = xc[i]
+		o.centroids[i] = xc[i].clone()
 	}
 }
 

@@ -4,25 +4,25 @@ import vsl.errors
 
 // #include <lapack.h>
 
-fn C.LAPACKE_dgesv(n int, nrhs int, a &f64, lda int, ipiv &int, b &f64, ldb int) int
+fn C.LAPACKE_dgesv(matrix_layout int, n int, nrhs int, a &f64, lda int, ipiv &int, b &f64, ldb int) int
 
-fn C.LAPACKE_dgesvd(jobu byte, jobvt byte, m int, n int, a &f64, lda int, s &f64, u &f64, ldu int, vt &f64, ldvt int, superb &f64) int
+fn C.LAPACKE_dgesvd(matrix_layout int, jobu byte, jobvt byte, m int, n int, a &f64, lda int, s &f64, u &f64, ldu int, vt &f64, ldvt int, superb &f64) int
 
 fn C.LAPACKE_dgetrf(matrix_layout int, m int, n int, a &f64, lda int, ipiv &int) int
 
-fn C.LAPACKE_dgetri(n int, a &f64, lda int, ipiv &int) int
+fn C.LAPACKE_dgetri(matrix_layout int, n int, a &f64, lda int, ipiv &int) int
 
-fn C.LAPACKE_dpotrf(lapack_col_major int, up u32, n int, a &f64, lda int) int
+fn C.LAPACKE_dpotrf(matrix_layout int, up u32, n int, a &f64, lda int) int
 
-fn C.LAPACKE_dgeev(lapack_col_major int, calc_vl byte, calc_vr byte, n int, a &f64, lda int, wr &f64, wi &f64, vl &f64, ldvl_ int, vr &f64, ldvr_ int) int
+fn C.LAPACKE_dgeev(matrix_layout int, calc_vl byte, calc_vr byte, n int, a &f64, lda int, wr &f64, wi &f64, vl &f64, ldvl_ int, vr &f64, ldvr_ int) int
 
-fn C.LAPACKE_dlange(norm byte, m int, n int, a &f64, lda int, work &f64) f64
+fn C.LAPACKE_dlange(matrix_layout int, norm byte, m int, n int, a &f64, lda int, work &f64) f64
 
-fn C.LAPACKE_dsyev(jobz byte, uplo byte, n int, a &f64, lda int, w &f64, work &f64, lwork int, info &int)
+fn C.LAPACKE_dsyev(matrix_layout int, jobz byte, uplo byte, n int, a &f64, lda int, w &f64, work &f64, lwork int, info &int)
 
-fn C.LAPACKE_dgebal(job byte, n int, a &f64, lda int, ilo int, ihi int, scale &f64, info &int)
+fn C.LAPACKE_dgebal(matrix_layout int, job byte, n int, a &f64, lda int, ilo int, ihi int, scale &f64, info &int)
 
-fn C.LAPACKE_dgehrd(n int, ilo int, ihi int, a &f64, lda int, tau &f64, work &f64, lwork int, info &int)
+fn C.LAPACKE_dgehrd(matrix_layout int, n int, ilo int, ihi int, a &f64, lda int, tau &f64, work &f64, lwork int, info &int)
 
 // dgesv computes the solution to a real system of linear equations.
 //
@@ -50,7 +50,7 @@ pub fn dgesv(n int, nrhs int, mut a []f64, lda int, ipiv []int, mut b []f64, ldb
 	if ipiv.len != n {
 		errors.vsl_panic('ipiv.len must be equal to n. $ipiv.len != $n\n', .efailed)
 	}
-	info := C.LAPACKE_dgesv(n, nrhs, unsafe { &a[0] }, lda, &ipiv[0], unsafe { &b[0] },
+	info := C.LAPACKE_dgesv(lapack_col_major, n, nrhs, unsafe { &a[0] }, lda, &ipiv[0], unsafe { &b[0] },
 		ldb)
 	if info != 0 {
 		errors.vsl_panic('lapack failed', .efailed)
@@ -78,7 +78,7 @@ pub fn dgesv(n int, nrhs int, mut a []f64, lda int, ipiv []int, mut b []f64, ldb
 //
 // NOTE: matrix 'a' will be modified
 pub fn dgesvd(jobu byte, jobvt byte, m int, n int, a []f64, lda int, s []f64, u []f64, ldu int, vt []f64, ldvt int, superb []f64) {
-	info := C.LAPACKE_dgesvd(jobu, jobvt, m, n, &a[0], lda, &s[0], &u[0], ldu, &vt[0],
+	info := C.LAPACKE_dgesvd(lapack_col_major, jobu, jobvt, m, n, &a[0], lda, &s[0], &u[0], ldu, &vt[0],
 		ldvt, &superb[0])
 	if info != 0 {
 		errors.vsl_panic('lapack failed', .efailed)
@@ -120,7 +120,7 @@ pub fn dgetrf(m int, n int, mut a []f64, lda int, ipiv []int) {
 // inv(A)*L = inv(U) for inv(A).
 pub fn dgetri(n int, mut a []f64, lda int, ipiv []int) {
 	unsafe {
-		info := C.LAPACKE_dgetri(n, &a[0], lda, &ipiv[0])
+		info := C.LAPACKE_dgetri(lapack_col_major, n, &a[0], lda, &ipiv[0])
 		if info != 0 {
 			errors.vsl_panic('lapack failed', .efailed)
 		}
@@ -201,5 +201,5 @@ pub fn dgeev(calc_vl bool, calc_vr bool, n int, mut a []f64, lda int, wr []f64, 
 }
 
 pub fn dlange(norm byte, m int, n int, a []f64, lda int, work []f64) f64 {
-	return unsafe { C.LAPACKE_dlange(norm, m, n, &a[0], lda, &work[0]) }
+	return unsafe { C.LAPACKE_dlange(lapack_col_major, norm, m, n, &a[0], lda, &work[0]) }
 }

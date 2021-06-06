@@ -29,17 +29,17 @@ pub mut:
 
 // stat returns a new Stat object
 pub fn stat_from_data(mut data Data, name string) &Stat {
-	mut o := Stat{
+	mut o := &Stat{
 		data: data
+		min_x: []f64{len: data.nb_features}
+		max_x: []f64{len: data.nb_features}
+		sum_x: []f64{len: data.nb_features}
+		mean_x: []f64{len: data.nb_features}
+		sig_x: []f64{len: data.nb_features}
+		del_x: []f64{len: data.nb_features}
 	}
-	o.min_x = []f64{len: data.nb_features}
-	o.max_x = []f64{len: data.nb_features}
-	o.sum_x = []f64{len: data.nb_features}
-	o.mean_x = []f64{len: data.nb_features}
-	o.sig_x = []f64{len: data.nb_features}
-	o.del_x = []f64{len: data.nb_features}
 	data.add_observer(o)
-	return &o
+	return o
 }
 
 // name returns the name of this stat object (thus defining the Observer interface)

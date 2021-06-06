@@ -26,7 +26,6 @@ pub mut:
 	nb_features int        // number of features. number of columns in x
 	x           &la.Matrix // [nb_samples][nb_features] x values
 	y           []f64      // [nb_samples] y values [optional]
-	stat        &Stat = voidptr(0) // statistics about this data
 }
 
 // data returns a new object to hold ML data
@@ -50,7 +49,6 @@ pub fn new_data(nb_samples int, nb_features int, use_y bool, allocate bool) Data
 		nb_samples: nb_samples
 		nb_features: nb_features
 	}
-	o.stat = stat_from_data(mut o, 'stat_for_data')
 	return o
 }
 
