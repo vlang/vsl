@@ -20,8 +20,8 @@ import vsl.errors
 */
 [heap]
 pub struct Data {
+	util.Observable
 pub mut:
-	observers   []util.Observer // list of interested parties
 	nb_samples  int        // number of data points (samples). number of rows in x and y
 	nb_features int        // number of features. number of columns in x
 	x           &la.Matrix // [nb_samples][nb_features] x values
@@ -47,12 +47,10 @@ pub fn new_data(nb_samples int, nb_features int, use_y bool, allocate bool) Data
 	mut o := Data{
 		x: x
 		y: y
-		observers: []
 		nb_samples: nb_samples
 		nb_features: nb_features
 	}
-	stat := stat_from_data(mut o, 'stat_for_data')
-	o.stat = stat
+	o.stat = stat_from_data(mut o, 'stat_for_data')
 	return o
 }
 
@@ -148,16 +146,4 @@ pub fn (o Data) clone() Data {
 		p.y = o.y.clone()
 	}
 	return p
-}
-
-// add_observer adds an object to the list of interested observers
-pub fn (mut o Data) add_observer(obs util.Observer) {
-	o.observers << obs
-}
-
-// notify_update notifies observers of updates
-pub fn (o Data) notify_update() {
-	for obs in o.observers {
-		obs.update()
-	}
 }

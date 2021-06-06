@@ -150,3 +150,15 @@ pub fn (mut o LinReg) calce() {
 	o.e = la.matrix_vector_mul_add(1, x, theta) // e := b⋅o + x⋅theta
 	o.e = la.vector_add(1, o.e, -1, y) // e := b⋅o + x⋅theta - y
 }
+
+// str is a custom str function for observers to avoid printing data
+pub fn (o &LinReg) str() string {
+	mut res := []string{}
+	res << 'vsl.ml.LinReg{'
+	res << '	name: $o.name'
+	res << '    params: $o.params'
+	res << '    stat: $o.stat'
+	res << '    e: $o.e'
+	res << '}'
+	return res.join('\n')
+} 

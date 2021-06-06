@@ -4,12 +4,14 @@ import vsl.blas.vlas.internal.float64 { l2_distance_unitary }
 import vsl.errors
 
 // KNN is the struct defining a K-Nearest Neighbors classifier.
+[heap]
 pub struct KNN {
 mut:
+	name    string      // name of this "observer"
 	data    &Data
 	weights map[f64]f64 // weights[class] = weight
 pub mut:
-	neighbors []&Neighbor
+	neighbors []Neighbor
 }
 
 // Neighbor is a support struct to help organizing the code
@@ -27,21 +29,27 @@ mut:
 // ```mut knn := new_knn(mut data_from_raw_xy_sep([[0.0, 0.0], [10.0, 10.0]], [0.0, 1.0]))```
 // If you predict with `knn.predict(1, [9.0, 9.0])`, it should return 1.0 as it is the closest
 // to [10.0, 10.0] (which is class 1.0).
-pub fn new_knn(mut data Data) &KNN {
+pub fn new_knn(mut data Data, name string) &KNN {
 	if data.x.data.len == 0 {
-		errors.vsl_panic('vls.ml.knn.new_knn expects data.x to have at least one element.',
+		errors.vsl_panic('vsl.ml.knn.new_knn with name $name expects `data.x` to have at least one element.',
 			.einval)
 	}
 	if data.y.len == 0 {
-		errors.vsl_panic('vls.ml.knn.new_knn expects data.y to have at least one element.',
+		errors.vsl_panic('vsl.ml.knn.new_knn with name $name expects `data.y` to have at least one element.',
 			.einval)
 	}
 	mut knn := KNN{
+		name: name,
 		data: data
 	}
 	data.add_observer(knn) // need to recompute neighbors upon data changes
 	knn.update() // compute first neighbors
 	return &knn
+}
+
+// name returns the name of this KNN object (thus defining the Observer interface)
+pub fn (o &KNN) name() string {
+	return o.name
 }
 
 // set_weights will set the weights for the KNN. They default to
@@ -70,9 +78,9 @@ pub fn (mut knn KNN) set_weights(weights map[f64]f64) {
 // update perform updates after data has been changed (as an Observer)
 pub fn (mut knn KNN) update() {
 	mut x := knn.data.x.get_deep2()
-	knn.neighbors = []&Neighbor{cap: x.len}
+	knn.neighbors = []Neighbor{cap: x.len}
 	for i := 0; i < x.len; i++ {
-		knn.neighbors << &Neighbor{
+		knn.neighbors << Neighbor{
 			point: x[i]
 			class: knn.data.y[i]
 		}
@@ -168,3 +176,14 @@ pub fn (mut knn KNN) predict(config PredictConfig) f64 {
 
 	return most_shown
 }
+
+// str is a custom str function for observers to avoid printing data
+pub fn (o &KNN) str() string {
+	mut res := []string{}
+	res << 'vsl.ml.KNN{'
+	res << '	name: $o.name'
+	res << '    weights: $o.weights'
+	res << '    neighbors: $o.neighbors'
+	res << '}'
+	return res.join('\n')
+} 

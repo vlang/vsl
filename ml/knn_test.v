@@ -19,7 +19,7 @@ fn test_knn_predict() {
 		1,
 		1,
 	]
-	mut knn := new_knn(mut data_from_raw_xy_sep(x, y))
+	mut knn := new_knn(mut data_from_raw_xy_sep(x, y), 'knn')
 	assert knn.predict(k: 1, to_pred: [0.333333, 0.66666]) == 0.0
 	assert knn.predict(k: 1, to_pred: [11., 9.3]) == 1.0
 }
@@ -43,7 +43,7 @@ fn test_knn_predict_with_data_change() {
 	]
 	mut data := data_from_raw_xy_sep(x, y)
 
-	mut knn := new_knn(mut data)
+	mut knn := new_knn(mut data, 'knn')
 	assert knn.predict(k: 1, to_pred: [0.333333, 0.66666]) == 0.0
 	assert knn.predict(k: 1, to_pred: [11., 9.3]) == 1.0
 
@@ -82,7 +82,7 @@ fn test_knn_predict_with_weights() {
 		3:  1
 	}
 	mut train_data := data_from_raw_xy_sep(x, y)
-	mut knn := new_knn(mut train_data)
+	mut knn := new_knn(mut train_data, 'knn')
 	knn.set_weights(w)
 	assert knn.predict(k: 5, to_pred: [9.8]) == 2.
 

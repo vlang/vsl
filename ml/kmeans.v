@@ -8,6 +8,7 @@ import vsl.la
 [heap]
 pub struct Kmeans {
 mut:
+	name    string      // name of this "observer"
 	data       &Data    // x data
 	nb_classes int      // expected number of classes
 	bins       &gm.Bins // "bins" to speed up searching for data points given their coordinates (2D or 3D only at the moment)
@@ -37,6 +38,11 @@ pub fn new_kmeans(mut data Data, nb_classes int) &Kmeans {
 	data.add_observer(o) // need to recompute bins upon data changes
 	o.update() // compute first bins
 	return &o
+}
+
+// name returns the name of this Kmeans object (thus defining the Observer interface)
+pub fn (o &Kmeans) name() string {
+	return o.name
 }
 
 // update perform updates after data has been changed (as an Observer)
@@ -118,3 +124,18 @@ pub fn (mut o Kmeans) train(config TrainConfig) int {
 	}
 	return nb_iter
 }
+
+// str is a custom str function for observers to avoid printing data
+pub fn (o &Kmeans) str() string {
+	mut res := []string{}
+	res << 'vsl.ml.Kmeans{'
+	res << '	name: $o.name'
+	res << '    nb_classes: $o.nb_classes'
+	res << '    bins: $o.bins'
+	res << '    classes: $o.classes'
+	res << '    centroids: $o.centroids'
+	res << '    nb_members: $o.nb_members'
+	res << '}'
+	return res.join('\n')
+} 
+

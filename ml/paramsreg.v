@@ -5,8 +5,8 @@ import vsl.util
 
 [heap]
 pub struct ParamsReg {
+	util.Observable
 pub mut:
-	observers []util.Observer // list of interested parties
 	// main
 	theta  []f64 // theta parameter [nb_features]
 	bias   f64   // bias parameter
@@ -146,16 +146,4 @@ pub fn (mut o ParamsReg) set_degree(p int) {
 // get_degree gets a copy of p
 pub fn (o &ParamsReg) get_degree() int {
 	return o.degree
-}
-
-// add_observer adds an object to the list of interested observers
-pub fn (mut o ParamsReg) add_observer(obs util.Observer) {
-	o.observers << obs
-}
-
-// notify_update notifies observers of updates
-pub fn (o &ParamsReg) notify_update() {
-	for obs in o.observers {
-		obs.update()
-	}
 }

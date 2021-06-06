@@ -1,6 +1,6 @@
 module errors
 
-pub fn str_error(errno ErrorCode) string {
+pub fn (errno ErrorCode) str() string {
 	return match errno {
 		.success { 'success' }
 		.failure { 'failure' }
