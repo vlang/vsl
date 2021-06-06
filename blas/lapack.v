@@ -18,11 +18,11 @@ fn C.LAPACKE_dgeev(matrix_layout int, calc_vl byte, calc_vr byte, n int, a &f64,
 
 fn C.LAPACKE_dlange(matrix_layout int, norm byte, m int, n int, a &f64, lda int, work &f64) f64
 
-fn C.LAPACKE_dsyev(matrix_layout int, jobz byte, uplo byte, n int, a &f64, lda int, w &f64, work &f64, lwork int)
+fn C.LAPACKE_dsyev(matrix_layout int, jobz byte, uplo byte, n int, a &f64, lda int, w &f64, work &f64, lwork int) int
 
-fn C.LAPACKE_dgebal(matrix_layout int, job byte, n int, a &f64, lda int, ilo int, ihi int, scale &f64)
+fn C.LAPACKE_dgebal(matrix_layout int, job byte, n int, a &f64, lda int, ilo int, ihi int, scale &f64) int
 
-fn C.LAPACKE_dgehrd(matrix_layout int, n int, ilo int, ihi int, a &f64, lda int, tau &f64, work &f64, lwork int)
+fn C.LAPACKE_dgehrd(matrix_layout int, n int, ilo int, ihi int, a &f64, lda int, tau &f64, work &f64, lwork int) int
 
 // dgesv computes the solution to a real system of linear equations.
 //
