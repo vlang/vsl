@@ -96,6 +96,7 @@ pub fn (mut knn KNN) update() {
 pub struct PredictConfig {
 	max_iter int
 	k        int
+mut:
 	to_pred  []f64
 }
 
@@ -121,7 +122,8 @@ pub fn (mut knn KNN) predict(config PredictConfig) f64 {
 	for i := 0; i < x.len; i++ {
 		knn.neighbors[i].distance = l2_distance_unitary(to_pred, x[i]) / knn.weights[knn.neighbors[i].class]
 	}
-	knn.neighbors.sort(a.distance < b.distance)
+	mut neighbors := knn.neighbors.clone()
+	neighbors.sort(a.distance < b.distance)
 
 	// Break ties
 	mut new_k := k
@@ -136,7 +138,7 @@ pub fn (mut knn KNN) predict(config PredictConfig) f64 {
 		}
 
 		tied = false
-		mut tmp_neighbors := knn.neighbors[0..new_k].clone()
+		mut tmp_neighbors := neighbors[0..new_k].clone()
 		mut freq := map[f64]int{}
 		for n in tmp_neighbors {
 			if n.class !in freq {
