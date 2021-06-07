@@ -84,7 +84,7 @@ fn new_guarded_vector(data []f64, inc int) ([]f64, []f64, []f64) {
 	if inc_ < 0 {
 		inc_ = -inc_
 	}
-	guard := 2 * inc
+	guard := 2 * inc_
 	size := (data.len - 1) * inc_ + 1
 	mut whole := []f64{len: size + 2 * guard}
 	mut v := whole[guard..whole.len - guard]
