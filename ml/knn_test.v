@@ -86,7 +86,7 @@ fn test_knn_predict_with_weights() {
 	knn.set_weights(w)
 	assert knn.predict(k: 5, to_pred: [9.8]) == 2.
 
-	w[3.] = 2.
+	w[3.] = 100.
 	knn.set_weights(w)
 	assert knn.predict(k: 5, to_pred: [9.8]) == 3.
 }
