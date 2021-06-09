@@ -145,7 +145,11 @@ $ ./bin/test # execute `./bin/test -h` to know more about the test command
 
 ## Contributors
 
-- [Ulises Jeremias Cornejo Fandos](https://github.com/ulises-jeremias) - creator and maintainer
+<a href="https://github.com/vlang/vsl/contributors">
+  <img src="https://contrib.rocks/image?repo=vlang/vsl"/>
+</a>
+
+Made with [contributors-img](https://contrib.rocks).
 
 [awesomevbadge]: https://awesome.re/mentioned-badge.svg
 [workflowbadge]: https://github.com/vlang/vsl/workflows/Build%20and%20Test%20with%20deps/badge.svg
