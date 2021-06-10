@@ -48,5 +48,3 @@ echo "Executing tests with command: \"v ${flags} test .\""
 v ${flags} test ${vsl_dir_path}
 
 find ${vsl_dir_path} -name '*_test' -exec rm -f {} +
-
-rm -f vsl
