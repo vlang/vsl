@@ -28,10 +28,10 @@ jobs:
     - name: Move VSL source code to V Modules
       run: mv ./vsl ~/.vmodules
     - name: Execute Tests using Pure V Backend with Vlib Math
-      run: ./vsl/bin/test
+      run: ~/.vmodules/vsl/bin/test
     - name: Execute Tests using Pure V Backend with Pure V Math
-      run: ./vsl/bin/test --use-vmath
+      run: ~/.vmodules/vsl/bin/test --use-vmath
     - name: Execute Tests using Open BLAS Backend
-      run: ./vsl/bin/test --use-cblas
+      run: ~/.vmodules/vsl/bin/test --use-cblas
     - name: Execute Tests using Open BLAS Backend and Pure V Math
-      run: ./vsl/bin/test --use-vmath --use-cblas
+      run: ~/.vmodules/vsl/bin/test --use-vmath --use-cblas
