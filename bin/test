@@ -20,8 +20,7 @@ source "${ROOT}/util/logs.sh" || exit
 
 set -eo pipefail
 
-rm -f vsl 
-ln -s . vsl
+vsl_dir_path=$(dirname $(dirname "$0"))
 
 flags=""
 
@@ -46,8 +45,8 @@ if [[ -n "${stats}" ]]; then
 fi
 
 echo "Executing tests with command: \"v ${flags} test .\""
-v ${flags} test .
+v ${flags} test ${vsl_dir_path}
 
-find . -name '*_test' -exec rm -f {} +
+find ${vsl_dir_path} -name '*_test' -exec rm -f {} +
 
 rm -f vsl

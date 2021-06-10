@@ -25,13 +25,13 @@ jobs:
     - name: Install VSL and dependencies
       run: |
         sudo apt-get install --quiet -y --no-install-recommends gfortran liblapacke-dev libopenblas-dev
-    - name: Symlink vsl to .vmodules
-      run: ln -s $(realpath vsl) ~/.vmodules/vsl
+    - name: Move VSL source code to V Modules
+      run: mv ./vsl ~/.vmodules
     - name: Execute Tests using Pure V Backend with Vlib Math
-      run: cd vsl; ./bin/test
+      run: ./vsl/bin/test
     - name: Execute Tests using Pure V Backend with Pure V Math
-      run: cd vsl; ./bin/test --use-vmath
+      run: ./vsl/bin/test --use-vmath
     - name: Execute Tests using Open BLAS Backend
-      run: cd vsl; ./bin/test --use-cblas
+      run: ./vsl/bin/test --use-cblas
     - name: Execute Tests using Open BLAS Backend and Pure V Math
-      run: cd vsl; ./bin/test --use-vmath --use-cblas
+      run: ./vsl/bin/test --use-vmath --use-cblas

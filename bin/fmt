@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-rm -f vsl 
-ln -s . vsl
+vsl_dir_path=$(dirname $(dirname "$0"))
 
-find . -name "*.v" -exec v fmt -w {} +
-
-rm -f vsl
+find ${vsl_dir_path} -name "*.v" -exec v fmt -w {} +
