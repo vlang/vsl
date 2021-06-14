@@ -13,14 +13,14 @@ pub fn (e ErrVCL) str() IError {
 }
 
 pub fn vcl_error(code C.cl_int) IError {
-	if code == 0 {
+	if code == C.CL_SUCCESS {
 		return none
 	}
 	return error_with_code(ErrVCL(code).str(), code)
 }
 
 pub fn vcl_panic(code C.cl_int) {
-	if code != 0 {
+	if code != C.CL_SUCCESS {
 		panic(ErrVCL(code).str())
 	}
 }

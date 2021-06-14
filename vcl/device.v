@@ -13,7 +13,7 @@ pub enum DeviceType {
 // represents the device on which memory can be allocated and kernels run
 // it abstracts away all the complexity of contexts/platforms/queues
 pub struct Device {
-pub:
+mut:
 	id       C.cl_device_id
 	ctx      C.cl_context
 	queue    C.cl_command_queue
@@ -24,16 +24,16 @@ pub:
 pub fn (mut d Device) release() ? {
 	for p in d.programs {
 		code := C.clReleaseProgram(p)
-		if code != 0 {
+		if code != C.CL_SUCCESS {
 			return vcl_error(code)
 		}
 	}
 	mut code := C.clReleaseCommandQueue(d.queue)
-	if code != 0 {
+	if code != C.CL_SUCCESS {
 		return vcl_error(code)
 	}
 	code = C.clReleaseContext(d.ctx)
-	if code != 0 {
+	if code != C.CL_SUCCESS {
 		return vcl_error(code)
 	}
 	return vcl_error(C.clReleaseDevice(d.id))
@@ -43,7 +43,7 @@ fn (d Device) get_info_str(param C.cl_device_info, panic_on_error bool) ?string 
 	mut info_bytes := [1024]byte{}
 	mut info_bytes_size := u64(0)
 	code := C.clGetDeviceInfo(d.id, param, 1024, &info_bytes[0], &info_bytes_size)
-	if code != 0 {
+	if code != C.CL_SUCCESS {
 		if panic_on_error {
 			vcl_panic(code)
 		}
@@ -96,5 +96,21 @@ pub fn (d Device) driver_version() string {
 // add_program copiles program source
 // if an error occurs in building the program the add_program will panic
 pub fn (mut d Device) add_program(source string) {
-	// todo
+	mut ret := C.cl_int(0)
+	p := C.clCreateProgramWithSource(d.ctx, 1, &source, voidptr(0), &ret)
+	if ret != C.CL_SUCCESS {
+		vcl_panic(ret)
+	}
+	ret = C.clBuildProgram(p, 1, &d.id, voidptr(0), voidptr(0), voidptr(0))
+	if ret != C.CL_SUCCESS {
+		if ret == C.CL_BUILD_PROGRAM_FAILURE {
+			mut n := C.size_t(0)
+			C.clGetProgramBuildInfo(p, d.id, C.CL_PROGRAM_BUILD_LOG, 0, voidptr(0), &n)
+			log := []byte{len: int(n)}
+			C.clGetProgramBuildInfo(p, d.id, C.CL_PROGRAM_BUILD_LOG, n, &log[0], voidptr(0))
+			panic(string(log))
+		}
+		vcl_panic(ret)
+	}
+	d.programs << p
 }
