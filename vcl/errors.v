@@ -9,7 +9,7 @@ const (
 pub type ErrVCL = C.cl_int
 
 pub fn (e ErrVCL) str() IError {
-	match e {
+	err := match e {
 		C.CL_SUCCESS { '' }
 		C.CL_DEVICE_NOT_FOUND { vcl.err_device_not_found }
 		C.CL_DEVICE_NOT_AVAILABLE { vcl.err_device_not_available }
@@ -62,6 +62,7 @@ pub fn (e ErrVCL) str() IError {
 		C.CL_INVALID_PROPERTY { err_invalid_propert }
 		default { 'cl: error $e' }
 	}
+	return error_with_code(err, int(e))
 }
 
 pub fn vcl_error(code C.cl_int) IError {
