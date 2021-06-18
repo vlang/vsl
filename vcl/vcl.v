@@ -6,7 +6,7 @@ pub fn get_devices(device_type DeviceType) ?[]&Device {
 	mut devices := []&Device{}
 
 	for p in platform_ids {
-		mut n := C.cl_uint(0)
+		mut n := u32(0)
 		mut ret := C.clGetDeviceIDs(p, C.cl_device_type(deviceType), 0, voidptr(0), &n)
 		if ret != C.CL_SUCCESS {
 			return vcl_error(ret)
@@ -36,7 +36,7 @@ pub fn get_default_device() ?&Device {
 }
 
 fn get_platforms() ?[]C.cl_platform_id {
-	mut id := C.cl_uint(0)
+	mut id := u32(0)
 	mut ret := C.clGetPlatformIDs(0, voidptr(0), &n)
 	if ret != C.CL_SUCCESS {
 		return vcl_error(ret)
@@ -53,7 +53,7 @@ fn new_device(id C.cl_device_id) ?&Device {
 	mut d := &Device{
 		id: id
 	}
-	mut ret := C.cl_int(0)
+	mut ret := 0
 	d.ctx = C.clCreateContext(voidptr(0), 1, &id, voidptr(0), voidptr(0), &ret)
 	if ret != C.CL_SUCCESS {
 		return vcl_error(ret)

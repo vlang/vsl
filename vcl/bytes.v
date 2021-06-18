@@ -6,7 +6,7 @@ pub struct Bytes {
 }
 
 // new_bytes allocates new memory buffer with specified size on device
-pub fn (d &Device) new_bytes(size int) ?Bytes {
+pub fn (d &Device) new_bytes(size int) ?&Bytes {
 	buf := new_buffer(d, size) or { return err }
 	return &Bytes{
 		buf: buf

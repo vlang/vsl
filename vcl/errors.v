@@ -6,7 +6,7 @@ const (
 )
 
 // ErrVCL converts that OpenCL error code to an V error
-pub type ErrVCL = C.cl_int
+pub type ErrVCL = int
 
 pub fn (e ErrVCL) str() IError {
 	err := match e {
@@ -65,14 +65,14 @@ pub fn (e ErrVCL) str() IError {
 	return error_with_code(err, int(e))
 }
 
-pub fn vcl_error(code C.cl_int) IError {
+pub fn vcl_error(code int) IError {
 	if code == C.CL_SUCCESS {
 		return none
 	}
 	return error_with_code(ErrVCL(code).str(), code)
 }
 
-pub fn vcl_panic(code C.cl_int) {
+pub fn vcl_panic(code int) {
 	if code != C.CL_SUCCESS {
 		panic(ErrVCL(code).str())
 	}

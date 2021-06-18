@@ -12,6 +12,7 @@ pub enum DeviceType {
 // Device the only needed entrence for the VCL
 // represents the device on which memory can be allocated and kernels run
 // it abstracts away all the complexity of contexts/platforms/queues
+[heap]
 pub struct Device {
 mut:
 	id       C.cl_device_id
@@ -96,7 +97,7 @@ pub fn (d &Device) driver_version() string {
 // add_program copiles program source
 // if an error occurs in building the program the add_program will panic
 pub fn (mut d Device) add_program(source string) {
-	mut ret := C.cl_int(0)
+	mut ret := 0
 	p := C.clCreateProgramWithSource(d.ctx, 1, &source, voidptr(0), &ret)
 	if ret != C.CL_SUCCESS {
 		vcl_panic(ret)

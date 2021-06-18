@@ -10,7 +10,7 @@ mut:
 
 // new_buffer creates a new buffer with specified size
 fn new_buffer(d &Device, size int) ?&Buffer {
-	mut ret := C.cl_int(0)
+	mut ret := 0
 	cl_buffer := C.clCreateBuffer(d.ctx, C.CL_MEM_READ_WRITE, C.size_t(size), voidptr(0),
 		&ret)
 	if ret != C.CL_SUCCESS {
