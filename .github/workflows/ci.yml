@@ -25,8 +25,8 @@ jobs:
         sudo apt-get install --quiet -y --no-install-recommends gfortran liblapacke-dev libopenblas-dev
     - name: Move VSL source code to V Modules
       run: mv ./vsl ~/.vmodules
-    - name: Execute Tests using Pure V Backend with Vlib Math
-      run: ~/.vmodules/vsl/bin/test
+    # - name: Execute Tests using Pure V Backend with Vlib Math
+    #   run: ~/.vmodules/vsl/bin/test
     - name: Execute Tests using Pure V Backend with Pure V Math
       run: ~/.vmodules/vsl/bin/test --use-vmath
     - name: Execute Tests using Open BLAS Backend
