@@ -29,7 +29,7 @@ jobs:
     #   run: ~/.vmodules/vsl/bin/test
     - name: Execute Tests using Pure V Backend with Pure V Math
       run: ~/.vmodules/vsl/bin/test --use-vmath
-    - name: Execute Tests using Open BLAS Backend
-      run: ~/.vmodules/vsl/bin/test --use-cblas
-    # - name: Execute Tests using Open BLAS Backend and Pure V Math
-    #   run: ~/.vmodules/vsl/bin/test --use-vmath --use-cblas
+    # - name: Execute Tests using Open BLAS Backend
+    #   run: ~/.vmodules/vsl/bin/test --use-cblas
+    - name: Execute Tests using Open BLAS Backend and Pure V Math
+      run: ~/.vmodules/vsl/bin/test --use-vmath --use-cblas
