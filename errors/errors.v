@@ -1,21 +1,16 @@
 module errors
 
 [inline]
-pub fn vsl_error(reason string, errno ErrorCode) IError {
-	return error_with_code('vsl: $errno: $reason', int(errno))
+pub fn error(reason string, errno ErrorCode) IError {
+	return error_with_code(error_message(reason, errno), int(errno))
 }
 
 [inline]
 pub fn vsl_panic(reason string, errno ErrorCode) {
-	panic('vsl: $errno: $reason')
+	panic(error_message(reason, errno))
 }
 
 [inline]
-pub fn vsl_error_message(reason string, errno ErrorCode) string {
-	return 'vsl: $errno: $reason'
-}
-
-[inline]
-pub fn vsl_panic_message(reason string, errno ErrorCode) string {
+pub fn error_message(reason string, errno ErrorCode) string {
 	return 'vsl: $errno: $reason'
 }
