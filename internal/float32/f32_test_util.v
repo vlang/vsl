@@ -196,7 +196,7 @@ fn is_valid_inc_guard(vec []f32, gd_val f32, inc int, gd_ln int) bool {
 
 fn random_slice(n int, inc int) []f32 {
 	inc_ := if inc < 0 { -inc } else { inc }
-	mut x := []f32{len: (n-1)*inc_+1}
+	mut x := []f32{len: (n - 1) * inc_ + 1}
 	for i in 0 .. x.len {
 		x[i] = rand.f32()
 	}

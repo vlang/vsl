@@ -196,7 +196,7 @@ fn is_valid_inc_guard(vec []f64, gd_val f64, inc int, gd_ln int) bool {
 
 fn random_slice(n int, inc int) []f64 {
 	inc_ := if inc < 0 { -inc } else { inc }
-	mut x := []f64{len: (n-1)*inc_+1}
+	mut x := []f64{len: (n - 1) * inc_ + 1}
 	for i in 0 .. x.len {
 		x[i] = rand.f64()
 	}
