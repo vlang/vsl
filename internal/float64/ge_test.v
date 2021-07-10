@@ -70,7 +70,7 @@ struct GeTest {
 	want []f64
 }
 
-fn test_ge() {
+fn test_ger() {
 	tol := 1e-15
 
 	x_gd_val, y_gd_val, a_gd_val := -0.5, 1.5, 10

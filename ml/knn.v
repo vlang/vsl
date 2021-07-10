@@ -1,6 +1,6 @@
 module ml
 
-import vsl.blas.vlas.internal.float64 { l2_distance_unitary }
+import vsl.internal.float64 { l2_distance_unitary }
 import vsl.errors
 
 // KNN is the struct defining a K-Nearest Neighbors classifier.
