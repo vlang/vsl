@@ -17,7 +17,7 @@ pub fn newton_bisection(func func.FnFdf, x_min f64, x_max f64, tol f64, max_iter
 	}
 	// Root is not bracketed by x1 and x2
 	if (func_low > 0.0 && func_high > 0.0) || (func_low < 0.0 && func_high < 0.0) {
-		return errors.vsl_error('roots is not bracketed by $x_min and $x_max', .einval)
+		return errors.error('roots is not bracketed by $x_min and $x_max', .einval)
 	}
 	mut xl := 0.0
 	mut xh := 0.0
@@ -54,5 +54,5 @@ pub fn newton_bisection(func func.FnFdf, x_min f64, x_max f64, tol f64, max_iter
 			xh = rts
 		}
 	} // Maximum number of iterations exceeded
-	return errors.vsl_error('maximum number of iterations exceeded', .emaxiter)
+	return errors.error('maximum number of iterations exceeded', .emaxiter)
 }

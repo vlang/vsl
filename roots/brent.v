@@ -19,7 +19,7 @@ pub fn brent(func func.Fn, x1 f64, x2 f64, tol f64) ?(f64, f64) {
 	mut fb := func.eval(b)
 	mut fc := fa
 	if (fa > 0.0 && fb > 0.0) || (fa < 0.0 && fb < 0.0) {
-		return errors.vsl_error('roots must be bracketed', .einval)
+		return errors.error('roots must be bracketed', .einval)
 	}
 	// Test if one the endpoints is the root
 	if fa == 0.0 {

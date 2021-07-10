@@ -9,7 +9,7 @@ pub fn bisection(func func.Fn, xmin f64, xmax f64, epsrel f64, epsabs f64, n_max
 	fxmin := func.safe_eval(xmin) ?
 	fxmax := func.safe_eval(xmax) ?
 	if (fxmin < 0.0 && fxmax < 0.0) || (fxmin > 0.0 && fxmax > 0.0) {
-		return errors.vsl_error('endpoints do not straddle y=0', .einval)
+		return errors.error('endpoints do not straddle y=0', .einval)
 	}
 	mut a := xmin
 	mut b := xmax
