@@ -1,6 +1,6 @@
 module vlas
 
-import vsl.blas.vlas.internal.float64
+import vsl.internal.float64
 import vsl.util
 
 // dgemv computes
