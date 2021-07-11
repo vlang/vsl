@@ -29,8 +29,11 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
     make \
   && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# required compilers and libraries for gosl
+# required compilers and libraries for vsl
 RUN apt-get update -y && apt-get install -y --no-install-recommends \
+    python3.8 \
+    python3-pip \
+    python3.8-dev \
     gcc \
     gfortran \
     libopenmpi-dev \
