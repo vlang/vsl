@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# Create a git tag with an automatically generated changelog from git log
+
+# Gets the latest tag name (version number)
+LAST_TAG="$(git describe --tags --abbrev=0)"
+
+# Get all the commits between the last tag and HEAD, only print their titles
+CHANGELOG="$(git log "${LAST_TAG}"..HEAD --pretty='- %s' --reverse --no-merges)"
+
+# Help message for the tagger
+HELP_MSG="# Clean up the commit messages or add additional info below (this line won't be visible)"
+
+[ $# -ne 1 ] && echo "Usage: $0 [TAG] (e.g. 'tag v0.1.1')" && exit 1
+TAG_NAME="$1"
+
+# Multiple messages (-m) are needed, so they are separated as paragraphs
+git tag -a -m "${HELP_MSG}" -m "Changelog:" -m "${CHANGELOG}" -e "${TAG_NAME}"
+echo "Added tag ${TAG_NAME}."
