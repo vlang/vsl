@@ -26,7 +26,8 @@ fn main() {
 	//  -' '-   -' '_
 	//       '.'
 
-	plot.new_plot().add_trace(
+	mut plt := plot.new_plot()
+	plt.add_trace(
 		trace_type: .scatter
 		x: x
 		y: y
@@ -38,7 +39,9 @@ fn main() {
 		line: {
 			color: '#FF0000'
 		}
-	).set_layout(
+	)
+	plt.set_layout(
 		title: 'Scatter plot example'
-	).show() or { panic(err) }
+	)
+	plt.show() or { panic(err) }
 }
