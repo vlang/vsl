@@ -21,11 +21,6 @@ fn main() {
 	]
 	x := util.arange(y.len).map(f64(it))
 
-	// Expected output:
-	//	  .       .
-	//  -' '-   -' '_
-	//       '.'
-
 	mut plt := plot.new_plot()
 	plt.add_trace(
 		trace_type: .scatter

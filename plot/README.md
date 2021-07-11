@@ -10,14 +10,14 @@ we will try to solve it as soon as possible. Any suggestion is welcome!
 Check the examples folder and compare it to Plotly's Python examples
 for a better understanding.
 
-Supported Graph types:
+## Supported Graph Types
 
-- scatter
-- pie
-- heatmap
-- surface
-- scatter3d
-- bar
+- Bar
+- Heatmap
+- Pie
+- Scatter
+- Scatter 3D
+- Surface
 
 ## Examples
 
@@ -30,6 +30,7 @@ import vsl.plot
 
 fn main() {
 	mut plt := plot.new_plot()
+
 	plt.add_trace(
 		trace_type: .bar
 		x_str: ['China', 'India', 'USA', 'Indonesia', 'Pakistan']
@@ -63,6 +64,7 @@ import vsl.plot
 
 fn main() {
 	mut plt := plot.new_plot()
+
 	plt.add_trace(
 		trace_type: .pie
 		labels: ['Nitrogen', 'Oxygen', 'Argon', 'Other']
@@ -117,12 +119,8 @@ fn main() {
 	]
 	x := util.arange(y.len).map(f64(it))
 
-	// Expected output:
-	//	  .       .
-	//  -' '-   -' '_
-	//       '.'
-
 	mut plt := plot.new_plot()
+
 	plt.add_trace(
 		trace_type: .scatter
 		x: x

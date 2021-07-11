@@ -4,6 +4,7 @@ import vsl.plot
 
 fn main() {
 	mut plt := plot.new_plot()
+
 	plt.add_trace(
 		trace_type: .pie
 		labels: ['Nitrogen', 'Oxygen', 'Argon', 'Other']
