@@ -47,8 +47,8 @@ fn main() {
 <div align="center">
 <p>
     <img
-        style="width: 400px"
-        width="200"
+        style="width: 80%"
+		width="80%"
         src="https://raw.githubusercontent.com/vlang/vsl/master/plot/static/bar.png?sanitize=true"
     >
 </p>
@@ -84,8 +84,8 @@ fn main() {
 <div align="center">
 <p>
     <img
-        style="width: 400px"
-        width="200"
+        style="width: 80%"
+		width="80%"
         src="https://raw.githubusercontent.com/vlang/vsl/master/plot/static/pie.png?sanitize=true"
     >
 </p>
@@ -148,8 +148,8 @@ fn main() {
 <div align="center">
 <p>
     <img
-        style="width: 400px"
-        width="200"
+        style="width: 80%"
+		width="80%"
         src="https://raw.githubusercontent.com/vlang/vsl/master/plot/static/scatter.png?sanitize=true"
     >
 </p>
