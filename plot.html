@@ -61,14 +61,14 @@ we will try to solve it as soon as possible. Any suggestion is welcome!</p>
 <a href="https://plotly.com/python/graph-objects/">Plotly's graph_objects</a>.
 Check the examples folder and compare it to Plotly's Python examples
 for a better understanding.</p>
-<p>Supported Graph types:</p>
+<h2>Supported Graph Types</h2>
 <ul>
-<li>scatter</li>
-<li>pie</li>
-<li>heatmap</li>
-<li>surface</li>
-<li>scatter3d</li>
-<li>bar</li>
+<li>Bar</li>
+<li>Heatmap</li>
+<li>Pie</li>
+<li>Scatter</li>
+<li>Scatter 3D</li>
+<li>Surface</li>
 </ul>
 <h2>Examples</h2>
 <h3>Bar plot</h3>
@@ -78,6 +78,7 @@ import vsl.plot
 
 fn main() {
     mut plt := plot.new_plot()
+
     plt.add_trace(
         trace_type: .bar
         x_str: ['China', 'India', 'USA', 'Indonesia', 'Pakistan']
@@ -108,6 +109,7 @@ import vsl.plot
 
 fn main() {
     mut plt := plot.new_plot()
+
     plt.add_trace(
         trace_type: .pie
         labels: ['Nitrogen', 'Oxygen', 'Argon', 'Other']
@@ -159,12 +161,8 @@ fn main() {
     ]
     x := util.arange(y.len).map(f64(it))
 
-    // Expected output:
-    //	  .       .
-    //  -' '-   -' '_
-    //       '.'
-
     mut plt := plot.new_plot()
+
     plt.add_trace(
         trace_type: .scatter
         x: x
@@ -354,7 +352,7 @@ fn main() {
 </section>
 
 						<div class="footer">
-							Powered by vdoc. Generated on: 11 Jul 2021 02:03:43
+							Powered by vdoc. Generated on: 11 Jul 2021 04:52:46
 						</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_plot">README</a></li>
