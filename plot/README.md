@@ -42,6 +42,16 @@ fn main() {
 }
 ```
 
+<div align="center">
+<p>
+    <img
+        style="width: 300px"
+        width="200"
+        src="https://raw.githubusercontent.com/vlang/vsl/master/plot/static/bar.png?sanitize=true"
+    >
+</p>
+</div>
+
 ### Pie plot
 
 ```v
@@ -66,6 +76,16 @@ fn main() {
 	plt.show() or { panic(err) }
 }
 ```
+
+<div align="center">
+<p>
+    <img
+        style="width: 300px"
+        width="200"
+        src="https://raw.githubusercontent.com/vlang/vsl/master/plot/static/pie.png?sanitize=true"
+    >
+</p>
+</div>
 
 ### Scatter plot
 
@@ -118,3 +138,13 @@ fn main() {
 	plt.show() or { panic(err) }
 }
 ```
+
+<div align="center">
+<p>
+    <img
+        style="width: 300px"
+        width="200"
+        src="https://raw.githubusercontent.com/vlang/vsl/master/plot/static/scatter.png?sanitize=true"
+    >
+</p>
+</div>
