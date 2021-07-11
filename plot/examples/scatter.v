@@ -7,7 +7,7 @@ fn main() {
 	y := [
 		0., 1, 3, 1, 0, -1, -3, -1, 0, 1, 3, 1, 0
 	]
-	x := util.arange(0, y.len).map(f64(i))
+	x := util.arange(y.len).map(f64(it))
 
 	// Expected output:
 	//	  .       .
@@ -28,8 +28,8 @@ fn main() {
 				color: '#FF0000',
 			}
 		)
-		set_layout(
+		.set_layout(
 			title: 'Scatter plot example'
 		)
-		show() or { panic(err) }
+		.show() or { panic(err) }
 }
