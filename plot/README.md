@@ -42,10 +42,12 @@ fn main() {
 }
 ```
 
+> Output
+
 <div align="center">
 <p>
     <img
-        style="width: 300px"
+        style="width: 400px"
         width="200"
         src="https://raw.githubusercontent.com/vlang/vsl/master/plot/static/bar.png?sanitize=true"
     >
@@ -77,10 +79,12 @@ fn main() {
 }
 ```
 
+> Output
+
 <div align="center">
 <p>
     <img
-        style="width: 300px"
+        style="width: 400px"
         width="200"
         src="https://raw.githubusercontent.com/vlang/vsl/master/plot/static/pie.png?sanitize=true"
     >
@@ -139,10 +143,12 @@ fn main() {
 }
 ```
 
+> Output
+
 <div align="center">
 <p>
     <img
-        style="width: 300px"
+        style="width: 400px"
         width="200"
         src="https://raw.githubusercontent.com/vlang/vsl/master/plot/static/scatter.png?sanitize=true"
     >
