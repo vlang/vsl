@@ -10,6 +10,10 @@ we will try to solve it as soon as possible. Any suggestion is welcome!
 Check the examples folder and compare it to Plotly's Python examples
 for a better understanding.
 
+## Dependencies
+
+- [Python 3](https://www.python.org/)
+
 ## Supported Graph Types
 
 - Bar
