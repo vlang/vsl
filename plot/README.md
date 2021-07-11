@@ -1,9 +1,9 @@
 # VSL Plot
 
 > This is in a very early stage of development so issues are to be expected.
-> The lack of features is the major problem right now, but these are slowly but
-> surely going to be added. If you find any problem, please file an issue and
-> we will try to solve it as soon as possible. Any suggestion is welcome!
+The lack of features is the major problem right now, but these are slowly but
+surely going to be added. If you find any problem, please file an issue and
+we will try to solve it as soon as possible. Any suggestion is welcome!
 
 `vsl.plot` follows the structure of
 [Plotly's graph_objects](https://plotly.com/python/graph-objects/).
@@ -47,7 +47,8 @@ fn main() {
 <div align="center">
 <p>
     <img
-        style="width: 80%"
+        style="width: 400px"
+		width="80%"
         src="https://raw.githubusercontent.com/vlang/vsl/master/plot/static/bar.png?sanitize=true"
     >
 </p>
@@ -83,7 +84,8 @@ fn main() {
 <div align="center">
 <p>
     <img
-        style="width: 80%"
+        style="width: 400px"
+		width="80%"
         src="https://raw.githubusercontent.com/vlang/vsl/master/plot/static/pie.png?sanitize=true"
     >
 </p>
@@ -146,7 +148,8 @@ fn main() {
 <div align="center">
 <p>
     <img
-        style="width: 80%"
+        style="width: 400px"
+		width="80%"
         src="https://raw.githubusercontent.com/vlang/vsl/master/plot/static/scatter.png?sanitize=true"
     >
 </p>
