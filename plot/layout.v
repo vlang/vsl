@@ -1,5 +1,6 @@
 module plot
 
+// Layout
 pub struct Layout {
 pub mut:
 	title		string
@@ -10,5 +11,4 @@ pub mut:
 	xaxis		Axis
 	yaxis		Axis
 	annotations []Annotation
-	// WIP: new properties will be added eventually.
 }

@@ -7,14 +7,13 @@ pub enum TraceType {
 	surface
 	scatter3d
 	bar
-	// WIP: new trace types will be added eventually.
 }
 
 pub struct Trace {
 pub mut:
 	trace_type		TraceType	[required]
 	x				[]f64
-	x_str			[]string	// for bar graphs
+	x_str			[]string
 	y				[]f64
 	z				[][]f64
 	values			[]f64
@@ -29,7 +28,6 @@ pub mut:
 	hole			f64
 	colorscale		string	= 'Viridis'
 	hovertemplate	string
-	// WIP: new properties will be added eventually.
 }
 
 pub struct Marker {
@@ -38,13 +36,12 @@ pub mut:
 	color			[]string
 	opacity			f64		= 0.8
 	colorscale		string	= 'Viridis'
-	// WIP: new properties will be added eventually.
 }
 
 pub struct Line {
 pub mut:
 	color			string
 	width			f64		= 2.0
-	dash			string	= 'solid' // check Plotly docs for more dash types
-	// WIP: new properties will be added eventually.
+	// check Plotly docs for more dash types
+	dash			string	= 'solid'
 }

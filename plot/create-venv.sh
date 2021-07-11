@@ -1,26 +1,38 @@
-#!/bin/bash
-usr=$(whoami)
-cd "/home/$usr/.vmodules/vsl/plot"
+#!/usr/bin/env bash
 
-which python &>/dev/null
+## Copyright (C) 2019-2021 The VSL Team
+## Licensed under MIT
+##
+##     @script.name [OPTION] ARGUMENTS...
+##
+## Options:
+##     -h, --help                            Prints usage and example
+##         --venv=PATH                       Virtual Env path
+##
 
-if [[ $? -eq 1 ]]; then
-	echo "Please install Python 3 and link it to /bin/python."
-	exit
+ROOT=$(dirname "$0")
+
+source "${ROOT}/../bin/util/opts/opts.sh" || exit
+
+if ! type -p python &>/dev/null; then
+    echo "Install Python 3 and link it to python binary."
+    exit 1
 fi
 
 pyver=$(python -c "import platform; print(str(platform.python_version()).split('.')[0])")
 
-echo "$pyver"
-
-if [[ $pyver != "3" ]]; then
-	echo "The detected Python version is < 3.0.0,
+if [[ "${pyver}" != "3" ]]; then
+    echo "The detected Python version is < 3.0.0,
 please update your Python version to 3+. If you already have
-Python 3+ under python3, please link python3 to /bin/python."
-	exit
+    Python 3+ under 'python3', please link 'python3' to python binary."
+    exit 1
 fi
 
-python -m venv plotvenv
-source "/home/$usr/.vmodules/vsl/plot/plotvenv/bin/activate"
-pip install plotly numpy pandas
+if [ -d "${venv}" ]; then
+    exit 0
+fi
+
+python -m venv "${venv}"
+source "${venv}/bin/activate"
+pip install plotly numpy
 deactivate

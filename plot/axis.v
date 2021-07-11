@@ -1,5 +1,6 @@
 module plot
 
+// Axis handles axis data
 pub struct Axis {
 pub mut:
 	title		AxisTitle
@@ -8,11 +9,10 @@ pub mut:
 	dtick		f64
 	tickvals	[]f64
 	ticktext	[]string
-	// WIP: new properties will be added eventually.
 }
 
+// AxisTitle handles needed data to render an axis title
 pub struct AxisTitle {
 pub mut:
 	text		string
-	// WIP: new properties will be added eventually.
 }
