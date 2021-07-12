@@ -26,7 +26,7 @@ pub fn axpy_inc(alpha f32, x []f32, mut y []f32, n u32, incX u32, incY u32, ix u
 }
 
 // axpy_inc_to
-pub fn axpy_inc_to(mut dst []f32, inc_dst u32, idst u32, alpha f32, x []f32, y []f32, n u32, incX u32, incY u32, ix u32, iy u32) {
+pub fn axpy_inc_to(mut dst []f32, incdst u32, idst u32, alpha f32, x []f32, y []f32, n u32, incX u32, incY u32, ix u32, iy u32) {
 	mut ix_ := ix
 	mut iy_ := iy
 	mut idst_ := idst
@@ -34,6 +34,6 @@ pub fn axpy_inc_to(mut dst []f32, inc_dst u32, idst u32, alpha f32, x []f32, y [
 		dst[idst_] = alpha * x[ix_] + y[iy_]
 		ix_ += incX
 		iy_ += incY
-		idst_ += inc_dst
+		idst_ += incdst
 	}
 }

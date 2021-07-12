@@ -24,12 +24,12 @@ pub fn scal_inc(alpha f32, mut x []f32, n u32, incx u32) {
 }
 
 // scal_inc_to
-pub fn scal_inc_to(mut dst []f32, inc_dst u32, alpha f32, x []f32, n u32, incx u32) {
+pub fn scal_inc_to(mut dst []f32, incdst u32, alpha f32, x []f32, n u32, incx u32) {
 	mut ix := 0
 	mut idst := u32(0)
 	for i := 0; i < int(n); i++ {
 		dst[idst] = alpha * x[ix]
 		ix += int(incx)
-		idst += inc_dst
+		idst += incdst
 	}
 }

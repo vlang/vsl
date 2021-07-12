@@ -170,17 +170,17 @@ fn test_axpy_inc() {
 			assert equal_strided(test.x, x, inc.x)
 
 			mut want := test.want
-			inc_x := inc.x
-			mut inc_y := inc.y
-			if inc_x * inc_y < 0 {
+			incx := inc.x
+			mut incy := inc.y
+			if incx * incy < 0 {
 				want = test.want_rev
 			}
-			if inc_y < 0 {
-				inc_y = -inc_y
+			if incy < 0 {
+				incy = -incy
 			}
 
 			for i, w in want {
-				assert same(y[i * inc_y], w)
+				assert same(y[i * incy], w)
 			}
 		}
 	}
@@ -219,22 +219,22 @@ fn test_axpy_inc_to() {
 			assert equal_strided(test.y, y, inc.y)
 
 			mut want := test.want
-			inc_x := inc.x
-			mut inc_y := inc.y
-			mut inc_dst := inc.dst
+			incx := inc.x
+			mut incy := inc.y
+			mut incdst := inc.dst
 			mut iw, mut inc_w := 0, 1
-			if inc_x * inc_y < 0 {
+			if incx * incy < 0 {
 				want = test.want_rev
 			}
-			if inc_y * inc.dst < 0 {
+			if incy * inc.dst < 0 {
 				iw, inc_w = want.len - 1, -1
 			}
-			if inc_dst < 0 {
-				inc_dst = -inc_dst
+			if incdst < 0 {
+				incdst = -incdst
 			}
 
 			for i, _ in want {
-				assert same(dst[i * inc_dst], want[iw + i * inc_w])
+				assert same(dst[i * incdst], want[iw + i * inc_w])
 			}
 		}
 	}

@@ -120,17 +120,17 @@ fn test_scal_inc() {
 
 	for test in float64.scal_tests {
 		n := test.x.len
-		for inc_x in [1, 2, 3, 4, 7, 10] {
-			xg := guard_inc_vector(test.x, x_gd_val, inc_x, gd_ln)
+		for incx in [1, 2, 3, 4, 7, 10] {
+			xg := guard_inc_vector(test.x, x_gd_val, incx, gd_ln)
 			mut x := xg[gd_ln..xg.len - gd_ln]
 
-			scal_inc(test.alpha, mut x, u32(n), u32(inc_x))
+			scal_inc(test.alpha, mut x, u32(n), u32(incx))
 
 			for i, w in test.want {
-				assert same(x[i * inc_x], w)
+				assert same(x[i * incx], w)
 			}
 
-			assert is_valid_inc_guard(xg, x_gd_val, inc_x, gd_ln)
+			assert is_valid_inc_guard(xg, x_gd_val, incx, gd_ln)
 		}
 	}
 }
