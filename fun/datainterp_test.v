@@ -1,7 +1,6 @@
 module fun
 
 fn test_interp01() {
-
 	xx := [0., 1, 2, 3, 4, 5]
 	yy := [0.50, 0.20, 0.20, 0.05, 0.01, 0.00]
 
@@ -22,7 +21,7 @@ fn test_interp02() {
 	xx := [0., 1, 2, 3, 4, 5]
 	yy := [0.50, 0.20, 0.20, 0.05, 0.01, 0.00]
 
-	for _, p in [1, 2, 3] {
+	for p in [1, 2, 3] {
 
 		mut o := new_data_interp("poly", p, xx, yy)
 
