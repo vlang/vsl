@@ -159,6 +159,11 @@
 <p>exp_pix uses euler's formula to compute exp(+i⋅x) = cos(x) + i⋅sin(x)</p>
 
 </section>
+						<section id="fib" class="doc-node">
+							<div class="title"><h2>fn fib <a href="#fib">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fun/fib.v#L7"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">fib</span><span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>fib returns the nth number in the Fibonacci sequence using O(1) space  in O(logn) time complexity</p>
+
+</section>
 						<section id="gamma" class="doc-node">
 							<div class="title"><h2>fn gamma <a href="#gamma">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fun/gamma.v#L44"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">gamma</span><span class="token punctuation">(</span>x_ <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
 <p>gamma returns the gamma function of x.   special ifs are:  gamma(+inf) = +inf  gamma(+0) = +inf  gamma(-0) = -inf  gamma(x) = nan for integer x &lt; 0  gamma(-inf) = nan  gamma(nan) = nan</p>
@@ -563,7 +568,7 @@
 </section>
 
 						<div class="footer">
-							Powered by vdoc. Generated on: 13 Jul 2021 04:44:50
+							Powered by vdoc. Generated on: 14 Jul 2021 15:31:13
 						</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#atan2p">fn atan2p</a>        <ul>
@@ -627,6 +632,9 @@
 </ul>
 </li>
 <li class="open"><a href="#exp_pix">fn exp_pix</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#fib">fn fib</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#gamma">fn gamma</a>        <ul>
