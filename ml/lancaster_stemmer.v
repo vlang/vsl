@@ -23,22 +23,22 @@ mut:
 	rule_map		map[string][]string
 pub mut:
 	rules			[]string = [
-        'ai*2.', 'a*1.', 'bb1.', 'city3s.', 'ci2>',
-        'cn1t>', 'dd1.', 'dei3y>', 'deec2ss.', 'dee1.',
-        'de2>', 'dooh4>', 'e1>', 'feil1v.', 'fi2>',
+		'ai*2.', 'a*1.', 'bb1.', 'city3s.', 'ci2>',
+		'cn1t>', 'dd1.', 'dei3y>', 'deec2ss.', 'dee1.',
+		'de2>', 'dooh4>', 'e1>', 'feil1v.', 'fi2>',
 		'gni3>', 'gai3y.', 'ga2>', 'gg1.', 'ht*2.',
-        'hsiug5ct.', 'hsi3>', 'i*1.', 'i1y>', 'ji1d.',
+		'hsiug5ct.', 'hsi3>', 'i*1.', 'i1y>', 'ji1d.',
 		'juf1s.', 'ju1d.', 'jo1d.', 'jeh1r.', 'jrev1t.',
 		'jsim2t.', 'jn1d.', 'j1s.', 'lbaifi6.', 'lbai4y.',
-        'lba3>', 'lbi3.', 'lib2l>', 'lc1.', 'lufi4y.',
+		'lba3>', 'lbi3.', 'lib2l>', 'lc1.', 'lufi4y.',
 		'luf3>', 'lu2.', 'lai3>', 'lau3>', 'la2>', 'll1.',
-        'mui3.', 'mu*2.', 'msi3>', 'mm1.', 'nois4j>',
-        'noix4ct.', 'noi3>', 'nai3>', 'na2>', 'nee0.',
-        'ne2>', 'nn1.', 'pihs4>', 'pp1.', 're2>', 'rae0.',
-        'ra2.', 'ro2>', 'ru2>', 'rr1.', 'rt1>', 'rei3y>',
+		'mui3.', 'mu*2.', 'msi3>', 'mm1.', 'nois4j>',
+		'noix4ct.', 'noi3>', 'nai3>', 'na2>', 'nee0.',
+		'ne2>', 'nn1.', 'pihs4>', 'pp1.', 're2>', 'rae0.',
+		'ra2.', 'ro2>', 'ru2>', 'rr1.', 'rt1>', 'rei3y>',
 		'sei3y>', 'sis2.', 'si2>', 'ssen4>', 'ss0.',
-        'suo3>', 'su*2.', 's*1>', 's0.', 'tacilp4y.', 'ta2>',
-        'tnem4>', 'tne3>', 'tna3>', 'tpir2b.', 'tpro2b.',
+		'suo3>', 'su*2.', 's*1>', 's0.', 'tacilp4y.', 'ta2>',
+		'tnem4>', 'tne3>', 'tna3>', 'tpir2b.', 'tpro2b.',
 		'tcud1.', 'tpmus2.', 'tpec2iv.', 'tulo2v.', 'tsis0.',
 		'tsi3>', 'tt1.', 'uqi3.', 'ugo1.', 'vis3j>', 'vie0.',
 		'vi2>', 'ylb1>', 'yli3y>', 'ylp0.', 'yl2>', 'ygo1.',
@@ -147,28 +147,11 @@ fn (stemmer LancasterStemmer) do_stemming(word_ string, intact_word string) stri
 			for rule in stemmer.rule_map[[word[last_letter_position]].bytestr()] {
 				regex_match, _ := valid_rule.match_string(rule)
 				if regex_match >= 0 {
-					gs := valid_rule.get_group_list()
-
-					mut ending_string := ''
-					if gs[0].start != -1 && gs[0].end != -1 {
-						ending_string = rule.substr(gs[0].start, gs[0].end)
-					}
-					mut intact_flag := ''
-					if gs[1].start != -1 && gs[1].end != -1 {
-						intact_flag = rule.substr(gs[1].start, gs[1].end)
-					}
-					mut remove_total := 0
-					if gs[2].start != -1 && gs[2].end != -1 {
-						remove_total = rule.substr(gs[2].start, gs[2].end).int()
-					}
-					mut append_string := ''
-					if gs[3].start != -1 && gs[3].end != -1 {
-						append_string = rule.substr(gs[3].start, gs[3].end)
-					}
-					mut cont_flag := ''
-					if gs[4].start != -1 && gs[4].end != -1 {
-						cont_flag = rule.substr(gs[4].start, gs[4].end)
-					}
+					ending_string	:= valid_rule.get_group_by_id(rule, 0)
+					intact_flag		:= valid_rule.get_group_by_id(rule, 1)
+					remove_total	:= valid_rule.get_group_by_id(rule, 2).int()
+					append_string	:= valid_rule.get_group_by_id(rule, 3)
+					cont_flag		:= valid_rule.get_group_by_id(rule, 4)
 
 					is_acceptable := fn (w string, r int) bool {
 						if 'aeiouy'.contains([w[0]].bytestr()) {
