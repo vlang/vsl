@@ -142,7 +142,7 @@ pub fn dswap(n int, mut x []f64, incx int, mut y []f64, incy int) {
 	if incy < 0 {
 		iy = (-n + 1) * incy
 	}
-	for i in 0 .. n {
+	for _ in 0 .. n {
 		tmp := x[ix]
 		x[ix] = y[iy]
 		y[iy] = tmp
