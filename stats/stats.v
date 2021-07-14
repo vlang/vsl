@@ -312,7 +312,7 @@ pub fn minmax(data []f64) (f64, f64) {
 	}
 	mut max := data[0]
 	mut min := data[0]
-	for v in data {
+	for v in data[1..] {
 		if v > max {
 			max = v
 		}
