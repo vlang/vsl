@@ -3,7 +3,7 @@ module ml
 import vsl.errors
 
 const punctuation = (
-	',.[]()[]-=_*;:+><\'\\"`´~^!?@#$%¨&/|'.split('')
+	',.[]()[]-=_*;:+><\\"`´~^!?@#$%¨&/|'.split('')
 )
 
 // tokenize_ does the same as tokenize, but does not emit a warning.
