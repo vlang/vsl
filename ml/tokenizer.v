@@ -6,6 +6,8 @@ const punctuation = (
 	',.[]()[]-=_*;:+><\\"`´~^!?@#$%¨&/|'.split('')
 )
 
+pub const ngram_sep = 'NGRAMSEP'
+
 // remove_punctuation will remove the following characters from the string:
 // `,.[]()[]-=_*;:+><\\"`´~^!?@#$%¨&/|'`
 pub fn remove_punctuation(x string) string {

@@ -2,8 +2,6 @@ module ml
 
 import vsl.errors
 
-const ngram_sep = 'NGRAMSEP'
-
 // most_frequent_ngrams returns an array with up to `n_features` elements
 // denoting the most frequent ngrams in `ngrams`.
 // Since V does not support map of arrays, the ngrams are joined by
