@@ -294,7 +294,7 @@ pub fn remove_stopwords_en(tokens []string, ignore_case bool) []string {
 // ngrams will return an array of grams containing `n` elements
 // from `tokens`. Example: `ngrams('the apple is red'.split(' '), 3)`
 // will return [['the', 'apple', 'is'], ['apple', 'is', 'red']]
-pub fn ngrams(tokens []string, n int) [][]string {
+pub fn ngrams(tokens []string, n int) ?[][]string {
 	mut grams := [][]string{}
 	if tokens.len == 0 {
 		return grams
@@ -303,7 +303,7 @@ pub fn ngrams(tokens []string, n int) [][]string {
 		return [tokens]
 	}
 	if n <= 0 {
-		errors.vsl_panic('ml.ngrams expects n to be in the inclusive range [0, tokens.len].',
+		return errors.error('ml.ngrams expects n to be in the inclusive range [0, $tokens.len].',
 			.einval)
 	}
 	for i in 0 .. (tokens.len - n + 1) {

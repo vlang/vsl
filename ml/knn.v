@@ -31,11 +31,11 @@ mut:
 // to [10.0, 10.0] (which is class 1.0).
 pub fn new_knn(mut data Data, name string) &KNN {
 	if data.x.data.len == 0 {
-		errors.vsl_panic('vsl.ml.knn.new_knn with name $name expects `data.x` to have at least one element.',
+		errors.vsl_panic('with name $name expects `data.x` to have at least one element.',
 			.einval)
 	}
 	if data.y.len == 0 {
-		errors.vsl_panic('vsl.ml.knn.new_knn with name $name expects `data.y` to have at least one element.',
+		errors.vsl_panic('with name $name expects `data.y` to have at least one element.',
 			.einval)
 	}
 	mut knn := KNN{
@@ -54,15 +54,15 @@ pub fn (o &KNN) name() string {
 
 // set_weights will set the weights for the KNN. They default to
 // 1.0 for every class when this function is not called.
-pub fn (mut knn KNN) set_weights(weights map[f64]f64) {
+pub fn (mut knn KNN) set_weights(weights map[f64]f64) ? {
 	mut new_weights := map[f64]f64{}
 	for k, v in weights {
 		if k !in knn.data.y {
-			errors.vsl_panic('KNN.set_weights expects weights (map[f64]f64) to have ' +
+			return errors.error('expects weights (map[f64]f64) to have ' +
 				"all its keys present in the KNN's classes.", .einval)
 		}
 		if v == 0.0 {
-			errors.vsl_panic('KNN.set_weights expects weights (map[f64]f64) to not have ' +
+			return errors.error('expects weights (map[f64]f64) to not have ' +
 				'zeroes, as it cannot divide by zero.', .ezerodiv)
 		}
 		new_weights[k] = v
@@ -107,16 +107,15 @@ mut:
 // `k` will be decreased until there are no more ties. The worst case
 // scenario is `k` ending up as 1. Also, it makes sure that if we do
 // have a tie when k = 1, we select the first closest neighbor.
-pub fn (mut knn KNN) predict(config PredictConfig) f64 {
+pub fn (mut knn KNN) predict(config PredictConfig) ?f64 {
 	k := config.k
 	to_pred := config.to_pred
 
 	if k <= 0 {
-		errors.vsl_panic('KNN.predict expects k (int) to be >= 1.', .einval)
+		return errors.error('expects k (int) to be >= 1.', .einval)
 	}
 	if to_pred.len <= 0 {
-		errors.vsl_panic('KNN.predict expects to_pred ([]f64) to have at least 1 element.',
-			.einval)
+		return errors.error('expects to_pred ([]f64) to have at least 1 element.', .einval)
 	}
 	mut x := knn.data.x.get_deep2()
 	for i := 0; i < x.len; i++ {

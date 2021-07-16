@@ -3,26 +3,25 @@ module ml
 import regex
 import vsl.errors
 
-/*
-The pieces of code for LancasterStemmer and its utilities found below
-were originally written in Python by the NLTK Project (Copyright 2001 - 2021),
-more specifically by Steven Tomcavage. This is just a translation from Python to V
-with minor changes, such as naming convention and code structure.
+// The pieces of code for LancasterStemmer and its utilities found below
+// were originally written in Python by the NLTK Project (Copyright 2001 - 2021),
+// more specifically by Steven Tomcavage. This is just a translation from Python to V
+// with minor changes, such as naming convention and code structure.
 
-The nltk library, developed by the NLTK Project (https://www.nltk.org),
-is licensed under Apache 2.0, available at <https://www.apache.org/licenses/LICENSE-2.0>.
+// The nltk library, developed by the NLTK Project (https://www.nltk.org),
+// is licensed under Apache 2.0, available at <https://www.apache.org/licenses/LICENSE-2.0>.
 
-The original code for the LancasterStemmer, which was acquired from NLTK's `stem`
-submodule can be found at <https://www.nltk.org/_modules/nltk/stem/lancaster.html>.
+// The original code for the LancasterStemmer, which was acquired from NLTK's `stem`
+// submodule can be found at <https://www.nltk.org/_modules/nltk/stem/lancaster.html>.
 
-All credits go to the respective authors of NLTK's LancasterStemmer implementation.
-*/
+// All credits go to the respective authors of NLTK's LancasterStemmer implementation.
 
 pub struct LancasterStemmer {
 mut:
 	rule_map map[string][]string
 pub mut:
-	rules []string = [
+	strip_prefix bool
+	rules        []string = [
 	'ai*2.',
 	'a*1.',
 	'bb1.',
@@ -139,7 +138,6 @@ pub mut:
 	'zi2>',
 	'zy1s.',
 ]
-	strip_prefix bool
 }
 
 // new_lancaster_stemmer returns a LancasterStemmer struct with a
@@ -152,16 +150,15 @@ pub fn new_lancaster_stemmer(strip_prefix bool) LancasterStemmer {
 
 // parse_rules makes sure all rules provided are allowed by the following
 // regex: `^[a-z]+\*?\d[a-z]*[>\.]?$`.
-fn (mut stemmer LancasterStemmer) parse_rules(rules []string) {
+fn (mut stemmer LancasterStemmer) parse_rules(rules []string) ? {
 	mut valid_rule := regex.regex_opt('^[a-z]+\\*?\\d[a-z]*[>\\.]?$') or {
-		errors.vsl_panic('Regex error in LancasterStemmer, this should never happen.',
+		return errors.error('regex error in LancasterStemmer, this should never happen. File an issue if you see this error',
 			.efailed)
-		return
 	}
 	for rule in rules {
 		regex_match, _ := valid_rule.match_string(rule)
 		if regex_match == -1 {
-			errors.vsl_panic('Invalid LancasterStemmer rule "$rule"', .einval)
+			return errors.error('invalid LancasterStemmer rule "$rule"', .einval)
 		}
 		// Indexing a string returns a byte. Turn it into an array of bytes
 		// and call bytestr() to turn it into a string.
@@ -175,9 +172,9 @@ fn (mut stemmer LancasterStemmer) parse_rules(rules []string) {
 }
 
 // set_rules redefines the rules of stemmer and parses it.
-pub fn (mut stemmer LancasterStemmer) set_rules(rules []string) {
+pub fn (mut stemmer LancasterStemmer) set_rules(rules []string) ? {
 	if rules.len == 0 {
-		errors.vsl_panic('No LancasterStemmer rules provided.', .einval)
+		return errors.error('no LancasterStemmer rules provided.', .einval)
 	}
 	stemmer.rule_map = map[string][]string{}
 	stemmer.rules = rules
@@ -185,11 +182,11 @@ pub fn (mut stemmer LancasterStemmer) set_rules(rules []string) {
 	// but I decided to keep it like this just in case the user wants
 	// to parse some set of rules and not assign it to their stemmer
 	// just yet.
-	stemmer.parse_rules(rules)
+	return stemmer.parse_rules(rules)
 }
 
 // stem serves as a wrapper for do_stemming, which is private.
-pub fn (mut stemmer LancasterStemmer) stem(word string) string {
+pub fn (mut stemmer LancasterStemmer) stem(word string) ?string {
 	mut lowercase := word.to_lower()
 	strip := fn (w string) string {
 		for prefix in ['kilo', 'micro', 'milli', 'intra', 'ultra', 'mega', 'nano', 'pico', 'pseudo'] {
@@ -204,7 +201,7 @@ pub fn (mut stemmer LancasterStemmer) stem(word string) string {
 	}
 	mut intact_word := lowercase
 	if stemmer.rule_map.len == 0 {
-		stemmer.parse_rules(stemmer.rules)
+		stemmer.parse_rules(stemmer.rules) or { return err }
 	}
 	return stemmer.do_stemming(lowercase, intact_word)
 }
@@ -214,9 +211,9 @@ pub fn (mut stemmer LancasterStemmer) stem(word string) string {
 fn (stemmer LancasterStemmer) do_stemming(word_ string, intact_word string) string {
 	mut word := word_
 	mut valid_rule := regex.regex_opt('^([a-z]+)(\\*?)(\\d)([a-z]*)([>\\.]?)$') or {
-		errors.vsl_panic('Regex error in LancasterStemmer, this should never happen.',
+		errors.vsl_panic('regex error in LancasterStemmer, this should never happen. File an issue if you see this error',
 			.efailed)
-		return word_
+		return word
 	}
 	mut proceed := true
 	for proceed {

@@ -12,10 +12,9 @@ import vsl.errors
 // V does NOT support maps of arrays, ngrams are joined by the constant
 // `ngram_sep`, which can be found in `ml/tokenizer.v`. This is why it
 // returns a `map[string]f64` and not a `map[[]string]f64`.
-pub fn term_frequencies(ngrams_sentence [][]string) map[string]f64 {
+pub fn term_frequencies(ngrams_sentence [][]string) ?map[string]f64 {
 	if ngrams_sentence.len == 0 {
-		errors.vsl_panic('ml.term_frequencies expects ngrams_sentence to have at least 1 ngram.',
-			.einval)
+		return errors.error('expects ngrams_sentence to have at least 1 ngram.', .einval)
 	}
 	mut tf := map[string]f64{}
 	joined := ngrams_sentence.map(it.join(ngram_sep))
@@ -35,10 +34,9 @@ pub fn term_frequencies(ngrams_sentence [][]string) map[string]f64 {
 // inverse_document_frequencies will return the IDF of each term by calling
 // `term_idf` on each unique ngram. Check `term_idf` for more details about
 // the parameter `document`.
-pub fn inverse_document_frequencies(document [][][]string) map[string]f64 {
+pub fn inverse_document_frequencies(document [][][]string) ?map[string]f64 {
 	if document.len == 0 {
-		errors.vsl_panic('ml.inverse_document_frequencies expects at least one sentence.',
-			.einval)
+		return errors.error('expects at least one sentence.', .einval)
 	}
 
 	mut idf := map[string]f64{}
@@ -53,7 +51,7 @@ pub fn inverse_document_frequencies(document [][][]string) map[string]f64 {
 	}
 
 	for ngram in unique_ngrams {
-		idf[ngram] = term_idf(ngram.split(ngram_sep), document)
+		idf[ngram] = term_idf(ngram.split(ngram_sep), document) ?
 	}
 	return idf
 }
@@ -67,12 +65,12 @@ pub fn inverse_document_frequencies(document [][][]string) map[string]f64 {
 // Keep in mind that, since V does NOT support maps of arrays, ngrams are
 // joined by the constant `ngram_sep`, which can be found in `ml/tokenizer.v`.
 // This is why it returns a `map[string]f64` and not a `map[[]string]f64`.
-pub fn term_idf(term []string, document [][][]string) f64 {
+pub fn term_idf(term []string, document [][][]string) ?f64 {
 	if document.len == 0 {
-		errors.vsl_panic('ml.term_idf expects at least one sentence.', .einval)
+		return errors.error('expects at least one sentence.', .einval)
 	}
 	if term.len == 0 {
-		errors.vsl_panic('ml.term_idf expects at least one ngram.', .einval)
+		return errors.error('expects at least one ngram.', .einval)
 	}
 
 	ngram := term.join(ngram_sep)
@@ -92,8 +90,9 @@ pub fn term_idf(term []string, document [][][]string) f64 {
 
 // tf_idf will return the TF * IDF for any given ngram, in a sentence, in a
 // document.
-pub fn tf_idf(ngram []string, sentence [][]string, document [][][]string) f64 {
-	tf := term_frequencies(sentence)[ngram.join(ngram_sep)]
-	idf := term_idf(ngram, document)
+pub fn tf_idf(ngram []string, sentence [][]string, document [][][]string) ?f64 {
+	tfs := term_frequencies(sentence) ?
+	tf := tfs[ngram.join(ngram_sep)]
+	idf := term_idf(ngram, document) ?
 	return tf * idf
 }
