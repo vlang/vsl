@@ -8,22 +8,15 @@ import vsl.errors
 // "NGRAMSEP". If `n_features` is <= 0, it will be set to ngrams.len.
 pub fn most_frequent_ngrams(ngrams [][]string, n_features int) [][]string {
 	if ngrams.len == 0 {
-		errors.vsl_panic(
-			'ngram_frequency_map expects a non-empty array of ngrams.',
-			.einval
-		)
+		errors.vsl_panic('ngram_frequency_map expects a non-empty array of ngrams.', .einval)
 	}
 	mut n_features_ := n_features
 	if n_features <= 0 {
 		n_features_ = ngrams.len
+	} else if n_features > ngrams.len {
+		errors.vsl_panic('n_features cannot be greater than the amount of ngrams.', .einval)
 	}
-	else if n_features > ngrams.len {
-		errors.vsl_panic(
-			'n_features cannot be greater than the amount of ngrams.',
-			.einval
-		)
-	}
-	mut freq_map := map[string]int
+	mut freq_map := map[string]int{}
 	mut joined := ngrams.map(it.join(ngram_sep))
 	// ngrams are joined by `ngram_sep` due to maps
 	// not supporting []string keys yet.
@@ -34,9 +27,11 @@ pub fn most_frequent_ngrams(ngrams [][]string, n_features int) [][]string {
 		freq_map[ngram]++
 	}
 	mut result := [][]string{}
-	for _ in 0..n_features_ {
+	for _ in 0 .. n_features_ {
 		keys := freq_map.keys()
-		if keys.len == 0 { break }
+		if keys.len == 0 {
+			break
+		}
 		mut most_frequent := keys[0]
 		for ngram in keys {
 			if freq_map[ngram] > freq_map[most_frequent] {

@@ -20,49 +20,142 @@ All credits go to the respective authors of NLTK's LancasterStemmer implementati
 
 pub struct LancasterStemmer {
 mut:
-	rule_map		map[string][]string
+	rule_map map[string][]string
 pub mut:
-	rules			[]string = [
-		'ai*2.', 'a*1.', 'bb1.', 'city3s.', 'ci2>',
-		'cn1t>', 'dd1.', 'dei3y>', 'deec2ss.', 'dee1.',
-		'de2>', 'dooh4>', 'e1>', 'feil1v.', 'fi2>',
-		'gni3>', 'gai3y.', 'ga2>', 'gg1.', 'ht*2.',
-		'hsiug5ct.', 'hsi3>', 'i*1.', 'i1y>', 'ji1d.',
-		'juf1s.', 'ju1d.', 'jo1d.', 'jeh1r.', 'jrev1t.',
-		'jsim2t.', 'jn1d.', 'j1s.', 'lbaifi6.', 'lbai4y.',
-		'lba3>', 'lbi3.', 'lib2l>', 'lc1.', 'lufi4y.',
-		'luf3>', 'lu2.', 'lai3>', 'lau3>', 'la2>', 'll1.',
-		'mui3.', 'mu*2.', 'msi3>', 'mm1.', 'nois4j>',
-		'noix4ct.', 'noi3>', 'nai3>', 'na2>', 'nee0.',
-		'ne2>', 'nn1.', 'pihs4>', 'pp1.', 're2>', 'rae0.',
-		'ra2.', 'ro2>', 'ru2>', 'rr1.', 'rt1>', 'rei3y>',
-		'sei3y>', 'sis2.', 'si2>', 'ssen4>', 'ss0.',
-		'suo3>', 'su*2.', 's*1>', 's0.', 'tacilp4y.', 'ta2>',
-		'tnem4>', 'tne3>', 'tna3>', 'tpir2b.', 'tpro2b.',
-		'tcud1.', 'tpmus2.', 'tpec2iv.', 'tulo2v.', 'tsis0.',
-		'tsi3>', 'tt1.', 'uqi3.', 'ugo1.', 'vis3j>', 'vie0.',
-		'vi2>', 'ylb1>', 'yli3y>', 'ylp0.', 'yl2>', 'ygo1.',
-		'yhp1.', 'ymo1.', 'ypo1.', 'yti3>', 'yte3>', 'ytl2.',
-		'yrtsi5.', 'yra3>', 'yro3>', 'yfi3.', 'ycn2t>',
-		'yca3>', 'zi2>', 'zy1s.'
-	]
-	strip_prefix	bool
+	rules []string = [
+	'ai*2.',
+	'a*1.',
+	'bb1.',
+	'city3s.',
+	'ci2>',
+	'cn1t>',
+	'dd1.',
+	'dei3y>',
+	'deec2ss.',
+	'dee1.',
+	'de2>',
+	'dooh4>',
+	'e1>',
+	'feil1v.',
+	'fi2>',
+	'gni3>',
+	'gai3y.',
+	'ga2>',
+	'gg1.',
+	'ht*2.',
+	'hsiug5ct.',
+	'hsi3>',
+	'i*1.',
+	'i1y>',
+	'ji1d.',
+	'juf1s.',
+	'ju1d.',
+	'jo1d.',
+	'jeh1r.',
+	'jrev1t.',
+	'jsim2t.',
+	'jn1d.',
+	'j1s.',
+	'lbaifi6.',
+	'lbai4y.',
+	'lba3>',
+	'lbi3.',
+	'lib2l>',
+	'lc1.',
+	'lufi4y.',
+	'luf3>',
+	'lu2.',
+	'lai3>',
+	'lau3>',
+	'la2>',
+	'll1.',
+	'mui3.',
+	'mu*2.',
+	'msi3>',
+	'mm1.',
+	'nois4j>',
+	'noix4ct.',
+	'noi3>',
+	'nai3>',
+	'na2>',
+	'nee0.',
+	'ne2>',
+	'nn1.',
+	'pihs4>',
+	'pp1.',
+	're2>',
+	'rae0.',
+	'ra2.',
+	'ro2>',
+	'ru2>',
+	'rr1.',
+	'rt1>',
+	'rei3y>',
+	'sei3y>',
+	'sis2.',
+	'si2>',
+	'ssen4>',
+	'ss0.',
+	'suo3>',
+	'su*2.',
+	's*1>',
+	's0.',
+	'tacilp4y.',
+	'ta2>',
+	'tnem4>',
+	'tne3>',
+	'tna3>',
+	'tpir2b.',
+	'tpro2b.',
+	'tcud1.',
+	'tpmus2.',
+	'tpec2iv.',
+	'tulo2v.',
+	'tsis0.',
+	'tsi3>',
+	'tt1.',
+	'uqi3.',
+	'ugo1.',
+	'vis3j>',
+	'vie0.',
+	'vi2>',
+	'ylb1>',
+	'yli3y>',
+	'ylp0.',
+	'yl2>',
+	'ygo1.',
+	'yhp1.',
+	'ymo1.',
+	'ypo1.',
+	'yti3>',
+	'yte3>',
+	'ytl2.',
+	'yrtsi5.',
+	'yra3>',
+	'yro3>',
+	'yfi3.',
+	'ycn2t>',
+	'yca3>',
+	'zi2>',
+	'zy1s.',
+]
+	strip_prefix bool
 }
 
 // new_lancaster_stemmer returns a LancasterStemmer struct with a
 // predefined set of stemming rules.
 pub fn new_lancaster_stemmer(strip_prefix bool) LancasterStemmer {
-	return LancasterStemmer{strip_prefix: strip_prefix}
+	return LancasterStemmer{
+		strip_prefix: strip_prefix
+	}
 }
 
 // parse_rules makes sure all rules provided are allowed by the following
 // regex: `^[a-z]+\*?\d[a-z]*[>\.]?$`.
 fn (mut stemmer LancasterStemmer) parse_rules(rules []string) {
 	mut valid_rule := regex.regex_opt('^[a-z]+\\*?\\d[a-z]*[>\\.]?$') or {
-		errors.vsl_panic(
-			'Regex error in LancasterStemmer, this should never happen.',
-			.efailed
-		)
+		errors.vsl_panic('Regex error in LancasterStemmer, this should never happen.',
+			.efailed)
 		return
 	}
 	for rule in rules {
@@ -75,8 +168,7 @@ fn (mut stemmer LancasterStemmer) parse_rules(rules []string) {
 		first_letter := [rule[0]].bytestr()
 		if first_letter in stemmer.rule_map {
 			stemmer.rule_map[first_letter] << rule
-		}
-		else {
+		} else {
 			stemmer.rule_map[first_letter] = [rule]
 		}
 	}
@@ -87,7 +179,7 @@ pub fn (mut stemmer LancasterStemmer) set_rules(rules []string) {
 	if rules.len == 0 {
 		errors.vsl_panic('No LancasterStemmer rules provided.', .einval)
 	}
-	stemmer.rule_map = map[string][]string
+	stemmer.rule_map = map[string][]string{}
 	stemmer.rules = rules
 	// I know this is ugly and could simply be stemmer.parse_rules()
 	// but I decided to keep it like this just in case the user wants
@@ -122,10 +214,8 @@ pub fn (mut stemmer LancasterStemmer) stem(word string) string {
 fn (stemmer LancasterStemmer) do_stemming(word_ string, intact_word string) string {
 	mut word := word_
 	mut valid_rule := regex.regex_opt('^([a-z]+)(\\*?)(\\d)([a-z]*)([>\\.]?)$') or {
-		errors.vsl_panic(
-			'Regex error in LancasterStemmer, this should never happen.',
-			.efailed
-		)
+		errors.vsl_panic('Regex error in LancasterStemmer, this should never happen.',
+			.efailed)
 		return word_
 	}
 	mut proceed := true
@@ -134,34 +224,31 @@ fn (stemmer LancasterStemmer) do_stemming(word_ string, intact_word string) stri
 		for char_idx, character in word {
 			if 'abcdefghijklmnopqrstuvwxyz'.contains([character].bytestr()) {
 				last_letter_position = char_idx
-			}
-			else {
+			} else {
 				break
 			}
 		}
 		if last_letter_position == -1 || [word[last_letter_position]].bytestr() !in stemmer.rule_map {
 			proceed = false
-		}
-		else {
+		} else {
 			mut rule_was_applied := false
 			for rule in stemmer.rule_map[[word[last_letter_position]].bytestr()] {
 				regex_match, _ := valid_rule.match_string(rule)
 				if regex_match >= 0 {
-					ending_string	:= valid_rule.get_group_by_id(rule, 0)
-					intact_flag		:= valid_rule.get_group_by_id(rule, 1)
-					remove_total	:= valid_rule.get_group_by_id(rule, 2).int()
-					append_string	:= valid_rule.get_group_by_id(rule, 3)
-					cont_flag		:= valid_rule.get_group_by_id(rule, 4)
+					ending_string := valid_rule.get_group_by_id(rule, 0)
+					intact_flag := valid_rule.get_group_by_id(rule, 1)
+					remove_total := valid_rule.get_group_by_id(rule, 2).int()
+					append_string := valid_rule.get_group_by_id(rule, 3)
+					cont_flag := valid_rule.get_group_by_id(rule, 4)
 
 					is_acceptable := fn (w string, r int) bool {
 						if 'aeiouy'.contains([w[0]].bytestr()) {
 							if w.len - r >= 2 {
 								return true
 							}
-						}
-						else if w.len - r >= 3 {
-							if 'aeiouy'.contains([w[1]].bytestr()) ||
-							   'aeiouy'.contains([w[2]].bytestr()) {
+						} else if w.len - r >= 3 {
+							if 'aeiouy'.contains([w[1]].bytestr())
+								|| 'aeiouy'.contains([w[2]].bytestr()) {
 								return true
 							}
 						}
@@ -188,8 +275,7 @@ fn (stemmer LancasterStemmer) do_stemming(word_ string, intact_word string) stri
 								}
 								break
 							}
-						}
-						else if is_acceptable(word, remove_total) {
+						} else if is_acceptable(word, remove_total) {
 							word = apply_rule(word, remove_total, append_string)
 							rule_was_applied = true
 							if cont_flag == '.' {
