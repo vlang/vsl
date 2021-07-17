@@ -3,8 +3,6 @@ module ml
 import vsl.vmath as math
 import vsl.errors
 
-// TODO: Optimize the code below, if possible.
-
 // term_frequencies will return the frequency of each term in a sentence.
 // However, since in VSL NLP tools we deal with ngrams instead of regular
 // "words" (1gram tokens), our sentence is actually a collection of ngrams
@@ -56,7 +54,7 @@ pub fn inverse_document_frequencies(document [][][]string) ?map[string]f64 {
 	return idf
 }
 
-// term_idf will return the IDF of a single term term.  However, since in
+// term_idf will return the IDF of a single term `term`. However, since in
 // VSL NLP tools we deal with ngrams instead of regular "words" (1gram
 // tokens), our document is actually a collection of ngrams and our
 // words/terms are the ngrams themselves. This means that a document (a
