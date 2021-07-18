@@ -1,4 +1,4 @@
-module ml
+module nlp
 
 import vsl.vmath as math
 import vsl.errors

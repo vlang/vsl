@@ -1,4 +1,4 @@
-module ml
+module nlp
 
 import regex
 import vsl.errors

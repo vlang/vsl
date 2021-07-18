@@ -1,4 +1,4 @@
-module ml
+module nlp
 
 import vsl.errors
 
@@ -10,7 +10,7 @@ pub const ngram_sep = 'NGRAMSEP'
 // `,.[]()[]-=_*;:+><\\"`´~^!?@#$%¨&/|'`
 pub fn remove_punctuation(x string) string {
 	mut new_x := x
-	for punct in (ml.punctuation.join('') + "'").split('') {
+	for punct in (nlp.punctuation.join('') + "'").split('') {
 		new_x = new_x.replace(punct, '')
 	}
 	return new_x
@@ -42,7 +42,7 @@ pub fn tokenize(x string) []string {
 			continue
 		}
 
-		if current_char in ml.punctuation {
+		if current_char in nlp.punctuation {
 			tokens << current_piece
 			tokens << current_char
 			current_piece = ''
@@ -303,7 +303,7 @@ pub fn ngrams(tokens []string, n int) ?[][]string {
 		return [tokens]
 	}
 	if n <= 0 {
-		return errors.error('ml.ngrams expects n to be in the inclusive range [0, $tokens.len].',
+		return errors.error('expects n to be in the inclusive range [0, $tokens.len].',
 			.einval)
 	}
 	for i in 0 .. (tokens.len - n + 1) {

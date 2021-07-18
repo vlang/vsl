@@ -1,4 +1,4 @@
-module ml
+module nlp
 
 import vsl.errors
 
@@ -49,7 +49,7 @@ pub fn most_frequent_ngrams(ngrams [][]string, n_features int) ?[][]string {
 // count_vectorize will give you an array of occurrences of each
 // ngram from `ngrams` in `most_frequent`. Assume
 // `ng := [['hello'], ['hello'], ['hi']]`.
-// `ml.count_vectorize(ng, ml.most_frequent_ngrams(ng, 0))`
+// `nlp.count_vectorize(ng, nlp.most_frequent_ngrams(ng, 0))`
 // should return `[2, 1]`. See `most_frequent_ngrams for more`
 // details on how it works.
 pub fn count_vectorize(ngrams [][]string, most_frequent [][]string) []int {
