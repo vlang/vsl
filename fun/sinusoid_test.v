@@ -1,6 +1,6 @@
 module fun
 
-import vsl.internal.float64
+import vsl.float.float64
 import vsl.vmath as math
 import vsl.util
 

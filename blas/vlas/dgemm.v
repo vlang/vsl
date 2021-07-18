@@ -2,7 +2,7 @@ module vlas
 
 // import runtime
 import sync
-import vsl.internal.float64
+import vsl.float.float64
 import vsl.util
 
 // dgemm performs one of the matrix-matrix operations

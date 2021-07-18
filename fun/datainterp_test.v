@@ -1,6 +1,6 @@
 module fun
 
-import vsl.internal.float64
+import vsl.float.float64
 
 fn test_interp01() {
 	xx := [0., 1, 2, 3, 4, 5]

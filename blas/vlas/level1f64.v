@@ -1,6 +1,6 @@
 module vlas
 
-import vsl.internal.float64
+import vsl.float.float64
 import vsl.vmath as math
 
 // dnrm2 computes the Euclidean norm of a vector,

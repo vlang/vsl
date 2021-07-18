@@ -1,6 +1,6 @@
 module vlas
 
-import vsl.internal.float64
+import vsl.float.float64
 import vsl.util
 
 // dger performs the rank-one operation
