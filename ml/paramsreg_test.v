@@ -1,5 +1,7 @@
 module ml
 
+import vsl.internal.float64
+
 fn test_params_reg() {
 	nb_features := 3
 	mut params := new_params_reg(nb_features)
@@ -10,18 +12,18 @@ fn test_params_reg() {
 	params.lambda = 0.1
 	params.degree = 3
 	assert params.theta == [1., 2, 3]
-	assert tolerance(params.bias, 4, 1e-15)
-	assert tolerance(params.lambda, 0.1, 1e-15)
+	assert float64.tolerance(params.bias, 4, 1e-15)
+	assert float64.tolerance(params.lambda, 0.1, 1e-15)
 	assert params.degree == 3
 	assert params.bkp_theta == [0., 0, 0]
-	assert tolerance(params.bkp_bias, 0, 1e-15)
-	assert tolerance(params.bkp_bias, 0, 1e-15)
+	assert float64.tolerance(params.bkp_bias, 0, 1e-15)
+	assert float64.tolerance(params.bkp_bias, 0, 1e-15)
 	assert params.bkp_degree == 0
 
 	params.backup()
 	assert params.bkp_theta == [1., 2, 3]
-	assert tolerance(params.bkp_bias, 4, 1e-15)
-	assert tolerance(params.bkp_lambda, 0.1, 1e-15)
+	assert float64.tolerance(params.bkp_bias, 4, 1e-15)
+	assert float64.tolerance(params.bkp_lambda, 0.1, 1e-15)
 	assert params.bkp_degree == 3
 
 	params.theta[1] = -2
@@ -29,11 +31,11 @@ fn test_params_reg() {
 	params.lambda = 0.01
 	params.degree = 4
 	assert params.theta == [1., -2, 3]
-	assert tolerance(params.bias, -4, 1e-15)
-	assert tolerance(params.lambda, 0.01, 1e-15)
+	assert float64.tolerance(params.bias, -4, 1e-15)
+	assert float64.tolerance(params.lambda, 0.01, 1e-15)
 	assert params.degree == 4
 	assert params.bkp_theta == [1., 2, 3]
-	assert tolerance(params.bkp_bias, 4.0, 1e-15)
-	assert tolerance(params.bkp_lambda, 0.1, 1e-15)
+	assert float64.tolerance(params.bkp_bias, 4.0, 1e-15)
+	assert float64.tolerance(params.bkp_lambda, 0.1, 1e-15)
 	assert params.bkp_degree == 3
 }

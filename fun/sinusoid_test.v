@@ -1,5 +1,6 @@
 module fun
 
+import vsl.internal.float64
 import vsl.vmath as math
 import vsl.util
 
@@ -14,20 +15,20 @@ fn test_sinusoid_01() {
 	sb := new_sinusoid_basis(t, a0, sa.a[1], sa.b[1])
 
 	// check setup data
-	assert tolerance(sa.period, sb.period, 1e-15)
-	assert tolerance(sa.frequency, sb.frequency, 1e-15)
-	assert tolerance(sa.phase_shift, sb.phase_shift, 1e-15)
-	assert tolerance(sa.mean_value, sb.mean_value, 1e-15)
-	assert tolerance(sa.amplitude, sb.amplitude, 1e-15)
-	assert tolerance(sa.angular_freq, sb.angular_freq, 1e-15)
-	assert tolerance(sa.time_shift, sb.time_shift, 1e-15)
+	assert float64.tolerance(sa.period, sb.period, 1e-15)
+	assert float64.tolerance(sa.frequency, sb.frequency, 1e-15)
+	assert float64.tolerance(sa.phase_shift, sb.phase_shift, 1e-15)
+	assert float64.tolerance(sa.mean_value, sb.mean_value, 1e-15)
+	assert float64.tolerance(sa.amplitude, sb.amplitude, 1e-15)
+	assert float64.tolerance(sa.angular_freq, sb.angular_freq, 1e-15)
+	assert float64.tolerance(sa.time_shift, sb.time_shift, 1e-15)
 
 	for i in 0 .. sa.a.len {
-		assert tolerance(sa.a[i], sb.a[i], 1e-15)
+		assert float64.tolerance(sa.a[i], sb.a[i], 1e-15)
 	}
 
 	for i in 0 .. sa.b.len {
-		assert tolerance(sa.b[i], sb.b[i], 1e-15)
+		assert float64.tolerance(sa.b[i], sb.b[i], 1e-15)
 	}
 
 	// check essen vs basis
@@ -40,7 +41,7 @@ fn test_sinusoid_01() {
 	}
 
 	for i in 0 .. y1.len {
-		assert tolerance(y1[i], y2[i], 1e-15)
+		assert float64.tolerance(y1[i], y2[i], 1e-15)
 	}
 
 	// check periodicity

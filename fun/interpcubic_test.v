@@ -1,5 +1,7 @@
 module fun
 
+import vsl.internal.float64
+
 fn test_interp_cubic_01() {
 	// test set
 	ycor := fn (x f64) f64 {
@@ -21,8 +23,8 @@ fn test_interp_cubic_01() {
 	for x in [-10.0, 0.0, 1.0, 8.0] {
 		y := interp.f(x)
 		yd := interp.g(x)
-		assert tolerance(y, ycor(x), 1e-15)
-		assert tolerance(yd, dcor(x), 1e-15)
+		assert float64.tolerance(y, ycor(x), 1e-15)
+		assert float64.tolerance(yd, dcor(x), 1e-15)
 	}
 
 	// check critical points
@@ -30,9 +32,9 @@ fn test_interp_cubic_01() {
 	assert has_min
 	assert has_max
 	assert has_ifl
-	assert tolerance(xmin, 8, 1e-15)
-	assert tolerance(xmax, -6, 1e-15)
-	assert tolerance(xifl, 1, 1e-15)
+	assert float64.tolerance(xmin, 8, 1e-15)
+	assert float64.tolerance(xmax, -6, 1e-15)
+	assert float64.tolerance(xifl, 1, 1e-15)
 }
 
 fn test_interp_cubic_02() {
@@ -54,8 +56,8 @@ fn test_interp_cubic_02() {
 	for x in [-10.0, 0.0, 5.0, 100.0] {
 		y := interp.f(x)
 		yd := interp.g(x)
-		assert tolerance(y, ycor(x), 1e-15)
-		assert tolerance(yd, dcor(x), 1e-15)
+		assert float64.tolerance(y, ycor(x), 1e-15)
+		assert float64.tolerance(yd, dcor(x), 1e-15)
 	}
 
 	// check critical points
@@ -63,7 +65,7 @@ fn test_interp_cubic_02() {
 	assert !has_min
 	assert !has_max
 	assert has_ifl
-	assert tolerance(xifl, 25, 1e-15)
+	assert float64.tolerance(xifl, 25, 1e-15)
 }
 
 fn test_interp_cubic_03() {
@@ -85,8 +87,8 @@ fn test_interp_cubic_03() {
 	for x in [-10.0, 0.0, 5.0, 100.0] {
 		y := interp.f(x)
 		yd := interp.g(x)
-		assert tolerance(y, ycor(x), 1e-15)
-		assert tolerance(yd, dcor(x), 1e-15)
+		assert float64.tolerance(y, ycor(x), 1e-15)
+		assert float64.tolerance(yd, dcor(x), 1e-15)
 	}
 
 	// check critical points
@@ -117,8 +119,8 @@ fn test_interp_cubic_04() {
 	for x in [-10.0, 0.0, 1.0, 8.0] {
 		y := interp.f(x)
 		yd := interp.g(x)
-		assert tolerance(y, ycor(x), 1e-15)
-		assert tolerance(yd, dcor(x), 1e-15)
+		assert float64.tolerance(y, ycor(x), 1e-15)
+		assert float64.tolerance(yd, dcor(x), 1e-15)
 	}
 
 	// check critical points
@@ -126,7 +128,7 @@ fn test_interp_cubic_04() {
 	assert has_min
 	assert has_max
 	assert has_ifl
-	assert tolerance(xmin, 8, 1e-15)
-	assert tolerance(xmax, -6, 1e-15)
-	assert tolerance(xifl, 1, 1e-15)
+	assert float64.tolerance(xmin, 8, 1e-15)
+	assert float64.tolerance(xmax, -6, 1e-15)
+	assert float64.tolerance(xifl, 1, 1e-15)
 }
