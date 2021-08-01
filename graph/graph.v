@@ -211,9 +211,9 @@ pub fn (g &Graph) str_dist_matrix() string {
 		}
 	}
 	mut l := ''
-	maxlen = int(vmath.max(3, maxlen))
-	fmts := strconv.v_sprintf('%%d', maxlen + 1)
-	fmtn := strconv.v_sprintf('%%%dg', maxlen + 1)
+	maxlen = int(vmath.max(3, maxlen)) + 1
+	fmts := strconv.v_sprintf('%%d', maxlen)
+	fmtn := strconv.v_sprintf('%%%dg', maxlen)
 	for i := 0; i < nv; i++ {
 		for j := 0; j < nv; j++ {
 			i_dist := g.dist[i]
