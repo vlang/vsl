@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-## Copyright (C) 2019-2021 Ulises Jeremias Cornejo Fandos
+## Copyright (C) 2019-2021 The VSL Team
 ## Licensed under MIT
 ##
 ##     @script.name [OPTION] ARGUMENTS...
@@ -31,7 +31,7 @@ USER_FLAG="-u $(id -u):$(id -g)"
 docker_ini() {
     if ! type -p docker > /dev/null; then
         log_failed "Docker is not installed in this system" ${log_file}
-        exit -1
+        exit 1
     fi
 
     if type -p md5 > /dev/null; then

@@ -93,3 +93,8 @@ pub fn pow10(n int) f64 {
 pub fn sincos(x f64) (f64, f64) {
 	return vimpl.sincos(x)
 }
+
+[inline]
+pub fn q_rsqrt(x f64) f64 {
+	return unsafe { vimpl.q_rsqrt(x) }
+}

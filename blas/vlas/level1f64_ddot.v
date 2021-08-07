@@ -1,6 +1,6 @@
 module vlas
 
-import vsl.internal.float64
+import vsl.float.float64
 
 // ddot computes the dot product of the two vectors
 //  \sum_i x[i]*y[i]

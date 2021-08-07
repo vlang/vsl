@@ -1,5 +1,13 @@
 module util
 
+// iabs performs the absolute operation with ints
+pub fn iabs(a int) int {
+	if a < 0 {
+		return -a
+	}
+	return a
+}
+
 // imax returns the maximum value of the two provided.
 pub fn imax(a int, b int) int {
 	if a > b {

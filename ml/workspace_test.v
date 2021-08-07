@@ -1,16 +1,18 @@
 module ml
 
+import vsl.float.float64
+
 fn sample_01_check_sat(o &Stat) {
-	assert tolerance(o.min_x[0], 0.87, 1e-15)
-	assert tolerance(o.max_x[0], 1.55, 1e-15)
-	assert tolerance(o.mean_x[0], 1.1960, 1e-15)
-	assert tolerance(o.sig_x[0], 0.189303432281837, 1e-14)
-	assert tolerance(o.sum_x[0], 23.92, 1e-15)
-	assert tolerance(o.min_y, 87.33, 1e-15)
-	assert tolerance(o.max_y, 99.42, 1e-15)
-	assert tolerance(o.mean_y, 92.1605, 1e-15)
-	assert tolerance(o.sig_y, 3.020778001913102, 1e-15)
-	assert tolerance(o.sum_y, 1843.21, 1e-15)
+	assert float64.tolerance(o.min_x[0], 0.87, 1e-15)
+	assert float64.tolerance(o.max_x[0], 1.55, 1e-15)
+	assert float64.tolerance(o.mean_x[0], 1.1960, 1e-15)
+	assert float64.tolerance(o.sig_x[0], 0.189303432281837, 1e-14)
+	assert float64.tolerance(o.sum_x[0], 23.92, 1e-15)
+	assert float64.tolerance(o.min_y, 87.33, 1e-15)
+	assert float64.tolerance(o.max_y, 99.42, 1e-15)
+	assert float64.tolerance(o.mean_y, 92.1605, 1e-15)
+	assert float64.tolerance(o.sig_y, 3.020778001913102, 1e-15)
+	assert float64.tolerance(o.sum_y, 1843.21, 1e-15)
 }
 
 fn test_stat_01() {
@@ -49,5 +51,5 @@ fn test_stat_01() {
 
 	s, t := stat.sum_vars()
 	assert s == [23.92]
-	assert tolerance(t, 1843.21, 1e-15)
+	assert float64.tolerance(t, 1843.21, 1e-15)
 }

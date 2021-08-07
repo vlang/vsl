@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 
 NAME="vsl"
-VERSION="latest"
+VERSION=${VERSION:-"latest"}
 
 docker logout
 docker login
-docker push ulisesjeremias/$NAME:$VERSION
+
+echo "Publishing ulisesjeremias/$NAME:$VERSION"
+
+docker push ulisesjeremias/$NAME:"$VERSION"

@@ -1,5 +1,7 @@
 module ml
 
+import vsl.float.float64
+
 fn test_lin_reg() {
 	xy := [
 		[0.99, 90.01],
@@ -28,7 +30,7 @@ fn test_lin_reg() {
 
 	reg.train()
 	// @todo: Fix this test
-	// assert tolerance(reg.cost(), 5.312454218805082e-01, 1e-15)
+	// assert float64.tolerance(reg.cost(), 5.312454218805082e-01, 1e-15)
 }
 
 fn test_lin_reg_pred() {
@@ -64,6 +66,6 @@ fn test_lin_reg_pred() {
 
 	for x0 in [0.8, 1.2, 2.0] {
 		pred := reg.predict([x0])
-		assert tolerance(pred, reg.stat.mean_y, 1e-11)
+		assert float64.tolerance(pred, reg.stat.mean_y, 1e-11)
 	}
 }
