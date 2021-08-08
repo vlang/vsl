@@ -5,24 +5,23 @@ struct Buffer {
 	size   int
 	device &Device
 mut:
-	memobj C.cl_mem
+	memobj ClMem
 }
 
 // new_buffer creates a new buffer with specified size
 fn new_buffer(d &Device, size int) ?&Buffer {
 	mut ret := 0
-	cl_buffer := C.clCreateBuffer(d.ctx, C.CL_MEM_READ_WRITE, C.size_t(size), voidptr(0),
-		&ret)
-	if ret != C.CL_SUCCESS {
+	buffer := C.clCreateBuffer(d.ctx, mem_read_write, size_t(size), voidptr(0), &ret)
+	if ret != success {
 		return vcl_error(ret)
 	}
-	if isnil(cl_buffer) {
+	if isnil(buffer) {
 		return err_unknown
 	}
 	return &Buffer{
 		size: size
 		device: d
-		memobj: cl_buffer
+		memobj: buffer
 	}
 }
 
@@ -37,14 +36,14 @@ fn (b &Buffer) clone(size int, ptr voidptr) chan IError {
 		ch <- error('buffer size not equal to data len')
 		return ch
 	}
-	mut event := C.cl_event{}
-	ret := C.clEnqueueWriteBuffer(b.device.queue, b.memobj, C.CL_FALSE, 0, C.size_t(size),
-		ptr, 0, voidptr(0), &event)
-	if ret != C.CL_SUCCESS {
+	mut event := ClEvent(0)
+	ret := C.clEnqueueWriteBuffer(b.device.queue, b.memobj, false, 0, size_t(size), ptr,
+		0, voidptr(0), &event)
+	if ret != success {
 		ch <- vcl_error(ret)
 		return ch
 	}
-	// go func(mut event C.cl_event, ch chan IError) {
+	// go func(mut event ClEvent, ch chan IError) {
 	// 	defer { C.clReleaseEvent(event) }
 	// 	ch <- vcl_error(C.clWaitForEvents(1, &event))
 	// }(mut event, ch)

@@ -5,19 +5,19 @@ pub type ArgumentType = Bytes | Vector | byte | f32 | i8 | int | u32 | u8
 // kernel returns a kernel
 // if retrieving the kernel didn't complete the function will return an error
 pub fn (d &Device) kernel(name string) ?&Kernel {
-	mut k := C.cl_kernel{}
+	mut k := ClKernel(0)
 	mut ret := 0
 	for p in d.programs {
-		k = C.clCreateKernel(p, name, &ret)
-		if ret == C.CL_INVALID_KERNEL_NAME {
+		k = C.clCreateKernel(p, &char(name.str), &ret)
+		if ret == invalid_kernel_name {
 			continue
 		}
-		if ret != C.CL_SUCCESS {
+		if ret != success {
 			return vcl_error(ret)
 		}
 		break
 	}
-	if ret == C.CL_INVALID_KERNEL_NAME {
+	if ret == invalid_kernel_name {
 		return error("kernel with name '$name' not found")
 	}
 	return new_kernel(d, k)
@@ -43,7 +43,7 @@ fn new_unsupported_argument_type_error(index int, value ArgumentType) IError {
 // Kernel represent a single kernel
 pub struct Kernel {
 	d &Device
-	k C.cl_kernel
+	k ClKernel
 }
 
 // global returns an kernel with global size set
@@ -94,7 +94,7 @@ fn release_kernel(k &Kernel) {
 	C.clReleaseKernel(k.k)
 }
 
-fn new_kernel(d &Device, k C.cl_kernel) &Kernel {
+fn new_kernel(d &Device, k ClKernel) &Kernel {
 	return &Kernel{
 		d: d
 		k: k
@@ -172,8 +172,8 @@ fn (k &Kernel) set_arg_local(index int, size int) ? {
 }
 
 fn (k &Kernel) set_arg_unsafe(index int, arg_size int, arg voidptr) ? {
-	res := C.clSetKernelArg(k.k, u32(index), u32(arg_size), arg)
-	if res != C.CL_SUCCESS {
+	res := C.clSetKernelArg(k.k, u32(index), size_t(arg_size), arg)
+	if res != success {
 		return vcl_error(res)
 	}
 }
@@ -185,32 +185,32 @@ fn (k &Kernel) call(work_sizes []int, lokal_sizes []int) chan IError {
 		ch <- error('length of work_sizes and localSizes differ')
 		return ch
 	}
-	mut global_work_offset_ptr := []u32{len: work_dim}
-	mut global_work_size_ptr := []u32{len: work_dim}
+	mut global_work_offset_ptr := []size_t{len: work_dim}
+	mut global_work_size_ptr := []size_t{len: work_dim}
 	for i in 0 .. work_dim {
-		global_work_size_ptr[i] = u32(work_sizes[i])
+		global_work_size_ptr[i] = size_t(work_sizes[i])
 	}
-	mut local_work_size_ptr := []u32{len: work_dim}
+	mut local_work_size_ptr := []size_t{len: work_dim}
 	for i in 0 .. work_dim {
-		local_work_size_ptr[i] = u32(lokal_sizes[i])
+		local_work_size_ptr[i] = size_t(lokal_sizes[i])
 	}
-	mut event := C.cl_event{}
+	mut event := ClEvent(0)
 	res := C.clEnqueueNDRangeKernel(k.d.queue, k.k, u32(work_dim), unsafe { &global_work_offset_ptr[0] },
 		unsafe { &global_work_size_ptr[0] }, unsafe { &local_work_size_ptr[0] }, 0, voidptr(0),
 		unsafe { &event })
-	if res != C.CL_SUCCESS {
+	if res != success {
 		err := vcl_error(res)
 		ch <- err
 		return ch
 	}
-	go fn (event C.cl_event) {
+	go fn (ch chan IError, event ClEvent) {
 		defer {
 			C.clReleaseEvent(event)
 		}
 		res := C.clWaitForEvents(1, unsafe { &event })
-		if res != C.CL_SUCCESS {
+		if res != success {
 			ch <- vcl_error(res)
 		}
-	}(event)
+	}(ch, event)
 	return ch
 }

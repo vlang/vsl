@@ -26,15 +26,15 @@ pub fn (b &Bytes) release() ? {
 // clone copies the data from host data to device buffer
 // it's a non-blocking call, channel will return an error or nil if the data transfer is complete
 pub fn (b &Bytes) clone(data []byte) chan IError {
-	return b.buf.clone(data.lan, &data[0])
+	return b.buf.clone(data.len, unsafe { &data[0] })
 }
 
 // data gets data from device, it's a blocking call
 pub fn (b &Bytes) data() ?[]byte {
 	mut data := []byte{len: b.buf.size}
-	ret := C.clEnqueueReadBuffer(b.buf.device.queue, b.buf.memobj, C.CL_TRUE, 0, C.size_t(b.buf.size),
-		&data[0], 0, voidptr(0), voidptr(0))
-	if ret != C.CL_SUCCESS {
+	ret := C.clEnqueueReadBuffer(b.buf.device.queue, b.buf.memobj, true, 0, size_t(b.buf.size),
+		unsafe { &data[0] }, 0, voidptr(0), voidptr(0))
+	if ret != success {
 		return vcl_error(ret)
 	}
 	return data
