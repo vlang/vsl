@@ -8,7 +8,7 @@ const (
 // ErrVCL converts that OpenCL error code to an V error
 pub type ErrVCL = int
 
-pub fn (e ErrVCL) str() IError {
+pub fn (e ErrVCL) err() IError {
 	err := match e {
 		C.CL_SUCCESS { '' }
 		C.CL_DEVICE_NOT_FOUND { vcl.err_device_not_found }
@@ -60,7 +60,7 @@ pub fn (e ErrVCL) str() IError {
 		C.CL_INVALID_MIP_LEVEL { vcl.err_invalid_mip_level }
 		C.CL_INVALID_GLOBAL_WORK_SIZE { vcl.err_invalid_global_work_size }
 		C.CL_INVALID_PROPERTY { err_invalid_propert }
-		default { 'cl: error $e' }
+		else { 'cl: error $e' }
 	}
 	return error_with_code(err, int(e))
 }
@@ -69,12 +69,12 @@ pub fn vcl_error(code int) IError {
 	if code == C.CL_SUCCESS {
 		return none
 	}
-	return error_with_code(ErrVCL(code).str(), code)
+	return error_with_code(ErrVCL(code).err(), code)
 }
 
 pub fn vcl_panic(code int) {
 	if code != C.CL_SUCCESS {
-		panic(ErrVCL(code).str())
+		panic(ErrVCL(code).err())
 	}
 }
 

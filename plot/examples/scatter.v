@@ -28,7 +28,7 @@ fn main() {
 		y: y
 		mode: 'lines+markers'
 		marker: {
-			size: []f64{len: x.len, init: 10.}
+			size:  []f64{len: x.len, init: 10.}
 			color: []string{len: x.len, init: '#FF0000'}
 		}
 		line: {

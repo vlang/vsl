@@ -1,6 +1,6 @@
 module vcl
 
-pub type ArgumentType = &Bytes | &Vector | byte | f32 | i8 | int | u32 | u8
+pub type ArgumentType = Bytes | Vector | byte | f32 | i8 | int | u32 | u8
 
 // kernel returns a kernel
 // if retrieving the kernel didn't complete the function will return an error
@@ -49,7 +49,7 @@ pub struct Kernel {
 // global returns an kernel with global size set
 pub fn (k &Kernel) global(global_work_sizes ...int) KernelWithGlobal {
 	return KernelWithGlobal{
-		kernel: k
+		kernel: unsafe { k }
 		global_work_sizes: global_work_sizes
 	}
 }
@@ -102,7 +102,7 @@ fn new_kernel(d &Device, k C.cl_kernel) &Kernel {
 }
 
 fn (k &Kernel) set_args(args ...ArgumentType) ? {
-	for arg in args {
+	for i, arg in args {
 		k.set_arg(i, arg) ?
 	}
 }
@@ -124,16 +124,16 @@ fn (k &Kernel) set_arg(index int, arg ArgumentType) ? {
 		f32 {
 			return k.set_arg_f32(index, arg)
 		}
-		&Bytes {
+		Bytes {
 			return k.set_arg_buffer(index, arg.buf)
 		}
-		&Vector {
+		Vector {
 			return k.set_arg_buffer(index, arg.buf)
 		}
-		&Image {
-			return k.set_arg_buffer(index, arg.buf)
-		}
-		// @todo: &LocalBuffer {
+		// @todo: Image {
+		// 	return k.set_arg_buffer(index, arg.buf)
+		// }
+		// @todo: LocalBuffer {
 		//     return k.set_arg_local(index, int(arg))
 		// }
 		else {
@@ -168,7 +168,7 @@ fn (k &Kernel) set_arg_u32(index int, val u32) ? {
 }
 
 fn (k &Kernel) set_arg_local(index int, size int) ? {
-	return k.set_arg_unsafe(index, size, nil)
+	return k.set_arg_unsafe(index, size, voidptr(0))
 }
 
 fn (k &Kernel) set_arg_unsafe(index int, arg_size int, arg voidptr) ? {

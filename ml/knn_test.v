@@ -77,7 +77,7 @@ fn test_knn_predict_with_weights() {
 		3,
 		3,
 	]
-	mut w := map{
+	mut w := {
 		1.: 1.
 		2:  1
 		3:  1
