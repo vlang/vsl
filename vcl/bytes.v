@@ -23,10 +23,10 @@ pub fn (b &Bytes) release() ? {
 	return b.buf.release()
 }
 
-// clone copies the data from host data to device buffer
+// load copies the data from host data to device buffer
 // it's a non-blocking call, channel will return an error or nil if the data transfer is complete
-pub fn (b &Bytes) clone(data []byte) chan IError {
-	return b.buf.clone(data.len, unsafe { &data[0] })
+pub fn (b &Bytes) load(data []byte) chan IError {
+	return b.buf.load(data.len, unsafe { &data[0] })
 }
 
 // data gets data from device, it's a blocking call

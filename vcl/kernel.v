@@ -62,7 +62,7 @@ pub struct KernelWithGlobal {
 }
 
 // local ets the local work sizes and returns an KernelCall which takes kernel arguments and runs the kernel
-fn (kg KernelWithGlobal) local(local_work_sizes ...int) KernelCall {
+pub fn (kg KernelWithGlobal) local(local_work_sizes ...int) KernelCall {
 	return KernelCall{
 		kernel: kg.kernel
 		global_work_sizes: kg.global_work_sizes
@@ -81,7 +81,7 @@ pub struct KernelCall {
 // run calls the kernel on its device with specified global and local work sizes and arguments
 // it's a non-blocking call, so it returns a channel that will send an error value when the kernel is done
 // or nil if the call was successful
-fn (kc KernelCall) run(args ...ArgumentType) chan IError {
+pub fn (kc KernelCall) run(args ...ArgumentType) chan IError {
 	ch := chan IError{cap: 1}
 	kc.kernel.set_args(...args) or {
 		ch <- err
@@ -144,7 +144,11 @@ fn (k &Kernel) set_arg(index int, arg ArgumentType) ? {
 
 fn (k &Kernel) set_arg_buffer(index int, buf &Buffer) ? {
 	mem := buf.memobj
-	return vcl_error(C.clSetKernelArg(k.k, u32(index), int(sizeof(mem)), unsafe { &mem }))
+	res := C.clSetKernelArg(k.k, u32(index), int(sizeof(mem)), unsafe { &buf.memobj })
+	if res != success {
+		println('ERROR ${@METHOD} $res')
+		return vcl_error(res)
+	}
 }
 
 fn (k &Kernel) set_arg_f32(index int, val f32) ? {

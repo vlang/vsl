@@ -29,15 +29,15 @@ pub fn (v &Vector) release() ? {
 	return v.buf.release()
 }
 
-// clone copies the T data from host data to device buffer
+// load copies the T data from host data to device buffer
 // it's a non-blocking call, channel will return an error or nil if the data transfer is complete
-pub fn (mut v Vector) clone(data []f32) chan IError {
+pub fn (mut v Vector) load(data []f32) chan IError {
 	if v.length() != data.len {
 		ch := chan IError{cap: 1}
 		ch <- error('vector length not equal to data length')
 		return ch
 	}
-	return v.buf.clone(data.len * int(sizeof(f32)), unsafe { &data[0] })
+	return v.buf.load(data.len * int(sizeof(f32)), unsafe { &data[0] })
 }
 
 // data gets T data from device, it's a blocking call
