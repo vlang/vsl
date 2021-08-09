@@ -3,7 +3,7 @@ module main
 import vsl.vcl
 
 // an complicated kernel
-	const kernel_source = '
+const kernel_source = '
 __kernel void addOne(__global float* data) {
 	const int i = get_global_id (0);
 	data[i] += 1;
@@ -22,7 +22,7 @@ fn vcl_example() ? {
 	}
 
 	// VCL has several kinds of device memory object: Bytes, Vector, Image (Soon)
-    // allocate buffer on the device (16 elems of f32). Vector will use generics in the future
+	// allocate buffer on the device (16 elems of f32). Vector will use generics in the future
 	mut v := device.new_vector(16) ?
 	defer {
 		v.release() or { panic(err) }
@@ -37,7 +37,7 @@ fn vcl_example() ? {
 	println('\n\nCreated vector: $v')
 
 	// add program source to device, get kernel
-	k := device.kernel("addOne") ?
+	k := device.kernel('addOne') ?
 	// run kernel (gloabl work size 16 and local work size 1)
 	kernel_err := <-k.global(16).local(1).run(v)
 	if kernel_err !is none {

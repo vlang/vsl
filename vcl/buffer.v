@@ -43,8 +43,10 @@ fn (b &Buffer) load(size int, ptr voidptr) chan IError {
 		ch <- vcl_error(ret)
 		return ch
 	}
-	go fn(event &ClEvent, ch chan IError) {
-		defer { C.clReleaseEvent(event) }
+	go fn (event &ClEvent, ch chan IError) {
+		defer {
+			C.clReleaseEvent(event)
+		}
 		ch <- vcl_error(C.clWaitForEvents(1, event))
 	}(&event, ch)
 
