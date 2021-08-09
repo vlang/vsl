@@ -1,6 +1,8 @@
 module vcl
 
-pub type ArgumentType = Bytes | Vector | byte | f32 | i8 | int | u32 | u8
+pub type ArgumentType = Bytes | Vector<byte> | Vector<f32> | Vector<f64> | Vector<i16> |
+	Vector<i64> | Vector<i8> | Vector<int> | Vector<u16> | Vector<u32> | Vector<u64> |
+	byte | f32 | f64 | i16 | i64 | i8 | int | u16 | u32 | u64
 
 // kernel returns a kernel
 // if retrieving the kernel didn't complete the function will return an error
@@ -109,25 +111,67 @@ fn (k &Kernel) set_args(args ...ArgumentType) ? {
 
 fn (k &Kernel) set_arg(index int, arg ArgumentType) ? {
 	match arg {
-		u8 {
-			return k.set_arg_u8(index, arg)
-		}
-		i8 {
-			return k.set_arg_i8(index, arg)
-		}
-		u32 {
-			return k.set_arg_u32(index, arg)
-		}
-		int {
-			return k.set_arg_int(index, arg)
+		byte {
+			return k.set_arg_unsafe(index, int(sizeof(arg)), unsafe { &arg })
 		}
 		f32 {
-			return k.set_arg_f32(index, arg)
+			return k.set_arg_unsafe(index, int(sizeof(arg)), unsafe { &arg })
+		}
+		f64 {
+			return k.set_arg_unsafe(index, int(sizeof(arg)), unsafe { &arg })
+		}
+		i16 {
+			return k.set_arg_unsafe(index, int(sizeof(arg)), unsafe { &arg })
+		}
+		i64 {
+			return k.set_arg_unsafe(index, int(sizeof(arg)), unsafe { &arg })
+		}
+		i8 {
+			return k.set_arg_unsafe(index, int(sizeof(arg)), unsafe { &arg })
+		}
+		int {
+			return k.set_arg_unsafe(index, int(sizeof(arg)), unsafe { &arg })
+		}
+		u16 {
+			return k.set_arg_unsafe(index, int(sizeof(arg)), unsafe { &arg })
+		}
+		u32 {
+			return k.set_arg_unsafe(index, int(sizeof(arg)), unsafe { &arg })
+		}
+		u64 {
+			return k.set_arg_unsafe(index, int(sizeof(arg)), unsafe { &arg })
 		}
 		Bytes {
 			return k.set_arg_buffer(index, arg.buf)
 		}
-		Vector {
+		Vector<byte> {
+			return k.set_arg_buffer(index, arg.buf)
+		}
+		Vector<f32> {
+			return k.set_arg_buffer(index, arg.buf)
+		}
+		Vector<f64> {
+			return k.set_arg_buffer(index, arg.buf)
+		}
+		Vector<i16> {
+			return k.set_arg_buffer(index, arg.buf)
+		}
+		Vector<i64> {
+			return k.set_arg_buffer(index, arg.buf)
+		}
+		Vector<i8> {
+			return k.set_arg_buffer(index, arg.buf)
+		}
+		Vector<int> {
+			return k.set_arg_buffer(index, arg.buf)
+		}
+		Vector<u16> {
+			return k.set_arg_buffer(index, arg.buf)
+		}
+		Vector<u32> {
+			return k.set_arg_buffer(index, arg.buf)
+		}
+		Vector<u64> {
 			return k.set_arg_buffer(index, arg.buf)
 		}
 		// @todo: Image {
@@ -136,39 +180,16 @@ fn (k &Kernel) set_arg(index int, arg ArgumentType) ? {
 		// @todo: LocalBuffer {
 		//     return k.set_arg_local(index, int(arg))
 		// }
-		else {
-			return new_unsupported_argument_type_error(index, arg)
-		}
 	}
 }
 
 fn (k &Kernel) set_arg_buffer(index int, buf &Buffer) ? {
 	mem := buf.memobj
-	res := C.clSetKernelArg(k.k, u32(index), int(sizeof(mem)), unsafe { &buf.memobj })
+	res := C.clSetKernelArg(k.k, u32(index), int(sizeof(mem)), unsafe { &buf })
 	if res != success {
 		println('ERROR ${@METHOD} $res')
 		return vcl_error(res)
 	}
-}
-
-fn (k &Kernel) set_arg_f32(index int, val f32) ? {
-	return k.set_arg_unsafe(index, int(sizeof(val)), unsafe { &val })
-}
-
-fn (k &Kernel) set_arg_i8(index int, val i8) ? {
-	return k.set_arg_unsafe(index, int(sizeof(val)), unsafe { &val })
-}
-
-fn (k &Kernel) set_arg_u8(index int, val u8) ? {
-	return k.set_arg_unsafe(index, int(sizeof(val)), unsafe { &val })
-}
-
-fn (k &Kernel) set_arg_int(index int, val int) ? {
-	return k.set_arg_unsafe(index, int(sizeof(val)), unsafe { &val })
-}
-
-fn (k &Kernel) set_arg_u32(index int, val u32) ? {
-	return k.set_arg_unsafe(index, int(sizeof(val)), unsafe { &val })
 }
 
 fn (k &Kernel) set_arg_local(index int, size int) ? {

@@ -5,8 +5,8 @@ import vsl.vcl
 // an complicated kernel
 const kernel_source = '
 __kernel void addOne(__global float* data) {
-	const int i = get_global_id (0);
-	data[i] += 1;
+    const int i = get_global_id (0);
+    data[i] += 1;
 }'
 
 fn vcl_example() ? {
@@ -22,19 +22,20 @@ fn vcl_example() ? {
 	}
 
 	// VCL has several kinds of device memory object: Bytes, Vector, Image (Soon)
-	// allocate buffer on the device (16 elems of f32). Vector will use generics in the future
-	mut v := device.new_vector(16) ?
+	// allocate buffer on the device (16 elems of f64). Vector will use generics in the future
+	mut v := device.new_vector<f64>(16) ?
 	defer {
 		v.release() or { panic(err) }
 	}
 
 	// load data to the vector (it's async)
-	data := [f32(0.), 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+	data := [f64(0.), 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 	err := <-v.load(data)
 	if err !is none {
 		return err
 	}
 	println('\n\nCreated vector: $v')
+	println(v.data() ?)
 
 	// add program source to device, get kernel
 	k := device.kernel('addOne') ?
