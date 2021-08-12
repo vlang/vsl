@@ -9,6 +9,7 @@ pub mut:
 	dtick    f64
 	tickvals []f64
 	ticktext []string
+	range    []f64
 }
 
 // AxisTitle handles needed data to render an axis title
