@@ -56,6 +56,13 @@ data = json.load(args.data)
 
 # Read layout json file.
 layout = json.load(args.layout)
+# If there is no range specified, leave it as None
+# and let Plotly handle it.
+for ax in ['x', 'y']:
+    if f'{ax}axis' in layout:
+        if 'range' in layout[f'{ax}axis']:
+            if len(layout[f'{ax}axis']['range']) != 2:
+                layout[f'{ax}axis']['range'] = None
 
 # Map vsl.plot.TraceType enum to Plotly objects.
 type_map = {
