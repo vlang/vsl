@@ -1,7 +1,8 @@
 # V Computing Language
 
 VCL is a high level way of writting programs with OpenCL using V.
-These are highly opinionated OpenCL bindings for V. It tries to make GPU computing easy, with some sugar abstraction, V's concurency and channels.
+These are highly opinionated OpenCL bindings for V. It tries to make GPU computing easy,
+with some sugar abstraction, V's concurency and channels.
 
 ## Example
 
