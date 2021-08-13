@@ -16,12 +16,12 @@ fn main() {
 	// Arbitrary values. Since nlp.KNN only takes floats, we must represent
 	// our classes (positive or negative) as floats.
 	class := {
-		'positive': 1.0
+		'positive': 1.0,
 		'negative': -1.0
 	}
 
 	class_inverse := {
-		1.0:  'positive'
+		1.0:  'positive',
 		-1.0: 'negative'
 	}
 
