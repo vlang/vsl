@@ -65,6 +65,6 @@ fn assert_permutation(a [][]f64, b [][]f64) bool {
 	for i, perm in a {
 		assert perm == b[i]
 	}
-	
+
 	return true
 }

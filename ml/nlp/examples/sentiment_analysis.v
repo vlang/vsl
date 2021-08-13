@@ -15,13 +15,13 @@ const dataset = [
 fn main() {
 	// Arbitrary values. Since nlp.KNN only takes floats, we must represent
 	// our classes (positive or negative) as floats.
-	class := map{
-		'positive': 1.0,
+	class := {
+		'positive': 1.0
 		'negative': -1.0
 	}
 
-	class_inverse := map{
-		1.0:  'positive',
+	class_inverse := {
+		1.0:  'positive'
 		-1.0: 'negative'
 	}
 
@@ -121,7 +121,7 @@ fn main() {
 	// In order to predict them, we have to do the same we did for all
 	// our training samples: tokenize, stem and ngramize (does that term
 	// even exist?)
-	bow := fn (sent string, mut lan nlp.LancasterStemmer, mf [][]string) []f64 {
+	bow := fn (sent string, mut lan ml.nlp.LancasterStemmer, mf [][]string) []f64 {
 		sent_tokenized := nlp.remove_stopwords_en(nlp.tokenize(nlp.remove_punctuation(sent).to_lower()),
 			true)
 		mut sent_stemmed := []string{}
@@ -180,7 +180,7 @@ fn main() {
 	training_data = ml.data_from_raw_xy_sep(tf_idf_rows, labels)
 	mut tf_idf_knn := ml.new_knn(mut training_data, 'TfIdfKNN')
 
-	tfidf := fn (sent string, mut lan nlp.LancasterStemmer, document [][][]string, unique [][]string) []f64 {
+	tfidf := fn (sent string, mut lan ml.nlp.LancasterStemmer, document [][][]string, unique [][]string) []f64 {
 		sent_tokenized := nlp.remove_stopwords_en(nlp.tokenize(nlp.remove_punctuation(sent).to_lower()),
 			true)
 		mut sent_stemmed := []string{}
