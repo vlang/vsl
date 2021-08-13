@@ -1,4 +1,4 @@
-# V Computation Language
+# V Computing Language
 
 ## Example
 
