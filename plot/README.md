@@ -130,11 +130,11 @@ fn main() {
 		x: x
 		y: y
 		mode: 'lines+markers'
-		marker: {
+		marker: plot.Marker{
 			size: []f64{len: x.len, init: 10.}
 			color: []string{len: x.len, init: '#FF0000'}
 		}
-		line: {
+		line: plot.Line{
 			color: '#FF0000'
 		}
 	)
