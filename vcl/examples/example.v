@@ -22,14 +22,14 @@ fn vcl_example() ? {
 	}
 
 	// VCL has several kinds of device memory object: Bytes, Vector, Image (Soon)
-	// allocate buffer on the device (16 elems of f64). Vector will use generics in the future
-	mut v := device.new_vector<f64>(16) ?
+	// allocate buffer on the device (16 elems of f32).
+	mut v := device.new_vector<f32>(16) ?
 	defer {
 		v.release() or { panic(err) }
 	}
 
 	// load data to the vector (it's async)
-	data := [f64(0.), 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+	data := [f32(0.), 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 	err := <-v.load(data)
 	if err !is none {
 		return err
