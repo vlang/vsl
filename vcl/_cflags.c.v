@@ -1,6 +1,7 @@
 module vcl
 
 #flag linux -lOpenCL
+#flag windows -lOpenCL
 #flag darwin -framework OpenCL
 
 $if darwin {
