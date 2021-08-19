@@ -1,6 +1,6 @@
 module la
 
-import math
+import vsl.float.float64
 
 const (
 	tol = 1e-12
@@ -11,7 +11,7 @@ fn tolerance_equal(data1 []f64, data2 []f64) bool {
 		return false
 	}
 	for i := 0; i < data1.len; i++ {
-		if math.abs(data1[i] - data2[i]) > la.tol {
+		if !float64.tolerance(data1[i], data2[i], la.tol) {
 			return false
 		}
 	}
