@@ -80,7 +80,7 @@ pub fn (mut o Kmeans) find_closest_centroids() {
 	for i := 0; i < o.data.nb_samples; i++ {
 		// set min distance to max value possible
 		mut dist_min := math.max_f64
-		xi := o.data.x.get_row(i) // optimize here by using a row-major matrix
+		xi := o.data.x.get_row(i)
 		// for each class
 		for j := 0; j < o.nb_classes; j++ {
 			xc := o.centroids[j]
@@ -103,7 +103,7 @@ pub fn (mut o Kmeans) compute_centroids() {
 	}
 	// add contributions to centroids and nb_members
 	for i := 0; i < o.data.nb_samples; i++ {
-		xi := o.data.x.get_row(i) // optimize here by using a row-major matrix
+		xi := o.data.x.get_row(i)
 		k := o.classes[i]
 		o.centroids[k] = la.vector_add(1.0, o.centroids[k], 1.0, xi)
 		o.nb_members[k]++
