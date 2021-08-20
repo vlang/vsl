@@ -48,8 +48,8 @@ pub fn matrix_raw(m int, n int, rawdata []f64) &Matrix {
 // set_from_deep2 sets matrix with data from a nested slice (Deep2) structure
 pub fn (mut o Matrix) set_from_deep2(a [][]f64) {
 	mut k := 0
-	for j := 0; j < o.n; j++ {
-		for i := 0; i < o.m; i++ {
+	for i := 0; i < o.m; i++ {
+		for j := 0; j < o.n; j++ {
 			o.data[k] = a[i][j]
 			k++
 		}
@@ -61,9 +61,9 @@ pub fn (mut o Matrix) set_diag(val f64) {
 	for i := 0; i < o.m; i++ {
 		for j := 0; j < o.n; j++ {
 			if i == j {
-				o.data[i + j * o.m] = val
+				o.data[i * o.n + j] = val
 			} else {
-				o.data[i + j * o.m] = 0
+				o.data[i * o.n + j] = 0
 			}
 		}
 	}
@@ -71,12 +71,12 @@ pub fn (mut o Matrix) set_diag(val f64) {
 
 // set sets value
 pub fn (mut o Matrix) set(i int, j int, val f64) {
-	o.data[i + j * o.m] = val // col-major
+	o.data[i * o.n + j] = val // row-major
 }
 
 // get gets value
 pub fn (o &Matrix) get(i int, j int) f64 {
-	return o.data[i + j * o.m] // col-major
+	return o.data[i * o.n + j] // row-major
 }
 
 // get_deep2 returns nested slice representation
@@ -84,7 +84,7 @@ pub fn (o &Matrix) get_deep2() [][]f64 {
 	mut m := [][]f64{len: o.m, init: []f64{len: o.n}}
 	for i := 0; i < o.m; i++ {
 		for j := 0; j < o.n; j++ {
-			m[i][j] = o.data[i + j * o.m]
+			m[i][j] = o.data[i * o.n + j]
 		}
 	}
 	return m
@@ -118,7 +118,7 @@ pub fn (o &Matrix) copy_into(mut result Matrix, alpha f64) {
 
 // add adds value to (i,j) location
 pub fn (mut o Matrix) add(i int, j int, val f64) {
-	o.data[i + j * o.m] += val // col-major
+	o.data[i * o.n + j] += val // row-major
 }
 
 // fill fills this matrix with a single number val
@@ -194,24 +194,25 @@ pub fn (o &Matrix) largest(den f64) f64 {
 }
 
 // col access column j of this matrix. No copies are made since the internal data are in
-// col-major format already.
+// row-major format already.
 // NOTE: this method can be used to modify the columns; e.g. with o.col(0)[0] = 123
+[inline]
 pub fn (o &Matrix) col(j int) []f64 {
-	return o.data[(j * o.m)..((j + 1) * o.m)]
+	return o.get_col(j)
 }
 
 // get_row returns row i of this matrix
 pub fn (o &Matrix) get_row(i int) []f64 {
-	mut row := []f64{len: o.n}
-	for j := 0; j < o.n; j++ {
-		row[j] = o.data[i + j * o.m]
-	}
-	return row
+	return o.data[(i * o.n)..((i + 1) * o.n)]
 }
 
 // get_col returns column j of this matrix
 pub fn (o &Matrix) get_col(j int) []f64 {
-	return o.data[(j * o.m)..((j + 1) * o.m)]
+	mut col := []f64{len: o.m}
+	for i := 0; i < o.m; i++ {
+		col[i] = o.data[i * o.n + j]
+	}
+	return col
 }
 
 // extract_cols returns columns from j=start to j=endp1-1
@@ -224,14 +225,39 @@ pub fn (o &Matrix) extract_cols(start int, endp1 int) &Matrix {
 	}
 	ncol := endp1 - start
 	mut reduced := new_matrix(o.m, ncol)
+	for i := 0; i < o.m; i++ {
+		for j := 0; j < ncol; j++ {
+			reduced.set(i, j, o.get(i, j + start))
+		}
+	}
+	return reduced
+}
+
+// extract_rows returns rows from i=start to i=endp1-1
+// start -- first column
+// endp1 -- "end-plus-one", the number of the last requested column + 1
+pub fn (o &Matrix) extract_rows(start int, endp1 int) &Matrix {
+	if endp1 <= start {
+		errors.vsl_panic("endp1 'end-plus-one' must be greater than start. start=$start, endp1=$endp1 invalid",
+			.efailed)
+	}
+	nrow := endp1 - start
+	mut reduced := new_matrix(nrow, o.n)
 	reduced.data = o.data[start * o.m..endp1 * o.m]
 	return reduced
 }
 
+// set_row sets the values of a row i with a single value
+pub fn (mut o Matrix) set_row(i int, value f64) {
+	for k := i * o.m; k < (i + 1) * o.m; k++ {
+		o.data[k] = value
+	}
+}
+
 // set_col sets the values of a column j with a single value
 pub fn (mut o Matrix) set_col(j int, value f64) {
-	for k := j * o.m; k < (j + 1) * o.m; k++ {
-		o.data[k] = value
+	for i := 0; i < o.m; i++ {
+		o.data[i * o.n + j] = value
 	}
 }
 
@@ -249,14 +275,14 @@ pub fn (o &Matrix) norm_frob() f64 {
 // nrm := ‖a‖_∞ = max_i ( Σ_j a[ij] )
 pub fn (o &Matrix) norm_inf() f64 {
 	mut nrm := 0.0
-	for j := 0; j < o.n; j++ { // sum first row
-		nrm += vmath.abs(o.data[j * o.m])
+	for i := 0; i < o.n; i++ { // sum first row
+		nrm += vmath.abs(o.data[i])
 	}
 	mut sumrow := 0.0
 	for i := 1; i < o.m; i++ {
 		sumrow = 0.0
 		for j := 0; j < o.n; j++ { // sum the other rows
-			sumrow += vmath.abs(o.data[i + j * o.m])
+			sumrow += vmath.abs(o.data[i * o.n + j])
 			if sumrow > nrm {
 				nrm = sumrow
 			}

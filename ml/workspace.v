@@ -66,7 +66,7 @@ pub fn (mut o Stat) update() {
 			o.sum_x[j] += xval
 		}
 		o.mean_x[j] = o.sum_x[j] / mf
-		o.sig_x[j] = stats.sample_stddev_mean(o.data.x.col(j), o.mean_x[j])
+		o.sig_x[j] = stats.sample_stddev_mean(o.data.x.get_col(j), o.mean_x[j])
 		o.del_x[j] = o.max_x[j] - o.min_x[j]
 	}
 	// y values

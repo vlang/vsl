@@ -69,7 +69,7 @@ pub fn matrix_svd(mut s []f64, mut u Matrix, mut vt Matrix, mut a Matrix, copy_a
 	if copy_a {
 		acpy = a.clone()
 	}
-	blas.dgesvd(byte(`A`), byte(`A`), a.m, a.n, acpy.data, a.m, s, u.data, a.m, vt.data,
+	blas.dgesvd(byte(`A`), byte(`A`), a.m, a.n, acpy.data, 1, s, u.data, a.m, vt.data,
 		a.n, superb)
 }
 

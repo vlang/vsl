@@ -16,5 +16,5 @@ pub fn den_solve(mut x []f64, a Matrix, b []f64, preserve_a bool) {
 		x[i] = b[i]
 	}
 	ipiv := []int{len: a_.m}
-	blas.dgesv(a_.m, 1, mut a_.data, a_.m, ipiv, mut x, a.m)
+	blas.dgesv(a_.m, 1, mut a_.data, a_.m, ipiv, mut x, 1)
 }

@@ -102,7 +102,7 @@ pub fn matrix_vector_mul(alpha f64, a Matrix, u []f64) []f64 {
 		}
 		return v
 	}
-	blas.dgemv(false, a.m, a.n, alpha, a.data, a.m, u, 1, 0.0, mut v, 1)
+	blas.dgemv(false, a.m, a.n, alpha, a.data, 1, u, 1, 0.0, mut v, a.m)
 	return v
 }
 
@@ -121,7 +121,7 @@ pub fn matrix_tr_vector_mul(alpha f64, a Matrix, u []f64) []f64 {
 		}
 		return v
 	}
-	blas.dgemv(true, a.m, a.n, alpha, a.data, a.m, u, 1, 0.0, mut v, 1)
+	blas.dgemv(true, a.m, a.n, alpha, a.data, 1, u, 1, 0.0, mut v, a.m)
 	return v
 }
 
@@ -151,7 +151,7 @@ pub fn vector_vector_tr_mul(alpha f64, u []f64, v []f64) &Matrix {
 //
 pub fn matrix_vector_mul_add(alpha f64, a Matrix, u []f64) []f64 {
 	mut v := []f64{len: a.m}
-	blas.dgemv(false, a.m, a.n, alpha, a.data, a.m, u, 1, 1.0, mut v, 1)
+	blas.dgemv(false, a.m, a.n, alpha, a.data, 1, u, 1, 1.0, mut v, 1)
 	return v
 }
 
@@ -171,7 +171,7 @@ pub fn matrix_matrix_mul(mut c Matrix, alpha f64, a Matrix, b Matrix) {
 		}
 		return
 	}
-	blas.dgemm(false, false, a.m, b.n, a.n, alpha, a.data, a.m, b.data, b.m, 0.0, mut
+	blas.dgemm(false, false, a.m, b.n, a.n, alpha, a.data, 1, b.data, b.m, 0.0, mut
 		c.data, c.m)
 }
 
@@ -191,7 +191,7 @@ pub fn matrix_tr_matrix_mul(mut c Matrix, alpha f64, a Matrix, b Matrix) {
 		}
 		return
 	}
-	blas.dgemm(true, false, a.n, b.n, a.m, alpha, a.data, a.m, b.data, b.m, 0.0, mut c.data,
+	blas.dgemm(true, false, a.n, b.n, a.m, alpha, a.data, 1, b.data, b.m, 0.0, mut c.data,
 		c.m)
 }
 
@@ -200,7 +200,7 @@ pub fn matrix_tr_matrix_mul(mut c Matrix, alpha f64, a Matrix, b Matrix) {
 //  c := alpha⋅a⋅bᵀ    ⇒    cij := alpha * aik * bjk
 //
 pub fn matrix_matrix_tr_mul(mut c Matrix, alpha f64, a Matrix, b Matrix) {
-	blas.dgemm(false, true, a.m, b.m, a.n, alpha, a.data, a.m, b.data, b.m, 0.0, mut c.data,
+	blas.dgemm(false, true, a.m, b.m, a.n, alpha, a.data, 1, b.data, b.m, 0.0, mut c.data,
 		c.m)
 }
 
@@ -209,7 +209,7 @@ pub fn matrix_matrix_tr_mul(mut c Matrix, alpha f64, a Matrix, b Matrix) {
 //  c := alpha⋅aᵀ⋅bᵀ    ⇒    cij := alpha * aki * bjk
 //
 pub fn matrix_tr_matrix_tr_mul(mut c Matrix, alpha f64, a Matrix, b Matrix) {
-	blas.dgemm(true, true, a.n, b.m, a.m, alpha, a.data, a.m, b.data, b.m, 0.0, mut c.data,
+	blas.dgemm(true, true, a.n, b.m, a.m, alpha, a.data, 1, b.data, b.m, 0.0, mut c.data,
 		c.m)
 }
 
@@ -218,7 +218,7 @@ pub fn matrix_tr_matrix_tr_mul(mut c Matrix, alpha f64, a Matrix, b Matrix) {
 //  c += alpha⋅a⋅b    ⇒    cij += alpha * aik * bkj
 //
 pub fn matrix_matrix_muladd(mut c Matrix, alpha f64, a Matrix, b Matrix) {
-	blas.dgemm(false, false, a.m, b.n, a.n, alpha, a.data, a.m, b.data, b.m, 1.0, mut
+	blas.dgemm(false, false, a.m, b.n, a.n, alpha, a.data, 1, b.data, b.m, 1.0, mut
 		c.data, c.m)
 }
 
@@ -227,7 +227,7 @@ pub fn matrix_matrix_muladd(mut c Matrix, alpha f64, a Matrix, b Matrix) {
 //  c += alpha⋅aᵀ⋅b    ⇒    cij += alpha * aki * bkj
 //
 pub fn matrix_tr_matrix_muladd(mut c Matrix, alpha f64, a Matrix, b Matrix) {
-	blas.dgemm(true, false, a.n, b.n, a.m, alpha, a.data, a.m, b.data, b.m, 1.0, mut c.data,
+	blas.dgemm(true, false, a.n, b.n, a.m, alpha, a.data, 1, b.data, b.m, 1.0, mut c.data,
 		c.m)
 }
 
@@ -236,7 +236,7 @@ pub fn matrix_tr_matrix_muladd(mut c Matrix, alpha f64, a Matrix, b Matrix) {
 //  c += alpha⋅a⋅bᵀ    ⇒    cij += alpha * aik * bjk
 //
 pub fn matrix_matrix_tr_muladd(mut c Matrix, alpha f64, a Matrix, b Matrix) {
-	blas.dgemm(false, true, a.m, b.m, a.n, alpha, a.data, a.m, b.data, b.m, 1.0, mut c.data,
+	blas.dgemm(false, true, a.m, b.m, a.n, alpha, a.data, 1, b.data, b.m, 1.0, mut c.data,
 		c.m)
 }
 
@@ -245,7 +245,7 @@ pub fn matrix_matrix_tr_muladd(mut c Matrix, alpha f64, a Matrix, b Matrix) {
 //  c += alpha⋅aᵀ⋅bᵀ    ⇒    cij += alpha * aki * bjk
 //
 pub fn matrix_tr_matrix_tr_mul_add(mut c Matrix, alpha f64, a Matrix, b Matrix) {
-	blas.dgemm(true, true, a.n, b.m, a.m, alpha, a.data, a.m, b.data, b.m, 1.0, mut c.data,
+	blas.dgemm(true, true, a.n, b.m, a.m, alpha, a.data, 1, b.data, b.m, 1.0, mut c.data,
 		c.m)
 }
 

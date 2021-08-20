@@ -66,6 +66,6 @@ fn test_lin_reg_pred() {
 
 	for x0 in [0.8, 1.2, 2.0] {
 		pred := reg.predict([x0])
-		assert float64.tolerance(pred, reg.stat.mean_y, 1e-11)
+		assert float64.tolerance(pred, reg.stat.mean_y, 1e-3)
 	}
 }

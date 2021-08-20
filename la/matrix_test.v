@@ -20,7 +20,7 @@ fn test_matrix_deep2() {
 	assert mat.m == 3
 	assert mat.n == 4
 	// The data is stored in column-major format
-	assert mat.data == [11.0, 21.0, 31.0, 12.0, 22.0, 32.0, 13.0, 23.0, 33.0, 14.0, 24.0, 34.0]
+	assert mat.data == [11., 12, 13, 14, 21, 22, 23, 24, 31, 32, 33, 34]
 }
 
 fn test_set_from_deep2() {
@@ -30,7 +30,7 @@ fn test_set_from_deep2() {
 	]
 	mut mat := new_matrix(2, 3)
 	mat.set_from_deep2(original_array)
-	assert mat.data == [1.0, 5, 1, 4, 2, 2]
+	assert mat.data == [1., 1, 2, 5, 4, 2]
 }
 
 fn test_set_diag() {
@@ -174,10 +174,11 @@ fn test_extract_cols_and_set_col() {
 		[21.0, 22.0, 23.0],
 		[31.0, 32.0, 33.0],
 	])
+	println(mat.data)
 	mat_e := mat.extract_cols(1, 3)
 	assert mat_e.m == 3
 	assert mat_e.n == 2
-	assert mat_e.data == [12.0, 22.0, 32.0, 13.0, 23.0, 33.0]
+	assert mat_e.data == [12.0, 13, 22, 23, 32, 33]
 	mat.set_col(0, -3)
 	assert mat.col(0) == [-3.0, -3.0, -3.0]
 }
@@ -232,8 +233,8 @@ fn test_det() {
 
 fn test_str_and_print_functions() {
 	mat := matrix_raw(2, 2, [1.0, 2.0, 3.0, 4.0])
-	assert mat.str() == '1 3 \n2 4 '
-	assert mat.print('%g ') == '1 3 \n2 4 '
-	assert mat.print_v('%g') == '[][]f64{\n    {1,3},\n    {2,4},\n}'
-	assert mat.print_py('%g') == 'np.matrix([\n    [1,3],\n    [2,4],\n], dtype=float)'
+	assert mat.str() == '1 2 \n3 4 '
+	assert mat.print('%g ') == '1 2 \n3 4 '
+	assert mat.print_v('%g') == '[][]f64{\n    {1,2},\n    {3,4},\n}'
+	assert mat.print_py('%g') == 'np.matrix([\n    [1,2],\n    [3,4],\n], dtype=float)'
 }
