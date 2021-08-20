@@ -102,7 +102,7 @@ pub fn matrix_vector_mul(alpha f64, a Matrix, u []f64) []f64 {
 		}
 		return v
 	}
-	blas.dgemv(false, a.m, a.n, alpha, a.data, 1, u, 1, 0.0, mut v, a.m)
+	blas.dgemv(false, a.m, a.n, alpha, a.data, a.m, u, 1, 0.0, mut v, 1)
 	return v
 }
 
@@ -121,7 +121,7 @@ pub fn matrix_tr_vector_mul(alpha f64, a Matrix, u []f64) []f64 {
 		}
 		return v
 	}
-	blas.dgemv(true, a.m, a.n, alpha, a.data, 1, u, 1, 0.0, mut v, a.m)
+	blas.dgemv(true, a.m, a.n, alpha, a.data, 1, u, 1, 0.0, mut v, a.n)
 	return v
 }
 
@@ -151,7 +151,7 @@ pub fn vector_vector_tr_mul(alpha f64, u []f64, v []f64) &Matrix {
 //
 pub fn matrix_vector_mul_add(alpha f64, a Matrix, u []f64) []f64 {
 	mut v := []f64{len: a.m}
-	blas.dgemv(false, a.m, a.n, alpha, a.data, 1, u, 1, 1.0, mut v, 1)
+	blas.dgemv(false, a.m, a.n, alpha, a.data, a.m, u, 1, 1.0, mut v, 1)
 	return v
 }
 
@@ -171,7 +171,7 @@ pub fn matrix_matrix_mul(mut c Matrix, alpha f64, a Matrix, b Matrix) {
 		}
 		return
 	}
-	blas.dgemm(false, false, a.m, b.n, a.n, alpha, a.data, 1, b.data, b.m, 0.0, mut
+	blas.dgemm(false, false, a.m, b.n, a.n, alpha, a.data, a.m, b.data, b.m, 0.0, mut
 		c.data, c.m)
 }
 
