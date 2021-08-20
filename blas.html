@@ -327,22 +327,22 @@ in the second case.</p>
 </section>
 						<section id="extract_col" class="doc-node">
 							<div class="title"><h2>fn extract_col <a href="#extract_col">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/conversions.v#L312"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">extract_col</span><span class="token punctuation">(</span>j <span class="token builtin">int</span><span class="token punctuation">,</span> m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> A <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
-<p>extract_col extracts j column from (m,n) row-major matrix</p>
+<p>extract_col extracts j column from (m,n) col-major matrix</p>
 
 </section>
 						<section id="extract_col_complex" class="doc-node">
 							<div class="title"><h2>fn extract_col_complex <a href="#extract_col_complex">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/conversions.v#L330"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">extract_col_complex</span><span class="token punctuation">(</span>j <span class="token builtin">int</span><span class="token punctuation">,</span> m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> A <span class="token punctuation">[</span><span class="token punctuation">]</span>complex<span class="token punctuation">.</span>Complex<span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>complex<span class="token punctuation">.</span>Complex</code></pre>
-<p>extract_col_complex extracts j column from (m,n) row-major matrix (complex version)</p>
+<p>extract_col_complex extracts j column from (m,n) col-major matrix (complex version)</p>
 
 </section>
 						<section id="extract_row" class="doc-node">
 							<div class="title"><h2>fn extract_row <a href="#extract_row">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/conversions.v#L303"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">extract_row</span><span class="token punctuation">(</span>i <span class="token builtin">int</span><span class="token punctuation">,</span> m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> A <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
-<p>extract_row extracts i row from (m,n) row-major matrix</p>
+<p>extract_row extracts i row from (m,n) col-major matrix</p>
 
 </section>
 						<section id="extract_row_complex" class="doc-node">
 							<div class="title"><h2>fn extract_row_complex <a href="#extract_row_complex">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/conversions.v#L321"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">extract_row_complex</span><span class="token punctuation">(</span>i <span class="token builtin">int</span><span class="token punctuation">,</span> m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> A <span class="token punctuation">[</span><span class="token punctuation">]</span>complex<span class="token punctuation">.</span>Complex<span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>complex<span class="token punctuation">.</span>Complex</code></pre>
-<p>extract_row_complex extracts i row from (m,n) row-major matrix (complex version)</p>
+<p>extract_row_complex extracts i row from (m,n) col-major matrix (complex version)</p>
 
 </section>
 						<section id="get_join_complex" class="doc-node">
@@ -427,7 +427,7 @@ complex numbers.</p>
 </section>
 
 						<div class="footer">
-							Powered by vdoc. Generated on: 20 Aug 2021 05:02:11
+							Powered by vdoc. Generated on: 20 Aug 2021 05:16:46
 						</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_blas">README</a></li>
