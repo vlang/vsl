@@ -57,7 +57,8 @@
 
 						<section id="approximate" class="doc-node">
 							<div class="title"><h2>fn approximate <a href="#approximate">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vmath/fractions/aprox.v#L73"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">approximate</span><span class="token punctuation">(</span>val <span class="token builtin">f64</span><span class="token punctuation">)</span> Fraction</code></pre>
-<p>approximate returns a Fraction that approcimates the given value to  within the default epsilon value (1.0e-4). This means the result will  be accurate to 3 places after the decimal.</p>
+<p>approximate returns a Fraction that approcimates the given value to within the default epsilon value (1.0e-4). This means the result will
+be accurate to 3 places after the decimal.</p>
 
 </section>
 						<section id="approximate_with_eps" class="doc-node">
@@ -67,7 +68,9 @@
 </section>
 						<section id="fraction" class="doc-node">
 							<div class="title"><h2>fn fraction <a href="#fraction">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vmath/fractions/fraction.v#L25"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">fraction</span><span class="token punctuation">(</span>n <span class="token builtin">i64</span><span class="token punctuation">,</span> d <span class="token builtin">i64</span><span class="token punctuation">)</span> Fraction</code></pre>
-<p>A factory function for creating a Fraction, adds a boundary condition  to ensure that the denominator is non-zero. It automatically converts  the negative denominator to positive and adjusts the numerator.  NOTE: Fractions created are not reduced by default.</p>
+<p>A factory function for creating a Fraction, adds a boundary condition to ensure that the denominator is non-zero. It automatically converts
+the negative denominator to positive and adjusts the numerator.<br>
+NOTE: Fractions created are not reduced by default.</p>
 
 </section>
 						<section id="Fraction.str" class="doc-node">
@@ -141,7 +144,9 @@
 </section>
 						<section id="Fraction.equals" class="doc-node">
 							<div class="title"><h2>fn (Fraction) equals <a href="#Fraction.equals">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vmath/fractions/fraction.v#L258"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>f1 Fraction<span class="token punctuation">)</span> <span class="token function">equals</span><span class="token punctuation">(</span>f2 Fraction<span class="token punctuation">)</span> <span class="token builtin">bool</span></code></pre>
-<p>+-----------------------------+  | Public comparison functions |  +-----------------------------+  equals returns true if both the Fractions are equal</p>
+<p>+-----------------------------+
+| Public comparison functions |
++-----------------------------+ equals returns true if both the Fractions are equal</p>
 
 </section>
 						<section id="Fraction.ge" class="doc-node">
@@ -166,7 +171,7 @@
 </section>
 
 						<div class="footer">
-							Powered by vdoc. Generated on: 19 Aug 2021 04:13:41
+							Powered by vdoc. Generated on: 20 Aug 2021 02:38:43
 						</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#approximate">fn approximate</a>        <ul>

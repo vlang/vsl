@@ -57,22 +57,36 @@
 
 						<section id="add_32" class="doc-node">
 							<div class="title"><h2>fn add_32 <a href="#add_32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vmath/bits/bits.v#L306"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">add_32</span><span class="token punctuation">(</span>x <span class="token builtin">u32</span><span class="token punctuation">,</span> y <span class="token builtin">u32</span><span class="token punctuation">,</span> carry <span class="token builtin">u32</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">u32</span><span class="token punctuation">,</span> <span class="token builtin">u32</span><span class="token punctuation">)</span></code></pre>
-<p>--- Add with carry ---  Add returns the sum with carry of x, y and carry: sum = x + y + carry.  The carry input must be 0 or 1; otherwise the behavior is undefined.  The carryOut output is guaranteed to be 0 or 1.   add_32 returns the sum with carry of x, y and carry: sum = x + y + carry.  The carry input must be 0 or 1; otherwise the behavior is undefined.  The carryOut output is guaranteed to be 0 or 1.   This function's execution time does not depend on the inputs.</p>
+<p>--- Add with carry ---
+Add returns the sum with carry of x, y and carry: sum = x + y + carry.<br>
+The carry input must be 0 or 1; otherwise the behavior is undefined.<br>
+The carryOut output is guaranteed to be 0 or 1.</p>
+<p>add_32 returns the sum with carry of x, y and carry: sum = x + y + carry.<br>
+The carry input must be 0 or 1; otherwise the behavior is undefined.<br>
+The carryOut output is guaranteed to be 0 or 1.</p>
+<p>This function's execution time does not depend on the inputs.</p>
 
 </section>
 						<section id="add_64" class="doc-node">
 							<div class="title"><h2>fn add_64 <a href="#add_64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vmath/bits/bits.v#L318"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">add_64</span><span class="token punctuation">(</span>x <span class="token builtin">u64</span><span class="token punctuation">,</span> y <span class="token builtin">u64</span><span class="token punctuation">,</span> carry <span class="token builtin">u64</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">u64</span><span class="token punctuation">,</span> <span class="token builtin">u64</span><span class="token punctuation">)</span></code></pre>
-<p>add_64 returns the sum with carry of x, y and carry: sum = x + y + carry.  The carry input must be 0 or 1; otherwise the behavior is undefined.  The carryOut output is guaranteed to be 0 or 1.   This function's execution time does not depend on the inputs.</p>
+<p>add_64 returns the sum with carry of x, y and carry: sum = x + y + carry.<br>
+The carry input must be 0 or 1; otherwise the behavior is undefined.<br>
+The carryOut output is guaranteed to be 0 or 1.</p>
+<p>This function's execution time does not depend on the inputs.</p>
 
 </section>
 						<section id="div_32" class="doc-node">
 							<div class="title"><h2>fn div_32 <a href="#div_32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vmath/bits/bits.v#L404"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">div_32</span><span class="token punctuation">(</span>hi <span class="token builtin">u32</span><span class="token punctuation">,</span> lo <span class="token builtin">u32</span><span class="token punctuation">,</span> y <span class="token builtin">u32</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">u32</span><span class="token punctuation">,</span> <span class="token builtin">u32</span><span class="token punctuation">)</span></code></pre>
-<p>--- Full-width divide ---  div_32 returns the quotient and remainder of (hi, lo) divided by y:  quo = (hi, lo)/y, rem = (hi, lo)%y with the dividend bits' upper  half in parameter hi and the lower half in parameter lo.  div_32 panics for y == 0 (division by zero) or y &lt;= hi (quotient overflow).</p>
+<p>--- Full-width divide --- div_32 returns the quotient and remainder of (hi, lo) divided by y: quo = (hi, lo)/y, rem = (hi, lo)%y with the dividend bits' upper
+half in parameter hi and the lower half in parameter lo.<br>
+div_32 panics for y == 0 (division by zero) or y &lt;= hi (quotient overflow).</p>
 
 </section>
 						<section id="div_64" class="doc-node">
 							<div class="title"><h2>fn div_64 <a href="#div_64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vmath/bits/bits.v#L418"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">div_64</span><span class="token punctuation">(</span>hi <span class="token builtin">u64</span><span class="token punctuation">,</span> lo <span class="token builtin">u64</span><span class="token punctuation">,</span> y1 <span class="token builtin">u64</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">u64</span><span class="token punctuation">,</span> <span class="token builtin">u64</span><span class="token punctuation">)</span></code></pre>
-<p>div_64 returns the quotient and remainder of (hi, lo) divided by y:  quo = (hi, lo)/y, rem = (hi, lo)%y with the dividend bits' upper  half in parameter hi and the lower half in parameter lo.  div_64 panics for y == 0 (division by zero) or y &lt;= hi (quotient overflow).</p>
+<p>div_64 returns the quotient and remainder of (hi, lo) divided by y: quo = (hi, lo)/y, rem = (hi, lo)%y with the dividend bits' upper
+half in parameter hi and the lower half in parameter lo.<br>
+div_64 panics for y == 0 (division by zero) or y &lt;= hi (quotient overflow).</p>
 
 </section>
 						<section id="leading_zeros_16" class="doc-node">
@@ -92,7 +106,8 @@
 </section>
 						<section id="leading_zeros_8" class="doc-node">
 							<div class="title"><h2>fn leading_zeros_8 <a href="#leading_zeros_8">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vmath/bits/bits.v#L32"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">leading_zeros_8</span><span class="token punctuation">(</span>x <span class="token builtin">byte</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
-<p>--- LeadingZeros ---  leading_zeros_8 returns the number of leading zero bits in x; the result is 8 for x == 0.</p>
+<p>--- LeadingZeros ---
+leading_zeros_8 returns the number of leading zero bits in x; the result is 8 for x == 0.</p>
 
 </section>
 						<section id="len_16" class="doc-node">
@@ -112,17 +127,22 @@
 </section>
 						<section id="len_8" class="doc-node">
 							<div class="title"><h2>fn len_8 <a href="#len_8">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vmath/bits/bits.v#L247"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">len_8</span><span class="token punctuation">(</span>x <span class="token builtin">byte</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
-<p>--- Len ---  len_8 returns the minimum number of bits required to represent x; the result is 0 for x == 0.</p>
+<p>--- Len ---
+len_8 returns the minimum number of bits required to represent x; the result is 0 for x == 0.</p>
 
 </section>
 						<section id="mul_32" class="doc-node">
 							<div class="title"><h2>fn mul_32 <a href="#mul_32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vmath/bits/bits.v#L372"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">mul_32</span><span class="token punctuation">(</span>x <span class="token builtin">u32</span><span class="token punctuation">,</span> y <span class="token builtin">u32</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">u32</span><span class="token punctuation">,</span> <span class="token builtin">u32</span><span class="token punctuation">)</span></code></pre>
-<p>mul_32 returns the 64-bit product of x and y: (hi, lo) = x * y  with the product bits' upper half returned in hi and the lower  half returned in lo.   This function's execution time does not depend on the inputs.</p>
+<p>mul_32 returns the 64-bit product of x and y: (hi, lo) = x * y with the product bits' upper half returned in hi and the lower
+half returned in lo.</p>
+<p>This function's execution time does not depend on the inputs.</p>
 
 </section>
 						<section id="mul_64" class="doc-node">
 							<div class="title"><h2>fn mul_64 <a href="#mul_64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vmath/bits/bits.v#L384"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">mul_64</span><span class="token punctuation">(</span>x <span class="token builtin">u64</span><span class="token punctuation">,</span> y <span class="token builtin">u64</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">u64</span><span class="token punctuation">,</span> <span class="token builtin">u64</span><span class="token punctuation">)</span></code></pre>
-<p>mul_64 returns the 128-bit product of x and y: (hi, lo) = x * y  with the product bits' upper half returned in hi and the lower  half returned in lo.   This function's execution time does not depend on the inputs.</p>
+<p>mul_64 returns the 128-bit product of x and y: (hi, lo) = x * y with the product bits' upper half returned in hi and the lower
+half returned in lo.</p>
+<p>This function's execution time does not depend on the inputs.</p>
 
 </section>
 						<section id="ones_count_16" class="doc-node">
@@ -142,17 +162,20 @@
 </section>
 						<section id="ones_count_8" class="doc-node">
 							<div class="title"><h2>fn ones_count_8 <a href="#ones_count_8">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vmath/bits/bits.v#L96"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">ones_count_8</span><span class="token punctuation">(</span>x <span class="token builtin">byte</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
-<p>--- OnesCount ---  ones_count_8 returns the number of one bits (&quot;population count&quot;) in x.</p>
+<p>--- OnesCount ---
+ones_count_8 returns the number of one bits (&quot;population count&quot;) in x.</p>
 
 </section>
 						<section id="rem_32" class="doc-node">
 							<div class="title"><h2>fn rem_32 <a href="#rem_32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vmath/bits/bits.v#L459"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">rem_32</span><span class="token punctuation">(</span>hi <span class="token builtin">u32</span><span class="token punctuation">,</span> lo <span class="token builtin">u32</span><span class="token punctuation">,</span> y <span class="token builtin">u32</span><span class="token punctuation">)</span> <span class="token builtin">u32</span></code></pre>
-<p>rem_32 returns the remainder of (hi, lo) divided by y. Rem32 panics  for y == 0 (division by zero) but, unlike Div32, it doesn't panic  on a quotient overflow.</p>
+<p>rem_32 returns the remainder of (hi, lo) divided by y. Rem32 panics for y == 0 (division by zero) but, unlike Div32, it doesn't panic
+on a quotient overflow.</p>
 
 </section>
 						<section id="rem_64" class="doc-node">
 							<div class="title"><h2>fn rem_64 <a href="#rem_64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vmath/bits/bits.v#L466"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">rem_64</span><span class="token punctuation">(</span>hi <span class="token builtin">u64</span><span class="token punctuation">,</span> lo <span class="token builtin">u64</span><span class="token punctuation">,</span> y <span class="token builtin">u64</span><span class="token punctuation">)</span> <span class="token builtin">u64</span></code></pre>
-<p>rem_64 returns the remainder of (hi, lo) divided by y. Rem64 panics  for y == 0 (division by zero) but, unlike div_64, it doesn't panic  on a quotient overflow.</p>
+<p>rem_64 returns the remainder of (hi, lo) divided by y. Rem64 panics for y == 0 (division by zero) but, unlike div_64, it doesn't panic
+on a quotient overflow.</p>
 
 </section>
 						<section id="reverse_16" class="doc-node">
@@ -172,52 +195,76 @@
 </section>
 						<section id="reverse_8" class="doc-node">
 							<div class="title"><h2>fn reverse_8 <a href="#reverse_8">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vmath/bits/bits.v#L189"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">reverse_8</span><span class="token punctuation">(</span>x <span class="token builtin">byte</span><span class="token punctuation">)</span> <span class="token builtin">byte</span></code></pre>
-<p>--- Reverse ---  reverse_8 returns the value of x with its bits in reversed order.</p>
+<p>--- Reverse ---
+reverse_8 returns the value of x with its bits in reversed order.</p>
 
 </section>
 						<section id="reverse_bytes_16" class="doc-node">
 							<div class="title"><h2>fn reverse_bytes_16 <a href="#reverse_bytes_16">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vmath/bits/bits.v#L222"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">reverse_bytes_16</span><span class="token punctuation">(</span>x <span class="token builtin">u16</span><span class="token punctuation">)</span> <span class="token builtin">u16</span></code></pre>
-<p>--- ReverseBytes ---  reverse_bytes_16 returns the value of x with its bytes in reversed order.   This function's execution time does not depend on the inputs.</p>
+<p>--- ReverseBytes ---
+reverse_bytes_16 returns the value of x with its bytes in reversed order.</p>
+<p>This function's execution time does not depend on the inputs.</p>
 
 </section>
 						<section id="reverse_bytes_32" class="doc-node">
 							<div class="title"><h2>fn reverse_bytes_32 <a href="#reverse_bytes_32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vmath/bits/bits.v#L230"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">reverse_bytes_32</span><span class="token punctuation">(</span>x <span class="token builtin">u32</span><span class="token punctuation">)</span> <span class="token builtin">u32</span></code></pre>
-<p>reverse_bytes_32 returns the value of x with its bytes in reversed order.   This function's execution time does not depend on the inputs.</p>
+<p>reverse_bytes_32 returns the value of x with its bytes in reversed order.</p>
+<p>This function's execution time does not depend on the inputs.</p>
 
 </section>
 						<section id="reverse_bytes_64" class="doc-node">
 							<div class="title"><h2>fn reverse_bytes_64 <a href="#reverse_bytes_64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vmath/bits/bits.v#L239"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">reverse_bytes_64</span><span class="token punctuation">(</span>x <span class="token builtin">u64</span><span class="token punctuation">)</span> <span class="token builtin">u64</span></code></pre>
-<p>reverse_bytes_64 returns the value of x with its bytes in reversed order.   This function's execution time does not depend on the inputs.</p>
+<p>reverse_bytes_64 returns the value of x with its bytes in reversed order.</p>
+<p>This function's execution time does not depend on the inputs.</p>
 
 </section>
 						<section id="rotate_left_16" class="doc-node">
 							<div class="title"><h2>fn rotate_left_16 <a href="#rotate_left_16">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vmath/bits/bits.v#L158"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">rotate_left_16</span><span class="token punctuation">(</span>x <span class="token builtin">u16</span><span class="token punctuation">,</span> k <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">u16</span></code></pre>
-<p>rotate_left_16 returns the value of x rotated left by (k mod 16) bits.  To rotate x right by k bits, call rotate_left_16(x, -k).   This function's execution time does not depend on the inputs.</p>
+<p>rotate_left_16 returns the value of x rotated left by (k mod 16) bits.<br>
+To rotate x right by k bits, call rotate_left_16(x, -k).</p>
+<p>This function's execution time does not depend on the inputs.</p>
 
 </section>
 						<section id="rotate_left_32" class="doc-node">
 							<div class="title"><h2>fn rotate_left_32 <a href="#rotate_left_32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vmath/bits/bits.v#L169"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">rotate_left_32</span><span class="token punctuation">(</span>x <span class="token builtin">u32</span><span class="token punctuation">,</span> k <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">u32</span></code></pre>
-<p>rotate_left_32 returns the value of x rotated left by (k mod 32) bits.  To rotate x right by k bits, call rotate_left_32(x, -k).   This function's execution time does not depend on the inputs.</p>
+<p>rotate_left_32 returns the value of x rotated left by (k mod 32) bits.<br>
+To rotate x right by k bits, call rotate_left_32(x, -k).</p>
+<p>This function's execution time does not depend on the inputs.</p>
 
 </section>
 						<section id="rotate_left_64" class="doc-node">
 							<div class="title"><h2>fn rotate_left_64 <a href="#rotate_left_64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vmath/bits/bits.v#L180"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">rotate_left_64</span><span class="token punctuation">(</span>x <span class="token builtin">u64</span><span class="token punctuation">,</span> k <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">u64</span></code></pre>
-<p>rotate_left_64 returns the value of x rotated left by (k mod 64) bits.  To rotate x right by k bits, call rotate_left_64(x, -k).   This function's execution time does not depend on the inputs.</p>
+<p>rotate_left_64 returns the value of x rotated left by (k mod 64) bits.<br>
+To rotate x right by k bits, call rotate_left_64(x, -k).</p>
+<p>This function's execution time does not depend on the inputs.</p>
 
 </section>
 						<section id="rotate_left_8" class="doc-node">
 							<div class="title"><h2>fn rotate_left_8 <a href="#rotate_left_8">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vmath/bits/bits.v#L147"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">rotate_left_8</span><span class="token punctuation">(</span>x <span class="token builtin">byte</span><span class="token punctuation">,</span> k <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">byte</span></code></pre>
-<p>--- RotateLeft ---  rotate_left_8 returns the value of x rotated left by (k mod 8) bits.  To rotate x right by k bits, call rotate_left_8(x, -k).   This function's execution time does not depend on the inputs.</p>
+<p>--- RotateLeft ---
+rotate_left_8 returns the value of x rotated left by (k mod 8) bits.<br>
+To rotate x right by k bits, call rotate_left_8(x, -k).</p>
+<p>This function's execution time does not depend on the inputs.</p>
 
 </section>
 						<section id="sub_32" class="doc-node">
 							<div class="title"><h2>fn sub_32 <a href="#sub_32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vmath/bits/bits.v#L337"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">sub_32</span><span class="token punctuation">(</span>x <span class="token builtin">u32</span><span class="token punctuation">,</span> y <span class="token builtin">u32</span><span class="token punctuation">,</span> borrow <span class="token builtin">u32</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">u32</span><span class="token punctuation">,</span> <span class="token builtin">u32</span><span class="token punctuation">)</span></code></pre>
-<p>--- Subtract with borrow ---  Sub returns the difference of x, y and borrow: diff = x - y - borrow.  The borrow input must be 0 or 1; otherwise the behavior is undefined.  The borrowOut output is guaranteed to be 0 or 1.   sub_32 returns the difference of x, y and borrow, diff = x - y - borrow.  The borrow input must be 0 or 1; otherwise the behavior is undefined.  The borrowOut output is guaranteed to be 0 or 1.   This function's execution time does not depend on the inputs.</p>
+<p>--- Subtract with borrow ---
+Sub returns the difference of x, y and borrow: diff = x - y - borrow.<br>
+The borrow input must be 0 or 1; otherwise the behavior is undefined.<br>
+The borrowOut output is guaranteed to be 0 or 1.</p>
+<p>sub_32 returns the difference of x, y and borrow, diff = x - y - borrow.<br>
+The borrow input must be 0 or 1; otherwise the behavior is undefined.<br>
+The borrowOut output is guaranteed to be 0 or 1.</p>
+<p>This function's execution time does not depend on the inputs.</p>
 
 </section>
 						<section id="sub_64" class="doc-node">
 							<div class="title"><h2>fn sub_64 <a href="#sub_64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vmath/bits/bits.v#L352"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">sub_64</span><span class="token punctuation">(</span>x <span class="token builtin">u64</span><span class="token punctuation">,</span> y <span class="token builtin">u64</span><span class="token punctuation">,</span> borrow <span class="token builtin">u64</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">u64</span><span class="token punctuation">,</span> <span class="token builtin">u64</span><span class="token punctuation">)</span></code></pre>
-<p>sub_64 returns the difference of x, y and borrow: diff = x - y - borrow.  The borrow input must be 0 or 1; otherwise the behavior is undefined.  The borrowOut output is guaranteed to be 0 or 1.   This function's execution time does not depend on the inputs.</p>
+<p>sub_64 returns the difference of x, y and borrow: diff = x - y - borrow.<br>
+The borrow input must be 0 or 1; otherwise the behavior is undefined.<br>
+The borrowOut output is guaranteed to be 0 or 1.</p>
+<p>This function's execution time does not depend on the inputs.</p>
 
 </section>
 						<section id="trailing_zeros_16" class="doc-node">
@@ -237,12 +284,13 @@
 </section>
 						<section id="trailing_zeros_8" class="doc-node">
 							<div class="title"><h2>fn trailing_zeros_8 <a href="#trailing_zeros_8">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vmath/bits/bits.v#L53"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">trailing_zeros_8</span><span class="token punctuation">(</span>x <span class="token builtin">byte</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
-<p>--- TrailingZeros ---  trailing_zeros_8 returns the number of trailing zero bits in x; the result is 8 for x == 0.</p>
+<p>--- TrailingZeros ---
+trailing_zeros_8 returns the number of trailing zero bits in x; the result is 8 for x == 0.</p>
 
 </section>
 
 						<div class="footer">
-							Powered by vdoc. Generated on: 19 Aug 2021 04:13:41
+							Powered by vdoc. Generated on: 20 Aug 2021 02:38:43
 						</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#add_32">fn add_32</a>        <ul>

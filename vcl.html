@@ -185,7 +185,7 @@ fn main() {
 </section>
 						<section id="Vector<T>.load" class="doc-node">
 							<div class="title"><h2>fn (Vector<T>) load <a href="#Vector<T>.load">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/vector.c.v#L34"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> v Vector<span class="token operator"><</span><span class="token builtin">T</span><span class="token operator">></span><span class="token punctuation">)</span> <span class="token function">load</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">T</span><span class="token punctuation">)</span> <span class="token builtin">chan</span> <span class="token builtin">IError</span></code></pre>
-<p>load copies the T data from host data to device buffer  it's a non-blocking call, channel will return an error or nil if the data transfer is complete</p>
+<p>load copies the T data from host data to device buffer it's a non-blocking call, channel will return an error or nil if the data transfer is complete</p>
 
 </section>
 						<section id="Vector<T>.data" class="doc-node">
@@ -217,7 +217,7 @@ fn main() {
 </section>
 						<section id="Bytes.load" class="doc-node">
 							<div class="title"><h2>fn (Bytes) load <a href="#Bytes.load">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/bytes.c.v#L28"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>b <span class="token operator">&</span>Bytes<span class="token punctuation">)</span> <span class="token function">load</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">byte</span><span class="token punctuation">)</span> <span class="token builtin">chan</span> <span class="token builtin">IError</span></code></pre>
-<p>load copies the data from host data to device buffer  it's a non-blocking call, channel will return an error or nil if the data transfer is complete</p>
+<p>load copies the data from host data to device buffer it's a non-blocking call, channel will return an error or nil if the data transfer is complete</p>
 
 </section>
 						<section id="Bytes.data" class="doc-node">
@@ -238,12 +238,12 @@ fn main() {
 	queue    ClCommandQueue
 	programs <span class="token punctuation">[</span><span class="token punctuation">]</span>ClProgram
 <span class="token punctuation">}</span></code></pre>
-<p>Device the only needed entrence for the VCL  represents the device on which memory can be allocated and kernels run  it abstracts away all the complexity of contexts/platforms/queues</p>
+<p>Device the only needed entrence for the VCL represents the device on which memory can be allocated and kernels run it abstracts away all the complexity of contexts/platforms/queues</p>
 
 </section>
 						<section id="Device.add_program" class="doc-node">
 							<div class="title"><h2>fn (Device) add_program <a href="#Device.add_program">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/device.c.v#L130"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> d Device<span class="token punctuation">)</span> <span class="token function">add_program</span><span class="token punctuation">(</span>source <span class="token builtin">string</span><span class="token punctuation">)</span> ?</code></pre>
-<p>add_program copiles program source  if an error occurs in building the program the add_program will panic</p>
+<p>add_program copiles program source if an error occurs in building the program the add_program will panic</p>
 
 </section>
 						<section id="Device.driver_version" class="doc-node">
@@ -258,7 +258,7 @@ fn main() {
 </section>
 						<section id="Device.kernel" class="doc-node">
 							<div class="title"><h2>fn (Device) kernel <a href="#Device.kernel">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/kernel.c.v#L9"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>d <span class="token operator">&</span>Device<span class="token punctuation">)</span> <span class="token function">kernel</span><span class="token punctuation">(</span>name <span class="token builtin">string</span><span class="token punctuation">)</span> ?<span class="token operator">&</span>Kernel</code></pre>
-<p>kernel returns a kernel  if retrieving the kernel didn't complete the function will return an error</p>
+<p>kernel returns a kernel if retrieving the kernel didn't complete the function will return an error</p>
 
 </section>
 						<section id="Device.name" class="doc-node">
@@ -325,12 +325,12 @@ fn main() {
 	global_work_sizes <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>
 	local_work_sizes  <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>
 <span class="token punctuation">}</span></code></pre>
-<p>KernelCall is a kernel with global and local work sizes set  and it's ready to be run</p>
+<p>KernelCall is a kernel with global and local work sizes set and it's ready to be run</p>
 
 </section>
 						<section id="KernelCall.run" class="doc-node">
 							<div class="title"><h2>fn (KernelCall) run <a href="#KernelCall.run">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/kernel.c.v#L86"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>kc KernelCall<span class="token punctuation">)</span> <span class="token function">run</span><span class="token punctuation">(</span>args ...ArgumentType<span class="token punctuation">)</span> <span class="token builtin">chan</span> <span class="token builtin">IError</span></code></pre>
-<p>run calls the kernel on its device with specified global and local work sizes and arguments  it's a non-blocking call, so it returns a channel that will send an error value when the kernel is done  or nil if the call was successful</p>
+<p>run calls the kernel on its device with specified global and local work sizes and arguments it's a non-blocking call, so it returns a channel that will send an error value when the kernel is done or nil if the call was successful</p>
 
 </section>
 						<section id="KernelWithGlobal" class="doc-node">
@@ -338,7 +338,7 @@ fn main() {
 	kernel            <span class="token operator">&</span>Kernel
 	global_work_sizes <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>
 <span class="token punctuation">}</span></code></pre>
-<p>KernelWithGlobal is a kernel with the global size set  to run the kernel it must also set the local size</p>
+<p>KernelWithGlobal is a kernel with the global size set to run the kernel it must also set the local size</p>
 
 </section>
 						<section id="KernelWithGlobal.local" class="doc-node">
@@ -367,7 +367,7 @@ fn main() {
 </section>
 
 						<div class="footer">
-							Powered by vdoc. Generated on: 19 Aug 2021 04:13:41
+							Powered by vdoc. Generated on: 20 Aug 2021 02:38:43
 						</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_vcl">README</a></li>

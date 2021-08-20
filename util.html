@@ -82,7 +82,8 @@
 </section>
 						<section id="int_ints_map_append" class="doc-node">
 							<div class="title"><h2>fn int_ints_map_append <a href="#int_ints_map_append">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/util/mapops.v#L5"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">int_ints_map_append</span><span class="token punctuation">(</span>o <span class="token builtin">map</span><span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> key <span class="token builtin">int</span><span class="token punctuation">,</span> item <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">map</span><span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span></code></pre>
-<p>int_ints_map_append appends a new item to a map of slice.  Note: this function creates a new slice in the map if key is not found.</p>
+<p>int_ints_map_append appends a new item to a map of slice.<br>
+Note: this function creates a new slice in the map if key is not found.</p>
 
 </section>
 						<section id="lin_space" class="doc-node">
@@ -92,7 +93,7 @@
 </section>
 						<section id="move_ith_to_end" class="doc-node">
 							<div class="title"><h2>fn move_ith_to_end <a href="#move_ith_to_end">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/util/util.v#L101"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">move_ith_to_end</span><span class="token punctuation">(</span><span class="token keyword">mut</span> arr <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> i <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
-<p>move_ith_to_end removes element at i from the array, and puts it at the end  is O(n)(?) because we have to potentially shift all the elements if we remove the first</p>
+<p>move_ith_to_end removes element at i from the array, and puts it at the end is O(n)(?) because we have to potentially shift all the elements if we remove the first</p>
 
 </section>
 						<section id="range" class="doc-node">
@@ -107,12 +108,14 @@
 </section>
 						<section id="str_flts_map_append" class="doc-node">
 							<div class="title"><h2>fn str_flts_map_append <a href="#str_flts_map_append">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/util/mapops.v#L33"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">str_flts_map_append</span><span class="token punctuation">(</span>o <span class="token builtin">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> key <span class="token builtin">string</span><span class="token punctuation">,</span> item <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
-<p>str_flts_map_append appends a new item to a map of slice.  Note: this function creates a new slice in the map if key is not found.</p>
+<p>str_flts_map_append appends a new item to a map of slice.<br>
+Note: this function creates a new slice in the map if key is not found.</p>
 
 </section>
 						<section id="str_ints_map_append" class="doc-node">
 							<div class="title"><h2>fn str_ints_map_append <a href="#str_ints_map_append">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/util/mapops.v#L19"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">str_ints_map_append</span><span class="token punctuation">(</span>o <span class="token builtin">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> key <span class="token builtin">string</span><span class="token punctuation">,</span> item <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span></code></pre>
-<p>str_ints_map_append appends a new item to a map of slice.  Note: this function creates a new slice in the map if key is not found.</p>
+<p>str_ints_map_append appends a new item to a map of slice.<br>
+Note: this function creates a new slice in the map if key is not found.</p>
 
 </section>
 						<section id="Observer" class="doc-node">
@@ -120,7 +123,7 @@
 	<span class="token function">name</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">string</span>
 	<span class="token function">update</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span></code></pre>
-<p>Observer is an interface to objects that need to observe something  the data observed by this observer is being update</p>
+<p>Observer is an interface to objects that need to observe something the data observed by this observer is being update</p>
 
 </section>
 						<section id="Observable" class="doc-node">
@@ -143,7 +146,7 @@
 </section>
 
 						<div class="footer">
-							Powered by vdoc. Generated on: 19 Aug 2021 04:13:41
+							Powered by vdoc. Generated on: 20 Aug 2021 02:38:43
 						</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#arange">fn arange</a>        <ul>

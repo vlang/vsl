@@ -94,7 +94,9 @@ standard math library written from scratch in pure V.</li>
 	max_f64               <span class="token operator">=</span> <span class="token number">1.797693134862315708145274237317043567981e+308</span>
 	smallest_non_zero_f64 <span class="token operator">=</span> <span class="token number">4.940656458412465441765687928682213723651e-324</span>
 <span class="token punctuation">)</span></code></pre>
-<p>Floating-point limit values  max is the largest finite value representable by the type.  smallest_non_zero is the smallest positive, non-zero value representable by the type.</p>
+<p>Floating-point limit values
+max is the largest finite value representable by the type.<br>
+smallest_non_zero is the smallest positive, non-zero value representable by the type.</p>
 
 </section>
 						<section id="" class="doc-node const">
@@ -223,22 +225,29 @@ standard math library written from scratch in pure V.</li>
 </section>
 						<section id="f32_bits" class="doc-node">
 							<div class="title"><h2>fn f32_bits <a href="#f32_bits">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vmath/unsafe_notd_vmath.v#L8"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">f32_bits</span><span class="token punctuation">(</span>f <span class="token builtin">f32</span><span class="token punctuation">)</span> <span class="token builtin">u32</span></code></pre>
-<p>f32_bits returns the IEEE 754 binary representation of f,  with the sign bit of f and the result in the same bit position.  f32_bits(f32_from_bits(x)) == x.</p>
+<p>f32_bits returns the IEEE 754 binary representation of f,
+with the sign bit of f and the result in the same bit position.<br>
+f32_bits(f32_from_bits(x)) == x.</p>
 
 </section>
 						<section id="f32_from_bits" class="doc-node">
 							<div class="title"><h2>fn f32_from_bits <a href="#f32_from_bits">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vmath/unsafe_notd_vmath.v#L16"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">f32_from_bits</span><span class="token punctuation">(</span>b <span class="token builtin">u32</span><span class="token punctuation">)</span> <span class="token builtin">f32</span></code></pre>
-<p>f32_from_bits returns the floating-point number corresponding  to the IEEE 754 binary representation b, with the sign bit of b  and the result in the same bit position.  f32_from_bits(f32_bits(x)) == x.</p>
+<p>f32_from_bits returns the floating-point number corresponding to the IEEE 754 binary representation b, with the sign bit of b
+and the result in the same bit position.<br>
+f32_from_bits(f32_bits(x)) == x.</p>
 
 </section>
 						<section id="f64_bits" class="doc-node">
 							<div class="title"><h2>fn f64_bits <a href="#f64_bits">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vmath/unsafe_notd_vmath.v#L23"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">f64_bits</span><span class="token punctuation">(</span>f <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">u64</span></code></pre>
-<p>f64_bits returns the IEEE 754 binary representation of f,  with the sign bit of f and the result in the same bit position,  and f64_bits(f64_from_bits(x)) == x.</p>
+<p>f64_bits returns the IEEE 754 binary representation of f, with the sign bit of f and the result in the same bit position,
+and f64_bits(f64_from_bits(x)) == x.</p>
 
 </section>
 						<section id="f64_from_bits" class="doc-node">
 							<div class="title"><h2>fn f64_from_bits <a href="#f64_from_bits">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vmath/unsafe_notd_vmath.v#L31"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">f64_from_bits</span><span class="token punctuation">(</span>b <span class="token builtin">u64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
-<p>f64_from_bits returns the floating-point number corresponding  to the IEEE 754 binary representation b, with the sign bit of b  and the result in the same bit position.  f64_from_bits(f64_bits(x)) == x.</p>
+<p>f64_from_bits returns the floating-point number corresponding to the IEEE 754 binary representation b, with the sign bit of b
+and the result in the same bit position.<br>
+f64_from_bits(f64_bits(x)) == x.</p>
 
 </section>
 						<section id="factorial" class="doc-node">
@@ -293,7 +302,10 @@ standard math library written from scratch in pure V.</li>
 </section>
 						<section id="is_inf" class="doc-node">
 							<div class="title"><h2>fn is_inf <a href="#is_inf">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vmath/bits_notd_vmath.v#L24"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">is_inf</span><span class="token punctuation">(</span>f <span class="token builtin">f64</span><span class="token punctuation">,</span> sign <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">bool</span></code></pre>
-<p>is_inf reports whether f is an infinity, according to sign.  If sign &gt; 0, is_inf reports whether f is positive infinity.  If sign &lt; 0, is_inf reports whether f is negative infinity.  If sign == 0, is_inf reports whether f is either infinity.</p>
+<p>is_inf reports whether f is an infinity, according to sign.<br>
+If sign &gt; 0, is_inf reports whether f is positive infinity.<br>
+If sign &lt; 0, is_inf reports whether f is negative infinity.<br>
+If sign == 0, is_inf reports whether f is either infinity.</p>
 
 </section>
 						<section id="is_nan" class="doc-node">
@@ -378,7 +390,8 @@ standard math library written from scratch in pure V.</li>
 </section>
 						<section id="modf" class="doc-node">
 							<div class="title"><h2>fn modf <a href="#modf">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vmath/math.v#L78"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">modf</span><span class="token punctuation">(</span>f <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
-<p>modf returns integer and fractional floating-point numbers  that sum to f. Both values have the same sign as f.</p>
+<p>modf returns integer and fractional floating-point numbers
+that sum to f. Both values have the same sign as f.</p>
 
 </section>
 						<section id="nan" class="doc-node">
@@ -398,7 +411,8 @@ standard math library written from scratch in pure V.</li>
 </section>
 						<section id="normalize" class="doc-node">
 							<div class="title"><h2>fn normalize <a href="#normalize">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vmath/bits_notd_vmath.v#L34"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">normalize</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
-<p>normalize returns a normal number y and exponent exp  satisfying x == y × 2**exp. It assumes x is finite and non-zero.</p>
+<p>normalize returns a normal number y and exponent exp
+satisfying x == y × 2**exp. It assumes x is finite and non-zero.</p>
 
 </section>
 						<section id="pow" class="doc-node">
@@ -468,12 +482,13 @@ standard math library written from scratch in pure V.</li>
 </section>
 						<section id="trunc" class="doc-node">
 							<div class="title"><h2>fn trunc <a href="#trunc">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vmath/math_notd_vmath.v#L254"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">trunc</span><span class="token punctuation">(</span>a <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
-<p>trunc rounds a toward zero, returning the nearest integral value that is not  larger in magnitude than a.</p>
+<p>trunc rounds a toward zero, returning the nearest integral value that is not
+larger in magnitude than a.</p>
 
 </section>
 
 						<div class="footer">
-							Powered by vdoc. Generated on: 19 Aug 2021 04:13:41
+							Powered by vdoc. Generated on: 20 Aug 2021 02:38:43
 						</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_vmath">README</a></li>
