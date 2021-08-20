@@ -50,7 +50,7 @@ pub fn dgesv(n int, nrhs int, mut a []f64, lda int, ipiv []int, mut b []f64, ldb
 	if ipiv.len != n {
 		errors.vsl_panic('ipiv.len must be equal to n. $ipiv.len != $n\n', .efailed)
 	}
-	info := C.LAPACKE_dgesv(lapack_row_major, n, nrhs, unsafe { &a[0] }, lda, &ipiv[0],
+	info := C.LAPACKE_dgesv(lapack_col_major, n, nrhs, unsafe { &a[0] }, lda, &ipiv[0],
 		unsafe { &b[0] }, ldb)
 	if info != 0 {
 		errors.vsl_panic('lapack failed', .efailed)

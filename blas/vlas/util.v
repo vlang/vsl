@@ -12,3 +12,18 @@ const (
 fn blocks(dim int, bsize int) int {
 	return (dim + bsize - 1) / bsize
 }
+
+fn flatten(a [][]f64) []f64 {
+	if a.len == 0 {
+		return []
+	}
+	m := a.len
+	n := a[0].len
+	mut s := []f64{len: m*n}
+	for i in 0 .. m {
+		for j in 0 .. n {
+			s[i*n+j] = a[i][j]
+		}
+	}
+	return s
+}
