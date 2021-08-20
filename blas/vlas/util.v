@@ -19,10 +19,10 @@ fn flatten(a [][]f64) []f64 {
 	}
 	m := a.len
 	n := a[0].len
-	mut s := []f64{len: m*n}
+	mut s := []f64{len: m * n}
 	for i in 0 .. m {
 		for j in 0 .. n {
-			s[i*n+j] = a[i][j]
+			s[i * n + j] = a[i][j]
 		}
 	}
 	return s
