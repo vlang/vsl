@@ -6,7 +6,7 @@ with some sugar abstraction, V's concurency and channels.
 
 ## Example
 
-```v
+```v ignore
 module main
 
 import vsl.vcl
