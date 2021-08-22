@@ -20,8 +20,9 @@ jobs:
         sudo ./v symlink
     - name: V doctor
       run: v doctor
+    - name: Move VSL source code to V Modules
+      run: mv ./vsl ~/.vmodules
     - name: Validate docs
       run: |
-        v install vsl
-        cd vsl
+        cd ~/.vmodules/vsl
         v check-md .
