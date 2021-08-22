@@ -1,6 +1,6 @@
 module ml
 
-import vsl.vmath as math
+import math
 import vsl.gm
 import vsl.la
 

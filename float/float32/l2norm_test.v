@@ -1,6 +1,6 @@
 module float32
 
-import vsl.vmath as math
+import math
 
 struct L2NormTest {
 	inc  int

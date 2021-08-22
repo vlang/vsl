@@ -1,7 +1,7 @@
 module vlas
 
 import vsl.float.float64
-import vsl.vmath as math
+import math
 
 // dnrm2 computes the Euclidean norm of a vector,
 //  sqrt(\sum_i x[i] * x[i]).

@@ -2,7 +2,7 @@ module roots
 
 import vsl.errors
 import vsl.func
-import vsl.vmath
+import math
 
 // Find the root of a function by combining Newton's method with the bisection
 // method
@@ -29,13 +29,13 @@ pub fn newton_bisection(func func.FnFdf, x_min f64, x_max f64, tol f64, max_iter
 		xh = x_min
 	}
 	mut rts := f64(0.5) * (x_min + x_max)
-	mut dx_anc := vmath.abs(x_max - x_min)
+	mut dx_anc := math.abs(x_max - x_min)
 	mut dx := dx_anc
 	mut func_current, mut diff_func_current := func.eval_f_df(rts)
 	for i in 0 .. max_iter {
 		if 
 			(((rts - xh) * diff_func_current - func_current) * ((rts - xl) * diff_func_current - func_current) >= 0.0)
-			|| vmath.abs(2.0 * func_current) > vmath.abs(dx_anc * diff_func_current) {
+			|| math.abs(2.0 * func_current) > math.abs(dx_anc * diff_func_current) {
 			dx_anc = dx
 			dx = 0.5 * (xh - xl)
 			rts = xl + dx
@@ -44,7 +44,7 @@ pub fn newton_bisection(func func.FnFdf, x_min f64, x_max f64, tol f64, max_iter
 			dx = func_current / diff_func_current
 			rts -= dx
 		}
-		if vmath.abs(dx) < tol {
+		if math.abs(dx) < tol {
 			return rts
 		}
 		func_current, diff_func_current = func.eval_f_df(rts)

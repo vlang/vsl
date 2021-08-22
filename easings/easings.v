@@ -1,6 +1,6 @@
 module easings
 
-import vsl.vmath
+import math
 
 pub type EasingFn = fn (x f64) f64
 
@@ -107,53 +107,53 @@ pub fn quintic_ease_in_out(p f64) f64 {
 // sine_ease_in accelerates using a sine formula
 [inline]
 pub fn sine_ease_in(p f64) f64 {
-	return vmath.sin((p - 1.0) * vmath.tau) + 1.0
+	return math.sin((p - 1.0) * math.tau) + 1.0
 }
 
 // sine_ease_out decelerates using a sine formula
 [inline]
 pub fn sine_ease_out(p f64) f64 {
-	return vmath.sin(p * vmath.tau)
+	return math.sin(p * math.tau)
 }
 
 // sine_ease_in_out accelerates and decelerates using a sine formula
 [inline]
 pub fn sine_ease_in_out(p f64) f64 {
-	return 0.5 * (1.0 - vmath.cos(p * vmath.pi))
+	return 0.5 * (1.0 - math.cos(p * math.pi))
 }
 
 // circular_ease_in accelerates using a circular function
 [inline]
 pub fn circular_ease_in(p f64) f64 {
-	return 1.0 - vmath.sqrt(1.0 - (p * p))
+	return 1.0 - math.sqrt(1.0 - (p * p))
 }
 
 // circular_ease_out decelerates using a circular function
 [inline]
 pub fn circular_ease_out(p f64) f64 {
-	return vmath.sqrt((2.0 - p) * p)
+	return math.sqrt((2.0 - p) * p)
 }
 
 // circular_ease_in_out accelerates and decelerates using a circular function
 [inline]
 pub fn circular_ease_in_out(p f64) f64 {
 	if p < 0.5 {
-		return 0.5 * (1.0 - vmath.sqrt(1.0 - 4.0 * (p * p)))
+		return 0.5 * (1.0 - math.sqrt(1.0 - 4.0 * (p * p)))
 	} else {
-		return 0.5 * (vmath.sqrt(-((2.0 * p) - 3.0) * ((2.0 * p) - 1.0)) + 1.0)
+		return 0.5 * (math.sqrt(-((2.0 * p) - 3.0) * ((2.0 * p) - 1.0)) + 1.0)
 	}
 }
 
 // exponential_ease_in accelerates using an exponential formula
 [inline]
 pub fn exponential_ease_in(p f64) f64 {
-	return if p == 0.0 { p } else { vmath.pow(2, 10.0 * (p - 1.0)) }
+	return if p == 0.0 { p } else { math.pow(2, 10.0 * (p - 1.0)) }
 }
 
 // exponential_ease_out decelerates using an exponential formula
 [inline]
 pub fn exponential_ease_out(p f64) f64 {
-	return if p == 1.0 { p } else { 1.0 - vmath.pow(2, -10.0 * p) }
+	return if p == 1.0 { p } else { 1.0 - math.pow(2, -10.0 * p) }
 }
 
 // exponential_ease_in_out accelerates and decelerates using an exponential formula
@@ -163,46 +163,46 @@ pub fn exponential_ease_in_out(p f64) f64 {
 		return p
 	}
 	if p < 0.5 {
-		return 0.5 * vmath.pow(2, (20.0 * p) - 10.0)
+		return 0.5 * math.pow(2, (20.0 * p) - 10.0)
 	} else {
-		return -0.5 * vmath.pow(2, (-20.0 * p) + 10.0) + 1
+		return -0.5 * math.pow(2, (-20.0 * p) + 10.0) + 1
 	}
 }
 
 // elastic_ease_in resembles a spring oscillating back and forth, then accelerates
 [inline]
 pub fn elastic_ease_in(p f64) f64 {
-	return vmath.sin(13.0 * vmath.tau * p) * vmath.pow(2, 10.0 * (p - 1.0))
+	return math.sin(13.0 * math.tau * p) * math.pow(2, 10.0 * (p - 1.0))
 }
 
 // elastic_ease_out resembles a spring oscillating back and forth, then decelerates
 [inline]
 pub fn elastic_ease_out(p f64) f64 {
-	return vmath.sin(-13.0 * vmath.tau * (p + 1.0)) * vmath.pow(2, -10.0 * p) + 1.0
+	return math.sin(-13.0 * math.tau * (p + 1.0)) * math.pow(2, -10.0 * p) + 1.0
 }
 
 // elastic_ease_in_out resembles a spring oscillating back and forth before it begins to accelerate, then resembles a spring oscillating back and forth before it begins to decelerate afer a half
 [inline]
 pub fn elastic_ease_in_out(p f64) f64 {
 	if p < 0.5 {
-		return 0.5 * vmath.sin(13.0 * vmath.tau * (2.0 * p)) * vmath.pow(2, 10.0 * ((2.0 * p) - 1.0))
+		return 0.5 * math.sin(13.0 * math.tau * (2.0 * p)) * math.pow(2, 10.0 * ((2.0 * p) - 1.0))
 	} else {
-		return 0.5 * (vmath.sin(-13.0 * vmath.tau * ((2.0 * p - 1.0) +
-			1.0)) * vmath.pow(2, -10.0 * (2.0 * p - 1.0)) + 2.0)
+		return 0.5 * (math.sin(-13.0 * math.tau * ((2.0 * p - 1.0) +
+			1.0)) * math.pow(2, -10.0 * (2.0 * p - 1.0)) + 2.0)
 	}
 }
 
 // back_ease_in retracts the motion slightly before it begins to accelerate
 [inline]
 pub fn back_ease_in(p f64) f64 {
-	return p * p * p - p * vmath.sin(p * vmath.pi)
+	return p * p * p - p * math.sin(p * math.pi)
 }
 
 // back_ease_out retracts the motion slightly before it begins to decelerate
 [inline]
 pub fn back_ease_out(p f64) f64 {
 	f := (1.0 - p)
-	return 1.0 - (f * f * f - f * vmath.sin(f * vmath.pi))
+	return 1.0 - (f * f * f - f * math.sin(f * math.pi))
 }
 
 // back_ease_in_out retracts the motion slightly before it begins to accelerate, then retracts the motion slightly before it begins to decelerate afer a half
@@ -210,10 +210,10 @@ pub fn back_ease_out(p f64) f64 {
 pub fn back_ease_in_out(p f64) f64 {
 	if p < 0.5 {
 		f := 2.0 * p
-		return 0.5 * (f * f * f - f * vmath.sin(f * vmath.pi))
+		return 0.5 * (f * f * f - f * math.sin(f * math.pi))
 	} else {
 		f := (1.0 - (2.0 * p - 1.0))
-		return 0.5 * (1.0 - (f * f * f - f * vmath.sin(f * vmath.pi))) + 0.5
+		return 0.5 * (1.0 - (f * f * f - f * math.sin(f * math.pi))) + 0.5
 	}
 }
 
@@ -250,7 +250,7 @@ pub fn bounce_ease_in_out(p f64) f64 {
 // animate returns []f64 of length "frames" using the easing function provided with lower and upper bounds as "from" and "to"
 [inline]
 pub fn animate(easing EasingFn, from f64, to f64, frames int) []f64 {
-	len := int(vmath.max(frames, 0.0))
+	len := int(math.max(frames, 0.0))
 	dt := 1.0 / f64(len - 1)
 	animation := range(0, len)
 	return animation.map(from + easing(it * dt) * (to - from)) // t := it*dt

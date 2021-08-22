@@ -3,7 +3,7 @@ module roots
 import vsl.errors
 import vsl.func
 import vsl.internal
-import vsl.vmath
+import math
 
 const (
 	itmax = 100
@@ -35,7 +35,7 @@ pub fn brent(func func.Fn, x1 f64, x2 f64, tol f64) ?(f64, f64) {
 	mut r := 0.0
 	for iter := 1; iter <= roots.itmax; iter++ {
 		prev_step = b - a
-		if vmath.abs(fc) < vmath.abs(fb) {
+		if math.abs(fc) < math.abs(fb) {
 			a = b
 			b = c
 			c = a
@@ -43,14 +43,14 @@ pub fn brent(func func.Fn, x1 f64, x2 f64, tol f64) ?(f64, f64) {
 			fb = fc
 			fc = fa
 		}
-		tol1 = 2.0 * internal.f64_epsilon * vmath.abs(b) + 0.5 * tol
+		tol1 = 2.0 * internal.f64_epsilon * math.abs(b) + 0.5 * tol
 		mut new_step := 0.5 * (c - b)
-		if vmath.abs(new_step) <= tol1 || fb == 0.0 {
-			return b, vmath.abs(c - b)
+		if math.abs(new_step) <= tol1 || fb == 0.0 {
+			return b, math.abs(c - b)
 		}
 		// decide if the interpolation can be tried. if prev_step was
 		// large enough and in the right direction
-		if vmath.abs(prev_step) >= tol1 && vmath.abs(fa) > vmath.abs(fb) {
+		if math.abs(prev_step) >= tol1 && math.abs(fa) > math.abs(fb) {
 			s := fb / fa
 			if a == c {
 				// if we only have two distinct points, only linear
@@ -73,8 +73,8 @@ pub fn brent(func func.Fn, x1 f64, x2 f64, tol f64) ?(f64, f64) {
 			// if b+p/q falls in [b,c] and isn't too large, it is accepted. If
 			// p/q is too large the the bisection procedure can reduce [b,c] more
 			// significantly
-			if 2.0 * p < 3.0 * new_step * q - vmath.abs(tol1 * q)
-				&& 2.0 * p < vmath.abs(prev_step * q) {
+			if 2.0 * p < 3.0 * new_step * q - math.abs(tol1 * q)
+				&& 2.0 * p < math.abs(prev_step * q) {
 				new_step = p / q
 			} else {
 				new_step = 0.5 * (c - b)
@@ -82,7 +82,7 @@ pub fn brent(func func.Fn, x1 f64, x2 f64, tol f64) ?(f64, f64) {
 			}
 		}
 		// adjust the step to be not less than tolerance
-		if vmath.abs(new_step) < tol1 {
+		if math.abs(new_step) < tol1 {
 			new_step = if new_step > 0 { tol1 } else { -tol1 }
 		}
 		a = b
@@ -94,5 +94,5 @@ pub fn brent(func func.Fn, x1 f64, x2 f64, tol f64) ?(f64, f64) {
 			fc = fa
 		}
 	}
-	return b, vmath.abs(c - b)
+	return b, math.abs(c - b)
 }

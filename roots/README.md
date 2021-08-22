@@ -50,7 +50,7 @@ module main
 
 import vsl.func
 import vsl.roots
-import vsl.vmath
+import math
 
 const (
 	epsabs = 0.0001
@@ -59,7 +59,7 @@ const (
 )
 
 fn cos(x f64, _ []f64) f64 {
-	return vmath.cos(x)
+	return math.cos(x)
 }
 
 fn main() {
@@ -68,4 +68,4 @@ fn main() {
 }
 ```
 
-`result` will be `vmath.pi / 2.00`
+`result` will be `math.pi / 2.00`

@@ -1,7 +1,7 @@
 module fun
 
 import vsl.poly
-import vsl.vmath as math
+import math
 
 // bessel_i0 returns the modified Bessel function i0(x) for any real x.
 fn bessel_i0(x f64) f64 {

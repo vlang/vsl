@@ -1,7 +1,7 @@
 module fun
 
-import vsl.vmath as math
-import vsl.vmath.complex as cmplx
+import math
+import math.complex as cmplx
 import vsl.errors
 
 // beta computes the beta function by calling the log_gamma_sign function

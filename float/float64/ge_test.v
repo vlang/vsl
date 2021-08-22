@@ -1,6 +1,6 @@
 module float64
 
-import vsl.vmath as math
+import math
 
 const (
 	ge_tests = [// m x n ( kernels executed )

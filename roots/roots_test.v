@@ -1,7 +1,7 @@
 module roots
 
 import vsl.func
-import vsl.vmath
+import math
 
 const (
 	epsabs = 0.0001
@@ -10,11 +10,11 @@ const (
 )
 
 fn f_cos(x f64, _ []f64) f64 {
-	return vmath.cos(x)
+	return math.cos(x)
 }
 
 fn fdf_cos(x f64, _ []f64) (f64, f64) {
-	return vmath.cos(x), -vmath.sin(x)
+	return math.cos(x), -math.sin(x)
 }
 
 fn test_root_bisection() {
@@ -22,14 +22,14 @@ fn test_root_bisection() {
 	x2 := f64(3)
 	func := func.new_func(f: f_cos)
 	result := bisection(func, x1, x2, roots.epsrel, roots.epsabs, roots.n_max) or { panic(err) }
-	assert compare(result, vmath.pi / 2.00)
+	assert compare(result, math.pi / 2.00)
 }
 
 fn test_root_newton() {
 	x0 := f64(0.5)
 	func := func.new_func_fdf(fdf: fdf_cos)
 	result := newton(func, x0, roots.epsrel, roots.epsabs, roots.n_max) or { panic(err) }
-	assert compare(result, vmath.pi / 2.00)
+	assert compare(result, math.pi / 2.00)
 }
 
 // Helper method for comparing floats
@@ -39,7 +39,7 @@ fn compare(x f64, y f64) bool {
 	if x < tolerance && x > (-1.0 * tolerance) && y < tolerance && y > (-1.0 * tolerance) {
 		return true
 	}
-	diff := vmath.abs(x - y)
-	mean := vmath.abs(x + y) / 2.0
-	return if vmath.is_nan(diff / mean) { true } else { ((diff / mean) < tolerance) }
+	diff := math.abs(x - y)
+	mean := math.abs(x + y) / 2.0
+	return if math.is_nan(diff / mean) { true } else { ((diff / mean) < tolerance) }
 }

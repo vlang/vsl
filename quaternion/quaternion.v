@@ -1,6 +1,6 @@
 module quaternion
 
-import vsl.vmath
+import math
 
 pub struct Quaternion {
 pub:
@@ -47,8 +47,8 @@ pub fn id() Quaternion {
 */
 pub fn from_axis_anglef3(angle f64, x f64, y f64, z f64) Quaternion {
 	half_angle := angle / 2.0
-	s := vmath.sin(half_angle)
-	c := vmath.cos(half_angle)
+	s := math.sin(half_angle)
+	c := math.cos(half_angle)
 	q := quaternion(c, x * s, y * s, z * s)
 	// reduce rounding errors caused by sin/cos
 	return q.normalized()
@@ -57,10 +57,10 @@ pub fn from_axis_anglef3(angle f64, x f64, y f64, z f64) Quaternion {
 pub fn from_spherical_coords(theta f64, phi f64) Quaternion {
 	half_theta := theta / 2.0
 	half_phi := phi / 2.0
-	ct := vmath.cos(half_theta)
-	cp := vmath.cos(half_phi)
-	st := vmath.sin(half_theta)
-	sp := vmath.sin(half_phi)
+	ct := math.cos(half_theta)
+	cp := math.cos(half_phi)
+	st := math.sin(half_theta)
+	sp := math.sin(half_phi)
 	return quaternion(cp * ct, -sp * st, st * cp, sp * ct)
 }
 
@@ -68,12 +68,12 @@ pub fn from_euler_angles(alpha f64, beta f64, gamma f64) Quaternion {
 	half_alpha := alpha / 2.0
 	half_beta := beta / 2.0
 	half_gamma := gamma / 2.0
-	ca := vmath.cos(half_alpha)
-	cb := vmath.cos(half_beta)
-	cc := vmath.cos(half_gamma)
-	sa := vmath.sin(half_alpha)
-	sb := vmath.sin(half_beta)
-	sc := vmath.sin(half_gamma)
+	ca := math.cos(half_alpha)
+	cb := math.cos(half_beta)
+	cc := math.cos(half_gamma)
+	sa := math.sin(half_alpha)
+	sb := math.sin(half_beta)
+	sc := math.sin(half_gamma)
 	return quaternion(ca * cb * cc - sa * cb * sc, ca * sb * sc - sa * sb * cc, ca * sb * cc +
 		sa * sb * sc, sa * cb * cc + ca * cb * sc)
 }

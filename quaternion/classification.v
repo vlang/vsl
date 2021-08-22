@@ -1,9 +1,9 @@
 module quaternion
 
-import vsl.vmath
+import math
 
 pub fn (q Quaternion) is_nan() bool {
-	return vmath.is_nan(q.w) || vmath.is_nan(q.x) || vmath.is_nan(q.y) || vmath.is_nan(q.z)
+	return math.is_nan(q.w) || math.is_nan(q.x) || math.is_nan(q.y) || math.is_nan(q.z)
 }
 
 pub fn (q Quaternion) is_zero() bool {
@@ -11,12 +11,12 @@ pub fn (q Quaternion) is_zero() bool {
 }
 
 pub fn (q Quaternion) is_inf() bool {
-	return vmath.is_inf(q.w, 0) || vmath.is_inf(q.x, 0) || vmath.is_inf(q.y, 0)
-		|| vmath.is_inf(q.z, 0)
+	return math.is_inf(q.w, 0) || math.is_inf(q.x, 0) || math.is_inf(q.y, 0)
+		|| math.is_inf(q.z, 0)
 }
 
 fn is_finite(a f64) bool {
-	return !vmath.is_nan(a) && !vmath.is_inf(a, 0)
+	return !math.is_nan(a) && !math.is_inf(a, 0)
 }
 
 pub fn (q Quaternion) is_finite() bool {

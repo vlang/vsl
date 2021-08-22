@@ -1,6 +1,6 @@
 module float32
 
-import vsl.vmath as math
+import math
 
 // l2_norm_unitary returns the L2-norm of x.
 pub fn l2_norm_unitary(x []f32) f32 {

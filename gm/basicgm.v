@@ -1,6 +1,6 @@
 module gm
 
-import vsl.vmath as math
+import math
 
 // Point holds the Cartesian coordinates of a point in 3D space
 [heap]

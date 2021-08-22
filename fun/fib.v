@@ -1,6 +1,6 @@
 module fun
 
-import vsl.vmath as math
+import math
 
 // fib returns the nth number in the Fibonacci sequence using O(1) space
 // in O(logn) time complexity

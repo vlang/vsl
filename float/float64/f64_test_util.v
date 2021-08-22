@@ -1,7 +1,7 @@
 module float64
 
 import rand
-import vsl.vmath as math
+import math
 
 const (
 	// Offset sets for testing alignment handling in Unitary assembly functions

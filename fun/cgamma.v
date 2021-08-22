@@ -1,7 +1,7 @@
 module fun
 
-import vsl.vmath.complex as cmplx
-import vsl.vmath as math
+import math.complex as cmplx
+import math
 
 // Compute the Gamma function for complex argument
 // `gr + gi i = Gamma(x + i y) if kf = 1`

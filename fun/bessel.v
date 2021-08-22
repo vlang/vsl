@@ -1,6 +1,6 @@
 module fun
 
-import vsl.vmath as math
+import math
 
 const (
 	huge    = 1e+300

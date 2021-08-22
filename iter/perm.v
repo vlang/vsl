@@ -1,7 +1,7 @@
 module iter
 
 import vsl.util
-import vsl.vmath as math
+import math
 
 pub struct PermutationsIter {
 mut:

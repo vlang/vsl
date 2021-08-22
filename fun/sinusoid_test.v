@@ -1,7 +1,7 @@
 module fun
 
 import vsl.float.float64
-import vsl.vmath as math
+import math
 import vsl.util
 
 fn test_sinusoid_01() {

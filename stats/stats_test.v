@@ -1,4 +1,4 @@
-import vsl.vmath as math
+import math
 import vsl.stats
 
 fn test_freq() {

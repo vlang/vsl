@@ -1,6 +1,6 @@
 module fun
 
-import vsl.vmath as math
+import math
 import vsl.errors
 
 // InterpCubic computes a cubic polynomial to perform interpolation either using 4 points

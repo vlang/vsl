@@ -1,5 +1,5 @@
 import vsl.fit
-import vsl.vmath
+import math
 
 fn test_linear_fit01() {
 	// data
@@ -34,7 +34,7 @@ fn compare(x f64, y f64) bool {
 	if x < tolerance && x > (-1.0 * tolerance) && y < tolerance && y > (-1.0 * tolerance) {
 		return true
 	}
-	diff := vmath.abs(x - y)
-	mean := vmath.abs(x + y) / 2.0
-	return if vmath.is_nan(diff / mean) { true } else { ((diff / mean) < tolerance) }
+	diff := math.abs(x - y)
+	mean := math.abs(x + y) / 2.0
+	return if math.is_nan(diff / mean) { true } else { ((diff / mean) < tolerance) }
 }

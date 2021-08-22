@@ -1,6 +1,6 @@
 module func
 
-import vsl.vmath
+import math
 import vsl.errors
 
 pub type ArbitraryFn = fn (x f64, params []f64) f64
@@ -30,7 +30,7 @@ pub fn (f Fn) eval(x f64) f64 {
 }
 
 fn is_finite(a f64) bool {
-	return !vmath.is_nan(a) && !vmath.is_inf(a, 0)
+	return !math.is_nan(a) && !math.is_inf(a, 0)
 }
 
 // Call the pointed-to function with argument x, put its result in y, and

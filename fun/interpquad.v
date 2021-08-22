@@ -1,6 +1,6 @@
 module fun
 
-import vsl.vmath as math
+import math
 import vsl.errors
 
 // InterpQuad computes a quadratic polynomial to perform interpolation either using 3 points
