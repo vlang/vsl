@@ -1,8 +1,8 @@
 module blas
 
 import strconv
-import vsl.vmath
-import vsl.vmath.complex
+import math
+import math.complex
 import vsl.errors
 
 pub const (
@@ -353,7 +353,7 @@ pub fn eigenvecs_build(mut vv []complex.Complex, wr []f64, wi []f64, v []f64) {
 	mut dj := 1 // increment for next conjugate pair
 	for j := 0; j < n; j += dj {
 		// loop over columns == eigenvalues
-		if vmath.abs(wi[j]) > 0.0 {
+		if math.abs(wi[j]) > 0.0 {
 			// eigenvalue is complex
 			if j > n - 2 {
 				errors.vsl_panic('last eigenvalue cannot be complex', .efailed)
@@ -395,7 +395,7 @@ pub fn eigenvecs_build_both(mut vvl []complex.Complex, mut vvr []complex.Complex
 	mut dj := 1 // increment for next conjugate pair
 	for j := 0; j < n; j += dj {
 		// loop over columns == eigenvalues
-		if vmath.abs(wi[j]) > 0.0 {
+		if math.abs(wi[j]) > 0.0 {
 			// eigenvalue is complex
 			if j > n - 2 {
 				errors.vsl_panic('last eigenvalue cannot be complex', .efailed)

@@ -1,6 +1,6 @@
 module float64
 
-import vsl.vmath as math
+import math
 
 // nanwith creates nan from payload
 fn nanwith(payload u64) f64 {

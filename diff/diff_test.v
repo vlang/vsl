@@ -1,18 +1,18 @@
 import vsl.diff
 import vsl.func
-import vsl.vmath
+import math
 
 fn f1(x f64, _ []f64) f64 {
-	return vmath.exp(x)
+	return math.exp(x)
 }
 
 fn df1(x f64, _ []f64) f64 {
-	return vmath.exp(x)
+	return math.exp(x)
 }
 
 fn f2(x f64, _ []f64) f64 {
 	if x >= 0.0 {
-		return x * vmath.sqrt(x)
+		return x * math.sqrt(x)
 	} else {
 		return 0.0
 	}
@@ -20,7 +20,7 @@ fn f2(x f64, _ []f64) f64 {
 
 fn df2(x f64, _ []f64) f64 {
 	if x >= 0.0 {
-		return 1.50 * vmath.sqrt(x)
+		return 1.50 * math.sqrt(x)
 	} else {
 		return 0.0
 	}
@@ -28,7 +28,7 @@ fn df2(x f64, _ []f64) f64 {
 
 fn f3(x f64, _ []f64) f64 {
 	if x != 0.0 {
-		return vmath.sin(1.0 / x)
+		return math.sin(1.0 / x)
 	} else {
 		return 0.0
 	}
@@ -36,18 +36,18 @@ fn f3(x f64, _ []f64) f64 {
 
 fn df3(x f64, _ []f64) f64 {
 	if x != 0.0 {
-		return -vmath.cos(1.0 / x) / (x * x)
+		return -math.cos(1.0 / x) / (x * x)
 	} else {
 		return 0.0
 	}
 }
 
 fn f4(x f64, _ []f64) f64 {
-	return vmath.exp(-x * x)
+	return math.exp(-x * x)
 }
 
 fn df4(x f64, _ []f64) f64 {
-	return -2.0 * x * vmath.exp(-x * x)
+	return -2.0 * x * math.exp(-x * x)
 }
 
 fn f5(x f64, _ []f64) f64 {
@@ -135,7 +135,7 @@ fn compare_near(x f64, y f64, tolerance f64) bool {
 	if x < tolerance && x > (-1.0 * tolerance) && y < tolerance && y > (-1.0 * tolerance) {
 		return true
 	}
-	diff := vmath.abs(x - y)
-	mean := vmath.abs(x + y) / 2.0
-	return if vmath.is_nan(diff / mean) { true } else { ((diff / mean) < tolerance) }
+	diff := math.abs(x - y)
+	mean := math.abs(x + y) / 2.0
+	return if math.is_nan(diff / mean) { true } else { ((diff / mean) < tolerance) }
 }

@@ -1,7 +1,7 @@
 module la
 
 import vsl.blas
-import vsl.vmath
+import math
 
 /*
 * vector_rms_error returns the scaled root-mean-square of the difference between two vectors
@@ -19,11 +19,11 @@ import vsl.vmath
 pub fn vector_rms_error(u []f64, v []f64, a f64, m f64, s []f64) f64 {
 	mut rms := 0.0
 	for i := 0; i < u.len; i++ {
-		scale := a + m * vmath.abs(s[i])
-		err := vmath.abs(u[i] - v[i])
+		scale := a + m * math.abs(s[i])
+		err := math.abs(u[i] - v[i])
 		rms += err * err / (scale * scale)
 	}
-	return vmath.sqrt(rms / f64(u.len))
+	return math.sqrt(rms / f64(u.len))
 }
 
 // vector_dot returns the dot product between two vectors:
@@ -67,9 +67,9 @@ pub fn vector_add(alpha f64, u []f64, beta f64, v []f64) []f64 {
 // vector_max_diff returns the maximum absolute difference between two vectors
 // maxdiff = max(|u - v|)
 pub fn vector_max_diff(u []f64, v []f64) f64 {
-	mut maxdiff := vmath.abs(u[0] - v[0])
+	mut maxdiff := math.abs(u[0] - v[0])
 	for i := 1; i < u.len; i++ {
-		diff := vmath.abs(u[i] - v[i])
+		diff := math.abs(u[i] - v[i])
 		if diff > maxdiff {
 			maxdiff = diff
 		}
@@ -82,7 +82,7 @@ pub fn vector_max_diff(u []f64, v []f64) f64 {
 pub fn vector_scale_abs(a f64, m f64, x []f64) []f64 {
 	mut scale := []f64{len: x.len}
 	for i := 0; i < x.len; i++ {
-		scale[i] = a + m * vmath.abs(x[i])
+		scale[i] = a + m * math.abs(x[i])
 	}
 	return scale
 }
@@ -141,7 +141,7 @@ pub fn vector_vector_tr_mul(alpha f64, u []f64, v []f64) &Matrix {
 		return m
 	}
 	mut a := []f64{len: u.len * v.len}
-	blas.dger(m.m, m.n, alpha, u, 1, v, 1, mut a, int(vmath.max(m.m, m.n)))
+	blas.dger(m.m, m.n, alpha, u, 1, v, 1, mut a, int(math.max(m.m, m.n)))
 	return matrix_raw(u.len, v.len, a)
 }
 

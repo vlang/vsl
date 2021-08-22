@@ -1,6 +1,6 @@
 module gm
 
-import vsl.vmath as math
+import math
 import vsl.errors
 
 pub const (

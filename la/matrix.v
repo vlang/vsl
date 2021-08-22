@@ -3,7 +3,7 @@ module la
 import strconv
 import vsl.errors
 import vsl.blas
-import vsl.vmath
+import math
 
 [heap]
 pub struct Matrix {
@@ -170,9 +170,9 @@ pub fn (mut o Matrix) clear_bry(diag f64) {
 
 // max_diff returns the maximum difference between the components of this and another matrix
 pub fn (o &Matrix) max_diff(another Matrix) f64 {
-	mut maxdiff := vmath.abs(o.data[0] - another.data[0])
+	mut maxdiff := math.abs(o.data[0] - another.data[0])
 	for k := 1; k < o.m * o.n; k++ {
-		diff := vmath.abs(o.data[k] - another.data[k])
+		diff := math.abs(o.data[k] - another.data[k])
 		if diff > maxdiff {
 			maxdiff = diff
 		}
@@ -183,9 +183,9 @@ pub fn (o &Matrix) max_diff(another Matrix) f64 {
 // largest returns the largest component |a[ij]| of this matrix, normalised by den
 // largest := |a[ij]| / den
 pub fn (o &Matrix) largest(den f64) f64 {
-	mut largest := vmath.abs(o.data[0])
+	mut largest := math.abs(o.data[0])
 	for k := 1; k < o.m * o.n; k++ {
-		tmp := vmath.abs(o.data[k])
+		tmp := math.abs(o.data[k])
 		if tmp > largest {
 			largest = tmp
 		}
@@ -268,7 +268,7 @@ pub fn (o &Matrix) norm_frob() f64 {
 	for k := 0; k < o.m * o.n; k++ {
 		nrm += o.data[k] * o.data[k]
 	}
-	return vmath.sqrt(nrm)
+	return math.sqrt(nrm)
 }
 
 // norm_inf returns the infinite norm of this matrix
@@ -276,13 +276,13 @@ pub fn (o &Matrix) norm_frob() f64 {
 pub fn (o &Matrix) norm_inf() f64 {
 	mut nrm := 0.0
 	for i := 0; i < o.n; i++ { // sum first row
-		nrm += vmath.abs(o.data[i])
+		nrm += math.abs(o.data[i])
 	}
 	mut sumrow := 0.0
 	for i := 1; i < o.m; i++ {
 		sumrow = 0.0
 		for j := 0; j < o.n; j++ { // sum the other rows
-			sumrow += vmath.abs(o.data[i * o.n + j])
+			sumrow += math.abs(o.data[i * o.n + j])
 			if sumrow > nrm {
 				nrm = sumrow
 			}
@@ -308,7 +308,7 @@ pub fn (o &Matrix) det() f64 {
 			.efailed)
 	}
 	mut ai := o.data.clone()
-	ipiv := []int{len: int(vmath.min(o.m, o.n))}
+	ipiv := []int{len: int(math.min(o.m, o.n))}
 	blas.dgetrf(o.m, o.n, mut ai, o.m, ipiv) // NOTE: ipiv are 1-based indices
 	mut det := 1.0
 	for i := 0; i < o.m; i++ {

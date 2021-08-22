@@ -2,7 +2,7 @@ module roots
 
 import vsl.errors
 import vsl.func
-import vsl.vmath
+import math
 
 // Find the root of a function using a bisection method
 pub fn bisection(func func.Fn, xmin f64, xmax f64, epsrel f64, epsabs f64, n_max int) ?f64 {
@@ -30,7 +30,7 @@ pub fn bisection(func func.Fn, xmin f64, xmax f64, epsrel f64, epsabs f64, n_max
 			b = c
 			fb = fc
 		}
-		if vmath.abs(b - a) < epsabs + epsrel * vmath.abs(a) {
+		if math.abs(b - a) < epsabs + epsrel * math.abs(a) {
 			break
 		}
 		i++

@@ -1,6 +1,6 @@
 module quaternion
 
-import vsl.vmath
+import math
 
 pub fn (q1 Quaternion) + (q2 Quaternion) Quaternion {
 	return quaternion(q1.w + q2.w, q1.x + q2.x, q1.y + q2.y, q1.z + q2.z)
@@ -81,7 +81,7 @@ pub fn (q Quaternion) norm() f64 {
 }
 
 pub fn (q Quaternion) abs() f64 {
-	return vmath.sqrt(q.norm())
+	return math.sqrt(q.norm())
 }
 
 pub fn (q Quaternion) angle() f64 {

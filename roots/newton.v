@@ -2,7 +2,7 @@ module roots
 
 import vsl.errors
 import vsl.func
-import vsl.vmath
+import math
 
 // Find the root of a function using Newton's algorithm with the Armijo line
 // search to ensure the absolute value of the function decreases along the
@@ -19,19 +19,19 @@ pub fn newton(func func.FnFdf, x0 f64, x_eps f64, fx_eps f64, n_max int) ?f64 {
 			errors.vsl_panic('div by zero', .ezerodiv)
 		}
 		dx := f / df
-		norm0 := vmath.abs(f)
+		norm0 := math.abs(f)
 		mut norm := 0.0 // Armijo line search
 		for t != 0.0 {
 			x_linesearch := root - t * dx
 			f, df = func.eval_f_df(x_linesearch)
-			norm = vmath.abs(f)
+			norm = math.abs(f)
 			if norm < norm0 * (1.0 - omega * t) {
 				root = x_linesearch
 				break
 			}
 			t *= gamma
 		}
-		if vmath.abs(dx) < x_eps * vmath.abs(root) || norm < fx_eps {
+		if math.abs(dx) < x_eps * math.abs(root) || norm < fx_eps {
 			break
 		}
 		i++

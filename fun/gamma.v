@@ -1,6 +1,6 @@
 module fun
 
-import vsl.vmath as math
+import math
 
 // gamma function computed by Stirling's formula.
 // The pair of results must be multiplied together to get the actual answer.

@@ -1,6 +1,6 @@
 module quaternion
 
-import vsl.vmath
+import math
 
 pub fn (start Quaternion) lerp(end Quaternion, tau f64) Quaternion {
 	// if tau is 0, return start
@@ -23,7 +23,7 @@ pub fn (start Quaternion) nlerp(end Quaternion, tau f64) Quaternion {
 }
 
 pub fn (start Quaternion) slerp(end Quaternion, tau f64) Quaternion {
-	return if start.rotor_chordal_distance(end) <= vmath.sqrt2 {
+	return if start.rotor_chordal_distance(end) <= math.sqrt2 {
 		end.divide(start).scalar_pow(tau).multiply(start)
 	} else {
 		end.opposite().divide(start).scalar_pow(tau).multiply(start)

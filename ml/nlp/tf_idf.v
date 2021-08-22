@@ -1,6 +1,6 @@
 module nlp
 
-import vsl.vmath as math
+import math
 import vsl.errors
 
 // term_frequencies will return the frequency of each term in a sentence.

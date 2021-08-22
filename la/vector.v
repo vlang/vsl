@@ -1,6 +1,6 @@
 module la
 
-import vsl.vmath
+import math
 
 pub type VectorApplyFn = fn (i int, x f64) f64
 
@@ -45,7 +45,7 @@ pub fn vector_accum(o []f64) f64 {
 // norm returns the Euclidean norm of a []f64:
 // nrm := ‖v‖
 pub fn vector_norm(o []f64) f64 {
-	return vmath.sqrt(vector_dot(o, o))
+	return math.sqrt(vector_dot(o, o))
 }
 
 // rms returns the root-mean-square of this []f64
@@ -55,7 +55,7 @@ pub fn vector_rms(o []f64) f64 {
 	for i := 0; i < o.len; i++ {
 		rms += o[i] * o[i]
 	}
-	rms = vmath.sqrt(rms / f64(o.len))
+	rms = math.sqrt(rms / f64(o.len))
 	return rms
 }
 
@@ -66,16 +66,16 @@ pub fn vector_norm_diff(o []f64, v []f64) f64 {
 	for i := 0; i < v.len; i++ {
 		nrm += (o[i] - v[i]) * (o[i] - v[i])
 	}
-	nrm = vmath.sqrt(nrm)
+	nrm = math.sqrt(nrm)
 	return nrm
 }
 
 // largest returns the largest component |u[i]| of this []f64, normalised by den
 // largest := |u[i]| / den
 pub fn vector_largest(o []f64, den f64) f64 {
-	mut largest := vmath.abs(o[0])
+	mut largest := math.abs(o[0])
 	for i := 1; i < o.len; i++ {
-		tmp := vmath.abs(o[i])
+		tmp := math.abs(o[i])
 		if tmp > largest {
 			largest = tmp
 		}

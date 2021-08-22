@@ -1,6 +1,6 @@
 module la
 
-import vsl.vmath
+import math
 
 fn test_new_matrix() {
 	mat := new_matrix(3, 2)
@@ -188,12 +188,12 @@ fn test_frobenius_norm() {
 		[1.0, 2.0],
 		[3.0, 4.0],
 	])
-	assert mat_a.norm_frob() == vmath.sqrt(30)
+	assert mat_a.norm_frob() == math.sqrt(30)
 	mat_b := matrix_deep2([
 		[1.0, 4.0, 6.0],
 		[7.0, 9.0, 10.],
 	])
-	assert mat_b.norm_frob() == vmath.sqrt(283)
+	assert mat_b.norm_frob() == math.sqrt(283)
 }
 
 fn test_infinite_norm() {

@@ -1,6 +1,6 @@
 module fun
 
-import vsl.vmath as math
+import math
 import vsl.internal
 
 // data for a Chebyshev series over a given interval
