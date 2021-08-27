@@ -50,11 +50,11 @@ pub fn dgemv(trans_a Transpose, m int, n int, alpha f64, a []f64, lda int, x []f
 	}
 
 	// Quick return if possible
-	if alpha == 0. && beta == 1 {
+	if alpha == 0.0 && beta == 1 {
 		return
 	}
 
-	if alpha == 0. {
+	if alpha == 0.0 {
 		// First form y = beta * y
 		if incy > 0 {
 			dscal(len_y, beta, mut y, incy)

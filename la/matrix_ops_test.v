@@ -34,8 +34,8 @@ fn test_matrix_inv_small() {
 		[3.0, 4.0],
 	])
 	ex2 := matrix_deep2([
-		[-4., 3.0],
-		[3.0, -2.],
+		[-4.0, 3.0],
+		[3.0, -2.0],
 	])
 	mut inv2 := new_matrix(2, 2)
 	det2 := matrix_inv_small(mut inv2, mat2, la.tol)
@@ -43,14 +43,14 @@ fn test_matrix_inv_small() {
 	assert math.abs(det2 + 1.0) <= la.tol
 	// case 3
 	mat3 := matrix_deep2([
-		[-2., 2.0, 0.0],
+		[-2.0, 2.0, 0.0],
 		[2.0, 1.0, 3.0],
-		[-2., 4.0, -2.],
+		[-2.0, 4.0, -2.0],
 	])
 	ex3 := matrix_deep2([
-		[-7. / 12, 1.0 / 6, 1.0 / 4],
-		[-1. / 12, 1.0 / 6, 1.0 / 4],
-		[5.0 / 12, 1.0 / 6, -1. / 4],
+		[-7.0 / 12, 1.0 / 6, 1.0 / 4],
+		[-1.0 / 12, 1.0 / 6, 1.0 / 4],
+		[5.0 / 12, 1.0 / 6, -1.0 / 4],
 	])
 	mut inv3 := new_matrix(3, 3)
 	det3 := matrix_inv_small(mut inv3, mat3, la.tol)

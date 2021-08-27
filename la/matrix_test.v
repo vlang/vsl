@@ -20,7 +20,7 @@ fn test_matrix_deep2() {
 	assert mat.m == 3
 	assert mat.n == 4
 	// The data is stored in column-major format
-	assert mat.data == [11., 12, 13, 14, 21, 22, 23, 24, 31, 32, 33, 34]
+	assert mat.data == [11.0, 12, 13, 14, 21, 22, 23, 24, 31, 32, 33, 34]
 }
 
 fn test_set_from_deep2() {
@@ -30,7 +30,7 @@ fn test_set_from_deep2() {
 	]
 	mut mat := new_matrix(2, 3)
 	mat.set_from_deep2(original_array)
-	assert mat.data == [1., 1, 2, 5, 4, 2]
+	assert mat.data == [1.0, 1, 2, 5, 4, 2]
 }
 
 fn test_set_diag() {
@@ -191,21 +191,21 @@ fn test_frobenius_norm() {
 	assert mat_a.norm_frob() == math.sqrt(30)
 	mat_b := matrix_deep2([
 		[1.0, 4.0, 6.0],
-		[7.0, 9.0, 10.],
+		[7.0, 9.0, 10.0],
 	])
 	assert mat_b.norm_frob() == math.sqrt(283)
 }
 
 fn test_infinite_norm() {
 	mat_a := matrix_deep2([
-		[1.0, -7.],
-		[-2., -3.],
+		[1.0, -7.0],
+		[-2.0, -3.0],
 	])
 	assert mat_a.norm_inf() == 8
 	mat_b := matrix_deep2([
-		[5.0, -4., 2.0],
-		[-1., 2.0, 3.0],
-		[-2., 1.0, 0.0],
+		[5.0, -4.0, 2.0],
+		[-1.0, 2.0, 3.0],
+		[-2.0, 1.0, 0.0],
 	])
 	assert mat_b.norm_inf() == 11
 }
@@ -225,7 +225,7 @@ fn test_det() {
 	assert mat_a.det() == -14
 	mat_b := matrix_deep2([
 		[6.0, 1.0, 1.0],
-		[4.0, -2., 5.0],
+		[4.0, -2.0, 5.0],
 		[2.0, 8.0, 7.0],
 	])
 	assert mat_b.det() == -306

@@ -39,7 +39,7 @@ fn test_counter_4() {
 }
 
 fn test_cycle_1() {
-	mut cycler := new_cycle_iter([1., 2., 3.])
+	mut cycler := new_cycle_iter([1.0, 2.0, 3.0])
 	assert cycler.next() == 1
 	assert cycler.next() == 2
 	assert cycler.next() == 3
@@ -48,7 +48,7 @@ fn test_cycle_1() {
 }
 
 fn test_cycle_2() {
-	mut cycler := new_cycle_iter([10., 0., 42., 12.])
+	mut cycler := new_cycle_iter([10.0, 0.0, 42.0, 12.0])
 	assert cycler.next() == 10
 	assert cycler.next() == 0
 	assert cycler.next() == 42

@@ -11,8 +11,7 @@ pub fn (q Quaternion) is_zero() bool {
 }
 
 pub fn (q Quaternion) is_inf() bool {
-	return math.is_inf(q.w, 0) || math.is_inf(q.x, 0) || math.is_inf(q.y, 0)
-		|| math.is_inf(q.z, 0)
+	return math.is_inf(q.w, 0) || math.is_inf(q.x, 0) || math.is_inf(q.y, 0) || math.is_inf(q.z, 0)
 }
 
 fn is_finite(a f64) bool {

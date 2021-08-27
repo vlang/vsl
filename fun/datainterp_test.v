@@ -3,7 +3,7 @@ module fun
 import vsl.float.float64
 
 fn test_interp01() {
-	xx := [0., 1, 2, 3, 4, 5]
+	xx := [0.0, 1, 2, 3, 4, 5]
 	yy := [0.50, 0.20, 0.20, 0.05, 0.01, 0.00]
 
 	mut o := new_data_interp('lin', 1, xx, yy)
@@ -20,7 +20,7 @@ fn test_interp01() {
 }
 
 fn test_interp02() {
-	xx := [0., 1, 2, 3, 4, 5]
+	xx := [0.0, 1, 2, 3, 4, 5]
 	yy := [0.50, 0.20, 0.20, 0.05, 0.01, 0.00]
 
 	for p in [1, 2, 3] {

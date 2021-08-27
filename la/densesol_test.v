@@ -21,21 +21,21 @@ fn tolerance_equal(data1 []f64, data2 []f64) bool {
 fn test_den_solve() {
 	// case 1
 	mat1 := matrix_deep2([
-		[1., 0],
-		[0., 2],
+		[1.0, 0],
+		[0.0, 2],
 	])
-	b1 := [1., 1]
+	b1 := [1.0, 1]
 	mut x1 := []f64{len: mat1.m}
 	den_solve(mut x1, mat1, b1, false)
-	assert tolerance_equal(x1, [1., 0.5])
+	assert tolerance_equal(x1, [1.0, 0.5])
 	// case 2
 	mat2 := matrix_deep2([
-		[2., 0, 0, -5.6],
-		[0., 3, 0, 1.2],
-		[0., 0, 4, 4.5],
-		[2., -5, 1.3, 0.2],
+		[2.0, 0, 0, -5.6],
+		[0.0, 3, 0, 1.2],
+		[0.0, 0, 4, 4.5],
+		[2.0, -5, 1.3, 0.2],
 	])
-	b2 := [1., 2., 3., 4.]
+	b2 := [1.0, 2.0, 3.0, 4.0]
 	mut x2 := []f64{len: mat2.m}
 	den_solve(mut x2, mat2, b2, false)
 	assert tolerance_equal(x2, [

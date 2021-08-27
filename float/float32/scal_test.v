@@ -11,59 +11,59 @@ struct ScalTest {
 const (
 	scal_tests = [
 		ScalTest{
-			alpha: f32(0.)
+			alpha: f32(0.0)
 			x: []f32{}
 			want: []f32{}
 		},
 		ScalTest{
-			alpha: f32(0.)
-			x: [f32(1.)]
-			want: [f32(0.)]
+			alpha: f32(0.0)
+			x: [f32(1.0)]
+			want: [f32(0.0)]
 		},
 		ScalTest{
-			alpha: f32(1.)
-			x: [f32(1.)]
-			want: [f32(1.)]
+			alpha: f32(1.0)
+			x: [f32(1.0)]
+			want: [f32(1.0)]
 		},
 		ScalTest{
-			alpha: f32(2.)
-			x: [f32(1.), -2]
-			want: [f32(2.), -4]
+			alpha: f32(2.0)
+			x: [f32(1.0), -2]
+			want: [f32(2.0), -4]
 		},
 		ScalTest{
-			alpha: f32(2.)
-			x: [f32(1.), -2, 3]
-			want: [f32(2.), -4, 6]
+			alpha: f32(2.0)
+			x: [f32(1.0), -2, 3]
+			want: [f32(2.0), -4, 6]
 		},
 		ScalTest{
-			alpha: f32(2.)
-			x: [f32(1.), -2, 3, 4]
-			want: [f32(2.), -4, 6, 8]
+			alpha: f32(2.0)
+			x: [f32(1.0), -2, 3, 4]
+			want: [f32(2.0), -4, 6, 8]
 		},
 		ScalTest{
-			alpha: f32(2.)
-			x: [f32(1.), -2, 3, 4, -5]
-			want: [f32(2.), -4, 6, 8, -10]
+			alpha: f32(2.0)
+			x: [f32(1.0), -2, 3, 4, -5]
+			want: [f32(2.0), -4, 6, 8, -10]
 		},
 		ScalTest{
-			alpha: f32(2.)
-			x: [f32(0.), 1, -2, 3, 4, -5, 6, -7]
-			want: [f32(0.), 2, -4, 6, 8, -10, 12, -14]
+			alpha: f32(2.0)
+			x: [f32(0.0), 1, -2, 3, 4, -5, 6, -7]
+			want: [f32(0.0), 2, -4, 6, 8, -10, 12, -14]
 		},
 		ScalTest{
-			alpha: f32(2.)
-			x: [f32(0.), 1, -2, 3, 4, -5, 6, -7, 8]
-			want: [f32(0.), 2, -4, 6, 8, -10, 12, -14, 16]
+			alpha: f32(2.0)
+			x: [f32(0.0), 1, -2, 3, 4, -5, 6, -7, 8]
+			want: [f32(0.0), 2, -4, 6, 8, -10, 12, -14, 16]
 		},
 		ScalTest{
-			alpha: f32(2.)
-			x: [f32(0.), 1, -2, 3, 4, -5, 6, -7, 8, 9]
-			want: [f32(0.), 2, -4, 6, 8, -10, 12, -14, 16, 18]
+			alpha: f32(2.0)
+			x: [f32(0.0), 1, -2, 3, 4, -5, 6, -7, 8, 9]
+			want: [f32(0.0), 2, -4, 6, 8, -10, 12, -14, 16, 18]
 		},
 		ScalTest{
-			alpha: f32(3.)
-			x: [f32(0.), 1, -2, 3, 4, -5, 6, -7, 8, 9, 12]
-			want: [f32(0.), 3, -6, 9, 12, -15, 18, -21, 24, 27, 36]
+			alpha: f32(3.0)
+			x: [f32(0.0), 1, -2, 3, 4, -5, 6, -7, 8, 9, 12]
+			want: [f32(0.0), 3, -6, 9, 12, -15, 18, -21, 24, 27, 36]
 		},
 	]
 )
@@ -90,7 +90,7 @@ fn test_scal_unitary() {
 
 fn test_scal_unitary_to() {
 	rand.seed([u32(42), u32(42)])
-	x_gd_val, dst_gd_val := f32(-1.), f32(0.5)
+	x_gd_val, dst_gd_val := f32(-1.0), f32(0.5)
 
 	for test in float32.scal_tests {
 		n := test.x.len
@@ -137,7 +137,7 @@ fn test_scal_inc() {
 
 fn test_scal_inc_to() {
 	rand.seed([u32(42), u32(42)])
-	x_gd_val, dst_gd_val := f32(-1.), f32(0.5)
+	x_gd_val, dst_gd_val := f32(-1.0), f32(0.5)
 	gd_ln := 4
 
 	for test in float32.scal_tests {

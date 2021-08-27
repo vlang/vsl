@@ -29,7 +29,7 @@ fn vcl_example() ? {
 	}
 
 	// load data to the vector (it's async)
-	data := [f32(0.), 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+	data := [f32(0.0), 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 	err := <-v.load(data)
 	if err !is none {
 		return err

@@ -1,13 +1,13 @@
 module vlas
 
 fn test_dgemv_no_trans_1() {
-	expected := [0., 0, 0, 0, 0]
+	expected := [0.0, 0, 0, 0, 0]
 	a := [
 		[4.1, 6.2, 8.1],
 		[9.6, 3.5, 9.1],
-		[10., 7, 3],
-		[1., 1, 2],
-		[9., 2, 5],
+		[10.0, 7, 3],
+		[1.0, 1, 2],
+		[9.0, 2, 5],
 	]
 	m := a.len
 	n := a[0].len
@@ -15,20 +15,20 @@ fn test_dgemv_no_trans_1() {
 	beta := 0.0
 	incx := 1
 	incy := 1
-	x := [1., 2, 3]
-	mut y := [7., 8, 9, 10, 11]
-	dgemv(blas_no_trans, m, n, 0., flatten(a), a[0].len, x, incx, beta, mut y, incy)
+	x := [1.0, 2, 3]
+	mut y := [7.0, 8, 9, 10, 11]
+	dgemv(blas_no_trans, m, n, 0.0, flatten(a), a[0].len, x, incx, beta, mut y, incy)
 	assert expected == y
 }
 
 fn test_dgemv_no_trans_2() {
-	expected := [7., 8, 9, 10, 11]
+	expected := [7.0, 8, 9, 10, 11]
 	a := [
 		[4.1, 6.2, 8.1],
 		[9.6, 3.5, 9.1],
-		[10., 7, 3],
-		[1., 1, 2],
-		[9., 2, 5],
+		[10.0, 7, 3],
+		[1.0, 1, 2],
+		[9.0, 2, 5],
 	]
 	m := a.len
 	n := a[0].len
@@ -36,9 +36,9 @@ fn test_dgemv_no_trans_2() {
 	beta := 1.0
 	incx := 1
 	incy := 1
-	x := [1., 2, 3]
-	mut y := [7., 8, 9, 10, 11]
-	dgemv(blas_no_trans, m, n, 0., flatten(a), a[0].len, x, incx, beta, mut y, incy)
+	x := [1.0, 2, 3]
+	mut y := [7.0, 8, 9, 10, 11]
+	dgemv(blas_no_trans, m, n, 0.0, flatten(a), a[0].len, x, incx, beta, mut y, incy)
 	assert expected == y
 }
 
@@ -47,9 +47,9 @@ fn test_dgemv_no_trans_3() {
 	a := [
 		[4.1, 6.2, 8.1],
 		[9.6, 3.5, 9.1],
-		[10., 7, 3],
-		[1., 1, 2],
-		[9., 2, 5],
+		[10.0, 7, 3],
+		[1.0, 1, 2],
+		[9.0, 2, 5],
 	]
 	m := a.len
 	n := a[0].len
@@ -57,9 +57,9 @@ fn test_dgemv_no_trans_3() {
 	beta := 0.0
 	incx := 1
 	incy := 1
-	x := [1., 2, 3]
-	mut y := [7., 8, 9, 10, 11]
-	dgemv(blas_no_trans, m, n, 1., flatten(a), a[0].len, x, incx, beta, mut y, incy)
+	x := [1.0, 2, 3]
+	mut y := [7.0, 8, 9, 10, 11]
+	dgemv(blas_no_trans, m, n, 1.0, flatten(a), a[0].len, x, incx, beta, mut y, incy)
 	assert expected == y
 }
 
@@ -68,9 +68,9 @@ fn test_dgemv_no_trans_4() {
 	a := [
 		[4.1, 6.2, 8.1],
 		[9.6, 3.5, 9.1],
-		[10., 7, 3],
-		[1., 1, 2],
-		[9., 2, 5],
+		[10.0, 7, 3],
+		[1.0, 1, 2],
+		[9.0, 2, 5],
 	]
 	m := a.len
 	n := a[0].len
@@ -78,20 +78,20 @@ fn test_dgemv_no_trans_4() {
 	beta := -6.0
 	incx := 1
 	incy := 1
-	x := [1., 2, 3]
-	mut y := [7., 8, 9, 10, 11]
-	dgemv(blas_no_trans, m, n, 8., flatten(a), a[0].len, x, incx, beta, mut y, incy)
+	x := [1.0, 2, 3]
+	mut y := [7.0, 8, 9, 10, 11]
+	dgemv(blas_no_trans, m, n, 8.0, flatten(a), a[0].len, x, incx, beta, mut y, incy)
 	assert expected == y
 }
 
 fn test_dgemv_trans_1() {
-	expected := [0., 0, 0]
+	expected := [0.0, 0, 0]
 	a := [
 		[4.1, 6.2, 8.1],
 		[9.6, 3.5, 9.1],
-		[10., 7, 3],
-		[1., 1, 2],
-		[9., 2, 5],
+		[10.0, 7, 3],
+		[1.0, 1, 2],
+		[9.0, 2, 5],
 	]
 	m := a.len
 	n := a[0].len
@@ -99,20 +99,20 @@ fn test_dgemv_trans_1() {
 	beta := 0.0
 	incx := 1
 	incy := 1
-	x := [1., 2, 3, -4, 5]
-	mut y := [7., 8, 9]
-	dgemv(blas_trans, m, n, 0., flatten(a), a[0].len, x, incx, beta, mut y, incy)
+	x := [1.0, 2, 3, -4, 5]
+	mut y := [7.0, 8, 9]
+	dgemv(blas_trans, m, n, 0.0, flatten(a), a[0].len, x, incx, beta, mut y, incy)
 	assert expected == y
 }
 
 fn test_dgemv_trans_2() {
-	expected := [7., 8, 9]
+	expected := [7.0, 8, 9]
 	a := [
 		[4.1, 6.2, 8.1],
 		[9.6, 3.5, 9.1],
-		[10., 7, 3],
-		[1., 1, 2],
-		[9., 2, 5],
+		[10.0, 7, 3],
+		[1.0, 1, 2],
+		[9.0, 2, 5],
 	]
 	m := a.len
 	n := a[0].len
@@ -120,9 +120,9 @@ fn test_dgemv_trans_2() {
 	beta := 1.0
 	incx := 1
 	incy := 1
-	x := [1., 2, 3, -4, 5]
-	mut y := [7., 8, 9]
-	dgemv(blas_trans, m, n, 0., flatten(a), a[0].len, x, incx, beta, mut y, incy)
+	x := [1.0, 2, 3, -4, 5]
+	mut y := [7.0, 8, 9]
+	dgemv(blas_trans, m, n, 0.0, flatten(a), a[0].len, x, incx, beta, mut y, incy)
 	assert expected == y
 }
 
@@ -131,9 +131,9 @@ fn test_dgemv_trans_3() {
 	a := [
 		[4.1, 6.2, 8.1],
 		[9.6, 3.5, 9.1],
-		[10., 7, 3],
-		[1., 1, 2],
-		[9., 2, 5],
+		[10.0, 7, 3],
+		[1.0, 1, 2],
+		[9.0, 2, 5],
 	]
 	m := a.len
 	n := a[0].len
@@ -141,9 +141,9 @@ fn test_dgemv_trans_3() {
 	beta := 0.0
 	incx := 1
 	incy := 1
-	x := [1., 2, 3, -4, 5]
-	mut y := [7., 8, 9]
-	dgemv(blas_trans, m, n, 1., flatten(a), a[0].len, x, incx, beta, mut y, incy)
+	x := [1.0, 2, 3, -4, 5]
+	mut y := [7.0, 8, 9]
+	dgemv(blas_trans, m, n, 1.0, flatten(a), a[0].len, x, incx, beta, mut y, incy)
 	assert expected == y
 }
 
@@ -152,9 +152,9 @@ fn test_dgemv_trans_4() {
 	a := [
 		[4.1, 6.2, 8.1],
 		[9.6, 3.5, 9.1],
-		[10., 7, 3],
-		[1., 1, 2],
-		[9., 2, 5],
+		[10.0, 7, 3],
+		[1.0, 1, 2],
+		[9.0, 2, 5],
 	]
 	m := a.len
 	n := a[0].len
@@ -162,8 +162,8 @@ fn test_dgemv_trans_4() {
 	beta := -6.0
 	incx := 1
 	incy := 1
-	x := [1., 2, 3, -4, 5]
-	mut y := [7., 8, 9]
-	dgemv(blas_trans, m, n, 8., flatten(a), a[0].len, x, incx, beta, mut y, incy)
+	x := [1.0, 2, 3, -4, 5]
+	mut y := [7.0, 8, 9]
+	dgemv(blas_trans, m, n, 8.0, flatten(a), a[0].len, x, incx, beta, mut y, incy)
 	assert expected == y
 }

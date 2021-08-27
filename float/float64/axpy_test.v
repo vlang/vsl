@@ -3,7 +3,7 @@ module float64
 const (
 	axpy_tests = [
 		AxpyTest{
-			alpha: 0.
+			alpha: 0.0
 			x: []f64{}
 			y: []f64{}
 			want: []f64{}
@@ -11,80 +11,80 @@ const (
 		},
 		AxpyTest{
 			alpha: 0
-			x: [2.]
-			y: [-3.]
-			want: [-3.]
-			want_rev: [-3.]
+			x: [2.0]
+			y: [-3.0]
+			want: [-3.0]
+			want_rev: [-3.0]
 		},
 		AxpyTest{
-			alpha: 1.
-			x: [2.]
-			y: [-3.]
-			want: [-1.]
-			want_rev: [-1.]
+			alpha: 1.0
+			x: [2.0]
+			y: [-3.0]
+			want: [-1.0]
+			want_rev: [-1.0]
 		},
 		AxpyTest{
-			alpha: 3.
-			x: [2.]
-			y: [-3.]
-			want: [3.]
-			want_rev: [3.]
+			alpha: 3.0
+			x: [2.0]
+			y: [-3.0]
+			want: [3.0]
+			want_rev: [3.0]
 		},
 		AxpyTest{
-			alpha: -3.
-			x: [2.]
-			y: [-3.]
-			want: [-9.]
-			want_rev: [-9.]
+			alpha: -3.0
+			x: [2.0]
+			y: [-3.0]
+			want: [-9.0]
+			want_rev: [-9.0]
 		},
 		AxpyTest{
-			alpha: 1.
-			x: [1., 5]
-			y: [2., -3]
-			want: [3., 2]
-			want_rev: [7., -2]
+			alpha: 1.0
+			x: [1.0, 5]
+			y: [2.0, -3]
+			want: [3.0, 2]
+			want_rev: [7.0, -2]
 		},
 		AxpyTest{
-			alpha: 1.
-			x: [2., 3, 4]
-			y: [-3., -2, -1]
-			want: [-1., 1, 3]
-			want_rev: [1., 1, 1]
+			alpha: 1.0
+			x: [2.0, 3, 4]
+			y: [-3.0, -2, -1]
+			want: [-1.0, 1, 3]
+			want_rev: [1.0, 1, 1]
 		},
 		AxpyTest{
-			alpha: 0.
-			x: [0., 0, 1, 1, 2, -3, -4]
-			y: [0., 1, 0, 3, -4, 5, -6]
-			want: [0., 1, 0, 3, -4, 5, -6]
-			want_rev: [0., 1, 0, 3, -4, 5, -6]
+			alpha: 0.0
+			x: [0.0, 0, 1, 1, 2, -3, -4]
+			y: [0.0, 1, 0, 3, -4, 5, -6]
+			want: [0.0, 1, 0, 3, -4, 5, -6]
+			want_rev: [0.0, 1, 0, 3, -4, 5, -6]
 		},
 		AxpyTest{
-			alpha: 1.
-			x: [0., 0, 1, 1, 2, -3, -4]
-			y: [0., 1, 0, 3, -4, 5, -6]
-			want: [0., 1, 1, 4, -2, 2, -10]
-			want_rev: [-4., -2, 2, 4, -3, 5, -6]
+			alpha: 1.0
+			x: [0.0, 0, 1, 1, 2, -3, -4]
+			y: [0.0, 1, 0, 3, -4, 5, -6]
+			want: [0.0, 1, 1, 4, -2, 2, -10]
+			want_rev: [-4.0, -2, 2, 4, -3, 5, -6]
 		},
 		AxpyTest{
-			alpha: 3.
-			x: [0., 0, 1, 1, 2, -3, -4]
-			y: [0., 1, 0, 3, -4, 5, -6]
-			want: [0., 1, 3, 6, 2, -4, -18]
-			want_rev: [-12., -8, 6, 6, -1, 5, -6]
+			alpha: 3.0
+			x: [0.0, 0, 1, 1, 2, -3, -4]
+			y: [0.0, 1, 0, 3, -4, 5, -6]
+			want: [0.0, 1, 3, 6, 2, -4, -18]
+			want_rev: [-12.0, -8, 6, 6, -1, 5, -6]
 		},
 		AxpyTest{
-			alpha: -3.
-			x: [0., 0, 1, 1, 2, -3, -4, 0, 0, 1, 1, 2, -3, -4]
-			y: [0., 1, 0, 3, -4, 5, -6, 0, 1, 0, 3, -4, 5, -6]
-			want: [0., 1, -3, 0, -10, 14, 6, 0, 1, -3, 0, -10, 14, 6]
-			want_rev: [12., 10, -6, 0, -7, 5, -6, 12, 10, -6, 0, -7, 5, -6]
+			alpha: -3.0
+			x: [0.0, 0, 1, 1, 2, -3, -4, 0, 0, 1, 1, 2, -3, -4]
+			y: [0.0, 1, 0, 3, -4, 5, -6, 0, 1, 0, 3, -4, 5, -6]
+			want: [0.0, 1, -3, 0, -10, 14, 6, 0, 1, -3, 0, -10, 14, 6]
+			want_rev: [12.0, 10, -6, 0, -7, 5, -6, 12, 10, -6, 0, -7, 5, -6]
 		},
 		AxpyTest{
-			alpha: -5.
-			x: [0., 0, 1, 1, 2, -3, -4, 5, 1, 2, -3, -4, 5]
-			y: [0., 1, 0, 3, -4, 5, -6, 7, 3, -4, 5, -6, 7]
-			want: [0., 1, -5, -2, -14, 20, 14, -18, -2, -14, 20, 14, -18]
-			want_rev: [-25., 21, 15, -7, -9, -20, 14, 22, -7, -9, 0, -6, 7]
+			alpha: -5.0
+			x: [0.0, 0, 1, 1, 2, -3, -4, 5, 1, 2, -3, -4, 5]
+			y: [0.0, 1, 0, 3, -4, 5, -6, 7, 3, -4, 5, -6, 7]
+			want: [0.0, 1, -5, -2, -14, 20, 14, -18, -2, -14, 20, 14, -18]
+			want_rev: [-25.0, 21, 15, -7, -9, -20, 14, 22, -7, -9, 0, -6, 7]
 		},
 	]
 )
@@ -98,7 +98,7 @@ struct AxpyTest {
 }
 
 fn test_axpy_unitary() {
-	x_gd_val, y_gd_val := -1., 1.5
+	x_gd_val, y_gd_val := -1.0, 1.5
 
 	for test in float64.axpy_tests {
 		for align in align2 {
@@ -120,7 +120,7 @@ fn test_axpy_unitary() {
 }
 
 fn test_axpy_unitary_to() {
-	dst_gd_val, x_gd_val, y_gd_val := 1., -1., 1.5
+	dst_gd_val, x_gd_val, y_gd_val := 1.0, -1.0, 1.5
 
 	for test in float64.axpy_tests {
 		for align in align3 {
@@ -147,7 +147,7 @@ fn test_axpy_unitary_to() {
 }
 
 fn test_axpy_inc() {
-	x_gd_val, y_gd_val := -1., 1.5
+	x_gd_val, y_gd_val := -1.0, 1.5
 	gd_ln := 4
 
 	for test in float64.axpy_tests {
@@ -187,7 +187,7 @@ fn test_axpy_inc() {
 }
 
 fn test_axpy_inc_to() {
-	dst_gd_val, x_gd_val, y_gd_val := 1, -1., 1.5
+	dst_gd_val, x_gd_val, y_gd_val := 1, -1.0, 1.5
 	gd_ln := 4
 
 	for test in float64.axpy_tests {

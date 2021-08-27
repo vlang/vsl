@@ -11,59 +11,59 @@ struct ScalTest {
 const (
 	scal_tests = [
 		ScalTest{
-			alpha: 0.
+			alpha: 0.0
 			x: []f64{}
 			want: []f64{}
 		},
 		ScalTest{
-			alpha: 0.
-			x: [1.]
-			want: [0.]
+			alpha: 0.0
+			x: [1.0]
+			want: [0.0]
 		},
 		ScalTest{
-			alpha: 1.
-			x: [1.]
-			want: [1.]
+			alpha: 1.0
+			x: [1.0]
+			want: [1.0]
 		},
 		ScalTest{
-			alpha: 2.
-			x: [1., -2]
-			want: [2., -4]
+			alpha: 2.0
+			x: [1.0, -2]
+			want: [2.0, -4]
 		},
 		ScalTest{
-			alpha: 2.
-			x: [1., -2, 3]
-			want: [2., -4, 6]
+			alpha: 2.0
+			x: [1.0, -2, 3]
+			want: [2.0, -4, 6]
 		},
 		ScalTest{
-			alpha: 2.
-			x: [1., -2, 3, 4]
-			want: [2., -4, 6, 8]
+			alpha: 2.0
+			x: [1.0, -2, 3, 4]
+			want: [2.0, -4, 6, 8]
 		},
 		ScalTest{
-			alpha: 2.
-			x: [1., -2, 3, 4, -5]
-			want: [2., -4, 6, 8, -10]
+			alpha: 2.0
+			x: [1.0, -2, 3, 4, -5]
+			want: [2.0, -4, 6, 8, -10]
 		},
 		ScalTest{
-			alpha: 2.
-			x: [0., 1, -2, 3, 4, -5, 6, -7]
-			want: [0., 2, -4, 6, 8, -10, 12, -14]
+			alpha: 2.0
+			x: [0.0, 1, -2, 3, 4, -5, 6, -7]
+			want: [0.0, 2, -4, 6, 8, -10, 12, -14]
 		},
 		ScalTest{
-			alpha: 2.
-			x: [0., 1, -2, 3, 4, -5, 6, -7, 8]
-			want: [0., 2, -4, 6, 8, -10, 12, -14, 16]
+			alpha: 2.0
+			x: [0.0, 1, -2, 3, 4, -5, 6, -7, 8]
+			want: [0.0, 2, -4, 6, 8, -10, 12, -14, 16]
 		},
 		ScalTest{
-			alpha: 2.
-			x: [0., 1, -2, 3, 4, -5, 6, -7, 8, 9]
-			want: [0., 2, -4, 6, 8, -10, 12, -14, 16, 18]
+			alpha: 2.0
+			x: [0.0, 1, -2, 3, 4, -5, 6, -7, 8, 9]
+			want: [0.0, 2, -4, 6, 8, -10, 12, -14, 16, 18]
 		},
 		ScalTest{
-			alpha: 3.
-			x: [0., 1, -2, 3, 4, -5, 6, -7, 8, 9, 12]
-			want: [0., 3, -6, 9, 12, -15, 18, -21, 24, 27, 36]
+			alpha: 3.0
+			x: [0.0, 1, -2, 3, 4, -5, 6, -7, 8, 9, 12]
+			want: [0.0, 3, -6, 9, 12, -15, 18, -21, 24, 27, 36]
 		},
 	]
 )
@@ -90,7 +90,7 @@ fn test_scal_unitary() {
 
 fn test_scal_unitary_to() {
 	rand.seed([u32(42), u32(42)])
-	x_gd_val, dst_gd_val := -1., 0.5
+	x_gd_val, dst_gd_val := -1.0, 0.5
 
 	for test in float64.scal_tests {
 		n := test.x.len
@@ -137,7 +137,7 @@ fn test_scal_inc() {
 
 fn test_scal_inc_to() {
 	rand.seed([u32(42), u32(42)])
-	x_gd_val, dst_gd_val := -1., 0.5
+	x_gd_val, dst_gd_val := -1.0, 0.5
 	gd_ln := 4
 
 	for test in float64.scal_tests {

@@ -5,5 +5,5 @@ pub struct Font {
 pub mut:
 	color  string = 'black'
 	family string = 'monospace'
-	size   f64    = 16.
+	size   f64    = 16.0
 }

@@ -12,24 +12,24 @@ struct L2NormTest {
 fn test_l2_norm_unitary() {
 	tol := f32(1e-7)
 
-	mut src_gd := f32(1.)
+	mut src_gd := f32(1.0)
 
 	l2_norm_unitary_tests := [
 		L2NormTest{
-			want: f32(0.)
+			want: f32(0.0)
 			x: []f32{}
 		},
 		L2NormTest{
-			want: f32(2.)
-			x: [f32(2.)]
+			want: f32(2.0)
+			x: [f32(2.0)]
 		},
 		L2NormTest{
 			want: f32(3.7416573867739413)
-			x: [f32(1.), 2, 3]
+			x: [f32(1.0), 2, 3]
 		},
 		L2NormTest{
 			want: f32(3.7416573867739413)
-			x: [f32(-1.), -2, -3]
+			x: [f32(-1.0), -2, -3]
 		},
 		L2NormTest{
 			want: f32(math.nan())
@@ -37,11 +37,11 @@ fn test_l2_norm_unitary() {
 		},
 		L2NormTest{
 			want: f32(17.88854381999832)
-			x: [f32(8.), -8, 8, -8, 8]
+			x: [f32(8.0), -8, 8, -8, 8]
 		},
 		L2NormTest{
 			want: f32(2.23606797749979)
-			x: [f32(0.), 1, 0, -1, 0, 1, 0, -1, 0, 1]
+			x: [f32(0.0), 1, 0, -1, 0, 1, 0, -1, 0, 1]
 		},
 	]
 
@@ -58,28 +58,28 @@ fn test_l2_norm_unitary() {
 fn test_l2_norm_inc() {
 	tol := f32(1e-7)
 
-	mut src_gd := f32(1.)
+	mut src_gd := f32(1.0)
 
 	l2_norm_inc_tests := [
 		L2NormTest{
 			inc: 2
-			want: f32(0.)
+			want: f32(0.0)
 			x: []f32{}
 		},
 		L2NormTest{
 			inc: 3
-			want: f32(2.)
-			x: [f32(2.)]
+			want: f32(2.0)
+			x: [f32(2.0)]
 		},
 		L2NormTest{
 			inc: 10
 			want: f32(3.7416573867739413)
-			x: [f32(1.), 2, 3]
+			x: [f32(1.0), 2, 3]
 		},
 		L2NormTest{
 			inc: 5
 			want: f32(3.7416573867739413)
-			x: [f32(-1.), -2, -3]
+			x: [f32(-1.0), -2, -3]
 		},
 		L2NormTest{
 			inc: 3
@@ -89,12 +89,12 @@ fn test_l2_norm_inc() {
 		L2NormTest{
 			inc: 15
 			want: f32(17.88854381999832)
-			x: [f32(8.), -8, 8, -8, 8]
+			x: [f32(8.0), -8, 8, -8, 8]
 		},
 		L2NormTest{
 			inc: 1
 			want: f32(2.23606797749979)
-			x: [f32(0.), 1, 0, -1, 0, 1, 0, -1, 0, 1]
+			x: [f32(0.0), 1, 0, -1, 0, 1, 0, -1, 0, 1]
 		},
 	]
 
@@ -111,43 +111,43 @@ fn test_l2_norm_inc() {
 fn test_l2_distance_unitary() {
 	tol := f32(1e-7)
 
-	mut src_gd := f32(1.)
+	mut src_gd := f32(1.0)
 
 	l2_distance_unitary_tests := [
 		L2NormTest{
-			want: f32(0.)
+			want: f32(0.0)
 			x: []f32{}
 			y: []f32{}
 		},
 		L2NormTest{
-			want: f32(2.)
-			x: [f32(3.)]
-			y: [f32(1.)]
+			want: f32(2.0)
+			x: [f32(3.0)]
+			y: [f32(1.0)]
 		},
 		L2NormTest{
 			want: f32(3.7416573867739413)
-			x: [f32(2.), 4, 6]
-			y: [f32(1.), 2, 3]
+			x: [f32(2.0), 4, 6]
+			y: [f32(1.0), 2, 3]
 		},
 		L2NormTest{
 			want: f32(3.7416573867739413)
-			x: [f32(1.), 2, 3]
-			y: [f32(2.), 4, 6]
+			x: [f32(1.0), 2, 3]
+			y: [f32(2.0), 4, 6]
 		},
 		L2NormTest{
 			want: f32(math.nan())
 			x: [f32(math.nan())]
-			y: [f32(0.)]
+			y: [f32(0.0)]
 		},
 		L2NormTest{
 			want: f32(17.88854381999832)
-			x: [f32(9.), -9, 9, -9, 9]
-			y: [f32(1.), -1, 1, -1, 1]
+			x: [f32(9.0), -9, 9, -9, 9]
+			y: [f32(1.0), -1, 1, -1, 1]
 		},
 		L2NormTest{
 			want: f32(2.23606797749979)
-			x: [f32(0.), 1, 0, -1, 0, 1, 0, -1, 0, 1]
-			y: [f32(0.), 2, 0, -2, 0, 2, 0, -2, 0, 2]
+			x: [f32(0.0), 1, 0, -1, 0, 1, 0, -1, 0, 1]
+			y: [f32(0.0), 2, 0, -2, 0, 2, 0, -2, 0, 2]
 		},
 	]
 

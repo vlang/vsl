@@ -5,7 +5,7 @@ import vsl.util
 
 fn main() {
 	y := [
-		0.,
+		0.0,
 		1,
 		3,
 		1,
@@ -28,7 +28,7 @@ fn main() {
 		y: y
 		mode: 'lines+markers'
 		marker: plot.Marker{
-			size: []f64{len: x.len, init: 10.}
+			size: []f64{len: x.len, init: 10.0}
 			color: []string{len: x.len, init: '#FF0000'}
 		}
 		line: plot.Line{
