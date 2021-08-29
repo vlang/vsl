@@ -25,7 +25,7 @@ fn test_permutations_simple_3() {
 }
 
 // fn test_permutations_simple_4() {
-// 	data := [1., 2., 3., 4.]
+// 	data := [1.0, 2.0, 3.0, 4.0]
 // 	expected := [
 // 		[1.0, 2.0, 3.0],
 // 		[1.0, 2.0, 4.0],

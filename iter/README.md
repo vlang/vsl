@@ -20,7 +20,7 @@ module main
 import vsl.iter
 
 fn main() {
-	data := [1., 2., 3.]
+	data := [1.0, 2.0, 3.0]
 	r := 3
 	combs := iter.combinations(data, r)
 	print(combs)
@@ -48,7 +48,7 @@ module main
 import vsl.iter
 
 fn main() {
-	data := [1., 2., 3.]
+	data := [1.0, 2.0, 3.0]
 	r := 3
 	mut combs := iter.new_combinations_iter(data, r)
 	for comb in combs {

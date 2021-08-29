@@ -38,7 +38,7 @@ fn main() {
 	plt.add_trace(
 		trace_type: .bar
 		x_str: ['China', 'India', 'USA', 'Indonesia', 'Pakistan']
-		y: [1411778724., 1379217184, 331989449, 271350000, 225200000]
+		y: [1411778724.0, 1379217184, 331989449, 271350000, 225200000]
 	)
 	plt.set_layout(
 		title: 'Countries by population'
@@ -72,8 +72,8 @@ fn main() {
 	plt.add_trace(
 		trace_type: .pie
 		labels: ['Nitrogen', 'Oxygen', 'Argon', 'Other']
-		values: [78., 21, 0.9, 0.1]
-		pull: [0., 0.1, 0, 0]
+		values: [78.0, 21, 0.9, 0.1]
+		pull: [0.0, 0.1, 0, 0]
 		hole: 0.25
 	)
 	plt.set_layout(
@@ -107,7 +107,7 @@ import vsl.util
 
 fn main() {
 	y := [
-		0.,
+		0.0,
 		1,
 		3,
 		1,
@@ -131,7 +131,7 @@ fn main() {
 		y: y
 		mode: 'lines+markers'
 		marker: plot.Marker{
-			size: []f64{len: x.len, init: 10.}
+			size: []f64{len: x.len, init: 10.0}
 			color: []string{len: x.len, init: '#FF0000'}
 		}
 		line: plot.Line{
