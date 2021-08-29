@@ -66,7 +66,7 @@ pub fn combinations(data []f64, r int) [][]f64
 import vsl.iter
 
 fn main() {
-    data := [1., 2., 3.]
+    data := [1.0, 2.0, 3.0]
     r := 3
     combs := iter.combinations(data, r)
     print(combs)
@@ -87,7 +87,7 @@ pub fn (mut o CombinationsIter) next() ?[]f64
 import vsl.iter
 
 fn main() {
-    data := [1., 2., 3.]
+    data := [1.0, 2.0, 3.0]
     r := 3
     mut combs := iter.new_combinations_iter(data, r)
     for comb in combs {
@@ -275,7 +275,7 @@ Using f64 array instead of generic while waiting on <a href="https://github.com/
 </section>
 
 						<div class="footer">
-							Powered by vdoc. Generated on: 27 Aug 2021 04:40:30
+							Powered by vdoc. Generated on: 29 Aug 2021 05:24:29
 						</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_iter">README</a></li>
