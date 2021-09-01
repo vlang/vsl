@@ -25,7 +25,10 @@ fn test_lin_reg() {
 		[1.43, 94.98],
 		[0.95, 87.33],
 	]
-	mut data := data_from_raw_xy(xy)
+	mut data := data_from_raw_xy(xy) or {
+		assert false
+		panic('This should never happen')
+	}
 	mut reg := new_lin_reg(mut data, 'linear regression')
 
 	reg.train()
@@ -56,7 +59,10 @@ fn test_lin_reg_pred() {
 		[1.43, 94.98],
 		[0.95, 87.33],
 	]
-	mut data := data_from_raw_xy(xy)
+	mut data := data_from_raw_xy(xy) or {
+		assert false
+		panic('This should never happen')
+	}
 	mut reg := new_lin_reg(mut data, 'linear regression')
 
 	// set regularization parameter

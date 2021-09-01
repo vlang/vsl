@@ -11,7 +11,10 @@ fn test_kmeans_01() {
 		[0.9, 0.1],
 		[0.7, 0.3],
 		[0.9, 0.3],
-	])
+	]) or {
+		assert false
+		panic('This should never happen')
+	}
 
 	// model
 	nb_classes := 2

@@ -16,7 +16,7 @@ pub fn newton(func func.FnFdf, x0 f64, x_eps f64, fx_eps f64, n_max int) ?f64 {
 	for i < n_max {
 		mut t := 1.0
 		if df == 0.0 {
-			errors.vsl_panic('div by zero', .ezerodiv)
+			return errors.error('div by zero', .ezerodiv)
 		}
 		dx := f / df
 		norm0 := math.abs(f)

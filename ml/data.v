@@ -37,19 +37,18 @@ pub mut:
 // x and y must be set using set() method
 // Output:
 // new object
-pub fn new_data(nb_samples int, nb_features int, use_y bool, allocate bool) Data {
+pub fn new_data(nb_samples int, nb_features int, use_y bool, allocate bool) ?&Data {
 	x := if allocate { la.new_matrix(nb_samples, nb_features) } else { la.new_matrix(0, 0) }
 	mut y := []f64{}
 	if allocate && use_y {
 		y = []f64{len: nb_samples}
 	}
-	mut o := Data{
+	return &Data{
 		x: x
 		y: y
 		nb_samples: nb_samples
 		nb_features: nb_features
 	}
-	return o
 }
 
 // set sets x matrix and y vector [optional] and notify observers
@@ -67,15 +66,15 @@ pub fn (mut o Data) set(x &la.Matrix, y []f64) {
 // xraw -- [nb_samples][nb_features] table with x values (NO y values)
 // Output:
 // new object
-pub fn data_from_raw_x(xraw [][]f64) Data {
+pub fn data_from_raw_x(xraw [][]f64) ?&Data {
 	// check
 	nb_samples := xraw.len
 	if nb_samples < 1 {
-		errors.vsl_panic('at least one row of data in table must be provided', .efailed)
+		return errors.error('at least one row of data in table must be provided', .efailed)
 	}
 	// allocate new object
 	nb_features := xraw[0].len
-	mut o := new_data(nb_samples, nb_features, true, true)
+	mut o := new_data(nb_samples, nb_features, true, true) ?
 	// copy data from raw table to x matrix
 	for i := 0; i < nb_samples; i++ {
 		for j := 0; j < nb_features; j++ {
@@ -89,15 +88,15 @@ pub fn data_from_raw_x(xraw [][]f64) Data {
 // yraw []f64. It acts similarly to data_from_raw_xy, but instead
 // of using the last column of xraw as the y data, it uses yraw
 // instead.
-pub fn data_from_raw_xy_sep(xraw [][]f64, yraw []f64) Data {
+pub fn data_from_raw_xy_sep(xraw [][]f64, yraw []f64) ?&Data {
 	// check
 	nb_samples := xraw.len
 	if nb_samples < 1 {
-		errors.vsl_panic('at least one row of data in table must be provided', .efailed)
+		return errors.error('at least one row of data in table must be provided', .efailed)
 	}
 	// allocate new object
 	nb_features := xraw[0].len
-	mut o := new_data(nb_samples, nb_features, false, true)
+	mut o := new_data(nb_samples, nb_features, false, true) ?
 	// copy data from raw table to x matrix
 	for i := 0; i < nb_samples; i++ {
 		for j := 0; j < nb_features; j++ {
@@ -116,15 +115,15 @@ pub fn data_from_raw_xy_sep(xraw [][]f64, yraw []f64) Data {
 // where the last column contains y-values
 // Output:
 // new object
-pub fn data_from_raw_xy(xyraw [][]f64) Data {
+pub fn data_from_raw_xy(xyraw [][]f64) ?&Data {
 	// check
 	nb_samples := xyraw.len
 	if nb_samples < 1 {
-		errors.vsl_panic('at least one row of data in table must be provided', .efailed)
+		return errors.error('at least one row of data in table must be provided', .efailed)
 	}
 	// allocate new object
 	nb_features := xyraw[0].len - 1 // -1 because of y column
-	mut o := new_data(nb_samples, nb_features, true, true)
+	mut o := new_data(nb_samples, nb_features, true, true) ?
 	// copy data from raw table to x and y arrays
 	for i := 0; i < nb_samples; i++ {
 		for j := 0; j < nb_features; j++ {
@@ -136,9 +135,9 @@ pub fn data_from_raw_xy(xyraw [][]f64) Data {
 }
 
 // clone returns a deep copy of this object
-pub fn (o Data) clone() Data {
+pub fn (o &Data) clone() ?&Data {
 	use_y := o.y.len > 0
-	mut p := new_data(o.nb_samples, o.nb_features, use_y, true)
+	mut p := new_data(o.nb_samples, o.nb_features, use_y, true) ?
 	o.x.copy_into(mut p.x, 1)
 	if use_y {
 		p.y = o.y.clone()
