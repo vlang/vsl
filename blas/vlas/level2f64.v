@@ -47,14 +47,11 @@ pub fn dger(m int, n int, alpha f64, x []f64, incx int, y []f64, incy int, mut a
 }
 
 // dgbmv performs one of the matrix-vector operations
-//  y = alpha * A * x + beta * y   if trans_a == blas_no_trans
-//  y = alpha * Aᵀ * x + beta * y  if trans_a == blas_trans or blas_conj_trans
+//  y = alpha * A * x + beta * y   if trans_a == .no_trans
+//  y = alpha * Aᵀ * x + beta * y  if trans_a == .trans or .conj_trans
 // where A is an m×n band matrix with kl sub-diagonals and ku super-diagonals,
 // x and y are vectors, and alpha and beta are scalars.
 pub fn dgbmv(trans_a Transpose, m int, n int, kl int, ku int, alpha f64, a []f64, lda int, x []f64, incx int, beta f64, mut y []f64, incy int) {
-	if trans_a != blas_no_trans && trans_a != blas_trans && trans_a != blas_conj_trans {
-		panic(bad_transpose)
-	}
 	if m < 0 {
 		panic(mlt0)
 	}
@@ -88,7 +85,7 @@ pub fn dgbmv(trans_a Transpose, m int, n int, kl int, ku int, alpha f64, a []f64
 	}
 	mut len_x := m
 	mut len_y := n
-	if trans_a == blas_no_trans {
+	if trans_a == .no_trans {
 		len_x = n
 		len_y = m
 	}
@@ -147,7 +144,7 @@ pub fn dgbmv(trans_a Transpose, m int, n int, kl int, ku int, alpha f64, a []f64
 	// i and j are indices of the compacted banded matrix.
 	// off is the offset into the dense matrix (off + j = densej)
 	n_col := ku + 1 + kl
-	if trans_a == blas_no_trans {
+	if trans_a == .no_trans {
 		mut iy := ky
 		if incx == 1 {
 			for i in 0 .. util.imin(m, n + kl) {
@@ -213,19 +210,10 @@ pub fn dgbmv(trans_a Transpose, m int, n int, kl int, ku int, alpha f64, a []f64
 }
 
 // dtrmv performs one of the matrix-vector operations
-//  x = A * x   if trans_a == blas_no_trans
-//  x = Aᵀ * x  if trans_a == blas_trans or blas_conj_trans
+//  x = A * x   if trans_a == .no_trans
+//  x = Aᵀ * x  if trans_a == .trans or .conj_trans
 // where A is an n×n triangular matrix, and x is a vector.
 pub fn dtrmv(ul Uplo, trans_a Transpose, d Diagonal, n int, a []f64, lda int, mut x []f64, incx int) {
-	if ul != blas_lower && ul != blas_upper {
-		panic(bad_uplo)
-	}
-	if trans_a != blas_no_trans && trans_a != blas_trans && trans_a != blas_conj_trans {
-		panic(bad_transpose)
-	}
-	if d != blas_non_unit && d != blas_unit {
-		panic(bad_diag)
-	}
 	if n < 0 {
 		panic(nlt0)
 	}
@@ -249,7 +237,7 @@ pub fn dtrmv(ul Uplo, trans_a Transpose, d Diagonal, n int, a []f64, lda int, mu
 		panic(short_x)
 	}
 
-	non_unit := d != blas_unit
+	non_unit := d != .unit
 	if n == 1 {
 		if non_unit {
 			x[0] *= a[0]
@@ -260,8 +248,8 @@ pub fn dtrmv(ul Uplo, trans_a Transpose, d Diagonal, n int, a []f64, lda int, mu
 	if incx <= 0 {
 		kx = -(n - 1) * incx
 	}
-	if trans_a == blas_no_trans {
-		if ul == blas_upper {
+	if trans_a == .no_trans {
+		if ul == .upper {
 			if incx == 1 {
 				for i in 0 .. n {
 					ilda := i * lda
@@ -318,7 +306,7 @@ pub fn dtrmv(ul Uplo, trans_a Transpose, d Diagonal, n int, a []f64, lda int, mu
 		return
 	}
 	// Cases where a is transposed.
-	if ul == blas_upper {
+	if ul == .upper {
 		if incx == 1 {
 			for i := n - 1; i >= 0; i-- {
 				ilda := i * lda
@@ -367,8 +355,8 @@ pub fn dtrmv(ul Uplo, trans_a Transpose, d Diagonal, n int, a []f64, lda int, mu
 }
 
 // dtrsv solves one of the systems of equations
-//  A * x = b   if trans_a == blas_no_trans
-//  Aᵀ * x = b  if trans_a == blas_trans or blas_conj_trans
+//  A * x = b   if trans_a == .no_trans
+//  Aᵀ * x = b  if trans_a == .trans or .conj_trans
 // where A is an n×n triangular matrix, and x and b are vectors.
 //
 // At entry to the function, x contains the values of b, and the result is
@@ -377,15 +365,6 @@ pub fn dtrmv(ul Uplo, trans_a Transpose, d Diagonal, n int, a []f64, lda int, mu
 // No test for singularity or near-singularity is included in this
 // routine. Such tests must be performed before calling this routine.
 pub fn dtrsv(ul Uplo, trans_a Transpose, d Diagonal, n int, a []f64, lda int, mut x []f64, incx int) {
-	if ul != blas_lower && ul != blas_upper {
-		panic(bad_uplo)
-	}
-	if trans_a != blas_no_trans && trans_a != blas_trans && trans_a != blas_conj_trans {
-		panic(bad_transpose)
-	}
-	if d != blas_non_unit && d != blas_unit {
-		panic(bad_diag)
-	}
 	if n < 0 {
 		panic(nlt0)
 	}
@@ -410,7 +389,7 @@ pub fn dtrsv(ul Uplo, trans_a Transpose, d Diagonal, n int, a []f64, lda int, mu
 	}
 
 	if n == 1 {
-		if d == blas_non_unit {
+		if d == .non_unit {
 			x[0] /= a[0]
 		}
 		return
@@ -420,9 +399,9 @@ pub fn dtrsv(ul Uplo, trans_a Transpose, d Diagonal, n int, a []f64, lda int, mu
 	if incx < 0 {
 		kx = -(n - 1) * incx
 	}
-	non_unit := d == blas_non_unit
-	if trans_a == blas_no_trans {
-		if ul == blas_upper {
+	non_unit := d == .non_unit
+	if trans_a == .no_trans {
+		if ul == .upper {
 			if incx == 1 {
 				for i := n - 1; i >= 0; i-- {
 					mut sum := 0.0
@@ -487,7 +466,7 @@ pub fn dtrsv(ul Uplo, trans_a Transpose, d Diagonal, n int, a []f64, lda int, mu
 		return
 	}
 	// Cases where a is transposed.
-	if ul == blas_upper {
+	if ul == .upper {
 		if incx == 1 {
 			for i in 0 .. n {
 				if non_unit {
@@ -552,9 +531,6 @@ pub fn dtrsv(ul Uplo, trans_a Transpose, d Diagonal, n int, a []f64, lda int, mu
 // where A is an n×n symmetric matrix, x and y are vectors, and alpha and
 // beta are scalars.
 pub fn dsymv(ul Uplo, n int, alpha f64, a []f64, lda int, x []f64, incx int, beta f64, mut y []f64, incy int) {
-	if ul != blas_lower && ul != blas_upper {
-		panic(bad_uplo)
-	}
 	if n < 0 {
 		panic(nlt0)
 	}
@@ -635,7 +611,7 @@ pub fn dsymv(ul Uplo, n int, alpha f64, a []f64, lda int, x []f64, incx int, bet
 		return
 	}
 
-	if ul == blas_upper {
+	if ul == .upper {
 		if incx == 1 {
 			mut iy := ky
 			for i in 0 .. n {
@@ -717,19 +693,10 @@ pub fn dsymv(ul Uplo, n int, alpha f64, a []f64, lda int, x []f64, incx int, bet
 }
 
 // dtbmv performs one of the matrix-vector operations
-//  x = A * x   if trans_a == blas_no_trans
-//  x = Aᵀ * x  if trans_a == blas_trans or blas_conj_trans
+//  x = A * x   if trans_a == .no_trans
+//  x = Aᵀ * x  if trans_a == .trans or .conj_trans
 // where A is an n×n triangular band matrix with k+1 diagonals, and x is a vector.
 pub fn dtbmv(ul Uplo, trans_a Transpose, d Diagonal, n int, k int, a []f64, lda int, mut x []f64, incx int) {
-	if ul != blas_lower && ul != blas_upper {
-		panic(bad_uplo)
-	}
-	if trans_a != blas_no_trans && trans_a != blas_trans && trans_a != blas_conj_trans {
-		panic(bad_transpose)
-	}
-	if d != blas_non_unit && d != blas_unit {
-		panic(bad_diag)
-	}
 	if n < 0 {
 		panic(nlt0)
 	}
@@ -761,10 +728,10 @@ pub fn dtbmv(ul Uplo, trans_a Transpose, d Diagonal, n int, k int, a []f64, lda 
 		kx = -(n - 1) * incx
 	}
 
-	nonunit := d != blas_unit
+	nonunit := d != .unit
 
-	if trans_a == blas_no_trans {
-		if ul == blas_upper {
+	if trans_a == .no_trans {
+		if ul == .upper {
 			if incx == 1 {
 				for i in 0 .. n {
 					u := util.imin(1 + k, n - i)
@@ -840,7 +807,7 @@ pub fn dtbmv(ul Uplo, trans_a Transpose, d Diagonal, n int, k int, a []f64, lda 
 		}
 		return
 	}
-	if ul == blas_upper {
+	if ul == .upper {
 		if incx == 1 {
 			for i := n - 1; i >= 0; i-- {
 				mut u := k + 1
@@ -924,19 +891,10 @@ pub fn dtbmv(ul Uplo, trans_a Transpose, d Diagonal, n int, k int, a []f64, lda 
 }
 
 // dtpmv performs one of the matrix-vector operations
-//  x = A * x   if trans_a == blas_no_trans
-//  x = Aᵀ * x  if trans_a == blas_trans or blas_conj_trans
+//  x = A * x   if trans_a == .no_trans
+//  x = Aᵀ * x  if trans_a == .trans or .conj_trans
 // where A is an n×n triangular matrix in packed format, and x is a vector.
 pub fn dtpmv(ul Uplo, trans_a Transpose, d Diagonal, n int, ap []f64, mut x []f64, incx int) {
-	if ul != blas_lower && ul != blas_upper {
-		panic(bad_uplo)
-	}
-	if trans_a != blas_no_trans && trans_a != blas_trans && trans_a != blas_conj_trans {
-		panic(bad_transpose)
-	}
-	if d != blas_non_unit && d != blas_unit {
-		panic(bad_diag)
-	}
 	if n < 0 {
 		panic(nlt0)
 	}
@@ -962,10 +920,10 @@ pub fn dtpmv(ul Uplo, trans_a Transpose, d Diagonal, n int, ap []f64, mut x []f6
 		kx = -(n - 1) * incx
 	}
 
-	non_unit := d == blas_non_unit
+	non_unit := d == .non_unit
 	mut offset := 0 // Offset is the index of (i,i)
-	if trans_a == blas_no_trans {
-		if ul == blas_upper {
+	if trans_a == .no_trans {
+		if ul == .upper {
 			if incx == 1 {
 				for i in 0 .. n {
 					mut xi := x[i]
@@ -1036,7 +994,7 @@ pub fn dtpmv(ul Uplo, trans_a Transpose, d Diagonal, n int, ap []f64, mut x []f6
 		return
 	}
 	// Cases where ap is transposed.
-	if ul == blas_upper {
+	if ul == .upper {
 		if incx == 1 {
 			offset = n * (n + 1) / 2 - 1
 			for i := n - 1; i >= 0; i-- {
@@ -1103,8 +1061,8 @@ pub fn dtpmv(ul Uplo, trans_a Transpose, d Diagonal, n int, ap []f64, mut x []f6
 }
 
 // dtbsv solves one of the systems of equations
-//  A * x = b   if trans_a == blas_no_trans
-//  Aᵀ * x = b  if trans_a == blas_trans or trans_a == blas_conj_trans
+//  A * x = b   if trans_a == .no_trans
+//  Aᵀ * x = b  if trans_a == .trans or trans_a == .conj_trans
 // where A is an n×n triangular band matrix with k+1 diagonals,
 // and x and b are vectors.
 //
@@ -1114,15 +1072,6 @@ pub fn dtpmv(ul Uplo, trans_a Transpose, d Diagonal, n int, ap []f64, mut x []f6
 // No test for singularity or near-singularity is included in this
 // routine. Such tests must be performed before calling this routine.
 pub fn dtbsv(ul Uplo, trans_a Transpose, d Diagonal, n int, k int, a []f64, lda int, mut x []f64, incx int) {
-	if ul != blas_lower && ul != blas_upper {
-		panic(bad_uplo)
-	}
-	if trans_a != blas_no_trans && trans_a != blas_trans && trans_a != blas_conj_trans {
-		panic(bad_transpose)
-	}
-	if d != blas_non_unit && d != blas_unit {
-		panic(bad_diag)
-	}
 	if n < 0 {
 		panic(nlt0)
 	}
@@ -1153,12 +1102,12 @@ pub fn dtbsv(ul Uplo, trans_a Transpose, d Diagonal, n int, k int, a []f64, lda 
 	if incx < 0 {
 		kx = -(n - 1) * incx
 	}
-	non_unit := d == blas_non_unit
+	non_unit := d == .non_unit
 	// Form x = A^-1 x.
 	// Several cases below use subslices for speed improvement.
 	// The incx != 1 cases usually do not because incx may be negative.
-	if trans_a == blas_no_trans {
-		if ul == blas_upper {
+	if trans_a == .no_trans {
+		if ul == .upper {
 			if incx == 1 {
 				for i := n - 1; i >= 0; i-- {
 					mut bands := k
@@ -1240,7 +1189,7 @@ pub fn dtbsv(ul Uplo, trans_a Transpose, d Diagonal, n int, k int, a []f64, lda 
 		return
 	}
 	// Cases where a is transposed.
-	if ul == blas_upper {
+	if ul == .upper {
 		if incx == 1 {
 			for i in 0 .. n {
 				mut bands := k
@@ -1321,9 +1270,6 @@ pub fn dtbsv(ul Uplo, trans_a Transpose, d Diagonal, n int, k int, a []f64, lda 
 // where A is an n×n symmetric band matrix with k super-diagonals, x and y are
 // vectors, and alpha and beta are scalars.
 pub fn dsbmv(ul Uplo, n int, k int, alpha f64, a []f64, lda int, x []f64, incx int, beta f64, mut y []f64, incy int) {
-	if ul != blas_lower && ul != blas_upper {
-		panic(bad_uplo)
-	}
 	if n < 0 {
 		panic(nlt0)
 	}
@@ -1404,7 +1350,7 @@ pub fn dsbmv(ul Uplo, n int, k int, alpha f64, a []f64, lda int, x []f64, incx i
 		return
 	}
 
-	if ul == blas_upper {
+	if ul == .upper {
 		if incx == 1 {
 			mut iy := ky
 			for i in 0 .. n {
@@ -1491,9 +1437,6 @@ pub fn dsbmv(ul Uplo, n int, k int, alpha f64, a []f64, lda int, x []f64, incx i
 //  A += alpha * x * xᵀ
 // where A is an n×n symmetric matrix, and x is a vector.
 pub fn dsyr(ul Uplo, n int, alpha f64, x []f64, incx int, mut a []f64, lda int) {
-	if ul != blas_lower && ul != blas_upper {
-		panic(bad_uplo)
-	}
 	if n < 0 {
 		panic(nlt0)
 	}
@@ -1527,7 +1470,7 @@ pub fn dsyr(ul Uplo, n int, alpha f64, x []f64, incx int, mut a []f64, lda int) 
 	if incx < 0 {
 		kx = -(len_x - 1) * incx
 	}
-	if ul == blas_upper {
+	if ul == .upper {
 		if incx == 1 {
 			for i in 0 .. n {
 				tmp := x[i] * alpha
@@ -1589,9 +1532,6 @@ pub fn dsyr(ul Uplo, n int, alpha f64, x []f64, incx int, mut a []f64, lda int) 
 //  A += alpha * x * yᵀ + alpha * y * xᵀ
 // where A is an n×n symmetric matrix, x and y are vectors, and alpha is a scalar.
 pub fn dsyr2(ul Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, mut a []f64, lda int) {
-	if ul != blas_lower && ul != blas_upper {
-		panic(bad_uplo)
-	}
 	if n < 0 {
 		panic(nlt0)
 	}
@@ -1634,7 +1574,7 @@ pub fn dsyr2(ul Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, mu
 	if incx < 0 {
 		kx = -(n - 1) * incx
 	}
-	if ul == blas_upper {
+	if ul == .upper {
 		if incx == 1 && incy == 1 {
 			for i in 0 .. n {
 				xi := x[i]
@@ -1694,8 +1634,8 @@ pub fn dsyr2(ul Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, mu
 }
 
 // dtpsv solves one of the systems of equations
-//  A * x = b   if trans_a == blas_no_trans
-//  Aᵀ * x = b  if trans_a == blas_trans or blas_conj_trans
+//  A * x = b   if trans_a == .no_trans
+//  Aᵀ * x = b  if trans_a == .trans or .conj_trans
 // where A is an n×n triangular matrix in packed format, and x and b are vectors.
 //
 // At entry to the function, x contains the values of b, and the result is
@@ -1704,15 +1644,6 @@ pub fn dsyr2(ul Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, mu
 // No test for singularity or near-singularity is included in this
 // routine. Such tests must be performed before calling this routine.
 pub fn dtpsv(ul Uplo, trans_a Transpose, d Diagonal, n int, ap []f64, mut x []f64, incx int) {
-	if ul != blas_lower && ul != blas_upper {
-		panic(bad_uplo)
-	}
-	if trans_a != blas_no_trans && trans_a != blas_trans && trans_a != blas_conj_trans {
-		panic(bad_transpose)
-	}
-	if d != blas_non_unit && d != blas_unit {
-		panic(bad_diag)
-	}
 	if n < 0 {
 		panic(nlt0)
 	}
@@ -1738,10 +1669,10 @@ pub fn dtpsv(ul Uplo, trans_a Transpose, d Diagonal, n int, ap []f64, mut x []f6
 		kx = -(n - 1) * incx
 	}
 
-	non_unit := d == blas_non_unit
+	non_unit := d == .non_unit
 	mut offset := 0 // Offset is the index of (i,i)
-	if trans_a == blas_no_trans {
-		if ul == blas_upper {
+	if trans_a == .no_trans {
+		if ul == .upper {
 			offset = n * (n + 1) / 2 - 1
 			if incx == 1 {
 				for i := n - 1; i >= 0; i-- {
@@ -1811,7 +1742,7 @@ pub fn dtpsv(ul Uplo, trans_a Transpose, d Diagonal, n int, ap []f64, mut x []f6
 		return
 	}
 	// Cases where ap is transposed.
-	if ul == blas_upper {
+	if ul == .upper {
 		if incx == 1 {
 			for i in 0 .. n {
 				if non_unit {
@@ -1882,9 +1813,6 @@ pub fn dtpsv(ul Uplo, trans_a Transpose, d Diagonal, n int, ap []f64, mut x []f6
 // where A is an n×n symmetric matrix in packed format, x and y are vectors,
 // and alpha and beta are scalars.
 pub fn dspmv(ul Uplo, n int, alpha f64, ap []f64, x []f64, incx int, beta f64, mut y []f64, incy int) {
-	if ul != blas_lower && ul != blas_upper {
-		panic(bad_uplo)
-	}
 	if n < 0 {
 		panic(nlt0)
 	}
@@ -1962,7 +1890,7 @@ pub fn dspmv(ul Uplo, n int, alpha f64, ap []f64, x []f64, incx int, beta f64, m
 		return
 	}
 	mut offset := 0 // Offset is the index of (i,i).
-	if ul == blas_upper {
+	if ul == .upper {
 		if incx == 1 {
 			mut iy := ky
 			for i in 0 .. n {
@@ -2050,9 +1978,6 @@ pub fn dspmv(ul Uplo, n int, alpha f64, ap []f64, x []f64, incx int, beta f64, m
 // where A is an n×n symmetric matrix in packed format, x is a vector, and
 // alpha is a scalar.
 pub fn dspr(ul Uplo, n int, alpha f64, x []f64, incx int, mut ap []f64) {
-	if ul != blas_lower && ul != blas_upper {
-		panic(bad_uplo)
-	}
 	if n < 0 {
 		panic(nlt0)
 	}
@@ -2084,7 +2009,7 @@ pub fn dspr(ul Uplo, n int, alpha f64, x []f64, incx int, mut ap []f64) {
 		kx = -(len_x - 1) * incx
 	}
 	mut offset := 0 // Offset is the index of (i,i).
-	if ul == blas_upper {
+	if ul == .upper {
 		if incx == 1 {
 			for i in 0 .. n {
 				mut atmp := ap[offset..]
@@ -2142,9 +2067,6 @@ pub fn dspr(ul Uplo, n int, alpha f64, x []f64, incx int, mut ap []f64) {
 // where A is an n×n symmetric matrix in packed format, x and y are vectors,
 // and alpha is a scalar.
 pub fn dspr2(ul Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, mut ap []f64) {
-	if ul != blas_lower && ul != blas_upper {
-		panic(bad_uplo)
-	}
 	if n < 0 {
 		panic(nlt0)
 	}
@@ -2185,7 +2107,7 @@ pub fn dspr2(ul Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, mu
 		kx = -(n - 1) * incx
 	}
 	mut offset := 0 // Offset is the index of (i,i).
-	if ul == blas_upper {
+	if ul == .upper {
 		if incx == 1 && incy == 1 {
 			for i in 0 .. n {
 				mut atmp := ap[offset..]

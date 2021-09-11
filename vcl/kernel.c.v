@@ -197,7 +197,7 @@ fn (k &Kernel) set_arg_local(index int, size int) ? {
 }
 
 fn (k &Kernel) set_arg_unsafe(index int, arg_size int, arg voidptr) ? {
-	res := C.clSetKernelArg(k.k, u32(index), size_t(arg_size), arg)
+	res := C.clSetKernelArg(k.k, u32(index), usize(arg_size), arg)
 	if res != success {
 		return vcl_error(res)
 	}
@@ -210,14 +210,14 @@ fn (k &Kernel) call(work_sizes []int, lokal_sizes []int) chan IError {
 		ch <- error('length of work_sizes and localSizes differ')
 		return ch
 	}
-	mut global_work_offset_ptr := []size_t{len: work_dim}
-	mut global_work_size_ptr := []size_t{len: work_dim}
+	mut global_work_offset_ptr := []usize{len: work_dim}
+	mut global_work_size_ptr := []usize{len: work_dim}
 	for i in 0 .. work_dim {
-		global_work_size_ptr[i] = size_t(work_sizes[i])
+		global_work_size_ptr[i] = usize(work_sizes[i])
 	}
-	mut local_work_size_ptr := []size_t{len: work_dim}
+	mut local_work_size_ptr := []usize{len: work_dim}
 	for i in 0 .. work_dim {
-		local_work_size_ptr[i] = size_t(lokal_sizes[i])
+		local_work_size_ptr[i] = usize(lokal_sizes[i])
 	}
 	mut event := ClEvent(0)
 	res := C.clEnqueueNDRangeKernel(k.d.queue, k.k, u32(work_dim), unsafe { &global_work_offset_ptr[0] },

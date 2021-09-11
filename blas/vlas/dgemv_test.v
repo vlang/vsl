@@ -17,7 +17,7 @@ fn test_dgemv_no_trans_1() {
 	incy := 1
 	x := [1.0, 2, 3]
 	mut y := [7.0, 8, 9, 10, 11]
-	dgemv(blas_no_trans, m, n, 0.0, flatten(a), a[0].len, x, incx, beta, mut y, incy)
+	dgemv(.no_trans, m, n, 0.0, flatten(a), a[0].len, x, incx, beta, mut y, incy)
 	assert expected == y
 }
 
@@ -38,7 +38,7 @@ fn test_dgemv_no_trans_2() {
 	incy := 1
 	x := [1.0, 2, 3]
 	mut y := [7.0, 8, 9, 10, 11]
-	dgemv(blas_no_trans, m, n, 0.0, flatten(a), a[0].len, x, incx, beta, mut y, incy)
+	dgemv(.no_trans, m, n, 0.0, flatten(a), a[0].len, x, incx, beta, mut y, incy)
 	assert expected == y
 }
 
@@ -59,7 +59,7 @@ fn test_dgemv_no_trans_3() {
 	incy := 1
 	x := [1.0, 2, 3]
 	mut y := [7.0, 8, 9, 10, 11]
-	dgemv(blas_no_trans, m, n, 1.0, flatten(a), a[0].len, x, incx, beta, mut y, incy)
+	dgemv(.no_trans, m, n, 1.0, flatten(a), a[0].len, x, incx, beta, mut y, incy)
 	assert expected == y
 }
 
@@ -80,7 +80,7 @@ fn test_dgemv_no_trans_4() {
 	incy := 1
 	x := [1.0, 2, 3]
 	mut y := [7.0, 8, 9, 10, 11]
-	dgemv(blas_no_trans, m, n, 8.0, flatten(a), a[0].len, x, incx, beta, mut y, incy)
+	dgemv(.no_trans, m, n, 8.0, flatten(a), a[0].len, x, incx, beta, mut y, incy)
 	assert expected == y
 }
 
@@ -101,7 +101,7 @@ fn test_dgemv_trans_1() {
 	incy := 1
 	x := [1.0, 2, 3, -4, 5]
 	mut y := [7.0, 8, 9]
-	dgemv(blas_trans, m, n, 0.0, flatten(a), a[0].len, x, incx, beta, mut y, incy)
+	dgemv(.trans, m, n, 0.0, flatten(a), a[0].len, x, incx, beta, mut y, incy)
 	assert expected == y
 }
 
@@ -122,7 +122,7 @@ fn test_dgemv_trans_2() {
 	incy := 1
 	x := [1.0, 2, 3, -4, 5]
 	mut y := [7.0, 8, 9]
-	dgemv(blas_trans, m, n, 0.0, flatten(a), a[0].len, x, incx, beta, mut y, incy)
+	dgemv(.trans, m, n, 0.0, flatten(a), a[0].len, x, incx, beta, mut y, incy)
 	assert expected == y
 }
 
@@ -143,7 +143,7 @@ fn test_dgemv_trans_3() {
 	incy := 1
 	x := [1.0, 2, 3, -4, 5]
 	mut y := [7.0, 8, 9]
-	dgemv(blas_trans, m, n, 1.0, flatten(a), a[0].len, x, incx, beta, mut y, incy)
+	dgemv(.trans, m, n, 1.0, flatten(a), a[0].len, x, incx, beta, mut y, incy)
 	assert expected == y
 }
 
@@ -164,6 +164,6 @@ fn test_dgemv_trans_4() {
 	incy := 1
 	x := [1.0, 2, 3, -4, 5]
 	mut y := [7.0, 8, 9]
-	dgemv(blas_trans, m, n, 8.0, flatten(a), a[0].len, x, incx, beta, mut y, incy)
+	dgemv(.trans, m, n, 8.0, flatten(a), a[0].len, x, incx, beta, mut y, incy)
 	assert expected == y
 }

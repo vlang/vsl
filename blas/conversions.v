@@ -4,36 +4,20 @@ import strconv
 import math
 import math.complex
 import vsl.errors
+import vsl.blas.vlas
 
-pub const (
-	lapack_row_major    = 101
-	lapack_col_major    = 102
-	cblas_row_major     = u32(101)
-	cblas_col_major     = u32(102)
-	cblas_no_trans      = u32(111)
-	cblas_trans         = u32(112)
-	cblas_conj_trans    = u32(113)
-	cblas_conj_no_trans = u32(114)
-	cblas_upper         = u32(121)
-	cblas_lower         = u32(122)
-	cblas_non_unit      = u32(131)
-	cblas_unit          = u32(132)
-	cblas_left          = u32(141)
-	cblas_right         = u32(142)
-)
-
-pub fn c_trans(trans bool) u32 {
+pub fn c_trans(trans bool) vlas.Transpose {
 	if trans {
-		return blas.cblas_trans
+		return .trans
 	}
-	return blas.cblas_no_trans
+	return .no_trans
 }
 
-pub fn c_uplo(up bool) u32 {
+pub fn c_uplo(up bool) vlas.Uplo {
 	if up {
-		return blas.cblas_upper
+		return .upper
 	}
-	return blas.cblas_lower
+	return .lower
 }
 
 pub fn l_uplo(up bool) byte {

@@ -4,13 +4,10 @@ import vsl.float.float64
 import vsl.util
 
 // dgemv computes
-//  y = alpha * A * x + beta * y   if trans_a = blas_no_trans
-//  y = alpha * Aᵀ * x + beta * y  if trans_a = blas_trans or blas_conj_trans
+//  y = alpha * A * x + beta * y   if trans_a = .no_trans
+//  y = alpha * Aᵀ * x + beta * y  if trans_a = .trans or .conj_trans
 // where A is an m×n dense matrix, x and y are vectors, and alpha and beta are scalars.
 pub fn dgemv(trans_a Transpose, m int, n int, alpha f64, a []f64, lda int, x []f64, incx int, beta f64, mut y []f64, incy int) {
-	if trans_a != blas_no_trans && trans_a != blas_trans && trans_a != blas_conj_trans {
-		panic(bad_transpose)
-	}
 	if m < 0 {
 		panic(mlt0)
 	}
@@ -29,7 +26,7 @@ pub fn dgemv(trans_a Transpose, m int, n int, alpha f64, a []f64, lda int, x []f
 	// Set up indexes
 	mut len_x := m
 	mut len_y := n
-	if trans_a == blas_no_trans {
+	if trans_a == .no_trans {
 		len_x = n
 		len_y = m
 	}
@@ -65,7 +62,7 @@ pub fn dgemv(trans_a Transpose, m int, n int, alpha f64, a []f64, lda int, x []f
 	}
 
 	// Form y = alpha * A * x + y
-	if trans_a == blas_no_trans {
+	if trans_a == .no_trans {
 		float64.gemv_n(u32(m), u32(n), alpha, a, u32(lda), x, u32(incx), beta, mut y,
 			u32(incy))
 		return

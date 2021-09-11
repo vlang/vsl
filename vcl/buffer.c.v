@@ -11,7 +11,7 @@ mut:
 // new_buffer creates a new buffer with specified size
 fn new_buffer(d &Device, size int) ?&Buffer {
 	mut ret := 0
-	buffer := C.clCreateBuffer(d.ctx, mem_read_write, size_t(size), voidptr(0), &ret)
+	buffer := C.clCreateBuffer(d.ctx, mem_read_write, usize(size), voidptr(0), &ret)
 	if ret != success {
 		return vcl_error(ret)
 	}
@@ -37,7 +37,7 @@ fn (b &Buffer) load(size int, ptr voidptr) chan IError {
 		return ch
 	}
 	mut event := ClEvent(0)
-	ret := C.clEnqueueWriteBuffer(b.device.queue, b.memobj, false, 0, size_t(size), ptr,
+	ret := C.clEnqueueWriteBuffer(b.device.queue, b.memobj, false, 0, usize(size), ptr,
 		0, voidptr(0), &event)
 	if ret != success {
 		ch <- vcl_error(ret)

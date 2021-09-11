@@ -13,19 +13,7 @@ import vsl.util
 // where A is an m×k or k×m dense matrix, B is an n×k or k×n dense matrix, C is
 // an m×n matrix, and alpha and beta are scalars. trans_a and trans_b specify whether A or
 // B are transposed.
-pub fn dgemm(trans_a u32, trans_b u32, m int, n int, k int, alpha f64, a []f64, lda int, b []f64, ldb int, beta f64, mut c []f64, ldc int) {
-	match trans_a {
-		blas_no_trans, blas_trans, blas_conj_trans {}
-		else {
-			panic(bad_transpose)
-		}
-	}
-	match trans_b {
-		blas_no_trans, blas_trans, blas_conj_trans {}
-		else {
-			panic(bad_transpose)
-		}
-	}
+pub fn dgemm(trans_a Transpose, trans_b Transpose, m int, n int, k int, alpha f64, a []f64, lda int, b []f64, ldb int, beta f64, mut c []f64, ldc int) {
 	if m < 0 {
 		panic(mlt0)
 	}
@@ -35,7 +23,7 @@ pub fn dgemm(trans_a u32, trans_b u32, m int, n int, k int, alpha f64, a []f64, 
 	if k < 0 {
 		panic(klt0)
 	}
-	a_trans := trans_a == blas_trans || trans_a == blas_conj_trans
+	a_trans := trans_a == .trans || trans_a == .conj_trans
 	if a_trans {
 		if lda < util.imax(1, m) {
 			panic(bad_ld_a)
@@ -45,7 +33,7 @@ pub fn dgemm(trans_a u32, trans_b u32, m int, n int, k int, alpha f64, a []f64, 
 			panic(bad_ld_a)
 		}
 	}
-	b_trans := trans_b == blas_trans || trans_b == blas_conj_trans
+	b_trans := trans_b == .trans || trans_b == .conj_trans
 	if b_trans {
 		if ldb < util.imax(1, k) {
 			panic(bad_ld_b)

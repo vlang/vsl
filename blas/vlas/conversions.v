@@ -1,24 +1,28 @@
 module vlas
 
-pub type Transpose = u32
+pub enum MemoryLayout {
+	row_major = 101
+	col_major = 102
+}
 
-pub type Uplo = u32
+pub enum Transpose {
+	no_trans = 111
+	trans = 112
+	conj_trans = 113
+	conj_no_trans = 114
+}
 
-pub type Diagonal = u32
+pub enum Uplo {
+	upper = 121
+	lower = 122
+}
 
-pub const (
-	lapack_row_major   = 101
-	lapack_col_major   = 102
-	blas_row_major     = u32(101)
-	blas_col_major     = u32(102)
-	blas_no_trans      = Transpose(111)
-	blas_trans         = Transpose(112)
-	blas_conj_trans    = Transpose(113)
-	blas_conj_no_trans = Transpose(114)
-	blas_upper         = Uplo(121)
-	blas_lower         = Uplo(122)
-	blas_non_unit      = Diagonal(131)
-	blas_unit          = Diagonal(132)
-	blas_left          = u32(141)
-	blas_right         = u32(142)
-)
+pub enum Diagonal {
+	non_unit = 131
+	unit = 132
+}
+
+pub enum Side {
+	left = 141
+	right = 142
+}

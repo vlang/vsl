@@ -4,17 +4,11 @@ import vsl.float.float64
 import vsl.util
 
 // dsyrk performs one of the symmetric rank-k operations
-//  C = alpha * A * Aᵀ + beta * C  if trans_a == blas_no_trans
-//  C = alpha * Aᵀ * A + beta * C  if trans_a == blas_trans or trans_a == blas_conj_trans
+//  C = alpha * A * Aᵀ + beta * C  if trans_a == .no_trans
+//  C = alpha * Aᵀ * A + beta * C  if trans_a == .trans or trans_a == .conj_trans
 // where A is an n×k or k×n matrix, C is an n×n symmetric matrix, and alpha and
 // beta are scalars.
 pub fn dsyrk(ul Uplo, trans_a Transpose, n int, k int, alpha f64, a []f64, lda int, beta f64, mut c []f64, ldc int) {
-	if ul != blas_lower && ul != blas_upper {
-		panic(bad_uplo)
-	}
-	if trans_a != blas_trans && trans_a != blas_no_trans && trans_a != blas_conj_trans {
-		panic(bad_transpose)
-	}
 	if n < 0 {
 		panic(nlt0)
 	}
@@ -23,7 +17,7 @@ pub fn dsyrk(ul Uplo, trans_a Transpose, n int, k int, alpha f64, a []f64, lda i
 	}
 	mut row := k
 	mut col := n
-	if trans_a == blas_no_trans {
+	if trans_a == .no_trans {
 		row = n
 		col = k
 	}
@@ -49,7 +43,7 @@ pub fn dsyrk(ul Uplo, trans_a Transpose, n int, k int, alpha f64, a []f64, lda i
 
 	if alpha == 0 {
 		if beta == 0 {
-			if ul == blas_upper {
+			if ul == .upper {
 				for i in 0 .. n {
 					mut ctmp := c[i * ldc + i..i * ldc + n]
 					for j in 0 .. ctmp.len {
@@ -66,7 +60,7 @@ pub fn dsyrk(ul Uplo, trans_a Transpose, n int, k int, alpha f64, a []f64, lda i
 			}
 			return
 		}
-		if ul == blas_upper {
+		if ul == .upper {
 			for i in 0 .. n {
 				mut ctmp := c[i * ldc + i..i * ldc + n]
 				for j in 0 .. ctmp.len {
@@ -83,8 +77,8 @@ pub fn dsyrk(ul Uplo, trans_a Transpose, n int, k int, alpha f64, a []f64, lda i
 		}
 		return
 	}
-	if trans_a == blas_no_trans {
-		if ul == blas_upper {
+	if trans_a == .no_trans {
+		if ul == .upper {
 			for i in 0 .. n {
 				mut ctmp := c[i * ldc + i..i * ldc + n]
 				atmp := a[i * lda..i * lda + k]
@@ -119,7 +113,7 @@ pub fn dsyrk(ul Uplo, trans_a Transpose, n int, k int, alpha f64, a []f64, lda i
 		return
 	}
 	// Cases where a is transposed.
-	if ul == blas_upper {
+	if ul == .upper {
 		for i in 0 .. n {
 			mut ctmp := c[i * ldc + i..i * ldc + n]
 			if beta == 0 {
