@@ -296,32 +296,32 @@ pub fn daxpy(n int, alpha f64, x []f64, incx int, mut y []f64, incy int) {
 }
 
 [inline]
-pub fn scopy(n int, x []f32, incx int, mut y []f32, incy int) {
+pub fn scopy(n int, mut x []f32, incx int, mut y []f32, incy int) {
 	C.cblas_scopy(n, unsafe { &x[0] }, incx, unsafe { &y[0] }, incy)
 }
 
 [inline]
-pub fn dcopy(n int, x []f64, incx int, mut y []f64, incy int) {
+pub fn dcopy(n int, mut x []f64, incx int, mut y []f64, incy int) {
 	C.cblas_dcopy(n, unsafe { &x[0] }, incx, unsafe { &y[0] }, incy)
 }
 
 [inline]
-pub fn sswap(n int, x []f32, incx int, mut y []f32, incy int) {
+pub fn sswap(n int, mut x []f32, incx int, mut y []f32, incy int) {
 	C.cblas_sswap(n, unsafe { &x[0] }, incx, unsafe { &y[0] }, incy)
 }
 
 [inline]
-pub fn dswap(n int, x []f64, incx int, mut y []f64, incy int) {
+pub fn dswap(n int, mut x []f64, incx int, mut y []f64, incy int) {
 	C.cblas_dswap(n, unsafe { &x[0] }, incx, unsafe { &y[0] }, incy)
 }
 
 [inline]
-pub fn srot(n int, x []f32, incx int, mut y []f32, incy int, c f32, s f32) {
+pub fn srot(n int, mut x []f32, incx int, mut y []f32, incy int, c f32, s f32) {
 	C.cblas_srot(n, unsafe { &x[0] }, incx, unsafe { &y[0] }, incy, c, s)
 }
 
 [inline]
-pub fn drot(n int, x []f64, incx int, mut y []f64, incy int, c f64, s f64) {
+pub fn drot(n int, mut x []f64, incx int, mut y []f64, incy int, c f64, s f64) {
 	C.cblas_drot(n, unsafe { &x[0] }, incx, unsafe { &y[0] }, incy, c, s)
 }
 
@@ -356,12 +356,12 @@ pub fn drotmg(d1 f64, d2 f64, b1 f64, b2 f32, p []f64) {
 }
 
 [inline]
-pub fn sscal(n int, alpha f32, x []f32, incx int) {
+pub fn sscal(n int, alpha f32, mut x []f32, incx int) {
 	C.cblas_sscal(n, alpha, unsafe { &x[0] }, incx)
 }
 
 [inline]
-pub fn dscal(n int, alpha f64, x []f64, incx int) {
+pub fn dscal(n int, alpha f64, mut x []f64, incx int) {
 	C.cblas_dscal(n, alpha, unsafe { &x[0] }, incx)
 }
 
@@ -390,49 +390,49 @@ pub fn dger(m int, n int, alpha f64, x []f64, incx int, y []f64, incy int, mut a
 }
 
 [inline]
-pub fn strsv(uplo bool, trans_a bool, diag vlas.Diagonal, n int, a []f32, lda int, x []f32, incx int) {
+pub fn strsv(uplo bool, trans_a bool, diag vlas.Diagonal, n int, a []f32, lda int, mut x []f32, incx int) {
 	C.cblas_strsv(.row_major, c_uplo(uplo), c_trans(trans_a), diag, n, unsafe { &a[0] },
 		lda, unsafe { &x[0] }, incx)
 }
 
 [inline]
-pub fn dtrsv(uplo bool, trans_a bool, diag vlas.Diagonal, n int, a []f64, lda int, x []f64, incx int) {
+pub fn dtrsv(uplo bool, trans_a bool, diag vlas.Diagonal, n int, a []f64, lda int, mut x []f64, incx int) {
 	C.cblas_dtrsv(.row_major, c_uplo(uplo), c_trans(trans_a), diag, n, unsafe { &a[0] },
 		lda, unsafe { &x[0] }, incx)
 }
 
 [inline]
-pub fn strmv(uplo bool, trans_a bool, diag vlas.Diagonal, n int, a []f32, lda int, x []f32, incx int) {
+pub fn strmv(uplo bool, trans_a bool, diag vlas.Diagonal, n int, a []f32, lda int, mut x []f32, incx int) {
 	C.cblas_strmv(.row_major, c_uplo(uplo), c_trans(trans_a), diag, n, unsafe { &a[0] },
 		lda, unsafe { &x[0] }, incx)
 }
 
 [inline]
-pub fn dtrmv(uplo bool, trans_a bool, diag vlas.Diagonal, n int, a []f64, lda int, x []f64, incx int) {
+pub fn dtrmv(uplo bool, trans_a bool, diag vlas.Diagonal, n int, a []f64, lda int, mut x []f64, incx int) {
 	C.cblas_dtrmv(.row_major, c_uplo(uplo), c_trans(trans_a), diag, n, unsafe { &a[0] },
 		lda, unsafe { &x[0] }, incx)
 }
 
 [inline]
-pub fn ssyr(uplo bool, n int, alpha f32, x []f32, incx int, a []f32, lda int) {
+pub fn ssyr(uplo bool, n int, alpha f32, x []f32, incx int, mut a []f32, lda int) {
 	C.cblas_ssyr(.row_major, c_uplo(uplo), n, alpha, unsafe { &x[0] }, incx, unsafe { &a[0] },
 		lda)
 }
 
 [inline]
-pub fn dsyr(uplo bool, n int, alpha f64, x []f64, incx int, a []f64, lda int) {
+pub fn dsyr(uplo bool, n int, alpha f64, x []f64, incx int, mut a []f64, lda int) {
 	C.cblas_dsyr(.row_major, c_uplo(uplo), n, alpha, unsafe { &x[0] }, incx, unsafe { &a[0] },
 		lda)
 }
 
 [inline]
-pub fn ssyr2(uplo bool, n int, alpha f32, x []f32, incx int, y []f32, incy int, a []f32, lda int) {
+pub fn ssyr2(uplo bool, n int, alpha f32, x []f32, incx int, y []f32, incy int, mut a []f32, lda int) {
 	C.cblas_ssyr2(.row_major, c_uplo(uplo), n, alpha, unsafe { &x[0] }, incx, unsafe { &y[0] },
 		incy, unsafe { &a[0] }, lda)
 }
 
 [inline]
-pub fn dsyr2(uplo bool, n int, alpha f64, x []f64, incx int, y []f64, incy int, a []f64, lda int) {
+pub fn dsyr2(uplo bool, n int, alpha f64, x []f64, incx int, y []f64, incy int, mut a []f64, lda int) {
 	C.cblas_dsyr2(.row_major, c_uplo(uplo), n, alpha, unsafe { &x[0] }, incx, unsafe { &y[0] },
 		incy, unsafe { &a[0] }, lda)
 }
