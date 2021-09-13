@@ -1,8 +1,8 @@
 module ml
 
-import vsl.la
 import math
-import vsl.stats
+import math.stats
+import vsl.la
 
 // Stat holds statistics about data
 //
