@@ -1,6 +1,7 @@
 module fit
 
 import math
+import math.util
 
 // linear computes linear fitting parameters. Errors on y-direction only
 //
@@ -13,9 +14,9 @@ import math
 pub fn linear(x []f64, y []f64) (f64, f64) {
 	mut sx := 0.0
 	mut sy := 0.0
-	ndata := x.len
+	ndata := util.imin(x.len, y.len)
 	// accumulate sums
-	for i := 0; i < ndata; i++ {
+	for i in 0 .. ndata {
 		sx += x[i]
 		sy += y[i]
 	}
@@ -24,7 +25,7 @@ pub fn linear(x []f64, y []f64) (f64, f64) {
 	mut st2 := 0.0
 	ss := f64(ndata)
 	sxoss := sx / ss
-	for i := 0; i < ndata; i++ {
+	for i in 0 .. ndata {
 		t := x[i] - sxoss
 		st2 += t * t
 		b += t * y[i]
@@ -47,9 +48,9 @@ pub fn linear(x []f64, y []f64) (f64, f64) {
 pub fn linear_sigma(x []f64, y []f64) (f64, f64, f64, f64, f64) {
 	mut sx := 0.0
 	mut sy := 0.0
-	ndata := x.len
+	ndata := util.imin(x.len, y.len)
 	// accumulate sums
-	for i := 0; i < ndata; i++ {
+	for i in 0 .. ndata {
 		sx += x[i]
 		sy += y[i]
 	}
@@ -58,7 +59,7 @@ pub fn linear_sigma(x []f64, y []f64) (f64, f64, f64, f64, f64) {
 	mut st2 := 0.0
 	ss := f64(ndata)
 	sxoss := sx / ss
-	for i := 0; i < ndata; i++ {
+	for i in 0 .. ndata {
 		t := x[i] - sxoss
 		st2 += t * t
 		b += t * y[i]
@@ -71,7 +72,7 @@ pub fn linear_sigma(x []f64, y []f64) (f64, f64, f64, f64, f64) {
 	mut sigma_b := math.sqrt(1.0 / st2)
 	// calculate χ².
 	mut chi_2 := 0.0
-	for i := 0; i < ndata; i++ {
+	for i in 0 .. ndata {
 		d := y[i] - a - b * x[i]
 		chi_2 += d * d
 	}
