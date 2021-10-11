@@ -37,7 +37,6 @@ fn test_vector_accum() {
 	a := [1.0, 2, -3]
 	s := 0.0
 	assert float64.close(vector_accum(a), s)
-	// assert vector_accum(a) == s
 }
 
 fn test_vector_norm() {
