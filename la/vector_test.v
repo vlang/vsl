@@ -4,12 +4,24 @@ import math
 import math.util
 import vsl.float.float64
 
+fn tolerance_equal(data1 []f64, data2 []f64) bool {
+	if data1.len != data2.len {
+		return false
+	}
+	for i := 0; i < data1.len; i++ {
+		if !float64.veryclose(data1[i], data2[i]) {
+			return false
+		}
+	}
+	return true
+}
+
 fn test_vector_apply() {
 	mut a := []f64{len: 5}
 	b := [1.0, 2, 3, 4, 5]
 	res := [2.0, 4, 6, 8, 10]
 	vector_apply(mut a, 2, b)
-	assert a == res // Should be exact as it is simple f64 mul
+	assert tolerance_equal(a, res)
 }
 
 fn test_vector_apply_func() {
@@ -19,18 +31,17 @@ fn test_vector_apply_func() {
 	mut a := [1.0, 2, 3, 4, 5]
 	res := [1.0, 3, 5, 7, 9]
 	vector_apply_func(mut a, func)
-	assert a == res // Should be exact as it is simple f64 mul
+	assert tolerance_equal(a, res)
 }
 
 fn test_vector_unit() {
-	mut a := [3.0, 4] // Pythagorean sides
-	// res := [0.6,0.8] // This fails, due to floating point error of inverse (1.0 / x)
-	res := [0.6000000000000001, 0.8] // This is the result
-	assert res == vector_unit(mut a)
+	mut a := [3.0, 4]
+	res := [0.6, 0.8]
+	assert tolerance_equal(res, vector_unit(mut a))
 
 	// 0 vectors should stay the same
 	a = [0.0]
-	assert a == vector_unit(mut a)
+	assert tolerance_equal(a, vector_unit(mut a))
 }
 
 fn test_vector_accum() {
@@ -46,7 +57,7 @@ fn test_vector_norm() {
 }
 
 fn test_vector_rms() {
-	octave_val := 3.5355 // Calculated in GNU octave
+	octave_val := 3.5355
 	assert float64.tolerance(vector_rms([3.0, 4]), octave_val, 1e-5)
 }
 
