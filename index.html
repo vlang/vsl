@@ -105,40 +105,11 @@ also contains V and the V Tools for working with VS Code (or not).
 Below is a video showing the convenience of
 VS Code + the V tools + VSL.</p>
 <p><img src="https://raw.githubusercontent.com/vlang/vsl/master/static/container.gif" alt=""></p>
-<h2>Install VSL locally</h2>
-<p>It is enough to use the so convenient <code>v install</code> <em>or</em> <code>vpkg get</code> functionality for installing VSL.
-Anyways, it is possible to optimize certain modules using different backends.
-For this there are some C dependencies that can be installed optionally.
-If you want to use these C dependencies and other libraries,
-first we need to install some dependencies in order to
-have VSL working as expected with these backends.</p>
-<h3>Install dependencies</h3>
-<p><strong>Debian/Ubuntu GNU Linux</strong></p>
-<p><code>libopenblas-dev</code> is not needed when using the pure V backend.</p>
-<pre><code class="language-sh">$ sudo apt-get install -y --no-install-recommends \
-    gcc \
-    gfortran \
-    liblapacke-dev \
-    libopenblas-dev \
-    libssl-dev \
-</code></pre>
-<p><strong>Arch Linux/Manjaro GNU Linux</strong></p>
-<pre><code class="language-sh">$ sudo pacman -S openssl
-</code></pre>
-<p>The best way of installing OpenBlas/LAPACK is using
-<a href="https://aur.archlinux.org/packages/openblas-lapack/">openblas-lapack</a>.</p>
-<pre><code class="language-sh">$ yay -S openblas-lapack
-</code></pre>
-<p><em>or</em></p>
-<pre><code class="language-sh">$ git clone https://aur.archlinux.org/openblas-lapack.git /tmp/openblas-lapack
-$ cd /tmp/openblas-lapack
-$ makepkg -si
-</code></pre>
-<h3>Install VSL</h3>
-<p><strong>Via vpm</strong></p>
+<h2>Install VSL</h2>
+<h3>Via vpm</h3>
 <pre><code class="language-sh">$ v install vsl
 </code></pre>
-<p><strong>Via <a href="https://github.com/v-pkg/vpkg">vpkg</a></strong></p>
+<h3>Via <a href="https://github.com/v-pkg/vpkg">vpkg</a></h3>
 <pre><code class="language-sh">$ vpkg get https://github.com/vlang/vsl
 </code></pre>
 <p>Done. Installation completed.</p>
@@ -167,7 +138,7 @@ $ makepkg -si
 </section>
 
 						<div class="footer">
-							Powered by vdoc. Generated on: 11 Oct 2021 20:22:35
+							Powered by vdoc. Generated on: 11 Oct 2021 21:39:31
 						</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_vsl">README</a></li>
