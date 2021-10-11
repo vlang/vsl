@@ -48,7 +48,7 @@ fn test_vector_norm() {
 
 fn test_vector_rms() {
 	octave_val := 3.5355 // Calculated in GNU octave
-	assert float64.close(vector_rms([3.0, 4]), octave_val)
+	assert float64.tolerance(vector_rms([3.0, 4]), octave_val, 1e-5)
 }
 
 fn test_vector_norm_diff() {

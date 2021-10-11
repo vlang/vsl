@@ -8,6 +8,7 @@
 ## Options:
 ##     -h, --help                            Prints usage and example
 ##         --stats                           Exeute with stats
+##         --prod                            Exeute with prod build
 ##         --use-cblas                       Execute tests using cblas
 ##         --use-autofree                    Execute tests using atofree
 ##
@@ -36,6 +37,11 @@ fi
 if [[ -n "${stats}" ]]; then
     echo "Running tests with stats"
     flags="${flags} -stats"
+fi
+
+if [[ -n "${prod}" ]]; then
+    echo "Running tests with prod"
+    flags="${flags} -prod"
 fi
 
 echo "Executing tests with command: \"v ${flags} test .\""
