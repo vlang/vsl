@@ -39,7 +39,6 @@ fn test_vector_unit() {
 	res := [0.6, 0.8]
 	assert tolerance_equal(res, vector_unit(mut a))
 
-	// 0 vectors should stay the same
 	a = [0.0]
 	assert tolerance_equal(a, vector_unit(mut a))
 }
