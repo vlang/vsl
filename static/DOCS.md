@@ -66,60 +66,15 @@ VS Code + the V tools + VSL.
 
 ![](https://raw.githubusercontent.com/vlang/vsl/master/static/container.gif)
 
-## Install VSL locally
+## Install VSL
 
-It is enough to use the so convenient `v install` _or_ `vpkg get` functionality for installing VSL.
-Anyways, it is possible to optimize certain modules using different backends.
-For this there are some C dependencies that can be installed optionally.
-If you want to use these C dependencies and other libraries,
-first we need to install some dependencies in order to 
-have VSL working as expected with these backends.
-
-### Install dependencies
-
-**Debian/Ubuntu GNU Linux**
-
-`libopenblas-dev` is not needed when using the pure V backend.
-
-```sh
-$ sudo apt-get install -y --no-install-recommends \
-    gcc \
-    gfortran \
-    liblapacke-dev \
-    libopenblas-dev \
-    libssl-dev \
-```
-
-**Arch Linux/Manjaro GNU Linux**
-
-```sh
-$ sudo pacman -S openssl
-```
-
-The best way of installing OpenBlas/LAPACK is using
-[openblas-lapack](https://aur.archlinux.org/packages/openblas-lapack/).
-
-```sh
-$ yay -S openblas-lapack
-```
-
-_or_
-
-```sh
-$ git clone https://aur.archlinux.org/openblas-lapack.git /tmp/openblas-lapack
-$ cd /tmp/openblas-lapack
-$ makepkg -si
-```
-
-### Install VSL
-
-**Via vpm**
+### Via vpm
 
 ```sh
 $ v install vsl
 ```
 
-**Via [vpkg](https://github.com/v-pkg/vpkg)**
+### Via [vpkg](https://github.com/v-pkg/vpkg)
 
 ```sh
 $ vpkg get https://github.com/vlang/vsl
