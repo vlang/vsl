@@ -4,6 +4,7 @@ module util
 // the data observed by this observer is being update
 pub interface Observer {
 	name() string
+mut:
 	update()
 }
 
@@ -19,8 +20,8 @@ pub fn (mut o Observable) add_observer(obs Observer) {
 }
 
 // notify_update notifies observers of updates
-pub fn (o Observable) notify_update() {
-	for obs in o.observers {
+pub fn (mut o Observable) notify_update() {
+	for mut obs in o.observers {
 		obs.update()
 	}
 }
