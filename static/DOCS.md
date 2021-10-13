@@ -66,7 +66,7 @@ VS Code + the V tools + VSL.
 
 ![](https://raw.githubusercontent.com/vlang/vsl/master/static/container.gif)
 
-## Install VSL
+## Install VSL locally
 
 ### Via vpm
 
