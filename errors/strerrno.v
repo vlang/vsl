@@ -1,7 +1,7 @@
 module errors
 
-pub fn (errno ErrorCode) str() string {
-	return match errno {
+pub fn (error_code ErrorCode) str() string {
+	return match error_code {
 		.success { 'success' }
 		.failure { 'failure' }
 		.can_continue { 'the iteration has not converged yet' }
