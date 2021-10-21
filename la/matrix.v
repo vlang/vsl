@@ -13,7 +13,7 @@ pub mut:
 	data []f64
 }
 
-// matrix allocates a new (empty) Matrix with given (m,n) (row/col sizes)
+// new_matrix allocates a new (empty) Matrix with given (m,n) (row/col sizes)
 pub fn new_matrix(m int, n int) &Matrix {
 	data := []f64{len: m * n}
 	return &Matrix{
