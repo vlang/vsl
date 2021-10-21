@@ -171,7 +171,7 @@ Input: a   -- the matrix tol -- tolerance to assume zero determinant Output: ai 
 </section>
 						<section id="new_matrix" class="doc-node">
 							<div class="title"><h2>fn new_matrix <a href="#new_matrix">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/matrix.v#L17"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">new_matrix</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">&</span>Matrix</code></pre>
-<p>matrix allocates a new (empty) Matrix with given (m,n) (row/col sizes)</p>
+<p>new_matrix allocates a new (empty) Matrix with given (m,n) (row/col sizes)</p>
 
 </section>
 						<section id="new_sparse_config" class="doc-node">
@@ -191,7 +191,7 @@ Input: a   -- the matrix tol -- tolerance to assume zero determinant Output: ai 
 </section>
 						<section id="vector_accum" class="doc-node">
 							<div class="title"><h2>fn vector_accum <a href="#vector_accum">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/vector.v#L37"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">vector_accum</span><span class="token punctuation">(</span>o <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
-<p>accum sum/accumulates all components in a []f64 sum := Σ_i v[i]</p>
+<p>vector_accum sum/accumulates all components in a []f64 sum := Σ_i v[i]</p>
 
 </section>
 						<section id="vector_add" class="doc-node">
@@ -201,12 +201,12 @@ Input: a   -- the matrix tol -- tolerance to assume zero determinant Output: ai 
 </section>
 						<section id="vector_apply" class="doc-node">
 							<div class="title"><h2>fn vector_apply <a href="#vector_apply">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/vector.v#L10"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">vector_apply</span><span class="token punctuation">(</span><span class="token keyword">mut</span> o <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> a <span class="token builtin">f64</span><span class="token punctuation">,</span> another <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
-<p>apply sets this []f64 with the scaled components of another []f64 this := a * another   ⇒   this[i] := a * another[i] NOTE: &quot;another&quot; may be &quot;this&quot;</p>
+<p>vector_apply sets this []f64 with the scaled components of another []f64 this := a * another   ⇒   this[i] := a * another[i] NOTE: &quot;another&quot; may be &quot;this&quot;</p>
 
 </section>
 						<section id="vector_apply_func" class="doc-node">
 							<div class="title"><h2>fn vector_apply_func <a href="#vector_apply_func">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/vector.v#L18"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">vector_apply_func</span><span class="token punctuation">(</span><span class="token keyword">mut</span> o <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> f VectorApplyFn<span class="token punctuation">)</span></code></pre>
-<p>apply_func runs a function over all components of a []f64 vi = f(i,vi)</p>
+<p>vector_apply_func runs a function over all components of a []f64 vi = f(i,vi)</p>
 
 </section>
 						<section id="vector_dot" class="doc-node">
@@ -216,7 +216,7 @@ Input: a   -- the matrix tol -- tolerance to assume zero determinant Output: ai 
 </section>
 						<section id="vector_largest" class="doc-node">
 							<div class="title"><h2>fn vector_largest <a href="#vector_largest">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/vector.v#L75"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">vector_largest</span><span class="token punctuation">(</span>o <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> den <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
-<p>largest returns the largest component |u[i]| of this []f64, normalised by den largest := |u[i]| / den</p>
+<p>vector_largest returns the largest component |u[i]| of this []f64, normalised by den largest := |u[i]| / den</p>
 
 </section>
 						<section id="vector_max_diff" class="doc-node">
@@ -226,17 +226,17 @@ Input: a   -- the matrix tol -- tolerance to assume zero determinant Output: ai 
 </section>
 						<section id="vector_norm" class="doc-node">
 							<div class="title"><h2>fn vector_norm <a href="#vector_norm">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/vector.v#L47"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">vector_norm</span><span class="token punctuation">(</span>o <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
-<p>norm returns the Euclidean norm of a []f64: nrm := ‖v‖</p>
+<p>vector_norm returns the Euclidean norm of a []f64: nrm := ‖v‖</p>
 
 </section>
 						<section id="vector_norm_diff" class="doc-node">
 							<div class="title"><h2>fn vector_norm_diff <a href="#vector_norm_diff">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/vector.v#L64"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">vector_norm_diff</span><span class="token punctuation">(</span>o <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> v <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
-<p>norm_diff returns the Euclidean norm of the difference: nrm := ||u - v||</p>
+<p>vector_norm_diff returns the Euclidean norm of the difference: nrm := ||u - v||</p>
 
 </section>
 						<section id="vector_rms" class="doc-node">
 							<div class="title"><h2>fn vector_rms <a href="#vector_rms">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/vector.v#L53"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">vector_rms</span><span class="token punctuation">(</span>o <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
-<p>rms returns the root-mean-square of this []f64</p>
+<p>vector_rms returns the root-mean-square of this []f64</p>
 
 </section>
 						<section id="vector_rms_error" class="doc-node">
@@ -251,7 +251,7 @@ Input: a   -- the matrix tol -- tolerance to assume zero determinant Output: ai 
 </section>
 						<section id="vector_unit" class="doc-node">
 							<div class="title"><h2>fn vector_unit <a href="#vector_unit">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/vector.v#L26"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">vector_unit</span><span class="token punctuation">(</span><span class="token keyword">mut</span> o <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
-<p>unit returns the unit []f64 parallel to this []f64 b := a / norm(a)</p>
+<p>vector_unit returns the unit []f64 parallel to this []f64 b := a / norm(a)</p>
 
 </section>
 						<section id="vector_vector_tr_mul" class="doc-node">
@@ -553,7 +553,7 @@ of this matrix are stored directly.</p>
 </section>
 
 						<div class="footer">
-							Powered by vdoc. Generated on: 14 Oct 2021 00:28:31
+							Powered by vdoc. Generated on: 21 Oct 2021 01:12:51
 						</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#den_solve">fn den_solve</a>        <ul>
