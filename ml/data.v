@@ -28,7 +28,7 @@ pub mut:
 	y           []f64      // [nb_samples] y values [optional]
 }
 
-// data returns a new object to hold ML data
+// new_data returns a new object to hold ML data
 // Input:
 // nb_samples  -- number of data samples (rows in x)
 // nb_features -- number of features (columns in x)
