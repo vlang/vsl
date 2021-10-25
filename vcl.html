@@ -152,27 +152,7 @@ fn main() {
 
 </section>
 						<section id="ArgumentType" class="doc-node">
-							<div class="title"><h2>type ArgumentType <a href="#ArgumentType">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/kernel.c.v#L3"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">type</span> ArgumentType <span class="token operator">=</span> Bytes
-	<span class="token operator">|</span> Vector<span class="token operator"><</span><span class="token builtin">byte</span><span class="token operator">></span>
-	<span class="token operator">|</span> Vector<span class="token operator"><</span><span class="token builtin">f32</span><span class="token operator">></span>
-	<span class="token operator">|</span> Vector<span class="token operator"><</span><span class="token builtin">f64</span><span class="token operator">></span>
-	<span class="token operator">|</span> Vector<span class="token operator"><</span><span class="token builtin">i16</span><span class="token operator">></span>
-	<span class="token operator">|</span> Vector<span class="token operator"><</span><span class="token builtin">i64</span><span class="token operator">></span>
-	<span class="token operator">|</span> Vector<span class="token operator"><</span><span class="token builtin">i8</span><span class="token operator">></span>
-	<span class="token operator">|</span> Vector<span class="token operator"><</span><span class="token builtin">int</span><span class="token operator">></span>
-	<span class="token operator">|</span> Vector<span class="token operator"><</span><span class="token builtin">u16</span><span class="token operator">></span>
-	<span class="token operator">|</span> Vector<span class="token operator"><</span><span class="token builtin">u32</span><span class="token operator">></span>
-	<span class="token operator">|</span> Vector<span class="token operator"><</span><span class="token builtin">u64</span><span class="token operator">></span>
-	<span class="token operator">|</span> <span class="token builtin">byte</span>
-	<span class="token operator">|</span> <span class="token builtin">f32</span>
-	<span class="token operator">|</span> <span class="token builtin">f64</span>
-	<span class="token operator">|</span> <span class="token builtin">i16</span>
-	<span class="token operator">|</span> <span class="token builtin">i64</span>
-	<span class="token operator">|</span> <span class="token builtin">i8</span>
-	<span class="token operator">|</span> <span class="token builtin">int</span>
-	<span class="token operator">|</span> <span class="token builtin">u16</span>
-	<span class="token operator">|</span> <span class="token builtin">u32</span>
-	<span class="token operator">|</span> <span class="token builtin">u64</span></code></pre>
+							<div class="title"><h2>interface ArgumentType <a href="#ArgumentType">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/kernel.c.v#L3"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">interface</span> <span class="token symbol">ArgumentType</span> <span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>
 
 
 </section>
@@ -275,7 +255,7 @@ fn main() {
 
 </section>
 						<section id="Device.kernel" class="doc-node">
-							<div class="title"><h2>fn (Device) kernel <a href="#Device.kernel">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/kernel.c.v#L9"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>d <span class="token operator">&</span>Device<span class="token punctuation">)</span> <span class="token function">kernel</span><span class="token punctuation">(</span>name <span class="token builtin">string</span><span class="token punctuation">)</span> ?<span class="token operator">&</span>Kernel</code></pre>
+							<div class="title"><h2>fn (Device) kernel <a href="#Device.kernel">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/kernel.c.v#L7"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>d <span class="token operator">&</span>Device<span class="token punctuation">)</span> <span class="token function">kernel</span><span class="token punctuation">(</span>name <span class="token builtin">string</span><span class="token punctuation">)</span> ?<span class="token operator">&</span>Kernel</code></pre>
 <p>kernel returns a kernel if retrieving the kernel didn't complete the function will return an error</p>
 
 </section>
@@ -325,7 +305,7 @@ fn main() {
 
 </section>
 						<section id="Kernel" class="doc-node">
-							<div class="title"><h2>struct Kernel <a href="#Kernel">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/kernel.c.v#L46"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">Kernel</span> <span class="token punctuation">{</span>
+							<div class="title"><h2>struct Kernel <a href="#Kernel">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/kernel.c.v#L44"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">Kernel</span> <span class="token punctuation">{</span>
 	d <span class="token operator">&</span>Device
 	k ClKernel
 <span class="token punctuation">}</span></code></pre>
@@ -333,12 +313,12 @@ fn main() {
 
 </section>
 						<section id="Kernel.global" class="doc-node">
-							<div class="title"><h2>fn (Kernel) global <a href="#Kernel.global">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/kernel.c.v#L52"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>k <span class="token operator">&</span>Kernel<span class="token punctuation">)</span> <span class="token function">global</span><span class="token punctuation">(</span>global_work_sizes ...<span class="token builtin">int</span><span class="token punctuation">)</span> KernelWithGlobal</code></pre>
+							<div class="title"><h2>fn (Kernel) global <a href="#Kernel.global">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/kernel.c.v#L50"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>k <span class="token operator">&</span>Kernel<span class="token punctuation">)</span> <span class="token function">global</span><span class="token punctuation">(</span>global_work_sizes ...<span class="token builtin">int</span><span class="token punctuation">)</span> KernelWithGlobal</code></pre>
 <p>global returns an kernel with global size set</p>
 
 </section>
 						<section id="KernelCall" class="doc-node">
-							<div class="title"><h2>struct KernelCall <a href="#KernelCall">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/kernel.c.v#L77"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">KernelCall</span> <span class="token punctuation">{</span>
+							<div class="title"><h2>struct KernelCall <a href="#KernelCall">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/kernel.c.v#L75"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">KernelCall</span> <span class="token punctuation">{</span>
 	kernel            <span class="token operator">&</span>Kernel
 	global_work_sizes <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>
 	local_work_sizes  <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>
@@ -347,12 +327,12 @@ fn main() {
 
 </section>
 						<section id="KernelCall.run" class="doc-node">
-							<div class="title"><h2>fn (KernelCall) run <a href="#KernelCall.run">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/kernel.c.v#L86"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>kc KernelCall<span class="token punctuation">)</span> <span class="token function">run</span><span class="token punctuation">(</span>args ...ArgumentType<span class="token punctuation">)</span> <span class="token builtin">chan</span> <span class="token builtin">IError</span></code></pre>
+							<div class="title"><h2>fn (KernelCall) run <a href="#KernelCall.run">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/kernel.c.v#L84"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>kc KernelCall<span class="token punctuation">)</span> <span class="token function">run</span><span class="token punctuation">(</span>args ...ArgumentType<span class="token punctuation">)</span> <span class="token builtin">chan</span> <span class="token builtin">IError</span></code></pre>
 <p>run calls the kernel on its device with specified global and local work sizes and arguments it's a non-blocking call, so it returns a channel that will send an error value when the kernel is done or nil if the call was successful</p>
 
 </section>
 						<section id="KernelWithGlobal" class="doc-node">
-							<div class="title"><h2>struct KernelWithGlobal <a href="#KernelWithGlobal">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/kernel.c.v#L61"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">KernelWithGlobal</span> <span class="token punctuation">{</span>
+							<div class="title"><h2>struct KernelWithGlobal <a href="#KernelWithGlobal">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/kernel.c.v#L59"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">KernelWithGlobal</span> <span class="token punctuation">{</span>
 	kernel            <span class="token operator">&</span>Kernel
 	global_work_sizes <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>
 <span class="token punctuation">}</span></code></pre>
@@ -360,12 +340,12 @@ fn main() {
 
 </section>
 						<section id="KernelWithGlobal.local" class="doc-node">
-							<div class="title"><h2>fn (KernelWithGlobal) local <a href="#KernelWithGlobal.local">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/kernel.c.v#L67"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>kg KernelWithGlobal<span class="token punctuation">)</span> <span class="token function">local</span><span class="token punctuation">(</span>local_work_sizes ...<span class="token builtin">int</span><span class="token punctuation">)</span> KernelCall</code></pre>
+							<div class="title"><h2>fn (KernelWithGlobal) local <a href="#KernelWithGlobal.local">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/kernel.c.v#L65"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>kg KernelWithGlobal<span class="token punctuation">)</span> <span class="token function">local</span><span class="token punctuation">(</span>local_work_sizes ...<span class="token builtin">int</span><span class="token punctuation">)</span> KernelCall</code></pre>
 <p>local ets the local work sizes and returns an KernelCall which takes kernel arguments and runs the kernel</p>
 
 </section>
 						<section id="UnsupportedArgumentTypeError" class="doc-node">
-							<div class="title"><h2>struct UnsupportedArgumentTypeError <a href="#UnsupportedArgumentTypeError">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/kernel.c.v#L29"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">UnsupportedArgumentTypeError</span> <span class="token punctuation">{</span>
+							<div class="title"><h2>struct UnsupportedArgumentTypeError <a href="#UnsupportedArgumentTypeError">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/kernel.c.v#L27"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">UnsupportedArgumentTypeError</span> <span class="token punctuation">{</span>
 <span class="token keyword">pub</span><span class="token punctuation">:</span>
 	code  <span class="token builtin">int</span>
 	msg   <span class="token builtin">string</span>
@@ -385,7 +365,7 @@ fn main() {
 </section>
 
 						<div class="footer">
-							Powered by vdoc. Generated on: 21 Oct 2021 01:12:51
+							Powered by vdoc. Generated on: 25 Oct 2021 02:55:25
 						</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_vcl">README</a></li>
@@ -402,7 +382,7 @@ fn main() {
 <li class="open"><a href="#vcl_panic">fn vcl_panic</a>        <ul>
 </ul>
 </li>
-<li class="open"><a href="#ArgumentType">type ArgumentType</a>        <ul>
+<li class="open"><a href="#ArgumentType">interface ArgumentType</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#DeviceType">type DeviceType</a>        <ul>
