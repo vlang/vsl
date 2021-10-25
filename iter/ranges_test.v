@@ -23,13 +23,14 @@ fn test_int_iter(){
 				[]i64{len:0}]
 
 	for i, values in args {
-		r := int_iter(start: values[0], stop: values[1], step:values[2])
+		r := new_int_iter(start: values[0], stop: values[1], step:values[2])  or { panic('this should not happen') }
 		for j, n in r {
 			assert n == expected[i][j]
 		}
 		assert r.len == expected[i].len
 	}
 }
+
 
 
 fn test_float_iter() {
@@ -55,7 +56,7 @@ fn test_float_iter() {
 				[]f64{}]
 
 	for i, values in args {
-		r := float_iter(start:values[0], stop:values[1], step:values[2])
+		r := new_float_iter(start:values[0], stop:values[1], step:values[2]) or { panic('this should not happen') }
 		for j, n in r {
 			if !n.eq_epsilon(expected[i][j]) {
 				println('$n,  ${expected[i][j]}')
@@ -66,7 +67,7 @@ fn test_float_iter() {
 	}
 }
 
-fn test_lin_iter() {
+fn test_linear_iter() {
 	limits := [[1.2406537780235105, 11.347723458996064], [7.934211647857726, -3.7058956024157084], [10.244703943148405, -6.008335534940258], [-6.071150084691839, -5.846906010513566], [10.367120987381458, -9.851326072515677], [0.8136613633305672, -1.0730190759873128], [10.965127527440444, 8.068742222821108], [-0.7509669252729427, -2.9004178591848113], [-9.673319044566949, 3.705538702478055], [-8.129098138805718, 2.753071722916834], [1.9788425271898529, 10.207068414571822], [2.6478453874582932, -1.8392282826138064]]
 	lens := [2, 5, 6, 3, 2, 4, 5, 4, 4, 1, 2, 0]
 	endpoints := [true, true, false, true, false, true, false, true, false, false, true, false]
@@ -85,7 +86,7 @@ fn test_lin_iter() {
 				[]f64{}]
 	
 	for i, lim in limits {
-		l := lin_iter(start: lim[0], stop: lim[1], len:lens[i], endpoint:endpoints[i])
+		l := new_linear_iter(start: lim[0], stop: lim[1], len:lens[i], endpoint:endpoints[i]) or { panic('this should not happen') }
 		for j, n in l {
 			assert n.eq_epsilon(expected[i][j])
 		}
