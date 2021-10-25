@@ -1,8 +1,6 @@
 module vcl
 
-pub type ArgumentType = Bytes | Vector<byte> | Vector<f32> | Vector<f64> | Vector<i16> |
-	Vector<i64> | Vector<i8> | Vector<int> | Vector<u16> | Vector<u32> | Vector<u64> |
-	byte | f32 | f64 | i16 | i64 | i8 | int | u16 | u32 | u64
+pub interface ArgumentType {}
 
 // kernel returns a kernel
 // if retrieving the kernel didn't complete the function will return an error
@@ -180,6 +178,7 @@ fn (k &Kernel) set_arg(index int, arg ArgumentType) ? {
 		// @todo: LocalBuffer {
 		//     return k.set_arg_local(index, int(arg))
 		// }
+                else {}
 	}
 }
 
