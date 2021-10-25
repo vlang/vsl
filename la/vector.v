@@ -4,7 +4,7 @@ import math
 
 pub type VectorApplyFn = fn (i int, x f64) f64
 
-// apply sets this []f64 with the scaled components of another []f64
+// vector_apply sets this []f64 with the scaled components of another []f64
 // this := a * another   ⇒   this[i] := a * another[i]
 // NOTE: "another" may be "this"
 pub fn vector_apply(mut o []f64, a f64, another []f64) {
@@ -13,7 +13,7 @@ pub fn vector_apply(mut o []f64, a f64, another []f64) {
 	}
 }
 
-// apply_func runs a function over all components of a []f64
+// vector_apply_func runs a function over all components of a []f64
 // vi = f(i,vi)
 pub fn vector_apply_func(mut o []f64, f VectorApplyFn) {
 	for i := 0; i < o.len; i++ {
@@ -21,7 +21,7 @@ pub fn vector_apply_func(mut o []f64, f VectorApplyFn) {
 	}
 }
 
-// unit returns the unit []f64 parallel to this []f64
+// vector_unit returns the unit []f64 parallel to this []f64
 // b := a / norm(a)
 pub fn vector_unit(mut o []f64) []f64 {
 	mut unit := []f64{len: o.len}
@@ -32,7 +32,7 @@ pub fn vector_unit(mut o []f64) []f64 {
 	return unit
 }
 
-// accum sum/accumulates all components in a []f64
+// vector_accum sum/accumulates all components in a []f64
 // sum := Σ_i v[i]
 pub fn vector_accum(o []f64) f64 {
 	mut sum := 0.0
@@ -42,13 +42,13 @@ pub fn vector_accum(o []f64) f64 {
 	return sum
 }
 
-// norm returns the Euclidean norm of a []f64:
+// vector_norm returns the Euclidean norm of a []f64:
 // nrm := ‖v‖
 pub fn vector_norm(o []f64) f64 {
 	return math.sqrt(vector_dot(o, o))
 }
 
-// rms returns the root-mean-square of this []f64
+// vector_rms returns the root-mean-square of this []f64
 //
 pub fn vector_rms(o []f64) f64 {
 	mut rms := 0.0
@@ -59,7 +59,7 @@ pub fn vector_rms(o []f64) f64 {
 	return rms
 }
 
-// norm_diff returns the Euclidean norm of the difference:
+// vector_norm_diff returns the Euclidean norm of the difference:
 // nrm := ||u - v||
 pub fn vector_norm_diff(o []f64, v []f64) f64 {
 	mut nrm := 0.0
@@ -70,7 +70,7 @@ pub fn vector_norm_diff(o []f64, v []f64) f64 {
 	return nrm
 }
 
-// largest returns the largest component |u[i]| of this []f64, normalised by den
+// vector_largest returns the largest component |u[i]| of this []f64, normalised by den
 // largest := |u[i]| / den
 pub fn vector_largest(o []f64, den f64) f64 {
 	mut largest := math.abs(o[0])
