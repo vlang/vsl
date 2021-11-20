@@ -77,7 +77,7 @@ pub fn matrix_matrix_mul(mut c la.Matrix, alpha f64, a la.Matrix, b la.Matrix) {
             for j := 0; j &lt; c.n; j++ {
                 c.set(i, j, 0.0)
                 for k := 0; k &lt; a.n; k++ {
-                   c.add(i, j, alpha * a.get(i, k) * b.get(k, j))
+                    c.add(i, j, alpha * a.get(i, k) * b.get(k, j))
                 }
             }
         }
@@ -406,7 +406,7 @@ complex numbers.</p>
 </section>
 
 						<div class="footer">
-							Powered by vdoc. Generated on: 25 Oct 2021 05:05:17
+							Powered by vdoc. Generated on: 20 Nov 2021 01:11:35
 						</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_blas">README</a></li>
