@@ -170,7 +170,7 @@ fn dgemm_parallel(a_trans bool, b_trans bool, m int, n int, k int, a []f64, lda 
 					lenj = n - j
 				}
 
-				mut c_sub := slice_view_f64(c, ldc, i, j, leni, lenj)
+				mut c_sub := slice_view_f64(*c, ldc, i, j, leni, lenj)
 
 				// Compute A_ik B_kj for all k
 				for k := 0; k < max_k_len; k += block_size {
