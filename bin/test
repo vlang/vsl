@@ -51,6 +51,15 @@ if [[ -n "${prod}" ]]; then
 fi
 
 echo "Executing tests with command: \"v ${flags} test .\""
-v ${flags} -cg test ${vsl_dir_path}
+v ${flags} -cg test "${vsl_dir_path}"
 
-find ${vsl_dir_path} -name '*_test' -exec rm -f {} +
+find "${vsl_dir_path}" -name '*_test' -exec rm -f {} +
+
+echo "Compiling Examples with flags ${flags}"
+for file in $(find "${vsl_dir_path}" -wholename '*/examples/*.v'); do
+    echo "Compiling ${file}"
+    v ${flags} -cg "${file}" -o "${file}.o"
+    echo "${file}.o created"
+    echo "Removing ${file}.o"
+    rm -f "${file}.o"
+done
