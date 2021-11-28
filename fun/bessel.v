@@ -8,8 +8,8 @@ const (
 	two_m13 = 1.0 / (1 << 13) // 2**-13 0x3f20000000000000
 	two_m29 = 1.0 / (1 << 29) // 2**-29 0x3e10000000000000
 	two_m54 = 1.0 / (1 << 54) // 2**-54 0x3c90000000000000
-	two129  = i64(1) << 129 // 2**129 0x4800000000000000
-	two302  = i64(1) << 302 // 2**302 0x52D0000000000000
+	// two129  = i64(1) << 129 // 2**129 0x4800000000000000
+	// two302  = i64(1) << 302 // 2**302 0x52D0000000000000
 	// j0r0/j0s0 on [0, 2]
 	j0r02   = 1.56249999999999947958e-02 // 0x3F8FFFFFFFFFFFFD
 	j0r03   = -1.89979294238854721751e-04 // 0xBF28E6A5B61AC6E9
@@ -85,7 +85,7 @@ pub fn bessel_j0(x_ f64) f64 {
 		// j0(x) = 1/sqrt(pi) * (P(0,x)*cc - Q(0,x)*ss) / sqrt(x)
 		// y0(x) = 1/sqrt(pi) * (P(0,x)*ss + Q(0,x)*cc) / sqrt(x)
 		mut z := 0.0
-		if x > fun.two129 {
+		if false /* x > fun.two129 */ {
 			// |x| > ~6.8056e+38
 			z = (1.0 / math.sqrt_pi) * cc / math.sqrt(x)
 		} else {
@@ -149,7 +149,7 @@ pub fn bessel_j1(x_ f64) f64 {
 		// j1(x) = 1/sqrt(pi) * (P(1,x)*cc - Q(1,x)*ss) / sqrt(x)
 		// y1(x) = 1/sqrt(pi) * (P(1,x)*ss + Q(1,x)*cc) / sqrt(x)
 		mut z := 0.0
-		if x > fun.two129 {
+		if false /* x > fun.two129 */ {
 			z = (1.0 / math.sqrt_pi) * cc / math.sqrt(x)
 		} else {
 			u := pone(x)
@@ -215,7 +215,7 @@ pub fn bessel_jn(n_ int, x_ f64) f64 {
 	mut b := 0.0
 	if f64(n) <= x {
 		// Safe to use J(n+1,x)=2n/x *J(n,x)-J(n-1,x)
-		if x >= fun.two302 {
+		if false /* x >= fun.two302 */ {
 			// x > 2**302
 			// (x >> n**2)
 			// Jn(x) = cos(x-(2n+1)*pi/4)*sqrt(2/x*pi)
@@ -407,7 +407,7 @@ pub fn bessel_y0(x f64) f64 {
 			}
 		}
 		mut z := 0.0
-		if x > fun.two129 {
+		if false /* x > fun.two129 */ {
 			// |x| > ~6.8056e+38
 			z = (1.0 / math.sqrt_pi) * ss / math.sqrt(x)
 		} else {
@@ -470,7 +470,7 @@ pub fn bessel_y1(x f64) f64 {
 		// sin(x) +- cos(x) = -cos(2x)/(sin(x) -+ cos(x))
 		// to compute the worse one.
 		mut z := 0.0
-		if x > fun.two129 {
+		if false /* x > fun.two129 */ {
 			z = (1.0 / math.sqrt_pi) * ss / math.sqrt(x)
 		} else {
 			u := pone(x)
@@ -528,7 +528,7 @@ pub fn bessel_yn(n_ int, x f64) f64 {
 		return bessel_y1(x)
 	}
 	mut b := 0.0
-	if x >= fun.two302 {
+	if false /* x >= fun.two302 */ {
 		// x > 2**302
 		// (x >> n**2)
 		// bessel_jn(x) = cos(x-(2n+1)*pi/4)*sqrt(2/x*pi)
