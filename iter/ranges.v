@@ -144,7 +144,8 @@ pub struct LinearIterParams {
 //}
 pub fn new_linear_iter(params LinearIterParams) ?LinearIter {
 	if params.len < 0 {
-		return errors.error(@MOD + '.' + @FN + ': number of samples must be non negative', .erange)
+		return errors.error(@MOD + '.' + @FN + ': number of samples must be non negative',
+			.erange)
 	}
 	mut step := f64(1)
 	if params.endpoint {
@@ -209,7 +210,8 @@ pub struct LogIterParams {
 //}
 pub fn new_log_iter(params LogIterParams) ?LogIter {
 	if params.len < 0 {
-		return errors.error(@MOD + '.' + @FN + ': number of samples must be non negative', .erange)
+		return errors.error(@MOD + '.' + @FN + ': number of samples must be non negative',
+			.erange)
 	}
 	return LogIter{
 		linear_iter: new_linear_iter(
@@ -217,7 +219,7 @@ pub fn new_log_iter(params LogIterParams) ?LogIter {
 			stop: params.stop
 			len: params.len
 			endpoint: params.endpoint
-		)?
+		) ?
 		base: params.base
 		len: params.len
 	}

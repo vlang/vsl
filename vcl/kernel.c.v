@@ -178,7 +178,7 @@ fn (k &Kernel) set_arg(index int, arg ArgumentType) ? {
 		// @todo: LocalBuffer {
 		//     return k.set_arg_local(index, int(arg))
 		// }
-                else {}
+		else {}
 	}
 }
 
