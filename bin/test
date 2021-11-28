@@ -57,8 +57,12 @@ find "${vsl_dir_path}" -name '*_test' -exec rm -f {} +
 
 echo "Compiling Examples with flags ${flags}"
 for file in $(find "${vsl_dir_path}" -wholename '*/examples/*.v'); do
+    if [[ "${file}" == *"not_ci"* ]]; then
+        echo "Skipping ${file}"
+        continue
+    fi
     echo "Compiling ${file}"
-    # v ${flags} -cg "${file}" -o "${file}.o"
+    v ${flags} -cg "${file}" -o "${file}.o"
     echo "${file}.o created"
     echo "Removing ${file}.o"
     rm -f "${file}.o"
