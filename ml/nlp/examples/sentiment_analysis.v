@@ -16,13 +16,13 @@ fn main() {
 	// Arbitrary values. Since nlp.KNN only takes floats, we must represent
 	// our classes (positive or negative) as floats.
 	class := {
-		'positive': 1.0,
+		'positive': 1.0
 		'negative': -1.0
 	}
 
 	class_inverse := {
-		1.0:  'positive',
-		-1.0: 'negative'
+		'1.0':  'positive'
+		'-1.0': 'negative'
 	}
 
 	// Now we want to convert our dataset to a numeric representation.
@@ -145,8 +145,8 @@ fn main() {
 
 	// Convert from numeric representation to text:
 	// 1.0: positive, -1.0: negative.
-	bow_label1 := class_inverse[bow_prediction1]
-	bow_label2 := class_inverse[bow_prediction2]
+	bow_label1 := class_inverse[bow_prediction1.str()]
+	bow_label2 := class_inverse[bow_prediction2.str()]
 
 	println('"$sentence1" predicted as "$bow_label1" using bag of words.')
 	println('"$sentence2" predicted as "$bow_label2" using bag of words.')
@@ -207,8 +207,8 @@ fn main() {
 		to_pred: tfidf(sentence2, mut lancaster, ngrams, unique_ngrams)
 	) or { panic(err) }
 
-	tf_idf_label1 := class_inverse[tf_idf_prediction1]
-	tf_idf_label2 := class_inverse[tf_idf_prediction2]
+	tf_idf_label1 := class_inverse[tf_idf_prediction1.str()]
+	tf_idf_label2 := class_inverse[tf_idf_prediction2.str()]
 
 	println('"$sentence1" predicted as "$tf_idf_label1" using TF-IDF.')
 	println('"$sentence2" predicted as "$tf_idf_label2" using TF-IDF.')
