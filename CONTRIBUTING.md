@@ -8,11 +8,11 @@ accordingly in the steps below.)
 
 1. Fork https://github.com/vlang/vsl using GitHub's interface to your own account.
    Let's say that the forked repository is at
-   `https://github.com/YOUR_GITHUB_USERNAME/v` .
+   `https://github.com/YOUR_GITHUB_USERNAME/vsl` .
 2. Clone the main vsl repository https://github.com/vlang/vsl to a local folder on
-   your computer, say named vsl/ (`git clone https://github.com/vlang/vsl vsl`)
+   your computer (`git clone https://github.com/vlang/vsl`)
 3. `cd vsl`
-4. `git remote add pullrequest https://github.com/YOUR_GITHUB_USERNAME/v`
+4. `git remote add pullrequest https://github.com/YOUR_GITHUB_USERNAME/vsl`
    NB: the remote named `pullrequest` should point to YOUR own forked repo, not the
    main v repository! After this, your local cloned repository is prepared for
    making pullrequests, and you can just do normal git operations such as:
