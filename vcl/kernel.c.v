@@ -23,20 +23,21 @@ pub fn (d &Device) kernel(name string) ?&Kernel {
 	return new_kernel(d, k)
 }
 
-// UnsupportedArgumentTypeError error
 pub struct UnsupportedArgumentTypeError {
+	Error
 pub:
-	code  int
-	msg   string
 	index int
 	value ArgumentType
+}
+
+pub fn (err UnsupportedArgumentTypeError) msg() string {
+	return 'cl: unsupported argument type for index $err.index: $err.value'
 }
 
 fn new_unsupported_argument_type_error(index int, value ArgumentType) IError {
 	return UnsupportedArgumentTypeError{
 		index: index
 		value: value
-		msg: 'cl: unsupported argument type for index $index: $value'
 	}
 }
 
