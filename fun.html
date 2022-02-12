@@ -30,7 +30,7 @@
 						<div class="info">
 							<div class="module">vsl</div>
 							<div class="toggle-version-container">
-								<span>0.1.45</span>
+								<span>0.1.45 ae0e90f</span>
 								<div id="dark-mode-toggle" role="switch" aria-checked="false" aria-label="Toggle dark mode"><svg xmlns="http://www.w3.org/2000/svg" class="light-icon" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.7l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-5c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-1 16.95h2V19.5h-2v2.95zm-7.45-3.91l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8z"/></svg>
 <svg xmlns="http://www.w3.org/2000/svg" class="dark-icon" enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24"><g><rect fill="none" height="24" width="24"/></g><g><g><g><path d="M11.1,12.08C8.77,7.57,10.6,3.6,11.63,2.01C6.27,2.2,1.98,6.59,1.98,12c0,0.14,0.02,0.28,0.02,0.42 C2.62,12.15,3.29,12,4,12c1.66,0,3.18,0.83,4.1,2.15C9.77,14.63,11,16.17,11,18c0,1.52-0.87,2.83-2.12,3.51 c0.98,0.32,2.03,0.5,3.11,0.5c3.5,0,6.58-1.8,8.37-4.52C18,17.72,13.38,16.52,11.1,12.08z"/></g><path d="M7,16l-0.18,0C6.4,14.84,5.3,14,4,14c-1.66,0-3,1.34-3,3s1.34,3,3,3c0.62,0,2.49,0,3,0c1.1,0,2-0.9,2-2 C9,16.9,8.1,16,7,16z"/></g></g></svg>
 </div>
@@ -428,10 +428,10 @@ We approximate pzero by qzero(x) = s*(-1.25 + (R/S)) where R = qj0r0 + qR1*s</st
 						<section id="ChebSeries" class="doc-node">
 							<div class="title"><h2>struct ChebSeries <a href="#ChebSeries">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fun/cheb.v#L7"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">ChebSeries</span> <span class="token punctuation">{</span>
 <span class="token keyword">pub</span><span class="token punctuation">:</span>
-	c     <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
-	order <span class="token builtin">int</span>
-	a     <span class="token builtin">f64</span>
-	b     <span class="token builtin">f64</span>
+	c     <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span> <span class="token comment"> coefficients</span>
+	order <span class="token builtin">int</span>   <span class="token comment"> order of expansion</span>
+	a     <span class="token builtin">f64</span>   <span class="token comment"> lower interval point</span>
+	b     <span class="token builtin">f64</span>   <span class="token comment"> upper interval point</span>
 <span class="token punctuation">}</span></code></pre>
 <p>data for a Chebyshev series over a given interval</p>
 
@@ -444,22 +444,24 @@ We approximate pzero by qzero(x) = s*(-1.25 + (R/S)) where R = qj0r0 + qR1*s</st
 						<section id="DataInterp" class="doc-node">
 							<div class="title"><h2>struct DataInterp <a href="#DataInterp">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fun/datainterp.v#L12"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">DataInterp</span> <span class="token punctuation">{</span>
 <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	itype <span class="token builtin">string</span>
-	xx    <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
-	yy    <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
-
-	m        <span class="token builtin">int</span>
-	n        <span class="token builtin">int</span>
-	j_hunt   <span class="token builtin">int</span>
-	dj_hunt  <span class="token builtin">int</span>
-	use_hunt <span class="token builtin">bool</span>
-	ascnd    <span class="token builtin">bool</span>
-
+<span class="token comment"> input data</span>
+	itype <span class="token builtin">string</span> <span class="token comment"> type of interpolator</span>
+	xx    <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>  <span class="token comment"> x-data values</span>
+	yy    <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>  <span class="token comment"> y-data values</span>
+<span class="token comment"> derived data</span>
+	m        <span class="token builtin">int</span>  <span class="token comment"> number of points of interpolating formula; e.g. 2 for segments, 3 for 2nd order polynomials</span>
+	n        <span class="token builtin">int</span>  <span class="token comment"> length of xx</span>
+	j_hunt   <span class="token builtin">int</span>  <span class="token comment"> temporary j to decide on using hunt</span>
+	dj_hunt  <span class="token builtin">int</span>  <span class="token comment"> increent of j to decide on using hunt function or locate</span>
+	use_hunt <span class="token builtin">bool</span> <span class="token comment"> use hunt code instead of locate</span>
+	ascnd    <span class="token builtin">bool</span> <span class="token comment"> ascending order of x-values</span>
+<span class="token comment"> implementation</span>
 	interp InterpFn
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	disable_hunt <span class="token builtin">bool</span>
-
-	dy <span class="token builtin">f64</span>
+<span class="token comment"> configuration data</span>
+	disable_hunt <span class="token builtin">bool</span> <span class="token comment"> do not use hunt code at all</span>
+<span class="token comment"> output data</span>
+	dy <span class="token builtin">f64</span> <span class="token comment"> error estimate</span>
 <span class="token punctuation">}</span></code></pre>
 <p>DataInterp implements numeric interpolators to be used with discrete data</p>
 
@@ -489,11 +491,12 @@ increasing or decreasing. the returned value is not less than 0, nor greater tha
 						<section id="InterpCubic" class="doc-node">
 							<div class="title"><h2>struct InterpCubic <a href="#InterpCubic">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fun/interpcubic.v#L8"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">InterpCubic</span> <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+<span class="token comment"> coefficients of polynomial a, b, c, d</span>
 	a <span class="token builtin">f64</span>
 	b <span class="token builtin">f64</span>
 	c <span class="token builtin">f64</span>
 	d <span class="token builtin">f64</span>
-
+<span class="token comment"> tolerance to avoid zero denominator</span>
 	tol_den <span class="token builtin">f64</span>
 <span class="token punctuation">}</span></code></pre>
 <p>InterpCubic computes a cubic polynomial to perform interpolation either using 4 points or 3 points and a known derivative</p>
@@ -527,10 +530,11 @@ increasing or decreasing. the returned value is not less than 0, nor greater tha
 						<section id="InterpQuad" class="doc-node">
 							<div class="title"><h2>struct InterpQuad <a href="#InterpQuad">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fun/interpquad.v#L8"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">InterpQuad</span> <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+<span class="token comment"> coefficients of polynomial a, b, c</span>
 	a <span class="token builtin">f64</span>
 	b <span class="token builtin">f64</span>
 	c <span class="token builtin">f64</span>
-
+<span class="token comment"> tolerance to avoid zero denominator</span>
 	tol_den <span class="token builtin">f64</span>
 <span class="token punctuation">}</span></code></pre>
 <p>InterpQuad computes a quadratic polynomial to perform interpolation either using 3 points or 2 points and a known derivative</p>
@@ -564,17 +568,18 @@ increasing or decreasing. the returned value is not less than 0, nor greater tha
 						<section id="Sinusoid" class="doc-node">
 							<div class="title"><h2>struct Sinusoid <a href="#Sinusoid">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fun/sinusoid.v#L15"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">Sinusoid</span> <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	period      <span class="token builtin">f64</span>
-	mean_value  <span class="token builtin">f64</span>
-	amplitude   <span class="token builtin">f64</span>
-	phase_shift <span class="token builtin">f64</span>
-
-	frequency    <span class="token builtin">f64</span>
-	angular_freq <span class="token builtin">f64</span>
-	time_shift   <span class="token builtin">f64</span>
-
-	a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
-	b <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
+<span class="token comment"> input</span>
+	period      <span class="token builtin">f64</span> <span class="token comment"> t: period; e.g. [s]</span>
+	mean_value  <span class="token builtin">f64</span> <span class="token comment"> a0: mean value; e.g. [m]</span>
+	amplitude   <span class="token builtin">f64</span> <span class="token comment"> c1: amplitude; e.g. [m]</span>
+	phase_shift <span class="token builtin">f64</span> <span class="token comment"> theta: phase shift; e.g. [rad]</span>
+<span class="token comment"> derived</span>
+	frequency    <span class="token builtin">f64</span> <span class="token comment"> f: frequency; e.g. [Hz] or [1 cycle/s]</span>
+	angular_freq <span class="token builtin">f64</span> <span class="token comment"> omega_0 = 2⋅π⋅f: angular frequency; e.g. [rad⋅s⁻¹]</span>
+	time_shift   <span class="token builtin">f64</span> <span class="token comment"> ts = theta / omega_0: time shift; e.g. [s]</span>
+<span class="token comment"> derived: coefficients</span>
+	a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span> <span class="token comment"> a0, a1, A2, ... (if series mode)</span>
+	b <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span> <span class="token comment"> B0, b1, B2, ... (if series mode)</span>
 <span class="token punctuation">}</span></code></pre>
 <p>Sinusoid implements the sinusoid equation:</p>
 <p>y(t) = a0 + c1⋅cos(omega_0⋅t + theta)             [essential-form]</p>
@@ -604,7 +609,7 @@ increasing or decreasing. the returned value is not less than 0, nor greater tha
 </section>
 
 						<div class="footer">
-							Powered by vdoc. Generated on: 4 Jan 2022 23:12:38
+							Powered by vdoc. Generated on: 12 Feb 2022 05:48:09
 						</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#atan2p">fn atan2p</a>        <ul>
