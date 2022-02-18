@@ -68,11 +68,13 @@ pub fn (p Plot) show() ? {
 		return errors.error('could not save the layout to a JSON file at ${layout_path}.',
 			.efailed)
 	}
-	result := os.execute('bash $run_path --venv="$venv_path" --data="$data_path" --layout="$layout_path"')
-	if result.exit_code != 0 {
-		return error_with_code(result.output, result.exit_code)
+	$if !test ? {
+		result := os.execute('bash $run_path --venv="$venv_path" --data="$data_path" --layout="$layout_path"')
+		if result.exit_code != 0 {
+			return error_with_code(result.output, result.exit_code)
+		}
+		println(result.output)
 	}
-	println(result.output)
 }
 
 // init will ensure that all dependencies are correctly installed and venv initiallized
