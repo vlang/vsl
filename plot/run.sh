@@ -15,9 +15,10 @@
 ROOT=$(dirname "$0")
 
 source "${ROOT}/../bin/util/opts/opts.sh" || exit
+source "${ROOT}/python.sh"
 
 bash "${ROOT}"/create-venv.sh --venv="${venv}"
 
 source "${venv}/bin/activate"
-python "${ROOT}/plotter.py" --data "${data}" --layout "${layout}"
+"${python_bin}" "${ROOT}/plotter.py" --data "${data}" --layout "${layout}"
 deactivate
