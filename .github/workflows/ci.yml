@@ -25,28 +25,37 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: vlang/v
+
       - name: Checkout VSL
         uses: actions/checkout@v2
         with:
           path: vsl
+
       - name: Build V and symlink
         run: |
           make
           ./v symlink
+
       - name: V doctor
         run: v doctor
+
       - name: Install VSL and dependencies
         run: |
           sudo apt-get install --quiet -y --no-install-recommends gfortran liblapacke-dev libopenblas-dev libgc-dev
+
       - name: Move VSL source code to V Modules
         run: mv ./vsl ~/.vmodules
+
       - name: Execute Tests using Pure V Backend
         run: ~/.vmodules/vsl/bin/test
+
       - name: Execute Tests using Pure V Backend with Pure C Blas
-        if: ${{ matrix.os }} != "ubuntu-18.04"
         run: ~/.vmodules/vsl/bin/test --use-cblas
+        if: ${{ matrix.os != 'ubuntu-18.04' }}
+
       - name: Execute Tests using Pure V Backend and Garbage Collection enabled
         run: ~/.vmodules/vsl/bin/test --use-gc boehm
+
       - name: Execute Tests using Pure V Backend with Pure C Blas and Garbage Collection enabled
         run: ~/.vmodules/vsl/bin/test --use-cblas --use-gc boehm
-        if: ${{ matrix.os }} != "ubuntu-18.04"
+        if: ${{ matrix.os != 'ubuntu-18.04' }}
