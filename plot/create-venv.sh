@@ -21,5 +21,5 @@ fi
 
 "${python_bin}" -m venv "${venv}"
 source "${venv}/bin/activate"
-pip install plotly numpy
+pip install plotly numpy Cython
 deactivate
