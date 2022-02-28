@@ -1,24 +1,24 @@
 #!/usr/bin/env bash
 
-## Copyright (C) 2019-2021 The VSL Team
-## Licensed under MIT
-##
-##     @script.name [OPTION] ARGUMENTS...
-##
-## Options:
-##     -h, --help                            Prints usage and example
-##         --venv=PATH                       Virtual Env path
-##         --data=PATH                       Path to the JSON file that contains the data
-##         --layout=PATH                     Path to the JSON file that contains the layout
-##
-
 ROOT=$(dirname "$0")
 
-source "${ROOT}/../bin/util/opts/opts.sh" || exit
-source "${ROOT}/python.sh"
+usage() {
+    echo "Usage: ${0} <venv_path> <data_path> <label_path>"
+    exit 1
+}
 
-bash "${ROOT}"/create-venv.sh --venv="${venv}"
+VENV="${1}"
+DATA="${2}"
+LAYOUT="${3}"
 
-source "${venv}/bin/activate"
-"${python_bin}" "${ROOT}/plotter.py" --data "${data}" --layout "${layout}"
+if [ -z "${VENV}" ] || [ -z "${DATA}" ] || [ -z "${LAYOUT}" ]; then
+    usage
+fi
+
+source "${ROOT}/python.sh" || exit
+
+"${ROOT}"/create-venv.sh "${VENV}" || exit
+
+source "${VENV}/bin/activate"
+"${python_bin}" "${ROOT}/plotter.py" --data "${DATA}" --layout "${LAYOUT}"
 deactivate

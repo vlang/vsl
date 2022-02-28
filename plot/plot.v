@@ -6,7 +6,7 @@ import time
 import vsl.errors
 
 const (
-	schema_version = 'v1'
+	schema_version = 'v1.0.2'
 	venv_dir_name  = '.plotvenv_$schema_version'
 	data_dir_name  = '.data_$schema_version'
 )
@@ -69,7 +69,7 @@ pub fn (p Plot) show() ? {
 			.efailed)
 	}
 	$if !test ? {
-		result := os.execute('bash $run_path --venv="$venv_path" --data="$data_path" --layout="$layout_path"')
+		result := os.execute('bash $run_path "$venv_path" "$data_path" "$layout_path"')
 		if result.exit_code != 0 {
 			return error_with_code(result.output, result.exit_code)
 		}
@@ -84,7 +84,7 @@ fn init() {
 		println('Creating plotly virtualenv...')
 	}
 	init_path := solve_mod_path('create-venv.sh')
-	result := os.execute('bash $init_path --venv="$venv_path"')
+	result := os.execute('bash $init_path "$venv_path"')
 	if result.exit_code != 0 {
 		panic(result.output)
 	}
