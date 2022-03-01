@@ -40,15 +40,15 @@ jobs:
         run: mv . ~/.vmodules
 
       - name: Execute Tests using Pure V Backend
-        run: ~/.vmodules/bin/test
+        run: ~/.vmodules/vsl/bin/test
 
       - name: Execute Tests using Pure V Backend with Pure C Blas
-        run: ~/.vmodules/bin/test --use-cblas
+        run: ~/.vmodules/vsl/bin/test --use-cblas
         if: ${{ matrix.os != 'ubuntu-18.04' }}
 
       - name: Execute Tests using Pure V Backend and Garbage Collection enabled
-        run: ~/.vmodules/bin/test --use-gc boehm
+        run: ~/.vmodules/vsl/bin/test --use-gc boehm
 
       - name: Execute Tests using Pure V Backend with Pure C Blas and Garbage Collection enabled
-        run: ~/.vmodules/bin/test --use-cblas --use-gc boehm
+        run: ~/.vmodules/vsl/bin/test --use-cblas --use-gc boehm
         if: ${{ matrix.os != 'ubuntu-18.04' }}
