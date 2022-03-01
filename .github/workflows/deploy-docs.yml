@@ -1,4 +1,4 @@
-name: Deploy Docs
+name: Deploy Documenation
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  ubuntu:
+  deploy-docs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout VSL
@@ -26,7 +26,7 @@ jobs:
         run: |
           rm -f ./vsl/README.md
           mv ./vsl/static/DOCS.md ./vsl/README.md
-          v doc -m -f ./vsl/html/
+          v doc -m -f html ./vsl
           mv ./vsl/_docs.html ./vsl/_docs/index.html
 
       - name: Deploy to gh-pages
