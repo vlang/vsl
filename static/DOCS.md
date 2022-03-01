@@ -87,7 +87,7 @@ Done. Installation completed.
 To test the module, just type the following command:
 
 ```sh
-$ ./bin/test # execute `./bin/test -h` to know more about the test command
+$ v test .
 ```
 
 ## Contributors
