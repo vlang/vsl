@@ -9,28 +9,28 @@ jobs:
   ubuntu:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout Latest V
-      uses: actions/checkout@v2
-      with:
-        repository: vlang/v
-    - name: Checkout VSL
-      uses: actions/checkout@v2
-      with:
-        path: vsl
-    - name: Build V
-      run: |
-        make
-        sudo ./v symlink
-    - name: V doctor
-      run: v doctor
-    - name: Build docs
-      run: |
-        rm -f ./vsl/README.md
-        mv ./vsl/static/DOCS.md ./vsl/README.md
-        v doc -m -f html vsl/
-        mv ./vsl/_docs/vsl.html ./vsl/_docs/index.html
-    - name: Deploy to gh-pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./vsl/_docs/
+      - name: Checkout VSL
+        uses: actions/checkout@v2
+        with:
+          path: vsl
+
+      - name: Setup V
+        uses: vlang/setup-v@v1
+        with:
+          check-latest: true
+
+      - name: V doctor
+        run: v doctor
+
+      - name: Build docs
+        run: |
+          rm -f ./README.md
+          mv ./static/DOCS.md ./README.md
+          v doc -m -f html/
+          mv ./_docs.html ./_docs/index.html
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_docs/
