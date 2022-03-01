@@ -11,8 +11,6 @@ jobs:
     steps:
       - name: Checkout VSL
         uses: actions/checkout@v2
-        with:
-          path: vsl
 
       - name: Setup V
         uses: vlang/setup-v@v1
