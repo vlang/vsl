@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Checkout VSL
         uses: actions/checkout@v2
+        with:
+          path: vsl
 
       - name: Setup V
         uses: vlang/setup-v@v1
@@ -22,13 +24,13 @@ jobs:
 
       - name: Build docs
         run: |
-          rm -f ./README.md
-          mv ./static/DOCS.md ./README.md
+          rm -f ./vsl/README.md
+          mv ./vsl/static/DOCS.md ./vsl/README.md
           v doc -m -f html/
-          mv ./_docs.html ./_docs/index.html
+          mv ./vsl/_docs.html ./vsl/_docs/index.html
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./_docs/
+          publish_dir: ./vsl/_docs/
