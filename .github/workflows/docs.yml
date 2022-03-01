@@ -26,7 +26,7 @@ jobs:
         run: |
           rm -f ./vsl/README.md
           mv ./vsl/static/DOCS.md ./vsl/README.md
-          v doc -m -f html/
+          v doc -m -f ./vsl/html/
           mv ./vsl/_docs.html ./vsl/_docs/index.html
 
       - name: Deploy to gh-pages
