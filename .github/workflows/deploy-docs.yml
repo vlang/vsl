@@ -8,6 +8,7 @@ on:
 jobs:
   deploy-docs:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout VSL
         uses: actions/checkout@v2
