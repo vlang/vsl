@@ -1,7 +1,7 @@
 name: VSL Continuous Integration
 
 concurrency:
-   group: ci
+   group: ci-${{ github.envent.number }}
    cancel-in-progress: true
 
 on:
