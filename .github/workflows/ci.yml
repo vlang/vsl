@@ -1,9 +1,5 @@
 name: VSL Continuous Integration
 
-concurrency:
-  group: ci-${{ github.event.number }}
-  cancel-in-progress: true
-
 on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
