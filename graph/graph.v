@@ -6,7 +6,7 @@ import math
 import vsl.errors
 import vsl.util
 
-pub enum SorthestPaths {
+pub enum ShortestPaths {
 	fw // FW: Floyd-Warshall method
 }
 
@@ -90,7 +90,7 @@ pub fn (g &Graph) get_edge(i int, j int) ?int {
  *  Input:
  *   method -- FW: Floyd-Warshall method
 */
-pub fn (g &Graph) shortest_paths(method SorthestPaths) Graph {
+pub fn (g &Graph) shortest_paths(method ShortestPaths) Graph {
 	if method != .fw {
 		panic('shortest_paths works with FW (Floyd-Warshall) method only for now')
 	}

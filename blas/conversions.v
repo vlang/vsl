@@ -284,37 +284,37 @@ pub fn split_complex(v []complex.Complex) ([]f64, []f64) {
 }
 
 // extract_row extracts i row from (m,n) col-major matrix
-pub fn extract_row(i int, m int, n int, A []f64) []f64 {
+pub fn extract_row(i int, m int, n int, a []f64) []f64 {
 	mut rowi := []f64{len: n}
 	for j in 0 .. n {
-		rowi[j] = A[i + j * m]
+		rowi[j] = a[i + j * m]
 	}
 	return rowi
 }
 
 // extract_col extracts j column from (m,n) col-major matrix
-pub fn extract_col(j int, m int, n int, A []f64) []f64 {
+pub fn extract_col(j int, m int, n int, a []f64) []f64 {
 	mut colj := []f64{len: m}
 	for i in 0 .. m {
-		colj[i] = A[i + j * m]
+		colj[i] = a[i + j * m]
 	}
 	return colj
 }
 
 // extract_row_complex extracts i row from (m,n) col-major matrix (complex version)
-pub fn extract_row_complex(i int, m int, n int, A []complex.Complex) []complex.Complex {
+pub fn extract_row_complex(i int, m int, n int, a []complex.Complex) []complex.Complex {
 	mut rowi := []complex.Complex{len: n}
 	for j in 0 .. n {
-		rowi[j] = A[i + j * m]
+		rowi[j] = a[i + j * m]
 	}
 	return rowi
 }
 
 // extract_col_complex extracts j column from (m,n) col-major matrix (complex version)
-pub fn extract_col_complex(j int, m int, n int, A []complex.Complex) []complex.Complex {
+pub fn extract_col_complex(j int, m int, n int, a []complex.Complex) []complex.Complex {
 	mut colj := []complex.Complex{len: m}
 	for i in 0 .. m {
-		colj[i] = A[i + j * m]
+		colj[i] = a[i + j * m]
 	}
 	return colj
 }

@@ -65,7 +65,7 @@ pub fn matrix_inv_small(mut ai Matrix, a Matrix, tol f64) f64 {
 // vt -- transposed right matrix [must be pre-allocated] vt is (a.n x a.n)
 pub fn matrix_svd(mut s []f64, mut u Matrix, mut vt Matrix, mut a Matrix, copy_a bool) {
 	superb := []f64{len: int(math.min(a.m, a.n))}
-	mut acpy := *a
+	mut acpy := unsafe { &Matrix(a) }
 	if copy_a {
 		acpy = a.clone()
 	}
