@@ -9,7 +9,7 @@ import vsl.blas
 pub fn den_solve(mut x []f64, a Matrix, b []f64, preserve_a bool) {
 	mut a_ := a
 	if preserve_a {
-		a_ = new_matrix(a.m, a.n)
+		a_ = *new_matrix(a.m, a.n)
 		a_.data = a.data.clone()
 	}
 	for i in 0 .. x.len {
