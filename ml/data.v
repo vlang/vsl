@@ -22,10 +22,10 @@ import vsl.errors
 pub struct Data {
 	util.Observable
 pub mut:
-	nb_samples  int        // number of data points (samples). number of rows in x and y
-	nb_features int        // number of features. number of columns in x
+	nb_samples  int // number of data points (samples). number of rows in x and y
+	nb_features int // number of features. number of columns in x
 	x           &la.Matrix<f64> // [nb_samples][nb_features] x values
-	y           []f64      // [nb_samples] y values [optional]
+	y           []f64 // [nb_samples] y values [optional]
 }
 
 // new_data returns a new object to hold ML data
@@ -38,7 +38,11 @@ pub mut:
 // Output:
 // new object
 pub fn new_data(nb_samples int, nb_features int, use_y bool, allocate bool) ?&Data {
-	x := if allocate { la.new_matrix<f64>(nb_samples, nb_features) } else { la.new_matrix<f64>(0, 0) }
+	x := if allocate {
+		la.new_matrix<f64>(nb_samples, nb_features)
+	} else {
+		la.new_matrix<f64>(0, 0)
+	}
 	mut y := []f64{}
 	if allocate && use_y {
 		y = []f64{len: nb_samples}
