@@ -123,8 +123,8 @@ pub fn (o LogReg) allocate_hessian() ([]f64, []f64, la.Matrix, la.Matrix) {
 	n := o.data.nb_features
 	d := []f64{len: m}
 	v := []f64{len: n}
-	dm := la.new_matrix(m, n)
-	hm := la.new_matrix(n, n)
+	dm := la.new_matrix<f64>(m, n)
+	hm := la.new_matrix<f64>(n, n)
         return d, v, dm, hm
 }
 

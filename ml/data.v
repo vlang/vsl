@@ -24,7 +24,7 @@ pub struct Data {
 pub mut:
 	nb_samples  int        // number of data points (samples). number of rows in x and y
 	nb_features int        // number of features. number of columns in x
-	x           &la.Matrix // [nb_samples][nb_features] x values
+	x           &la.Matrix<f64> // [nb_samples][nb_features] x values
 	y           []f64      // [nb_samples] y values [optional]
 }
 
@@ -38,7 +38,7 @@ pub mut:
 // Output:
 // new object
 pub fn new_data(nb_samples int, nb_features int, use_y bool, allocate bool) ?&Data {
-	x := if allocate { la.new_matrix(nb_samples, nb_features) } else { la.new_matrix(0, 0) }
+	x := if allocate { la.new_matrix<f64>(nb_samples, nb_features) } else { la.new_matrix<f64>(0, 0) }
 	mut y := []f64{}
 	if allocate && use_y {
 		y = []f64{len: nb_samples}
@@ -55,7 +55,7 @@ pub fn new_data(nb_samples int, nb_features int, use_y bool, allocate bool) ?&Da
 // Input:
 // x -- x values
 // y -- y values [optional]
-pub fn (mut o Data) set(x &la.Matrix, y []f64) {
+pub fn (mut o Data) set(x &la.Matrix<f64>, y []f64) {
 	o.x = x
 	o.y = y
 	o.notify_update()

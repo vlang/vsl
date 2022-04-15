@@ -106,8 +106,8 @@ pub fn (mut o LinReg) train() {
 	r = la.matrix_tr_vector_mul(1, x, y) // r := a = xᵀy
 	r = la.vector_add(1.0, r, -t * m_1, s) // r := a - (t/m)s
 	// K matrix
-	mut b := la.new_matrix(n, n)
-	mut k := la.new_matrix(n, n)
+	mut b := la.new_matrix<f64>(n, n)
+	mut k := la.new_matrix<f64>(n, n)
 	b = la.vector_vector_tr_mul(1.0 * m_1, s, s) // b := (1/m) ssᵀ
 	la.matrix_tr_matrix_mul(mut k, 1, x, x) // k := A = xᵀx
 	la.matrix_add(mut k, 1, k, -1, b) // k := A - b

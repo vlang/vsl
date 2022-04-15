@@ -2,21 +2,21 @@ module la
 
 import math
 
-pub type VectorApplyFn = fn (i int, x f64) f64
+pub type VectorApplyFn<T> = fn (i int, x T) T
 
-// vector_apply sets this []f64 with the scaled components of another []f64
+// vector_apply sets this []T with the scaled components of another []T
 // this := a * another   ⇒   this[i] := a * another[i]
 // NOTE: "another" may be "this"
-pub fn vector_apply(mut o []f64, a f64, another []f64) {
-	for i := 0; i < o.len; i++ {
+pub fn vector_apply<T>(mut o []T, a T, another []T) {
+	for i in 0 .. o.len {
 		o[i] = a * another[i]
 	}
 }
 
-// vector_apply_func runs a function over all components of a []f64
+// vector_apply_func runs a function over all components of a []T
 // vi = f(i,vi)
-pub fn vector_apply_func(mut o []f64, f VectorApplyFn) {
-	for i := 0; i < o.len; i++ {
+pub fn vector_apply_func<T>(mut o []T, f VectorApplyFn<T>) {
+	for i in 0 .. o.len {
 		o[i] = f(i, o[i])
 	}
 }
@@ -32,47 +32,47 @@ pub fn vector_unit(mut o []f64) []f64 {
 	return unit
 }
 
-// vector_accum sum/accumulates all components in a []f64
+// vector_accum sum/accumulates all components in a []T
 // sum := Σ_i v[i]
-pub fn vector_accum(o []f64) f64 {
-	mut sum := 0.0
-	for i := 0; i < o.len; i++ {
+pub fn vector_accum<T>(o []T) T {
+	mut sum := T(0)
+	for i in 0 .. o.len {
 		sum += o[i]
 	}
 	return sum
 }
 
-// vector_norm returns the Euclidean norm of a []f64:
+// vector_norm returns the Euclidean norm of a []T:
 // nrm := ‖v‖
 pub fn vector_norm(o []f64) f64 {
 	return math.sqrt(vector_dot(o, o))
 }
 
-// vector_rms returns the root-mean-square of this []f64
+// vector_rms returns the root-mean-square of this []T
 //
-pub fn vector_rms(o []f64) f64 {
-	mut rms := 0.0
-	for i := 0; i < o.len; i++ {
+pub fn vector_rms<T>(o []T) T {
+	mut rms := T(0)
+	for i in 0 .. o.len {
 		rms += o[i] * o[i]
 	}
-	rms = math.sqrt(rms / f64(o.len))
+	rms = T(math.sqrt(f64(rms / T(o.len))))
 	return rms
 }
 
 // vector_norm_diff returns the Euclidean norm of the difference:
 // nrm := ||u - v||
-pub fn vector_norm_diff(o []f64, v []f64) f64 {
-	mut nrm := 0.0
-	for i := 0; i < v.len; i++ {
+pub fn vector_norm_diff<T>(o []T, v []T) T {
+	mut nrm := T(0)
+	for i in 0 .. v.len {
 		nrm += (o[i] - v[i]) * (o[i] - v[i])
 	}
-	nrm = math.sqrt(nrm)
+	nrm = T(math.sqrt(f64(nrm)))
 	return nrm
 }
 
-// vector_largest returns the largest component |u[i]| of this []f64, normalised by den
+// vector_largest returns the largest component |u[i]| of this []T, normalised by den
 // largest := |u[i]| / den
-pub fn vector_largest(o []f64, den f64) f64 {
+pub fn vector_largest<T>(o []T, den T) T {
 	mut largest := math.abs(o[0])
 	for i := 1; i < o.len; i++ {
 		tmp := math.abs(o[i])

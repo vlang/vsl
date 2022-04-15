@@ -4,6 +4,27 @@ import vsl.errors
 import vsl.blas
 import math
 
+// det computes the determinant of matrix using the LU factorization
+// NOTE: this method may fail due to overflow...
+pub fn matrix_det(o &Matrix<f64>) f64 {
+	if o.m != o.n {
+		errors.vsl_panic('matrix must be square to compute determinant. $o.m x $o.n is invalid\n',
+			.efailed)
+	}
+	mut ai := o.data.clone()
+	ipiv := []int{len: int(math.min(o.m, o.n))}
+	blas.dgetrf(o.m, o.n, mut ai, o.m, ipiv) // NOTE: ipiv are 1-based indices
+	mut det := 1.0
+	for i in 0 .. o.m {
+		if ipiv[i] - 1 == i { // NOTE: ipiv are 1-based indices
+			det = det * ai[i + i * o.m]
+		} else {
+			det = -det * ai[i + i * o.m]
+		}
+	}
+	return det
+}
+
 // matrix_inv_small computes the inverse of small matrices of size 1x1, 2x2, or 3x3.
 // It also returns the determinant.
 // Input:
@@ -12,7 +33,7 @@ import math
 // Output:
 // ai  -- the inverse matrix
 // det -- determinant of a
-pub fn matrix_inv_small(mut ai Matrix, a Matrix, tol f64) f64 {
+pub fn matrix_inv_small<T>(mut ai Matrix<T>, a Matrix<T>, tol T) T {
 	mut det := 0.0
 	if a.m == 1 && a.n == 1 {
 		det = a.get(0, 0)
@@ -63,9 +84,9 @@ pub fn matrix_inv_small(mut ai Matrix, a Matrix, tol f64) f64 {
 // s  -- diagonal terms [must be pre-allocated] s.len = imin(a.m, a.n)
 // u  -- left matrix [must be pre-allocated] u is (a.m x a.m)
 // vt -- transposed right matrix [must be pre-allocated] vt is (a.n x a.n)
-pub fn matrix_svd(mut s []f64, mut u Matrix, mut vt Matrix, mut a Matrix, copy_a bool) {
-	superb := []f64{len: int(math.min(a.m, a.n))}
-	mut acpy := unsafe { &Matrix(a) }
+pub fn matrix_svd<T>(mut s []T, mut u Matrix<T>, mut vt Matrix<T>, mut a Matrix<T>, copy_a bool) {
+	superb := []T{len: int(math.min(a.m, a.n))}
+	mut acpy := unsafe { &Matrix<T>(a) }
 	if copy_a {
 		acpy = a.clone()
 	}
@@ -81,7 +102,7 @@ pub fn matrix_svd(mut s []f64, mut u Matrix, mut vt Matrix, mut a Matrix, copy_a
 // ai -- inverse matrix (N x M)
 // det -- determinant of matrix (ONLY if calc_det == true and the matrix is square)
 // NOTE: the dimension of the ai matrix must be N x M for the pseudo-inverse
-pub fn matrix_inv(mut ai Matrix, mut a Matrix, calc_det bool) f64 {
+pub fn matrix_inv<T>(mut ai Matrix<T>, mut a Matrix<T>, calc_det bool) T {
 	mut det := 0.0
 	// square inverse
 	if a.m == a.n {
@@ -102,7 +123,7 @@ pub fn matrix_inv(mut ai Matrix, mut a Matrix, calc_det bool) f64 {
 		return det
 	}
 	// singular value decomposition
-	mut s := []f64{len: int(math.min(a.m, a.n))}
+	mut s := []T{len: int(math.min(a.m, a.n))}
 	mut u := new_matrix(a.m, a.m)
 	mut vt := new_matrix(a.n, a.n)
 	matrix_svd(mut s, mut u, mut vt, mut a, true)
@@ -126,7 +147,7 @@ pub fn matrix_inv(mut ai Matrix, mut a Matrix, calc_det bool) f64 {
 // normtype -- Type of norm to use:
 // "I"                 => Infinite
 // "F" or "" (default) => Frobenius
-pub fn matrix_cond_num(mut a Matrix, normtype string) f64 {
+pub fn matrix_cond_num<T>(mut a Matrix<T>, normtype string) T {
 	mut res := 0.0
 	mut ai := new_matrix(a.m, a.n)
 	matrix_inv(mut ai, mut a, false)

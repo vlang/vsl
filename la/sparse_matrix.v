@@ -4,7 +4,7 @@ import vsl.errors
 
 // Triplet is a simple representation of a sparse matrix, where the indices and values
 // of this matrix are stored directly.
-pub struct Triplet {
+pub struct Triplet<T> {
 mut:
 	// matrix dimension (rows, columns)
 	m int
@@ -16,11 +16,11 @@ mut:
 	i []int
 	j []int
 	// values for each i, j (size=max)
-	x []f64
+	x []T
 }
 
 // CCMatrix represents a sparse matrix using the so-called "column-compressed format".
-pub struct CCMatrix {
+pub struct CCMatrix<T> {
 mut:
 	// matrix dimension (rows, columns)
 	m int
@@ -31,26 +31,26 @@ mut:
 	p []int
 	i []int
 	// values (len(x)=nnz)
-	x []f64
+	x []T
 }
 
 // new_triplet returns a new Triplet. This is a wrapper to new(Triplet) followed by init()
-pub fn new_triplet(m int, n int, max int) Triplet {
-	mut o := Triplet{}
+pub fn new_triplet<T>(m int, n int, max int) &Triplet<T> {
+	mut o := &Triplet{}
 	o.init(m, n, max)
 	return o
 }
 
 // init allocates all memory required to hold a sparse matrix in triplet form
-pub fn (mut o Triplet) init(m int, n int, max int) {
+pub fn (mut o Triplet<T>) init(m int, n int, max int) {
 	o.m, o.n, o.pos, o.max = m, n, 0, max
 	o.i = []int{len: max}
 	o.j = []int{len: max}
-	o.x = []f64{len: max}
+	o.x = []T{len: max}
 }
 
 // put inserts an element to a pre-allocated (with init) triplet matrix
-pub fn (mut o Triplet) put(i int, j int, x f64) {
+pub fn (mut o Triplet<T>) put(i int, j int, x T) {
 	if i >= o.m {
 		errors.vsl_panic('cannot put item because index of row is outside range (i=$i, m=$o.m)',
 			.erange)
@@ -77,7 +77,7 @@ pub fn (mut o Triplet) put(i int, j int, x f64) {
  *      [a10 a11 a12 ... ... ...] 4      [.  .  .]
  *      [... ... ... ... ... ...] 5
 */
-pub fn (mut o Triplet) put_matrix_and_matrix_t(a Triplet) {
+pub fn (mut o Triplet<T>) put_matrix_and_matrix_t(a &Triplet<T>) {
 	if a.n + a.m > o.m || a.n + a.m > o.n {
 		errors.vsl_panic('cannot put larger matrix into sparse matrix.\nb := [[.. at] [a ..]] with len(a)=($a.m,$a.n) and len(b)=($o.m,$o.n)',
 			.erange)
@@ -98,7 +98,7 @@ pub fn (mut o Triplet) put_matrix_and_matrix_t(a Triplet) {
  *      [a10 a11 a12 ... ... ...] 4      [.  .  .]
  *      [... ... ... ... ... ...] 5
 */
-pub fn (mut o Triplet) put_cc_matrix_and_matrix_t(a CCMatrix) {
+pub fn (mut o Triplet<T>) put_cc_matrix_and_matrix_t(a &CCMatrix<T>) {
 	if a.n + a.m > o.m || a.n + a.m > o.n {
 		errors.vsl_panic('cannot put larger matrix into sparse matrix.\nb := [[.. at] [a ..]] with len(a)=($a.m,$a.n) and len(b)=($o.m,$o.n)',
 			.erange)
@@ -112,28 +112,28 @@ pub fn (mut o Triplet) put_cc_matrix_and_matrix_t(a CCMatrix) {
 }
 
 // start (re)starts index for inserting items using the put command
-pub fn (mut o Triplet) start() {
+pub fn (mut o Triplet<T>) start() {
 	o.pos = 0
 }
 
 // Len returns the number of items just inserted in the triplet
-pub fn (mut o Triplet) len() int {
+pub fn (mut o Triplet<T>) len() int {
 	return o.pos
 }
 
 // max returns the maximum number of items that can be inserted in the triplet
-pub fn (o Triplet) max() int {
+pub fn (o Triplet<T>) max() int {
 	return o.max
 }
 
 // size returns the row/column size of the matrix represented by the Triplet
-pub fn (o Triplet) size() (int, int) {
+pub fn (o Triplet<T>) size() (int, int) {
 	return o.m, o.n
 }
 
 // to_dense returns the dense matrix corresponding to this Triplet
-pub fn (o Triplet) to_dense() &Matrix {
-	mut a := new_matrix(o.m, o.n)
+pub fn (o Triplet<T>) to_dense() &Matrix<T> {
+	mut a := new_matrix<T>(o.m, o.n)
 	for k := 0; k < o.max; k++ {
 		a.add(o.i[k], o.j[k], o.x[k])
 	}
