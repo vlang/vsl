@@ -2,7 +2,6 @@ module la
 
 import strconv
 import vsl.errors
-import vsl.blas
 import math
 
 [heap]
