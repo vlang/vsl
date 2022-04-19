@@ -1,9 +1,8 @@
 module la
 
+import math
 import strconv
 import vsl.errors
-import vsl.blas
-import math
 
 [heap]
 pub struct Matrix<T> {
@@ -49,7 +48,7 @@ pub fn matrix_raw<T>(m int, n int, rawdata []T) &Matrix<T> {
 pub fn (mut o Matrix<T>) set_from_deep2(a [][]T) {
 	mut k := 0
 	for i in 0 .. o.m {
-		for j := 0; j < o.n; j++ {
+		for j in 0 .. o.n {
 			o.data[k] = a[i][j]
 			k++
 		}
@@ -59,7 +58,7 @@ pub fn (mut o Matrix<T>) set_from_deep2(a [][]T) {
 // set_diag sets diagonal matrix with diagonal components equal to val
 pub fn (mut o Matrix<T>) set_diag(val T) {
 	for i in 0 .. o.m {
-		for j := 0; j < o.n; j++ {
+		for j in 0 .. o.n {
 			if i == j {
 				o.data[i * o.n + j] = val
 			} else {
@@ -83,7 +82,7 @@ pub fn (o &Matrix<T>) get(i int, j int) T {
 pub fn (o &Matrix<T>) get_deep2() [][]T {
 	mut m := [][]T{len: o.m, init: []T{len: o.n}}
 	for i in 0 .. o.m {
-		for j := 0; j < o.n; j++ {
+		for j in 0 .. o.n {
 			m[i][j] = o.data[i * o.n + j]
 		}
 	}
@@ -138,7 +137,7 @@ pub fn (mut o Matrix<T>) fill(val T) {
 */
 pub fn (mut o Matrix<T>) clear_rc(rows []int, cols []int, diag T) {
 	for r in rows {
-		for j := 0; j < o.n; j++ {
+		for j in 0 .. o.n {
 			if r == j {
 				o.set(r, j, diag)
 			} else {
@@ -281,7 +280,7 @@ pub fn (o &Matrix<T>) norm_inf() T {
 	mut sumrow := 0.0
 	for i := 1; i < o.m; i++ {
 		sumrow = 0.0
-		for j := 0; j < o.n; j++ { // sum the other rows
+		for j in 0 .. o.n { // sum the other rows
 			sumrow += math.abs(o.data[i * o.n + j])
 			if sumrow > nrm {
 				nrm = sumrow
@@ -315,7 +314,7 @@ pub fn (o &Matrix<T>) print(nfmt_ string) string {
 		if i > 0 {
 			l += '\n'
 		}
-		for j := 0; j < o.n; j++ {
+		for j in 0 .. o.n {
 			l += safe_print(nfmt, o.get(i, j))
 		}
 	}
@@ -331,7 +330,7 @@ pub fn (o &Matrix<T>) print_v(nfmt_ string) string {
 	mut l := '[][]$T.name{\n'
 	for i in 0 .. o.m {
 		l += '    {'
-		for j := 0; j < o.n; j++ {
+		for j in 0 .. o.n {
 			if j > 0 {
 				l += ','
 			}
@@ -352,7 +351,7 @@ pub fn (o &Matrix<T>) print_py(nfmt_ string) string {
 	mut l := 'np.matrix([\n'
 	for i in 0 .. o.m {
 		l += '    ['
-		for j := 0; j < o.n; j++ {
+		for j in 0 .. o.n {
 			if j > 0 {
 				l += ','
 			}

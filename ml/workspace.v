@@ -9,52 +9,52 @@ import vsl.la
 // NOTE: Stat is an Observer of Data; thus, data.notify_update() will recompute stat
 //
 [heap]
-pub struct Stat {
+pub struct Stat<T> {
 pub mut:
-	data   &Data  // data
+	data   &Data<T>  // data
 	name   string // name of this object
-	min_x  []f64  // [n_features] min x values
-	max_x  []f64  // [n_features] max x values
-	sum_x  []f64  // [n_features] sum of x values
-	mean_x []f64  // [n_features] mean of x values
-	sig_x  []f64  // [n_features] standard deviations of x
-	del_x  []f64  // [n_features] difference: max(x) - min(x)
-	min_y  f64    // min of y values
-	max_y  f64    // max of y values
-	sum_y  f64    // sum of y values
-	mean_y f64    // mean of y values
-	sig_y  f64    // standard deviation of y
-	del_y  f64    // difference: max(y) - min(y)
+	min_x  []T  // [n_features] min x values
+	max_x  []T  // [n_features] max x values
+	sum_x  []T  // [n_features] sum of x values
+	mean_x []T  // [n_features] mean of x values
+	sig_x  []T  // [n_features] standard deviations of x
+	del_x  []T  // [n_features] difference: max(x) - min(x)
+	min_y  T    // min of y values
+	max_y  T    // max of y values
+	sum_y  T    // sum of y values
+	mean_y T    // mean of y values
+	sig_y  T    // standard deviation of y
+	del_y  T    // difference: max(y) - min(y)
 }
 
 // stat returns a new Stat object
-pub fn stat_from_data(mut data Data, name string) &Stat {
-	mut o := &Stat{
+pub fn stat_from_data<T>(mut data Data<T>, name string) &Stat<T> {
+	mut o := &Stat<T>{
 		name: name
 		data: data
-		min_x: []f64{len: data.nb_features}
-		max_x: []f64{len: data.nb_features}
-		sum_x: []f64{len: data.nb_features}
-		mean_x: []f64{len: data.nb_features}
-		sig_x: []f64{len: data.nb_features}
-		del_x: []f64{len: data.nb_features}
+		min_x: []T{len: data.nb_features}
+		max_x: []T{len: data.nb_features}
+		sum_x: []T{len: data.nb_features}
+		mean_x: []T{len: data.nb_features}
+		sig_x: []T{len: data.nb_features}
+		del_x: []T{len: data.nb_features}
 	}
 	data.add_observer(o)
 	return o
 }
 
 // name returns the name of this stat object (thus defining the Observer interface)
-pub fn (o &Stat) name() string {
+pub fn (o &Stat<T>) name() string {
 	return o.name
 }
 
 // update compute statistics for given data (an Observer of Data)
-pub fn (mut o Stat) update() {
+pub fn (mut o Stat<T>) update() {
 	// constants
 	m := o.data.x.m // number of samples
 	n := o.data.x.n // number of features
 	// x values
-	mf := f64(m)
+	mf := T(m)
 	for j in 0 .. n {
 		o.min_x[j] = o.data.x.get(0, j)
 		o.max_x[j] = o.min_x[j]
@@ -89,8 +89,8 @@ pub fn (mut o Stat) update() {
 // Output:
 // t -- scalar t = oᵀy  sum of columns of the y vector: t = Σ_i^m o_i y_i
 // s -- vector s = Xᵀo  sum of columns of the X matrix: s_j = Σ_i^m o_i X_ij  [n_features]
-pub fn (mut o Stat) sum_vars() ([]f64, f64) {
-	one := []f64{len: o.data.x.m, init: 1.0}
+pub fn (mut o Stat<T>) sum_vars() ([]T, T) {
+	one := []T{len: o.data.x.m}
 	s := la.matrix_tr_vector_mul(1, o.data.x, one)
 	mut t := 0.0
 	if o.data.y.len > 0 {
@@ -100,7 +100,7 @@ pub fn (mut o Stat) sum_vars() ([]f64, f64) {
 }
 
 // copy_into copies stat into p
-pub fn (o &Stat) copy_into(mut p Stat) {
+pub fn (o &Stat<T>) copy_into(mut p Stat<T>) {
 	p.min_x = o.min_x.clone()
 	p.max_x = o.max_x.clone()
 	p.sum_x = o.sum_x.clone()
@@ -116,10 +116,10 @@ pub fn (o &Stat) copy_into(mut p Stat) {
 }
 
 // str is a custom str function for observers to avoid printing data
-pub fn (o &Stat) str() string {
+pub fn (o &Stat<T>) str() string {
 	mut res := []string{}
-	res << 'vsl.ml.Stat{'
-	res << '	name: $o.name'
+	res << 'vsl.ml.Stat<$T.name>{'
+	res << '    name: $o.name'
 	res << '    min_x: $o.min_x'
 	res << '    max_x: $o.max_x'
 	res << '    sum_x: $o.sum_x'

@@ -22,7 +22,7 @@ import vsl.la
 //
 //  c := alpha⋅a⋅b    ⇒    cij := alpha * aik * bkj
 //
-pub fn matrix_matrix_mul(mut c la.Matrix, alpha f64, a la.Matrix, b la.Matrix) {
+pub fn matrix_matrix_mul(mut c la.Matrix<f64>, alpha f64, a &la.Matrix<f64>, b &la.Matrix<f64>) {
 	if c.m < 6 && c.n < 6 && a.n < 30 {
 		for i := 0; i < c.m; i++ {
 			for j := 0; j < c.n; j++ {

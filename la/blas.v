@@ -28,16 +28,16 @@ pub fn vector_rms_error(u []f64, v []f64, a f64, m f64, s []f64) f64 {
 
 // vector_dot returns the dot product between two vectors:
 // s := u・v
-pub fn vector_dot(u []f64, v []f64) f64 {
-	mut res := 0.0
-	cutoff := 150
-	if u.len <= cutoff {
-		for i := 0; i < u.len; i++ {
-			res += u[i] * v[i]
-		}
-		return res
-	}
-	return blas.ddot(u.len, u, 1, v, 1)
+pub fn vector_dot<T>(u []T, v []T) T {
+        mut res := 0.0
+        cutoff := 150
+        if u.len <= cutoff {
+                for i := 0; i < u.len; i++ {
+                        res += u[i] * v[i]
+                }
+                return res
+        }
+        return blas.ddot(u.len, u, 1, v, 1)
 }
 
 // vector_add adds the scaled components of two vectors
@@ -110,19 +110,31 @@ pub fn matrix_vector_mul(alpha f64, a &Matrix<f64>, u []f64) []f64 {
 //
 // v = alpha⋅aᵀ⋅u    ⇒    vi = alpha * aji * uj = alpha * uj * aji
 //
-pub fn matrix_tr_vector_mul(alpha f64, a &Matrix<f64>, u []f64) []f64 {
-	mut v := []f64{len: a.n}
-	if a.m < 9 && a.n < 9 {
-		for i := 0; i < a.n; i++ {
-			v[i] = 0.0
-			for j := 0; j < a.m; j++ {
-				v[i] += alpha * a.get(j, i) * u[j]
-			}
-		}
-		return v
-	}
-	blas.dgemv(true, a.m, a.n, alpha, a.data, a.n, u, 1, 0.0, mut v, v.len)
-	return v
+pub fn matrix_tr_vector_mul<T>(alpha T, a &Matrix<T>, u []T) []T {
+	$if T is f64 {
+                mut v := []f64{len: a.n}
+                if a.m < 9 && a.n < 9 {
+                        for i := 0; i < a.n; i++ {
+                                v[i] = 0.0
+                                for j := 0; j < a.m; j++ {
+                                        v[i] += alpha * a.get(j, i) * u[j]
+                                }
+                        }
+                        return v
+                }
+                blas.dgemv(true, a.m, a.n, alpha, a.data, a.n, u, 1, 0.0, mut v, v.len)
+                return v
+        }
+        $else {
+                mut v := []T{len: a.n}
+                for i := 0; i < a.n; i++ {
+                        v[i] = 0.0
+                        for j := 0; j < a.m; j++ {
+                                v[i] += alpha * a.get(j, i) * u[j]
+                        }
+                }
+                return v
+        }
 }
 
 // vector_vector_tr_mul returns the matrix = vector-transpose(vector) multiplication

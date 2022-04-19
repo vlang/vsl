@@ -9,8 +9,8 @@ import vsl.la
 pub struct Kmeans {
 mut:
 	name       string   // name of this "observer"
-	data       &Data    // x data
-	stat       &Stat    // statistics about x (data)
+	data       &Data<f64>    // x data
+	stat       &Stat<f64>    // statistics about x (data)
 	nb_classes int      // expected number of classes
 	bins       &gm.Bins // "bins" to speed up searching for data points given their coordinates (2D or 3D only at the moment)
 pub mut:
@@ -20,7 +20,7 @@ pub mut:
 }
 
 // new_kmeans returns a new K-means model
-pub fn new_kmeans(mut data Data, nb_classes int, name string) &Kmeans {
+pub fn new_kmeans(mut data Data<f64>, nb_classes int, name string) &Kmeans {
 	// classes
 	classes := []int{len: data.nb_samples}
 	centroids := [][]f64{len: nb_classes}

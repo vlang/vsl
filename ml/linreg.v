@@ -5,12 +5,12 @@ import vsl.la
 // LinReg implements a linear regression model
 [heap]
 pub struct LinReg {
-	ParamsReg
 mut:
+	params ParamsReg<f64>
 	// main
 	name string // name of this "observer"
-	data &Data  // x-y data
-	stat &Stat  // statistics
+	data &Data<f64>  // x-y data
+	stat &Stat<f64>  // statistics
 	// workspace
 	e []f64 // vector e = b⋅o + x⋅theta - y [nb_samples]
 }
@@ -19,7 +19,7 @@ mut:
 //   Input:
 //     data   -- x,y data
 //     name   -- unique name of this (observer) object
-pub fn new_lin_reg(mut data Data, name string) &LinReg {
+pub fn new_lin_reg(mut data Data<f64>, name string) &LinReg {
 	mut stat := stat_from_data(mut data, 'stat_' + name)
 	stat.update()
 	mut reg := &LinReg{
@@ -28,7 +28,7 @@ pub fn new_lin_reg(mut data Data, name string) &LinReg {
 		stat: stat
 		e: []f64{len: data.nb_samples}
 	}
-	reg.init(data.nb_features)
+	reg.params.init(data.nb_features)
 	return reg
 }
 
@@ -43,8 +43,8 @@ pub fn (o &LinReg) name() string {
 //   Output:
 //     y -- model prediction y(x)
 pub fn (o &LinReg) predict(x []f64) f64 {
-	theta := o.access_thetas()
-	b := o.get_bias()
+	theta := o.params.access_thetas()
+	b := o.params.get_bias()
 	return b + la.vector_dot(x, theta) // b + xᵀtheta
 }
 
@@ -58,8 +58,8 @@ pub fn (o &LinReg) predict(x []f64) f64 {
 pub fn (mut o LinReg) cost() f64 {
 	// auxiliary
 	m_1 := 1.0 / f64(o.data.nb_samples)
-	lambda := o.get_lambda()
-	theta := o.access_thetas()
+	lambda := o.params.get_lambda()
+	theta := o.params.access_thetas()
 	// cost
 	o.calce() // e := b⋅o + x⋅theta - y
 	mut c := (0.5 * m_1) * la.vector_dot(o.e, o.e) // C := (0.5/m) eᵀe
@@ -76,8 +76,8 @@ pub fn (mut o LinReg) cost() f64 {
 pub fn (mut o LinReg) gradients() ([]f64, f64) {
 	// auxiliary
 	m_1 := 1.0 / f64(o.data.nb_samples)
-	lambda := o.get_lambda()
-	theta := o.access_thetas()
+	lambda := o.params.get_lambda()
+	theta := o.params.access_thetas()
 	x := o.data.x
 	// dcdtheta
 	o.calce() // e := b⋅o + x⋅theta - y
@@ -96,7 +96,7 @@ pub fn (mut o LinReg) gradients() ([]f64, f64) {
 //     params -- theta and b
 pub fn (mut o LinReg) train() {
 	// auxiliary
-	lambda := o.get_lambda()
+	lambda := o.params.get_lambda()
 	x, y := o.data.x, o.data.y
 	s, t := o.stat.sum_vars()
 	// r vector
@@ -117,17 +117,17 @@ pub fn (mut o LinReg) train() {
 		}
 	}
 	// solve system
-	mut theta := o.access_thetas()
+	mut theta := o.params.access_thetas()
 	la.den_solve(mut theta, k, r, false)
 	b_ := (t - la.vector_dot(s, theta)) * m_1
-	o.set_bias(b_)
+	o.params.set_bias(b_)
 }
 
 // calce calculates e vector (save into o.e)
 //  Output: e = b⋅o + x⋅theta - y
 pub fn (mut o LinReg) calce() {
-	theta := o.access_thetas()
-	b := o.get_bias()
+	theta := o.params.access_thetas()
+	b := o.params.get_bias()
 	x, y := o.data.x, o.data.y
 	o.e = [b]
 	{
@@ -142,15 +142,15 @@ pub fn (mut o LinReg) calce() {
 pub fn (o &LinReg) str() string {
 	mut res := []string{}
 	res << 'vsl.ml.LinReg{'
-	res << '	name: $o.name'
-	res << '    theta: $o.theta'
-	res << '    bias: $o.bias'
-	res << '    lambda: $o.lambda'
-	res << '    degree: $o.degree'
-	res << '    bkp_theta: $o.bkp_theta'
-	res << '    bkp_bias: $o.bkp_bias'
-	res << '    bkp_lambda: $o.bkp_lambda'
-	res << '    bkp_degree: $o.bkp_degree'
+	res << '    name: $o.name'
+	res << '    theta: $o.params.theta'
+	res << '    bias: $o.params.bias'
+	res << '    lambda: $o.params.lambda'
+	res << '    degree: $o.params.degree'
+	res << '    bkp_theta: $o.params.bkp_theta'
+	res << '    bkp_bias: $o.params.bkp_bias'
+	res << '    bkp_lambda: $o.params.bkp_lambda'
+	res << '    bkp_degree: $o.params.bkp_degree'
 	res << '    stat: $o.stat'
 	res << '    e: $o.e'
 	res << '}'
