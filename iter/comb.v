@@ -17,7 +17,7 @@ pub fn combinations(data []f64, r int) [][]f64 {
 
 pub struct CombinationsIter {
 mut:
-	pos  int
+	pos  u64
 	idxs []int
 pub:
 	repeat int
