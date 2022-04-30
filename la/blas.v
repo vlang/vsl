@@ -3,6 +3,15 @@ module la
 import vsl.blas
 import math
 
+// @todo: @ulises-jeremias to remove this once https://github.com/vlang/v/issues/14047 is finished
+fn arr_to_f64arr<T>(arr []T) []f64 {
+        mut ret := []f64{cap: arr.len}
+        for v in arr {
+                ret << f64(v)
+        }
+        return ret
+}
+
 /*
 * vector_rms_error returns the scaled root-mean-square of the difference between two vectors
  * with components normalised by a scaling factor
@@ -18,7 +27,7 @@ import math
 */
 pub fn vector_rms_error(u []f64, v []f64, a f64, m f64, s []f64) f64 {
 	mut rms := 0.0
-	for i := 0; i < u.len; i++ {
+	for i in 0 .. u.len {
 		scale := a + m * math.abs(s[i])
 		err := math.abs(u[i] - v[i])
 		rms += err * err / (scale * scale)
@@ -29,15 +38,24 @@ pub fn vector_rms_error(u []f64, v []f64, a f64, m f64, s []f64) f64 {
 // vector_dot returns the dot product between two vectors:
 // s := u・v
 pub fn vector_dot<T>(u []T, v []T) T {
-        mut res := 0.0
-        cutoff := 150
-        if u.len <= cutoff {
-                for i := 0; i < u.len; i++ {
+        $if T is f64 {
+                mut res := T(0)
+                cutoff := 150
+                if u.len <= cutoff {
+                        for i in 0 .. u.len {
+                                res += u[i] * v[i]
+                        }
+                        return res
+                }
+                return blas.ddot(u.len, arr_to_f64arr<T>(u), 1, arr_to_f64arr<T>(v), 1)
+        }
+        $else {
+                mut res := T(0)
+                for i in 0 .. u.len {
                         res += u[i] * v[i]
                 }
                 return res
         }
-        return blas.ddot(u.len, u, 1, v, 1)
 }
 
 // vector_add adds the scaled components of two vectors
@@ -122,7 +140,7 @@ pub fn matrix_tr_vector_mul<T>(alpha T, a &Matrix<T>, u []T) []T {
                         }
                         return v
                 }
-                blas.dgemv(true, a.m, a.n, alpha, a.data, a.n, u, 1, 0.0, mut v, v.len)
+                blas.dgemv(true, a.m, a.n, alpha, arr_to_f64arr<T>(a.data), a.n, arr_to_f64arr<T>(u), 1, 0.0, mut v, v.len)
                 return v
         }
         $else {

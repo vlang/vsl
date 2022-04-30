@@ -21,7 +21,7 @@ import vsl.errors
 [heap]
 pub struct Data<T> {
 pub mut:
-	observable util.Observable
+	observable  util.Observable
 	nb_samples  int // number of data points (samples). number of rows in x and y
 	nb_features int // number of features. number of columns in x
 	x           &la.Matrix<T> // [nb_samples][nb_features] x values
@@ -38,11 +38,7 @@ pub mut:
 // Output:
 // new object
 pub fn new_data<T>(nb_samples int, nb_features int, use_y bool, allocate bool) ?&Data<T> {
-	x := if allocate {
-		la.new_matrix<T>(nb_samples, nb_features)
-	} else {
-		la.new_matrix<T>(0, 0)
-	}
+	x := if allocate { la.new_matrix<T>(nb_samples, nb_features) } else { la.new_matrix<T>(0, 0) }
 	mut y := []T{}
 	if allocate && use_y {
 		y = []T{len: nb_samples}

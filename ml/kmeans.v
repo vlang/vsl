@@ -8,11 +8,11 @@ import vsl.la
 [heap]
 pub struct Kmeans {
 mut:
-	name       string   // name of this "observer"
-	data       &Data<f64>    // x data
-	stat       &Stat<f64>    // statistics about x (data)
-	nb_classes int      // expected number of classes
-	bins       &gm.Bins // "bins" to speed up searching for data points given their coordinates (2D or 3D only at the moment)
+	name       string     // name of this "observer"
+	data       &Data<f64> // x data
+	stat       &Stat<f64> // statistics about x (data)
+	nb_classes int        // expected number of classes
+	bins       &gm.Bins   // "bins" to speed up searching for data points given their coordinates (2D or 3D only at the moment)
 pub mut:
 	classes    []int   // [nb_samples] indices of classes of each sample
 	centroids  [][]f64 // [nb_classes][nb_features] coordinates of centroids

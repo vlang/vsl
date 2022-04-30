@@ -11,12 +11,12 @@ pub mut:
 	theta  []T // theta parameter [nb_features]
 	bias   T   // bias parameter
 	lambda T   // regularization parameter
-	degree int   // degree of polynomial
+	degree int // degree of polynomial
 	// backup
 	bkp_theta  []T // copy of theta
 	bkp_bias   T   // copy of b
 	bkp_lambda T   // copy of lambda
-	bkp_degree int   // copy of degree
+	bkp_degree int // copy of degree
 }
 
 // new_params_reg returns a new object to hold regression parameters

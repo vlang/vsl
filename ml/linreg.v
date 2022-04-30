@@ -6,11 +6,11 @@ import vsl.la
 [heap]
 pub struct LinReg {
 mut:
-	params ParamsReg<f64>
+	params &ParamsReg<f64>
 	// main
-	name string // name of this "observer"
-	data &Data<f64>  // x-y data
-	stat &Stat<f64>  // statistics
+	name string     // name of this "observer"
+	data &Data<f64> // x-y data
+	stat &Stat<f64> // statistics
 	// workspace
 	e []f64 // vector e = b⋅o + x⋅theta - y [nb_samples]
 }
@@ -22,13 +22,14 @@ mut:
 pub fn new_lin_reg(mut data Data<f64>, name string) &LinReg {
 	mut stat := stat_from_data(mut data, 'stat_' + name)
 	stat.update()
+	params := new_params_reg<f64>(data.nb_features)
 	mut reg := &LinReg{
 		name: name
 		data: data
 		stat: stat
 		e: []f64{len: data.nb_samples}
+		params: params
 	}
-	reg.params.init(data.nb_features)
 	return reg
 }
 
@@ -143,14 +144,7 @@ pub fn (o &LinReg) str() string {
 	mut res := []string{}
 	res << 'vsl.ml.LinReg{'
 	res << '    name: $o.name'
-	res << '    theta: $o.params.theta'
-	res << '    bias: $o.params.bias'
-	res << '    lambda: $o.params.lambda'
-	res << '    degree: $o.params.degree'
-	res << '    bkp_theta: $o.params.bkp_theta'
-	res << '    bkp_bias: $o.params.bkp_bias'
-	res << '    bkp_lambda: $o.params.bkp_lambda'
-	res << '    bkp_degree: $o.params.bkp_degree'
+	res << '    params: $o.params'
 	res << '    stat: $o.stat'
 	res << '    e: $o.e'
 	res << '}'

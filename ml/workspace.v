@@ -11,20 +11,20 @@ import vsl.la
 [heap]
 pub struct Stat<T> {
 pub mut:
-	data   &Data<T>  // data
-	name   string // name of this object
-	min_x  []T  // [n_features] min x values
-	max_x  []T  // [n_features] max x values
-	sum_x  []T  // [n_features] sum of x values
-	mean_x []T  // [n_features] mean of x values
-	sig_x  []T  // [n_features] standard deviations of x
-	del_x  []T  // [n_features] difference: max(x) - min(x)
-	min_y  T    // min of y values
-	max_y  T    // max of y values
-	sum_y  T    // sum of y values
-	mean_y T    // mean of y values
-	sig_y  T    // standard deviation of y
-	del_y  T    // difference: max(y) - min(y)
+	data   &Data<T> // data
+	name   string   // name of this object
+	min_x  []T      // [n_features] min x values
+	max_x  []T      // [n_features] max x values
+	sum_x  []T      // [n_features] sum of x values
+	mean_x []T      // [n_features] mean of x values
+	sig_x  []T      // [n_features] standard deviations of x
+	del_x  []T      // [n_features] difference: max(x) - min(x)
+	min_y  T        // min of y values
+	max_y  T        // max of y values
+	sum_y  T        // sum of y values
+	mean_y T        // mean of y values
+	sig_y  T        // standard deviation of y
+	del_y  T        // difference: max(y) - min(y)
 }
 
 // stat returns a new Stat object
@@ -90,7 +90,7 @@ pub fn (mut o Stat<T>) update() {
 // t -- scalar t = oᵀy  sum of columns of the y vector: t = Σ_i^m o_i y_i
 // s -- vector s = Xᵀo  sum of columns of the X matrix: s_j = Σ_i^m o_i X_ij  [n_features]
 pub fn (mut o Stat<T>) sum_vars() ([]T, T) {
-	one := []T{len: o.data.x.m}
+	one := []T{len: o.data.x.m, init: T(1)}
 	s := la.matrix_tr_vector_mul(1, o.data.x, one)
 	mut t := 0.0
 	if o.data.y.len > 0 {
