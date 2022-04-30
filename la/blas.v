@@ -228,22 +228,8 @@ pub fn matrix_vector_mul_add(alpha f64, a &Matrix<f64>, u []f64) []f64 {
 //
 //  c := alpha⋅a⋅b    ⇒    cij := alpha * aik * bkj
 //
-pub fn matrix_matrix_mul<T>(mut c Matrix<T>, alpha T, a &Matrix<T>, b &Matrix<T>) {
-	$if T is f64 {
-		if c.m < 6 && c.n < 6 && a.n < 30 {
-			for i in 0 .. c.m {
-				for j := 0; j < c.n; j++ {
-					c.set(i, j, 0.0)
-					for k := 0; k < a.n; k++ {
-						c.add(i, j, alpha * a.get(i, k) * b.get(k, j))
-					}
-				}
-			}
-			return
-		}
-		blas.dgemm(false, false, a.m, b.n, a.n, alpha, arr_to_f64arr<T>(a.data), a.m,
-			arr_to_f64arr<T>(b.data), b.m, 0.0, mut arr_to_f64arr<T>(c.data), c.m)
-	} $else {
+pub fn matrix_matrix_mul(mut c Matrix<f64>, alpha f64, a &Matrix<f64>, b &Matrix<f64>) {
+	if c.m < 6 && c.n < 6 && a.n < 30 {
 		for i in 0 .. c.m {
 			for j := 0; j < c.n; j++ {
 				c.set(i, j, 0.0)
@@ -252,7 +238,10 @@ pub fn matrix_matrix_mul<T>(mut c Matrix<T>, alpha T, a &Matrix<T>, b &Matrix<T>
 				}
 			}
 		}
+		return
 	}
+	blas.dgemm(false, false, a.m, b.n, a.n, alpha, a.data, a.m, b.data, b.m, 0.0, mut
+		c.data, c.m)
 }
 
 // matrix_tr_matrix_mul returns the matrix multiplication (scaled) with transposed(a)
