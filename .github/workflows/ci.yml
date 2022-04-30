@@ -12,6 +12,8 @@ on:
     - cron: "31 1,12 * * *"
 
   push:
+    branches:
+      - master
 
   pull_request:
     branches:
