@@ -66,7 +66,7 @@ fn test_lin_reg_pred() {
 	mut reg := new_lin_reg(mut data, 'linear regression')
 
 	// set regularization parameter
-	reg.set_lambda(1e12) // very high bias => constant line
+	reg.params.set_lambda(1e12) // very high bias => constant line
 
 	reg.train()
 
