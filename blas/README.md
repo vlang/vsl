@@ -24,10 +24,10 @@ import vsl.la
 //
 pub fn matrix_matrix_mul(mut c la.Matrix<f64>, alpha f64, a &la.Matrix<f64>, b &la.Matrix<f64>) {
 	if c.m < 6 && c.n < 6 && a.n < 30 {
-		for i := 0; i < c.m; i++ {
-			for j := 0; j < c.n; j++ {
+		for i in 0 .. c.m {
+			for j in 0 .. c.n {
 				c.set(i, j, 0.0)
-				for k := 0; k < a.n; k++ {
+				for k in 0 .. a.n {
 					c.add(i, j, alpha * a.get(i, k) * b.get(k, j))
 				}
 			}
