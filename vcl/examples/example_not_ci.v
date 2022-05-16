@@ -39,7 +39,7 @@ fn vcl_example() ? {
 
 	// add program source to device, get kernel
 	k := device.kernel('addOne') ?
-	// run kernel (gloabl work size 16 and local work size 1)
+	// run kernel (global work size 16 and local work size 1)
 	kernel_err := <-k.global(16).local(1).run(v)
 	if kernel_err !is none {
 		return kernel_err
