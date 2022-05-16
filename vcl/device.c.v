@@ -70,7 +70,7 @@ pub fn (mut d Device) release() ? {
 }
 
 fn (d &Device) get_info_str(param ClDeviceInfo, panic_on_error bool) ?string {
-	mut info_bytes := [1024]byte{}
+	mut info_bytes := [1024]u8{}
 	mut info_bytes_size := usize(0)
 	code := C.clGetDeviceInfo(d.id, param, 1024, &info_bytes[0], &info_bytes_size)
 	if code != success {
@@ -139,9 +139,9 @@ pub fn (mut d Device) add_program(source string) ? {
 		if ret == build_program_failure {
 			mut n := usize(0)
 			C.clGetProgramBuildInfo(p, d.id, vcl.program_build_log, 0, voidptr(0), &n)
-			log := []byte{len: int(n)}
+			log := []u8{len: int(n)}
 			C.clGetProgramBuildInfo(p, d.id, vcl.program_build_log, n, &log[0], voidptr(0))
-			return error(string(log))
+			return error(log.bytestr())
 		}
 		return vcl_error(ret)
 	}

@@ -30,8 +30,8 @@ pub fn (b &Bytes) load(data []byte) chan IError {
 }
 
 // data gets data from device, it's a blocking call
-pub fn (b &Bytes) data() ?[]byte {
-	mut data := []byte{len: b.buf.size}
+pub fn (b &Bytes) data() ?[]u8 {
+	mut data := []u8{len: b.buf.size}
 	ret := C.clEnqueueReadBuffer(b.buf.device.queue, b.buf.memobj, true, 0, usize(b.buf.size),
 		unsafe { &data[0] }, 0, voidptr(0), voidptr(0))
 	if ret != success {

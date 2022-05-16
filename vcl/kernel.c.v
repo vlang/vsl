@@ -110,7 +110,7 @@ fn (k &Kernel) set_args(args ...ArgumentType) ? {
 
 fn (k &Kernel) set_arg(index int, arg ArgumentType) ? {
 	match arg {
-		byte {
+		u8 {
 			return k.set_arg_unsafe(index, int(sizeof(arg)), unsafe { &arg })
 		}
 		f32 {

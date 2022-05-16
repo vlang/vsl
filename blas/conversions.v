@@ -20,14 +20,14 @@ pub fn c_uplo(up bool) vlas.Uplo {
 	return .lower
 }
 
-pub fn l_uplo(up bool) byte {
+pub fn l_uplo(up bool) u8 {
 	if up {
 		return `U`
 	}
 	return `L`
 }
 
-pub fn job_vlr(do_calc bool) byte {
+pub fn job_vlr(do_calc bool) u8 {
 	if do_calc {
 		return `V`
 	}
