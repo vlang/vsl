@@ -76,10 +76,10 @@ import vsl.la
 //
 pub fn matrix_matrix_mul(mut c la.Matrix&lt;f64&gt;, alpha f64, a &amp;la.Matrix&lt;f64&gt;, b &amp;la.Matrix&lt;f64&gt;) {
     if c.m &lt; 6 &amp;&amp; c.n &lt; 6 &amp;&amp; a.n &lt; 30 {
-        for i := 0; i &lt; c.m; i++ {
-            for j := 0; j &lt; c.n; j++ {
+        for i in 0 .. c.m {
+            for j in 0 .. c.n {
                 c.set(i, j, 0.0)
-                for k := 0; k &lt; a.n; k++ {
+                for k in 0 .. a.n {
                     c.add(i, j, alpha * a.get(i, k) * b.get(k, j))
                 }
             }
@@ -419,7 +419,7 @@ complex numbers.</p>
 </section>
 
           <div class="footer">
-            Powered by vdoc. Generated on: 16 May 2022 03:26:02
+            Powered by vdoc. Generated on: 16 May 2022 03:28:33
           </div>
         </div>
         <div class="doc-toc"><ul><li class="open"><a href="#readme_blas">README</a></li>
