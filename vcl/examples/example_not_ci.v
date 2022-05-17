@@ -5,7 +5,7 @@ import vsl.vcl
 // an complicated kernel
 const kernel_source = '
 __kernel void addOne(__global float* data) {
-    const int i = get_global_id (0);
+    const int i = get_global_id(0);
     data[i] += 1;
 }'
 
@@ -38,6 +38,7 @@ fn vcl_example() ? {
 	println(v.data() ?)
 
 	// add program source to device, get kernel
+        device.add_program(kernel_source) ?
 	k := device.kernel('addOne') ?
 	// run kernel (global work size 16 and local work size 1)
 	kernel_err := <-k.global(16).local(1).run(v)
