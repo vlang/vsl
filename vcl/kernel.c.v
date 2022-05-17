@@ -232,6 +232,7 @@ fn (k &Kernel) call(work_sizes []int, lokal_sizes []int) chan IError {
 		if res != success {
 			ch <- vcl_error(res)
 		}
+                ch.close()
 	}(ch, event)
 	return ch
 }
