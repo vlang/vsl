@@ -185,11 +185,7 @@ fn (k &Kernel) set_arg(index int, arg ArgumentType) ? {
 
 fn (k &Kernel) set_arg_buffer(index int, buf &Buffer) ? {
 	mem := buf.memobj
-	res := C.clSetKernelArg(k.k, u32(index), int(sizeof(mem)), unsafe { &buf })
-	if res != success {
-		println('ERROR ${@METHOD} $res')
-		return vcl_error(res)
-	}
+        return k.set_arg_unsafe(index, int(sizeof(mem)), mem)
 }
 
 fn (k &Kernel) set_arg_local(index int, size int) ? {
