@@ -185,7 +185,7 @@ fn (k &Kernel) set_arg(index int, arg ArgumentType) ? {
 
 fn (k &Kernel) set_arg_buffer(index int, buf &Buffer) ? {
 	mem := buf.memobj
-        return k.set_arg_unsafe(index, int(sizeof(mem)), mem)
+        return k.set_arg_unsafe(index, int(sizeof(mem)), &mem)
 }
 
 fn (k &Kernel) set_arg_local(index int, size int) ? {
