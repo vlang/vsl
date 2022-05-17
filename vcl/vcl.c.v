@@ -2,7 +2,7 @@ module vcl
 
 // get_devices returns all devices of all platforms with specified type
 pub fn get_devices(device_type DeviceType) ?[]&Device {
-	platform_ids := get_platforms() ?
+	platform_ids := get_platforms()?
 	mut devices := []&Device{}
 
 	for p in platform_ids {
@@ -18,7 +18,7 @@ pub fn get_devices(device_type DeviceType) ?[]&Device {
 			return vcl_error(ret)
 		}
 		for d in device_ids {
-			device := new_device(d) ?
+			device := new_device(d)?
 			devices << device
 		}
 	}

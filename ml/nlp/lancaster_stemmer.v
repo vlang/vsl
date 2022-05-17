@@ -201,7 +201,7 @@ pub fn (mut stemmer LancasterStemmer) stem(word string) ?string {
 	}
 	mut intact_word := lowercase
 	if stemmer.rule_map.len == 0 {
-		stemmer.parse_rules(stemmer.rules) ?
+		stemmer.parse_rules(stemmer.rules)?
 	}
 	return stemmer.do_stemming(lowercase, intact_word)
 }

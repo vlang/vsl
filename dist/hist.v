@@ -50,8 +50,8 @@ pub fn text_hist(labels []string, counts []int, barlen int) ?string {
 // build_text_hist builds a text histogram
 pub fn build_text_hist(xmin f64, xmax f64, nstations int, values []f64, numfmt string, barlen int) ?string {
 	mut hist := new_histogram(util.lin_space(xmin, xmax, nstations))
-	hist.count(values, true) ?
-	labels := hist.gen_labels(numfmt) ?
+	hist.count(values, true)?
+	labels := hist.gen_labels(numfmt)?
 	return text_hist(labels, hist.counts, barlen)
 }
 
@@ -114,7 +114,7 @@ pub fn (mut o Histogram) count(vals []f64, clear bool) ? {
 	}
 	// add entries to bins
 	for x in vals {
-		idx := o.find_bin(x) ?
+		idx := o.find_bin(x)?
 		if idx >= 0 {
 			o.counts[idx]++
 		}

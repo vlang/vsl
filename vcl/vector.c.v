@@ -9,12 +9,12 @@ mut:
 // new_vector allocates new vector buffer with specified length
 pub fn (d &Device) new_vector<T>(length int) ?&Vector<T> {
 	size := length * int(sizeof(T))
-	buffer := new_buffer(d, size) ?
-        buf := &Buffer{
-                memobj: buffer.memobj
-                device: d
-                size: size
-        }
+	buffer := new_buffer(d, size)?
+	buf := &Buffer{
+		memobj: buffer.memobj
+		device: d
+		size: size
+	}
 	return &Vector<T>{
 		buf: buf
 	}

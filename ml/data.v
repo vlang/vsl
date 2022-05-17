@@ -74,7 +74,7 @@ pub fn data_from_raw_x<T>(xraw [][]T) ?&Data<T> {
 	}
 	// allocate new object
 	nb_features := xraw[0].len
-	mut o := new_data<T>(nb_samples, nb_features, true, true) ?
+	mut o := new_data<T>(nb_samples, nb_features, true, true)?
 	// copy data from raw table to x matrix
 	for i := 0; i < nb_samples; i++ {
 		for j := 0; j < nb_features; j++ {
@@ -96,7 +96,7 @@ pub fn data_from_raw_xy_sep<T>(xraw [][]T, yraw []T) ?&Data<T> {
 	}
 	// allocate new object
 	nb_features := xraw[0].len
-	mut o := new_data<T>(nb_samples, nb_features, false, true) ?
+	mut o := new_data<T>(nb_samples, nb_features, false, true)?
 	// copy data from raw table to x matrix
 	for i := 0; i < nb_samples; i++ {
 		for j := 0; j < nb_features; j++ {
@@ -123,7 +123,7 @@ pub fn data_from_raw_xy<T>(xyraw [][]T) ?&Data<T> {
 	}
 	// allocate new object
 	nb_features := xyraw[0].len - 1 // -1 because of y column
-	mut o := new_data<T>(nb_samples, nb_features, true, true) ?
+	mut o := new_data<T>(nb_samples, nb_features, true, true)?
 	// copy data from raw table to x and y arrays
 	for i := 0; i < nb_samples; i++ {
 		for j := 0; j < nb_features; j++ {
@@ -137,7 +137,7 @@ pub fn data_from_raw_xy<T>(xyraw [][]T) ?&Data<T> {
 // clone returns a deep copy of this object
 pub fn (o &Data<T>) clone() ?&Data<T> {
 	use_y := o.y.len > 0
-	mut p := new_data<T>(o.nb_samples, o.nb_features, use_y, true) ?
+	mut p := new_data<T>(o.nb_samples, o.nb_features, use_y, true)?
 	o.x.copy_into(mut p.x, 1)
 	if use_y {
 		p.y = o.y.clone()

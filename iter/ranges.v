@@ -219,7 +219,7 @@ pub fn new_log_iter(params LogIterParams) ?LogIter {
 			stop: params.stop
 			len: params.len
 			endpoint: params.endpoint
-		) ?
+		)?
 		base: params.base
 		len: params.len
 	}
@@ -227,5 +227,5 @@ pub fn new_log_iter(params LogIterParams) ?LogIter {
 
 // next returns the next element of the iterator if possible.
 pub fn (mut o LogIter) next() ?f64 {
-	return math.pow(o.base, o.linear_iter.next() ?)
+	return math.pow(o.base, o.linear_iter.next()?)
 }

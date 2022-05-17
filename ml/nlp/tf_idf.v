@@ -49,7 +49,7 @@ pub fn inverse_document_frequencies(document [][][]string) ?map[string]f64 {
 	}
 
 	for ngram in unique_ngrams {
-		idf[ngram] = term_idf(ngram.split(ngram_sep), document) ?
+		idf[ngram] = term_idf(ngram.split(ngram_sep), document)?
 	}
 	return idf
 }
@@ -89,8 +89,8 @@ pub fn term_idf(term []string, document [][][]string) ?f64 {
 // tf_idf will return the TF * IDF for any given ngram, in a sentence, in a
 // document.
 pub fn tf_idf(ngram []string, sentence [][]string, document [][][]string) ?f64 {
-	tfs := term_frequencies(sentence) ?
+	tfs := term_frequencies(sentence)?
 	tf := tfs[ngram.join(ngram_sep)]
-	idf := term_idf(ngram, document) ?
+	idf := term_idf(ngram, document)?
 	return tf * idf
 }

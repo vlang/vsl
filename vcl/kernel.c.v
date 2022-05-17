@@ -104,7 +104,7 @@ fn new_kernel(d &Device, k ClKernel) &Kernel {
 
 fn (k &Kernel) set_args(args ...ArgumentType) ? {
 	for i, arg in args {
-		k.set_arg(i, arg) ?
+		k.set_arg(i, arg)?
 	}
 }
 
@@ -185,7 +185,7 @@ fn (k &Kernel) set_arg(index int, arg ArgumentType) ? {
 
 fn (k &Kernel) set_arg_buffer(index int, buf &Buffer) ? {
 	mem := buf.memobj
-        return k.set_arg_unsafe(index, int(sizeof(mem)), &mem)
+	return k.set_arg_unsafe(index, int(sizeof(mem)), &mem)
 }
 
 fn (k &Kernel) set_arg_local(index int, size int) ? {
@@ -232,7 +232,7 @@ fn (k &Kernel) call(work_sizes []int, lokal_sizes []int) chan IError {
 		if res != success {
 			ch <- vcl_error(res)
 		}
-                ch.close()
+		ch.close()
 	}(ch, event)
 	return ch
 }
