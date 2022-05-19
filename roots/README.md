@@ -64,7 +64,7 @@ fn cos(x f64, _ []f64) f64 {
 
 fn main() {
 	func := func.new_func(f: cos)
-	result := roots.bisection(func, 0.0, 3.0, epsrel, epsabs, n_max) ?
+	result := roots.bisection(func, 0.0, 3.0, epsrel, epsabs, n_max)?
 }
 ```
 

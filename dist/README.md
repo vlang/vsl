@@ -58,9 +58,9 @@ fn main() {
 		6,
 		7,
 		8,
-	], true) ?
+	], true)?
 
-	labels := hist.gen_labels('%g') ?
+	labels := hist.gen_labels('%g')?
 	println(labels)
 }
 ```
