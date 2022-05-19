@@ -2,12 +2,6 @@ module vcl
 
 import gg
 
-// ImageType represents available image types
-pub enum ImageType {
-        intensity = C.CL_INTENSITY
-        rgba = C.CL_RGBA
-}
-
 // Image memory buffer on the device with image data
 pub struct Image {
         format ClImageFormat
@@ -15,7 +9,7 @@ pub struct Image {
 mut:
 	buf &Buffer
 pub:
-        @type ImageType
+        @type ImageChannelOrder
         bounds gg.Rect
 }
 
@@ -25,7 +19,7 @@ pub fn (mut img Image) release() ? {
 }
 
 // image allocates an image buffer
-pub fn (d &Device) image(@type ImageType, bounds gg.Rect) ?&Image {
+pub fn (d &Device) image(@type ImageChannelOrder, bounds gg.Rect) ?&Image {
         return d.create_image(@type, bounds, 0, voidptr(0))
 }
 
@@ -33,10 +27,10 @@ pub fn (d &Device) image(@type ImageType, bounds gg.Rect) ?&Image {
 pub fn (d &Device) from_image(img gg.Image) ?&Image {
         data := img.data
         mut row_pitch := 0
-        mut image_type := ImageType.intensity
+        mut image_type := ImageChannelOrder.intensity
 
         if img.nr_channels in [3, 4] {
-                image_type = ImageType.rgba
+                image_type = ImageChannelOrder.rgba
         }
 
         bounds := gg.Rect{0, 0, img.width, img.height}
@@ -44,6 +38,47 @@ pub fn (d &Device) from_image(img gg.Image) ?&Image {
 }
 
 // create_image creates a new image
-fn (d &Device) create_image(image_type ImageType, bounds gg.Rect, row_pitch int, data voidptr) ?&Image {
-        return none
+fn (d &Device) create_image(image_type ImageChannelOrder, bounds gg.Rect, row_pitch int, data voidptr) ?&Image {
+        format := &ClImageFormat{
+                // image_channel_order: image_type
+                // image_channel_data_type: ImageChannelDataType.unorm_int8
+        }
+
+        desc := C.create_image_desc(C.CL_MEM_OBJECT_IMAGE2D, usize(bounds.width), usize(bounds.height), 0, 0, usize(row_pitch), 0, 0, 0, voidptr(0))
+
+        mut flags := mem_read_write
+
+        if !isnil(data) {
+                flags = mem_read_write | mem_copy_host_ptr
+        }
+
+        mut ret := 0
+
+        memobj := C.clCreateImage(d.ctx, flags, format, desc, data, &ret)
+        if ret != success {
+		return vcl_error(ret)
+	}
+
+        if isnil(memobj) {
+                return err_unknown
+        }
+
+        mut size := int(bounds.width * bounds.height)
+        if image_type == ImageChannelOrder.rgba {
+                size *= 4
+        }
+
+        buf := &Buffer{
+                memobj: memobj,
+                size: size,
+                device: d
+        }
+
+        return &Image{
+                buf: buf,
+                bounds: bounds,
+                @type: image_type,
+                format: format,
+                desc: desc
+        }
 }

@@ -62,8 +62,7 @@ fn new_device(id ClDeviceId) ?&Device {
 	if isnil(d.ctx) {
 		return err_unknown
 	}
-	// if OCLVersion == 2 {
-	if false {
+	if C.CL_VERSION_2_0_EXISTS == 1 {
 		d.queue = C.clCreateCommandQueueWithProperties(d.ctx, d.id, voidptr(0), &ret)
 	} else {
 		d.queue = C.clCreateCommandQueue(d.ctx, d.id, 0, &ret)

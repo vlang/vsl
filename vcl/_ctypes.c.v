@@ -10,8 +10,6 @@ type ClProgram = voidptr
 type ClKernel = voidptr
 type ClEvent = voidptr
 type ClSampler = voidptr
-type ClImageFormat = voidptr
-type ClImageDesc = voidptr
 
 type ClMemFlags = u64
 type ClDeviceType = u64
@@ -43,3 +41,25 @@ fn C.clSetKernelArg(kernel ClKernel, arg_index u32, arg_size usize, arg_value vo
 fn C.clEnqueueNDRangeKernel(command_queue ClCommandQueue, kernel ClKernel, work_dim u32, global_work_offset &usize, global_work_size &usize, local_work_size &usize, num_events_in_wait_list u32, event_wait_list &ClEvent, event &ClEvent) int
 fn C.clGetPlatformIDs(num_entries u32, platforms &ClPlatformId, num_platforms &u32) int
 fn C.clCreateContext(properties &ClContextProperties, num_devices u32, devices &ClDeviceId, pfn_notify voidptr, user_data voidptr, errcode_ret &int) ClContext
+
+// ImageChannelOrder represents available image types
+pub enum ImageChannelOrder {
+        intensity = C.CL_INTENSITY
+        rgba = C.CL_RGBA
+}
+
+// ImageChannelDataType describes the size of the channel data type
+pub enum ImageChannelDataType {
+        unorm_int8 = C.CL_UNORM_INT8
+}
+
+type ClMemObjectType = int
+type ClImageDesc = voidptr
+
+pub struct ClImageFormat {
+        image_channel_order u64
+        image_channel_data_type u64
+}
+
+fn C.clCreateImage(context ClContext, flags ClMemFlags, format &ClImageFormat, desc ClImageDesc, data voidptr, errcode_ret &int) ClMem
+fn C.create_image_desc(image_type ClMemObjectType, image_width usize, image_height usize, image_depth usize, image_array_size usize, image_row_pitch usize, image_slice_pitch usize, num_mip_levels u32, num_samples u32, buffer ClMem) &ClImageDesc
