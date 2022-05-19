@@ -6,8 +6,8 @@ mut:
 	buf &Buffer
 }
 
-// new_vector allocates new vector buffer with specified length
-pub fn (d &Device) new_vector<T>(length int) ?&Vector<T> {
+// vector allocates new vector buffer with specified length
+pub fn (d &Device) vector<T>(length int) ?&Vector<T> {
 	size := length * int(sizeof(T))
 	buffer := new_buffer(d, size)?
 	buf := &Buffer{

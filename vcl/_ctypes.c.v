@@ -10,6 +10,8 @@ type ClProgram = voidptr
 type ClKernel = voidptr
 type ClEvent = voidptr
 type ClSampler = voidptr
+type ClImageFormat = voidptr
+type ClImageDesc = voidptr
 
 type ClMemFlags = u64
 type ClDeviceType = u64
