@@ -57,8 +57,8 @@ type ClMemObjectType = int
 type ClImageDesc = voidptr
 
 pub struct ClImageFormat {
-        image_channel_order u64
-        image_channel_data_type u64
+        image_channel_order ImageChannelOrder
+        image_channel_data_type ImageChannelDataType
 }
 
 fn C.clCreateImage(context ClContext, flags ClMemFlags, format &ClImageFormat, desc ClImageDesc, data voidptr, errcode_ret &int) ClMem
