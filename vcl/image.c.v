@@ -10,10 +10,10 @@ pub enum ImageType {
 
 // Image memory buffer on the device with image data
 pub struct Image {
-mut:
-	buf &Buffer
         format ClImageFormat
         desc &ClImageDesc
+mut:
+	buf &Buffer
 pub:
         @type ImageType
         bounds gg.Rect
