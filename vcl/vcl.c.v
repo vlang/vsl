@@ -29,7 +29,8 @@ pub fn get_devices(device_type DeviceType) ?[]&Device {
 // get_default_device ...
 pub fn get_default_device() ?&Device {
 	mut id := ClDeviceId(0)
-	ret := C.clGetDeviceIDs(voidptr(0), ClDeviceType(device_default_device), 1, &id, voidptr(0))
+        platform_ids := get_platforms()?
+	ret := C.clGetDeviceIDs(unsafe { &platform_ids[0] }, ClDeviceType(device_default_device), 1, &id, voidptr(0))
 	if ret != success {
 		return vcl_error(ret)
 	}
