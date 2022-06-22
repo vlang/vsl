@@ -7,7 +7,7 @@ import vsl.blas
 //   Given:  a ⋅ x = b    find x   such that   x = a⁻¹ ⋅ b
 //
 pub fn den_solve(mut x []f64, a &Matrix<f64>, b []f64, preserve_a bool) {
-	mut a_ := a
+	mut a_ := unsafe { a }
 	if preserve_a {
 		a_ = new_matrix<f64>(a.m, a.n)
 		a_.data = a.data.clone()
