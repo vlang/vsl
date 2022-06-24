@@ -133,7 +133,7 @@ pub fn (o &Communicator) send_one(val f64, to_id int) {
 }
 
 // recv_one receives one value from processor fromId
-pub fn (o &Communicator) recv_one(from_id int) (val f64) {
+pub fn (o &Communicator) recv_one(from_id int) f64 {
 	return 0
 }
 
