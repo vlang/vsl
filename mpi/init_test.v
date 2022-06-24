@@ -1,11 +1,13 @@
 module mpi
 
 fn switch_mpi() ? {
-        if is_on() { return }
+	if is_on() {
+		return
+	}
 
-        return start()
+	return start()
 }
 
 fn test_mpi() {
-        switch_mpi() or {}
+	switch_mpi() or {}
 }
