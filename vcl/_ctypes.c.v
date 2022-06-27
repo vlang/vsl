@@ -44,13 +44,13 @@ fn C.clCreateContext(properties &ClContextProperties, num_devices u32, devices &
 
 // ImageChannelOrder represents available image types
 pub enum ImageChannelOrder {
-        intensity = C.CL_INTENSITY
-        rgba = C.CL_RGBA
+	intensity = C.CL_INTENSITY
+	rgba = C.CL_RGBA
 }
 
 // ImageChannelDataType describes the size of the channel data type
 pub enum ImageChannelDataType {
-        unorm_int8 = C.CL_UNORM_INT8
+	unorm_int8 = C.CL_UNORM_INT8
 }
 
 type ClMemObjectType = int
