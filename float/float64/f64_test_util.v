@@ -47,7 +47,7 @@ pub fn new_inc_to_set(inc ...int) []IncToSet {
 	return inc_to_set
 }
 
-// s returns true when the inputs have the same value, allowing NaN equality.
+// same returns true when the inputs have the same value, allowing NaN equality.
 pub fn same(a f64, b f64) bool {
 	return a == b || (math.is_nan(a) && math.is_nan(b))
 }
@@ -73,6 +73,18 @@ pub fn tolerance(a f64, b f64, tol f64) bool {
 		}
 	}
 	return d < e_
+}
+
+pub fn arrays_tolerance(data1 []f64, data2 []f64, tol f64) bool {
+	if data1.len != data2.len {
+		return false
+	}
+	for i := 0; i < data1.len; i++ {
+		if !tolerance(data1[i], data2[i], tol) {
+			return false
+		}
+	}
+	return true
 }
 
 pub fn close(a f64, b f64) bool {
