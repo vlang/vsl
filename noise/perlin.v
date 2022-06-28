@@ -14,7 +14,7 @@ struct Vec2 {
 [inline]
 fn random_gradient() ?Vec2 {
 	nr := rand.f32_in_range(0.0, math.pi * 2)?
-	return Vec2 {
+	return Vec2{
 		x: math.cosf(nr)
 		y: math.sinf(nr)
 	}
@@ -30,12 +30,12 @@ fn dot(ix int, iy int, x f32, y f32) ?f32 {
 	vec := random_gradient()?
 	dx := x - f32(ix)
 	dy := y - f32(iy)
-	return (dx*vec.x + dy*vec.y)
+	return dx * vec.x + dy * vec.y
 }
 
 // gets the noise value at coordinate (x, y)
 [inline]
-fn perlin(x f32, y f32) ?f32 {
+pub fn perlin(x f32, y f32) ?f32 {
 	x1 := int(math.floor(x))
 	y1 := int(math.floor(y))
 	x2 := x1 + 1
@@ -62,7 +62,7 @@ pub fn perlin_many(w int, h int) ?[][]f32 {
 		for j, _ in a {
 			val := perlin(j, i)?
 			println(f64(val))
-			res[i][j] = val 
+			res[i][j] = val
 		}
 	}
 	return res

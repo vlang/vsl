@@ -2,11 +2,12 @@
 
 This module aims to to implement noise algorithms.
 
-It uses the `rand` module in vlib to generate random numbers, so you may seed the generator as you see fit.
+It uses the `rand` module in vlib to generate random numbers,
+so you may seed the generator as you see fit.
 
 Example:
 ```v
-import noise
+import vsl.noise
 import rand
 
 fn main() {
