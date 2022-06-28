@@ -61,7 +61,6 @@ pub fn perlin_many(w int, h int) ?[][]f32 {
 	for i, a in res {
 		for j, _ in a {
 			val := perlin(j, i)?
-			println(f64(val))
 			res[i][j] = val
 		}
 	}
