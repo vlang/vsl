@@ -229,7 +229,7 @@ fn (k &Kernel) call(work_sizes []int, lokal_sizes []int) chan IError {
 			C.clReleaseEvent(event)
 		}
 		res := C.clWaitForEvents(1, unsafe { &event })
-                ch <- vcl_error(res)
+		ch <- vcl_error(res)
 	}(ch, event)
 	return ch
 }

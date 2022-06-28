@@ -6,18 +6,6 @@ const (
 	tol = 1e-12
 )
 
-fn tolerance_equal(data1 []f64, data2 []f64) bool {
-	if data1.len != data2.len {
-		return false
-	}
-	for i := 0; i < data1.len; i++ {
-		if !float64.tolerance(data1[i], data2[i], la.tol) {
-			return false
-		}
-	}
-	return true
-}
-
 fn test_den_solve() {
 	// case 1
 	mat1 := matrix_deep2([
@@ -27,7 +15,7 @@ fn test_den_solve() {
 	b1 := [1.0, 1]
 	mut x1 := []f64{len: mat1.m}
 	den_solve(mut x1, mat1, b1, false)
-	assert tolerance_equal(x1, [1.0, 0.5])
+	assert float64.arrays_tolerance(x1, [1.0, 0.5], la.tol)
 	// case 2
 	mat2 := matrix_deep2([
 		[2.0, 0, 0, -5.6],
@@ -38,10 +26,10 @@ fn test_den_solve() {
 	b2 := [1.0, 2.0, 3.0, 4.0]
 	mut x2 := []f64{len: mat2.m}
 	den_solve(mut x2, mat2, b2, false)
-	assert tolerance_equal(x2, [
+	assert float64.arrays_tolerance(x2, [
 		2.867389875082183,
 		0.32846811308349777,
 		-0.20118343195266275,
 		0.8454963839579225,
-	])
+	], la.tol)
 }
