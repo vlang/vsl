@@ -45,8 +45,8 @@ jobs:
 
       - name: Validate Docs
         run: |
-          cd ./vsl
-          v check-md .
+          cd ~
+          v check-md ~/.vmodules/vsl
 
   ci:
     runs-on: ${{ matrix.os }}
