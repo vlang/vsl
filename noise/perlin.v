@@ -56,11 +56,13 @@ fn perlin(x f32, y f32) ?f32 {
 }
 
 // creates a 2d array of perlin noise of size `w` times `h`
-pub fn perlin_many(w f32, h f32) ?[][]f32 {
-	mut res := [][]f32{len: int(h), init: []f32{len: int(w)}}
+pub fn perlin_many(w int, h int) ?[][]f32 {
+	mut res := [][]f32{len: h, init: []f32{len: w}}
 	for i, a in res {
 		for j, _ in a {
-			res[i][j] = perlin(j, i)?
+			val := perlin(j, i)?
+			println(f64(val))
+			res[i][j] = val 
 		}
 	}
 	return res
