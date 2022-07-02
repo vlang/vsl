@@ -8,7 +8,7 @@ pub struct SparseConfig {
 mut:
 	mumps_ordering int // ICNTL(7) default = "" == "auto"
 	mumps_scaling  int // Scaling type (check MUMPS solver) [may be empty]
-        // communicator &mpi.Communicator = 0 // MPI communicator for parallel solvers [may be nil]
+	// communicator &mpi.Communicator = 0 // MPI communicator for parallel solvers [may be nil]
 	// internal
 	symmetric   bool // indicates symmetric system. NOTE: when using MUMPS, only the upper or lower part of the matrix must be provided
 	sym_pos_def bool // indicates symmetric-positive-defined system. NOTE: when using MUMPS, only the upper or lower part of the matrix must be provided
