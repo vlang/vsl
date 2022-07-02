@@ -37,4 +37,14 @@ cl_image_desc *create_image_desc(
     return desc;
 }
 
+cl_image_format *create_image_format(
+    cl_channel_order image_channel_order,
+    cl_channel_type image_channel_data_type
+) {
+    cl_image_format *format = (cl_image_format *)malloc(sizeof(cl_image_format));
+    format->image_channel_order = image_channel_order;
+    format->image_channel_data_type = image_channel_data_type;
+    return format;
+}
+
 #endif

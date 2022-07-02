@@ -2,7 +2,7 @@ module main
 
 import vsl.vcl
 
-// an complicated kernel
+// a complicated kernel
 const kernel_source = '
 __kernel void addOne(__global float* data) {
     const int i = get_global_id(0);
