@@ -20,7 +20,11 @@
 	},
 
 	// Add the IDs of extensions you want installed when the container is created.
-	"extensions": ["v.V"],
+	"extensions": [
+		"v.V",
+		"vlanguage.vscode-vlang",
+		"ms-vscode.cpptools"
+	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
