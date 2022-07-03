@@ -48,7 +48,35 @@ jobs:
           cd ~
           v check-md ~/.vmodules/vsl
 
-  ci:
+  fmt-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout VSL
+        uses: actions/checkout@v2
+        with:
+          path: vsl
+
+      - name: Setup V
+        uses: vlang/setup-v@v1
+        with:
+          check-latest: true
+
+      - name: V doctor
+        run: v doctor
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get install --quiet -y --no-install-recommends gfortran liblapacke-dev libopenblas-dev libgc-dev libopenmpi-dev
+
+      - name: Move VSL source code to V Modules
+        run: mv ./vsl ~/.vmodules
+
+      - name: Verify Fmt
+        continue-on-error: true
+        run: v fmt -verify ~/.vmodules/vsl
+
+  run-tests:
     runs-on: ${{ matrix.os }}
 
     strategy:
