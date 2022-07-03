@@ -136,7 +136,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          brew install openblas
+          brew install openblas lapack
 
       - name: Move VSL source code to V Modules
         run: mv ./vsl ~/.vmodules
