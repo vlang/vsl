@@ -136,7 +136,16 @@ jobs:
 
       - name: Install dependencies
         run: |
-          brew install openblas lapack
+          brew install openblas
+
+      - name: Install LAPACKE from https://github.com/Reference-LAPACK/lapack
+        run: |
+          git clone https://github.com/Reference-LAPACK/lapack
+          cd lapack
+          mkdir build
+          cd build
+          cmake ..
+          cmake --build . -j --target install
 
       - name: Move VSL source code to V Modules
         run: mv ./vsl ~/.vmodules
