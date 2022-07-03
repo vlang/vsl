@@ -36,7 +36,7 @@ jobs:
       - name: V doctor
         run: v doctor
 
-      - name: Install VSL and dependencies
+      - name: Install dependencies
         run: |
           sudo apt-get install --quiet -y --no-install-recommends gfortran liblapacke-dev libopenblas-dev libgc-dev libopenmpi-dev
 
@@ -97,7 +97,7 @@ jobs:
       - name: V doctor
         run: v doctor
 
-      - name: Install VSL and dependencies
+      - name: Install dependencies
         run: |
           sudo apt-get install --quiet -y --no-install-recommends gfortran liblapacke-dev libopenblas-dev libgc-dev libopenmpi-dev
 
@@ -134,9 +134,12 @@ jobs:
       - name: V doctor
         run: v doctor
 
-      - name: Install VSL and dependencies
+      - name: Install dependencies
         run: |
           brew install openblas
+
+      - name: Move VSL source code to V Modules
+        run: mv ./vsl ~/.vmodules
 
       - name: Execute Tests using Pure V Backend
         run: ~/.vmodules/vsl/bin/test
