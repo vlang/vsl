@@ -119,7 +119,7 @@ jobs:
         if: ${{ matrix.os != 'ubuntu-18.04' }}
 
   run-tests-on-macos:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - name: Checkout VSL
         uses: actions/checkout@v2
