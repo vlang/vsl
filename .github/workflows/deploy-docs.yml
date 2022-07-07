@@ -27,9 +27,11 @@ jobs:
 
       - name: Build docs
         run: |
-          rm -f ./vsl/README.md
-          mv ./vsl/static/DOCS.md ./vsl/README.md
-          v doc -readme -m -f html vsl/
+          pushd vsl
+          rm -f README.md
+          mv static/DOCS.md README.md
+          v doc -readme -m -f html .
+          popd
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
