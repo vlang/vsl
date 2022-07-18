@@ -33,7 +33,7 @@ pub fn (b &Bytes) load(data []byte) chan IError {
 pub fn (b &Bytes) data() ?[]u8 {
 	mut data := []u8{len: b.buf.size}
 	ret := C.clEnqueueReadBuffer(b.buf.device.queue, b.buf.memobj, true, 0, usize(b.buf.size),
-		unsafe { &data[0] }, 0, voidptr(0), voidptr(0))
+		unsafe { &data[0] }, 0, unsafe { nil }, unsafe { nil })
 	if ret != success {
 		return vcl_error(ret)
 	}

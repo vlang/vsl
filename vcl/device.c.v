@@ -130,17 +130,18 @@ pub fn (d &Device) driver_version() ?string {
 pub fn (mut d Device) add_program(source string) ? {
 	mut ret := 0
 	source_ptr := &char(source.str)
-	p := C.clCreateProgramWithSource(d.ctx, 1, &source_ptr, voidptr(0), &ret)
+	p := C.clCreateProgramWithSource(d.ctx, 1, &source_ptr, unsafe { nil }, &ret)
 	if ret != success {
 		return vcl_error(ret)
 	}
-	ret = C.clBuildProgram(p, 1, &d.id, &char(0), voidptr(0), voidptr(0))
+	ret = C.clBuildProgram(p, 1, &d.id, &char(0), unsafe { nil }, unsafe { nil })
 	if ret != success {
 		if ret == build_program_failure {
 			mut n := usize(0)
-			C.clGetProgramBuildInfo(p, d.id, vcl.program_build_log, 0, voidptr(0), &n)
+			C.clGetProgramBuildInfo(p, d.id, vcl.program_build_log, 0, unsafe { nil },
+				&n)
 			log := []u8{len: int(n)}
-			C.clGetProgramBuildInfo(p, d.id, vcl.program_build_log, n, &log[0], voidptr(0))
+			C.clGetProgramBuildInfo(p, d.id, vcl.program_build_log, n, &log[0], unsafe { nil })
 			return error(log.bytestr())
 		}
 		return vcl_error(ret)

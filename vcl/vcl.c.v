@@ -7,13 +7,13 @@ pub fn get_devices(device_type DeviceType) ?[]&Device {
 
 	for p in platform_ids {
 		mut n := u32(0)
-		mut ret := C.clGetDeviceIDs(p, ClDeviceType(device_type), 0, voidptr(0), &n)
+		mut ret := C.clGetDeviceIDs(p, ClDeviceType(device_type), 0, unsafe { nil }, &n)
 		if ret != success {
 			return vcl_error(ret)
 		}
 		mut device_ids := []ClDeviceId{len: int(n)}
 		ret = C.clGetDeviceIDs(p, ClDeviceType(device_type), n, unsafe { &device_ids[0] },
-			voidptr(0))
+			unsafe { nil })
 		if ret != success {
 			return vcl_error(ret)
 		}
@@ -31,7 +31,7 @@ pub fn get_default_device() ?&Device {
 	mut id := ClDeviceId(0)
 	platform_ids := get_platforms()?
 	ret := C.clGetDeviceIDs(unsafe { &platform_ids[0] }, ClDeviceType(device_default_device),
-		1, &id, voidptr(0))
+		1, &id, unsafe { nil })
 	if ret != success {
 		return vcl_error(ret)
 	}
@@ -40,12 +40,12 @@ pub fn get_default_device() ?&Device {
 
 fn get_platforms() ?[]ClPlatformId {
 	mut n := u32(0)
-	mut ret := C.clGetPlatformIDs(0, voidptr(0), &n)
+	mut ret := C.clGetPlatformIDs(0, unsafe { nil }, &n)
 	if ret != success {
 		return vcl_error(ret)
 	}
 	mut platform_ids := []ClPlatformId{len: int(n)}
-	ret = C.clGetPlatformIDs(n, unsafe { &platform_ids[0] }, voidptr(0))
+	ret = C.clGetPlatformIDs(n, unsafe { &platform_ids[0] }, unsafe { nil })
 	if ret != success {
 		return vcl_error(ret)
 	}
@@ -57,7 +57,8 @@ fn new_device(id ClDeviceId) ?&Device {
 		id: id
 	}
 	mut ret := 0
-	d.ctx = C.clCreateContext(voidptr(0), 1, &id, voidptr(0), voidptr(0), &ret)
+	d.ctx = C.clCreateContext(unsafe { nil }, 1, &id, unsafe { nil }, unsafe { nil },
+		&ret)
 	if ret != success {
 		return vcl_error(ret)
 	}
@@ -65,7 +66,7 @@ fn new_device(id ClDeviceId) ?&Device {
 		return err_unknown
 	}
 	if C.CL_VERSION_2_0_EXISTS == 1 {
-		d.queue = C.clCreateCommandQueueWithProperties(d.ctx, d.id, voidptr(0), &ret)
+		d.queue = C.clCreateCommandQueueWithProperties(d.ctx, d.id, unsafe { nil }, &ret)
 	} else {
 		d.queue = C.clCreateCommandQueue(d.ctx, d.id, 0, &ret)
 	}

@@ -56,7 +56,7 @@ pub fn (o &Kmeans) name() string {
 // update perform updates after data has been changed (as an Observer)
 pub fn (mut o Kmeans) update() {
 	for i in 0 .. o.data.nb_samples {
-		o.bins.append([o.data.x.get(i, 0), o.data.x.get(i, 1)], i, voidptr(0))
+		o.bins.append([o.data.x.get(i, 0), o.data.x.get(i, 1)], i, unsafe { nil })
 	}
 }
 

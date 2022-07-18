@@ -78,7 +78,7 @@ pub fn new_bins(xmin []f64, xmax []f64, ndiv_ []int) &Bins {
 		nbins *= o.ndiv[k]
 	}
 	// other slices
-	o.all = []&Bin{len: nbins}
+	o.all = unsafe { []&Bin{len: nbins} }
 	o.tmp = []int{len: o.ndim}
 	return o
 }

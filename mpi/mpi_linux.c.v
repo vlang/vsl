@@ -39,13 +39,13 @@ pub fn is_on() bool {
 
 // start initialises MPI
 pub fn start() ? {
-	C.MPI_Init(0, voidptr(0))
+	C.MPI_Init(0, unsafe { nil })
 }
 
 // start_thread_safe initialises MPI in a thread safe way
 pub fn start_thread_safe() ? {
 	r := 0
-	C.MPI_Init_thread(0, voidptr(0), C.MPI_THREAD_MULTIPLE, &r)
+	C.MPI_Init_thread(0, unsafe { nil }, C.MPI_THREAD_MULTIPLE, &r)
 	if r != C.MPI_THREAD_MULTIPLE {
 		return errors.error("MPI_THREAD_MULTIPLE can't be set: got $r", .efailed)
 	}
@@ -83,7 +83,7 @@ mut:
 pub fn new_communicator(ranks []int) ?&Communicator {
 	mut o := &Communicator{
 		comm: MPI_Comm(C.MPI_COMM_WORLD)
-		group: voidptr(0)
+		group: unsafe { nil }
 	}
 	if ranks.len == 0 {
 		C.MPI_Comm_group(C.MPI_COMM_WORLD, &o.group)
@@ -196,7 +196,7 @@ pub fn (o &Communicator) send(vals []f64, to_id int) {
 
 // recv receives values from processor fromId
 pub fn (o &Communicator) recv(vals []f64, from_id int) {
-	C.MPI_Recv(unsafe { &vals[0] }, vals.len, C.MPI_DOUBLE, from_id, 0, o.comm, voidptr(0))
+	C.MPI_Recv(unsafe { &vals[0] }, vals.len, C.MPI_DOUBLE, from_id, 0, o.comm, unsafe { nil })
 }
 
 // send_c sends values to processor toID (complex version)
@@ -206,7 +206,7 @@ pub fn (o &Communicator) send_c(vals []complex.Complex, to_id int) {
 
 // recv_c receives values from processor fromId (complex version)
 pub fn (o &Communicator) recv_c(vals []complex.Complex, from_id int) {
-	C.MPI_Recv(unsafe { &vals[0] }, vals.len, C.MPI_DOUBLE, from_id, 0, o.comm, voidptr(0))
+	C.MPI_Recv(unsafe { &vals[0] }, vals.len, C.MPI_DOUBLE, from_id, 0, o.comm, unsafe { nil })
 }
 
 // send_i sends values to processor toID (integer version)
@@ -216,7 +216,7 @@ pub fn (o &Communicator) send_i(vals []int, to_id int) {
 
 // recv_i receives values from processor fromId (integer version)
 pub fn (o &Communicator) recv_i(vals []int, from_id int) {
-	C.MPI_Recv(unsafe { &vals[0] }, vals.len, C.MPI_INT, from_id, 0, o.comm, voidptr(0))
+	C.MPI_Recv(unsafe { &vals[0] }, vals.len, C.MPI_INT, from_id, 0, o.comm, unsafe { nil })
 }
 
 // send_one sends one value to processor toID
@@ -228,7 +228,7 @@ pub fn (o &Communicator) send_one(val f64, to_id int) {
 // recv_one receives one value from processor fromId
 pub fn (o &Communicator) recv_one(from_id int) f64 {
 	vals := [0.0]
-	C.MPI_Recv(unsafe { &vals[0] }, 1, C.MPI_DOUBLE, from_id, 0, o.comm, voidptr(0))
+	C.MPI_Recv(unsafe { &vals[0] }, 1, C.MPI_DOUBLE, from_id, 0, o.comm, unsafe { nil })
 	return vals[0]
 }
 
@@ -241,6 +241,6 @@ pub fn (o &Communicator) send_one_i(val int, to_id int) {
 // recv_one_i receives one value from processor fromId (integer version)
 pub fn (o &Communicator) recv_one_i(from_id int) int {
 	vals := [0]
-	C.MPI_Recv(unsafe { &vals[0] }, 1, C.MPI_INT, from_id, 0, o.comm, voidptr(0))
+	C.MPI_Recv(unsafe { &vals[0] }, 1, C.MPI_INT, from_id, 0, o.comm, unsafe { nil })
 	return vals[0]
 }

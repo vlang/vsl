@@ -189,7 +189,7 @@ fn (k &Kernel) set_arg_buffer(index int, buf &Buffer) ? {
 }
 
 fn (k &Kernel) set_arg_local(index int, size int) ? {
-	return k.set_arg_unsafe(index, size, voidptr(0))
+	return k.set_arg_unsafe(index, size, unsafe { nil })
 }
 
 fn (k &Kernel) set_arg_unsafe(index int, arg_size int, arg voidptr) ? {
@@ -217,7 +217,7 @@ fn (k &Kernel) call(work_sizes []int, lokal_sizes []int) chan IError {
 	}
 	mut event := ClEvent(0)
 	res := C.clEnqueueNDRangeKernel(k.d.queue, k.k, u32(work_dim), unsafe { &global_work_offset_ptr[0] },
-		unsafe { &global_work_size_ptr[0] }, unsafe { &local_work_size_ptr[0] }, 0, voidptr(0),
+		unsafe { &global_work_size_ptr[0] }, unsafe { &local_work_size_ptr[0] }, 0, unsafe { nil },
 		unsafe { &event })
 	if res != success {
 		err := vcl_error(res)
