@@ -1,29 +1,5 @@
 module util
 
-// iabs performs the absolute operation with ints
-pub fn iabs(a int) int {
-	if a < 0 {
-		return -a
-	}
-	return a
-}
-
-// imax returns the maximum value of the two provided.
-pub fn imax(a int, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-// imin returns the minimum value of the two provided.
-pub fn imin(a int, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-
 // range returns a list with int values in the interval [0, n)
 pub fn arange(n int) []int {
 	mut result := []int{cap: n}

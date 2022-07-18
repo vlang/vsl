@@ -3,7 +3,7 @@ module vlas
 // import runtime
 import sync
 import vsl.float.float64
-import vsl.util
+import math
 
 // dgemm performs one of the matrix-matrix operations
 //  C = alpha * A * B + beta * C
@@ -25,25 +25,25 @@ pub fn dgemm(trans_a Transpose, trans_b Transpose, m int, n int, k int, alpha f6
 	}
 	a_trans := trans_a == .trans || trans_a == .conj_trans
 	if a_trans {
-		if lda < util.imax(1, m) {
+		if lda < math.max(1, m) {
 			panic(bad_ld_a)
 		}
 	} else {
-		if lda < util.imax(1, k) {
+		if lda < math.max(1, k) {
 			panic(bad_ld_a)
 		}
 	}
 	b_trans := trans_b == .trans || trans_b == .conj_trans
 	if b_trans {
-		if ldb < util.imax(1, k) {
+		if ldb < math.max(1, k) {
 			panic(bad_ld_b)
 		}
 	} else {
-		if ldb < util.imax(1, n) {
+		if ldb < math.max(1, n) {
 			panic(bad_ld_b)
 		}
 	}
-	if ldc < util.imax(1, n) {
+	if ldc < math.max(1, n) {
 		panic(bad_ld_c)
 	}
 

@@ -1,7 +1,7 @@
 module vlas
 
+import math
 import vsl.float.float64
-import vsl.util
 
 // dger performs the rank-one operation
 //  A += alpha * x * yᵀ
@@ -13,7 +13,7 @@ pub fn dger(m int, n int, alpha f64, x []f64, incx int, y []f64, incy int, mut a
 	if n < 0 {
 		panic(nlt0)
 	}
-	if lda < util.imax(1, n) {
+	if lda < math.max(1, n) {
 		panic(bad_ld_a)
 	}
 	if incx == 0 {
@@ -80,7 +80,7 @@ pub fn dgbmv(trans_a Transpose, m int, n int, kl int, ku int, alpha f64, a []f64
 	}
 
 	// For zero matrix size the following slice length checks are trivially satisfied.
-	if a.len < lda * (util.imin(m, n + kl) - 1) + kl + ku + 1 {
+	if a.len < lda * (math.min(m, n + kl) - 1) + kl + ku + 1 {
 		panic(short_a)
 	}
 	mut len_x := m
@@ -147,10 +147,10 @@ pub fn dgbmv(trans_a Transpose, m int, n int, kl int, ku int, alpha f64, a []f64
 	if trans_a == .no_trans {
 		mut iy := ky
 		if incx == 1 {
-			for i in 0 .. util.imin(m, n + kl) {
-				l := util.imax(0, kl - i)
-				u := util.imin(n_col, n + kl - i)
-				off := util.imax(0, i - kl)
+			for i in 0 .. math.min(m, n + kl) {
+				l := math.max(0, kl - i)
+				u := math.min(n_col, n + kl - i)
+				off := math.max(0, i - kl)
 				atmp := a[i * lda + l..i * lda + u]
 				xtmp := x[off..off + u - l]
 				mut sum := 0.0
@@ -162,10 +162,10 @@ pub fn dgbmv(trans_a Transpose, m int, n int, kl int, ku int, alpha f64, a []f64
 			}
 			return
 		}
-		for i in 0 .. util.imin(m, n + kl) {
-			l := util.imax(0, kl - i)
-			u := util.imin(n_col, n + kl - i)
-			off := util.imax(0, i - kl)
+		for i in 0 .. math.min(m, n + kl) {
+			l := math.max(0, kl - i)
+			u := math.min(n_col, n + kl - i)
+			off := math.max(0, i - kl)
 			atmp := a[i * lda + l..i * lda + u]
 			mut jx := kx
 			mut sum := 0.0
@@ -179,10 +179,10 @@ pub fn dgbmv(trans_a Transpose, m int, n int, kl int, ku int, alpha f64, a []f64
 		return
 	}
 	if incx == 1 {
-		for i in 0 .. util.imin(m, n + kl) {
-			l := util.imax(0, kl - i)
-			u := util.imin(n_col, n + kl - i)
-			off := util.imax(0, i - kl)
+		for i in 0 .. math.min(m, n + kl) {
+			l := math.max(0, kl - i)
+			u := math.min(n_col, n + kl - i)
+			off := math.max(0, i - kl)
 			atmp := a[i * lda + l..i * lda + u]
 			tmp := alpha * x[i]
 			mut jy := ky
@@ -194,10 +194,10 @@ pub fn dgbmv(trans_a Transpose, m int, n int, kl int, ku int, alpha f64, a []f64
 		return
 	}
 	mut ix := kx
-	for i in 0 .. util.imin(m, n + kl) {
-		l := util.imax(0, kl - i)
-		u := util.imin(n_col, n + kl - i)
-		off := util.imax(0, i - kl)
+	for i in 0 .. math.min(m, n + kl) {
+		l := math.max(0, kl - i)
+		u := math.min(n_col, n + kl - i)
+		off := math.max(0, i - kl)
 		atmp := a[i * lda + l..i * lda + u]
 		tmp := alpha * x[ix]
 		mut jy := ky
@@ -217,7 +217,7 @@ pub fn dtrmv(ul Uplo, trans_a Transpose, d Diagonal, n int, a []f64, lda int, mu
 	if n < 0 {
 		panic(nlt0)
 	}
-	if lda < util.imax(1, n) {
+	if lda < math.max(1, n) {
 		panic(bad_ld_a)
 	}
 	if incx == 0 {
@@ -368,7 +368,7 @@ pub fn dtrsv(ul Uplo, trans_a Transpose, d Diagonal, n int, a []f64, lda int, mu
 	if n < 0 {
 		panic(nlt0)
 	}
-	if lda < util.imax(1, n) {
+	if lda < math.max(1, n) {
 		panic(bad_ld_a)
 	}
 	if incx == 0 {
@@ -534,7 +534,7 @@ pub fn dsymv(ul Uplo, n int, alpha f64, a []f64, lda int, x []f64, incx int, bet
 	if n < 0 {
 		panic(nlt0)
 	}
-	if lda < util.imax(1, n) {
+	if lda < math.max(1, n) {
 		panic(bad_ld_a)
 	}
 	if incx == 0 {
@@ -734,7 +734,7 @@ pub fn dtbmv(ul Uplo, trans_a Transpose, d Diagonal, n int, k int, a []f64, lda 
 		if ul == .upper {
 			if incx == 1 {
 				for i in 0 .. n {
-					u := util.imin(1 + k, n - i)
+					u := math.min(1 + k, n - i)
 					mut sum := 0.0
 					mut atmp := a[i * lda..]
 					xtmp := x[i..]
@@ -752,7 +752,7 @@ pub fn dtbmv(ul Uplo, trans_a Transpose, d Diagonal, n int, k int, a []f64, lda 
 			}
 			mut ix := kx
 			for i in 0 .. n {
-				u := util.imin(1 + k, n - i)
+				u := math.min(1 + k, n - i)
 				mut sum := 0.0
 				atmp := a[i * lda..]
 				mut jx := incx
@@ -772,7 +772,7 @@ pub fn dtbmv(ul Uplo, trans_a Transpose, d Diagonal, n int, k int, a []f64, lda 
 		}
 		if incx == 1 {
 			for i := n - 1; i >= 0; i-- {
-				l := util.imax(0, k - i)
+				l := math.max(0, k - i)
 				atmp := a[i * lda..]
 				mut sum := 0.0
 				for j := l; j < k; j++ {
@@ -789,7 +789,7 @@ pub fn dtbmv(ul Uplo, trans_a Transpose, d Diagonal, n int, k int, a []f64, lda 
 		}
 		mut ix := kx + (n - 1) * incx
 		for i := n - 1; i >= 0; i-- {
-			l := util.imax(0, k - i)
+			l := math.max(0, k - i)
 			atmp := a[i * lda..]
 			mut sum := 0.0
 			mut jx := l * incx
@@ -1357,7 +1357,7 @@ pub fn dsbmv(ul Uplo, n int, k int, alpha f64, a []f64, lda int, x []f64, incx i
 				atmp := a[i * lda..]
 				tmp := alpha * x[i]
 				mut sum := tmp * atmp[0]
-				u := util.imin(k, n - i - 1)
+				u := math.min(k, n - i - 1)
 				mut jy := incy
 				for j := 1; j <= u; j++ {
 					v := atmp[j]
@@ -1376,7 +1376,7 @@ pub fn dsbmv(ul Uplo, n int, k int, alpha f64, a []f64, lda int, x []f64, incx i
 			atmp := a[i * lda..]
 			tmp := alpha * x[ix]
 			mut sum := tmp * atmp[0]
-			u := util.imin(k, n - i - 1)
+			u := math.min(k, n - i - 1)
 			mut jx := incx
 			mut jy := incy
 			for j := 1; j <= u; j++ {
@@ -1397,7 +1397,7 @@ pub fn dsbmv(ul Uplo, n int, k int, alpha f64, a []f64, lda int, x []f64, incx i
 	if incx == 1 {
 		mut iy := ky
 		for i in 0 .. n {
-			l := util.imax(0, k - i)
+			l := math.max(0, k - i)
 			tmp := alpha * x[i]
 			mut jy := l * incy
 			atmp := a[i * lda..]
@@ -1415,7 +1415,7 @@ pub fn dsbmv(ul Uplo, n int, k int, alpha f64, a []f64, lda int, x []f64, incx i
 	mut ix := kx
 	mut iy := ky
 	for i in 0 .. n {
-		l := util.imax(0, k - i)
+		l := math.max(0, k - i)
 		tmp := alpha * x[ix]
 		mut jx := l * incx
 		mut jy := l * incy
@@ -1440,7 +1440,7 @@ pub fn dsyr(ul Uplo, n int, alpha f64, x []f64, incx int, mut a []f64, lda int) 
 	if n < 0 {
 		panic(nlt0)
 	}
-	if lda < util.imax(1, n) {
+	if lda < math.max(1, n) {
 		panic(bad_ld_a)
 	}
 	if incx == 0 {
@@ -1535,7 +1535,7 @@ pub fn dsyr2(ul Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, mu
 	if n < 0 {
 		panic(nlt0)
 	}
-	if lda < util.imax(1, n) {
+	if lda < math.max(1, n) {
 		panic(bad_ld_a)
 	}
 	if incx == 0 {

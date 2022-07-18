@@ -2,7 +2,6 @@ module fun
 
 import math
 import vsl.errors
-import vsl.util
 
 // InterpFn defines the type of the implementation of the data interpolation
 pub type InterpFn = fn (mut o DataInterp, j int, x f64) f64
@@ -78,7 +77,7 @@ pub fn (mut o DataInterp) reset(xx []f64, yy []f64) {
 	o.xx = xx
 	o.yy = yy
 	o.n = xx.len
-	o.dj_hunt = util.imin(1, int(math.pow(f64(o.n), 0.25)))
+	o.dj_hunt = math.min(1, int(math.pow(f64(o.n), 0.25)))
 	o.use_hunt = false
 	o.ascnd = o.xx[o.n - 1] >= o.xx[0]
 }
@@ -112,7 +111,7 @@ pub fn (mut o DataInterp) locate(x f64) int {
 	}
 
 	// set hunt flag
-	if util.iabs(jl - o.j_hunt) > o.dj_hunt {
+	if math.abs(jl - o.j_hunt) > o.dj_hunt {
 		o.use_hunt = false // too large, use locate next time
 	} else {
 		o.use_hunt = true // ok, use hunt next time
@@ -120,7 +119,7 @@ pub fn (mut o DataInterp) locate(x f64) int {
 	o.j_hunt = jl
 
 	// results
-	return util.imax(0, util.imin(o.n - o.m, jl - ((o.m - 2) >> 1)))
+	return math.max(0, math.min(o.n - o.m, jl - ((o.m - 2) >> 1)))
 }
 
 // hunt returns a value j such that x is (insofar as possible) centered in the subrange
@@ -177,7 +176,7 @@ pub fn (mut o DataInterp) hunt(x f64) int {
 	}
 
 	// set hunt flag
-	if util.iabs(jl - o.j_hunt) > o.dj_hunt {
+	if math.abs(jl - o.j_hunt) > o.dj_hunt {
 		o.use_hunt = false
 	} else {
 		o.use_hunt = true
@@ -185,7 +184,7 @@ pub fn (mut o DataInterp) hunt(x f64) int {
 	o.j_hunt = jl
 
 	// results
-	return util.imax(0, util.imin(o.n - o.m, jl - ((o.m - 2) >> 1)))
+	return math.max(0, math.min(o.n - o.m, jl - ((o.m - 2) >> 1)))
 }
 
 // lin_interp implements linear interpolator

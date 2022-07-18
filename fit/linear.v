@@ -1,7 +1,6 @@
 module fit
 
 import math
-import math.util
 
 // linear computes linear fitting parameters. Errors on y-direction only
 //
@@ -14,7 +13,7 @@ import math.util
 pub fn linear(x []f64, y []f64) (f64, f64) {
 	mut sx := 0.0
 	mut sy := 0.0
-	ndata := util.imin(x.len, y.len)
+	ndata := math.min(x.len, y.len)
 	// accumulate sums
 	for i in 0 .. ndata {
 		sx += x[i]
@@ -48,7 +47,7 @@ pub fn linear(x []f64, y []f64) (f64, f64) {
 pub fn linear_sigma(x []f64, y []f64) (f64, f64, f64, f64, f64) {
 	mut sx := 0.0
 	mut sy := 0.0
-	ndata := util.imin(x.len, y.len)
+	ndata := math.min(x.len, y.len)
 	// accumulate sums
 	for i in 0 .. ndata {
 		sx += x[i]

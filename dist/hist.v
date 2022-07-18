@@ -1,5 +1,6 @@
 module dist
 
+import math
 import strconv
 import vsl.errors
 import vsl.util
@@ -16,9 +17,9 @@ pub fn text_hist(labels []string, counts []int, barlen int) ?string {
 	mut lmax := 0
 	mut lmax_ := 0
 	for i, f in counts {
-		fmax = util.imax(fmax, f)
-		lmax = util.imax(lmax, labels[i].len)
-		lmax_ = util.imax(lmax_, f.str().len)
+		fmax = math.max(fmax, f)
+		lmax = math.max(lmax, labels[i].len)
+		lmax_ = math.max(lmax_, f.str().len)
 	}
 	if fmax < 1 {
 		return 'max frequency is too small: fmax=$fmax'

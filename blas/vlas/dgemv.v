@@ -1,7 +1,7 @@
 module vlas
 
 import vsl.float.float64
-import vsl.util
+import math
 
 // dgemv computes
 //  y = alpha * A * x + beta * y   if trans_a = .no_trans
@@ -14,7 +14,7 @@ pub fn dgemv(trans_a Transpose, m int, n int, alpha f64, a []f64, lda int, x []f
 	if n < 0 {
 		panic(nlt0)
 	}
-	if lda < util.imax(1, n) {
+	if lda < math.max(1, n) {
 		panic(bad_ld_a)
 	}
 	if incx == 0 {

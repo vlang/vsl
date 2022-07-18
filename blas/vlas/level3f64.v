@@ -1,7 +1,7 @@
 module vlas
 
 import vsl.float.float64
-import vsl.util
+import math
 
 // dsyrk performs one of the symmetric rank-k operations
 //  C = alpha * A * Aᵀ + beta * C  if trans_a == .no_trans
@@ -21,10 +21,10 @@ pub fn dsyrk(ul Uplo, trans_a Transpose, n int, k int, alpha f64, a []f64, lda i
 		row = n
 		col = k
 	}
-	if lda < util.imax(1, col) {
+	if lda < math.max(1, col) {
 		panic(bad_ld_a)
 	}
-	if ldc < util.imax(1, n) {
+	if ldc < math.max(1, n) {
 		panic(bad_ld_c)
 	}
 
