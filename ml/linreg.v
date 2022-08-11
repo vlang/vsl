@@ -84,7 +84,7 @@ pub fn (mut o LinReg) gradients() ([]f64, f64) {
 	o.calce() // e := b⋅o + x⋅theta - y
 	mut dcdtheta := la.matrix_tr_vector_mul(1.0 * m_1, x, o.e) // dcdtheta := (1/m) xᵀe
 	if lambda > 0 {
-		dcdtheta = la.vector_add(1, dcdtheta, lambda * m_1, theta) // dcdtheta += (1/m) theta
+		dcdtheta = la.vector_add(1.0, dcdtheta, lambda * m_1, theta) // dcdtheta += (1/m) theta
 	}
 	// dcdb
 	return dcdtheta, (1.0 * m_1) * la.vector_accum(o.e) // dcdb = (1/m) oᵀe
@@ -104,7 +104,7 @@ pub fn (mut o LinReg) train() {
 	m_1 := 1.0 / f64(o.data.nb_samples)
 	n := o.data.nb_features
 	mut r := []f64{len: n}
-	r = la.matrix_tr_vector_mul(1, x, y) // r := a = xᵀy
+	r = la.matrix_tr_vector_mul(1.0, x, y) // r := a = xᵀy
 	r = la.vector_add(1.0, r, -t * m_1, s) // r := a - (t/m)s
 	// K matrix
 	mut b := la.new_matrix<f64>(n, n)
@@ -136,7 +136,7 @@ pub fn (mut o LinReg) calce() {
 		o.e.len
 	} // e := b⋅o
 	o.e = la.matrix_vector_mul_add(1, x, theta) // e := b⋅o + x⋅theta
-	o.e = la.vector_add(1, o.e, -1, y) // e := b⋅o + x⋅theta - y
+	o.e = la.vector_add(1.0, o.e, -1, y) // e := b⋅o + x⋅theta - y
 }
 
 // str is a custom str function for observers to avoid printing data

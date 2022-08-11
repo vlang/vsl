@@ -91,7 +91,7 @@ pub fn (mut o Stat<T>) update() {
 // s -- vector s = Xᵀo  sum of columns of the X matrix: s_j = Σ_i^m o_i X_ij  [n_features]
 pub fn (mut o Stat<T>) sum_vars() ([]T, T) {
 	one := []T{len: o.data.x.m, init: T(1)}
-	s := la.matrix_tr_vector_mul(1, o.data.x, one)
+	s := la.matrix_tr_vector_mul(1.0, o.data.x, one)
 	mut t := 0.0
 	if o.data.y.len > 0 {
 		t = la.vector_dot(one, o.data.y)
