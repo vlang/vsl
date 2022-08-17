@@ -36,9 +36,18 @@ jobs:
       - name: V doctor
         run: v doctor
 
-      - name: Install VSL and dependencies
+      - name: Install dependencies
         run: |
-          sudo apt-get install --quiet -y --no-install-recommends gfortran liblapacke-dev libopenblas-dev libgc-dev libopenmpi-dev
+          sudo apt-get install --quiet -y --no-install-recommends \
+            gfortran \
+            libxi-dev \
+            libxcursor-dev \
+            mesa-common-dev \
+            liblapacke-dev \
+            libopenblas-dev \
+            libgc-dev \
+            libopenmpi-dev \
+            opencl-headers
 
       - name: Copy VSL source code to V Modules
         run: cp -rf ./vsl ~/.vmodules
