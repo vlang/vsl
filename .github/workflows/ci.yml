@@ -128,8 +128,12 @@ jobs:
             libopenblas-dev \
             libgc-dev \
             libgl1-mesa-dev \
-            libopenmpi-dev \
-            opencl-headers
+            libopenmpi-dev
+
+      - name: Install OpenCL Headers
+        run: |
+          git clone https://github.com/KhronosGroup/OpenCL-Headers.git
+          cp -rf OpenCL-Headers/CL ./vsl/vcl
 
       - name: Move VSL source code to V Modules
         run: mv ./vsl ~/.vmodules
