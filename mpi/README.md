@@ -25,8 +25,8 @@ A program must issue a send (on one rank) and matching receive on another
 rank or all ranks, depending on the nature of the method.  Use `barrier()`
 to ensure all ranks are synchronized at that point.
 
-Once you have created a new Communicator, you can use these methods,
-where the <type> is one of the above i32, u32, i64, u64, f32 or f64:
+Once you have created a Communicator, you can use these methods,
+where the `<type>` is one of the above i32, u32, i64, u64, f32 or f64:
 
 | Method | Result |
 |--------|--------|
@@ -43,21 +43,19 @@ where the <type> is one of the above i32, u32, i64, u64, f32 or f64:
 | `comm.send_f64( ... )` | As above for 64-bit floats |
 | `comm.send_one_<type>( val <type>, to_rank int)` | Send one value to one rank |
 | `comm.recv_one_<type>( from_rank int) <type>` | Returns one value from one rank |
-| `comm.bcast_from_root_<type>(vals []<type>) | Copy the values to all processors |
-| `comm.reduce_sum_<type>(mut dest []<type>, orig []<type>) | Sum all orig array elements to dest on rank 0 |
-| `comm.all_reduce_sum_<type>(mut dest []<type>, orig []<type>) | Sum all orig array elements to dest on all ranks |
-| `comm.reduce_min_<type>(mut dest []<type>, orig []<type>) | Minimize all orig array elements to dest on rank 0 |
-| `comm.all_reduce_min_<type>(mut dest []<type>, orig []<type>) | Minimize all orig array elements to dest on all ranks |
-| `comm.reduce_max_<type>(mut dest []<type>, orig []<type>) | Maximize all orig array elements to dest on rank 0 |
-| `comm.all_reduce_max_<type>(mut dest []<type>, orig []<type>) | Maximize all orig array elements to dest on all ranks |
+| `comm.bcast_from_root_<type>(vals []<type>)` | Copy the values to all processors |
+| `comm.reduce_sum_<type>(mut dest []<type>, orig []<type>)` | Sum all orig array elements to dest on rank 0 |
+| `comm.all_reduce_sum_<type>(mut dest []<type>, orig []<type>)` | Sum all orig array elements to dest on all ranks |
+| `comm.reduce_min_<type>(mut dest []<type>, orig []<type>)` | Minimize all orig array elements to dest on rank 0 |
+| `comm.all_reduce_min_<type>(mut dest []<type>, orig []<type>)` | Minimize all orig array elements to dest on all ranks |
+| `comm.reduce_max_<type>(mut dest []<type>, orig []<type>)` | Maximize all orig array elements to dest on rank 0 |
+| `comm.all_reduce_max_<type>(mut dest []<type>, orig []<type>)` | Maximize all orig array elements to dest on all ranks |
 
-A program must issue a send (on one rank) and matching receive on another
-rank or all ranks, depending on the nature of the method.
 
 As an example
 
 ```v
-/// compute some simple array results using OpenMPI
+// compute some simple array results using OpenMPI
 import vsl.mpi
 
 fn main() {
@@ -102,10 +100,26 @@ fn main() {
         shortd = [0.0, 2.0, 3.0].map(it * f64(1+mpi.world_rank()))
         comm.all_reduce_max_f64(mut reduced, shortd)
         if reduced == ansar {				// true on all ranks
-                println('  $comm.rank() allreduce_max succes')
+                println('  $comm.rank() allreduce_max success')
         }
 
         mpi.finalize()
 }
 
+```
+
+
+The results should look like this for two processors:
+
+```
+$ mpirun -np 2 -H localhost:8 ./t
+Hello from rank 0 of  2 processes
+Hello from rank 1 of  2 processes
+Communicator rank 1 of 2 processors
+Communicator rank 0 of 2 processors
+  1 bcast_from_root success
+  0 bcast_from_root success
+  0 reduce_sum success
+  1 allreduce_max success
+  0 allreduce_max success
 ```
