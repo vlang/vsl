@@ -32,7 +32,7 @@
           <div class="info">
             <div class="module">vsl</div>
             <div class="toggle-version-container">
-              <span>0.1.45 275a997</span>
+              <span>0.1.45 6ff7537</span>
               <div id="dark-mode-toggle" role="switch" aria-checked="false" aria-label="Toggle dark mode"><svg xmlns="http://www.w3.org/2000/svg" class="light-icon" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.7l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-5c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-1 16.95h2V19.5h-2v2.95zm-7.45-3.91l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8z"/></svg>
 <svg xmlns="http://www.w3.org/2000/svg" class="dark-icon" enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24"><g><rect fill="none" height="24" width="24"/></g><g><g><g><path d="M11.1,12.08C8.77,7.57,10.6,3.6,11.63,2.01C6.27,2.2,1.98,6.59,1.98,12c0,0.14,0.02,0.28,0.02,0.42 C2.62,12.15,3.29,12,4,12c1.66,0,3.18,0.83,4.1,2.15C9.77,14.63,11,16.17,11,18c0,1.52-0.87,2.83-2.12,3.51 c0.98,0.32,2.03,0.5,3.11,0.5c3.5,0,6.58-1.8,8.37-4.52C18,17.72,13.38,16.52,11.1,12.08z"/></g><path d="M7,16l-0.18,0C6.4,14.84,5.3,14,4,14c-1.66,0-3,1.34-3,3s1.34,3,3,3c0.62,0,2.49,0,3,0c1.1,0,2-0.9,2-2 C9,16.9,8.1,16,7,16z"/></g></g></svg>
 </div>
@@ -55,51 +55,244 @@
         <div class="doc-content">
           						<section id="readme_mpi" class="doc-node">
 							<div class="title"><h1> mpi <a href="#readme_mpi">#</a></h1></div><h1>Message Passing Interface for parallel computing</h1>
-<p>The <code>mpi</code> package is a light wrapper to the <a href="https://www.open-mpi.org">OpenMPI</a> C++ library designed
-to develop algorithms for parallel computing.</p>
-<p>This package allows parallel computations over the network.</p>
+<p>The <code>mpi</code> package is a simplified wrapper to the <a href="https://www.open-mpi.org">OpenMPI</a> C library designed
+to support algorithms for parallel computing.</p>
+<p>This library allows a program to support parallel computations over the network.
+This is otherwise known as a single-program multiple-data (SPMD) architecture.</p>
+<p>The mpi routines supported include:</p>
+<ul>
+<li><code>start()</code> [deprecated]</li>
+<li><code>initialize()</code></li>
+<li><code>finalize()</code></li>
+<li><code>stop()</code> [deprecated]</li>
+<li><code>world_rank() int</code></li>
+<li><code>world_size() int</code></li>
+<li><code>is_on() bool</code></li>
+<li><code>new_communicator(ranks []int) ?&amp;Communicator</code></li>
+</ul>
+<p>The methods for the Communicator support i32, u32, i64, u64, f32 and f64
+data types.  These allow exchange of arrays of data between processors
+or broadcast from the first processor (the root node with rank == 0).</p>
+<p>A program must issue a send (on one rank) and matching receive on another
+rank or all ranks, depending on the nature of the method.  Use <code>barrier()</code>
+to ensure all ranks are synchronized at that point.</p>
+<p>Support is provided for Linux and the BSDs.</p>
+<p>Once you have created a Communicator, you can use these methods,
+where the <code>&lt;type&gt;</code> is one of the above i32, u32, i64, u64, f32 or f64:</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>comm.rank()</code></td>
+<td>Rank of the processor within the World or group</td>
+</tr>
+<tr>
+<td><code>comm.size()</code></td>
+<td>Size of the list of processors</td>
+</tr>
+<tr>
+<td><code>comm.abort()</code></td>
+<td>Abort the MPI program</td>
+</tr>
+<tr>
+<td><code>comm.barrier()</code></td>
+<td>Resynchronize all processors to this point</td>
+</tr>
+<tr>
+<td><code>comm.send_i32( vals []i32, to_rank int)</code></td>
+<td>Send an array to one rank</td>
+</tr>
+<tr>
+<td><code>comm.recv_i32( vals []i32, from_rank int)</code></td>
+<td>Receive array from one rank</td>
+</tr>
+<tr>
+<td><code>comm.send_u32( ... )</code></td>
+<td>As above for unsigned 32-bit integers</td>
+</tr>
+<tr>
+<td><code>comm.send_i64( ... )</code></td>
+<td>As above for signed 64-bit integers</td>
+</tr>
+<tr>
+<td><code>comm.send_u64( ... )</code></td>
+<td>As above for unsigned 64-bit integers</td>
+</tr>
+<tr>
+<td><code>comm.send_f32( ... )</code></td>
+<td>As above for 32-bit floats</td>
+</tr>
+<tr>
+<td><code>comm.send_f64( ... )</code></td>
+<td>As above for 64-bit floats</td>
+</tr>
+<tr>
+<td><code>comm.send_one_&lt;type&gt;( val &lt;type&gt;, to_rank int)</code></td>
+<td>Send one value to one rank</td>
+</tr>
+<tr>
+<td><code>comm.recv_one_&lt;type&gt;( from_rank int) &lt;type&gt;</code></td>
+<td>Returns one value from one rank</td>
+</tr>
+<tr>
+<td><code>comm.bcast_from_root_&lt;type&gt;(vals []&lt;type&gt;)</code></td>
+<td>Copy the values to all processors</td>
+</tr>
+<tr>
+<td><code>comm.reduce_sum_&lt;type&gt;(mut dest []&lt;type&gt;, orig []&lt;type&gt;)</code></td>
+<td>Sum orig array elements to dest on rank 0</td>
+</tr>
+<tr>
+<td><code>comm.all_reduce_sum_&lt;type&gt;(mut dest []&lt;type&gt;, orig []&lt;type&gt;)</code></td>
+<td>Sum orig array elements to dest on all ranks</td>
+</tr>
+<tr>
+<td><code>comm.reduce_min_&lt;type&gt;(mut dest []&lt;type&gt;, orig []&lt;type&gt;)</code></td>
+<td>Minimize orig array elements to dest on rank 0</td>
+</tr>
+<tr>
+<td><code>comm.all_reduce_min_&lt;type&gt;(mut dest []&lt;type&gt;, orig []&lt;type&gt;)</code></td>
+<td>Minimize orig array elements to dest on all ranks</td>
+</tr>
+<tr>
+<td><code>comm.reduce_max_&lt;type&gt;(mut dest []&lt;type&gt;, orig []&lt;type&gt;)</code></td>
+<td>Maximize orig array elements to dest on rank 0</td>
+</tr>
+<tr>
+<td><code>comm.all_reduce_max_&lt;type&gt;(mut dest []&lt;type&gt;, orig []&lt;type&gt;)</code></td>
+<td>Maximize orig array elements to dest on all ranks</td>
+</tr>
+</tbody>
+</table>
+<p>As an example</p>
+<pre><code class="language-v">/// compute some simple array results using OpenMPI
+import vsl.mpi
+
+fn main() {
+    mut shortd := [1.0, 3.0, 5.0] // all ranks have this array
+    mpi.initialize()?
+
+    println('Hello from rank $mpi.world_rank() of  $mpi.world_size() processes')
+
+    // communicator
+
+    comm := mpi.new_communicator([])?
+    println('Communicator rank $comm.rank() of $comm.size() processors ')
+
+    // barrier
+
+    comm.barrier()
+
+    // broadcast and verify
+
+    if mpi.world_rank() &gt; 0 {
+        shortd[2] = 77.0 // only non-root (rank not 0) has this value
+    }
+    comm.bcast_from_root_f64(shortd) // send original to all
+    if shortd == [1.0, 3.0, 5.0] {
+        println('  $comm.rank() bcast_from_root success')
+    }
+    comm.barrier()
+
+    // reduce and verify
+
+    mut reduced := []f64{len: 3}
+    ansr := shortd.map(it * comm.size())
+    comm.reduce_sum_f64(mut reduced, shortd)
+    if reduced == ansr { // only true on rank 0
+        println('  $comm.rank() reduce_sum success')
+    }
+    comm.barrier()
+
+    // allreduce and verify
+
+    ansar := [0.0, 2.0, 3.0].map(it * f64(mpi.world_size()))
+    shortd = [0.0, 2.0, 3.0].map(it * f64(1 + mpi.world_rank()))
+    comm.all_reduce_max_f64(mut reduced, shortd)
+    if reduced == ansar { // true on all ranks
+        println('  $comm.rank() allreduce_max succes')
+    }
+
+    mpi.finalize()
+}
+</code></pre>
+<p>The results should look like this for two processors:</p>
+<pre><code>$ mpirun -np 2 -H localhost:8 ./t
+Hello from rank 0 of  2 processes
+Hello from rank 1 of  2 processes
+Communicator rank 1 of 2 processors
+Communicator rank 0 of 2 processors
+  1 bcast_from_root success
+  0 bcast_from_root success
+  0 reduce_sum success
+  1 allreduce_max success
+  0 allreduce_max success
+</code></pre>
 
 </section>
 
+						<section id="finalize" class="doc-node">
+							<div class="title"><h2>fn finalize <a href="#finalize">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L72"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">finalize</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<p>finalize MPI</p>
+
+</section>
+						<section id="initialise" class="doc-node">
+							<div class="title"><h2>fn initialise <a href="#initialise">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L52"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">initialise</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">?</span></code></pre>
+<p>initialise readies MPI for use</p>
+
+</section>
+						<section id="initialize" class="doc-node">
+							<div class="title"><h2>fn initialize <a href="#initialize">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L47"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">initialize</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">?</span></code></pre>
+<p>initialize readies MPI for use</p>
+
+</section>
 						<section id="is_on" class="doc-node">
-							<div class="title"><h2>fn is_on <a href="#is_on">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_linux.c.v#L34"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">is_on</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">bool</span></code></pre>
-<p>is_on tells whether MPI is on or not  note: this returns true even after stop</p>
+							<div class="title"><h2>fn is_on <a href="#is_on">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L34"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">is_on</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">bool</span></code></pre>
+<p>is_on tells whether MPI is on or not  note: this returns true even after finish</p>
 
 </section>
 						<section id="new_communicator" class="doc-node">
-							<div class="title"><h2>fn new_communicator <a href="#new_communicator">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_linux.c.v#L83"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">new_communicator</span><span class="token punctuation">(</span>ranks <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">?</span><span class="token operator">&</span>Communicator</code></pre>
+							<div class="title"><h2>fn new_communicator <a href="#new_communicator">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L101"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">new_communicator</span><span class="token punctuation">(</span>ranks <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">?</span><span class="token operator">&</span>Communicator</code></pre>
 <p>new_communicator creates a new communicator or returns the World Communicator
 ranks -- World indices of processors in this Communicator.<br>
-use nil or empty to get the World Communicator</p>
+use nil or empty to get the World Communicator
+Note there is currently no means to use groups.</p>
 
 </section>
 						<section id="start" class="doc-node">
-							<div class="title"><h2>fn start <a href="#start">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_linux.c.v#L41"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">?</span></code></pre>
+							<div class="title"><h2>fn start <a href="#start">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L42"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><div class="attributes"><div class="attribute attribute-deprecated">deprecated: use initialize instead</div></div>
+<pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">?</span></code></pre>
 <p>start initialises MPI</p>
 
 </section>
 						<section id="start_thread_safe" class="doc-node">
-							<div class="title"><h2>fn start_thread_safe <a href="#start_thread_safe">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_linux.c.v#L46"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">start_thread_safe</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">?</span></code></pre>
+							<div class="title"><h2>fn start_thread_safe <a href="#start_thread_safe">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L57"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">start_thread_safe</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">?</span></code></pre>
 <p>start_thread_safe initialises MPI in a thread safe way</p>
 
 </section>
 						<section id="stop" class="doc-node">
-							<div class="title"><h2>fn stop <a href="#stop">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_linux.c.v#L55"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">stop</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+							<div class="title"><h2>fn stop <a href="#stop">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L67"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><div class="attributes"><div class="attribute attribute-deprecated">deprecated: use finalize instead</div></div>
+<pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">stop</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <p>stop finalises MPI</p>
 
 </section>
 						<section id="world_rank" class="doc-node">
-							<div class="title"><h2>fn world_rank <a href="#world_rank">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_linux.c.v#L60"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">world_rank</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
-<p>world_rank returns the processor rank/ID within the World Communicator</p>
+							<div class="title"><h2>fn world_rank <a href="#world_rank">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L77"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">world_rank</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>world_rank returns the processor rank within the World Communicator</p>
 
 </section>
 						<section id="world_size" class="doc-node">
-							<div class="title"><h2>fn world_size <a href="#world_size">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_linux.c.v#L67"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">world_size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+							<div class="title"><h2>fn world_size <a href="#world_size">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L84"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">world_size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>world_size returns the number of processors in the World Communicator</p>
 
 </section>
 						<section id="Communicator" class="doc-node">
-							<div class="title"><h2>struct Communicator <a href="#Communicator">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_linux.c.v#L74"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">Communicator</span> <span class="token punctuation">{</span>
+							<div class="title"><h2>struct Communicator <a href="#Communicator">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L91"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">Communicator</span> <span class="token punctuation">{</span>
 <span class="token keyword">mut</span><span class="token punctuation">:</span>
 	comm  MPI_Comm
 	group MPI_Group
@@ -108,131 +301,370 @@ use nil or empty to get the World Communicator</p>
 
 </section>
 						<section id="Communicator.rank" class="doc-node">
-							<div class="title"><h2>fn (Communicator) rank <a href="#Communicator.rank">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_linux.c.v#L103"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">rank</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
-<p>rank returns the processor rank/ID</p>
+							<div class="title"><h2>fn (Communicator) rank <a href="#Communicator.rank">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L121"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">rank</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>rank returns the processor rank</p>
 
 </section>
 						<section id="Communicator.size" class="doc-node">
-							<div class="title"><h2>fn (Communicator) size <a href="#Communicator.size">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_linux.c.v#L110"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+							<div class="title"><h2>fn (Communicator) size <a href="#Communicator.size">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L128"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>size returns the number of processors</p>
 
 </section>
 						<section id="Communicator.abort" class="doc-node">
-							<div class="title"><h2>fn (Communicator) abort <a href="#Communicator.abort">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_linux.c.v#L117"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">abort</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+							<div class="title"><h2>fn (Communicator) abort <a href="#Communicator.abort">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L135"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">abort</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <p>abort aborts MPI</p>
 
 </section>
 						<section id="Communicator.barrier" class="doc-node">
-							<div class="title"><h2>fn (Communicator) barrier <a href="#Communicator.barrier">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_linux.c.v#L122"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">barrier</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+							<div class="title"><h2>fn (Communicator) barrier <a href="#Communicator.barrier">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L140"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">barrier</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <p>barrier forces synchronisation</p>
 
 </section>
-						<section id="Communicator.bcast_from_root" class="doc-node">
-							<div class="title"><h2>fn (Communicator) bcast_from_root <a href="#Communicator.bcast_from_root">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_linux.c.v#L127"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">bcast_from_root</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
-<p>bcast_from_root broadcasts slice from root (Rank == 0) to all other processors</p>
+						<section id="Communicator.send_i32" class="doc-node">
+							<div class="title"><h2>fn (Communicator) send_i32 <a href="#Communicator.send_i32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L147"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">send_i32</span><span class="token punctuation">(</span>vals <span class="token punctuation">[</span><span class="token punctuation">]</span>i32<span class="token punctuation">,</span> to_rank <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>send_i32 sends values to processor to_rank</p>
 
 </section>
-						<section id="Communicator.bcast_from_root_c" class="doc-node">
-							<div class="title"><h2>fn (Communicator) bcast_from_root_c <a href="#Communicator.bcast_from_root_c">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_linux.c.v#L132"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">bcast_from_root_c</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span>complex<span class="token punctuation">.</span>Complex<span class="token punctuation">)</span></code></pre>
-<p>bcast_from_root_c broadcasts slice from root (Rank == 0) to all other processors (complex version)</p>
+						<section id="Communicator.recv_i32" class="doc-node">
+							<div class="title"><h2>fn (Communicator) recv_i32 <a href="#Communicator.recv_i32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L152"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">recv_i32</span><span class="token punctuation">(</span>vals <span class="token punctuation">[</span><span class="token punctuation">]</span>i32<span class="token punctuation">,</span> from_rank <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>recv_i32 receives values from processor from_rank</p>
 
 </section>
-						<section id="Communicator.reduce_sum" class="doc-node">
-							<div class="title"><h2>fn (Communicator) reduce_sum <a href="#Communicator.reduce_sum">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_linux.c.v#L138"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">reduce_sum</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
-<p>reduce_sum sums all values in 'orig' to 'dest' in root (Rank == 0) processor   note (important): orig and dest must be different slices</p>
+						<section id="Communicator.send_u32" class="doc-node">
+							<div class="title"><h2>fn (Communicator) send_u32 <a href="#Communicator.send_u32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L157"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">send_u32</span><span class="token punctuation">(</span>vals <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u32</span><span class="token punctuation">,</span> to_rank <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>send_u32 sends values to processor to_rank</p>
 
 </section>
-						<section id="Communicator.reduce_sum_c" class="doc-node">
-							<div class="title"><h2>fn (Communicator) reduce_sum_c <a href="#Communicator.reduce_sum_c">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_linux.c.v#L145"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">reduce_sum_c</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span>complex<span class="token punctuation">.</span>Complex<span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span>complex<span class="token punctuation">.</span>Complex<span class="token punctuation">)</span></code></pre>
-<p>reduce_sum_c sums all values in 'orig' to 'dest' in root (Rank == 0) processor (complex version)   note (important): orig and dest must be different slices</p>
+						<section id="Communicator.recv_u32" class="doc-node">
+							<div class="title"><h2>fn (Communicator) recv_u32 <a href="#Communicator.recv_u32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L162"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">recv_u32</span><span class="token punctuation">(</span>vals <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u32</span><span class="token punctuation">,</span> from_rank <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>recv_u32 receives values from processor from_rank</p>
 
 </section>
-						<section id="Communicator.all_reduce_sum" class="doc-node">
-							<div class="title"><h2>fn (Communicator) all_reduce_sum <a href="#Communicator.all_reduce_sum">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_linux.c.v#L152"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">all_reduce_sum</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
-<p>all_reduce_sum combines all values from orig into dest summing values   note (important): orig and dest must be different slices</p>
+						<section id="Communicator.send_i64" class="doc-node">
+							<div class="title"><h2>fn (Communicator) send_i64 <a href="#Communicator.send_i64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L167"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">send_i64</span><span class="token punctuation">(</span>vals <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">i64</span><span class="token punctuation">,</span> to_rank <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>send_i64 sends values to processor to_rank</p>
 
 </section>
-						<section id="Communicator.all_reduce_sum_c" class="doc-node">
-							<div class="title"><h2>fn (Communicator) all_reduce_sum_c <a href="#Communicator.all_reduce_sum_c">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_linux.c.v#L159"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">all_reduce_sum_c</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span>complex<span class="token punctuation">.</span>Complex<span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span>complex<span class="token punctuation">.</span>Complex<span class="token punctuation">)</span></code></pre>
-<p>all_reduce_sum_c combines all values from orig into dest summing values (complex version)   note (important): orig and dest must be different slices</p>
+						<section id="Communicator.recv_i64" class="doc-node">
+							<div class="title"><h2>fn (Communicator) recv_i64 <a href="#Communicator.recv_i64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L172"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">recv_i64</span><span class="token punctuation">(</span>vals <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">i64</span><span class="token punctuation">,</span> from_rank <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>recv_i64 receives values from processor from_rank</p>
 
 </section>
-						<section id="Communicator.all_reduce_min" class="doc-node">
-							<div class="title"><h2>fn (Communicator) all_reduce_min <a href="#Communicator.all_reduce_min">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_linux.c.v#L166"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">all_reduce_min</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
-<p>all_reduce_min combines all values from orig into dest picking minimum values   note (important): orig and dest must be different slices</p>
+						<section id="Communicator.send_u64" class="doc-node">
+							<div class="title"><h2>fn (Communicator) send_u64 <a href="#Communicator.send_u64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L177"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">send_u64</span><span class="token punctuation">(</span>vals <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u64</span><span class="token punctuation">,</span> to_rank <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>send_u64 sends values to processor to_rank</p>
 
 </section>
-						<section id="Communicator.all_reduce_max" class="doc-node">
-							<div class="title"><h2>fn (Communicator) all_reduce_max <a href="#Communicator.all_reduce_max">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_linux.c.v#L173"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">all_reduce_max</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
-<p>all_reduce_max combines all values from orig into dest picking minimum values   note (important): orig and dest must be different slices</p>
+						<section id="Communicator.recv_u64" class="doc-node">
+							<div class="title"><h2>fn (Communicator) recv_u64 <a href="#Communicator.recv_u64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L182"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">recv_u64</span><span class="token punctuation">(</span>vals <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u64</span><span class="token punctuation">,</span> from_rank <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>recv_u64 receives values from processor from_rank</p>
 
 </section>
-						<section id="Communicator.all_reduce_min_i" class="doc-node">
-							<div class="title"><h2>fn (Communicator) all_reduce_min_i <a href="#Communicator.all_reduce_min_i">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_linux.c.v#L180"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">all_reduce_min_i</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
-<p>all_reduce_min_i combines all values from orig into dest picking minimum values (integer version)   note (important): orig and dest must be different slices</p>
+						<section id="Communicator.send_f32" class="doc-node">
+							<div class="title"><h2>fn (Communicator) send_f32 <a href="#Communicator.send_f32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L187"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">send_f32</span><span class="token punctuation">(</span>vals <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span><span class="token punctuation">,</span> to_rank <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>send_f32 sends values to processor to_rank</p>
 
 </section>
-						<section id="Communicator.all_reduce_max_i" class="doc-node">
-							<div class="title"><h2>fn (Communicator) all_reduce_max_i <a href="#Communicator.all_reduce_max_i">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_linux.c.v#L187"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">all_reduce_max_i</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
-<p>all_reduce_max_i combines all values from orig into dest picking minimum values (integer version)   note (important): orig and dest must be different slices</p>
+						<section id="Communicator.recv_f32" class="doc-node">
+							<div class="title"><h2>fn (Communicator) recv_f32 <a href="#Communicator.recv_f32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L192"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">recv_f32</span><span class="token punctuation">(</span>vals <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span><span class="token punctuation">,</span> from_rank <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>recv_f32 receives values from processor from_rank</p>
 
 </section>
-						<section id="Communicator.send" class="doc-node">
-							<div class="title"><h2>fn (Communicator) send <a href="#Communicator.send">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_linux.c.v#L193"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">send</span><span class="token punctuation">(</span>vals <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> to_id <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
-<p>send sends values to processor toID</p>
+						<section id="Communicator.send_f64" class="doc-node">
+							<div class="title"><h2>fn (Communicator) send_f64 <a href="#Communicator.send_f64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L197"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">send_f64</span><span class="token punctuation">(</span>vals <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> to_rank <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>send_f64 sends values to processor to_rank</p>
 
 </section>
-						<section id="Communicator.recv" class="doc-node">
-							<div class="title"><h2>fn (Communicator) recv <a href="#Communicator.recv">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_linux.c.v#L198"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">recv</span><span class="token punctuation">(</span>vals <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> from_id <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
-<p>recv receives values from processor fromId</p>
+						<section id="Communicator.recv_f64" class="doc-node">
+							<div class="title"><h2>fn (Communicator) recv_f64 <a href="#Communicator.recv_f64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L202"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">recv_f64</span><span class="token punctuation">(</span>vals <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> from_rank <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>recv_f64 receives values from processor from_rank</p>
 
 </section>
-						<section id="Communicator.send_c" class="doc-node">
-							<div class="title"><h2>fn (Communicator) send_c <a href="#Communicator.send_c">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_linux.c.v#L203"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">send_c</span><span class="token punctuation">(</span>vals <span class="token punctuation">[</span><span class="token punctuation">]</span>complex<span class="token punctuation">.</span>Complex<span class="token punctuation">,</span> to_id <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
-<p>send_c sends values to processor toID (complex version)</p>
+						<section id="Communicator.send_one_i32" class="doc-node">
+							<div class="title"><h2>fn (Communicator) send_one_i32 <a href="#Communicator.send_one_i32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L207"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">send_one_i32</span><span class="token punctuation">(</span>val i32<span class="token punctuation">,</span> to_rank <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>send_one_i32 sends one value to processor to_rank</p>
 
 </section>
-						<section id="Communicator.recv_c" class="doc-node">
-							<div class="title"><h2>fn (Communicator) recv_c <a href="#Communicator.recv_c">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_linux.c.v#L208"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">recv_c</span><span class="token punctuation">(</span>vals <span class="token punctuation">[</span><span class="token punctuation">]</span>complex<span class="token punctuation">.</span>Complex<span class="token punctuation">,</span> from_id <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
-<p>recv_c receives values from processor fromId (complex version)</p>
+						<section id="Communicator.recv_one_i32" class="doc-node">
+							<div class="title"><h2>fn (Communicator) recv_one_i32 <a href="#Communicator.recv_one_i32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L213"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">recv_one_i32</span><span class="token punctuation">(</span>from_rank <span class="token builtin">int</span><span class="token punctuation">)</span> i32</code></pre>
+<p>recv_one_i32 receives one value from processor from_rank</p>
 
 </section>
-						<section id="Communicator.send_i" class="doc-node">
-							<div class="title"><h2>fn (Communicator) send_i <a href="#Communicator.send_i">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_linux.c.v#L213"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">send_i</span><span class="token punctuation">(</span>vals <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> to_id <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
-<p>send_i sends values to processor toID (integer version)</p>
+						<section id="Communicator.send_one_u32" class="doc-node">
+							<div class="title"><h2>fn (Communicator) send_one_u32 <a href="#Communicator.send_one_u32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L220"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">send_one_u32</span><span class="token punctuation">(</span>val <span class="token builtin">u32</span><span class="token punctuation">,</span> to_rank <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>send_one_u32 sends one value to processor to_rank</p>
 
 </section>
-						<section id="Communicator.recv_i" class="doc-node">
-							<div class="title"><h2>fn (Communicator) recv_i <a href="#Communicator.recv_i">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_linux.c.v#L218"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">recv_i</span><span class="token punctuation">(</span>vals <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> from_id <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
-<p>recv_i receives values from processor fromId (integer version)</p>
+						<section id="Communicator.recv_one_u32" class="doc-node">
+							<div class="title"><h2>fn (Communicator) recv_one_u32 <a href="#Communicator.recv_one_u32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L226"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">recv_one_u32</span><span class="token punctuation">(</span>from_rank <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">u32</span></code></pre>
+<p>recv_one_u32 receives one value from processor from_rank</p>
 
 </section>
-						<section id="Communicator.send_one" class="doc-node">
-							<div class="title"><h2>fn (Communicator) send_one <a href="#Communicator.send_one">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_linux.c.v#L223"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">send_one</span><span class="token punctuation">(</span>val <span class="token builtin">f64</span><span class="token punctuation">,</span> to_id <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
-<p>send_one sends one value to processor toID</p>
+						<section id="Communicator.send_one_i64" class="doc-node">
+							<div class="title"><h2>fn (Communicator) send_one_i64 <a href="#Communicator.send_one_i64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L233"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">send_one_i64</span><span class="token punctuation">(</span>val <span class="token builtin">i64</span><span class="token punctuation">,</span> to_rank <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>send_one_i64 sends one value to processor to_rank</p>
 
 </section>
-						<section id="Communicator.recv_one" class="doc-node">
-							<div class="title"><h2>fn (Communicator) recv_one <a href="#Communicator.recv_one">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_linux.c.v#L229"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">recv_one</span><span class="token punctuation">(</span>from_id <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
-<p>recv_one receives one value from processor fromId</p>
+						<section id="Communicator.recv_one_i64" class="doc-node">
+							<div class="title"><h2>fn (Communicator) recv_one_i64 <a href="#Communicator.recv_one_i64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L239"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">recv_one_i64</span><span class="token punctuation">(</span>from_rank <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">i64</span></code></pre>
+<p>recv_one_i64 receives one value from processor from_rank</p>
 
 </section>
-						<section id="Communicator.send_one_i" class="doc-node">
-							<div class="title"><h2>fn (Communicator) send_one_i <a href="#Communicator.send_one_i">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_linux.c.v#L236"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">send_one_i</span><span class="token punctuation">(</span>val <span class="token builtin">int</span><span class="token punctuation">,</span> to_id <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
-<p>send_one_i sends one value to processor toID (integer version)</p>
+						<section id="Communicator.send_one_u64" class="doc-node">
+							<div class="title"><h2>fn (Communicator) send_one_u64 <a href="#Communicator.send_one_u64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L246"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">send_one_u64</span><span class="token punctuation">(</span>val <span class="token builtin">u64</span><span class="token punctuation">,</span> to_rank <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>send_one_u64 sends one value to processor to_rank</p>
 
 </section>
-						<section id="Communicator.recv_one_i" class="doc-node">
-							<div class="title"><h2>fn (Communicator) recv_one_i <a href="#Communicator.recv_one_i">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_linux.c.v#L242"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">recv_one_i</span><span class="token punctuation">(</span>from_id <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
-<p>recv_one_i receives one value from processor fromId (integer version)</p>
+						<section id="Communicator.recv_one_u64" class="doc-node">
+							<div class="title"><h2>fn (Communicator) recv_one_u64 <a href="#Communicator.recv_one_u64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L252"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">recv_one_u64</span><span class="token punctuation">(</span>from_rank <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">u64</span></code></pre>
+<p>recv_one_u64 receives one value from processor from_rank</p>
+
+</section>
+						<section id="Communicator.send_one_f32" class="doc-node">
+							<div class="title"><h2>fn (Communicator) send_one_f32 <a href="#Communicator.send_one_f32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L259"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">send_one_f32</span><span class="token punctuation">(</span>val <span class="token builtin">f32</span><span class="token punctuation">,</span> to_rank <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>send_one_f32 sends one value to processor to_rank</p>
+
+</section>
+						<section id="Communicator.recv_one_f32" class="doc-node">
+							<div class="title"><h2>fn (Communicator) recv_one_f32 <a href="#Communicator.recv_one_f32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L265"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">recv_one_f32</span><span class="token punctuation">(</span>from_rank <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">f32</span></code></pre>
+<p>recv_one_f32 receives one value from processor from_rank</p>
+
+</section>
+						<section id="Communicator.send_one_f64" class="doc-node">
+							<div class="title"><h2>fn (Communicator) send_one_f64 <a href="#Communicator.send_one_f64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L272"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">send_one_f64</span><span class="token punctuation">(</span>val <span class="token builtin">f64</span><span class="token punctuation">,</span> to_rank <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>send_one_f64 sends one value to processor to_rank</p>
+
+</section>
+						<section id="Communicator.recv_one_f64" class="doc-node">
+							<div class="title"><h2>fn (Communicator) recv_one_f64 <a href="#Communicator.recv_one_f64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L278"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">recv_one_f64</span><span class="token punctuation">(</span>from_rank <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>recv_one_f64 receives one value from processor from_rank</p>
+
+</section>
+						<section id="Communicator.bcast_from_root_i32" class="doc-node">
+							<div class="title"><h2>fn (Communicator) bcast_from_root_i32 <a href="#Communicator.bcast_from_root_i32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L285"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">bcast_from_root_i32</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span>i32<span class="token punctuation">)</span></code></pre>
+<p>bcast_from_root_i32 broadcasts slice x from root (Rank == 0) to all other processors</p>
+
+</section>
+						<section id="Communicator.bcast_from_root_u32" class="doc-node">
+							<div class="title"><h2>fn (Communicator) bcast_from_root_u32 <a href="#Communicator.bcast_from_root_u32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L290"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">bcast_from_root_u32</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u32</span><span class="token punctuation">)</span></code></pre>
+<p>bcast_from_root_u32 broadcasts slice x from root (Rank == 0) to all other processors</p>
+
+</section>
+						<section id="Communicator.bcast_from_root_i64" class="doc-node">
+							<div class="title"><h2>fn (Communicator) bcast_from_root_i64 <a href="#Communicator.bcast_from_root_i64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L295"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">bcast_from_root_i64</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">i64</span><span class="token punctuation">)</span></code></pre>
+<p>bcast_from_root_i64 broadcasts slice x from root (Rank == 0) to all other processors</p>
+
+</section>
+						<section id="Communicator.bcast_from_root_u64" class="doc-node">
+							<div class="title"><h2>fn (Communicator) bcast_from_root_u64 <a href="#Communicator.bcast_from_root_u64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L300"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">bcast_from_root_u64</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u64</span><span class="token punctuation">)</span></code></pre>
+<p>bcast_from_root_u64 broadcasts slice x from root (Rank == 0) to all other processors</p>
+
+</section>
+						<section id="Communicator.bcast_from_root_f32" class="doc-node">
+							<div class="title"><h2>fn (Communicator) bcast_from_root_f32 <a href="#Communicator.bcast_from_root_f32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L305"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">bcast_from_root_f32</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span><span class="token punctuation">)</span></code></pre>
+<p>bcast_from_root_f32 broadcasts slice x from root (Rank == 0) to all other processors</p>
+
+</section>
+						<section id="Communicator.bcast_from_root_f64" class="doc-node">
+							<div class="title"><h2>fn (Communicator) bcast_from_root_f64 <a href="#Communicator.bcast_from_root_f64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L310"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">bcast_from_root_f64</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+<p>bcast_from_root_f64 broadcasts slice x from root (Rank == 0) to all other processors</p>
+
+</section>
+						<section id="Communicator.reduce_sum_i32" class="doc-node">
+							<div class="title"><h2>fn (Communicator) reduce_sum_i32 <a href="#Communicator.reduce_sum_i32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L316"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">reduce_sum_i32</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span>i32<span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span>i32<span class="token punctuation">)</span></code></pre>
+<p>reduce_sum_i32 sums all values in 'orig' to 'dest' in root (Rank == 0) processor   note (important): orig and dest must be different slices</p>
+
+</section>
+						<section id="Communicator.all_reduce_sum_i32" class="doc-node">
+							<div class="title"><h2>fn (Communicator) all_reduce_sum_i32 <a href="#Communicator.all_reduce_sum_i32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L323"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">all_reduce_sum_i32</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span>i32<span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span>i32<span class="token punctuation">)</span></code></pre>
+<p>all_reduce_sum_i32 combines all values from orig into dest summing values   note (important): orig and dest must be different slices</p>
+
+</section>
+						<section id="Communicator.reduce_min_i32" class="doc-node">
+							<div class="title"><h2>fn (Communicator) reduce_min_i32 <a href="#Communicator.reduce_min_i32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L330"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">reduce_min_i32</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span>i32<span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span>i32<span class="token punctuation">)</span></code></pre>
+<p>reduce_min_i32 minimizes all values in 'orig' to 'dest' in root (Rank == 0) processor   note (important): orig and dest must be different slices</p>
+
+</section>
+						<section id="Communicator.all_reduce_min_i32" class="doc-node">
+							<div class="title"><h2>fn (Communicator) all_reduce_min_i32 <a href="#Communicator.all_reduce_min_i32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L337"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">all_reduce_min_i32</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span>i32<span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span>i32<span class="token punctuation">)</span></code></pre>
+<p>all_reduce_min_i32 minimizes all values from orig into all dest values   note (important): orig and dest must be different slices</p>
+
+</section>
+						<section id="Communicator.reduce_max_i32" class="doc-node">
+							<div class="title"><h2>fn (Communicator) reduce_max_i32 <a href="#Communicator.reduce_max_i32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L344"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">reduce_max_i32</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span>i32<span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span>i32<span class="token punctuation">)</span></code></pre>
+<p>reduce_max_i32 maximizes all values in 'orig' to 'dest' in root (Rank == 0) processor   note (important): orig and dest must be different slices</p>
+
+</section>
+						<section id="Communicator.all_reduce_max_i32" class="doc-node">
+							<div class="title"><h2>fn (Communicator) all_reduce_max_i32 <a href="#Communicator.all_reduce_max_i32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L351"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">all_reduce_max_i32</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span>i32<span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span>i32<span class="token punctuation">)</span></code></pre>
+<p>all_reduce_max_i32 maximizes all values from orig into all dest values   note (important): orig and dest must be different slices</p>
+
+</section>
+						<section id="Communicator.reduce_sum_u32" class="doc-node">
+							<div class="title"><h2>fn (Communicator) reduce_sum_u32 <a href="#Communicator.reduce_sum_u32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L358"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">reduce_sum_u32</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u32</span><span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u32</span><span class="token punctuation">)</span></code></pre>
+<p>reduce_sum_u32 sums all values in 'orig' to 'dest' in root (Rank == 0) processor   note (important): orig and dest must be different slices</p>
+
+</section>
+						<section id="Communicator.all_reduce_sum_u32" class="doc-node">
+							<div class="title"><h2>fn (Communicator) all_reduce_sum_u32 <a href="#Communicator.all_reduce_sum_u32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L365"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">all_reduce_sum_u32</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u32</span><span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u32</span><span class="token punctuation">)</span></code></pre>
+<p>all_reduce_sum_u32 combines all values from orig into dest summing values   note (important): orig and dest must be different slices</p>
+
+</section>
+						<section id="Communicator.reduce_min_u32" class="doc-node">
+							<div class="title"><h2>fn (Communicator) reduce_min_u32 <a href="#Communicator.reduce_min_u32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L372"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">reduce_min_u32</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u32</span><span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u32</span><span class="token punctuation">)</span></code></pre>
+<p>reduce_min_u32 minimizes all values in 'orig' to 'dest' in root (Rank == 0) processor   note (important): orig and dest must be different slices</p>
+
+</section>
+						<section id="Communicator.all_reduce_min_u32" class="doc-node">
+							<div class="title"><h2>fn (Communicator) all_reduce_min_u32 <a href="#Communicator.all_reduce_min_u32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L379"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">all_reduce_min_u32</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u32</span><span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u32</span><span class="token punctuation">)</span></code></pre>
+<p>all_reduce_min_u32 minimizes all values from orig into all dest values   note (important): orig and dest must be different slices</p>
+
+</section>
+						<section id="Communicator.reduce_max_u32" class="doc-node">
+							<div class="title"><h2>fn (Communicator) reduce_max_u32 <a href="#Communicator.reduce_max_u32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L386"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">reduce_max_u32</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u32</span><span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u32</span><span class="token punctuation">)</span></code></pre>
+<p>reduce_max_u32 maximizes all values in 'orig' to 'dest' in root (Rank == 0) processor   note (important): orig and dest must be different slices</p>
+
+</section>
+						<section id="Communicator.all_reduce_max_u32" class="doc-node">
+							<div class="title"><h2>fn (Communicator) all_reduce_max_u32 <a href="#Communicator.all_reduce_max_u32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L393"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">all_reduce_max_u32</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u32</span><span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u32</span><span class="token punctuation">)</span></code></pre>
+<p>all_reduce_max_u32 maximizes all values from orig into all dest values   note (important): orig and dest must be different slices</p>
+
+</section>
+						<section id="Communicator.reduce_sum_i64" class="doc-node">
+							<div class="title"><h2>fn (Communicator) reduce_sum_i64 <a href="#Communicator.reduce_sum_i64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L400"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">reduce_sum_i64</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">i64</span><span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">i64</span><span class="token punctuation">)</span></code></pre>
+<p>reduce_sum_i64 sums all values in 'orig' to 'dest' in root (Rank == 0) processor   note (important): orig and dest must be different slices</p>
+
+</section>
+						<section id="Communicator.all_reduce_sum_i64" class="doc-node">
+							<div class="title"><h2>fn (Communicator) all_reduce_sum_i64 <a href="#Communicator.all_reduce_sum_i64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L407"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">all_reduce_sum_i64</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">i64</span><span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">i64</span><span class="token punctuation">)</span></code></pre>
+<p>all_reduce_sum_i64 combines all values from orig into dest summing values   note (important): orig and dest must be different slices</p>
+
+</section>
+						<section id="Communicator.reduce_min_i64" class="doc-node">
+							<div class="title"><h2>fn (Communicator) reduce_min_i64 <a href="#Communicator.reduce_min_i64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L414"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">reduce_min_i64</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">i64</span><span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">i64</span><span class="token punctuation">)</span></code></pre>
+<p>reduce_min_i64 minimizes all values in 'orig' to 'dest' in root (Rank == 0) processor   note (important): orig and dest must be different slices</p>
+
+</section>
+						<section id="Communicator.all_reduce_min_i64" class="doc-node">
+							<div class="title"><h2>fn (Communicator) all_reduce_min_i64 <a href="#Communicator.all_reduce_min_i64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L421"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">all_reduce_min_i64</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">i64</span><span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">i64</span><span class="token punctuation">)</span></code></pre>
+<p>all_reduce_min_i64 minimizes all values from orig into all dest values   note (important): orig and dest must be different slices</p>
+
+</section>
+						<section id="Communicator.reduce_max_i64" class="doc-node">
+							<div class="title"><h2>fn (Communicator) reduce_max_i64 <a href="#Communicator.reduce_max_i64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L428"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">reduce_max_i64</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">i64</span><span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">i64</span><span class="token punctuation">)</span></code></pre>
+<p>reduce_max_i64 maximizes all values in 'orig' to 'dest' in root (Rank == 0) processor   note (important): orig and dest must be different slices</p>
+
+</section>
+						<section id="Communicator.all_reduce_max_i64" class="doc-node">
+							<div class="title"><h2>fn (Communicator) all_reduce_max_i64 <a href="#Communicator.all_reduce_max_i64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L435"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">all_reduce_max_i64</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">i64</span><span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">i64</span><span class="token punctuation">)</span></code></pre>
+<p>all_reduce_max_i64 maximizes all values from orig into all dest values   note (important): orig and dest must be different slices</p>
+
+</section>
+						<section id="Communicator.reduce_sum_u64" class="doc-node">
+							<div class="title"><h2>fn (Communicator) reduce_sum_u64 <a href="#Communicator.reduce_sum_u64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L442"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">reduce_sum_u64</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u64</span><span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u64</span><span class="token punctuation">)</span></code></pre>
+<p>reduce_sum_u64 sums all values in 'orig' to 'dest' in root (Rank == 0) processor   note (important): orig and dest must be different slices</p>
+
+</section>
+						<section id="Communicator.all_reduce_sum_u64" class="doc-node">
+							<div class="title"><h2>fn (Communicator) all_reduce_sum_u64 <a href="#Communicator.all_reduce_sum_u64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L449"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">all_reduce_sum_u64</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u64</span><span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u64</span><span class="token punctuation">)</span></code></pre>
+<p>all_reduce_sum_u64 combines all values from orig into dest summing values   note (important): orig and dest must be different slices</p>
+
+</section>
+						<section id="Communicator.reduce_min_u64" class="doc-node">
+							<div class="title"><h2>fn (Communicator) reduce_min_u64 <a href="#Communicator.reduce_min_u64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L456"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">reduce_min_u64</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u64</span><span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u64</span><span class="token punctuation">)</span></code></pre>
+<p>reduce_min_u64 minimizes all values in 'orig' to 'dest' in root (Rank == 0) processor   note (important): orig and dest must be different slices</p>
+
+</section>
+						<section id="Communicator.all_reduce_min_u64" class="doc-node">
+							<div class="title"><h2>fn (Communicator) all_reduce_min_u64 <a href="#Communicator.all_reduce_min_u64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L463"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">all_reduce_min_u64</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u64</span><span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u64</span><span class="token punctuation">)</span></code></pre>
+<p>all_reduce_min_u64 minimizes all values from orig into all dest values   note (important): orig and dest must be different slices</p>
+
+</section>
+						<section id="Communicator.reduce_max_u64" class="doc-node">
+							<div class="title"><h2>fn (Communicator) reduce_max_u64 <a href="#Communicator.reduce_max_u64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L470"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">reduce_max_u64</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u64</span><span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u64</span><span class="token punctuation">)</span></code></pre>
+<p>reduce_max_u64 maximizes all values in 'orig' to 'dest' in root (Rank == 0) processor   note (important): orig and dest must be different slices</p>
+
+</section>
+						<section id="Communicator.all_reduce_max_u64" class="doc-node">
+							<div class="title"><h2>fn (Communicator) all_reduce_max_u64 <a href="#Communicator.all_reduce_max_u64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L477"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">all_reduce_max_u64</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u64</span><span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u64</span><span class="token punctuation">)</span></code></pre>
+<p>all_reduce_max_u64 maximizes all values from orig into all dest values   note (important): orig and dest must be different slices</p>
+
+</section>
+						<section id="Communicator.reduce_sum_f32" class="doc-node">
+							<div class="title"><h2>fn (Communicator) reduce_sum_f32 <a href="#Communicator.reduce_sum_f32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L484"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">reduce_sum_f32</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span><span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span><span class="token punctuation">)</span></code></pre>
+<p>reduce_sum_f32 sums all values in 'orig' to 'dest' in root (Rank == 0) processor   note (important): orig and dest must be different slices</p>
+
+</section>
+						<section id="Communicator.all_reduce_sum_f32" class="doc-node">
+							<div class="title"><h2>fn (Communicator) all_reduce_sum_f32 <a href="#Communicator.all_reduce_sum_f32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L491"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">all_reduce_sum_f32</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span><span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span><span class="token punctuation">)</span></code></pre>
+<p>all_reduce_sum_f32 combines all values from orig into dest summing values   note (important): orig and dest must be different slices</p>
+
+</section>
+						<section id="Communicator.reduce_min_f32" class="doc-node">
+							<div class="title"><h2>fn (Communicator) reduce_min_f32 <a href="#Communicator.reduce_min_f32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L498"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">reduce_min_f32</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span><span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span><span class="token punctuation">)</span></code></pre>
+<p>reduce_min_f32 minimizes all values in 'orig' to 'dest' in root (Rank == 0) processor   note (important): orig and dest must be different slices</p>
+
+</section>
+						<section id="Communicator.all_reduce_min_f32" class="doc-node">
+							<div class="title"><h2>fn (Communicator) all_reduce_min_f32 <a href="#Communicator.all_reduce_min_f32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L505"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">all_reduce_min_f32</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span><span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span><span class="token punctuation">)</span></code></pre>
+<p>all_reduce_min_f32 minimizes all values from orig into all dest values   note (important): orig and dest must be different slices</p>
+
+</section>
+						<section id="Communicator.reduce_max_f32" class="doc-node">
+							<div class="title"><h2>fn (Communicator) reduce_max_f32 <a href="#Communicator.reduce_max_f32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L512"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">reduce_max_f32</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span><span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span><span class="token punctuation">)</span></code></pre>
+<p>reduce_max_f32 maximizes all values in 'orig' to 'dest' in root (Rank == 0) processor   note (important): orig and dest must be different slices</p>
+
+</section>
+						<section id="Communicator.all_reduce_max_f32" class="doc-node">
+							<div class="title"><h2>fn (Communicator) all_reduce_max_f32 <a href="#Communicator.all_reduce_max_f32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L519"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">all_reduce_max_f32</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span><span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span><span class="token punctuation">)</span></code></pre>
+<p>all_reduce_max_f32 maximizes all values from orig into all dest values   note (important): orig and dest must be different slices</p>
+
+</section>
+						<section id="Communicator.reduce_sum_f64" class="doc-node">
+							<div class="title"><h2>fn (Communicator) reduce_sum_f64 <a href="#Communicator.reduce_sum_f64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L526"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">reduce_sum_f64</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+<p>reduce_sum_f64 sums all values in 'orig' to 'dest' in root (Rank == 0) processor   note (important): orig and dest must be different slices</p>
+
+</section>
+						<section id="Communicator.all_reduce_sum_f64" class="doc-node">
+							<div class="title"><h2>fn (Communicator) all_reduce_sum_f64 <a href="#Communicator.all_reduce_sum_f64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L533"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">all_reduce_sum_f64</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+<p>all_reduce_sum_f64 combines all values from orig into dest summing values   note (important): orig and dest must be different slices</p>
+
+</section>
+						<section id="Communicator.reduce_min_f64" class="doc-node">
+							<div class="title"><h2>fn (Communicator) reduce_min_f64 <a href="#Communicator.reduce_min_f64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L540"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">reduce_min_f64</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+<p>reduce_min_f64 minimizes all values in 'orig' to 'dest' in root (Rank == 0) processor   note (important): orig and dest must be different slices</p>
+
+</section>
+						<section id="Communicator.all_reduce_min_f64" class="doc-node">
+							<div class="title"><h2>fn (Communicator) all_reduce_min_f64 <a href="#Communicator.all_reduce_min_f64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L547"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">all_reduce_min_f64</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+<p>all_reduce_min_f64 minimizes all values from orig into all dest values   note (important): orig and dest must be different slices</p>
+
+</section>
+						<section id="Communicator.reduce_max_f64" class="doc-node">
+							<div class="title"><h2>fn (Communicator) reduce_max_f64 <a href="#Communicator.reduce_max_f64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L554"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">reduce_max_f64</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+<p>reduce_max_f64 maximizes all values in 'orig' to 'dest' in root (Rank == 0) processor   note (important): orig and dest must be different slices</p>
+
+</section>
+						<section id="Communicator.all_reduce_max_f64" class="doc-node">
+							<div class="title"><h2>fn (Communicator) all_reduce_max_f64 <a href="#Communicator.all_reduce_max_f64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/mpi/mpi_nix.c.v#L561"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Communicator<span class="token punctuation">)</span> <span class="token function">all_reduce_max_f64</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dest <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> orig <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+<p>all_reduce_max_f64 maximizes all values from orig into all dest values   note (important): orig and dest must be different slices</p>
 
 </section>
 
           <div class="footer">
-            Powered by vdoc. Generated on: 11 Aug 2022 07:22:11
+            Powered by vdoc. Generated on: 24 Aug 2022 00:10:14
           </div>
         </div>
         <div class="doc-toc"><ul><li class="open"><a href="#readme_mpi">README</a></li>
+<li class="open"><a href="#finalize">fn finalize</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#initialise">fn initialise</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#initialize">fn initialize</a>        <ul>
+</ul>
+</li>
 <li class="open"><a href="#is_on">fn is_on</a>        <ul>
 </ul>
 </li>
@@ -259,26 +691,72 @@ use nil or empty to get the World Communicator</p>
 <li><a href="#Communicator.size">fn size</a></li>
 <li><a href="#Communicator.abort">fn abort</a></li>
 <li><a href="#Communicator.barrier">fn barrier</a></li>
-<li><a href="#Communicator.bcast_from_root">fn bcast_from_root</a></li>
-<li><a href="#Communicator.bcast_from_root_c">fn bcast_from_root_c</a></li>
-<li><a href="#Communicator.reduce_sum">fn reduce_sum</a></li>
-<li><a href="#Communicator.reduce_sum_c">fn reduce_sum_c</a></li>
-<li><a href="#Communicator.all_reduce_sum">fn all_reduce_sum</a></li>
-<li><a href="#Communicator.all_reduce_sum_c">fn all_reduce_sum_c</a></li>
-<li><a href="#Communicator.all_reduce_min">fn all_reduce_min</a></li>
-<li><a href="#Communicator.all_reduce_max">fn all_reduce_max</a></li>
-<li><a href="#Communicator.all_reduce_min_i">fn all_reduce_min_i</a></li>
-<li><a href="#Communicator.all_reduce_max_i">fn all_reduce_max_i</a></li>
-<li><a href="#Communicator.send">fn send</a></li>
-<li><a href="#Communicator.recv">fn recv</a></li>
-<li><a href="#Communicator.send_c">fn send_c</a></li>
-<li><a href="#Communicator.recv_c">fn recv_c</a></li>
-<li><a href="#Communicator.send_i">fn send_i</a></li>
-<li><a href="#Communicator.recv_i">fn recv_i</a></li>
-<li><a href="#Communicator.send_one">fn send_one</a></li>
-<li><a href="#Communicator.recv_one">fn recv_one</a></li>
-<li><a href="#Communicator.send_one_i">fn send_one_i</a></li>
-<li><a href="#Communicator.recv_one_i">fn recv_one_i</a></li>
+<li><a href="#Communicator.send_i32">fn send_i32</a></li>
+<li><a href="#Communicator.recv_i32">fn recv_i32</a></li>
+<li><a href="#Communicator.send_u32">fn send_u32</a></li>
+<li><a href="#Communicator.recv_u32">fn recv_u32</a></li>
+<li><a href="#Communicator.send_i64">fn send_i64</a></li>
+<li><a href="#Communicator.recv_i64">fn recv_i64</a></li>
+<li><a href="#Communicator.send_u64">fn send_u64</a></li>
+<li><a href="#Communicator.recv_u64">fn recv_u64</a></li>
+<li><a href="#Communicator.send_f32">fn send_f32</a></li>
+<li><a href="#Communicator.recv_f32">fn recv_f32</a></li>
+<li><a href="#Communicator.send_f64">fn send_f64</a></li>
+<li><a href="#Communicator.recv_f64">fn recv_f64</a></li>
+<li><a href="#Communicator.send_one_i32">fn send_one_i32</a></li>
+<li><a href="#Communicator.recv_one_i32">fn recv_one_i32</a></li>
+<li><a href="#Communicator.send_one_u32">fn send_one_u32</a></li>
+<li><a href="#Communicator.recv_one_u32">fn recv_one_u32</a></li>
+<li><a href="#Communicator.send_one_i64">fn send_one_i64</a></li>
+<li><a href="#Communicator.recv_one_i64">fn recv_one_i64</a></li>
+<li><a href="#Communicator.send_one_u64">fn send_one_u64</a></li>
+<li><a href="#Communicator.recv_one_u64">fn recv_one_u64</a></li>
+<li><a href="#Communicator.send_one_f32">fn send_one_f32</a></li>
+<li><a href="#Communicator.recv_one_f32">fn recv_one_f32</a></li>
+<li><a href="#Communicator.send_one_f64">fn send_one_f64</a></li>
+<li><a href="#Communicator.recv_one_f64">fn recv_one_f64</a></li>
+<li><a href="#Communicator.bcast_from_root_i32">fn bcast_from_root_i32</a></li>
+<li><a href="#Communicator.bcast_from_root_u32">fn bcast_from_root_u32</a></li>
+<li><a href="#Communicator.bcast_from_root_i64">fn bcast_from_root_i64</a></li>
+<li><a href="#Communicator.bcast_from_root_u64">fn bcast_from_root_u64</a></li>
+<li><a href="#Communicator.bcast_from_root_f32">fn bcast_from_root_f32</a></li>
+<li><a href="#Communicator.bcast_from_root_f64">fn bcast_from_root_f64</a></li>
+<li><a href="#Communicator.reduce_sum_i32">fn reduce_sum_i32</a></li>
+<li><a href="#Communicator.all_reduce_sum_i32">fn all_reduce_sum_i32</a></li>
+<li><a href="#Communicator.reduce_min_i32">fn reduce_min_i32</a></li>
+<li><a href="#Communicator.all_reduce_min_i32">fn all_reduce_min_i32</a></li>
+<li><a href="#Communicator.reduce_max_i32">fn reduce_max_i32</a></li>
+<li><a href="#Communicator.all_reduce_max_i32">fn all_reduce_max_i32</a></li>
+<li><a href="#Communicator.reduce_sum_u32">fn reduce_sum_u32</a></li>
+<li><a href="#Communicator.all_reduce_sum_u32">fn all_reduce_sum_u32</a></li>
+<li><a href="#Communicator.reduce_min_u32">fn reduce_min_u32</a></li>
+<li><a href="#Communicator.all_reduce_min_u32">fn all_reduce_min_u32</a></li>
+<li><a href="#Communicator.reduce_max_u32">fn reduce_max_u32</a></li>
+<li><a href="#Communicator.all_reduce_max_u32">fn all_reduce_max_u32</a></li>
+<li><a href="#Communicator.reduce_sum_i64">fn reduce_sum_i64</a></li>
+<li><a href="#Communicator.all_reduce_sum_i64">fn all_reduce_sum_i64</a></li>
+<li><a href="#Communicator.reduce_min_i64">fn reduce_min_i64</a></li>
+<li><a href="#Communicator.all_reduce_min_i64">fn all_reduce_min_i64</a></li>
+<li><a href="#Communicator.reduce_max_i64">fn reduce_max_i64</a></li>
+<li><a href="#Communicator.all_reduce_max_i64">fn all_reduce_max_i64</a></li>
+<li><a href="#Communicator.reduce_sum_u64">fn reduce_sum_u64</a></li>
+<li><a href="#Communicator.all_reduce_sum_u64">fn all_reduce_sum_u64</a></li>
+<li><a href="#Communicator.reduce_min_u64">fn reduce_min_u64</a></li>
+<li><a href="#Communicator.all_reduce_min_u64">fn all_reduce_min_u64</a></li>
+<li><a href="#Communicator.reduce_max_u64">fn reduce_max_u64</a></li>
+<li><a href="#Communicator.all_reduce_max_u64">fn all_reduce_max_u64</a></li>
+<li><a href="#Communicator.reduce_sum_f32">fn reduce_sum_f32</a></li>
+<li><a href="#Communicator.all_reduce_sum_f32">fn all_reduce_sum_f32</a></li>
+<li><a href="#Communicator.reduce_min_f32">fn reduce_min_f32</a></li>
+<li><a href="#Communicator.all_reduce_min_f32">fn all_reduce_min_f32</a></li>
+<li><a href="#Communicator.reduce_max_f32">fn reduce_max_f32</a></li>
+<li><a href="#Communicator.all_reduce_max_f32">fn all_reduce_max_f32</a></li>
+<li><a href="#Communicator.reduce_sum_f64">fn reduce_sum_f64</a></li>
+<li><a href="#Communicator.all_reduce_sum_f64">fn all_reduce_sum_f64</a></li>
+<li><a href="#Communicator.reduce_min_f64">fn reduce_min_f64</a></li>
+<li><a href="#Communicator.all_reduce_min_f64">fn all_reduce_min_f64</a></li>
+<li><a href="#Communicator.reduce_max_f64">fn reduce_max_f64</a></li>
+<li><a href="#Communicator.all_reduce_max_f64">fn all_reduce_max_f64</a></li>
 </ul>
 </li>
 </ul></div>
