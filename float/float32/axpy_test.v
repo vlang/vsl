@@ -169,11 +169,11 @@ fn test_axpy_inc() {
 
 			assert equal_strided(test.x, x, inc.x)
 
-			mut want := test.want
+			mut want := test.want.clone()
 			incx := inc.x
 			mut incy := inc.y
 			if incx * incy < 0 {
-				want = test.want_rev
+				want = test.want_rev.clone()
 			}
 			if incy < 0 {
 				incy = -incy
@@ -218,13 +218,13 @@ fn test_axpy_inc_to() {
 			assert equal_strided(test.x, x, inc.x)
 			assert equal_strided(test.y, y, inc.y)
 
-			mut want := test.want
+			mut want := test.want.clone()
 			incx := inc.x
 			mut incy := inc.y
 			mut incdst := inc.dst
 			mut iw, mut inc_w := 0, 1
 			if incx * incy < 0 {
-				want = test.want_rev
+				want = test.want_rev.clone()
 			}
 			if incy * inc.dst < 0 {
 				iw, inc_w = want.len - 1, -1

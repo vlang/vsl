@@ -95,7 +95,7 @@ pub fn (mut o Bins) append(x []f64, id int, extra voidptr) {
 	}
 	xcopy := x.clone()
 	entry := BinEntry{id, xcopy, extra}
-	mut entries := bin.entries
+	mut entries := unsafe { bin.entries }
 	entries << &entry
 }
 
