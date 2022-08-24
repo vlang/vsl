@@ -4,10 +4,10 @@ import vsl.float.float64
 import vsl.mpi
 
 fn example() ? {
-	mpi.start()?
+	mpi.initialize()?
 
 	defer {
-		mpi.stop()
+		mpi.finalize()
 	}
 
 	if mpi.world_rank() == 0 {
@@ -33,7 +33,7 @@ fn example() ? {
 
 	// sum to root
 	mut r := []f64{len: n}
-	comm.reduce_sum(mut r, x)
+	comm.reduce_sum_f64(mut r, x)
 	if id == 0 {
 		assertion := float64.arrays_tolerance(r, []f64{len: n, init: it}, 1e-17)
 		println('ID: $id - Assertion: $assertion')
@@ -43,7 +43,7 @@ fn example() ? {
 	}
 
 	r[0] = 123.0
-	comm.bcast_from_root(r)
+	comm.bcast_from_root_f64(r)
 	assertion := float64.arrays_tolerance(r, [123.0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 1e-17)
 	println('ID: $id - Assertion: $assertion')
 }
