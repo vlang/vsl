@@ -566,14 +566,14 @@ fn dgemvcomp(mut test DgemvCase, trans bool, case DgemvSubcase) {
 	assert equal_strided(test.a, a, 1)
 
 	for j, inc in new_inc_set(-1, 1, 2, 3, 90) {
-		mut want, mut incy := case.want, inc.y
+		mut want, mut incy := case.want.clone(), inc.y
 		if inc.x < 0 && inc.y < 0 {
-			want = case.want_rev_xy
+			want = case.want_rev_xy.clone()
 			incy = -inc.y
 		} else if inc.x < 0 {
-			want = case.want_rev_x
+			want = case.want_rev_x.clone()
 		} else if inc.y < 0 {
-			want = case.want_rev_y
+			want = case.want_rev_y.clone()
 			incy = -inc.y
 		}
 
