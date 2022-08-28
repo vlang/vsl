@@ -36,3 +36,6 @@ jobs:
         with:
           push: true
           tags: ulisesjeremias/vsl_dev:latest
+          build-args: |
+            DEV_IMG=true
+          
