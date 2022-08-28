@@ -36,10 +36,15 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
     python3.8-dev \
     gcc \
     gfortran \
-    libopenmpi-dev \
-    libhwloc-dev \
+    libxi-dev \
+    libxcursor-dev \
+    mesa-common-dev \
     liblapacke-dev \
     libopenblas-dev \
+    libgc-dev \
+    libgl1-mesa-dev \
+    libopenmpi-dev \
+    opencl-headers \
     libmetis-dev \
     libsuitesparse-dev \
     libmumps-dev \
