@@ -52,4 +52,4 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: ulisesjeremias/vsl:{{ env.GIT_TAG }}
+          tags: ulisesjeremias/vsl:${{ env.GIT_TAG }}
