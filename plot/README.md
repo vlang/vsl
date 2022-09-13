@@ -38,7 +38,7 @@ for a better understanding.
 
 ### Bar plot
 
-[examples/bar.v](./examples/bar.v)
+[examples/bar.v](https://github.com/vlang/vsl/blob/master/plot/examples/bar.v)
 
 > Output
 
@@ -54,7 +54,7 @@ for a better understanding.
 
 ### Pie plot
 
-[examples/pie.v](./examples/pie.v)
+[examples/pie.v](https://github.com/vlang/vsl/blob/master/plot/examples/pie.v)
 
 > Output
 
@@ -70,7 +70,7 @@ for a better understanding.
 
 ### Scatter plot
 
-[examples/scatter.v](./examples/scatter.v)
+[examples/scatter.v](https://github.com/vlang/vsl/blob/master/plot/examples/scatter.v)
 
 > Output
 
@@ -86,7 +86,7 @@ for a better understanding.
 
 ### Scatter 3D plot
 
-[examples/scatter3d.v](./examples/scatter3d.v)
+[examples/scatter3d.v](https://github.com/vlang/vsl/blob/master/plot/examples/scatter3d.v)
 
 > Output
 
