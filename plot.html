@@ -89,24 +89,7 @@ for a better understanding.</p>
 </ul>
 <h2>Examples</h2>
 <h3>Bar plot</h3>
-<pre><code class="language-v">module main
-
-import vsl.plot
-
-fn main() {
-    mut plt := plot.new_plot()
-
-    plt.add_trace(
-        trace_type: .bar
-        x_str: ['China', 'India', 'USA', 'Indonesia', 'Pakistan']
-        y: [1411778724.0, 1379217184, 331989449, 271350000, 225200000]
-    )
-    plt.set_layout(
-        title: 'Countries by population'
-    )
-    plt.show() or { panic(err) }
-}
-</code></pre>
+<p><a href="./examples/bar.v">examples/bar.v</a></p>
 <blockquote>
 <p>Output</p>
 </blockquote>
@@ -120,28 +103,7 @@ fn main() {
 </p>
 </div>
 <h3>Pie plot</h3>
-<pre><code class="language-v">module main
-
-import vsl.plot
-
-fn main() {
-    mut plt := plot.new_plot()
-
-    plt.add_trace(
-        trace_type: .pie
-        labels: ['Nitrogen', 'Oxygen', 'Argon', 'Other']
-        values: [78.0, 21, 0.9, 0.1]
-        pull: [0.0, 0.1, 0, 0]
-        hole: 0.25
-    )
-    plt.set_layout(
-        title: 'Gases in the atmosphere'
-        width: 750
-        height: 750
-    )
-    plt.show() or { panic(err) }
-}
-</code></pre>
+<p><a href="./examples/pie.v">examples/pie.v</a></p>
 <blockquote>
 <p>Output</p>
 </blockquote>
@@ -155,50 +117,7 @@ fn main() {
 </p>
 </div>
 <h3>Scatter plot</h3>
-<pre><code class="language-v">module main
-
-import vsl.plot
-import vsl.util
-
-fn main() {
-    y := [
-        0.0,
-        1,
-        3,
-        1,
-        0,
-        -1,
-        -3,
-        -1,
-        0,
-        1,
-        3,
-        1,
-        0,
-    ]
-    x := util.arange(y.len).map(f64(it))
-
-    mut plt := plot.new_plot()
-
-    plt.add_trace(
-        trace_type: .scatter
-        x: x
-        y: y
-        mode: 'lines+markers'
-        marker: plot.Marker{
-            size: []f64{len: x.len, init: 10.0}
-            color: []string{len: x.len, init: '#FF0000'}
-        }
-        line: plot.Line{
-            color: '#FF0000'
-        }
-    )
-    plt.set_layout(
-        title: 'Scatter plot example'
-    )
-    plt.show() or { panic(err) }
-}
-</code></pre>
+<p><a href="./examples/scatter.v">examples/scatter.v</a></p>
 <blockquote>
 <p>Output</p>
 </blockquote>
@@ -208,6 +127,20 @@ fn main() {
         style="width: 50%"
         width="80%"
         src="https://raw.githubusercontent.com/vlang/vsl/master/plot/static/scatter.png?sanitize=true"
+    >
+</p>
+</div>
+<h3>Scatter 3D plot</h3>
+<p><a href="./examples/scatter3d.v">examples/scatter3d.v</a></p>
+<blockquote>
+<p>Output</p>
+</blockquote>
+<div align="center">
+<p>
+    <img
+        style="width: 50%"
+        width="80%"
+        src="https://raw.githubusercontent.com/vlang/vsl/master/plot/static/scatter3d.png?sanitize=true"
     >
 </p>
 </div>
@@ -370,7 +303,7 @@ fn main() {
 </section>
 
           <div class="footer">
-            Powered by vdoc. Generated on: 13 Sep 2022 04:39:40
+            Powered by vdoc. Generated on: 13 Sep 2022 05:04:21
           </div>
         </div>
         <div class="doc-toc"><ul><li class="open"><a href="#readme_plot">README</a></li>
