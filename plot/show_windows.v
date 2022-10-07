@@ -1,7 +1,9 @@
 module plot
 
 pub fn (p Plot) show() ? {
-	return error('not implemented')
+	$if !test ? {
+		return error('not implemented')
+	}
 }
 
 // init will ensure that all dependencies are correctly installed and venv initiallized
