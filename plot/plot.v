@@ -1,10 +1,5 @@
 module plot
 
-import json
-import os
-import time
-import vsl.errors
-
 const (
 	schema_version = 'v1.0.2'
 	venv_dir_name  = '.plotvenv_$schema_version'

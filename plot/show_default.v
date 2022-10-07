@@ -1,8 +1,9 @@
 module plot
 
-import time
 import json
 import os
+import time
+import vsl.errors
 
 pub fn (p Plot) show() ? {
 	ts := time.now().format_ss_micro()

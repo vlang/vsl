@@ -1,8 +1,10 @@
 module plot
 
+import vsl.errors
+
 pub fn (p Plot) show() ? {
 	$if !test ? {
-		return error('not implemented')
+		return errors.error('not implemented', .efailed)
 	}
 }
 
