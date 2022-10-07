@@ -62,10 +62,8 @@ fn cos(x f64, _ []f64) f64 {
 	return math.cos(x)
 }
 
-fn main() {
-	func := func.new_func(f: cos)
-	result := roots.bisection(func, 0.0, 3.0, epsrel, epsabs, n_max)?
-}
+func := func.new_func(f: cos)
+result := roots.bisection(func, 0.0, 3.0, epsrel, epsabs, n_max)?
 ```
 
 `result` will be `math.pi / 2.00`

@@ -11,9 +11,7 @@ module main
 
 import vsl.easings
 
-fn main() {
-	println(easings.animate(easings.bounce_ease_out, 0, 100, 100))
-}
+println(easings.animate(easings.bounce_ease_out, 0, 100, 100))
 ```
 
 ## Credits

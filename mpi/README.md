@@ -59,53 +59,51 @@ As an example
 /// compute some simple array results using OpenMPI
 import vsl.mpi
 
-fn main() {
-	mut shortd := [1.0, 3.0, 5.0] // all ranks have this array
-	mpi.initialize()?
+mut shortd := [1.0, 3.0, 5.0] // all ranks have this array
+mpi.initialize()?
 
-	println('Hello from rank $mpi.world_rank() of  $mpi.world_size() processes')
+println('Hello from rank $mpi.world_rank() of  $mpi.world_size() processes')
 
-	// communicator
+// communicator
 
-	comm := mpi.new_communicator([])?
-	println('Communicator rank $comm.rank() of $comm.size() processors ')
+comm := mpi.new_communicator([])?
+println('Communicator rank $comm.rank() of $comm.size() processors ')
 
-	// barrier
+// barrier
 
-	comm.barrier()
+comm.barrier()
 
-	// broadcast and verify
+// broadcast and verify
 
-	if mpi.world_rank() > 0 {
-		shortd[2] = 77.0 // only non-root (rank not 0) has this value
-	}
-	comm.bcast_from_root_f64(shortd) // send original to all
-	if shortd == [1.0, 3.0, 5.0] {
-		println('  $comm.rank() bcast_from_root success')
-	}
-	comm.barrier()
-
-	// reduce and verify
-
-	mut reduced := []f64{len: 3}
-	ansr := shortd.map(it * comm.size())
-	comm.reduce_sum_f64(mut reduced, shortd)
-	if reduced == ansr { // only true on rank 0
-		println('  $comm.rank() reduce_sum success')
-	}
-	comm.barrier()
-
-	// allreduce and verify
-
-	ansar := [0.0, 2.0, 3.0].map(it * f64(mpi.world_size()))
-	shortd = [0.0, 2.0, 3.0].map(it * f64(1 + mpi.world_rank()))
-	comm.all_reduce_max_f64(mut reduced, shortd)
-	if reduced == ansar { // true on all ranks
-		println('  $comm.rank() allreduce_max succes')
-	}
-
-	mpi.finalize()
+if mpi.world_rank() > 0 {
+	shortd[2] = 77.0 // only non-root (rank not 0) has this value
 }
+comm.bcast_from_root_f64(shortd) // send original to all
+if shortd == [1.0, 3.0, 5.0] {
+	println('  $comm.rank() bcast_from_root success')
+}
+comm.barrier()
+
+// reduce and verify
+
+mut reduced := []f64{len: 3}
+ansr := shortd.map(it * comm.size())
+comm.reduce_sum_f64(mut reduced, shortd)
+if reduced == ansr { // only true on rank 0
+	println('  $comm.rank() reduce_sum success')
+}
+comm.barrier()
+
+// allreduce and verify
+
+ansar := [0.0, 2.0, 3.0].map(it * f64(mpi.world_size()))
+shortd = [0.0, 2.0, 3.0].map(it * f64(1 + mpi.world_rank()))
+comm.all_reduce_max_f64(mut reduced, shortd)
+if reduced == ansar { // true on all ranks
+	println('  $comm.rank() allreduce_max succes')
+}
+
+mpi.finalize()
 ```
 
 

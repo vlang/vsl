@@ -15,25 +15,19 @@ __kernel void invert(__read_only image2d_t src, __write_only image2d_t dest) {
 	write_imagef(dest, pos, pixel);
 }'
 
-fn vcl_image_example() ? {
-	// get all devices if you want
-	devices := vcl.get_devices(vcl.device_cpu)?
-	println('Devices: $devices')
+// get all devices if you want
+devices := vcl.get_devices(vcl.device_cpu)?
+println('Devices: $devices')
 
-	// do not create platforms/devices/contexts/queues/...
-	// just get the device
-	mut device := vcl.get_default_device()?
-	defer {
-		device.release() or { panic(err) }
-	}
-
-	// Create image buffer
-	mut img := device.image(.rgba, gg.Rect{0, 0, 500, 500})?
-	defer {
-		img.release() or { panic(err) }
-	}
+// do not create platforms/devices/contexts/queues/...
+// just get the device
+mut device := vcl.get_default_device()?
+defer {
+	device.release() or { panic(err) }
 }
 
-fn main() {
-	vcl_image_example() or { panic(err) }
+// Create image buffer
+mut img := device.image(.rgba, gg.Rect{0, 0, 500, 500})?
+defer {
+	img.release() or { panic(err) }
 }
