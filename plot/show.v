@@ -6,6 +6,10 @@ import time
 import vsl.errors
 
 pub fn (p Plot) show() ? {
+	$if windows ? {
+		return errors.error('not implemented', .efailed)
+	}
+
 	ts := time.now().format_ss_micro()
 	plot_str := json.encode_pretty(p.traces)
 
@@ -42,22 +46,4 @@ pub fn (p Plot) show() ? {
 		}
 		println(result.output)
 	}
-}
-
-// init will ensure that all dependencies are correctly installed and venv initiallized
-fn init() {
-	venv_path := solve_mod_path(venv_dir_name)
-	if !os.is_dir(venv_path) {
-		println('Creating plotly virtualenv...')
-	}
-	init_path := solve_mod_path('create-venv.sh')
-	result := os.execute('bash $init_path "$venv_path"')
-	if result.exit_code != 0 {
-		panic(result.output)
-	}
-	println(result.output)
-}
-
-fn solve_mod_path(dirs ...string) string {
-	return os.join_path(@VMODROOT, ...dirs)
 }
