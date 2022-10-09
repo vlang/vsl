@@ -6,10 +6,6 @@ import time
 import vsl.errors
 
 pub fn (p Plot) show() ? {
-	$if windows ? {
-		return errors.error('not implemented', .efailed)
-	}
-
 	ts := time.now().format_ss_micro()
 	plot_str := json.encode_pretty(p.traces)
 

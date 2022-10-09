@@ -10,10 +10,6 @@ const (
 
 // init will ensure that all dependencies are correctly installed and venv initiallized
 fn init() {
-	$if windows ? {
-		print(@MOD + ' is not working on widows yet')
-		return
-	}
 	venv_path := solve_mod_path(plot.venv_dir_name)
 	if !os.is_dir(venv_path) {
 		println('Creating plotly virtualenv...')
