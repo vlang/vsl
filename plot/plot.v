@@ -14,7 +14,7 @@ fn init() {
 	if !os.is_dir(venv_path) {
 		println('Creating plotly virtualenv...')
 	}
-	init_path := solve_mod_path('create-venv.sh')
+	init_path := solve_mod_path('scripts', 'create-venv.sh')
 	result := os.execute('bash $init_path "$venv_path"')
 	if result.exit_code != 0 {
 		panic(result.output)

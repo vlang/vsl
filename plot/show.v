@@ -24,7 +24,7 @@ pub fn (p Plot) show() ? {
 
 	data_path := solve_mod_path(data_dir_name, 'data-${ts}.json')
 	layout_path := solve_mod_path(data_dir_name, 'layout-${ts}.json')
-	run_path := solve_mod_path('run.sh')
+	run_path := solve_mod_path('scripts', 'run.sh')
 
 	os.write_file(data_path, plot_str) or {
 		return errors.error('could not save the plot to a JSON file at ${data_path}.',
