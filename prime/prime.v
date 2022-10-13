@@ -8,7 +8,8 @@ pub fn is_prime(p int) bool {
 		return false
 	}
 	mut i := 2
-	for i <= math.floor(p / 2) {
+	max := math.floor(f32(p) / 2)
+	for i <= max {
 		rem := p % i
 		if rem != 0 {
 			i++
