@@ -8,7 +8,7 @@ pub fn is_prime(p int) bool {
 		return false
 	}
 	mut i := 2
-	for i <= p / 2 {
+	for i <= math.floor(p / 2) {
 		rem := p % i
 		if rem != 0 {
 			i++
