@@ -2,7 +2,7 @@ module prime
 
 import math
 
-// is_prime returns is an int is prime (deterministically)
+// is_prime returns if an int is prime (deterministically)
 pub fn is_prime(p int) bool {
 	if p < 2 {
 		return false
