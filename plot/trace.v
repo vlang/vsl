@@ -7,6 +7,7 @@ pub enum TraceType {
 	surface
 	scatter3d
 	bar
+	histogram
 }
 
 pub struct Trace {
@@ -14,6 +15,7 @@ pub mut:
 	trace_type    TraceType  [required]
 	x             []f64
 	x_str         []string
+	xbins		  map[string]f32
 	y             []f64
 	z             [][]f64
 	values        []f64
