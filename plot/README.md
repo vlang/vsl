@@ -29,6 +29,7 @@ for a better understanding.
 
 - Bar
 - Heatmap
+- Histogram
 - Pie
 - Scatter
 - Scatter 3D
@@ -46,8 +47,40 @@ for a better understanding.
 <p>
     <img
         style="width: 50%"
-		width="80%"
+  width="80%"
         src="https://raw.githubusercontent.com/vlang/vsl/master/plot/static/bar.png?sanitize=true"
+    >
+</p>
+</div>
+
+### Heatmap plot
+
+[examples/heatmap.v](https://github.com/vlang/vsl/blob/master/plot/examples/heatmap.v)
+
+> Output
+
+<div align="center">
+<p>
+    <img
+        style="width: 50%"
+  width="80%"
+        src="https://raw.githubusercontent.com/vlang/vsl/master/plot/static/heatmap.png?sanitize=true"
+    >
+</p>
+</div>
+
+### Histogram plot
+
+[examples/histogram.v](https://github.com/vlang/vsl/blob/master/plot/examples/histogram.v)
+
+> Output
+
+<div align="center">
+<p>
+    <img
+        style="width: 50%"
+  width="80%"
+        src="https://raw.githubusercontent.com/vlang/vsl/master/plot/static/histogram.png?sanitize=true"
     >
 </p>
 </div>
@@ -62,7 +95,7 @@ for a better understanding.
 <p>
     <img
         style="width: 50%"
-		width="80%"
+  width="80%"
         src="https://raw.githubusercontent.com/vlang/vsl/master/plot/static/pie.png?sanitize=true"
     >
 </p>
@@ -78,7 +111,7 @@ for a better understanding.
 <p>
     <img
         style="width: 50%"
-		width="80%"
+  width="80%"
         src="https://raw.githubusercontent.com/vlang/vsl/master/plot/static/scatter.png?sanitize=true"
     >
 </p>
@@ -94,7 +127,7 @@ for a better understanding.
 <p>
     <img
         style="width: 50%"
-		width="80%"
+  width="80%"
         src="https://raw.githubusercontent.com/vlang/vsl/master/plot/static/scatter3d.png?sanitize=true"
     >
 </p>
