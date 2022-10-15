@@ -60,7 +60,7 @@ There are routines for finding real and complex roots of quadratic and
 cubic equations using analytic methods. An iterative polynomial solver
 is also available for finding the roots of general polynomials with real
 coefficients (of any order). The functions are declared in the module <code>vsl.poly</code>.</p>
-<h1>Polynomial Evaluation</h1>
+<h2>Polynomial Evaluation</h2>
 <p>The functions described here evaluate the polynomial</p>
 <pre><code>P(x) = c[0] + c[1] x + c[2] x^2 + . . . + c[len-1] x^(len-1)
 </code></pre>
@@ -74,7 +74,7 @@ coefficients (of any order). The functions are declared in the module <code>vsl.
 results in the array <code>res</code> of size <code>lenres</code>. The output array
 contains the values of <code>d^k P(x)/d x^k</code> for the specified value of
 <code>x</code> starting with <code>k = 0</code>.</p>
-<h1>Quadratic Equations</h1>
+<h2>Quadratic Equations</h2>
 <pre><code class="language-v">fn solve_quadratic(a f64, b f64, c f64) []f64
 </code></pre>
 <p>This function finds the real roots of the quadratic equation,</p>
@@ -95,7 +95,7 @@ errors if the coefficients of the polynomial are inexact. These errors
 may cause a discrete change in the number of roots. However, for
 polynomials with small integer coefficients the discriminant can always
 be computed exactly.</p>
-<h1>Cubic Equations</h1>
+<h2>Cubic Equations</h2>
 <pre><code class="language-v">fn solve_cubic(a f64, b f64, c f64) []f64
 </code></pre>
 <p>This function finds the real roots of the cubic equation,</p>
@@ -173,7 +173,7 @@ is printed if a is identically zero.</p>
 </section>
 
           <div class="footer">
-            Powered by vdoc. Generated on: 15 Oct 2022 22:04:37
+            Powered by vdoc. Generated on: 15 Oct 2022 22:27:32
           </div>
         </div>
         <div class="doc-toc"><ul><li class="open"><a href="#readme_poly">README</a></li>
