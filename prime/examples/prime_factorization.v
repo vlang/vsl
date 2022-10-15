@@ -1,5 +1,6 @@
 // A simple prime factorizer
 module main
+
 import vsl.prime
 import os
 
@@ -12,6 +13,7 @@ fn spf(x int) ?int {
 	}
 	return x
 }
+
 fn factorize(y int) ?[]int {
 	mut n := y
 	mut factors := []int{}
@@ -22,7 +24,8 @@ fn factorize(y int) ?[]int {
 	}
 	return factors
 }
-fn main(){
+
+fn main() {
 	mut n := os.input('').int()
 	factors := factorize(n)?
 	for f in factors {
