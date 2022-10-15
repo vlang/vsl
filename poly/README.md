@@ -6,7 +6,7 @@ cubic equations using analytic methods. An iterative polynomial solver
 is also available for finding the roots of general polynomials with real
 coefficients (of any order). The functions are declared in the module `vsl.poly`.
 
-# Polynomial Evaluation
+## Polynomial Evaluation
 
 The functions described here evaluate the polynomial
 
@@ -31,7 +31,7 @@ results in the array `res` of size `lenres`. The output array
 contains the values of `d^k P(x)/d x^k` for the specified value of
 `x` starting with `k = 0`.
 
-# Quadratic Equations
+## Quadratic Equations
 
 ```v ignore
 fn solve_quadratic(a f64, b f64, c f64) []f64
@@ -60,7 +60,7 @@ may cause a discrete change in the number of roots. However, for
 polynomials with small integer coefficients the discriminant can always
 be computed exactly.
 
-# Cubic Equations
+## Cubic Equations
 
 ```v ignore
 fn solve_cubic(a f64, b f64, c f64) []f64
