@@ -1,7 +1,5 @@
 module la
 
-import math
-import math.util
 import vsl.float.float64
 
 fn tolerance_equal(data1 []f64, data2 []f64) bool {

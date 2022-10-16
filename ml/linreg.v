@@ -131,10 +131,12 @@ pub fn (mut o LinReg) calce() {
 	b := o.params.get_bias()
 	x, y := o.data.x, o.data.y
 	o.e = [b]
+	/* WTF:
 	{
 		len:
 		o.e.len
 	} // e := b⋅o
+	*/
 	o.e = la.matrix_vector_mul_add(1, x, theta) // e := b⋅o + x⋅theta
 	o.e = la.vector_add(1.0, o.e, -1, y) // e := b⋅o + x⋅theta - y
 }
