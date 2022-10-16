@@ -1,7 +1,7 @@
 module main
 
-import vsl.ml
 import vsl.ml.nlp
+import vsl.ml
 
 const dataset = [
 	['I think apples are good.', 'positive'],
