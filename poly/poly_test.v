@@ -1,6 +1,6 @@
 module poly
 
-fn test_eval(){
+fn test_eval() {
 	// ans = 2
 	// ans = 4.0 + 4 * 2 = 12
 	// ans = 5 + 4 * 12 = 53
@@ -9,14 +9,12 @@ fn test_eval(){
 	assert eval(cof, 4) == 53
 }
 
-fn test_swap(){
+fn test_swap() {
 	mut a := 101.0
 	mut b := 202.0
 	a, b = swap_(a, b)
 	assert a == 202.0 && b == 101.0
-
 }
-
 
 // fn test_sorted_3_(){
 // 	a := 5.0
@@ -26,13 +24,13 @@ fn test_swap(){
 // 	assert y == 7.0
 // }
 
-fn test_add(){
+fn test_add() {
 	a := [6.0, 777, -3]
 	b := [1.0, -755, -4]
 	assert add(a, b) == [7.0, 22, -7]
 }
 
-fn test_substract(){
+fn test_substract() {
 	a := [6.0, 777, -3]
 	b := [1.0, -755, -4]
 	assert substract(a, b) == [5.0, 1532, 1]
