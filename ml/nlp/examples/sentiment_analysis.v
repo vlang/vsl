@@ -79,7 +79,6 @@ for i in 0 .. dataset.len {
 	// 'bad' are the only decisive factors), our n is going to be 1.
 	// For the example above, 1grams would be [['hello'], ['my'], ['friend']].
 	// The option/result below is in case you pass negative values to nlp.ngrams.
-	// TODO: ask Ulises to convert it back to a vsl panic.
 	ng := nlp.ngrams(stemmed, 1) or { panic(err) } // [][]string
 	ngrams << ng // appends [][]string to ngrams ([][][]string)
 	all_ngrams << ng // extends all_ngrams([][]string) by [][]string
