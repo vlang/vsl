@@ -1,6 +1,5 @@
 module iter
 
-import math
 import vsl.fun
 import vsl.util
 
