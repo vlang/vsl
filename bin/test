@@ -7,8 +7,8 @@
 ##
 ## Options:
 ##     -h, --help                            Prints usage and example
-##         --stats                           Exeute with stats
-##         --prod                            Exeute with prod build
+##         --stats                           Execute with stats
+##         --prod                            Execute with prod build
 ##         --use-cblas                       Execute tests using cblas
 ##         --use-autofree                    Execute tests using atofree
 ##         --use-gc=STRATEGY                 Execute tests using garbage collector
