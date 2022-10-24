@@ -21,7 +21,7 @@ pub fn hypot(x f64, y f64) f64 {
 		if max < math.max_f64 / root_term {
 			result = max * root_term
 		} else {
-			errors.vsl_panic('overflow in hypot_e function', .eovrflw)
+			errors.vsl_panic('overflow in hypot function', .eovrflw)
 		}
 	}
 	return result
