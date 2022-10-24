@@ -13,7 +13,7 @@ struct Vec2 {
 
 [inline]
 fn random_gradient() ?Vec2 {
-	nr := rand.f32_in_range(0.0, math.pi * 2)?
+	nr := rand.f32_in_range(0.0, math.pi * 2) or { return err }
 	return Vec2{
 		x: math.cosf(nr)
 		y: math.sinf(nr)

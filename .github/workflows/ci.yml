@@ -80,7 +80,12 @@ jobs:
 
     strategy:
       matrix:
-        os: [ubuntu-20.04, ubuntu-18.04]
+        os:
+          - ubuntu-20.04
+          - ubuntu-18.04
+        flags: 
+          - ""
+          - "--prod"
 
     steps:
       - name: Checkout VSL
@@ -104,15 +109,15 @@ jobs:
         run: mv ./vsl ~/.vmodules
 
       - name: Execute Tests using Pure V Backend
-        run: ~/.vmodules/vsl/bin/test
+        run: ~/.vmodules/vsl/bin/test ${{ matrix.flags }}
 
       - name: Execute Tests using Pure V Backend with Pure C Blas
-        run: ~/.vmodules/vsl/bin/test --use-cblas
+        run: ~/.vmodules/vsl/bin/test ${{ matrix.flags }} --use-cblas
         if: ${{ matrix.os != 'ubuntu-18.04' }}
 
       - name: Execute Tests using Pure V Backend and Garbage Collection enabled
-        run: ~/.vmodules/vsl/bin/test --use-gc boehm
+        run: ~/.vmodules/vsl/bin/test ${{ matrix.flags }} --use-gc boehm
 
       - name: Execute Tests using Pure V Backend with Pure C Blas and Garbage Collection enabled
-        run: ~/.vmodules/vsl/bin/test --use-cblas --use-gc boehm
+        run: ~/.vmodules/vsl/bin/test ${{ matrix.flags }} --use-cblas --use-gc boehm
         if: ${{ matrix.os != 'ubuntu-18.04' }}
