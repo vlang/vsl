@@ -32,7 +32,7 @@ fn test_lin_reg() {
 	mut reg := new_lin_reg(mut data, 'linear regression')
 
 	reg.train()
-	// @todo: Fix this test
+	// TODO: Fix this test
 	// assert float64.tolerance(reg.cost(), 5.312454218805082e-01, 1e-15)
 }
 

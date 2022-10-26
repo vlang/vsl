@@ -39,7 +39,7 @@ fn test_graph01() {
 	for i, v in [0, 1, 2, 3] {
 		assert g2_path_0_3[i] == v
 	}
-	mut weights_e := g2.weights_e
+	mut weights_e := g2.weights_e.clone()
 	weights_e[3] = 13
 	g3 := &Graph{
 		edges: g.edges

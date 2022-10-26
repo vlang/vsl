@@ -72,6 +72,7 @@ type_map = {
     3: go.Surface,
     4: go.Scatter3d,
     5: go.Bar,
+    6: go.Histogram
 }
 
 

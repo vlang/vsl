@@ -1,5 +1,7 @@
 module iter
 
+import arrays
+
 pub struct ProductIterator {
 	repeat_lengths []u64
 	size           u64
@@ -15,7 +17,7 @@ pub fn new_product_iterator(data [][]f64) ProductIterator {
 		repeat_lengths: calc_repeat_lengths(data.map(it.len)).map(u64(it))
 		indices_to_grab: []int{len: data.len, init: -1}
 		data: data
-		size: u64(data.map(it.len).reduce(int_prod, 1))
+		size: u64(arrays.fold(data.map(it.len), 1, int_prod))
 	}
 }
 

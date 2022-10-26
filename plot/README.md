@@ -1,9 +1,20 @@
 # VSL Plot
 
 > This is in a very early stage of development so issues are to be expected.
-The lack of features is the major problem right now, but these are slowly but
-surely going to be added. If you find any problem, please file an issue and
-we will try to solve it as soon as possible. Any suggestion is welcome!
+> The lack of features is the major problem right now, but these are slowly but
+> surely going to be added. If you find any problem, please file an issue and
+> we will try to solve it as soon as possible. Any suggestion is welcome!
+
+This library implements high-level functions to generate plots and drawings.
+Although we use Python/Plotly, the goal is to provide a convenient
+V library that is different than Plotly. The difference happens
+because we want convenience for the V developer while getting the
+fantastic quality of Plotly grinning.
+
+Internally, we use Plotly via a Python 3 script. First, we generate a
+JSON files in a directory under `$VMODULES/vsl/plot`, and then
+we call python3 using V's `os.execute`. The JSON file is then read
+by Plotly and the plot is generated.
 
 `vsl.plot` follows the structure of
 [Plotly's graph_objects](https://plotly.com/python/graph-objects/).
@@ -18,6 +29,7 @@ for a better understanding.
 
 - Bar
 - Heatmap
+- Histogram
 - Pie
 - Scatter
 - Scatter 3D
@@ -27,25 +39,7 @@ for a better understanding.
 
 ### Bar plot
 
-```v
-module main
-
-import vsl.plot
-
-fn main() {
-	mut plt := plot.new_plot()
-
-	plt.add_trace(
-		trace_type: .bar
-		x_str: ['China', 'India', 'USA', 'Indonesia', 'Pakistan']
-		y: [1411778724.0, 1379217184, 331989449, 271350000, 225200000]
-	)
-	plt.set_layout(
-		title: 'Countries by population'
-	)
-	plt.show() or { panic(err) }
-}
-```
+[examples/bar.v](https://github.com/vlang/vsl/blob/master/plot/examples/bar.v)
 
 > Output
 
@@ -53,37 +47,47 @@ fn main() {
 <p>
     <img
         style="width: 50%"
-		width="80%"
+  width="80%"
         src="https://raw.githubusercontent.com/vlang/vsl/master/plot/static/bar.png?sanitize=true"
+    >
+</p>
+</div>
+
+### Heatmap plot
+
+[examples/heatmap.v](https://github.com/vlang/vsl/blob/master/plot/examples/heatmap.v)
+
+> Output
+
+<div align="center">
+<p>
+    <img
+        style="width: 50%"
+  width="80%"
+        src="https://raw.githubusercontent.com/vlang/vsl/master/plot/static/heatmap.png?sanitize=true"
+    >
+</p>
+</div>
+
+### Histogram plot
+
+[examples/histogram.v](https://github.com/vlang/vsl/blob/master/plot/examples/histogram.v)
+
+> Output
+
+<div align="center">
+<p>
+    <img
+        style="width: 50%"
+  width="80%"
+        src="https://raw.githubusercontent.com/vlang/vsl/master/plot/static/histogram.png?sanitize=true"
     >
 </p>
 </div>
 
 ### Pie plot
 
-```v
-module main
-
-import vsl.plot
-
-fn main() {
-	mut plt := plot.new_plot()
-
-	plt.add_trace(
-		trace_type: .pie
-		labels: ['Nitrogen', 'Oxygen', 'Argon', 'Other']
-		values: [78.0, 21, 0.9, 0.1]
-		pull: [0.0, 0.1, 0, 0]
-		hole: 0.25
-	)
-	plt.set_layout(
-		title: 'Gases in the atmosphere'
-		width: 750
-		height: 750
-	)
-	plt.show() or { panic(err) }
-}
-```
+[examples/pie.v](https://github.com/vlang/vsl/blob/master/plot/examples/pie.v)
 
 > Output
 
@@ -91,7 +95,7 @@ fn main() {
 <p>
     <img
         style="width: 50%"
-		width="80%"
+  width="80%"
         src="https://raw.githubusercontent.com/vlang/vsl/master/plot/static/pie.png?sanitize=true"
     >
 </p>
@@ -99,51 +103,7 @@ fn main() {
 
 ### Scatter plot
 
-```v
-module main
-
-import vsl.plot
-import vsl.util
-
-fn main() {
-	y := [
-		0.0,
-		1,
-		3,
-		1,
-		0,
-		-1,
-		-3,
-		-1,
-		0,
-		1,
-		3,
-		1,
-		0,
-	]
-	x := util.arange(y.len).map(f64(it))
-
-	mut plt := plot.new_plot()
-
-	plt.add_trace(
-		trace_type: .scatter
-		x: x
-		y: y
-		mode: 'lines+markers'
-		marker: plot.Marker{
-			size: []f64{len: x.len, init: 10.0}
-			color: []string{len: x.len, init: '#FF0000'}
-		}
-		line: plot.Line{
-			color: '#FF0000'
-		}
-	)
-	plt.set_layout(
-		title: 'Scatter plot example'
-	)
-	plt.show() or { panic(err) }
-}
-```
+[examples/scatter.v](https://github.com/vlang/vsl/blob/master/plot/examples/scatter.v)
 
 > Output
 
@@ -151,8 +111,24 @@ fn main() {
 <p>
     <img
         style="width: 50%"
-		width="80%"
+  width="80%"
         src="https://raw.githubusercontent.com/vlang/vsl/master/plot/static/scatter.png?sanitize=true"
+    >
+</p>
+</div>
+
+### Scatter 3D plot
+
+[examples/scatter3d.v](https://github.com/vlang/vsl/blob/master/plot/examples/scatter3d.v)
+
+> Output
+
+<div align="center">
+<p>
+    <img
+        style="width: 50%"
+  width="80%"
+        src="https://raw.githubusercontent.com/vlang/vsl/master/plot/static/scatter3d.png?sanitize=true"
     >
 </p>
 </div>

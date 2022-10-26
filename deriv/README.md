@@ -22,20 +22,18 @@ fn pow(x f64, _ []f64) f64 {
 	return math.pow(x, 1.5)
 }
 
-fn main() {
-	f := func.new_func(f: pow)
-	println('f(x) = x^(3/2)')
-	mut expected := 1.5 * math.sqrt(2.0)
-	mut result, mut abserr := deriv.central(f, 2.0, 1e-8)
-	println('x = 2.0')
-	println("f'(x) = $result +/- $abserr")
-	println('exact = $expected')
-	expected = 0.0
-	result, abserr = deriv.forward(f, 0.0, 1e-8)
-	println('x = 0.0')
-	println("f'(x) = $result +/- $abserr")
-	println('exact = $expected')
-}
+f := func.new_func(f: pow)
+println('f(x) = x^(3/2)')
+mut expected := 1.5 * math.sqrt(2.0)
+mut result, mut abserr := deriv.central(f, 2.0, 1e-8)
+println('x = 2.0')
+println("f'(x) = $result +/- $abserr")
+println('exact = $expected')
+expected = 0.0
+result, abserr = deriv.forward(f, 0.0, 1e-8)
+println('x = 0.0')
+println("f'(x) = $result +/- $abserr")
+println('exact = $expected')
 ```
 
 Will print
@@ -51,7 +49,7 @@ f'(x) = 0.0000000160 +/- 0.0000000339
 exact = 0.0000000000
 ```
 
-# Functions
+## Functions
 
 ```v ignore
 fn central (f func.Fn, x, h f64) (f64, f64)
@@ -108,6 +106,6 @@ has a discontinuity at `x`, or is undefined for values greater than
 This function is equivalent to calling `deriv.forward` with a
 negative step-size.
 
-# References and Further Reading
+## References and Further Reading
 
 This work is a spiritual descendent of the Differentiation module in GSL.

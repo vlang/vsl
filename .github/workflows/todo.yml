@@ -1,0 +1,18 @@
+name: Todo Checker
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  todo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Begin CI...
+        uses: actions/checkout@v3
+
+      - name: TODO to Issue
+        uses: alstr/todo-to-issue-action@v4
+        id: todo

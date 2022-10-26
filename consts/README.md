@@ -5,7 +5,7 @@ The full list of constants is described briefly below.
 The full list of constants is described briefly below.
 Consult the module files themselves for the values of the constants used in the library.
 
-# Fundamental Constants
+## Fundamental Constants
 
 ```
 consts.mksa_speed_of_light
@@ -749,25 +749,23 @@ light and the length of an astronomical unit to produce a result for the
 shortest and longest light-travel times in seconds. The figures are
 converted into minutes before being displayed.
 
-```
+```v
 module main
 
 import vsl.consts
 
-fn main() {
-	c := consts.mksa_speed_of_light
-	au := consts.mksa_astronomical_unit
-	minutes := consts.mksa_minute // distance stored in meters
-	r_earth := 1.0 * au
-	r_mars := 1.52 * au
-	t_min := (r_mars - r_earth) / c
-	t_max := (r_mars + r_earth) / c
-	min := t_min / minutes
-	max := t_max / minutes
-	println('light travel time from Earth to Mars:')
-	println('minimum = $min minutes')
-	println('maximum = $max minutes')
-}
+c := consts.mksa_speed_of_light
+au := consts.mksa_astronomical_unit
+minutes := consts.mksa_minute // distance stored in meters
+r_earth := 1.0 * au
+r_mars := 1.52 * au
+t_min := (r_mars - r_earth) / c
+t_max := (r_mars + r_earth) / c
+min := t_min / minutes
+max := t_max / minutes
+println('light travel time from Earth to Mars:')
+println('minimum = $min minutes')
+println('maximum = $max minutes')
 ```
 
 will print
@@ -778,7 +776,7 @@ minimum = 4.3 minutes
 maximum = 21.0 minutes
 ```
 
-# References and Further Reading
+## References and Further Reading
 
 The authoritative sources for physical constants are the 2006 CODATA
 recommended values, published in the article below. Further

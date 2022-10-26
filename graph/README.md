@@ -26,15 +26,13 @@ module main
 
 import vsl.graph
 
-fn main() {
-	edges := [[0, 1], [0, 3], [1, 2], [2, 3]]
-	weights_e := [5.0, 10.0, 3.0, 1.0]
-	verts := [][]f64{}
-	weights_v := []f64{}
-	g := graph.new_graph(edges, weights_e, verts, weights_v)
-	// print distance matrix
-	print(g.str_dist_matrix())
-}
+edges := [[0, 1], [0, 3], [1, 2], [2, 3]]
+weights_e := [5.0, 10.0, 3.0, 1.0]
+verts := [][]f64{}
+weights_v := []f64{}
+g := graph.new_graph(edges, weights_e, verts, weights_v)
+// print distance matrix
+print(g.str_dist_matrix())
 ```
 
 Vertex coordinates can be specified as well. Furthermore, weights can be assigned to vertices. These
@@ -84,20 +82,18 @@ module main
 
 import vsl.graph
 
-fn main() {
-	// initialise graph
-	edges := [[0, 1], [0, 3], [1, 2], [2, 3]]
-	weights_e := [5.0, 10.0, 3.0, 1.0]
-	verts := [][]f64{}
-	weights_v := []f64{}
-	g := graph.new_graph(edges, weights_e, verts, weights_v)
-	// compute paths
-	g.shortest_paths(.fw)
-	// print shortest path from 0 to 2
-	print(g.path(0, 2))
-	// print shortest path from 0 to 3
-	print(g.path(0, 3))
-	// print distance matrix
-	print(g.str_dist_matrix())
-}
+// initialise graph
+edges := [[0, 1], [0, 3], [1, 2], [2, 3]]
+weights_e := [5.0, 10.0, 3.0, 1.0]
+verts := [][]f64{}
+weights_v := []f64{}
+g := graph.new_graph(edges, weights_e, verts, weights_v)
+// compute paths
+g.shortest_paths(.fw)
+// print shortest path from 0 to 2
+print(g.path(0, 2))
+// print shortest path from 0 to 3
+print(g.path(0, 3))
+// print distance matrix
+print(g.str_dist_matrix())
 ```

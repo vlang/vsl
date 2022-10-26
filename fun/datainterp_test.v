@@ -15,7 +15,9 @@ fn test_interp01() {
 	xref := [1.0 / 3.0, 2.5, 2.0 / 3.0, 1.1, 1.5, 3.5, 4.5]
 	yref := [0.4, 0.125, 0.3, 0.2, 0.2, 0.03, 0.005]
 	for i, x in xref {
-		assert float64.close(o.p(x), yref[i])
+		res := float64.close(o.p(x), yref[i])
+		eprintln('>> i: ${i:5} | res: $res | o.p(x): ${o.p(x):20.20f} | yref[i]: ${yref[i]:20.20f} ')
+		assert res
 	}
 }
 

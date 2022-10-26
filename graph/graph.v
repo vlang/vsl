@@ -96,8 +96,8 @@ pub fn (g &Graph) shortest_paths(method ShortestPaths) Graph {
 	}
 	g2 := g.calc_dist()
 	nv := g2.dist.len
-	mut dist := g2.dist
-	mut next := g2.next
+	mut dist := g2.dist.clone()
+	mut next := g2.next.clone()
 	for k := 0; k < nv; k++ {
 		for i := 0; i < nv; i++ {
 			for j := 0; j < nv; j++ {
@@ -141,8 +141,8 @@ pub fn (g &Graph) path(s int, t int) []int {
 
 // calc_dist computes distances beetween all vertices and initialises 'next' matrix
 pub fn (g &Graph) calc_dist() Graph {
-	mut dist := g.dist
-	mut next := g.next
+	mut dist := g.dist.clone()
+	mut next := g.next.clone()
 	verts := g.verts
 	edges := g.edges
 	weights_e := g.weights_e

@@ -17,18 +17,18 @@ pub fn bisection(func func.Fn, xmin f64, xmax f64, epsrel f64, epsabs f64, n_max
 		a = xmax
 		b = xmin
 	}
-	mut fa := func.safe_eval(a)?
-	mut fb := func.safe_eval(b)?
+	// mut fa := func.safe_eval(a)?
+	// mut fb := func.safe_eval(b)?
 	mut i := 0
 	for i < n_max {
 		c := (a + b) / 2.0
 		fc := func.safe_eval(c)?
 		if fc < 0.0 {
 			a = c
-			fa = fc
+			// fa = fc
 		} else {
 			b = c
-			fb = fc
+			// fb = fc
 		}
 		if math.abs(b - a) < epsabs + epsrel * math.abs(a) {
 			break

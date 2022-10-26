@@ -2,8 +2,6 @@ module la
 
 import math
 
-pub type VectorApplyFn<T> = fn (i int, x T) T
-
 // vector_apply sets this []T with the scaled components of another []T
 // this := a * another   ⇒   this[i] := a * another[i]
 // NOTE: "another" may be "this"
@@ -15,7 +13,7 @@ pub fn vector_apply<T>(mut o []T, a T, another []T) {
 
 // vector_apply_func runs a function over all components of a []T
 // vi = f(i,vi)
-pub fn vector_apply_func<T>(mut o []T, f VectorApplyFn<T>) {
+pub fn vector_apply_func<T>(mut o []T, f fn (i int, x T) T) {
 	for i in 0 .. o.len {
 		o[i] = f(i, o[i])
 	}

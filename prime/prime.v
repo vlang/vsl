@@ -2,13 +2,14 @@ module prime
 
 import math
 
-// is_prime returns is an int is prime (deterministically)
+// is_prime returns if an int is prime (deterministically)
 pub fn is_prime(p int) bool {
 	if p < 2 {
 		return false
 	}
 	mut i := 2
-	for i <= p / 2 {
+	max := math.floor(f32(p) / 2)
+	for i <= max {
 		rem := p % i
 		if rem != 0 {
 			i++

@@ -58,8 +58,8 @@ Windows, Linux, and macOS out of the box.
 ### Quick, containerized (recommended)
 
 1. Install Docker
-2. Install Visual Studio Code
-3. Install the Remote Development extension for VS Code
+2. Install [Visual Studio Code](https://code.visualstudio.com/)
+3. Install the [Remote Development](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) extension for VS Code
 4. Clone https://github.com/ulises-jeremias/hello-vsl
 5. Create your application within a container (see gif below)
 

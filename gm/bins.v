@@ -95,7 +95,7 @@ pub fn (mut o Bins) append(x []f64, id int, extra voidptr) {
 	}
 	xcopy := x.clone()
 	entry := BinEntry{id, xcopy, extra}
-	mut entries := bin.entries
+	mut entries := unsafe { bin.entries }
 	entries << &entry
 }
 
@@ -108,7 +108,7 @@ pub fn (mut o Bins) clear() {
 pub fn (mut o Bins) find_bin_by_index(idx int) &Bin {
 	// check
 	if idx < 0 || idx >= o.all.len {
-		return voidptr(0)
+		return unsafe { nil }
 	}
 	// allocate new bin if necessary
 	if isnil(o.all[idx]) {
