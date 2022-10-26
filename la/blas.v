@@ -3,7 +3,7 @@ module la
 import vsl.blas
 import math
 
-// @todo: @ulises-jeremias to remove this once https://github.com/vlang/v/issues/14047 is finished
+// TODO: @ulises-jeremias to remove this once https://github.com/vlang/v/issues/14047 is finished
 fn arr_to_f64arr<T>(arr []T) []f64 {
 	mut ret := []f64{cap: arr.len}
 	for v in arr {

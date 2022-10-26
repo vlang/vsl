@@ -173,10 +173,10 @@ fn (k &Kernel) set_arg(index int, arg ArgumentType) ? {
 		Vector<u64> {
 			return k.set_arg_buffer(index, arg.buf)
 		}
-		// @todo: Image {
+		// TODO: Image {
 		// 	return k.set_arg_buffer(index, arg.buf)
 		// }
-		// @todo: LocalBuffer {
+		// TODO: LocalBuffer {
 		//     return k.set_arg_local(index, int(arg))
 		// }
 		else {}

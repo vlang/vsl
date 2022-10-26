@@ -4,7 +4,7 @@ import math
 
 // l2_norm_unitary returns the L2-norm of x.
 pub fn l2_norm_unitary(x []f32) f32 {
-	// @todo: Change when f32 math is ready
+	// TODO: Change when f32 math is ready
 	mut scale := f32(0)
 	mut sum_squares := f32(1)
 	for v in x {
@@ -32,7 +32,7 @@ pub fn l2_norm_unitary(x []f32) f32 {
 
 // l2_norm_inc returns the L2-norm of x.
 pub fn l2_norm_inc(x []f32, n u32, incx u32) f32 {
-	// @todo: Change when f32 math is ready
+	// TODO: Change when f32 math is ready
 	mut scale := f32(0)
 	mut sum_squares := f32(1)
 	for ix := u32(0); ix < n * incx; ix += incx {
@@ -61,7 +61,7 @@ pub fn l2_norm_inc(x []f32, n u32, incx u32) f32 {
 
 // l2_distance_unitary returns the L2-norm of x-y.
 pub fn l2_distance_unitary(x []f32, y []f32) f32 {
-	// @todo: Change when f32 math is ready
+	// TODO: Change when f32 math is ready
 	mut scale := f32(0)
 	mut sum_squares := f32(1)
 	for i, v in x {
