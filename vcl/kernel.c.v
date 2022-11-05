@@ -224,7 +224,7 @@ fn (k &Kernel) call(work_sizes []int, lokal_sizes []int) chan IError {
 		ch <- err
 		return ch
 	}
-	go fn (ch chan IError, event ClEvent) {
+	spawn fn (ch chan IError, event ClEvent) {
 		defer {
 			C.clReleaseEvent(event)
 		}
