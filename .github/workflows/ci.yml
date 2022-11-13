@@ -36,7 +36,7 @@ jobs:
       - name: V doctor
         run: v doctor
 
-      - name: Install VSL and dependencies
+      - name: Install dependencies
         run: |
           sudo apt-get install --quiet -y --no-install-recommends \
             gfortran \
@@ -121,7 +121,7 @@ jobs:
       - name: V doctor
         run: v doctor
 
-      - name: Install VSL and dependencies
+      - name: Install dependencies
         run: |
           sudo apt-get install --quiet -y --no-install-recommends \
             gfortran \
