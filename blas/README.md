@@ -8,7 +8,7 @@ This package implements BLAS functions. It provides two different backends:
   This implementation can be found on `vsl.blas.vlas`.
 
 Therefore, its routines are a little more
-_lower level_ than the ones in the package `vsl.la`.
+*lower level* than the ones in the package `vsl.la`.
 
 ## Usage Example
 
@@ -41,12 +41,12 @@ pub fn matrix_matrix_mul(mut c la.Matrix<f64>, alpha f64, a &la.Matrix<f64>, b &
 
 ## Install dependencies
 
-**Debian/Ubuntu GNU Linux**
+### Debian/Ubuntu GNU Linux
 
 `libopenblas-dev` is not needed when using the pure V backend.
 
 ```sh
-$ sudo apt-get install -y --no-install-recommends \
+sudo apt-get install -y --no-install-recommends \
     gcc \
     gfortran \
     liblapacke-dev \
@@ -54,23 +54,23 @@ $ sudo apt-get install -y --no-install-recommends \
     libssl-dev \
 ```
 
-**Arch Linux/Manjaro GNU Linux**
+### Arch Linux/Manjaro GNU Linux
 
 ```sh
-$ sudo pacman -S openssl
+sudo pacman -S openssl
 ```
 
 The best way of installing OpenBlas/LAPACK is using
 [openblas-lapack](https://aur.archlinux.org/packages/openblas-lapack/).
 
 ```sh
-$ yay -S openblas-lapack
+yay -S openblas-lapack
 ```
 
-_or_
+or
 
 ```sh
-$ git clone https://aur.archlinux.org/openblas-lapack.git /tmp/openblas-lapack
-$ cd /tmp/openblas-lapack
-$ makepkg -si
+git clone https://aur.archlinux.org/openblas-lapack.git /tmp/openblas-lapack
+cd /tmp/openblas-lapack
+makepkg -si
 ```
