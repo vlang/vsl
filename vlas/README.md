@@ -1,11 +1,11 @@
 # V Linear Algebra System
 
-This package implements BLAS functions. It provides two different backends:
+This package implements BLAS and LAPACK functions. It provides two different backends:
 
 - One using Open BLAS when using flag `-d cblas`.
   [Check also OpenBLAS](https://github.com/xianyi/OpenBLAS).
 - One using a pure V implementation called VLAS, *by default*.
-  This implementation can be found on `vsl.vlas.vlas`.
+  This implementation can be found on `vsl.vlas.vblas`.
 
 Therefore, its routines are a little more
 *lower level* than the ones in the package `vsl.la`.
