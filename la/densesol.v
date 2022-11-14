@@ -1,6 +1,6 @@
 module la
 
-import vsl.blas
+import vsl.vlas
 
 // den_solve solves dense linear system using LAPACK (OpenBLaS)
 //
@@ -16,5 +16,5 @@ pub fn den_solve(mut x []f64, a &Matrix<f64>, b []f64, preserve_a bool) {
 		x[i] = b[i]
 	}
 	ipiv := []int{len: a_.m}
-	blas.dgesv(a_.m, 1, mut a_.data, a_.m, ipiv, mut x, 1)
+	vlas.dgesv(a_.m, 1, mut a_.data, a_.m, ipiv, mut x, 1)
 }

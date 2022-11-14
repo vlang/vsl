@@ -1,4 +1,4 @@
-module vlas
+module vblas
 
 import math
 import vsl.float.float64

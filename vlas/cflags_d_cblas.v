@@ -1,4 +1,4 @@
-module blas
+module vlas
 
 #flag linux -O2 -I/usr/local/include -I/usr/lib -I@VMODROOT
 #flag linux -lopenblas -llapacke -L/usr/local/lib -L/usr/lib

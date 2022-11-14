@@ -1,11 +1,11 @@
-# Basic Linear Algebra System
+# V Linear Algebra System
 
 This package implements BLAS functions. It provides two different backends:
 
 - One using Open BLAS when using flag `-d cblas`.
   [Check also OpenBLAS](https://github.com/xianyi/OpenBLAS).
 - One using a pure V implementation called VLAS, *by default*.
-  This implementation can be found on `vsl.blas.vlas`.
+  This implementation can be found on `vsl.vlas.vlas`.
 
 Therefore, its routines are a little more
 *lower level* than the ones in the package `vsl.la`.
@@ -15,7 +15,7 @@ Therefore, its routines are a little more
 ```v
 module main
 
-import vsl.blas
+import vsl.vlas
 import vsl.la
 
 // matrix_matrix_mul returns the matrix multiplication (scaled)
@@ -34,7 +34,7 @@ pub fn matrix_matrix_mul(mut c la.Matrix<f64>, alpha f64, a &la.Matrix<f64>, b &
 		}
 		return
 	}
-	blas.dgemm(false, false, a.m, b.n, a.n, alpha, a.data, a.m, b.data, b.m, 0.0, mut
+	vlas.dgemm(false, false, a.m, b.n, a.n, alpha, a.data, a.m, b.data, b.m, 0.0, mut
 		c.data, c.m)
 }
 ```

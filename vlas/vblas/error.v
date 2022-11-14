@@ -1,4 +1,4 @@
-module vlas
+module vblas
 
 // Panic strings used during parameter checks.
 // This list is duplicated in netlib/blas/netlib. Keep in sync.

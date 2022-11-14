@@ -1,19 +1,19 @@
-module blas
+module vlas
 
 import strconv
 import math
 import math.complex
 import vsl.errors
-import vsl.blas.vlas
+import vsl.vlas.vblas
 
-pub fn c_trans(trans bool) vlas.Transpose {
+pub fn c_trans(trans bool) vblas.Transpose {
 	if trans {
 		return .trans
 	}
 	return .no_trans
 }
 
-pub fn c_uplo(up bool) vlas.Uplo {
+pub fn c_uplo(up bool) vblas.Uplo {
 	if up {
 		return .upper
 	}

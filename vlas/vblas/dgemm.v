@@ -1,4 +1,4 @@
-module vlas
+module vblas
 
 // import runtime
 import sync

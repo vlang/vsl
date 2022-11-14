@@ -1,27 +1,27 @@
-module blas
+module vlas
 
 import vsl.errors
-import vsl.blas.vlas
+import vsl.vlas.vblas
 
-fn C.LAPACKE_dgesv(matrix_layout vlas.MemoryLayout, n int, nrhs int, a &f64, lda int, ipiv &int, b &f64, ldb int) int
+fn C.LAPACKE_dgesv(matrix_layout vblas.MemoryLayout, n int, nrhs int, a &f64, lda int, ipiv &int, b &f64, ldb int) int
 
-fn C.LAPACKE_dgesvd(matrix_layout vlas.MemoryLayout, jobu byte, jobvt byte, m int, n int, a &f64, lda int, s &f64, u &f64, ldu int, vt &f64, ldvt int, superb &f64) int
+fn C.LAPACKE_dgesvd(matrix_layout vblas.MemoryLayout, jobu byte, jobvt byte, m int, n int, a &f64, lda int, s &f64, u &f64, ldu int, vt &f64, ldvt int, superb &f64) int
 
-fn C.LAPACKE_dgetrf(matrix_layout vlas.MemoryLayout, m int, n int, a &f64, lda int, ipiv &int) int
+fn C.LAPACKE_dgetrf(matrix_layout vblas.MemoryLayout, m int, n int, a &f64, lda int, ipiv &int) int
 
-fn C.LAPACKE_dgetri(matrix_layout vlas.MemoryLayout, n int, a &f64, lda int, ipiv &int) int
+fn C.LAPACKE_dgetri(matrix_layout vblas.MemoryLayout, n int, a &f64, lda int, ipiv &int) int
 
-fn C.LAPACKE_dpotrf(matrix_layout vlas.MemoryLayout, up u32, n int, a &f64, lda int) int
+fn C.LAPACKE_dpotrf(matrix_layout vblas.MemoryLayout, up u32, n int, a &f64, lda int) int
 
-fn C.LAPACKE_dgeev(matrix_layout vlas.MemoryLayout, calc_vl byte, calc_vr byte, n int, a &f64, lda int, wr &f64, wi &f64, vl &f64, ldvl_ int, vr &f64, ldvr_ int) int
+fn C.LAPACKE_dgeev(matrix_layout vblas.MemoryLayout, calc_vl byte, calc_vr byte, n int, a &f64, lda int, wr &f64, wi &f64, vl &f64, ldvl_ int, vr &f64, ldvr_ int) int
 
-fn C.LAPACKE_dlange(matrix_layout vlas.MemoryLayout, norm byte, m int, n int, a &f64, lda int, work &f64) f64
+fn C.LAPACKE_dlange(matrix_layout vblas.MemoryLayout, norm byte, m int, n int, a &f64, lda int, work &f64) f64
 
-fn C.LAPACKE_dsyev(matrix_layout vlas.MemoryLayout, jobz byte, uplo byte, n int, a &f64, lda int, w &f64, work &f64, lwork int) int
+fn C.LAPACKE_dsyev(matrix_layout vblas.MemoryLayout, jobz byte, uplo byte, n int, a &f64, lda int, w &f64, work &f64, lwork int) int
 
-fn C.LAPACKE_dgebal(matrix_layout vlas.MemoryLayout, job byte, n int, a &f64, lda int, ilo int, ihi int, scale &f64) int
+fn C.LAPACKE_dgebal(matrix_layout vblas.MemoryLayout, job byte, n int, a &f64, lda int, ilo int, ihi int, scale &f64) int
 
-fn C.LAPACKE_dgehrd(matrix_layout vlas.MemoryLayout, n int, ilo int, ihi int, a &f64, lda int, tau &f64, work &f64, lwork int) int
+fn C.LAPACKE_dgehrd(matrix_layout vblas.MemoryLayout, n int, ilo int, ihi int, a &f64, lda int, tau &f64, work &f64, lwork int) int
 
 // dgesv computes the solution to a real system of linear equations.
 //
