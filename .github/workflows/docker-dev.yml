@@ -35,6 +35,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
+          file: ./.devcontainer/Dockerfile
           tags: ulisesjeremias/vsl_dev:latest
           build-args: |
             DEV_IMG=true
