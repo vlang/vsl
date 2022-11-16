@@ -764,8 +764,8 @@ t_max := (r_mars + r_earth) / c
 min := t_min / minutes
 max := t_max / minutes
 println('light travel time from Earth to Mars:')
-println('minimum = $min minutes')
-println('maximum = $max minutes')
+println('minimum = ${min} minutes')
+println('maximum = ${max} minutes')
 ```
 
 will print
