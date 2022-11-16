@@ -74,13 +74,13 @@ println('f(x) = x^(3/2)')
 mut expected := 1.5 * math.sqrt(2.0)
 mut result, mut abserr := diff.central(f, 2.0)
 println('x = 2.0')
-println(&quot;f'(x) = $result +/- $abserr&quot;)
-println('exact = $expected')
+println(&quot;f'(x) = ${result} +/- ${abserr}&quot;)
+println('exact = ${expected}')
 expected = 0.0
 result, abserr = diff.forward(f, 0.0)
 println('x = 0.0')
-println(&quot;f'(x) = $result +/- $abserr&quot;)
-println('exact = $expected')
+println(&quot;f'(x) = ${result} +/- ${abserr}&quot;)
+println('exact = ${expected}')
 </code></pre>
 
 </section>
@@ -102,7 +102,7 @@ println('exact = $expected')
 </section>
 
           <div class="footer">
-            Powered by vdoc. Generated on: 16 Nov 2022 04:12:54
+            Powered by vdoc. Generated on: 16 Nov 2022 04:16:25
           </div>
         </div>
         <div class="doc-toc"><ul><li class="open"><a href="#readme_diff">README</a></li>

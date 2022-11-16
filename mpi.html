@@ -176,12 +176,12 @@ import vsl.mpi
 mut shortd := [1.0, 3.0, 5.0] // all ranks have this array
 mpi.initialize()?
 
-println('Hello from rank $mpi.world_rank() of  $mpi.world_size() processes')
+println('Hello from rank ${mpi.world_rank()} of ${mpi.world_size()} processes')
 
 // communicator
 
 comm := mpi.new_communicator([])?
-println('Communicator rank $comm.rank() of $comm.size() processors ')
+println('Communicator rank ${comm.rank()} of ${comm.size()} processors ')
 
 // barrier
 
@@ -194,7 +194,7 @@ if mpi.world_rank() &gt; 0 {
 }
 comm.bcast_from_root_f64(shortd) // send original to all
 if shortd == [1.0, 3.0, 5.0] {
-    println('  $comm.rank() bcast_from_root success')
+    println('  ${comm.rank()} bcast_from_root success')
 }
 comm.barrier()
 
@@ -204,7 +204,7 @@ mut reduced := []f64{len: 3}
 ansr := shortd.map(it * comm.size())
 comm.reduce_sum_f64(mut reduced, shortd)
 if reduced == ansr { // only true on rank 0
-    println('  $comm.rank() reduce_sum success')
+    println('  ${comm.rank()} reduce_sum success')
 }
 comm.barrier()
 
@@ -214,13 +214,13 @@ ansar := [0.0, 2.0, 3.0].map(it * f64(mpi.world_size()))
 shortd = [0.0, 2.0, 3.0].map(it * f64(1 + mpi.world_rank()))
 comm.all_reduce_max_f64(mut reduced, shortd)
 if reduced == ansar { // true on all ranks
-    println('  $comm.rank() allreduce_max succes')
+    println('  ${comm.rank()} allreduce_max succes')
 }
 
 mpi.finalize()
 </code></pre>
 <p>The results should look like this for two processors:</p>
-<pre><code>$ mpirun -np 2 -H localhost:8 ./t
+<pre><code class="language-sh">$ mpirun -np 2 -H localhost:8 ./t
 Hello from rank 0 of  2 processes
 Hello from rank 1 of  2 processes
 Communicator rank 1 of 2 processors
@@ -650,7 +650,7 @@ Note there is currently no means to use groups.</p>
 </section>
 
           <div class="footer">
-            Powered by vdoc. Generated on: 16 Nov 2022 04:12:55
+            Powered by vdoc. Generated on: 16 Nov 2022 04:16:25
           </div>
         </div>
         <div class="doc-toc"><ul><li class="open"><a href="#readme_mpi">README</a></li>
