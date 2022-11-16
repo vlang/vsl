@@ -36,7 +36,7 @@ pub fn (p Plot) show() ? {
 			.efailed)
 	}
 	$if !test ? {
-		result := os.execute('bash $run_path "$venv_path" "$data_path" "$layout_path"')
+		result := os.execute('bash ${run_path} "${venv_path}" "${data_path}" "${layout_path}"')
 		if result.exit_code != 0 {
 			return error_with_code(result.output, result.exit_code)
 		}

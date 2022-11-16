@@ -27,7 +27,7 @@ pub fn new_kmeans(mut data Data<f64>, nb_classes int, name string) &Kmeans {
 	nb_members := []int{len: nb_classes}
 
 	// stat
-	mut stat := stat_from_data(mut data, 'stat_$name')
+	mut stat := stat_from_data(mut data, 'stat_${name}')
 	stat.update()
 
 	// bins
@@ -137,12 +137,12 @@ pub fn (mut o Kmeans) train(config TrainConfig) int {
 pub fn (o &Kmeans) str() string {
 	mut res := []string{}
 	res << 'vsl.ml.Kmeans{'
-	res << '	name: $o.name'
-	res << '    nb_classes: $o.nb_classes'
-	res << '    bins: $o.bins'
-	res << '    classes: $o.classes'
-	res << '    centroids: $o.centroids'
-	res << '    nb_members: $o.nb_members'
+	res << '	name: ${o.name}'
+	res << '    nb_classes: ${o.nb_classes}'
+	res << '    bins: ${o.bins}'
+	res << '    classes: ${o.classes}'
+	res << '    centroids: ${o.centroids}'
+	res << '    nb_members: ${o.nb_members}'
 	res << '}'
 	return res.join('\n')
 }

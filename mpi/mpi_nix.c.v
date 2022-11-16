@@ -57,7 +57,7 @@ pub fn start_thread_safe() ? {
 	r := 0
 	C.MPI_Init_thread(0, unsafe { nil }, C.MPI_THREAD_MULTIPLE, &r)
 	if r != C.MPI_THREAD_MULTIPLE {
-		return errors.error("MPI_THREAD_MULTIPLE can't be set: got $r", .efailed)
+		return errors.error("MPI_THREAD_MULTIPLE can't be set: got ${r}", .efailed)
 	}
 }
 

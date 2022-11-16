@@ -22,7 +22,7 @@ pub fn text_hist(labels []string, counts []int, barlen int) ?string {
 		lmax_ = math.max(lmax_, f.str().len)
 	}
 	if fmax < 1 {
-		return 'max frequency is too small: fmax=$fmax'
+		return 'max frequency is too small: fmax=${fmax}'
 	}
 	scale := f64(barlen) / f64(fmax)
 	// print
@@ -130,7 +130,7 @@ pub fn (o Histogram) gen_labels(numfmt string) ?[]string {
 	nbins := o.stations.len - 1
 	mut labels := []string{len: nbins}
 	for i in 0 .. nbins {
-		labels[i] = strconv.v_sprintf('[$numfmt,$numfmt)', o.stations[i], o.stations[i + 1])
+		labels[i] = strconv.v_sprintf('[${numfmt},${numfmt})', o.stations[i], o.stations[i + 1])
 	}
 	return labels
 }

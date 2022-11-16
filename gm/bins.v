@@ -66,7 +66,7 @@ pub fn new_bins(xmin []f64, xmax []f64, ndiv_ []int) &Bins {
 		o.xdel[k] = o.xmax[k] - o.xmin[k]
 		o.size[k] = o.xdel[k] / f64(ndiv[k])
 		if o.xdel[k] < gm.xdelzero {
-			errors.vsl_panic('xmax[$k]-xmin[$k]=${o.xdel[k]} must be greater than $gm.xdelzero',
+			errors.vsl_panic('xmax[${k}]-xmin[${k}]=${o.xdel[k]} must be greater than ${gm.xdelzero}',
 				.efailed)
 		}
 	}
@@ -87,11 +87,11 @@ pub fn new_bins(xmin []f64, xmax []f64, ndiv_ []int) &Bins {
 pub fn (mut o Bins) append(x []f64, id int, extra voidptr) {
 	idx := o.calc_index(x)
 	if idx < 0 {
-		errors.vsl_panic('coordinates $x are out of range', .erange)
+		errors.vsl_panic('coordinates ${x} are out of range', .erange)
 	}
 	bin := o.find_bin_by_index(idx)
 	if isnil(bin) {
-		errors.vsl_panic('bin index $idx is out of range', .erange)
+		errors.vsl_panic('bin index ${idx} is out of range', .erange)
 	}
 	xcopy := x.clone()
 	entry := BinEntry{id, xcopy, extra}
@@ -338,28 +338,28 @@ pub fn (o &Bins) nentries() int {
 // summary returns the summary of this Bins' data
 pub fn (o &Bins) summary() string {
 	mut l := ''
-	l += 'ndim        = $o.ndim\n'
-	l += 'xmin        = $o.xmin\n'
-	l += 'xmax        = $o.xmax\n'
-	l += 'xdel        = $o.xdel\n'
-	l += 'size        = $o.size\n'
-	l += 'ndiv        = $o.ndiv\n'
-	l += 'nall        = $o.all.len\n'
-	l += 'nactivebins = $o.nactive()\n'
-	l += 'nentries    = $o.nentries()\n'
+	l += 'ndim        = ${o.ndim}\n'
+	l += 'xmin        = ${o.xmin}\n'
+	l += 'xmax        = ${o.xmax}\n'
+	l += 'xdel        = ${o.xdel}\n'
+	l += 'size        = ${o.size}\n'
+	l += 'ndiv        = ${o.ndiv}\n'
+	l += 'nall        = ${o.all.len}\n'
+	l += 'nactivebins = ${o.nactive()}\n'
+	l += 'nentries    = ${o.nentries()}\n'
 	return l
 }
 
 // str returns the string representation of one Bin
 pub fn (o Bin) str() string {
-	mut l := "{\"idx\":$o.index, \"entries\":["
+	mut l := "{\"idx\":${o.index}, \"entries\":["
 	for i, entry in o.entries {
 		if i > 0 {
 			l += ', '
 		}
-		l += "{\"id\":$entry.id, \"x\":[$entry.x[0],$entry.x[1]"
+		l += "{\"id\":${entry.id}, \"x\":[${entry.x}[0],${entry.x}[1]"
 		if entry.x.len > 2 {
-			l += ',$entry.x[2]'
+			l += ',${entry.x}[2]'
 		}
 		l += ']'
 		if !isnil(entry.extra) {
@@ -380,7 +380,7 @@ pub fn (o &Bins) str() string {
 			if k > 0 {
 				l += ',\n'
 			}
-			l += '  $bin'
+			l += '  ${bin}'
 			k++
 		}
 	}

@@ -87,7 +87,7 @@ fn (d &Device) get_info_str(param ClDeviceInfo, panic_on_error bool) ?string {
 pub fn (d &Device) str() string {
 	name := d.name() or { '' }
 	vendor := d.vendor() or { '' }
-	return '$name $vendor'
+	return '${name} ${vendor}'
 }
 
 // name device info - name

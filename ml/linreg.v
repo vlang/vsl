@@ -139,10 +139,10 @@ pub fn (mut o LinReg) calce() {
 pub fn (o &LinReg) str() string {
 	mut res := []string{}
 	res << 'vsl.ml.LinReg{'
-	res << '    name: $o.name'
-	res << '    params: $o.params'
-	res << '    stat: $o.stat'
-	res << '    e: $o.e'
+	res << '    name: ${o.name}'
+	res << '    params: ${o.params}'
+	res << '    stat: ${o.stat}'
+	res << '    e: ${o.e}'
 	res << '}'
 	return res.join('\n')
 }

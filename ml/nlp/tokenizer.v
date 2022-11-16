@@ -303,7 +303,7 @@ pub fn ngrams(tokens []string, n int) ?[][]string {
 		return [tokens]
 	}
 	if n <= 0 {
-		return errors.error('expects n to be in the inclusive range [0, $tokens.len].',
+		return errors.error('expects n to be in the inclusive range [0, ${tokens.len}].',
 			.einval)
 	}
 	for i in 0 .. (tokens.len - n + 1) {

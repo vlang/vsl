@@ -84,13 +84,13 @@ pub fn (q Quaternion) copy() Quaternion {
 }
 
 fn cof_str(a f64) string {
-	return if a >= 0.0 { '+$a' } else { '$a' }
+	return if a >= 0.0 { '+${a}' } else { '${a}' }
 }
 
 // To String method
 // w + xi + yj + zk
 pub fn (q Quaternion) str() string {
-	mut out := '$q.w'
+	mut out := '${q.w}'
 	out += cof_str(q.x)
 	out += 'i'
 	out += cof_str(q.y)

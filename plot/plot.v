@@ -4,8 +4,8 @@ import os
 
 const (
 	schema_version = 'v1.0.2'
-	venv_dir_name  = '.plotvenv_$schema_version'
-	data_dir_name  = '.data_$schema_version'
+	venv_dir_name  = '.plotvenv_${schema_version}'
+	data_dir_name  = '.data_${schema_version}'
 )
 
 // init will ensure that all dependencies are correctly installed and venv initiallized
@@ -15,7 +15,7 @@ fn init() {
 		println('Creating plotly virtualenv...')
 	}
 	init_path := solve_mod_path('scripts', 'create-venv.sh')
-	result := os.execute('bash $init_path "$venv_path"')
+	result := os.execute('bash ${init_path} "${venv_path}"')
 	if result.exit_code != 0 {
 		panic(result.output)
 	}

@@ -158,7 +158,7 @@ fn (mut stemmer LancasterStemmer) parse_rules(rules []string) ? {
 	for rule in rules {
 		regex_match, _ := valid_rule.match_string(rule)
 		if regex_match == -1 {
-			return errors.error('invalid LancasterStemmer rule "$rule"', .einval)
+			return errors.error('invalid LancasterStemmer rule "${rule}"', .einval)
 		}
 		// Indexing a string returns a byte. Turn it into an array of bytes
 		// and call bytestr() to turn it into a string.

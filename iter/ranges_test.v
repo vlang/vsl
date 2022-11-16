@@ -57,7 +57,7 @@ fn test_float_iter() {
 		}
 		for j, n in r {
 			if !n.eq_epsilon(expected[i][j]) {
-				println('$n,  ${expected[i][j]}')
+				println('${n},  ${expected[i][j]}')
 			}
 			assert n.eq_epsilon(expected[i][j])
 		}

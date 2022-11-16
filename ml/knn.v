@@ -31,11 +31,11 @@ mut:
 // to [10.0, 10.0] (which is class 1.0).
 pub fn new_knn(mut data Data<f64>, name string) ?&KNN {
 	if data.x.data.len == 0 {
-		return errors.error('with name $name expects `data.x` to have at least one element.',
+		return errors.error('with name ${name} expects `data.x` to have at least one element.',
 			.einval)
 	}
 	if data.y.len == 0 {
-		return errors.error('with name $name expects `data.y` to have at least one element.',
+		return errors.error('with name ${name} expects `data.y` to have at least one element.',
 			.einval)
 	}
 	mut knn := &KNN{
@@ -182,9 +182,9 @@ pub fn (mut knn KNN) predict(config PredictConfig) ?f64 {
 pub fn (o &KNN) str() string {
 	mut res := []string{}
 	res << 'vsl.ml.KNN{'
-	res << '	name: $o.name'
-	res << '    weights: $o.weights'
-	res << '    neighbors: $o.neighbors'
+	res << '	name: ${o.name}'
+	res << '    weights: ${o.weights}'
+	res << '    neighbors: ${o.neighbors}'
 	res << '}'
 	return res.join('\n')
 }

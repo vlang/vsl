@@ -37,7 +37,7 @@ pub fn (o InterpQuad) g(x f64) f64 {
 //   fopt -- f(xopt) = y @ optimum
 pub fn (o InterpQuad) optimum() (f64, f64) {
 	if math.abs(o.a) < o.tol_den {
-		errors.vsl_panic('cannot compute optimum because zero A=$o.a', .ezerodiv)
+		errors.vsl_panic('cannot compute optimum because zero A=${o.a}', .ezerodiv)
 	}
 	xopt := -0.5 * o.b / o.a
 	fopt := o.f(xopt)
@@ -52,7 +52,7 @@ pub fn (mut o InterpQuad) fit_3points(x0 f64, y0 f64, x1 f64, y1 f64, x2 f64, y2
 	z0, z1, z2 := x0 * x0, x1 * x1, x2 * x2
 	den := x0 * (z2 - z1) - x1 * z2 + x2 * z1 + (x1 - x2) * z0
 	if math.abs(den) < o.tol_den {
-		return errors.error('Cannot fit 3 points because denominator=$den is near zero.\n\t(x0,y0)=($x0,$y0)\t(x1,y1)=($x1,$y1)\t(x2,y2)=($x2,$y2)',
+		return errors.error('Cannot fit 3 points because denominator=${den} is near zero.\n\t(x0,y0)=(${x0},${y0})\t(x1,y1)=(${x1},${y1})\t(x2,y2)=(${x2},${y2})',
 			.ezerodiv)
 	}
 	o.a = ((x1 - x2) * y0 + x2 * y1 - x1 * y2 + x0 * (y2 - y1)) / den
@@ -68,7 +68,7 @@ pub fn (mut o InterpQuad) fit_2points_d(x0 f64, y0 f64, x1 f64, y1 f64, x2 f64, 
 	z0, z1 := x0 * x0, x1 * x1
 	den := -z1 + z0 + 2 * x1 * x2 - 2 * x0 * x2
 	if math.abs(den) < o.tol_den {
-		return errors.error('Cannot fit 2 points because denominator=$den is near zero.\n\t(x0,y0)=($x0,$y0)\t(x1,y1)=($x1,$y1)\t(x2,d2)=($x2,$d2)',
+		return errors.error('Cannot fit 2 points because denominator=${den} is near zero.\n\t(x0,y0)=(${x0},${y0})\t(x1,y1)=(${x1},${y1})\t(x2,d2)=(${x2},${d2})',
 			.ezerodiv)
 	}
 	o.a = (-d2 * x0 + d2 * x1 + y0 - y1) / den

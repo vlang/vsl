@@ -12,5 +12,5 @@ pub fn vsl_panic(reason string, error_code ErrorCode) {
 
 [inline]
 pub fn error_message(reason string, error_code ErrorCode) string {
-	return 'vsl: $reason'
+	return 'vsl: ${reason}'
 }

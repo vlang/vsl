@@ -36,7 +36,7 @@ pub fn (o &Point) disp(dx f64, dy f64, dz f64) &Point {
 
 // str outputs Point
 pub fn (o &Point) str() string {
-	return '{$o.x, $o.y, $o.z}'
+	return '{${o.x}, ${o.y}, ${o.z}}'
 }
 
 // dist_point_point computes the unsigned distance from a to b
@@ -63,7 +63,7 @@ pub fn (o &Segment) vector(m f64) []f64 {
 
 // str outputs Segment
 pub fn (o &Segment) str() string {
-	return '{$o.a $o.b} len=$o.len()'
+	return '{${o.a} ${o.b}} len=${o.len()}'
 }
 
 // new_segment creates a new segment from a to b
@@ -99,7 +99,7 @@ pub fn dist_point_line(p &Point, a &Point, b &Point, tol f64) f64 {
 	nn := ns.len()
 	if nn < tol { // point-point distance
 		$if debug {
-			print('basicgeom.go: dist_point_line: __WARNING__ point-point distance too small:\n p=$p a=$a b=$b')
+			print('basicgeom.go: dist_point_line: __WARNING__ point-point distance too small:\n p=${p} a=${a} b=${b}')
 		}
 		return vs.len()
 	}

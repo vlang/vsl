@@ -18,7 +18,7 @@ pub fn (d &Device) kernel(name string) ?&Kernel {
 		break
 	}
 	if ret == invalid_kernel_name {
-		return error("kernel with name '$name' not found")
+		return error("kernel with name '${name}' not found")
 	}
 	return new_kernel(d, k)
 }
@@ -31,7 +31,7 @@ pub:
 }
 
 pub fn (err UnsupportedArgumentTypeError) msg() string {
-	return 'cl: unsupported argument type for index $err.index: $err.value'
+	return 'cl: unsupported argument type for index ${err.index}: ${err.value}'
 }
 
 fn new_unsupported_argument_type_error(index int, value ArgumentType) IError {

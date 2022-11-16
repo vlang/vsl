@@ -60,7 +60,7 @@ pub fn (e ErrVCL) err() IError {
 		vcl.invalid_mip_level { vcl.err_invalid_mip_level }
 		vcl.invalid_global_work_size { vcl.err_invalid_global_work_size }
 		vcl.invalid_property { vcl.err_invalid_property }
-		else { 'cl: error $e' }
+		else { 'cl: error ${e}' }
 	}
 	return error_with_code(err, int(e))
 }

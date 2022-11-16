@@ -146,8 +146,8 @@ bow_prediction2 := bow_knn.predict(
 bow_label1 := class_inverse[bow_prediction1.str()]
 bow_label2 := class_inverse[bow_prediction2.str()]
 
-println('"$sentence1" predicted as "$bow_label1" using bag of words.')
-println('"$sentence2" predicted as "$bow_label2" using bag of words.')
+println('"${sentence1}" predicted as "${bow_label1}" using bag of words.')
+println('"${sentence2}" predicted as "${bow_label2}" using bag of words.')
 
 // Now let's use TF-IDF and see if we get something different.
 // It takes a document (an array of sentences, which by itself is an array
@@ -208,5 +208,5 @@ tf_idf_prediction2 := tf_idf_knn.predict(
 tf_idf_label1 := class_inverse[tf_idf_prediction1.str()]
 tf_idf_label2 := class_inverse[tf_idf_prediction2.str()]
 
-println('"$sentence1" predicted as "$tf_idf_label1" using TF-IDF.')
-println('"$sentence2" predicted as "$tf_idf_label2" using TF-IDF.')
+println('"${sentence1}" predicted as "${tf_idf_label1}" using TF-IDF.')
+println('"${sentence2}" predicted as "${tf_idf_label2}" using TF-IDF.')

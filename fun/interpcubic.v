@@ -74,7 +74,7 @@ pub fn (mut o InterpCubic) fit_4points(x0 f64, y0 f64, x1 f64, y1 f64, x2 f64, y
 		x0 * ((w3 - w2) * z1 - w3 * z2 + w1 * (z2 - z3) + w2 * z3) + x1 * (w3 * z2 - w2 * z3) +
 		(w2 * x3 - w3 * x2) * z1 + ((w2 - w3) * x1 + w3 * x2 - w2 * x3 + w1 * (x3 - x2)) * z0
 	if math.abs(den) < o.tol_den {
-		return errors.error('Cannot fit 4 points because denominator=$den is near zero.\n\t(x0,y0)=($x0,$y0)\t(x1,y1)=($x1,$y1)\t(x2,y2)=($x2,$y2)\t(x3,d3)=($x3,$y3)',
+		return errors.error('Cannot fit 4 points because denominator=${den} is near zero.\n\t(x0,y0)=(${x0},${y0})\t(x1,y1)=(${x1},${y1})\t(x2,y2)=(${x2},${y2})\t(x3,d3)=(${x3},${y3})',
 			.ezerodiv)
 	}
 	o.a = -((x1 * (y3 - y2) - x2 * y3 + x3 * y2 + (x2 - x3) * y1) * z0 + (x2 * y3 - x3 * y2) * z1 +
@@ -105,7 +105,7 @@ pub fn (mut o InterpCubic) fit_3points_d(x0 f64, y0 f64, x1 f64, y1 f64, x2 f64,
 		3 * x1 * z3 - 3 * x2 * z3) + w1 * (z2 - 2 * x2 * x3) + w0 * (-2 * x1 * x3 + 2 * x2 * x3 +
 		z1 - z2)
 	if math.abs(den) < o.tol_den {
-		return errors.error('Cannot fit 3 points because denominator=$den is near zero.\n\t(x0,y0)=($x0,$y0)\t(x1,y1)=($x1,$y1)\t(x2,y2)=($x2,$y2)\t(x3,d3)=($x3,$d3)',
+		return errors.error('Cannot fit 3 points because denominator=${den} is near zero.\n\t(x0,y0)=(${x0},${y0})\t(x1,y1)=(${x1},${y1})\t(x2,y2)=(${x2},${y2})\t(x3,d3)=(${x3},${d3})',
 			.ezerodiv)
 	}
 	o.a = -(-2 * x1 * x3 * y2 + x0 * (2 * x3 * y2 - 2 * x3 * y1) + (y1 - y2) * z0 + y2 * z1 +

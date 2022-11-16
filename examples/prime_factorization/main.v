@@ -29,7 +29,7 @@ fn main() {
 	mut n := os.input('').int()
 	factors := factorize(n)?
 	for f in factors {
-		print('$f ')
+		print('${f} ')
 	}
 	println('')
 }

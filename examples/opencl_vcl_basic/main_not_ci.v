@@ -11,7 +11,7 @@ __kernel void addOne(__global float* data) {
 
 // get all devices if you want
 devices := vcl.get_devices(vcl.device_cpu)?
-println('Devices: $devices')
+println('Devices: ${devices}')
 
 // do not create platforms/devices/contexts/queues/...
 // just get the device
@@ -33,7 +33,7 @@ err := <-v.load(data)
 if err !is none {
 	return err
 }
-println('\n\nCreated vector: $v')
+println('\n\nCreated vector: ${v}')
 println(v.data()?)
 
 // add program source to device, get kernel
@@ -48,4 +48,4 @@ if kernel_err !is none {
 // get data from vector
 next_data := v.data()?
 // prints out [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16]
-println('\n\nUpdated vector data: $next_data')
+println('\n\nUpdated vector data: ${next_data}')

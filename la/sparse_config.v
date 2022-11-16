@@ -85,7 +85,7 @@ pub fn (mut o SparseConfig) set_mumps_ordering(ordering string) {
 		'metis' { o.mumps_ordering = 5 }
 		'qamd' { o.mumps_ordering = 6 }
 		'auto' { o.mumps_ordering = 7 }
-		else { errors.vsl_panic('ordering scheme $ordering is not available\n', .efailed) }
+		else { errors.vsl_panic('ordering scheme ${ordering} is not available\n', .efailed) }
 	}
 }
 
@@ -112,6 +112,6 @@ pub fn (mut o SparseConfig) set_mumps_scaling(scaling string) {
 		'', 'rcit' { o.mumps_scaling = 7 } // row/col iterative
 		'rrcit' { o.mumps_scaling = 8 } // rigorous row/col it
 		'auto' { o.mumps_scaling = 77 } // automatic
-		else { errors.vsl_panic('scaling scheme $scaling is not available\n', .efailed) }
+		else { errors.vsl_panic('scaling scheme ${scaling} is not available\n', .efailed) }
 	}
 }

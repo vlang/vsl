@@ -67,7 +67,7 @@ pub fn (g &Graph) get_edge(i int, j int) ?int {
 	if key in g.key2edge {
 		return g.key2edge[key]
 	}
-	return errors.error('cannot find edge from $i to $j', .efailed)
+	return errors.error('cannot find edge from ${i} to ${j}', .efailed)
 }
 
 /*
@@ -176,7 +176,7 @@ pub fn (g &Graph) calc_dist() Graph {
 		dist[i][j] = d
 		next[i][j] = j
 		if dist[i][j] < 0 {
-			panic('distance between vertices cannot be negative: $dist[i][j]')
+			panic('distance between vertices cannot be negative: ${dist}[i][j]')
 		}
 	}
 	return Graph{

@@ -16,7 +16,7 @@ pub fn beta(a f64, b f64) f64 {
 pub fn binomial(n int, k_ int) f64 {
 	mut k := k_
 	if n < 0 || k < 0 || k > n {
-		errors.vsl_panic('binomial function requires that k <= n (both positive). incorrect values: n=$n, k=$k',
+		errors.vsl_panic('binomial function requires that k <= n (both positive). incorrect values: n=${n}, k=${k}',
 			.erange)
 	}
 	if k == 0 || k == n {
@@ -37,7 +37,7 @@ pub fn binomial(n int, k_ int) f64 {
 	}
 	res := f64(k) * beta(f64(k), f64(n - k + 1))
 	if res == 0 {
-		errors.vsl_panic('binomial function failed with n=$n, k=$k', .efailed)
+		errors.vsl_panic('binomial function failed with n=${n}, k=${k}', .efailed)
 	}
 	return math.floor(0.5 + 1.0 / res)
 }
@@ -50,7 +50,7 @@ pub fn uint_binomial(n_ u64, k_ u64) u64 {
 	mut n := n_
 	mut k := k_
 	if k > n {
-		errors.vsl_panic('uint_binomial function requires that k <= n. incorrect values: n=$n, k=$k',
+		errors.vsl_panic('uint_binomial function requires that k <= n. incorrect values: n=${n}, k=${k}',
 			.erange)
 	}
 	if k == 0 || k == n {
@@ -67,7 +67,7 @@ pub fn uint_binomial(n_ u64, k_ u64) u64 {
 		c_i := c / i
 		max_n := math.max_u64 / n
 		if c_i > max_n / n {
-			errors.vsl_panic('overflow in uint_binomial: $c_i > $max_n', .eovrflw)
+			errors.vsl_panic('overflow in uint_binomial: ${c_i} > ${max_n}', .eovrflw)
 		}
 		c = c_i * n + c % i * n / i // split c*n/i into (c/i*i + c%i)*n/i
 		n = n - 1

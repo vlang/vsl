@@ -219,7 +219,7 @@ pub fn (o &Matrix<T>) get_col(j int) []T {
 // endp1 -- "end-plus-one", the number of the last requested column + 1
 pub fn (o &Matrix<T>) extract_cols(start int, endp1 int) &Matrix<T> {
 	if endp1 <= start {
-		errors.vsl_panic("endp1 'end-plus-one' must be greater than start. start=$start, endp1=$endp1 invalid",
+		errors.vsl_panic("endp1 'end-plus-one' must be greater than start. start=${start}, endp1=${endp1} invalid",
 			.efailed)
 	}
 	ncol := endp1 - start
@@ -237,7 +237,7 @@ pub fn (o &Matrix<T>) extract_cols(start int, endp1 int) &Matrix<T> {
 // endp1 -- "end-plus-one", the number of the last requested column + 1
 pub fn (o &Matrix<T>) extract_rows(start int, endp1 int) &Matrix<T> {
 	if endp1 <= start {
-		errors.vsl_panic("endp1 'end-plus-one' must be greater than start. start=$start, endp1=$endp1 invalid",
+		errors.vsl_panic("endp1 'end-plus-one' must be greater than start. start=${start}, endp1=${endp1} invalid",
 			.efailed)
 	}
 	nrow := endp1 - start
@@ -327,7 +327,7 @@ pub fn (o &Matrix<T>) print_v(nfmt_ string) string {
 	if nfmt == '' {
 		nfmt = '%10g'
 	}
-	mut l := '[][]$T.name{\n'
+	mut l := '[][]${T.name}{\n'
 	for i in 0 .. o.m {
 		l += '    {'
 		for j in 0 .. o.n {
