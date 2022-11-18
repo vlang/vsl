@@ -70,7 +70,7 @@ body:
     validations:
       required: true
   - type: input
-    id: version
+    id: tool-version
     attributes:
       label: Version used
       description: |
