@@ -63,6 +63,15 @@ body:
   - type: input
     id: version
     attributes:
+      label: V version
+      description: |
+        Please make sure to run `v up` before reporting any issues as it may have already been fixed.
+        It's also advisable to update all relevant modules using `v outdated` and `v install
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
       label: Version used
       description: |
         Please provide the version of the repository or tool you are using.
@@ -72,5 +81,7 @@ body:
     id: environment
     attributes:
       label: Environment details (OS name and version, etc.)
+      description: |
+        You can use `v doctor` to fill up this section.
     validations:
         required: true
