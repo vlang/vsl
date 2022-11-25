@@ -10,12 +10,12 @@ on:
       dockerfile:
         description: 'The dockerfile to use'
         type: string
-        required: true
+        required: false
         default: './Dockerfile'
       context:
         description: 'The context to use'
         type: string
-        required: true
+        required: false
         default: '.'
       build-args:
         description: 'The build args to use'

@@ -88,16 +88,16 @@ parse_options() {
         parse_documentation
         while read -r line; do
             case "$line" in
-                "-h, --help"*)  continue ;;
-                "--help, -h"*)  continue ;;
-                -*," "--*)      option=$(echo "$line" | awk -F'(^-|, --| )'  '{ print $2"="$3 }') ;;
-                --*," "-*)      option=$(echo "$line" | awk -F'(--|, -| )'   '{ print $3"="$2 }') ;;
-                --*=*)          option=$(echo "$line" | awk -F'(--|=| )'     '{ print $2"=?" }') ;;
-                --*" "*)        option=$(echo "$line" | awk -F'(--| )'       '{ print $2 }') ;;
-                *)              continue ;;
+            "-h, --help"*) continue ;;
+            "--help, -h"*) continue ;;
+            -*," "--*) option=$(echo "$line" | awk -F'(^-|, --| )' '{ print $2"="$3 }') ;;
+            --*," "-*) option=$(echo "$line" | awk -F'(--|, -| )' '{ print $3"="$2 }') ;;
+            --*=*) option=$(echo "$line" | awk -F'(--|=| )' '{ print $2"=?" }') ;;
+            --*" "*) option=$(echo "$line" | awk -F'(--| )' '{ print $2 }') ;;
+            *) continue ;;
             esac
             options+=("$option")
-        done <<< "$documentation"
+        done <<<"$documentation"
     fi
 
     options+=(h=help)
@@ -106,10 +106,10 @@ parse_options() {
     # Prepare known options
     for option in "${options[@]}"; do
         option_var=${option#*=}
-        option_name=${option%=$option_var}
+        option_name=${option%="$option_var"}
         if [[ "${#option_name}" = "1" ]]; then
             short_options="${short_options}${option_name}"
-            if [[ "${#option_var}" > "1" ]]; then
+            if [[ "${#option_var}" -gt "1" ]]; then
                 short_option_vars+=("$option_var")
             fi
         fi
@@ -123,7 +123,7 @@ parse_options() {
             parameters+=("$argument")
             for known_option in "${options[@]}"; do
                 known_option_var=${known_option#*=}
-                known_option_name=${known_option%=$known_option_var}
+                known_option_name=${known_option%="$known_option_var"}
                 if [[ "$known_option_var" = "?" && "$argument" = --$known_option_name ]]; then
                     next_is_value="yes"
                     break
@@ -149,7 +149,7 @@ parse_options() {
         # Set the corresponding variable for known options
         for known_option in "${options[@]}" "${short_option_vars[@]}"; do
             known_option_var=${known_option#*=}
-            known_option_name=${known_option%=$known_option_var}
+            known_option_name=${known_option%="$known_option_var"}
 
             # Short option
             if [[ "$option" = "$known_option_name" ]]; then
@@ -186,25 +186,31 @@ parse_options() {
 
             # Long option with unnecessary value
             elif [[ "$option" = -$known_option_name=* && "$known_option_var" != "?" ]]; then
-                option_value=${option#*=}
-                show_error "--$known_option_name does not accept a value, you specified \"$option_value\""
-                exit 1
+                if [[ -z "${NO_CHECK}" ]]; then
+                    option_value=${option#*=}
+                    show_error "--$known_option_name does not accept a value, you specified \"$option_value\""
+                    exit 1
+                fi
             fi
         done
 
         # Unknown option
         if [[ -z "$option_value" ]]; then
-            option=${option%%=*}
-            [[ "$option" = \?* ]] && option=${option#*\?}
-            show_error "unrecognized option -$option"
-            exit 1
+            if [[ -z "${NO_CHECK}" ]]; then
+                option=${option%%=*}
+                [[ "$option" = \?* ]] && option=${option#*\?}
+                show_error "unrecognized option -$option"
+                exit 1
+            fi
         fi
 
         # Help option
         if [[ -n "$help" ]]; then
-            [[ -z "$documentation" ]] && parse_documentation
-            echo "$documentation"
-            exit
+            if [[ -z "${NO_HELP}" ]]; then
+                [[ -z "$documentation" ]] && parse_documentation
+                echo "$documentation"
+                exit
+            fi
         fi
     done
 }

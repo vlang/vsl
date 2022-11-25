@@ -21,7 +21,7 @@
 ##                             format.
 
 ROOT=$(dirname $0)
-source "${ROOT}/opts.sh" || exit # Bash implementation, slower
+source "${ROOT}/easy-options.sh" || exit # Bash implementation, slower
 
 # Boolean and parameter options
 [[ -n "$some_option"  ]] && echo "Option specified: --some-option"

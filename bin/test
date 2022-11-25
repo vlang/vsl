@@ -16,7 +16,7 @@
 
 ROOT=$(dirname "$0")
 
-source "${ROOT}/util/opts/opts.sh" || exit
+source "${ROOT}/util/easyoptions/easyoptions.sh" || exit
 source "${ROOT}/util/logs.sh" || exit
 
 set -eo pipefail
