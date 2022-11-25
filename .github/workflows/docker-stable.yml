@@ -17,6 +17,9 @@ jobs:
       tags: ulisesjeremias/vsl:latest
       build-args: |
         DEV_IMG=false
+    secrets:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
   docker-tag:
     runs-on: ubuntu-latest
