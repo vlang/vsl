@@ -20,6 +20,16 @@ on:
       - master
 
 jobs:
+  shellcheck:
+    if: github.event_name == 'push'
+    name: Shellcheck
+    uses: ./.github/workflows/shellcheck.yml
+
+  todo:
+    if: github.event_name == 'push'
+    name: TODO
+    uses: ./.github/workflows/todo.yml
+
   validate-docs:
     runs-on: ubuntu-latest
     steps:

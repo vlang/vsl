@@ -1,16 +1,14 @@
-name: Todo Checker
+name: Shellcheck
 
 on:
   workflow_call:
 
 jobs:
-  todo:
+  shellcheck:
+    name: Shellcheck
     runs-on: ubuntu-latest
-
     steps:
       - name: Begin CI...
         uses: actions/checkout@v3
-
-      - name: TODO to Issue
-        uses: alstr/todo-to-issue-action@v4
-        id: todo
+      - name: Run ShellCheck
+        uses: ludeeus/action-shellcheck@1.1.0
