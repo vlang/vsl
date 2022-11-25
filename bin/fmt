@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-vsl_dir_path=$(dirname "$(dirname "$0")")
-
-find "${vsl_dir_path}" -name "*.v" -exec v fmt -w {} +
