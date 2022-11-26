@@ -22,7 +22,7 @@ pub fn range(start int, stop int) []int {
 }
 
 // get_many returns an array containing the values in the given idxs
-pub fn get_many<T>(arr []T, idxs []int) []T {
+pub fn get_many[T](arr []T, idxs []int) []T {
 	if idxs.len == 0 {
 		return []T{}
 	}

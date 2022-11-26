@@ -22,7 +22,7 @@ defer {
 
 // VCL has several kinds of device memory object: Bytes, Vector, Image (Soon)
 // allocate buffer on the device (16 elems of f32).
-mut v := device.vector<f32>(16)?
+mut v := device.vector[f32](16)?
 defer {
 	v.release() or { panic(err) }
 }

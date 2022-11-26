@@ -143,34 +143,34 @@ fn (k &Kernel) set_arg(index int, arg ArgumentType) ? {
 		Bytes {
 			return k.set_arg_buffer(index, arg.buf)
 		}
-		Vector<byte> {
+		Vector[byte] {
 			return k.set_arg_buffer(index, arg.buf)
 		}
-		Vector<f32> {
+		Vector[f32] {
 			return k.set_arg_buffer(index, arg.buf)
 		}
-		Vector<f64> {
+		Vector[f64] {
 			return k.set_arg_buffer(index, arg.buf)
 		}
-		Vector<i16> {
+		Vector[i16] {
 			return k.set_arg_buffer(index, arg.buf)
 		}
-		Vector<i64> {
+		Vector[i64] {
 			return k.set_arg_buffer(index, arg.buf)
 		}
-		Vector<i8> {
+		Vector[i8] {
 			return k.set_arg_buffer(index, arg.buf)
 		}
-		Vector<int> {
+		Vector[int] {
 			return k.set_arg_buffer(index, arg.buf)
 		}
-		Vector<u16> {
+		Vector[u16] {
 			return k.set_arg_buffer(index, arg.buf)
 		}
-		Vector<u32> {
+		Vector[u32] {
 			return k.set_arg_buffer(index, arg.buf)
 		}
-		Vector<u64> {
+		Vector[u64] {
 			return k.set_arg_buffer(index, arg.buf)
 		}
 		// TODO: Image {
