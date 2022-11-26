@@ -21,7 +21,6 @@ on:
 
 jobs:
   shellcheck:
-    if: github.event_name == 'push'
     name: Shellcheck
     uses: ./.github/workflows/shellcheck.yml
 
