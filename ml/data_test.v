@@ -2,7 +2,7 @@ module ml
 
 import vsl.la
 
-fn check_xy_01(x &la.Matrix<f64>, y []f64) {
+fn check_xy_01(x &la.Matrix[f64], y []f64) {
 	expected := [
 		[-1.0, 0, -3],
 		[-2.0, 3, 3],

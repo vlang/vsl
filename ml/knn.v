@@ -8,7 +8,7 @@ import vsl.errors
 pub struct KNN {
 mut:
 	name    string // name of this "observer"
-	data    &Data<f64>
+	data    &Data[f64]
 	weights map[f64]f64 // weights[class] = weight
 pub mut:
 	neighbors []Neighbor
@@ -29,7 +29,7 @@ mut:
 // ```mut knn := new_knn(mut data_from_raw_xy_sep([[0.0, 0.0], [10.0, 10.0]], [0.0, 1.0]))```
 // If you predict with `knn.predict(1, [9.0, 9.0])`, it should return 1.0 as it is the closest
 // to [10.0, 10.0] (which is class 1.0).
-pub fn new_knn(mut data Data<f64>, name string) ?&KNN {
+pub fn new_knn(mut data Data[f64], name string) ?&KNN {
 	if data.x.data.len == 0 {
 		return errors.error('with name ${name} expects `data.x` to have at least one element.',
 			.einval)

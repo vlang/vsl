@@ -3,7 +3,7 @@ module la
 import math
 
 fn test_new_matrix() {
-	mat := new_matrix<f64>(3, 2)
+	mat := new_matrix[f64](3, 2)
 	expected_data := []f64{len: 6, init: 0.0}
 	assert mat.m == 3
 	assert mat.n == 2
@@ -28,13 +28,13 @@ fn test_set_from_deep2() {
 		[1.0, 1.0, 2.0],
 		[5.0, 4.0, 2.0],
 	]
-	mut mat := new_matrix<f64>(2, 3)
+	mut mat := new_matrix[f64](2, 3)
 	mat.set_from_deep2(original_array)
 	assert mat.data == [1.0, 1, 2, 5, 4, 2]
 }
 
 fn test_set_diag() {
-	mut mat := new_matrix<f64>(4, 4)
+	mut mat := new_matrix[f64](4, 4)
 	mat.set_diag(36)
 	assert mat.data == [36.0, 0, 0, 0, 0, 36.0, 0, 0, 0, 0, 36.0, 0, 0, 0, 0, 36.0]
 }
@@ -98,7 +98,7 @@ fn test_transpose() {
 
 fn test_copy_into_and_matrix_raw() {
 	mat_a := matrix_raw(3, 4, []f64{len: 12, init: 42})
-	mut mat_b := new_matrix<f64>(3, 4)
+	mut mat_b := new_matrix[f64](3, 4)
 	mat_a.copy_into(mut mat_b, 0.5)
 	assert mat_b.data == []f64{len: 12, init: 21}
 }
@@ -111,7 +111,7 @@ fn test_add() {
 
 fn test_fill() {
 	mat_a := matrix_raw(3, 4, []f64{len: 12, init: 54.3})
-	mut mat_b := new_matrix<f64>(3, 4)
+	mut mat_b := new_matrix[f64](3, 4)
 	mat_b.fill(54.3)
 	assert mat_a.data == mat_b.data
 }
@@ -212,7 +212,7 @@ fn test_infinite_norm() {
 
 fn test_apply() {
 	mat_a := matrix_raw(1, 4, [0.0, 2.0, 4.0, 6.0])
-	mut mat_b := new_matrix<f64>(1, 4)
+	mut mat_b := new_matrix[f64](1, 4)
 	mat_b.apply(3.0 / 2.0, mat_a)
 	assert mat_b.data == [0.0, 3.0, 6.0, 9.0]
 }

@@ -9,9 +9,9 @@ import vsl.la
 // NOTE: Stat is an Observer of Data; thus, data.notify_update() will recompute stat
 //
 [heap]
-pub struct Stat<T> {
+pub struct Stat[T] {
 pub mut:
-	data   &Data<T> // data
+	data   &Data[T] // data
 	name   string   // name of this object
 	min_x  []T      // [n_features] min x values
 	max_x  []T      // [n_features] max x values
@@ -28,8 +28,8 @@ pub mut:
 }
 
 // stat returns a new Stat object
-pub fn stat_from_data<T>(mut data Data<T>, name string) &Stat<T> {
-	mut o := &Stat<T>{
+pub fn stat_from_data[T](mut data Data[T], name string) &Stat[T] {
+	mut o := &Stat[T]{
 		name: name
 		data: data
 		min_x: []T{len: data.nb_features}
@@ -44,12 +44,12 @@ pub fn stat_from_data<T>(mut data Data<T>, name string) &Stat<T> {
 }
 
 // name returns the name of this stat object (thus defining the Observer interface)
-pub fn (o &Stat<T>) name() string {
+pub fn (o &Stat[T]) name() string {
 	return o.name
 }
 
 // update compute statistics for given data (an Observer of Data)
-pub fn (mut o Stat<T>) update() {
+pub fn (mut o Stat[T]) update() {
 	// constants
 	m := o.data.x.m // number of samples
 	n := o.data.x.n // number of features
@@ -89,7 +89,7 @@ pub fn (mut o Stat<T>) update() {
 // Output:
 // t -- scalar t = oᵀy  sum of columns of the y vector: t = Σ_i^m o_i y_i
 // s -- vector s = Xᵀo  sum of columns of the X matrix: s_j = Σ_i^m o_i X_ij  [n_features]
-pub fn (mut o Stat<T>) sum_vars() ([]T, T) {
+pub fn (mut o Stat[T]) sum_vars() ([]T, T) {
 	one := []T{len: o.data.x.m, init: T(1)}
 	s := la.matrix_tr_vector_mul(1.0, o.data.x, one)
 	mut t := 0.0
@@ -100,7 +100,7 @@ pub fn (mut o Stat<T>) sum_vars() ([]T, T) {
 }
 
 // copy_into copies stat into p
-pub fn (o &Stat<T>) copy_into(mut p Stat<T>) {
+pub fn (o &Stat[T]) copy_into(mut p Stat[T]) {
 	p.min_x = o.min_x.clone()
 	p.max_x = o.max_x.clone()
 	p.sum_x = o.sum_x.clone()
@@ -116,7 +116,7 @@ pub fn (o &Stat<T>) copy_into(mut p Stat<T>) {
 }
 
 // str is a custom str function for observers to avoid printing data
-pub fn (o &Stat<T>) str() string {
+pub fn (o &Stat[T]) str() string {
 	mut res := []string{}
 	res << 'vsl.ml.Stat<${T.name}>{'
 	res << '    name: ${o.name}'

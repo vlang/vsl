@@ -4,7 +4,7 @@ import vsl.la
 import vsl.util
 
 [heap]
-pub struct ParamsReg<T> {
+pub struct ParamsReg[T] {
 pub mut:
 	observable util.Observable
 	// main
@@ -20,23 +20,23 @@ pub mut:
 }
 
 // new_params_reg returns a new object to hold regression parameters
-pub fn new_params_reg<T>(nb_features int) &ParamsReg<T> {
+pub fn new_params_reg[T](nb_features int) &ParamsReg[T] {
 	theta := []T{len: nb_features}
 	bkp_theta := []T{len: nb_features}
-	return &ParamsReg<T>{
+	return &ParamsReg[T]{
 		theta: theta
 		bkp_theta: bkp_theta
 	}
 }
 
 // init initializes ParamsReg with nb_features (number of features)
-pub fn (mut o ParamsReg<T>) init(nb_features int) {
+pub fn (mut o ParamsReg[T]) init(nb_features int) {
 	o.theta = []T{len: nb_features}
 	o.bkp_theta = []T{len: nb_features}
 }
 
 // backup creates an internal copy of parameters
-pub fn (mut o ParamsReg<T>) backup() {
+pub fn (mut o ParamsReg[T]) backup() {
 	o.bkp_theta = o.theta.clone()
 	o.bkp_bias = o.bias
 	o.bkp_lambda = o.lambda
@@ -44,7 +44,7 @@ pub fn (mut o ParamsReg<T>) backup() {
 }
 
 // restore restores an internal copy of parameters and notifies observers
-pub fn (mut o ParamsReg<T>) restore(skip_notification bool) {
+pub fn (mut o ParamsReg[T]) restore(skip_notification bool) {
 	o.theta = o.bkp_theta.clone()
 	o.bias = o.bkp_bias
 	o.lambda = o.bkp_lambda
@@ -55,7 +55,7 @@ pub fn (mut o ParamsReg<T>) restore(skip_notification bool) {
 }
 
 // set_params sets theta and b and notifies observers
-pub fn (mut o ParamsReg<T>) set_params(theta []T, b T) {
+pub fn (mut o ParamsReg[T]) set_params(theta []T, b T) {
 	o.theta = theta.clone()
 	o.bias = b
 	o.notify_update()
@@ -63,7 +63,7 @@ pub fn (mut o ParamsReg<T>) set_params(theta []T, b T) {
 
 // set_param sets either theta or b (use negative indices for b). Notifies observers
 //  i -- index of theta or -1 for bias
-pub fn (mut o ParamsReg<T>) set_param(i int, value T) {
+pub fn (mut o ParamsReg[T]) set_param(i int, value T) {
 	defer {
 		o.notify_update()
 	}
@@ -76,7 +76,7 @@ pub fn (mut o ParamsReg<T>) set_param(i int, value T) {
 
 // get_param returns either theta or b (use negative indices for b)
 //  i -- index of theta or -1 for bias
-pub fn (o &ParamsReg<T>) get_param(i int) T {
+pub fn (o &ParamsReg[T]) get_param(i int) T {
 	if i < 0 {
 		return o.bias
 	}
@@ -84,76 +84,76 @@ pub fn (o &ParamsReg<T>) get_param(i int) T {
 }
 
 // set_thetas sets the whole vector theta and notifies observers
-pub fn (mut o ParamsReg<T>) set_thetas(theta []T) {
+pub fn (mut o ParamsReg[T]) set_thetas(theta []T) {
 	la.vector_apply(mut o.theta, 1.0, theta)
 	o.notify_update()
 }
 
 // get_thetas gets a copy of theta
-pub fn (o &ParamsReg<T>) get_thetas() []T {
+pub fn (o &ParamsReg[T]) get_thetas() []T {
 	return o.theta.clone()
 }
 
 // access_thetas returns access (slice) to theta
-pub fn (o &ParamsReg<T>) access_thetas() []T {
+pub fn (o &ParamsReg[T]) access_thetas() []T {
 	return o.theta
 }
 
 // access_bias returns access (pointer) to b
-pub fn (o &ParamsReg<T>) access_bias() &T {
+pub fn (o &ParamsReg[T]) access_bias() &T {
 	return &o.bias
 }
 
 // set_theta sets one component of theta and notifies observers
-pub fn (mut o ParamsReg<T>) set_theta(i int, thetai T) {
+pub fn (mut o ParamsReg[T]) set_theta(i int, thetai T) {
 	o.theta[i] = thetai
 	o.notify_update()
 }
 
 // get_theta returns the value of theta[i]
-pub fn (o &ParamsReg<T>) get_theta(i int) T {
+pub fn (o &ParamsReg[T]) get_theta(i int) T {
 	return o.theta[i]
 }
 
 // set_bias sets b and notifies observers
-pub fn (mut o ParamsReg<T>) set_bias(b T) {
+pub fn (mut o ParamsReg[T]) set_bias(b T) {
 	o.bias = b
 	o.notify_update()
 }
 
 // get_bias gets a copy of b
-pub fn (o &ParamsReg<T>) get_bias() T {
+pub fn (o &ParamsReg[T]) get_bias() T {
 	return o.bias
 }
 
 // set_lambda sets lambda and notifies observers
-pub fn (mut o ParamsReg<T>) set_lambda(lambda T) {
+pub fn (mut o ParamsReg[T]) set_lambda(lambda T) {
 	o.lambda = lambda
 	o.notify_update()
 }
 
 // get_lambda gets a copy of lambda
-pub fn (o &ParamsReg<T>) get_lambda() T {
+pub fn (o &ParamsReg[T]) get_lambda() T {
 	return o.lambda
 }
 
 // set_degree sets p and notifies observers
-pub fn (mut o ParamsReg<T>) set_degree(p int) {
+pub fn (mut o ParamsReg[T]) set_degree(p int) {
 	o.degree = p
 	o.notify_update()
 }
 
 // get_degree gets a copy of p
-pub fn (o &ParamsReg<T>) get_degree() int {
+pub fn (o &ParamsReg[T]) get_degree() int {
 	return o.degree
 }
 
 // add_observer adds an object to the list of interested observers
-pub fn (mut o ParamsReg<T>) add_observer(obs util.Observer) {
+pub fn (mut o ParamsReg[T]) add_observer(obs util.Observer) {
 	o.observable.add_observer(obs)
 }
 
 // notify_update notifies observers of updates
-pub fn (mut o ParamsReg<T>) notify_update() {
+pub fn (mut o ParamsReg[T]) notify_update() {
 	o.observable.notify_update()
 }

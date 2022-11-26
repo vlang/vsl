@@ -2,7 +2,7 @@ module ml
 
 import vsl.float.float64
 
-fn sample_01_check_sat<T>(o &Stat<T>) {
+fn sample_01_check_sat[T](o &Stat[T]) {
 	assert float64.tolerance(o.min_x[0], 0.87, 1e-15)
 	assert float64.tolerance(o.max_x[0], 1.55, 1e-15)
 	assert float64.tolerance(o.mean_x[0], 1.1960, 1e-15)
