@@ -41,6 +41,7 @@ y_pred := lin_space.map(reg.predict([it]))
 
 mut plt := plot.new_plot()
 plt.add_trace(
+	name: 'dataset'
 	trace_type: .scatter
 	x: xy.map(it[0])
 	y: xy.map(it[1])
@@ -54,6 +55,7 @@ plt.add_trace(
 	}
 )
 plt.add_trace(
+	name: 'linear regression'
 	trace_type: .scatter
 	x: lin_space
 	y: y_pred
