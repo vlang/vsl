@@ -31,13 +31,8 @@ mut reg := ml.new_lin_reg(mut data, 'linear regression')
 
 reg.train()
 
-for x0 in [0.8, 1.2, 2.0] {
-	pred := reg.predict([x0])
-	println('x0: ${x0}, pred: ${pred}')
-}
-
 lin_space := util.lin_space(0.8, 2.0, 21)
-y_pred := lin_space.map(reg.predict([it]))
+y_pred := reg.predict(lin_space)
 
 mut plt := plot.new_plot()
 plt.add_trace(
