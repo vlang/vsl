@@ -32,7 +32,7 @@ mut reg := ml.new_lin_reg(mut data, 'linear regression')
 reg.train()
 
 lin_space := util.lin_space(0.8, 2.0, 21)
-y_pred := reg.predict(lin_space)
+y_pred := lin_space.map(reg.predict([it]))
 
 mut plt := plot.new_plot()
 plt.add_trace(
