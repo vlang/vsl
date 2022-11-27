@@ -39,7 +39,7 @@ for a better understanding.
 
 ### Bar plot
 
-[bar plot example](https://github.com/vlang/vsl/blob/master/examples/bar_plot)
+[bar plot example](https://github.com/vlang/vsl/blob/master/examples/plot_bar)
 
 > Output
 
@@ -55,7 +55,7 @@ for a better understanding.
 
 ### Heatmap plot
 
-[heatmap plot example](https://github.com/vlang/vsl/blob/master/examples/heatmap_plot)
+[heatmap plot example](https://github.com/vlang/vsl/blob/master/examples/plot_heatmap)
 
 > Output
 
@@ -71,7 +71,7 @@ for a better understanding.
 
 ### Histogram plot
 
-[histogram plot example](https://github.com/vlang/vsl/blob/master/examples/histogram_plot)
+[histogram plot example](https://github.com/vlang/vsl/blob/master/examples/plot_histogram)
 
 > Output
 
@@ -87,7 +87,7 @@ for a better understanding.
 
 ### Pie plot
 
-[pie plot example](https://github.com/vlang/vsl/blob/master/examples/pie_plot)
+[pie plot example](https://github.com/vlang/vsl/blob/master/examples/plot_pie)
 
 > Output
 
@@ -103,7 +103,7 @@ for a better understanding.
 
 ### Scatter plot
 
-[scatter plot example](https://github.com/vlang/vsl/blob/master/examples/scatter_plot)
+[scatter plot example](https://github.com/vlang/vsl/blob/master/examples/plot_scatter)
 
 > Output
 
@@ -119,7 +119,7 @@ for a better understanding.
 
 ### Scatter 3D plot
 
-[scatter3d plot example](https://github.com/vlang/vsl/blob/master/examples/scatter3d_plot)
+[scatter3d plot example](https://github.com/vlang/vsl/blob/master/examples/plot_scatter3d)
 
 > Output
 
