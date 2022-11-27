@@ -6,13 +6,14 @@ import vsl.la
 [heap]
 pub struct LinReg {
 mut:
-	params &ParamsReg[f64]
 	// main
 	name string     // name of this "observer"
 	data &Data[f64] // x-y data
-	stat &Stat[f64] // statistics
 	// workspace
 	e []f64 // vector e = b⋅o + x⋅theta - y [nb_samples]
+pub mut:
+	stat   &Stat[f64] // statistics
+	params &ParamsReg[f64]
 }
 
 // new_lin_reg returns a new LinReg object
