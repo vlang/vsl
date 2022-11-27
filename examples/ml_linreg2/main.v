@@ -1,6 +1,5 @@
 module main
 
-import vsl.float.float64
 import vsl.ml
 
 xy := [
@@ -28,13 +27,9 @@ xy := [
 mut data := ml.data_from_raw_xy(xy)?
 mut reg := ml.new_lin_reg(mut data, 'linear regression')
 
-// set regularization parameter
-reg.params.set_lambda(1e12) // very high bias => constant line
-
 reg.train()
 
 for x0 in [0.8, 1.2, 2.0] {
 	pred := reg.predict([x0])
-	assert float64.tolerance(pred, reg.stat.mean_y, 1e-3)
 	println('x0: ${x0}, pred: ${pred}')
 }

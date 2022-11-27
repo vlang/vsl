@@ -1,6 +1,5 @@
 module main
 
-import vsl.float.float64
 import vsl.ml
 import vsl.plot
 import vsl.util
@@ -30,14 +29,10 @@ xy := [
 mut data := ml.data_from_raw_xy(xy)?
 mut reg := ml.new_lin_reg(mut data, 'linear regression')
 
-// set regularization parameter
-reg.params.set_lambda(1e12) // very high bias => constant line
-
 reg.train()
 
 for x0 in [0.8, 1.2, 2.0] {
 	pred := reg.predict([x0])
-	assert float64.tolerance(pred, reg.stat.mean_y, 1e-3)
 	println('x0: ${x0}, pred: ${pred}')
 }
 
@@ -45,6 +40,19 @@ lin_space := util.lin_space(0.8, 2.0, 21)
 y_pred := lin_space.map(reg.predict([it]))
 
 mut plt := plot.new_plot()
+plt.add_trace(
+	trace_type: .scatter
+	x: xy.map(it[0])
+	y: xy.map(it[1])
+	mode: 'markers'
+	marker: plot.Marker{
+		size: []f64{len: xy.len, init: 5.0}
+		color: []string{len: xy.len, init: '#FF0000'}
+	}
+	line: plot.Line{
+		color: '#FF0000'
+	}
+)
 plt.add_trace(
 	trace_type: .scatter
 	x: lin_space
