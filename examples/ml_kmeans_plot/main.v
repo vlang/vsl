@@ -65,9 +65,6 @@ for i, c in model.classes {
 	println('class ${i}: ${c}')
 }
 
-x := data.x.get_col(0)
-y := data.x.get_col(1)
-
 mut plt := plot.new_plot()
 plt.set_layout(
 	title: 'Clustering K-means Example'
@@ -87,6 +84,9 @@ plt.add_trace(
 		color: []string{len: data.y.len, init: 'purple'}
 	}
 )
+
+x := data.x.get_col(0)
+y := data.x.get_col(1)
 
 for i in 0 .. nb_classes {
 	mut x_for_class := []f64{}
