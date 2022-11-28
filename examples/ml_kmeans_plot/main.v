@@ -2,7 +2,6 @@ module main
 
 import vsl.ml
 import vsl.plot
-import vsl.util
 
 fn color_from_class(i int) string {
 	return match i {
@@ -80,7 +79,7 @@ plt.add_trace(
 	y: centroids_y
 	mode: 'markers'
 	marker: plot.Marker{
-		size: []f64{len: data.y.len, init: 10.0}
+		size: []f64{len: data.y.len, init: 15.0}
 		color: []string{len: data.y.len, init: 'purple'}
 	}
 )
@@ -105,7 +104,7 @@ for i in 0 .. nb_classes {
 		y: y_for_class
 		mode: 'markers'
 		marker: plot.Marker{
-			size: []f64{len: data.y.len, init: 5.0}
+			size: []f64{len: data.y.len, init: 10.0}
 			color: []string{len: data.y.len, init: color_from_class(i)}
 		}
 	)
