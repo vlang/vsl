@@ -31,6 +31,9 @@ mut reg := ml.new_lin_reg(mut data, 'linear regression')
 
 reg.train()
 
+x := data.x.get_col(0)
+y := data.y
+
 lin_space := util.lin_space(0.8, 2.0, 21)
 y_pred := lin_space.map(reg.predict([it]))
 
@@ -42,8 +45,8 @@ plt.set_layout(
 plt.add_trace(
 	name: 'dataset'
 	trace_type: .scatter
-	x: xy.map(it[0])
-	y: xy.map(it[1])
+	x: x
+	y: y
 	mode: 'markers'
 	marker: plot.Marker{
 		size: []f64{len: xy.len, init: 10.0}
