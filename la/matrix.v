@@ -299,6 +299,18 @@ pub fn (mut o Matrix[T]) apply(alpha T, another &Matrix[T]) {
 	}
 }
 
+// equals returns true if this matrix is equal to another matrix
+// this == another   ⇒   this[i] == another[i]
+// NOTE: "another" may be "this"
+pub fn (o &Matrix[T]) equals(another &Matrix[T]) bool {
+	for k in 0 .. o.m * o.n {
+		if o.data[k] != another.data[k] {
+			return false
+		}
+	}
+	return true
+}
+
 pub fn (o &Matrix[T]) str() string {
 	return o.print('')
 }

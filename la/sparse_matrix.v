@@ -36,7 +36,7 @@ mut:
 
 // new_triplet returns a new Triplet. This is a wrapper to new(Triplet) followed by init()
 pub fn new_triplet[T](m int, n int, max int) &Triplet[T] {
-	mut o := &Triplet{}
+	mut o := &Triplet[T]{}
 	o.init(m, n, max)
 	return o
 }
@@ -50,17 +50,17 @@ pub fn (mut o Triplet[T]) init(m int, n int, max int) {
 }
 
 // put inserts an element to a pre-allocated (with init) triplet matrix
-pub fn (mut o Triplet[T]) put(i int, j int, x T) {
+pub fn (mut o Triplet[T]) put(i int, j int, x T) ? {
 	if i >= o.m {
-		errors.vsl_panic('cannot put item because index of row is outside range (i=${i}, m=${o.m})',
+		return errors.error('cannot put item because index of row is outside range (i=${i}, m=${o.m})',
 			.erange)
 	}
 	if j >= o.n {
-		errors.vsl_panic('cannot put item because index of columns is outside range (j=${j}, n=${o.n})',
+		return errors.error('cannot put item because index of columns is outside range (j=${j}, n=${o.n})',
 			.erange)
 	}
 	if o.pos >= o.max {
-		errors.vsl_panic('cannot put item because max number of items has been exceeded (pos=${o.pos}, max=${o.max})',
+		return errors.error('cannot put item because max number of items has been exceeded (pos=${o.pos}, max=${o.max})',
 			.erange)
 	}
 	o.i[o.pos], o.j[o.pos], o.x[o.pos] = i, j, x
@@ -77,14 +77,14 @@ pub fn (mut o Triplet[T]) put(i int, j int, x T) {
  *      [a10 a11 a12 ... ... ...] 4      [.  .  .]
  *      [... ... ... ... ... ...] 5
 */
-pub fn (mut o Triplet[T]) put_matrix_and_matrix_t(a &Triplet[T]) {
+pub fn (mut o Triplet[T]) put_matrix_and_matrix_t(a &Triplet[T]) ? {
 	if a.n + a.m > o.m || a.n + a.m > o.n {
-		errors.vsl_panic('cannot put larger matrix into sparse matrix.\nb := [[.. at] [a ..]] with len(a)=(${a.m},${a.n}) and len(b)=(${o.m},${o.n})',
+		return errors.error('cannot put larger matrix into sparse matrix.\nb := [[.. at] [a ..]] with len(a)=(${a.m},${a.n}) and len(b)=(${o.m},${o.n})',
 			.erange)
 	}
-	for k := 0; k < a.pos; k++ {
-		o.put(a.n + a.i[k], a.j[k], a.x[k]) // puts a
-		o.put(a.j[k], a.n + a.i[k], a.x[k]) // puts at
+	for k in 0 .. a.pos {
+		o.put(a.n + a.i[k], a.j[k], a.x[k])? // puts a
+		o.put(a.j[k], a.n + a.i[k], a.x[k])? // puts at
 	}
 }
 
@@ -98,15 +98,15 @@ pub fn (mut o Triplet[T]) put_matrix_and_matrix_t(a &Triplet[T]) {
  *      [a10 a11 a12 ... ... ...] 4      [.  .  .]
  *      [... ... ... ... ... ...] 5
 */
-pub fn (mut o Triplet[T]) put_cc_matrix_and_matrix_t(a &CCMatrix[T]) {
+pub fn (mut o Triplet[T]) put_cc_matrix_and_matrix_t(a &CCMatrix[T]) ? {
 	if a.n + a.m > o.m || a.n + a.m > o.n {
-		errors.vsl_panic('cannot put larger matrix into sparse matrix.\nb := [[.. at] [a ..]] with len(a)=(${a.m},${a.n}) and len(b)=(${o.m},${o.n})',
+		return errors.error('cannot put larger matrix into sparse matrix.\nb := [[.. at] [a ..]] with len(a)=(${a.m},${a.n}) and len(b)=(${o.m},${o.n})',
 			.erange)
 	}
 	for j := 0; j < a.n; j++ {
 		for k := a.p[j]; k < a.p[j + 1]; k++ {
-			o.put(a.n + a.i[k], j, a.x[k]) // puts a
-			o.put(j, a.n + a.i[k], a.x[k]) // puts at
+			o.put(a.n + a.i[k], j, a.x[k])? // puts a
+			o.put(j, a.n + a.i[k], a.x[k])? // puts at
 		}
 	}
 }
