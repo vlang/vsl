@@ -1,5 +1,6 @@
 module dataset
 
+// raw data that contains [x0, x1, class]
 pub const raw_dataset = [
 	[5.1, 3.5, 0.0],
 	[4.9, 3.0, 0.0],
