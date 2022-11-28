@@ -22,8 +22,16 @@ model.set_centroids([
 	[0.6, 0.4] /* class 1 */,
 ])
 
-// train
+// initial classes
 model.find_closest_centroids()
+
+// initial computation of centroids
+model.compute_centroids()
+
+// train
+model.train(epochs: 6)
+
+// test
 expected_classes := [
 	0,
 	0,

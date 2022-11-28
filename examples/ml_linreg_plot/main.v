@@ -35,6 +35,10 @@ lin_space := util.lin_space(0.8, 2.0, 21)
 y_pred := lin_space.map(reg.predict([it]))
 
 mut plt := plot.new_plot()
+plt.set_layout(
+	title: 'Linear Regression Example'
+)
+
 plt.add_trace(
 	name: 'dataset'
 	trace_type: .scatter
@@ -44,9 +48,6 @@ plt.add_trace(
 	marker: plot.Marker{
 		size: []f64{len: xy.len, init: 5.0}
 		color: []string{len: xy.len, init: '#FF0000'}
-	}
-	line: plot.Line{
-		color: '#FF0000'
 	}
 )
 plt.add_trace(
@@ -59,7 +60,5 @@ plt.add_trace(
 		color: '#FF0000'
 	}
 )
-plt.set_layout(
-	title: 'Linear Regression Example'
-)
+
 plt.show()?
