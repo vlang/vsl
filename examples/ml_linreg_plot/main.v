@@ -46,8 +46,8 @@ plt.add_trace(
 	y: xy.map(it[1])
 	mode: 'markers'
 	marker: plot.Marker{
-		size: []f64{len: xy.len, init: 5.0}
-		color: []string{len: xy.len, init: '#FF0000'}
+		size: []f64{len: xy.len, init: 10.0}
+		color: []string{len: xy.len, init: 'blue'}
 	}
 )
 plt.add_trace(
@@ -57,7 +57,7 @@ plt.add_trace(
 	y: y_pred
 	mode: 'lines'
 	line: plot.Line{
-		color: '#FF0000'
+		color: 'red'
 	}
 )
 
