@@ -79,7 +79,7 @@ plt.add_trace(
 	y: centroids_y
 	mode: 'markers'
 	marker: plot.Marker{
-		size: []f64{len: data.y.len, init: 15.0}
+		size: []f64{len: data.y.len, init: 10.0}
 		color: []string{len: data.y.len, init: 'purple'}
 	}
 )
@@ -104,7 +104,7 @@ for i in 0 .. nb_classes {
 		y: y_for_class
 		mode: 'markers'
 		marker: plot.Marker{
-			size: []f64{len: data.y.len, init: 10.0}
+			size: []f64{len: data.y.len, init: 12.0}
 			color: []string{len: data.y.len, init: color_from_class(i)}
 		}
 	)
