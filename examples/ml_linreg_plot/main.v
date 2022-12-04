@@ -48,9 +48,9 @@ plt.add_trace(
 	x: x
 	y: y
 	mode: 'markers'
+	colorscale: 'smoker'
 	marker: plot.Marker{
 		size: []f64{len: xy.len, init: 10.0}
-		color: []string{len: xy.len, init: 'blue'}
 	}
 )
 plt.add_trace(
@@ -59,6 +59,7 @@ plt.add_trace(
 	x: lin_space
 	y: y_pred
 	mode: 'lines'
+	colorscale: 'smoker'
 	line: plot.Line{
 		color: 'red'
 	}

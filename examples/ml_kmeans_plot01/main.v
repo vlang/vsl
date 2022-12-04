@@ -3,22 +3,6 @@ module main
 import vsl.ml
 import vsl.plot
 
-fn color_from_class(i int) string {
-	return match i {
-		0 { 'red' }
-		1 { 'blue' }
-		2 { 'green' }
-		3 { 'yellow' }
-		4 { 'orange' }
-		5 { 'purple' }
-		6 { 'pink' }
-		7 { 'brown' }
-		8 { 'black' }
-		9 { 'grey' }
-		else { 'white' }
-	}
-}
-
 // data
 mut data := ml.data_from_raw_x([
 	[0.1, 0.7],
@@ -76,9 +60,9 @@ for i, c in model.centroids {
 		x: [c[0]]
 		y: [c[1]]
 		mode: 'markers'
+		colorscale: 'smoker'
 		marker: plot.Marker{
 			size: [12.0]
-			color: [color_from_class(i + 4)]
 		}
 	)
 }
@@ -102,9 +86,9 @@ for i in 0 .. nb_classes {
 		x: x_for_class
 		y: y_for_class
 		mode: 'markers'
+		colorscale: 'smoker'
 		marker: plot.Marker{
 			size: []f64{len: data.nb_samples, init: 12.0}
-			color: []string{len: data.nb_samples, init: color_from_class(i)}
 		}
 	)
 }
