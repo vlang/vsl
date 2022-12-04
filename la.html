@@ -64,6 +64,20 @@
 <p>Given:  a ⋅ x = b    find x   such that   x = a⁻¹ ⋅ b</p>
 
 </section>
+						<section id="jacobi" class="doc-node">
+							<div class="title"><h2>fn jacobi <a href="#jacobi">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/jacobi.v#L30"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">jacobi</span><span class="token punctuation">(</span><span class="token keyword">mut</span> q Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> v <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">?</span></code></pre>
+<p>jacobi performs the Jacobi transformation of a symmetric matrix to find its eigenvectors and
+eigenvalues.</p>
+<p>The Jacobi method consists of a sequence of orthogonal similarity transformations. Each transformation (a Jacobi rotation) is just a plane rotation designed to annihilate one of the off-diagonal matrix elements. Successive transformations undo previously set zeros, but the off-diagonal elements nevertheless get smaller and smaller. Accumulating the product of the transformations as you go gives the matrix of eigenvectors (Q), while the elements of the final
+diagonal matrix (A) are the eigenvalues.</p>
+<p>The Jacobi method is absolutely foolproof for all real symmetric matrices.</p>
+<pre><code>    A = Q ⋅ L ⋅ Qᵀ
+</code></pre>
+<p>Input:    A -- matrix to compute eigenvalues (SYMMETRIC and SQUARE)   Output:    A -- modified    Q -- matrix which columns are the eigenvectors    v -- vector with the eigenvalues</p>
+<p>NOTE: for matrices of order greater than about 10, say, the algorithm is slower,
+by a significant constant factor, than the QR method.</p>
+
+</section>
 						<section id="matrix_add" class="doc-node">
 							<div class="title"><h2>fn matrix_add <a href="#matrix_add">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/blas.v#L323"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">matrix_add</span><span class="token punctuation">(</span><span class="token keyword">mut</span> res Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> a <span class="token operator">&</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> beta <span class="token builtin">f64</span><span class="token punctuation">,</span> b <span class="token operator">&</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>
 <p>matrix_add adds the scaled components of two matrices   res := alpha⋅a + beta⋅b   ⇒   result[i][j] := alpha⋅a[i][j] + beta⋅b[i][j]</p>
@@ -562,10 +576,13 @@ of this matrix are stored directly.</p>
 </section>
 
           <div class="footer">
-            Powered by vdoc. Generated on: 4 Dec 2022 06:47:53
+            Powered by vdoc. Generated on: 4 Dec 2022 07:11:17
           </div>
         </div>
         <div class="doc-toc"><ul><li class="open"><a href="#den_solve">fn den_solve</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#jacobi">fn jacobi</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#matrix_add">fn matrix_add</a>        <ul>
