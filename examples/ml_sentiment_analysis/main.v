@@ -119,7 +119,7 @@ sentence2 := 'I hate grape juice, it tastes bad.' // should be negative
 // In order to predict them, we have to do the same we did for all
 // our training samples: tokenize, stem and ngramize (does that term
 // even exist?)
-bow := fn (sent string, mut lan nlp.LancasterStemmer, mf [][]string) []f64 {
+bow := fn (sent string, mut lan nlp.LancasterStemmer, mf [][]string) ?[]f64 {
 	sent_tokenized := nlp.remove_stopwords_en(nlp.tokenize(nlp.remove_punctuation(sent).to_lower()),
 		true)
 	mut sent_stemmed := []string{}
@@ -133,12 +133,12 @@ bow := fn (sent string, mut lan nlp.LancasterStemmer, mf [][]string) []f64 {
 bow_prediction1 := bow_knn.predict(
 	k: 2
 	// low value due to small dataset
-	to_pred: bow(sentence1, mut lancaster, most_freq)
+	to_pred: bow(sentence1, mut lancaster, most_freq)?
 )?
 bow_prediction2 := bow_knn.predict(
 	k: 2
 	// low value due to small dataset
-	to_pred: bow(sentence2, mut lancaster, most_freq)
+	to_pred: bow(sentence2, mut lancaster, most_freq)?
 )?
 
 // Convert from numeric representation to text:
@@ -178,7 +178,7 @@ for sent in ngrams {
 training_data = ml.data_from_raw_xy_sep(tf_idf_rows, labels)?
 mut tf_idf_knn := ml.new_knn(mut training_data, 'TfIdfKNN')?
 
-tfidf := fn (sent string, mut lan nlp.LancasterStemmer, document [][][]string, unique [][]string) []f64 {
+tfidf := fn (sent string, mut lan nlp.LancasterStemmer, document [][][]string, unique [][]string) ?[]f64 {
 	sent_tokenized := nlp.remove_stopwords_en(nlp.tokenize(nlp.remove_punctuation(sent).to_lower()),
 		true)
 	mut sent_stemmed := []string{}
@@ -196,13 +196,13 @@ tfidf := fn (sent string, mut lan nlp.LancasterStemmer, document [][][]string, u
 tf_idf_prediction1 := tf_idf_knn.predict(
 	k: 2
 	// low value due to small dataset
-	to_pred: tfidf(sentence1, mut lancaster, ngrams, unique_ngrams)
+	to_pred: tfidf(sentence1, mut lancaster, ngrams, unique_ngrams)?
 )?
 
 tf_idf_prediction2 := tf_idf_knn.predict(
 	k: 2
 	// low value due to small dataset
-	to_pred: tfidf(sentence2, mut lancaster, ngrams, unique_ngrams)
+	to_pred: tfidf(sentence2, mut lancaster, ngrams, unique_ngrams)?
 )?
 
 tf_idf_label1 := class_inverse[tf_idf_prediction1.str()]
