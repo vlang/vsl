@@ -27,8 +27,8 @@ fn test_knn_predict() {
 		assert false
 		panic('This should never happen')
 	}
-	assert knn.predict(k: 1, to_pred: [0.333333, 0.66666]) or { panic(err) } == 0.0
-	assert knn.predict(k: 1, to_pred: [11.0, 9.3]) or { panic(err) } == 1.0
+	assert knn.predict(k: 1, to_pred: [0.333333, 0.66666])? == 0.0
+	assert knn.predict(k: 1, to_pred: [11.0, 9.3])? == 1.0
 }
 
 fn test_knn_predict_with_data_change() {
@@ -57,8 +57,8 @@ fn test_knn_predict_with_data_change() {
 		assert false
 		panic('This should never happen')
 	}
-	assert knn.predict(k: 1, to_pred: [0.333333, 0.66666]) or { panic(err) } == 0.0
-	assert knn.predict(k: 1, to_pred: [11.0, 9.3]) or { panic(err) } == 1.0
+	assert knn.predict(k: 1, to_pred: [0.333333, 0.66666])? == 0.0
+	assert knn.predict(k: 1, to_pred: [11.0, 9.3])? == 1.0
 
 	x << [1.0, 2.0]
 	y << 1
@@ -66,8 +66,8 @@ fn test_knn_predict_with_data_change() {
 	m := la.matrix_deep2(x)
 	data.set(m, y)
 
-	assert knn.predict(k: 1, to_pred: [0.333333, 0.66666]) or { panic(err) } == 0.0
-	assert knn.predict(k: 1, to_pred: [11.0, 9.3]) or { panic(err) } == 1.0
+	assert knn.predict(k: 1, to_pred: [0.333333, 0.66666])? == 0.0
+	assert knn.predict(k: 1, to_pred: [11.0, 9.3])? == 1.0
 }
 
 fn test_knn_predict_with_weights() {
@@ -102,10 +102,10 @@ fn test_knn_predict_with_weights() {
 		assert false
 		panic('This should never happen')
 	}
-	knn.set_weights(w) or { panic(err) }
-	assert knn.predict(k: 5, to_pred: [9.8]) or { panic(err) } == 2.0
+	knn.set_weights(w)?
+	assert knn.predict(k: 5, to_pred: [9.8])? == 2.0
 
 	w[3.0] = 100.0
-	knn.set_weights(w) or { panic(err) }
-	assert knn.predict(k: 5, to_pred: [9.8]) or { panic(err) } == 3.0
+	knn.set_weights(w)?
+	assert knn.predict(k: 5, to_pred: [9.8])? == 3.0
 }

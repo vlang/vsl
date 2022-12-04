@@ -17,7 +17,7 @@ fn test_interp_cubic_01() {
 
 	// intepolator
 	mut interp := new_interp_cubic()
-	interp.fit_4points(x0, y0, x1, y1, x2, y2, x3, y3) or { panic(err) }
+	interp.fit_4points(x0, y0, x1, y1, x2, y2, x3, y3)?
 
 	// check model and derivatives
 	for x in [-10.0, 0.0, 1.0, 8.0] {
@@ -50,7 +50,7 @@ fn test_interp_cubic_02() {
 
 	// intepolator
 	mut interp := new_interp_cubic()
-	interp.fit_4points(x0, y0, x1, y1, x2, y2, x3, y3) or { panic(err) }
+	interp.fit_4points(x0, y0, x1, y1, x2, y2, x3, y3)?
 
 	// check model and derivatives
 	for x in [-10.0, 0.0, 5.0, 100.0] {
@@ -81,7 +81,7 @@ fn test_interp_cubic_03() {
 
 	// intepolator
 	mut interp := new_interp_cubic()
-	interp.fit_4points(x0, y0, x1, y1, x2, y2, x3, y3) or { panic(err) }
+	interp.fit_4points(x0, y0, x1, y1, x2, y2, x3, y3)?
 
 	// check model and derivatives
 	for x in [-10.0, 0.0, 5.0, 100.0] {
@@ -113,7 +113,7 @@ fn test_interp_cubic_04() {
 
 	// intepolator
 	mut interp := new_interp_cubic()
-	interp.fit_3points_d(x0, y0, x1, y1, x2, y2, x3, d3) or { panic(err) }
+	interp.fit_3points_d(x0, y0, x1, y1, x2, y2, x3, d3)?
 
 	// check model and derivatives
 	for x in [-10.0, 0.0, 1.0, 8.0] {

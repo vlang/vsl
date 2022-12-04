@@ -16,7 +16,7 @@ fn test_interp_quad_01() {
 
 	// intepolator
 	mut interp := new_interp_quad()
-	interp.fit_3points(x0, y0, x1, y1, x2, y2) or { panic(err) }
+	interp.fit_3points(x0, y0, x1, y1, x2, y2)?
 
 	// check model and derivatives
 	for x in [-10.0, 0.0, 1.0, 8.0] {
@@ -46,7 +46,7 @@ fn test_interp_quad_02() {
 
 	// intepolator
 	mut interp := new_interp_quad()
-	interp.fit_3points(x0, y0, x1, y1, x2, y2) or { panic(err) }
+	interp.fit_3points(x0, y0, x1, y1, x2, y2)?
 
 	// check model and derivatives
 	for x in [-10.0, 0.0, 1.0, 8.0] {
@@ -76,7 +76,7 @@ fn test_interp_quad_03() {
 
 	// intepolator
 	mut interp := new_interp_quad()
-	interp.fit_2points_d(x0, y0, x1, y1, x2, d2) or { panic(err) }
+	interp.fit_2points_d(x0, y0, x1, y1, x2, d2)?
 
 	// check model and derivatives
 	for x in [-10.0, 0.0, 1.0, 8.0] {
@@ -106,7 +106,7 @@ fn test_interp_quad_04() {
 
 	// intepolator
 	mut interp := new_interp_quad()
-	interp.fit_2points_d(x0, y0, x1, y1, x2, d2) or { panic(err) }
+	interp.fit_2points_d(x0, y0, x1, y1, x2, d2)?
 
 	// check model and derivatives
 	for x in [-10.0, 0.0, 1.0, 8.0] {
