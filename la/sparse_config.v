@@ -1,14 +1,14 @@
 module la
 
 import vsl.errors
-// import vsl.mpi
+import vsl.mpi
 
 // The SparseConfig structure holds configuration arguments for sparse solvers
 pub struct SparseConfig {
 mut:
 	mumps_ordering int // ICNTL(7) default = "" == "auto"
 	mumps_scaling  int // Scaling type (check MUMPS solver) [may be empty]
-	// communicator &mpi.Communicator = 0 // MPI communicator for parallel solvers [may be nil]
+	communicator   ?&mpi.Communicator // MPI communicator for parallel solvers [may be none]
 	// internal
 	symmetric   bool // indicates symmetric system. NOTE: when using MUMPS, only the upper or lower part of the matrix must be provided
 	sym_pos_def bool // indicates symmetric-positive-defined system. NOTE: when using MUMPS, only the upper or lower part of the matrix must be provided
@@ -34,18 +34,16 @@ pub fn new_sparse_config() SparseConfig {
 }
 
 // new_sparse_config_with_comm returns a new SparseConfig
-// Input:
-//  comm -- may be nil
-// pub fn new_sparse_config_with_comm(comm &mpi.Communicator) SparseConfig {
-// 	mut o := SparseConfig{
-// 		mumps_increase_of_working_space_pct: 100
-// 		mumps_max_memory_per_processor: 2000
-//                 communicator: unsafe{ comm }
-// 	}
-// 	o.set_mumps_ordering('')
-// 	o.set_mumps_scaling('')
-// 	return o
-// }
+pub fn new_sparse_config_with_comm(comm &mpi.Communicator) SparseConfig {
+	mut o := SparseConfig{
+		mumps_increase_of_working_space_pct: 100
+		mumps_max_memory_per_processor: 2000
+		communicator: unsafe { comm }
+	}
+	o.set_mumps_ordering('')
+	o.set_mumps_scaling('')
+	return o
+}
 
 // set_mumps_symmetry sets symmetry options for MUMPS solver
 pub fn (mut o SparseConfig) set_mumps_symmetry(only_upper_or_lower_given bool, positive_defined bool) {
