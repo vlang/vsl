@@ -53,19 +53,17 @@ plt.set_layout(
 	title: 'Clustering K-means Example'
 )
 
-for i, c in model.centroids {
-	plt.add_trace(
-		name: 'centroid for class #${i}'
-		trace_type: .scatter
-		x: [c[0]]
-		y: [c[1]]
-		mode: 'markers'
-		colorscale: 'smoker'
-		marker: plot.Marker{
-			size: [12.0]
-		}
-	)
-}
+plt.add_trace(
+	name: 'centroids'
+	trace_type: .scatter
+	x: model.centroids.map(it[0])
+	y: model.centroids.map(it[1])
+	mode: 'markers'
+	colorscale: 'smoker'
+	marker: plot.Marker{
+		size: []f64{len: model.centroids.len, init: 12.0}
+	}
+)
 
 x := data.x.get_col(0)
 y := data.x.get_col(1)
