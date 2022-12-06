@@ -51,7 +51,7 @@ pub fn jacobi(mut q Matrix[f64], mut v []f64, mut a Matrix[f64]) ? {
 	}
 
 	// Perform iterations
-	for iteration in 0 .. max_iterations {
+	for _ in 0 .. max_iterations {
 		// Sum off-diagonal elements
 		mut sum := 0.0
 		for i in 0 .. n - 1 {
