@@ -2,39 +2,7 @@
 
 This example shows how to use the basic MPI functions in VSL.
 
-## Requirements
-
-- On ubuntu, you can install the OpenMPI library with:
-
-```bash
-sudo apt install libopenmpi-dev
-```
-
-- On Arch Linux, you can install the OpenMPI library with:
-
-```bash
-sudo pacman -S openmpi
-```
-
-- On macOS, you can install the OpenMPI library with:
-
-```bash
-brew install openmpi
-```
-
-- On Windows, you can install the OpenMPI library with:
-
-```bash
-choco install openmpi
-```
-
-- On FreeBSD, you can install the OpenMPI library with:
-
-```bash
-pkg install openmpi
-```
-
-## Running the example
+## Quickstart
 
 - Compile the example with:
 
