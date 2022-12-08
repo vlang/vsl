@@ -110,7 +110,7 @@ mpi.finalize()
 The results should look like this for two processors:
 
 ```sh
-$ mpirun -np 2 -H localhost:8 ./t
+$ mpirun -np 2 -H localhost:8 ./main
 Hello from rank 0 of  2 processes
 Hello from rank 1 of  2 processes
 Communicator rank 1 of 2 processors
