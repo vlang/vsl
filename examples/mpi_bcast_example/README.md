@@ -7,7 +7,7 @@ This example shows how to use the basic MPI functions in VSL.
 - Compile the example with:
 
 ```bash
-v -o mpi_bcast_example -prod -cc mpirun main_not_ci.v
+v -o mpi_bcast_example -prod -cc mpirun main.v
 ```
 
 - Run the example with:
