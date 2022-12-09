@@ -20,6 +20,7 @@ pub fn (mut img Image) release() ? {
 
 // image allocates an image buffer
 pub fn (d &Device) image(@type ImageChannelOrder, bounds gg.Rect) ?&Image {
+	println(@STRUCT + '.' + @FN + ' is not stable yet. Issues are expected.')
 	return d.create_image(@type, bounds, 0, unsafe { nil })
 }
 
