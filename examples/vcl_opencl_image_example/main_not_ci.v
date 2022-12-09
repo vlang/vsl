@@ -17,7 +17,7 @@ __kernel void invert(__read_only image2d_t src, __write_only image2d_t dest) {
 
 // get all devices if you want
 devices := vcl.get_devices(vcl.DeviceType.cpu)?
-println('Devices: $devices')
+println('Devices: ${devices}')
 
 // do not create platforms/devices/contexts/queues/...
 // just get the device
