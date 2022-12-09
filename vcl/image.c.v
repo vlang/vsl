@@ -26,6 +26,7 @@ pub fn (d &Device) image(@type ImageChannelOrder, bounds gg.Rect) ?&Image {
 
 // from_image creates new Image and copies data from gg.Image
 pub fn (d &Device) from_image(img gg.Image) ?&Image {
+        println(@STRUCT + '.' + @FN + ' is not stable yet. Issues are expected.')
 	data := img.data
 	mut row_pitch := 0
 	mut image_type := ImageChannelOrder.intensity
