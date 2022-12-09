@@ -12,6 +12,7 @@
 ##         --use-cblas                       Execute tests using cblas
 ##         --use-autofree                    Execute tests using atofree
 ##         --use-gc=STRATEGY                 Execute tests using garbage collector
+##         --skip-examples                   Skip examples compilation
 ##
 
 ROOT=$(dirname "$0")
@@ -55,15 +56,20 @@ v ${flags} test "${vsl_dir_path}"
 
 find "${vsl_dir_path}" -name '*_test' -exec rm -f {} +
 
-echo "Compiling Examples with flags ${flags}"
-for file in $(find "${vsl_dir_path}" -wholename '*/examples/*.v'); do
-    if [[ "${file}" == *"not_ci"* ]]; then
-        echo "Skipping ${file}"
-        continue
-    fi
-    echo "Compiling ${file}"
-    v ${flags} -o "${file}.o" "${file}"
-    echo "${file}.o created"
-    echo "Removing ${file}.o"
-    rm -f "${file}.o"
-done
+if [[ -z "${skip_examples}" ]]; then
+    echo "Compiling examples"
+    echo "Compiling Examples with flags ${flags}"
+    for file in $(find "${vsl_dir_path}" -wholename '*/examples/*.v'); do
+        if [[ "${file}" == *"not_ci"* ]]; then
+            echo "Skipping ${file}"
+            continue
+        fi
+        echo "Compiling ${file}"
+        v ${flags} -o "${file}.o" "${file}"
+        echo "${file}.o created"
+        echo "Removing ${file}.o"
+        rm -f "${file}.o"
+    done
+else
+    echo "Skipping examples compilation"
+fi
