@@ -10,7 +10,7 @@ __kernel void addOne(__global float* data) {
 }'
 
 // get all devices if you want
-devices := vcl.get_devices(vcl.device_cpu)?
+devices := vcl.get_devices(vcl.DeviceType.cpu)?
 println('Devices: ${devices}')
 
 // do not create platforms/devices/contexts/queues/...
@@ -31,7 +31,7 @@ defer {
 data := [f32(0.0), 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 err := <-v.load(data)
 if err !is none {
-	return err
+	panic(err)
 }
 println('\n\nCreated vector: ${v}')
 println(v.data()?)
@@ -42,7 +42,7 @@ k := device.kernel('addOne')?
 // run kernel (global work size 16 and local work size 1)
 kernel_err := <-k.global(16).local(1).run(v)
 if kernel_err !is none {
-	return kernel_err
+	panic(kernel_err)
 }
 
 // get data from vector

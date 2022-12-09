@@ -1,15 +1,13 @@
 module vcl
 
-pub type DeviceType = int
-
-pub const (
+pub enum DeviceType as i64 {
 	// device types - bitfield
-	device_cpu            = (1 << 0)
-	device_gpu            = (1 << 1)
-	device_accelerator    = (1 << 2)
-	device_default_device = (1 << 0)
-	device_all            = 0xFFFFFFFF
-)
+	cpu = (1 << 0)
+	gpu = (1 << 1)
+	accelerator = (1 << 2)
+	default_device = (1 << 0)
+	all = 0xFFFFFFFF
+}
 
 const (
 	// cl_mem_flags and cl_svm_mem_flags - bitfield
