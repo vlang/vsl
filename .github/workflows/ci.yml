@@ -104,12 +104,13 @@ jobs:
       - name: Verify Fmt
         run: v fmt -verify ~/.vmodules/vsl
 
-  run-tests:
+  run-tests-on-linux:
     runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
         os:
+          - ubuntu-22.04
           - ubuntu-20.04
           - ubuntu-18.04
         flags: 
