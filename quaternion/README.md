@@ -7,8 +7,3 @@ the quaternion plane as possible.
 
 The quaternion types, functions and arithmetic operations are defined in
 the dir `vsl.quaternion`.
-
-# Representation of quaternions
-
-Quaternions are represented using the type `Quaternion`. The functions and macros described
-below allow quaternions to be manipulated in a portable way.
