@@ -43,6 +43,7 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
     libgc-dev \
     libgl1-mesa-dev \
     libopenmpi-dev \
+    libhdf5-dev \
     opencl-headers \
     libmetis-dev \
     libsuitesparse-dev \
