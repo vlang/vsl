@@ -1,43 +1,11 @@
+module hdf5
+
 import os
-import hdf5
-
-fn make1type[T](a int) []T {
-	return []T{len: a, init: T(it)}
-}
-
-fn make2type[T](a int, b int) [][]T {
-	return [][]T{len: a, init: []T{len: b}}
-}
-
-fn make3type[T](a int, b int, c int) [][][]T {
-	return [][][]T{len: a, init: make2type[T](b, c)}
-}
-
-fn compare1d[T](ax []T, bx []T) {
-	assert ax.len == bx.len
-	for i in 0 .. ax.len {
-		assert ax[i] == bx[i]
-	}
-}
-
-fn compare2d[T](ax [][]T, bx [][]T) {
-	assert ax.len == bx.len
-	for i in 0 .. ax.len {
-		compare1d(ax[i], bx[i])
-	}
-}
-
-fn check2dims[T](ax [][]T, b int) {
-	assert ax.len == b
-	for i in 0 .. ax.len {
-		assert ax[i].len == b
-	}
-}
 
 const (
 	h5dump     = 'h5dump'
 	h5data     = 'hdf_two.h5'
-	testfolder = os.join_path(os.vtmp_dir(),'vsl','two_d_test')
+	testfolder = os.join_path(os.vtmp_dir(), 'vsl', 'two_d_test')
 	testfile   = os.join_path(testfolder, h5data)
 )
 
@@ -75,44 +43,44 @@ fn test_2d() {
 		}
 	}
 
-	f := hdf5.new_file(testfile.str)?
+	f := new_file(hdf5.testfile)?
 
-	f.write_dataset2d(c'i8array', i8array)?
-	f.write_dataset2d(c'u8array', u8array)?
+	f.write_dataset2d('i8array', i8array)?
+	f.write_dataset2d('u8array', u8array)?
 
-	f.write_dataset2d(c'i16array', i16array)?
-	f.write_dataset2d(c'u16array', u16array)?
+	f.write_dataset2d('i16array', i16array)?
+	f.write_dataset2d('u16array', u16array)?
 
-	f.write_dataset2d(c'i32array', i32array)?
-	f.write_dataset2d(c'u32array', u32array)?
+	f.write_dataset2d('i32array', i32array)?
+	f.write_dataset2d('u32array', u32array)?
 
-	f.write_dataset2d(c'i64array', i64array)?
-	f.write_dataset2d(c'u64array', u64array)?
+	f.write_dataset2d('i64array', i64array)?
+	f.write_dataset2d('u64array', u64array)?
 
-	f.write_dataset2d(c'intarray', intarray)?
+	f.write_dataset2d('intarray', intarray)?
 
-	f.write_dataset2d(c'f32array', f32array)?
-	f.write_dataset2d(c'f64array', f64array)?
+	f.write_dataset2d('f32array', f32array)?
+	f.write_dataset2d('f64array', f64array)?
 
 	f.close()
 }
 
 fn testsuite_begin() {
-	os.rmdir_all(testfolder) or {}
-	os.mkdir_all(testfolder)!
+	os.rmdir_all(hdf5.testfolder) or {}
+	os.mkdir_all(hdf5.testfolder)!
 
-	assert os.exists_in_system_path(h5dump)
+	assert os.exists_in_system_path(hdf5.h5dump)
 
 	test_2d()
 }
 
 fn testsuite_end() {
-	os.rmdir_all(testfolder) or {}
+	os.rmdir_all(hdf5.testfolder) or {}
 }
 
 // verify all datatypes in 2 dimensions
 fn test_run() {
-	res := os.execute('h5dump ${testfile}')
+	res := os.execute('h5dump ${hdf5.testfile}')
 	output := res.output.trim_space()
 	assert output.contains('i8array')
 	assert output.contains('u8array')
@@ -168,35 +136,35 @@ fn readback() ? {
 
 	mut intarrayrd := make2type[int](1, 1)
 
-	f := hdf5.open_file(testfile.str)?
+	f := open_file(hdf5.testfile)?
 
-	f.read_dataset2d(c'i8array', mut i8arrayrd)
-	f.read_dataset2d(c'u8array', mut u8arrayrd)
-	check2dims(i8arrayrd, 3)
-	check2dims(u8arrayrd, 3)
+	f.read_dataset2d('i8array', mut i8arrayrd)
+	f.read_dataset2d('u8array', mut u8arrayrd)
+	check2dims(i8arrayrd, 3, 3)
+	check2dims(u8arrayrd, 3, 3)
 
-	f.read_dataset2d(c'i16array', mut i16arrayrd)
-	f.read_dataset2d(c'u16array', mut u16arrayrd)
-	check2dims(i16arrayrd, 3)
-	check2dims(u16arrayrd, 3)
+	f.read_dataset2d('i16array', mut i16arrayrd)
+	f.read_dataset2d('u16array', mut u16arrayrd)
+	check2dims(i16arrayrd, 3, 3)
+	check2dims(u16arrayrd, 3, 3)
 
-	f.read_dataset2d(c'i32array', mut i32arrayrd)
-	f.read_dataset2d(c'u32array', mut u32arrayrd)
-	check2dims(i32arrayrd, 3)
-	check2dims(u32arrayrd, 3)
+	f.read_dataset2d('i32array', mut i32arrayrd)
+	f.read_dataset2d('u32array', mut u32arrayrd)
+	check2dims(i32arrayrd, 3, 3)
+	check2dims(u32arrayrd, 3, 3)
 
-	f.read_dataset2d(c'i64array', mut i64arrayrd)
-	f.read_dataset2d(c'u64array', mut u64arrayrd)
-	check2dims(i64arrayrd, 3)
-	check2dims(u64arrayrd, 3)
+	f.read_dataset2d('i64array', mut i64arrayrd)
+	f.read_dataset2d('u64array', mut u64arrayrd)
+	check2dims(i64arrayrd, 3, 3)
+	check2dims(u64arrayrd, 3, 3)
 
-	f.read_dataset2d(c'f32array', mut f32arrayrd)
-	f.read_dataset2d(c'f64array', mut f64arrayrd)
-	check2dims(f32arrayrd, 3)
-	check2dims(f64arrayrd, 3)
+	f.read_dataset2d('f32array', mut f32arrayrd)
+	f.read_dataset2d('f64array', mut f64arrayrd)
+	check2dims(f32arrayrd, 3, 3)
+	check2dims(f64arrayrd, 3, 3)
 
-	f.read_dataset2d(c'intarray', mut intarrayrd)
-	check2dims(intarrayrd, 3)
+	f.read_dataset2d('intarray', mut intarrayrd)
+	check2dims(intarrayrd, 3, 3)
 
 	for i in 0 .. 3 {
 		for j in 0 .. 3 {

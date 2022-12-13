@@ -48,14 +48,14 @@ Add automatic group paths.
 ## Usage example
 
 ```v
-import hdf5
+import vsl.hdf5
 import math.stats
 import rand
 
 fn main() {
 	mut linedata := []f64{len: 21}
-	mut meanv := f64(0)
-	hdffile := c'hdffile.h5'
+	mut meanv := 0.0
+	hdffile := 'hdffile.h5'
 
 	for i in 0 .. linedata.len {
 		linedata[i] = rand.f64()
@@ -63,77 +63,13 @@ fn main() {
 	meanv = stats.mean(linedata)
 
 	f := hdf5.new_file(hdffile)?
-	f.write_dataset1d(c'/randdata', linedata)?
-	f.write_attribute(c'/randdata', c'mean', meanv)?
+	f.write_dataset1d('/randdata', linedata)?
+	f.write_attribute('/randdata', c'mean', meanv)?
 	f.close()
 }
 ```
 
 You can view the result with `h5dump hdffile.h5`.
-
-## Functions
-
-```v ignore
-fn new_file(filename &char) ?HDF_File
-```
-
-This function opens a file for writing, truncating it if it already
-exists.
-
-```v ignore
-fn open_file(filename &char) ?HDF_File
-```
-
-This opens an existing file for reading.
-
-```v ignore
-fn close(file_desc HDF_File)
-```
-
-Closes a file opened for reading or writing.
-
-```v ignore
-fn write_dataset1d(dset_name &char, buffer []T) ?HDF5_herr_t
-```
-
-Writes a vector of type T with the dataset name.  Similar routines
-exist for 2d and 3d for types [][]T and [][][]T.
-
-```v ignore
-fn read_dataset1d(dset_name &char, mut dataset []T)
-```
-
-Reads the named dataset into the variable dataset, changing it's size
-as required for the data in the file.  Similar routines
-exist for 2d for types [][]T.
-
-```v ignore
-fn write_attribute(dset_name &char, attr_name &char, buffer T) ?HDF5_herr_t
-```
-
-This writes a scalar number or string under the attr_name and associated with
-the named dataset.  You can add any number of attributes to a dataset.
-
-```v ignore
-fn write_attribute1d(dset_name &char, attr_name &char, buffer []T) ?HDF5_herr_t
-```
-
-This writes a numeric vector with the attr_name and associated with
-the named dataset.  You can add any number of attributes to a dataset.
-
-```v ignore
-fn read_attribute(dset_name &char, attr_name &char, mut buffer T) ?HDF5_herr_t
-```
-
-This reads a scalar attribute (number or string) associated with the dataset.
-
-```v ignore
-fn read_attribute1d(dset_name &char, attr_name &char, mut buffer []T) ?HDF5_herr_t
-```
-
-This reads a numeric vector attribute associated with the dataset. The given
-1d array is changed as required to fit the size of the vector.
-
 
 ## References and Further Reading
 

@@ -1,55 +1,6 @@
+module hdf5
+
 import os
-import hdf5
-
-fn make1type[T](a int) []T {
-	return []T{len: a, init: T(it)}
-}
-
-fn make2type[T](a int, b int) [][]T {
-	return [][]T{len: a, init: []T{len: b}}
-}
-
-fn make3type[T](a int, b int, c int) [][][]T {
-	return [][][]T{len: a, init: make2type[T](b, c)}
-}
-
-fn compare1d[T](ax []T, bx []T) {
-	assert ax.len == bx.len
-	for i in 0 .. ax.len {
-		assert ax[i] == bx[i]
-	}
-}
-
-fn compare2d[T](ax [][]T, bx [][]T) {
-	assert ax.len == bx.len
-	for i in 0 .. ax.len {
-		compare1d(ax[i], bx[i])
-	}
-}
-
-fn compare3d[T](ax [][][]T, bx [][][]T) {
-	assert ax.len == bx.len
-	for i in 0 .. ax.len {
-		compare2d(ax[i], bx[i])
-	}
-}
-
-fn check2dims[T](ax [][]T, b int, c int) {
-	assert ax.len == b
-	for i in 0 .. ax.len {
-		assert ax[i].len == c
-	}
-}
-
-fn check3dims[T](ax [][][]T, b int, c int, d int) {
-	assert ax.len == b
-	for i in 0 .. ax.len {
-		assert ax[i].len == c
-		for j in 0 .. ax[i].len {
-			assert ax[i][j].len == d
-		}
-	}
-}
 
 const (
 	h5dump     = 'h5dump'
@@ -94,33 +45,33 @@ fn test_3d() {
 		}
 	}
 
-	f := hdf5.new_file(testfile.str)?
+	f := new_file(hdf5.testfile)?
 
-	f.write_dataset3d(c'i8array', i8array)?
-	f.write_dataset3d(c'u8array', u8array)?
+	f.write_dataset3d('i8array', i8array)?
+	f.write_dataset3d('u8array', u8array)?
 
-	f.write_dataset3d(c'i16array', i16array)?
-	f.write_dataset3d(c'u16array', u16array)?
+	f.write_dataset3d('i16array', i16array)?
+	f.write_dataset3d('u16array', u16array)?
 
-	f.write_dataset3d(c'i32array', i32array)?
-	f.write_dataset3d(c'u32array', u32array)?
+	f.write_dataset3d('i32array', i32array)?
+	f.write_dataset3d('u32array', u32array)?
 
-	f.write_dataset3d(c'i64array', i64array)?
-	f.write_dataset3d(c'u64array', u64array)?
+	f.write_dataset3d('i64array', i64array)?
+	f.write_dataset3d('u64array', u64array)?
 
-	f.write_dataset3d(c'intarray', intarray)?
+	f.write_dataset3d('intarray', intarray)?
 
-	f.write_dataset3d(c'f32array', f32array)?
-	f.write_dataset3d(c'f64array', f64array)?
+	f.write_dataset3d('f32array', f32array)?
+	f.write_dataset3d('f64array', f64array)?
 
 	f.close()
 }
 
 fn testsuite_begin() {
-	os.rmdir_all(testfolder) or {}
-	os.mkdir_all(testfolder)!
+	os.rmdir_all(hdf5.testfolder) or {}
+	os.mkdir_all(hdf5.testfolder)!
 
-	assert os.exists_in_system_path(h5dump)
+	assert os.exists_in_system_path(hdf5.h5dump)
 
 	test_3d()
 }
@@ -131,7 +82,7 @@ fn testsuite_end() {
 
 // verify all datatypes in 3 dimensions
 fn test_run() {
-	res := os.execute('h5dump ${testfile}')
+	res := os.execute('h5dump ${hdf5.testfile}')
 	output := res.output.trim_space()
 	assert output.contains('i8array')
 	assert output.contains('u8array')
@@ -187,34 +138,34 @@ fn readback() ? {
 
 	mut intarrayrd := make3type[int](1, 1, 1)
 
-	f := hdf5.open_file(testfile.str)?
+	f := open_file(hdf5.testfile)?
 
-	f.read_dataset3d(c'i8array', mut i8arrayrd)
-	f.read_dataset3d(c'u8array', mut u8arrayrd)
+	f.read_dataset3d('i8array', mut i8arrayrd)
+	f.read_dataset3d('u8array', mut u8arrayrd)
 	check3dims(i8arrayrd, 3, 4, 5)
 	check3dims(u8arrayrd, 3, 4, 5)
 
-	f.read_dataset3d(c'i16array', mut i16arrayrd)
-	f.read_dataset3d(c'u16array', mut u16arrayrd)
+	f.read_dataset3d('i16array', mut i16arrayrd)
+	f.read_dataset3d('u16array', mut u16arrayrd)
 	check3dims(i16arrayrd, 3, 4, 5)
 	check3dims(u16arrayrd, 3, 4, 5)
 
-	f.read_dataset3d(c'i32array', mut i32arrayrd)
-	f.read_dataset3d(c'u32array', mut u32arrayrd)
+	f.read_dataset3d('i32array', mut i32arrayrd)
+	f.read_dataset3d('u32array', mut u32arrayrd)
 	check3dims(i32arrayrd, 3, 4, 5)
 	check3dims(u32arrayrd, 3, 4, 5)
 
-	f.read_dataset3d(c'i64array', mut i64arrayrd)
-	f.read_dataset3d(c'u64array', mut u64arrayrd)
+	f.read_dataset3d('i64array', mut i64arrayrd)
+	f.read_dataset3d('u64array', mut u64arrayrd)
 	check3dims(i64arrayrd, 3, 4, 5)
 	check3dims(u64arrayrd, 3, 4, 5)
 
-	f.read_dataset3d(c'f32array', mut f32arrayrd)
-	f.read_dataset3d(c'f64array', mut f64arrayrd)
+	f.read_dataset3d('f32array', mut f32arrayrd)
+	f.read_dataset3d('f64array', mut f64arrayrd)
 	check3dims(f32arrayrd, 3, 4, 5)
 	check3dims(f64arrayrd, 3, 4, 5)
 
-	f.read_dataset3d(c'intarray', mut intarrayrd)
+	f.read_dataset3d('intarray', mut intarrayrd)
 	check3dims(intarrayrd, 3, 4, 5)
 
 	for i in 0 .. 3 {

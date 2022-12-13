@@ -1,21 +1,11 @@
+module hdf5
+
 import os
-import hdf5
-
-fn make1type[T](a int) []T {
-	return []T{len: a, init: T(it)}
-}
-
-fn compare1d[T](ax []T, bx []T) {
-	assert ax.len == bx.len
-	for i in 0 .. ax.len {
-		assert ax[i] == bx[i]
-	}
-}
 
 const (
 	h5dump     = 'h5dump'
 	h5data     = 'hdf_types.h5'
-	testfolder = os.join_path(os.vtmp_dir(),'vsl','typeshdf5')
+	testfolder = os.join_path(os.vtmp_dir(), 'vsl', 'typeshdf5')
 	testfile   = os.join_path(testfolder, h5data)
 
 	i8array    = make1type[i8](2)
@@ -37,29 +27,29 @@ const (
 )
 
 fn testsuite_begin() {
-	os.rmdir_all(testfolder) or {}
-	os.mkdir_all(testfolder)!
+	os.rmdir_all(hdf5.testfolder) or {}
+	os.mkdir_all(hdf5.testfolder)!
 
-	assert os.exists_in_system_path(h5dump)
+	assert os.exists_in_system_path(hdf5.h5dump)
 
-	f := hdf5.new_file(testfile.str)?
+	f := new_file(hdf5.testfile)?
 
-	f.write_dataset1d(c'i8array', i8array)?
-	f.write_dataset1d(c'u8array', u8array)?
+	f.write_dataset1d('i8array', hdf5.i8array)?
+	f.write_dataset1d('u8array', hdf5.u8array)?
 
-	f.write_dataset1d(c'i16array', i16array)?
-	f.write_dataset1d(c'u16array', u16array)?
+	f.write_dataset1d('i16array', hdf5.i16array)?
+	f.write_dataset1d('u16array', hdf5.u16array)?
 
-	f.write_dataset1d(c'i32array', i32array)?
-	f.write_dataset1d(c'u32array', u32array)?
+	f.write_dataset1d('i32array', hdf5.i32array)?
+	f.write_dataset1d('u32array', hdf5.u32array)?
 
-	f.write_dataset1d(c'i64array', i64array)?
-	f.write_dataset1d(c'u64array', u64array)?
+	f.write_dataset1d('i64array', hdf5.i64array)?
+	f.write_dataset1d('u64array', hdf5.u64array)?
 
-	f.write_dataset1d(c'intarray', intarray)?
+	f.write_dataset1d('intarray', hdf5.intarray)?
 
-	f.write_dataset1d(c'f32array', f32array)?
-	f.write_dataset1d(c'f64array', f64array)?
+	f.write_dataset1d('f32array', hdf5.f32array)?
+	f.write_dataset1d('f64array', hdf5.f64array)?
 
 	f.close()
 }
@@ -70,7 +60,7 @@ fn testsuite_end() {
 
 // verify all datatypes in 1 dimension
 fn test_run() {
-	res := os.execute('h5dump ${testfile}')
+	res := os.execute('h5dump ${hdf5.testfile}')
 	output := res.output.trim_space()
 	assert output.contains('i8array')
 	assert output.contains('u8array')
@@ -103,7 +93,7 @@ fn test_run() {
 	assert 11 == output.count('DATASET')
 	assert 11 == output.count('DATATYPE')
 	assert 11 == output.count('DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }')
-	assert 11 == output.count('(0): 0, 1')
+	assert 11 == output.count('(0): 0, 0') // uninitialized
 	assert 2 == output.count('H5T_STD_I32LE') // i32 and int
 
 	readback()?
@@ -129,35 +119,35 @@ fn readback() ? {
 
 	mut intarrayrd := make1type[int](1)
 
-	f := hdf5.open_file(testfile.str)?
+	f := open_file(hdf5.testfile)?
 
-	f.read_dataset1d(c'i8array', mut i8arrayrd)
-	f.read_dataset1d(c'u8array', mut u8arrayrd)
-	compare1d(i8array, i8arrayrd)
-	compare1d(u8array, u8arrayrd)
+	f.read_dataset1d('i8array', mut i8arrayrd)
+	f.read_dataset1d('u8array', mut u8arrayrd)
+	compare1d(hdf5.i8array, i8arrayrd)
+	compare1d(hdf5.u8array, u8arrayrd)
 
-	f.read_dataset1d(c'i16array', mut i16arrayrd)
-	f.read_dataset1d(c'u16array', mut u16arrayrd)
-	compare1d(i16array, i16arrayrd)
-	compare1d(u16array, u16arrayrd)
+	f.read_dataset1d('i16array', mut i16arrayrd)
+	f.read_dataset1d('u16array', mut u16arrayrd)
+	compare1d(hdf5.i16array, i16arrayrd)
+	compare1d(hdf5.u16array, u16arrayrd)
 
-	f.read_dataset1d(c'i32array', mut i32arrayrd)
-	f.read_dataset1d(c'u32array', mut u32arrayrd)
-	compare1d(i32array, i32arrayrd)
-	compare1d(u32array, u32arrayrd)
+	f.read_dataset1d('i32array', mut i32arrayrd)
+	f.read_dataset1d('u32array', mut u32arrayrd)
+	compare1d(hdf5.i32array, i32arrayrd)
+	compare1d(hdf5.u32array, u32arrayrd)
 
-	f.read_dataset1d(c'i64array', mut i64arrayrd)
-	f.read_dataset1d(c'u64array', mut u64arrayrd)
-	compare1d(i64array, i64arrayrd)
-	compare1d(u64array, u64arrayrd)
+	f.read_dataset1d('i64array', mut i64arrayrd)
+	f.read_dataset1d('u64array', mut u64arrayrd)
+	compare1d(hdf5.i64array, i64arrayrd)
+	compare1d(hdf5.u64array, u64arrayrd)
 
-	f.read_dataset1d(c'f32array', mut f32arrayrd)
-	f.read_dataset1d(c'f64array', mut f64arrayrd)
-	compare1d(f32array, f32arrayrd)
-	compare1d(f64array, f64arrayrd)
+	f.read_dataset1d('f32array', mut f32arrayrd)
+	f.read_dataset1d('f64array', mut f64arrayrd)
+	compare1d(hdf5.f32array, f32arrayrd)
+	compare1d(hdf5.f64array, f64arrayrd)
 
-	f.read_dataset1d(c'intarray', mut intarrayrd)
-	compare1d(intarray, intarrayrd)
+	f.read_dataset1d('intarray', mut intarrayrd)
+	compare1d(hdf5.intarray, intarrayrd)
 
 	f.close()
 }
