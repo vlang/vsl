@@ -95,21 +95,16 @@ the flatten() function which is a copy operation.</p>
 import math.stats
 import rand
 
-fn main() {
-    mut linedata := []f64{len: 21}
-    mut meanv := 0.0
-    hdffile := 'hdffile.h5'
+linedata := []f64{len: 21, init: rand.f64()}
+mut meanv := 0.0
+hdffile := 'hdffile.h5'
 
-    for i in 0 .. linedata.len {
-        linedata[i] = rand.f64()
-    }
-    meanv = stats.mean(linedata)
+meanv = stats.mean(linedata)
 
-    f := hdf5.new_file(hdffile)?
-    f.write_dataset1d('/randdata', linedata)?
-    f.write_attribute('/randdata', c'mean', meanv)?
-    f.close()
-}
+f := hdf5.new_file(hdffile)?
+f.write_dataset1d('/randdata', linedata)?
+f.write_attribute('/randdata', 'mean', meanv)?
+f.close()
 </code></pre>
 <p>You can view the result with <code>h5dump hdffile.h5</code>.</p>
 <h2>References and Further Reading</h2>
@@ -209,7 +204,7 @@ Maximum dimension is math.max_i32 or less (this is checked).</p>
 </section>
 
           <div class="footer">
-            Powered by vdoc. Generated on: 14 Dec 2022 23:08:02
+            Powered by vdoc. Generated on: 14 Dec 2022 23:10:58
           </div>
         </div>
         <div class="doc-toc"><ul><li class="open"><a href="#readme_hdf5">README</a></li>
