@@ -1,7 +1,7 @@
 module h5
 
 #flag linux -I/usr/local/include
-#flag linux -pthread -lhdf5 -lhdf5_hl
+#flag linux -L/usr/local/lib -pthread -lhdf5 -lhdf5_hl
 #flag darwin
 #flag darwin -lhdf5 -lhdf5_hl
 #flag freebsd -I/usr/local/include
