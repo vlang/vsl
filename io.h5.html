@@ -56,23 +56,23 @@
           						<section id="readme_io.h5" class="doc-node">
 							<div class="title"><h1> io.h5 <a href="#readme_io.h5">#</a></h1></div><h1>HDF5</h1>
 <p>The functions described in this chapter will read or write data to
-a file in the <a href="https://hdfgroup.org">HDF5</a> format.  These contain
+a file in the <a href="https://hdfgroup.org">HDF5</a> format. These contain
 <code>datasets</code> together with a set of <code>attributes</code> for each dataset.</p>
 <p>Datasets are arranged in a heirarchical name space similar to Unix
-file system.  Each namespace is called a <code>group</code>.  Datasets are
+file system. Each namespace is called a <code>group</code>. Datasets are
 stored in a group in an area of the file called a <code>dataspace</code>.</p>
-<p>This library simplifies much of this and supports:</p>
+<h2>Supported Features</h2>
 <ul>
-<li>Datasets consisting of a vector ([]i64, []f64, etc).</li>
-<li>Datasets consisting of a 2-d array ([][]u8, [][]i16, etc).</li>
-<li>Datasets consisting of a 3-d array ([][][]u32, [][][]f32, etc).</li>
-<li>Any number of attributes for each dataset (int, []f64, string, etc).
+<li>Datasets consisting of a vector (<code>[]i64</code>, <code>[]f64</code>, etc).</li>
+<li>Datasets consisting of a 2-d array (<code>[][]u8</code>, <code>[][]i16</code>, etc).</li>
+<li>Datasets consisting of a 3-d array (<code>[][][]u32</code>, <code>[][][]f32</code>, etc).</li>
+<li>Any number of attributes for each dataset (<code>int</code>, <code>[]f64</code>, <code>string</code>, etc).
 Attributes can be scalars or vectors. These are often metadata
 of the dataset describing how it was acquired or created.</li>
 </ul>
-<p>Currently we do not support:</p>
+<h2>Unsupported Features - Planned</h2>
 <ul>
-<li>Writing to groups other than &quot;/&quot; (which is the default)</li>
+<li>Writing to groups other than <code>/</code> (which is the default)</li>
 <li>Datasets of arrays of strings.</li>
 <li>Compound data structures (akin to <code>struct</code>).</li>
 <li>Images or tables.</li>
@@ -80,16 +80,6 @@ of the dataset describing how it was acquired or created.</li>
 <li>Distributed datasets (pointers to other HDF5 files).</li>
 <li>Parallel reading or writing.</li>
 </ul>
-<p>The functions described in this chapter are declared in the module <code>vsl.h5</code></p>
-<h2>ToDo List</h2>
-<p>Fixing the error processing arrangement, which is currently a mix of
-option and result types.</p>
-<p>Fix the memory consumption for writing 2-d or 3-d arrays: currently this uses
-the flatten() function which is a copy operation.</p>
-<p>Add more examples.</p>
-<p>Add more datatypes, especially images.</p>
-<p>Consider adding a file open-for-update function.</p>
-<p>Add automatic group paths.</p>
 <h2>Usage example</h2>
 <pre><code class="language-v">import vsl.io.h5
 import math.stats
@@ -204,7 +194,7 @@ Maximum dimension is math.max_i32 or less (this is checked).</p>
 </section>
 
           <div class="footer">
-            Powered by vdoc. Generated on: 14 Dec 2022 23:14:56
+            Powered by vdoc. Generated on: 14 Dec 2022 23:18:54
           </div>
         </div>
         <div class="doc-toc"><ul><li class="open"><a href="#readme_io.h5">README</a></li>
