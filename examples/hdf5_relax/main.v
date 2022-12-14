@@ -7,7 +7,7 @@ import math
 fn main() {
 	mut linedata := []f64{len: 21}
 	mut newv := 0.0
-	hdffile := c'ex1_hdffile.h5'
+	hdffile := 'ex1_hdffile.h5'
 	mut rounds := i32(0)
 
 	linedata[0] = -2.0
