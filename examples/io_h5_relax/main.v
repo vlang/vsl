@@ -1,4 +1,4 @@
-import vsl.io.hdf5
+import vsl.io.h5
 import math
 
 // A simple 1d relaxation problem.  Write the results
@@ -25,7 +25,7 @@ for loop in 0 .. 1000 {
 		break
 	}
 }
-f := hdf5.new_file(hdffile)?
+f := h5.new_file(hdffile)?
 f.write_dataset1d('linedata', linedata)?
 f.write_attribute('linedata', 'rounds', rounds)?
 f.write_attribute('linedata', 'maxdiff', maxdiff)?

@@ -1,4 +1,4 @@
-module hdf5
+module h5
 
 #flag linux -I@VMODROOT
 #flag linux -pthread -lhdf5 -lhdf5_hl

@@ -1,4 +1,4 @@
-module hdf5
+module h5
 
 import arrays { flatten }
 import math

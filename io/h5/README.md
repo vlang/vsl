@@ -27,7 +27,7 @@ Currently we do not support:
 - Distributed datasets (pointers to other HDF5 files).
 - Parallel reading or writing.
 
-The functions described in this chapter are declared in the module `vsl.hdf5`
+The functions described in this chapter are declared in the module `vsl.h5`
 
 ## ToDo List
 
@@ -48,7 +48,7 @@ Add automatic group paths.
 ## Usage example
 
 ```v
-import vsl.io.hdf5
+import vsl.io.h5
 import math.stats
 import rand
 
@@ -58,7 +58,7 @@ hdffile := 'hdffile.h5'
 
 meanv = stats.mean(linedata)
 
-f := hdf5.new_file(hdffile)?
+f := h5.new_file(hdffile)?
 f.write_dataset1d('/randdata', linedata)?
 f.write_attribute('/randdata', 'mean', meanv)?
 f.close()

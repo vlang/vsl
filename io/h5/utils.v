@@ -1,4 +1,4 @@
-module hdf5
+module h5
 
 // functions for testing
 

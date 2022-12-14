@@ -1,4 +1,4 @@
-module hdf5
+module h5
 
 import os
 
@@ -45,7 +45,7 @@ fn test_3d() {
 		}
 	}
 
-	f := new_file(hdf5.testfile)?
+	f := new_file(h5.testfile)?
 
 	f.write_dataset3d('i8array', i8array)?
 	f.write_dataset3d('u8array', u8array)?
@@ -68,10 +68,10 @@ fn test_3d() {
 }
 
 fn testsuite_begin() {
-	os.rmdir_all(hdf5.testfolder) or {}
-	os.mkdir_all(hdf5.testfolder)!
+	os.rmdir_all(h5.testfolder) or {}
+	os.mkdir_all(h5.testfolder)!
 
-	assert os.exists_in_system_path(hdf5.h5dump)
+	assert os.exists_in_system_path(h5.h5dump)
 
 	test_3d()
 }
@@ -82,7 +82,7 @@ fn testsuite_end() {
 
 // verify all datatypes in 3 dimensions
 fn test_run() {
-	res := os.execute('h5dump ${hdf5.testfile}')
+	res := os.execute('h5dump ${h5.testfile}')
 	output := res.output.trim_space()
 	assert output.contains('i8array')
 	assert output.contains('u8array')
@@ -138,7 +138,7 @@ fn readback() ? {
 
 	mut intarrayrd := make3type[int](1, 1, 1)
 
-	f := open_file(hdf5.testfile)?
+	f := open_file(h5.testfile)?
 
 	f.read_dataset3d('i8array', mut i8arrayrd)
 	f.read_dataset3d('u8array', mut u8arrayrd)
