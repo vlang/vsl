@@ -52,21 +52,16 @@ import vsl.hdf5
 import math.stats
 import rand
 
-fn main() {
-	mut linedata := []f64{len: 21}
-	mut meanv := 0.0
-	hdffile := 'hdffile.h5'
+linedata := []f64{len: 21, init: rand.f64()}
+mut meanv := 0.0
+hdffile := 'hdffile.h5'
 
-	for i in 0 .. linedata.len {
-		linedata[i] = rand.f64()
-	}
-	meanv = stats.mean(linedata)
+meanv = stats.mean(linedata)
 
-	f := hdf5.new_file(hdffile)?
-	f.write_dataset1d('/randdata', linedata)?
-	f.write_attribute('/randdata', c'mean', meanv)?
-	f.close()
-}
+f := hdf5.new_file(hdffile)?
+f.write_dataset1d('/randdata', linedata)?
+f.write_attribute('/randdata', 'mean', meanv)?
+f.close()
 ```
 
 You can view the result with `h5dump hdffile.h5`.
