@@ -29,7 +29,7 @@ stored in a group in an area of the file called a `dataspace`.
 
 ## Usage example
 
-```v
+```v ignore
 import vsl.io.h5
 import math.stats
 import rand
