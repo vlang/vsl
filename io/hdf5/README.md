@@ -48,7 +48,7 @@ Add automatic group paths.
 ## Usage example
 
 ```v
-import vsl.hdf5
+import vsl.io.hdf5
 import math.stats
 import rand
 

@@ -1,4 +1,4 @@
-import vsl.hdf5
+import vsl.io.hdf5
 import math
 
 // A simple 1d relaxation problem.  Write the results
