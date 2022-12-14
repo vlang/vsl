@@ -2,7 +2,7 @@ module h5
 
 #flag linux -I/usr/local/include -I@VMODROOT
 #flag linux -L/usr/local/lib -pthread -lhdf5 -lhdf5_hl
-#flag darwin -I@VMODROOT
+#flag darwin -I/usr/local/include -I@VMODROOT
 #flag darwin -lhdf5 -lhdf5_hl
 #flag freebsd -I/usr/local/include -I@VMODROOT
 #flag freebsd -L/usr/local/lib
