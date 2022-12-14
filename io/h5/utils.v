@@ -1,6 +1,16 @@
 module h5
 
-// functions for testing
+fn make1type[T](a int) []T {
+	return []T{len: a}
+}
+
+fn make2type[T](a int, b int) [][]T {
+	return [][]T{len: a, init: []T{len: b}}
+}
+
+fn make3type[T](a int, b int, c int) [][][]T {
+	return [][][]T{len: a, init: make2type[T](b, c)}
+}
 
 fn compare1d[T](ax []T, bx []T) {
 	assert ax.len == bx.len

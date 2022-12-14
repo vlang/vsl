@@ -57,18 +57,6 @@ fn C.H5Dclose(dset_id Hdf5HidT) Hdf5HerrT
 fn C.H5Sclose(dset_id Hdf5HidT) Hdf5HerrT
 fn C.H5Fclose(file_id Hdf5HidT) Hdf5HerrT
 
-fn make1type[T](a int) []T {
-	return []T{len: a}
-}
-
-fn make2type[T](a int, b int) [][]T {
-	return [][]T{len: a, init: []T{len: b}}
-}
-
-fn make3type[T](a int, b int, c int) [][][]T {
-	return [][][]T{len: a, init: make2type[T](b, c)}
-}
-
 // hdftype is a Templated function to convert a type to an external const
 // It maps the V type name to an HDF5 type name (f64 -> C.H5T_IEEE_F64LE).
 // Not valid for read with Big Endian architectures (SPARC, some POWER machines)
@@ -104,24 +92,22 @@ fn hdftype[T](x T) Hdf5HidT {
 	return C.H5T_STD_U8LE
 }
 
-pub struct HdfFile {
+pub struct Hdf5File {
 mut:
 	filedesc Hdf5HidT
 }
 
 // new_file creates a new HDF5 file, or truncates an existing file.
-pub fn new_file(filename string) ?HdfFile {
-	mut f := HdfFile{
+pub fn new_file(filename string) ?Hdf5File {
+	mut f := Hdf5File{
 		filedesc: C.H5Fcreate(unsafe { filename.str }, C.H5F_ACC_TRUNC, C.H5P_DEFAULT,
 			C.H5P_DEFAULT)
 	}
 	return f
 }
 
-// WRITERS
-
 // write_dataset1d writes a 1-d numeric array (vector) to a named HDF5 dataset in an HDF5 file.
-pub fn (f &HdfFile) write_dataset1d[T](dset_name string, buffer []T) ?Hdf5HerrT {
+pub fn (f &Hdf5File) write_dataset1d[T](dset_name string, buffer []T) ?Hdf5HerrT {
 	rank := int(1)
 	dims := [i64(buffer.len)]
 	dtype := hdftype(buffer[0])
@@ -132,7 +118,7 @@ pub fn (f &HdfFile) write_dataset1d[T](dset_name string, buffer []T) ?Hdf5HerrT 
 
 // write_dataset2d writes a 2-d numeric array to a named HDF5 dataset in an HDF5 file.
 // Note: creates a temporary copy of the array.
-pub fn (f &HdfFile) write_dataset2d[T](dset_name string, buffer [][]T) ?Hdf5HerrT {
+pub fn (f &Hdf5File) write_dataset2d[T](dset_name string, buffer [][]T) ?Hdf5HerrT {
 	rank := int(2)
 	dims := [i64(buffer.len), buffer[0].len]
 	dtype := hdftype(buffer[0][0])
@@ -143,7 +129,7 @@ pub fn (f &HdfFile) write_dataset2d[T](dset_name string, buffer [][]T) ?Hdf5Herr
 
 // write_dataset3d writes a numeric 3-d array (layers of 2-d arrays) to a named HDF5 dataset in an HDF5 file.
 // Note: creates a temporary copy of the array.
-pub fn (f &HdfFile) write_dataset3d[T](dset_name string, buffer [][][]T) ?Hdf5HerrT {
+pub fn (f &Hdf5File) write_dataset3d[T](dset_name string, buffer [][][]T) ?Hdf5HerrT {
 	rank := int(3)
 	dims := [i64(buffer.len), buffer[0].len, buffer[0][0].len]
 	dtype := hdftype(buffer[0][0][0])
@@ -154,7 +140,7 @@ pub fn (f &HdfFile) write_dataset3d[T](dset_name string, buffer [][][]T) ?Hdf5He
 }
 
 // write_attribute1d adds a named 1-d numeric array (vector) attribute to a named HDF5 dataset.
-pub fn (f &HdfFile) write_attribute1d[T](dset_name string, attr_name string, buffer []T) ?Hdf5HerrT {
+pub fn (f &Hdf5File) write_attribute1d[T](dset_name string, attr_name string, buffer []T) ?Hdf5HerrT {
 	$if T is f64 {
 		return C.H5LTset_attribute_double(f.filedesc, dset_name.str, attr_name.str, unsafe { buffer.data },
 			u64(buffer.len))
@@ -193,7 +179,7 @@ pub fn (f &HdfFile) write_attribute1d[T](dset_name string, attr_name string, buf
 // write_attribute adds a named scalar attribute to a named HDF5 dataset.
 //   This is a helper function to avoid an array temporary; it writes a single element vector.
 //   It also supports writing a string attribute.
-pub fn (f &HdfFile) write_attribute[T](dset_name string, attr_name string, buffer T) ?Hdf5HerrT {
+pub fn (f &Hdf5File) write_attribute[T](dset_name string, attr_name string, buffer T) ?Hdf5HerrT {
 	$if T is f64 {
 		return C.H5LTset_attribute_double(f.filedesc, dset_name.str, attr_name.str, &buffer,
 			u64(1))
@@ -231,11 +217,9 @@ pub fn (f &HdfFile) write_attribute[T](dset_name string, attr_name string, buffe
 	}
 }
 
-// READERS
-
 // open_file opens an existing HDF5 file
-pub fn open_file(filename string) ?HdfFile {
-	mut f := HdfFile{
+pub fn open_file(filename string) ?Hdf5File {
+	mut f := Hdf5File{
 		filedesc: C.H5Fopen(unsafe { filename.str }, C.H5F_ACC_RDONLY, C.H5P_DEFAULT)
 	}
 	return f
@@ -244,7 +228,7 @@ pub fn open_file(filename string) ?HdfFile {
 // read_dataset1d reads a 1-d numeric array (vector) from a named HDF5 dataset in an HDF5 file.
 //   Replaces the value of the array.
 //   Maximum dimension is math.max_i32 or less (this is checked).
-pub fn (f &HdfFile) read_dataset1d[T](dset_name string, mut dataset []T) {
+pub fn (f &Hdf5File) read_dataset1d[T](dset_name string, mut dataset []T) {
 	mut rank := 0
 	mut class_id := Hdf5ClassT(0)
 	mut type_size := Hdf5SizeT(0)
@@ -275,7 +259,7 @@ pub fn (f &HdfFile) read_dataset1d[T](dset_name string, mut dataset []T) {
 //   Replaces the value of the array.
 //   Maximum of any dimension is math.max_i32 or less (this is checked).
 //   Maximum total elements is also math.max_i32.
-pub fn (f &HdfFile) read_dataset2d[T](dset_name string, mut dataset [][]T) {
+pub fn (f &Hdf5File) read_dataset2d[T](dset_name string, mut dataset [][]T) {
 	mut rank := 0
 	mut class_id := Hdf5ClassT(0)
 	mut type_size := Hdf5SizeT(0)
@@ -309,7 +293,7 @@ pub fn (f &HdfFile) read_dataset2d[T](dset_name string, mut dataset [][]T) {
 //   Replaces the value of the array with correctly dimensioned array.
 //   Maximum of any dimension is math.max_i32 or less (this is checked).
 //   Maximum total elements is also math.max_i32.
-pub fn (f &HdfFile) read_dataset3d[T](dset_name string, mut dataset [][][]T) {
+pub fn (f &Hdf5File) read_dataset3d[T](dset_name string, mut dataset [][][]T) {
 	mut rank := 0
 	mut class_id := Hdf5ClassT(0)
 	mut type_size := Hdf5SizeT(0)
@@ -399,7 +383,7 @@ fn reshape3[T](y []T, dims []Hdf5HsizeT) ![][][]T {
 // getattr_class_size reads back the HDF5 class (float, int, string) and size (1, 2, 4, 8) of a scalar attribute.
 // This is a helper function for read_attribute<T> for a scalar or read_attribute1d<T> for a vector.
 // Assumes the attribute and dataset exist.
-fn (f &HdfFile) getattr_class_size(dset_name string, attr_name string) (Hdf5ClassT, Hdf5SizeT) {
+fn (f &Hdf5File) getattr_class_size(dset_name string, attr_name string) (Hdf5ClassT, Hdf5SizeT) {
 	mut rank := int(0)
 	mut type_class := Hdf5ClassT(0)
 	mut type_size := Hdf5SizeT(0)
@@ -417,7 +401,7 @@ fn (f &HdfFile) getattr_class_size(dset_name string, attr_name string) (Hdf5Clas
 }
 
 // checkdsetattr verifies dataset and attribute exist
-fn (f &HdfFile) checkdsetattr(dset_name string, attr_name string) bool {
+fn (f &Hdf5File) checkdsetattr(dset_name string, attr_name string) bool {
 	mut dset_id := C.H5Dopen2(f.filedesc, dset_name.str, C.H5P_DEFAULT)
 	defer {
 		C.H5Dclose(dset_id)
@@ -436,7 +420,7 @@ fn (f &HdfFile) checkdsetattr(dset_name string, attr_name string) bool {
 
 // checktype verifies name, class and type-size for an attribute.
 // Returns true only if the name exists and class and type-size match.
-fn (f &HdfFile) checktype(dset_name string, attr_name string, type_class Hdf5ClassT, type_size Hdf5SizeT) bool {
+fn (f &Hdf5File) checktype(dset_name string, attr_name string, type_class Hdf5ClassT, type_size Hdf5SizeT) bool {
 	mut x_type_class := Hdf5ClassT(0)
 	mut x_type_size := Hdf5SizeT(0)
 
@@ -463,7 +447,7 @@ fn (f &HdfFile) checktype(dset_name string, attr_name string, type_class Hdf5Cla
 // This is a helper function to check existance of and process string copies.
 // Strings are a special case since the length varies.
 // Assumes the dataset exists but does check the attribute exists.
-fn (f &HdfFile) getstringattr(dset_name string, attr_name string) !string {
+fn (f &Hdf5File) getstringattr(dset_name string, attr_name string) !string {
 	mut type_class := Hdf5ClassT(0)
 	mut type_size := Hdf5SizeT(0)
 	mut curdims := Hdf5HsizeT(0)
@@ -500,7 +484,7 @@ fn (f &HdfFile) getstringattr(dset_name string, attr_name string) !string {
 // readattribute gets a named scalar attribute from a named HDF5 dataset.
 //   This is a helper function to avoid an array temporary; it gets a single element vector.
 //   It also supports reading a string attribute.
-pub fn (f &HdfFile) read_attribute[T](dset_name string, attr_name string, mut attr_value T) ?bool {
+pub fn (f &Hdf5File) read_attribute[T](dset_name string, attr_name string, mut attr_value T) ?bool {
 	mut errc := Hdf5HerrT(0)
 
 	if !f.checkdsetattr(dset_name, attr_name) {
@@ -601,7 +585,7 @@ pub fn (f &HdfFile) read_attribute[T](dset_name string, attr_name string, mut at
 // read_attribute1d reads a 1-d numeric array (vector) from a named HDF5 dataset and named attribute in an HDF5 file.
 //   Replaces the value of the given array.
 //   Maximum dimension is math.max_i32 or less (this is checked).
-pub fn (f &HdfFile) read_attribute1d[T](dset_name string, attr_name string, mut attr_value []T) ?bool {
+pub fn (f &Hdf5File) read_attribute1d[T](dset_name string, attr_name string, mut attr_value []T) ?bool {
 	mut rank := 0
 	mut class_id := Hdf5ClassT(0)
 	mut type_size := Hdf5SizeT(0)
@@ -721,6 +705,6 @@ pub fn (f &HdfFile) read_attribute1d[T](dset_name string, attr_name string, mut 
 }
 
 // close releases memory resources for HDF5 files.
-pub fn (f &HdfFile) close() {
+pub fn (f &Hdf5File) close() {
 	C.H5Fclose(f.filedesc)
 }
