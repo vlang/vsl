@@ -100,10 +100,6 @@ jobs:
             libhdf5-dev \
             opencl-headers
 
-      - name: Find hdf5
-        run: |
-          sudo find / -name "*hdf5*"
-
       - name: Move VSL source code to V Modules
         run: mv ./vsl ~/.vmodules
 
