@@ -44,6 +44,7 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
     libgl1-mesa-dev \
     libopenmpi-dev \
     libhdf5-dev \
+    hdf5-tools \
     opencl-headers \
     libmetis-dev \
     libsuitesparse-dev \
