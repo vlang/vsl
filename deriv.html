@@ -55,12 +55,12 @@
         <div class="doc-content">
           						<section id="readme_deriv" class="doc-node">
 							<div class="title"><h1> deriv <a href="#readme_deriv">#</a></h1></div><h1>Numerical Differentiation</h1>
-<p>The functions described in this chapter compute numerical derivatives by
-finite differencing. An adaptive algorithm is used to find the best
+<p>This module provides functions for computing numerical derivatives of
+functions.</p>
+<p>An adaptive algorithm is used to find the best
 choice of finite difference and to estimate the error in the derivative.</p>
-<p>Again, the development of this module is inspired by the same present in GSL
+<p>The development of this module is inspired by the same present in <a href="https://github.com/ampl/gsl">GSL</a>
 looking to adapt it completely to the practices and tools present in VSL.</p>
-<p>The functions described in this chapter are declared in the module <code>vsl.deriv</code></p>
 <h2>Usage example</h2>
 <pre><code class="language-v">module main
 
@@ -140,7 +140,7 @@ has a discontinuity at <code>x</code>, or is undefined for values greater than
 <p>This function is equivalent to calling <code>deriv.forward</code> with a
 negative step-size.</p>
 <h2>References and Further Reading</h2>
-<p>This work is a spiritual descendent of the Differentiation module in GSL.</p>
+<p>This work is a spiritual descendent of the Differentiation module in <a href="https://github.com/ampl/gsl">GSL</a>.</p>
 
 </section>
 
@@ -161,7 +161,7 @@ negative step-size.</p>
 </section>
 
           <div class="footer">
-            Powered by vdoc. Generated on: 18 Dec 2022 23:38:40
+            Powered by vdoc. Generated on: 18 Dec 2022 23:42:46
           </div>
         </div>
         <div class="doc-toc"><ul><li class="open"><a href="#readme_deriv">README</a></li>
