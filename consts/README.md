@@ -1,9 +1,16 @@
 # Constants
 
-The full list of constants is described briefly below.
+This module provides a collection of physical constants in the MKSA system.
 
-The full list of constants is described briefly below.
-Consult the module files themselves for the values of the constants used in the library.
+The constants are defined in the module files themselves, and are not imported by default.
+
+## Usage
+
+```v
+import vsl.consts
+
+println(consts.mksa_speed_of_light)
+```
 
 ## Fundamental Constants
 
