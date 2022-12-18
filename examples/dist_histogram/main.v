@@ -6,7 +6,7 @@ lims := [0.0, 1, 2, 3, 4, 5]
 
 mut hist := dist.new_histogram(lims)
 
-hist.count([
+values := [
 	0.0,
 	0.1,
 	0.2,
@@ -34,7 +34,11 @@ hist.count([
 	6,
 	7,
 	8,
-], true)?
+]
 
+hist.count(values, true)?
 labels := hist.gen_labels('%g')?
-println(labels)
+
+hist_text := dist.text_hist(labels, hist.counts, 0)?
+
+println(hist_text)
