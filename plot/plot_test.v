@@ -11,9 +11,5 @@ fn test_bar() {
 	plt.set_layout(
 		title: 'Countries by population'
 	)
-	if _ := plt.show() {
-		assert true
-	} else {
-		assert false
-	}
+	plt.show()?
 }

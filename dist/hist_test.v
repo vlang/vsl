@@ -4,23 +4,14 @@ fn test_hist() {
 	lims := [0.0, 1, 2, 3, 4, 5]
 	mut hist := new_histogram(lims)
 
-	mut idx := hist.find_bin(-3.3) or {
-		assert false
-		panic('This should not happen')
-	}
+	mut idx := hist.find_bin(-3.3)?
 	assert idx == -1
 
-	idx = hist.find_bin(7.0) or {
-		assert false
-		panic('This should not happen')
-	}
+	idx = hist.find_bin(7.0)?
 	assert idx == -1
 
 	for i, x in lims {
-		idx = hist.find_bin(x) or {
-			assert false
-			panic('This should not happen')
-		}
+		idx = hist.find_bin(x)?
 		if i < lims.len - 1 {
 			assert idx == i
 		} else {
@@ -28,34 +19,19 @@ fn test_hist() {
 		}
 	}
 
-	idx = hist.find_bin(0.5) or {
-		assert false
-		panic('This should not happen')
-	}
+	idx = hist.find_bin(0.5)?
 	assert idx == 0
 
-	idx = hist.find_bin(1.5) or {
-		assert false
-		panic('This should not happen')
-	}
+	idx = hist.find_bin(1.5)?
 	assert idx == 1
 
-	idx = hist.find_bin(2.5) or {
-		assert false
-		panic('This should not happen')
-	}
+	idx = hist.find_bin(2.5)?
 	assert idx == 2
 
-	idx = hist.find_bin(3.99999999999999) or {
-		assert false
-		panic('This should not happen')
-	}
+	idx = hist.find_bin(3.99999999999999)?
 	assert idx == 3
 
-	idx = hist.find_bin(4.999999) or {
-		assert false
-		panic('This should not happen')
-	}
+	idx = hist.find_bin(4.999999)?
 	assert idx == 4
 
 	hist.count([
@@ -86,16 +62,10 @@ fn test_hist() {
 		6,
 		7,
 		8,
-	], true) or {
-		assert false
-		panic('This should not happen')
-	}
+	], true)?
 
 	expected := [5, 8, 2, 2, 3]
 	assert hist.counts == expected
 
-	labels := hist.gen_labels('%g') or {
-		assert false
-		panic('This should not happen')
-	}
+	labels := hist.gen_labels('%g')?
 }

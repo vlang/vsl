@@ -24,15 +24,9 @@ fn test_data_01() {
 		[3.0, 1, 4, 1],
 		[-4.0, 5, 0, 0],
 		[1.0, -8, 5, 1],
-	]) or {
-		assert false
-		panic('This should never happen')
-	}
+	])?
 	check_xy_01(data.x, data.y)
-	data_backup := data.clone() or {
-		assert false
-		panic('This should never happen')
-	}
+	data_backup := data.clone()?
 	check_xy_01(data_backup.x, data_backup.y)
 	assert data_backup.nb_features == 3
 	assert data_backup.nb_samples == 5

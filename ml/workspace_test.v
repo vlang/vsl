@@ -38,10 +38,7 @@ fn test_stat_01() {
 		[1.43, 94.98],
 		[0.95, 87.33],
 	]
-	mut data := data_from_raw_xy(xy) or {
-		assert false
-		panic('This should never happen')
-	}
+	mut data := data_from_raw_xy(xy)?
 
 	// stat
 	mut stat := stat_from_data(mut data, 'stat')
