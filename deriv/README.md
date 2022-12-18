@@ -1,13 +1,13 @@
 # Numerical Differentiation
 
-The functions described in this chapter compute numerical derivatives by
-finite differencing. An adaptive algorithm is used to find the best
+This module provides functions for computing numerical derivatives of
+functions.
+
+An adaptive algorithm is used to find the best
 choice of finite difference and to estimate the error in the derivative.
 
-Again, the development of this module is inspired by the same present in GSL
+The development of this module is inspired by the same present in [GSL](https://github.com/ampl/gsl)
 looking to adapt it completely to the practices and tools present in VSL.
-
-The functions described in this chapter are declared in the module `vsl.deriv`
 
 ## Usage example
 
@@ -108,4 +108,4 @@ negative step-size.
 
 ## References and Further Reading
 
-This work is a spiritual descendent of the Differentiation module in GSL.
+This work is a spiritual descendent of the Differentiation module in [GSL](https://github.com/ampl/gsl).

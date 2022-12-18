@@ -1,7 +1,9 @@
 # Numerical Differentiation
 
-The functions described in this chapter compute numerical derivatives by
-finite differencing. An adaptive algorithm is used to find the best
+This module provides functions for computing numerical derivatives of
+functions.
+
+An adaptive algorithm is used to find the best
 choice of finite difference and to estimate the error in the derivative.
 
 ## Usage example
