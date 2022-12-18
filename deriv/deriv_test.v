@@ -1,4 +1,5 @@
-import vsl.deriv
+module deriv
+
 import vsl.func
 import math
 
@@ -104,11 +105,11 @@ fn deriv_test(deriv_method string, f func.Fn, df func.Fn, x f64) bool {
 	expected := df.eval(x)
 	h := 1e-5
 	result, _ := if deriv_method == 'backward' {
-		deriv.backward(f, x, h)
+		backward(f, x, h)
 	} else if deriv_method == 'forward' {
-		deriv.forward(f, x, h)
+		forward(f, x, h)
 	} else {
-		deriv.central(f, x, h)
+		central(f, x, h)
 	}
 	return compare(result, expected)
 }
@@ -117,11 +118,11 @@ fn deriv_near_test(deriv_method string, f func.Fn, df func.Fn, x f64, tolerance 
 	expected := df.eval(x)
 	h := 1e-5
 	result, _ := if deriv_method == 'backward' {
-		deriv.backward(f, x, h)
+		backward(f, x, h)
 	} else if deriv_method == 'forward' {
-		deriv.forward(f, x, h)
+		forward(f, x, h)
 	} else {
-		deriv.central(f, x, h)
+		central(f, x, h)
 	}
 	return compare_near(result, expected, tolerance)
 }

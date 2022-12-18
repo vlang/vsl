@@ -1,4 +1,5 @@
-import vsl.diff
+module diff
+
 import vsl.func
 import math
 
@@ -103,11 +104,11 @@ fn test_diff() {
 fn diff_test(diff_method string, f func.Fn, df func.Fn, x f64) bool {
 	expected := df.eval(x)
 	result, _ := if diff_method == 'backward' {
-		diff.backward(f, x)
+		backward(f, x)
 	} else if diff_method == 'forward' {
-		diff.forward(f, x)
+		forward(f, x)
 	} else {
-		diff.central(f, x)
+		central(f, x)
 	}
 	return compare(result, expected)
 }
@@ -115,11 +116,11 @@ fn diff_test(diff_method string, f func.Fn, df func.Fn, x f64) bool {
 fn diff_near_test(diff_method string, f func.Fn, df func.Fn, x f64, tolerance f64) bool {
 	expected := df.eval(x)
 	result, _ := if diff_method == 'backward' {
-		diff.backward(f, x)
+		backward(f, x)
 	} else if diff_method == 'forward' {
-		diff.forward(f, x)
+		forward(f, x)
 	} else {
-		diff.central(f, x)
+		central(f, x)
 	}
 	return compare_near(result, expected, tolerance)
 }
