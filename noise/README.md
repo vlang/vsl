@@ -11,8 +11,8 @@ so you may seed the generator as you see fit.
 import rand
 import vsl.noise
 
-rand.seed([u32(1), 0])
+rand.seed([u32(3807353518), 2705198303])
 println(noise.perlin(0.0, 0.0)?)
 ```
 
-Output: `-0.6457864`
+Output: `0.58872`
