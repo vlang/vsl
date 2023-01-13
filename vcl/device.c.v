@@ -51,26 +51,26 @@ mut:
 // release releases the device
 pub fn (mut d Device) release() ? {
 	for p in d.programs {
-		code := C.clReleaseProgram(p)
+		code := clReleaseProgram(p)
 		if code != success {
 			return vcl_error(code)
 		}
 	}
-	mut code := C.clReleaseCommandQueue(d.queue)
+	mut code := clReleaseCommandQueue(d.queue)
 	if code != success {
 		return vcl_error(code)
 	}
-	code = C.clReleaseContext(d.ctx)
+	code = clReleaseContext(d.ctx)
 	if code != success {
 		return vcl_error(code)
 	}
-	return vcl_error(C.clReleaseDevice(d.id))
+	return vcl_error(clReleaseDevice(d.id))
 }
 
 fn (d &Device) get_info_str(param ClDeviceInfo, panic_on_error bool) ?string {
 	mut info_bytes := [1024]u8{}
 	mut info_bytes_size := usize(0)
-	code := C.clGetDeviceInfo(d.id, param, 1024, &info_bytes[0], &info_bytes_size)
+	code := clGetDeviceInfo(d.id, param, 1024, &info_bytes[0], &info_bytes_size)
 	if code != success {
 		if panic_on_error {
 			vcl_panic(code)
@@ -128,18 +128,18 @@ pub fn (d &Device) driver_version() ?string {
 pub fn (mut d Device) add_program(source string) ? {
 	mut ret := 0
 	source_ptr := &char(source.str)
-	p := C.clCreateProgramWithSource(d.ctx, 1, &source_ptr, unsafe { nil }, &ret)
+	p := clCreateProgramWithSource(d.ctx, 1, &source_ptr, unsafe { nil }, &ret)
 	if ret != success {
 		return vcl_error(ret)
 	}
-	ret = C.clBuildProgram(p, 1, &d.id, &char(0), unsafe { nil }, unsafe { nil })
+	ret = clBuildProgram(p, 1, &d.id, &char(0), unsafe { nil }, unsafe { nil })
 	if ret != success {
 		if ret == build_program_failure {
 			mut n := usize(0)
-			C.clGetProgramBuildInfo(p, d.id, vcl.program_build_log, 0, unsafe { nil },
+			clGetProgramBuildInfo(p, d.id, vcl.program_build_log, 0, unsafe { nil },
 				&n)
 			log := []u8{len: int(n)}
-			C.clGetProgramBuildInfo(p, d.id, vcl.program_build_log, n, &log[0], unsafe { nil })
+			clGetProgramBuildInfo(p, d.id, vcl.program_build_log, n, &log[0], unsafe { nil })
 			return error(log.bytestr())
 		}
 		return vcl_error(ret)

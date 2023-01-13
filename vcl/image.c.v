@@ -41,8 +41,8 @@ pub fn (d &Device) from_image(img gg.Image) ?&Image {
 
 // create_image creates a new image
 fn (d &Device) create_image(image_type ImageChannelOrder, bounds gg.Rect, row_pitch int, data voidptr) ?&Image {
-	format := C.create_image_format(usize(image_type), usize(ImageChannelDataType.unorm_int8))
-	desc := C.create_image_desc(C.CL_MEM_OBJECT_IMAGE2D, usize(bounds.width), usize(bounds.height),
+	format := create_image_format(usize(image_type), usize(ImageChannelDataType.unorm_int8))
+	desc := create_image_desc(CL_MEM_OBJECT_IMAGE2D, usize(bounds.width), usize(bounds.height),
 		0, 0, usize(row_pitch), 0, 0, 0, unsafe { nil })
 
 	mut flags := mem_read_write
@@ -53,7 +53,7 @@ fn (d &Device) create_image(image_type ImageChannelOrder, bounds gg.Rect, row_pi
 
 	mut ret := 0
 
-	memobj := C.clCreateImage(d.ctx, flags, format, desc, data, &ret)
+	memobj := clCreateImage(d.ctx, flags, format, desc, data, &ret)
 	if ret != success {
 		return vcl_error(ret)
 	}

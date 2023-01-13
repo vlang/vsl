@@ -11,7 +11,7 @@ mut:
 // buffer creates a new buffer with specified size
 fn (d &Device) buffer(size int) ?&Buffer {
 	mut ret := 0
-	buffer := C.clCreateBuffer(d.ctx, mem_read_write, usize(size), unsafe { nil }, &ret)
+	buffer := clCreateBuffer(d.ctx, mem_read_write, usize(size), unsafe { nil }, &ret)
 	if ret != success {
 		return vcl_error(ret)
 	}
@@ -27,7 +27,7 @@ fn (d &Device) buffer(size int) ?&Buffer {
 
 // release releases the buffer on the device
 fn (b &Buffer) release() ? {
-	return vcl_error(C.clReleaseMemObject(b.memobj))
+	return vcl_error(clReleaseMemObject(b.memobj))
 }
 
 fn (b &Buffer) load(size int, ptr voidptr) chan IError {
@@ -37,7 +37,7 @@ fn (b &Buffer) load(size int, ptr voidptr) chan IError {
 		return ch
 	}
 	mut event := ClEvent(0)
-	ret := C.clEnqueueWriteBuffer(b.device.queue, b.memobj, false, 0, usize(size), ptr,
+	ret := clEnqueueWriteBuffer(b.device.queue, b.memobj, false, 0, usize(size), ptr,
 		0, unsafe { nil }, &event)
 	if ret != success {
 		ch <- vcl_error(ret)
@@ -45,9 +45,9 @@ fn (b &Buffer) load(size int, ptr voidptr) chan IError {
 	}
 	spawn fn (event &ClEvent, ch chan IError) {
 		defer {
-			C.clReleaseEvent(event)
+			clReleaseEvent(event)
 		}
-		ch <- vcl_error(C.clWaitForEvents(1, event))
+		ch <- vcl_error(clWaitForEvents(1, event))
 	}(&event, ch)
 
 	return ch

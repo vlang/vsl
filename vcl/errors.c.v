@@ -60,6 +60,8 @@ pub fn (e ErrVCL) err() IError {
 		vcl.invalid_mip_level { vcl.err_invalid_mip_level }
 		vcl.invalid_global_work_size { vcl.err_invalid_global_work_size }
 		vcl.invalid_property { vcl.err_invalid_property }
+		vcl.not_found_shared { vcl.err_not_found_shared }
+		vcl.not_found_symbol { vcl.err_not_found_symbol }
 		else { 'cl: error ${e}' }
 	}
 	return error_with_code(err, int(e))
@@ -138,6 +140,8 @@ const (
 	err_invalid_compiler_options                  = 'cl: Invalid Compiler Options'
 	err_invalid_linker_options                    = 'cl: Invalid Linker Options'
 	err_invalid_device_partition_count            = 'cl: Invalid Device Partition Count'
+	err_not_found_shared                          = 'Shared library: Not Found Shared library'
+	err_not_found_symbol                          = 'Shared library: Not Found symbol in Shared library'
 
 	// err codes
 	success                                       = 0
@@ -203,4 +207,7 @@ const (
 	invalid_device_queue                          = -70
 	invalid_spec_id                               = -71
 	max_size_restriction_exceeded                 = -72
+	not_found_shared                              = -73
+	not_found_symbol                              = -74
 )
+
