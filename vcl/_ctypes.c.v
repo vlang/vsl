@@ -18,7 +18,6 @@ type ClProperties = u64
 type ClQueueProperties = u64
 type ClProgramBuildInfo = u32
 
-type clCreateKernel = C.clCreateKernel
 // ImageChannelOrder represents available image types
 pub enum ImageChannelOrder {
 	intensity = C.CL_INTENSITY
