@@ -204,3 +204,4 @@ const (
 	invalid_spec_id                               = -71
 	max_size_restriction_exceeded                 = -72
 )
+
