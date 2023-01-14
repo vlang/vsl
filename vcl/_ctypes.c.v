@@ -51,8 +51,8 @@ const(
 	bug = not_found_shared// fix me
 	bug2 = not_found_symbol// fix me
 )
-	type clCreateBuffer_type = fn (context ClContext, flags ClMemFlags, size usize, host_ptr voidptr, errcode_ret &int)
 $if shared_library ? {
+	type clCreateBuffer_type = fn (context ClContext, flags ClMemFlags, size usize, host_ptr voidptr, errcode_ret &int)
 	fn clCreateBuffer(context ClContext, flags ClMemFlags, size usize, host_ptr voidptr, errcode_ret &int)  ClMem {
 		library := dl_get_opened() or {return bug}
 		defer{my_dl_close(library)}
