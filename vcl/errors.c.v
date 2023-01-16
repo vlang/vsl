@@ -2,7 +2,7 @@ module vcl
 
 const (
 	// Generally an unexpected result from an OpenCL function (e.g. success but null pointer)
-	err_unknown = error('cl: unknown error')
+	err_unknown = error('vcl_cl: unknown error')
 )
 
 // ErrVCL converts that OpenCL error code to an V error
@@ -60,7 +60,9 @@ pub fn (e ErrVCL) err() IError {
 		vcl.invalid_mip_level { vcl.err_invalid_mip_level }
 		vcl.invalid_global_work_size { vcl.err_invalid_global_work_size }
 		vcl.invalid_property { vcl.err_invalid_property }
-		else { 'cl: error ${e}' }
+		vcl.not_found_dl_library { vcl.err_not_found_dl_library }
+		vcl.not_found_dl_symbol { vcl.err_not_found_dl_symbol }
+		else { 'vcl_cl: error ${e}' }
 	}
 	return error_with_code(err, int(e))
 }
@@ -80,64 +82,68 @@ pub fn vcl_panic(code int) {
 
 const (
 	// Common OpenCl errors
-	err_device_not_found                          = 'cl: Device Not Found'
-	err_device_not_available                      = 'cl: Device Not Available'
-	err_compiler_not_available                    = 'cl: Compiler Not Available'
-	err_mem_object_allocation_failure             = 'cl: Mem Object Allocation Failure'
-	err_out_of_resources                          = 'cl: Out Of Resources'
-	err_out_of_host_memory                        = 'cl: Out Of Host Memory'
-	err_profiling_info_not_available              = 'cl: Profiling Info Not Available'
-	err_mem_copy_overlap                          = 'cl: Mem Copy Overlap'
-	err_image_format_mismatch                     = 'cl: Image Format Mismatch'
-	err_image_format_not_supported                = 'cl: Image Format Not Supported'
-	err_build_program_failure                     = 'cl: Build Program Failure'
-	err_map_failure                               = 'cl: Map Failure'
-	err_misaligned_sub_buffer_offset              = 'cl: Misaligned Sub Buffer Offset'
-	err_exec_status_error_for_events_in_wait_list = 'cl: Exec Status Error For Events In Wait List'
-	err_compile_program_failure                   = 'cl: Compile Program Failure'
-	err_linker_not_available                      = 'cl: Linker Not Available'
-	err_link_program_failure                      = 'cl: Link Program Failure'
-	err_device_partition_failed                   = 'cl: Device Partition Failed'
-	err_kernel_arg_info_not_available             = 'cl: Kernel Arg Info Not Available'
-	err_invalid_value                             = 'cl: Invalid Value'
-	err_invalid_device_type                       = 'cl: Invalid Device Type'
-	err_invalid_platform                          = 'cl: Invalid Platform'
-	err_invalid_device                            = 'cl: Invalid Device'
-	err_invalid_context                           = 'cl: Invalid Context'
-	err_invalid_queue_properties                  = 'cl: Invalid Queue Properties'
-	err_invalid_command_queue                     = 'cl: Invalid Command Queue'
-	err_invalid_host_ptr                          = 'cl: Invalid Host Ptr'
-	err_invalid_mem_object                        = 'cl: Invalid Mem Object'
-	err_invalid_image_format_descriptor           = 'cl: Invalid Image Format Descriptor'
-	err_invalid_image_size                        = 'cl: Invalid Image Size'
-	err_invalid_sampler                           = 'cl: Invalid Sampler'
-	err_invalid_binary                            = 'cl: Invalid Binary'
-	err_invalid_build_options                     = 'cl: Invalid Build Options'
-	err_invalid_program                           = 'cl: Invalid Program'
-	err_invalid_program_executable                = 'cl: Invalid Program Executable'
-	err_invalid_kernel_name                       = 'cl: Invalid Kernel Name'
-	err_invalid_kernel_definition                 = 'cl: Invalid Kernel Definition'
-	err_invalid_kernel                            = 'cl: Invalid Kernel'
-	err_invalid_arg_index                         = 'cl: Invalid Arg Index'
-	err_invalid_arg_value                         = 'cl: Invalid Arg Value'
-	err_invalid_arg_size                          = 'cl: Invalid Arg Size'
-	err_invalid_kernel_args                       = 'cl: Invalid Kernel Args'
-	err_invalid_work_dimension                    = 'cl: Invalid Work Dimension'
-	err_invalid_work_group_size                   = 'cl: Invalid Work Group Size'
-	err_invalid_work_item_size                    = 'cl: Invalid Work Item Size'
-	err_invalid_global_offset                     = 'cl: Invalid Global Offset'
-	err_invalid_event_wait_list                   = 'cl: Invalid Event Wait List'
-	err_invalid_event                             = 'cl: Invalid Event'
-	err_invalid_operation                         = 'cl: Invalid Operation'
-	err_invalid_gl_object                         = 'cl: Invalid Gl Object'
-	err_invalid_buffer_size                       = 'cl: Invalid Buffer Size'
-	err_invalid_mip_level                         = 'cl: Invalid Mip Level'
-	err_invalid_global_work_size                  = 'cl: Invalid Global Work Size'
-	err_invalid_property                          = 'cl: Invalid Property'
-	err_invalid_image_descriptor                  = 'cl: Invalid Image Descriptor'
-	err_invalid_compiler_options                  = 'cl: Invalid Compiler Options'
-	err_invalid_linker_options                    = 'cl: Invalid Linker Options'
-	err_invalid_device_partition_count            = 'cl: Invalid Device Partition Count'
+	err_device_not_found                          = 'vcl_cl: Device Not Found'
+	err_device_not_available                      = 'vcl_cl: Device Not Available'
+	err_compiler_not_available                    = 'vcl_cl: Compiler Not Available'
+	err_mem_object_allocation_failure             = 'vcl_cl: Mem Object Allocation Failure'
+	err_out_of_resources                          = 'vcl_cl: Out Of Resources'
+	err_out_of_host_memory                        = 'vcl_cl: Out Of Host Memory'
+	err_profiling_info_not_available              = 'vcl_cl: Profiling Info Not Available'
+	err_mem_copy_overlap                          = 'vcl_cl: Mem Copy Overlap'
+	err_image_format_mismatch                     = 'vcl_cl: Image Format Mismatch'
+	err_image_format_not_supported                = 'vcl_cl: Image Format Not Supported'
+	err_build_program_failure                     = 'vcl_cl: Build Program Failure'
+	err_map_failure                               = 'vcl_cl: Map Failure'
+	err_misaligned_sub_buffer_offset              = 'vcl_cl: Misaligned Sub Buffer Offset'
+	err_exec_status_error_for_events_in_wait_list = 'vcl_cl: Exec Status Error For Events In Wait List'
+	err_compile_program_failure                   = 'vcl_cl: Compile Program Failure'
+	err_linker_not_available                      = 'vcl_cl: Linker Not Available'
+	err_link_program_failure                      = 'vcl_cl: Link Program Failure'
+	err_device_partition_failed                   = 'vcl_cl: Device Partition Failed'
+	err_kernel_arg_info_not_available             = 'vcl_cl: Kernel Arg Info Not Available'
+	err_invalid_value                             = 'vcl_cl: Invalid Value'
+	err_invalid_device_type                       = 'vcl_cl: Invalid Device Type'
+	err_invalid_platform                          = 'vcl_cl: Invalid Platform'
+	err_invalid_device                            = 'vcl_cl: Invalid Device'
+	err_invalid_context                           = 'vcl_cl: Invalid Context'
+	err_invalid_queue_properties                  = 'vcl_cl: Invalid Queue Properties'
+	err_invalid_command_queue                     = 'vcl_cl: Invalid Command Queue'
+	err_invalid_host_ptr                          = 'vcl_cl: Invalid Host Ptr'
+	err_invalid_mem_object                        = 'vcl_cl: Invalid Mem Object'
+	err_invalid_image_format_descriptor           = 'vcl_cl: Invalid Image Format Descriptor'
+	err_invalid_image_size                        = 'vcl_cl: Invalid Image Size'
+	err_invalid_sampler                           = 'vcl_cl: Invalid Sampler'
+	err_invalid_binary                            = 'vcl_cl: Invalid Binary'
+	err_invalid_build_options                     = 'vcl_cl: Invalid Build Options'
+	err_invalid_program                           = 'vcl_cl: Invalid Program'
+	err_invalid_program_executable                = 'vcl_cl: Invalid Program Executable'
+	err_invalid_kernel_name                       = 'vcl_cl: Invalid Kernel Name'
+	err_invalid_kernel_definition                 = 'vcl_cl: Invalid Kernel Definition'
+	err_invalid_kernel                            = 'vcl_cl: Invalid Kernel'
+	err_invalid_arg_index                         = 'vcl_cl: Invalid Arg Index'
+	err_invalid_arg_value                         = 'vcl_cl: Invalid Arg Value'
+	err_invalid_arg_size                          = 'vcl_cl: Invalid Arg Size'
+	err_invalid_kernel_args                       = 'vcl_cl: Invalid Kernel Args'
+	err_invalid_work_dimension                    = 'vcl_cl: Invalid Work Dimension'
+	err_invalid_work_group_size                   = 'vcl_cl: Invalid Work Group Size'
+	err_invalid_work_item_size                    = 'vcl_cl: Invalid Work Item Size'
+	err_invalid_global_offset                     = 'vcl_cl: Invalid Global Offset'
+	err_invalid_event_wait_list                   = 'vcl_cl: Invalid Event Wait List'
+	err_invalid_event                             = 'vcl_cl: Invalid Event'
+	err_invalid_operation                         = 'vcl_cl: Invalid Operation'
+	err_invalid_gl_object                         = 'vcl_cl: Invalid Gl Object'
+	err_invalid_buffer_size                       = 'vcl_cl: Invalid Buffer Size'
+	err_invalid_mip_level                         = 'vcl_cl: Invalid Mip Level'
+	err_invalid_global_work_size                  = 'vcl_cl: Invalid Global Work Size'
+	err_invalid_property                          = 'vcl_cl: Invalid Property'
+	err_invalid_image_descriptor                  = 'vcl_cl: Invalid Image Descriptor'
+	err_invalid_compiler_options                  = 'vcl_cl: Invalid Compiler Options'
+	err_invalid_linker_options                    = 'vcl_cl: Invalid Linker Options'
+	err_invalid_device_partition_count            = 'vcl_cl: Invalid Device Partition Count'
+
+	// Dl errors
+	err_not_found_dl_library                      = 'vcl_cl_dl: Not Found Dl Library'
+	err_not_found_dl_symbol                       = 'vcl_cl_dl: Not Found Dl Symbol'
 
 	// err codes
 	success                                       = 0
@@ -203,4 +209,6 @@ const (
 	invalid_device_queue                          = -70
 	invalid_spec_id                               = -71
 	max_size_restriction_exceeded                 = -72
+	not_found_dl_library                          = -73
+	not_found_dl_symbol                           = -74
 )

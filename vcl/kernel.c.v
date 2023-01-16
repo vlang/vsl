@@ -8,7 +8,7 @@ pub fn (d &Device) kernel(name string) ?&Kernel {
 	mut k := ClKernel(0)
 	mut ret := 0
 	for p in d.programs {
-		k = C.clCreateKernel(p, &char(name.str), &ret)
+		k = cl_create_kernel(p, &char(name.str), &ret)
 		if ret == invalid_kernel_name {
 			continue
 		}
@@ -92,7 +92,7 @@ pub fn (kc KernelCall) run(args ...ArgumentType) chan IError {
 }
 
 fn release_kernel(k &Kernel) {
-	C.clReleaseKernel(k.k)
+	cl_release_kernel(k.k)
 }
 
 fn new_kernel(d &Device, k ClKernel) &Kernel {
@@ -193,7 +193,7 @@ fn (k &Kernel) set_arg_local(index int, size int) ? {
 }
 
 fn (k &Kernel) set_arg_unsafe(index int, arg_size int, arg voidptr) ? {
-	res := C.clSetKernelArg(k.k, u32(index), usize(arg_size), arg)
+	res := cl_set_kernel_arg(k.k, u32(index), usize(arg_size), arg)
 	if res != success {
 		return vcl_error(res)
 	}
@@ -216,7 +216,7 @@ fn (k &Kernel) call(work_sizes []int, lokal_sizes []int) chan IError {
 		local_work_size_ptr[i] = usize(lokal_sizes[i])
 	}
 	mut event := ClEvent(0)
-	res := C.clEnqueueNDRangeKernel(k.d.queue, k.k, u32(work_dim), unsafe { &global_work_offset_ptr[0] },
+	res := cl_enqueue_nd_range_kernel(k.d.queue, k.k, u32(work_dim), unsafe { &global_work_offset_ptr[0] },
 		unsafe { &global_work_size_ptr[0] }, unsafe { &local_work_size_ptr[0] }, 0, unsafe { nil },
 		unsafe { &event })
 	if res != success {
@@ -226,9 +226,9 @@ fn (k &Kernel) call(work_sizes []int, lokal_sizes []int) chan IError {
 	}
 	spawn fn (ch chan IError, event ClEvent) {
 		defer {
-			C.clReleaseEvent(event)
+			cl_release_event(event)
 		}
-		res := C.clWaitForEvents(1, unsafe { &event })
+		res := cl_wait_for_events(1, unsafe { &event })
 		ch <- vcl_error(res)
 	}(ch, event)
 	return ch
