@@ -3,17 +3,13 @@ module vcl
 import dl
 
 const (
-	library_name     = 'OpenCL'
-	dl_sym_opt_issue = not_found_dl_library
-	dl_open_issue    = not_found_dl_symbol
+	library_name     = 'libOpenCL${dl.dl_ext}'
+	dl_open_issue    = not_found_dl_library
+	dl_sym_opt_issue = not_found_dl_symbol
 )
 
 fn dl_open() !voidptr {
-	handle := dl.open(vcl.library_name, dl.rtld_lazy)
-	if isnil(handle) {
-		return error('Could not open ${vcl.library_name} library')
-	}
-	return handle
+	return dl.open_opt(vcl.library_name, dl.rtld_lazy)
 }
 
 fn dl_close(handle voidptr) {
