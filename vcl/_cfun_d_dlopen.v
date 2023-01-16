@@ -3,6 +3,7 @@ module vcl
 import dl
 
 const (
+	// TODO - Update library_name for Windows and Darwin
 	library_name     = 'libOpenCL${dl.dl_ext}'
 	dl_open_issue    = not_found_dl_library
 	dl_sym_opt_issue = not_found_dl_symbol

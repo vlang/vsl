@@ -4,6 +4,11 @@ VCL is a high level way of writting programs with OpenCL using V.
 These are highly opinionated OpenCL bindings for V. It tries to make GPU computing easy,
 with some sugar abstraction, V's concurency and channels.
 
+## Usage
+
+By default VCL uses OpenCL loading the library statically. If you want to use OpenCL
+dynamicly, you can use the `-d dlopencl` flag.
+
 ## Example
 
 ```v ignore
