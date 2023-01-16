@@ -335,29 +335,15 @@ fn cl_create_image(context ClContext, flags ClMemFlags, format &ClImageFormat, d
 	return sfn(context, flags, format, desc, data, errcode_ret)
 }
 
-type CreateImagedescType = fn (image_type ClMemObjectType, image_width usize, image_height usize, image_depth usize, image_array_size usize, image_row_pitch usize, image_slice_pitch usize, num_mip_levels u32, num_samples u32, buffer ClMem) &ClImageDesc
-
+fn C.create_image_desc(image_type ClMemObjectType, image_width usize, image_height usize, image_depth usize, image_array_size usize, image_row_pitch usize, image_slice_pitch usize, num_mip_levels u32, num_samples u32, buffer ClMem) &ClImageDesc
 [inline]
 fn create_image_desc(image_type ClMemObjectType, image_width usize, image_height usize, image_depth usize, image_array_size usize, image_row_pitch usize, image_slice_pitch usize, num_mip_levels u32, num_samples u32, buffer ClMem) &ClImageDesc {
-	handle := dl_open() or { return vcl.dl_open_issue }
-	defer {
-		dl_close(handle)
-	}
-	f := dl.sym_opt(handle, 'create_image_desc') or { return vcl.dl_sym_opt_issue }
-	sfn := CreateImagedescType(f)
-	return sfn(image_type, image_width, image_height, image_depth, image_array_size, image_row_pitch,
-		image_slice_pitch, num_mip_levels, num_samples, buffer)
+	return C.create_image_desc(image_type, image_width, image_height, image_depth, image_array_size,
+		image_row_pitch, image_slice_pitch, num_mip_levels, num_samples, buffer)
 }
 
-type CreateImageformatType = fn (image_channel_order usize, image_channel_data_type usize) &ClImageFormat
-
+fn C.create_image_format(image_channel_order usize, image_channel_data_type usize) &ClImageFormat
 [inline]
 fn create_image_format(image_channel_order usize, image_channel_data_type usize) &ClImageFormat {
-	handle := dl_open() or { return vcl.dl_open_issue }
-	defer {
-		dl_close(handle)
-	}
-	f := dl.sym_opt(handle, 'create_image_format') or { return vcl.dl_sym_opt_issue }
-	sfn := CreateImageformatType(f)
-	return sfn(image_channel_order, image_channel_data_type)
+	return C.create_image_format(image_channel_order, image_channel_data_type)
 }
