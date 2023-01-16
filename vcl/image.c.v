@@ -53,7 +53,7 @@ fn (d &Device) create_image(image_type ImageChannelOrder, bounds gg.Rect, row_pi
 
 	mut ret := 0
 
-	memobj := C.clCreateImage(d.ctx, flags, format, desc, data, &ret)
+	memobj := cl_create_image(d.ctx, flags, format, desc, data, &ret)
 	if ret != success {
 		return vcl_error(ret)
 	}

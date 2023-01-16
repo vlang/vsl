@@ -7,12 +7,13 @@ pub fn get_devices(device_type DeviceType) ?[]&Device {
 
 	for p in platform_ids {
 		mut n := u32(0)
-		mut ret := C.clGetDeviceIDs(p, ClDeviceType(device_type), 0, unsafe { nil }, &n)
+		mut ret := cl_get_device_i_ds(p, ClDeviceType(device_type), 0, unsafe { nil },
+			&n)
 		if ret != success {
 			return vcl_error(ret)
 		}
 		mut device_ids := []ClDeviceId{len: int(n)}
-		ret = C.clGetDeviceIDs(p, ClDeviceType(device_type), n, unsafe { &device_ids[0] },
+		ret = cl_get_device_i_ds(p, ClDeviceType(device_type), n, unsafe { &device_ids[0] },
 			unsafe { nil })
 		if ret != success {
 			return vcl_error(ret)
@@ -30,7 +31,7 @@ pub fn get_devices(device_type DeviceType) ?[]&Device {
 pub fn get_default_device() ?&Device {
 	mut id := ClDeviceId(0)
 	platform_ids := get_platforms()?
-	ret := C.clGetDeviceIDs(unsafe { &platform_ids[0] }, ClDeviceType(DeviceType.default_device),
+	ret := cl_get_device_i_ds(unsafe { &platform_ids[0] }, ClDeviceType(DeviceType.default_device),
 		1, &id, unsafe { nil })
 	if ret != success {
 		return vcl_error(ret)
@@ -40,12 +41,12 @@ pub fn get_default_device() ?&Device {
 
 fn get_platforms() ?[]ClPlatformId {
 	mut n := u32(0)
-	mut ret := C.clGetPlatformIDs(0, unsafe { nil }, &n)
+	mut ret := cl_get_platform_i_ds(0, unsafe { nil }, &n)
 	if ret != success {
 		return vcl_error(ret)
 	}
 	mut platform_ids := []ClPlatformId{len: int(n)}
-	ret = C.clGetPlatformIDs(n, unsafe { &platform_ids[0] }, unsafe { nil })
+	ret = cl_get_platform_i_ds(n, unsafe { &platform_ids[0] }, unsafe { nil })
 	if ret != success {
 		return vcl_error(ret)
 	}
@@ -57,7 +58,7 @@ fn new_device(id ClDeviceId) ?&Device {
 		id: id
 	}
 	mut ret := 0
-	d.ctx = C.clCreateContext(unsafe { nil }, 1, &id, unsafe { nil }, unsafe { nil },
+	d.ctx = cl_create_context(unsafe { nil }, 1, &id, unsafe { nil }, unsafe { nil },
 		&ret)
 	if ret != success {
 		return vcl_error(ret)
@@ -66,9 +67,10 @@ fn new_device(id ClDeviceId) ?&Device {
 		return err_unknown
 	}
 	if C.CL_VERSION_2_0_EXISTS == 1 {
-		d.queue = C.clCreateCommandQueueWithProperties(d.ctx, d.id, unsafe { nil }, &ret)
+		d.queue = cl_create_command_queue_with_properties(d.ctx, d.id, unsafe { nil },
+			&ret)
 	} else {
-		d.queue = C.clCreateCommandQueue(d.ctx, d.id, 0, &ret)
+		d.queue = cl_create_command_queue(d.ctx, d.id, usize(0), &ret)
 	}
 	if ret != success {
 		return vcl_error(ret)
