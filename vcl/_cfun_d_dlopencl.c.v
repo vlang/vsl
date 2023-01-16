@@ -1,19 +1,67 @@
 module vcl
 
 import dl
+import os
 
 const (
-	library_name = $if windows {
-		'OpenCL${dl.dl_ext}'
-	} $else {
-		'libOpenCL${dl.dl_ext}'
-	}
 	dl_open_issue    = not_found_dl_library
 	dl_sym_opt_issue = not_found_dl_symbol
 )
 
+const (
+	darwin_default_paths  = [
+		'libOpenCL${dl.dl_ext}',
+		'/System/Library/Frameworks/OpenCL.framework/OpenCL',
+	]
+	android_default_paths = [
+		'libOpenCL${dl.dl_ext}',
+		'/system/lib64/libOpenCL${dl.dl_ext}',
+		'/system/vendor/lib64/libOpenCL${dl.dl_ext}',
+		'/system/vendor/lib64/egl/libGLES_mali${dl.dl_ext}',
+		'/system/vendor/lib64/libPVROCL${dl.dl_ext}',
+		'/data/data/org.pocl.libs/files/lib64/libpocl${dl.dl_ext}',
+		'/system/lib/libOpenCL${dl.dl_ext}',
+		'/system/vendor/lib/libOpenCL${dl.dl_ext}',
+		'/system/vendor/lib/egl/libGLES_mali${dl.dl_ext}',
+		'/system/vendor/lib/libPVROCL${dl.dl_ext}',
+		'/data/data/org.pocl.libs/files/lib/libpocl${dl.dl_ext}',
+	]
+	windows_default_paths = [
+		'OpenCL${dl.dl_ext}',
+	]
+	linux_default_paths   = ['libOpenCL${dl.dl_ext}', '/usr/lib/libOpenCL${dl.dl_ext}',
+		'/usr/local/lib/libOpenCL${dl.dl_ext}', '/usr/local/lib/libpocl${dl.dl_ext}',
+		'/usr/lib64/libOpenCL${dl.dl_ext}', '/usr/lib32/libOpenCL${dl.dl_ext}']
+)
+
 fn dl_open() !voidptr {
-	return dl.open_opt(vcl.library_name, dl.rtld_lazy)
+	default_paths := $if windows {
+		vcl.windows_default_paths
+	} $else $if linux {
+		vcl.linux_default_paths
+	} $else $if darwin {
+		vcl.darwin_default_paths
+	} $else $if android {
+		vcl.android_default_paths
+	} $else {
+		[]string{}
+	}
+
+	if vcl_path := os.getenv_opt('VCL_LIBOPENCL_PATH') {
+		for path in vcl_path.split(':') {
+			if handle := dl.open_opt(path, dl.rtld_lazy) {
+				return handle
+			}
+		}
+	}
+
+	for path in default_paths {
+		if handle := dl.open_opt(path, dl.rtld_lazy) {
+			return handle
+		}
+	}
+
+	return error('Could not find OpenCL library')
 }
 
 fn dl_close(handle voidptr) {
