@@ -29,9 +29,6 @@ If you are in termux you use `-d dlopencl` flag automatic, but before that you w
 git clone https://github.com/KhronosGroup/OpenCL-Headers
 cd OpenCL-Headers
 cp -r CL ~/.vmodules/vsl/vcl/
-# for remove dependency which you can not compile egl in sokol
-# cd ~/.vmodules/vsl/vcl/ 
-# rm image.c.v
 cd
 ```
 you can also use `VCL_LIBOPENCL_PATH` but it need path for specific hardware for example in my 
