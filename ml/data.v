@@ -61,6 +61,16 @@ pub fn (mut o Data[T]) set(x &la.Matrix[T], y []T) {
 	o.observable.notify_update()
 }
 
+pub fn (mut o Data[T]) set_y(y []T) {
+        o.y = y
+        o.observable.notify_update()
+}
+
+pub fn (mut o Data[T]) set_x(x &la.Matrix[T]) {
+        o.x = x
+        o.observable.notify_update()
+}
+
 // data_from_raw_x returns a new object with data set from raw x values
 // Input:
 // xraw -- [nb_samples][nb_features] table with x values (NO y values)
