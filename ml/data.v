@@ -134,7 +134,7 @@ pub fn data_from_raw_xy[T](xyraw [][]T) ?&Data[T] {
 	return o
 }
 
-// clone returns a deep copy of this object
+// clone returns a deep copy of this object removing the observers
 pub fn (o &Data[T]) clone() ?&Data[T] {
 	use_y := o.y.len > 0
 	mut p := new_data[T](o.nb_samples, o.nb_features, use_y, true)?
@@ -143,6 +143,17 @@ pub fn (o &Data[T]) clone() ?&Data[T] {
 		p.y = o.y.clone()
 	}
 	return p
+}
+
+// clone_with_same_x returns a deep copy of this object, but with the same reference to x removing the observers
+pub fn (o &Data[T]) clone_with_same_x() ?&Data[T] {
+        use_y := o.y.len > 0
+        return &Data[T]{
+                x: o.x
+                y: if use_y { o.y.clone() } else { []T{} }
+                nb_samples: o.nb_samples
+                nb_features: o.nb_features
+        }
 }
 
 // add_observer adds an object to the list of interested observers
