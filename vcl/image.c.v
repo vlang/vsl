@@ -1,6 +1,25 @@
 module vcl
 
-import gg
+// Rect is a struct that represents a rectangle shape
+pub struct Rect {
+pub:
+	x      f32
+	y      f32
+	width  f32
+	height f32
+}
+
+// ImageData holds the fileds and data needed to represent a bitmap/pixel based image in memory.
+pub struct ImageData {
+pub mut:
+	id          int
+	width       int
+	height      int
+	nr_channels int
+	data        voidptr
+	ext         string
+	path        string
+}
 
 // Image memory buffer on the device with image data
 pub struct Image {
@@ -10,7 +29,7 @@ mut:
 	buf &Buffer
 pub:
 	@type  ImageChannelOrder
-	bounds gg.Rect
+	bounds Rect
 }
 
 // release releases the buffer on the device
@@ -19,13 +38,13 @@ pub fn (mut img Image) release() ? {
 }
 
 // image allocates an image buffer
-pub fn (d &Device) image(@type ImageChannelOrder, bounds gg.Rect) ?&Image {
+pub fn (d &Device) image(@type ImageChannelOrder, bounds Rect) ?&Image {
 	println(@STRUCT + '.' + @FN + ' is not stable yet. Issues are expected.')
 	return d.create_image(@type, bounds, 0, unsafe { nil })
 }
 
-// from_image creates new Image and copies data from gg.Image
-pub fn (d &Device) from_image(img gg.Image) ?&Image {
+// from_image creates new Image and copies data from Image
+pub fn (d &Device) from_image(img ImageData) ?&Image {
 	println(@STRUCT + '.' + @FN + ' is not stable yet. Issues are expected.')
 	data := img.data
 	mut row_pitch := 0
@@ -35,12 +54,12 @@ pub fn (d &Device) from_image(img gg.Image) ?&Image {
 		image_type = ImageChannelOrder.rgba
 	}
 
-	bounds := gg.Rect{0, 0, img.width, img.height}
+	bounds := Rect{0, 0, img.width, img.height}
 	return d.create_image(image_type, bounds, row_pitch, data)
 }
 
 // create_image creates a new image
-fn (d &Device) create_image(image_type ImageChannelOrder, bounds gg.Rect, row_pitch int, data voidptr) ?&Image {
+fn (d &Device) create_image(image_type ImageChannelOrder, bounds Rect, row_pitch int, data voidptr) ?&Image {
 	format := C.create_image_format(usize(image_type), usize(ImageChannelDataType.unorm_int8))
 	desc := C.create_image_desc(C.CL_MEM_OBJECT_IMAGE2D, usize(bounds.width), usize(bounds.height),
 		0, 0, usize(row_pitch), 0, 0, 0, unsafe { nil })
