@@ -9,8 +9,6 @@ with some sugar abstraction, V's concurency and channels.
 By default VCL uses OpenCL loading the library statically. If you want to use OpenCL
 dynamicly, you can use the `-d dlopencl` flag.
 
-
-
 By default it will look for the OpenCL library in the system path and all the known
 locations for OpenCL libraries (like `/usr/lib` and `/usr/local/lib`) and load the first
 library it finds. If you want to use a specific OpenCL library,
@@ -23,17 +21,6 @@ do the following:
 ```bash
 export VCL_LIBOPENCL_PATH=/usr/local/cuda/lib64/libOpenCL.so
 ```
-## termux
-If you are in termux you use `-d dlopencl` flag automatic, but before that you will need:
-```
-git clone https://github.com/KhronosGroup/OpenCL-Headers
-cd OpenCL-Headers
-cp -r CL ~/.vmodules/vsl/vcl/
-cd
-```
-you can also use `VCL_LIBOPENCL_PATH` but it need path for specific hardware for example in my 
-samsung galaxy tab s6: `/system/vendor/lib/libOpenCL.so`
-
 
 ## Example
 
@@ -90,3 +77,4 @@ next_data := v.data()?
 // prints out [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16]
 println('\n\nUpdated vector data: $next_data')
 ```
+
