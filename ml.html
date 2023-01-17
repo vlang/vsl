@@ -114,16 +114,21 @@ to [10.0, 10.0] (which is class 1.0).</p>
 </section>
 						<section id="Data[T].clone" class="doc-node">
 							<div class="title"><h2>fn (Data[T]) clone <a href="#Data[T].clone">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/data.v#L138"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Data<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">clone</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">?</span><span class="token operator">&</span>Data<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span></code></pre>
-<p>clone returns a deep copy of this object</p>
+<p>clone returns a deep copy of this object removing the observers</p>
+
+</section>
+						<section id="Data[T].clone_with_same_x" class="doc-node">
+							<div class="title"><h2>fn (Data[T]) clone_with_same_x <a href="#Data[T].clone_with_same_x">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/data.v#L149"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&</span>Data<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">clone_with_same_x</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">?</span><span class="token operator">&</span>Data<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span></code></pre>
+<p>clone_with_same_x returns a deep copy of this object, but with the same reference to x removing the observers</p>
 
 </section>
 						<section id="Data[T].add_observer" class="doc-node">
-							<div class="title"><h2>fn (Data[T]) add_observer <a href="#Data[T].add_observer">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/data.v#L149"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o Data<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">add_observer</span><span class="token punctuation">(</span>obs util<span class="token punctuation">.</span>Observer<span class="token punctuation">)</span></code></pre>
+							<div class="title"><h2>fn (Data[T]) add_observer <a href="#Data[T].add_observer">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/data.v#L160"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o Data<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">add_observer</span><span class="token punctuation">(</span>obs util<span class="token punctuation">.</span>Observer<span class="token punctuation">)</span></code></pre>
 <p>add_observer adds an object to the list of interested observers</p>
 
 </section>
 						<section id="Data[T].notify_update" class="doc-node">
-							<div class="title"><h2>fn (Data[T]) notify_update <a href="#Data[T].notify_update">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/data.v#L154"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o Data<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">notify_update</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+							<div class="title"><h2>fn (Data[T]) notify_update <a href="#Data[T].notify_update">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/data.v#L165"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o Data<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">notify_update</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <p>notify_update notifies observers of updates</p>
 
 </section>
@@ -470,7 +475,7 @@ have a tie when k = 1, we select the first closest neighbor.</p>
 </section>
 
           <div class="footer">
-            Powered by vdoc. Generated on: 17 Jan 2023 20:16:48
+            Powered by vdoc. Generated on: 17 Jan 2023 20:26:26
           </div>
         </div>
         <div class="doc-toc"><ul><li class="open"><a href="#data_from_raw_x">fn data_from_raw_x</a>        <ul>
@@ -503,6 +508,7 @@ have a tie when k = 1, we select the first closest neighbor.</p>
 <li class="open"><a href="#Data[T].set">type Data[T]</a>        <ul>
 <li><a href="#Data[T].set">fn set</a></li>
 <li><a href="#Data[T].clone">fn clone</a></li>
+<li><a href="#Data[T].clone_with_same_x">fn clone_with_same_x</a></li>
 <li><a href="#Data[T].add_observer">fn add_observer</a></li>
 <li><a href="#Data[T].notify_update">fn notify_update</a></li>
 </ul>
