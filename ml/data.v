@@ -21,7 +21,7 @@ import vsl.errors
 [heap]
 pub struct Data[T] {
 pub mut:
-	observable  util.Observable
+	observable  util.Observable = util.Observable{}
 	nb_samples  int // number of data points (samples). number of rows in x and y
 	nb_features int // number of features. number of columns in x
 	x           &la.Matrix[T] // [nb_samples][nb_features] x values
