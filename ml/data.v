@@ -61,11 +61,17 @@ pub fn (mut o Data[T]) set(x &la.Matrix[T], y []T) {
 	o.observable.notify_update()
 }
 
+// set_x sets x matrix and notify observers
+// Input:
+// y -- y values
 pub fn (mut o Data[T]) set_y(y []T) {
         o.y = y
         o.observable.notify_update()
 }
 
+// set_x sets x matrix and notify observers
+// Input:
+// x -- x values
 pub fn (mut o Data[T]) set_x(x &la.Matrix[T]) {
         o.x = x
         o.observable.notify_update()
