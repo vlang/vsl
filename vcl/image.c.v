@@ -1,6 +1,7 @@
 module vcl
 
 // Rect is a struct that represents a rectangle shape
+[params]
 pub struct Rect {
 pub:
 	x      f32
@@ -10,6 +11,7 @@ pub:
 }
 
 // ImageData holds the fileds and data needed to represent a bitmap/pixel based image in memory.
+[params]
 pub struct ImageData {
 pub mut:
 	id          int
