@@ -41,7 +41,7 @@ fn dl_open() !voidptr {
 		vcl.linux_default_paths
 	} $else $if darwin {
 		vcl.darwin_default_paths
-	} $else $if android || termux{
+	} $else $if android || termux {
 		vcl.android_default_paths
 	} $else {
 		[]string{}
