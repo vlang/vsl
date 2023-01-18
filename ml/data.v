@@ -55,26 +55,31 @@ pub fn new_data[T](nb_samples int, nb_features int, use_y bool, allocate bool) ?
 // Input:
 // x -- x values
 // y -- y values [optional]
-pub fn (mut o Data[T]) set(x &la.Matrix[T], y []T) {
+pub fn (mut o Data[T]) set(x &la.Matrix[T], y []T) ? {
+	if y.len < o.nb_samples || x.n < o.nb_features || x.m < o.nb_samples {
+		return errors.error('x matrix must have same dimensions as number of samples and features',
+			.efailed)
+	}
 	o.x = x
 	o.y = y
 	o.observable.notify_update()
 }
 
-// set_x sets x matrix and notify observers
-// Input:
-// y -- y values
-pub fn (mut o Data[T]) set_y(y []T) {
-        o.y = y
-        o.observable.notify_update()
+pub fn (mut o Data[T]) set_y(y []T) ? {
+	if y.len < o.nb_samples {
+		return errors.error('y vector must have same length as number of samples', .efailed)
+	}
+	o.y = y
+	o.observable.notify_update()
 }
 
-// set_x sets x matrix and notify observers
-// Input:
-// x -- x values
-pub fn (mut o Data[T]) set_x(x &la.Matrix[T]) {
-        o.x = x
-        o.observable.notify_update()
+pub fn (mut o Data[T]) set_x(x &la.Matrix[T]) ? {
+	if x.n < o.nb_samples || x.m < o.nb_features {
+		return errors.error('x matrix must have same dimensions as number of samples and features',
+			.efailed)
+	}
+	o.x = x
+	o.observable.notify_update()
 }
 
 // data_from_raw_x returns a new object with data set from raw x values
@@ -163,13 +168,13 @@ pub fn (o &Data[T]) clone() ?&Data[T] {
 
 // clone_with_same_x returns a deep copy of this object, but with the same reference to x removing the observers
 pub fn (o &Data[T]) clone_with_same_x() ?&Data[T] {
-        use_y := o.y.len > 0
-        return &Data[T]{
-                x: o.x
-                y: if use_y { o.y.clone() } else { []T{} }
-                nb_samples: o.nb_samples
-                nb_features: o.nb_features
-        }
+	use_y := o.y.len > 0
+	return &Data[T]{
+		x: o.x
+		y: if use_y { o.y.clone() } else { []T{} }
+		nb_samples: o.nb_samples
+		nb_features: o.nb_features
+	}
 }
 
 // add_observer adds an object to the list of interested observers
