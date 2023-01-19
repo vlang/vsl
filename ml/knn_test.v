@@ -52,7 +52,7 @@ fn test_knn_predict_with_data_change() {
 	y << 1
 
 	m := la.matrix_deep2(x)
-	data.set(m, y)
+	data.set(m, y)?
 
 	assert knn.predict(k: 1, to_pred: [0.333333, 0.66666])? == 0.0
 	assert knn.predict(k: 1, to_pred: [11.0, 9.3])? == 1.0

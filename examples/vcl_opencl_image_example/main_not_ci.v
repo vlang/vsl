@@ -27,7 +27,7 @@ defer {
 }
 
 // Create image buffer
-mut img := device.image(.rgba, gg.Rect{0, 0, 500, 500})?
+mut img := device.image(.rgba, width: 500, height: 500)?
 defer {
 	img.release() or { panic(err) }
 }
