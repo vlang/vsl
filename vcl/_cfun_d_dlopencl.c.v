@@ -72,11 +72,21 @@ type ClCreateBufferType = fn (context ClContext, flags ClMemFlags, size usize, h
 
 [inline]
 fn cl_create_buffer(context ClContext, flags ClMemFlags, size usize, host_ptr voidptr, errcode_ret &int) ClMem {
-	handle := dl_open() or { return vcl.dl_open_issue }
+	handle := dl_open() or {
+		unsafe {
+			*errcode_ret = vcl.dl_open_issue
+		}
+		return unsafe { ClMem(voidptr(nil)) }
+	}
 	defer {
 		dl_close(handle)
 	}
-	f := dl.sym_opt(handle, 'clCreateBuffer') or { return vcl.dl_sym_opt_issue }
+	f := dl.sym_opt(handle, 'clCreateBuffer') or {
+		unsafe {
+			*errcode_ret = vcl.dl_sym_opt_issue
+		}
+		return unsafe { ClMem(voidptr(nil)) }
+	}
 	sfn := ClCreateBufferType(f)
 	return sfn(context, flags, size, host_ptr, errcode_ret)
 }
@@ -230,11 +240,21 @@ type ClCreateProgramWithSourceType = fn (context ClContext, count u32, strings &
 
 [inline]
 fn cl_create_program_with_source(context ClContext, count u32, strings &&char, lengths &usize, errcode_ret &int) ClProgram {
-	handle := dl_open() or { return vcl.dl_open_issue }
+	handle := dl_open() or {
+		unsafe {
+			*errcode_ret = vcl.dl_open_issue
+		}
+		return unsafe { ClProgram(voidptr(nil)) }
+	}
 	defer {
 		dl_close(handle)
 	}
-	f := dl.sym_opt(handle, 'clCreateProgramWithSource') or { return vcl.dl_sym_opt_issue }
+	f := dl.sym_opt(handle, 'clCreateProgramWithSource') or {
+		unsafe {
+			*errcode_ret = vcl.dl_sym_opt_issue
+		}
+		return unsafe { ClProgram(voidptr(nil)) }
+	}
 	sfn := ClCreateProgramWithSourceType(f)
 	return sfn(context, count, strings, lengths, errcode_ret)
 }
@@ -243,11 +263,21 @@ type ClCreateCommandQueueWithPropertiesType = fn (context ClContext, device ClDe
 
 [inline]
 fn cl_create_command_queue_with_properties(context ClContext, device ClDeviceId, properties &ClQueueProperties, errcode_ret &int) ClCommandQueue {
-	handle := dl_open() or { return vcl.dl_open_issue }
+	handle := dl_open() or {
+		unsafe {
+			*errcode_ret = vcl.dl_open_issue
+		}
+		return unsafe { ClCommandQueue(voidptr(nil)) }
+	}
 	defer {
 		dl_close(handle)
 	}
-	f := dl.sym_opt(handle, 'clCreateCommandQueueWithProperties') or { return vcl.dl_sym_opt_issue }
+	f := dl.sym_opt(handle, 'clCreateCommandQueueWithProperties') or {
+		unsafe {
+			*errcode_ret = vcl.dl_sym_opt_issue
+		}
+		return unsafe { ClCommandQueue(voidptr(nil)) }
+	}
 	sfn := ClCreateCommandQueueWithPropertiesType(f)
 	return sfn(context, device, properties, errcode_ret)
 }
@@ -256,11 +286,21 @@ type ClCreateCommandQueueType = fn (context ClContext, device ClDeviceId, proper
 
 [inline]
 fn cl_create_command_queue(context ClContext, device ClDeviceId, properties &ClQueueProperties, errcode_ret &int) ClCommandQueue {
-	handle := dl_open() or { return vcl.dl_open_issue }
+	handle := dl_open() or {
+		unsafe {
+			*errcode_ret = vcl.dl_open_issue
+		}
+		return unsafe { ClCommandQueue(voidptr(nil)) }
+	}
 	defer {
 		dl_close(handle)
 	}
-	f := dl.sym_opt(handle, 'clCreateCommandQueue') or { return vcl.dl_sym_opt_issue }
+	f := dl.sym_opt(handle, 'clCreateCommandQueue') or {
+		unsafe {
+			*errcode_ret = vcl.dl_sym_opt_issue
+		}
+		return unsafe { ClCommandQueue(voidptr(nil)) }
+	}
 	sfn := ClCreateCommandQueueType(f)
 	return sfn(context, device, properties, errcode_ret)
 }
@@ -295,11 +335,21 @@ type ClCreateKernelType = fn (program ClProgram, kernel_name &char, errcode_ret 
 
 [inline]
 fn cl_create_kernel(program ClProgram, kernel_name &char, errcode_ret &int) ClKernel {
-	handle := dl_open() or { return vcl.dl_open_issue }
+	handle := dl_open() or {
+		unsafe {
+			*errcode_ret = vcl.dl_open_issue
+		}
+		return unsafe { ClKernel(voidptr(nil)) }
+	}
 	defer {
 		dl_close(handle)
 	}
-	f := dl.sym_opt(handle, 'clCreateKernel') or { return vcl.dl_sym_opt_issue }
+	f := dl.sym_opt(handle, 'clCreateKernel') or {
+		unsafe {
+			*errcode_ret = vcl.dl_sym_opt_issue
+		}
+		return unsafe { ClKernel(voidptr(nil)) }
+	}
 	sfn := ClCreateKernelType(f)
 	return sfn(program, kernel_name, errcode_ret)
 }
@@ -361,11 +411,21 @@ type ClCreateContextType = fn (properties &ClContextProperties, num_devices u32,
 
 [inline]
 fn cl_create_context(properties &ClContextProperties, num_devices u32, devices &ClDeviceId, pfn_notify voidptr, user_data voidptr, errcode_ret &int) ClContext {
-	handle := dl_open() or { return vcl.dl_open_issue }
+	handle := dl_open() or {
+		unsafe {
+			*errcode_ret = vcl.dl_open_issue
+		}
+		return unsafe { ClContext(voidptr(nil)) }
+	}
 	defer {
 		dl_close(handle)
 	}
-	f := dl.sym_opt(handle, 'clCreateContext') or { return vcl.dl_sym_opt_issue }
+	f := dl.sym_opt(handle, 'clCreateContext') or {
+		unsafe {
+			*errcode_ret = vcl.dl_sym_opt_issue
+		}
+		return unsafe { ClContext(voidptr(nil)) }
+	}
 	sfn := ClCreateContextType(f)
 	return sfn(properties, num_devices, devices, pfn_notify, user_data, errcode_ret)
 }
@@ -374,11 +434,21 @@ type ClCreateImageType = fn (context ClContext, flags ClMemFlags, format &ClImag
 
 [inline]
 fn cl_create_image(context ClContext, flags ClMemFlags, format &ClImageFormat, desc ClImageDesc, data voidptr, errcode_ret &int) ClMem {
-	handle := dl_open() or { return vcl.dl_open_issue }
+	handle := dl_open() or {
+		unsafe {
+			*errcode_ret = vcl.dl_open_issue
+		}
+		return unsafe { ClMem(voidptr(nil)) }
+	}
 	defer {
 		dl_close(handle)
 	}
-	f := dl.sym_opt(handle, 'clCreateImage') or { return vcl.dl_sym_opt_issue }
+	f := dl.sym_opt(handle, 'clCreateImage') or {
+		unsafe {
+			*errcode_ret = vcl.dl_sym_opt_issue
+		}
+		return unsafe { ClMem(voidptr(nil)) }
+	}
 	sfn := ClCreateImageType(f)
 	return sfn(context, flags, format, desc, data, errcode_ret)
 }
