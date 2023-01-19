@@ -76,7 +76,7 @@ fn cl_create_buffer(context ClContext, flags ClMemFlags, size usize, host_ptr vo
 		unsafe {
 			*errcode_ret = vcl.dl_open_issue
 		}
-		return unsafe { ClMem(voidptr(nil)) }
+		return unsafe { ClMem(nil) }
 	}
 	defer {
 		dl_close(handle)
@@ -85,7 +85,7 @@ fn cl_create_buffer(context ClContext, flags ClMemFlags, size usize, host_ptr vo
 		unsafe {
 			*errcode_ret = vcl.dl_sym_opt_issue
 		}
-		return unsafe { ClMem(voidptr(nil)) }
+		return unsafe { ClMem(nil) }
 	}
 	sfn := ClCreateBufferType(f)
 	return sfn(context, flags, size, host_ptr, errcode_ret)
@@ -244,7 +244,7 @@ fn cl_create_program_with_source(context ClContext, count u32, strings &&char, l
 		unsafe {
 			*errcode_ret = vcl.dl_open_issue
 		}
-		return unsafe { ClProgram(voidptr(nil)) }
+		return unsafe { ClProgram(nil) }
 	}
 	defer {
 		dl_close(handle)
@@ -253,7 +253,7 @@ fn cl_create_program_with_source(context ClContext, count u32, strings &&char, l
 		unsafe {
 			*errcode_ret = vcl.dl_sym_opt_issue
 		}
-		return unsafe { ClProgram(voidptr(nil)) }
+		return unsafe { ClProgram(nil) }
 	}
 	sfn := ClCreateProgramWithSourceType(f)
 	return sfn(context, count, strings, lengths, errcode_ret)
@@ -267,7 +267,7 @@ fn cl_create_command_queue_with_properties(context ClContext, device ClDeviceId,
 		unsafe {
 			*errcode_ret = vcl.dl_open_issue
 		}
-		return unsafe { ClCommandQueue(voidptr(nil)) }
+		return unsafe { ClCommandQueue(nil) }
 	}
 	defer {
 		dl_close(handle)
@@ -276,7 +276,7 @@ fn cl_create_command_queue_with_properties(context ClContext, device ClDeviceId,
 		unsafe {
 			*errcode_ret = vcl.dl_sym_opt_issue
 		}
-		return unsafe { ClCommandQueue(voidptr(nil)) }
+		return unsafe { ClCommandQueue(nil) }
 	}
 	sfn := ClCreateCommandQueueWithPropertiesType(f)
 	return sfn(context, device, properties, errcode_ret)
@@ -290,7 +290,7 @@ fn cl_create_command_queue(context ClContext, device ClDeviceId, properties &ClQ
 		unsafe {
 			*errcode_ret = vcl.dl_open_issue
 		}
-		return unsafe { ClCommandQueue(voidptr(nil)) }
+		return unsafe { ClCommandQueue(nil) }
 	}
 	defer {
 		dl_close(handle)
@@ -299,7 +299,7 @@ fn cl_create_command_queue(context ClContext, device ClDeviceId, properties &ClQ
 		unsafe {
 			*errcode_ret = vcl.dl_sym_opt_issue
 		}
-		return unsafe { ClCommandQueue(voidptr(nil)) }
+		return unsafe { ClCommandQueue(nil) }
 	}
 	sfn := ClCreateCommandQueueType(f)
 	return sfn(context, device, properties, errcode_ret)
@@ -339,7 +339,7 @@ fn cl_create_kernel(program ClProgram, kernel_name &char, errcode_ret &int) ClKe
 		unsafe {
 			*errcode_ret = vcl.dl_open_issue
 		}
-		return unsafe { ClKernel(voidptr(nil)) }
+		return unsafe { ClKernel(nil) }
 	}
 	defer {
 		dl_close(handle)
@@ -348,7 +348,7 @@ fn cl_create_kernel(program ClProgram, kernel_name &char, errcode_ret &int) ClKe
 		unsafe {
 			*errcode_ret = vcl.dl_sym_opt_issue
 		}
-		return unsafe { ClKernel(voidptr(nil)) }
+		return unsafe { ClKernel(nil) }
 	}
 	sfn := ClCreateKernelType(f)
 	return sfn(program, kernel_name, errcode_ret)
@@ -415,7 +415,7 @@ fn cl_create_context(properties &ClContextProperties, num_devices u32, devices &
 		unsafe {
 			*errcode_ret = vcl.dl_open_issue
 		}
-		return unsafe { ClContext(voidptr(nil)) }
+		return unsafe { ClContext(nil) }
 	}
 	defer {
 		dl_close(handle)
@@ -424,7 +424,7 @@ fn cl_create_context(properties &ClContextProperties, num_devices u32, devices &
 		unsafe {
 			*errcode_ret = vcl.dl_sym_opt_issue
 		}
-		return unsafe { ClContext(voidptr(nil)) }
+		return unsafe { ClContext(nil) }
 	}
 	sfn := ClCreateContextType(f)
 	return sfn(properties, num_devices, devices, pfn_notify, user_data, errcode_ret)
@@ -438,7 +438,7 @@ fn cl_create_image(context ClContext, flags ClMemFlags, format &ClImageFormat, d
 		unsafe {
 			*errcode_ret = vcl.dl_open_issue
 		}
-		return unsafe { ClMem(voidptr(nil)) }
+		return unsafe { ClMem(nil) }
 	}
 	defer {
 		dl_close(handle)
@@ -447,7 +447,7 @@ fn cl_create_image(context ClContext, flags ClMemFlags, format &ClImageFormat, d
 		unsafe {
 			*errcode_ret = vcl.dl_sym_opt_issue
 		}
-		return unsafe { ClMem(voidptr(nil)) }
+		return unsafe { ClMem(nil) }
 	}
 	sfn := ClCreateImageType(f)
 	return sfn(context, flags, format, desc, data, errcode_ret)
