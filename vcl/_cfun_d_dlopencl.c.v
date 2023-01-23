@@ -25,6 +25,7 @@ const (
 		'/system/vendor/lib/egl/libGLES_mali${dl.dl_ext}',
 		'/system/vendor/lib/libPVROCL${dl.dl_ext}',
 		'/data/data/org.pocl.libs/files/lib/libpocl${dl.dl_ext}',
+		'/system_ext/lib64/libOpenCL_system${dl.dl_ext}'
 	]
 	windows_default_paths = [
 		'OpenCL${dl.dl_ext}',
