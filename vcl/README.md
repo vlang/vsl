@@ -40,7 +40,6 @@ When your code do not run you can find on onternet path to opencl for your speci
 </p>
 </details>
 
-
 ## Example
 
 ```v ignore
