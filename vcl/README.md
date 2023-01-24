@@ -32,9 +32,11 @@ export VCL_LIBOPENCL_PATH=/usr/local/cuda/lib64/libOpenCL.so
 <details><summary>expand</summary>
 <p>
 On termux you have to go with dynamic option, but before that you could execute theese command (add headers into source):
+	```bash
 	cd
 	git clone https://github.com/KhronosGroup/OpenCL-Headers
 	cp -r OpenCL-Headers/CL .vmodules/vsl/vcl/
+	```
 When your code do not run you can find on onternet path to opencl for your specific device and export `VCL_LIBOPENCL_PATH`
 </p>
 </details>
