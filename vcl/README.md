@@ -3,9 +3,8 @@
 VCL is a high level way of writting programs with OpenCL using V.
 These are highly opinionated OpenCL bindings for V. It tries to make GPU computing easy,
 with some sugar abstraction, V's concurency and channels.
-
-## Loading OpenCL dynamically
-
+<details><summary>## Loading OpenCL dynamically option</summary>
+<p>
 By default VCL uses OpenCL loading the library statically. If you want to use OpenCL
 dynamically, you can use the `-d dlopencl` flag.
 
@@ -21,6 +20,9 @@ do the following:
 ```bash
 export VCL_LIBOPENCL_PATH=/usr/local/cuda/lib64/libOpenCL.so
 ```
+
+</p>
+</details>
 
 ## Example
 
