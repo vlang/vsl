@@ -5,6 +5,7 @@ These are highly opinionated OpenCL bindings for V. It tries to make GPU computi
 with some sugar abstraction, V's concurency and channels.
 
 ## Loading OpenCL dynamically option
+
 <details><summary>expand</summary>
 <p>
 By default VCL uses OpenCL loading the library statically. If you want to use OpenCL
@@ -27,6 +28,7 @@ export VCL_LIBOPENCL_PATH=/usr/local/cuda/lib64/libOpenCL.so
 </details>
 
 ## Termux instalation
+
 <details><summary>expand</summary>
 <p>
 On termux you have to go with dynamic option, but before that you could execute theese command (add headers into source):
@@ -42,6 +44,8 @@ When your code do not run you can find on onternet path to opencl for your speci
 
 ## Example
 
+<details><summary>expand</summary>
+<p>
 ```v ignore
 module main
 
@@ -95,4 +99,5 @@ next_data := v.data()?
 // prints out [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16]
 println('\n\nUpdated vector data: $next_data')
 ```
-
+</p>
+</details>
