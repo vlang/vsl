@@ -4,10 +4,10 @@ VCL is a high level way of writting programs with OpenCL using V.
 These are highly opinionated OpenCL bindings for V. It tries to make GPU computing easy,
 with some sugar abstraction, V's concurency and channels.
 
-## Loading OpenCL dynamically
+## Loading OpenCL dynamicly
 
 By default VCL uses OpenCL loading the library statically. If you want to use OpenCL
-dynamically, you can use the `-d dlopencl` flag.
+dynamicly, you can use the `-d dlopencl` flag.
 
 By default it will look for the OpenCL library in the system path and all the known
 locations for OpenCL libraries (like `/usr/lib` and `/usr/local/lib`) and load the first
