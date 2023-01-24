@@ -44,9 +44,7 @@ When your code do not run you can find on onternet path to opencl for your speci
 
 ## Example
 
-<details><summary>expand</summary>
-<p>
-```
+```v ignore
 module main
 
 import vsl.vcl
@@ -99,5 +97,4 @@ next_data := v.data()?
 // prints out [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16]
 println('\n\nUpdated vector data: $next_data')
 ```
-</p>
-</details>
+
