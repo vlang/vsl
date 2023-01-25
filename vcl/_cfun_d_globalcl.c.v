@@ -102,7 +102,7 @@ fn init() {
 	handle = dl_open() or { panic('Could not open OpenCL library') }
 }
 
-fn clear() {
+fn cleanup() {
 	dl_close(handle)
 }
 
