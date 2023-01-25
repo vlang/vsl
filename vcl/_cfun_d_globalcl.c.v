@@ -1,3 +1,4 @@
+[has_globals]
 module vcl
 
 import dl
