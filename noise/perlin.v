@@ -6,18 +6,10 @@ import rand
 // implemented according to the example implementation on wikipedia
 // https://en.wikipedia.org/wiki/Perlin_noise#Implementation
 
-struct Vec2 {
-	x f32
-	y f32
-}
-
 [inline]
-fn random_gradient() ?Vec2 {
+fn random_gradient() ?(f32, f32) {
 	nr := rand.f32_in_range(0.0, math.pi * 2) or { return err }
-	return Vec2{
-		x: math.cosf(nr)
-		y: math.sinf(nr)
-	}
+	return math.cosf(nr), math.sinf(nr)
 }
 
 [inline]
@@ -27,10 +19,10 @@ fn interpolate(a f32, b f32, w f32) f32 {
 
 [inline]
 fn dot(ix int, iy int, x f32, y f32) ?f32 {
-	vec := random_gradient()?
+	vec_x, vec_y := random_gradient()?
 	dx := x - f32(ix)
 	dy := y - f32(iy)
-	return dx * vec.x + dy * vec.y
+	return dx * vec_x + dy * vec_y
 }
 
 // gets the noise value at coordinate (x, y)
