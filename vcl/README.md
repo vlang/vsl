@@ -6,9 +6,12 @@ with some sugar abstraction, V's concurency and channels.
 
 ## Using custom OpenCL headers
 
-> IMPORTANT: Using a different OpenCL header version than the one used by the OpenCL library can cause problems. If you are using a custom OpenCL header, make sure that it is compatible with the OpenCL library you are using.
+> IMPORTANT: Using a different OpenCL header version than the one used by the OpenCL library
+> can cause problems. If you are using a custom OpenCL header, make sure that it is
+> compatible with the OpenCL library you are using.
 >
-> NOTE: Darwin systems will look for the header file at `<OpenCL/opencl.h>` while any other systems will look for the header file at `<CL/cl.h>`.
+> NOTE: Darwin systems will look for the header file at `<OpenCL/opencl.h>` while any other
+> systems will look for the header file at `<CL/cl.h>`.
 
 By default VCL uses the OpenCL headers from the system path and all the known
 locations for OpenCL headers (like `/usr/include` and `/usr/local/include`) and load the first
