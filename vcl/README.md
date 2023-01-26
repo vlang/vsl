@@ -4,10 +4,59 @@ VCL is a high level way of writting programs with OpenCL using V.
 These are highly opinionated OpenCL bindings for V. It tries to make GPU computing easy,
 with some sugar abstraction, V's concurency and channels.
 
+## Using custom OpenCL headers
+
+> IMPORTANT: Using a different OpenCL header version than the one used by the OpenCL library
+> can cause problems. If you are using a custom OpenCL header, make sure that it is
+> compatible with the OpenCL library you are using.
+>
+> NOTE: Darwin systems will look for the header file at `<OpenCL/opencl.h>` while any other
+> systems will look for the header file at `<CL/cl.h>`.
+
+By default VCL uses the OpenCL headers from the system path and all the known
+locations for OpenCL headers (like `/usr/include` and `/usr/local/include`) and load the first
+header it finds. If you want to use a specific OpenCL header,
+you can add the `-I` flag into your V program with the path to the headers directory.
+
+```v
+#flag -I/custom/path/to/opencl/headers
+```
+
+or at compile time:
+
+```sh
+v -I/custom/path/to/opencl/headers my_program.v
+```
+
+You can also link or move the headers directory into VCL's source directory. For example:
+
+```sh
+# for darwin systems
+ln -s /custom/path/to/opencl/headers ~/.vmodules/vcl/OpenCL
+
+# or for any other system you can do
+ln -s /custom/path/to/opencl/headers ~/.vmodules/vcl/CL
+```
+
+or, you can copy the headers directory into VCL's source directory.
+For example you can clone the OpenCL-Headers repository and copy the headers as follows:
+
+```sh
+git clone https://github.com/KhronosGroup/OpenCL-Headers /tmp/OpenCL-Headers
+
+# for darwin systems
+cp -r /tmp/OpenCL-Headers/CL ~/.vmodules/vcl/OpenCL
+
+# or for any other system you can do
+cp -r /tmp/OpenCL-Headers/CL ~/.vmodules/vcl/CL
+```
+
 ## Loading OpenCL dynamically
 
 By default VCL uses OpenCL loading the library statically. If you want to use OpenCL
 dynamically, you can use the `-d dlopencl` flag.
+
+> NOTE: It will require to compile your program with the `-enable-globals` flag.
 
 By default it will look for the OpenCL library in the system path and all the known
 locations for OpenCL libraries (like `/usr/lib` and `/usr/local/lib`) and load the first
@@ -18,63 +67,6 @@ the path to the library. Multiple paths can be separated by `:`.
 For example, if you want to use the OpenCL library from the NVIDIA CUDA Toolkit, you can
 do the following:
 
-```bash
+```sh
 export VCL_LIBOPENCL_PATH=/usr/local/cuda/lib64/libOpenCL.so
 ```
-
-## Example
-
-```v ignore
-module main
-
-import vsl.vcl
-
-// an complicated kernel
-const kernel_source = '
-__kernel void addOne(__global float* data) {
-    const int i = get_global_id(0);
-    data[i] += 1;
-}'
-
-// get all devices if you want
-devices := vcl.get_devices(vcl.DeviceType.cpu)?
-println('Devices: $devices')
-
-// do not create platforms/devices/contexts/queues/...
-// just get the device
-mut device := vcl.get_default_device()?
-defer {
-	device.release() or { panic(err) }
-}
-
-// VCL has several kinds of device memory object: Bytes, Vector, Image (Soon)
-// allocate buffer on the device (16 elems of f32).
-mut v := device.vector<f32>(16)?
-defer {
-	v.release() or { panic(err) }
-}
-
-// load data to the vector (it's async)
-data := [f32(0.0), 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
-err := <-v.load(data)
-if err !is none {
-	panic(err)
-}
-println('\n\nCreated vector: $v')
-println(v.data()?)
-
-// add program source to device, get kernel
-device.add_program(kernel_source)?
-k := device.kernel('addOne')?
-// run kernel (global work size 16 and local work size 1)
-kernel_err := <-k.global(16).local(1).run(v)
-if kernel_err !is none {
-	panic(kernel_err)
-}
-
-// get data from vector
-next_data := v.data()?
-// prints out [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16]
-println('\n\nUpdated vector data: $next_data')
-```
-
