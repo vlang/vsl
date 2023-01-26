@@ -19,7 +19,13 @@ you can add the `-I` flag into your V program with the path to the headers direc
 #flag -I/custom/path/to/opencl/headers
 ```
 
-or you can link or move the headers directory into VCL's source directory. For example:
+or at compile time:
+
+```sh
+v -I/custom/path/to/opencl/headers my_program.v
+```
+
+You can also link or move the headers directory into VCL's source directory. For example:
 
 ```sh
 # for darwin systems
