@@ -70,6 +70,12 @@ fn cleanup() {
 	}
 }
 
+fn init() {
+	$if globalcl ? {
+		dl_open() or { return }
+	}
+}
+
 type ClCreateBufferType = fn (context ClContext, flags ClMemFlags, size usize, host_ptr voidptr, errcode_ret &int) ClMem
 
 [inline]
