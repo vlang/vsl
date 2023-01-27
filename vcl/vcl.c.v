@@ -4,7 +4,6 @@ module vcl
 pub fn get_devices(device_type DeviceType) ?[]&Device {
 	platform_ids := get_platforms()?
 	mut devices := []&Device{}
-
 	for p in platform_ids {
 		mut n := u32(0)
 		mut ret := cl_get_device_i_ds(p, ClDeviceType(device_type), 0, unsafe { nil },
