@@ -103,12 +103,14 @@ fn new_kernel(d &Device, k ClKernel) &Kernel {
 }
 
 fn (k &Kernel) set_args(args ...ArgumentType) ? {
-	for i, arg in args {
-		k.set_arg(i, arg)?
+	mut i := 0
+	for arg in args {
+		k.set_arg(mut i, arg)?
+		i++
 	}
 }
 
-fn (k &Kernel) set_arg(index int, arg ArgumentType) ? {
+fn (k &Kernel) set_arg(mut index &int, arg ArgumentType) ? {
 	match arg {
 		u8 {
 			return k.set_arg_unsafe(index, int(sizeof(arg)), unsafe { &arg })
@@ -173,9 +175,13 @@ fn (k &Kernel) set_arg(index int, arg ArgumentType) ? {
 		Vector[u64] {
 			return k.set_arg_buffer(index, arg.buf)
 		}
-		// TODO: Image {
-		// 	return k.set_arg_buffer(index, arg.buf)
-		// }
+		Image {
+		 	k.set_arg_buffer(index, arg.buf) ?
+			index++
+		 	k.set_arg_buffer(index, arg.bounds.width) ?
+			index++
+		 	k.set_arg_buffer(index, arg.bounds.height) ?
+		}
 		// TODO: LocalBuffer {
 		//     return k.set_arg_local(index, int(arg))
 		// }

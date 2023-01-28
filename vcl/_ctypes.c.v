@@ -60,3 +60,6 @@ type ClImageFormat = voidptr
 fn C.clCreateImage(context ClContext, flags ClMemFlags, format &ClImageFormat, desc ClImageDesc, data voidptr, errcode_ret &int) ClMem
 fn C.create_image_desc(image_type ClMemObjectType, image_width usize, image_height usize, image_depth usize, image_array_size usize, image_row_pitch usize, image_slice_pitch usize, num_mip_levels u32, num_samples u32, buffer ClMem) &ClImageDesc
 fn C.create_image_format(image_channel_order usize, image_channel_data_type usize) &ClImageFormat
+
+fn C.clEnqueueReadImage(command_queue ClCommandQueue, image ClMem, blocking_read bool, origin3 usize, region3 usize, row_pitch usize, slice_pitch usize, ptr voidptr, num_events_in_wait_list u32, event_wait_list &ClEvent, event &ClEvent) int
+fn C.clEnqueueWriteImage(command_queue ClCommandQueue, image ClMem, blocking_write bool, origin3 usize, region3 usize, row_pitch usize, slice_pitch usize, ptr voidptr, num_events_in_wait_list u32, event_wait_list &ClEvent, event &ClEvent) int
