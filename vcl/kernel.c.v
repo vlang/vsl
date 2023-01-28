@@ -176,11 +176,11 @@ fn (k &Kernel) set_arg(mut index &int, arg ArgumentType) ? {
 			return k.set_arg_buffer(index, arg.buf)
 		}
 		Image {
-		 	k.set_arg_buffer(index, arg.buf) ?
+			k.set_arg_buffer(index, arg.buf)?
 			index++
-		 	k.set_arg_buffer(index, arg.bounds.width) ?
+			k.set_arg_buffer(index, arg.bounds.width)?
 			index++
-		 	k.set_arg_buffer(index, arg.bounds.height) ?
+			k.set_arg_buffer(index, arg.bounds.height)?
 		}
 		// TODO: LocalBuffer {
 		//     return k.set_arg_local(index, int(arg))

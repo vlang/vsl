@@ -104,13 +104,13 @@ fn (d &Device) create_image(image_type ImageChannelOrder, bounds Rect, row_pitch
 }
 
 pub fn (image &Image) data() ?[]u8 {
-	origin := {usize(0), 0, 0}
-	region := {usize(width), height, 1}
+	origin := [usize(0), 0, 0]
+	region := [usize(width), height, 1]
 	mut data := []u8{len: image.buf.size}
-    ret := clEnqueueReadImage(image.buf.device.queue, img.buf.memobj, true,
-        unsafe{&origin[0]}, unsafe{&region[0]}, 0, 0, unsafe{&data[0]}, 0, unsafe{nil}, unsafe{nil})
+	ret := clEnqueueReadImage(image.buf.device.queue, img.buf.memobj, true, unsafe { &origin[0] },
+		unsafe { &region[0] }, 0, 0, unsafe { &data[0] }, 0, unsafe { nil }, unsafe { nil })
     if ret != CL_SUCCESS {
-        return vclError(ret)
+		return vclError(ret)
     }
-    return data
+	return data
 }
