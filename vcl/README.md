@@ -54,9 +54,9 @@ cp -r /tmp/OpenCL-Headers/CL ~/.vmodules/vcl/CL
 ## Loading OpenCL dynamically
 
 By default VCL uses OpenCL loading the library statically. If you want to use OpenCL
-dynamically, you can use the `-d dlopencl` flag.
+dynamically, you can use the `-d dlopencl` flag, if you want little bit better performance with Loading dynamically, you can use two `-d dlopencl -d globalcl` flags.
 
-> NOTE: It will require to compile your program with the `-enable-globals` flag.
+> NOTE: `-d dlopencl -d globalcl` flags will require to compile your program with the `-enable-globals` flag.
 
 By default it will look for the OpenCL library in the system path and all the known
 locations for OpenCL libraries (like `/usr/lib` and `/usr/local/lib`) and load the first
