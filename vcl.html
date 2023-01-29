@@ -94,9 +94,12 @@ cp -r /tmp/OpenCL-Headers/CL ~/.vmodules/vcl/CL
 </code></pre>
 <h2>Loading OpenCL dynamically</h2>
 <p>By default VCL uses OpenCL loading the library statically. If you want to use OpenCL
-dynamically, you can use the <code>-d dlopencl</code> flag, if you want little bit better performance with Loading dynamically, you can use two <code>-d dlopencl -d globalcl</code> flags.</p>
+dynamically, you can use the <code>-d dlopencl</code> flag,
+if you want little bit better performance with Loading dynamically,
+you can use two <code>-d dlopencl -d globalcl</code> flags.</p>
 <blockquote>
-<p>NOTE: <code>-d dlopencl -d globalcl</code> flags will require to compile your program with the <code>-enable-globals</code> flag.</p>
+<p>NOTE: <code>-d dlopencl -d globalcl</code> flags will require to compile
+your program with the <code>-enable-globals</code> flag.</p>
 </blockquote>
 <p>By default it will look for the OpenCL library in the system path and all the known
 locations for OpenCL libraries (like <code>/usr/lib</code> and <code>/usr/local/lib</code>) and load the first
@@ -423,7 +426,7 @@ do the following:</p>
 </section>
 
           <div class="footer">
-            Powered by vdoc. Generated on: 29 Jan 2023 00:50:44
+            Powered by vdoc. Generated on: 29 Jan 2023 01:24:22
           </div>
         </div>
         <div class="doc-toc"><ul><li class="open"><a href="#readme_vcl">README</a></li>
