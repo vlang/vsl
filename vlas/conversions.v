@@ -4,7 +4,7 @@ import strconv
 import math
 import math.complex
 import vsl.errors
-import vsl.vlas.vblas
+import vsl.vlas.internal.vblas
 
 pub fn c_trans(trans bool) vblas.Transpose {
 	if trans {

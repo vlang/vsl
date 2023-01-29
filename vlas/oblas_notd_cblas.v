@@ -1,6 +1,6 @@
 module vlas
 
-import vsl.vlas.vblas
+import vsl.vlas.internal.vblas
 
 // set_num_threads sets the number of threads in VLAS
 pub fn set_num_threads(n int) {}
