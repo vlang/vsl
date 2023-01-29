@@ -80,7 +80,7 @@ pub fn vcl_panic(code int) {
 	}
 }
 
-pub const (
+const (
 	// Common OpenCl errors
 	err_device_not_found                          = 'vcl_cl: Device Not Found'
 	err_device_not_available                      = 'vcl_cl: Device Not Available'
