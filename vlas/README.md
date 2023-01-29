@@ -51,7 +51,6 @@ sudo apt-get install -y --no-install-recommends \
     gfortran \
     liblapacke-dev \
     libopenblas-dev \
-    libssl-dev \
 ```
 
 ### Arch Linux/Manjaro GNU Linux
