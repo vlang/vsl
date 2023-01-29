@@ -1,7 +1,7 @@
 module vlas
 
 import vsl.errors
-import vsl.vlas.vblas
+import vsl.vlas.internal.vblas
 
 fn C.LAPACKE_dgesv(matrix_layout vblas.MemoryLayout, n int, nrhs int, a &f64, lda int, ipiv &int, b &f64, ldb int) int
 
