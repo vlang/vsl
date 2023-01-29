@@ -56,10 +56,6 @@ sudo apt-get install -y --no-install-recommends \
 
 ### Arch Linux/Manjaro GNU Linux
 
-```sh
-sudo pacman -S openssl
-```
-
 The best way of installing OpenBlas/LAPACK is using
 [openblas-lapack](https://aur.archlinux.org/packages/openblas-lapack/).
 
