@@ -2,7 +2,7 @@ module main
 
 import vsl.ml
 import vsl.plot
-import prec.dataset
+import internal.dataset
 
 // data
 mut data := ml.data_from_raw_x(dataset.raw_dataset.map([it[0], it[1]]))?
