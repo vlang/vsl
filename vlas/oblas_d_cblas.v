@@ -1,6 +1,6 @@
 module vlas
 
-import vsl.vlas.vblas
+import vsl.vlas.internal.vblas
 
 fn C.openblas_set_num_threads(n int)
 
