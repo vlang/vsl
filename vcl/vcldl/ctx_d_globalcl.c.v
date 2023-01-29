@@ -1,4 +1,4 @@
-module utils
+module vcldl
 
 __global (
 	cl_handle      = unsafe { nil }
