@@ -1,7 +1,7 @@
 module diff
 
 import vsl.func
-import vsl.internal
+import vsl.internal.prec
 import math
 
 pub fn backward(f func.Fn, x f64) (f64, f64) {
@@ -10,7 +10,7 @@ pub fn backward(f func.Fn, x f64) (f64, f64) {
          * size to get a very rough estimate of f''. Use this to estimate
          * the step size which will minimize the error in calculating f'.
 	*/
-	mut h := internal.sqrt_f64_epsilon
+	mut h := prec.sqrt_f64_epsilon
 	mut a := []f64{}
 	mut d := []f64{}
 	mut k := 0
@@ -33,12 +33,12 @@ pub fn backward(f func.Fn, x f64) (f64, f64) {
          * step size.
 	*/
 	mut a2 := math.abs(d[0] + d[1] + d[2])
-	if a2 < 100.0 * internal.sqrt_f64_epsilon {
-		a2 = 100.0 * internal.sqrt_f64_epsilon
+	if a2 < 100.0 * prec.sqrt_f64_epsilon {
+		a2 = 100.0 * prec.sqrt_f64_epsilon
 	}
-	h = math.sqrt(internal.sqrt_f64_epsilon / (2.0 * a2))
-	if h > 100.0 * internal.sqrt_f64_epsilon {
-		h = 100.0 * internal.sqrt_f64_epsilon
+	h = math.sqrt(prec.sqrt_f64_epsilon / (2.0 * a2))
+	if h > 100.0 * prec.sqrt_f64_epsilon {
+		h = 100.0 * prec.sqrt_f64_epsilon
 	}
 	return (f.eval(x) - f.eval(x - h)) / h, math.abs(10.0 * a2 * h)
 }
@@ -49,7 +49,7 @@ pub fn forward(f func.Fn, x f64) (f64, f64) {
          * size to get a very rough estimate of f''. Use this to estimate
          * the step size which will minimize the error in calculating f'.
 	*/
-	mut h := internal.sqrt_f64_epsilon
+	mut h := prec.sqrt_f64_epsilon
 	mut a := []f64{}
 	mut d := []f64{}
 	mut k := 0
@@ -72,12 +72,12 @@ pub fn forward(f func.Fn, x f64) (f64, f64) {
          * step size.
 	*/
 	mut a2 := math.abs(d[0] + d[1] + d[2])
-	if a2 < 100.0 * internal.sqrt_f64_epsilon {
-		a2 = 100.0 * internal.sqrt_f64_epsilon
+	if a2 < 100.0 * prec.sqrt_f64_epsilon {
+		a2 = 100.0 * prec.sqrt_f64_epsilon
 	}
-	h = math.sqrt(internal.sqrt_f64_epsilon / (2.0 * a2))
-	if h > 100.0 * internal.sqrt_f64_epsilon {
-		h = 100.0 * internal.sqrt_f64_epsilon
+	h = math.sqrt(prec.sqrt_f64_epsilon / (2.0 * a2))
+	if h > 100.0 * prec.sqrt_f64_epsilon {
+		h = 100.0 * prec.sqrt_f64_epsilon
 	}
 	return (f.eval(x + h) - f.eval(x)) / h, math.abs(10.0 * a2 * h)
 }
@@ -88,7 +88,7 @@ pub fn central(f func.Fn, x f64) (f64, f64) {
          * size to get a very rough estimate of f'''. Use this to estimate
          * the step size which will minimize the error in calculating f'.
 	*/
-	mut h := internal.sqrt_f64_epsilon
+	mut h := prec.sqrt_f64_epsilon
 	mut a := []f64{}
 	mut d := []f64{}
 	mut k := 0
@@ -111,12 +111,12 @@ pub fn central(f func.Fn, x f64) (f64, f64) {
          * step size.
 	*/
 	mut a3 := math.abs(d[0] + d[1] + d[2] + d[3])
-	if a3 < 100.0 * internal.sqrt_f64_epsilon {
-		a3 = 100.0 * internal.sqrt_f64_epsilon
+	if a3 < 100.0 * prec.sqrt_f64_epsilon {
+		a3 = 100.0 * prec.sqrt_f64_epsilon
 	}
-	h = math.pow(internal.sqrt_f64_epsilon / (2.0 * a3), 1.0 / 3.0)
-	if h > 100.0 * internal.sqrt_f64_epsilon {
-		h = 100.0 * internal.sqrt_f64_epsilon
+	h = math.pow(prec.sqrt_f64_epsilon / (2.0 * a3), 1.0 / 3.0)
+	if h > 100.0 * prec.sqrt_f64_epsilon {
+		h = 100.0 * prec.sqrt_f64_epsilon
 	}
 	return (f.eval(x + h) - f.eval(x - h)) / (2.0 * h), math.abs(100.0 * a3 * h * h)
 }

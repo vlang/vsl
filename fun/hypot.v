@@ -2,7 +2,7 @@ module fun
 
 import math
 import vsl.errors
-import vsl.internal
+import vsl.internal.prec
 
 pub fn hypot(x f64, y f64) f64 {
 	if math.is_inf(x, 0) || math.is_inf(y, 0) {
@@ -44,7 +44,7 @@ pub fn hypot_e(x f64, y f64) (f64, f64) {
 		root_term := math.sqrt(1.0 + rat * rat)
 		if max < math.max_f64 / root_term {
 			result = max * root_term
-			result_err = f64(2.0) * internal.f64_epsilon * math.abs(result)
+			result_err = f64(2.0) * prec.f64_epsilon * math.abs(result)
 		} else {
 			errors.vsl_panic('overflow in hypot_e function', .eovrflw)
 		}

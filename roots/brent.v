@@ -2,7 +2,7 @@ module roots
 
 import vsl.errors
 import vsl.func
-import vsl.internal
+import vsl.internal.prec
 import math
 
 const (
@@ -43,7 +43,7 @@ pub fn brent(func func.Fn, x1 f64, x2 f64, tol f64) ?(f64, f64) {
 			fb = fc
 			fc = fa
 		}
-		tol1 = 2.0 * internal.f64_epsilon * math.abs(b) + 0.5 * tol
+		tol1 = 2.0 * prec.f64_epsilon * math.abs(b) + 0.5 * tol
 		mut new_step := 0.5 * (c - b)
 		if math.abs(new_step) <= tol1 || fb == 0.0 {
 			return b, math.abs(c - b)

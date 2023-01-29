@@ -1,7 +1,7 @@
 module fun
 
 import math
-import vsl.internal
+import vsl.internal.prec
 
 // sinh(x) series
 // double-precision for |x| < 1.0
@@ -86,7 +86,7 @@ const (
 pub fn sin_e(x f64) (f64, f64) {
 	sgn_x := if x < 0 { -1 } else { 1 }
 	abs_x := math.abs(x)
-	if abs_x < internal.root4_f64_epsilon {
+	if abs_x < prec.root4_f64_epsilon {
 		x2 := x * x
 		return x * (1.0 - x2 / 6.0), math.abs(x * x2 * x2 / 100.0)
 	} else {
@@ -115,14 +115,14 @@ pub fn sin_e(x f64) (f64, f64) {
 			result = 1.0 - 0.5 * z * z * (1.0 - z * z * cos_cs_val)
 		}
 		result *= sgn_result
-		if abs_x > 1.0 / internal.f64_epsilon {
+		if abs_x > 1.0 / prec.f64_epsilon {
 			result_err = math.abs(result)
-		} else if abs_x > 100.0 / internal.sqrt_f64_epsilon {
-			result_err = 2.0 * abs_x * internal.f64_epsilon * math.abs(result)
-		} else if abs_x > 0.1 / internal.sqrt_f64_epsilon {
-			result_err = 2.0 * internal.sqrt_f64_epsilon * math.abs(result)
+		} else if abs_x > 100.0 / prec.sqrt_f64_epsilon {
+			result_err = 2.0 * abs_x * prec.f64_epsilon * math.abs(result)
+		} else if abs_x > 0.1 / prec.sqrt_f64_epsilon {
+			result_err = 2.0 * prec.sqrt_f64_epsilon * math.abs(result)
 		} else {
-			result_err = 2.0 * internal.f64_epsilon * math.abs(result)
+			result_err = 2.0 * prec.f64_epsilon * math.abs(result)
 		}
 		return result, result_err
 	}
@@ -130,7 +130,7 @@ pub fn sin_e(x f64) (f64, f64) {
 
 pub fn cos_e(x f64) (f64, f64) {
 	abs_x := math.abs(x)
-	if abs_x < internal.root4_f64_epsilon {
+	if abs_x < prec.root4_f64_epsilon {
 		x2 := x * x
 		return 1.0 - 0.5 * x2, math.abs(x2 * x2 / 12.0)
 	} else {
@@ -162,14 +162,14 @@ pub fn cos_e(x f64) (f64, f64) {
 			result = z * (1.0 + z * z * sin_cs_val)
 		}
 		result *= sgn_result
-		if abs_x > 1.0 / internal.f64_epsilon {
+		if abs_x > 1.0 / prec.f64_epsilon {
 			result_err = math.abs(result)
-		} else if abs_x > 100.0 / internal.sqrt_f64_epsilon {
-			result_err = 2.0 * abs_x * internal.f64_epsilon * math.abs(result)
-		} else if abs_x > 0.1 / internal.sqrt_f64_epsilon {
-			result_err = 2.0 * internal.sqrt_f64_epsilon * math.abs(result)
+		} else if abs_x > 100.0 / prec.sqrt_f64_epsilon {
+			result_err = 2.0 * abs_x * prec.f64_epsilon * math.abs(result)
+		} else if abs_x > 0.1 / prec.sqrt_f64_epsilon {
+			result_err = 2.0 * prec.sqrt_f64_epsilon * math.abs(result)
 		} else {
-			result_err = 2.0 * internal.f64_epsilon * math.abs(result)
+			result_err = 2.0 * prec.f64_epsilon * math.abs(result)
 		}
 		return result, result_err
 	}
@@ -178,7 +178,7 @@ pub fn cos_e(x f64) (f64, f64) {
 pub fn sin(x f64) f64 {
 	sgn_x := if x < 0 { -1 } else { 1 }
 	abs_x := math.abs(x)
-	if abs_x < internal.root4_f64_epsilon {
+	if abs_x < prec.root4_f64_epsilon {
 		x2 := x * x
 		return x * (1.0 - x2 / 6.0)
 	} else {
@@ -212,7 +212,7 @@ pub fn sin(x f64) f64 {
 
 pub fn cos(x f64) f64 {
 	abs_x := math.abs(x)
-	if abs_x < internal.root4_f64_epsilon {
+	if abs_x < prec.root4_f64_epsilon {
 		x2 := x * x
 		return 1.0 - 0.5 * x2
 	} else {

@@ -1,7 +1,7 @@
 module fun
 
 import math
-import vsl.internal
+import vsl.internal.prec
 
 // Compute the binomial coefficient
 pub fn choose(n int, p int) f64 {
@@ -11,7 +11,7 @@ pub fn choose(n int, p int) f64 {
 	n_f64 := f64(n)
 	p_f64 := f64(p)
 	k := math.max(p_f64, n_f64 - p_f64)
-	if k < internal.max_int_fact_arg {
+	if k < prec.max_int_fact_arg {
 		return math.factorial(n_f64) / (math.factorial(p_f64) * math.factorial(n_f64 - p_f64))
 	}
 	log_choose := math.log_factorial(n_f64 + 1.0) - math.log_factorial(p_f64 + 1.0) - math.log_factorial(

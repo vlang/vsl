@@ -1,7 +1,7 @@
 module fun
 
 import math
-import vsl.internal
+import vsl.internal.prec
 
 // data for a Chebyshev series over a given interval
 pub struct ChebSeries {
@@ -28,5 +28,5 @@ pub fn (cs ChebSeries) eval_e(x f64) (f64, f64) {
 	temp = d
 	d = y * d - dd + 0.5 * cs.c[0]
 	e += math.abs(y * temp) + math.abs(dd) + 0.5 * math.abs(cs.c[0])
-	return d, f64(internal.f64_epsilon) * e + math.abs(cs.c[cs.order])
+	return d, f64(prec.f64_epsilon) * e + math.abs(cs.c[cs.order])
 }
