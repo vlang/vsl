@@ -176,10 +176,9 @@ fn (k &Kernel) set_arg(index int, arg ArgumentType) ? {
 		// TODO: Image {
 		// 	return k.set_arg_buffer(index, arg.buf)
 		// }
-		// TODO: LocalBuffer {
-		//     return k.set_arg_local(index, int(arg))
-		// }
-		else {}
+		else {
+			return new_unsupported_argument_type_error(index, arg)
+		}
 	}
 }
 
