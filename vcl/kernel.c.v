@@ -103,14 +103,12 @@ fn new_kernel(d &Device, k ClKernel) &Kernel {
 }
 
 fn (k &Kernel) set_args(args ...ArgumentType) ? {
-	mut i := 0
-	for arg in args {
-		k.set_arg(mut i, arg)?
-		i++
+	for i, arg in args {
+		k.set_arg(i, arg)?
 	}
 }
 
-fn (k &Kernel) set_arg(mut index &int, arg ArgumentType) ? {
+fn (k &Kernel) set_arg(index int, arg ArgumentType) ? {
 	match arg {
 		u8 {
 			return k.set_arg_unsafe(index, int(sizeof(arg)), unsafe { &arg })
@@ -176,16 +174,16 @@ fn (k &Kernel) set_arg(mut index &int, arg ArgumentType) ? {
 			return k.set_arg_buffer(index, arg.buf)
 		}
 		Image {
-			k.set_arg_buffer(index, arg.buf)?
-			index++
-			k.set_arg_buffer(index, arg.bounds.width)?
-			index++
-			k.set_arg_buffer(index, arg.bounds.height)?
+			img := (arg as Image)
+			img.write_queue()?
+			// TODO k.set_arg_buffer(index+1, img.width)?
+    		// TODO k.set_arg_buffer(index+1, img.height)?
+			// TODO increment: index += 2          !?
+			return k.set_arg_buffer(index, arg.buf)
 		}
-		// TODO: LocalBuffer {
-		//     return k.set_arg_local(index, int(arg))
-		// }
-		else {}
+		else {
+			return new_unsupported_argument_type_error(index, arg)
+		}
 	}
 }
 

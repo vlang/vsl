@@ -60,8 +60,8 @@ pub fn (e ErrVCL) err() IError {
 		vcl.invalid_mip_level { vcl.err_invalid_mip_level }
 		vcl.invalid_global_work_size { vcl.err_invalid_global_work_size }
 		vcl.invalid_property { vcl.err_invalid_property }
-		vcl.not_found_dl_library { vcl.err_not_found_dl_library }
-		vcl.not_found_dl_symbol { vcl.err_not_found_dl_symbol }
+		vcl.dl_sym_issue { vcl.err_dl_sym_issue }
+		vcl.dl_open_issue { vcl.err_dl_open_issue }
 		else { 'vcl_cl: error ${e}' }
 	}
 	return error_with_code(err, int(e))
@@ -142,8 +142,8 @@ const (
 	err_invalid_device_partition_count            = 'vcl_cl: Invalid Device Partition Count'
 
 	// Dl errors
-	err_not_found_dl_library                      = 'vcl_cl_dl: Not Found Dl Library'
-	err_not_found_dl_symbol                       = 'vcl_cl_dl: Not Found Dl Symbol'
+	err_dl_sym_issue                              = 'vcl_cl_dl: Not Found Dl Library'
+	err_dl_open_issue                             = 'vcl_cl_dl: Not Found Dl Symbol'
 
 	// err codes
 	success                                       = 0
@@ -209,6 +209,6 @@ const (
 	invalid_device_queue                          = -70
 	invalid_spec_id                               = -71
 	max_size_restriction_exceeded                 = -72
-	not_found_dl_library                          = -73
-	not_found_dl_symbol                           = -74
+	dl_sym_issue                                  = -73
+	dl_open_issue                                 = -74
 )

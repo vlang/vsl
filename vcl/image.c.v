@@ -27,6 +27,7 @@ pub mut:
 pub struct Image {
 	format ClImageFormat
 	desc   &ClImageDesc
+	_data voidptr
 mut:
 	buf &Buffer
 pub:
@@ -94,23 +95,51 @@ fn (d &Device) create_image(image_type ImageChannelOrder, bounds Rect, row_pitch
 		device: d
 	}
 
+	mut export_data := voidptr(unsafe { nill })
+	if !isnil(data) {
+		export_data = data.clone()
+	}else {
+		export_data = voidptr([]u8{len: size, cap: size, init: 0})
+	}
+
 	return &Image{
 		buf: buf
 		bounds: bounds
 		@type: image_type
 		format: format
+		_data: export_data
 		desc: desc
 	}
 }
 
-pub fn (image &Image) data() ?[]u8 {
+pub fn (image &Image) data() ?&Image {
 	origin := [usize(0), 0, 0]
-	region := [usize(width), height, 1]
-	mut data := []u8{len: image.buf.size}
+	region := [usize(image.bounds.width), usize(image.bounds.height), 1]
+	mut result := []u8{len: image.buf.size}
 	ret := clEnqueueReadImage(image.buf.device.queue, img.buf.memobj, true, unsafe { &origin[0] },
-		unsafe { &region[0] }, 0, 0, unsafe { &data[0] }, 0, unsafe { nil }, unsafe { nil })
-    if ret != CL_SUCCESS {
+		unsafe { &region[0] }, 0, 0, unsafe { &result[0] }, 0, unsafe { nil }, unsafe { nil })
+	if ret != CL_SUCCESS {
 		return vclError(ret)
-    }
-	return data
+	}
+	return &Image{
+		buf: image.buf
+		bounds: image.bounds
+		@type: image.@type
+		format: image.format
+		_data:  unsafe { voidptr(result) }
+		desc: image.desc
+	}
+}
+
+
+
+fn (image &Image) write_queue() ?int {
+	origin := [usize(0), 0, 0]
+	region := [usize(image.bounds.width), usize(image.bounds.height), 1]
+	ret := clEnqueueWriteImage(image.buf.device.queue, img.buf.memobj, true, unsafe { &origin[0] },
+		unsafe { &region[0] }, 0, 0, image._data, 0, unsafe { nil }, unsafe { nil })
+	if ret != CL_SUCCESS {
+		return vclError(ret)
+	}
+	return ret
 }

@@ -10,13 +10,8 @@ mut:
 pub fn (d &Device) vector[T](length int) ?&Vector[T] {
 	size := length * int(sizeof(T))
 	buffer := d.buffer(size)?
-	buf := &Buffer{
-		memobj: buffer.memobj
-		device: d
-		size: size
-	}
 	return &Vector[T]{
-		buf: buf
+		buf: buffer
 	}
 }
 

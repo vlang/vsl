@@ -41,7 +41,6 @@ pub fn get_default_device() ?&Device {
 
 fn get_platforms() ?[]ClPlatformId {
 	mut n := u32(0)
-
 	mut ret := cl_get_platform_i_ds(0, unsafe { nil }, &n)
 	if ret != success {
 		return vcl_error(ret)
