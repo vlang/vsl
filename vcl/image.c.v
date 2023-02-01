@@ -118,7 +118,7 @@ pub fn (image &Image) data() ?&Image {
 	mut result := []u8{len: image.buf.size}
 	ret := clEnqueueReadImage(image.buf.device.queue, img.buf.memobj, true, unsafe { &origin[0] },
 		unsafe { &region[0] }, 0, 0, unsafe { &result[0] }, 0, unsafe { nil }, unsafe { nil })
-	if ret != CL_SUCCESS {
+	if ret != success {
 		return vclError(ret)
 	}
 	return &Image{
@@ -138,7 +138,7 @@ fn (image &Image) write_queue() ?int {
 	region := [usize(image.bounds.width), usize(image.bounds.height), 1]
 	ret := clEnqueueWriteImage(image.buf.device.queue, img.buf.memobj, true, unsafe { &origin[0] },
 		unsafe { &region[0] }, 0, 0, image._data, 0, unsafe { nil }, unsafe { nil })
-	if ret != CL_SUCCESS {
+	if ret != sussc {
 		return vclError(ret)
 	}
 	return ret
