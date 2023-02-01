@@ -272,12 +272,7 @@ type clEnqueueReadImageType = fn (command_queue ClCommandQueue, image ClMem, blo
 
 [inline]
 fn cl_enqueue_read_image(command_queue ClCommandQueue, image ClMem, blocking_read bool, origin3 usize, region3 usize, row_pitch usize, slice_pitch usize, ptr voidptr, num_events_in_wait_list u32, event_wait_list &ClEvent, event &ClEvent) int {
-	h, f := dl.get_sym('clEnqueueReadImage') or { return err.code() }
-	$if !globalcl ? {
-		defer {
-			dl_close(h)
-		}
-	}
+	f := dl.get_sym('clEnqueueReadImage') or { return err.code() }
 	sfn := clEnqueueReadImageType(f)
 	return sfn(command_queue, image, blocking_read, origin3, region3, row_pitch, slice_pitch,
 		ptr, num_events_in_wait_list, event_wait_list, event)
@@ -287,13 +282,8 @@ type clEnqueueWriteImageType = fn (command_queue ClCommandQueue, image ClMem, bl
 
 [inline]
 fn cl_enqueue_write_image(command_queue ClCommandQueue, image ClMem, blocking_write bool, origin3 usize, region3 usize, row_pitch usize, slice_pitch usize, ptr voidptr, num_events_in_wait_list u32, event_wait_list &ClEvent, event &ClEvent) int {
-	h, f := dl.get_sym('clEnqueueWriteImage') or { return err.code() }
-	$if !globalcl ? {
-		defer {
-			dl_close(h)
-		}
-	}
+	f := dl.get_sym('clEnqueueWriteImage') or { return err.code() }
 	sfn := clEnqueueWriteImageType(f)
 	return sfn(command_queue, image, blocking_read, origin3, region3, row_pitch, slice_pitch,
 		ptr, num_events_in_wait_list, event_wait_list, event)
-}
+}t
