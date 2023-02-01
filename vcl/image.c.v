@@ -138,7 +138,7 @@ fn (image &Image) write_queue() ?int {
 	region := [usize(image.bounds.width), usize(image.bounds.height), 1]
 	ret := clEnqueueWriteImage(image.buf.device.queue, img.buf.memobj, true, unsafe { &origin[0] },
 		unsafe { &region[0] }, 0, 0, image._data, 0, unsafe { nil }, unsafe { nil })
-	if ret != sussc {
+	if ret != success {
 		return vclError(ret)
 	}
 	return ret
