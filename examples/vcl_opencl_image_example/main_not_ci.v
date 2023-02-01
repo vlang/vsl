@@ -15,6 +15,8 @@ __kernel void invert(__read_only image2d_t src, __write_only image2d_t dest) {
 	write_imagef(dest, pos, pixel);
 }'
 
+const cube_size = 500
+
 // get all devices if you want
 devices := vcl.get_devices(vcl.DeviceType.cpu)?
 println('Devices: ${devices}')
@@ -27,7 +29,20 @@ defer {
 }
 
 // Create image buffer
-mut img := device.image(.rgba, width: 500, height: 500)?
+mut img := device.image(.rgba, width: cube_size, height: cube_size)?
 defer {
 	img.release() or { panic(err) }
 }
+
+
+// add program source to device, get kernel
+device.add_program(invert_color_kernel)?
+k := device.kernel('invert')?
+// run kernel (global work size 16 and local work size 1)
+kernel_err := <-k.global(cube_size).local(cube_size).run(img, cube_size, cube_size)
+if kernel_err !is none {
+	panic(kernel_err)
+}
+
+next_img := v.data()?
+// TODO output
