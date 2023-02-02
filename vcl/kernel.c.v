@@ -174,8 +174,6 @@ fn (k &Kernel) set_arg(index int, arg ArgumentType) ? {
 			return k.set_arg_buffer(index, arg.buf)
 		}
 		Image {
-			img := (arg as Image)
-			img.write_queue()?
 			// TODO k.set_arg_buffer(index+1, img.width)?
     		// TODO k.set_arg_buffer(index+1, img.height)?
 			// TODO increment: index += 2          !?

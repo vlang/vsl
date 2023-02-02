@@ -1,6 +1,5 @@
 module main
 
-import gg
 import vsl.vcl
 
 const invert_color_kernel = '
@@ -44,5 +43,5 @@ if kernel_err !is none {
 	panic(kernel_err)
 }
 
-next_img := v.data()?
+next_img := img.data()?
 // TODO output
