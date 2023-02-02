@@ -33,7 +33,6 @@ defer {
 	img.release() or { panic(err) }
 }
 
-
 // add program source to device, get kernel
 device.add_program(invert_color_kernel)?
 k := device.kernel('invert')?

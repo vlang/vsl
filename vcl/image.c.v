@@ -25,8 +25,8 @@ pub mut:
 
 // Image memory buffer on the device with image data
 pub struct Image {
-	format ClImageFormat
-	desc   &ClImageDesc
+	format   ClImageFormat
+	desc     &ClImageDesc
 	img_data voidptr
 mut:
 	buf &Buffer
@@ -77,11 +77,11 @@ fn (d &Device) create_image(image_type ImageChannelOrder, bounds Rect, row_pitch
 	if image_type == ImageChannelOrder.rgba {
 		size *= 4
 	}
-	export_data :=if !isnil(data) {
-		data //unsafe {[]u8(data).clone()}
-	}else {
+	export_data := if !isnil(data) {
+		data // unsafe {[]u8(data).clone()}
+	} else {
 		data0 := []u8{len: size, cap: size, init: 0}
-		 unsafe{&data0[0]}
+		unsafe { &data0[0] }
 	}
 
 	mut ret := 0
@@ -94,15 +94,13 @@ fn (d &Device) create_image(image_type ImageChannelOrder, bounds Rect, row_pitch
 		return err_unknown
 	}
 
-
 	buf := &Buffer{
 		memobj: memobj
 		size: size
 		device: d
 	}
 
-
-	img:= &Image{
+	img := &Image{
 		buf: buf
 		bounds: bounds
 		@type: image_type
@@ -129,12 +127,10 @@ pub fn (image &Image) data() ?&Image {
 		bounds: image.bounds
 		@type: image.@type
 		format: image.format
-		img_data:  unsafe { &result[0] }
+		img_data: unsafe { &result[0] }
 		desc: image.desc
 	}
 }
-
-
 
 fn (image &Image) write_queue() ?int {
 	origin := [3]usize{init: 0}

@@ -267,11 +267,10 @@ fn cl_create_image(context ClContext, flags ClMemFlags, format &ClImageFormat, d
 	return sfn(context, flags, format, desc, data, errcode_ret)
 }
 
-
 type clEnqueueReadImageType = fn (command_queue ClCommandQueue, image ClMem, blocking_read bool, origin3 [3]usize, region3 [3]usize, row_pitch usize, slice_pitch usize, ptr voidptr, num_events_in_wait_list u32, event_wait_list &ClEvent, event &ClEvent) int
 
 [inline]
-fn cl_enqueue_read_image(command_queue ClCommandQueue, image ClMem, blocking_read bool,  origin3 [3]usize, region3 [3]usize, row_pitch usize, slice_pitch usize, ptr voidptr, num_events_in_wait_list u32, event_wait_list &ClEvent, event &ClEvent) int {
+fn cl_enqueue_read_image(command_queue ClCommandQueue, image ClMem, blocking_read bool, origin3 [3]usize, region3 [3]usize, row_pitch usize, slice_pitch usize, ptr voidptr, num_events_in_wait_list u32, event_wait_list &ClEvent, event &ClEvent) int {
 	h, f := dl.get_sym('clEnqueueReadImage') or { return err.code() }
 	sfn := clEnqueueReadImageType(f)
 	return sfn(command_queue, image, blocking_read, origin3, region3, row_pitch, slice_pitch,
@@ -281,7 +280,7 @@ fn cl_enqueue_read_image(command_queue ClCommandQueue, image ClMem, blocking_rea
 type clEnqueueWriteImageType = fn (command_queue ClCommandQueue, image ClMem, blocking_write bool, origin3 [3]usize, region3 [3]usize, row_pitch usize, slice_pitch usize, ptr voidptr, num_events_in_wait_list u32, event_wait_list &ClEvent, event &ClEvent) int
 
 [inline]
-fn cl_enqueue_write_image(command_queue ClCommandQueue, image ClMem, blocking_write bool,  origin3 [3]usize, region3 [3]usize, row_pitch usize, slice_pitch usize, ptr voidptr, num_events_in_wait_list u32, event_wait_list &ClEvent, event &ClEvent) int {
+fn cl_enqueue_write_image(command_queue ClCommandQueue, image ClMem, blocking_write bool, origin3 [3]usize, region3 [3]usize, row_pitch usize, slice_pitch usize, ptr voidptr, num_events_in_wait_list u32, event_wait_list &ClEvent, event &ClEvent) int {
 	h, f := dl.get_sym('clEnqueueWriteImage') or { return err.code() }
 	sfn := clEnqueueWriteImageType(f)
 	return sfn(command_queue, image, blocking_read, origin3, region3, row_pitch, slice_pitch,
