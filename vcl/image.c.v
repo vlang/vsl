@@ -41,16 +41,15 @@ pub fn (mut img Image) release() ? {
 }
 
 // image allocates an image buffer
-pub fn (d &Device) image(@type ImageChannelOrder, bounds Rect) ?&Image {
+pub fn (d &Device) image2d(@type ImageChannelOrder, bounds Rect) ?&Image {
 	println(@STRUCT + '.' + @FN + ' is not stable yet. Issues are expected.')
-	return d.create_image(@type, bounds, 0, unsafe { nil })
+	return d.create_image2d(@type, bounds, unsafe { nil })
 }
 
 // from_image creates new Image and copies data from Image
-pub fn (d &Device) from_image(img ImageData) ?&Image {
+pub fn (d &Device) from_image2d(img ImageData) ?&Image {
 	println(@STRUCT + '.' + @FN + ' is not stable yet. Issues are expected.')
 	data := img.data
-	mut row_pitch := 0
 	mut image_type := ImageChannelOrder.intensity
 
 	if img.nr_channels in [3, 4] {
@@ -58,25 +57,22 @@ pub fn (d &Device) from_image(img ImageData) ?&Image {
 	}
 
 	bounds := Rect{0, 0, img.width, img.height}
-	return d.create_image(image_type, bounds, row_pitch, data)
+	return d.create_image2d(image_type, bounds, data)
 }
 
-// create_image creates a new image
-fn (d &Device) create_image(image_type ImageChannelOrder, bounds Rect, row_pitch int, data voidptr) ?&Image {
+// create_image2d creates a new image
+fn (d &Device) create_image2d(image_type ImageChannelOrder, bounds Rect, data voidptr) ?&Image {
+	mut row_pitch := int(bounds.width)
+	mut size := int(bounds.width * bounds.height)
+	if image_type == ImageChannelOrder.rgba {
+		size *= 4
+		row_pitch *= 4
+	}
 	format := C.create_image_format(usize(image_type), usize(ImageChannelDataType.unorm_int8))
 	desc := C.create_image_desc(C.CL_MEM_OBJECT_IMAGE2D, usize(bounds.width), usize(bounds.height),
 		0, 0, usize(row_pitch), 0, 0, 0, unsafe { nil })
 
-	mut flags := mem_read_write
-
-	if !isnil(data) {
-		flags = mem_read_write | mem_copy_host_ptr
-	}
-
-	mut size := int(bounds.width * bounds.height)
-	if image_type == ImageChannelOrder.rgba {
-		size *= 4
-	}
+	mut flags := mem_read_write | mem_copy_host_ptr
 	export_data := if !isnil(data) {
 		data // unsafe {[]u8(data).clone()}
 	} else {
@@ -85,7 +81,8 @@ fn (d &Device) create_image(image_type ImageChannelOrder, bounds Rect, row_pitch
 	}
 
 	mut ret := 0
-	memobj := cl_create_image(d.ctx, flags, format, desc, export_data, &ret)
+	memobj := cl_create_image2d(d.ctx, flags, format, usize(bounds.width), usize(bounds.height),
+		usize(row_pitch), export_data, &ret)
 	if ret != success {
 		return vcl_error(ret)
 	}
@@ -133,12 +130,18 @@ pub fn (image &Image) data() ?&Image {
 }
 
 fn (image &Image) write_queue() ?int {
-	origin := [3]usize{init: 0}
-	region0 := [usize(image.bounds.width), usize(image.bounds.height), 1]
-	region := [3]usize{init: region0[it]}
+	mut origin := [3]usize{}
+	mut region := [3]usize{}
+	temp := [usize(image.bounds.width), usize(image.bounds.height), 1]
+	for i := 0; i < 3; i++ {
+		origin[i] = 0
+		region[i] = temp[i]
+	}
+
 	ret := cl_enqueue_write_image(image.buf.device.queue, image.buf.memobj, true, origin,
 		region, 0, 0, image.img_data, 0, unsafe { nil }, unsafe { nil })
 	if ret != success {
+		println(ret)
 		return vcl_error(ret)
 	}
 	return ret

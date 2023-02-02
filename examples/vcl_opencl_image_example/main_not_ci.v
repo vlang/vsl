@@ -28,7 +28,7 @@ defer {
 }
 
 // Create image buffer
-mut img := device.image(.rgba, width: cube_size, height: cube_size)?
+mut img := device.image2d(.rgba, width: cube_size, height: cube_size)?
 defer {
 	img.release() or { panic(err) }
 }

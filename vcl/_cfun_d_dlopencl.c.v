@@ -256,15 +256,15 @@ fn cl_create_context(properties &ClContextProperties, num_devices u32, devices &
 type ClCreateImageType = fn (context ClContext, flags ClMemFlags, format &ClImageFormat, desc ClImageDesc, data voidptr, errcode_ret &int) ClMem
 
 [inline]
-fn cl_create_image(context ClContext, flags ClMemFlags, format &ClImageFormat, desc ClImageDesc, data voidptr, errcode_ret &int) ClMem {
-	f := dl.get_sym('clCreateImage') or {
+fn cl_create_image2d(context ClContext, flags ClMemFlags, format &ClImageFormat, width usize, height usize, row_pitch usize, data voidptr, errcode_ret &int) ClMem {
+	f := dl.get_sym('clCreateImage2D') or {
 		unsafe {
 			*errcode_ret = map_dl_err_code(err.code())
 		}
 		return unsafe { ClMem(nil) }
 	}
 	sfn := ClCreateImageType(f)
-	return sfn(context, flags, format, desc, data, errcode_ret)
+	return sfn(context, flags, format, width, height, row_pitch, data, errcode_ret)
 }
 
 type clEnqueueReadImageType = fn (command_queue ClCommandQueue, image ClMem, blocking_read bool, origin3 [3]usize, region3 [3]usize, row_pitch usize, slice_pitch usize, ptr voidptr, num_events_in_wait_list u32, event_wait_list &ClEvent, event &ClEvent) int
