@@ -6,12 +6,12 @@ import math
 
 // Find the root of a function by combining Newton's method with the bisection
 // method
-pub fn newton_bisection(func func.FnFdf, x_min f64, x_max f64, tol f64, max_iter int) ?f64 {
-	func_low, _ := func.eval_f_df(x_min)
+pub fn newton_bisection(f func.FnFdf, x_min f64, x_max f64, tol f64, max_iter int) ?f64 {
+	func_low, _ := f.eval_f_df(x_min)
 	if func_low == 0.0 {
 		return x_min
 	}
-	func_high, _ := func.eval_f_df(x_max)
+	func_high, _ := f.eval_f_df(x_max)
 	if func_high == 0.0 {
 		return x_max
 	}
@@ -31,7 +31,7 @@ pub fn newton_bisection(func func.FnFdf, x_min f64, x_max f64, tol f64, max_iter
 	mut rts := f64(0.5) * (x_min + x_max)
 	mut dx_anc := math.abs(x_max - x_min)
 	mut dx := dx_anc
-	mut func_current, mut diff_func_current := func.eval_f_df(rts)
+	mut func_current, mut diff_func_current := f.eval_f_df(rts)
 	for _ in 0 .. max_iter {
 		if (((rts - xh) * diff_func_current - func_current) * ((rts - xl) * diff_func_current - func_current) >= 0.0)
 			|| math.abs(2.0 * func_current) > math.abs(dx_anc * diff_func_current) {
@@ -46,7 +46,7 @@ pub fn newton_bisection(func func.FnFdf, x_min f64, x_max f64, tol f64, max_iter
 		if math.abs(dx) < tol {
 			return rts
 		}
-		func_current, diff_func_current = func.eval_f_df(rts)
+		func_current, diff_func_current = f.eval_f_df(rts)
 		if func_current < 0.0 {
 			xl = rts
 		} else {
