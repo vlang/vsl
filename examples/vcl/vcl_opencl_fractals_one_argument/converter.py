@@ -1,4 +1,4 @@
-# until I find solution in Vlang
+# TODO: Convert this to V code using `VTL` and `vlib` for image management
 import numpy as np
 from PIL import Image
 import os
