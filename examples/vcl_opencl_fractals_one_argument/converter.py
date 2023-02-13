@@ -1,11 +1,9 @@
-# until I find solution in Vlang
+# TODO: Convert this to V code using `VTL` and `vlib` for image management
 import numpy as np
 from PIL import Image
 import os
-
-height = 500
-width = 500
-path = './outputs/' #
+height = width = 500
+path = './outputs/'
 file_names = os.listdir(path)
 for name in file_names:
     file_name, file_ext = os.path.splitext(name)
