@@ -13,4 +13,4 @@ for name in file_names:
         img_array = np.frombuffer(binary_data, dtype=np.uint8)
         img_array = img_array.reshape((height, width, 4))
         img = Image.fromarray(img_array, mode='RGBA')
-        img.save(path + file_name + '.py.png')
+        img.save(path + file_name + '.png')
