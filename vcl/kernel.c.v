@@ -173,9 +173,12 @@ fn (k &Kernel) set_arg(index int, arg ArgumentType) ? {
 		Vector[u64] {
 			return k.set_arg_buffer(index, arg.buf)
 		}
-		// TODO: Image {
-		// 	return k.set_arg_buffer(index, arg.buf)
-		// }
+		Image {
+			// TODO k.set_arg_buffer(index+1, img.width)?
+			// TODO k.set_arg_buffer(index+1, img.height)?
+			// TODO increment: index += 2          !?
+			return k.set_arg_buffer(index, arg.buf)
+		}
 		else {
 			return new_unsupported_argument_type_error(index, arg)
 		}
