@@ -5,7 +5,7 @@ import os
 
 height = 500
 width = 500
-path = './outputs/' #
+path = './outputs/'
 file_names = os.listdir(path)
 for name in file_names:
     file_name, file_ext = os.path.splitext(name)
