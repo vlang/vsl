@@ -11,12 +11,12 @@ const (
 
 // Search for the root of func in the interval [x1, x2] with a
 // given tolerance
-pub fn brent(func func.Fn, x1 f64, x2 f64, tol f64) ?(f64, f64) {
+pub fn brent(f func.Fn, x1 f64, x2 f64, tol f64) ?(f64, f64) {
 	mut a := x1
 	mut b := x2
 	mut c := a
-	mut fa := func.eval(a)
-	mut fb := func.eval(b)
+	mut fa := f.eval(a)
+	mut fb := f.eval(b)
 	mut fc := fa
 	if (fa > 0.0 && fb > 0.0) || (fa < 0.0 && fb < 0.0) {
 		return errors.error('roots must be bracketed', .einval)
@@ -88,7 +88,7 @@ pub fn brent(func func.Fn, x1 f64, x2 f64, tol f64) ?(f64, f64) {
 		a = b
 		fa = fb
 		b += new_step
-		fb = func.eval(b) // adjust c to have the opposite sign of b
+		fb = f.eval(b) // adjust c to have the opposite sign of b
 		if (fb < 0 && fc < 0) || (fb > 0 && fc > 0) {
 			c = a
 			fc = fa
