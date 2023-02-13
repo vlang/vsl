@@ -4,22 +4,26 @@ import vsl.vcl
 import os
 
 const cube_size = 500
+
 const width = cube_size
+
 const height = cube_size
+
 const names = [
-	"mandelbrot_basic",
-	"mandelbrot_blue_red_black",
-	"mandelbrot_pseudo_random_colors",
-	"julia",
-	"julia_set",
-	"julia_basic",
-	"sierpinski_triangle",
-	"sierpinski_triangle2"
+	'mandelbrot_basic',
+	'mandelbrot_blue_red_black',
+	'mandelbrot_pseudo_random_colors',
+	'julia',
+	'julia_set',
+	'julia_basic',
+	'sierpinski_triangle',
+	'sierpinski_triangle2',
 ]
-fn main (){
-    name := names[7]	// name of file and kernel
-	os.mkdir("outputs") or {// create outputs
-		if !err.msg().contains_any_substr(["File exists"]) {
+
+fn main() {
+	name := names[7] // name of file and kernel
+	os.mkdir('outputs') or { // create outputs
+		if !err.msg().contains_any_substr(['File exists']) {
 			panic(err)
 		}
 	}
@@ -42,16 +46,16 @@ fn main (){
 	k := device.kernel('${name}')?
 	// run kernel (global work size 16 and local work size 1)
 	kernel_err := <-k.global(int(img.bounds.width), int(img.bounds.height))
-	.local(1, 1).run(img)
+		.local(1, 1).run(img)
 	if kernel_err !is none {
 		panic(kernel_err)
 	}
 
 	// get and save binary result
 	next_img := img.data_2d()?
-	mut f := os.create("outputs/${name}V.bin")!
+	mut f := os.create('outputs/${name}V.bin')!
 	w := f.write(next_img)!
 	if w != next_img.len {
-		panic("uncomplete writes")
+		panic('uncomplete writes')
 	}
 }
