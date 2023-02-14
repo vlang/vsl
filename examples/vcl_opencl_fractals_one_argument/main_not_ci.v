@@ -2,8 +2,12 @@ module main
 
 import vsl.vcl
 import os
+import sokol.f
+
 #include "to_bmt.c"
-fn C.bmp_generator(filename &u8,width int, height int, data &u8) int
+
+fn C.bmp_generator(filename &u8, width int, height int, data &u8) int
+
 const cube_size = 500
 
 const width = cube_size
@@ -54,12 +58,12 @@ fn main() {
 
 	// get and save bmp result
 	buffer := img.data_2d()?
-	C.bmp_generator('./outputs/${name}.bmp'.str, width, height, unsafe { &buffer[0]})
-	// bmp_generator('./outputs/${name}.bmp', width, height, new_buffer)
+	C.bmp_generator('./outputs/${name}C.bmp'.str, width, height, unsafe { &buffer[0] })
+	bmp_generator('./outputs/${name}V.bmp', width, height, buffer)
 
 	// get and save binary result
-	mut f := os.create('outputs/${name}V.bin')!
-	w := f.write(buffer)!
+	mut file := os.create('outputs/${name}V.bin')!
+	w := file.write(buffer)!
 	if w != buffer.len {
 		panic('uncomplete writes')
 	}
