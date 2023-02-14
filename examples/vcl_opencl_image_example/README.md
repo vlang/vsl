@@ -5,5 +5,5 @@ This example shows how to do basic image processing with VCL using OpenCL as bac
 ## Quickstart
 
 ```bash
-v run main_not_ci.v
+v run main.v
 ```
