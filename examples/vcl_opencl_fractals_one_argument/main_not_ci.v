@@ -59,7 +59,7 @@ fn main() {
 
 	// get and save binary result
 	mut f := os.create('outputs/${name}V.bin')!
-	w := f.write(next_img)!
+	w := f.write(buffer)!
 	if w != buffer.len {
 		panic('uncomplete writes')
 	}
