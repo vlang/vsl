@@ -2,6 +2,11 @@ module main
 
 import vsl.vcl
 import os
+import sokol.f
+
+#include "to_bmt.c"
+
+fn C.bmp_generator(filename &u8, width int, height int, data &u8) int
 
 const cube_size = 500
 
@@ -9,13 +14,26 @@ const width = cube_size
 
 const height = cube_size
 
+const names = [
+	'mandelbrot_basic',
+	'mandelbrot_blue_red_black',
+	'mandelbrot_pseudo_random_colors',
+	'julia',
+	'julia_set',
+	'julia_basic',
+	'sierpinski_triangle',
+	'sierpinski_triangle2',
+]
+
 fn main() {
-	// name of file and kernel
-	name := 'mandelbrot_basic'
-	// embed of file - maybe it could be or open and read ...
-	mut kernel_file := $embed_file('kernels/mandelbrot.cl')
-	kernel_mondelbrot := kernel_file.to_string()
-	// println(kernel_mondelbrot)
+	name := names[3] // name of file and kernel
+	os.mkdir('outputs') or { // create outputs
+		if !err.msg().contains_any_substr(['File exists']) {
+			panic(err)
+		}
+	}
+	// load kernel
+	kernel_mondelbrot := os.read_file('kernels/${name}.cl')!
 
 	mut device := vcl.get_default_device()?
 	defer {
@@ -38,11 +56,15 @@ fn main() {
 		panic(kernel_err)
 	}
 
+	// get and save bmp result
+	buffer := img.data_2d()?
+	C.bmp_generator('./outputs/${name}C.bmp'.str, width, height, unsafe { &buffer[0] })
+	bmp_generator('./outputs/${name}V.bmp', width, height, buffer)
+
 	// get and save binary result
-	next_img := img.data_2d()?
-	mut f := os.create('outputs/${name}V.bin')!
-	w := f.write(next_img)!
-	if w != next_img.len {
+	mut file := os.create('outputs/${name}V.bin')!
+	w := file.write(buffer)!
+	if w != buffer.len {
 		panic('uncomplete writes')
 	}
 }

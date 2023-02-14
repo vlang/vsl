@@ -2,9 +2,7 @@
 import numpy as np
 from PIL import Image
 import os
-
-height = 500
-width = 500
+height = width = 500
 path = './outputs/'
 file_names = os.listdir(path)
 for name in file_names:
