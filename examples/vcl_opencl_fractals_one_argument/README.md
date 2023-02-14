@@ -6,4 +6,9 @@ cd  ~/.vmodules/vsl/examples/vcl_opencl_fractals_one_argument/
 v run .
 python3 converter.py
 ```
-control images will be in dir "images"
+Control images will be in dir "images"
+Of course you can add yours kernels and run with this vlang code, the new kernel must contains 
+```
+__kernel void @name(__write_only image2d_t outputImage){
+```
+where \@name must be name of your kernel and name of file `\@name.cl`
