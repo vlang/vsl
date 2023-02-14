@@ -2,38 +2,34 @@ module main
 
 import vsl.vcl
 import os
-import sokol.f
+import stbi
 
-#include "to_bmt.c"
+const (
+	cube_size   = 500
+	width       = cube_size
+	height      = cube_size
 
-fn C.bmp_generator(filename &u8, width int, height int, data &u8) int
+	root        = os.dir(@FILE)
+	kernels_dir = os.join_path(root, 'kernels')
+	output_dir  = os.join_path(root, 'output')
 
-const cube_size = 500
+	kernels     = [
+		'mandelbrot_basic',
+		'mandelbrot_blue_red_black',
+		'mandelbrot_pseudo_random_colors',
+		'julia',
+		'julia_set',
+		'julia_basic',
+		'sierpinski_triangle',
+		'sierpinski_triangle2',
+	]
+)
 
-const width = cube_size
-
-const height = cube_size
-
-const names = [
-	'mandelbrot_basic',
-	'mandelbrot_blue_red_black',
-	'mandelbrot_pseudo_random_colors',
-	'julia',
-	'julia_set',
-	'julia_basic',
-	'sierpinski_triangle',
-	'sierpinski_triangle2',
-]
-
-fn main() {
-	name := names[3] // name of file and kernel
-	os.mkdir('outputs') or { // create outputs
-		if !err.msg().contains_any_substr(['File exists']) {
-			panic(err)
-		}
-	}
+fn run_kernel(kernel_name string) ? {
 	// load kernel
-	kernel_mondelbrot := os.read_file('kernels/${name}.cl')!
+	kernel_mondelbrot := os.read_file(os.join_path(kernels_dir, '${kernel_name}.cl')) or {
+		return err
+	}
 
 	mut device := vcl.get_default_device()?
 	defer {
@@ -48,7 +44,8 @@ fn main() {
 
 	// add program source to device, get kernel
 	device.add_program(kernel_mondelbrot)?
-	k := device.kernel('${name}')?
+	k := device.kernel('${kernel_name}')?
+
 	// run kernel (global work size 16 and local work size 1)
 	kernel_err := <-k.global(int(img.bounds.width), int(img.bounds.height))
 		.local(1, 1).run(img)
@@ -56,15 +53,18 @@ fn main() {
 		panic(kernel_err)
 	}
 
-	// get and save bmp result
+	// get image data from buffer and save it
 	buffer := img.data_2d()?
-	C.bmp_generator('./outputs/${name}C.bmp'.str, width, height, unsafe { &buffer[0] })
-	bmp_generator('./outputs/${name}V.bmp', width, height, buffer)
+	stbi.stbi_write_bmp(os.join_path(output_dir, '${kernel_name}.bmp'), width, height,
+		4, buffer.data) or { return err }
+	stbi.stbi_write_png(os.join_path(output_dir, '${kernel_name}.png'), width, height,
+		4, buffer.data, 0) or { return err }
+}
 
-	// get and save binary result
-	mut file := os.create('outputs/${name}V.bin')!
-	w := file.write(buffer)!
-	if w != buffer.len {
-		panic('uncomplete writes')
+fn main() {
+	os.mkdir_all(output_dir)!
+
+	for kernel in kernels {
+		run_kernel(kernel)?
 	}
 }
