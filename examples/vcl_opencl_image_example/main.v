@@ -9,24 +9,14 @@ const (
 	output_dir = os.join_path(root, 'output')
 )
 
-const invert_color_kernel = '
-__constant sampler_t sampler = CLK_NORMALIZED_COORDS_FALSE | CLK_ADDRESS_CLAMP_TO_EDGE | CLK_FILTER_NEAREST;
-
-__kernel void invert(__read_only image2d_t src, __write_only image2d_t dest) {
-	const int2 pos = {get_global_id(0), get_global_id(1)};
-	float4 pixel = read_imagef(src, sampler, pos);
-	pixel.x = 1 - pixel.x;
-	pixel.y = 1 - pixel.y;
-	pixel.z = 1 - pixel.z;
-	write_imagef(dest, pos, pixel);
-}'
-
 const cube_size = 500
 
 fn main() {
 	// create output dir
 	os.mkdir_all(output_dir)!
-
+	invert_color_kernel := os.read_file(os.join_path(root, 'kernel.cl')) or {
+		return
+	}
 	width := cube_size
 	height := cube_size
 
@@ -36,9 +26,10 @@ fn main() {
 	defer {
 		device.release() or { panic(err) }
 	}
+	img_ata:= stbi.load("my.png")?.data
 
 	// Create image buffer (image2d_t) to read_only
-	mut img := device.image_2d(.rgba, width: width, height: height)?
+	mut img := device.from_bytes_image_2d(img_ata, .rgba, width: width, height: height)?
 	defer {
 		img.release() or { panic(err) }
 	}
@@ -46,7 +37,7 @@ fn main() {
 	// Create image buffer (image2d_t) to write_only
 	mut inverted_img := device.image_2d(.rgba, width: width, height: height)?
 	defer {
-		img.release() or { panic(err) }
+		inverted_img.release() or { panic(err) }
 	}
 
 	// add program source to device, get kernel
