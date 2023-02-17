@@ -1,6 +1,8 @@
 module vcl
 
+import vsl.vcl.native
 // Bytes is a memory buffer on the device that holds []byte
+
 pub struct Bytes {
 	buf &Buffer
 }
@@ -32,10 +34,10 @@ pub fn (b &Bytes) load(data []byte) chan IError {
 // data gets data from device, it's a blocking call
 pub fn (b &Bytes) data() ?[]u8 {
 	mut data := []u8{len: b.buf.size}
-	ret := cl_enqueue_read_buffer(b.buf.device.queue, b.buf.memobj, true, 0, usize(b.buf.size),
+	ret := native.cl_enqueue_read_buffer(b.buf.device.queue, b.buf.memobj, true, 0, usize(b.buf.size),
 		unsafe { &data[0] }, 0, unsafe { nil }, unsafe { nil })
-	if ret != success {
-		return vcl_error(ret)
+	if ret != native.success {
+		return native.vcl_error(ret)
 	}
 	return data
 }

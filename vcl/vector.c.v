@@ -1,5 +1,7 @@
 module vcl
 
+import vsl.vcl.native
+
 // Vector is a memory buffer on device that holds []T
 pub struct Vector[T] {
 mut:
@@ -39,10 +41,10 @@ pub fn (mut v Vector[T]) load(data []T) chan IError {
 // data gets T data from device, it's a blocking call
 pub fn (v &Vector[T]) data() ?[]T {
 	mut data := []T{len: int(v.buf.size / int(sizeof(T)))}
-	ret := cl_enqueue_read_buffer(v.buf.device.queue, v.buf.memobj, true, 0, usize(v.buf.size),
+	ret := native.cl_enqueue_read_buffer(v.buf.device.queue, v.buf.memobj, true, 0, usize(v.buf.size),
 		unsafe { &data[0] }, 0, unsafe { nil }, unsafe { nil })
-	if ret != success {
-		return vcl_error(ret)
+	if ret != native.success {
+		return native.vcl_error(ret)
 	}
 	return data
 }

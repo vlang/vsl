@@ -1,23 +1,25 @@
 module vcl
 
+import vsl.vcl.native
+
 pub interface ArgumentType {}
 
 // kernel returns a kernel
 // if retrieving the kernel didn't complete the function will return an error
 pub fn (d &Device) kernel(name string) ?&Kernel {
-	mut k := ClKernel(0)
+	mut k := native.ClKernel(0)
 	mut ret := 0
 	for p in d.programs {
-		k = cl_create_kernel(p, &char(name.str), &ret)
-		if ret == invalid_kernel_name {
+		k = native.cl_create_kernel(p, &char(name.str), &ret)
+		if ret == native.invalid_kernel_name {
 			continue
 		}
-		if ret != success {
-			return vcl_error(ret)
+		if ret != native.success {
+			return native.vcl_error(ret)
 		}
 		break
 	}
-	if ret == invalid_kernel_name {
+	if ret == native.invalid_kernel_name {
 		return error("kernel with name '${name}' not found")
 	}
 	return new_kernel(d, k)
@@ -44,7 +46,7 @@ fn new_unsupported_argument_type_error(index int, value ArgumentType) IError {
 // Kernel represent a single kernel
 pub struct Kernel {
 	d &Device
-	k ClKernel
+	k native.ClKernel
 }
 
 // global returns an kernel with global size set
@@ -91,11 +93,22 @@ pub fn (kc KernelCall) run(args ...ArgumentType) chan IError {
 	return kc.kernel.call(kc.global_work_sizes, kc.local_work_sizes)
 }
 
-fn release_kernel(k &Kernel) {
-	cl_release_kernel(k.k)
+// run_unsafety is unsafety version of run not controling whether is types native or not
+[unsafe]
+pub fn (kc KernelCall) run_unsafety(args ...ArgumentType) chan IError {
+	ch := chan IError{cap: 1}
+	kc.kernel.set_args_unsafety(...args) or {
+		ch <- err
+		return ch
+	}
+	return kc.kernel.call(kc.global_work_sizes, kc.local_work_sizes)
 }
 
-fn new_kernel(d &Device, k ClKernel) &Kernel {
+fn release_kernel(k &Kernel) {
+	native.cl_release_kernel(k.k)
+}
+
+fn new_kernel(d &Device, k native.ClKernel) &Kernel {
 	return &Kernel{
 		d: d
 		k: k
@@ -174,15 +187,25 @@ fn (k &Kernel) set_arg(index int, arg ArgumentType) ? {
 			return k.set_arg_buffer(index, arg.buf)
 		}
 		Image {
-			// TODO k.set_arg_buffer(index+1, img.width)?
-			// TODO k.set_arg_buffer(index+1, img.height)?
-			// TODO increment: index += 2          !?
 			return k.set_arg_buffer(index, arg.buf)
 		}
 		else {
 			return new_unsupported_argument_type_error(index, arg)
 		}
 	}
+}
+
+fn (k &Kernel) set_args_unsafety(args ...ArgumentType) ? {
+	for i, arg in args {
+		k.set_arg_unsafety(i, arg)?
+	}
+}
+
+fn (k &Kernel) set_arg_unsafety(index int, arg ArgumentType) ? {
+	if arg is Vector {
+		return k.set_arg_buffer(index, arg.buf)
+	}
+	return k.set_arg_unsafe(index, int(sizeof(arg)), unsafe { &arg })
 }
 
 fn (k &Kernel) set_arg_buffer(index int, buf &Buffer) ? {
@@ -195,9 +218,9 @@ fn (k &Kernel) set_arg_local(index int, size int) ? {
 }
 
 fn (k &Kernel) set_arg_unsafe(index int, arg_size int, arg voidptr) ? {
-	res := cl_set_kernel_arg(k.k, u32(index), usize(arg_size), arg)
-	if res != success {
-		return vcl_error(res)
+	res := native.cl_set_kernel_arg(k.k, u32(index), usize(arg_size), arg)
+	if res != native.success {
+		return native.vcl_error(res)
 	}
 }
 
@@ -217,21 +240,21 @@ fn (k &Kernel) call(work_sizes []int, lokal_sizes []int) chan IError {
 	for i in 0 .. work_dim {
 		local_work_size_ptr[i] = usize(lokal_sizes[i])
 	}
-	mut event := ClEvent(0)
-	res := cl_enqueue_nd_range_kernel(k.d.queue, k.k, u32(work_dim), unsafe { &global_work_offset_ptr[0] },
+	mut event := native.ClEvent(0)
+	res := native.cl_enqueue_nd_range_kernel(k.d.queue, k.k, u32(work_dim), unsafe { &global_work_offset_ptr[0] },
 		unsafe { &global_work_size_ptr[0] }, unsafe { &local_work_size_ptr[0] }, 0, unsafe { nil },
 		unsafe { &event })
-	if res != success {
-		err := vcl_error(res)
+	if res != native.success {
+		err := native.vcl_error(res)
 		ch <- err
 		return ch
 	}
-	spawn fn (ch chan IError, event ClEvent) {
+	spawn fn (ch chan IError, event native.ClEvent) {
 		defer {
-			cl_release_event(event)
+			native.cl_release_event(event)
 		}
-		res := cl_wait_for_events(1, unsafe { &event })
-		ch <- vcl_error(res)
+		res := native.cl_wait_for_events(1, unsafe { &event })
+		ch <- native.vcl_error(res)
 	}(ch, event)
 	return ch
 }

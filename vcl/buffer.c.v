@@ -1,22 +1,25 @@
 module vcl
 
+import vsl.vcl.native
 // Buffer memory buffer on the device
+
 struct Buffer {
 	size   int
 	device &Device
 mut:
-	memobj ClMem
+	memobj native.ClMem
 }
 
 // buffer creates a new buffer with specified size
 fn (d &Device) buffer(size int) ?&Buffer {
 	mut ret := 0
-	buffer := cl_create_buffer(d.ctx, mem_read_write, usize(size), unsafe { nil }, &ret)
-	if ret != success {
-		return vcl_error(ret)
+	buffer := native.cl_create_buffer(d.ctx, native.mem_read_write, usize(size), unsafe { nil },
+		&ret)
+	if ret != native.success {
+		return native.vcl_error(ret)
 	}
 	if isnil(buffer) {
-		return err_unknown
+		return native.err_unknown
 	}
 	return &Buffer{
 		size: size
@@ -27,7 +30,7 @@ fn (d &Device) buffer(size int) ?&Buffer {
 
 // release releases the buffer on the device
 fn (b &Buffer) release() ? {
-	return vcl_error(cl_release_mem_object(b.memobj))
+	return native.vcl_error(native.cl_release_mem_object(b.memobj))
 }
 
 fn (b &Buffer) load(size int, ptr voidptr) chan IError {
@@ -36,18 +39,18 @@ fn (b &Buffer) load(size int, ptr voidptr) chan IError {
 		ch <- error('buffer size not equal to data len')
 		return ch
 	}
-	mut event := ClEvent(0)
-	ret := cl_enqueue_write_buffer(b.device.queue, b.memobj, false, 0, usize(size), ptr,
-		0, unsafe { nil }, &event)
-	if ret != success {
-		ch <- vcl_error(ret)
+	mut event := native.ClEvent(0)
+	ret := native.cl_enqueue_write_buffer(b.device.queue, b.memobj, false, 0, usize(size),
+		ptr, 0, unsafe { nil }, &event)
+	if ret != native.success {
+		ch <- native.vcl_error(ret)
 		return ch
 	}
-	spawn fn (event &ClEvent, ch chan IError) {
+	spawn fn (event &native.ClEvent, ch chan IError) {
 		defer {
-			cl_release_event(event)
+			native.cl_release_event(event)
 		}
-		ch <- vcl_error(cl_wait_for_events(1, event))
+		ch <- native.vcl_error(native.cl_wait_for_events(1, event))
 	}(&event, ch)
 
 	return ch
