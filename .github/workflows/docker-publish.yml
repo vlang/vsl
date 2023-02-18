@@ -1,9 +1,5 @@
 name: Docker Publish
 
-concurrency:
-  group: docker
-  cancel-in-progress: true
-
 on:
   workflow_call:
     inputs:
