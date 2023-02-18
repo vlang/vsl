@@ -9,14 +9,10 @@ const (
 	output_dir = os.join_path(root, 'output')
 )
 
-const cube_size = 500
-
 fn main() {
 	// create output dir
 	os.mkdir_all(output_dir)!
 	invert_color_kernel := os.read_file(os.join_path(root, 'kernel.cl'))!
-	width := cube_size
-	height := cube_size
 
 	// do not create platforms/devices/contexts/queues/...
 	// just get the device
@@ -33,7 +29,7 @@ fn main() {
 	}
 
 	// Create image buffer (image2d_t) to write_only
-	mut inverted_img := device.image_2d(.rgba, width: width, height: height)?
+	mut inverted_img := device.image_2d(.rgba, width: img.bounds.width, height: img.bounds.height)?
 	defer {
 		inverted_img.release() or { panic(err) }
 	}
@@ -50,6 +46,6 @@ fn main() {
 
 	next_inverted_img := inverted_img.data_2d()?
 	// save image
-	stbi.stbi_write_png(os.join_path(output_dir, 'inverted.png'), width, height, 4, next_inverted_img.data,
-		0)!
+	stbi.stbi_write_png(os.join_path(output_dir, 'inverted.png'), int(inverted_img.bounds.width),
+		int(inverted_img.bounds.height), 4, next_inverted_img.data, 0)!
 }
