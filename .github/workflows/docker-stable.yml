@@ -1,7 +1,7 @@
 name: Docker Publish
 
 concurrency:
-  group: docker
+  group: docker-stable
   cancel-in-progress: true
 
 on:
