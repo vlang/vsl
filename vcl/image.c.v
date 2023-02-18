@@ -46,7 +46,7 @@ pub fn (d &Device) image_2d(@type ImageChannelOrder, bounds Rect) ?&Image {
 }
 
 // image_2d allocates an image buffer and write data
-pub fn (d &Device) from_bytes_image_2d(data voidptr, @type native.ImageChannelOrder, bounds Rect) ?&Image {
+pub fn (d &Device) image_2d_from_bytes(data voidptr, @type ImageChannelOrder, bounds Rect) ?&Image {
 	return d.create_image_2d(@type, bounds, data)
 }
 
