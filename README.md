@@ -28,6 +28,11 @@ Although most modules offer pure-V definitions, VSL also provides modules
 that wrap known C libraries among other backends that allow
 high performance computing as an alternative.
 
+|                                                                                             |                                                                                       |                                                                       |                                                                              |
+| :-----------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------: | :-------------------------------------------------------------------: | :--------------------------------------------------------------------------: |
+|       ![sierpinski_triangle](https://raw.githubusercontent.com/vlang/vsl/master/vcl/static/sierpinski_triangle.png)       | ![mandelbrot_blue_red_black](https://raw.githubusercontent.com/vlang/vsl/master/vcl/static/mandelbrot_blue_red_black.png) |   ![julia](https://raw.githubusercontent.com/vlang/vsl/master/vcl/static/julia.png)   | ![mandelbrot_basic](https://raw.githubusercontent.com/vlang/vsl/master/vcl/static/mandelbrot_basic.png) |
+| ![mandelbrot_pseudo_random_colors](https://raw.githubusercontent.com/vlang/vsl/master/vcl/static/mandelbrot_pseudo_random_colors.png) |   ![sierpinski_triangle2](https://raw.githubusercontent.com/vlang/vsl/master/vcl/static/sierpinski_triangle2.png)    | ![julia_set](https://raw.githubusercontent.com/vlang/vsl/master/vcl/static/julia_set.png) |   ![julia_basic](https://raw.githubusercontent.com/vlang/vsl/master/vcl/static/julia_basic.png)    |
+
 ## Docs
 
 Visit [vsl docs](https://vlang.github.io/vsl) to know more about the supported features.
