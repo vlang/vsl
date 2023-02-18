@@ -45,11 +45,6 @@ pub fn (d &Device) image_2d(@type ImageChannelOrder, bounds Rect) ?&Image {
 	return d.create_image_2d(@type, bounds, unsafe { nil })
 }
 
-// image_2d_from_bytes allocates an image buffer and write data
-pub fn (d &Device) image_2d_from_bytes(data voidptr, @type ImageChannelOrder, bounds Rect) ?&Image {
-	return d.create_image_2d(@type, bounds, data)
-}
-
 // from_image_2d creates new Image and copies data from Image
 pub fn (d &Device) from_image_2d(img ImageData) ?&Image {
 	data := img.data
