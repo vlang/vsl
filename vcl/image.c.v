@@ -10,8 +10,8 @@ pub: // pixel need integers
 	height f32
 }
 
-// ImageData holds the fileds and data needed to represent a bitmap/pixel based image in memory.
-pub interface ImageData {
+// IImage holds the fileds and data needed to represent a bitmap/pixel based image in memory.
+pub interface IImage {
 	width int
 	height int
 	nr_channels int
@@ -41,7 +41,7 @@ pub fn (d &Device) image_2d(@type ImageChannelOrder, bounds Rect) ?&Image {
 }
 
 // from_image_2d creates new Image and copies data from Image
-pub fn (d &Device) from_image_2d(img ImageData) ?&Image {
+pub fn (d &Device) from_image_2d(img IImage) ?&Image {
 	data := img.data
 	mut image_type := ImageChannelOrder.intensity
 
@@ -137,7 +137,7 @@ fn (d &Device) image_general(@type ImageChannelOrder, bounds Rect) ?&Image {
 }
 
 // from_image_general creates new Image and copies data from Image TODO not accomplish - broken
-fn (d &Device) from_image_general(img ImageData) ?&Image {
+fn (d &Device) from_image_general(img IImage) ?&Image {
 	println(@STRUCT + '.' + @FN + ' is not stable yet. Issues are expected.')
 	data := img.data
 	mut row_pitch := 0
