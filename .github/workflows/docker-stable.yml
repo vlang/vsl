@@ -25,7 +25,7 @@ jobs:
     uses: ./.github/workflows/docker-publish.yml
     with:
       dockerfile: './Dockerfile'
-      tags: ulisesjeremias/vsl:${{ GITHUB_REF/refs\/tags\// }}
+      tags: ulisesjeremias/vsl:${{  github.ref_name }}
       build-args: |
         DEV_IMG=false
     secrets:
