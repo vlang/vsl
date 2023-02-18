@@ -29,7 +29,7 @@ fn main() {
 	stbi_img:= stbi.load(os.join_path(root,'my.png'))?.data
 
 	// Create image buffer (image2d_t) to read_only
-	mut img := device.image_2d_from_bytes(img_ata, .rgba, width: width, height: height)?
+	mut img := device.from_image_2d(stbi_img)?
 	defer {
 		img.release() or { panic(err) }
 	}
