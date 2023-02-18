@@ -14,9 +14,7 @@ const cube_size = 500
 fn main() {
 	// create output dir
 	os.mkdir_all(output_dir)!
-	invert_color_kernel := os.read_file(os.join_path(root, 'kernel.cl')) or {
-		return
-	}
+	invert_color_kernel := os.read_file(os.join_path(root, 'kernel.cl'))!
 	width := cube_size
 	height := cube_size
 
@@ -26,10 +24,10 @@ fn main() {
 	defer {
 		device.release() or { panic(err) }
 	}
-	stbi_img:= stbi.load(os.join_path(root,'my.png'))?.data
+	stbi_img := stbi.load(os.join_path(root, 'julia.png')) or { panic(err) }
 
 	// Create image buffer (image2d_t) to read_only
-	mut img := device.from_image_2d(stbi_img)?
+	mut img := device.from_image_2d(stbi_img) or { panic(err) }
 	defer {
 		img.release() or { panic(err) }
 	}

@@ -11,16 +11,12 @@ pub: // pixel need integers
 }
 
 // ImageData holds the fileds and data needed to represent a bitmap/pixel based image in memory.
-[params]
-pub struct ImageData {
-pub mut:
-	id          int
-	width       int
-	height      int
+pub interface ImageData {
+	width int
+	height int
 	nr_channels int
-	data        voidptr
-	ext         string
-	path        string
+	data voidptr
+	ext string
 }
 
 // Image memory buffer on the device with image data
