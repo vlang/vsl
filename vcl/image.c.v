@@ -16,7 +16,6 @@ pub interface ImageData {
 	height int
 	nr_channels int
 	data voidptr
-	ext string
 }
 
 // Image memory buffer on the device with image data
