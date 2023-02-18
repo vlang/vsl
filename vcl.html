@@ -156,6 +156,17 @@ do the following:</p>
 
 
 </section>
+						<section id="ImageData" class="doc-node">
+							<div class="title"><h2>interface ImageData <a href="#ImageData">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/image.c.v#L14"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">interface</span> <span class="token symbol">ImageData</span> <span class="token punctuation">{</span>
+	width <span class="token builtin">int</span>
+	height <span class="token builtin">int</span>
+	nr_channels <span class="token builtin">int</span>
+	data <span class="token builtin">voidptr</span>
+	ext <span class="token builtin">string</span>
+<span class="token punctuation">}</span></code></pre>
+<p>ImageData holds the fileds and data needed to represent a bitmap/pixel based image in memory.</p>
+
+</section>
 						<section id="ErrVCL" class="doc-node">
 							<div class="title"><h2>type ErrVCL <a href="#ErrVCL">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/errors.c.v#L9"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">type</span> ErrVCL <span class="token operator">=</span> <span class="token builtin">int</span></code></pre>
 <p>ErrVCL converts that OpenCL error code to an V error</p>
@@ -282,12 +293,12 @@ do the following:</p>
 
 </section>
 						<section id="Device.from_image_2d" class="doc-node">
-							<div class="title"><h2>fn (Device) from_image_2d <a href="#Device.from_image_2d">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/image.c.v#L49"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>d <span class="token operator">&</span>Device<span class="token punctuation">)</span> <span class="token function">from_image_2d</span><span class="token punctuation">(</span>img ImageData<span class="token punctuation">)</span> <span class="token operator">?</span><span class="token operator">&</span>Image</code></pre>
+							<div class="title"><h2>fn (Device) from_image_2d <a href="#Device.from_image_2d">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/image.c.v#L45"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>d <span class="token operator">&</span>Device<span class="token punctuation">)</span> <span class="token function">from_image_2d</span><span class="token punctuation">(</span>img ImageData<span class="token punctuation">)</span> <span class="token operator">?</span><span class="token operator">&</span>Image</code></pre>
 <p>from_image_2d creates new Image and copies data from Image</p>
 
 </section>
 						<section id="Device.image_2d" class="doc-node">
-							<div class="title"><h2>fn (Device) image_2d <a href="#Device.image_2d">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/image.c.v#L44"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>d <span class="token operator">&</span>Device<span class="token punctuation">)</span> <span class="token function">image_2d</span><span class="token punctuation">(</span>@type ImageChannelOrder<span class="token punctuation">,</span> bounds Rect<span class="token punctuation">)</span> <span class="token operator">?</span><span class="token operator">&</span>Image</code></pre>
+							<div class="title"><h2>fn (Device) image_2d <a href="#Device.image_2d">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/image.c.v#L40"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>d <span class="token operator">&</span>Device<span class="token punctuation">)</span> <span class="token function">image_2d</span><span class="token punctuation">(</span>@type ImageChannelOrder<span class="token punctuation">,</span> bounds Rect<span class="token punctuation">)</span> <span class="token operator">?</span><span class="token operator">&</span>Image</code></pre>
 <p>image_2d allocates an image buffer</p>
 
 </section>
@@ -337,7 +348,7 @@ do the following:</p>
 
 </section>
 						<section id="Image" class="doc-node">
-							<div class="title"><h2>struct Image <a href="#Image">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/image.c.v#L27"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">Image</span> <span class="token punctuation">{</span>
+							<div class="title"><h2>struct Image <a href="#Image">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/image.c.v#L23"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">Image</span> <span class="token punctuation">{</span>
 	format   ClImageFormat
 	desc     <span class="token operator">&</span>ClImageDesc
 	img_data <span class="token builtin">voidptr</span>
@@ -351,27 +362,13 @@ do the following:</p>
 
 </section>
 						<section id="Image.release" class="doc-node">
-							<div class="title"><h2>fn (Image) release <a href="#Image.release">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/image.c.v#L39"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> img Image<span class="token punctuation">)</span> <span class="token function">release</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">?</span></code></pre>
+							<div class="title"><h2>fn (Image) release <a href="#Image.release">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/image.c.v#L35"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> img Image<span class="token punctuation">)</span> <span class="token function">release</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">?</span></code></pre>
 <p>release releases the buffer on the device</p>
 
 </section>
 						<section id="Image.data_2d" class="doc-node">
-							<div class="title"><h2>fn (Image) data_2d <a href="#Image.data_2d">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/image.c.v#L107"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>image <span class="token operator">&</span>Image<span class="token punctuation">)</span> <span class="token function">data_2d</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">?</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u8</span></code></pre>
+							<div class="title"><h2>fn (Image) data_2d <a href="#Image.data_2d">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/image.c.v#L103"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>image <span class="token operator">&</span>Image<span class="token punctuation">)</span> <span class="token function">data_2d</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">?</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u8</span></code></pre>
 
-
-</section>
-						<section id="ImageData" class="doc-node">
-							<div class="title"><h2>struct ImageData <a href="#ImageData">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/image.c.v#L15"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">ImageData</span> <span class="token punctuation">{</span>
-<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	id          <span class="token builtin">int</span>
-	width       <span class="token builtin">int</span>
-	height      <span class="token builtin">int</span>
-	nr_channels <span class="token builtin">int</span>
-	data        <span class="token builtin">voidptr</span>
-	ext         <span class="token builtin">string</span>
-	path        <span class="token builtin">string</span>
-<span class="token punctuation">}</span></code></pre>
-<p>ImageData holds the fileds and data needed to represent a bitmap/pixel based image in memory.</p>
 
 </section>
 						<section id="Kernel" class="doc-node">
@@ -450,7 +447,7 @@ do the following:</p>
 </section>
 
           <div class="footer">
-            Powered by vdoc. Generated on: 18 Feb 2023 16:54:46
+            Powered by vdoc. Generated on: 18 Feb 2023 16:59:09
           </div>
         </div>
         <div class="doc-toc"><ul><li class="open"><a href="#readme_vcl">README</a></li>
@@ -467,6 +464,9 @@ do the following:</p>
 </ul>
 </li>
 <li class="open"><a href="#ArgumentType">interface ArgumentType</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#ImageData">interface ImageData</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#ErrVCL">type ErrVCL</a>        <ul>
@@ -519,9 +519,6 @@ do the following:</p>
 <li class="open"><a href="#Image">struct Image</a>        <ul>
 <li><a href="#Image.release">fn release</a></li>
 <li><a href="#Image.data_2d">fn data_2d</a></li>
-</ul>
-</li>
-<li class="open"><a href="#ImageData">struct ImageData</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#Kernel">struct Kernel</a>        <ul>
