@@ -55,7 +55,7 @@ pub fn (mut o PermutationsIter) next() ?[]f64 {
 		o.cycles[i]--
 		if o.cycles[i] == 0 {
 			util.move_ith_to_end(mut o.idxs, i)
-			o.cycles[i] = n - 1
+			o.cycles[i] = n - i
 		} else {
 			j := o.cycles[i]
 			new_at_i := o.idxs[o.idxs.len - j]
