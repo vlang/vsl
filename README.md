@@ -23,10 +23,7 @@
 
 </div>
 
-VSL is a Scientific Library with a great variety of different modules.
-Although most modules offer pure-V definitions, VSL also provides modules
-that wrap known C libraries among other backends that allow
-high performance computing as an alternative.
+VSL is a V library to develop Artificial Intelligence and High-Performance Scientific Computations.
 
 |                                                                                             |                                                                                       |                                                                       |                                                                              |
 | :-----------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------: | :-------------------------------------------------------------------: | :--------------------------------------------------------------------------: |
@@ -36,6 +33,11 @@ high performance computing as an alternative.
 ## Docs
 
 Visit [vsl docs](https://vlang.github.io/vsl) to know more about the supported features.
+
+VSL is a Scientific Library with a great variety of different modules.
+Although most modules offer pure-V definitions, VSL also provides modules
+that wrap known C libraries among other backends that allow
+high performance computing as an alternative.
 
 This library contains essential functions for linear algebra computations
 (operations between all combinations of vectors and matrices, eigenvalues and eigenvectors,
