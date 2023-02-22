@@ -91,6 +91,19 @@ pub fn (kc KernelCall) run(args ...ArgumentType) chan IError {
 	return kc.kernel.call(kc.global_work_sizes, kc.local_work_sizes)
 }
 
+// run_unsafe unsafe version of `run` allow set own struct to kernel argument
+[unsafe]
+pub fn (kc KernelCall) run_unsafe(args ...ArgumentType) chan IError {
+	ch := chan IError{cap: 1}
+	unsafe {
+		kc.kernel.set_args(...args) or {
+			ch <- err
+			return ch
+		}
+	}
+	return kc.kernel.call(kc.global_work_sizes, kc.local_work_sizes)
+}
+
 fn release_kernel(k &Kernel) {
 	cl_release_kernel(k.k)
 }
@@ -106,6 +119,22 @@ fn (k &Kernel) set_args(args ...ArgumentType) ? {
 	for i, arg in args {
 		k.set_arg(i, arg)?
 	}
+}
+
+[unsafe]
+fn (k &Kernel) set_args_unsafe(args ...ArgumentType) ? {
+	for i, arg in args {
+		unsafe {
+			k.set_unsafe_arg(i, arg)?
+		}
+	}
+}
+
+fn (k &Kernel) set_unsafe_arg(index int, arg ArgumentType) ? {
+	if arg is Vector {
+		return k.set_arg_buffer(index, arg.buf)
+	}
+	return k.set_arg_unsafe(index, int(sizeof(arg)), unsafe { &arg })
 }
 
 fn (k &Kernel) set_arg(index int, arg ArgumentType) ? {
@@ -174,9 +203,6 @@ fn (k &Kernel) set_arg(index int, arg ArgumentType) ? {
 			return k.set_arg_buffer(index, arg.buf)
 		}
 		Image {
-			// TODO k.set_arg_buffer(index+1, img.width)?
-			// TODO k.set_arg_buffer(index+1, img.height)?
-			// TODO increment: index += 2          !?
 			return k.set_arg_buffer(index, arg.buf)
 		}
 		else {

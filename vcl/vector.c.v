@@ -51,3 +51,9 @@ pub fn (v &Vector[T]) data() ?[]T {
 pub fn (v &Vector[T]) map(k &Kernel) chan IError {
 	return k.global(v.length()).local(1).run(v)
 }
+
+// map_unsafe unsafe version of map allow own struct
+[unsafe]
+pub fn (v &Vector[T]) map_unsafe(k &Kernel) chan IError {
+	return unsafe { k.global(v.length()).local(1).run_unsafe(v) }
+}
