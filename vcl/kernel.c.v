@@ -130,6 +130,7 @@ fn (k &Kernel) set_args_unsafe(args ...ArgumentType) ? {
 	}
 }
 
+[unsafe]
 fn (k &Kernel) set_unsafe_arg(index int, arg ArgumentType) ? {
 	if arg is Vector {
 		return k.set_arg_buffer(index, arg.buf)
