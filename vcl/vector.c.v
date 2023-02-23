@@ -51,3 +51,8 @@ pub fn (v &Vector[T]) data() ?[]T {
 pub fn (v &Vector[T]) map(k &Kernel) chan IError {
 	return k.global(v.length()).local(1).run(v)
 }
+
+// buffer returns the underlying buffer
+pub fn (v &Vector[T]) buffer() &Buffer {
+	return v.buf
+}

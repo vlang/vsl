@@ -44,3 +44,8 @@ pub fn (b &Bytes) data() ?[]u8 {
 pub fn (b &Bytes) map(mut k Kernel) chan IError {
 	return k.global(b.buf.size).local(1).run(b)
 }
+
+// buffer returns the underlying buffer
+pub fn (b &Bytes) buffer() &Buffer {
+	return b.buf
+}

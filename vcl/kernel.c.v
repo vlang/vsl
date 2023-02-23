@@ -140,6 +140,9 @@ fn (k &Kernel) set_arg(index int, arg ArgumentType) ? {
 		u64 {
 			return k.set_arg_unsafe(index, int(sizeof(arg)), unsafe { &arg })
 		}
+		Buffer {
+			return k.set_arg_buffer(index, arg)
+		}
 		Bytes {
 			return k.set_arg_buffer(index, arg.buf)
 		}

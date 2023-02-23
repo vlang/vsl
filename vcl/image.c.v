@@ -193,3 +193,8 @@ fn (d &Device) create_image_general(image_type ImageChannelOrder, bounds Rect, r
 		desc: desc
 	}
 }
+
+// buffer returns the underlying buffer
+fn (image &Image) buffer() &Buffer {
+	return image.buf
+}
