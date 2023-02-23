@@ -201,6 +201,11 @@ do the following:</p>
 <p>map applies an map kernel on all elements of the vector</p>
 
 </section>
+						<section id="Vector[T].buffer" class="doc-node">
+							<div class="title"><h2>fn (Vector[T]) buffer <a href="#Vector[T].buffer">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/vector.c.v#L56"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>v <span class="token operator">&</span>Vector<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">buffer</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&</span>Buffer</code></pre>
+<p>buffer returns the underlying buffer</p>
+
+</section>
 						<section id="DeviceType" class="doc-node">
 							<div class="title"><h2>enum DeviceType <a href="#DeviceType">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/device.c.v#L3"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">enum</span> DeviceType <span class="token keyword">as</span> <span class="token builtin">i64</span> <span class="token punctuation">{</span>
 <span class="token comment">// device types - bitfield</span>
@@ -258,6 +263,11 @@ do the following:</p>
 						<section id="Bytes.map" class="doc-node">
 							<div class="title"><h2>fn (Bytes) map <a href="#Bytes.map">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/bytes.c.v#L44"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>b <span class="token operator">&</span>Bytes<span class="token punctuation">)</span> <span class="token builtin">map</span><span class="token punctuation">(</span><span class="token keyword">mut</span> k Kernel<span class="token punctuation">)</span> <span class="token builtin">chan</span> <span class="token builtin">IError</span></code></pre>
 <p>map applies an map kernel on all elements of the buffer</p>
+
+</section>
+						<section id="Bytes.buffer" class="doc-node">
+							<div class="title"><h2>fn (Bytes) buffer <a href="#Bytes.buffer">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/bytes.c.v#L49"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>b <span class="token operator">&</span>Bytes<span class="token punctuation">)</span> <span class="token function">buffer</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&</span>Buffer</code></pre>
+<p>buffer returns the underlying buffer</p>
 
 </section>
 						<section id="Device" class="doc-node">
@@ -446,7 +456,7 @@ do the following:</p>
 </section>
 
           <div class="footer">
-            Powered by vdoc. Generated on: 23 Feb 2023 00:09:20
+            Powered by vdoc. Generated on: 23 Feb 2023 00:58:03
           </div>
         </div>
         <div class="doc-toc"><ul><li class="open"><a href="#readme_vcl">README</a></li>
@@ -478,6 +488,7 @@ do the following:</p>
 <li><a href="#Vector[T].load">fn load</a></li>
 <li><a href="#Vector[T].data">fn data</a></li>
 <li><a href="#Vector[T].map">fn map</a></li>
+<li><a href="#Vector[T].buffer">fn buffer</a></li>
 </ul>
 </li>
 <li class="open"><a href="#DeviceType">enum DeviceType</a>        <ul>
@@ -495,6 +506,7 @@ do the following:</p>
 <li><a href="#Bytes.load">fn load</a></li>
 <li><a href="#Bytes.data">fn data</a></li>
 <li><a href="#Bytes.map">fn map</a></li>
+<li><a href="#Bytes.buffer">fn buffer</a></li>
 </ul>
 </li>
 <li class="open"><a href="#Device">struct Device</a>        <ul>
