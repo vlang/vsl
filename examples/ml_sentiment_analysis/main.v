@@ -134,12 +134,12 @@ bow_prediction1 := bow_knn.predict(
 	k: 2
 	// low value due to small dataset
 	to_pred: bow(sentence1, mut lancaster, most_freq)!
-)?
+)!
 bow_prediction2 := bow_knn.predict(
 	k: 2
 	// low value due to small dataset
 	to_pred: bow(sentence2, mut lancaster, most_freq)!
-)?
+)!
 
 // Convert from numeric representation to text:
 // 1.0: positive, -1.0: negative.
@@ -197,13 +197,13 @@ tf_idf_prediction1 := tf_idf_knn.predict(
 	k: 2
 	// low value due to small dataset
 	to_pred: tfidf(sentence1, mut lancaster, ngrams, unique_ngrams)!
-)?
+)!
 
 tf_idf_prediction2 := tf_idf_knn.predict(
 	k: 2
 	// low value due to small dataset
 	to_pred: tfidf(sentence2, mut lancaster, ngrams, unique_ngrams)!
-)?
+)!
 
 tf_idf_label1 := class_inverse[tf_idf_prediction1.str()]
 tf_idf_label2 := class_inverse[tf_idf_prediction2.str()]
