@@ -36,7 +36,7 @@ fn is_finite(a f64) bool {
 // Call the pointed-to function with argument x, put its result in y, and
 // return an error if the function value is inf/nan.
 [inline]
-pub fn (f Fn) safe_eval(x f64) ?f64 {
+pub fn (f Fn) safe_eval(x f64) !f64 {
 	y := f.f(x, f.params)
 	if is_finite(y) {
 		return y

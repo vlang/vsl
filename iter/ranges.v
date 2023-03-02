@@ -219,7 +219,7 @@ pub fn new_log_iter(params LogIterParams) !LogIter {
 			stop: params.stop
 			len: params.len
 			endpoint: params.endpoint
-		)?
+		)!
 		base: params.base
 		len: params.len
 	}

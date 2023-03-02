@@ -83,8 +83,8 @@ pub fn (mut o Triplet[T]) put_matrix_and_matrix_t(a &Triplet[T]) ! {
 			.erange)
 	}
 	for k in 0 .. a.pos {
-		o.put(a.n + a.i[k], a.j[k], a.x[k])? // puts a
-		o.put(a.j[k], a.n + a.i[k], a.x[k])? // puts at
+		o.put(a.n + a.i[k], a.j[k], a.x[k])! // puts a
+		o.put(a.j[k], a.n + a.i[k], a.x[k])! // puts at
 	}
 }
 
@@ -105,8 +105,8 @@ pub fn (mut o Triplet[T]) put_cc_matrix_and_matrix_t(a &CCMatrix[T]) ! {
 	}
 	for j := 0; j < a.n; j++ {
 		for k := a.p[j]; k < a.p[j + 1]; k++ {
-			o.put(a.n + a.i[k], j, a.x[k])? // puts a
-			o.put(j, a.n + a.i[k], a.x[k])? // puts at
+			o.put(a.n + a.i[k], j, a.x[k])! // puts a
+			o.put(j, a.n + a.i[k], a.x[k])! // puts at
 		}
 	}
 }

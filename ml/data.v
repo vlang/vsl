@@ -95,7 +95,7 @@ pub fn data_from_raw_x[T](xraw [][]T) !&Data[T] {
 	}
 	// allocate new object
 	nb_features := xraw[0].len
-	mut o := new_data[T](nb_samples, nb_features, true, true)?
+	mut o := new_data[T](nb_samples, nb_features, true, true)!
 	// copy data from raw table to x matrix
 	for i := 0; i < nb_samples; i++ {
 		for j := 0; j < nb_features; j++ {
