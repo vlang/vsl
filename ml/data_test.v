@@ -26,7 +26,7 @@ fn test_data_01() {
 		[1.0, -8, 5, 1],
 	])?
 	check_xy_01(data.x, data.y)
-	data_backup := data.clone()?
+	data_backup := data.clone()!
 	check_xy_01(data_backup.x, data_backup.y)
 	assert data_backup.nb_features == 3
 	assert data_backup.nb_samples == 5

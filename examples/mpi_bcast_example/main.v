@@ -3,7 +3,7 @@ module main
 import vsl.float.float64
 import vsl.mpi
 
-mpi.initialize()?
+mpi.initialize()!
 
 defer {
 	mpi.finalize()
@@ -25,7 +25,7 @@ for i := start; i < endp1; i++ {
 }
 
 // Communicator
-comm := mpi.new_communicator([])?
+comm := mpi.new_communicator([])!
 
 // Barrier
 comm.barrier()

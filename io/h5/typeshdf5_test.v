@@ -34,22 +34,22 @@ fn testsuite_begin() {
 
 	f := new_file(h5.testfile)?
 
-	f.write_dataset1d('i8array', h5.i8array)?
-	f.write_dataset1d('u8array', h5.u8array)?
+	f.write_dataset1d('i8array', h5.i8array)!
+	f.write_dataset1d('u8array', h5.u8array)!
 
-	f.write_dataset1d('i16array', h5.i16array)?
-	f.write_dataset1d('u16array', h5.u16array)?
+	f.write_dataset1d('i16array', h5.i16array)!
+	f.write_dataset1d('u16array', h5.u16array)!
 
-	f.write_dataset1d('i32array', h5.i32array)?
-	f.write_dataset1d('u32array', h5.u32array)?
+	f.write_dataset1d('i32array', h5.i32array)!
+	f.write_dataset1d('u32array', h5.u32array)!
 
-	f.write_dataset1d('i64array', h5.i64array)?
-	f.write_dataset1d('u64array', h5.u64array)?
+	f.write_dataset1d('i64array', h5.i64array)!
+	f.write_dataset1d('u64array', h5.u64array)!
 
-	f.write_dataset1d('intarray', h5.intarray)?
+	f.write_dataset1d('intarray', h5.intarray)!
 
-	f.write_dataset1d('f32array', h5.f32array)?
-	f.write_dataset1d('f64array', h5.f64array)?
+	f.write_dataset1d('f32array', h5.f32array)!
+	f.write_dataset1d('f64array', h5.f64array)!
 
 	f.close()
 }
@@ -96,11 +96,11 @@ fn test_run() {
 	assert 11 == output.count('(0): 0, 0') // uninitialized
 	assert 2 == output.count('H5T_STD_I32LE') // i32 and int
 
-	readback()?
-	readback()? // worth doing twice
+	readback()!
+	readback()! // worth doing twice
 }
 
-fn readback() ? {
+fn readback() ! {
 	// read_dataset1d will change the mut array size
 	mut i8arrayrd := make1type[i8](1)
 	mut u8arrayrd := make1type[u8](1)
@@ -119,7 +119,7 @@ fn readback() ? {
 
 	mut intarrayrd := make1type[int](1)
 
-	f := open_file(h5.testfile)?
+	f := open_file(h5.testfile)!
 
 	f.read_dataset1d('i8array', mut i8arrayrd)
 	f.read_dataset1d('u8array', mut u8arrayrd)

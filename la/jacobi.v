@@ -27,7 +27,7 @@ import vsl.errors
 //   NOTE: for matrices of order greater than about 10, say, the algorithm is slower,
 //         by a significant constant factor, than the QR method.
 //
-pub fn jacobi(mut q Matrix[f64], mut v []f64, mut a Matrix[f64]) ? {
+pub fn jacobi(mut q Matrix[f64], mut v []f64, mut a Matrix[f64]) ! {
 	tol := 1e-15
 	max_iterations := 20
 

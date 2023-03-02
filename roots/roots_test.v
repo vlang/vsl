@@ -21,14 +21,14 @@ fn test_root_bisection() {
 	x1 := 0.0
 	x2 := f64(3)
 	f := func.new_func(f: f_cos)
-	result := bisection(f, x1, x2, roots.epsrel, roots.epsabs, roots.n_max)?
+	result := bisection(f, x1, x2, roots.epsrel, roots.epsabs, roots.n_max)!
 	assert compare(result, math.pi / 2.00)
 }
 
 fn test_root_newton() {
 	x0 := f64(0.5)
 	f := func.new_func_fdf(fdf: fdf_cos)
-	result := newton(f, x0, roots.epsrel, roots.epsabs, roots.n_max)?
+	result := newton(f, x0, roots.epsrel, roots.epsabs, roots.n_max)!
 	assert compare(result, math.pi / 2.00)
 }
 

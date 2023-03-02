@@ -50,7 +50,7 @@ pub fn (mut o Triplet[T]) init(m int, n int, max int) {
 }
 
 // put inserts an element to a pre-allocated (with init) triplet matrix
-pub fn (mut o Triplet[T]) put(i int, j int, x T) ? {
+pub fn (mut o Triplet[T]) put(i int, j int, x T) ! {
 	if i >= o.m {
 		return errors.error('cannot put item because index of row is outside range (i=${i}, m=${o.m})',
 			.erange)
@@ -77,7 +77,7 @@ pub fn (mut o Triplet[T]) put(i int, j int, x T) ? {
  *      [a10 a11 a12 ... ... ...] 4      [.  .  .]
  *      [... ... ... ... ... ...] 5
 */
-pub fn (mut o Triplet[T]) put_matrix_and_matrix_t(a &Triplet[T]) ? {
+pub fn (mut o Triplet[T]) put_matrix_and_matrix_t(a &Triplet[T]) ! {
 	if a.n + a.m > o.m || a.n + a.m > o.n {
 		return errors.error('cannot put larger matrix into sparse matrix.\nb := [[.. at] [a ..]] with len(a)=(${a.m},${a.n}) and len(b)=(${o.m},${o.n})',
 			.erange)
@@ -98,7 +98,7 @@ pub fn (mut o Triplet[T]) put_matrix_and_matrix_t(a &Triplet[T]) ? {
  *      [a10 a11 a12 ... ... ...] 4      [.  .  .]
  *      [... ... ... ... ... ...] 5
 */
-pub fn (mut o Triplet[T]) put_cc_matrix_and_matrix_t(a &CCMatrix[T]) ? {
+pub fn (mut o Triplet[T]) put_cc_matrix_and_matrix_t(a &CCMatrix[T]) ! {
 	if a.n + a.m > o.m || a.n + a.m > o.n {
 		return errors.error('cannot put larger matrix into sparse matrix.\nb := [[.. at] [a ..]] with len(a)=(${a.m},${a.n}) and len(b)=(${o.m},${o.n})',
 			.erange)

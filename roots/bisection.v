@@ -5,7 +5,7 @@ import vsl.func
 import math
 
 // Find the root of a function using a bisection method
-pub fn bisection(f func.Fn, xmin f64, xmax f64, epsrel f64, epsabs f64, n_max int) ?f64 {
+pub fn bisection(f func.Fn, xmin f64, xmax f64, epsrel f64, epsabs f64, n_max int) !f64 {
 	fxmin := f.safe_eval(xmin)?
 	fxmax := f.safe_eval(xmax)?
 	if (fxmin < 0.0 && fxmax < 0.0) || (fxmin > 0.0 && fxmax > 0.0) {

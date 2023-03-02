@@ -38,4 +38,4 @@ plt.set_layout(
 	height: 750
 )
 
-plt.show()?
+plt.show()!

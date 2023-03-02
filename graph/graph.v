@@ -62,7 +62,7 @@ pub fn (g &Graph) nverts() int {
 }
 
 // get_edge performs a lookup on key2edge map and returs id of edge for given nodes ides
-pub fn (g &Graph) get_edge(i int, j int) ?int {
+pub fn (g &Graph) get_edge(i int, j int) !int {
 	key := hash_edge_key(i, j)
 	if key in g.key2edge {
 		return g.key2edge[key]

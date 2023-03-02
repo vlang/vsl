@@ -13,14 +13,14 @@ const square_perlin = [
 fn test_perlin() {
 	rand.seed([u32(114764230), 293925637])
 
-	x := perlin(0.0, 0.0)?
+	x := perlin(0.0, 0.0)!
 	println(' x is ${x:11.9}')
 	assert abs(x - noise.single_perlin) < 1.0e-6
 }
 
 fn test_perlin_many() {
 	rand.seed([u32(114764230), 293925637])
-	y := perlin_many(2, 2)?
+	y := perlin_many(2, 2)!
 
 	println(' y is ${y:13.11}')
 	for i, _ in y {

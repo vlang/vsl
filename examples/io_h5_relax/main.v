@@ -25,8 +25,8 @@ for loop in 0 .. 1000 {
 		break
 	}
 }
-f := h5.new_file(hdffile)?
-f.write_dataset1d('linedata', linedata)?
-f.write_attribute('linedata', 'rounds', rounds)?
-f.write_attribute('linedata', 'maxdiff', maxdiff)?
+f := h5.new_file(hdffile)!
+f.write_dataset1d('linedata', linedata)!
+f.write_attribute('linedata', 'rounds', rounds)!
+f.write_attribute('linedata', 'maxdiff', maxdiff)!
 f.close()

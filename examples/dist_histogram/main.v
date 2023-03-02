@@ -36,9 +36,9 @@ values := [
 	8,
 ]
 
-hist.count(values, true)?
-labels := hist.gen_labels('%g')?
+hist.count(values, true)!
+labels := hist.gen_labels('%g')!
 
-hist_text := dist.text_hist(labels, hist.counts, 0)?
+hist_text := dist.text_hist(labels, hist.counts, 0)!
 
 println(hist_text)

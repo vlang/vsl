@@ -91,4 +91,4 @@ for i in 0 .. nb_classes {
 	)
 }
 
-plt.show()?
+plt.show()!

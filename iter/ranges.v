@@ -28,7 +28,7 @@ pub struct IntIterParams {
 //	  -stop  i64 [required]: the end of the range (exclusive).
 //	  -step  i64 = 1:        the step between the numbers.
 //}
-pub fn new_int_iter(params IntIterParams) ?IntIter {
+pub fn new_int_iter(params IntIterParams) !IntIter {
 	if params.step == 0 {
 		return errors.error(@MOD + '.' + @FN + ': step cannot be 0', .erange)
 	}
@@ -84,7 +84,7 @@ pub struct FloatIterParams {
 //	 -stop  f64 [required]: the end of the range (exclusive).
 //	 -step  f64 = 1:        the step between the numbers.
 //}
-pub fn new_float_iter(params FloatIterParams) ?FloatIter {
+pub fn new_float_iter(params FloatIterParams) !FloatIter {
 	if params.step == 0 {
 		return errors.error(@MOD + '.' + @FN + ': step cannot be 0', .erange)
 	}
@@ -142,7 +142,7 @@ pub struct LinearIterParams {
 //	 -len      i64  = 50:      Number of samples to generate. Must be non-negative.
 //   -endpoint bool = true:    If true, `stop` is the last sample. Otherwise, it is not included.
 //}
-pub fn new_linear_iter(params LinearIterParams) ?LinearIter {
+pub fn new_linear_iter(params LinearIterParams) !LinearIter {
 	if params.len < 0 {
 		return errors.error(@MOD + '.' + @FN + ': number of samples must be non negative',
 			.erange)
@@ -208,7 +208,7 @@ pub struct LogIterParams {
 //	 -base     f64  = 10.0:    The base of the log space.
 //	 -endpoint bool = true:    If true, bas ^ stop is the last sample. Otherwise, it is not included.
 //}
-pub fn new_log_iter(params LogIterParams) ?LogIter {
+pub fn new_log_iter(params LogIterParams) !LogIter {
 	if params.len < 0 {
 		return errors.error(@MOD + '.' + @FN + ': number of samples must be non negative',
 			.erange)

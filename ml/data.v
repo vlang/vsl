@@ -37,7 +37,7 @@ pub mut:
 // x and y must be set using set() method
 // Output:
 // new object
-pub fn new_data[T](nb_samples int, nb_features int, use_y bool, allocate bool) ?&Data[T] {
+pub fn new_data[T](nb_samples int, nb_features int, use_y bool, allocate bool) !&Data[T] {
 	x := if allocate { la.new_matrix[T](nb_samples, nb_features) } else { la.new_matrix[T](0, 0) }
 	mut y := []T{}
 	if allocate && use_y {
@@ -55,7 +55,7 @@ pub fn new_data[T](nb_samples int, nb_features int, use_y bool, allocate bool) ?
 // Input:
 // x -- x values
 // y -- y values [optional]
-pub fn (mut o Data[T]) set(x &la.Matrix[T], y []T) ? {
+pub fn (mut o Data[T]) set(x &la.Matrix[T], y []T) ! {
 	if y.len < o.nb_samples || x.n < o.nb_features || x.m < o.nb_samples {
 		return errors.error('x matrix must have same dimensions as number of samples and features',
 			.efailed)
@@ -65,7 +65,7 @@ pub fn (mut o Data[T]) set(x &la.Matrix[T], y []T) ? {
 	o.observable.notify_update()
 }
 
-pub fn (mut o Data[T]) set_y(y []T) ? {
+pub fn (mut o Data[T]) set_y(y []T) ! {
 	if y.len < o.nb_samples {
 		return errors.error('y vector must have same length as number of samples', .efailed)
 	}
@@ -73,7 +73,7 @@ pub fn (mut o Data[T]) set_y(y []T) ? {
 	o.observable.notify_update()
 }
 
-pub fn (mut o Data[T]) set_x(x &la.Matrix[T]) ? {
+pub fn (mut o Data[T]) set_x(x &la.Matrix[T]) ! {
 	if x.n < o.nb_samples || x.m < o.nb_features {
 		return errors.error('x matrix must have same dimensions as number of samples and features',
 			.efailed)
@@ -87,7 +87,7 @@ pub fn (mut o Data[T]) set_x(x &la.Matrix[T]) ? {
 // xraw -- [nb_samples][nb_features] table with x values (NO y values)
 // Output:
 // new object
-pub fn data_from_raw_x[T](xraw [][]T) ?&Data[T] {
+pub fn data_from_raw_x[T](xraw [][]T) !&Data[T] {
 	// check
 	nb_samples := xraw.len
 	if nb_samples < 1 {
@@ -109,7 +109,7 @@ pub fn data_from_raw_x[T](xraw [][]T) ?&Data[T] {
 // yraw []T. It acts similarly to data_from_raw_xy, but instead
 // of using the last column of xraw as the y data, it uses yraw
 // instead.
-pub fn data_from_raw_xy_sep[T](xraw [][]T, yraw []T) ?&Data[T] {
+pub fn data_from_raw_xy_sep[T](xraw [][]T, yraw []T) !&Data[T] {
 	// check
 	nb_samples := xraw.len
 	if nb_samples < 1 {
@@ -117,7 +117,7 @@ pub fn data_from_raw_xy_sep[T](xraw [][]T, yraw []T) ?&Data[T] {
 	}
 	// allocate new object
 	nb_features := xraw[0].len
-	mut o := new_data[T](nb_samples, nb_features, false, true)?
+	mut o := new_data[T](nb_samples, nb_features, false, true)!
 	// copy data from raw table to x matrix
 	for i := 0; i < nb_samples; i++ {
 		for j := 0; j < nb_features; j++ {
@@ -136,7 +136,7 @@ pub fn data_from_raw_xy_sep[T](xraw [][]T, yraw []T) ?&Data[T] {
 // where the last column contains y-values
 // Output:
 // new object
-pub fn data_from_raw_xy[T](xyraw [][]T) ?&Data[T] {
+pub fn data_from_raw_xy[T](xyraw [][]T) !&Data[T] {
 	// check
 	nb_samples := xyraw.len
 	if nb_samples < 1 {
@@ -144,7 +144,7 @@ pub fn data_from_raw_xy[T](xyraw [][]T) ?&Data[T] {
 	}
 	// allocate new object
 	nb_features := xyraw[0].len - 1 // -1 because of y column
-	mut o := new_data[T](nb_samples, nb_features, true, true)?
+	mut o := new_data[T](nb_samples, nb_features, true, true)!
 	// copy data from raw table to x and y arrays
 	for i := 0; i < nb_samples; i++ {
 		for j := 0; j < nb_features; j++ {
@@ -156,9 +156,9 @@ pub fn data_from_raw_xy[T](xyraw [][]T) ?&Data[T] {
 }
 
 // clone returns a deep copy of this object removing the observers
-pub fn (o &Data[T]) clone() ?&Data[T] {
+pub fn (o &Data[T]) clone() !&Data[T] {
 	use_y := o.y.len > 0
-	mut p := new_data[T](o.nb_samples, o.nb_features, use_y, true)?
+	mut p := new_data[T](o.nb_samples, o.nb_features, use_y, true)!
 	o.x.copy_into(mut p.x, 1)
 	if use_y {
 		p.y = o.y.clone()
@@ -167,7 +167,7 @@ pub fn (o &Data[T]) clone() ?&Data[T] {
 }
 
 // clone_with_same_x returns a deep copy of this object, but with the same reference to x removing the observers
-pub fn (o &Data[T]) clone_with_same_x() ?&Data[T] {
+pub fn (o &Data[T]) clone_with_same_x() !&Data[T] {
 	use_y := o.y.len > 0
 	return &Data[T]{
 		x: o.x

@@ -16,4 +16,4 @@ plt.set_layout(
 	width: 750
 	height: 750
 )
-plt.show()?
+plt.show()!
