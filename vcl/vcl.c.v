@@ -1,8 +1,8 @@
 module vcl
 
 // get_devices returns all devices of all platforms with specified type
-pub fn get_devices(device_type DeviceType) ?[]&Device {
-	platform_ids := get_platforms()?
+pub fn get_devices(device_type DeviceType) ![]&Device {
+	platform_ids := get_platforms()!
 	mut devices := []&Device{}
 
 	for p in platform_ids {
@@ -19,7 +19,7 @@ pub fn get_devices(device_type DeviceType) ?[]&Device {
 			return vcl_error(ret)
 		}
 		for d in device_ids {
-			device := new_device(d)?
+			device := new_device(d)!
 			devices << device
 		}
 	}
@@ -28,9 +28,9 @@ pub fn get_devices(device_type DeviceType) ?[]&Device {
 }
 
 // get_default_device ...
-pub fn get_default_device() ?&Device {
+pub fn get_default_device() !&Device {
 	mut id := ClDeviceId(0)
-	platform_ids := get_platforms()?
+	platform_ids := get_platforms()!
 	ret := cl_get_device_i_ds(unsafe { &platform_ids[0] }, ClDeviceType(DeviceType.default_device),
 		1, &id, unsafe { nil })
 	if ret != success {
@@ -39,7 +39,7 @@ pub fn get_default_device() ?&Device {
 	return new_device(id)
 }
 
-fn get_platforms() ?[]ClPlatformId {
+fn get_platforms() ![]ClPlatformId {
 	mut n := u32(0)
 	mut ret := cl_get_platform_i_ds(0, unsafe { nil }, &n)
 	if ret != success {
@@ -53,7 +53,7 @@ fn get_platforms() ?[]ClPlatformId {
 	return platform_ids
 }
 
-fn new_device(id ClDeviceId) ?&Device {
+fn new_device(id ClDeviceId) !&Device {
 	mut d := &Device{
 		id: id
 	}
