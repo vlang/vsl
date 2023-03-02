@@ -6,7 +6,7 @@ import vsl.errors
 import vsl.util
 
 // text_hist prints a text histogram
-pub fn text_hist(labels []string, counts []int, barlen int) ?string {
+pub fn text_hist(labels []string, counts []int, barlen int) !string {
 	// check
 	assert labels.len == counts.len
 	if counts.len < 2 {
@@ -49,10 +49,10 @@ pub fn text_hist(labels []string, counts []int, barlen int) ?string {
 }
 
 // build_text_hist builds a text histogram
-pub fn build_text_hist(xmin f64, xmax f64, nstations int, values []f64, numfmt string, barlen int) ?string {
+pub fn build_text_hist(xmin f64, xmax f64, nstations int, values []f64, numfmt string, barlen int) !string {
 	mut hist := new_histogram(util.lin_space(xmin, xmax, nstations))
-	hist.count(values, true)?
-	labels := hist.gen_labels(numfmt)?
+	hist.count(values, true)!
+	labels := hist.gen_labels(numfmt)!
 	return text_hist(labels, hist.counts, barlen)
 }
 
@@ -81,7 +81,7 @@ pub fn new_histogram(stations []f64) &Histogram {
 
 // find_bin finds where x falls in
 // returns -1 if x is outside the range
-pub fn (o Histogram) find_bin(x f64) ?int {
+pub fn (o Histogram) find_bin(x f64) !int {
 	// check
 	if o.stations.len < 2 {
 		return errors.error('Histogram must have at least 2 stations', .efailed)
@@ -108,7 +108,7 @@ pub fn (o Histogram) find_bin(x f64) ?int {
 }
 
 // count counts how many items fall within each bin
-pub fn (mut o Histogram) count(vals []f64, clear bool) ? {
+pub fn (mut o Histogram) count(vals []f64, clear bool) ! {
 	// check
 	if o.stations.len < 2 {
 		return errors.error('Histogram must have at least 2 stations', .efailed)
@@ -124,7 +124,7 @@ pub fn (mut o Histogram) count(vals []f64, clear bool) ? {
 	}
 	// add entries to bins
 	for x in vals {
-		idx := o.find_bin(x)?
+		idx := o.find_bin(x)!
 		if idx >= 0 {
 			o.counts[idx]++
 		}
@@ -132,7 +132,7 @@ pub fn (mut o Histogram) count(vals []f64, clear bool) ? {
 }
 
 // gen_labels generate nice labels identifying bins
-pub fn (o Histogram) gen_labels(numfmt string) ?[]string {
+pub fn (o Histogram) gen_labels(numfmt string) ![]string {
 	if o.stations.len < 2 {
 		return errors.error('Histogram must have at least 2 stations', .efailed)
 	}
@@ -146,7 +146,7 @@ pub fn (o Histogram) gen_labels(numfmt string) ?[]string {
 
 // density_area computes the area of the density diagram
 //  nsamples -- number of samples used when generating pseudo-random numbers
-pub fn (o Histogram) density_area(nsamples int) ?f64 {
+pub fn (o Histogram) density_area(nsamples int) !f64 {
 	nstations := o.stations.len
 	if nstations < 2 {
 		return errors.error('density area computation needs at least two stations', .efailed)

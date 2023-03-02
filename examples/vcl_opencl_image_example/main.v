@@ -29,7 +29,7 @@ fn main() {
 	}
 
 	// Create image buffer (image2d_t) to write_only
-	mut inverted_img := device.image_2d(.rgba, width: img.bounds.width, height: img.bounds.height)?
+	mut inverted_img := device.image_2d(.rgba, width: img.bounds.width, height: img.bounds.height)!
 	defer {
 		inverted_img.release() or { panic(err) }
 	}
