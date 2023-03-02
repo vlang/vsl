@@ -13,7 +13,7 @@ mut data := ml.data_from_raw_x([
 	[0.9, 0.1],
 	[0.7, 0.3],
 	[0.9, 0.3],
-])?
+])!
 
 // model
 nb_classes := 2
