@@ -4,7 +4,7 @@ pub interface ArgumentType {}
 
 // kernel returns a kernel
 // if retrieving the kernel didn't complete the function will return an error
-pub fn (d &Device) kernel(name string) ?&Kernel {
+pub fn (d &Device) kernel(name string) !&Kernel {
 	mut k := ClKernel(0)
 	mut ret := 0
 	for p in d.programs {
@@ -102,13 +102,13 @@ fn new_kernel(d &Device, k ClKernel) &Kernel {
 	}
 }
 
-fn (k &Kernel) set_args(args ...ArgumentType) ? {
+fn (k &Kernel) set_args(args ...ArgumentType) ! {
 	for i, arg in args {
-		k.set_arg(i, arg)?
+		k.set_arg(i, arg)!
 	}
 }
 
-fn (k &Kernel) set_arg(index int, arg ArgumentType) ? {
+fn (k &Kernel) set_arg(index int, arg ArgumentType) ! {
 	match arg {
 		u8 {
 			return k.set_arg_unsafe(index, int(sizeof(arg)), unsafe { &arg })
@@ -185,16 +185,16 @@ fn (k &Kernel) set_arg(index int, arg ArgumentType) ? {
 	}
 }
 
-fn (k &Kernel) set_arg_buffer(index int, buf &Buffer) ? {
+fn (k &Kernel) set_arg_buffer(index int, buf &Buffer) ! {
 	mem := buf.memobj
 	return k.set_arg_unsafe(index, int(sizeof(mem)), &mem)
 }
 
-fn (k &Kernel) set_arg_local(index int, size int) ? {
+fn (k &Kernel) set_arg_local(index int, size int) ! {
 	return k.set_arg_unsafe(index, size, unsafe { nil })
 }
 
-fn (k &Kernel) set_arg_unsafe(index int, arg_size int, arg voidptr) ? {
+fn (k &Kernel) set_arg_unsafe(index int, arg_size int, arg voidptr) ! {
 	res := cl_set_kernel_arg(k.k, u32(index), usize(arg_size), arg)
 	if res != success {
 		return vcl_error(res)

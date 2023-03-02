@@ -49,7 +49,7 @@ mut:
 }
 
 // release releases the device
-pub fn (mut d Device) release() ? {
+pub fn (mut d Device) release() ! {
 	for p in d.programs {
 		code := cl_release_program(p)
 		if code != success {
@@ -67,7 +67,7 @@ pub fn (mut d Device) release() ? {
 	return vcl_error(cl_release_device(d.id))
 }
 
-fn (d &Device) get_info_str(param ClDeviceInfo, panic_on_error bool) ?string {
+fn (d &Device) get_info_str(param ClDeviceInfo, panic_on_error bool) !string {
 	mut info_bytes := [1024]u8{}
 	mut info_bytes_size := usize(0)
 	code := cl_get_device_info(d.id, param, 1024, &info_bytes[0], &info_bytes_size)
@@ -89,43 +89,43 @@ pub fn (d &Device) str() string {
 }
 
 // name device info - name
-pub fn (d &Device) name() ?string {
+pub fn (d &Device) name() !string {
 	return d.get_info_str(vcl.device_name, true)
 }
 
 // vendor device info - vendor
-pub fn (d &Device) vendor() ?string {
+pub fn (d &Device) vendor() !string {
 	return d.get_info_str(vcl.device_vendor, true)
 }
 
 // extensions device info - extensions
-pub fn (d &Device) extensions() ?string {
+pub fn (d &Device) extensions() !string {
 	return d.get_info_str(vcl.device_extensions, true)
 }
 
 // open_clc_version device info - OpenCL C version
-pub fn (d &Device) open_clc_version() ?string {
+pub fn (d &Device) open_clc_version() !string {
 	return d.get_info_str(vcl.device_opencl_c_version, true)
 }
 
 // profile device info - profile
-pub fn (d &Device) profile() ?string {
+pub fn (d &Device) profile() !string {
 	return d.get_info_str(vcl.device_profile, true)
 }
 
 // version device info - version
-pub fn (d &Device) version() ?string {
+pub fn (d &Device) version() !string {
 	return d.get_info_str(vcl.device_version, true)
 }
 
 // driver_version device info - driver version
-pub fn (d &Device) driver_version() ?string {
+pub fn (d &Device) driver_version() !string {
 	return d.get_info_str(vcl.driver_version, true)
 }
 
 // add_program copiles program source
 // if an error occurs in building the program the add_program will panic
-pub fn (mut d Device) add_program(source string) ? {
+pub fn (mut d Device) add_program(source string) ! {
 	mut ret := 0
 	source_ptr := &char(source.str)
 	p := cl_create_program_with_source(d.ctx, 1, &source_ptr, unsafe { nil }, &ret)

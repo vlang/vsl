@@ -9,7 +9,7 @@ mut:
 }
 
 // buffer creates a new buffer with specified size
-fn (d &Device) buffer(size int) ?&Buffer {
+fn (d &Device) buffer(size int) !&Buffer {
 	mut ret := 0
 	buffer := cl_create_buffer(d.ctx, mem_read_write, usize(size), unsafe { nil }, &ret)
 	if ret != success {
@@ -26,7 +26,7 @@ fn (d &Device) buffer(size int) ?&Buffer {
 }
 
 // release releases the buffer on the device
-fn (b &Buffer) release() ? {
+fn (b &Buffer) release() ! {
 	return vcl_error(cl_release_mem_object(b.memobj))
 }
 
