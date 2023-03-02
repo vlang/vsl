@@ -67,7 +67,7 @@ for i in 0 .. dataset.len {
 		// accepts custom rules (which we will not be getting into), and
 		// it makes sure they are valid. For this example, the code below
 		// should NOT throw errors.
-		stemmed << lancaster.stem(token)?
+		stemmed << lancaster.stem(token)!
 	}
 
 	// Now we need to extract ngrams. Since VSL provides ngram support,
@@ -79,7 +79,7 @@ for i in 0 .. dataset.len {
 	// 'bad' are the only decisive factors), our n is going to be 1.
 	// For the example above, 1grams would be [['hello'], ['my'], ['friend']].
 	// The option/result below is in case you pass negative values to nlp.ngrams.
-	ng := nlp.ngrams(stemmed, 1)? // [][]string
+	ng := nlp.ngrams(stemmed, 1)! // [][]string
 	ngrams << ng // appends [][]string to ngrams ([][][]string)
 	all_ngrams << ng // extends all_ngrams([][]string) by [][]string
 }
@@ -92,7 +92,7 @@ for i in 0 .. dataset.len {
 // in our dataset are "good" and "bad", lets go for a low number: 5. This number
 // should be higher if you use ngrams > 1 and have more data.
 n_features := 5
-mut most_freq := nlp.most_frequent_ngrams(all_ngrams, n_features)? // [][]string
+mut most_freq := nlp.most_frequent_ngrams(all_ngrams, n_features)! // [][]string
 
 // Now, for each sentence, we will get the array of number of occurrences
 // for each ngram in it. Sounds confusing? Well, here's an example:
@@ -110,8 +110,8 @@ for i in 0 .. dataset.len {
 
 // Amazing! We have all we need to train a sentiment analysis model with
 // bag of words. Check it out:
-mut training_data := ml.data_from_raw_xy_sep(vectorized, labels)?
-mut bow_knn := ml.new_knn(mut training_data, 'BagOfWordsKNN')?
+mut training_data := ml.data_from_raw_xy_sep(vectorized, labels)!
+mut bow_knn := ml.new_knn(mut training_data, 'BagOfWordsKNN')!
 
 sentence1 := 'I think today is a good day' // should be positive
 sentence2 := 'I hate grape juice, it tastes bad.' // should be negative
@@ -119,27 +119,27 @@ sentence2 := 'I hate grape juice, it tastes bad.' // should be negative
 // In order to predict them, we have to do the same we did for all
 // our training samples: tokenize, stem and ngramize (does that term
 // even exist?)
-bow := fn (sent string, mut lan nlp.LancasterStemmer, mf [][]string) ?[]f64 {
+bow := fn (sent string, mut lan nlp.LancasterStemmer, mf [][]string) ![]f64 {
 	sent_tokenized := nlp.remove_stopwords_en(nlp.tokenize(nlp.remove_punctuation(sent).to_lower()),
 		true)
 	mut sent_stemmed := []string{}
 	for tok in sent_tokenized {
-		sent_stemmed << lan.stem(tok)?
+		sent_stemmed << lan.stem(tok)!
 	}
-	sent_ngrams := nlp.ngrams(sent_stemmed, 1)?
+	sent_ngrams := nlp.ngrams(sent_stemmed, 1)!
 	return nlp.count_vectorize(sent_ngrams, mf).map(f64(it))
 }
 
 bow_prediction1 := bow_knn.predict(
 	k: 2
 	// low value due to small dataset
-	to_pred: bow(sentence1, mut lancaster, most_freq)?
-)?
+	to_pred: bow(sentence1, mut lancaster, most_freq)!
+)!
 bow_prediction2 := bow_knn.predict(
 	k: 2
 	// low value due to small dataset
-	to_pred: bow(sentence2, mut lancaster, most_freq)?
-)?
+	to_pred: bow(sentence2, mut lancaster, most_freq)!
+)!
 
 // Convert from numeric representation to text:
 // 1.0: positive, -1.0: negative.
@@ -170,25 +170,25 @@ mut tf_idf_rows := [][]f64{}
 for sent in ngrams {
 	mut tf_idf_sentence := []f64{}
 	for u_ng in unique_ngrams {
-		tf_idf_sentence << nlp.tf_idf(u_ng, sent, ngrams)?
+		tf_idf_sentence << nlp.tf_idf(u_ng, sent, ngrams)!
 	}
 	tf_idf_rows << tf_idf_sentence
 }
 
-training_data = ml.data_from_raw_xy_sep(tf_idf_rows, labels)?
-mut tf_idf_knn := ml.new_knn(mut training_data, 'TfIdfKNN')?
+training_data = ml.data_from_raw_xy_sep(tf_idf_rows, labels)!
+mut tf_idf_knn := ml.new_knn(mut training_data, 'TfIdfKNN')!
 
-tfidf := fn (sent string, mut lan nlp.LancasterStemmer, document [][][]string, unique [][]string) ?[]f64 {
+tfidf := fn (sent string, mut lan nlp.LancasterStemmer, document [][][]string, unique [][]string) ![]f64 {
 	sent_tokenized := nlp.remove_stopwords_en(nlp.tokenize(nlp.remove_punctuation(sent).to_lower()),
 		true)
 	mut sent_stemmed := []string{}
 	for tok in sent_tokenized {
-		sent_stemmed << lan.stem(tok)?
+		sent_stemmed << lan.stem(tok)!
 	}
-	mut sent_ng := nlp.ngrams(sent_stemmed, 1)?
+	mut sent_ng := nlp.ngrams(sent_stemmed, 1)!
 	mut tf_idf_sentence := []f64{}
 	for u_ng in unique {
-		tf_idf_sentence << nlp.tf_idf(u_ng, sent_ng, document)?
+		tf_idf_sentence << nlp.tf_idf(u_ng, sent_ng, document)!
 	}
 	return tf_idf_sentence
 }
@@ -196,14 +196,14 @@ tfidf := fn (sent string, mut lan nlp.LancasterStemmer, document [][][]string, u
 tf_idf_prediction1 := tf_idf_knn.predict(
 	k: 2
 	// low value due to small dataset
-	to_pred: tfidf(sentence1, mut lancaster, ngrams, unique_ngrams)?
-)?
+	to_pred: tfidf(sentence1, mut lancaster, ngrams, unique_ngrams)!
+)!
 
 tf_idf_prediction2 := tf_idf_knn.predict(
 	k: 2
 	// low value due to small dataset
-	to_pred: tfidf(sentence2, mut lancaster, ngrams, unique_ngrams)?
-)?
+	to_pred: tfidf(sentence2, mut lancaster, ngrams, unique_ngrams)!
+)!
 
 tf_idf_label1 := class_inverse[tf_idf_prediction1.str()]
 tf_idf_label2 := class_inverse[tf_idf_prediction2.str()]

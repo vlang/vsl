@@ -38,22 +38,22 @@ pub fn is_on() bool {
 
 // start initialises MPI
 [deprecated: 'use initialize instead']
-pub fn start() ? {
+pub fn start() ! {
 	C.MPI_Init(0, unsafe { nil })
 }
 
 // initialize readies MPI for use
-pub fn initialize() ? {
+pub fn initialize() ! {
 	C.MPI_Init(0, unsafe { nil })
 }
 
 // initialise readies MPI for use
-pub fn initialise() ? {
+pub fn initialise() ! {
 	C.MPI_Init(0, unsafe { nil })
 }
 
 // start_thread_safe initialises MPI in a thread safe way
-pub fn start_thread_safe() ? {
+pub fn start_thread_safe() ! {
 	r := 0
 	C.MPI_Init_thread(0, unsafe { nil }, C.MPI_THREAD_MULTIPLE, &r)
 	if r != C.MPI_THREAD_MULTIPLE {
@@ -97,7 +97,7 @@ mut:
 //   ranks -- World indices of processors in this Communicator.
 //            use nil or empty to get the World Communicator
 //   Note there is currently no means to use groups.
-pub fn new_communicator(ranks []int) ?&Communicator {
+pub fn new_communicator(ranks []int) !&Communicator {
 	mut o := &Communicator{
 		comm: MPI_Comm(C.MPI_COMM_WORLD)
 		group: unsafe { nil }

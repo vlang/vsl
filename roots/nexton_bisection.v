@@ -6,7 +6,7 @@ import math
 
 // Find the root of a function by combining Newton's method with the bisection
 // method
-pub fn newton_bisection(f func.FnFdf, x_min f64, x_max f64, tol f64, max_iter int) ?f64 {
+pub fn newton_bisection(f func.FnFdf, x_min f64, x_max f64, tol f64, max_iter int) !f64 {
 	func_low, _ := f.eval_f_df(x_min)
 	if func_low == 0.0 {
 		return x_min

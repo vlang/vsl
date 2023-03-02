@@ -150,7 +150,7 @@ pub fn new_lancaster_stemmer(strip_prefix bool) LancasterStemmer {
 
 // parse_rules makes sure all rules provided are allowed by the following
 // regex: `^[a-z]+\*?\d[a-z]*[>\.]?$`.
-fn (mut stemmer LancasterStemmer) parse_rules(rules []string) ? {
+fn (mut stemmer LancasterStemmer) parse_rules(rules []string) ! {
 	mut valid_rule := regex.regex_opt('^[a-z]+\\*?\\d[a-z]*[>\\.]?$') or {
 		return errors.error('regex error in LancasterStemmer, this should never happen. File an issue if you see this error',
 			.efailed)
@@ -172,7 +172,7 @@ fn (mut stemmer LancasterStemmer) parse_rules(rules []string) ? {
 }
 
 // set_rules redefines the rules of stemmer and parses it.
-pub fn (mut stemmer LancasterStemmer) set_rules(rules []string) ? {
+pub fn (mut stemmer LancasterStemmer) set_rules(rules []string) ! {
 	if rules.len == 0 {
 		return errors.error('no LancasterStemmer rules provided.', .einval)
 	}
@@ -186,7 +186,7 @@ pub fn (mut stemmer LancasterStemmer) set_rules(rules []string) ? {
 }
 
 // stem serves as a wrapper for do_stemming, which is private.
-pub fn (mut stemmer LancasterStemmer) stem(word string) ?string {
+pub fn (mut stemmer LancasterStemmer) stem(word string) !string {
 	mut lowercase := word.to_lower()
 	strip := fn (w string) string {
 		for prefix in ['kilo', 'micro', 'milli', 'intra', 'ultra', 'mega', 'nano', 'pico', 'pseudo'] {
@@ -201,7 +201,7 @@ pub fn (mut stemmer LancasterStemmer) stem(word string) ?string {
 	}
 	mut intact_word := lowercase
 	if stemmer.rule_map.len == 0 {
-		stemmer.parse_rules(stemmer.rules)?
+		stemmer.parse_rules(stemmer.rules)!
 	}
 	return stemmer.do_stemming(lowercase, intact_word)
 }

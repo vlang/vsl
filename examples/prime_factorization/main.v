@@ -4,8 +4,8 @@ module main
 import vsl.prime
 import os
 
-fn spf(x int) ?int {
-	sieve := prime.prime_sieve(x)?
+fn spf(x int) !int {
+	sieve := prime.prime_sieve(x)!
 	for p in sieve {
 		if x % p == 0 {
 			return p
@@ -14,11 +14,11 @@ fn spf(x int) ?int {
 	return x
 }
 
-fn factorize(y int) ?[]int {
+fn factorize(y int) ![]int {
 	mut n := y
 	mut factors := []int{}
 	for n != 1 {
-		x := spf(n)?
+		x := spf(n)!
 		factors << x
 		n /= x
 	}
@@ -27,7 +27,7 @@ fn factorize(y int) ?[]int {
 
 fn main() {
 	mut n := os.input('').int()
-	factors := factorize(n)?
+	factors := factorize(n)!
 	for f in factors {
 		print('${f} ')
 	}

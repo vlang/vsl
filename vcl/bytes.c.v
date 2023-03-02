@@ -6,8 +6,8 @@ pub struct Bytes {
 }
 
 // bytes allocates new memory buffer with specified size on device
-pub fn (d &Device) bytes(size int) ?&Bytes {
-	buf := d.buffer(size)?
+pub fn (d &Device) bytes(size int) !&Bytes {
+	buf := d.buffer(size)!
 	return &Bytes{
 		buf: buf
 	}
@@ -19,7 +19,7 @@ pub fn (b &Bytes) size() int {
 }
 
 // release releases the buffer on the device
-pub fn (b &Bytes) release() ? {
+pub fn (b &Bytes) release() ! {
 	return b.buf.release()
 }
 
@@ -30,7 +30,7 @@ pub fn (b &Bytes) load(data []byte) chan IError {
 }
 
 // data gets data from device, it's a blocking call
-pub fn (b &Bytes) data() ?[]u8 {
+pub fn (b &Bytes) data() ![]u8 {
 	mut data := []u8{len: b.buf.size}
 	ret := cl_enqueue_read_buffer(b.buf.device.queue, b.buf.memobj, true, 0, usize(b.buf.size),
 		unsafe { &data[0] }, 0, unsafe { nil }, unsafe { nil })

@@ -10,7 +10,7 @@ pub fn is_on() bool {
 }
 
 // start initialises MPI
-pub fn start() ? {
+pub fn start() ! {
 	return errors.error('MPI is not supported on this platform', .efailed)
 }
 
@@ -34,7 +34,7 @@ pub struct Communicator {}
 // new_communicator creates a new communicator or returns the World Communicator
 //   ranks -- World indices of processors in this Communicator.
 //            use nil or empty to get the World Communicator
-pub fn new_communicator(ranks []int) ?&Communicator {
+pub fn new_communicator(ranks []int) !&Communicator {
 	return errors.error('MPI is not supported on this platform', .efailed)
 }
 

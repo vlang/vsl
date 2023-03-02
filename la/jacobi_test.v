@@ -20,7 +20,7 @@ fn test_jacobi01() {
 
 	mut expected_v := [2.0, 2.0, 2.0]
 
-	jacobi(mut q, mut v, mut a)?
+	jacobi(mut q, mut v, mut a)!
 
 	assert float64.arrays_tolerance(q.data, expected_q.data, 1e-17)
 	assert float64.arrays_tolerance(v, expected_v, 1e-17)

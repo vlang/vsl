@@ -6,7 +6,7 @@ import vsl.errors
 // denoting the most frequent ngrams in `ngrams`.
 // Since V does not support map of arrays, the ngrams are joined by
 // "NGRAMSEP". If `n_features` is <= 0, it will be set to ngrams.len.
-pub fn most_frequent_ngrams(ngrams [][]string, n_features int) ?[][]string {
+pub fn most_frequent_ngrams(ngrams [][]string, n_features int) ![][]string {
 	if ngrams.len == 0 {
 		return errors.error('ngram_frequency_map expects a non-empty array of ngrams.',
 			.einval)

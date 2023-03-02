@@ -5,7 +5,7 @@ import os
 import time
 import vsl.errors
 
-pub fn (p Plot) show() ? {
+pub fn (p Plot) show() ! {
 	ts := time.now().format_ss_micro()
 	plot_str := json.encode_pretty(p.traces)
 

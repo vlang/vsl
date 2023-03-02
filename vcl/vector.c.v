@@ -7,9 +7,9 @@ mut:
 }
 
 // vector allocates new vector buffer with specified length
-pub fn (d &Device) vector[T](length int) ?&Vector[T] {
+pub fn (d &Device) vector[T](length int) !&Vector[T] {
 	size := length * int(sizeof(T))
-	buffer := d.buffer(size)?
+	buffer := d.buffer(size)!
 	return &Vector[T]{
 		buf: buffer
 	}
@@ -21,7 +21,7 @@ pub fn (v &Vector[T]) length() int {
 }
 
 // Release releases the buffer on the device
-pub fn (v &Vector[T]) release() ? {
+pub fn (v &Vector[T]) release() ! {
 	return v.buf.release()
 }
 
@@ -37,7 +37,7 @@ pub fn (mut v Vector[T]) load(data []T) chan IError {
 }
 
 // data gets T data from device, it's a blocking call
-pub fn (v &Vector[T]) data() ?[]T {
+pub fn (v &Vector[T]) data() ![]T {
 	mut data := []T{len: int(v.buf.size / int(sizeof(T)))}
 	ret := cl_enqueue_read_buffer(v.buf.device.queue, v.buf.memobj, true, 0, usize(v.buf.size),
 		unsafe { &data[0] }, 0, unsafe { nil }, unsafe { nil })

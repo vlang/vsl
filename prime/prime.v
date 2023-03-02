@@ -20,7 +20,7 @@ pub fn is_prime(p int) bool {
 }
 
 // prime sieve returns a list of primes up the number specified
-pub fn prime_sieve(range int) ?[]int {
+pub fn prime_sieve(range int) ![]int {
 	if range <= 1 {
 		return error('Range must be greater than 1')
 	}

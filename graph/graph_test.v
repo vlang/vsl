@@ -26,13 +26,13 @@ fn test_graph01() {
 	assert g.key2edge[hash_edge_key(0, 3)] == 1 // (0,3) → edge 1
 	assert g.key2edge[hash_edge_key(1, 2)] == 2 // (1,2) → edge 2
 	assert g.key2edge[hash_edge_key(2, 3)] == 3 // (2,3) → edge 3
-	edg0 := g.get_edge(0, 1)?
+	edg0 := g.get_edge(0, 1)!
 	assert edg0 == 0
-	edg1 := g.get_edge(0, 3)?
+	edg1 := g.get_edge(0, 3)!
 	assert edg1 == 1
-	edg2 := g.get_edge(1, 2)?
+	edg2 := g.get_edge(1, 2)!
 	assert edg2 == 2
-	edg3 := g.get_edge(2, 3)?
+	edg3 := g.get_edge(2, 3)!
 	assert edg3 == 3
 	g2 := g.shortest_paths(.fw)
 	g2_path_0_3 := g2.path(0, 3)

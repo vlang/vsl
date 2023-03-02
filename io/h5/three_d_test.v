@@ -45,24 +45,24 @@ fn test_3d() {
 		}
 	}
 
-	f := new_file(h5.testfile)?
+	f := new_file(h5.testfile)!
 
-	f.write_dataset3d('i8array', i8array)?
-	f.write_dataset3d('u8array', u8array)?
+	f.write_dataset3d('i8array', i8array)!
+	f.write_dataset3d('u8array', u8array)!
 
-	f.write_dataset3d('i16array', i16array)?
-	f.write_dataset3d('u16array', u16array)?
+	f.write_dataset3d('i16array', i16array)!
+	f.write_dataset3d('u16array', u16array)!
 
-	f.write_dataset3d('i32array', i32array)?
-	f.write_dataset3d('u32array', u32array)?
+	f.write_dataset3d('i32array', i32array)!
+	f.write_dataset3d('u32array', u32array)!
 
-	f.write_dataset3d('i64array', i64array)?
-	f.write_dataset3d('u64array', u64array)?
+	f.write_dataset3d('i64array', i64array)!
+	f.write_dataset3d('u64array', u64array)!
 
-	f.write_dataset3d('intarray', intarray)?
+	f.write_dataset3d('intarray', intarray)!
 
-	f.write_dataset3d('f32array', f32array)?
-	f.write_dataset3d('f64array', f64array)?
+	f.write_dataset3d('f32array', f32array)!
+	f.write_dataset3d('f64array', f64array)!
 
 	f.close()
 }
@@ -114,11 +114,11 @@ fn test_run() {
 
 	assert 2 == output.count('H5T_STD_I32LE') // i32 and int
 
-	readback()?
-	readback()? // worth doing twice
+	readback()!
+	readback()! // worth doing twice
 }
 
-fn readback() ? {
+fn readback() ! {
 	// read_dataset3d will change the mut array size
 
 	mut i8arrayrd := make3type[i8](1, 1, 1)
@@ -138,7 +138,7 @@ fn readback() ? {
 
 	mut intarrayrd := make3type[int](1, 1, 1)
 
-	f := open_file(h5.testfile)?
+	f := open_file(h5.testfile)!
 
 	f.read_dataset3d('i8array', mut i8arrayrd)
 	f.read_dataset3d('u8array', mut u8arrayrd)

@@ -16,7 +16,7 @@ fn main() {
 
 	// do not create platforms/devices/contexts/queues/...
 	// just get the device
-	mut device := vcl.get_default_device()?
+	mut device := vcl.get_default_device()!
 	defer {
 		device.release() or { panic(err) }
 	}
@@ -29,14 +29,14 @@ fn main() {
 	}
 
 	// Create image buffer (image2d_t) to write_only
-	mut inverted_img := device.image_2d(.rgba, width: img.bounds.width, height: img.bounds.height)?
+	mut inverted_img := device.image_2d(.rgba, width: img.bounds.width, height: img.bounds.height)!
 	defer {
 		inverted_img.release() or { panic(err) }
 	}
 
 	// add program source to device, get kernel
-	device.add_program(invert_color_kernel)?
-	k := device.kernel('invert')?
+	device.add_program(invert_color_kernel)!
+	k := device.kernel('invert')!
 	// run kernel (global work size 16 and local work size 1)
 	kernel_err := <-k.global(int(img.bounds.width), int(img.bounds.height))
 		.local(1, 1).run(img, inverted_img)
@@ -44,7 +44,7 @@ fn main() {
 		panic(kernel_err)
 	}
 
-	next_inverted_img := inverted_img.data_2d()?
+	next_inverted_img := inverted_img.data_2d()!
 	// save image
 	stbi.stbi_write_png(os.join_path(output_dir, 'inverted.png'), int(inverted_img.bounds.width),
 		int(inverted_img.bounds.height), 4, next_inverted_img.data, 0)!

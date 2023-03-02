@@ -5,7 +5,7 @@ import vsl.plot
 import internal.dataset
 
 // data
-mut data := ml.data_from_raw_x(dataset.raw_dataset.map([it[0], it[1]]))?
+mut data := ml.data_from_raw_x(dataset.raw_dataset.map([it[0], it[1]]))!
 
 // model
 nb_classes := 3
@@ -68,4 +68,4 @@ for i in 0 .. nb_classes {
 	)
 }
 
-plt.show()?
+plt.show()!

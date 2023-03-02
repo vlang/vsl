@@ -39,4 +39,4 @@ plt.add_trace(
 plt.set_layout(
 	title: 'Scatter plot example'
 )
-plt.show()?
+plt.show()!

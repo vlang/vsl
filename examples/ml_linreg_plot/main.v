@@ -26,7 +26,7 @@ xy := [
 	[1.43, 94.98],
 	[0.95, 87.33],
 ]
-mut data := ml.data_from_raw_xy(xy)?
+mut data := ml.data_from_raw_xy(xy)!
 mut reg := ml.new_lin_reg(mut data, 'linear regression')
 
 reg.train()
@@ -65,4 +65,4 @@ plt.add_trace(
 	}
 )
 
-plt.show()?
+plt.show()!

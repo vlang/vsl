@@ -12,4 +12,4 @@ plt.add_trace(
 plt.set_layout(
 	title: 'Countries by population'
 )
-plt.show()?
+plt.show()!
