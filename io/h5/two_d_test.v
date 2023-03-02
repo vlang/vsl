@@ -43,24 +43,24 @@ fn test_2d() {
 		}
 	}
 
-	f := new_file(h5.testfile)?
+	f := new_file(h5.testfile)!
 
-	f.write_dataset2d('i8array', i8array)?
-	f.write_dataset2d('u8array', u8array)?
+	f.write_dataset2d('i8array', i8array)!
+	f.write_dataset2d('u8array', u8array)!
 
-	f.write_dataset2d('i16array', i16array)?
-	f.write_dataset2d('u16array', u16array)?
+	f.write_dataset2d('i16array', i16array)!
+	f.write_dataset2d('u16array', u16array)!
 
-	f.write_dataset2d('i32array', i32array)?
-	f.write_dataset2d('u32array', u32array)?
+	f.write_dataset2d('i32array', i32array)!
+	f.write_dataset2d('u32array', u32array)!
 
-	f.write_dataset2d('i64array', i64array)?
-	f.write_dataset2d('u64array', u64array)?
+	f.write_dataset2d('i64array', i64array)!
+	f.write_dataset2d('u64array', u64array)!
 
-	f.write_dataset2d('intarray', intarray)?
+	f.write_dataset2d('intarray', intarray)!
 
-	f.write_dataset2d('f32array', f32array)?
-	f.write_dataset2d('f64array', f64array)?
+	f.write_dataset2d('f32array', f32array)!
+	f.write_dataset2d('f64array', f64array)!
 
 	f.close()
 }
@@ -112,11 +112,11 @@ fn test_run() {
 
 	assert 2 == output.count('H5T_STD_I32LE') // i32 and int
 
-	readback()?
-	readback()? // worth doing twice
+	readback()!
+	readback()! // worth doing twice
 }
 
-fn readback() ? {
+fn readback() ! {
 	// read_dataset2d will change the mut array size
 
 	mut i8arrayrd := make2type[i8](1, 1)
@@ -136,7 +136,7 @@ fn readback() ? {
 
 	mut intarrayrd := make2type[int](1, 1)
 
-	f := open_file(h5.testfile)?
+	f := open_file(h5.testfile)!
 
 	f.read_dataset2d('i8array', mut i8arrayrd)
 	f.read_dataset2d('u8array', mut u8arrayrd)
