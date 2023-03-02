@@ -48,7 +48,7 @@ pub fn (o InterpQuad) optimum() (f64, f64) {
 //   (x0, y0) -- first point
 //   (x1, y1) -- second point
 //   (x2, y2) -- third point
-pub fn (mut o InterpQuad) fit_3points(x0 f64, y0 f64, x1 f64, y1 f64, x2 f64, y2 f64) ? {
+pub fn (mut o InterpQuad) fit_3points(x0 f64, y0 f64, x1 f64, y1 f64, x2 f64, y2 f64) ! {
 	z0, z1, z2 := x0 * x0, x1 * x1, x2 * x2
 	den := x0 * (z2 - z1) - x1 * z2 + x2 * z1 + (x1 - x2) * z0
 	if math.abs(den) < o.tol_den {
@@ -64,7 +64,7 @@ pub fn (mut o InterpQuad) fit_3points(x0 f64, y0 f64, x1 f64, y1 f64, x2 f64, y2
 //   (x0, y0) -- first point
 //   (x1, y1) -- second point
 //   (x2, d2) -- derivate @ x2
-pub fn (mut o InterpQuad) fit_2points_d(x0 f64, y0 f64, x1 f64, y1 f64, x2 f64, d2 f64) ? {
+pub fn (mut o InterpQuad) fit_2points_d(x0 f64, y0 f64, x1 f64, y1 f64, x2 f64, d2 f64) ! {
 	z0, z1 := x0 * x0, x1 * x1
 	den := -z1 + z0 + 2 * x1 * x2 - 2 * x0 * x2
 	if math.abs(den) < o.tol_den {
