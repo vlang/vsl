@@ -67,7 +67,7 @@ pub fn (o InterpCubic) critical() (f64, f64, f64, bool, bool, bool) {
 //   (x1, y1) -- second point
 //   (x2, y2) -- third point
 //   (x3, y3) -- fourth point
-pub fn (mut o InterpCubic) fit_4points(x0 f64, y0 f64, x1 f64, y1 f64, x2 f64, y2 f64, x3 f64, y3 f64) ? {
+pub fn (mut o InterpCubic) fit_4points(x0 f64, y0 f64, x1 f64, y1 f64, x2 f64, y2 f64, x3 f64, y3 f64) ! {
 	z0, z1, z2, z3 := x0 * x0, x1 * x1, x2 * x2, x3 * x3
 	w0, w1, w2, w3 := z0 * x0, z1 * x1, z2 * x2, z3 * x3
 	den := w0 * ((x2 - x3) * z1 + x3 * z2 - x2 * z3 + x1 * (z3 - z2)) + w1 * (x2 * z3 - x3 * z2) +
@@ -97,7 +97,7 @@ pub fn (mut o InterpCubic) fit_4points(x0 f64, y0 f64, x1 f64, y1 f64, x2 f64, y
 //   (x1, y1) -- second point
 //   (x2, y2) -- third point
 //   (x3, d3) -- derivative @ x3
-pub fn (mut o InterpCubic) fit_3points_d(x0 f64, y0 f64, x1 f64, y1 f64, x2 f64, y2 f64, x3 f64, d3 f64) ? {
+pub fn (mut o InterpCubic) fit_3points_d(x0 f64, y0 f64, x1 f64, y1 f64, x2 f64, y2 f64, x3 f64, d3 f64) ! {
 	z0, z1, z2, z3 := x0 * x0, x1 * x1, x2 * x2, x3 * x3
 	w0, w1, w2 := z0 * x0, z1 * x1, z2 * x2
 	den := x0 * (2 * w1 * x3 - 2 * w2 * x3 - 3 * z1 * z3 + 3 * z2 * z3) +
