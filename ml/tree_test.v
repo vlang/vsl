@@ -73,3 +73,11 @@ fn test_unique() {}
 fn test_best_criteria() {}
 
 fn test_info_gain() {}
+
+fn test_init_tree() {}
+
+fn test_train() {}
+
+fn test_update() {}
+
+fn test_predict() {}
