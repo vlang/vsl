@@ -61,12 +61,11 @@ to support FFT of real to complex and complex to real (arrays).</p>
 <p>The result of a real-to-complex transform, because of mathematical symmetry of the
 result, is stored in the original input array rather than 2x the space.</p>
 <p>The output is the two real values bracketing the complex pairs
-of conjugate negative frequencies:</p>
-<p><em>r0 r1 i1 r2 i2 r3 i3 ... rx</em></p>
-<p>where r0 + <em>i</em>0 is the first complex result, r1 - <em>i</em>i1 is the second, and so on
-until rx + <em>i</em>0 (where x is n/2) is the last. (Note the minus signs.)</p>
+of conjugate negative frequencies: <em>r0 r1 i1 r2 i2 r3 i3 ... rx</em></p>
+<p>where <em>r0 + i0</em> is the first complex result, <em>r1 - i1</em> is the second, and so on
+until <em>rx + i0</em> (where <em>x</em> is <em>n/2</em>) is the last. (Note the minus signs.)</p>
 <p>The positive frequencies are the same as the negative frequencies in reverse
-order.  See the reference
+order. See the reference
 for <a href="https://www.fftw.org/fftw3.pdf">FFTW</a> for further examples of embeddings.</p>
 
 </section>
@@ -98,7 +97,7 @@ r[1] and i</em>r[2]</p>
 </section>
 
           <div class="footer">
-            Powered by vdoc. Generated on: 19 Mar 2023 20:23:41
+            Powered by vdoc. Generated on: 19 Mar 2023 20:25:50
           </div>
         </div>
         <div class="doc-toc"><ul><li class="open"><a href="#readme_fft">README</a></li>
