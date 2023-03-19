@@ -1,11 +1,5 @@
 module fft
 
-#flag -I @VMODROOT/src
-#flag @VMODROOT/src/f32.o
-#flag @VMODROOT/src/f64.o
-#include "pocketfft_f32.h"
-#include "pocketfft_f64.h"
-
 type FftSizeT = u64
 
 struct C.cfft_plan_i_f32 {
