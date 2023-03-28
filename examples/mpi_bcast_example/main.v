@@ -34,7 +34,7 @@ comm.barrier()
 mut r := []f64{len: n}
 comm.reduce_sum_f64(mut r, x)
 if id == 0 {
-	assertion := float64.arrays_tolerance(r, []f64{len: n, init: it}, 1e-17)
+	assertion := float64.arrays_tolerance(r, []f64{len: n, init: index}, 1e-17)
 	println('ID: ${id} - Assertion: ${assertion}')
 } else {
 	assertion := float64.arrays_tolerance(r, []f64{len: n}, 1e-17)
