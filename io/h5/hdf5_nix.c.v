@@ -57,9 +57,9 @@ fn C.H5Dclose(dset_id Hdf5HidT) Hdf5HerrT
 fn C.H5Sclose(dset_id Hdf5HidT) Hdf5HerrT
 fn C.H5Fclose(file_id Hdf5HidT) Hdf5HerrT
 
-// hdftype is a Templated function to convert a type to an external const
+// hdftype is a Templated function to convert a type to an external const.
 // It maps the V type name to an HDF5 type name (f64 -> C.H5T_IEEE_F64LE).
-// Not valid for read with Big Endian architectures (SPARC, some POWER machines)
+// Not valid for read on Big Endian architectures (SPARC, some POWER machines).
 fn hdftype[T](x T) Hdf5HidT {
 	$if T is f64 {
 		return C.H5T_IEEE_F64LE
@@ -117,7 +117,7 @@ pub fn (f &Hdf5File) write_dataset1d[T](dset_name string, buffer []T) !Hdf5HerrT
 }
 
 // write_dataset2d writes a 2-d numeric array to a named HDF5 dataset in an HDF5 file.
-// Note: creates a temporary copy of the array.
+// Note: creates and deletes a temporary copy of the array.
 pub fn (f &Hdf5File) write_dataset2d[T](dset_name string, buffer [][]T) !Hdf5HerrT {
 	rank := int(2)
 	dims := [i64(buffer.len), buffer[0].len]
@@ -128,7 +128,7 @@ pub fn (f &Hdf5File) write_dataset2d[T](dset_name string, buffer [][]T) !Hdf5Her
 }
 
 // write_dataset3d writes a numeric 3-d array (layers of 2-d arrays) to a named HDF5 dataset in an HDF5 file.
-// Note: creates a temporary copy of the array.
+// Note: creates and deletes a temporary copy of the array.
 pub fn (f &Hdf5File) write_dataset3d[T](dset_name string, buffer [][][]T) !Hdf5HerrT {
 	rank := int(3)
 	dims := [i64(buffer.len), buffer[0].len, buffer[0][0].len]
@@ -217,7 +217,7 @@ pub fn (f &Hdf5File) write_attribute[T](dset_name string, attr_name string, buff
 	}
 }
 
-// open_file opens an existing HDF5 file
+// open_file opens an existing HDF5 file.
 pub fn open_file(filename string) !Hdf5File {
 	mut f := Hdf5File{
 		filedesc: C.H5Fopen(unsafe { filename.str }, C.H5F_ACC_RDONLY, C.H5P_DEFAULT)

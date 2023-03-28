@@ -82,7 +82,7 @@ pub mut:
 	im f64
 }
 
-// create_plan returns a plan to compute a Fourier transform of the given array
+// create_plan returns a plan to compute a Fourier transform of the given array.
 // A plan is reusable for any array of exactly this size and type.
 // The array may be []f32, []f64, or []complx_f32 or []complex_f64.
 pub fn create_plan[T](x T) ?Fftplan {
@@ -100,7 +100,7 @@ pub fn create_plan[T](x T) ?Fftplan {
 	return none
 }
 
-// forward_fft computes a Fourier transform defined by the plan p
+// forward_fft computes a Fourier transform defined by the plan p.
 // The input is []f32 or []f64.
 // The output result (r) is returned in-place, and is complex
 // and real numbers mixed as follows:
@@ -141,7 +141,7 @@ pub fn forward_fft[T](p Fftplan, v T) int {
 	}
 }
 
-// backward_fft computes the backwards Fourier transform defined by the plan r
+// backward_fft computes the backwards Fourier transform defined by the plan r.
 pub fn backward_fft[T](r Fftplan, v T) int {
 	match r {
 		Fft32 {
