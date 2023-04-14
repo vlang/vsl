@@ -20,6 +20,7 @@
 [![VSL Continuous Integration][workflowbadge]][workflowurl]
 [![Deploy Documentation][deploydocsbadge]][deploydocsurl]
 [![License: MIT][licensebadge]][licenseurl]
+[![Modules][ModulesBadge]][ModulesUrl]
 
 </div>
 
@@ -117,7 +118,10 @@ Made with [contributors-img](https://contrib.rocks).
 [workflowbadge]: https://github.com/vlang/vsl/actions/workflows/ci.yml/badge.svg
 [deploydocsbadge]: https://github.com/vlang/vsl/actions/workflows/deploy-docs.yml/badge.svg
 [licensebadge]: https://img.shields.io/badge/License-MIT-blue.svg
+[ModulesBadge]: https://img.shields.io/badge/modules-reference-027d9c?logo=v&logoColor=white&logoWidth=10
+
 [awesomevurl]: https://github.com/vlang/awesome-v/blob/master/README.md#scientific-computing
 [workflowurl]: https://github.com/vlang/vsl/actions/workflows/ci.yml
 [deploydocsurl]: https://github.com/vlang/vsl/actions/workflows/deploy-docs.yml
 [licenseurl]: https://github.com/vlang/vsl/blob/master/LICENSE
+[ModulesUrl]: https://vlang.github.io/vsl/
