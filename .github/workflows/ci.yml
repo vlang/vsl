@@ -108,7 +108,7 @@ jobs:
         run: mv ./vsl ~/.vmodules
 
       - name: Verify Fmt
-        run:
+        run: |
           cd ~
           v fmt -verify ~/.vmodules/vsl
 
