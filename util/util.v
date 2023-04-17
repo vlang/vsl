@@ -61,9 +61,9 @@ pub fn stepped_range(start int, stop int, step int) []int {
 	for {
 		val++
 		new_val := start + (val * step)
-		if (step > 0) && (new_val >= stop) {
+		if step > 0 && new_val >= stop {
 			break
-		} else if (step < 0) && (new_val <= stop) {
+		} else if step < 0 && new_val <= stop {
 			break
 		} else {
 			result << new_val

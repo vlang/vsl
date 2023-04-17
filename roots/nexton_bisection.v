@@ -33,7 +33,7 @@ pub fn newton_bisection(f func.FnFdf, x_min f64, x_max f64, tol f64, max_iter in
 	mut dx := dx_anc
 	mut func_current, mut diff_func_current := f.eval_f_df(rts)
 	for _ in 0 .. max_iter {
-		if (((rts - xh) * diff_func_current - func_current) * ((rts - xl) * diff_func_current - func_current) >= 0.0)
+		if ((rts - xh) * diff_func_current - func_current) * ((rts - xl) * diff_func_current - func_current) >= 0.0
 			|| math.abs(2.0 * func_current) > math.abs(dx_anc * diff_func_current) {
 			dx_anc = dx
 			dx = 0.5 * (xh - xl)
