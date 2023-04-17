@@ -108,7 +108,9 @@ jobs:
         run: mv ./vsl ~/.vmodules
 
       - name: Verify Fmt
-        run: v fmt -verify ~/.vmodules/vsl
+        run:
+          cd ~
+          v fmt -verify ~/.vmodules/vsl
 
   run-tests-on-linux:
     runs-on: ${{ matrix.os }}
