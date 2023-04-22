@@ -27,27 +27,6 @@ stored in a group in an area of the file called a `dataspace`.
 - Distributed datasets (pointers to other HDF5 files).
 - Parallel reading or writing.
 
-## Usage example
-
-```v
-import vsl.io.h5
-import math.stats
-import rand
-
-linedata := []f64{len: 21, init: (0 * index) + rand.f64()}
-mut meanv := 0.0
-hdffile := 'hdffile.h5'
-
-meanv = stats.mean(linedata)
-
-f := h5.new_file(hdffile)!
-f.write_dataset1d('/randdata', linedata)!
-f.write_attribute('/randdata', 'mean', meanv)!
-f.close()
-```
-
-You can view the result with `h5dump hdffile.h5`.
-
 ## References and Further Reading
 
 See the [HDF5](https://hdfgroup.org) website for documentation and examples

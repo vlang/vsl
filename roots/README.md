@@ -42,28 +42,3 @@ Find the root of `f` between `x_min` and `x_max` with the accuracy
 or with the maximum number of iterations `n_max`.
 
 On exit, the results is `(x_max + x_min) / 2`.
-
-## Usage example
-
-```v
-module main
-
-import vsl.func
-import vsl.roots
-import math
-
-const (
- epsabs = 0.0001
- epsrel = 0.00001
- n_max  = 100
-)
-
-fn cos(x f64, _ []f64) f64 {
- return math.cos(x)
-}
-
-f := func.new_func(f: cos)
-result := roots.bisection(f, 0.0, 3.0, epsrel, epsabs, n_max)?
-```
-
-`result` will be `math.pi / 2.00`

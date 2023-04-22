@@ -9,46 +9,6 @@ choice of finite difference and to estimate the error in the derivative.
 The development of this module is inspired by the same present in [GSL](https://github.com/ampl/gsl)
 looking to adapt it completely to the practices and tools present in VSL.
 
-## Usage example
-
-```v
-module main
-
-import vsl.deriv
-import vsl.func
-import math
-
-fn pow(x f64, _ []f64) f64 {
- return math.pow(x, 1.5)
-}
-
-f := func.new_func(f: pow)
-println('f(x) = x^(3/2)')
-mut expected := 1.5 * math.sqrt(2.0)
-mut result, mut abserr := deriv.central(f, 2.0, 1e-8)
-println('x = 2.0')
-println("f'(x) = ${result} +/- ${abserr}")
-println('exact = ${expected}')
-expected = 0.0
-result, abserr = deriv.forward(f, 0.0, 1e-8)
-println('x = 0.0')
-println("f'(x) = ${result} +/- ${abserr}")
-println('exact = ${expected}')
-```
-
-Will print
-
-```console
-f(x) = x^(3/2)
-x = 2.0
-f'(x) = 2.1213203120 +/- 0.0000005006
-exact = 2.1213203436
-
-x = 0.0
-f'(x) = 0.0000000160 +/- 0.0000000339
-exact = 0.0000000000
-```
-
 ## Functions
 
 ```v ignore
