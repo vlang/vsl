@@ -75,7 +75,7 @@ jobs:
           v check-md ~/.vmodules/vsl
 
   fmt-check:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout VSL
