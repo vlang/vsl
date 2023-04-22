@@ -102,7 +102,7 @@ fn (d &Device) create_image_2d(image_type ImageChannelOrder, bounds Rect, data v
 pub fn (image &Image) data_2d() ![]u8 {
 	origin := [3]usize{init: 0}
 	region0 := [usize(image.bounds.width), usize(image.bounds.height), 1]
-	region := [3]usize{init: region0[it]}
+	region := [3]usize{init: region0[index]}
 	result := []u8{len: image.buf.size, cap: image.buf.size}
 	ret := cl_enqueue_read_image(image.buf.device.queue, image.buf.memobj, true, origin,
 		region, 0, 0, unsafe { &result[0] }, 0, unsafe { nil }, unsafe { nil })
