@@ -80,23 +80,6 @@ of the dataset describing how it was acquired or created.</li>
 <li>Distributed datasets (pointers to other HDF5 files).</li>
 <li>Parallel reading or writing.</li>
 </ul>
-<h2>Usage example</h2>
-<pre><code class="language-v">import vsl.io.h5
-import math.stats
-import rand
-
-linedata := []f64{len: 21, init: (0 * index) + rand.f64()}
-mut meanv := 0.0
-hdffile := 'hdffile.h5'
-
-meanv = stats.mean(linedata)
-
-f := h5.new_file(hdffile)!
-f.write_dataset1d('/randdata', linedata)!
-f.write_attribute('/randdata', 'mean', meanv)!
-f.close()
-</code></pre>
-<p>You can view the result with <code>h5dump hdffile.h5</code>.</p>
 <h2>References and Further Reading</h2>
 <p>See the <a href="https://hdfgroup.org">HDF5</a> website for documentation and examples
 in C or Fortran.</p>
@@ -194,7 +177,7 @@ Maximum dimension is math.max_i32 or less (this is checked).</p>
 </section>
 
           <div class="footer">
-            Powered by vdoc. Generated on: 22 Apr 2023 19:07:05
+            Powered by vdoc. Generated on: 22 Apr 2023 22:08:53
           </div>
         </div>
         <div class="doc-toc"><ul><li class="open"><a href="#readme_io.h5">README</a></li>

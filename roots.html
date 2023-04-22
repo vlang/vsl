@@ -83,27 +83,6 @@ The algorithm stops when one of the three following conditions is met:</p>
 <code>|x_max - x_min| &lt; epsrel * x_min + epsabs</code>,
 or with the maximum number of iterations <code>n_max</code>.</p>
 <p>On exit, the results is <code>(x_max + x_min) / 2</code>.</p>
-<h2>Usage example</h2>
-<pre><code class="language-v">module main
-
-import vsl.func
-import vsl.roots
-import math
-
-const (
- epsabs = 0.0001
- epsrel = 0.00001
- n_max  = 100
-)
-
-fn cos(x f64, _ []f64) f64 {
- return math.cos(x)
-}
-
-f := func.new_func(f: cos)
-result := roots.bisection(f, 0.0, 3.0, epsrel, epsabs, n_max)?
-</code></pre>
-<p><code>result</code> will be <code>math.pi / 2.00</code></p>
 
 </section>
 
@@ -130,7 +109,7 @@ iterations.</p>
 </section>
 
           <div class="footer">
-            Powered by vdoc. Generated on: 22 Apr 2023 19:07:05
+            Powered by vdoc. Generated on: 22 Apr 2023 22:08:53
           </div>
         </div>
         <div class="doc-toc"><ul><li class="open"><a href="#readme_roots">README</a></li>

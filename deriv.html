@@ -61,40 +61,6 @@ functions.</p>
 choice of finite difference and to estimate the error in the derivative.</p>
 <p>The development of this module is inspired by the same present in <a href="https://github.com/ampl/gsl">GSL</a>
 looking to adapt it completely to the practices and tools present in VSL.</p>
-<h2>Usage example</h2>
-<pre><code class="language-v">module main
-
-import vsl.deriv
-import vsl.func
-import math
-
-fn pow(x f64, _ []f64) f64 {
- return math.pow(x, 1.5)
-}
-
-f := func.new_func(f: pow)
-println('f(x) = x^(3/2)')
-mut expected := 1.5 * math.sqrt(2.0)
-mut result, mut abserr := deriv.central(f, 2.0, 1e-8)
-println('x = 2.0')
-println(&quot;f'(x) = ${result} +/- ${abserr}&quot;)
-println('exact = ${expected}')
-expected = 0.0
-result, abserr = deriv.forward(f, 0.0, 1e-8)
-println('x = 0.0')
-println(&quot;f'(x) = ${result} +/- ${abserr}&quot;)
-println('exact = ${expected}')
-</code></pre>
-<p>Will print</p>
-<pre><code class="language-console">f(x) = x^(3/2)
-x = 2.0
-f'(x) = 2.1213203120 +/- 0.0000005006
-exact = 2.1213203436
-
-x = 0.0
-f'(x) = 0.0000000160 +/- 0.0000000339
-exact = 0.0000000000
-</code></pre>
 <h2>Functions</h2>
 <pre><code class="language-v">fn central (f func.Fn, x, h f64) (f64, f64)
 </code></pre>
@@ -161,7 +127,7 @@ negative step-size.</p>
 </section>
 
           <div class="footer">
-            Powered by vdoc. Generated on: 22 Apr 2023 19:07:05
+            Powered by vdoc. Generated on: 22 Apr 2023 22:08:53
           </div>
         </div>
         <div class="doc-toc"><ul><li class="open"><a href="#readme_deriv">README</a></li>
