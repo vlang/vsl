@@ -15,7 +15,6 @@ License
 
 3-clause BSD (see LICENSE.md)
 
-
 Some code details
 -----------------
 
@@ -46,10 +45,9 @@ For lengths with very large prime factors, Bluestein's algorithm is used, and
 instead of an FFT of length `n`, a convolution of length `n2 >= 2*n-1`
 is performed, where `n2` is chosen to be highly composite.
 
-
 [1] Swarztrauber, P. 1982, Vectorizing the Fast Fourier Transforms
     (New York: Academic Press), 51
 
-[2] https://www.netlib.org/fftpack/
+[2] <https://www.netlib.org/fftpack/>
 
-[3] https://en.wikipedia.org/wiki/Chirp_Z-transform
+[3] <https://en.wikipedia.org/wiki/Chirp_Z-transform>

@@ -10,7 +10,7 @@ coefficients (of any order). The functions are declared in the module `vsl.poly`
 
 The functions described here evaluate the polynomial
 
-```
+```console
 P(x) = c[0] + c[1] x + c[2] x^2 + . . . + c[len-1] x^(len-1)
 ```
 
@@ -39,7 +39,7 @@ fn solve_quadratic(a f64, b f64, c f64) []f64
 
 This function finds the real roots of the quadratic equation,
 
-```
+```console
 a x^2 + b x + c = 0
 ```
 
@@ -68,7 +68,7 @@ fn solve_cubic(a f64, b f64, c f64) []f64
 
 This function finds the real roots of the cubic equation,
 
-```
+```console
 x^3 + a x^2 + b x + c = 0
 ```
 

@@ -35,7 +35,7 @@ This library contains essential functions for linear algebra computations
 (operations between all combinations of vectors and matrices, eigenvalues and eigenvectors,
 linear solvers) and the development of numerical methods (e.g. numerical quadrature).
 
-Optionally, we link VSL with existent libraries written 
+Optionally, we link VSL with existent libraries written
 in C and Fortran, such as Open BLAS and LAPACK.
 These existing libraries have been fundamental for the development of high-performant
 simulations over many years. We believe that it is possible to rewrite these
@@ -59,7 +59,7 @@ Windows, Linux, and macOS out of the box.
 1. Install Docker
 2. Install [Visual Studio Code](https://code.visualstudio.com/)
 3. Install the [Remote Development](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) extension for VS Code
-4. Clone https://github.com/ulises-jeremias/hello-vsl
+4. Clone <https://github.com/ulises-jeremias/hello-vsl>
 5. Create your application within a container (see gif below)
 
 Done. And your system will remain "clean".
@@ -78,13 +78,13 @@ VS Code + the V tools + VSL.
 ### Via vpm
 
 ```sh
-$ v install vsl
+v install vsl
 ```
 
 ### Via [vpkg](https://github.com/v-pkg/vpkg)
 
 ```sh
-$ vpkg get https://github.com/vlang/vsl
+vpkg get https://github.com/vlang/vsl
 ```
 
 Done. Installation completed.
@@ -94,7 +94,7 @@ Done. Installation completed.
 To test the module, just type the following command:
 
 ```sh
-$ v test .
+v test .
 ```
 
 ## Contributors
@@ -104,8 +104,3 @@ $ v test .
 </a>
 
 Made with [contributors-img](https://contrib.rocks).
-
-[awesomevbadge]: https://awesome.re/mentioned-badge.svg
-[licensebadge]: https://img.shields.io/badge/License-MIT-blue.svg
-[awesomevurl]: https://github.com/vlang/awesome-v/blob/master/README.md#scientific-computing
-[licenseurl]: https://github.com/vlang/vsl/blob/master/LICENSE

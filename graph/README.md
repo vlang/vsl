@@ -8,7 +8,7 @@ finding. It also implements an algorithm to solve the assignment problem.
 In `graph`, directed graphs are mainly defined by edges. A weight can be assigned to each edge as
 well. For example, the graph below:
 
-```
+```console
           [10]
      0 ––––––––→ 3      numbers in parentheses
      |    (1)    ↑      indicate edge ids
@@ -43,7 +43,7 @@ are useful when computing distances, for example.
 The `shortest_paths` method of `Graph` computes the shortest paths using the Floyd-Warshall
 algorithm. For example, the graph above has the following distances matrix:
 
-```
+```console
        [10]
     0 ––––––→ 3            numbers in brackets
     |         ↑            indicate weights
@@ -66,7 +66,7 @@ with the `path` method.
 
 ### Example: Small graph
 
-```
+```console
          [10]
     0 ––––––––→ 3      numbers in parentheses
     |    (1)    ↑      indicate edge ids

@@ -1,47 +1,22 @@
 # V Linear Algebra System
 
-This package implements BLAS and LAPACK functions. It provides two different backends:
+This package implements BLAS and LAPACKE functions. It provides different backends:
 
-- One using Open BLAS when using flag `-d cblas`.
-  [Check also OpenBLAS](https://github.com/xianyi/OpenBLAS).
-- One using a pure V implementation called VLAS, *by default*.
-  This implementation can be found on `vsl.vlas.vblas`.
+| Backend  | Description                                                                                                                                                        | Status  | Compilation Flags |
+| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- | ----------------- |
+| VLAS     | Pure V implementation                                                                                                                                              | WIP     | `-d vlas`         |
+| OpenBLAS | OpenBLAS is an optimized BLAS library based on <https://github.com/xianyi/OpenBLAS>. Check the section [OpenBLAS Backend](#openblas-backend) for more information. | Working | `-d openblas`     |
+| LAPACKE  | LAPACKE is a C interface to the LAPACK linear algebra routines                                                                                                     | Working | `-d lapacke`      |
 
-Therefore, its routines are a little more
-*lower level* than the ones in the package `vsl.la`.
+Therefore, its routines are a little more _lower level_ than the ones in the package `vsl.la`.
 
-## Usage Example
+## OpenBLAS Backend
 
-```v
-module main
+Use the flag `-d cblas` to use the OpenBLAS backend.
 
-import vsl.vlas
-import vsl.la
+### Install dependencies
 
-// matrix_matrix_mul returns the matrix multiplication (scaled)
-//
-//  c := alpha⋅a⋅b    ⇒    cij := alpha * aik * bkj
-//
-pub fn matrix_matrix_mul(mut c la.Matrix[f64], alpha f64, a &la.Matrix[f64], b &la.Matrix[f64]) {
-	if c.m < 6 && c.n < 6 && a.n < 30 {
-		for i in 0 .. c.m {
-			for j in 0 .. c.n {
-				c.set(i, j, 0.0)
-				for k in 0 .. a.n {
-					c.add(i, j, alpha * a.get(i, k) * b.get(k, j))
-				}
-			}
-		}
-		return
-	}
-	vlas.dgemm(false, false, a.m, b.n, a.n, alpha, a.data, a.m, b.data, b.m, 0.0, mut
-		c.data, c.m)
-}
-```
-
-## Install dependencies
-
-### Debian/Ubuntu GNU Linux
+#### Debian/Ubuntu GNU Linux
 
 `libopenblas-dev` is not needed when using the pure V backend.
 
@@ -49,13 +24,50 @@ pub fn matrix_matrix_mul(mut c la.Matrix[f64], alpha f64, a &la.Matrix[f64], b &
 sudo apt-get install -y --no-install-recommends \
     gcc \
     gfortran \
-    liblapacke-dev \
-    libopenblas-dev \
+    libopenblas-dev
 ```
 
-### Arch Linux/Manjaro GNU Linux
+#### Arch Linux/Manjaro GNU Linux
 
-The best way of installing OpenBlas/LAPACK is using
+The best way of installing OpenBlas is using
+[openblas-lapack](https://aur.archlinux.org/packages/openblas-lapack/).
+
+```sh
+yay -S openblas-lapack
+```
+
+or
+
+```sh
+git clone https://aur.archlinux.org/openblas-lapack.git /tmp/openblas-lapack
+cd /tmp/openblas-lapack
+makepkg -si
+```
+
+#### macOS
+
+```sh
+brew install openblas
+```
+
+## LAPACKE Backend
+
+Use the flag `-d lapacke` to use the LAPACKE backend.
+
+### Install dependencies
+
+#### Debian/Ubuntu GNU Linux
+
+```sh
+sudo apt-get install -y --no-install-recommends \
+    gcc \
+    gfortran \
+    liblapacke-dev
+```
+
+#### Arch Linux/Manjaro GNU Linux
+
+The best way of installing LAPACKE is using
 [openblas-lapack](https://aur.archlinux.org/packages/openblas-lapack/).
 
 ```sh

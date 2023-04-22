@@ -53,13 +53,13 @@ import vsl.roots
 import math
 
 const (
-	epsabs = 0.0001
-	epsrel = 0.00001
-	n_max  = 100
+ epsabs = 0.0001
+ epsrel = 0.00001
+ n_max  = 100
 )
 
 fn cos(x f64, _ []f64) f64 {
-	return math.cos(x)
+ return math.cos(x)
 }
 
 f := func.new_func(f: cos)

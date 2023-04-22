@@ -16,7 +16,7 @@ import vsl.func
 import math
 
 fn pow(x f64, _ []f64) f64 {
-	return math.pow(x, 1.5)
+ return math.pow(x, 1.5)
 }
 
 f := func.new_func(f: pow)

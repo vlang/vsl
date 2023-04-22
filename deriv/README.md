@@ -19,7 +19,7 @@ import vsl.func
 import math
 
 fn pow(x f64, _ []f64) f64 {
-	return math.pow(x, 1.5)
+ return math.pow(x, 1.5)
 }
 
 f := func.new_func(f: pow)
@@ -38,7 +38,7 @@ println('exact = ${expected}')
 
 Will print
 
-```
+```console
 f(x) = x^(3/2)
 x = 2.0
 f'(x) = 2.1213203120 +/- 0.0000005006

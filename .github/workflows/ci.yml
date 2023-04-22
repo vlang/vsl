@@ -24,6 +24,10 @@ jobs:
     name: Shellcheck
     uses: ./.github/workflows/shellcheck.yml
 
+  markdownlint:
+    name: Markdown Lint
+    uses: ./.github/workflows/markdownlint.yml
+
   todo:
     if: github.event_name == 'push'
     name: TODO

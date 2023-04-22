@@ -1,0 +1,14 @@
+name: Markdown Lint
+
+on:
+  workflow_call:
+
+jobs:
+  markdownlint:
+    name: Markdown Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Begin CI...
+        uses: actions/checkout@v3
+      - name: Markdown Lint
+        uses: articulate/actions-markdownlint@v1
