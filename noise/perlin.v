@@ -3,9 +3,6 @@ module noise
 import math
 import rand
 
-// implemented according to the example implementation on wikipedia
-// https://en.wikipedia.org/wiki/Perlin_noise#Implementation
-
 [inline]
 fn random_gradient() !(f32, f32) {
 	nr := rand.f32_in_range(0.0, math.pi * 2) or { return err }
@@ -25,9 +22,8 @@ fn dot(ix int, iy int, x f32, y f32) !f32 {
 	return dx * vec_x + dy * vec_y
 }
 
-// gets the noise value at coordinate (x, y)
-[inline]
-pub fn perlin(x f32, y f32) !f32 {
+// perlin2d is a function that returns a perlin noise value for a given x and y coordinate
+pub fn perlin2d(x f32, y f32) !f32 {
 	x1 := int(math.floor(x))
 	y1 := int(math.floor(y))
 	x2 := x1 + 1
@@ -47,12 +43,12 @@ pub fn perlin(x f32, y f32) !f32 {
 	return interpolate(first, second, sy)
 }
 
-// creates a 2d array of perlin noise of size `w` times `h`
-pub fn perlin_many(w int, h int) ![][]f32 {
+// perlin2d_space is a function that returns a 2d array of perlin noise values for a given width and height
+pub fn perlin2d_space(w int, h int) ![][]f32 {
 	mut res := [][]f32{len: h, init: []f32{len: w}}
 	for i, a in res {
 		for j, _ in a {
-			val := perlin(j, i)!
+			val := perlin2d(j, i)!
 			res[i][j] = val
 		}
 	}
