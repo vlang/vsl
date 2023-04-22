@@ -55,52 +55,72 @@
         <div class="doc-content">
           						<section id="readme_vlas" class="doc-node">
 							<div class="title"><h1> vlas <a href="#readme_vlas">#</a></h1></div><h1>V Linear Algebra System</h1>
-<p>This package implements BLAS and LAPACK functions. It provides two different backends:</p>
-<ul>
-<li>One using Open BLAS when using flag <code>-d cblas</code>.
-<a href="https://github.com/xianyi/OpenBLAS">Check also OpenBLAS</a>.</li>
-<li>One using a pure V implementation called VLAS, <em>by default</em>.
-This implementation can be found on <code>vsl.vlas.vblas</code>.</li>
-</ul>
-<p>Therefore, its routines are a little more
-<em>lower level</em> than the ones in the package <code>vsl.la</code>.</p>
-<h2>Usage Example</h2>
-<pre><code class="language-v">module main
-
-import vsl.vlas
-import vsl.la
-
-// matrix_matrix_mul returns the matrix multiplication (scaled)
-//
-//  c := alpha⋅a⋅b    ⇒    cij := alpha * aik * bkj
-//
-pub fn matrix_matrix_mul(mut c la.Matrix[f64], alpha f64, a &amp;la.Matrix[f64], b &amp;la.Matrix[f64]) {
-    if c.m &lt; 6 &amp;&amp; c.n &lt; 6 &amp;&amp; a.n &lt; 30 {
-        for i in 0 .. c.m {
-            for j in 0 .. c.n {
-                c.set(i, j, 0.0)
-                for k in 0 .. a.n {
-                    c.add(i, j, alpha * a.get(i, k) * b.get(k, j))
-                }
-            }
-        }
-        return
-    }
-    vlas.dgemm(false, false, a.m, b.n, a.n, alpha, a.data, a.m, b.data, b.m, 0.0, mut
-        c.data, c.m)
-}
-</code></pre>
-<h2>Install dependencies</h2>
-<h3>Debian/Ubuntu GNU Linux</h3>
+<p>This package implements BLAS and LAPACKE functions. It provides different backends:</p>
+<table>
+<thead>
+<tr>
+<th>Backend</th>
+<th>Description</th>
+<th>Status</th>
+<th>Compilation Flags</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>VLAS</td>
+<td>Pure V implementation</td>
+<td>WIP</td>
+<td><code>-d vlas</code></td>
+</tr>
+<tr>
+<td>OpenBLAS</td>
+<td>OpenBLAS is an optimized BLAS library based on <a href="https://github.com/xianyi/OpenBLAS">https://github.com/xianyi/OpenBLAS</a>. Check the section <a href="#openblas-backend">OpenBLAS Backend</a> for more information.</td>
+<td>Working</td>
+<td><code>-d openblas</code></td>
+</tr>
+<tr>
+<td>LAPACKE</td>
+<td>LAPACKE is a C interface to the LAPACK linear algebra routines</td>
+<td>Working</td>
+<td><code>-d lapacke</code></td>
+</tr>
+</tbody>
+</table>
+<p>Therefore, its routines are a little more <em>lower level</em> than the ones in the package <code>vsl.la</code>.</p>
+<h2>OpenBLAS Backend</h2>
+<p>Use the flag <code>-d cblas</code> to use the OpenBLAS backend.</p>
+<h3>Install dependencies</h3>
+<h4>Debian/Ubuntu GNU Linux</h4>
 <p><code>libopenblas-dev</code> is not needed when using the pure V backend.</p>
 <pre><code class="language-sh">sudo apt-get install -y --no-install-recommends \
     gcc \
     gfortran \
-    liblapacke-dev \
-    libopenblas-dev \
+    libopenblas-dev
 </code></pre>
-<h3>Arch Linux/Manjaro GNU Linux</h3>
-<p>The best way of installing OpenBlas/LAPACK is using
+<h4>Arch Linux/Manjaro GNU Linux</h4>
+<p>The best way of installing OpenBlas is using
+<a href="https://aur.archlinux.org/packages/openblas-lapack/">openblas-lapack</a>.</p>
+<pre><code class="language-sh">yay -S openblas-lapack
+</code></pre>
+<p>or</p>
+<pre><code class="language-sh">git clone https://aur.archlinux.org/openblas-lapack.git /tmp/openblas-lapack
+cd /tmp/openblas-lapack
+makepkg -si
+</code></pre>
+<h4>macOS</h4>
+<pre><code class="language-sh">brew install openblas
+</code></pre>
+<h2>LAPACKE Backend</h2>
+<p>Use the flag <code>-d lapacke</code> to use the LAPACKE backend.</p>
+<h3>Install dependencies</h3>
+<h4>Debian/Ubuntu GNU Linux</h4>
+<pre><code class="language-sh">sudo apt-get install -y --no-install-recommends \
+    gcc \
+    gfortran \
+    liblapacke-dev
+</code></pre>
+<h4>Arch Linux/Manjaro GNU Linux</h4>
+<p>The best way of installing LAPACKE is using
 <a href="https://aur.archlinux.org/packages/openblas-lapack/">openblas-lapack</a>.</p>
 <pre><code class="language-sh">yay -S openblas-lapack
 </code></pre>
@@ -416,7 +436,7 @@ complex numbers.</p>
 </section>
 
           <div class="footer">
-            Powered by vdoc. Generated on: 22 Apr 2023 18:45:12
+            Powered by vdoc. Generated on: 22 Apr 2023 19:07:05
           </div>
         </div>
         <div class="doc-toc"><ul><li class="open"><a href="#readme_vlas">README</a></li>

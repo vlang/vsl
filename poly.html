@@ -62,7 +62,7 @@ is also available for finding the roots of general polynomials with real
 coefficients (of any order). The functions are declared in the module <code>vsl.poly</code>.</p>
 <h2>Polynomial Evaluation</h2>
 <p>The functions described here evaluate the polynomial</p>
-<pre><code>P(x) = c[0] + c[1] x + c[2] x^2 + . . . + c[len-1] x^(len-1)
+<pre><code class="language-console">P(x) = c[0] + c[1] x + c[2] x^2 + . . . + c[len-1] x^(len-1)
 </code></pre>
 <p>using Horner's method for stability.</p>
 <pre><code class="language-v">fn eval(c []f64, x f64) f64
@@ -78,7 +78,7 @@ contains the values of <code>d^k P(x)/d x^k</code> for the specified value of
 <pre><code class="language-v">fn solve_quadratic(a f64, b f64, c f64) []f64
 </code></pre>
 <p>This function finds the real roots of the quadratic equation,</p>
-<pre><code>a x^2 + b x + c = 0
+<pre><code class="language-console">a x^2 + b x + c = 0
 </code></pre>
 <p>The number of real roots (either zero, one or two) is returned, and
 their locations are are returned as <code>[ x0, x1 ]</code>. If no real roots
@@ -99,7 +99,7 @@ be computed exactly.</p>
 <pre><code class="language-v">fn solve_cubic(a f64, b f64, c f64) []f64
 </code></pre>
 <p>This function finds the real roots of the cubic equation,</p>
-<pre><code>x^3 + a x^2 + b x + c = 0
+<pre><code class="language-console">x^3 + a x^2 + b x + c = 0
 </code></pre>
 <p>with a leading coefficient of unity. The number of real roots (either
 one or three) is returned, and their locations are returned as <code>[ x0, x1, x2 ]</code>.
@@ -173,7 +173,7 @@ is printed if a is identically zero.</p>
 </section>
 
           <div class="footer">
-            Powered by vdoc. Generated on: 22 Apr 2023 18:45:12
+            Powered by vdoc. Generated on: 22 Apr 2023 19:07:05
           </div>
         </div>
         <div class="doc-toc"><ul><li class="open"><a href="#readme_poly">README</a></li>

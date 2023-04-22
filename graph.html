@@ -60,7 +60,7 @@ finding. It also implements an algorithm to solve the assignment problem.</p>
 <h2>Graph representation</h2>
 <p>In <code>graph</code>, directed graphs are mainly defined by edges. A weight can be assigned to each edge as
 well. For example, the graph below:</p>
-<pre><code>          [10]
+<pre><code class="language-console">          [10]
      0 ––––––––→ 3      numbers in parentheses
      |    (1)    ↑      indicate edge ids
   [5]|(0)        |
@@ -87,7 +87,7 @@ are useful when computing distances, for example.</p>
 <h2>Floyd-Warshall algorithm to compute shortest paths</h2>
 <p>The <code>shortest_paths</code> method of <code>Graph</code> computes the shortest paths using the Floyd-Warshall
 algorithm. For example, the graph above has the following distances matrix:</p>
-<pre><code>       [10]
+<pre><code class="language-console">       [10]
     0 ––––––→ 3            numbers in brackets
     |         ↑            indicate weights
 [5] |         | [1]
@@ -106,7 +106,7 @@ graph:  j= 0  1  2  3
 paths from source (s) to destination (t) can be extracted
 with the <code>path</code> method.</p>
 <h3>Example: Small graph</h3>
-<pre><code>         [10]
+<pre><code class="language-console">         [10]
     0 ––––––––→ 3      numbers in parentheses
     |    (1)    ↑      indicate edge ids
  [5]|(0)        |
@@ -203,7 +203,7 @@ print(g.str_dist_matrix())
 </section>
 
           <div class="footer">
-            Powered by vdoc. Generated on: 22 Apr 2023 18:45:12
+            Powered by vdoc. Generated on: 22 Apr 2023 19:07:05
           </div>
         </div>
         <div class="doc-toc"><ul><li class="open"><a href="#readme_graph">README</a></li>
