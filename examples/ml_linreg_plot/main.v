@@ -35,7 +35,7 @@ x := data.x.get_col(0)
 y := data.y
 
 lin_space := util.lin_space(0.8, 2.0, 21)
-y_pred := lin_space.map(reg.predict([index]))
+y_pred := lin_space.map(reg.predict([it]))
 
 mut plt := plot.new_plot()
 plt.set_layout(
