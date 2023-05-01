@@ -26,7 +26,7 @@ fn arr_to_f64arr[T](arr []T) []f64 {
  *   scale[i] = a + m*|s[i]|
 */
 pub fn vector_rms_error[T](u []T, v []T, a T, m T, s []T) T {
-	mut rms := T(0)
+	mut rms := T{}
 	for i in 0 .. u.len {
 		scale := a + m * math.abs(s[i])
 		err := math.abs(u[i] - v[i])
@@ -39,7 +39,7 @@ pub fn vector_rms_error[T](u []T, v []T, a T, m T, s []T) T {
 // s := u・v
 pub fn vector_dot[T](u []T, v []T) T {
 	$if T is f64 {
-		mut res := T(0)
+		mut res := T{}
 		cutoff := 150
 		if u.len <= cutoff {
 			for i in 0 .. u.len {
@@ -49,7 +49,7 @@ pub fn vector_dot[T](u []T, v []T) T {
 		}
 		return vlas.ddot(u.len, arr_to_f64arr[T](u), 1, arr_to_f64arr[T](v), 1)
 	} $else {
-		mut res := T(0)
+		mut res := T{}
 		for i in 0 .. u.len {
 			res += u[i] * v[i]
 		}
