@@ -15,8 +15,18 @@ fn cos(x f64, _ []f64) f64 {
 }
 
 f := func.new_func(f: cos)
-result := roots.bisection(f, 0.0, 3.0, epsrel, epsabs, n_max)!
 
-assert result == math.pi / 2.00
+mut solver := roots.new_bisection(f)
 
-println(result)
+solver.xmin = 0.0
+solver.xmax = 3.0
+solver.epsabs = epsabs
+solver.epsrel = epsrel
+solver.n_max = n_max
+
+result := solver.solve()!
+
+expected := math.pi / 2.0
+assert math.abs(result.x - expected) < epsabs
+
+println('x = ${result.x}')

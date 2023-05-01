@@ -14,7 +14,7 @@ pub fn new_count_iter(start f64, step f64) Counter {
 	}
 }
 
-pub fn (mut c Counter) next() f64 {
+pub fn (mut c Counter) next() ?f64 {
 	s := c.state
 	c.state += c.step
 	return s
@@ -34,7 +34,7 @@ pub fn new_cycle_iter(data []f64) Cycler {
 	}
 }
 
-pub fn (mut c Cycler) next() f64 {
+pub fn (mut c Cycler) next() ?f64 {
 	this_idx := c.idx % c.data.len
 	c.idx++
 	return c.data[this_idx]
@@ -51,6 +51,6 @@ pub fn new_repeat_iter(item f64) Repeater {
 	}
 }
 
-pub fn (m Repeater) next() f64 {
+pub fn (m Repeater) next() ?f64 {
 	return m.item
 }
