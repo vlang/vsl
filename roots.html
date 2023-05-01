@@ -32,7 +32,7 @@
           <div class="info">
             <div class="module">vsl</div>
             <div class="toggle-version-container">
-              <span>0.1.50 046dd54</span>
+              <span>0.1.50 b255fef</span>
               <div id="dark-mode-toggle" role="switch" aria-checked="false" aria-label="Toggle dark mode"><svg xmlns="http://www.w3.org/2000/svg" class="light-icon" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.7l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-5c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-1 16.95h2V19.5h-2v2.95zm-7.45-3.91l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8z"/></svg>
 <svg xmlns="http://www.w3.org/2000/svg" class="dark-icon" enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24"><g><rect fill="none" height="24" width="24"/></g><g><g><g><path d="M11.1,12.08C8.77,7.57,10.6,3.6,11.63,2.01C6.27,2.2,1.98,6.59,1.98,12c0,0.14,0.02,0.28,0.02,0.42 C2.62,12.15,3.29,12,4,12c1.66,0,3.18,0.83,4.1,2.15C9.77,14.63,11,16.17,11,18c0,1.52-0.87,2.83-2.12,3.51 c0.98,0.32,2.03,0.5,3.11,0.5c3.5,0,6.58-1.8,8.37-4.52C18,17.72,13.38,16.52,11.1,12.08z"/></g><path d="M7,16l-0.18,0C6.4,14.84,5.3,14,4,14c-1.66,0-3,1.34-3,3s1.34,3,3,3c0.62,0,2.49,0,3,0c1.1,0,2-0.9,2-2 C9,16.9,8.1,16,7,16z"/></g></g></svg>
 </div>
@@ -59,14 +59,14 @@
 
 </section>
 
-						<section id="brent" class="doc-node">
-							<div class="title"><h2>fn brent <a href="#brent">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/roots/brent.v#L14"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">brent</span><span class="token punctuation">(</span>f func<span class="token punctuation">.</span>Fn<span class="token punctuation">,</span> x1 <span class="token builtin">f64</span><span class="token punctuation">,</span> x2 <span class="token builtin">f64</span><span class="token punctuation">,</span> tol <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">(</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
-<p>Search for the root of func in the interval [x1, x2] with a given tolerance</p>
-
-</section>
 						<section id="new_bisection" class="doc-node">
 							<div class="title"><h2>fn new_bisection <a href="#new_bisection">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/roots/bisection.v#L20"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">new_bisection</span><span class="token punctuation">(</span>f func<span class="token punctuation">.</span>Fn<span class="token punctuation">)</span> <span class="token operator">&</span>Bisection</code></pre>
 <p>new_bisection creates a new Bisection object</p>
+
+</section>
+						<section id="new_brent" class="doc-node">
+							<div class="title"><h2>fn new_brent <a href="#new_brent">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/roots/brent.v#L26"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">new_brent</span><span class="token punctuation">(</span>f func<span class="token punctuation">.</span>Fn<span class="token punctuation">)</span> <span class="token operator">&</span>Brent</code></pre>
+<p>new_brent creates a new Brent object</p>
 
 </section>
 						<section id="newton" class="doc-node">
@@ -96,15 +96,14 @@ iterations.</p>
 
 </section>
 						<section id="Bisection.next" class="doc-node">
-							<div class="title"><h2>fn (Bisection) next <a href="#Bisection.next">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/roots/bisection.v#L43"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> solver Bisection<span class="token punctuation">)</span> <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">?</span><span class="token operator">&</span>BisectionIteration</code></pre>
+							<div class="title"><h2>fn (Bisection) next <a href="#Bisection.next">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/roots/bisection.v#L42"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> solver Bisection<span class="token punctuation">)</span> <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">?</span><span class="token operator">&</span>BisectionIteration</code></pre>
 <p>next returns the next iteration of the bisection method.<br>
 If the maximum number of iterations is reached, an error is returned.<br>
-If the root is found, the root is returned.<br>
-If</p>
+If the root is found, the root is returned.</p>
 
 </section>
 						<section id="Bisection.solve" class="doc-node">
-							<div class="title"><h2>fn (Bisection) solve <a href="#Bisection.solve">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/roots/bisection.v#L77"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> solver Bisection<span class="token punctuation">)</span> <span class="token function">solve</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token operator">&</span>BisectionIteration</code></pre>
+							<div class="title"><h2>fn (Bisection) solve <a href="#Bisection.solve">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/roots/bisection.v#L76"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> solver Bisection<span class="token punctuation">)</span> <span class="token function">solve</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token operator">&</span>BisectionIteration</code></pre>
 <p>solve solves for the root of the function using the bisection method.<br>
 If the maximum number of iterations is reached, an error is returned.<br>
 If the root is found, the root is returned.</p>
@@ -121,16 +120,42 @@ If the root is found, the root is returned.</p>
 
 
 </section>
+						<section id="Brent" class="doc-node">
+							<div class="title"><h2>struct Brent <a href="#Brent">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/roots/brent.v#L13"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">Brent</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span><span class="token punctuation">:</span>
+	f func<span class="token punctuation">.</span>Fn <span class="token punctuation">[</span>required<span class="token punctuation">]</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	x1      <span class="token builtin">f64</span>
+	x2      <span class="token builtin">f64</span>
+	tol     <span class="token builtin">f64</span>
+	n_max   <span class="token builtin">int</span>
+	n_calls <span class="token builtin">int</span>
+	n_iter  <span class="token builtin">int</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Brent implements Brent's method for finding roots of a function in a given interval. The function must be continuous and the
+interval must contain a root.</p>
+
+</section>
+						<section id="BrentIteration" class="doc-node">
+							<div class="title"><h2>struct BrentIteration <a href="#BrentIteration">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/roots/brent.v#L34"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">BrentIteration</span> <span class="token punctuation">{</span>
+	x       <span class="token builtin">f64</span>
+	fx      <span class="token builtin">f64</span>
+	n_calls <span class="token builtin">int</span>
+	n_iter  <span class="token builtin">int</span>
+<span class="token punctuation">}</span></code></pre>
+<p>BrentIteration is a single iteration of Brent's method</p>
+
+</section>
 
           <div class="footer">
-            Powered by vdoc. Generated on: 1 May 2023 05:06:58
+            Powered by vdoc. Generated on: 1 May 2023 16:40:09
           </div>
         </div>
         <div class="doc-toc"><ul><li class="open"><a href="#readme_roots">README</a></li>
-<li class="open"><a href="#brent">fn brent</a>        <ul>
+<li class="open"><a href="#new_bisection">fn new_bisection</a>        <ul>
 </ul>
 </li>
-<li class="open"><a href="#new_bisection">fn new_bisection</a>        <ul>
+<li class="open"><a href="#new_brent">fn new_brent</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#newton">fn newton</a>        <ul>
@@ -145,6 +170,12 @@ If the root is found, the root is returned.</p>
 </ul>
 </li>
 <li class="open"><a href="#BisectionIteration">struct BisectionIteration</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#Brent">struct Brent</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#BrentIteration">struct BrentIteration</a>        <ul>
 </ul>
 </li>
 </ul></div>
