@@ -56,44 +56,17 @@
           						<section id="readme_roots" class="doc-node">
 							<div class="title"><h1> roots <a href="#readme_roots">#</a></h1></div><h1>One Dimensional Root-Finding</h1>
 <p>The module <code>vsl.roots</code> contains functions for the root finding methods and related declarations.</p>
-<h2>Functions</h2>
-<pre><code class="language-v">fn brent (f func.Fn, x1, x2, tol f64) ?(f64, f64)
-</code></pre>
-<p>Find th root of <code>f</code> between <code>x1</code> and <code>x1</code> with an accuracy
-of order <code>tol</code>. The result will be the root and an upper bound of the error.</p>
-<pre><code class="language-v">fn newton_bisection (f func.FnFdf, x_min, x_max, tol f64, n_max int) ?f64
-</code></pre>
-<p>Find th root of <code>f</code> between <code>x_min</code> and <code>x_max</code> with an accuracy
-of order <code>tol</code> and a maximum of n_max iterations. The result will be the found root.</p>
-<p>Note that the function must also compute the first derivate of the function. This function
-relies on combining Newton's approach with a bisection technique.</p>
-<pre><code class="language-v">fn newton (f func.FnFdf, x0, x_eps, fx_eps f64, n_max int) ?f64
-</code></pre>
-<p>Find the root of <code>f</code> starting from <code>x0</code> using Newton’s method with
-descent direction given by the inverse of the derivative.
-The algorithm stops when one of the three following conditions is met:</p>
-<ul>
-<li>the maximum number of iterations <code>n_max</code> is reached</li>
-<li>the last improvement over <code>x</code> is smaller than <code>x . x_eps</code></li>
-<li>at the current position <code>|f(x)| &lt; fx_eps</code></li>
-</ul>
-<pre><code class="language-v">fn bisection(f func.Fn, xmin, xmax, epsrel, epsabs f64, n_max int) ?f64
-</code></pre>
-<p>Find the root of <code>f</code> between <code>x_min</code> and <code>x_max</code> with the accuracy
-<code>|x_max - x_min| &lt; epsrel * x_min + epsabs</code>,
-or with the maximum number of iterations <code>n_max</code>.</p>
-<p>On exit, the results is <code>(x_max + x_min) / 2</code>.</p>
 
 </section>
 
-						<section id="bisection" class="doc-node">
-							<div class="title"><h2>fn bisection <a href="#bisection">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/roots/bisection.v#L8"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">bisection</span><span class="token punctuation">(</span>f func<span class="token punctuation">.</span>Fn<span class="token punctuation">,</span> xmin <span class="token builtin">f64</span><span class="token punctuation">,</span> xmax <span class="token builtin">f64</span><span class="token punctuation">,</span> epsrel <span class="token builtin">f64</span><span class="token punctuation">,</span> epsabs <span class="token builtin">f64</span><span class="token punctuation">,</span> n_max <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">f64</span></code></pre>
-<p>Find the root of a function using a bisection method</p>
-
-</section>
 						<section id="brent" class="doc-node">
 							<div class="title"><h2>fn brent <a href="#brent">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/roots/brent.v#L14"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">brent</span><span class="token punctuation">(</span>f func<span class="token punctuation">.</span>Fn<span class="token punctuation">,</span> x1 <span class="token builtin">f64</span><span class="token punctuation">,</span> x2 <span class="token builtin">f64</span><span class="token punctuation">,</span> tol <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">(</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
 <p>Search for the root of func in the interval [x1, x2] with a given tolerance</p>
+
+</section>
+						<section id="new_bisection" class="doc-node">
+							<div class="title"><h2>fn new_bisection <a href="#new_bisection">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/roots/bisection.v#L20"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">new_bisection</span><span class="token punctuation">(</span>f func<span class="token punctuation">.</span>Fn<span class="token punctuation">)</span> <span class="token operator">&</span>Bisection</code></pre>
+<p>new_bisection creates a new Bisection object</p>
 
 </section>
 						<section id="newton" class="doc-node">
@@ -107,22 +80,71 @@ iterations.</p>
 <p>Find the root of a function by combining Newton's method with the bisection method</p>
 
 </section>
+						<section id="Bisection" class="doc-node">
+							<div class="title"><h2>struct Bisection <a href="#Bisection">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/roots/bisection.v#L7"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">Bisection</span> <span class="token punctuation">{</span>
+	f func<span class="token punctuation">.</span>Fn <span class="token punctuation">[</span>required<span class="token punctuation">]</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	xmin    <span class="token builtin">f64</span>
+	xmax    <span class="token builtin">f64</span>
+	epsrel  <span class="token builtin">f64</span>
+	epsabs  <span class="token builtin">f64</span>
+	n_max   <span class="token builtin">int</span>
+	n_calls <span class="token builtin">int</span>
+	n_iter  <span class="token builtin">int</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Bisection implements a bisection method for finding the root of a function</p>
+
+</section>
+						<section id="Bisection.next" class="doc-node">
+							<div class="title"><h2>fn (Bisection) next <a href="#Bisection.next">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/roots/bisection.v#L43"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> solver Bisection<span class="token punctuation">)</span> <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">?</span><span class="token operator">&</span>BisectionIteration</code></pre>
+<p>next returns the next iteration of the bisection method.<br>
+If the maximum number of iterations is reached, an error is returned.<br>
+If the root is found, the root is returned.<br>
+If</p>
+
+</section>
+						<section id="Bisection.solve" class="doc-node">
+							<div class="title"><h2>fn (Bisection) solve <a href="#Bisection.solve">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/roots/bisection.v#L77"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> solver Bisection<span class="token punctuation">)</span> <span class="token function">solve</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token operator">&</span>BisectionIteration</code></pre>
+<p>solve solves for the root of the function using the bisection method.<br>
+If the maximum number of iterations is reached, an error is returned.<br>
+If the root is found, the root is returned.</p>
+
+</section>
+						<section id="BisectionIteration" class="doc-node">
+							<div class="title"><h2>struct BisectionIteration <a href="#BisectionIteration">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/roots/bisection.v#L31"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">BisectionIteration</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	x       <span class="token builtin">f64</span>
+	fx      <span class="token builtin">f64</span>
+	n_calls <span class="token builtin">int</span>
+	n_iter  <span class="token builtin">int</span>
+<span class="token punctuation">}</span></code></pre>
+
+
+</section>
 
           <div class="footer">
-            Powered by vdoc. Generated on: 1 May 2023 04:18:36
+            Powered by vdoc. Generated on: 1 May 2023 05:06:58
           </div>
         </div>
         <div class="doc-toc"><ul><li class="open"><a href="#readme_roots">README</a></li>
-<li class="open"><a href="#bisection">fn bisection</a>        <ul>
+<li class="open"><a href="#brent">fn brent</a>        <ul>
 </ul>
 </li>
-<li class="open"><a href="#brent">fn brent</a>        <ul>
+<li class="open"><a href="#new_bisection">fn new_bisection</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#newton">fn newton</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#newton_bisection">fn newton_bisection</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#Bisection">struct Bisection</a>        <ul>
+<li><a href="#Bisection.next">fn next</a></li>
+<li><a href="#Bisection.solve">fn solve</a></li>
+</ul>
+</li>
+<li class="open"><a href="#BisectionIteration">struct BisectionIteration</a>        <ul>
 </ul>
 </li>
 </ul></div>
