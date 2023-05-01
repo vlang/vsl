@@ -1,5 +1,6 @@
 module main
 
+import vsl.float.float64
 import vsl.func
 import vsl.plot
 import vsl.roots
@@ -29,7 +30,7 @@ solver.n_max = n_max
 result := solver.solve()!
 
 expected := math.pi / 2.0
-assert math.abs(result.x - expected) < epsabs
+assert float64.soclose(result.x, expected, solver.epsabs)
 
 println('x = ${result.x}')
 

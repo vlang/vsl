@@ -1,6 +1,7 @@
 module main
 
 import vsl.deriv
+import vsl.float.float64
 import vsl.func
 import math
 
@@ -17,7 +18,7 @@ println('x = 2.0')
 println("f'(x) = ${result} +/- ${abserr}")
 println('exact = ${expected}')
 
-assert math.abs(result - expected) < abserr
+assert float64.soclose(result, expected, abserr)
 
 expected = 0.0
 result, abserr = deriv.forward(f, 0.0, 1e-8)
@@ -25,4 +26,4 @@ println('x = 0.0')
 println("f'(x) = ${result} +/- ${abserr}")
 println('exact = ${expected}')
 
-assert math.abs(result - expected) < abserr
+assert float64.soclose(result, expected, abserr)
