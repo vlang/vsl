@@ -26,7 +26,7 @@ pub struct BisectionParams {
 	n_max  int = 100
 }
 
-// new_bisection creates a new Bisection object
+// new_bisection creates a new Bisection object with the given parameters
 pub fn new_bisection(f func.Fn, params BisectionParams) &Bisection {
 	return &Bisection{
 		f: f
