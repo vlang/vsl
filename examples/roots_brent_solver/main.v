@@ -5,7 +5,8 @@ import vsl.roots
 import math
 
 const (
-	tol = 1e-10
+	tol   = 1e-10
+	n_max = 100
 )
 
 fn yx(x f64, _ []f64) f64 {
@@ -16,10 +17,17 @@ fn yx(x f64, _ []f64) f64 {
 xa, xb := 0.0, 0.11
 
 f := func.new_func(f: yx)
-result, err := roots.brent(f, xa, xb, tol)!
+mut solver := roots.new_brent(f)
+
+solver.x1 = xa
+solver.x2 = xb
+solver.tol = tol
+solver.n_max = n_max
 
 expected := 0.0623775815137495
 
-assert math.abs(result - expected) < err
+result := solver.solve()!
 
-println(result)
+assert math.abs(result.x - expected) < epsabs
+
+println('x = ${result.x}')
