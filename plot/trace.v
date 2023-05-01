@@ -10,6 +10,7 @@ pub enum TraceType {
 	histogram
 }
 
+[params]
 pub struct Trace {
 pub mut:
 	trace_type    TraceType      [required]

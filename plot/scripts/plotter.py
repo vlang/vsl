@@ -66,13 +66,13 @@ for ax in ['x', 'y']:
 
 # Map vsl.plot.TraceType enum to Plotly objects.
 type_map = {
-    0: go.Scatter,
-    1: go.Pie,
-    2: go.Heatmap,
-    3: go.Surface,
-    4: go.Scatter3d,
-    5: go.Bar,
-    6: go.Histogram
+    'scatter': go.Scatter,
+    'pie': go.Pie,
+    'heatmap': go.Heatmap,
+    'surface': go.Surface,
+    'scatter3d': go.Scatter3d,
+    'bar': go.Bar,
+    'histogram': go.Histogram
 }
 
 
