@@ -47,8 +47,6 @@ pub mut:
 }
 
 // next returns the next iteration of the bisection method.
-// If the maximum number of iterations is reached, an error is returned.
-// If the root is found, the root is returned.
 pub fn (mut solver Bisection) next() ?&BisectionIteration {
 	if solver.n_iter == solver.n_max {
 		return none
@@ -81,8 +79,6 @@ pub fn (mut solver Bisection) next() ?&BisectionIteration {
 }
 
 // solve solves for the root of the function using the bisection method.
-// If the maximum number of iterations is reached, an error is returned.
-// If the root is found, the root is returned.
 pub fn (mut solver Bisection) solve() !&BisectionIteration {
 	mut result := &BisectionIteration{}
 	for {
