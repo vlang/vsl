@@ -3,6 +3,7 @@ module main
 import vsl.func
 import vsl.plot
 import vsl.roots
+import vsl.util
 import math
 
 const (
@@ -34,7 +35,7 @@ println('x = ${result.x}')
 
 mut plt := plot.new_plot()
 
-x := [0.0, 0.02, 0.04, 0.06, 0.08, 0.12]
+x := util.lin_space(0.0, 3.0, 100)
 y := x.map(f_cos(it, []f64{}))
 
 plt.add_trace(

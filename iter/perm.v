@@ -26,7 +26,7 @@ pub fn new_permutations_iter(data []f64, r int) PermutationsIter {
 	}
 	size := u64(math.factorial(n) / math.factorial(n - r))
 	idxs := util.arange(n)
-	cycles := util.stepped_range(n, n - r, -1)
+	cycles := util.range(n, n - r, step: -1)
 	return PermutationsIter{
 		data: data
 		repeat: r
