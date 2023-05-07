@@ -27,7 +27,7 @@ fn test_root_bisection() {
 		epsabs: roots.epsabs
 		n_max: roots.n_max
 	)
-	result := solver.solve()!
+	result := solver.solve()?
 	assert float64.soclose(result.x, math.pi / 2.00, roots.epsabs)
 }
 

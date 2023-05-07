@@ -27,7 +27,7 @@ solver.epsabs = epsabs
 solver.epsrel = epsrel
 solver.n_max = n_max
 
-result := solver.solve()!
+result := solver.solve()?
 
 expected := math.pi / 2.0
 assert float64.soclose(result.x, expected, solver.epsabs)

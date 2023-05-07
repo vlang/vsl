@@ -6,6 +6,8 @@ import math
 // Bisection implements a bisection method for finding the root of a function
 pub struct Bisection {
 	f func.Fn [required]
+mut:
+	last_iter ?&BisectionIteration = none // last iteration
 pub mut:
 	xmin      f64 // lower bound
 	xmax      f64 // upper bound
@@ -56,12 +58,13 @@ pub fn (mut solver Bisection) next() ?&BisectionIteration {
 	fxmid := solver.f.safe_eval(xmid) or { return none }
 	solver.n_f_calls += 1
 	if math.abs(fxmid) < solver.epsabs || math.abs(fxmid) < solver.epsrel * math.abs(fxmid) {
-		return &BisectionIteration{
+		solver.last_iter = &BisectionIteration{
 			x: xmid
 			fx: fxmid
 			n_f_calls: solver.n_f_calls
 			n_iter: solver.n_iter
 		}
+		return solver.last_iter?
 	}
 	fxmin := solver.f.safe_eval(solver.xmin) or { return none }
 	if fxmid * fxmin < 0.0 {
@@ -70,23 +73,19 @@ pub fn (mut solver Bisection) next() ?&BisectionIteration {
 		solver.xmin = xmid
 	}
 
-	return &BisectionIteration{
+	solver.last_iter = &BisectionIteration{
 		x: xmid
 		fx: fxmid
 		n_f_calls: solver.n_f_calls
 		n_iter: solver.n_iter
 	}
+	return solver.last_iter?
 }
 
 // solve solves for the root of the function using the bisection method.
-pub fn (mut solver Bisection) solve() !&BisectionIteration {
-	mut result := &BisectionIteration{}
+pub fn (mut solver Bisection) solve() ?&BisectionIteration {
 	for {
-		iter := solver.next() or { break }
-		result.x = iter.x
-		result.fx = iter.fx
-		result.n_f_calls = iter.n_f_calls
-		result.n_iter = iter.n_iter
+		solver.next() or { break }
 	}
-	return result
+	return solver.last_iter?
 }
