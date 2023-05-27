@@ -19,8 +19,6 @@ jobs:
   docker:
     uses: ./.github/workflows/docker-publish.yml
     with:
-      dockerfile: "./Dockerfile"
-      context: "."
       target: vsl-dev
       tags: ulisesjeremias/vsl:dev
       build-args: |

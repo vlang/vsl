@@ -59,22 +59,14 @@ RUN /bin/bash /tmp/library-scripts/vsl-clone-and-build.sh "${DEV_IMG}" "${VSL_VE
 
 FROM vsl AS vsl-dev
 
-ENV EDITOR code
-
-##################################################################################################
-#                                                                                                #
-#   The code below is copied from:                                                               #
-#      https://github.com/microsoft/vscode-remote-try-go/blob/master/.devcontainer/Dockerfile    #
-#   And modifies to use v lang instead                                                           #
-#                                                                                                #
-##################################################################################################
-
 # Options for setup script
 ARG INSTALL_ZSH="true"
 ARG UPGRADE_PACKAGES="false"
 ARG USERNAME=vscode
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
+
+ENV EDITOR code
 
 # Install needed packages and setup non-root user. Use a separate RUN statement to add your own dependencies.
 COPY docker/common-debian.sh /tmp/library-scripts/
