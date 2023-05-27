@@ -3,7 +3,7 @@
     <img
         style="width: 200px"
         width="200"
-        src="https://raw.githubusercontent.com/vlang/vsl/master/static/vsl-logo.png?sanitize=true"
+        src="https://raw.githubusercontent.com/vlang/vsl/main/static/vsl-logo.png?sanitize=true"
     >
 </p>
 <h1>The V Scientific Library</h1>
@@ -11,7 +11,7 @@
 [vlang.io](https://vlang.io) |
 [Docs](https://vlang.github.io/vsl) |
 [Changelog](#) |
-[Contributing](https://github.com/vlang/vsl/blob/master/CONTRIBUTING.md)
+[Contributing](https://github.com/vlang/vsl/blob/main/CONTRIBUTING.md)
 
 </div>
 
@@ -19,8 +19,8 @@ VSL is a V library to develop Artificial Intelligence and High-Performance Scien
 
 |                                                                                             |                                                                                       |                                                                       |                                                                              |
 | :-----------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------: | :-------------------------------------------------------------------: | :--------------------------------------------------------------------------: |
-|       ![sierpinski_triangle](https://raw.githubusercontent.com/vlang/vsl/master/vcl/static/sierpinski_triangle.png)       | ![mandelbrot_blue_red_black](https://raw.githubusercontent.com/vlang/vsl/master/vcl/static/mandelbrot_blue_red_black.png) |   ![julia](https://raw.githubusercontent.com/vlang/vsl/master/vcl/static/julia.png)   | ![mandelbrot_basic](https://raw.githubusercontent.com/vlang/vsl/master/vcl/static/mandelbrot_basic.png) |
-| ![mandelbrot_pseudo_random_colors](https://raw.githubusercontent.com/vlang/vsl/master/vcl/static/mandelbrot_pseudo_random_colors.png) |   ![sierpinski_triangle2](https://raw.githubusercontent.com/vlang/vsl/master/vcl/static/sierpinski_triangle2.png)    | ![julia_set](https://raw.githubusercontent.com/vlang/vsl/master/vcl/static/julia_set.png) |   ![julia_basic](https://raw.githubusercontent.com/vlang/vsl/master/vcl/static/julia_basic.png)    |
+|       ![sierpinski_triangle](https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/sierpinski_triangle.png)       | ![mandelbrot_blue_red_black](https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/mandelbrot_blue_red_black.png) |   ![julia](https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/julia.png)   | ![mandelbrot_basic](https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/mandelbrot_basic.png) |
+| ![mandelbrot_pseudo_random_colors](https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/mandelbrot_pseudo_random_colors.png) |   ![sierpinski_triangle2](https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/sierpinski_triangle2.png)    | ![julia_set](https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/julia_set.png) |   ![julia_basic](https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/julia_basic.png)    |
 
 ## Docs
 
@@ -64,14 +64,14 @@ Windows, Linux, and macOS out of the box.
 
 Done. And your system will remain "clean".
 
-![](https://raw.githubusercontent.com/vlang/vsl/master/static/vscode-open-in-container.gif)
+![](https://raw.githubusercontent.com/vlang/vsl/main/static/vscode-open-in-container.gif)
 
 Our [Docker Image](https://hub.docker.com/repository/docker/ulisesjeremias/vsl)
 also contains V and the V Tools for working with VS Code (or not).
 Below is a video showing the convenience of
 VS Code + the V tools + VSL.
 
-![](https://raw.githubusercontent.com/vlang/vsl/master/static/container.gif)
+![](https://raw.githubusercontent.com/vlang/vsl/main/static/container.gif)
 
 ## Install VSL locally
 

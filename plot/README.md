@@ -39,7 +39,7 @@ for a better understanding.
 
 ### Bar plot
 
-[bar plot example](https://github.com/vlang/vsl/blob/master/examples/plot_bar)
+[bar plot example](https://github.com/vlang/vsl/blob/main/examples/plot_bar)
 
 > Output
 
@@ -48,14 +48,14 @@ for a better understanding.
     <img
         style="width: 50%"
   width="80%"
-        src="https://raw.githubusercontent.com/vlang/vsl/master/plot/static/bar.png?sanitize=true"
+        src="https://raw.githubusercontent.com/vlang/vsl/main/plot/static/bar.png?sanitize=true"
     >
 </p>
 </div>
 
 ### Heatmap plot
 
-[heatmap plot example](https://github.com/vlang/vsl/blob/master/examples/plot_heatmap)
+[heatmap plot example](https://github.com/vlang/vsl/blob/main/examples/plot_heatmap)
 
 > Output
 
@@ -64,14 +64,14 @@ for a better understanding.
     <img
         style="width: 50%"
   width="80%"
-        src="https://raw.githubusercontent.com/vlang/vsl/master/plot/static/heatmap.png?sanitize=true"
+        src="https://raw.githubusercontent.com/vlang/vsl/main/plot/static/heatmap.png?sanitize=true"
     >
 </p>
 </div>
 
 ### Histogram plot
 
-[histogram plot example](https://github.com/vlang/vsl/blob/master/examples/plot_histogram)
+[histogram plot example](https://github.com/vlang/vsl/blob/main/examples/plot_histogram)
 
 > Output
 
@@ -80,14 +80,14 @@ for a better understanding.
     <img
         style="width: 50%"
   width="80%"
-        src="https://raw.githubusercontent.com/vlang/vsl/master/plot/static/histogram.png?sanitize=true"
+        src="https://raw.githubusercontent.com/vlang/vsl/main/plot/static/histogram.png?sanitize=true"
     >
 </p>
 </div>
 
 ### Pie plot
 
-[pie plot example](https://github.com/vlang/vsl/blob/master/examples/plot_pie)
+[pie plot example](https://github.com/vlang/vsl/blob/main/examples/plot_pie)
 
 > Output
 
@@ -96,14 +96,14 @@ for a better understanding.
     <img
         style="width: 50%"
   width="80%"
-        src="https://raw.githubusercontent.com/vlang/vsl/master/plot/static/pie.png?sanitize=true"
+        src="https://raw.githubusercontent.com/vlang/vsl/main/plot/static/pie.png?sanitize=true"
     >
 </p>
 </div>
 
 ### Scatter plot
 
-[scatter plot example](https://github.com/vlang/vsl/blob/master/examples/plot_scatter)
+[scatter plot example](https://github.com/vlang/vsl/blob/main/examples/plot_scatter)
 
 > Output
 
@@ -112,14 +112,14 @@ for a better understanding.
     <img
         style="width: 50%"
   width="80%"
-        src="https://raw.githubusercontent.com/vlang/vsl/master/plot/static/scatter.png?sanitize=true"
+        src="https://raw.githubusercontent.com/vlang/vsl/main/plot/static/scatter.png?sanitize=true"
     >
 </p>
 </div>
 
 ### Scatter 3D plot
 
-[scatter3d plot example](https://github.com/vlang/vsl/blob/master/examples/plot_scatter3d)
+[scatter3d plot example](https://github.com/vlang/vsl/blob/main/examples/plot_scatter3d)
 
 > Output
 
@@ -128,7 +128,7 @@ for a better understanding.
     <img
         style="width: 50%"
   width="80%"
-        src="https://raw.githubusercontent.com/vlang/vsl/master/plot/static/scatter3d.png?sanitize=true"
+        src="https://raw.githubusercontent.com/vlang/vsl/main/plot/static/scatter3d.png?sanitize=true"
     >
 </p>
 </div>

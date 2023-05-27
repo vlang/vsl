@@ -63,7 +63,7 @@ RUN /bin/bash /tmp/library-scripts/vsl-clone-and-build.sh "${DEV_IMG}" "${VSL_VE
 ##################################################################################################
 #                                                                                                #
 #   The code below is copied from:                                                               #
-#      https://github.com/microsoft/vscode-remote-try-go/blob/master/.devcontainer/Dockerfile    #
+#      https://github.com/microsoft/vscode-remote-try-go/blob/main/.devcontainer/Dockerfile    #
 #   And modifies to use v lang instead                                                           #
 #                                                                                                #
 ##################################################################################################
