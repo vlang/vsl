@@ -17,15 +17,12 @@ SHELL ["/bin/bash", "-c"]
 RUN <<EOF
 apt-get update -y
 apt-get install -y --no-install-recommends \
-  # install apt-utils to avoid warning messages
   apt-utils 2> >( grep -v 'debconf: delaying package configuration, since apt-utils is not installed' >&2 ) \
-  # essential tools for development
   ca-certificates \
   netbase \
   curl \
   git \
   make \
-  # required compilers and libraries for vsl
   python3.8 \
   python3-pip \
   python3.8-dev \
