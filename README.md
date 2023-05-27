@@ -63,24 +63,16 @@ Having Docker and VS Code installed, you can start developing powerful numerical
 using VSL in a matter of seconds. Furthermore, the best part of it is that it works on
 Windows, Linux, and macOS out of the box.
 
-### Quick, containerized (recommended)
+### Quick, containerized (recommended!)
 
 1. Install Docker
-2. Install [Visual Studio Code](https://code.visualstudio.com/)
-3. Install the [Remote Development](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) extension for VS Code
-4. Clone <https://github.com/ulises-jeremias/hello-vsl>
-5. Create your application within a container (see gif below)
+2. Clone <https://github.com/ulises-jeremias/hello-vsl>
+3. Follow the instructions in the README.md file of the repository :ok_hand:
 
 Done. And your system will remain "clean".
 
-![](https://raw.githubusercontent.com/vlang/vsl/main/static/vscode-open-in-container.gif)
-
 Our [Docker Image](https://hub.docker.com/repository/docker/ulisesjeremias/vsl)
 also contains V and the V Tools for working with VS Code (or not).
-Below is a video showing the convenience of
-VS Code + the V tools + VSL.
-
-![](https://raw.githubusercontent.com/vlang/vsl/main/static/container.gif)
 
 ## Install VSL locally
 
