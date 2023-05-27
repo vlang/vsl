@@ -22,7 +22,7 @@ jobs:
       target: vsl-dev
       tags: ulisesjeremias/vsl:dev
       build-args: |
-        DEV_IMG=true
+        DEV_IMG=false
     secrets:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
