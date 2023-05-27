@@ -19,7 +19,7 @@ body:
       description: |
         Why do you need this feature? For example: "I'm always frustrated when..."
     validations:
-        required: true
+      required: true
   - type: textarea
     id: solution
     attributes:

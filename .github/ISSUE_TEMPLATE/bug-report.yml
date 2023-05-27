@@ -5,7 +5,6 @@ title: "(short issue description)"
 labels: [bug]
 assignees: []
 body:
-
   - type: textarea
     id: description
     attributes:

@@ -13,7 +13,9 @@ jobs:
   docker-latest:
     uses: ./.github/workflows/docker-publish.yml
     with:
-      dockerfile: './Dockerfile'
+      dockerfile: "./Dockerfile"
+      context: "."
+      target: "vsl"
       tags: ulisesjeremias/vsl:latest
       build-args: |
         DEV_IMG=false
@@ -24,7 +26,9 @@ jobs:
   docker-tag:
     uses: ./.github/workflows/docker-publish.yml
     with:
-      dockerfile: './Dockerfile'
+      dockerfile: "./Dockerfile"
+      context: "."
+      target: "vsl"
       tags: ulisesjeremias/vsl:${{  github.ref_name }}
       build-args: |
         DEV_IMG=false

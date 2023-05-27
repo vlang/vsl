@@ -26,10 +26,10 @@
 
 VSL is a V library to develop Artificial Intelligence and High-Performance Scientific Computations.
 
-|                                                                                             |                                                                                       |                                                                       |                                                                              |
-| :-----------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------: | :-------------------------------------------------------------------: | :--------------------------------------------------------------------------: |
-|       ![sierpinski_triangle](https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/sierpinski_triangle.png)       | ![mandelbrot_blue_red_black](https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/mandelbrot_blue_red_black.png) |   ![julia](https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/julia.png)   | ![mandelbrot_basic](https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/mandelbrot_basic.png) |
-| ![mandelbrot_pseudo_random_colors](https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/mandelbrot_pseudo_random_colors.png) |   ![sierpinski_triangle2](https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/sierpinski_triangle2.png)    | ![julia_set](https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/julia_set.png) |   ![julia_basic](https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/julia_basic.png)    |
+|                                                                                                                                     |                                                                                                                         |                                                                                         |                                                                                                       |
+| :---------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------: |
+|             ![sierpinski_triangle](https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/sierpinski_triangle.png)             | ![mandelbrot_blue_red_black](https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/mandelbrot_blue_red_black.png) |     ![julia](https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/julia.png)     | ![mandelbrot_basic](https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/mandelbrot_basic.png) |
+| ![mandelbrot_pseudo_random_colors](https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/mandelbrot_pseudo_random_colors.png) |      ![sierpinski_triangle2](https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/sierpinski_triangle2.png)      | ![julia_set](https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/julia_set.png) |      ![julia_basic](https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/julia_basic.png)      |
 
 ## Docs
 
@@ -119,7 +119,6 @@ Made with [contributors-img](https://contrib.rocks).
 [deploydocsbadge]: https://github.com/vlang/vsl/actions/workflows/deploy-docs.yml/badge.svg
 [licensebadge]: https://img.shields.io/badge/License-MIT-blue.svg
 [ModulesBadge]: https://img.shields.io/badge/modules-reference-027d9c?logo=v&logoColor=white&logoWidth=10
-
 [awesomevurl]: https://github.com/vlang/awesome-v/blob/main/README.md#scientific-computing
 [workflowurl]: https://github.com/vlang/vsl/actions/workflows/ci.yml
 [deploydocsurl]: https://github.com/vlang/vsl/actions/workflows/deploy-docs.yml

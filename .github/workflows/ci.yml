@@ -1,8 +1,8 @@
 name: VSL Continuous Integration
 
 concurrency:
-   group: ci-${{ github.event.number }}
-   cancel-in-progress: true
+  group: ci-${{ github.event.number }}
+  cancel-in-progress: true
 
 on:
   # Allows you to run this workflow manually from the Actions tab
@@ -126,7 +126,7 @@ jobs:
           - ubuntu-22.04
           - ubuntu-20.04
           - ubuntu-18.04
-        flags: 
+        flags:
           - ""
           - "--prod"
 

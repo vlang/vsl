@@ -8,7 +8,7 @@ on:
 jobs:
   deploy-docs:
     concurrency: deployment
-  
+
     runs-on: ubuntu-latest
 
     steps:
