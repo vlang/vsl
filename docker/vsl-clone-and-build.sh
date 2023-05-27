@@ -14,4 +14,4 @@ if [ "${VSL_VERSION}" = "latest" ]; then
   BRANCH="main"
 fi
 
-git clone -b $BRANCH --single-branch --depth 1 https://github.com/vlang/vsl.git /opt/vlang/v/vlib/vsl
+git clone -b $BRANCH --single-branch --depth 1 https://github.com/vlang/vsl.git /opt/vlang/vlib/vsl
