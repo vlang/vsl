@@ -1,6 +1,6 @@
 ARG VLANG_TAG=buster-dev
 
-FROM --platform=$BUILDPLATFORM thevlang/vlang:${VLANG_TAG} AS vsl
+FROM thevlang/vlang:${VLANG_TAG} AS vsl
 # VLANG_TAG is specified again because the FROM directive resets ARGs
 # (but their default value is retained if set previously)
 ARG VLANG_TAG
