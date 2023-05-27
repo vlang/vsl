@@ -1,4 +1,4 @@
-ARG VLANG_TAG=buster-dev
+ARG VLANG_TAG=buster
 
 FROM thevlang/vlang:${VLANG_TAG} AS vsl
 # VLANG_TAG is specified again because the FROM directive resets ARGs
