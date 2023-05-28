@@ -22,7 +22,7 @@ source "${ROOT}/util/logs.sh" || exit
 
 set -eo pipefail
 
-vsl_dir_path=$(realpath "$(dirname "$0")")
+vsl_dir_path=$(dirname "$(dirname "$0")")
 
 flags=""
 
