@@ -15,14 +15,14 @@
 ##         --skip-examples                   Skip examples compilation
 ##
 
-ROOT=$(dirname "$0")
+ROOT=$(realpath "$(dirname "$0")")
 
 source "${ROOT}/util/easyoptions/easyoptions.sh" || exit
 source "${ROOT}/util/logs.sh" || exit
 
 set -eo pipefail
 
-vsl_dir_path=$(dirname $(dirname "$0"))
+vsl_dir_path=$(realpath "$(dirname "$0")")
 
 flags=""
 
