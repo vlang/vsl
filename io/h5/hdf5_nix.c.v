@@ -135,7 +135,7 @@ pub fn (f &Hdf5File) write_dataset3d[T](dset_name string, buffer [][][]T) !Hdf5H
 	dtype := hdftype(buffer[0][0][0])
 	// must flatten[T] else V cannot guess correctly
 	mut errc := C.H5LTmake_dataset(f.filedesc, dset_name.str, rank, unsafe { dims.data },
-		dtype, unsafe { flatten[T](flatten[T](buffer)).data })
+		dtype, unsafe { flatten(flatten[T](buffer)).data })
 	return errc
 }
 
