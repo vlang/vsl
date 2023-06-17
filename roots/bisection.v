@@ -7,7 +7,7 @@ import math
 pub struct Bisection {
 	f func.Fn [required]
 mut:
-	last_iter ?&BisectionIteration = none // last iteration
+	last_iter ?&BisectionIteration // last iteration
 pub mut:
 	xmin      f64 // lower bound
 	xmax      f64 // upper bound
