@@ -6,7 +6,7 @@ import vsl.mpi
 // The SparseConfig structure holds configuration arguments for sparse solvers
 pub struct SparseConfig {
 mut:
-	communicator   ?&mpi.Communicator = none // MPI communicator for parallel solvers [may be none]
+	communicator   ?&mpi.Communicator // MPI communicator for parallel solvers [may be none]
 	mumps_ordering int  // ICNTL(7) default = "" == "auto"
 	mumps_scaling  int  // Scaling type (check MUMPS solver) [may be empty]
 	symmetric      bool // indicates symmetric system. NOTE: when using MUMPS, only the upper or lower part of the matrix must be provided
