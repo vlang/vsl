@@ -510,7 +510,7 @@ NOTE: this method can be used to modify the columns; e.g. with o.col(0)[0] = 123
 						<section id="SparseConfig" class="doc-node">
 							<div class="title"><h2>struct SparseConfig <a href="#SparseConfig">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/sparse_config.v#L7"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">SparseConfig</span> <span class="token punctuation">{</span>
 <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	communicator   <span class="token operator">?</span><span class="token operator">&</span>mpi<span class="token punctuation">.</span>Communicator <span class="token operator">=</span> <span class="token keyword">none</span> <span class="token comment">// MPI communicator for parallel solvers [may be none]</span>
+	communicator   <span class="token operator">?</span><span class="token operator">&</span>mpi<span class="token punctuation">.</span>Communicator <span class="token comment">// MPI communicator for parallel solvers [may be none]</span>
 	mumps_ordering <span class="token builtin">int</span>  <span class="token comment">// ICNTL(7) default = "" == "auto"</span>
 	mumps_scaling  <span class="token builtin">int</span>  <span class="token comment">// Scaling type (check MUMPS solver) [may be empty]</span>
 	symmetric      <span class="token builtin">bool</span> <span class="token comment">// indicates symmetric system. NOTE: when using MUMPS, only the upper or lower part of the matrix must be provided</span>
@@ -576,7 +576,7 @@ of this matrix are stored directly.</p>
 </section>
 
           <div class="footer">
-            Powered by vdoc. Generated on: 16 Jun 2023 20:49:16
+            Powered by vdoc. Generated on: 17 Jun 2023 05:18:25
           </div>
         </div>
         <div class="doc-toc"><ul><li class="open"><a href="#den_solve">fn den_solve</a>        <ul>
