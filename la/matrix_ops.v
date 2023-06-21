@@ -33,7 +33,7 @@ pub fn matrix_det(o &Matrix[f64]) f64 {
 // Output:
 // ai  -- the inverse matrix
 // det -- determinant of a
-pub fn matrix_inv_small[T](mut ai Matrix[T], a Matrix[T], tol T) T {
+pub fn matrix_inv_small(mut ai Matrix[f64], a Matrix[f64], tol f64) f64 {
 	mut det := 0.0
 	if a.m == 1 && a.n == 1 {
 		det = a.get(0, 0)
@@ -84,9 +84,9 @@ pub fn matrix_inv_small[T](mut ai Matrix[T], a Matrix[T], tol T) T {
 // s  -- diagonal terms [must be pre-allocated] s.len = imin(a.m, a.n)
 // u  -- left matrix [must be pre-allocated] u is (a.m x a.m)
 // vt -- transposed right matrix [must be pre-allocated] vt is (a.n x a.n)
-pub fn matrix_svd[T](mut s []T, mut u Matrix[T], mut vt Matrix[T], mut a Matrix[T], copy_a bool) {
-	superb := []T{len: int(math.min(a.m, a.n))}
-	mut acpy := unsafe { &Matrix[T](a) }
+pub fn matrix_svd(mut s []f64, mut u Matrix[f64], mut vt Matrix[f64], mut a Matrix[f64], copy_a bool) {
+	superb := []f64{len: int(math.min(a.m, a.n))}
+	mut acpy := unsafe { &Matrix[f64](a) }
 	if copy_a {
 		acpy = a.clone()
 	}
@@ -102,7 +102,7 @@ pub fn matrix_svd[T](mut s []T, mut u Matrix[T], mut vt Matrix[T], mut a Matrix[
 // ai -- inverse matrix (N x M)
 // det -- determinant of matrix (ONLY if calc_det == true and the matrix is square)
 // NOTE: the dimension of the ai matrix must be N x M for the pseudo-inverse
-pub fn matrix_inv[T](mut ai Matrix[T], mut a Matrix[T], calc_det bool) T {
+pub fn matrix_inv(mut ai Matrix[f64], mut a Matrix[f64], calc_det bool) f64 {
 	mut det := 0.0
 	// square inverse
 	if a.m == a.n {
@@ -123,9 +123,9 @@ pub fn matrix_inv[T](mut ai Matrix[T], mut a Matrix[T], calc_det bool) T {
 		return det
 	}
 	// singular value decomposition
-	mut s := []T{len: int(math.min(a.m, a.n))}
-	mut u := new_matrix[T](a.m, a.m)
-	mut vt := new_matrix[T](a.n, a.n)
+	mut s := []f64{len: int(math.min(a.m, a.n))}
+	mut u := new_matrix[f64](a.m, a.m)
+	mut vt := new_matrix[f64](a.n, a.n)
 	matrix_svd(mut s, mut u, mut vt, mut a, true)
 	// pseudo inverse
 	tol_s := 1e-8 // TODO: improve this tolerance with a better estimate
@@ -147,9 +147,9 @@ pub fn matrix_inv[T](mut ai Matrix[T], mut a Matrix[T], calc_det bool) T {
 // normtype -- Type of norm to use:
 // "I"                 => Infinite
 // "F" or "" (default) => Frobenius
-pub fn matrix_cond_num[T](mut a Matrix[T], normtype string) T {
+pub fn matrix_cond_num(mut a Matrix[f64], normtype string) f64 {
 	mut res := 0.0
-	mut ai := new_matrix[T](a.m, a.n)
+	mut ai := new_matrix[f64](a.m, a.n)
 	matrix_inv(mut ai, mut a, false)
 	if normtype == 'I' {
 		res = a.norm_inf() * ai.norm_inf()
