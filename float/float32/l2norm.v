@@ -11,7 +11,7 @@ pub fn l2_norm_unitary(x []f32) f32 {
 		if v == 0 {
 			continue
 		}
-		absxi := f32(math.abs(f64(v)))
+		absxi := math.abs(v)
 		if math.is_nan(f64(absxi)) {
 			return f32(math.nan())
 		}
@@ -40,7 +40,7 @@ pub fn l2_norm_inc(x []f32, n u32, incx u32) f32 {
 		if val == 0 {
 			continue
 		}
-		absxi := f32(math.abs(f64(val)))
+		absxi := math.abs(val)
 		if math.is_nan(f64(absxi)) {
 			return f32(math.nan())
 		}
@@ -70,7 +70,7 @@ pub fn l2_distance_unitary(x []f32, y []f32) f32 {
 		if dec_v == 0 {
 			continue
 		}
-		absxi := f32(math.abs(f64(dec_v)))
+		absxi := math.abs(dec_v)
 		if math.is_nan(f64(absxi)) {
 			return f32(math.nan())
 		}

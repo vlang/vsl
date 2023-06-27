@@ -224,7 +224,7 @@ pub fn (mut o Bins) find_along_segment(xi_ []f64, xf_ []f64, tol f64) []int {
 	mut sbins := []&Bin{} // selected bins
 	mut lmax := math.max(o.size[0], o.size[1])
 	if o.ndim == 3 {
-		lmax = math.max(f64(lmax), o.size[2])
+		lmax = math.max(lmax, o.size[2])
 	}
 	btol := 0.9 * lmax // tolerance for bins
 	pi := point_from_vector(xi, o.ndim)

@@ -11,7 +11,7 @@ fn tolerance_equal[T](data1 []T, data2 []T) bool {
 		return false
 	}
 	for i := 0; i < data1.len; i++ {
-		if f64(math.abs(f64(data1[i] - data2[i]))) > la.matrix_tests_tol {
+		if f64(math.abs(data1[i] - data2[i])) > la.matrix_tests_tol {
 			return false
 		}
 	}
