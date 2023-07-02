@@ -43,7 +43,7 @@ fn (b &Buffer) load(size int, ptr voidptr) chan IError {
 		ch <- vcl_error(ret)
 		return ch
 	}
-	spawn fn (event &ClEvent, ch chan IError) {
+	go fn (event &ClEvent, ch chan IError) {
 		defer {
 			cl_release_event(event)
 		}

@@ -1,6 +1,6 @@
 module vblas
 
-// import runtime
+import runtime
 import sync
 import vsl.float.float64
 import math
@@ -143,7 +143,7 @@ fn dgemm_parallel(a_trans bool, b_trans bool, m int, n int, k int, a []f64, lda 
 
 	// worker_limit acts a number of maximum concurrent workers,
 	// with the limit set to the number of procs available.
-	// worker_limit := chan int{cap: runtime.nr_jobs()}
+	worker_limit := chan int{cap: runtime.nr_jobs()}
 
 	// wg is used to wait for all
 	mut wg := sync.new_waitgroup()
@@ -154,11 +154,11 @@ fn dgemm_parallel(a_trans bool, b_trans bool, m int, n int, k int, a []f64, lda 
 
 	for i := 0; i < m; i += block_size {
 		for j := 0; j < n; j += block_size {
-			// worker_limit <- 0
-			spawn fn (a_trans bool, b_trans bool, m int, n int, max_k_len int, a []f64, lda int, b []f64, ldb int, mut c []f64, ldc int, alpha f64, i int, j int, mut wg sync.WaitGroup) {
+			worker_limit <- 0
+			go fn [worker_limit] (a_trans bool, b_trans bool, m int, n int, max_k_len int, a []f64, lda int, b []f64, ldb int, mut c []f64, ldc int, alpha f64, i int, j int, mut wg sync.WaitGroup) {
 				defer {
 					wg.done()
-					// <-worker_limit
+					_ := <-worker_limit
 				}
 
 				mut leni := block_size
