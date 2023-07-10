@@ -74,7 +74,7 @@ pub fn print_col_major(m int, n int, data []f64, nfmt_ string) string {
 			l += '\n'
 		}
 		for j in 0 .. n {
-			l += strconv.v_sprintf(nfmt, data[i + j * m])
+			l += unsafe { strconv.v_sprintf(nfmt, data[i + j * m]) }
 		}
 	}
 	return l
@@ -93,7 +93,7 @@ pub fn print_col_major_v(m int, n int, data []f64, nfmt_ string) string {
 			if j > 0 {
 				l += ','
 			}
-			l += strconv.v_sprintf(nfmt, data[i + j * m])
+			l += unsafe { strconv.v_sprintf(nfmt, data[i + j * m]) }
 		}
 		l += '},\n'
 	}
@@ -114,7 +114,7 @@ pub fn print_col_major_py(m int, n int, data []f64, nfmt_ string) string {
 			if j > 0 {
 				l += ','
 			}
-			l += strconv.v_sprintf(nfmt, data[i + j * m])
+			l += unsafe { strconv.v_sprintf(nfmt, data[i + j * m]) }
 		}
 		l += '],\n'
 	}
@@ -177,7 +177,7 @@ pub fn print_col_major_complex(m int, n int, data []complex.Complex, nfmt_r_ str
 				l += ', '
 			}
 			v := data[i + j * m]
-			l += strconv.v_sprintf(nfmt_r, v.re) + strconv.v_sprintf(nfmt_i, v.im) + 'i'
+			l += unsafe { strconv.v_sprintf(nfmt_r, v.re) + strconv.v_sprintf(nfmt_i, v.im) + 'i' }
 		}
 	}
 	return l
@@ -205,7 +205,7 @@ pub fn print_col_major_complex_v(m int, n int, data []complex.Complex, nfmt_r_ s
 				l += ','
 			}
 			v := data[i + j * m]
-			l += strconv.v_sprintf(nfmt_r, v.re) + strconv.v_sprintf(nfmt_i, v.im) + 'i'
+			l += unsafe { strconv.v_sprintf(nfmt_r, v.re) + strconv.v_sprintf(nfmt_i, v.im) + 'i' }
 		}
 		l += '},\n'
 	}
@@ -235,7 +235,7 @@ pub fn print_col_major_omplex_py(m int, n int, data []complex.Complex, nfmt_r_ s
 				l += ','
 			}
 			v := data[i + j * m]
-			l += strconv.v_sprintf(nfmt_r, v.re) + strconv.v_sprintf(nfmt_i, v.im) + 'j'
+			l += unsafe { strconv.v_sprintf(nfmt_r, v.re) + strconv.v_sprintf(nfmt_i, v.im) + 'j' }
 		}
 		l += '],\n'
 	}

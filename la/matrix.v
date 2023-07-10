@@ -377,5 +377,5 @@ pub fn (o &Matrix[T]) print_py(nfmt_ string) string {
 
 [inline]
 pub fn safe_print[T](format string, message T) string {
-	return strconv.v_sprintf(format, message)
+	return unsafe { strconv.v_sprintf(format, message) }
 }
