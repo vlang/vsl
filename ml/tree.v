@@ -3,7 +3,6 @@ module ml
 import arrays
 import math
 import rand
-import vsl.ml
 
 pub type Tree = Empty | Node
 
@@ -169,10 +168,10 @@ fn (dt DecisionTree) grow_tree(data Data[f64], depth int) Node {
 	xrix := right_idxs.map(x[it])
 	ylix := left_idxs.map(y[it])
 	yrix := right_idxs.map(y[it])
-	mut xleft := ml.data_from_raw_xy_sep(xlix, ylix) or {
+	mut xleft := data_from_raw_xy_sep(xlix, ylix) or {
 		panic('could not create new data for left subtree')
 	}
-	mut xright := ml.data_from_raw_xy_sep(xrix, yrix) or {
+	mut xright := data_from_raw_xy_sep(xrix, yrix) or {
 		panic('could not create new data for right subtree')
 	}
 	left := dt.grow_tree(xleft, depth + 1)

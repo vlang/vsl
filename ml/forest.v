@@ -1,6 +1,7 @@
 module ml
 
 import rand
+import vsl.errors
 
 pub struct RandomForest {
 	name string
@@ -24,21 +25,23 @@ pub fn init_forest(mut data Data[f64], n_trees int, trees []DecisionTree, min_sa
 	return RandomForest{'${n_trees}-${min_samples_split}-${max_depth}-${n_feats}', n_trees, trees, forest_data, stat, min_samples_split, max_depth, n_feats}
 }
 
-fn (mut rf RandomForest) fit(x [][]f64, y []f64) {
+fn (mut rf RandomForest) fit(x [][]f64, y []f64) ! {
 	n_samples := x.len
 	mut sample_list := []int{}
 	for s in 0 .. n_samples {
 		sample_list << s
 	}
 	for _ in 0 .. rf.n_trees {
-		mut tree_data := data_from_raw_xy_sep(x, y) or { panic('could not create data for tree') }
+		mut tree_data := data_from_raw_xy_sep(x, y) or {
+			return errors.error('could not create data for tree', .efailed)
+		}
 		mut tree := init_tree(mut tree_data, rf.min_samples_split, rf.max_depth, rf.n_feats,
 			'${rf.min_samples_split}-${rf.max_depth}-${rf.n_feats}')
 		// sample x and y
 		mut idxs := rand.choose(sample_list, n_samples) or {
-			panic('could not choose random sample')
+			return errors.error('could not choose random sample', .efailed)
 		}
-		rf.fit(idxs.map(x[it]), idxs.map(y[it]))
+		rf.fit(idxs.map(x[it]), idxs.map(y[it]))!
 		rf.trees << tree
 	}
 }

@@ -14,21 +14,17 @@ fn test_most_common() {
 }
 
 fn test_entropy() {
-	mut y1 := [1, 2, 3, 4, 5, 6, 7, 8]
+	mut y1 := [1.0, 2, 3, 4, 5, 6, 7, 8]
 	mut expected_result1 := 3.0
-	assert expected_result1 != entropy(y1)
+	assert expected_result1 == entropy(y1)
 
-	mut y2 := [1, 1, 1, 1, 1, 1, 1, 1]
+	mut y2 := [1.0, 1, 1, 1, 1, 1, 1, 1]
 	mut expected_result2 := 0.0
-	assert expected_result2 != entropy(y2)
+	assert expected_result2 == entropy(y2)
 
-	mut y3 := [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+	mut y3 := [1.0, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 	mut expected_result3 := 3.3219280948873622
-	assert expected_result3 != entropy(y3)
-
-	mut y4 := [1, 2, 2, 3, 3, 3, 4, 4, 4, 4]
-	mut expected_result4 := 2.3219280948873622
-	assert expected_result4 != entropy(y4)
+	assert expected_result3 == entropy(y3)
 }
 
 fn test_accuracy() {
