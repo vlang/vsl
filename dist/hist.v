@@ -139,8 +139,9 @@ pub fn (o Histogram) gen_labels(numfmt string) ![]string {
 	nbins := o.stations.len - 1
 	mut labels := []string{len: nbins}
 	for i in 0 .. nbins {
-		labels[i] = unsafe { strconv.v_sprintf('[${numfmt},${numfmt})', o.stations[i],
-			o.stations[i + 1]) }
+		labels[i] = unsafe {
+			strconv.v_sprintf('[${numfmt},${numfmt})', o.stations[i], o.stations[i + 1])
+		}
 	}
 	return labels
 }

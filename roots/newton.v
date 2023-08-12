@@ -11,7 +11,9 @@ pub fn newton(f func.FnFdf, x0 f64, x_eps f64, fx_eps f64, n_max int) !f64 {
 	omega := 1e-4
 	gamma := 0.5
 	mut root := x0
-	mut fval, mut df := f.eval_f_df(root)
+	mut fval, mut df := f.eval_f_df(root) or {
+		return errors.error('function evaluation failed', .efailed)
+	}
 	mut i := 0
 	for i < n_max {
 		mut t := 1.0
@@ -23,7 +25,9 @@ pub fn newton(f func.FnFdf, x0 f64, x_eps f64, fx_eps f64, n_max int) !f64 {
 		mut norm := 0.0 // Armijo line search
 		for t != 0.0 {
 			x_linesearch := root - t * dx
-			fval, df = f.eval_f_df(x_linesearch)
+			fval, df = f.eval_f_df(x_linesearch) or {
+				return errors.error('function evaluation failed', .efailed)
+			}
 			norm = math.abs(fval)
 			if norm < norm0 * (1.0 - omega * t) {
 				root = x_linesearch
