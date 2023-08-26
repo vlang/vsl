@@ -41,10 +41,7 @@ pub fn (v &Vector[T]) data() ![]T {
 	mut data := []T{len: int(v.buf.size / int(sizeof(T)))}
 	ret := cl_enqueue_read_buffer(v.buf.device.queue, v.buf.memobj, true, 0, usize(v.buf.size),
 		unsafe { &data[0] }, 0, unsafe { nil }, unsafe { nil })
-	if ret != success {
-		return vcl_error(ret)
-	}
-	return data
+	return error_or_default(ret, data)
 }
 
 // map applies an map kernel on all elements of the vector

@@ -13,7 +13,7 @@ pub fn (d &Device) kernel(name string) !&Kernel {
 			continue
 		}
 		if ret != success {
-			return vcl_error(ret)
+			return error_from_code(ret)
 		}
 		break
 	}
@@ -222,7 +222,7 @@ fn (k &Kernel) call(work_sizes []int, lokal_sizes []int) chan IError {
 		unsafe { &global_work_size_ptr[0] }, unsafe { &local_work_size_ptr[0] }, 0, unsafe { nil },
 		unsafe { &event })
 	if res != success {
-		err := vcl_error(res)
+		err := error_from_code(res)
 		ch <- err
 		return ch
 	}
@@ -231,7 +231,7 @@ fn (k &Kernel) call(work_sizes []int, lokal_sizes []int) chan IError {
 			cl_release_event(event)
 		}
 		res := cl_wait_for_events(1, unsafe { &event })
-		ch <- vcl_error(res)
+		ch <- error_from_code(res)
 	}(ch, event)
 	return ch
 }

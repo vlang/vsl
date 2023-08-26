@@ -9,8 +9,11 @@ const (
 pub type ErrVCL = int
 
 pub fn (e ErrVCL) err() IError {
+	if e == vcl.success {
+		return none
+	}
+
 	err := match e {
-		vcl.success { '' }
 		vcl.device_not_found { vcl.err_device_not_found }
 		vcl.device_not_available { vcl.err_device_not_available }
 		vcl.compiler_not_available { vcl.err_compiler_not_available }
@@ -67,16 +70,41 @@ pub fn (e ErrVCL) err() IError {
 	return error_with_code(err, int(e))
 }
 
-pub fn vcl_error(code int) IError {
+pub fn error_from_code(code int) IError {
+	return ErrVCL(code).err()
+}
+
+pub fn error_or_default[T](code int, default T) !T {
 	if code == vcl.success {
-		return none
+		return default
 	}
 	return ErrVCL(code).err()
 }
 
-pub fn vcl_panic(code int) {
-	if code != vcl.success {
-		panic(ErrVCL(code).err())
+pub fn typed_error[T](code int) !T {
+	if code == vcl.success {
+		return
+	}
+	return ErrVCL(code).err()
+}
+
+pub fn vcl_error(code int) ! {
+	err := ErrVCL(code).err()
+	match err {
+		none {}
+		else {
+			return err
+		}
+	}
+}
+
+pub fn panic_on_error(code int) {
+	err := ErrVCL(code).err()
+	match err {
+		none {}
+		else {
+			panic(err)
+		}
 	}
 }
 

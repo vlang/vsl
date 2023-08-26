@@ -67,15 +67,15 @@ pub fn (mut d Device) release() ! {
 	return vcl_error(cl_release_device(d.id))
 }
 
-fn (d &Device) get_info_str(param ClDeviceInfo, panic_on_error bool) !string {
+fn (d &Device) get_info_str(param ClDeviceInfo, should_panic_on_error bool) !string {
 	mut info_bytes := [1024]u8{}
 	mut info_bytes_size := usize(0)
 	code := cl_get_device_info(d.id, param, 1024, &info_bytes[0], &info_bytes_size)
 	if code != success {
-		if panic_on_error {
-			vcl_panic(code)
+		if should_panic_on_error {
+			panic_on_error(code)
 		}
-		return vcl_error(code)
+		return error_or_default(code, '')
 	}
 
 	res := info_bytes[..int(info_bytes_size)].bytestr()

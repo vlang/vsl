@@ -35,7 +35,7 @@ pub fn (b &Bytes) data() ![]u8 {
 	ret := cl_enqueue_read_buffer(b.buf.device.queue, b.buf.memobj, true, 0, usize(b.buf.size),
 		unsafe { &data[0] }, 0, unsafe { nil }, unsafe { nil })
 	if ret != success {
-		return vcl_error(ret)
+		return error_from_code(ret)
 	}
 	return data
 }

@@ -13,7 +13,7 @@ fn (d &Device) buffer(size int) !&Buffer {
 	mut ret := 0
 	buffer := cl_create_buffer(d.ctx, mem_read_write, usize(size), unsafe { nil }, &ret)
 	if ret != success {
-		return vcl_error(ret)
+		return error_from_code(ret)
 	}
 	if isnil(buffer) {
 		return err_unknown
@@ -40,14 +40,14 @@ fn (b &Buffer) load(size int, ptr voidptr) chan IError {
 	ret := cl_enqueue_write_buffer(b.device.queue, b.memobj, false, 0, usize(size), ptr,
 		0, unsafe { nil }, &event)
 	if ret != success {
-		ch <- vcl_error(ret)
+		ch <- error_from_code(ret)
 		return ch
 	}
 	spawn fn (event &ClEvent, ch chan IError) {
 		defer {
 			cl_release_event(event)
 		}
-		ch <- vcl_error(cl_wait_for_events(1, event))
+		ch <- error_from_code(cl_wait_for_events(1, event))
 	}(&event, ch)
 
 	return ch
