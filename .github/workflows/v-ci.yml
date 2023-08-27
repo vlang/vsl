@@ -201,7 +201,7 @@ jobs:
         run: |
           git clone https://github.com/xianyi/OpenBLAS.git
           cd OpenBLAS
-          flags="FC=gfortran USE_OPENMP=1 USE_THREAD=1 USE_TLS=1 NO_STATIC=1"
+          flags="FC=gfortran NO_STATIC=1"
           make ${flags} shared
           sudo make ${flags} PREFIX=/usr install
 
@@ -210,6 +210,8 @@ jobs:
           sudo ln -sf /usr/lib/libopenblas.so /usr/lib/libcblas.so
           sudo ln -sf /usr/lib/libopenblas.so /usr/lib/liblapack.so
           sudo ln -sf /usr/lib/libopenblas.so /usr/lib/liblapacke.so
+
+          cd ..
 
       - name: Move VSL source code to V Modules
         run: mv ./vsl ~/.vmodules
