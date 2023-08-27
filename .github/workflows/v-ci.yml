@@ -193,10 +193,23 @@ jobs:
         run: |
           brew install coreutils
           brew install gcc
-          brew install openblas
           brew install libomp
           brew install hdf5
           brew install open-mpi
+
+      - name: Install Openblas-Lapack
+        run: |
+          git clone https://github.com/xianyi/OpenBLAS.git
+          cd OpenBLAS
+          flags="FC=gfortran USE_OPENMP=1 USE_THREAD=1 USE_TLS=1 NO_STATIC=1"
+          make ${flags} shared
+          sudo make ${flags} PREFIX=/usr install
+
+          # Symlink to provide blas, cblas, lapack and lapacke
+          sudo ln -sf /usr/lib/libopenblas.so /usr/lib/libblas.so
+          sudo ln -sf /usr/lib/libopenblas.so /usr/lib/libcblas.so
+          sudo ln -sf /usr/lib/libopenblas.so /usr/lib/liblapack.so
+          sudo ln -sf /usr/lib/libopenblas.so /usr/lib/liblapacke.so
 
       - name: Move VSL source code to V Modules
         run: mv ./vsl ~/.vmodules
