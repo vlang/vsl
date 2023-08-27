@@ -196,7 +196,6 @@ jobs:
           brew install libomp
           brew install hdf5
           brew install open-mpi
-          brew install li
 
       - name: Move VSL source code to V Modules
         run: mv ./vsl ~/.vmodules
