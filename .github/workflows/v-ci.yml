@@ -191,6 +191,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          brew install coreutils
           brew install gcc
           brew install openblas
           brew install libomp
