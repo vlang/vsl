@@ -201,6 +201,7 @@ jobs:
 
       - name: Find Files
         run: |
+          brew info open-mpi
           brew info openblas
           brew info lapack
 
