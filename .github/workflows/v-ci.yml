@@ -198,10 +198,6 @@ jobs:
           brew install open-mpi
           brew install openblas
 
-      - name: Find OpenBlas files
-        run: |
-          find /usr/local -name "*lapacke*"
-
       - name: Move VSL source code to V Modules
         run: mv ./vsl ~/.vmodules
 
