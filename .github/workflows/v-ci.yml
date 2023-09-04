@@ -196,24 +196,7 @@ jobs:
           brew install libomp
           brew install hdf5
           brew install open-mpi
-
-      - name: Install Openblas-Lapack
-        run: |
-          git clone https://github.com/xianyi/OpenBLAS.git
-          cd OpenBLAS
-          flags="BINARY=64 USE_THREAD=1 CC=gcc-9 FC=gfortran-9"
-          make ${flags}
-          sudo make ${flags} PREFIX=/usr install
-
-          # Symlink to provide blas, cblas, lapack and lapacke
-          sudo ln -sf /usr/lib/libopenblas.so /usr/lib/libblas.so
-          sudo ln -sf /usr/lib/libopenblas.so /usr/lib/libcblas.so
-          sudo ln -sf /usr/lib/libopenblas.so /usr/lib/liblapack.so
-          sudo ln -sf /usr/lib/libopenblas.so /usr/lib/liblapacke.so
-
-          cd ..
-        env:
-          MACOSX_DEPLOYMENT_TARGET: 11.0
+          brew install openblas
 
       - name: Move VSL source code to V Modules
         run: mv ./vsl ~/.vmodules
