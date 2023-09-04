@@ -202,7 +202,7 @@ jobs:
         run: |
           find /usr/local/Cellar/openblas -name "*.dylib"
           find /usr/local/Cellar/openblas -name "*.a"
-          find /usr/include /usr/local/include -name "cblas.h" -or -name "lapacke.h"
+          find /usr/local/include -name "cblas.h" -or -name "lapacke.h"
           find /usr/lib /usr/local/lib -name "libopenblas.*"
           brew info openblas
 
