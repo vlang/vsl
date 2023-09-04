@@ -170,7 +170,7 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - macos-11.0
+          - macos-10.15
         flags:
           - ""
           - "--prod"
@@ -201,7 +201,7 @@ jobs:
         run: |
           git clone https://github.com/xianyi/OpenBLAS.git
           cd OpenBLAS
-          flags="CC=cc FC=gfortran"
+          flags="BINARY=64 USE_THREAD=1 CC=gcc-9 FC=gfortran-9"
           make ${flags}
           sudo make ${flags} PREFIX=/usr install
 
