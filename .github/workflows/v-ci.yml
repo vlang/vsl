@@ -200,9 +200,7 @@ jobs:
 
       - name: Find OpenBlas files
         run: |
-          find /usr/local/opt/openblas/include -name "cblas.h" -or -name "lapacke.h"
-          find /usr/local/opt/openblas/lib -name "lib*"
-          brew info openblas
+          find /usr/local -name "*lapacke*"
 
       - name: Move VSL source code to V Modules
         run: mv ./vsl ~/.vmodules
