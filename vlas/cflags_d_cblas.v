@@ -4,6 +4,6 @@ module vlas
 #flag linux -lopenblas -llapacke -L/usr/local/lib -L/usr/lib
 #flag windows -O2
 #flag windows -lopenblas -lgfortran
-#flag darwin -I/usr/local/opt/openblas/include -I/usr/local/include
-#flag darwin -llapacke -lopenblas -L/usr/local/opt/openblas/lib -L/usr/local/lib
+#flag darwin -I/usr/local/opt/openblas/include
+#flag darwin -llapacke -lopenblas -L/usr/local/opt/openblas/lib
 #flag -I@VMODROOT
