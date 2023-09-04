@@ -201,8 +201,8 @@ jobs:
         run: |
           git clone https://github.com/xianyi/OpenBLAS.git
           cd OpenBLAS
-          flags="FC=gfortran NO_STATIC=1"
-          make ${flags} shared
+          flags="CC=cc FC=gfortran"
+          make ${flags}
           sudo make ${flags} PREFIX=/usr install
 
           # Symlink to provide blas, cblas, lapack and lapacke
@@ -212,6 +212,8 @@ jobs:
           sudo ln -sf /usr/lib/libopenblas.so /usr/lib/liblapacke.so
 
           cd ..
+        env:
+          MACOSX_DEPLOYMENT_TARGET: 11.0
 
       - name: Move VSL source code to V Modules
         run: mv ./vsl ~/.vmodules
