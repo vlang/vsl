@@ -199,6 +199,11 @@ jobs:
           brew install openblas
           brew install lapack
 
+      - name: Find Files
+        run: |
+          brew info openblas
+          brew info lapack
+
       - name: Move VSL source code to V Modules
         run: mv ./vsl ~/.vmodules
 
