@@ -197,6 +197,7 @@ jobs:
           brew install hdf5
           brew install open-mpi
           brew install openblas
+          brew install lapack
 
       - name: Move VSL source code to V Modules
         run: mv ./vsl ~/.vmodules
