@@ -3,10 +3,6 @@ module vlas
 import vsl.errors
 import vsl.vlas.internal.vblas
 
-$if darwin {
-        #include <Accelerate/Accelerate.h>
-}
-
 fn C.LAPACKE_dgesv(matrix_layout vblas.MemoryLayout, n int, nrhs int, a &f64, lda int, ipiv &int, b &f64, ldb int) int
 
 fn C.LAPACKE_dgesvd(matrix_layout vblas.MemoryLayout, jobu byte, jobvt byte, m int, n int, a &f64, lda int, s &f64, u &f64, ldu int, vt &f64, ldvt int, superb &f64) int
