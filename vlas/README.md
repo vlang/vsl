@@ -52,7 +52,7 @@ brew install openblas
 
 ## LAPACKE Backend
 
-Use the flag `-d lapacke` to use the LAPACKE backend.
+Use the flag `-d lapacke` to use the LAPACKE backend (enabled by default for now).
 
 ### Install dependencies
 

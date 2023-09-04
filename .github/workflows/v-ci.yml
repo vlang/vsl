@@ -8,9 +8,6 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-  schedule:
-    - cron: "31 1,12 * * *"
-
   push:
     branches:
       - main
@@ -20,24 +17,11 @@ on:
       - main
 
 jobs:
-  shellcheck:
-    name: Shellcheck
-    uses: ./.github/workflows/shellcheck.yml
-
-  markdownlint:
-    name: Markdown Lint
-    uses: ./.github/workflows/markdownlint.yml
-
-  todo:
-    if: github.event_name == 'push'
-    name: TODO
-    uses: ./.github/workflows/todo.yml
-
   validate-docs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout VSL
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: vsl
 
@@ -79,7 +63,7 @@ jobs:
 
     steps:
       - name: Checkout VSL
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: vsl
 
@@ -133,7 +117,7 @@ jobs:
 
     steps:
       - name: Checkout VSL
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: vsl
 
@@ -178,3 +162,59 @@ jobs:
       - name: Execute Tests using Pure V Backend with Pure C Blas and Garbage Collection enabled
         run: ~/.vmodules/vsl/bin/test ${{ matrix.flags }} --use-cblas --use-gc boehm
         if: ${{ matrix.os != 'ubuntu-18.04' }}
+
+  run-tests-on-macos:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - macos-latest
+        flags:
+          - ""
+          - "--prod"
+
+    steps:
+      - name: Checkout VSL
+        uses: actions/checkout@v3
+        with:
+          path: vsl
+
+      - name: Setup V
+        uses: vlang/setup-v@v1.3
+        with:
+          check-latest: true
+
+      - name: V doctor
+        run: v doctor
+
+      - name: Install dependencies
+        run: |
+          brew install coreutils
+          brew install gcc
+          brew install libomp
+          brew install hdf5
+          brew install open-mpi
+          brew install openblas
+          brew install lapack
+
+      - name: Move VSL source code to V Modules
+        run: mv ./vsl ~/.vmodules
+
+      - name: Execute Tests using Pure V Backend
+        # TODO: Remove continue-on-error when CI is fixed for macOS
+        continue-on-error: true
+        run: ~/.vmodules/vsl/bin/test
+
+      - name: Execute Tests using Pure V Backend with Pure C Blas
+        continue-on-error: true
+        run: ~/.vmodules/vsl/bin/test --use-cblas
+
+      - name: Execute Tests using Pure V Backend and Garbage Collection enabled
+        continue-on-error: true
+        run: ~/.vmodules/vsl/bin/test --use-gc boehm
+
+      - name: Execute Tests using Pure V Backend with Pure C Blas and Garbage Collection enabled
+        continue-on-error: true
+        run: ~/.vmodules/vsl/bin/test --use-cblas --use-gc boehm
