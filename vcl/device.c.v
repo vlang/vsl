@@ -5,7 +5,7 @@ pub enum DeviceType as i64 {
 	cpu = (1 << 0)
 	gpu = (1 << 1)
 	accelerator = (1 << 2)
-	default_device = (1 << 0)
+	default_device = (1 << 3)
 	all = 0xFFFFFFFF
 }
 
