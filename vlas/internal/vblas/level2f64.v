@@ -736,8 +736,8 @@ pub fn dtbmv(ul Uplo, trans_a Transpose, d Diagonal, n int, k int, a []f64, lda 
 				for i in 0 .. n {
 					u := math.min(1 + k, n - i)
 					mut sum := 0.0
-					mut atmp := a[i * lda..]
-					xtmp := x[i..]
+					mut atmp := unsafe { a[i * lda..] }
+					xtmp := unsafe { x[i..] }
 					for j := 1; j < u; j++ {
 						sum += xtmp[j] * atmp[j]
 					}
@@ -931,7 +931,7 @@ pub fn dtpmv(ul Uplo, trans_a Transpose, d Diagonal, n int, ap []f64, mut x []f6
 						xi *= ap[offset]
 					}
 					atmp := ap[offset + 1..offset + n - i]
-					xtmp := x[i + 1..]
+					xtmp := unsafe { x[i + 1..] }
 					for j, v in atmp {
 						xi += v * xtmp[j]
 					}
@@ -1000,7 +1000,7 @@ pub fn dtpmv(ul Uplo, trans_a Transpose, d Diagonal, n int, ap []f64, mut x []f6
 			for i := n - 1; i >= 0; i-- {
 				xi := x[i]
 				atmp := ap[offset + 1..offset + n - i]
-				mut xtmp := x[i + 1..]
+				mut xtmp := unsafe { x[i + 1..] }
 				for j, v in atmp {
 					xtmp[j] += v * xi
 				}
@@ -1115,7 +1115,7 @@ pub fn dtbsv(ul Uplo, trans_a Transpose, d Diagonal, n int, k int, a []f64, lda 
 						bands = n - i - 1
 					}
 					atmp := a[i * lda + 1..]
-					xtmp := x[i + 1..i + bands + 1]
+					xtmp := unsafe { x[i + 1..i + bands + 1] }
 					mut sum := 0.0
 					for j, v in xtmp {
 						sum += v * atmp[j]
@@ -1155,7 +1155,7 @@ pub fn dtbsv(ul Uplo, trans_a Transpose, d Diagonal, n int, k int, a []f64, lda 
 					bands = i
 				}
 				atmp := a[i * lda + k - bands..]
-				xtmp := x[i - bands..i]
+				xtmp := unsafe { x[i - bands..i] }
 				mut sum := 0.0
 				for j, v in xtmp {
 					sum += v * atmp[j]
@@ -1234,7 +1234,7 @@ pub fn dtbsv(ul Uplo, trans_a Transpose, d Diagonal, n int, k int, a []f64, lda 
 				bands = n - i - 1
 			}
 			mut sum := 0.0
-			xtmp := x[i + 1..i + 1 + bands]
+			xtmp := unsafe { x[i + 1..i + 1 + bands] }
 			for j, v in xtmp {
 				sum += v * a[(i + j + 1) * lda + k - j - 1]
 			}
@@ -1475,7 +1475,7 @@ pub fn dsyr(ul Uplo, n int, alpha f64, x []f64, incx int, mut a []f64, lda int) 
 			for i in 0 .. n {
 				tmp := x[i] * alpha
 				if tmp != 0 {
-					mut atmp := a[i * lda + i..i * lda + n]
+					mut atmp := unsafe { a[i * lda + i..i * lda + n] }
 					xtmp := x[i..n]
 					for j, v in xtmp {
 						atmp[j] += v * tmp
@@ -1489,7 +1489,7 @@ pub fn dsyr(ul Uplo, n int, alpha f64, x []f64, incx int, mut a []f64, lda int) 
 			tmp := x[ix] * alpha
 			if tmp != 0 {
 				mut jx := ix
-				mut atmp := a[i * lda..]
+				mut atmp := unsafe { a[i * lda..] }
 				for j := i; j < n; j++ {
 					atmp[j] += x[jx] * tmp
 					jx += incx
@@ -1504,7 +1504,7 @@ pub fn dsyr(ul Uplo, n int, alpha f64, x []f64, incx int, mut a []f64, lda int) 
 		for i in 0 .. n {
 			tmp := x[i] * alpha
 			if tmp != 0 {
-				mut atmp := a[i * lda..]
+				mut atmp := unsafe { a[i * lda..] }
 				xtmp := x[..i + 1]
 				for j, v in xtmp {
 					atmp[j] += tmp * v
@@ -1517,7 +1517,7 @@ pub fn dsyr(ul Uplo, n int, alpha f64, x []f64, incx int, mut a []f64, lda int) 
 	for i in 0 .. n {
 		tmp := x[ix] * alpha
 		if tmp != 0 {
-			mut atmp := a[i * lda..]
+			mut atmp := unsafe { a[i * lda..] }
 			mut jx := kx
 			for j := 0; j < i + 1; j++ {
 				atmp[j] += tmp * x[jx]
@@ -1579,7 +1579,7 @@ pub fn dsyr2(ul Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, mu
 			for i in 0 .. n {
 				xi := x[i]
 				yi := y[i]
-				mut atmp := a[i * lda..]
+				mut atmp := unsafe { a[i * lda..] }
 				for j := i; j < n; j++ {
 					atmp[j] += alpha * (xi * y[j] + x[j] * yi)
 				}
@@ -1593,7 +1593,7 @@ pub fn dsyr2(ul Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, mu
 			mut jy := ky + i * incy
 			xi := x[ix]
 			yi := y[iy]
-			mut atmp := a[i * lda..]
+			mut atmp := unsafe { a[i * lda..] }
 			for j := i; j < n; j++ {
 				atmp[j] += alpha * (xi * y[jy] + x[jx] * yi)
 				jx += incx
@@ -1608,7 +1608,7 @@ pub fn dsyr2(ul Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, mu
 		for i in 0 .. n {
 			xi := x[i]
 			yi := y[i]
-			mut atmp := a[i * lda..]
+			mut atmp := unsafe { a[i * lda..] }
 			for j := 0; j <= i; j++ {
 				atmp[j] += alpha * (xi * y[j] + x[j] * yi)
 			}
@@ -1622,7 +1622,7 @@ pub fn dsyr2(ul Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, mu
 		mut jy := ky
 		xi := x[ix]
 		yi := y[iy]
-		mut atmp := a[i * lda..]
+		mut atmp := unsafe { a[i * lda..] }
 		for j := 0; j <= i; j++ {
 			atmp[j] += alpha * (xi * y[jy] + x[jx] * yi)
 			jx += incx
@@ -1677,7 +1677,7 @@ pub fn dtpsv(ul Uplo, trans_a Transpose, d Diagonal, n int, ap []f64, mut x []f6
 			if incx == 1 {
 				for i := n - 1; i >= 0; i-- {
 					atmp := ap[offset + 1..offset + n - i]
-					xtmp := x[i + 1..]
+					xtmp := unsafe { x[i + 1..] }
 					mut sum := 0.0
 					for j, v in atmp {
 						sum += v * xtmp[j]
@@ -1750,7 +1750,7 @@ pub fn dtpsv(ul Uplo, trans_a Transpose, d Diagonal, n int, ap []f64, mut x []f6
 				}
 				xi := x[i]
 				atmp := ap[offset + 1..offset + n - i]
-				mut xtmp := x[i + 1..]
+				mut xtmp := unsafe { x[i + 1..] }
 				for j, v in atmp {
 					xtmp[j] -= v * xi
 				}
@@ -2012,7 +2012,7 @@ pub fn dspr(ul Uplo, n int, alpha f64, x []f64, incx int, mut ap []f64) {
 	if ul == .upper {
 		if incx == 1 {
 			for i in 0 .. n {
-				mut atmp := ap[offset..]
+				mut atmp := unsafe { ap[offset..] }
 				xv := alpha * x[i]
 				xtmp := x[i..n]
 				for j, v in xtmp {
@@ -2025,7 +2025,7 @@ pub fn dspr(ul Uplo, n int, alpha f64, x []f64, incx int, mut ap []f64) {
 		mut ix := kx
 		for i in 0 .. n {
 			mut jx := kx + i * incx
-			mut atmp := ap[offset..]
+			mut atmp := unsafe { ap[offset..] }
 			xv := alpha * x[ix]
 			for j := 0; j < n - i; j++ {
 				atmp[j] += xv * x[jx]
@@ -2038,7 +2038,7 @@ pub fn dspr(ul Uplo, n int, alpha f64, x []f64, incx int, mut ap []f64) {
 	}
 	if incx == 1 {
 		for i in 0 .. n {
-			mut atmp := ap[offset - i..]
+			mut atmp := unsafe { ap[offset - i..] }
 			xv := alpha * x[i]
 			xtmp := x[..i + 1]
 			for j, v in xtmp {
@@ -2051,7 +2051,7 @@ pub fn dspr(ul Uplo, n int, alpha f64, x []f64, incx int, mut ap []f64) {
 	mut ix := kx
 	for i in 0 .. n {
 		mut jx := kx
-		mut atmp := ap[offset - i..]
+		mut atmp := unsafe { ap[offset - i..] }
 		xv := alpha * x[ix]
 		for j := 0; j <= i; j++ {
 			atmp[j] += xv * x[jx]
@@ -2110,7 +2110,7 @@ pub fn dspr2(ul Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, mu
 	if ul == .upper {
 		if incx == 1 && incy == 1 {
 			for i in 0 .. n {
-				mut atmp := ap[offset..]
+				mut atmp := unsafe { ap[offset..] }
 				xi := x[i]
 				yi := y[i]
 				xtmp := x[i..n]
@@ -2127,7 +2127,7 @@ pub fn dspr2(ul Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, mu
 		for i in 0 .. n {
 			mut jx := kx + i * incx
 			mut jy := ky + i * incy
-			mut atmp := ap[offset..]
+			mut atmp := unsafe { ap[offset..] }
 			xi := x[ix]
 			yi := y[iy]
 			for j := 0; j < n - i; j++ {
@@ -2143,7 +2143,7 @@ pub fn dspr2(ul Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, mu
 	}
 	if incx == 1 && incy == 1 {
 		for i in 0 .. n {
-			mut atmp := ap[offset - i..]
+			mut atmp := unsafe { ap[offset - i..] }
 			xi := x[i]
 			yi := y[i]
 			xtmp := x[..i + 1]
@@ -2159,7 +2159,7 @@ pub fn dspr2(ul Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, mu
 	for i in 0 .. n {
 		mut jx := kx
 		mut jy := ky
-		mut atmp := ap[offset - i..]
+		mut atmp := unsafe { ap[offset - i..] }
 		for j := 0; j <= i; j++ {
 			atmp[j] += alpha * (x[ix] * y[jy] + x[jx] * y[iy])
 			jx += incx

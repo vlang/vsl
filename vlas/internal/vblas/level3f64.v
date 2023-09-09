@@ -45,7 +45,7 @@ pub fn dsyrk(ul Uplo, trans_a Transpose, n int, k int, alpha f64, a []f64, lda i
 		if beta == 0 {
 			if ul == .upper {
 				for i in 0 .. n {
-					mut ctmp := c[i * ldc + i..i * ldc + n]
+					mut ctmp := unsafe { c[i * ldc + i..i * ldc + n] }
 					for j in 0 .. ctmp.len {
 						ctmp[j] = 0
 					}
@@ -53,7 +53,7 @@ pub fn dsyrk(ul Uplo, trans_a Transpose, n int, k int, alpha f64, a []f64, lda i
 				return
 			}
 			for i in 0 .. n {
-				mut ctmp := c[i * ldc..i * ldc + i + 1]
+				mut ctmp := unsafe { c[i * ldc..i * ldc + i + 1] }
 				for j in 0 .. ctmp.len {
 					ctmp[j] = 0
 				}
@@ -62,7 +62,7 @@ pub fn dsyrk(ul Uplo, trans_a Transpose, n int, k int, alpha f64, a []f64, lda i
 		}
 		if ul == .upper {
 			for i in 0 .. n {
-				mut ctmp := c[i * ldc + i..i * ldc + n]
+				mut ctmp := unsafe { c[i * ldc + i..i * ldc + n] }
 				for j in 0 .. ctmp.len {
 					ctmp[j] *= beta
 				}
@@ -70,7 +70,7 @@ pub fn dsyrk(ul Uplo, trans_a Transpose, n int, k int, alpha f64, a []f64, lda i
 			return
 		}
 		for i in 0 .. n {
-			mut ctmp := c[i * ldc..i * ldc + i + 1]
+			mut ctmp := unsafe { c[i * ldc..i * ldc + i + 1] }
 			for j in 0 .. ctmp.len {
 				ctmp[j] *= beta
 			}
@@ -80,7 +80,7 @@ pub fn dsyrk(ul Uplo, trans_a Transpose, n int, k int, alpha f64, a []f64, lda i
 	if trans_a == .no_trans {
 		if ul == .upper {
 			for i in 0 .. n {
-				mut ctmp := c[i * ldc + i..i * ldc + n]
+				mut ctmp := unsafe { c[i * ldc + i..i * ldc + n] }
 				atmp := a[i * lda..i * lda + k]
 				if beta == 0 {
 					for jc in 0 .. ctmp.len {
@@ -98,7 +98,7 @@ pub fn dsyrk(ul Uplo, trans_a Transpose, n int, k int, alpha f64, a []f64, lda i
 			return
 		}
 		for i in 0 .. n {
-			mut ctmp := c[i * ldc..i * ldc + i + 1]
+			mut ctmp := unsafe { c[i * ldc..i * ldc + i + 1] }
 			atmp := a[i * lda..i * lda + k]
 			if beta == 0 {
 				for j in 0 .. ctmp.len {
@@ -115,7 +115,7 @@ pub fn dsyrk(ul Uplo, trans_a Transpose, n int, k int, alpha f64, a []f64, lda i
 	// Cases where a is transposed.
 	if ul == .upper {
 		for i in 0 .. n {
-			mut ctmp := c[i * ldc + i..i * ldc + n]
+			mut ctmp := unsafe { c[i * ldc + i..i * ldc + n] }
 			if beta == 0 {
 				for j in 0 .. ctmp.len {
 					ctmp[j] = 0
@@ -135,7 +135,7 @@ pub fn dsyrk(ul Uplo, trans_a Transpose, n int, k int, alpha f64, a []f64, lda i
 		return
 	}
 	for i in 0 .. n {
-		mut ctmp := c[i * ldc..i * ldc + i + 1]
+		mut ctmp := unsafe { c[i * ldc..i * ldc + i + 1] }
 		if beta != 1 {
 			for j in 0 .. ctmp.len {
 				ctmp[j] *= beta

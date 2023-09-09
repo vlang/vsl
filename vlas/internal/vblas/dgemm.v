@@ -84,14 +84,14 @@ pub fn dgemm(trans_a Transpose, trans_b Transpose, m int, n int, k int, alpha f6
 	if beta != 1 {
 		if beta == 0 {
 			for i in 0 .. m {
-				mut ctmp := c[i * ldc..i * ldc + n]
+				mut ctmp := unsafe { c[i * ldc..i * ldc + n] }
 				for j, _ in ctmp {
 					ctmp[j] = 0
 				}
 			}
 		} else {
 			for i in 0 .. m {
-				mut ctmp := c[i * ldc..i * ldc + n]
+				mut ctmp := unsafe { c[i * ldc..i * ldc + n] }
 				for j, _ in ctmp {
 					ctmp[j] *= beta
 				}
