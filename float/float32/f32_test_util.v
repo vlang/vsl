@@ -100,7 +100,7 @@ fn new_guarded_vector(data []f32, inc int) ([]f32, []f32, []f32) {
 	guard := 2 * inc_
 	size := (data.len - 1) * inc_ + 1
 	mut whole := []f32{len: size + 2 * guard}
-	mut v := whole[guard..whole.len - guard]
+	mut v := unsafe { whole[guard..whole.len - guard] }
 	for i, _ in whole {
 		whole[i] = f32(math.nan())
 	}

@@ -17,8 +17,10 @@ fn test_kmeans_01() {
 	nb_classes := 2
 	mut model := new_kmeans(mut data, nb_classes, 'kmeans')
 	model.set_centroids([
-		[0.4, 0.6] /* class 0 */,
-		[0.6, 0.4] /* class 1 */,
+		// class 0
+		[0.4, 0.6],
+		// class 1
+		[0.6, 0.4],
 	])
 
 	// train

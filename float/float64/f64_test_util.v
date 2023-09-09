@@ -121,7 +121,7 @@ pub fn new_guarded_vector(data []f64, inc int) ([]f64, []f64, []f64) {
 	guard := 2 * inc_
 	size := (data.len - 1) * inc_ + 1
 	mut whole := []f64{len: size + 2 * guard}
-	mut v := whole[guard..whole.len - guard]
+	mut v := unsafe { whole[guard..whole.len - guard] }
 	for i, _ in whole {
 		whole[i] = math.nan()
 	}
