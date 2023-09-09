@@ -84,14 +84,14 @@ pub fn dgemm(trans_a Transpose, trans_b Transpose, m int, n int, k int, alpha f6
 	if beta != 1 {
 		if beta == 0 {
 			for i in 0 .. m {
-				mut ctmp := c[i * ldc..i * ldc + n]
+				mut ctmp := unsafe { c[i * ldc..i * ldc + n] }
 				for j, _ in ctmp {
 					ctmp[j] = 0
 				}
 			}
 		} else {
 			for i in 0 .. m {
-				mut ctmp := c[i * ldc..i * ldc + n]
+				mut ctmp := unsafe { c[i * ldc..i * ldc + n] }
 				for j, _ in ctmp {
 					ctmp[j] *= beta
 				}
@@ -225,7 +225,7 @@ fn dgemm_serial_not_not(m int, n int, k int, a []f64, lda int, b []f64, ldb int,
 	// This style is used instead of the literal [i*stride +j]) is used because
 	// approximately 5 times faster.
 	for i in 0 .. m {
-		mut ctmp := c[i * ldc..i * ldc + n]
+		mut ctmp := unsafe { c[i * ldc..i * ldc + n] }
 		for l, v in a[i * lda..i * lda + k] {
 			tmp := alpha * v
 			if tmp != 0 {
@@ -244,7 +244,7 @@ fn dgemm_serial_trans_not(m int, n int, k int, a []f64, lda int, b []f64, ldb in
 		for i, v in a[l * lda..l * lda + m] {
 			tmp := alpha * v
 			if tmp != 0 {
-				mut ctmp := c[i * ldc..i * ldc + n]
+				mut ctmp := unsafe { c[i * ldc..i * ldc + n] }
 				float64.axpy_unitary(tmp, btmp, mut ctmp)
 			}
 		}
@@ -257,7 +257,7 @@ fn dgemm_serial_not_trans(m int, n int, k int, a []f64, lda int, b []f64, ldb in
 	// approximately 5 times faster.
 	for i in 0 .. m {
 		atmp := a[i * lda..i * lda + k]
-		mut ctmp := c[i * ldc..i * ldc + n]
+		mut ctmp := unsafe { c[i * ldc..i * ldc + n] }
 		for j in 0 .. n {
 			ctmp[j] += alpha * float64.dot_unitary(atmp, b[j * ldb..j * ldb + k])
 		}
@@ -272,7 +272,7 @@ fn dgemm_serial_trans_trans(m int, n int, k int, a []f64, lda int, b []f64, ldb 
 		for i, v in a[l * lda..l * lda + m] {
 			tmp := alpha * v
 			if tmp != 0 {
-				mut ctmp := c[i * ldc..i * ldc + n]
+				mut ctmp := unsafe { c[i * ldc..i * ldc + n] }
 				float64.axpy_inc(tmp, b[l..], mut ctmp, u32(n), u32(ldb), 1, 0, 0)
 			}
 		}

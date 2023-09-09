@@ -22,7 +22,7 @@ mut:
 	use_hunt bool // use hunt code instead of locate
 	ascnd    bool // ascending order of x-values
 	// implementation
-	interp InterpFn
+	interp InterpFn = unsafe { nil }
 pub mut:
 	// configuration data
 	disable_hunt bool // do not use hunt code at all
