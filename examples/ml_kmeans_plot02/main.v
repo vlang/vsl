@@ -11,9 +11,12 @@ mut data := ml.data_from_raw_x(dataset.raw_dataset.map([it[0], it[1]]))!
 nb_classes := 3
 mut model := ml.new_kmeans(mut data, nb_classes, 'kmeans')
 model.set_centroids([
-	[3.0, 3] /* class 0 */,
-	[6.0, 2] /* class 1 */,
-	[8.0, 5] /* class 2 */,
+	// class 0
+	[3.0, 3],
+	// class 1
+	[6.0, 2],
+	// class 2
+	[8.0, 5],
 ])
 
 // initial classes
