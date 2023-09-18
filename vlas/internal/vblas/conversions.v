@@ -6,9 +6,9 @@ pub enum MemoryLayout {
 }
 
 pub enum Transpose {
-	no_trans = 111
-	trans = 112
-	conj_trans = 113
+	no_trans      = 111
+	trans         = 112
+	conj_trans    = 113
 	conj_no_trans = 114
 }
 
@@ -19,10 +19,10 @@ pub enum Uplo {
 
 pub enum Diagonal {
 	non_unit = 131
-	unit = 132
+	unit     = 132
 }
 
 pub enum Side {
-	left = 141
+	left  = 141
 	right = 142
 }

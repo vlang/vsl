@@ -543,9 +543,9 @@ fn dgemvcomp(mut test DgemvCase, trans bool, case DgemvSubcase) {
 
 	mut xg, mut yg := guard_vector(test_x, x_gd_val, gd_ln), guard_vector(test_y, y_gd_val,
 		gd_ln)
-	mut x, mut y := xg[gd_ln..xg.len - gd_ln], yg[gd_ln..yg.len - gd_ln]
+	mut x, mut y := unsafe { xg[gd_ln..xg.len - gd_ln] }, unsafe { yg[gd_ln..yg.len - gd_ln] }
 	mut ag := guard_vector(test.a, a_gd_val, gd_ln)
-	mut a := ag[gd_ln..ag.len - gd_ln]
+	mut a := unsafe { ag[gd_ln..ag.len - gd_ln] }
 
 	lda := u32(test.n)
 

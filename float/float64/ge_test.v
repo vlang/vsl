@@ -83,7 +83,7 @@ fn test_ger() {
 				yg_ln)
 			x, y := xg[xg_ln..xg.len - xg_ln], yg[yg_ln..yg.len - yg_ln]
 			ag := guard_vector(test.a, a_gd_val, ag_ln)
-			mut a := ag[ag_ln..ag.len - ag_ln]
+			mut a := unsafe { ag[ag_ln..ag.len - ag_ln] }
 			alpha := 1.0
 			ger(u32(m), u32(n), alpha, x, 1, y, 1, mut a, u32(n))
 			for i, w in test.want {

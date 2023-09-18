@@ -130,7 +130,7 @@ fn test_axpy_unitary_to() {
 				yg_ln)
 			dstg := guard_vector(dst_orig, dst_gd_val, dg_ln)
 			x, y := xg[xg_ln..xg.len - xg_ln], yg[yg_ln..yg.len - yg_ln]
-			mut dst := dstg[dg_ln..dstg.len - dg_ln]
+			mut dst := unsafe { dstg[dg_ln..dstg.len - dg_ln] }
 			axpy_unitary_to(mut dst, test.alpha, x, y)
 
 			assert is_valid_guard(xg, x_gd_val, xg_ln)
@@ -211,7 +211,7 @@ fn test_axpy_inc_to() {
 				y_gd_val, inc.y, gd_ln)
 			dstg := guard_inc_vector(dst_orig, dst_gd_val, inc.dst, gd_ln)
 			x, y := xg[gd_ln..xg.len - gd_ln], yg[gd_ln..yg.len - gd_ln]
-			mut dst := dstg[gd_ln..dstg.len - gd_ln]
+			mut dst := unsafe { dstg[gd_ln..dstg.len - gd_ln] }
 			axpy_inc_to(mut dst, u32(inc.dst), idst, test.alpha, x, y, u32(n), u32(inc.x),
 				u32(inc.y), u32(ix), u32(iy))
 

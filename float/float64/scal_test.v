@@ -75,7 +75,7 @@ fn test_scal_unitary() {
 		for align in align1 {
 			xg_ln := 4 + align
 			xg := guard_vector(test.x, x_gd_val, xg_ln)
-			mut x := xg[xg_ln..xg.len - xg_ln]
+			mut x := unsafe { xg[xg_ln..xg.len - xg_ln] }
 
 			scal_unitary(test.alpha, mut x)
 
@@ -99,7 +99,7 @@ fn test_scal_unitary_to() {
 			xg := guard_vector(test.x, x_gd_val, xg_ln)
 			dg := guard_vector(random_slice(n, 1), dst_gd_val, dg_ln)
 			x := xg[xg_ln..xg.len - xg_ln]
-			mut dst := dg[dg_ln..dg.len - dg_ln]
+			mut dst := unsafe { dg[dg_ln..dg.len - dg_ln] }
 
 			scal_unitary_to(mut dst, test.alpha, x)
 
@@ -122,7 +122,7 @@ fn test_scal_inc() {
 		n := test.x.len
 		for incx in [1, 2, 3, 4, 7, 10] {
 			xg := guard_inc_vector(test.x, x_gd_val, incx, gd_ln)
-			mut x := xg[gd_ln..xg.len - gd_ln]
+			mut x := unsafe { xg[gd_ln..xg.len - gd_ln] }
 
 			scal_inc(test.alpha, mut x, u32(n), u32(incx))
 
@@ -146,7 +146,7 @@ fn test_scal_inc_to() {
 			xg := guard_inc_vector(test.x, x_gd_val, inc.x, gd_ln)
 			dg := guard_inc_vector(random_slice(n, 1), dst_gd_val, inc.y, gd_ln)
 			x := xg[gd_ln..xg.len - gd_ln]
-			mut dst := dg[gd_ln..dg.len - gd_ln]
+			mut dst := unsafe { dg[gd_ln..dg.len - gd_ln] }
 
 			scal_inc_to(mut dst, u32(inc.y), test.alpha, x, u32(n), u32(inc.x))
 
