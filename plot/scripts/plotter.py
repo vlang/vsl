@@ -104,20 +104,20 @@ for trace in data:
     trace = remove_key(trace, "y")
     trace = remove_key(trace, "z")
 
-    if trace_type == 1:
+    if trace_type == 'pie':
         if "marker" in trace:
             trace["marker"].pop("opacity")
             trace["marker"].pop("colorscale")
 
     if "x_str" in trace:
-        if trace_type == 5:
+        if trace_type == 'bar':
             trace["x"] = trace["x_str"]
         trace.pop("x_str")
 
     # Since I can only pass [][]f64 to Trace.z,
     # I must flatten it when dealing with 3D scatters
     # (and possibly other 3D plots?).
-    if trace_type == 4:
+    if trace_type == 'scatter3d':
         trace["z"] = np.array(trace["z"]).flatten()
 
     plot_data.append(type_map[trace_type](trace))
