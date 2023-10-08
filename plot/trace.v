@@ -32,6 +32,9 @@ pub mut:
 	hole          f64
 	colorscale    string = 'Viridis'
 	hovertemplate string
+	textinfo      string
+	fill          string
+	fillcolor     string
 }
 
 pub struct Marker {

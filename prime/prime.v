@@ -24,7 +24,7 @@ pub fn prime_sieve(range int) ![]int {
 	if range <= 1 {
 		return error('Range must be greater than 1')
 	}
-	mut number_list := []bool{len: range, init: (it % 2 != 0)}
+	mut number_list := []bool{len: range, init: (index % 2 != 0)}
 	number_list[0] = false
 	number_list[1] = false
 	number_list[2] = true
