@@ -2,27 +2,21 @@ module main
 
 import vsl.ml
 import vsl.plot
+import internal.dataset
 
 // data
-mut data := ml.data_from_raw_x([
-	[0.1, 0.7],
-	[0.3, 0.7],
-	[0.1, 0.9],
-	[0.3, 0.9],
-	[0.7, 0.1],
-	[0.9, 0.1],
-	[0.7, 0.3],
-	[0.9, 0.3],
-])!
+mut data := ml.data_from_raw_x(dataset.raw_dataset.map([it[0], it[1]]))!
 
 // model
-nb_classes := 2
+nb_classes := 3
 mut model := ml.new_kmeans(mut data, nb_classes, 'kmeans')
 model.set_centroids([
 	// class 0
-	[0.4, 0.6],
+	[3.0, 3],
 	// class 1
-	[0.6, 0.4],
+	[6.0, 2],
+	// class 2
+	[8.0, 5],
 ])
 
 // initial classes
@@ -33,22 +27,6 @@ model.compute_centroids()
 
 // train
 model.train(epochs: 6)
-
-// test
-expected_classes := [
-	0,
-	0,
-	0,
-	0,
-	1,
-	1,
-	1,
-	1,
-]
-for i, c in model.classes {
-	assert c == expected_classes[i]
-	println('class ${i}: ${c}')
-}
 
 mut plt := plot.new_plot()
 plt.set_layout(
@@ -88,7 +66,7 @@ for i in 0 .. nb_classes {
 		mode: 'markers'
 		colorscale: 'smoker'
 		marker: plot.Marker{
-			size: []f64{len: data.nb_samples, init: 12.0}
+			size: []f64{len: data.nb_samples, init: 8.0}
 		}
 	)
 }
