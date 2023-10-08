@@ -3,6 +3,8 @@ module ml
 import math
 import math.stats
 import vsl.la
+import vsl.util
+import vsl.plot
 
 // Stat holds statistics about data
 //

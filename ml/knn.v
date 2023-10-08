@@ -182,7 +182,7 @@ pub fn (mut knn KNN) predict(config PredictConfig) !f64 {
 pub fn (o &KNN) str() string {
 	mut res := []string{}
 	res << 'vsl.ml.KNN{'
-	res << '	name: ${o.name}'
+	res << '    name: ${o.name}'
 	res << '    weights: ${o.weights}'
 	res << '    neighbors: ${o.neighbors}'
 	res << '}'

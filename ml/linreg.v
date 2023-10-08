@@ -1,6 +1,8 @@
 module ml
 
 import vsl.la
+import vsl.plot
+import vsl.util
 
 // LinReg implements a linear regression model
 [heap]
@@ -146,4 +148,49 @@ pub fn (o &LinReg) str() string {
 	res << '    e: ${o.e}'
 	res << '}'
 	return res.join('\n')
+}
+
+// plot plots the data and the linear regression model
+pub fn (o &LinReg) plot() ! {
+	// Get the minimum and maximum values of the features
+	min_x := o.stat.min_x[0]
+	max_x := o.stat.max_x[0]
+
+	// Generate a range based on the minimum and maximum values
+	x_values := util.lin_space(min_x, max_x, 100) // You can adjust the number of points (100 in this case)
+
+	// Calculate prediction values for the range
+	y_values := x_values.map(o.predict([it]))
+
+	// Rest of the code for plotting the graph
+	mut plt := plot.new_plot()
+	plt.set_layout(
+		title: 'Linear Regression Example'
+	)
+
+	plt.add_trace(
+		name: 'dataset'
+		trace_type: .scatter
+		x: o.data.x.get_col(0)
+		y: o.data.y
+		mode: 'markers'
+		colorscale: 'smoker'
+		marker: plot.Marker{
+			size: []f64{len: o.data.y.len, init: 10.0}
+		}
+	)
+
+	plt.add_trace(
+		name: 'linear regression'
+		trace_type: .scatter
+		x: x_values
+		y: y_values
+		mode: 'lines'
+		colorscale: 'smoker'
+		line: plot.Line{
+			color: 'red'
+		}
+	)
+
+	plt.show()!
 }

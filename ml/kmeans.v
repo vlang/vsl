@@ -3,6 +3,7 @@ module ml
 import math
 import vsl.gm
 import vsl.la
+import vsl.plot
 
 // Kmeans implements the K-means model (Observer of Data)
 [heap]
@@ -145,4 +146,54 @@ pub fn (o &Kmeans) str() string {
 	res << '    nb_members: ${o.nb_members}'
 	res << '}'
 	return res.join('\n')
+}
+
+// plot method for visualizing the clustering
+pub fn (o &Kmeans) plot() ! {
+	mut plt := plot.new_plot()
+	plt.set_layout(
+		title: 'K-means Clustering'
+	)
+
+	x := o.data.x.get_col(0)
+	y := o.data.x.get_col(1)
+
+	// Plot data points with different colors for each class
+	for i in 0 .. o.nb_classes {
+		mut x_for_class := []f64{}
+		mut y_for_class := []f64{}
+		for j in 0 .. o.data.nb_samples {
+			if o.classes[j] == i {
+				x_for_class << x[j]
+				y_for_class << y[j]
+			}
+		}
+
+		plt.add_trace(
+			name: 'class #${i}'
+			trace_type: .scatter
+			x: x_for_class
+			y: y_for_class
+			mode: 'markers'
+			colorscale: 'smoker'
+			marker: plot.Marker{
+				size: []f64{len: x_for_class.len, init: 8.0} // Adjust size as needed
+			}
+		)
+	}
+
+	// Plot centroids
+	plt.add_trace(
+		name: 'centroids'
+		trace_type: .scatter
+		x: o.centroids.map(it[0])
+		y: o.centroids.map(it[1])
+		mode: 'markers'
+		colorscale: 'smoker'
+		marker: plot.Marker{
+			size: []f64{len: o.centroids.len, init: 12.0} // Adjust size as needed
+		}
+	)
+
+	plt.show()!
 }
