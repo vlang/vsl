@@ -35,7 +35,7 @@ fn main() {
 	knn.train()
 
 	// Predict the class for a new point
-	mut to_pred := [4.0, 5.0]
+	to_pred := [4.0, 5.0]
 	prediction := knn.predict(k: 3, to_pred: to_pred)!
 
 	// Print the prediction
