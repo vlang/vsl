@@ -2,7 +2,6 @@ import argparse
 import os
 import json
 import plotly.graph_objects as go
-import numpy as np
 
 
 def remove_key(d, key, empty_subkey=None):
@@ -113,7 +112,7 @@ def process_trace(trace):
 
     # Flatten 'z' when dealing with 3D scatters.
     if trace_type == 'scatter3d':
-        trace["z"] = np.array(trace["z"]).flatten()
+        trace["z"] = [item for sublist in trace["z"] for item in sublist]
 
     return map_trace_type_to_plotly_object(trace_type)(trace)
 
