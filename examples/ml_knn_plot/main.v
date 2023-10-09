@@ -4,7 +4,7 @@ import vsl.ml
 
 fn main() {
 	// Generate random data with two classes
-	mut data := ml.data_from_raw_xy_sep([
+	x := [
 		[1.0, 2.0],
 		[2.0, 3.0],
 		[3.0, 3.0],
@@ -17,7 +17,9 @@ fn main() {
 		[5.0, 5.0],
 		[4.5, 6.0],
 		[7.0, 6.0],
-	], [0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0])!
+	]
+	y := [0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+	mut data := ml.data_from_raw_xy_sep(x, y)!
 
 	// Create a KNN model
 	mut knn := ml.new_knn(mut data, 'Example KNN')!
