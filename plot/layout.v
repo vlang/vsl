@@ -6,8 +6,8 @@ pub mut:
 	title       string
 	title_x     f64  = 0.5
 	autosize    bool = true
-	width       int  = 500
-	height      int  = 500
+	width       int  = 650
+	height      int  = 650
 	xaxis       Axis
 	yaxis       Axis
 	annotations []Annotation
