@@ -124,14 +124,13 @@ pub struct TrainConfig {
 }
 
 // train trains model
-pub fn (mut o Kmeans) train(config TrainConfig) int {
+pub fn (mut o Kmeans) train(config TrainConfig) {
 	mut nb_iter := 0
 	for nb_iter < config.epochs {
 		o.find_closest_centroids()
 		o.compute_centroids()
 		nb_iter++
 	}
-	return nb_iter
 }
 
 // str is a custom str function for observers to avoid printing data

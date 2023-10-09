@@ -2,6 +2,7 @@ module ml
 
 import vsl.float.float64 { l2_distance_unitary }
 import vsl.errors
+import vsl.plot
 
 // KNN is the struct defining a K-Nearest Neighbors classifier.
 [heap]
@@ -12,6 +13,7 @@ mut:
 	weights map[f64]f64 // weights[class] = weight
 pub mut:
 	neighbors []Neighbor
+	trained   bool
 }
 
 // Neighbor is a support struct to help organizing the code
@@ -77,6 +79,18 @@ pub fn (mut knn KNN) set_weights(weights map[f64]f64) ! {
 
 // update perform updates after data has been changed (as an Observer)
 pub fn (mut knn KNN) update() {
+	knn.train()
+}
+
+// train computes the neighbors and weights during training
+pub fn (mut knn KNN) train() {
+	if knn.data.x.data.len == 0 {
+		return
+	}
+	if knn.data.y.len == 0 {
+		return
+	}
+
 	mut x := knn.data.x.get_deep2()
 	knn.neighbors = []Neighbor{cap: x.len}
 	for i := 0; i < x.len; i++ {
@@ -90,6 +104,7 @@ pub fn (mut knn KNN) update() {
 		weights[class] = 1.0
 	}
 	knn.weights = weights.clone()
+	knn.trained = true
 }
 
 // data needed for KNN.predict
@@ -187,4 +202,41 @@ pub fn (o &KNN) str() string {
 	res << '    neighbors: ${o.neighbors}'
 	res << '}'
 	return res.join('\n')
+}
+
+// plot method for visualizing the KNN model
+pub fn (o &KNN) plot() ! {
+	mut plt := plot.new_plot()
+	plt.set_layout(
+		title: 'K-Nearest Neighbors'
+	)
+
+	x := o.data.x.get_col(0)
+	y := o.data.x.get_col(1)
+
+	// Plot data points with different colors for each class
+	for i in o.data.y {
+		mut x_for_class := []f64{cap: o.data.nb_samples}
+		mut y_for_class := []f64{cap: o.data.nb_samples}
+		for j in 0 .. o.data.nb_samples {
+			if o.data.y[j] == i {
+				x_for_class << x[j]
+				y_for_class << y[j]
+			}
+		}
+
+		plt.add_trace(
+			name: 'class #${i}'
+			trace_type: .scatter
+			x: x_for_class
+			y: y_for_class
+			mode: 'markers'
+			colorscale: 'smoker'
+			marker: plot.Marker{
+				size: []f64{len: x_for_class.len, init: 8.0} // Adjust size as needed
+			}
+		)
+	}
+
+	plt.show()!
 }

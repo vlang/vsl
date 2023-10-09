@@ -21,6 +21,7 @@ fn test_knn_predict() {
 	]
 	mut data := data_from_raw_xy_sep(x, y)!
 	mut knn := new_knn(mut data, 'knn')!
+	knn.train()
 	assert knn.predict(k: 1, to_pred: [0.333333, 0.66666])! == 0.0
 	assert knn.predict(k: 1, to_pred: [11.0, 9.3])! == 1.0
 }

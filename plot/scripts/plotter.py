@@ -4,30 +4,12 @@ import json
 import plotly.graph_objects as go
 
 
-def remove_key(d, key, empty_subkey=None):
-    """
-    Remove specified key from dictionary 'd'.
-    If 'empty_subkey' is provided, it removes 'empty_subkey'
-    from 'd[key]' if present and empty. If 'empty_subkey'
-    is not provided, it removes 'key' from 'd' if 'key' is
-    in 'd' and 'd[key]' is empty.
-    """
-    result = d
-    if key in result:
-        if empty_subkey is not None:
-            if empty_subkey in result[key]:
-                if not len(result[key][empty_subkey]):
-                    result[key].pop(empty_subkey)
-        else:
-            if not len(result[key]):
-                result.pop(key)
-    return result
-
-
 def remove_empty_keys(d):
     """
     Recursively remove empty keys (both keys with empty values
     and empty lists/dictionaries).
+    If a key is empty, it is removed from the dictionary.
+    If a key is a list/dictionary, it is recursively processed.
     """
     result = d
     for k in list(result.keys()):
@@ -37,6 +19,9 @@ def remove_empty_keys(d):
                 result.pop(k)
         elif isinstance(result[k], list):
             if not len(result[k]):
+                result.pop(k)
+        else:
+            if not result[k]:
                 result.pop(k)
     return result
 
