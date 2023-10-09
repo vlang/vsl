@@ -25,7 +25,7 @@ fn main() {
 	mut knn := ml.new_knn(mut data, 'Example KNN')!
 
 	// Set weights to give more importance to class 1
-	mut weights := {
+	weights := {
 		0.0: 1.0
 		1.0: 2.0
 	}
