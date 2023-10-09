@@ -89,14 +89,12 @@ pub fn (mut o Bins) append(x []f64, id int, extra voidptr) {
 	if idx < 0 {
 		errors.vsl_panic('coordinates ${x} are out of range', .erange)
 	}
-	bin := o.find_bin_by_index(idx)
+	mut bin := o.find_bin_by_index(idx)
 	if isnil(bin) {
 		errors.vsl_panic('bin index ${idx} is out of range', .erange)
 	}
 	xcopy := x.clone()
-	entry := BinEntry{id, xcopy, extra}
-	mut entries := unsafe { bin.entries }
-	entries << &entry
+	bin.entries << &BinEntry{id, xcopy, extra}
 }
 
 // clear clears all biBinsns
@@ -357,9 +355,9 @@ pub fn (o Bin) str() string {
 		if i > 0 {
 			l += ', '
 		}
-		l += "{\"id\":${entry.id}, \"x\":[${entry.x}[0],${entry.x}[1]"
+		l += "{\"id\":${entry.id}, \"x\":[${entry.x[0]},${entry.x[1]}"
 		if entry.x.len > 2 {
-			l += ',${entry.x}[2]'
+			l += ',${entry.x[2]}'
 		}
 		l += ']'
 		if !isnil(entry.extra) {
