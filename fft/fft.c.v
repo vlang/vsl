@@ -123,8 +123,7 @@ pub fn create_plan[T](x T) ?Fftplan {
 //   r[1] and i*r[2]
 //
 // Note: these codes allocate and free memory of the same size as the input.
-
-pub fn forward_fft[T](p Fftplan, v T) int {
+pub fn forward_fft[T](p Fftplan, mut v T) int {
 	match p {
 		Fft32 {
 			return C.rfft_forward_f32(p.plan, v.data, f32(1.0))
@@ -142,7 +141,7 @@ pub fn forward_fft[T](p Fftplan, v T) int {
 }
 
 // backward_fft computes the backwards Fourier transform defined by the plan r.
-pub fn backward_fft[T](r Fftplan, v T) int {
+pub fn backward_fft[T](r Fftplan, mut v T) int {
 	match r {
 		Fft32 {
 			return C.rfft_backward_f32(r.plan, v.data, f32(1.0))

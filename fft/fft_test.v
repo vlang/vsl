@@ -10,12 +10,12 @@ fn test_fft() {
 	println('orig   ${aline}')
 
 	mut p := fft.create_plan(aline)?
-	mut x := fft.forward_fft(p, aline)
+	mut x := fft.forward_fft(p, mut aline)
 	println('forw ${x} ${aline}')
 	assert aline[0] == f32(1.0)
 	assert aline[1] == f32(1.0)
 
-	x = fft.backward_fft(p, aline)
+	x = fft.backward_fft(p, mut aline)
 	println('back ${x} ${aline}')
 	assert aline[0] == f32(2.0)
 	assert aline[1] == f32(0.0)
@@ -27,14 +27,14 @@ fn test_fft() {
 	println('orig   ${aline}')
 
 	p = fft.create_plan(aline)?
-	mut y := fft.forward_fft(p, aline)
+	mut y := fft.forward_fft(p, mut aline)
 	println('forw ${y} ${aline}')
 	assert aline[0] == f32(1.0)
 	assert aline[1] == f32(0.0)
 	assert aline[2] == f32(-1.0)
 	assert aline[3] == f32(-1.0)
 
-	x = fft.backward_fft(p, aline)
+	x = fft.backward_fft(p, mut aline)
 	println('back ${x} ${aline}')
 	assert aline[0] == f32(0.0)
 	assert aline[1] == f32(4.0)
@@ -51,7 +51,7 @@ fn test_fft() {
 
 	aline = [f32(0.5), 0.5, 1, 2]
 	println('sgnl ${y} ${aline}')
-	y = fft.forward_fft(p, aline)
+	y = fft.forward_fft(p, mut aline)
 	println('forw ${y} ${aline}')
 	assert aline[0] == f32(4.0)
 	assert aline[1] == f32(-0.5)
@@ -68,7 +68,7 @@ fn test_fft() {
 	// same as above without a dc offset
 	aline = [f32(0.5), 0.5, 1, 2].map(it - f32(1.0))
 	println('sgnl ${y} ${aline}')
-	y = fft.forward_fft(p, aline)
+	y = fft.forward_fft(p, mut aline)
 	println('forw ${y} ${aline}')
 	assert aline[0] == f32(0.0)
 	assert aline[1] == f32(-0.5)
@@ -82,7 +82,7 @@ fn test_fft() {
 	aline = [f32(0.5), 0.5, 1, 2, 2, 2, 2, 3]
 	println('sgnl ${y} ${aline}')
 	p = fft.create_plan(aline)?
-	y = fft.forward_fft(p, aline)
+	y = fft.forward_fft(p, mut aline)
 	println('forw ${y} ${aline}')
 	assert aline[0] == 13.0
 	assert aline[3] == -0.5

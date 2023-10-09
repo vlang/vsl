@@ -10,12 +10,12 @@ fn test_fft() {
 	println('orig   ${bline}')
 
 	mut p := fft.create_plan(bline)?
-	mut x := fft.forward_fft(p, bline)
+	mut x := fft.forward_fft(p, mut bline)
 	println('forw ${x} ${bline}')
 	assert bline[0] == f64(1.0)
 	assert bline[1] == f64(1.0)
 
-	x = fft.backward_fft(p, bline)
+	x = fft.backward_fft(p, mut bline)
 	println('back ${x} ${bline}')
 	assert bline[0] == f64(2.0)
 	assert bline[1] == f64(0.0)
@@ -27,14 +27,14 @@ fn test_fft() {
 	println('orig   ${bline}')
 
 	p = fft.create_plan(bline)?
-	mut y := fft.forward_fft(p, bline)
+	mut y := fft.forward_fft(p, mut bline)
 	println('forw ${y} ${bline}')
 	assert bline[0] == f64(1.0)
 	assert bline[1] == f64(0.0)
 	assert bline[2] == f64(-1.0)
 	assert bline[3] == f64(-1.0)
 
-	x = fft.backward_fft(p, bline)
+	x = fft.backward_fft(p, mut bline)
 	println('back ${x} ${bline}')
 	assert bline[0] == f64(0.0)
 	assert bline[1] == f64(4.0)
@@ -51,7 +51,7 @@ fn test_fft() {
 
 	bline = [f64(0.5), 0.5, 1, 2]
 	println('sgnl ${y} ${bline}')
-	y = fft.forward_fft(p, bline)
+	y = fft.forward_fft(p, mut bline)
 	println('forw ${y} ${bline}')
 	assert bline[0] == f64(4.0)
 	assert bline[1] == f64(-0.5)
@@ -68,7 +68,7 @@ fn test_fft() {
 	// same as above without a dc offset
 	bline = [f64(0.5), 0.5, 1, 2].map(it - f64(1.0))
 	println('sgnl ${y} ${bline}')
-	y = fft.forward_fft(p, bline)
+	y = fft.forward_fft(p, mut bline)
 	println('forw ${y} ${bline}')
 	assert bline[0] == f64(0.0)
 	assert bline[1] == f64(-0.5)
@@ -82,7 +82,7 @@ fn test_fft() {
 	bline = [f64(0.5), 0.5, 1, 2, 2, 2, 2, 3]
 	println('sgnl ${y} ${bline}')
 	p = fft.create_plan(bline)?
-	y = fft.forward_fft(p, bline)
+	y = fft.forward_fft(p, mut bline)
 	println('forw ${y} ${bline}')
 	assert bline[0] == 13.0
 	assert bline[3] == -0.5
