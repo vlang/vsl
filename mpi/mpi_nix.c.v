@@ -36,12 +36,6 @@ pub fn is_on() bool {
 	return flag != 0
 }
 
-// start initialises MPI
-[deprecated: 'use initialize instead']
-pub fn start() ! {
-	C.MPI_Init(0, unsafe { nil })
-}
-
 // initialize readies MPI for use
 pub fn initialize() ! {
 	C.MPI_Init(0, unsafe { nil })
@@ -59,12 +53,6 @@ pub fn start_thread_safe() ! {
 	if r != C.MPI_THREAD_MULTIPLE {
 		return errors.error("MPI_THREAD_MULTIPLE can't be set: got ${r}", .efailed)
 	}
-}
-
-// stop finalises MPI
-[deprecated: 'use finalize instead']
-pub fn stop() {
-	C.MPI_Finalize()
 }
 
 // finalize MPI

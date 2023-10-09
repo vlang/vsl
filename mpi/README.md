@@ -42,10 +42,8 @@ pkg install openmpi
 
 The mpi routines supported include:
 
-- `start()` [deprecated]
 - `initialize()`
 - `finalize()`
-- `stop()` [deprecated]
 - `world_rank() int`
 - `world_size() int`
 - `is_on() bool`

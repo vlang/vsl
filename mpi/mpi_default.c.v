@@ -9,13 +9,18 @@ pub fn is_on() bool {
 	return false
 }
 
-// start initialises MPI
-pub fn start() ! {
+// initialize initialises MPI
+pub fn initialize() ! {
 	return errors.error('MPI is not supported on this platform', .efailed)
 }
 
-// stop finalises MPI
-pub fn stop() {
+// initialise initialises MPI
+pub fn initialise() ! {
+	return errors.error('MPI is not supported on this platform', .efailed)
+}
+
+// finalize finalises MPI
+pub fn finalize() {
 }
 
 // world_rank returns the processor rank/ID within the World Communicator
