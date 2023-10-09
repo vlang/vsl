@@ -84,7 +84,7 @@ for <a href="https://www.fftw.org/fftw3.pdf">FFTW</a> for further examples of em
 </section>
 
 		<section id="backward_fft" class="doc-node">
-			<div class="title"><h2>fn backward_fft <a href="#backward_fft">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fft/fft.c.v#L145"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> backward_fft<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">(</span>r Fftplan<span class="token punctuation">,</span> v <span class="token builtin">T</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+			<div class="title"><h2>fn backward_fft <a href="#backward_fft">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fft/fft.c.v#L144"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> backward_fft<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">(</span>r Fftplan<span class="token punctuation">,</span> <span class="token keyword">mut</span> v <span class="token builtin">T</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>backward_fft computes the backwards Fourier transform defined by the plan r.</p>
 
 </section>
@@ -96,7 +96,7 @@ The array may be []f32, []f64, or []complx_f32 or []complex_f64.</p>
 
 </section>
 		<section id="forward_fft" class="doc-node">
-			<div class="title"><h2>fn forward_fft <a href="#forward_fft">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fft/fft.c.v#L127"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> forward_fft<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">(</span>p Fftplan<span class="token punctuation">,</span> v <span class="token builtin">T</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+			<div class="title"><h2>fn forward_fft <a href="#forward_fft">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fft/fft.c.v#L126"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> forward_fft<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">(</span>p Fftplan<span class="token punctuation">,</span> <span class="token keyword">mut</span> v <span class="token builtin">T</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>forward_fft computes a Fourier transform defined by the plan p.<br>
 The input is []f32 or []f64.<br>
 The output result (r) is returned in-place, and is complex and real numbers mixed as follows:    r[0] (im[0] is assumed and is 0)    r[1] im[1] ... r[n/2] im[n/2]   conjugate negative frequences    r[n] is the magnitude at zero frequency (im[n] is assumed and is 0) Positive frequencies are excluded as these are symmetric to the negative frequencies for real inputs.  (Consult any signal processing text for details.)</p>
@@ -109,7 +109,7 @@ r[1] and i</em>r[2]</p>
 
 </section>
 
-						<div class="footer">Powered by vdoc. Generated on: 9 Oct 2023 04:23:20</div>
+						<div class="footer">Powered by vdoc. Generated on: 9 Oct 2023 04:57:22</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_fft">README</a></li>
 <li class="open"><a href="#backward_fft">fn backward_fft</a>        <ul>
