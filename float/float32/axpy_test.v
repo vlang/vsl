@@ -105,7 +105,7 @@ fn test_axpy_unitary() {
 			xg_ln, yg_ln := 4 + align.x, 4 + align.y
 			xg, yg := guard_vector(test.x, x_gd_val, xg_ln), guard_vector(test.y, y_gd_val,
 				yg_ln)
-			x, mut y := xg[xg_ln..xg.len - xg_ln], yg[yg_ln..yg.len - yg_ln]
+			x, mut y := xg[xg_ln..xg.len - xg_ln], unsafe { yg[yg_ln..yg.len - yg_ln] }
 			axpy_unitary(test.alpha, x, mut y)
 
 			assert is_valid_guard(xg, x_gd_val, xg_ln)
@@ -164,7 +164,7 @@ fn test_axpy_inc() {
 			}
 			xg, yg := guard_inc_vector(test.x, x_gd_val, inc.x, gd_ln), guard_inc_vector(test.y,
 				y_gd_val, inc.y, gd_ln)
-			x, mut y := xg[gd_ln..xg.len - gd_ln], yg[gd_ln..yg.len - gd_ln]
+			x, mut y := xg[gd_ln..xg.len - gd_ln], unsafe { yg[gd_ln..yg.len - gd_ln] }
 			axpy_inc(test.alpha, x, mut y, u32(n), u32(inc.x), u32(inc.y), u32(ix), u32(iy))
 
 			assert equal_strided(test.x, x, inc.x)
