@@ -6,11 +6,6 @@ import vweb
 
 const port = 8082
 
-const (
-	schema_version = 'v1.0.3'
-	data_dir_name  = '.data_${schema_version}'
-)
-
 struct App {
 	vweb.Context
 	plot Plot [vweb_global]
