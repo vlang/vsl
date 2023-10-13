@@ -142,11 +142,11 @@ for a better understanding.</p>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
 	title    AxisTitle
 	tickmode <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">'auto'</span>
-	tick0    <span class="token builtin">f64</span>
-	dtick    <span class="token builtin">f64</span>
-	tickvals <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
-	ticktext <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span>
-	range    <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
+	tick0    <span class="token builtin">f64</span>       <span class="token punctuation">[</span>omitempty<span class="token punctuation">]</span>
+	dtick    <span class="token builtin">f64</span>       <span class="token punctuation">[</span>omitempty<span class="token punctuation">]</span>
+	tickvals <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>     <span class="token punctuation">[</span>omitempty<span class="token punctuation">]</span>
+	ticktext <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span>  <span class="token punctuation">[</span>omitempty<span class="token punctuation">]</span>
+	range    <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>     <span class="token punctuation">[</span>omitempty<span class="token punctuation">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>Axis handles axis data</p>
 
@@ -263,7 +263,7 @@ for a better understanding.</p>
 
 </section>
 
-						<div class="footer">Powered by vdoc. Generated on: 13 Oct 2023 04:11:33</div>
+						<div class="footer">Powered by vdoc. Generated on: 13 Oct 2023 04:20:43</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_plot">README</a></li>
 <li class="open"><a href="#new_plot">fn new_plot</a>        <ul>
