@@ -127,11 +127,11 @@ for a better understanding.</p>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
 	x          <span class="token builtin">f64</span>
 	y          <span class="token builtin">f64</span>
-	text       <span class="token builtin">string</span>
-	showarrow  <span class="token builtin">bool</span>
-	arrowhead  <span class="token builtin">int</span>
-	arrowcolor <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">'black'</span>
-	align      <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">'center'</span>
+	text       <span class="token builtin">string</span> <span class="token punctuation">[</span>omitempty<span class="token punctuation">]</span>
+	showarrow  <span class="token builtin">bool</span>   <span class="token punctuation">[</span>omitempty<span class="token punctuation">]</span>
+	arrowhead  <span class="token builtin">int</span>    <span class="token punctuation">[</span>omitempty<span class="token punctuation">]</span>
+	arrowcolor <span class="token builtin">string</span> <span class="token punctuation">[</span>omitempty<span class="token punctuation">]</span>
+	align      <span class="token builtin">string</span> <span class="token punctuation">[</span>omitempty<span class="token punctuation">]</span>
 	font       Font
 <span class="token punctuation">}</span></code></pre>
 <p>Annotation handles all the information needed to annotate plots</p>
@@ -187,8 +187,8 @@ for a better understanding.</p>
 		<section id="Line" class="doc-node">
 			<div class="title"><h2>struct Line <a href="#Line">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/plot/trace.v#L49"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">Line</span> <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	color <span class="token builtin">string</span>
-	width <span class="token builtin">f64</span> <span class="token operator">=</span> <span class="token number">2.0</span>
+	color <span class="token builtin">string</span> <span class="token punctuation">[</span>omitempty<span class="token punctuation">]</span>
+	width <span class="token builtin">f64</span>    <span class="token punctuation">[</span>omitempty<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">2.0</span>
 	<span class="token comment">// check Plotly docs for more dash types</span>
 	dash <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">'solid'</span>
 <span class="token punctuation">}</span></code></pre>
@@ -198,10 +198,10 @@ for a better understanding.</p>
 		<section id="Marker" class="doc-node">
 			<div class="title"><h2>struct Marker <a href="#Marker">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/plot/trace.v#L41"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">Marker</span> <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	size       <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
-	color      <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span>
-	opacity    <span class="token builtin">f64</span>    <span class="token operator">=</span> <span class="token number">0.8</span>
-	colorscale <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">'Viridis'</span>
+	size       <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token punctuation">[</span>omitempty<span class="token punctuation">]</span>
+	color      <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token punctuation">[</span>omitempty<span class="token punctuation">]</span>
+	opacity    <span class="token builtin">f64</span>      <span class="token punctuation">[</span>omitempty<span class="token punctuation">]</span>
+	colorscale <span class="token builtin">string</span>   <span class="token punctuation">[</span>omitempty<span class="token punctuation">]</span>
 <span class="token punctuation">}</span></code></pre>
 
 
@@ -242,28 +242,28 @@ for a better understanding.</p>
 	x             XType
 	xbins         <span class="token builtin">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token builtin">f32</span>
 	y             <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
-	z             ZType
-	values        <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
-	labels        <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span>
-	text          <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span>
-	customdata    <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span>
-	name          <span class="token builtin">string</span>
-	mode          <span class="token builtin">string</span>
-	marker        Marker
-	line          Line
-	pull          <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
-	hole          <span class="token builtin">f64</span>
-	colorscale    <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">'Viridis'</span>
-	hovertemplate <span class="token builtin">string</span>
-	textinfo      <span class="token builtin">string</span>
-	fill          <span class="token builtin">string</span>
-	fillcolor     <span class="token builtin">string</span>
+	z             ZType          <span class="token punctuation">[</span>omitempty<span class="token punctuation">]</span>
+	values        <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>          <span class="token punctuation">[</span>omitempty<span class="token punctuation">]</span>
+	labels        <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span>       <span class="token punctuation">[</span>omitempty<span class="token punctuation">]</span>
+	text          <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span>       <span class="token punctuation">[</span>omitempty<span class="token punctuation">]</span>
+	customdata    <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span>     <span class="token punctuation">[</span>omitempty<span class="token punctuation">]</span>
+	name          <span class="token builtin">string</span>         <span class="token punctuation">[</span>omitempty<span class="token punctuation">]</span>
+	mode          <span class="token builtin">string</span>         <span class="token punctuation">[</span>omitempty<span class="token punctuation">]</span>
+	marker        Marker         <span class="token punctuation">[</span>omitempty<span class="token punctuation">]</span>
+	line          Line           <span class="token punctuation">[</span>omitempty<span class="token punctuation">]</span>
+	pull          <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>          <span class="token punctuation">[</span>omitempty<span class="token punctuation">]</span>
+	hole          <span class="token builtin">f64</span>            <span class="token punctuation">[</span>omitempty<span class="token punctuation">]</span>
+	colorscale    <span class="token builtin">string</span>         <span class="token punctuation">[</span>omitempty<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'Viridis'</span>
+	hovertemplate <span class="token builtin">string</span>         <span class="token punctuation">[</span>omitempty<span class="token punctuation">]</span>
+	textinfo      <span class="token builtin">string</span>         <span class="token punctuation">[</span>omitempty<span class="token punctuation">]</span>
+	fill          <span class="token builtin">string</span>         <span class="token punctuation">[</span>omitempty<span class="token punctuation">]</span>
+	fillcolor     <span class="token builtin">string</span>         <span class="token punctuation">[</span>omitempty<span class="token punctuation">]</span>
 <span class="token punctuation">}</span></code></pre>
 
 
 </section>
 
-						<div class="footer">Powered by vdoc. Generated on: 13 Oct 2023 03:53:06</div>
+						<div class="footer">Powered by vdoc. Generated on: 13 Oct 2023 04:07:22</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_plot">README</a></li>
 <li class="open"><a href="#new_plot">fn new_plot</a>        <ul>
