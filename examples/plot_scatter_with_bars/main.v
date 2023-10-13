@@ -20,7 +20,7 @@ fn main() {
 	)
 	plt.add_trace(
 		trace_type: .bar
-		x_str: x.map(it.str())
+		x: x.map(it.str())
 		y: y
 		marker: plot.Marker{
 			color: []string{len: x.len, init: '#0000FF'}

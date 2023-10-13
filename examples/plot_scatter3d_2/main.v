@@ -6,13 +6,13 @@ import vsl.plot
 fn main() {
 	mut x := []f64{cap: 100}
 	mut y := []f64{cap: 100}
-	mut z := [][]f64{cap: 100}
+	mut z := []f64{cap: 100}
 
 	for i in 0 .. 100 {
 		val := f64(i) * 0.1
 		x << math.cos(val)
 		y << math.sin(val)
-		z << [val]
+		z << val
 	}
 
 	mut plt := plot.new_plot()

@@ -10,7 +10,7 @@ mut plt := plot.new_plot()
 
 plt.add_trace(
 	trace_type: .heatmap
-	x_str: x
+	x: x
 	y_str: y
 	z: z
 )

@@ -73,11 +73,10 @@ def process_trace(trace):
     """
     Process a trace to ensure only accepted keys are present.
     """
-    custom_keys = ["x_str"]
     trace_type = trace.pop("trace_type")
 
     # Remove all JSON keys not accepted by Plotly.
-    accepted = dir(map_trace_type_to_plotly_object(trace_type)) + custom_keys
+    accepted = dir(map_trace_type_to_plotly_object(trace_type))
     keys = list(trace.keys())
     for k in keys:
         if k not in accepted:
@@ -89,15 +88,6 @@ def process_trace(trace):
         if "marker" in trace:
             trace["marker"].pop("opacity")
             trace["marker"].pop("colorscale")
-
-    if "x_str" in trace:
-        if trace_type == 'bar':
-            trace["x"] = trace["x_str"]
-        trace.pop("x_str")
-
-    # Flatten 'z' when dealing with 3D scatters.
-    if trace_type == 'scatter3d':
-        trace["z"] = [item for sublist in trace["z"] for item in sublist]
 
     return map_trace_type_to_plotly_object(trace_type)(trace)
 

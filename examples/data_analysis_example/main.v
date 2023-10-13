@@ -89,7 +89,7 @@ fn main() {
 		trace_type: .scatter3d
 		x: x1_class0
 		y: x2_class0
-		z: [][]f64{len: x1_class0.len, init: [0.0]}
+		z: []f64{len: x1_class0.len, init: 0.0}
 		mode: 'markers'
 		marker: plot.Marker{
 			size: []f64{len: x1_class0.len, init: 8.0}
@@ -102,7 +102,7 @@ fn main() {
 		trace_type: .scatter3d
 		x: x1_class1
 		y: x2_class1
-		z: [][]f64{len: x1_class1.len, init: [0.0]}
+		z: []f64{len: x1_class1.len, init: 0.0}
 		mode: 'markers'
 		marker: plot.Marker{
 			size: []f64{len: x1_class1.len, init: 8.0}
@@ -138,14 +138,14 @@ fn main() {
 
 	plt_bars.add_trace(
 		trace_type: .bar
-		x_str: []string{len: stat.mean_x.len, init: 'Class ${index}'}
+		x: []string{len: stat.mean_x.len, init: 'Class ${index}'}
 		y: stat.mean_x
 		name: 'Mean'
 	)
 
 	plt_bars.add_trace(
 		trace_type: .bar
-		x_str: []string{len: stat.sig_x.len, init: 'Class ${index}'}
+		x: []string{len: stat.sig_x.len, init: 'Class ${index}'}
 		y: stat.sig_x
 		name: 'Standard Deviation'
 	)

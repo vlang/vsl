@@ -10,16 +10,17 @@ pub enum TraceType {
 	histogram
 }
 
+type XType = []f64 | []string
+type ZType = [][]f64 | []f64
+
 [params]
 pub struct Trace {
 pub mut:
 	trace_type    TraceType      [required]
-	x             []f64
-	x_str         []string
-	y_str         []string
+	x             XType
 	xbins         map[string]f32
 	y             []f64
-	z             [][]f64
+	z             ZType
 	values        []f64
 	labels        []string
 	text          []string

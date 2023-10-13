@@ -10,13 +10,13 @@ fn main() {
 	mut plt := plot.new_plot()
 	plt.add_trace(
 		trace_type: .bar
-		x_str: categories
+		x: categories
 		y: values1
 		name: 'Group 1'
 	)
 	plt.add_trace(
 		trace_type: .bar
-		x_str: categories
+		x: categories
 		y: values2
 		name: 'Group 2'
 	)
