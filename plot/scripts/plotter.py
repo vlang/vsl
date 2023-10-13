@@ -21,16 +21,6 @@ def load_json_file(file_handle):
     return json.load(file_handle)
 
 
-def process_layout_range(layout, axis):
-    """
-    Ensure that the layout range is specified correctly.
-    """
-    if f'{axis}axis' in layout:
-        if 'range' in layout[f'{axis}axis']:
-            if len(layout[f'{axis}axis']['range']) != 2:
-                layout[f'{axis}axis']['range'] = None
-
-
 def map_trace_type_to_plotly_object(trace_type):
     """
     Map vsl.plot.TraceType enum to Plotly objects.
@@ -89,10 +79,6 @@ def main():
 
     # Read layout JSON file.
     layout = load_json_file(args.layout)
-
-    # Ensure correct layout range specification.
-    for axis in ['x', 'y']:
-        process_layout_range(layout, axis)
 
     # List of traces to be plotted.
     plot_data = [process_trace(trace) for trace in data]

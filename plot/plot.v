@@ -32,6 +32,14 @@ pub fn (mut p Plot) add_annotation(annotation Annotation) Plot {
 }
 
 pub fn (mut p Plot) set_layout(layout Layout) Plot {
-	p.layout = layout
+	mut next_layout := layout
+	// Ensure that the layout range is specified correctly
+	if next_layout.xaxis.range.len != 2 {
+		next_layout.xaxis.range = []f64{}
+	}
+	if next_layout.yaxis.range.len != 2 {
+		next_layout.yaxis.range = []f64{}
+	}
+	p.layout = next_layout
 	return p
 }

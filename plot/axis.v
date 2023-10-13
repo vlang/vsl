@@ -5,11 +5,11 @@ pub struct Axis {
 pub mut:
 	title    AxisTitle
 	tickmode string = 'auto'
-	tick0    f64
-	dtick    f64
-	tickvals []f64
-	ticktext []string
-	range    []f64
+	tick0    f64       [omitempty]
+	dtick    f64       [omitempty]
+	tickvals []f64     [omitempty]
+	ticktext []string  [omitempty]
+	range    []f64     [omitempty]
 }
 
 // AxisTitle handles needed data to render an axis title
