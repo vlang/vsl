@@ -5,10 +5,10 @@ pub struct Annotation {
 pub mut:
 	x          f64
 	y          f64
-	text       string
-	showarrow  bool
-	arrowhead  int
-	arrowcolor string = 'black'
-	align      string = 'center'
+	text       string [omitempty]
+	showarrow  bool   [omitempty]
+	arrowhead  int    [omitempty]
+	arrowcolor string [omitempty]
+	align      string [omitempty]
 	font       Font
 }

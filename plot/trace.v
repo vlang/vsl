@@ -20,36 +20,36 @@ pub mut:
 	x             XType
 	xbins         map[string]f32
 	y             []f64
-	z             ZType
-	values        []f64
-	labels        []string
-	text          []string
-	customdata    [][]string
-	name          string
-	mode          string
-	marker        Marker
-	line          Line
-	pull          []f64
-	hole          f64
-	colorscale    string = 'Viridis'
-	hovertemplate string
-	textinfo      string
-	fill          string
-	fillcolor     string
+	z             ZType          [omitempty]
+	values        []f64          [omitempty]
+	labels        []string       [omitempty]
+	text          []string       [omitempty]
+	customdata    [][]string     [omitempty]
+	name          string         [omitempty]
+	mode          string         [omitempty]
+	marker        Marker         [omitempty]
+	line          Line           [omitempty]
+	pull          []f64          [omitempty]
+	hole          f64            [omitempty]
+	colorscale    string         [omitempty] = 'Viridis'
+	hovertemplate string         [omitempty]
+	textinfo      string         [omitempty]
+	fill          string         [omitempty]
+	fillcolor     string         [omitempty]
 }
 
 pub struct Marker {
 pub mut:
-	size       []f64
-	color      []string
-	opacity    f64    = 0.8
-	colorscale string = 'Viridis'
+	size       []f64    [omitempty]
+	color      []string [omitempty]
+	opacity    f64      [omitempty]
+	colorscale string   [omitempty]
 }
 
 pub struct Line {
 pub mut:
-	color string
-	width f64 = 2.0
+	color string [omitempty]
+	width f64    [omitempty] = 2.0
 	// check Plotly docs for more dash types
 	dash string = 'solid'
 }

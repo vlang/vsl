@@ -84,11 +84,6 @@ def process_trace(trace):
 
     trace = remove_empty_keys(trace)
 
-    if trace_type == 'pie':
-        if "marker" in trace:
-            trace["marker"].pop("opacity")
-            trace["marker"].pop("colorscale")
-
     return map_trace_type_to_plotly_object(trace_type)(trace)
 
 
