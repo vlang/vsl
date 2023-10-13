@@ -19,7 +19,7 @@ pub mut:
 	trace_type    TraceType      [required]
 	x             XType
 	xbins         map[string]f32
-	y             []f64
+	y             []f64          [omitempty]
 	z             ZType          [omitempty]
 	values        []f64          [omitempty]
 	labels        []string       [omitempty]
