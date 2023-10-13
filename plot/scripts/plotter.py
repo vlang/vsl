@@ -4,28 +4,6 @@ import json
 import plotly.graph_objects as go
 
 
-def remove_empty_keys(d):
-    """
-    Recursively remove empty keys (both keys with empty values
-    and empty lists/dictionaries).
-    If a key is empty, it is removed from the dictionary.
-    If a key is a list/dictionary, it is recursively processed.
-    """
-    result = d
-    for k in list(result.keys()):
-        if isinstance(result[k], dict):
-            result[k] = remove_empty_keys(result[k])
-            if not len(result[k]):
-                result.pop(k)
-        elif isinstance(result[k], list):
-            if not len(result[k]):
-                result.pop(k)
-        else:
-            if not result[k]:
-                result.pop(k)
-    return result
-
-
 def is_valid_file(parser, arg):
     """
     Check if the provided file path exists.
@@ -81,8 +59,6 @@ def process_trace(trace):
     for k in keys:
         if k not in accepted:
             trace.pop(k)
-
-    trace = remove_empty_keys(trace)
 
     return map_trace_type_to_plotly_object(trace_type)(trace)
 
