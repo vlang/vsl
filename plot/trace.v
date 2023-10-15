@@ -11,6 +11,7 @@ pub enum TraceType {
 }
 
 type XType = []f64 | []string
+type YType = []f64 | []string
 type ZType = [][]f64 | []f64
 
 [params]
@@ -19,7 +20,7 @@ pub mut:
 	trace_type    TraceType      [required]
 	x             XType
 	xbins         map[string]f32
-	y             []f64          [omitempty]
+	y             YType          [omitempty]
 	z             ZType          [omitempty]
 	values        []f64          [omitempty]
 	labels        []string       [omitempty]
