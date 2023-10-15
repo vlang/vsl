@@ -108,7 +108,7 @@ Made with [contributors-img](https://contrib.rocks).
 [deploydocsbadge]: https://github.com/vlang/vsl/actions/workflows/deploy-docs.yml/badge.svg
 [licensebadge]: https://img.shields.io/badge/License-MIT-blue.svg
 [ModulesBadge]: https://img.shields.io/badge/modules-reference-027d9c?logo=v&logoColor=white&logoWidth=10
-[awesomevurl]: https://github.com/vlang/awesome-v/blob/main/README.md#scientific-computing
+[awesomevurl]: https://github.com/vlang/awesome-v/blob/master/README.md#scientific-computing
 [workflowurl]: https://github.com/vlang/vsl/actions/workflows/ci.yml
 [deploydocsurl]: https://github.com/vlang/vsl/actions/workflows/deploy-docs.yml
 [licenseurl]: https://github.com/vlang/vsl/blob/main/LICENSE
