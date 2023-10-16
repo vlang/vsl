@@ -4,7 +4,8 @@ import json
 import time
 import vweb
 
-const port = 8082
+// port is the port to run the server on. If 0, it will run on the next available port.
+const port = 0
 
 struct App {
 	vweb.Context
