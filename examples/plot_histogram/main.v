@@ -12,10 +12,10 @@ for _ in 1 .. 1000 {
 mut plt := plot.Plot.new()
 plt.histogram(
 	x: x1
-	xbins: {
-		'start': f32(0)
-		'end':   f32(100)
-		'size':  2
+	xbins: plot.Bins{
+		start: 0.0
+		end: 100.0
+		size: 2
 	}
 )
 plt.layout(
