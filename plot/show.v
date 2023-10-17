@@ -10,19 +10,20 @@ type TracesWithTypeValue = Trace | string
 
 struct PlotlyHandler {
 	plot Plot
-	ch   chan int
+mut:
+	server &http.Server [str: skip] = unsafe { nil }
 }
 
-fn (handler PlotlyHandler) handle(req http.Request) http.Response {
+fn (mut handler PlotlyHandler) handle(req http.Request) http.Response {
 	mut r := http.Response{
 		body: handler.plot.plotly()
 		header: req.header
 	}
 	r.set_status(.ok)
 	r.set_version(req.version)
-	go fn [handler] () {
+	go fn [mut handler] () {
 		time.sleep(300 * time.millisecond)
-		handler.ch <- 1
+		handler.server.close()
 	}()
 	return r
 }
@@ -32,23 +33,20 @@ pub fn (plot Plot) show() ! {
 	$if test ? {
 		println('Ignoring plot.show() because we are running in test mode')
 	} $else {
-		port := 8080
-		ch := chan int{}
+		mut handler := PlotlyHandler{
+			plot: plot
+		}
 		mut server := &http.Server{
 			accept_timeout: 1 * time.second
-			port: port
-			handler: PlotlyHandler{
-				plot: plot
-				ch: ch
-			}
+			port: 0
+			handler: handler
 		}
+		handler.server = server
 		t := spawn server.listen_and_serve()
 		for server.status() != .running {
 			time.sleep(10 * time.millisecond)
 		}
-		os.open_uri('http://localhost:${port}')!
-		_ := <-ch
-		server.close()
+		os.open_uri('http://${server.addr}')!
 		t.wait()
 	}
 }
