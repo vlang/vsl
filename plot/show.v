@@ -3,6 +3,7 @@ module plot
 import json
 import net
 import net.http
+import os
 import time
 
 // port is the port to run the server on. If 0, it will run on the next available port.
@@ -29,6 +30,7 @@ fn (handler PlotlyHandler) handle(req http.Request) http.Response {
 	return r
 }
 
+// show starts a web server and opens a browser window to display the plot.
 pub fn (plot Plot) show() ! {
 	$if test ? {
 		println('Ignoring plot.show() because we are running in test mode')
@@ -36,12 +38,17 @@ pub fn (plot Plot) show() ! {
 		ch := chan int{}
 		mut server := &http.Server{
 			accept_timeout: 1 * time.second
+			port: plot.port
 			handler: PlotlyHandler{
 				plot: plot
 				ch: ch
 			}
 		}
 		t := spawn server.listen_and_serve()
+		for server.status() != .running {
+			time.sleep(10 * time.millisecond)
+		}
+		os.open_uri('http://localhost:${plot.port}')!
 		_ := <-ch
 		server.close()
 		t.wait()
