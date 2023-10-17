@@ -37,7 +37,8 @@ fn encode[T](obj T) string {
 	return obj_json
 }
 
-pub fn (mut app App) index() vweb.Result {
+['/']
+pub fn (mut app App) plotly() vweb.Result {
 	// For some reason this is not working yet
 	traces_with_type := app.plot.traces.map({
 		'type':  TracesWithTypeValue(it.trace_type())
