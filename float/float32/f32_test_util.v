@@ -6,8 +6,8 @@ import math
 const (
 	// Offset sets for testing alignment handling in Unitary assembly functions
 	align1 = [0, 1]
-	align2 = new_inc_set(0, 1)
-	align3 = new_inc_to_set(0, 1)
+	align2 = IncSet.new(0, 1)
+	align3 = IncToSet.new(0, 1)
 )
 
 struct IncSet {
@@ -15,8 +15,8 @@ struct IncSet {
 	y int
 }
 
-// new_inc_set will generate all (x,y) combinations of the input increment set.
-fn new_inc_set(inc ...int) []IncSet {
+// IncSet.new will generate all (x,y) combinations of the input increment set.
+fn IncSet.new(inc ...int) []IncSet {
 	n := inc.len
 	mut inc_set := []IncSet{len: n * n}
 	for i, x in inc {
@@ -33,8 +33,8 @@ struct IncToSet {
 	y   int
 }
 
-// new_inc_to_set will generate all (dst,x,y) combinations of the input increment set.
-fn new_inc_to_set(inc ...int) []IncToSet {
+// IncToSet.new will generate all (dst,x,y) combinations of the input increment set.
+fn IncToSet.new(inc ...int) []IncToSet {
 	n := inc.len
 	mut inc_to_set := []IncToSet{len: n * n * n}
 	for i, dst in inc {

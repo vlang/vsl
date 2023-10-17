@@ -142,7 +142,7 @@ fn test_scal_inc_to() {
 
 	for test in float32.scal_tests {
 		n := test.x.len
-		for inc in new_inc_set(1, 2, 3, 4, 7, 10) {
+		for inc in IncSet.new(1, 2, 3, 4, 7, 10) {
 			xg := guard_inc_vector(test.x, x_gd_val, inc.x, gd_ln)
 			dg := guard_inc_vector(random_slice(n, 1), dst_gd_val, inc.y, gd_ln)
 			x := xg[gd_ln..xg.len - gd_ln]

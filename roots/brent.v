@@ -22,8 +22,8 @@ pub mut:
 	n_iter  int
 }
 
-// new_brent creates a new Brent object
-pub fn new_brent(f func.Fn) &Brent {
+// Brent.new creates a new Brent object
+pub fn Brent.new(f func.Fn) &Brent {
 	return &Brent{
 		f: f
 		tol: 1e-6

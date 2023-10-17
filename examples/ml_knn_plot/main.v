@@ -19,10 +19,10 @@ fn main() {
 		[7.0, 6.0],
 	]
 	y := [0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0]
-	mut data := ml.data_from_raw_xy_sep(x, y)!
+	mut data := ml.Data.from_raw_xy_sep(x, y)!
 
 	// Create a KNN model
-	mut knn := ml.new_knn(mut data, 'Example KNN')!
+	mut knn := ml.KNN.new(mut data, 'Example KNN')!
 
 	// Set weights to give more importance to class 1
 	weights := {

@@ -16,7 +16,7 @@ fn testsuite_begin() {
 
 	assert os.exists_in_system_path(h5.h5dump)
 
-	f := new_file(h5.testfile)!
+	f := Hdf5File.new(h5.testfile)!
 	f.write_dataset1d('Shortarray', h5.shortarray)!
 	f.close()
 }

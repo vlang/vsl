@@ -51,7 +51,7 @@ for row in dataset {
 // Well, stemming is keeping the radicals of words so that terms such
 // as "try", "tried" and "trying" are considered the same token: "try".
 // Let's create a stemmer:
-mut lancaster := nlp.new_lancaster_stemmer(true) // Parameter is strip_prefix. If true, "kilogram" becomes "gram", for example.
+mut lancaster := nlp.LancasterStemmer.new(true) // Parameter is strip_prefix. If true, "kilogram" becomes "gram", for example.
 
 // List of sentences as ngrams, read the comments
 // below to understand.
@@ -110,8 +110,8 @@ for i in 0 .. dataset.len {
 
 // Amazing! We have all we need to train a sentiment analysis model with
 // bag of words. Check it out:
-mut training_data := ml.data_from_raw_xy_sep(vectorized, labels)!
-mut bow_knn := ml.new_knn(mut training_data, 'BagOfWordsKNN')!
+mut training_data := ml.Data.from_raw_xy_sep(vectorized, labels)!
+mut bow_knn := ml.KNN.new(mut training_data, 'BagOfWordsKNN')!
 
 sentence1 := 'I think today is a good day' // should be positive
 sentence2 := 'I hate grape juice, it tastes bad.' // should be negative
@@ -175,8 +175,8 @@ for sent in ngrams {
 	tf_idf_rows << tf_idf_sentence
 }
 
-training_data = ml.data_from_raw_xy_sep(tf_idf_rows, labels)!
-mut tf_idf_knn := ml.new_knn(mut training_data, 'TfIdfKNN')!
+training_data = ml.Data.from_raw_xy_sep(tf_idf_rows, labels)!
+mut tf_idf_knn := ml.KNN.new(mut training_data, 'TfIdfKNN')!
 
 tfidf := fn (sent string, mut lan nlp.LancasterStemmer, document [][][]string, unique [][]string) ![]f64 {
 	sent_tokenized := nlp.remove_stopwords_en(nlp.tokenize(nlp.remove_punctuation(sent).to_lower()),

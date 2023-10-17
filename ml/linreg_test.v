@@ -25,8 +25,8 @@ fn test_lin_reg() {
 		[1.43, 94.98],
 		[0.95, 87.33],
 	]
-	mut data := data_from_raw_xy(xy)!
-	mut reg := new_lin_reg(mut data, 'linear regression')
+	mut data := Data.from_raw_xy(xy)!
+	mut reg := LinReg.new(mut data, 'linear regression')
 
 	reg.train()
 	// TODO: Fix this test
@@ -56,8 +56,8 @@ fn test_lin_reg_pred() {
 		[1.43, 94.98],
 		[0.95, 87.33],
 	]
-	mut data := data_from_raw_xy(xy)!
-	mut reg := new_lin_reg(mut data, 'linear regression')
+	mut data := Data.from_raw_xy(xy)!
+	mut reg := LinReg.new(mut data, 'linear regression')
 
 	// set regularization parameter
 	reg.params.set_lambda(1e12) // very high bias => constant line

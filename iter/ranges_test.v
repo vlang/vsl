@@ -14,9 +14,7 @@ fn test_int_iter() {
 		[i64(-88), -84, -80, -76], []i64{len: 0}]
 
 	for i, values in args {
-		r := new_int_iter(start: values[0], stop: values[1], step: values[2]) or {
-			panic('this should not happen')
-		}
+		r := IntIter.new(start: values[0], stop: values[1], step: values[2])!
 		for j, n in r {
 			assert n == expected[i][j]
 		}
@@ -52,9 +50,7 @@ fn test_float_iter() {
 	]
 
 	for i, values in args {
-		r := new_float_iter(start: values[0], stop: values[1], step: values[2]) or {
-			panic('this should not happen')
-		}
+		r := FloatIter.new(start: values[0], stop: values[1], step: values[2])!
 		for j, n in r {
 			if !n.eq_epsilon(expected[i][j]) {
 				println('${n},  ${expected[i][j]}')
@@ -92,9 +88,7 @@ fn test_linear_iter() {
 		[]f64{}]
 
 	for i, lim in limits {
-		l := new_linear_iter(start: lim[0], stop: lim[1], len: lens[i], endpoint: endpoints[i]) or {
-			panic('this should not happen')
-		}
+		l := LinearIter.new(start: lim[0], stop: lim[1], len: lens[i], endpoint: endpoints[i])!
 		for j, n in l {
 			assert n.eq_epsilon(expected[i][j])
 		}

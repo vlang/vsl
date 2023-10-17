@@ -39,11 +39,11 @@ pub mut:
 	all  []&Bin // [nbins] all bins (there will be an extra "ghost" bin along each dimension)
 }
 
-// new_bins initialise bins structure
+// Bins.new initialise bins structure
 //   xmin -- [ndim] min/initial coordinates of the whole space (box/cube)
 //   xmax -- [ndim] max/final coordinates of the whole space (box/cube)
 //   ndiv -- [ndim] number of divisions for xmax-xmin
-pub fn new_bins(xmin []f64, xmax []f64, ndiv_ []int) &Bins {
+pub fn Bins.new(xmin []f64, xmax []f64, ndiv_ []int) &Bins {
 	mut ndiv := ndiv_.clone()
 	mut o := &Bins{}
 	// check for out-of-range values
@@ -252,7 +252,7 @@ pub fn (mut o Bins) find_along_segment(xi_ []f64, xf_ []f64, tol f64) []int {
 			z += o.size[2] / 2.0
 		}
 		// check if bin is near line
-		p := new_point(x, y, z)
+		p := Point.new(x, y, z)
 		d := dist_point_line(p, pi, pf, tol)
 		if d <= btol {
 			sbins << bin
@@ -308,7 +308,7 @@ fn point_from_vector(v []f64, dim int) &Point {
 	if dim == 3 {
 		z = v[3]
 	}
-	return new_point(x, y, z)
+	return Point.new(x, y, z)
 }
 
 // nactive returns the number of active bins; i.e. non-nil bins

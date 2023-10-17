@@ -18,14 +18,14 @@ pub mut:
 	params &ParamsReg[f64]
 }
 
-// new_lin_reg returns a new LinReg object
+// LinReg.new returns a new LinReg object
 //   Input:
 //     data   -- x,y data
 //     name   -- unique name of this (observer) object
-pub fn new_lin_reg(mut data Data[f64], name string) &LinReg {
-	mut stat := stat_from_data(mut data, 'stat_' + name)
+pub fn LinReg.new(mut data Data[f64], name string) &LinReg {
+	mut stat := Stats.from_data(mut data, 'stat_' + name)
 	stat.update()
-	params := new_params_reg[f64](data.nb_features)
+	params := ParamsReg.new[f64](data.nb_features)
 	mut reg := &LinReg{
 		name: name
 		data: data
@@ -110,8 +110,8 @@ pub fn (mut o LinReg) train() {
 	r = la.matrix_tr_vector_mul(1.0, x, y) // r := a = xᵀy
 	r = la.vector_add(1.0, r, -t * m_1, s) // r := a - (t/m)s
 	// K matrix
-	mut b := la.new_matrix[f64](n, n)
-	mut k := la.new_matrix[f64](n, n)
+	mut b := la.Matrix.new[f64](n, n)
+	mut k := la.Matrix.new[f64](n, n)
 	b = la.vector_vector_tr_mul(1.0 * m_1, s, s) // b := (1/m) ssᵀ
 	la.matrix_tr_matrix_mul(mut k, 1, x, x) // k := A = xᵀx
 	la.matrix_add(mut k, 1, k, -1, b) // k := A - b

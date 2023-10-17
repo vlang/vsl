@@ -20,7 +20,10 @@ pub fn (d &Device) kernel(name string) !&Kernel {
 	if ret == invalid_kernel_name {
 		return error("kernel with name '${name}' not found")
 	}
-	return new_kernel(d, k)
+	return &Kernel{
+		d: d
+		k: k
+	}
 }
 
 pub struct UnsupportedArgumentTypeError {
@@ -34,7 +37,7 @@ pub fn (err UnsupportedArgumentTypeError) msg() string {
 	return 'cl: unsupported argument type for index ${err.index}: ${err.value}'
 }
 
-fn new_unsupported_argument_type_error(index int, value ArgumentType) IError {
+fn UnsupportedArgumentTypeError.new(index int, value ArgumentType) IError {
 	return UnsupportedArgumentTypeError{
 		index: index
 		value: value
@@ -93,13 +96,6 @@ pub fn (kc KernelCall) run(args ...ArgumentType) chan IError {
 
 fn release_kernel(k &Kernel) {
 	cl_release_kernel(k.k)
-}
-
-fn new_kernel(d &Device, k ClKernel) &Kernel {
-	return &Kernel{
-		d: d
-		k: k
-	}
 }
 
 fn (k &Kernel) set_args(args ...ArgumentType) ! {
@@ -180,7 +176,7 @@ fn (k &Kernel) set_arg(index int, arg ArgumentType) ! {
 			return k.set_arg_buffer(index, arg.buf)
 		}
 		else {
-			return new_unsupported_argument_type_error(index, arg)
+			return UnsupportedArgumentTypeError.new(index, arg)
 		}
 	}
 }

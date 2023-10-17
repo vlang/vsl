@@ -25,7 +25,7 @@ for i := start; i < endp1; i++ {
 }
 
 // Communicator
-comm := mpi.new_communicator([])!
+comm := mpi.Communicator.new([])!
 
 // Barrier
 comm.barrier()

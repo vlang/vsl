@@ -112,7 +112,7 @@ for i := start; i < endp1; i++ {
 - `mpi.finalize()`: Cleanup and finalize MPI at the end of the program.
 - `mpi.world_rank()`: Get the rank of the current process.
 - `mpi.world_size()`: Get the total number of processes.
-- `mpi.new_communicator([])`: Create a new communicator.
+- `mpi.Communicator.new([])`: Create a new communicator.
 
 Now, let's dive into the MPI functions used in the example.
 
@@ -125,7 +125,7 @@ Now, let's dive into the MPI functions used in the example.
 Synchronize all processes:
 
 ```v ignore
-comm := mpi.new_communicator([])!
+comm := mpi.Communicator.new([])!
 comm.barrier()
 ```
 

@@ -153,7 +153,7 @@ fn test_axpy_inc() {
 	for test in float32.axpy_tests {
 		n := test.x.len
 
-		for inc in new_inc_set(-7, -4, -3, -2, -1, 1, 2, 3, 4, 7) {
+		for inc in IncSet.new(-7, -4, -3, -2, -1, 1, 2, 3, 4, 7) {
 			mut ix := 0
 			mut iy := 0
 			if inc.x < 0 {
@@ -193,7 +193,7 @@ fn test_axpy_inc_to() {
 	for test in float32.axpy_tests {
 		n := test.x.len
 
-		for inc in new_inc_to_set(-7, -4, -3, -2, -1, 1, 2, 3, 4, 7) {
+		for inc in IncToSet.new(-7, -4, -3, -2, -1, 1, 2, 3, 4, 7) {
 			mut ix := 0
 			mut iy := 0
 			mut idst := u32(0)

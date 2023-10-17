@@ -17,9 +17,9 @@ fn f_cos(x f64, _ []f64) f64 {
 	return math.cos(x)
 }
 
-f := func.new_func(f: f_cos)
+f := func.Fn.new(f: f_cos)
 
-mut solver := roots.new_bisection(f)
+mut solver := roots.Bisection.new(f)
 
 solver.xmin = 0.0
 solver.xmax = 3.0

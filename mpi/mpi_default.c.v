@@ -40,10 +40,10 @@ pub fn world_size() int {
 // Communicator holds the World Communicator or a subset Communicator
 pub struct Communicator {}
 
-// new_communicator creates a new communicator or returns the World Communicator
+// Communicator.new creates a new communicator or returns the World Communicator
 //   ranks -- World indices of processors in this Communicator.
 //            use nil or empty to get the World Communicator
-pub fn new_communicator(ranks []int) !&Communicator {
+pub fn Communicator.new(ranks []int) !&Communicator {
 	return errors.error('MPI is not supported on this platform', .efailed)
 }
 

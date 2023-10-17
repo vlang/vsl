@@ -3,7 +3,7 @@ module la
 import math
 
 fn test_new_matrix() {
-	mat := new_matrix[f64](3, 2)
+	mat := Matrix.new[f64](3, 2)
 	expected_data := []f64{len: 6, init: 0.0}
 	assert mat.m == 3
 	assert mat.n == 2
@@ -16,7 +16,7 @@ fn test_matrix_deep2() {
 		[21.0, 22.0, 23.0, 24.0],
 		[31.0, 32.0, 33.0, 34.0],
 	]
-	mat := matrix_deep2(original_array)
+	mat := Matrix.deep2(original_array)
 	assert mat.m == 3
 	assert mat.n == 4
 	// The data is stored in column-major format
@@ -28,19 +28,19 @@ fn test_set_from_deep2() {
 		[1.0, 1.0, 2.0],
 		[5.0, 4.0, 2.0],
 	]
-	mut mat := new_matrix[f64](2, 3)
+	mut mat := Matrix.new[f64](2, 3)
 	mat.set_from_deep2(original_array)
 	assert mat.data == [1.0, 1, 2, 5, 4, 2]
 }
 
 fn test_set_diag() {
-	mut mat := new_matrix[f64](4, 4)
+	mut mat := Matrix.new[f64](4, 4)
 	mat.set_diag(36)
 	assert mat.data == [36.0, 0, 0, 0, 0, 36.0, 0, 0, 0, 0, 36.0, 0, 0, 0, 0, 36.0]
 }
 
 fn test_set_and_get() {
-	mut mat := matrix_deep2([
+	mut mat := Matrix.deep2([
 		[10.0, 11.0, 12.0, 13.0],
 		[20.0, 21.0, 22.0, 23.0],
 		[30.0, 31.0, 32.0, 33.0],
@@ -57,12 +57,12 @@ fn test_get_deep2() {
 		[3.62, 0.15, -0.5, 35.5],
 		[-4.1, 0.62, -984, 45.1],
 	]
-	mat := matrix_deep2(original_array)
+	mat := Matrix.deep2(original_array)
 	assert mat.get_deep2() == original_array
 }
 
 fn test_matrix_clone() {
-	mat1 := matrix_deep2([
+	mat1 := Matrix.deep2([
 		[0.1, 0.2, 0.3],
 		[1.1, 1.2, 1.3],
 	])
@@ -73,11 +73,11 @@ fn test_matrix_clone() {
 }
 
 fn test_transpose() {
-	mat1 := matrix_deep2([
+	mat1 := Matrix.deep2([
 		[1.0, 2.0, 3.0],
 		[4.0, 5.0, 6.0],
 	])
-	mat2 := matrix_deep2([
+	mat2 := Matrix.deep2([
 		[1.0, 4.0],
 		[2.0, 5.0],
 		[3.0, 6.0],
@@ -97,32 +97,32 @@ fn test_transpose() {
 }
 
 fn test_copy_into_and_matrix_raw() {
-	mat_a := matrix_raw(3, 4, []f64{len: 12, init: 42})
-	mut mat_b := new_matrix[f64](3, 4)
+	mat_a := Matrix.raw(3, 4, []f64{len: 12, init: 42})
+	mut mat_b := Matrix.new[f64](3, 4)
 	mat_a.copy_into(mut mat_b, 0.5)
 	assert mat_b.data == []f64{len: 12, init: 21}
 }
 
 fn test_add() {
-	mut mat := matrix_raw(1, 2, [0.1, 0.2])
+	mut mat := Matrix.raw(1, 2, [0.1, 0.2])
 	mat.add(0, 1, 1)
 	assert mat.get(0, 1) == 1.2
 }
 
 fn test_fill() {
-	mat_a := matrix_raw(3, 4, []f64{len: 12, init: 54.3})
-	mut mat_b := new_matrix[f64](3, 4)
+	mat_a := Matrix.raw(3, 4, []f64{len: 12, init: 54.3})
+	mut mat_b := Matrix.new[f64](3, 4)
 	mat_b.fill(54.3)
 	assert mat_a.data == mat_b.data
 }
 
 fn test_clear_rc() {
-	mut mat_a := matrix_deep2([
+	mut mat_a := Matrix.deep2([
 		[1.0, 2.0, 3.0, 4.0],
 		[5.0, 6.0, 7.0, 8.0],
 		[4.0, 3.0, 2.0, 1.0],
 	])
-	mat_b := matrix_deep2([
+	mat_b := Matrix.deep2([
 		[1.0, 2.0, 3.0, 4.0],
 		[0.0, 1.0, 0.0, 0.0],
 		[0.0, 0.0, 1.0, 0.0],
@@ -132,12 +132,12 @@ fn test_clear_rc() {
 }
 
 fn test_clear_bry() {
-	mut mat_a := matrix_deep2([
+	mut mat_a := Matrix.deep2([
 		[1.0, 2.0, 3.0],
 		[4.0, 5.0, 6.0],
 		[7.0, 8.0, 9.0],
 	])
-	mat_b := matrix_deep2([
+	mat_b := Matrix.deep2([
 		[1.0, 0.0, 0.0],
 		[0.0, 5.0, 0.0],
 		[0.0, 0.0, 1.0],
@@ -147,18 +147,18 @@ fn test_clear_bry() {
 }
 
 fn test_max_diff() {
-	mat_a := matrix_raw(3, 2, [1.0, 5, 3, 6, 7, 3])
-	mat_b := matrix_raw(3, 2, [4.0, 19, 42, 3, -31, 5])
+	mat_a := Matrix.raw(3, 2, [1.0, 5, 3, 6, 7, 3])
+	mat_b := Matrix.raw(3, 2, [4.0, 19, 42, 3, -31, 5])
 	assert mat_a.max_diff(mat_b) == 39
 }
 
 fn test_largest() {
-	mat := matrix_raw(3, 3, [1.0, 5, 3, 6, -74, 3, 24, 62, -39])
+	mat := Matrix.raw(3, 3, [1.0, 5, 3, 6, -74, 3, 24, 62, -39])
 	assert mat.largest(74) == 1
 }
 
 fn test_col_get_row_get_col() {
-	mat := matrix_deep2([
+	mat := Matrix.deep2([
 		[11.0, 12.0, 13.0],
 		[21.0, 22.0, 23.0],
 		[31.0, 32.0, 33.0],
@@ -169,7 +169,7 @@ fn test_col_get_row_get_col() {
 }
 
 fn test_extract_cols_and_set_col() {
-	mut mat := matrix_deep2([
+	mut mat := Matrix.deep2([
 		[11.0, 12.0, 13.0],
 		[21.0, 22.0, 23.0],
 		[31.0, 32.0, 33.0],
@@ -184,12 +184,12 @@ fn test_extract_cols_and_set_col() {
 }
 
 fn test_frobenius_norm() {
-	mat_a := matrix_deep2([
+	mat_a := Matrix.deep2([
 		[1.0, 2.0],
 		[3.0, 4.0],
 	])
 	assert mat_a.norm_frob() == math.sqrt(30)
-	mat_b := matrix_deep2([
+	mat_b := Matrix.deep2([
 		[1.0, 4.0, 6.0],
 		[7.0, 9.0, 10.0],
 	])
@@ -197,12 +197,12 @@ fn test_frobenius_norm() {
 }
 
 fn test_infinite_norm() {
-	mat_a := matrix_deep2([
+	mat_a := Matrix.deep2([
 		[1.0, -7.0],
 		[-2.0, -3.0],
 	])
 	assert mat_a.norm_inf() == 8
-	mat_b := matrix_deep2([
+	mat_b := Matrix.deep2([
 		[5.0, -4.0, 2.0],
 		[-1.0, 2.0, 3.0],
 		[-2.0, 1.0, 0.0],
@@ -211,14 +211,14 @@ fn test_infinite_norm() {
 }
 
 fn test_apply() {
-	mat_a := matrix_raw(1, 4, [0.0, 2.0, 4.0, 6.0])
-	mut mat_b := new_matrix[f64](1, 4)
+	mat_a := Matrix.raw(1, 4, [0.0, 2.0, 4.0, 6.0])
+	mut mat_b := Matrix.new[f64](1, 4)
 	mat_b.apply(3.0 / 2.0, mat_a)
 	assert mat_b.data == [0.0, 3.0, 6.0, 9.0]
 }
 
 fn test_str_and_print_functions() {
-	mat := *matrix_raw(2, 2, [1.0, 2.0, 3.0, 4.0])
+	mat := *Matrix.raw(2, 2, [1.0, 2.0, 3.0, 4.0])
 	assert mat.str() == '1 2 \n3 4 '
 	assert mat.print('%g ') == '1 2 \n3 4 '
 	assert mat.print_v('%g') == '[][]f64{\n    {1,2},\n    {3,4},\n}'

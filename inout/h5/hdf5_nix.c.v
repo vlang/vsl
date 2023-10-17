@@ -97,8 +97,8 @@ mut:
 	filedesc Hdf5HidT
 }
 
-// new_file creates a new HDF5 file, or truncates an existing file.
-pub fn new_file(filename string) !Hdf5File {
+// Hdf5File.new creates a new HDF5 file, or truncates an existing file.
+pub fn Hdf5File.new(filename string) !Hdf5File {
 	mut f := Hdf5File{
 		filedesc: C.H5Fcreate(unsafe { filename.str }, C.H5F_ACC_TRUNC, C.H5P_DEFAULT,
 			C.H5P_DEFAULT)

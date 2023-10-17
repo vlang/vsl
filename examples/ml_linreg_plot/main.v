@@ -25,8 +25,8 @@ fn main() {
 		[1.43, 94.98],
 		[0.95, 87.33],
 	]
-	mut data := ml.data_from_raw_xy(xy)!
-	mut reg := ml.new_lin_reg(mut data, 'linear regression')
+	mut data := ml.Data.from_raw_xy(xy)!
+	mut reg := ml.LinReg.new(mut data, 'linear regression')
 
 	reg.train()
 

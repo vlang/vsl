@@ -189,7 +189,7 @@ pub fn matrix_tr_vector_mul[T](alpha T, a &Matrix[T], u []T) []T {
 //
 pub fn vector_vector_tr_mul[T](alpha T, u []T, v []T) &Matrix[T] {
 	$if T is f64 {
-		mut m := new_matrix[f64](u.len, v.len)
+		mut m := Matrix.new[f64](u.len, v.len)
 		if m.m < 9 && m.n < 9 {
 			for i in 0 .. m.m {
 				for j in 0 .. m.n {
@@ -201,9 +201,9 @@ pub fn vector_vector_tr_mul[T](alpha T, u []T, v []T) &Matrix[T] {
 		mut a := []f64{len: u.len * v.len}
 		vlas.dger(m.m, m.n, alpha, arr_to_f64arr[T](u), 1, arr_to_f64arr[T](v), 1, mut
 			a, int(math.max(m.m, m.n)))
-		return matrix_raw(u.len, v.len, a)
+		return Matrix.raw(u.len, v.len, a)
 	} $else {
-		mut m := new_matrix[T](u.len, v.len)
+		mut m := Matrix.new[T](u.len, v.len)
 
 		for i in 0 .. m.m {
 			for j in 0 .. m.n {

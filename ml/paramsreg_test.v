@@ -4,7 +4,7 @@ import vsl.float.float64
 
 fn test_params_reg() {
 	nb_features := 3
-	mut params := new_params_reg[f64](nb_features)
+	mut params := ParamsReg.new[f64](nb_features)
 	params.theta[0] = 1
 	params.theta[1] = 2
 	params.theta[2] = 3

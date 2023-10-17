@@ -81,11 +81,11 @@ mut:
 	group MPI_Group
 }
 
-// new_communicator creates a new communicator or returns the World Communicator
+// Communicator.new creates a new communicator or returns the World Communicator
 //   ranks -- World indices of processors in this Communicator.
 //            use nil or empty to get the World Communicator
 //   Note there is currently no means to use groups.
-pub fn new_communicator(ranks []int) !&Communicator {
+pub fn Communicator.new(ranks []int) !&Communicator {
 	mut o := &Communicator{
 		comm: MPI_Comm(C.MPI_COMM_WORLD)
 		group: unsafe { nil }

@@ -19,7 +19,7 @@ pub fn get_devices(device_type DeviceType) ![]&Device {
 			return error_from_code(ret)
 		}
 		for d in device_ids {
-			device := new_device(d)!
+			device := Device.new(d)!
 			devices << device
 		}
 	}
@@ -36,7 +36,7 @@ pub fn get_default_device() !&Device {
 	if ret != success {
 		return error_from_code(ret)
 	}
-	return new_device(id)
+	return Device.new(id)
 }
 
 fn get_platforms() ![]ClPlatformId {
@@ -50,7 +50,7 @@ fn get_platforms() ![]ClPlatformId {
 	return error_or_default(ret, platform_ids)
 }
 
-fn new_device(id ClDeviceId) !&Device {
+fn Device.new(id ClDeviceId) !&Device {
 	mut d := &Device{
 		id: id
 	}

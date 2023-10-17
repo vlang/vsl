@@ -5,7 +5,7 @@ import vsl.plot
 
 fn main() {
 	// Example data: two features (X1 and X2) and a label (y)
-	mut data := ml.data_from_raw_xy([
+	mut data := ml.Data.from_raw_xy([
 		[1.0, 2.0, 0.0],
 		[2.0, 3.0, 0.0],
 		[3.0, 3.0, 0.0],
@@ -127,7 +127,7 @@ fn main() {
 	plt_3d.show()!
 
 	// Basic statistics analysis
-	mut stat := ml.stat_from_data(mut data, 'Example Data')
+	mut stat := ml.Stats.from_data(mut data, 'Example Data')
 	stat.update()
 
 	// Visualize statistics in a bar chart

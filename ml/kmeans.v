@@ -20,20 +20,20 @@ pub mut:
 	nb_members []int   // [nb_classes] number of members in each class
 }
 
-// new_kmeans returns a new K-means model
-pub fn new_kmeans(mut data Data[f64], nb_classes int, name string) &Kmeans {
+// Kmeans.new returns a new K-means model
+pub fn Kmeans.new(mut data Data[f64], nb_classes int, name string) &Kmeans {
 	// classes
 	classes := []int{len: data.nb_samples}
 	centroids := [][]f64{len: nb_classes}
 	nb_members := []int{len: nb_classes}
 
 	// stat
-	mut stat := stat_from_data(mut data, 'stat_${name}')
+	mut stat := Stats.from_data(mut data, 'stat_${name}')
 	stat.update()
 
 	// bins
 	ndiv := [10, 10] // TODO: make this a parameter
-	bins := gm.new_bins(stat.min_x, stat.max_x, ndiv) // TODO: make sure minx and maxx are 2D or 3D; i.e. nb_features ≤ 2
+	bins := gm.Bins.new(stat.min_x, stat.max_x, ndiv) // TODO: make sure minx and maxx are 2D or 3D; i.e. nb_features ≤ 2
 	mut o := Kmeans{
 		name: name
 		data: data

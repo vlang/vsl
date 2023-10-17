@@ -11,7 +11,7 @@ fn test_graph01() {
 	 *      1 ––––––––→ 2      indicate weights
 	 *           [3]
 	*/
-	g := new_graph([[0, 1], [0, 3], [1, 2], [2, 3]], [5.0, 10, 3, 1], [], [])
+	g := Graph.new([[0, 1], [0, 3], [1, 2], [2, 3]], [5.0, 10, 3, 1], [], [])
 	assert g.shares.keys().len == 4 // nverts
 	assert g.key2edge.keys().len == 4 // nedges
 	assert g.dist.len == 4 // nverts
@@ -71,7 +71,7 @@ fn test_graph02() {
 	 *      1 ←–––– 0 ––––→ 2
 	 *          [6]    [8]
 	*/
-	g := new_graph([[4, 5], [1, 4], [0, 1], [0, 2], [5, 2], [2, 3],
+	g := Graph.new([[4, 5], [1, 4], [0, 1], [0, 2], [5, 2], [2, 3],
 		[5, 3]], [3.0, 11, 6, 8, 7, 9, 4], [], [])
 	assert g.shares.keys().len == 6 // nverts
 	assert g.key2edge.keys().len == 7 // nedges

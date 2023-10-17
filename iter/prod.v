@@ -12,7 +12,7 @@ pub:
 	data [][]f64
 }
 
-pub fn new_product_iterator(data [][]f64) ProductIterator {
+pub fn ProductIterator.new(data [][]f64) ProductIterator {
 	return ProductIterator{
 		repeat_lengths: calc_repeat_lengths(data.map(it.len)).map(u64(it))
 		indices_to_grab: []int{len: data.len, init: -1}
@@ -39,7 +39,7 @@ pub fn (mut o ProductIterator) next() ?[]f64 {
 
 // Cartesian product of the arrays in `data`
 pub fn product(data [][]f64) [][]f64 {
-	products := new_product_iterator(data)
+	products := ProductIterator.new(data)
 	mut result := [][]f64{cap: int(products.size)}
 	for prod in products {
 		result << prod

@@ -18,7 +18,7 @@ fn check_xy_01(x &la.Matrix[f64], y []f64) {
 }
 
 fn test_data_01() {
-	data := data_from_raw_xy([
+	data := Data.from_raw_xy([
 		[-1.0, 0, -3, 0],
 		[-2.0, 3, 3, 1],
 		[3.0, 1, 4, 1],
@@ -33,7 +33,7 @@ fn test_data_01() {
 }
 
 fn test_split() {
-	data := data_from_raw_xy([
+	data := Data.from_raw_xy([
 		[-1.0, 0, -3, 0],
 		[-2.0, 3, 3, 1],
 		[3.0, 1, 4, 1],

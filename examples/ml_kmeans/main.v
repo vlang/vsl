@@ -3,7 +3,7 @@ module main
 import vsl.ml
 
 // data
-mut data := ml.data_from_raw_x([
+mut data := ml.Data.from_raw_x([
 	[0.1, 0.7],
 	[0.3, 0.7],
 	[0.1, 0.9],
@@ -16,7 +16,7 @@ mut data := ml.data_from_raw_x([
 
 // model
 nb_classes := 2
-mut model := ml.new_kmeans(mut data, nb_classes, 'kmeans')
+mut model := ml.Kmeans.new(mut data, nb_classes, 'kmeans')
 model.set_centroids([
 	// class 0
 	[0.4, 0.6],

@@ -45,7 +45,7 @@ fn test_3d() {
 		}
 	}
 
-	f := new_file(h5.testfile)!
+	f := Hdf5File.new(h5.testfile)!
 
 	f.write_dataset3d('i8array', i8array)!
 	f.write_dataset3d('u8array', u8array)!

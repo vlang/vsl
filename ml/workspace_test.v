@@ -38,10 +38,10 @@ fn test_stat_01() {
 		[1.43, 94.98],
 		[0.95, 87.33],
 	]
-	mut data := data_from_raw_xy(xy)!
+	mut data := Data.from_raw_xy(xy)!
 
 	// stat
-	mut stat := stat_from_data(mut data, 'stat')
+	mut stat := Stats.from_data(mut data, 'stat')
 
 	// notify update
 	data.notify_update()

@@ -30,7 +30,7 @@ pub mut:
 	dy f64 // error estimate
 }
 
-// new_data_interp creates new interpolator for data point sets xx and yy (with same lengths)
+// DataInterp.new creates new interpolator for data point sets xx and yy (with same lengths)
 //
 //     type -- type of interpolator
 //        "lin"  : linear
@@ -39,7 +39,7 @@ pub mut:
 //     p  -- order of interpolator
 //     xx -- x-data
 //     yy -- y-data
-pub fn new_data_interp(itype string, p int, xx []f64, yy []f64) &DataInterp {
+pub fn DataInterp.new(itype string, p int, xx []f64, yy []f64) &DataInterp {
 	mut o := &DataInterp{
 		itype: itype
 	}

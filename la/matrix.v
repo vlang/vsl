@@ -12,8 +12,8 @@ pub mut:
 	data []T
 }
 
-// new_matrix allocates a new (empty) Matrix with given (m,n) (row/col sizes)
-pub fn new_matrix[T](m int, n int) &Matrix[T] {
+// Matrix.new allocates a new (empty) Matrix with given (m,n) (row/col sizes)
+pub fn Matrix.new[T](m int, n int) &Matrix[T] {
 	data := []T{len: m * n}
 	return &Matrix[T]{
 		m: m
@@ -22,21 +22,21 @@ pub fn new_matrix[T](m int, n int) &Matrix[T] {
 	}
 }
 
-// matrix_deep2 allocates a new Matrix from given (Deep2) nested slice.
+// Matrix.deep2 allocates a new Matrix from given (Deep2) nested slice.
 // NOTE: make sure to have at least 1x1 item
-pub fn matrix_deep2[T](a [][]T) &Matrix[T] {
-	mut o := new_matrix[T](a.len, a[0].len)
+pub fn Matrix.deep2[T](a [][]T) &Matrix[T] {
+	mut o := Matrix.new[T](a.len, a[0].len)
 	o.set_from_deep2(a)
 	return o
 }
 
-// matrix_raw creates a new Matrix using given raw data
+// Matrix.raw creates a new Matrix using given raw data
 // Input:
 // rawdata -- data organized as column-major; e.g. Fortran format
 // NOTE:
 // (1) rawdata is not copied!
 // (2) the external slice rawdata should not be changed or deleted
-pub fn matrix_raw[T](m int, n int, rawdata []T) &Matrix[T] {
+pub fn Matrix.raw[T](m int, n int, rawdata []T) &Matrix[T] {
 	return &Matrix[T]{
 		m: m
 		n: n
@@ -91,14 +91,14 @@ pub fn (o &Matrix[T]) get_deep2() [][]T {
 
 // clone returns a copy of this matrix
 pub fn (o &Matrix[T]) clone() &Matrix[T] {
-	mut clone := new_matrix[T](o.m, o.n)
+	mut clone := Matrix.new[T](o.m, o.n)
 	clone.data = o.data.clone()
 	return clone
 }
 
 // transpose returns the transpose matrix
 pub fn (o &Matrix[T]) transpose() &Matrix[T] {
-	mut tran := new_matrix[T](o.n, o.m)
+	mut tran := Matrix.new[T](o.n, o.m)
 	for i := 0; i < o.n; i++ {
 		for j := 0; j < o.m; j++ {
 			tran.set(i, j, o.get(j, i))
@@ -223,7 +223,7 @@ pub fn (o &Matrix[T]) extract_cols(start int, endp1 int) !&Matrix[T] {
 			.efailed)
 	}
 	ncol := endp1 - start
-	mut reduced := new_matrix[T](o.m, ncol)
+	mut reduced := Matrix.new[T](o.m, ncol)
 	for i in 0 .. o.m {
 		for j := 0; j < ncol; j++ {
 			reduced.set(i, j, o.get(i, j + start))
@@ -241,7 +241,7 @@ pub fn (o &Matrix[T]) extract_rows(start int, endp1 int) !&Matrix[T] {
 			.efailed)
 	}
 	nrow := endp1 - start
-	mut reduced := new_matrix[T](nrow, o.n)
+	mut reduced := Matrix.new[T](nrow, o.n)
 	reduced.data = o.data[start * o.m..endp1 * o.m]
 	return reduced
 }
@@ -266,8 +266,8 @@ pub fn (o &Matrix[T]) split_by_col(j int) !(&Matrix[T], &Matrix[T]) {
 	if j < 0 || j >= o.n {
 		return errors.error('j=${j} must be in range [0, ${o.n})', .efailed)
 	}
-	mut left := new_matrix[T](o.m, j)
-	mut right := new_matrix[T](o.m, o.n - j)
+	mut left := Matrix.new[T](o.m, j)
+	mut right := Matrix.new[T](o.m, o.n - j)
 	for i in 0 .. o.m {
 		for k := 0; k < j; k++ {
 			left.set(i, k, o.get(i, k))
@@ -285,8 +285,8 @@ pub fn (o &Matrix[T]) split_by_row(i int) !(&Matrix[T], &Matrix[T]) {
 	if i < 0 || i >= o.m {
 		return errors.error('i=${i} must be in range [0, ${o.m})', .efailed)
 	}
-	mut top := new_matrix[T](i, o.n)
-	mut bottom := new_matrix[T](o.m - i, o.n)
+	mut top := Matrix.new[T](i, o.n)
+	mut bottom := Matrix.new[T](o.m - i, o.n)
 	for j in 0 .. o.n {
 		for k := 0; k < i; k++ {
 			top.set(k, j, o.get(k, j))

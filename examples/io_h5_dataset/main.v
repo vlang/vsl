@@ -8,7 +8,7 @@ hdffile := 'hdffile.h5'
 
 meanv = stats.mean(linedata)
 
-f := h5.new_file(hdffile)!
+f := h5.Hdf5File.new(hdffile)!
 f.write_dataset1d('/randdata', linedata)!
 f.write_attribute('/randdata', 'mean', meanv)!
 f.close()

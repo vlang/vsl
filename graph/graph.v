@@ -26,12 +26,12 @@ pub:
 	next     [][]int       // [nverts][nverts] next tree connection. -1 means no connection
 }
 
-// new_graph initialises graph
+// Graph.new initialises graph
 // edges    -- [nedges][2] edges (connectivity)
 // weights_e -- [nedges] weights of edges
 // verts    -- [nverts][ndim] vertices
 // weights_v -- [nverts] weights of vertices
-pub fn new_graph(edges [][]int, weights_e []f64, verts [][]f64, weights_v []f64) &Graph {
+pub fn Graph.new(edges [][]int, weights_e []f64, verts [][]f64, weights_v []f64) &Graph {
 	mut key2edge := map[int]int{}
 	mut shares := map[int][]int{}
 	for k, edge in edges {

@@ -18,13 +18,13 @@ mut:
 	hmy       []f64 // vector e = h(l) - y [nb_samples]
 }
 
-// new_log_reg returns a new LogReg object
+// LogReg.new returns a new LogReg object
 //   Input:
 //     data   -- x,y data
 //     params -- θ, b, λ
 //     name   -- unique name of this (observer) object
-pub fn new_log_reg(mut data Data, params &ParamsReg, name string) LogReg {
-	mut stat := stat_from_data(mut data, "stat_" + name)
+pub fn LogReg.new(mut data Data, params &ParamsReg, name string) LogReg {
+	mut stat := Stats.from_data(mut data, "stat_" + name)
 	stat.update()
 	mut log_reg := LogReg{
                 name: name
@@ -123,8 +123,8 @@ pub fn (o LogReg) allocate_hessian() ([]f64, []f64, la.Matrix, la.Matrix) {
 	n := o.data.nb_features
 	d := []f64{len: m}
 	v := []f64{len: n}
-	dm := la.new_matrix<f64>(m, n)
-	hm := la.new_matrix<f64>(n, n)
+	dm := la.Matrix.new<f64>(m, n)
+	hm := la.Matrix.new<f64>(n, n)
         return d, v, dm, hm
 }
 

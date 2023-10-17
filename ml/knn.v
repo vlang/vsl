@@ -25,13 +25,13 @@ mut:
 	distance f64
 }
 
-// new_knn accepts a `vml.ml.Data` parameter called `data`, that will be used
+// KNN.new accepts a `vml.ml.Data` parameter called `data`, that will be used
 // to predict values with `KNN.predict`. You can use the following piece of code to
 // make your life easier:
-// ```mut knn := new_knn(mut data_from_raw_xy_sep([[0.0, 0.0], [10.0, 10.0]], [0.0, 1.0]))```
+// ```mut knn := KNN.new(mut Data.from_raw_xy_sep([[0.0, 0.0], [10.0, 10.0]], [0.0, 1.0]))```
 // If you predict with `knn.predict(1, [9.0, 9.0])`, it should return 1.0 as it is the closest
 // to [10.0, 10.0] (which is class 1.0).
-pub fn new_knn(mut data Data[f64], name string) !&KNN {
+pub fn KNN.new(mut data Data[f64], name string) !&KNN {
 	if data.x.data.len == 0 {
 		return errors.error('with name ${name} expects `data.x` to have at least one element.',
 			.einval)

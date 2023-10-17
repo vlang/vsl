@@ -9,7 +9,7 @@ fn pow(x f64, _ []f64) f64 {
 	return math.pow(x, 1.5)
 }
 
-f := func.new_func(f: pow)
+f := func.Fn.new(f: pow)
 println('f(x) = x^(3/2)')
 
 mut expected := 1.5 * math.sqrt(2.0)

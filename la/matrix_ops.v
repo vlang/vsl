@@ -124,8 +124,8 @@ pub fn matrix_inv(mut ai Matrix[f64], mut a Matrix[f64], calc_det bool) f64 {
 	}
 	// singular value decomposition
 	mut s := []f64{len: int(math.min(a.m, a.n))}
-	mut u := new_matrix[f64](a.m, a.m)
-	mut vt := new_matrix[f64](a.n, a.n)
+	mut u := Matrix.new[f64](a.m, a.m)
+	mut vt := Matrix.new[f64](a.n, a.n)
 	matrix_svd(mut s, mut u, mut vt, mut a, true)
 	// pseudo inverse
 	tol_s := 1e-8 // TODO: improve this tolerance with a better estimate
@@ -149,7 +149,7 @@ pub fn matrix_inv(mut ai Matrix[f64], mut a Matrix[f64], calc_det bool) f64 {
 // "F" or "" (default) => Frobenius
 pub fn matrix_cond_num(mut a Matrix[f64], normtype string) f64 {
 	mut res := 0.0
-	mut ai := new_matrix[f64](a.m, a.n)
+	mut ai := Matrix.new[f64](a.m, a.n)
 	matrix_inv(mut ai, mut a, false)
 	if normtype == 'I' {
 		res = a.norm_inf() * ai.norm_inf()

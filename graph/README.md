@@ -30,7 +30,7 @@ edges := [[0, 1], [0, 3], [1, 2], [2, 3]]
 weights_e := [5.0, 10.0, 3.0, 1.0]
 verts := [][]f64{}
 weights_v := []f64{}
-g := graph.new_graph(edges, weights_e, verts, weights_v)
+g := graph.Graph.new(edges, weights_e, verts, weights_v)
 // print distance matrix
 print(g.str_dist_matrix())
 ```
@@ -87,7 +87,7 @@ edges := [[0, 1], [0, 3], [1, 2], [2, 3]]
 weights_e := [5.0, 10.0, 3.0, 1.0]
 verts := [][]f64{}
 weights_v := []f64{}
-g := graph.new_graph(edges, weights_e, verts, weights_v)
+g := graph.Graph.new(edges, weights_e, verts, weights_v)
 // compute paths
 g.shortest_paths(.fw)
 // print shortest path from 0 to 2

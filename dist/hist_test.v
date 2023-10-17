@@ -2,7 +2,7 @@ module dist
 
 fn test_hist() {
 	lims := [0.0, 1, 2, 3, 4, 5]
-	mut hist := new_histogram(lims)
+	mut hist := Histogram.new(lims)
 
 	mut idx := hist.find_bin(-3.3)!
 	assert idx == -1

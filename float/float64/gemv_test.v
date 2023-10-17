@@ -565,7 +565,7 @@ fn dgemvcomp(mut test DgemvCase, trans bool, case DgemvSubcase) {
 	assert equal_strided(test_x, x, 1)
 	assert equal_strided(test.a, a, 1)
 
-	for j, inc in new_inc_set(-1, 1, 2, 3, 90) {
+	for j, inc in IncSet.new(-1, 1, 2, 3, 90) {
 		mut want, mut incy := case.want.clone(), inc.y
 		if inc.x < 0 && inc.y < 0 {
 			want = case.want_rev_xy.clone()

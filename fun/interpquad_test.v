@@ -15,7 +15,7 @@ fn test_interp_quad_01() {
 	x2, y2 := 3.0, 5.0
 
 	// intepolator
-	mut interp := new_interp_quad()
+	mut interp := InterpQuad.new()
 	interp.fit_3points(x0, y0, x1, y1, x2, y2)!
 
 	// check model and derivatives
@@ -45,7 +45,7 @@ fn test_interp_quad_02() {
 	x2, y2 := 3.0, -1.0
 
 	// intepolator
-	mut interp := new_interp_quad()
+	mut interp := InterpQuad.new()
 	interp.fit_3points(x0, y0, x1, y1, x2, y2)!
 
 	// check model and derivatives
@@ -75,7 +75,7 @@ fn test_interp_quad_03() {
 	x2, d2 := -1.0, -4.0
 
 	// intepolator
-	mut interp := new_interp_quad()
+	mut interp := InterpQuad.new()
 	interp.fit_2points_d(x0, y0, x1, y1, x2, d2)!
 
 	// check model and derivatives
@@ -105,7 +105,7 @@ fn test_interp_quad_04() {
 	x2, d2 := -1.0, 4.0
 
 	// intepolator
-	mut interp := new_interp_quad()
+	mut interp := InterpQuad.new()
 	interp.fit_2points_d(x0, y0, x1, y1, x2, d2)!
 
 	// check model and derivatives

@@ -15,8 +15,8 @@ pub mut:
 	tol_den f64
 }
 
-// new_interp_quad returns a new InterpQuad instance
-pub fn new_interp_quad() &InterpQuad {
+// InterpQuad.new returns a new InterpQuad instance
+pub fn InterpQuad.new() &InterpQuad {
 	return &InterpQuad{
 		tol_den: 1e-15
 	}

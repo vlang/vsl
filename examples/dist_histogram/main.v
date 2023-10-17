@@ -4,7 +4,7 @@ import vsl.dist
 
 lims := [0.0, 1, 2, 3, 4, 5]
 
-mut hist := dist.new_histogram(lims)
+mut hist := dist.Histogram.new(lims)
 
 values := [
 	0.0,

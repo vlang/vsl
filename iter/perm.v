@@ -14,9 +14,9 @@ pub:
 	data   []f64
 }
 
-// new_permutations_iter will return an iterator that allows
+// PermutationsIter.new will return an iterator that allows
 // lazy computation for all length `r` permutations of `data`
-pub fn new_permutations_iter(data []f64, r int) PermutationsIter {
+pub fn PermutationsIter.new(data []f64, r int) PermutationsIter {
 	n := data.len
 	if r > n {
 		return PermutationsIter{
@@ -70,7 +70,7 @@ pub fn (mut o PermutationsIter) next() ?[]f64 {
 
 // permutations returns successive `r` length permutations of elements in `data`
 pub fn permutations(data []f64, r int) [][]f64 {
-	mut perms := new_permutations_iter(data, r)
+	mut perms := PermutationsIter.new(data, r)
 	mut result := [][]f64{cap: int(perms.size)}
 	for perm in perms {
 		result << perm

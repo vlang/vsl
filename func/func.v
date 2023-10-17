@@ -18,9 +18,9 @@ mut:
 	params []f64
 }
 
-// new_func returns an arbitrary function with parameters
+// Fn.new returns an arbitrary function with parameters
 [inline]
-pub fn new_func(f Fn) Fn {
+pub fn Fn.new(f Fn) Fn {
 	return f
 }
 
@@ -53,9 +53,9 @@ mut:
 	params []f64
 }
 
-// new_func_fdf returns an arbitrary function returning two values, r1, r2
+// FnFdf.new returns an arbitrary function returning two values, r1, r2
 [inline]
-pub fn new_func_fdf(fn_fdf FnFdf) FnFdf {
+pub fn FnFdf.new(fn_fdf FnFdf) FnFdf {
 	return fn_fdf
 }
 
@@ -84,9 +84,9 @@ mut:
 	params []f64
 }
 
-// new_func_vec returns an arbitrary vector-valued function with parameters
+// FnVec.new returns an arbitrary vector-valued function with parameters
 [inline]
-pub fn new_func_vec(f FnVec) FnVec {
+pub fn FnVec.new(f FnVec) FnVec {
 	return f
 }
 

@@ -7,7 +7,7 @@ pub mut:
 	state f64
 }
 
-pub fn new_count_iter(start f64, step f64) Counter {
+pub fn Counter.new(start f64, step f64) Counter {
 	return Counter{
 		step: step
 		state: start
@@ -27,7 +27,7 @@ pub:
 	data []f64
 }
 
-pub fn new_cycle_iter(data []f64) Cycler {
+pub fn Cycler.new(data []f64) Cycler {
 	return Cycler{
 		data: data
 		idx: 0
@@ -45,7 +45,7 @@ pub:
 	item f64
 }
 
-pub fn new_repeat_iter(item f64) Repeater {
+pub fn Repeater.new(item f64) Repeater {
 	return Repeater{
 		item: item
 	}
