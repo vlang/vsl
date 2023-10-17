@@ -175,7 +175,7 @@ fn test_extract_cols_and_set_col() {
 		[31.0, 32.0, 33.0],
 	])
 	println(mat.data)
-	mat_e := mat.extract_cols(1, 3)
+	mat_e := mat.extract_cols(1, 3)!
 	assert mat_e.m == 3
 	assert mat_e.n == 2
 	assert mat_e.data == [12.0, 13, 22, 23, 32, 33]

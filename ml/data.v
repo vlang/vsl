@@ -1,5 +1,6 @@
 module ml
 
+import math
 import vsl.util
 import vsl.la
 import vsl.errors
@@ -38,7 +39,11 @@ pub mut:
 // Output:
 // new object
 pub fn new_data[T](nb_samples int, nb_features int, use_y bool, allocate bool) !&Data[T] {
-	x := if allocate { la.new_matrix[T](nb_samples, nb_features) } else { la.new_matrix[T](0, 0) }
+	x := if allocate {
+		la.new_matrix[T](nb_samples, nb_features)
+	} else {
+		&la.Matrix[T](unsafe { nil })
+	}
 	mut y := []T{}
 	if allocate && use_y {
 		y = []T{len: nb_samples}
@@ -185,4 +190,30 @@ pub fn (mut o Data[T]) add_observer(obs util.Observer) {
 // notify_update notifies observers of updates
 pub fn (mut o Data[T]) notify_update() {
 	o.observable.notify_update()
+}
+
+// split returns a new object with data split into two parts
+// Input:
+// ratio -- ratio of samples to be put in the first part
+// Output:
+// new object
+pub fn (o &Data[T]) split(ratio f64) !(&Data[T], &Data[T]) {
+	if ratio <= 0.0 || ratio >= 1.0 {
+		return errors.error('ratio must be between 0 and 1', .efailed)
+	}
+	nb_features := o.nb_features
+	nb_samples := o.nb_samples
+
+	nb_samples1 := int(math.floor((ratio * nb_samples)))
+	nb_samples2 := nb_samples - nb_samples1
+
+	m1, m2 := o.x.split_by_row(nb_samples1)!
+
+	mut o1 := new_data[T](nb_samples1, nb_features, false, false)!
+	mut o2 := new_data[T](nb_samples2, nb_features, false, false)!
+
+	o1.set(m1, o.y[..nb_samples1])!
+	o2.set(m2, o.y[nb_samples1..])!
+
+	return o1, o2
 }

@@ -31,3 +31,19 @@ fn test_data_01() {
 	assert data_backup.nb_features == 3
 	assert data_backup.nb_samples == 5
 }
+
+fn test_split() {
+	data := data_from_raw_xy([
+		[-1.0, 0, -3, 0],
+		[-2.0, 3, 3, 1],
+		[3.0, 1, 4, 1],
+		[-4.0, 5, 0, 0],
+		[1.0, -8, 5, 1],
+		[-1.0, 0, -3, 1],
+	])!
+	data1, data2 := data.split(0.2)!
+	assert data1.nb_samples == 1
+	assert data2.nb_samples == 5
+	assert data1.nb_features == 3
+	assert data2.nb_features == 3
+}

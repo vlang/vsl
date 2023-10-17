@@ -217,9 +217,9 @@ pub fn (o &Matrix[T]) get_col(j int) []T {
 // extract_cols returns columns from j=start to j=endp1-1
 // start -- first column
 // endp1 -- "end-plus-one", the number of the last requested column + 1
-pub fn (o &Matrix[T]) extract_cols(start int, endp1 int) &Matrix[T] {
+pub fn (o &Matrix[T]) extract_cols(start int, endp1 int) !&Matrix[T] {
 	if endp1 <= start {
-		errors.vsl_panic("endp1 'end-plus-one' must be greater than start. start=${start}, endp1=${endp1} invalid",
+		return errors.error("endp1 'end-plus-one' must be greater than start. start=${start}, endp1=${endp1} invalid",
 			.efailed)
 	}
 	ncol := endp1 - start
@@ -235,9 +235,9 @@ pub fn (o &Matrix[T]) extract_cols(start int, endp1 int) &Matrix[T] {
 // extract_rows returns rows from i=start to i=endp1-1
 // start -- first column
 // endp1 -- "end-plus-one", the number of the last requested column + 1
-pub fn (o &Matrix[T]) extract_rows(start int, endp1 int) &Matrix[T] {
+pub fn (o &Matrix[T]) extract_rows(start int, endp1 int) !&Matrix[T] {
 	if endp1 <= start {
-		errors.vsl_panic("endp1 'end-plus-one' must be greater than start. start=${start}, endp1=${endp1} invalid",
+		return errors.error("endp1 'end-plus-one' must be greater than start. start=${start}, endp1=${endp1} invalid",
 			.efailed)
 	}
 	nrow := endp1 - start
@@ -258,6 +258,44 @@ pub fn (mut o Matrix[T]) set_col(j int, value T) {
 	for i in 0 .. o.m {
 		o.data[i * o.n + j] = value
 	}
+}
+
+// split_by_col splits this matrix into two matrices at column j
+// j -- column index
+pub fn (o &Matrix[T]) split_by_col(j int) !(&Matrix[T], &Matrix[T]) {
+	if j < 0 || j >= o.n {
+		return errors.error('j=${j} must be in range [0, ${o.n})', .efailed)
+	}
+	mut left := new_matrix[T](o.m, j)
+	mut right := new_matrix[T](o.m, o.n - j)
+	for i in 0 .. o.m {
+		for k := 0; k < j; k++ {
+			left.set(i, k, o.get(i, k))
+		}
+		for k := j; k < o.n; k++ {
+			right.set(i, k - j, o.get(i, k))
+		}
+	}
+	return left, right
+}
+
+// split_by_row splits this matrix into two matrices at row i
+// i -- row index
+pub fn (o &Matrix[T]) split_by_row(i int) !(&Matrix[T], &Matrix[T]) {
+	if i < 0 || i >= o.m {
+		return errors.error('i=${i} must be in range [0, ${o.m})', .efailed)
+	}
+	mut top := new_matrix[T](i, o.n)
+	mut bottom := new_matrix[T](o.m - i, o.n)
+	for j in 0 .. o.n {
+		for k := 0; k < i; k++ {
+			top.set(k, j, o.get(k, j))
+		}
+		for k := i; k < o.m; k++ {
+			bottom.set(k - i, j, o.get(k, j))
+		}
+	}
+	return top, bottom
 }
 
 // norm_frob returns the Frobenius norm of this matrix
