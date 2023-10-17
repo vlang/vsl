@@ -236,11 +236,6 @@
 <p>str is a custom str function for observers to avoid printing data</p>
 
 </section>
-		<section id="Stats.Stats__static__from_data" class="doc-node">
-			<div class="title"><h2>fn (Stats) Stats__static__from_data <a href="#Stats.Stats__static__from_data">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/workspace.v#L31"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> Stats<span class="token punctuation">.</span>from_data<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token keyword">mut</span> data Data<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">,</span> name <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">&</span>Stat<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span></code></pre>
-<p>stat returns a new Stat object</p>
-
-</section>
 		<section id="Data" class="doc-node">
 			<div class="title"><h2>struct Data <a href="#Data">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/data.v#L23"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> Data<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span> <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
@@ -514,6 +509,11 @@ have a tie when k = 1, we select the first closest neighbor.</p>
 <p>NOTE: Stat is an Observer of Data; thus, data.notify_update() will recompute stat</p>
 
 </section>
+		<section id="Stat.Stat__static__from_data" class="doc-node">
+			<div class="title"><h2>fn (Stat) Stat__static__from_data <a href="#Stat.Stat__static__from_data">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/workspace.v#L31"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> Stat<span class="token punctuation">.</span>from_data<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token keyword">mut</span> data Data<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">,</span> name <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">&</span>Stat<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span></code></pre>
+<p>stat returns a new Stat object</p>
+
+</section>
 		<section id="TrainConfig" class="doc-node">
 			<div class="title"><h2>struct TrainConfig <a href="#TrainConfig">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/ml/kmeans.v#L121"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">TrainConfig</span> <span class="token punctuation">{</span>
 	epochs          <span class="token builtin">int</span>
@@ -523,7 +523,7 @@ have a tie when k = 1, we select the first closest neighbor.</p>
 
 </section>
 
-						<div class="footer">Powered by vdoc. Generated on: 17 Oct 2023 04:13:08</div>
+						<div class="footer">Powered by vdoc. Generated on: 17 Oct 2023 04:18:39</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#Data[T].set">type Data[T]</a>        <ul>
 <li><a href="#Data[T].set">fn set</a></li>
@@ -565,10 +565,6 @@ have a tie when k = 1, we select the first closest neighbor.</p>
 <li><a href="#Stat[T].sum_vars">fn sum_vars</a></li>
 <li><a href="#Stat[T].copy_into">fn copy_into</a></li>
 <li><a href="#Stat[T].str">fn str</a></li>
-</ul>
-</li>
-<li class="open"><a href="#Stats.Stats__static__from_data">type Stats</a>        <ul>
-<li><a href="#Stats.Stats__static__from_data">fn Stats__static__from_data</a></li>
 </ul>
 </li>
 <li class="open"><a href="#Data">struct Data</a>        <ul>
@@ -622,6 +618,7 @@ have a tie when k = 1, we select the first closest neighbor.</p>
 </ul>
 </li>
 <li class="open"><a href="#Stat">struct Stat</a>        <ul>
+<li><a href="#Stat.Stat__static__from_data">fn Stat__static__from_data</a></li>
 </ul>
 </li>
 <li class="open"><a href="#TrainConfig">struct TrainConfig</a>        <ul>
