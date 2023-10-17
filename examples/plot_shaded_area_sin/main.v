@@ -8,8 +8,7 @@ fn main() {
 	y := x.map(math.sin(it))
 
 	mut plt := plot.new_plot()
-	plt.add_trace(
-		trace_type: .scatter
+	plt.scatter(
 		x: x
 		y: y
 		mode: 'lines'
@@ -18,8 +17,7 @@ fn main() {
 		}
 		name: 'sin(x)'
 	)
-	plt.add_trace(
-		trace_type: .scatter
+	plt.scatter(
 		x: x
 		y: []f64{len: x.len}
 		mode: 'lines'
@@ -30,7 +28,7 @@ fn main() {
 		}
 		name: 'Shaded Area'
 	)
-	plt.set_layout(
+	plt.layout(
 		title: 'Shaded Area under sin(x)'
 	)
 	plt.show()!

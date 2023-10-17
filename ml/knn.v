@@ -207,7 +207,7 @@ pub fn (o &KNN) str() string {
 // plot method for visualizing the KNN model
 pub fn (o &KNN) plot() ! {
 	mut plt := plot.new_plot()
-	plt.set_layout(
+	plt.layout(
 		title: 'K-Nearest Neighbors'
 	)
 
@@ -225,9 +225,8 @@ pub fn (o &KNN) plot() ! {
 			}
 		}
 
-		plt.add_trace(
+		plt.scatter(
 			name: 'class #${i}'
-			trace_type: .scatter
 			x: x_for_class
 			y: y_for_class
 			mode: 'markers'

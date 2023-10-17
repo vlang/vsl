@@ -19,14 +19,13 @@ fn main() {
 	}
 
 	mut plt := plot.new_plot()
-	plt.add_trace(
-		trace_type: .surface
+	plt.surface(
 		x: x
 		y: y
 		z: z
 		colorscale: 'Viridis'
 	)
-	plt.set_layout(
+	plt.layout(
 		title: 'Ripple Effect Surface'
 	)
 	plt.show()!

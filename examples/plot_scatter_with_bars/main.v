@@ -8,8 +8,7 @@ fn main() {
 	y := x.map(it * it)
 
 	mut plt := plot.new_plot()
-	plt.add_trace(
-		trace_type: .scatter
+	plt.scatter(
 		x: x
 		y: y
 		mode: 'markers'
@@ -18,15 +17,14 @@ fn main() {
 			color: []string{len: x.len, init: '#FF0000'}
 		}
 	)
-	plt.add_trace(
-		trace_type: .bar
+	plt.bar(
 		x: x.map(it.str())
 		y: y
 		marker: plot.Marker{
 			color: []string{len: x.len, init: '#0000FF'}
 		}
 	)
-	plt.set_layout(
+	plt.layout(
 		title: 'Scatter with Bars'
 	)
 	plt.show()!

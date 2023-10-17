@@ -18,14 +18,13 @@ fn main() {
 	}
 
 	mut plt := plot.new_plot()
-	plt.add_trace(
-		trace_type: .surface
+	plt.surface(
 		x: x
 		y: y
 		z: z
 		colorscale: 'Viridis'
 	)
-	plt.set_layout(
+	plt.layout(
 		title: 'Surface Plot of sin(x) * cos(y)'
 	)
 	plt.show()!

@@ -9,8 +9,7 @@ fn main() {
 	y2 := x.map(math.cos(it))
 
 	mut plt := plot.new_plot()
-	plt.add_trace(
-		trace_type: .scatter
+	plt.scatter(
 		x: x
 		y: y1
 		mode: 'lines'
@@ -19,8 +18,7 @@ fn main() {
 		}
 		name: 'sin(x)'
 	)
-	plt.add_trace(
-		trace_type: .scatter
+	plt.scatter(
 		x: x
 		y: y2
 		mode: 'lines'
@@ -29,7 +27,7 @@ fn main() {
 		}
 		name: 'cos(x)'
 	)
-	plt.set_layout(
+	plt.layout(
 		title: 'Line Plot with Highlighted Areas'
 	)
 	plt.show()!

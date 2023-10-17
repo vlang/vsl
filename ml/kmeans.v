@@ -150,7 +150,7 @@ pub fn (o &Kmeans) str() string {
 // plot method for visualizing the clustering
 pub fn (o &Kmeans) plot() ! {
 	mut plt := plot.new_plot()
-	plt.set_layout(
+	plt.layout(
 		title: 'K-means Clustering'
 	)
 
@@ -168,9 +168,8 @@ pub fn (o &Kmeans) plot() ! {
 			}
 		}
 
-		plt.add_trace(
+		plt.scatter(
 			name: 'class #${i}'
-			trace_type: .scatter
 			x: x_for_class
 			y: y_for_class
 			mode: 'markers'
@@ -182,9 +181,8 @@ pub fn (o &Kmeans) plot() ! {
 	}
 
 	// Plot centroids
-	plt.add_trace(
+	plt.scatter(
 		name: 'centroids'
-		trace_type: .scatter
 		x: o.centroids.map(it[0])
 		y: o.centroids.map(it[1])
 		mode: 'markers'

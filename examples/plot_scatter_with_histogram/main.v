@@ -12,8 +12,7 @@ fn main() {
 	}
 
 	mut plt := plot.new_plot()
-	plt.add_trace(
-		trace_type: .scatter
+	plt.scatter(
 		x: x
 		y: x
 		mode: 'markers'
@@ -22,11 +21,10 @@ fn main() {
 			color: []string{len: x.len, init: '#FF0000'}
 		}
 	)
-	plt.add_trace(
-		trace_type: .histogram
+	plt.histogram(
 		x: x
 	)
-	plt.set_layout(
+	plt.layout(
 		title: 'Scatter with Histogram'
 	)
 	plt.show()!

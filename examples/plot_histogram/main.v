@@ -10,8 +10,7 @@ for _ in 1 .. 1000 {
 	x1 << rand.f64n(100) or { 0 }
 }
 mut plt := plot.new_plot()
-plt.add_trace(
-	trace_type: .histogram
+plt.histogram(
 	x: x1
 	xbins: {
 		'start': f32(0)
@@ -19,7 +18,7 @@ plt.add_trace(
 		'size':  2
 	}
 )
-plt.set_layout(
+plt.layout(
 	title: 'Histogram Example'
 	width: 750
 	height: 750

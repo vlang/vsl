@@ -15,9 +15,8 @@ fn main() {
 
 	// Create the Scatter plot
 	mut plt := plot.new_plot()
-	plt.add_trace(
+	plt.scatter(
 		name: 'Easing Scatter'
-		trace_type: .scatter
 		x: x_values
 		y: y_values
 		mode: 'markers'
@@ -29,7 +28,7 @@ fn main() {
 		}
 	)
 
-	plt.set_layout(title: 'Scatter Plot with Easing')
+	plt.layout(title: 'Scatter Plot with Easing')
 	plt.show()!
 }
 

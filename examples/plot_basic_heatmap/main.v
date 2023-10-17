@@ -8,13 +8,12 @@ y := ['Morning', 'Afternoon', 'Evening']
 
 mut plt := plot.new_plot()
 
-plt.add_trace(
-	trace_type: .heatmap
+plt.heatmap(
 	x: x
 	y: y
 	z: z
 )
-plt.set_layout(
+plt.layout(
 	title: 'Heatmap Basic Implementation'
 	width: 750
 	height: 750

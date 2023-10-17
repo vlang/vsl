@@ -14,15 +14,14 @@ fn main() {
 
 	// Create the Surface plot
 	mut plt := plot.new_plot()
-	plt.add_trace(
+	plt.surface(
 		name: 'Easing Surface'
-		trace_type: .surface
 		x: x_values
 		y: y_values
 		z: [][]f64{len: z_values.len, init: z_values}
 		colorscale: 'viridis'
 	)
 
-	plt.set_layout(title: 'Surface Plot with Easing')
+	plt.layout(title: 'Surface Plot with Easing')
 	plt.show()!
 }

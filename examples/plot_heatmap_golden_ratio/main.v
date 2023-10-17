@@ -26,13 +26,12 @@ z := [[13.0, 3, 3, 5], [13.0, 2, 1, 5], [13.0, 10, 11, 12], [13.0, 8, 8, 8]]
 
 mut plt := plot.new_plot()
 
-plt.add_trace(
-	trace_type: .heatmap
+plt.heatmap(
 	x: xe
 	y: ye
 	z: z
 )
-plt.set_layout(
+plt.layout(
 	title: 'Heatmap with Unequal Block Sizes'
 	width: 750
 	height: 750

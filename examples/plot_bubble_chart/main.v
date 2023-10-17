@@ -8,8 +8,7 @@ fn main() {
 	size := []f64{len: 10, init: f64(index) * 10.0}
 
 	mut plt := plot.new_plot()
-	plt.add_trace(
-		trace_type: .scatter
+	plt.scatter(
 		x: x
 		y: y
 		mode: 'markers'
@@ -19,7 +18,7 @@ fn main() {
 		}
 		name: 'Bubble Chart'
 	)
-	plt.set_layout(
+	plt.layout(
 		title: 'Bubble Chart'
 	)
 	plt.show()!
