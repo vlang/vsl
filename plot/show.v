@@ -36,8 +36,10 @@ pub fn (plot Plot) show() ! {
 		mut handler := PlotlyHandler{
 			plot: plot
 		}
+		listener := net.listen_tcp(net.AddrFamily.ip, ':0')!
 		mut server := &http.Server{
 			accept_timeout: 1 * time.second
+			listener: listener
 			port: 0
 			handler: handler
 		}
@@ -46,7 +48,11 @@ pub fn (plot Plot) show() ! {
 		for server.status() != .running {
 			time.sleep(10 * time.millisecond)
 		}
-		os.open_uri('http://${server.addr}')!
+		mut uri := 'http://${server.addr}'
+		for ip in ['0.0.0.0', '127.0.0.1'] {
+			uri = uri.replace(ip, 'localhost')
+		}
+		os.open_uri(uri)!
 		t.wait()
 	}
 }
