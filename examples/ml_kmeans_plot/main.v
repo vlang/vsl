@@ -1,14 +1,15 @@
 module main
 
-import vsl.ml
+import vsl.ml { Data, Kmeans }
 import internal.dataset
 
 // data
-mut data := ml.Data.from_raw_x(dataset.raw_dataset.map([it[0], it[1]]))!
+x := dataset.raw_dataset.map([it[0], it[1]])
+mut data := Data.from_raw_x(x)!
 
 // model
 nb_classes := 3
-mut model := ml.Kmeans.new(mut data, nb_classes, 'kmeans')
+mut model := Kmeans.new(mut data, nb_classes, 'kmeans')
 model.set_centroids([
 	// class 0
 	[3.0, 3],
