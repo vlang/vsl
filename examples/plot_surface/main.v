@@ -17,15 +17,14 @@ fn main() {
 		z << row
 	}
 
-	mut plt := plot.new_plot()
-	plt.add_trace(
-		trace_type: .surface
+	mut plt := plot.Plot.new()
+	plt.surface(
 		x: x
 		y: y
 		z: z
 		colorscale: 'Viridis'
 	)
-	plt.set_layout(
+	plt.layout(
 		title: 'Surface Plot Example'
 	)
 	plt.show()!

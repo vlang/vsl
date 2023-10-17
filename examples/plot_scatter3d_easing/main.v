@@ -15,10 +15,9 @@ fn main() {
 	z_values := easings.animate(easings.bounce_ease_in_out, 0.0, 1.0, frames)
 
 	// Create the Scatter3D plot
-	mut plt := plot.new_plot()
-	plt.add_trace(
+	mut plt := plot.Plot.new()
+	plt.scatter3d(
 		name: 'Easing Scatter3D'
-		trace_type: .scatter3d
 		x: x_values
 		y: y_values
 		z: [][]f64{len: z_values.len, init: z_values}
@@ -30,7 +29,7 @@ fn main() {
 		}
 	)
 
-	plt.set_layout(title: '3D Scatter Plot with Easing')
+	plt.layout(title: '3D Scatter Plot with Easing')
 	plt.show()!
 }
 

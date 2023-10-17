@@ -62,7 +62,7 @@ fn main() {
 	])!
 
 	// Visualize data in a 3D scatter plot
-	mut plt_3d := plot.new_plot()
+	mut plt_3d := plot.Plot.new()
 
 	x1 := data.x.get_col(0)
 	x2 := data.x.get_col(1)
@@ -75,7 +75,7 @@ fn main() {
 	mut x2_class1 := []f64{}
 
 	for i in 0 .. data.nb_samples {
-		if y[i] == 0 {
+		if y[i] == 0.0 {
 			x1_class0 << x1[i]
 			x2_class0 << x2[i]
 		} else {
@@ -85,11 +85,10 @@ fn main() {
 	}
 
 	// Add traces for each class in the 3D plot
-	plt_3d.add_trace(
-		trace_type: .scatter3d
+	plt_3d.scatter3d(
 		x: x1_class0
 		y: x2_class0
-		z: []f64{len: x1_class0.len, init: 0.0}
+		z: [][]f64{len: x1_class0.len, init: [0.0]}
 		mode: 'markers'
 		marker: plot.Marker{
 			size: []f64{len: x1_class0.len, init: 8.0}
@@ -97,12 +96,10 @@ fn main() {
 		}
 		name: 'Class 0'
 	)
-
-	plt_3d.add_trace(
-		trace_type: .scatter3d
+	plt_3d.scatter3d(
 		x: x1_class1
 		y: x2_class1
-		z: []f64{len: x1_class1.len, init: 0.0}
+		z: [][]f64{len: x1_class1.len, init: [0.0]}
 		mode: 'markers'
 		marker: plot.Marker{
 			size: []f64{len: x1_class1.len, init: 8.0}
@@ -112,7 +109,7 @@ fn main() {
 	)
 
 	// Configure the layout of the 3D plot
-	plt_3d.set_layout(
+	plt_3d.layout(
 		title: 'Two-class Data'
 		xaxis: plot.Axis{
 			title: plot.AxisTitle{
@@ -134,24 +131,22 @@ fn main() {
 	stat.update()
 
 	// Visualize statistics in a bar chart
-	mut plt_bars := plot.new_plot()
+	mut plt_bars := plot.Plot.new()
 
-	plt_bars.add_trace(
-		trace_type: .bar
+	plt_bars.bar(
 		x: []string{len: stat.mean_x.len, init: 'Class ${index}'}
 		y: stat.mean_x
 		name: 'Mean'
 	)
 
-	plt_bars.add_trace(
-		trace_type: .bar
+	plt_bars.bar(
 		x: []string{len: stat.sig_x.len, init: 'Class ${index}'}
 		y: stat.sig_x
 		name: 'Standard Deviation'
 	)
 
 	// Configure the layout of the bar chart
-	plt_bars.set_layout(
+	plt_bars.layout(
 		title: 'Feature Statistics'
 	)
 

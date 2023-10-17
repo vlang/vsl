@@ -34,13 +34,12 @@ assert float64.soclose(result.x, expected, solver.epsabs)
 
 println('x = ${result.x}')
 
-mut plt := plot.new_plot()
+mut plt := plot.Plot.new()
 
 x := util.lin_space(0.0, 3.0, 100)
 y := x.map(f_cos(it, []f64{}))
 
-plt.add_trace(
-	trace_type: .scatter
+plt.scatter(
 	x: x
 	y: y
 	mode: 'lines'
@@ -48,8 +47,7 @@ plt.add_trace(
 		color: '#FF0000'
 	}
 )
-plt.add_trace(
-	trace_type: .scatter
+plt.scatter(
 	x: [result.x]
 	y: [result.fx]
 	mode: 'markers'
@@ -57,7 +55,7 @@ plt.add_trace(
 		color: ['#0000FF']
 	}
 )
-plt.set_layout(
+plt.layout(
 	title: 'cos(x)'
 )
 plt.show()!

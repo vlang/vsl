@@ -20,9 +20,8 @@ y := [
 ]
 x := util.arange(y.len).map(f64(it))
 
-mut plt := plot.new_plot()
-plt.add_trace(
-	trace_type: .scatter
+mut plt := plot.Plot.new()
+plt.scatter(
 	x: x
 	y: y
 	mode: 'lines+markers'
@@ -31,7 +30,7 @@ plt.add_trace(
 		size: []f64{len: x.len, init: 10.0}
 	}
 )
-plt.set_layout(
+plt.layout(
 	title: 'Scatter plot example'
 )
 plt.show()!
