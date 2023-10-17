@@ -22,9 +22,19 @@ pub fn (p Plot) show() ! {
 	}
 }
 
-fn preprocess_data_string(data string) string {
-	return data.replace(',"[]f64"', '').replace('"[]f64"', '').replace(',"[]string"',
-		'""').replace('"[]string"', '""')
+// TODO: This is a hack to allow the json encoder to work with sum types
+fn encode[T](obj T) string {
+	strings_to_replace := [
+		',"[]f64"',
+		'"[]f64"',
+		',"[]string"',
+		'"[]string"',
+	]
+	mut obj_json := json.encode(obj)
+	for string_to_replace in strings_to_replace {
+		obj_json = obj_json.replace(string_to_replace, '')
+	}
+	return obj_json
 }
 
 pub fn (mut app App) index() vweb.Result {
@@ -33,8 +43,8 @@ pub fn (mut app App) index() vweb.Result {
 		'type':  TracesWithTypeValue(it.trace_type())
 		'trace': TracesWithTypeValue(it)
 	})
-	traces_with_type_json := preprocess_data_string(json.encode(traces_with_type))
-	layout_json := json.encode(app.plot.layout)
+	traces_with_type_json := encode(traces_with_type)
+	layout_json := encode(app.plot.layout)
 	go fn () {
 		time.sleep(100 * time.millisecond)
 		exit(0)
