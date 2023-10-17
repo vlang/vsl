@@ -6,10 +6,7 @@ import vsl.plot
 fn main() {
 	rand.seed([u32(1), 42])
 
-	mut x := []f64{cap: 100}
-	for _ in 1 .. 100 {
-		x << rand.f64n(100) or { 0 }
-	}
+	x := []f64{len: 100, init: (0 * index) + rand.f64n(100) or { 0 }}
 
 	mut plt := plot.Plot.new()
 	plt.scatter(

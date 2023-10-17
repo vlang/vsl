@@ -5,13 +5,11 @@ import vsl.plot
 
 rand.seed([u32(1), 42])
 
-mut x1 := []f64{cap: 1000}
-for _ in 1 .. 1000 {
-	x1 << rand.f64n(100) or { 0 }
-}
+x := []f64{len: 1000, init: (0 * index) + rand.f64n(100) or { 0 }}
+
 mut plt := plot.Plot.new()
 plt.histogram(
-	x: x1
+	x: x
 	xbins: plot.Bins{
 		start: 0.0
 		end: 100.0
