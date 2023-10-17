@@ -1,4 +1,4 @@
-import vsl.io.h5
+import vsl.inout.h5
 import math.stats
 import rand
 
