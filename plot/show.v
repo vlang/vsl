@@ -48,11 +48,7 @@ pub fn (plot Plot) show() ! {
 		for server.status() != .running {
 			time.sleep(10 * time.millisecond)
 		}
-		mut uri := 'http://${server.addr}'
-		for ip in ['0.0.0.0', '127.0.0.1'] {
-			uri = uri.replace(ip, 'localhost')
-		}
-		os.open_uri(uri)!
+		os.open_uri('http://${server.addr}')!
 		t.wait()
 	}
 }
