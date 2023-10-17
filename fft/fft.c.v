@@ -2,6 +2,26 @@ module fft
 
 type FftSizeT = u64
 
+type C.cfft_plan_f32 = voidptr
+
+type C.rfft_plan_f32 = voidptr
+
+type C.cfft_plan_f64 = voidptr
+
+type C.rfft_plan_f64 = voidptr
+
+type C.cfftp_plan_f32 = voidptr
+
+type C.cfftblue_plan_f32 = voidptr
+
+type C.cfftp_plan_f64 = voidptr
+
+type C.cfftblue_plan_f64 = voidptr
+
+type C.rfftp_plan_f32 = voidptr
+
+type C.rfftblue_plan_f32 = voidptr
+
 struct C.cfft_plan_i_f32 {
 	packplan C.cfftp_plan_f32
 	blueplan C.cfftblue_plan_f32

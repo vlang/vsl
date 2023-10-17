@@ -22,11 +22,10 @@ fn main() {
 	spectrum := signal.clone()
 
 	// Create a scatter plot for the signal and its spectrum
-	mut plt := plot.new_plot()
+	mut plt := plot.Plot.new()
 
 	// Add a scatter plot for the original signal
-	plt.add_trace(
-		trace_type: .scatter
+	plt.scatter(
 		x: []f64{len: original_signal.len, init: f64(index)}
 		y: original_signal
 		mode: 'markers'
@@ -37,8 +36,7 @@ fn main() {
 	)
 
 	// Add a scatter plot for the imaginary part of the spectrum
-	plt.add_trace(
-		trace_type: .scatter
+	plt.scatter(
 		x: []f64{len: spectrum.len, init: f64(index)}
 		y: spectrum
 		mode: 'markers'
@@ -49,7 +47,7 @@ fn main() {
 	)
 
 	// Set up the layout
-	plt.set_layout(
+	plt.layout(
 		title: 'Signal and FFT Spectrum'
 	)
 

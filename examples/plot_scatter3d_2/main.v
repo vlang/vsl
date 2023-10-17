@@ -15,9 +15,8 @@ fn main() {
 		z << val
 	}
 
-	mut plt := plot.new_plot()
-	plt.add_trace(
-		trace_type: .scatter3d
+	mut plt := plot.Plot.new()
+	plt.scatter3d(
 		x: x
 		y: y
 		z: z
@@ -27,7 +26,7 @@ fn main() {
 			color: []string{len: x.len, init: '#0000FF'}
 		}
 	)
-	plt.set_layout(
+	plt.layout(
 		title: 'Scatter plot example'
 	)
 	plt.show()!

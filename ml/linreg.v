@@ -163,14 +163,13 @@ pub fn (o &LinReg) plot() ! {
 	y_values := x_values.map(o.predict([it]))
 
 	// Rest of the code for plotting the graph
-	mut plt := plot.new_plot()
-	plt.set_layout(
+	mut plt := plot.Plot.new()
+	plt.layout(
 		title: 'Linear Regression Example'
 	)
 
-	plt.add_trace(
+	plt.scatter(
 		name: 'dataset'
-		trace_type: .scatter
 		x: o.data.x.get_col(0)
 		y: o.data.y
 		mode: 'markers'
@@ -180,9 +179,8 @@ pub fn (o &LinReg) plot() ! {
 		}
 	)
 
-	plt.add_trace(
+	plt.scatter(
 		name: 'linear regression'
-		trace_type: .scatter
 		x: x_values
 		y: y_values
 		mode: 'lines'

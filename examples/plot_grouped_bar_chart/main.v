@@ -7,20 +7,18 @@ fn main() {
 	values1 := [10.0, 15, 7, 12]
 	values2 := [8.0, 14, 5, 10]
 
-	mut plt := plot.new_plot()
-	plt.add_trace(
-		trace_type: .bar
+	mut plt := plot.Plot.new()
+	plt.bar(
 		x: categories
 		y: values1
 		name: 'Group 1'
 	)
-	plt.add_trace(
-		trace_type: .bar
+	plt.bar(
 		x: categories
 		y: values2
 		name: 'Group 2'
 	)
-	plt.set_layout(
+	plt.layout(
 		title: 'Grouped Bar Chart'
 	)
 	plt.show()!

@@ -1,4 +1,4 @@
-import vsl.io.h5
+import vsl.inout.h5
 import math
 
 // A simple 1d relaxation problem.  Write the results

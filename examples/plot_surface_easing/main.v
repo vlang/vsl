@@ -13,16 +13,15 @@ fn main() {
 	z_values := easings.animate(easings.bounce_ease_in_out, 0.0, 1.0, frames)
 
 	// Create the Surface plot
-	mut plt := plot.new_plot()
-	plt.add_trace(
+	mut plt := plot.Plot.new()
+	plt.surface(
 		name: 'Easing Surface'
-		trace_type: .surface
 		x: x_values
 		y: y_values
 		z: [][]f64{len: z_values.len, init: z_values}
 		colorscale: 'viridis'
 	)
 
-	plt.set_layout(title: 'Surface Plot with Easing')
+	plt.layout(title: 'Surface Plot with Easing')
 	plt.show()!
 }
