@@ -23,7 +23,7 @@ pub mut:
 //     data   -- x,y data
 //     name   -- unique name of this (observer) object
 pub fn LinReg.new(mut data Data[f64], name string) &LinReg {
-	mut stat := Stats.from_data(mut data, 'stat_' + name)
+	mut stat := Stat.from_data(mut data, 'stat_' + name)
 	stat.update()
 	params := ParamsReg.new[f64](data.nb_features)
 	mut reg := &LinReg{

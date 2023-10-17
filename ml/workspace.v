@@ -28,7 +28,7 @@ pub mut:
 }
 
 // stat returns a new Stat object
-pub fn Stats.from_data[T](mut data Data[T], name string) &Stat[T] {
+pub fn Stat.from_data[T](mut data Data[T], name string) &Stat[T] {
 	mut o := &Stat[T]{
 		name: name
 		data: data

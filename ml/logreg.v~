@@ -24,7 +24,7 @@ mut:
 //     params -- θ, b, λ
 //     name   -- unique name of this (observer) object
 pub fn LogReg.new(mut data Data, params &ParamsReg, name string) LogReg {
-	mut stat := Stats.from_data(mut data, "stat_" + name)
+	mut stat := Stat.from_data(mut data, "stat_" + name)
 	stat.update()
 	mut log_reg := LogReg{
                 name: name

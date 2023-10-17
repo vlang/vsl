@@ -28,7 +28,7 @@ pub fn Kmeans.new(mut data Data[f64], nb_classes int, name string) &Kmeans {
 	nb_members := []int{len: nb_classes}
 
 	// stat
-	mut stat := Stats.from_data(mut data, 'stat_${name}')
+	mut stat := Stat.from_data(mut data, 'stat_${name}')
 	stat.update()
 
 	// bins
