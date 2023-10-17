@@ -22,7 +22,7 @@ fn main() {
 	spectrum := signal.clone()
 
 	// Create a scatter plot for the signal and its spectrum
-	mut plt := plot.new_plot()
+	mut plt := plot.Plot.new()
 
 	// Add a scatter plot for the original signal
 	plt.scatter(

@@ -15,7 +15,7 @@ fn main() {
 		z << val
 	}
 
-	mut plt := plot.new_plot()
+	mut plt := plot.Plot.new()
 	plt.scatter3d(
 		x: x
 		y: y

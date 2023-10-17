@@ -6,7 +6,7 @@ fn main() {
 	labels := ['Apples', 'Bananas', 'Cherries', 'Grapes']
 	values := [25.0, 30, 15, 30]
 
-	mut plt := plot.new_plot()
+	mut plt := plot.Plot.new()
 	plt.pie(
 		labels: labels
 		values: values

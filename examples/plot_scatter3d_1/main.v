@@ -22,7 +22,7 @@ fn main() {
 	x := util.arange(y.len).map(f64(it))
 	z := util.arange(y.len).map(util.arange(y.len).map(f64(it * it)))
 
-	mut plt := plot.new_plot()
+	mut plt := plot.Plot.new()
 	plt.scatter3d(
 		x: x
 		y: y

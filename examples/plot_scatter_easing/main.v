@@ -14,7 +14,7 @@ fn main() {
 	y_values := easings.animate(easings.elastic_ease_out, 0.0, 1.0, frames)
 
 	// Create the Scatter plot
-	mut plt := plot.new_plot()
+	mut plt := plot.Plot.new()
 	plt.scatter(
 		name: 'Easing Scatter'
 		x: x_values

@@ -3,7 +3,7 @@ module main
 import vsl.plot
 
 fn main() {
-	mut plt := plot.new_plot()
+	mut plt := plot.Plot.new()
 
 	plt.bar(
 		x: ['China', 'India', 'USA', 'Indonesia', 'Pakistan']

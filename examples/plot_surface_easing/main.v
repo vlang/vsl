@@ -13,7 +13,7 @@ fn main() {
 	z_values := easings.animate(easings.bounce_ease_in_out, 0.0, 1.0, frames)
 
 	// Create the Surface plot
-	mut plt := plot.new_plot()
+	mut plt := plot.Plot.new()
 	plt.surface(
 		name: 'Easing Surface'
 		x: x_values

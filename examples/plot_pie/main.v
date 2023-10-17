@@ -3,7 +3,7 @@ module main
 import vsl.plot
 
 fn main() {
-	mut plt := plot.new_plot()
+	mut plt := plot.Plot.new()
 
 	plt.pie(
 		labels: ['Nitrogen', 'Oxygen', 'Argon', 'Other']

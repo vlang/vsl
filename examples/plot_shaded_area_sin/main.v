@@ -7,7 +7,7 @@ fn main() {
 	x := []f64{len: 100, init: f64(index) * 0.1}
 	y := x.map(math.sin(it))
 
-	mut plt := plot.new_plot()
+	mut plt := plot.Plot.new()
 	plt.scatter(
 		x: x
 		y: y

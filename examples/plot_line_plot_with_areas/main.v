@@ -8,7 +8,7 @@ fn main() {
 	y1 := x.map(math.sin(it))
 	y2 := x.map(math.cos(it))
 
-	mut plt := plot.new_plot()
+	mut plt := plot.Plot.new()
 	plt.scatter(
 		x: x
 		y: y1

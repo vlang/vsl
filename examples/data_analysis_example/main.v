@@ -62,7 +62,7 @@ fn main() {
 	])!
 
 	// Visualize data in a 3D scatter plot
-	mut plt_3d := plot.new_plot()
+	mut plt_3d := plot.Plot.new()
 
 	x1 := data.x.get_col(0)
 	x2 := data.x.get_col(1)
@@ -131,7 +131,7 @@ fn main() {
 	stat.update()
 
 	// Visualize statistics in a bar chart
-	mut plt_bars := plot.new_plot()
+	mut plt_bars := plot.Plot.new()
 
 	plt_bars.bar(
 		x: []string{len: stat.mean_x.len, init: 'Class ${index}'}

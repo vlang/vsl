@@ -18,7 +18,7 @@ fn main() {
 		z << row
 	}
 
-	mut plt := plot.new_plot()
+	mut plt := plot.Plot.new()
 	plt.surface(
 		x: x
 		y: y

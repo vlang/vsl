@@ -1,7 +1,7 @@
 module plot
 
 fn test_bar() {
-	mut plt := new_plot()
+	mut plt := Plot.new()
 
 	plt.bar(
 		x: ['China', 'India', 'USA', 'Indonesia', 'Pakistan']

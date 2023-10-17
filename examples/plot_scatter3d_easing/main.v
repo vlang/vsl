@@ -15,7 +15,7 @@ fn main() {
 	z_values := easings.animate(easings.bounce_ease_in_out, 0.0, 1.0, frames)
 
 	// Create the Scatter3D plot
-	mut plt := plot.new_plot()
+	mut plt := plot.Plot.new()
 	plt.scatter3d(
 		name: 'Easing Scatter3D'
 		x: x_values

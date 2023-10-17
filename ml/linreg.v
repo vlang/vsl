@@ -163,7 +163,7 @@ pub fn (o &LinReg) plot() ! {
 	y_values := x_values.map(o.predict([it]))
 
 	// Rest of the code for plotting the graph
-	mut plt := plot.new_plot()
+	mut plt := plot.Plot.new()
 	plt.layout(
 		title: 'Linear Regression Example'
 	)

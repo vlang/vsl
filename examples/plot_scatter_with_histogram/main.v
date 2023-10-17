@@ -11,7 +11,7 @@ fn main() {
 		x << rand.f64n(100) or { 0 }
 	}
 
-	mut plt := plot.new_plot()
+	mut plt := plot.Plot.new()
 	plt.scatter(
 		x: x
 		y: x

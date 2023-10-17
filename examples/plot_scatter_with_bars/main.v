@@ -7,7 +7,7 @@ fn main() {
 	x := util.lin_space(1.0, 10.0, 10)
 	y := x.map(it * it)
 
-	mut plt := plot.new_plot()
+	mut plt := plot.Plot.new()
 	plt.scatter(
 		x: x
 		y: y

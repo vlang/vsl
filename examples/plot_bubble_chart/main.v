@@ -7,7 +7,7 @@ fn main() {
 	y := []f64{len: 100, init: f64(index) * 0.1}
 	size := []f64{len: 10, init: f64(index) * 10.0}
 
-	mut plt := plot.new_plot()
+	mut plt := plot.Plot.new()
 	plt.scatter(
 		x: x
 		y: y

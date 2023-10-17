@@ -149,7 +149,7 @@ pub fn (o &Kmeans) str() string {
 
 // plot method for visualizing the clustering
 pub fn (o &Kmeans) plot() ! {
-	mut plt := plot.new_plot()
+	mut plt := plot.Plot.new()
 	plt.layout(
 		title: 'K-means Clustering'
 	)

@@ -9,7 +9,7 @@ mut x1 := []f64{cap: 1000}
 for _ in 1 .. 1000 {
 	x1 << rand.f64n(100) or { 0 }
 }
-mut plt := plot.new_plot()
+mut plt := plot.Plot.new()
 plt.histogram(
 	x: x1
 	xbins: {

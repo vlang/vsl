@@ -34,7 +34,7 @@ assert float64.soclose(result.x, expected, solver.epsabs)
 
 println('x = ${result.x}')
 
-mut plt := plot.new_plot()
+mut plt := plot.Plot.new()
 
 x := util.lin_space(0.0, 3.0, 100)
 y := x.map(f_cos(it, []f64{}))

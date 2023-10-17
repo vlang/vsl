@@ -206,7 +206,7 @@ pub fn (o &KNN) str() string {
 
 // plot method for visualizing the KNN model
 pub fn (o &KNN) plot() ! {
-	mut plt := plot.new_plot()
+	mut plt := plot.Plot.new()
 	plt.layout(
 		title: 'K-Nearest Neighbors'
 	)
