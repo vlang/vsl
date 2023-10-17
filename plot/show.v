@@ -1,24 +1,50 @@
 module plot
 
 import json
+import net
+import net.http
 import time
-import vweb
 
 // port is the port to run the server on. If 0, it will run on the next available port.
-const port = 8000
-
-struct App {
-	vweb.Context
-	plot Plot [vweb_global]
-}
+const port = 8080
 
 type TracesWithTypeValue = Trace | string
 
-pub fn (p Plot) show() ! {
-	$if !test ? {
-		vweb.run(&App{
-			plot: p
-		}, plot.port)
+struct PlotlyHandler {
+	plot Plot
+	ch   chan int
+}
+
+fn (handler PlotlyHandler) handle(req http.Request) http.Response {
+	mut r := http.Response{
+		body: handler.plot.plotly()
+		header: req.header
+	}
+	r.set_status(.ok)
+	r.set_version(req.version)
+	go fn [handler] () {
+		time.sleep(300 * time.millisecond)
+		handler.ch <- 1
+	}()
+	return r
+}
+
+pub fn (plot Plot) show() ! {
+	$if test ? {
+		println('Ignoring plot.show() because we are running in test mode')
+	} $else {
+		ch := chan int{}
+		mut server := &http.Server{
+			accept_timeout: 1 * time.second
+			handler: PlotlyHandler{
+				plot: plot
+				ch: ch
+			}
+		}
+		t := spawn server.listen_and_serve()
+		_ := <-ch
+		server.close()
+		t.wait()
 	}
 }
 
@@ -37,20 +63,15 @@ fn encode[T](obj T) string {
 	return obj_json
 }
 
-['/']
-pub fn (mut app App) plotly() vweb.Result {
-	// For some reason this is not working yet
-	traces_with_type := app.plot.traces.map({
+fn (plot Plot) plotly() string {
+	traces_with_type := plot.traces.map({
 		'type':  TracesWithTypeValue(it.trace_type())
 		'trace': TracesWithTypeValue(it)
 	})
 	traces_with_type_json := encode(traces_with_type)
-	layout_json := encode(app.plot.layout)
-	go fn () {
-		time.sleep(100 * time.millisecond)
-		exit(0)
-	}()
-	return app.html('<!DOCTYPE html>
+	layout_json := encode(plot.layout)
+
+	return '<!DOCTYPE html>
 <html>
   <head>
     <title>VSL Plot</title>
@@ -89,5 +110,5 @@ pub fn (mut app App) plotly() vweb.Result {
       Plotly.newPlot("gd", payload);
     </script>
   </body>
-</html>')
+</html>'
 }
