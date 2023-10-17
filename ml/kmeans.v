@@ -14,6 +14,7 @@ mut:
 	stat       &Stat[f64] // statistics about x (data)
 	nb_classes int        // expected number of classes
 	bins       &gm.Bins   // "bins" to speed up searching for data points given their coordinates (2D or 3D only at the moment)
+	nb_iter    int        // number of iterations
 pub mut:
 	classes    []int   // [nb_samples] indices of classes of each sample
 	centroids  [][]f64 // [nb_classes][nb_features] coordinates of centroids
@@ -131,6 +132,7 @@ pub fn (mut o Kmeans) train(config TrainConfig) {
 		o.compute_centroids()
 		nb_iter++
 	}
+	o.nb_iter = o.nb_iter + nb_iter
 }
 
 // str is a custom str function for observers to avoid printing data
