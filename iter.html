@@ -78,9 +78,9 @@ pub fn combinations(data []f64, r int) [][]f64
 </code></pre>
 <h2>Lazy generation</h2>
 <p>This case is optimal to generate combinations in a lazy way, optimizing memory use:</p>
-<pre><code class="language-v">// new_combinations_iter will return an iterator that allows
+<pre><code class="language-v">// CombinationsIter.new will return an iterator that allows
 // lazy computation for all length `r` combinations of `data`
-pub fn new_combinations_iter(data []f64, r int) CombinationsIter
+pub fn CombinationsIter.new(data []f64, r int) CombinationsIter
 
 // next will return next combination if possible
 pub fn (mut o CombinationsIter) next() ?[]f64
@@ -102,86 +102,6 @@ as I could manage.<br>
 Using f64 array instead of generic while waiting on <a href="https://github.com/vlang/v/issues/7753">https://github.com/vlang/v/issues/7753</a></p>
 
 </section>
-		<section id="new_combinations_iter" class="doc-node">
-			<div class="title"><h2>fn new_combinations_iter <a href="#new_combinations_iter">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/iter/comb.v#L30"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">new_combinations_iter</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> r <span class="token builtin">int</span><span class="token punctuation">)</span> CombinationsIter</code></pre>
-<p>new_combinations_iter will return an iterator that allows lazy computation for all length <code>r</code> combinations of <code>data</code></p>
-
-</section>
-		<section id="new_combinations_with_replacement_iter" class="doc-node">
-			<div class="title"><h2>fn new_combinations_with_replacement_iter <a href="#new_combinations_with_replacement_iter">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/iter/comb.v#L107"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">new_combinations_with_replacement_iter</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> r <span class="token builtin">int</span><span class="token punctuation">)</span> CombinationsWithReplacementIter</code></pre>
-<p>new_combinations_with_replacement_iter will return an iterator that allows lazy computation for all length <code>r</code> combinations with replacement of <code>data</code></p>
-
-</section>
-		<section id="new_count_iter" class="doc-node">
-			<div class="title"><h2>fn new_count_iter <a href="#new_count_iter">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/iter/inf_iters.v#L10"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">new_count_iter</span><span class="token punctuation">(</span>start <span class="token builtin">f64</span><span class="token punctuation">,</span> step <span class="token builtin">f64</span><span class="token punctuation">)</span> Counter</code></pre>
-
-
-</section>
-		<section id="new_cycle_iter" class="doc-node">
-			<div class="title"><h2>fn new_cycle_iter <a href="#new_cycle_iter">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/iter/inf_iters.v#L30"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">new_cycle_iter</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> Cycler</code></pre>
-
-
-</section>
-		<section id="new_float_iter" class="doc-node">
-			<div class="title"><h2>fn new_float_iter <a href="#new_float_iter">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/iter/ranges.v#L87"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">new_float_iter</span><span class="token punctuation">(</span>params FloatIterParams<span class="token punctuation">)</span> <span class="token operator">!</span>FloatIter</code></pre>
-<h2>new_float_iter returns an iterator of evenly spaced floats in the half-open interval <code>[start, stop)</code>.</h2>
-<p>parameters: 	FloatIterParams {
--start f64 :           the start of the range.<br>
--stop  f64 [required]: the end of the range (exclusive).<br>
--step  f64 = 1:        the step between the numbers.<br>
-}</p>
-
-</section>
-		<section id="new_int_iter" class="doc-node">
-			<div class="title"><h2>fn new_int_iter <a href="#new_int_iter">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/iter/ranges.v#L31"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">new_int_iter</span><span class="token punctuation">(</span>params IntIterParams<span class="token punctuation">)</span> <span class="token operator">!</span>IntIter</code></pre>
-<h2>new_int_iter returns an iterator of evenly spaced integers numbers in the half-open interval <code>[start, stop)</code>.</h2>
-<p>parameters: 	IntIterParams {
--start i64 :           the start of the range.<br>
--stop  i64 [required]: the end of the range (exclusive).<br>
--step  i64 = 1:        the step between the numbers.<br>
-}</p>
-
-</section>
-		<section id="new_linear_iter" class="doc-node">
-			<div class="title"><h2>fn new_linear_iter <a href="#new_linear_iter">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/iter/ranges.v#L145"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">new_linear_iter</span><span class="token punctuation">(</span>params LinearIterParams<span class="token punctuation">)</span> <span class="token operator">!</span>LinearIter</code></pre>
-<h2>new_linear_iter returns an iterator of <code>len</code> evenly spaced floats in the interval <code>[start, stop]</code>.<br>
-The endpoint of the interval can optionally be excluded.</h2>
-<p>parameters: 	LinearIterParams {
--start    f64 :           The start of the range.<br>
--stop     f64 [required]: The end of the range.<br>
--len      i64  = 50:      Number of samples to generate. Must be non-negative.<br>
--endpoint bool = true:    If true, <code>stop</code> is the last sample. Otherwise, it is not included.<br>
-}</p>
-
-</section>
-		<section id="new_log_iter" class="doc-node">
-			<div class="title"><h2>fn new_log_iter <a href="#new_log_iter">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/iter/ranges.v#L211"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">new_log_iter</span><span class="token punctuation">(</span>params LogIterParams<span class="token punctuation">)</span> <span class="token operator">!</span>LogIter</code></pre>
-<h2>log_iter returns an iterator of <code>len</code> numbers evenly spaced on a logarithmic scale.<br>
-The sequence starts at <code>base ^ start</code> and ends in <code>base ^ stop</code> (if <code>endpoint</code> = true).</h2>
-<p>parameters:  LogIterParams {
--start    f64 [required]: <code>base ^ start</code> is the starting value of the sequence.<br>
--stop     f64 [required]: <code>base ^ stop</code> is the final value of the sequence, unless endpoint is false. In that case, num + 1 values are spaced over the interval in log-space, of which all but the last (a sequence of length len) are returned.<br>
--len      i64  = 50:      Number of samples to generate.<br>
--base     f64  = 10.0:    The base of the log space.<br>
--endpoint bool = true:    If true, bas ^ stop is the last sample. Otherwise, it is not included.<br>
-}</p>
-
-</section>
-		<section id="new_permutations_iter" class="doc-node">
-			<div class="title"><h2>fn new_permutations_iter <a href="#new_permutations_iter">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/iter/perm.v#L19"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">new_permutations_iter</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> r <span class="token builtin">int</span><span class="token punctuation">)</span> PermutationsIter</code></pre>
-<p>new_permutations_iter will return an iterator that allows lazy computation for all length <code>r</code> permutations of <code>data</code></p>
-
-</section>
-		<section id="new_product_iterator" class="doc-node">
-			<div class="title"><h2>fn new_product_iterator <a href="#new_product_iterator">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/iter/prod.v#L15"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">new_product_iterator</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> ProductIterator</code></pre>
-
-
-</section>
-		<section id="new_repeat_iter" class="doc-node">
-			<div class="title"><h2>fn new_repeat_iter <a href="#new_repeat_iter">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/iter/inf_iters.v#L48"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">new_repeat_iter</span><span class="token punctuation">(</span>item <span class="token builtin">f64</span><span class="token punctuation">)</span> Repeater</code></pre>
-
-
-</section>
 		<section id="permutations" class="doc-node">
 			<div class="title"><h2>fn permutations <a href="#permutations">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/iter/perm.v#L72"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">permutations</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> r <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 <p>permutations returns successive <code>r</code> length permutations of elements in <code>data</code></p>
@@ -192,9 +112,29 @@ The sequence starts at <code>base ^ start</code> and ends in <code>base ^ stop</
 <p>Cartesian product of the arrays in <code>data</code></p>
 
 </section>
+		<section id="FloatIter.FloatIter__static__new" class="doc-node">
+			<div class="title"><h2>fn (FloatIter) FloatIter__static__new <a href="#FloatIter.FloatIter__static__new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/iter/ranges.v#L87"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> FloatIter<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>params FloatIterParams<span class="token punctuation">)</span> <span class="token operator">!</span>FloatIter</code></pre>
+<h2>FloatIter.new returns an iterator of evenly spaced floats in the half-open interval <code>[start, stop)</code>.</h2>
+<p>parameters: 	FloatIterParams {
+-start f64 :           the start of the range.<br>
+-stop  f64 [required]: the end of the range (exclusive).<br>
+-step  f64 = 1:        the step between the numbers.<br>
+}</p>
+
+</section>
 		<section id="FloatIter.next" class="doc-node">
 			<div class="title"><h2>fn (FloatIter) next <a href="#FloatIter.next">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/iter/ranges.v#L106"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> r FloatIter<span class="token punctuation">)</span> <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">?</span><span class="token builtin">f64</span></code></pre>
 <p>next returns the next element of the iterator if possible.</p>
+
+</section>
+		<section id="IntIter.IntIter__static__new" class="doc-node">
+			<div class="title"><h2>fn (IntIter) IntIter__static__new <a href="#IntIter.IntIter__static__new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/iter/ranges.v#L31"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> IntIter<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>params IntIterParams<span class="token punctuation">)</span> <span class="token operator">!</span>IntIter</code></pre>
+<h2>IntIter.new returns an iterator of evenly spaced integers numbers in the half-open interval <code>[start, stop)</code>.</h2>
+<p>parameters: 	IntIterParams {
+-start i64 :           the start of the range.<br>
+-stop  i64 [required]: the end of the range (exclusive).<br>
+-step  i64 = 1:        the step between the numbers.<br>
+}</p>
 
 </section>
 		<section id="IntIter.next" class="doc-node">
@@ -202,9 +142,34 @@ The sequence starts at <code>base ^ start</code> and ends in <code>base ^ stop</
 <p>next returns the next element of the iterator if possible.</p>
 
 </section>
+		<section id="LinearIter.LinearIter__static__new" class="doc-node">
+			<div class="title"><h2>fn (LinearIter) LinearIter__static__new <a href="#LinearIter.LinearIter__static__new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/iter/ranges.v#L145"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> LinearIter<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>params LinearIterParams<span class="token punctuation">)</span> <span class="token operator">!</span>LinearIter</code></pre>
+<h2>LinearIter.new returns an iterator of <code>len</code> evenly spaced floats in the interval <code>[start, stop]</code>.<br>
+The endpoint of the interval can optionally be excluded.</h2>
+<p>parameters: 	LinearIterParams {
+-start    f64 :           The start of the range.<br>
+-stop     f64 [required]: The end of the range.<br>
+-len      i64  = 50:      Number of samples to generate. Must be non-negative.<br>
+-endpoint bool = true:    If true, <code>stop</code> is the last sample. Otherwise, it is not included.<br>
+}</p>
+
+</section>
 		<section id="LinearIter.next" class="doc-node">
 			<div class="title"><h2>fn (LinearIter) next <a href="#LinearIter.next">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/iter/ranges.v#L166"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o LinearIter<span class="token punctuation">)</span> <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">?</span><span class="token builtin">f64</span></code></pre>
 <p>next returns the next element of the iterator if possible.</p>
+
+</section>
+		<section id="LogIter.LogIter__static__new" class="doc-node">
+			<div class="title"><h2>fn (LogIter) LogIter__static__new <a href="#LogIter.LogIter__static__new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/iter/ranges.v#L211"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> LogIter<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>params LogIterParams<span class="token punctuation">)</span> <span class="token operator">!</span>LogIter</code></pre>
+<h2>LogIter.new returns an iterator of <code>len</code> numbers evenly spaced on a logarithmic scale.<br>
+The sequence starts at <code>base ^ start</code> and ends in <code>base ^ stop</code> (if <code>endpoint</code> = true).</h2>
+<p>parameters:  LogIterParams {
+-start    f64 [required]: <code>base ^ start</code> is the starting value of the sequence.<br>
+-stop     f64 [required]: <code>base ^ stop</code> is the final value of the sequence, unless endpoint is false. In that case, num + 1 values are spaced over the interval in log-space, of which all but the last (a sequence of length len) are returned.<br>
+-len      i64  = 50:      Number of samples to generate.<br>
+-base     f64  = 10.0:    The base of the log space.<br>
+-endpoint bool = true:    If true, bas ^ stop is the last sample. Otherwise, it is not included.<br>
+}</p>
 
 </section>
 		<section id="LogIter.next" class="doc-node">
@@ -225,6 +190,11 @@ The sequence starts at <code>base ^ start</code> and ends in <code>base ^ stop</
 
 
 </section>
+		<section id="CombinationsIter.CombinationsIter__static__new" class="doc-node">
+			<div class="title"><h2>fn (CombinationsIter) CombinationsIter__static__new <a href="#CombinationsIter.CombinationsIter__static__new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/iter/comb.v#L30"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> CombinationsIter<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> r <span class="token builtin">int</span><span class="token punctuation">)</span> CombinationsIter</code></pre>
+<p>CombinationsIter.new will return an iterator that allows lazy computation for all length <code>r</code> combinations of <code>data</code></p>
+
+</section>
 		<section id="CombinationsIter.next" class="doc-node">
 			<div class="title"><h2>fn (CombinationsIter) next <a href="#CombinationsIter.next">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/iter/comb.v#L49"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o CombinationsIter<span class="token punctuation">)</span> <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">?</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 <p>next will return next combination if possible</p>
@@ -243,6 +213,11 @@ The sequence starts at <code>base ^ start</code> and ends in <code>base ^ stop</
 
 
 </section>
+		<section id="CombinationsWithReplacementIter.CombinationsWithReplacementIter__static__new" class="doc-node">
+			<div class="title"><h2>fn (CombinationsWithReplacementIter) CombinationsWithReplacementIter__static__new <a href="#CombinationsWithReplacementIter.CombinationsWithReplacementIter__static__new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/iter/comb.v#L107"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> CombinationsWithReplacementIter<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> r <span class="token builtin">int</span><span class="token punctuation">)</span> CombinationsWithReplacementIter</code></pre>
+<p>CombinationsWithReplacementIter.new will return an iterator that allows lazy computation for all length <code>r</code> combinations with replacement of <code>data</code></p>
+
+</section>
 		<section id="CombinationsWithReplacementIter.next" class="doc-node">
 			<div class="title"><h2>fn (CombinationsWithReplacementIter) next <a href="#CombinationsWithReplacementIter.next">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/iter/comb.v#L126"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o CombinationsWithReplacementIter<span class="token punctuation">)</span> <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">?</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 <p>next will return next combination if possible</p>
@@ -258,6 +233,11 @@ The sequence starts at <code>base ^ start</code> and ends in <code>base ^ stop</
 
 
 </section>
+		<section id="Counter.Counter__static__new" class="doc-node">
+			<div class="title"><h2>fn (Counter) Counter__static__new <a href="#Counter.Counter__static__new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/iter/inf_iters.v#L10"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> Counter<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>start <span class="token builtin">f64</span><span class="token punctuation">,</span> step <span class="token builtin">f64</span><span class="token punctuation">)</span> Counter</code></pre>
+
+
+</section>
 		<section id="Counter.next" class="doc-node">
 			<div class="title"><h2>fn (Counter) next <a href="#Counter.next">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/iter/inf_iters.v#L17"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> c Counter<span class="token punctuation">)</span> <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">?</span><span class="token builtin">f64</span></code></pre>
 
@@ -270,6 +250,11 @@ The sequence starts at <code>base ^ start</code> and ends in <code>base ^ stop</
 <span class="token keyword">pub</span><span class="token punctuation">:</span>
 	data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
 <span class="token punctuation">}</span></code></pre>
+
+
+</section>
+		<section id="Cycler.Cycler__static__new" class="doc-node">
+			<div class="title"><h2>fn (Cycler) Cycler__static__new <a href="#Cycler.Cycler__static__new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/iter/inf_iters.v#L30"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> Cycler<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> Cycler</code></pre>
 
 
 </section>
@@ -331,6 +316,11 @@ The sequence starts at <code>base ^ start</code> and ends in <code>base ^ stop</
 
 
 </section>
+		<section id="PermutationsIter.PermutationsIter__static__new" class="doc-node">
+			<div class="title"><h2>fn (PermutationsIter) PermutationsIter__static__new <a href="#PermutationsIter.PermutationsIter__static__new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/iter/perm.v#L19"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> PermutationsIter<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> r <span class="token builtin">int</span><span class="token punctuation">)</span> PermutationsIter</code></pre>
+<p>PermutationsIter.new will return an iterator that allows lazy computation for all length <code>r</code> permutations of <code>data</code></p>
+
+</section>
 		<section id="PermutationsIter.next" class="doc-node">
 			<div class="title"><h2>fn (PermutationsIter) next <a href="#PermutationsIter.next">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/iter/perm.v#L40"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o PermutationsIter<span class="token punctuation">)</span> <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">?</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 <p>next will return next permutation if possible</p>
@@ -349,6 +339,11 @@ The sequence starts at <code>base ^ start</code> and ends in <code>base ^ stop</
 
 
 </section>
+		<section id="ProductIterator.ProductIterator__static__new" class="doc-node">
+			<div class="title"><h2>fn (ProductIterator) ProductIterator__static__new <a href="#ProductIterator.ProductIterator__static__new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/iter/prod.v#L15"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> ProductIterator<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> ProductIterator</code></pre>
+
+
+</section>
 		<section id="ProductIterator.next" class="doc-node">
 			<div class="title"><h2>fn (ProductIterator) next <a href="#ProductIterator.next">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/iter/prod.v#L24"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o ProductIterator<span class="token punctuation">)</span> <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">?</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 
@@ -362,13 +357,18 @@ The sequence starts at <code>base ^ start</code> and ends in <code>base ^ stop</
 
 
 </section>
+		<section id="Repeater.Repeater__static__new" class="doc-node">
+			<div class="title"><h2>fn (Repeater) Repeater__static__new <a href="#Repeater.Repeater__static__new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/iter/inf_iters.v#L48"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> Repeater<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>item <span class="token builtin">f64</span><span class="token punctuation">)</span> Repeater</code></pre>
+
+
+</section>
 		<section id="Repeater.next" class="doc-node">
 			<div class="title"><h2>fn (Repeater) next <a href="#Repeater.next">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/iter/inf_iters.v#L54"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>m Repeater<span class="token punctuation">)</span> <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">?</span><span class="token builtin">f64</span></code></pre>
 
 
 </section>
 
-						<div class="footer">Powered by vdoc. Generated on: 17 Oct 2023 03:23:15</div>
+						<div class="footer">Powered by vdoc. Generated on: 17 Oct 2023 04:13:08</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_iter">README</a></li>
 <li class="open"><a href="#combinations">fn combinations</a>        <ul>
@@ -377,74 +377,49 @@ The sequence starts at <code>base ^ start</code> and ends in <code>base ^ stop</
 <li class="open"><a href="#combinations_with_replacement">fn combinations_with_replacement</a>        <ul>
 </ul>
 </li>
-<li class="open"><a href="#new_combinations_iter">fn new_combinations_iter</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#new_combinations_with_replacement_iter">fn new_combinations_with_replacement_iter</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#new_count_iter">fn new_count_iter</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#new_cycle_iter">fn new_cycle_iter</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#new_float_iter">fn new_float_iter</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#new_int_iter">fn new_int_iter</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#new_linear_iter">fn new_linear_iter</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#new_log_iter">fn new_log_iter</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#new_permutations_iter">fn new_permutations_iter</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#new_product_iterator">fn new_product_iterator</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#new_repeat_iter">fn new_repeat_iter</a>        <ul>
-</ul>
-</li>
 <li class="open"><a href="#permutations">fn permutations</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#product">fn product</a>        <ul>
 </ul>
 </li>
-<li class="open"><a href="#FloatIter.next">type FloatIter</a>        <ul>
+<li class="open"><a href="#FloatIter.FloatIter__static__new">type FloatIter</a>        <ul>
+<li><a href="#FloatIter.FloatIter__static__new">fn FloatIter__static__new</a></li>
 <li><a href="#FloatIter.next">fn next</a></li>
 </ul>
 </li>
-<li class="open"><a href="#IntIter.next">type IntIter</a>        <ul>
+<li class="open"><a href="#IntIter.IntIter__static__new">type IntIter</a>        <ul>
+<li><a href="#IntIter.IntIter__static__new">fn IntIter__static__new</a></li>
 <li><a href="#IntIter.next">fn next</a></li>
 </ul>
 </li>
-<li class="open"><a href="#LinearIter.next">type LinearIter</a>        <ul>
+<li class="open"><a href="#LinearIter.LinearIter__static__new">type LinearIter</a>        <ul>
+<li><a href="#LinearIter.LinearIter__static__new">fn LinearIter__static__new</a></li>
 <li><a href="#LinearIter.next">fn next</a></li>
 </ul>
 </li>
-<li class="open"><a href="#LogIter.next">type LogIter</a>        <ul>
+<li class="open"><a href="#LogIter.LogIter__static__new">type LogIter</a>        <ul>
+<li><a href="#LogIter.LogIter__static__new">fn LogIter__static__new</a></li>
 <li><a href="#LogIter.next">fn next</a></li>
 </ul>
 </li>
 <li class="open"><a href="#CombinationsIter">struct CombinationsIter</a>        <ul>
+<li><a href="#CombinationsIter.CombinationsIter__static__new">fn CombinationsIter__static__new</a></li>
 <li><a href="#CombinationsIter.next">fn next</a></li>
 </ul>
 </li>
 <li class="open"><a href="#CombinationsWithReplacementIter">struct CombinationsWithReplacementIter</a>        <ul>
+<li><a href="#CombinationsWithReplacementIter.CombinationsWithReplacementIter__static__new">fn CombinationsWithReplacementIter__static__new</a></li>
 <li><a href="#CombinationsWithReplacementIter.next">fn next</a></li>
 </ul>
 </li>
 <li class="open"><a href="#Counter">struct Counter</a>        <ul>
+<li><a href="#Counter.Counter__static__new">fn Counter__static__new</a></li>
 <li><a href="#Counter.next">fn next</a></li>
 </ul>
 </li>
 <li class="open"><a href="#Cycler">struct Cycler</a>        <ul>
+<li><a href="#Cycler.Cycler__static__new">fn Cycler__static__new</a></li>
 <li><a href="#Cycler.next">fn next</a></li>
 </ul>
 </li>
@@ -461,14 +436,17 @@ The sequence starts at <code>base ^ start</code> and ends in <code>base ^ stop</
 </ul>
 </li>
 <li class="open"><a href="#PermutationsIter">struct PermutationsIter</a>        <ul>
+<li><a href="#PermutationsIter.PermutationsIter__static__new">fn PermutationsIter__static__new</a></li>
 <li><a href="#PermutationsIter.next">fn next</a></li>
 </ul>
 </li>
 <li class="open"><a href="#ProductIterator">struct ProductIterator</a>        <ul>
+<li><a href="#ProductIterator.ProductIterator__static__new">fn ProductIterator__static__new</a></li>
 <li><a href="#ProductIterator.next">fn next</a></li>
 </ul>
 </li>
 <li class="open"><a href="#Repeater">struct Repeater</a>        <ul>
+<li><a href="#Repeater.Repeater__static__new">fn Repeater__static__new</a></li>
 <li><a href="#Repeater.next">fn next</a></li>
 </ul>
 </li>

@@ -190,16 +190,6 @@ v is a strided vector that contains elements of data at indices i*inc and nan el
 can be used to detect invalid memory reads and writes.</p>
 
 </section>
-		<section id="new_inc_set" class="doc-node">
-			<div class="title"><h2>fn new_inc_set <a href="#new_inc_set">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/float/float64/f64_test_util.v#L19"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">new_inc_set</span><span class="token punctuation">(</span>inc <span class="token punctuation">...</span><span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>IncSet</code></pre>
-<p>new_inc_set will generate all (x,y) combinations of the input increment set.</p>
-
-</section>
-		<section id="new_inc_to_set" class="doc-node">
-			<div class="title"><h2>fn new_inc_to_set <a href="#new_inc_to_set">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/float/float64/f64_test_util.v#L37"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">new_inc_to_set</span><span class="token punctuation">(</span>inc <span class="token punctuation">...</span><span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>IncToSet</code></pre>
-<p>new_inc_to_set will generate all (dst,x,y) combinations of the input increment set.</p>
-
-</section>
 		<section id="non_strided_write" class="doc-node">
 			<div class="title"><h2>fn non_strided_write <a href="#non_strided_write">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/float/float64/f64_test_util.v#L161"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">non_strided_write</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> inc <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">bool</span></code></pre>
 <p>non_strided_write returns false if all elements of x at non-stride indices are
@@ -251,8 +241,18 @@ equal to nan, true otherwise.</p>
 
 
 </section>
+		<section id="IncSet.IncSet__static__new" class="doc-node">
+			<div class="title"><h2>fn (IncSet) IncSet__static__new <a href="#IncSet.IncSet__static__new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/float/float64/f64_test_util.v#L19"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> IncSet<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>inc <span class="token punctuation">...</span><span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>IncSet</code></pre>
+<p>IncSet.new will generate all (x,y) combinations of the input increment set.</p>
 
-						<div class="footer">Powered by vdoc. Generated on: 17 Oct 2023 03:23:15</div>
+</section>
+		<section id="IncToSet.IncToSet__static__new" class="doc-node">
+			<div class="title"><h2>fn (IncToSet) IncToSet__static__new <a href="#IncToSet.IncToSet__static__new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/float/float64/f64_test_util.v#L37"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> IncToSet<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>inc <span class="token punctuation">...</span><span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>IncToSet</code></pre>
+<p>IncToSet.new will generate all (dst,x,y) combinations of the input increment set.</p>
+
+</section>
+
+						<div class="footer">Powered by vdoc. Generated on: 17 Oct 2023 04:13:08</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#alike">fn alike</a>        <ul>
 </ul>
@@ -320,12 +320,6 @@ equal to nan, true otherwise.</p>
 <li class="open"><a href="#new_guarded_vector">fn new_guarded_vector</a>        <ul>
 </ul>
 </li>
-<li class="open"><a href="#new_inc_set">fn new_inc_set</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#new_inc_to_set">fn new_inc_to_set</a>        <ul>
-</ul>
-</li>
 <li class="open"><a href="#non_strided_write">fn non_strided_write</a>        <ul>
 </ul>
 </li>
@@ -354,6 +348,14 @@ equal to nan, true otherwise.</p>
 </ul>
 </li>
 <li class="open"><a href="#veryclose">fn veryclose</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#IncSet.IncSet__static__new">type IncSet</a>        <ul>
+<li><a href="#IncSet.IncSet__static__new">fn IncSet__static__new</a></li>
+</ul>
+</li>
+<li class="open"><a href="#IncToSet.IncToSet__static__new">type IncToSet</a>        <ul>
+<li><a href="#IncToSet.IncToSet__static__new">fn IncToSet__static__new</a></li>
 </ul>
 </li>
 </ul></div>

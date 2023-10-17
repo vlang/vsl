@@ -71,21 +71,6 @@
 
 </section>
 
-		<section id="new_func" class="doc-node">
-			<div class="title"><h2>fn new_func <a href="#new_func">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/func/func.v#L23"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">new_func</span><span class="token punctuation">(</span>f Fn<span class="token punctuation">)</span> Fn</code></pre>
-<p>new_func returns an arbitrary function with parameters</p>
-
-</section>
-		<section id="new_func_fdf" class="doc-node">
-			<div class="title"><h2>fn new_func_fdf <a href="#new_func_fdf">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/func/func.v#L58"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">new_func_fdf</span><span class="token punctuation">(</span>fn_fdf FnFdf<span class="token punctuation">)</span> FnFdf</code></pre>
-<p>new_func_fdf returns an arbitrary function returning two values, r1, r2</p>
-
-</section>
-		<section id="new_func_vec" class="doc-node">
-			<div class="title"><h2>fn new_func_vec <a href="#new_func_vec">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/func/func.v#L89"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">new_func_vec</span><span class="token punctuation">(</span>f FnVec<span class="token punctuation">)</span> FnVec</code></pre>
-<p>new_func_vec returns an arbitrary vector-valued function with parameters</p>
-
-</section>
 		<section id="ArbitraryFn" class="doc-node">
 			<div class="title"><h2>type ArbitraryFn <a href="#ArbitraryFn">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/func/func.v#L6"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">type</span> ArbitraryFn <span class="token operator">=</span> <span class="token keyword">fn</span> <span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">,</span> params <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
 
@@ -115,6 +100,11 @@
 <p>Definition of an arbitrary function with parameters</p>
 
 </section>
+		<section id="Fn.Fn__static__new" class="doc-node">
+			<div class="title"><h2>fn (Fn) Fn__static__new <a href="#Fn.Fn__static__new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/func/func.v#L23"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> Fn<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>f Fn<span class="token punctuation">)</span> Fn</code></pre>
+<p>Fn.new returns an arbitrary function with parameters</p>
+
+</section>
 		<section id="Fn.eval" class="doc-node">
 			<div class="title"><h2>fn (Fn) eval <a href="#Fn.eval">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/func/func.v#L28"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>f Fn<span class="token punctuation">)</span> <span class="token function">eval</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
 
@@ -135,6 +125,11 @@ return an error if the function value is inf/nan.</p>
 	params <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
 <span class="token punctuation">}</span></code></pre>
 <p>Definition of an arbitrary function returning two values, r1, r2</p>
+
+</section>
+		<section id="FnFdf.FnFdf__static__new" class="doc-node">
+			<div class="title"><h2>fn (FnFdf) FnFdf__static__new <a href="#FnFdf.FnFdf__static__new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/func/func.v#L58"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> FnFdf<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>fn_fdf FnFdf<span class="token punctuation">)</span> FnFdf</code></pre>
+<p>FnFdf.new returns an arbitrary function returning two values, r1, r2</p>
 
 </section>
 		<section id="FnFdf.eval_f" class="doc-node">
@@ -161,24 +156,20 @@ return an error if the function value is inf/nan.</p>
 <p>Definition of an arbitrary vector-valued function with parameters</p>
 
 </section>
+		<section id="FnVec.FnVec__static__new" class="doc-node">
+			<div class="title"><h2>fn (FnVec) FnVec__static__new <a href="#FnVec.FnVec__static__new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/func/func.v#L89"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> FnVec<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>f FnVec<span class="token punctuation">)</span> FnVec</code></pre>
+<p>FnVec.new returns an arbitrary vector-valued function with parameters</p>
+
+</section>
 		<section id="FnVec.eval" class="doc-node">
 			<div class="title"><h2>fn (FnVec) eval <a href="#FnVec.eval">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/func/func.v#L94"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>f FnVec<span class="token punctuation">)</span> <span class="token function">eval</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">,</span> y <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
 
 
 </section>
 
-						<div class="footer">Powered by vdoc. Generated on: 17 Oct 2023 03:23:15</div>
+						<div class="footer">Powered by vdoc. Generated on: 17 Oct 2023 04:13:08</div>
 					</div>
-					<div class="doc-toc"><ul><li class="open"><a href="#new_func">fn new_func</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#new_func_fdf">fn new_func_fdf</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#new_func_vec">fn new_func_vec</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#ArbitraryFn">type ArbitraryFn</a>        <ul>
+					<div class="doc-toc"><ul><li class="open"><a href="#ArbitraryFn">type ArbitraryFn</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#DfFn">type DfFn</a>        <ul>
@@ -191,17 +182,20 @@ return an error if the function value is inf/nan.</p>
 </ul>
 </li>
 <li class="open"><a href="#Fn">struct Fn</a>        <ul>
+<li><a href="#Fn.Fn__static__new">fn Fn__static__new</a></li>
 <li><a href="#Fn.eval">fn eval</a></li>
 <li><a href="#Fn.safe_eval">fn safe_eval</a></li>
 </ul>
 </li>
 <li class="open"><a href="#FnFdf">struct FnFdf</a>        <ul>
+<li><a href="#FnFdf.FnFdf__static__new">fn FnFdf__static__new</a></li>
 <li><a href="#FnFdf.eval_f">fn eval_f</a></li>
 <li><a href="#FnFdf.eval_df">fn eval_df</a></li>
 <li><a href="#FnFdf.eval_f_df">fn eval_f_df</a></li>
 </ul>
 </li>
 <li class="open"><a href="#FnVec">struct FnVec</a>        <ul>
+<li><a href="#FnVec.FnVec__static__new">fn FnVec__static__new</a></li>
 <li><a href="#FnVec.eval">fn eval</a></li>
 </ul>
 </li>

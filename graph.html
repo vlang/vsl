@@ -91,7 +91,7 @@ edges := [[0, 1], [0, 3], [1, 2], [2, 3]]
 weights_e := [5.0, 10.0, 3.0, 1.0]
 verts := [][]f64{}
 weights_v := []f64{}
-g := graph.new_graph(edges, weights_e, verts, weights_v)
+g := graph.Graph.new(edges, weights_e, verts, weights_v)
 // print distance matrix
 print(g.str_dist_matrix())
 </code></pre>
@@ -137,7 +137,7 @@ edges := [[0, 1], [0, 3], [1, 2], [2, 3]]
 weights_e := [5.0, 10.0, 3.0, 1.0]
 verts := [][]f64{}
 weights_v := []f64{}
-g := graph.new_graph(edges, weights_e, verts, weights_v)
+g := graph.Graph.new(edges, weights_e, verts, weights_v)
 // compute paths
 g.shortest_paths(.fw)
 // print shortest path from 0 to 2
@@ -150,11 +150,6 @@ print(g.str_dist_matrix())
 
 </section>
 
-		<section id="new_graph" class="doc-node">
-			<div class="title"><h2>fn new_graph <a href="#new_graph">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/graph/graph.v#L34"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">new_graph</span><span class="token punctuation">(</span>edges <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> weights_e <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> verts <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> weights_v <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">&</span>Graph</code></pre>
-<p>new_graph initialises graph edges    -- [nedges][2] edges (connectivity) weights_e -- [nedges] weights of edges verts    -- [nverts][ndim] vertices weights_v -- [nverts] weights of vertices</p>
-
-</section>
 		<section id="ShortestPaths" class="doc-node">
 			<div class="title"><h2>enum ShortestPaths <a href="#ShortestPaths">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/graph/graph.v#L9"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">enum</span> <span class="token symbol">ShortestPaths</span> <span class="token punctuation">{</span>
 	fw <span class="token comment">// FW: Floyd-Warshall method</span>
@@ -177,6 +172,11 @@ print(g.str_dist_matrix())
 	next     <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>       <span class="token comment">// [nverts][nverts] next tree connection. -1 means no connection</span>
 <span class="token punctuation">}</span></code></pre>
 <p>Graph defines a graph structure</p>
+
+</section>
+		<section id="Graph.Graph__static__new" class="doc-node">
+			<div class="title"><h2>fn (Graph) Graph__static__new <a href="#Graph.Graph__static__new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/graph/graph.v#L34"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> Graph<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>edges <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> weights_e <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> verts <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> weights_v <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">&</span>Graph</code></pre>
+<p>Graph.new initialises graph edges    -- [nedges][2] edges (connectivity) weights_e -- [nedges] weights of edges verts    -- [nverts][ndim] vertices weights_v -- [nverts] weights of vertices</p>
 
 </section>
 		<section id="Graph.nverts" class="doc-node">
@@ -215,16 +215,14 @@ print(g.str_dist_matrix())
 
 </section>
 
-						<div class="footer">Powered by vdoc. Generated on: 17 Oct 2023 03:23:15</div>
+						<div class="footer">Powered by vdoc. Generated on: 17 Oct 2023 04:13:08</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_graph">README</a></li>
-<li class="open"><a href="#new_graph">fn new_graph</a>        <ul>
-</ul>
-</li>
 <li class="open"><a href="#ShortestPaths">enum ShortestPaths</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#Graph">struct Graph</a>        <ul>
+<li><a href="#Graph.Graph__static__new">fn Graph__static__new</a></li>
 <li><a href="#Graph.nverts">fn nverts</a></li>
 <li><a href="#Graph.get_edge">fn get_edge</a></li>
 <li><a href="#Graph.shortest_paths">fn shortest_paths</a></li>

@@ -103,12 +103,6 @@ thus it is not as efficient as it could be, e.g. by using the SV decomposition.<
 normtype -- Type of norm to use: &quot;I&quot;                 =&gt; Infinite &quot;F&quot; or &quot;&quot; (default) =&gt; Frobenius</p>
 
 </section>
-		<section id="matrix_deep2" class="doc-node">
-			<div class="title"><h2>fn matrix_deep2 <a href="#matrix_deep2">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/matrix.v#L27"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> matrix_deep2<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">(</span>a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">T</span><span class="token punctuation">)</span> <span class="token operator">&</span>Matrix<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span></code></pre>
-<p>matrix_deep2 allocates a new Matrix from given (Deep2) nested slice.<br>
-NOTE: make sure to have at least 1x1 item</p>
-
-</section>
 		<section id="matrix_det" class="doc-node">
 			<div class="title"><h2>fn matrix_det <a href="#matrix_det">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/matrix_ops.v#L9"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">matrix_det</span><span class="token punctuation">(</span>o <span class="token operator">&</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
 <p>det computes the determinant of matrix using the LU factorization
@@ -151,11 +145,6 @@ Input: a   -- the matrix tol -- tolerance to assume zero determinant Output: ai 
 			<div class="title"><h2>fn matrix_matrix_tr_muladd <a href="#matrix_matrix_tr_muladd">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/blas.v#L307"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">matrix_matrix_tr_muladd</span><span class="token punctuation">(</span><span class="token keyword">mut</span> c Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> a <span class="token operator">&</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> b <span class="token operator">&</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>
 <p>matrix_matrix_tr_muladd returns the matrix multiplication (scaled) with transposed(b)</p>
 <p>c += alpha⋅a⋅bᵀ    ⇒    cij += alpha * aik * bjk</p>
-
-</section>
-		<section id="matrix_raw" class="doc-node">
-			<div class="title"><h2>fn matrix_raw <a href="#matrix_raw">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/matrix.v#L39"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> matrix_raw<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> rawdata <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">T</span><span class="token punctuation">)</span> <span class="token operator">&</span>Matrix<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span></code></pre>
-<p>matrix_raw creates a new Matrix using given raw data Input: rawdata -- data organized as column-major; e.g. Fortran format NOTE: (1) rawdata is not copied! (2) the external slice rawdata should not be changed or deleted</p>
 
 </section>
 		<section id="matrix_svd" class="doc-node">
@@ -203,26 +192,6 @@ Input: a   -- the matrix tol -- tolerance to assume zero determinant Output: ai 
 			<div class="title"><h2>fn matrix_vector_mul_add <a href="#matrix_vector_mul_add">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/blas.v#L221"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">matrix_vector_mul_add</span><span class="token punctuation">(</span>alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> a <span class="token operator">&</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> u <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 <p>matrix_vector_mul_add returns the matrix-vector multiplication with addition</p>
 <p>v += alpha⋅a⋅u    ⇒    vi += alpha * aij * uj</p>
-
-</section>
-		<section id="new_matrix" class="doc-node">
-			<div class="title"><h2>fn new_matrix <a href="#new_matrix">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/matrix.v#L16"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> new_matrix<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">&</span>Matrix<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span></code></pre>
-<p>new_matrix allocates a new (empty) Matrix with given (m,n) (row/col sizes)</p>
-
-</section>
-		<section id="new_sparse_config" class="doc-node">
-			<div class="title"><h2>fn new_sparse_config <a href="#new_sparse_config">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/sparse_config.v#L23"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">new_sparse_config</span><span class="token punctuation">(</span><span class="token punctuation">)</span> SparseConfig</code></pre>
-<p>new_sparse_config returns a new SparseConfig Input:  comm -- may be nil</p>
-
-</section>
-		<section id="new_sparse_config_with_comm" class="doc-node">
-			<div class="title"><h2>fn new_sparse_config_with_comm <a href="#new_sparse_config_with_comm">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/sparse_config.v#L34"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">new_sparse_config_with_comm</span><span class="token punctuation">(</span>comm <span class="token operator">&</span>mpi<span class="token punctuation">.</span>Communicator<span class="token punctuation">)</span> SparseConfig</code></pre>
-<p>new_sparse_config_with_comm returns a new SparseConfig</p>
-
-</section>
-		<section id="new_triplet" class="doc-node">
-			<div class="title"><h2>fn new_triplet <a href="#new_triplet">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/sparse_matrix.v#L38"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> new_triplet<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> max <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">&</span>Triplet<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span></code></pre>
-<p>new_triplet returns a new Triplet. This is a wrapper to new(Triplet) followed by init()</p>
 
 </section>
 		<section id="safe_print" class="doc-node">
@@ -530,6 +499,22 @@ NOTE: this method can be used to modify the columns; e.g. with o.col(0)[0] = 123
 
 
 </section>
+		<section id="Matrix.Matrix__static__new" class="doc-node">
+			<div class="title"><h2>fn (Matrix) Matrix__static__new <a href="#Matrix.Matrix__static__new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/matrix.v#L16"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> Matrix<span class="token punctuation">.</span>new<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">&</span>Matrix<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span></code></pre>
+<p>Matrix.new allocates a new (empty) Matrix with given (m,n) (row/col sizes)</p>
+
+</section>
+		<section id="Matrix.Matrix__static__deep2" class="doc-node">
+			<div class="title"><h2>fn (Matrix) Matrix__static__deep2 <a href="#Matrix.Matrix__static__deep2">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/matrix.v#L27"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> Matrix<span class="token punctuation">.</span>deep2<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">(</span>a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">T</span><span class="token punctuation">)</span> <span class="token operator">&</span>Matrix<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span></code></pre>
+<p>Matrix.deep2 allocates a new Matrix from given (Deep2) nested slice.<br>
+NOTE: make sure to have at least 1x1 item</p>
+
+</section>
+		<section id="Matrix.Matrix__static__raw" class="doc-node">
+			<div class="title"><h2>fn (Matrix) Matrix__static__raw <a href="#Matrix.Matrix__static__raw">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/matrix.v#L39"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> Matrix<span class="token punctuation">.</span>raw<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> rawdata <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">T</span><span class="token punctuation">)</span> <span class="token operator">&</span>Matrix<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span></code></pre>
+<p>Matrix.raw creates a new Matrix using given raw data Input: rawdata -- data organized as column-major; e.g. Fortran format NOTE: (1) rawdata is not copied! (2) the external slice rawdata should not be changed or deleted</p>
+
+</section>
 		<section id="SparseConfig" class="doc-node">
 			<div class="title"><h2>struct SparseConfig <a href="#SparseConfig">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/sparse_config.v#L7"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">struct</span> <span class="token symbol">SparseConfig</span> <span class="token punctuation">{</span>
 <span class="token keyword">mut</span><span class="token punctuation">:</span>
@@ -544,6 +529,16 @@ NOTE: this method can be used to modify the columns; e.g. with o.col(0)[0] = 123
 	mumps_max_memory_per_processor      <span class="token builtin">int</span>  <span class="token comment">// MUMPS control parameters (check MUMPS solver manual) ICNTL(23) default = 2000Mb</span>
 <span class="token punctuation">}</span></code></pre>
 <p>The SparseConfig structure holds configuration arguments for sparse solvers</p>
+
+</section>
+		<section id="SparseConfig.SparseConfig__static__new" class="doc-node">
+			<div class="title"><h2>fn (SparseConfig) SparseConfig__static__new <a href="#SparseConfig.SparseConfig__static__new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/sparse_config.v#L23"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> SparseConfig<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span> SparseConfig</code></pre>
+<p>SparseConfig.new returns a new SparseConfig Input:  comm -- may be nil</p>
+
+</section>
+		<section id="SparseConfig.SparseConfig__static__with_comm" class="doc-node">
+			<div class="title"><h2>fn (SparseConfig) SparseConfig__static__with_comm <a href="#SparseConfig.SparseConfig__static__with_comm">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/sparse_config.v#L34"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> SparseConfig<span class="token punctuation">.</span><span class="token function">with_comm</span><span class="token punctuation">(</span>comm <span class="token operator">&</span>mpi<span class="token punctuation">.</span>Communicator<span class="token punctuation">)</span> SparseConfig</code></pre>
+<p>SparseConfig.with_comm returns a new SparseConfig</p>
 
 </section>
 		<section id="SparseConfig.set_mumps_symmetry" class="doc-node">
@@ -597,8 +592,13 @@ factorization phase.<br>
 of this matrix are stored directly.</p>
 
 </section>
+		<section id="Triplet.Triplet__static__new" class="doc-node">
+			<div class="title"><h2>fn (Triplet) Triplet__static__new <a href="#Triplet.Triplet__static__new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/sparse_matrix.v#L38"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> Triplet<span class="token punctuation">.</span>new<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> max <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">&</span>Triplet<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span></code></pre>
+<p>Triplet.new returns a new Triplet. This is a wrapper to new(Triplet) followed by init()</p>
 
-						<div class="footer">Powered by vdoc. Generated on: 17 Oct 2023 03:23:15</div>
+</section>
+
+						<div class="footer">Powered by vdoc. Generated on: 17 Oct 2023 04:13:08</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#den_solve">fn den_solve</a>        <ul>
 </ul>
@@ -610,9 +610,6 @@ of this matrix are stored directly.</p>
 </ul>
 </li>
 <li class="open"><a href="#matrix_cond_num">fn matrix_cond_num</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#matrix_deep2">fn matrix_deep2</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#matrix_det">fn matrix_det</a>        <ul>
@@ -634,9 +631,6 @@ of this matrix are stored directly.</p>
 </ul>
 </li>
 <li class="open"><a href="#matrix_matrix_tr_muladd">fn matrix_matrix_tr_muladd</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#matrix_raw">fn matrix_raw</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#matrix_svd">fn matrix_svd</a>        <ul>
@@ -661,18 +655,6 @@ of this matrix are stored directly.</p>
 </ul>
 </li>
 <li class="open"><a href="#matrix_vector_mul_add">fn matrix_vector_mul_add</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#new_matrix">fn new_matrix</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#new_sparse_config">fn new_sparse_config</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#new_sparse_config_with_comm">fn new_sparse_config_with_comm</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#new_triplet">fn new_triplet</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#safe_print">fn safe_print</a>        <ul>
@@ -770,9 +752,14 @@ of this matrix are stored directly.</p>
 </ul>
 </li>
 <li class="open"><a href="#Matrix">struct Matrix</a>        <ul>
+<li><a href="#Matrix.Matrix__static__new">fn Matrix__static__new</a></li>
+<li><a href="#Matrix.Matrix__static__deep2">fn Matrix__static__deep2</a></li>
+<li><a href="#Matrix.Matrix__static__raw">fn Matrix__static__raw</a></li>
 </ul>
 </li>
 <li class="open"><a href="#SparseConfig">struct SparseConfig</a>        <ul>
+<li><a href="#SparseConfig.SparseConfig__static__new">fn SparseConfig__static__new</a></li>
+<li><a href="#SparseConfig.SparseConfig__static__with_comm">fn SparseConfig__static__with_comm</a></li>
 <li><a href="#SparseConfig.set_mumps_symmetry">fn set_mumps_symmetry</a></li>
 <li><a href="#SparseConfig.set_umfpack_symmetry">fn set_umfpack_symmetry</a></li>
 <li><a href="#SparseConfig.set_mumps_ordering">fn set_mumps_ordering</a></li>
@@ -780,6 +767,7 @@ of this matrix are stored directly.</p>
 </ul>
 </li>
 <li class="open"><a href="#Triplet">struct Triplet</a>        <ul>
+<li><a href="#Triplet.Triplet__static__new">fn Triplet__static__new</a></li>
 </ul>
 </li>
 </ul></div>
