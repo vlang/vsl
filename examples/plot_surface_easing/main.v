@@ -1,6 +1,6 @@
 module main
 
-import easings
+import vsl.easings
 import vsl.plot
 
 fn main() {
