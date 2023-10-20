@@ -1,0 +1,40 @@
+name: Lint
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout VSL
+        uses: actions/checkout@v4
+        with:
+          path: vsl
+      - name: Setup V
+        uses: vlang/setup-v@v1.3
+        with:
+          check-latest: true
+      - name: Setup VSL as V module
+        run: mv vsl ~/.vmodules/
+      - name: Validate Docs
+        run: v check-md -hide-warnings ~/.vmodules/vsl
+
+  fmt:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout VSL
+        uses: actions/checkout@v4
+        with:
+          path: vsl
+      - name: Setup V
+        uses: vlang/setup-v@v1.3
+        with:
+          check-latest: true
+      - name: Setup VSL as V module
+        run: mv vsl ~/.vmodules/
+      - name: Check Formatting
+        # NOTE: `cd` into module dir required. Currently, running `v fmt -verify` from outside the module dir
+        # would encounter errors and `v fmt -w` would even break the module.
+        run: cd ~/.vmodules/vsl && v fmt -verify .
