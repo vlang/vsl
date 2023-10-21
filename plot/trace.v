@@ -12,13 +12,13 @@ pub enum TraceType {
 }
 
 // XType is a type for x-axis data
-pub type XType = []f64 | []string
+pub type XType = []f64 | []int | []string
 
 // YType is a type for y-axis data
-pub type YType = []f64 | []string
+pub type YType = []f64 | []int | []string
 
 // ZType is a type for z-axis data
-pub type ZType = [][]f64 | []f64
+pub type ZType = [][]f64 | [][]int | []f64 | []int
 
 // CommonTrace is a struct for common trace properties
 [params]
