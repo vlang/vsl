@@ -189,14 +189,10 @@ pub fn dgeev(calc_vl bool, calc_vr bool, n int, mut a []f64, lda int, wr []f64, 
 		ldvr = 1
 	}
 	unsafe {
-		info := C.LAPACKE_dgeev(.row_major, job_vlr(calc_vl), job_vlr(calc_vr), n, &a[0],
-			lda, &wr[0], &wi[0], &vvl, ldvl, &vvr, ldvr)
+		info := C.LAPACKE_dgeev(.row_major, &char(job_vlr(calc_vl).str().str), &char(job_vlr(calc_vr).str().str),
+			n, &a[0], lda, &wr[0], &wi[0], &vvl, ldvl, &vvr, ldvr)
 		if info != 0 {
 			errors.vsl_panic('lapack failed', .efailed)
 		}
 	}
-}
-
-pub fn dlange(norm &char, m int, n int, a []f64, lda int, work []f64) f64 {
-	return unsafe { C.LAPACKE_dlange(.row_major, norm, m, n, &a[0], lda, &work[0]) }
 }

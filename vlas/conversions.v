@@ -7,29 +7,19 @@ import vsl.errors
 import vsl.vlas.internal.vblas
 
 pub fn c_trans(trans bool) vblas.Transpose {
-	if trans {
-		return .trans
-	}
-	return .no_trans
+	return if trans { .trans } else { .no_trans }
 }
 
 pub fn c_uplo(up bool) vblas.Uplo {
-	if up {
-		return .upper
-	}
-	return .lower
+	return if up { .upper } else { .lower }
 }
 
 fn l_uplo(up bool) u8 {
 	return if up { `U` } else { `L` }
 }
 
-fn job_vlr(do_calc bool) &char {
-	return &char(if do_calc {
-		'V'
-	} else {
-		'N'
-	}.str)
+fn job_vlr(do_calc bool) rune {
+	return if do_calc { `V` } else { `N` }
 }
 
 // slice_to_col_major converts nested slice into an array representing a col-major matrix
