@@ -20,24 +20,24 @@ fn main() {
 		0,
 	]
 	x := util.arange(y.len)
-	z := util.arange(y.len).map(util.arange(y.len).map(f64(it * it)))
-
 	mut plt := plot.Plot.new()
-	plt.scatter3d(
+	plt.scatter(
 		x: x
 		y: y
-		z: z
 		mode: 'lines+markers'
 		marker: plot.Marker{
 			size: []f64{len: x.len, init: 10.0}
-			color: []string{len: x.len, init: '#0000FF'}
+			color: []string{len: x.len, init: '#FF0000'}
 		}
 		line: plot.Line{
-			color: '#0000FF'
+			color: '#FF0000'
 		}
 	)
 	plt.layout(
 		title: 'Scatter plot example'
+		annotations: [plot.Annotation{
+			text: 'test annotation'
+		}]
 	)
 	plt.show()!
 }

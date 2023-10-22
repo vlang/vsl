@@ -18,7 +18,7 @@ y := [
 	1,
 	0,
 ]
-x := util.arange(y.len).map(f64(it))
+x := util.arange(y.len)
 
 mut plt := plot.Plot.new()
 plt.scatter(
