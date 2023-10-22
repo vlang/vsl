@@ -20,18 +20,16 @@ pub fn c_uplo(up bool) vblas.Uplo {
 	return .lower
 }
 
-pub fn l_uplo(up bool) u8 {
-	if up {
-		return `U`
-	}
-	return `L`
+fn l_uplo(up bool) u8 {
+	return if up { `U` } else { `L` }
 }
 
-pub fn job_vlr(do_calc bool) u8 {
-	if do_calc {
-		return `V`
-	}
-	return `N`
+fn job_vlr(do_calc bool) &char {
+	return &char(if do_calc {
+		'V'
+	} else {
+		'N'
+	}.str)
 }
 
 // slice_to_col_major converts nested slice into an array representing a col-major matrix
