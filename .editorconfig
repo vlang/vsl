@@ -4,7 +4,7 @@ end_of_line = lf
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-[*.{v,vsh}]
+[*.{v,vsh,mod}]
 indent_style = tab
 
 [*.rst]
