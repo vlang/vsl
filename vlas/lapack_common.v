@@ -15,9 +15,7 @@ fn C.LAPACKE_dpotrf(matrix_layout vblas.MemoryLayout, up u32, n int, a &f64, lda
 
 fn C.LAPACKE_dgeev(matrix_layout vblas.MemoryLayout, calc_vl &char, calc_vr &char, n int, a &f64, lda int, wr &f64, wi &f64, vl &f64, ldvl_ int, vr &f64, ldvr_ int) int
 
-fn C.LAPACKE_dlange(matrix_layout vblas.MemoryLayout, norm &char, m int, n int, a &f64, lda int, work &f64) f64
-
-fn C.LAPACKE_dsyev(matrix_layout vblas.MemoryLayout, jobz &char, uplo &char, n int, a &f64, lda int, w &f64, work &f64, lwork int) int
+fn C.LAPACKE_dsyev(matrix_layout vblas.MemoryLayout, jobz byte, uplo byte, n int, a &f64, lda int, w &f64, work &f64, lwork int) int
 
 fn C.LAPACKE_dgebal(matrix_layout vblas.MemoryLayout, job &char, n int, a &f64, lda int, ilo int, ihi int, scale &f64) int
 

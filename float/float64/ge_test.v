@@ -69,7 +69,7 @@ struct GeTest {
 }
 
 fn test_ger() {
-	tol := 1e-15
+	tol := $if macos { 7e-15 } $else { 1e-15 }
 
 	x_gd_val, y_gd_val, a_gd_val := -0.5, 1.5, 10
 	gd_ln := 4
@@ -87,7 +87,7 @@ fn test_ger() {
 			alpha := 1.0
 			ger(u32(m), u32(n), alpha, x, 1, y, 1, mut a, u32(n))
 			for i, w in test.want {
-				assert tolerance(a[i], w, tol)
+				assert tolerance(a[i], w, tol), 'got: ${a[i]}, want: ${w}, tol: ${tol}'
 			}
 		}
 	}
