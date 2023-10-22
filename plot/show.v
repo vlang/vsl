@@ -14,13 +14,13 @@ pub struct PlotConfig {
 }
 
 // show starts a web server and opens a browser window to display the plot.
-pub fn (plot Plot) show(config PlotConfig) ! {
+pub fn (p Plot) show(config PlotConfig) ! {
 	$if test ? {
 		println('Ignoring plot.show() because we are running in test mode')
 	} $else {
 		mut handler := PlotlyHandler{
 			use_cdn: true
-			plot: plot
+			plot: p
 		}
 		listener := net.listen_tcp(net.AddrFamily.ip, ':0')!
 		mut server := &http.Server{
@@ -46,13 +46,13 @@ pub struct PlotlyScriptConfig {
 }
 
 // get_plotly_script returns the plot script as an html tag.
-pub fn (plot Plot) get_plotly_script(element_id string, config PlotlyScriptConfig) &html.Tag {
-	traces_with_type := plot.traces.map({
+pub fn (p Plot) get_plotly_script(element_id string, config PlotlyScriptConfig) &html.Tag {
+	traces_with_type := p.traces.map({
 		'type':  TracesWithTypeValue(it.trace_type())
 		'trace': TracesWithTypeValue(it)
 	})
 	traces_with_type_json := encode(traces_with_type)
-	layout_json := encode(plot.layout)
+	layout_json := encode(p.layout)
 
 	plot_script := &html.Tag{
 		name: 'script'
@@ -92,9 +92,9 @@ Plotly.newPlot("${element_id}", payload);'
 	return plot_script
 }
 
-fn (plot Plot) get_html(element_id string, config PlotConfig) string {
-	title := if plot.layout.title == '' { 'VSL Plot' } else { plot.layout.title }
-	plot_script := plot.get_plotly_script(element_id, use_cdn: config.use_cdn)
+fn (p Plot) get_html(element_id string, config PlotConfig) string {
+	title := if p.layout.title == '' { 'VSL Plot' } else { p.layout.title }
+	plot_script := p.get_plotly_script(element_id, use_cdn: config.use_cdn)
 
 	return '<!DOCTYPE html>
 <html>
@@ -135,6 +135,10 @@ fn encode[T](obj T) string {
 	strings_to_replace := [
 		',"[]f64"',
 		'"[]f64"',
+		',"[][]f64"',
+		'"[][]f64"',
+		',"[]int"',
+		'"[]int"',
 		',"[]string"',
 		'"[]string"',
 	]
