@@ -118,18 +118,13 @@ jobs:
         run: mv ./vsl ~/.vmodules
 
       - name: Execute Tests using Pure V Backend
-        # TODO: Remove continue-on-error when CI is fixed for macOS
-        continue-on-error: true
         run: ~/.vmodules/vsl/bin/test
 
       - name: Execute Tests using Pure V Backend with Pure C Blas
-        continue-on-error: true
         run: ~/.vmodules/vsl/bin/test --use-cblas
 
       - name: Execute Tests using Pure V Backend and Garbage Collection enabled
-        continue-on-error: true
         run: ~/.vmodules/vsl/bin/test --use-gc boehm
 
       - name: Execute Tests using Pure V Backend with Pure C Blas and Garbage Collection enabled
-        continue-on-error: true
         run: ~/.vmodules/vsl/bin/test --use-cblas --use-gc boehm
