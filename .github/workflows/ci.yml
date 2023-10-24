@@ -105,6 +105,7 @@ jobs:
           brew install open-mpi
           brew install openblas
           brew install lapack
+          brew install opencl-headers
 
       - name: Move VSL source code to V Modules
         run: mv ./vsl ~/.vmodules
