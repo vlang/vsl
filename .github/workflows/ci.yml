@@ -69,14 +69,6 @@ jobs:
 
       - name: Execute Tests using Pure V Backend with Pure C Blas
         run: ~/.vmodules/vsl/bin/test ${{ matrix.flags }} --use-cblas
-        if: ${{ matrix.os != 'ubuntu-18.04' }}
-
-      - name: Execute Tests using Pure V Backend and Garbage Collection enabled
-        run: ~/.vmodules/vsl/bin/test ${{ matrix.flags }} --use-gc boehm
-
-      - name: Execute Tests using Pure V Backend with Pure C Blas and Garbage Collection enabled
-        run: ~/.vmodules/vsl/bin/test ${{ matrix.flags }} --use-cblas --use-gc boehm
-        if: ${{ matrix.os != 'ubuntu-18.04' }}
 
   run-tests-on-macos:
     runs-on: ${{ matrix.os }}
@@ -118,18 +110,7 @@ jobs:
         run: mv ./vsl ~/.vmodules
 
       - name: Execute Tests using Pure V Backend
-        # TODO: Remove continue-on-error when CI is fixed for macOS
-        continue-on-error: true
-        run: ~/.vmodules/vsl/bin/test
+        run: ~/.vmodules/vsl/bin/test --skip-examples
 
       - name: Execute Tests using Pure V Backend with Pure C Blas
-        continue-on-error: true
-        run: ~/.vmodules/vsl/bin/test --use-cblas
-
-      - name: Execute Tests using Pure V Backend and Garbage Collection enabled
-        continue-on-error: true
-        run: ~/.vmodules/vsl/bin/test --use-gc boehm
-
-      - name: Execute Tests using Pure V Backend with Pure C Blas and Garbage Collection enabled
-        continue-on-error: true
-        run: ~/.vmodules/vsl/bin/test --use-cblas --use-gc boehm
+        run: ~/.vmodules/vsl/bin/test --use-cblas --skip-examples

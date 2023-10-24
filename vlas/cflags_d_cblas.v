@@ -6,5 +6,11 @@ module vlas
 #flag windows -lgfortran
 #flag darwin -I/usr/local/opt/openblas/include
 #flag darwin -L/usr/local/opt/openblas/lib
+#flag darwin -L/usr/local/opt/lapack/lib
 #flag -I@VMODROOT
 #flag -lopenblas -llapacke
+
+$if macos {
+	#include <lapacke.h>
+	#include <cblas.h>
+}

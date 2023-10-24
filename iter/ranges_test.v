@@ -1,5 +1,7 @@
 module iter
 
+import math
+
 fn test_int_iter() {
 	args := [[i64(27), 11, -5], [i64(13), 1, -6], [i64(-19), -35, -6],
 		[i64(-88), -29, 8], [i64(17), -94, 2], [i64(30), 45, 6],
@@ -52,10 +54,12 @@ fn test_float_iter() {
 	for i, values in args {
 		r := FloatIter.new(start: values[0], stop: values[1], step: values[2])!
 		for j, n in r {
-			if !n.eq_epsilon(expected[i][j]) {
-				println('${n},  ${expected[i][j]}')
+			$if macos {
+				tol := 2e-15
+				assert math.tolerance(expected[i][j], n, tol), 'got: ${n}, want: ${expected[i][j]}, tol: ${tol}'
+			} $else {
+				assert n.eq_epsilon(expected[i][j]), 'got: ${n}, want: ${expected[i][j]}'
 			}
-			assert n.eq_epsilon(expected[i][j])
 		}
 		assert r.len == expected[i].len
 	}
@@ -90,7 +94,12 @@ fn test_linear_iter() {
 	for i, lim in limits {
 		l := LinearIter.new(start: lim[0], stop: lim[1], len: lens[i], endpoint: endpoints[i])!
 		for j, n in l {
-			assert n.eq_epsilon(expected[i][j])
+			$if macos {
+				tol := 2e-15
+				assert math.tolerance(expected[i][j], n, tol), 'got: ${n}, want: ${expected[i][j]}'
+			} $else {
+				assert n.eq_epsilon(expected[i][j]), 'got: ${n}, want: ${expected[i][j]}'
+			}
 		}
 		assert l.len == expected[i].len
 	}

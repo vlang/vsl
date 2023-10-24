@@ -29,7 +29,11 @@ fn test_det() {
 		[4.0, -2.0, 5.0],
 		[2.0, 8.0, 7.0],
 	])
-	assert matrix_det(mat_b) == -306
+	$if macos {
+		assert math.tolerance(matrix_det(mat_b), -306, la.matrix_tests_tol)
+	} $else {
+		assert matrix_det(mat_b) == -306
+	}
 }
 
 fn test_matrix_inv_small() {

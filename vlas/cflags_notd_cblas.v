@@ -8,3 +8,7 @@ module vlas
 #flag darwin -L/usr/local/opt/lapack/lib
 #flag -I@VMODROOT
 #flag -llapacke
+
+$if macos {
+	#include <lapacke.h>
+}
