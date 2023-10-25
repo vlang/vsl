@@ -1,7 +1,7 @@
 #ifndef VCL_OPENCL_H
 #define VCL_OPENCL_H
 
-#ifdef DARWIN
+#ifdef __APPLE__
 #include <OpenCL/opencl.h>
 #else
 #include <CL/cl.h>

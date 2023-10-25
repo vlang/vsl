@@ -65,7 +65,7 @@ if [[ -z "${skip_examples}" ]]; then
             continue
         fi
         echo "Compiling ${file}"
-        v ${flags} -o "${file}.o" "${file}"
+        v ${flags} -d dlopencl -o "${file}.o" "${file}"
         echo "${file}.o created"
         echo "Removing ${file}.o"
         rm -f "${file}.o"
