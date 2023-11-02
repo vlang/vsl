@@ -36,7 +36,7 @@
 						<div class="info">
 							<div class="module">vsl</div>
 							<div class="toggle-version-container">
-								<span>0.1.50 a63f3e6</span>
+								<span>0.1.50 0b58a4d</span>
 								<div
 									id="dark-mode-toggle"
 									role="switch"
@@ -67,13 +67,7 @@
 				<div class="doc-container">
 					<div class="doc-content">
 								<section id="readme_graph" class="doc-node">
-			<div class="title"><h1> graph <a href="#readme_graph">#</a></h1></div><h1>Graph theory structures and algorithms</h1>
-<p>This package implements algorithms for handling graphs and solving problems such as shortest path
-finding. It also implements an algorithm to solve the assignment problem.</p>
-<h2>Graph representation</h2>
-<p>In <code>graph</code>, directed graphs are mainly defined by edges. A weight can be assigned to each edge as
-well. For example, the graph below:</p>
-<pre><code class="language-console">          [10]
+			<div class="title"><h1> graph <a href="#readme_graph">#</a></h1></div><h1>Graph theory structures and algorithms</h1><p>This package implements algorithms for handling graphs and solving problems such as shortest pathfinding. It also implements an algorithm to solve the assignment problem.</p><h2>Graph representation</h2><p>In <code>graph</code>, directed graphs are mainly defined by edges. A weight can be assigned to each edge aswell. For example, the graph below:</p><pre><code class="language-console">          [10]
      0 ––––––––→ 3      numbers in parentheses
      |    (1)    ↑      indicate edge ids
   [5]|(0)        |
@@ -81,26 +75,17 @@ well. For example, the graph below:</p>
      ↓    (2)    |      numbers in brackets
      1 ––––––––→ 2      indicate weights
           [3]
-</code></pre>
-<p>is defined with the following code:</p>
-<pre><code class="language-v">module main
+</code></pre><p>is defined with the following code:</p><pre><code class="language-v"><span class="token keyword">module</span> main
 
-import vsl.graph
+<span class="token keyword">import</span> vsl<span class="token punctuation">.</span>graph
 
-edges := [[0, 1], [0, 3], [1, 2], [2, 3]]
-weights_e := [5.0, 10.0, 3.0, 1.0]
-verts := [][]f64{}
-weights_v := []f64{}
-g := graph.Graph.new(edges, weights_e, verts, weights_v)
-// print distance matrix
-print(g.str_dist_matrix())
-</code></pre>
-<p>Vertex coordinates can be specified as well. Furthermore, weights can be assigned to vertices. These
-are useful when computing distances, for example.</p>
-<h2>Floyd-Warshall algorithm to compute shortest paths</h2>
-<p>The <code>shortest_paths</code> method of <code>Graph</code> computes the shortest paths using the Floyd-Warshall
-algorithm. For example, the graph above has the following distances matrix:</p>
-<pre><code class="language-console">       [10]
+edges <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
+weights_e <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token number">5.0</span><span class="token punctuation">,</span> <span class="token number">10.0</span><span class="token punctuation">,</span> <span class="token number">3.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">]</span>
+verts <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+weights_v <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+g <span class="token operator">:=</span> graph<span class="token punctuation">.</span>Graph<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>edges<span class="token punctuation">,</span> weights_e<span class="token punctuation">,</span> verts<span class="token punctuation">,</span> weights_v<span class="token punctuation">)</span>
+<span class="token comment">// print distance matrix</span>
+<span class="token function">print</span><span class="token punctuation">(</span>g<span class="token punctuation">.</span><span class="token function">str_dist_matrix</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre><p>Vertex coordinates can be specified as well. Furthermore, weights can be assigned to vertices. Theseare useful when computing distances, for example.</p><h2>Floyd-Warshall algorithm to compute shortest paths</h2><p>The <code>shortest_paths</code> method of <code>Graph</code> computes the shortest paths using the Floyd-Warshallalgorithm. For example, the graph above has the following distances matrix:</p><pre><code class="language-console">       [10]
     0 ––––––→ 3            numbers in brackets
     |         ↑            indicate weights
 [5] |         | [1]
@@ -114,12 +99,7 @@ graph:  j= 0  1  2  3
            ∞  0  3  ∞ |  1  ⇒  w(1→2)=3
            ∞  ∞  0  1 |  2  ⇒  w(2→3)=1
            ∞  ∞  ∞  0 |  3
-</code></pre>
-<p>After running the <code>shortest_paths</code> command,
-paths from source (s) to destination (t) can be extracted
-with the <code>path</code> method.</p>
-<h3>Example: Small graph</h3>
-<pre><code class="language-console">         [10]
+</code></pre><p>After running the <code>shortest_paths</code> command,paths from source (s) to destination (t) can be extractedwith the <code>path</code> method.</p><h3>Example: Small graph</h3><pre><code class="language-console">         [10]
     0 ––––––––→ 3      numbers in parentheses
     |    (1)    ↑      indicate edge ids
  [5]|(0)        |
@@ -127,26 +107,24 @@ with the <code>path</code> method.</p>
     ↓    (2)    |      numbers in brackets
     1 ––––––––→ 2      indicate weights
          [3]
-</code></pre>
-<pre><code class="language-v">module main
+</code></pre><pre><code class="language-v"><span class="token keyword">module</span> main
 
-import vsl.graph
+<span class="token keyword">import</span> vsl<span class="token punctuation">.</span>graph
 
-// initialise graph
-edges := [[0, 1], [0, 3], [1, 2], [2, 3]]
-weights_e := [5.0, 10.0, 3.0, 1.0]
-verts := [][]f64{}
-weights_v := []f64{}
-g := graph.Graph.new(edges, weights_e, verts, weights_v)
-// compute paths
-g.shortest_paths(.fw)
-// print shortest path from 0 to 2
-print(g.path(0, 2))
-// print shortest path from 0 to 3
-print(g.path(0, 3))
-// print distance matrix
-print(g.str_dist_matrix())
-</code></pre>
+<span class="token comment">// initialise graph</span>
+edges <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
+weights_e <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token number">5.0</span><span class="token punctuation">,</span> <span class="token number">10.0</span><span class="token punctuation">,</span> <span class="token number">3.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">]</span>
+verts <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+weights_v <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+g <span class="token operator">:=</span> graph<span class="token punctuation">.</span>Graph<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>edges<span class="token punctuation">,</span> weights_e<span class="token punctuation">,</span> verts<span class="token punctuation">,</span> weights_v<span class="token punctuation">)</span>
+<span class="token comment">// compute paths</span>
+g<span class="token punctuation">.</span><span class="token function">shortest_paths</span><span class="token punctuation">(</span><span class="token punctuation">.</span>fw<span class="token punctuation">)</span>
+<span class="token comment">// print shortest path from 0 to 2</span>
+<span class="token function">print</span><span class="token punctuation">(</span>g<span class="token punctuation">.</span><span class="token function">path</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment">// print shortest path from 0 to 3</span>
+<span class="token function">print</span><span class="token punctuation">(</span>g<span class="token punctuation">.</span><span class="token function">path</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment">// print distance matrix</span>
+<span class="token function">print</span><span class="token punctuation">(</span>g<span class="token punctuation">.</span><span class="token function">str_dist_matrix</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
 
 </section>
 
@@ -215,7 +193,7 @@ print(g.str_dist_matrix())
 
 </section>
 
-						<div class="footer">Powered by vdoc. Generated on: 1 Nov 2023 01:02:17</div>
+						<div class="footer">Powered by vdoc. Generated on: 2 Nov 2023 04:59:36</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_graph">README</a></li>
 <li class="open"><a href="#ShortestPaths">enum ShortestPaths</a>        <ul>

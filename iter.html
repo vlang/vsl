@@ -36,7 +36,7 @@
 						<div class="info">
 							<div class="module">vsl</div>
 							<div class="toggle-version-container">
-								<span>0.1.50 a63f3e6</span>
+								<span>0.1.50 0b58a4d</span>
 								<div
 									id="dark-mode-toggle"
 									role="switch"
@@ -67,24 +67,15 @@
 				<div class="doc-container">
 					<div class="doc-content">
 								<section id="readme_iter" class="doc-node">
-			<div class="title"><h1> iter <a href="#readme_iter">#</a></h1></div><h1>Iterator Tools</h1>
-<p>This module provides two different ways of managing combinatorics.
-Let see an example for <code>combinations</code>.</p>
-<h2>Fully formed array of all Combinations</h2>
-<pre><code class="language-v">// combinations will return an array of all length `r` combinations of `data`
-// While waiting on https://github.com/vlang/v/issues/7753 to be fixed, the function
-// assumes f64 array input. Will be easy to change to generic later
-pub fn combinations(data []f64, r int) [][]f64
-</code></pre>
-<h2>Lazy generation</h2>
-<p>This case is optimal to generate combinations in a lazy way, optimizing memory use:</p>
-<pre><code class="language-v">// CombinationsIter.new will return an iterator that allows
-// lazy computation for all length `r` combinations of `data`
-pub fn CombinationsIter.new(data []f64, r int) CombinationsIter
+			<div class="title"><h1> iter <a href="#readme_iter">#</a></h1></div><h1>Iterator Tools</h1><p>This module provides two different ways of managing combinatorics.Let see an example for <code>combinations</code>.</p><h2>Fully formed array of all Combinations</h2><pre><code class="language-v"><span class="token comment">// combinations will return an array of all length `r` combinations of `data`</span>
+<span class="token comment">// While waiting on https://github.com/vlang/v/issues/7753 to be fixed, the function</span>
+<span class="token comment">// assumes f64 array input. Will be easy to change to generic later</span>
+<span class="token keyword">pub</span> <span class="token keyword">fn</span> <span class="token function">combinations</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> r <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre><h2>Lazy generation</h2><p>This case is optimal to generate combinations in a lazy way, optimizing memory use:</p><pre><code class="language-v"><span class="token comment">// CombinationsIter.new will return an iterator that allows</span>
+<span class="token comment">// lazy computation for all length `r` combinations of `data`</span>
+<span class="token keyword">pub</span> <span class="token keyword">fn</span> CombinationsIter<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> r <span class="token builtin">int</span><span class="token punctuation">)</span> CombinationsIter
 
-// next will return next combination if possible
-pub fn (mut o CombinationsIter) next() ?[]f64
-</code></pre>
+<span class="token comment">// next will return next combination if possible</span>
+<span class="token keyword">pub</span> <span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o CombinationsIter<span class="token punctuation">)</span> <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">?</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 
 </section>
 
@@ -95,11 +86,7 @@ pub fn (mut o CombinationsIter) next() ?[]f64
 </section>
 		<section id="combinations_with_replacement" class="doc-node">
 			<div class="title"><h2>fn combinations_with_replacement <a href="#combinations_with_replacement">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/iter/comb.v#L86"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">combinations_with_replacement</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> r <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
-<p>combinations_with_replacement will return r length subsequences of elements from the
-input <code>data</code> allowing individual elements to be repeated more than once.<br>
-This is as close a translation of python's [itertools.combinations_with_replacement] (<a href="https://docs.python.org/3.9/library/itertools.html#itertools.combinations_with_replacement">https://docs.python.org/3.9/library/itertools.html#itertools.combinations_with_replacement</a>)
-as I could manage.<br>
-Using f64 array instead of generic while waiting on <a href="https://github.com/vlang/v/issues/7753">https://github.com/vlang/v/issues/7753</a></p>
+<p>combinations_with_replacement will return r length subsequences of elements from theinput <code>data</code> allowing individual elements to be repeated more than once.<br />This is as close a translation of python's [itertools.combinations_with_replacement] (<a href="https://docs.python.org/3.9/library/itertools.html#itertools.combinations_with_replacement">https://docs.python.org/3.9/library/itertools.html#itertools.combinations_with_replacement</a>)as I could manage.<br />Using f64 array instead of generic while waiting on <a href="https://github.com/vlang/v/issues/7753">https://github.com/vlang/v/issues/7753</a></p>
 
 </section>
 		<section id="permutations" class="doc-node">
@@ -114,12 +101,7 @@ Using f64 array instead of generic while waiting on <a href="https://github.com/
 </section>
 		<section id="FloatIter.FloatIter__static__new" class="doc-node">
 			<div class="title"><h2>fn (FloatIter) FloatIter__static__new <a href="#FloatIter.FloatIter__static__new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/iter/ranges.v#L87"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> FloatIter<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>params FloatIterParams<span class="token punctuation">)</span> <span class="token operator">!</span>FloatIter</code></pre>
-<h2>FloatIter.new returns an iterator of evenly spaced floats in the half-open interval <code>[start, stop)</code>.</h2>
-<p>parameters: 	FloatIterParams {
--start f64 :           the start of the range.<br>
--stop  f64 [required]: the end of the range (exclusive).<br>
--step  f64 = 1:        the step between the numbers.<br>
-}</p>
+<h2>FloatIter.new returns an iterator of evenly spaced floats in the half-open interval <code>[start, stop)</code>.</h2><p>parameters: 	FloatIterParams {-start f64 :           the start of the range.<br />-stop  f64 [required]: the end of the range (exclusive).<br />-step  f64 = 1:        the step between the numbers.<br />}</p>
 
 </section>
 		<section id="FloatIter.next" class="doc-node">
@@ -129,12 +111,7 @@ Using f64 array instead of generic while waiting on <a href="https://github.com/
 </section>
 		<section id="IntIter.IntIter__static__new" class="doc-node">
 			<div class="title"><h2>fn (IntIter) IntIter__static__new <a href="#IntIter.IntIter__static__new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/iter/ranges.v#L31"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> IntIter<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>params IntIterParams<span class="token punctuation">)</span> <span class="token operator">!</span>IntIter</code></pre>
-<h2>IntIter.new returns an iterator of evenly spaced integers numbers in the half-open interval <code>[start, stop)</code>.</h2>
-<p>parameters: 	IntIterParams {
--start i64 :           the start of the range.<br>
--stop  i64 [required]: the end of the range (exclusive).<br>
--step  i64 = 1:        the step between the numbers.<br>
-}</p>
+<h2>IntIter.new returns an iterator of evenly spaced integers numbers in the half-open interval <code>[start, stop)</code>.</h2><p>parameters: 	IntIterParams {-start i64 :           the start of the range.<br />-stop  i64 [required]: the end of the range (exclusive).<br />-step  i64 = 1:        the step between the numbers.<br />}</p>
 
 </section>
 		<section id="IntIter.next" class="doc-node">
@@ -144,14 +121,7 @@ Using f64 array instead of generic while waiting on <a href="https://github.com/
 </section>
 		<section id="LinearIter.LinearIter__static__new" class="doc-node">
 			<div class="title"><h2>fn (LinearIter) LinearIter__static__new <a href="#LinearIter.LinearIter__static__new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/iter/ranges.v#L145"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> LinearIter<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>params LinearIterParams<span class="token punctuation">)</span> <span class="token operator">!</span>LinearIter</code></pre>
-<h2>LinearIter.new returns an iterator of <code>len</code> evenly spaced floats in the interval <code>[start, stop]</code>.<br>
-The endpoint of the interval can optionally be excluded.</h2>
-<p>parameters: 	LinearIterParams {
--start    f64 :           The start of the range.<br>
--stop     f64 [required]: The end of the range.<br>
--len      i64  = 50:      Number of samples to generate. Must be non-negative.<br>
--endpoint bool = true:    If true, <code>stop</code> is the last sample. Otherwise, it is not included.<br>
-}</p>
+<h2>LinearIter.new returns an iterator of <code>len</code> evenly spaced floats in the interval <code>[start, stop]</code>.<br />The endpoint of the interval can optionally be excluded.</h2><p>parameters: 	LinearIterParams {-start    f64 :           The start of the range.<br />-stop     f64 [required]: The end of the range.<br />-len      i64  = 50:      Number of samples to generate. Must be non-negative.<br />-endpoint bool = true:    If true, <code>stop</code> is the last sample. Otherwise, it is not included.<br />}</p>
 
 </section>
 		<section id="LinearIter.next" class="doc-node">
@@ -161,15 +131,7 @@ The endpoint of the interval can optionally be excluded.</h2>
 </section>
 		<section id="LogIter.LogIter__static__new" class="doc-node">
 			<div class="title"><h2>fn (LogIter) LogIter__static__new <a href="#LogIter.LogIter__static__new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/iter/ranges.v#L211"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> LogIter<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>params LogIterParams<span class="token punctuation">)</span> <span class="token operator">!</span>LogIter</code></pre>
-<h2>LogIter.new returns an iterator of <code>len</code> numbers evenly spaced on a logarithmic scale.<br>
-The sequence starts at <code>base ^ start</code> and ends in <code>base ^ stop</code> (if <code>endpoint</code> = true).</h2>
-<p>parameters:  LogIterParams {
--start    f64 [required]: <code>base ^ start</code> is the starting value of the sequence.<br>
--stop     f64 [required]: <code>base ^ stop</code> is the final value of the sequence, unless endpoint is false. In that case, num + 1 values are spaced over the interval in log-space, of which all but the last (a sequence of length len) are returned.<br>
--len      i64  = 50:      Number of samples to generate.<br>
--base     f64  = 10.0:    The base of the log space.<br>
--endpoint bool = true:    If true, bas ^ stop is the last sample. Otherwise, it is not included.<br>
-}</p>
+<h2>LogIter.new returns an iterator of <code>len</code> numbers evenly spaced on a logarithmic scale.<br />The sequence starts at <code>base ^ start</code> and ends in <code>base ^ stop</code> (if <code>endpoint</code> = true).</h2><p>parameters:  LogIterParams {-start    f64 [required]: <code>base ^ start</code> is the starting value of the sequence.<br />-stop     f64 [required]: <code>base ^ stop</code> is the final value of the sequence, unless endpoint is false. In that case, num + 1 values are spaced over the interval in log-space, of which all but the last (a sequence of length len) are returned.<br />-len      i64  = 50:      Number of samples to generate.<br />-base     f64  = 10.0:    The base of the log space.<br />-endpoint bool = true:    If true, bas ^ stop is the last sample. Otherwise, it is not included.<br />}</p>
 
 </section>
 		<section id="LogIter.next" class="doc-node">
@@ -368,7 +330,7 @@ The sequence starts at <code>base ^ start</code> and ends in <code>base ^ stop</
 
 </section>
 
-						<div class="footer">Powered by vdoc. Generated on: 1 Nov 2023 01:02:17</div>
+						<div class="footer">Powered by vdoc. Generated on: 2 Nov 2023 04:59:36</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_iter">README</a></li>
 <li class="open"><a href="#combinations">fn combinations</a>        <ul>

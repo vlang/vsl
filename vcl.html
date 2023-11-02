@@ -36,7 +36,7 @@
 						<div class="info">
 							<div class="module">vsl</div>
 							<div class="toggle-version-container">
-								<span>0.1.50 a63f3e6</span>
+								<span>0.1.50 0b58a4d</span>
 								<div
 									id="dark-mode-toggle"
 									role="switch"
@@ -67,91 +67,31 @@
 				<div class="doc-container">
 					<div class="doc-content">
 								<section id="readme_vcl" class="doc-node">
-			<div class="title"><h1> vcl <a href="#readme_vcl">#</a></h1></div><h1>V Computing Language</h1>
-<p>VCL is a high level way of writing programs with OpenCL using V.
-These are highly opinionated OpenCL bindings for V. It tries to make GPU computing easy,
-with some sugar abstraction, V's concurrency and channels.</p>
-<table>
-<thead>
-<tr>
-<th align="center"></th>
-<th align="center"></th>
-<th align="center"></th>
-<th align="center"></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center"><img src="https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/sierpinski_triangle.png" alt=""></td>
-<td align="center"><img src="https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/mandelbrot_blue_red_black.png" alt=""></td>
-<td align="center"><img src="https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/julia.png" alt=""></td>
-<td align="center"><img src="https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/mandelbrot_basic.png" alt=""></td>
-</tr>
-<tr>
-<td align="center"><img src="https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/mandelbrot_pseudo_random_colors.png" alt=""></td>
-<td align="center"><img src="https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/sierpinski_triangle2.png" alt=""></td>
-<td align="center"><img src="https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/julia_set.png" alt=""></td>
-<td align="center"><img src="https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/julia_basic.png" alt=""></td>
-</tr>
-</tbody>
-</table>
-<h2>Using custom OpenCL headers</h2>
-<blockquote>
-<p>IMPORTANT: Using a different OpenCL header version than the one used by the OpenCL library
-can cause problems. If you are using a custom OpenCL header, make sure that it is
-compatible with the OpenCL library you are using.</p>
-<p>NOTE: Darwin systems will look for the header file at <code>&lt;OpenCL/opencl.h&gt;</code> while any other
-systems will look for the header file at <code>&lt;CL/cl.h&gt;</code>.</p>
-</blockquote>
-<p>By default VCL uses the OpenCL headers from the system path and all the known
-locations for OpenCL headers (like <code>/usr/include</code> and <code>/usr/local/include</code>) and load the first
-header it finds. If you want to use a specific OpenCL header,
-you can add the <code>-I</code> flag into your V program with the path to the headers directory.</p>
-<pre><code class="language-v">#flag -I/custom/path/to/opencl/headers
-</code></pre>
-<p>or at compile time:</p>
-<pre><code class="language-sh">v -I/custom/path/to/opencl/headers my_program.v
-</code></pre>
-<p>You can also link or move the headers directory into VCL's source directory. For example:</p>
-<pre><code class="language-sh"># for darwin systems
+			<div class="title"><h1> vcl <a href="#readme_vcl">#</a></h1></div><h1>V Computing Language</h1><p>VCL is a high level way of writing programs with OpenCL using V.These are highly opinionated OpenCL bindings for V. It tries to make GPU computing easy,with some sugar abstraction, V's concurrency and channels.</p><table><thead><tr><th align="center"></th><th align="center"></th><th align="center"></th><th align="center"></th></tr></thead><tbody><tr><td align="center"><img src="https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/sierpinski_triangle.png" alt="" /></td><td align="center"><img src="https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/mandelbrot_blue_red_black.png" alt="" /></td><td align="center"><img src="https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/julia.png" alt="" /></td><td align="center"><img src="https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/mandelbrot_basic.png" alt="" /></td></tr><tr><td align="center"><img src="https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/mandelbrot_pseudo_random_colors.png" alt="" /></td><td align="center"><img src="https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/sierpinski_triangle2.png" alt="" /></td><td align="center"><img src="https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/julia_set.png" alt="" /></td><td align="center"><img src="https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/julia_basic.png" alt="" /></td></tr></tbody></table><h2>Using custom OpenCL headers</h2><blockquote><p>IMPORTANT: Using a different OpenCL header version than the one used by the OpenCL librarycan cause problems. If you are using a custom OpenCL header, make sure that it iscompatible with the OpenCL library you are using.</p><p>NOTE: Darwin systems will look for the header file at <code>&lt;OpenCL/opencl.h&gt;</code> while any othersystems will look for the header file at <code>&lt;CL/cl.h&gt;</code>.</p></blockquote><p>By default VCL uses the OpenCL headers from the system path and all the knownlocations for OpenCL headers (like <code>/usr/include</code> and <code>/usr/local/include</code>) and load the firstheader it finds. If you want to use a specific OpenCL header,you can add the <code>-I</code> flag into your V program with the path to the headers directory.</p><pre><code class="language-v">#</code></pre><p>or at compile time:</p><pre><code class="language-sh">v -I/custom/path/to/opencl/headers my_program.v
+</code></pre><p>You can also link or move the headers directory into VCL's source directory. For example:</p><pre><code class="language-sh"># for darwin systems
 ln -s /custom/path/to/opencl/headers ~/.vmodules/vcl/OpenCL
 
 # or for any other system you can do
 ln -s /custom/path/to/opencl/headers ~/.vmodules/vcl/CL
-</code></pre>
-<p>or, you can copy the headers directory into VCL's source directory.
-For example you can clone the OpenCL-Headers repository and copy the headers as follows:</p>
-<pre><code class="language-sh">git clone https://github.com/KhronosGroup/OpenCL-Headers /tmp/OpenCL-Headers
+</code></pre><p>or, you can copy the headers directory into VCL's source directory.For example you can clone the OpenCL-Headers repository and copy the headers as follows:</p><pre><code class="language-sh">git clone https://github.com/KhronosGroup/OpenCL-Headers /tmp/OpenCL-Headers
 
 # for darwin systems
 cp -r /tmp/OpenCL-Headers/CL ~/.vmodules/vcl/OpenCL
 
 # or for any other system you can do
 cp -r /tmp/OpenCL-Headers/CL ~/.vmodules/vcl/CL
-</code></pre>
-<h2>Loading OpenCL dynamically</h2>
-<p>By default VCL uses OpenCL loading the library statically. If you want to use OpenCL
-dynamically, you can use the <code>-d dlopencl</code> flag.</p>
-<p>By default it will look for the OpenCL library in the system path and all the known
-locations for OpenCL libraries (like <code>/usr/lib</code> and <code>/usr/local/lib</code>) and load the first
-library it finds. If you want to use a specific OpenCL library,
-you can declare the environment variable <code>VCL_LIBOPENCL_PATH</code> with
-the path to the library. Multiple paths can be separated by <code>:</code>.</p>
-<p>For example, if you want to use the OpenCL library from the NVIDIA CUDA Toolkit, you can
-do the following:</p>
-<pre><code class="language-sh">export VCL_LIBOPENCL_PATH=/usr/local/cuda/lib64/libOpenCL.so
-</code></pre>
-<!-- Images -->
+</code></pre><h2>Loading OpenCL dynamically</h2><p>By default VCL uses OpenCL loading the library statically. If you want to use OpenCLdynamically, you can use the <code>-d dlopencl</code> flag.</p><p>By default it will look for the OpenCL library in the system path and all the knownlocations for OpenCL libraries (like <code>/usr/lib</code> and <code>/usr/local/lib</code>) and load the firstlibrary it finds. If you want to use a specific OpenCL library,you can declare the environment variable <code>VCL_LIBOPENCL_PATH</code> withthe path to the library. Multiple paths can be separated by <code>:</code>.</p><p>For example, if you want to use the OpenCL library from the NVIDIA CUDA Toolkit, you cando the following:</p><pre><code class="language-sh">export VCL_LIBOPENCL_PATH=/usr/local/cuda/lib64/libOpenCL.so
+</code></pre><!-- Images -->
 
 </section>
 
 		<section id="error_from_code" class="doc-node">
-			<div class="title"><h2>fn error_from_code <a href="#error_from_code">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/errors.c.v#L73"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">error_from_code</span><span class="token punctuation">(</span>code <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">IError</span></code></pre>
+			<div class="title"><h2>fn error_from_code <a href="#error_from_code">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/errors.c.v#L86"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">error_from_code</span><span class="token punctuation">(</span>code <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">IError</span></code></pre>
 
 
 </section>
 		<section id="error_or_default" class="doc-node">
-			<div class="title"><h2>fn error_or_default <a href="#error_or_default">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/errors.c.v#L77"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> error_or_default<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">(</span>code <span class="token builtin">int</span><span class="token punctuation">,</span> default <span class="token builtin">T</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">T</span></code></pre>
+			<div class="title"><h2>fn error_or_default <a href="#error_or_default">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/errors.c.v#L90"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> error_or_default<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">(</span>code <span class="token builtin">int</span><span class="token punctuation">,</span> default <span class="token builtin">T</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">T</span></code></pre>
 
 
 </section>
@@ -166,17 +106,17 @@ do the following:</p>
 
 </section>
 		<section id="panic_on_error" class="doc-node">
-			<div class="title"><h2>fn panic_on_error <a href="#panic_on_error">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/errors.c.v#L101"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">panic_on_error</span><span class="token punctuation">(</span>code <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+			<div class="title"><h2>fn panic_on_error <a href="#panic_on_error">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/errors.c.v#L114"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">panic_on_error</span><span class="token punctuation">(</span>code <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
 
 
 </section>
 		<section id="typed_error" class="doc-node">
-			<div class="title"><h2>fn typed_error <a href="#typed_error">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/errors.c.v#L84"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> typed_error<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">(</span>code <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">T</span></code></pre>
+			<div class="title"><h2>fn typed_error <a href="#typed_error">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/errors.c.v#L97"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> typed_error<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">(</span>code <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">T</span></code></pre>
 
 
 </section>
 		<section id="vcl_error" class="doc-node">
-			<div class="title"><h2>fn vcl_error <a href="#vcl_error">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/errors.c.v#L91"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">vcl_error</span><span class="token punctuation">(</span>code <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
+			<div class="title"><h2>fn vcl_error <a href="#vcl_error">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/errors.c.v#L104"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">vcl_error</span><span class="token punctuation">(</span>code <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
 
 
 </section>
@@ -483,7 +423,7 @@ do the following:</p>
 
 </section>
 
-						<div class="footer">Powered by vdoc. Generated on: 1 Nov 2023 01:02:18</div>
+						<div class="footer">Powered by vdoc. Generated on: 2 Nov 2023 04:59:36</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_vcl">README</a></li>
 <li class="open"><a href="#error_from_code">fn error_from_code</a>        <ul>

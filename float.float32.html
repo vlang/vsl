@@ -36,7 +36,7 @@
 						<div class="info">
 							<div class="module">vsl</div>
 							<div class="toggle-version-container">
-								<span>0.1.50 a63f3e6</span>
+								<span>0.1.50 0b58a4d</span>
 								<div
 									id="dark-mode-toggle"
 									role="switch"
@@ -108,20 +108,17 @@
 </section>
 		<section id="gemv_n" class="doc-node">
 			<div class="title"><h2>fn gemv_n <a href="#gemv_n">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/float/float32/ge.v#L34"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">gemv_n</span><span class="token punctuation">(</span>m <span class="token builtin">u32</span><span class="token punctuation">,</span> n <span class="token builtin">u32</span><span class="token punctuation">,</span> alpha <span class="token builtin">f32</span><span class="token punctuation">,</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span><span class="token punctuation">,</span> lda <span class="token builtin">u32</span><span class="token punctuation">,</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span><span class="token punctuation">,</span> incx <span class="token builtin">u32</span><span class="token punctuation">,</span> beta <span class="token builtin">f32</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> y <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span><span class="token punctuation">,</span> incy <span class="token builtin">u32</span><span class="token punctuation">)</span></code></pre>
-<p>gemv_n computes  y = alpha * A * x + beta * y
-where A is an m×n dense matrix, x and y are vectors, and alpha and beta are scalars.</p>
+<p>gemv_n computes  y = alpha * A * x + beta * ywhere A is an m×n dense matrix, x and y are vectors, and alpha and beta are scalars.</p>
 
 </section>
 		<section id="gemv_t" class="doc-node">
 			<div class="title"><h2>fn gemv_t <a href="#gemv_t">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/float/float32/ge.v#L73"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">gemv_t</span><span class="token punctuation">(</span>m <span class="token builtin">u32</span><span class="token punctuation">,</span> n <span class="token builtin">u32</span><span class="token punctuation">,</span> alpha <span class="token builtin">f32</span><span class="token punctuation">,</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span><span class="token punctuation">,</span> lda <span class="token builtin">u32</span><span class="token punctuation">,</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span><span class="token punctuation">,</span> incx <span class="token builtin">u32</span><span class="token punctuation">,</span> beta <span class="token builtin">f32</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> y <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span><span class="token punctuation">,</span> incy <span class="token builtin">u32</span><span class="token punctuation">)</span></code></pre>
-<p>gemv_t computes  y = alpha * Aᵀ * x + beta * y
-where A is an m×n dense matrix, x and y are vectors, and alpha and beta are scalars.</p>
+<p>gemv_t computes  y = alpha * Aᵀ * x + beta * ywhere A is an m×n dense matrix, x and y are vectors, and alpha and beta are scalars.</p>
 
 </section>
 		<section id="ger" class="doc-node">
 			<div class="title"><h2>fn ger <a href="#ger">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/float/float32/ge.v#L6"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">ger</span><span class="token punctuation">(</span>m <span class="token builtin">u32</span><span class="token punctuation">,</span> n <span class="token builtin">u32</span><span class="token punctuation">,</span> alpha <span class="token builtin">f32</span><span class="token punctuation">,</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span><span class="token punctuation">,</span> incx <span class="token builtin">u32</span><span class="token punctuation">,</span> y <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span><span class="token punctuation">,</span> incy <span class="token builtin">u32</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span><span class="token punctuation">,</span> lda <span class="token builtin">u32</span><span class="token punctuation">)</span></code></pre>
-<p>ger performs the rank-one operation  A += alpha * x * yᵀ
-where A is an m×n dense matrix, x and y are vectors, and alpha is a scalar.</p>
+<p>ger performs the rank-one operation  A += alpha * x * yᵀwhere A is an m×n dense matrix, x and y are vectors, and alpha is a scalar.</p>
 
 </section>
 		<section id="l2_distance_unitary" class="doc-node">
@@ -160,7 +157,7 @@ where A is an m×n dense matrix, x and y are vectors, and alpha is a scalar.</p>
 
 </section>
 
-						<div class="footer">Powered by vdoc. Generated on: 1 Nov 2023 01:02:17</div>
+						<div class="footer">Powered by vdoc. Generated on: 2 Nov 2023 04:59:36</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#arrays_tolerance">fn arrays_tolerance</a>        <ul>
 </ul>

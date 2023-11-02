@@ -36,7 +36,7 @@
 						<div class="info">
 							<div class="module">vsl</div>
 							<div class="toggle-version-container">
-								<span>0.1.50 a63f3e6</span>
+								<span>0.1.50 0b58a4d</span>
 								<div
 									id="dark-mode-toggle"
 									role="switch"
@@ -67,9 +67,7 @@
 				<div class="doc-container">
 					<div class="doc-content">
 								<section id="readme_gm" class="doc-node">
-			<div class="title"><h1> gm <a href="#readme_gm">#</a></h1></div><h1>Geometry algorithms and structures</h1>
-<p>This package provides some functions to help with the solution of geometry problems.
-It also includes some routines loosely related with geometry.</p>
+			<div class="title"><h1> gm <a href="#readme_gm">#</a></h1></div><h1>Geometry algorithms and structures</h1><p>This package provides some functions to help with the solution of geometry problems.It also includes some routines loosely related with geometry.</p>
 
 </section>
 
@@ -86,7 +84,7 @@ It also includes some routines loosely related with geometry.</p>
 </section>
 		<section id="dist_point_line" class="doc-node">
 			<div class="title"><h2>fn dist_point_line <a href="#dist_point_line">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/gm/basicgm.v#L96"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token function">dist_point_line</span><span class="token punctuation">(</span>p <span class="token operator">&</span>Point<span class="token punctuation">,</span> a <span class="token operator">&</span>Point<span class="token punctuation">,</span> b <span class="token operator">&</span>Point<span class="token punctuation">,</span> tol <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
-<p>dist_point_line computes the distance from p to line passing through a -&gt; b</p>
+<p>dist_point_line computes the distance from p to line passing through a -> b</p>
 
 </section>
 		<section id="dist_point_point" class="doc-node">
@@ -201,19 +199,12 @@ It also includes some routines loosely related with geometry.</p>
 </section>
 		<section id="Bins.find_closest" class="doc-node">
 			<div class="title"><h2>fn (Bins) find_closest <a href="#Bins.find_closest">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/gm/bins.v#L148"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o Bins<span class="token punctuation">)</span> <span class="token function">find_closest</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
-<p>find_closest returns the id of the entry whose coordinates are closest to x   id_closest  -- the id of the closest entity. return -1 if out-of-range or not found   sq_dist_min -- the minimum distance (squared) between x and the closest entity in the same bin</p>
-<p>NOTE: find_closest does search the whole area.<br>
-It only locates neighbours in the same bin where the given x is located.<br>
-So, if there area no entries in the bin containing x, no entry will be found.</p>
+<p>find_closest returns the id of the entry whose coordinates are closest to x   id_closest  -- the id of the closest entity. return -1 if out-of-range or not found   sq_dist_min -- the minimum distance (squared) between x and the closest entity in the same bin</p><p>NOTE: find_closest does search the whole area.<br />It only locates neighbours in the same bin where the given x is located.<br />So, if there area no entries in the bin containing x, no entry will be found.</p>
 
 </section>
 		<section id="Bins.find_closest_and_append" class="doc-node">
 			<div class="title"><h2>fn (Bins) find_closest_and_append <a href="#Bins.find_closest_and_append">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/gm/bins.v#L187"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o Bins<span class="token punctuation">)</span> <span class="token function">find_closest_and_append</span><span class="token punctuation">(</span><span class="token keyword">mut</span> next_id <span class="token operator">&</span><span class="token builtin">int</span><span class="token punctuation">,</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> extra <span class="token builtin">voidptr</span><span class="token punctuation">,</span> rad_tol <span class="token builtin">f64</span><span class="token punctuation">,</span> diff PointsDiffFn<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token builtin">bool</span><span class="token punctuation">)</span></code></pre>
-<p>find_closest_and_append finds closest point and, if not found, append to bins with a new Id   input:
-next_id -- is the Id of the next point. Will be incremented if x is a new point to be added.<br>
-x       -- is the point to be added     extra   -- extra information attached to point     rad_tol -- is the tolerance for the radial distance (i.e. NOT squared) to decide
-whether a new point will be appended or not.<br>
-diff    -- [optional] a function for further check that the new and an eventual existent                points are really different, even after finding that they coincide (within tol)   output:     id       -- the id attached to x     existent -- flag telling if x was found, based on given tolerance</p>
+<p>find_closest_and_append finds closest point and, if not found, append to bins with a new Id   input:next_id -- is the Id of the next point. Will be incremented if x is a new point to be added.<br />x       -- is the point to be added     extra   -- extra information attached to point     rad_tol -- is the tolerance for the radial distance (i.e. NOT squared) to decidewhether a new point will be appended or not.<br />diff    -- [optional] a function for further check that the new and an eventual existent                points are really different, even after finding that they coincide (within tol)   output:     id       -- the id attached to x     existent -- flag telling if x was found, based on given tolerance</p>
 
 </section>
 		<section id="Bins.find_along_segment" class="doc-node">
@@ -311,7 +302,7 @@ diff    -- [optional] a function for further check that the new and an eventual 
 
 </section>
 
-						<div class="footer">Powered by vdoc. Generated on: 1 Nov 2023 01:02:17</div>
+						<div class="footer">Powered by vdoc. Generated on: 2 Nov 2023 04:59:36</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_gm">README</a></li>
 <li class="open"><a href="#Constants">Constants</a></li>
