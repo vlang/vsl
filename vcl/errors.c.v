@@ -28,6 +28,11 @@ pub fn (e ErrVCL) err() IError {
 		vcl.map_failure { vcl.err_map_failure }
 		vcl.misaligned_sub_buffer_offset { vcl.err_misaligned_sub_buffer_offset }
 		vcl.exec_status_error_for_events_in_wait_list { vcl.err_exec_status_error_for_events_in_wait_list }
+		vcl.compile_program_failure { vcl.err_compile_program_failure }
+		vcl.linker_not_available { vcl.err_linker_not_available }
+		vcl.link_program_failure { vcl.err_link_program_failure }
+		vcl.device_partition_failed { vcl.err_device_partition_failed }
+		vcl.kernel_arg_info_not_available { vcl.err_kernel_arg_info_not_available }
 		vcl.invalid_value { vcl.err_invalid_value }
 		vcl.invalid_device_type { vcl.err_invalid_device_type }
 		vcl.invalid_platform { vcl.err_invalid_platform }
@@ -63,6 +68,14 @@ pub fn (e ErrVCL) err() IError {
 		vcl.invalid_mip_level { vcl.err_invalid_mip_level }
 		vcl.invalid_global_work_size { vcl.err_invalid_global_work_size }
 		vcl.invalid_property { vcl.err_invalid_property }
+		vcl.invalid_image_descriptor { vcl.err_invalid_image_descriptor }
+		vcl.invalid_compiler_options { vcl.err_invalid_compiler_options }
+		vcl.invalid_linker_options { vcl.err_invalid_linker_options }
+		vcl.invalid_device_partition_count { vcl.err_invalid_device_partition_count }
+		vcl.invalid_pipe_size { vcl.err_invalid_pipe_size }
+		vcl.invalid_device_queue { vcl.err_invalid_device_queue }
+		vcl.invalid_spec_id { vcl.err_invalid_spec_id }
+		vcl.max_size_restriction_exceeded { vcl.err_max_size_restriction_exceeded }
 		vcl.dl_sym_issue { vcl.err_dl_sym_issue }
 		vcl.dl_open_issue { vcl.err_dl_open_issue }
 		else { 'vcl_cl: error ${e}' }
@@ -168,6 +181,10 @@ const (
 	err_invalid_compiler_options                  = 'vcl_cl: Invalid Compiler Options'
 	err_invalid_linker_options                    = 'vcl_cl: Invalid Linker Options'
 	err_invalid_device_partition_count            = 'vcl_cl: Invalid Device Partition Count'
+	err_invalid_pipe_size                         = 'vcl_cl: Invalid Pipe Size'
+	err_invalid_device_queue                      = 'vcl_cl: Invalid Device Queue'
+	err_invalid_spec_id                           = 'vcl_cl: Invalid Spec Id'
+	err_max_size_restriction_exceeded             = 'vcl_cl: Max Size Restriction exceeded'
 
 	// Dl errors
 	err_dl_sym_issue                              = 'vcl_cl_dl: Not Found Dl Library'
