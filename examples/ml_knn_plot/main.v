@@ -42,5 +42,5 @@ fn main() {
 	println('Prediction: ${prediction}')
 
 	// Plot the KNN model
-	knn.plot()!
+	knn.get_plotter().show()!
 }

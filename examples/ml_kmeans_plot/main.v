@@ -30,5 +30,5 @@ fn main() {
 	model.train(epochs: 6)
 
 	// Plot the results using the new plot method
-	model.plot()!
+	model.get_plotter().show()!
 }

@@ -149,8 +149,8 @@ pub fn (o &Kmeans) str() string {
 	return res.join('\n')
 }
 
-// plot method for visualizing the clustering
-pub fn (o &Kmeans) plot() ! {
+// get_plotter returns a plot.Plot struct for plotting
+pub fn (o &Kmeans) get_plotter() &plot.Plot {
 	mut plt := plot.Plot.new()
 	plt.layout(
 		title: 'K-means Clustering'
@@ -194,5 +194,5 @@ pub fn (o &Kmeans) plot() ! {
 		}
 	)
 
-	plt.show()!
+	return plt
 }

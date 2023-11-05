@@ -10,8 +10,8 @@ pub mut:
 	layout Layout
 }
 
-pub fn Plot.new() Plot {
-	return Plot{}
+pub fn Plot.new() &Plot {
+	return &Plot{}
 }
 
 // add_trace adds a trace to the plot

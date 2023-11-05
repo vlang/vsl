@@ -30,5 +30,5 @@ fn main() {
 
 	reg.train()
 
-	reg.plot()!
+	reg.get_plotter().show()!
 }

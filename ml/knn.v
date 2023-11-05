@@ -204,8 +204,9 @@ pub fn (o &KNN) str() string {
 	return res.join('\n')
 }
 
-// plot method for visualizing the KNN model
-pub fn (o &KNN) plot() ! {
+// get_plotter returns a plot.Plot struct with the data needed to plot
+// the KNN model.
+pub fn (o &KNN) get_plotter() &plot.Plot {
 	mut plt := plot.Plot.new()
 	plt.layout(
 		title: 'K-Nearest Neighbors'
@@ -237,5 +238,5 @@ pub fn (o &KNN) plot() ! {
 		)
 	}
 
-	plt.show()!
+	return plt
 }

@@ -150,8 +150,8 @@ pub fn (o &LinReg) str() string {
 	return res.join('\n')
 }
 
-// plot plots the data and the linear regression model
-pub fn (o &LinReg) plot() ! {
+// get_plotter returns a plot.Plot struct for plotting the data and the linear regression model
+pub fn (o &LinReg) get_plotter() &plot.Plot {
 	// Get the minimum and maximum values of the features
 	min_x := o.stat.min_x[0]
 	max_x := o.stat.max_x[0]
@@ -167,28 +167,18 @@ pub fn (o &LinReg) plot() ! {
 	plt.layout(
 		title: 'Linear Regression Example'
 	)
-
 	plt.scatter(
 		name: 'dataset'
 		x: o.data.x.get_col(0)
 		y: o.data.y
 		mode: 'markers'
-		colorscale: 'smoker'
-		marker: plot.Marker{
-			size: []f64{len: o.data.y.len, init: 10.0}
-		}
 	)
-
 	plt.scatter(
-		name: 'linear regression'
+		name: 'prediction'
 		x: x_values
 		y: y_values
 		mode: 'lines'
-		colorscale: 'smoker'
-		line: plot.Line{
-			color: 'red'
-		}
 	)
 
-	plt.show()!
+	return plt
 }
