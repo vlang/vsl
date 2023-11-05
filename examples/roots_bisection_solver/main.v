@@ -17,45 +17,47 @@ fn f_cos(x f64, _ []f64) f64 {
 	return math.cos(x)
 }
 
-f := func.Fn.new(f: f_cos)
+fn main() {
+	f := func.Fn.new(f: f_cos)
 
-mut solver := roots.Bisection.new(f)
+	mut solver := roots.Bisection.new(f)
 
-solver.xmin = 0.0
-solver.xmax = 3.0
-solver.epsabs = epsabs
-solver.epsrel = epsrel
-solver.n_max = n_max
+	solver.xmin = 0.0
+	solver.xmax = 3.0
+	solver.epsabs = epsabs
+	solver.epsrel = epsrel
+	solver.n_max = n_max
 
-result := solver.solve()?
+	result := solver.solve()?
 
-expected := math.pi / 2.0
-assert float64.soclose(result.x, expected, solver.epsabs)
+	expected := math.pi / 2.0
+	assert float64.soclose(result.x, expected, solver.epsabs)
 
-println('x = ${result.x}')
+	println('x = ${result.x}')
 
-mut plt := plot.Plot.new()
+	mut plt := plot.Plot.new()
 
-x := util.lin_space(0.0, 3.0, 100)
-y := x.map(f_cos(it, []f64{}))
+	x := util.lin_space(0.0, 3.0, 100)
+	y := x.map(f_cos(it, []f64{}))
 
-plt.scatter(
-	x: x
-	y: y
-	mode: 'lines'
-	line: plot.Line{
-		color: '#FF0000'
-	}
-)
-plt.scatter(
-	x: [result.x]
-	y: [result.fx]
-	mode: 'markers'
-	marker: plot.Marker{
-		color: ['#0000FF']
-	}
-)
-plt.layout(
-	title: 'cos(x)'
-)
-plt.show()!
+	plt.scatter(
+		x: x
+		y: y
+		mode: 'lines'
+		line: plot.Line{
+			color: '#FF0000'
+		}
+	)
+	plt.scatter(
+		x: [result.x]
+		y: [result.fx]
+		mode: 'markers'
+		marker: plot.Marker{
+			color: ['#0000FF']
+		}
+	)
+	plt.layout(
+		title: 'cos(x)'
+	)
+	plt.show()!
+}

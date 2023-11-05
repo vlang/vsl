@@ -1,4 +1,3 @@
-// A simple prime factorizer
 module main
 
 import vsl.prime

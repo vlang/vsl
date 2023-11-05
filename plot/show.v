@@ -8,9 +8,13 @@ import os
 import time
 
 // PlotConfig is a configuration for the Plotly plot.
+// It includes the configuration for the web server that serves the plot.
 [params]
 pub struct PlotConfig {
+	net.ListenOptions
+	timeout time.Duration = 1 * time.second
 	use_cdn bool
+	saddr   string = ':0'
 }
 
 // show starts a web server and opens a browser window to display the plot.
@@ -22,9 +26,12 @@ pub fn (p Plot) show(config PlotConfig) ! {
 			use_cdn: true
 			plot: p
 		}
-		listener := net.listen_tcp(net.AddrFamily.ip, ':0')!
+		listener := net.listen_tcp(net.AddrFamily.ip, config.saddr,
+			dualstack: config.dualstack
+			backlog: config.backlog
+		)!
 		mut server := &http.Server{
-			accept_timeout: 1 * time.second
+			accept_timeout: config.timeout
 			listener: listener
 			handler: handler
 		}
