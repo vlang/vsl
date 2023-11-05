@@ -1,7 +1,8 @@
 module diff
 
-import vsl.func
 import math
+import vsl.float.float64
+import vsl.func
 
 fn f1(x f64, _ []f64) f64 {
 	return math.exp(x)
@@ -102,15 +103,7 @@ fn test_diff() {
 }
 
 fn diff_test(diff_method string, f func.Fn, df func.Fn, x f64) bool {
-	expected := df.eval(x)
-	result, _ := if diff_method == 'backward' {
-		backward(f, x)
-	} else if diff_method == 'forward' {
-		forward(f, x)
-	} else {
-		central(f, x)
-	}
-	return compare(result, expected)
+	return diff_near_test(diff_method, f, df, x, 1e-5)
 }
 
 fn diff_near_test(diff_method string, f func.Fn, df func.Fn, x f64, tolerance f64) bool {
@@ -122,21 +115,5 @@ fn diff_near_test(diff_method string, f func.Fn, df func.Fn, x f64, tolerance f6
 	} else {
 		central(f, x)
 	}
-	return compare_near(result, expected, tolerance)
-}
-
-// Helper methods for comparing floats
-[inline]
-fn compare(x f64, y f64) bool {
-	return compare_near(x, y, 1e-5)
-}
-
-fn compare_near(x f64, y f64, tolerance f64) bool {
-	// Special case for zeroes
-	if x < tolerance && x > (-1.0 * tolerance) && y < tolerance && y > (-1.0 * tolerance) {
-		return true
-	}
-	diff := math.abs(x - y)
-	mean := math.abs(x + y) / 2.0
-	return if math.is_nan(diff / mean) { true } else { ((diff / mean) < tolerance) }
+	return float64.tolerance(result, expected, tolerance)
 }

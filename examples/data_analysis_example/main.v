@@ -1,11 +1,11 @@
 module main
 
-import vsl.ml { Data, Stat }
-import vsl.plot { Axis, AxisTitle, Marker, Plot }
+import vsl.ml
+import vsl.plot
 
 fn main() {
 	// Example data: two features (X1 and X2) and a label (y)
-	mut data := Data.from_raw_xy([
+	mut data := ml.Data.from_raw_xy([
 		[1.0, 2.0, 0.0],
 		[2.0, 3.0, 0.0],
 		[3.0, 3.0, 0.0],
@@ -62,7 +62,7 @@ fn main() {
 	])!
 
 	// Visualize data in a 3D scatter plot
-	mut plt_3d := Plot.new()
+	mut plt_3d := plot.Plot.new()
 
 	x1 := data.x.get_col(0)
 	x2 := data.x.get_col(1)
@@ -90,7 +90,7 @@ fn main() {
 		y: x2_class0
 		z: [][]f64{len: x1_class0.len, init: [0.0]}
 		mode: 'markers'
-		marker: Marker{
+		marker: plot.Marker{
 			size: []f64{len: x1_class0.len, init: 8.0}
 			color: []string{len: x1_class0.len, init: 'blue'}
 		}
@@ -101,7 +101,7 @@ fn main() {
 		y: x2_class1
 		z: [][]f64{len: x1_class1.len, init: [0.0]}
 		mode: 'markers'
-		marker: Marker{
+		marker: plot.Marker{
 			size: []f64{len: x1_class1.len, init: 8.0}
 			color: []string{len: x1_class1.len, init: 'red'}
 		}
@@ -111,13 +111,13 @@ fn main() {
 	// Configure the layout of the 3D plot
 	plt_3d.layout(
 		title: 'Two-class Data'
-		xaxis: Axis{
-			title: AxisTitle{
+		xaxis: plot.Axis{
+			title: plot.AxisTitle{
 				text: 'X1'
 			}
 		}
-		yaxis: Axis{
-			title: AxisTitle{
+		yaxis: plot.Axis{
+			title: plot.AxisTitle{
 				text: 'X2'
 			}
 		}
@@ -127,11 +127,11 @@ fn main() {
 	plt_3d.show()!
 
 	// Basic statistics analysis
-	mut stat := Stat.from_data(mut data, 'Example Data')
+	mut stat := ml.Stat.from_data(mut data, 'Example Data')
 	stat.update()
 
 	// Visualize statistics in a bar chart
-	mut plt_bars := Plot.new()
+	mut plt_bars := plot.Plot.new()
 
 	plt_bars.bar(
 		x: []string{len: stat.mean_x.len, init: 'Class ${index}'}

@@ -1,6 +1,7 @@
 module deriv
 
 import vsl.func
+import vsl.float.float64
 import math
 
 fn f1(x f64, _ []f64) f64 {
@@ -102,16 +103,7 @@ fn test_deriv() {
 }
 
 fn deriv_test(deriv_method string, f func.Fn, df func.Fn, x f64) bool {
-	expected := df.eval(x)
-	h := 1e-5
-	result, _ := if deriv_method == 'backward' {
-		backward(f, x, h)
-	} else if deriv_method == 'forward' {
-		forward(f, x, h)
-	} else {
-		central(f, x, h)
-	}
-	return compare(result, expected)
+	return deriv_near_test(deriv_method, f, df, x, 1e-5)
 }
 
 fn deriv_near_test(deriv_method string, f func.Fn, df func.Fn, x f64, tolerance f64) bool {
@@ -124,21 +116,5 @@ fn deriv_near_test(deriv_method string, f func.Fn, df func.Fn, x f64, tolerance 
 	} else {
 		central(f, x, h)
 	}
-	return compare_near(result, expected, tolerance)
-}
-
-// Helper methods for comparing floats
-[inline]
-fn compare(x f64, y f64) bool {
-	return compare_near(x, y, 1e-5)
-}
-
-fn compare_near(x f64, y f64, tolerance f64) bool {
-	// Special case for zeroes
-	if x < tolerance && x > (-1.0 * tolerance) && y < tolerance && y > (-1.0 * tolerance) {
-		return true
-	}
-	deriv := math.abs(x - y)
-	mean := math.abs(x + y) / 2.0
-	return if math.is_nan(deriv / mean) { true } else { ((deriv / mean) < tolerance) }
+	return float64.tolerance(result, expected, tolerance)
 }

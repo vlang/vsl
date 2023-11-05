@@ -1,4 +1,5 @@
 import vsl.fit
+import vsl.float.float64
 import math
 
 fn test_linear_fit01() {
@@ -6,11 +7,11 @@ fn test_linear_fit01() {
 	x := [1.0, 2, 3, 4]
 	y := [1.0, 2, 3, 4]
 	a, b, sigma_a, sigma_b, chi_2 := fit.linear_sigma(x, y)
-	assert compare(a, 0.0)
-	assert compare(b, 1.0)
-	assert compare(sigma_a, 0.0)
-	assert compare(sigma_b, 0.0)
-	assert compare(chi_2, 0.0)
+	assert float64.tolerance(a, 0.0, 1e-5)
+	assert float64.tolerance(b, 1.0, 1e-5)
+	assert float64.tolerance(sigma_a, 0.0, 1e-5)
+	assert float64.tolerance(sigma_b, 0.0, 1e-5)
+	assert float64.tolerance(chi_2, 0.0, 1e-5)
 }
 
 fn test_linear_fit02() {
@@ -23,18 +24,6 @@ fn test_linear_fit02() {
 		10,
 	]
 	a, b := fit.linear(x, y)
-	assert compare(a, 3.5)
-	assert compare(b, 1.4)
-}
-
-// Helper method for comparing floats
-fn compare(x f64, y f64) bool {
-	tolerance := 0.00001
-	// Special case for zeroes
-	if x < tolerance && x > (-1.0 * tolerance) && y < tolerance && y > (-1.0 * tolerance) {
-		return true
-	}
-	diff := math.abs(x - y)
-	mean := math.abs(x + y) / 2.0
-	return if math.is_nan(diff / mean) { true } else { ((diff / mean) < tolerance) }
+	assert float64.tolerance(a, 3.5, 1e-5)
+	assert float64.tolerance(b, 1.4, 1e-5)
 }
