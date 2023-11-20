@@ -65,7 +65,7 @@ pub fn uint_binomial(n_ u64, k_ u64) u64 {
 	mut c := u64(1)
 	for i := u64(1); i <= k; i++ {
 		c_i := c / i
-		max_n := math.max_u64 / n
+		max_n := max_u64 / n
 		if c_i > max_n / n {
 			errors.vsl_panic('overflow in uint_binomial: ${c_i} > ${max_n}', .eovrflw)
 		}
