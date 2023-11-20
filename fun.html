@@ -36,7 +36,7 @@
 						<div class="info">
 							<div class="module">vsl</div>
 							<div class="toggle-version-container">
-								<span>0.1.50 4e6186e</span>
+								<span>0.1.50 6cc51f2</span>
 								<div
 									id="dark-mode-toggle"
 									role="switch"
@@ -382,6 +382,34 @@
 <p>uint_binomial implements the binomial coefficient using u64. panic happens on overflow also, this function uses a loop so it may not be very efficient for large k the code below comes from <a href="https://en.wikipedia.org/wiki/binomial_coefficient">https://en.wikipedia.org/wiki/binomial_coefficient</a> [cannot find a reference to cite]</p>
 
 </section>
+		<section id="DataInterp.new" class="doc-node">
+			<div class="title"><h2>fn DataInterp.new <a href="#DataInterp.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fun/datainterp.v#L42"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> DataInterp<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>itype <span class="token builtin">string</span><span class="token punctuation">,</span> p <span class="token builtin">int</span><span class="token punctuation">,</span> xx <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> yy <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">&</span>DataInterp</code></pre>
+<p>DataInterp.new creates new interpolator for data point sets xx and yy (with same lengths)</p><pre><code>type -- type of interpolator        "lin"  : linear        "poly" : polynomial
+
+p  -- order of interpolator     xx -- x-data     yy -- y-data
+</code></pre>
+
+</section>
+		<section id="InterpCubic.new" class="doc-node">
+			<div class="title"><h2>fn InterpCubic.new <a href="#InterpCubic.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fun/interpcubic.v#L20"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> InterpCubic<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&</span>InterpCubic</code></pre>
+<p>InterpCubic.new returns a new InterpCubic instance</p>
+
+</section>
+		<section id="InterpQuad.new" class="doc-node">
+			<div class="title"><h2>fn InterpQuad.new <a href="#InterpQuad.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fun/interpquad.v#L19"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> InterpQuad<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&</span>InterpQuad</code></pre>
+<p>InterpQuad.new returns a new InterpQuad instance</p>
+
+</section>
+		<section id="Sinusoid.basis" class="doc-node">
+			<div class="title"><h2>fn Sinusoid.basis <a href="#Sinusoid.basis">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fun/sinusoid.v#L62"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> Sinusoid<span class="token punctuation">.</span><span class="token function">basis</span><span class="token punctuation">(</span>t <span class="token builtin">f64</span><span class="token punctuation">,</span> a0 <span class="token builtin">f64</span><span class="token punctuation">,</span> a1 <span class="token builtin">f64</span><span class="token punctuation">,</span> b1 <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">&</span>Sinusoid</code></pre>
+<p>Sinusoid.basis creates a new sinusoid object with the "basis" parameters set   t  -- period; e.g. [s]   a0 -- mean value; e.g. [m]   a1 -- coefficient of the cos term   b1 -- coefficient of the sin term</p>
+
+</section>
+		<section id="Sinusoid.essential" class="doc-node">
+			<div class="title"><h2>fn Sinusoid.essential <a href="#Sinusoid.essential">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fun/sinusoid.v#L36"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> Sinusoid<span class="token punctuation">.</span><span class="token function">essential</span><span class="token punctuation">(</span>t <span class="token builtin">f64</span><span class="token punctuation">,</span> a0 <span class="token builtin">f64</span><span class="token punctuation">,</span> c1 <span class="token builtin">f64</span><span class="token punctuation">,</span> theta <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">&</span>Sinusoid</code></pre>
+<p>Sinusoid.essential creates a new sinusoid object with the "essential" parameters set   t  -- period; e.g. [s]   a0 -- mean value; e.g. [m]   c1 -- amplitude; e.g. [m]   theta  -- phase shift; e.g. [rad]</p>
+
+</section>
 		<section id="InterpFn" class="doc-node">
 			<div class="title"><h2>type InterpFn <a href="#InterpFn">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fun/datainterp.v#L7"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">type</span> InterpFn <span class="token operator">=</span> <span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o DataInterp<span class="token punctuation">,</span> j <span class="token builtin">int</span><span class="token punctuation">,</span> x <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
 <p>InterpFn defines the type of the implementation of the data interpolation</p>
@@ -428,14 +456,6 @@
 <p>DataInterp implements numeric interpolators to be used with discrete data</p>
 
 </section>
-		<section id="DataInterp.DataInterp__static__new" class="doc-node">
-			<div class="title"><h2>fn (DataInterp) DataInterp__static__new <a href="#DataInterp.DataInterp__static__new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fun/datainterp.v#L42"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> DataInterp<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>itype <span class="token builtin">string</span><span class="token punctuation">,</span> p <span class="token builtin">int</span><span class="token punctuation">,</span> xx <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> yy <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">&</span>DataInterp</code></pre>
-<p>DataInterp.new creates new interpolator for data point sets xx and yy (with same lengths)</p><pre><code>type -- type of interpolator        "lin"  : linear        "poly" : polynomial
-
-p  -- order of interpolator     xx -- x-data     yy -- y-data
-</code></pre>
-
-</section>
 		<section id="DataInterp.reset" class="doc-node">
 			<div class="title"><h2>fn (DataInterp) reset <a href="#DataInterp.reset">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fun/datainterp.v#L64"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o DataInterp<span class="token punctuation">)</span> <span class="token function">reset</span><span class="token punctuation">(</span>xx <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> yy <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
 <p>reset re-assigns xx and yy data sets</p>
@@ -468,11 +488,6 @@ p  -- order of interpolator     xx -- x-data     yy -- y-data
 	tol_den <span class="token builtin">f64</span>
 <span class="token punctuation">}</span></code></pre>
 <p>InterpCubic computes a cubic polynomial to perform interpolation either using 4 points or 3 points and a known derivative</p>
-
-</section>
-		<section id="InterpCubic.InterpCubic__static__new" class="doc-node">
-			<div class="title"><h2>fn (InterpCubic) InterpCubic__static__new <a href="#InterpCubic.InterpCubic__static__new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fun/interpcubic.v#L20"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> InterpCubic<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&</span>InterpCubic</code></pre>
-<p>InterpCubic.new returns a new InterpCubic instance</p>
 
 </section>
 		<section id="InterpCubic.f" class="doc-node">
@@ -511,11 +526,6 @@ p  -- order of interpolator     xx -- x-data     yy -- y-data
 	tol_den <span class="token builtin">f64</span>
 <span class="token punctuation">}</span></code></pre>
 <p>InterpQuad computes a quadratic polynomial to perform interpolation either using 3 points or 2 points and a known derivative</p>
-
-</section>
-		<section id="InterpQuad.InterpQuad__static__new" class="doc-node">
-			<div class="title"><h2>fn (InterpQuad) InterpQuad__static__new <a href="#InterpQuad.InterpQuad__static__new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fun/interpquad.v#L19"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> InterpQuad<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&</span>InterpQuad</code></pre>
-<p>InterpQuad.new returns a new InterpQuad instance</p>
 
 </section>
 		<section id="InterpQuad.f" class="doc-node">
@@ -562,16 +572,6 @@ p  -- order of interpolator     xx -- x-data     yy -- y-data
 <p>Sinusoid implements the sinusoid equation:</p><p>y(t) = a0 + c1⋅cos(omega_0⋅t + theta)             [essential-form]</p><p>y(t) = a0 + a1⋅cos(omega_0⋅t) + b1⋅sin(omega_0⋅t)  [basis-form]</p><p>a1 =  c1⋅cos(theta)   b1 = -c1⋅sin(theta)   theta  = arctan(-b1 / a1)   if a1<0, theta += π   c1 = sqrt(a1² + b1²)</p>
 
 </section>
-		<section id="Sinusoid.Sinusoid__static__essential" class="doc-node">
-			<div class="title"><h2>fn (Sinusoid) Sinusoid__static__essential <a href="#Sinusoid.Sinusoid__static__essential">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fun/sinusoid.v#L36"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> Sinusoid<span class="token punctuation">.</span><span class="token function">essential</span><span class="token punctuation">(</span>t <span class="token builtin">f64</span><span class="token punctuation">,</span> a0 <span class="token builtin">f64</span><span class="token punctuation">,</span> c1 <span class="token builtin">f64</span><span class="token punctuation">,</span> theta <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">&</span>Sinusoid</code></pre>
-<p>Sinusoid.essential creates a new sinusoid object with the "essential" parameters set   t  -- period; e.g. [s]   a0 -- mean value; e.g. [m]   c1 -- amplitude; e.g. [m]   theta  -- phase shift; e.g. [rad]</p>
-
-</section>
-		<section id="Sinusoid.Sinusoid__static__basis" class="doc-node">
-			<div class="title"><h2>fn (Sinusoid) Sinusoid__static__basis <a href="#Sinusoid.Sinusoid__static__basis">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fun/sinusoid.v#L62"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> Sinusoid<span class="token punctuation">.</span><span class="token function">basis</span><span class="token punctuation">(</span>t <span class="token builtin">f64</span><span class="token punctuation">,</span> a0 <span class="token builtin">f64</span><span class="token punctuation">,</span> a1 <span class="token builtin">f64</span><span class="token punctuation">,</span> b1 <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">&</span>Sinusoid</code></pre>
-<p>Sinusoid.basis creates a new sinusoid object with the "basis" parameters set   t  -- period; e.g. [s]   a0 -- mean value; e.g. [m]   a1 -- coefficient of the cos term   b1 -- coefficient of the sin term</p>
-
-</section>
 		<section id="Sinusoid.yessen" class="doc-node">
 			<div class="title"><h2>fn (Sinusoid) yessen <a href="#Sinusoid.yessen">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fun/sinusoid.v#L86"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div><pre class="signature"><code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o Sinusoid<span class="token punctuation">)</span> <span class="token function">yessen</span><span class="token punctuation">(</span>t <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
 <p>yessen computes y(t) = a0 + c1⋅cos(omega_0⋅t + theta [essential-form]</p>
@@ -593,7 +593,7 @@ p  -- order of interpolator     xx -- x-data     yy -- y-data
 
 </section>
 
-						<div class="footer">Powered by vdoc. Generated on: 5 Nov 2023 19:36:57</div>
+						<div class="footer">Powered by vdoc. Generated on: 20 Nov 2023 00:27:41</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#atan2p">fn atan2p</a>        <ul>
 </ul>
@@ -781,6 +781,21 @@ p  -- order of interpolator     xx -- x-data     yy -- y-data
 <li class="open"><a href="#uint_binomial">fn uint_binomial</a>        <ul>
 </ul>
 </li>
+<li class="open"><a href="#DataInterp.new">fn DataInterp.new</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#InterpCubic.new">fn InterpCubic.new</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#InterpQuad.new">fn InterpQuad.new</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#Sinusoid.basis">fn Sinusoid.basis</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#Sinusoid.essential">fn Sinusoid.essential</a>        <ul>
+</ul>
+</li>
 <li class="open"><a href="#InterpFn">type InterpFn</a>        <ul>
 </ul>
 </li>
@@ -789,7 +804,6 @@ p  -- order of interpolator     xx -- x-data     yy -- y-data
 </ul>
 </li>
 <li class="open"><a href="#DataInterp">struct DataInterp</a>        <ul>
-<li><a href="#DataInterp.DataInterp__static__new">fn DataInterp__static__new</a></li>
 <li><a href="#DataInterp.reset">fn reset</a></li>
 <li><a href="#DataInterp.p">fn p</a></li>
 <li><a href="#DataInterp.locate">fn locate</a></li>
@@ -797,7 +811,6 @@ p  -- order of interpolator     xx -- x-data     yy -- y-data
 </ul>
 </li>
 <li class="open"><a href="#InterpCubic">struct InterpCubic</a>        <ul>
-<li><a href="#InterpCubic.InterpCubic__static__new">fn InterpCubic__static__new</a></li>
 <li><a href="#InterpCubic.f">fn f</a></li>
 <li><a href="#InterpCubic.g">fn g</a></li>
 <li><a href="#InterpCubic.critical">fn critical</a></li>
@@ -806,7 +819,6 @@ p  -- order of interpolator     xx -- x-data     yy -- y-data
 </ul>
 </li>
 <li class="open"><a href="#InterpQuad">struct InterpQuad</a>        <ul>
-<li><a href="#InterpQuad.InterpQuad__static__new">fn InterpQuad__static__new</a></li>
 <li><a href="#InterpQuad.f">fn f</a></li>
 <li><a href="#InterpQuad.g">fn g</a></li>
 <li><a href="#InterpQuad.optimum">fn optimum</a></li>
@@ -815,8 +827,6 @@ p  -- order of interpolator     xx -- x-data     yy -- y-data
 </ul>
 </li>
 <li class="open"><a href="#Sinusoid">struct Sinusoid</a>        <ul>
-<li><a href="#Sinusoid.Sinusoid__static__essential">fn Sinusoid__static__essential</a></li>
-<li><a href="#Sinusoid.Sinusoid__static__basis">fn Sinusoid__static__basis</a></li>
 <li><a href="#Sinusoid.yessen">fn yessen</a></li>
 <li><a href="#Sinusoid.ybasis">fn ybasis</a></li>
 <li><a href="#Sinusoid.approx_square_fourier">fn approx_square_fourier</a></li>
