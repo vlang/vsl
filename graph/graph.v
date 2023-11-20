@@ -11,7 +11,7 @@ pub enum ShortestPaths {
 }
 
 // Graph defines a graph structure
-[heap]
+@[heap]
 pub struct Graph {
 pub:
 	// input

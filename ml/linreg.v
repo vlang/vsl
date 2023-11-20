@@ -5,7 +5,7 @@ import vsl.plot
 import vsl.util
 
 // LinReg implements a linear regression model
-[heap]
+@[heap]
 pub struct LinReg {
 mut:
 	// main

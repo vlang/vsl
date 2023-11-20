@@ -3,7 +3,7 @@ module gm
 import math
 
 // Point holds the Cartesian coordinates of a point in 3D space
-[heap]
+@[heap]
 pub struct Point {
 pub mut:
 	x f64
@@ -12,7 +12,7 @@ pub mut:
 }
 
 // Segment represents a directed segment from a to b
-[heap]
+@[heap]
 pub struct Segment {
 pub:
 	a &Point

@@ -9,7 +9,7 @@ pub fn arange(n int) []int {
 	return result
 }
 
-[params]
+@[params]
 pub struct RangeStep {
 	step int = 1
 }

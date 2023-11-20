@@ -5,7 +5,7 @@ import math
 
 // Bisection implements a bisection method for finding the root of a function
 pub struct Bisection {
-	f func.Fn [required]
+	f func.Fn @[required]
 mut:
 	last_iter ?&BisectionIteration // last iteration
 pub mut:
@@ -19,7 +19,7 @@ pub mut:
 }
 
 // BisectionParams contains the parameters for the bisection method
-[params]
+@[params]
 pub struct BisectionParams {
 	xmin   f64
 	xmax   f64

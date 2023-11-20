@@ -21,98 +21,98 @@ pub type YType = []f64 | []int | []string
 pub type ZType = [][]f64 | [][]int | []f64 | []int
 
 // CommonTrace is a struct for common trace properties
-[params]
+@[params]
 pub struct CommonTrace {
 pub mut:
 	x          XType
 	xbins      map[string]f32
-	y          YType          [omitempty]
-	z          ZType          [omitempty]
-	name       string         [omitempty]
-	mode       string         [omitempty]
-	marker     Marker         [omitempty]
-	line       Line           [omitempty]
-	pull       []f64          [omitempty]
-	hole       f64            [omitempty]
-	fill       string         [omitempty]
-	fillcolor  string         [omitempty]
-	customdata [][]string     [omitempty]
-	colorscale string         [omitempty] = 'Viridis'
-	textinfo   string         [omitempty]
-	text       []string       [omitempty]
+	y          YType          @[omitempty]
+	z          ZType          @[omitempty]
+	name       string         @[omitempty]
+	mode       string         @[omitempty]
+	marker     Marker         @[omitempty]
+	line       Line           @[omitempty]
+	pull       []f64          @[omitempty]
+	hole       f64            @[omitempty]
+	fill       string         @[omitempty]
+	fillcolor  string         @[omitempty]
+	customdata [][]string     @[omitempty]
+	colorscale string = 'Viridis'         @[omitempty]
+	textinfo   string         @[omitempty]
+	text       []string       @[omitempty]
 }
 
 // ScatterTrace is a struct for Scatter trace type
-[params]
+@[params]
 pub struct ScatterTrace {
 	CommonTrace
 }
 
 // PieTrace is a struct for Pie trace type
-[params]
+@[params]
 pub struct PieTrace {
 	CommonTrace
 pub mut:
-	values []f64    [omitempty]
-	labels []string [omitempty]
+	values []f64    @[omitempty]
+	labels []string @[omitempty]
 }
 
 // HeatmapTrace is a struct for Heatmap trace type
-[params]
+@[params]
 pub struct HeatmapTrace {
 	CommonTrace
 pub mut:
-	hovertemplate string [omitempty]
-	zsmooth       string [omitempty]
+	hovertemplate string @[omitempty]
+	zsmooth       string @[omitempty]
 }
 
 // SurfaceTrace is a struct for Surface trace type
-[params]
+@[params]
 pub struct SurfaceTrace {
 	CommonTrace
 pub mut:
-	hovertemplate string [omitempty]
+	hovertemplate string @[omitempty]
 }
 
 // Scatter3DTrace is a struct for Scatter3D trace type
-[params]
+@[params]
 pub struct Scatter3DTrace {
 	CommonTrace
 }
 
 // BarTrace is a struct for Bar trace type
-[params]
+@[params]
 pub struct BarTrace {
 	CommonTrace
 }
 
 // HistogramTrace is a struct for Histogram trace type
-[params]
+@[params]
 pub struct HistogramTrace {
 	CommonTrace
 pub mut:
-	nbinsx   int    [omitempty]
-	nbinsy   int    [omitempty]
-	xbins    Bins   [omitempty]
-	histfunc string [omitempty]
-	marker   Marker [omitempty]
+	nbinsx   int    @[omitempty]
+	nbinsy   int    @[omitempty]
+	xbins    Bins   @[omitempty]
+	histfunc string @[omitempty]
+	marker   Marker @[omitempty]
 }
 
 // Marker is a struct for marker properties in a trace
 pub struct Marker {
 pub mut:
-	size       []f64    [omitempty]
-	color      []string [omitempty]
-	opacity    f64      [omitempty]    = 0.8
-	colorscale string   [omitempty] = 'Viridis'
+	size       []f64    @[omitempty]
+	color      []string @[omitempty]
+	opacity    f64    = 0.8      @[omitempty]
+	colorscale string = 'Viridis'   @[omitempty]
 }
 
 // Line is a struct for line properties in a trace
 pub struct Line {
 pub mut:
-	color string [omitempty]
-	width f64    [omitempty]    = 2.0
-	dash  string [omitempty] = 'solid'
+	color string @[omitempty]
+	width f64    = 2.0    @[omitempty]
+	dash  string = 'solid' @[omitempty]
 }
 
 // Bins is a struct for bin limits in a histogram trace

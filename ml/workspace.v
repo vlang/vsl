@@ -8,7 +8,7 @@ import vsl.la
 //
 // NOTE: Stat is an Observer of Data; thus, data.notify_update() will recompute stat
 //
-[heap]
+@[heap]
 pub struct Stat[T] {
 pub mut:
 	data   &Data[T] // data

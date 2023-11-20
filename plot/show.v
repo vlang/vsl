@@ -9,7 +9,7 @@ import time
 
 // PlotConfig is a configuration for the Plotly plot.
 // It includes the configuration for the web server that serves the plot.
-[params]
+@[params]
 pub struct PlotConfig {
 	net.ListenOptions
 	timeout time.Duration = 1 * time.second
@@ -47,7 +47,7 @@ pub fn (p Plot) show(config PlotConfig) ! {
 type TracesWithTypeValue = Trace | string
 
 // PlotlyScriptConfig is a configuration for the Plotly plot script.
-[params]
+@[params]
 pub struct PlotlyScriptConfig {
 	PlotConfig
 }
@@ -120,7 +120,7 @@ struct PlotlyHandler {
 	PlotlyScriptConfig
 	plot Plot
 mut:
-	server &http.Server [str: skip] = unsafe { nil }
+	server &http.Server = unsafe { nil } @[str: skip]
 }
 
 fn (mut handler PlotlyHandler) handle(req http.Request) http.Response {

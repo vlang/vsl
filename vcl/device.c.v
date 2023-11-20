@@ -38,7 +38,7 @@ const (
 // Device the only needed entrence for the VCL
 // represents the device on which memory can be allocated and kernels run
 // it abstracts away all the complexity of contexts/platforms/queues
-[heap]
+@[heap]
 pub struct Device {
 mut:
 	id       ClDeviceId

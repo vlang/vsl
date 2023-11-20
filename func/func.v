@@ -13,18 +13,18 @@ pub type VectorValuedFn = fn (x f64, y []f64, params []f64) f64
 
 // Definition of an arbitrary function with parameters
 pub struct Fn {
-	f ArbitraryFn [required]
+	f ArbitraryFn @[required]
 mut:
 	params []f64
 }
 
 // Fn.new returns an arbitrary function with parameters
-[inline]
+@[inline]
 pub fn Fn.new(f Fn) Fn {
 	return f
 }
 
-[inline]
+@[inline]
 pub fn (f Fn) eval(x f64) f64 {
 	return f.f(x, f.params)
 }
@@ -35,7 +35,7 @@ fn is_finite(a f64) bool {
 
 // Call the pointed-to function with argument x, put its result in y, and
 // return an error if the function value is inf/nan.
-[inline]
+@[inline]
 pub fn (f Fn) safe_eval(x f64) !f64 {
 	y := f.f(x, f.params)
 	if is_finite(y) {
@@ -54,24 +54,24 @@ mut:
 }
 
 // FnFdf.new returns an arbitrary function returning two values, r1, r2
-[inline]
+@[inline]
 pub fn FnFdf.new(fn_fdf FnFdf) FnFdf {
 	return fn_fdf
 }
 
-[inline]
+@[inline]
 pub fn (fdf FnFdf) eval_f(x f64) ?f64 {
 	f := fdf.f or { return none }
 	return f(x, fdf.params)
 }
 
-[inline]
+@[inline]
 pub fn (fdf FnFdf) eval_df(x f64) ?f64 {
 	df := fdf.df or { return none }
 	return df(x, fdf.params)
 }
 
-[inline]
+@[inline]
 pub fn (fdf FnFdf) eval_f_df(x f64) ?(f64, f64) {
 	fdf_ := fdf.fdf or { return none }
 	return fdf_(x, fdf.params)
@@ -79,18 +79,18 @@ pub fn (fdf FnFdf) eval_f_df(x f64) ?(f64, f64) {
 
 // Definition of an arbitrary vector-valued function with parameters
 pub struct FnVec {
-	f VectorValuedFn [required]
+	f VectorValuedFn @[required]
 mut:
 	params []f64
 }
 
 // FnVec.new returns an arbitrary vector-valued function with parameters
-[inline]
+@[inline]
 pub fn FnVec.new(f FnVec) FnVec {
 	return f
 }
 
-[inline]
+@[inline]
 pub fn (f FnVec) eval(x f64, y []f64) f64 {
 	return f.f(x, y, f.params)
 }

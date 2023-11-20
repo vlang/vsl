@@ -1,7 +1,7 @@
 module vcl
 
 // Rect is a struct that represents a rectangle shape
-[params]
+@[params]
 pub struct Rect {
 pub: // pixel need integers
 	x      f32
@@ -12,10 +12,10 @@ pub: // pixel need integers
 
 // IImage holds the fileds and data needed to represent a bitmap/pixel based image in memory.
 pub interface IImage {
-	width int
-	height int
+	width       int
+	height      int
 	nr_channels int
-	data voidptr
+	data        voidptr
 }
 
 // Image memory buffer on the device with image data

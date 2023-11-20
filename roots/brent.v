@@ -12,7 +12,7 @@ const itmax = 100
 // interval must contain a root.
 pub struct Brent {
 pub:
-	f func.Fn [required]
+	f func.Fn @[required]
 pub mut:
 	x1      f64
 	x2      f64

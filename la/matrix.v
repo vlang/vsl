@@ -4,7 +4,7 @@ import math
 import strconv
 import vsl.errors
 
-[heap]
+@[heap]
 pub struct Matrix[T] {
 pub mut:
 	m    int
@@ -195,7 +195,7 @@ pub fn (o &Matrix[T]) largest(den T) T {
 // col access column j of this matrix. No copies are made since the internal data are in
 // row-major format already.
 // NOTE: this method can be used to modify the columns; e.g. with o.col(0)[0] = 123
-[inline]
+@[inline]
 pub fn (o &Matrix[T]) col(j int) []T {
 	return o.get_col(j)
 }
@@ -413,7 +413,7 @@ pub fn (o &Matrix[T]) print_py(nfmt_ string) string {
 	return l
 }
 
-[inline]
+@[inline]
 pub fn safe_print[T](format string, message T) string {
 	return unsafe { strconv.v_sprintf(format, message) }
 }

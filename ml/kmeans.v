@@ -6,7 +6,7 @@ import vsl.la
 import vsl.plot
 
 // Kmeans implements the K-means model (Observer of Data)
-[heap]
+@[heap]
 pub struct Kmeans {
 mut:
 	name       string     // name of this "observer"

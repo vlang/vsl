@@ -13,10 +13,10 @@ pub:
 	len i64
 }
 
-[params]
+@[params]
 pub struct IntIterParams {
 	start i64
-	stop  i64 [required]
+	stop  i64 @[required]
 	step  i64 = 1
 }
 
@@ -69,10 +69,10 @@ pub:
 	len i64
 }
 
-[params]
+@[params]
 pub struct FloatIterParams {
 	start f64
-	stop  f64 [required]
+	stop  f64 @[required]
 	step  f64 = 1.0
 }
 
@@ -124,10 +124,10 @@ pub:
 	step f64
 }
 
-[params]
+@[params]
 pub struct LinearIterParams {
-	start    f64  [required]
-	stop     f64  [required]
+	start    f64  @[required]
+	stop     f64  @[required]
 	len      i64  = 50
 	endpoint bool = true
 }
@@ -188,10 +188,10 @@ mut:
 	linear_iter LinearIter
 }
 
-[params]
+@[params]
 pub struct LogIterParams {
-	start    f64  [required]
-	stop     f64  [required]
+	start    f64  @[required]
+	stop     f64  @[required]
 	len      i64  = 50
 	base     f64  = 10.0
 	endpoint bool = true

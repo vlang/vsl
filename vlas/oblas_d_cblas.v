@@ -193,255 +193,255 @@ pub fn set_num_threads(n int) {
 	C.openblas_set_num_threads(n)
 }
 
-[inline]
+@[inline]
 pub fn sdsdot(n int, alpha f32, x []f32, incx int, y []f32, incy int) f32 {
 	return C.cblas_sdsdot(n, alpha, unsafe { &x[0] }, incx, unsafe { &y[0] }, incy)
 }
 
-[inline]
+@[inline]
 pub fn dsdot(n int, x []f32, incx int, y []f32, incy int) f64 {
 	return C.cblas_dsdot(n, unsafe { &x[0] }, incx, unsafe { &y[0] }, incy)
 }
 
-[inline]
+@[inline]
 pub fn sdot(n int, x []f32, incx int, y []f32, incy int) f32 {
 	return C.cblas_sdot(n, unsafe { &x[0] }, incx, unsafe { &y[0] }, incy)
 }
 
-[inline]
+@[inline]
 pub fn ddot(n int, x []f64, incx int, y []f64, incy int) f64 {
 	return C.cblas_ddot(n, unsafe { &x[0] }, incx, unsafe { &y[0] }, incy)
 }
 
-[inline]
+@[inline]
 pub fn sasum(n int, x []f32, incx int) f32 {
 	return C.cblas_sasum(n, unsafe { &x[0] }, incx)
 }
 
-[inline]
+@[inline]
 pub fn dasum(n int, x []f64, incx int) f64 {
 	return C.cblas_dasum(n, unsafe { &x[0] }, incx)
 }
 
-[inline]
+@[inline]
 pub fn ssum(n int, x []f32, incx int) f32 {
 	return C.cblas_ssum(n, unsafe { &x[0] }, incx)
 }
 
-[inline]
+@[inline]
 pub fn dsum(n int, x []f64, incx int) f64 {
 	return C.cblas_dsum(n, unsafe { &x[0] }, incx)
 }
 
-[inline]
+@[inline]
 pub fn snrm2(n int, x []f32, incx int) f32 {
 	return C.cblas_snrm2(n, unsafe { &x[0] }, incx)
 }
 
-[inline]
+@[inline]
 pub fn dnrm2(n int, x []f64, incx int) f64 {
 	return C.cblas_dnrm2(n, unsafe { &x[0] }, incx)
 }
 
-[inline]
+@[inline]
 pub fn isamax(n int, x []f32, incx int) int {
 	return C.cblas_isamax(n, unsafe { &x[0] }, incx)
 }
 
-[inline]
+@[inline]
 pub fn idamax(n int, x []f64, incx int) int {
 	return C.cblas_idamax(n, unsafe { &x[0] }, incx)
 }
 
-[inline]
+@[inline]
 pub fn isamin(n int, x []f32, incx int) int {
 	return C.cblas_isamin(n, unsafe { &x[0] }, incx)
 }
 
-[inline]
+@[inline]
 pub fn idamin(n int, x &f64, incx int) int {
 	return C.cblas_idamin(n, unsafe { &x[0] }, incx)
 }
 
-[inline]
+@[inline]
 pub fn ismax(n int, x []f32, incx int) int {
 	return C.cblas_ismax(n, unsafe { &x[0] }, incx)
 }
 
-[inline]
+@[inline]
 pub fn idmax(n int, x []f64, incx int) int {
 	return C.cblas_idmax(n, unsafe { &x[0] }, incx)
 }
 
-[inline]
+@[inline]
 pub fn ismin(n int, x []f32, incx int) int {
 	return C.cblas_ismin(n, unsafe { &x[0] }, incx)
 }
 
-[inline]
+@[inline]
 pub fn idmin(n int, x []f64, incx int) int {
 	return C.cblas_idmin(n, unsafe { &x[0] }, incx)
 }
 
-[inline]
+@[inline]
 pub fn saxpy(n int, alpha f32, x []f32, incx int, mut y []f32, incy int) {
 	C.cblas_saxpy(n, alpha, unsafe { &x[0] }, incx, unsafe { &y[0] }, incy)
 }
 
-[inline]
+@[inline]
 pub fn daxpy(n int, alpha f64, x []f64, incx int, mut y []f64, incy int) {
 	C.cblas_daxpy(n, alpha, unsafe { &x[0] }, incx, unsafe { &y[0] }, incy)
 }
 
-[inline]
+@[inline]
 pub fn scopy(n int, mut x []f32, incx int, mut y []f32, incy int) {
 	C.cblas_scopy(n, unsafe { &x[0] }, incx, unsafe { &y[0] }, incy)
 }
 
-[inline]
+@[inline]
 pub fn dcopy(n int, mut x []f64, incx int, mut y []f64, incy int) {
 	C.cblas_dcopy(n, unsafe { &x[0] }, incx, unsafe { &y[0] }, incy)
 }
 
-[inline]
+@[inline]
 pub fn sswap(n int, mut x []f32, incx int, mut y []f32, incy int) {
 	C.cblas_sswap(n, unsafe { &x[0] }, incx, unsafe { &y[0] }, incy)
 }
 
-[inline]
+@[inline]
 pub fn dswap(n int, mut x []f64, incx int, mut y []f64, incy int) {
 	C.cblas_dswap(n, unsafe { &x[0] }, incx, unsafe { &y[0] }, incy)
 }
 
-[inline]
+@[inline]
 pub fn srot(n int, mut x []f32, incx int, mut y []f32, incy int, c f32, s f32) {
 	C.cblas_srot(n, unsafe { &x[0] }, incx, unsafe { &y[0] }, incy, c, s)
 }
 
-[inline]
+@[inline]
 pub fn drot(n int, mut x []f64, incx int, mut y []f64, incy int, c f64, s f64) {
 	C.cblas_drot(n, unsafe { &x[0] }, incx, unsafe { &y[0] }, incy, c, s)
 }
 
-[inline]
+@[inline]
 pub fn srotg(a f32, b f32, c f32, s f32) {
 	C.cblas_srotg(&a, &b, &c, &s)
 }
 
-[inline]
+@[inline]
 pub fn drotg(a f64, b f64, c f64, s f64) {
 	C.cblas_drotg(&a, &b, &c, &s)
 }
 
-[inline]
+@[inline]
 pub fn srotm(n int, x []f32, incx int, y []f32, incy int, p []f32) {
 	C.cblas_srotm(n, unsafe { &x[0] }, incx, unsafe { &y[0] }, incy, unsafe { &p[0] })
 }
 
-[inline]
+@[inline]
 pub fn drotm(n int, x []f64, incx int, y []f64, incy int, p []f64) {
 	C.cblas_drotm(n, unsafe { &x[0] }, incx, unsafe { &y[0] }, incy, unsafe { &p[0] })
 }
 
-[inline]
+@[inline]
 pub fn srotmg(d1 f32, d2 f32, b1 f32, b2 f32, p []f32) {
 	C.cblas_srotmg(&d1, &d2, &b1, b2, unsafe { &p[0] })
 }
 
-[inline]
+@[inline]
 pub fn drotmg(d1 f64, d2 f64, b1 f64, b2 f32, p []f64) {
 	C.cblas_drotmg(&d1, &d2, &b1, b2, unsafe { &p[0] })
 }
 
-[inline]
+@[inline]
 pub fn sscal(n int, alpha f32, mut x []f32, incx int) {
 	C.cblas_sscal(n, alpha, unsafe { &x[0] }, incx)
 }
 
-[inline]
+@[inline]
 pub fn dscal(n int, alpha f64, mut x []f64, incx int) {
 	C.cblas_dscal(n, alpha, unsafe { &x[0] }, incx)
 }
 
-[inline]
+@[inline]
 pub fn sgemv(trans bool, m int, n int, alpha f32, a []f32, lda int, x []f32, incx int, beta f32, mut y []f32, incy int) {
 	C.cblas_sgemv(.row_major, c_trans(trans), m, n, alpha, unsafe { &a[0] }, lda, unsafe { &x[0] },
 		incx, beta, unsafe { &y[0] }, incy)
 }
 
-[inline]
+@[inline]
 pub fn dgemv(trans bool, m int, n int, alpha f64, a []f64, lda int, x []f64, incx int, beta f64, mut y []f64, incy int) {
 	C.cblas_dgemv(.row_major, c_trans(trans), m, n, alpha, unsafe { &a[0] }, lda, unsafe { &x[0] },
 		incx, beta, unsafe { &y[0] }, incy)
 }
 
-[inline]
+@[inline]
 pub fn sger(m int, n int, alpha f32, x []f32, incx int, y []f32, incy int, mut a []f32, lda int) {
 	C.cblas_sger(.row_major, m, n, alpha, unsafe { &x[0] }, incx, unsafe { &y[0] }, incy,
 		unsafe { &a[0] }, lda)
 }
 
-[inline]
+@[inline]
 pub fn dger(m int, n int, alpha f64, x []f64, incx int, y []f64, incy int, mut a []f64, lda int) {
 	C.cblas_dger(.row_major, m, n, alpha, unsafe { &x[0] }, incx, unsafe { &y[0] }, incy,
 		unsafe { &a[0] }, lda)
 }
 
-[inline]
+@[inline]
 pub fn strsv(uplo bool, trans_a bool, diag vblas.Diagonal, n int, a []f32, lda int, mut x []f32, incx int) {
 	C.cblas_strsv(.row_major, c_uplo(uplo), c_trans(trans_a), diag, n, unsafe { &a[0] },
 		lda, unsafe { &x[0] }, incx)
 }
 
-[inline]
+@[inline]
 pub fn dtrsv(uplo bool, trans_a bool, diag vblas.Diagonal, n int, a []f64, lda int, mut x []f64, incx int) {
 	C.cblas_dtrsv(.row_major, c_uplo(uplo), c_trans(trans_a), diag, n, unsafe { &a[0] },
 		lda, unsafe { &x[0] }, incx)
 }
 
-[inline]
+@[inline]
 pub fn strmv(uplo bool, trans_a bool, diag vblas.Diagonal, n int, a []f32, lda int, mut x []f32, incx int) {
 	C.cblas_strmv(.row_major, c_uplo(uplo), c_trans(trans_a), diag, n, unsafe { &a[0] },
 		lda, unsafe { &x[0] }, incx)
 }
 
-[inline]
+@[inline]
 pub fn dtrmv(uplo bool, trans_a bool, diag vblas.Diagonal, n int, a []f64, lda int, mut x []f64, incx int) {
 	C.cblas_dtrmv(.row_major, c_uplo(uplo), c_trans(trans_a), diag, n, unsafe { &a[0] },
 		lda, unsafe { &x[0] }, incx)
 }
 
-[inline]
+@[inline]
 pub fn ssyr(uplo bool, n int, alpha f32, x []f32, incx int, mut a []f32, lda int) {
 	C.cblas_ssyr(.row_major, c_uplo(uplo), n, alpha, unsafe { &x[0] }, incx, unsafe { &a[0] },
 		lda)
 }
 
-[inline]
+@[inline]
 pub fn dsyr(uplo bool, n int, alpha f64, x []f64, incx int, mut a []f64, lda int) {
 	C.cblas_dsyr(.row_major, c_uplo(uplo), n, alpha, unsafe { &x[0] }, incx, unsafe { &a[0] },
 		lda)
 }
 
-[inline]
+@[inline]
 pub fn ssyr2(uplo bool, n int, alpha f32, x []f32, incx int, y []f32, incy int, mut a []f32, lda int) {
 	C.cblas_ssyr2(.row_major, c_uplo(uplo), n, alpha, unsafe { &x[0] }, incx, unsafe { &y[0] },
 		incy, unsafe { &a[0] }, lda)
 }
 
-[inline]
+@[inline]
 pub fn dsyr2(uplo bool, n int, alpha f64, x []f64, incx int, y []f64, incy int, mut a []f64, lda int) {
 	C.cblas_dsyr2(.row_major, c_uplo(uplo), n, alpha, unsafe { &x[0] }, incx, unsafe { &y[0] },
 		incy, unsafe { &a[0] }, lda)
 }
 
-[inline]
+@[inline]
 pub fn sgemm(trans_a bool, trans_b bool, m int, n int, k int, alpha f32, a []f32, lda int, b []f32, ldb int, beta f32, mut cc []f32, ldc int) {
 	C.cblas_sgemm(.row_major, c_trans(trans_a), c_trans(trans_b), m, n, k, alpha, unsafe { &a[0] },
 		lda, unsafe { &b[0] }, ldb, beta, unsafe { &cc[0] }, ldc)
 }
 
-[inline]
+@[inline]
 pub fn dgemm(trans_a bool, trans_b bool, m int, n int, k int, alpha f64, a []f64, lda int, b []f64, ldb int, beta f64, mut cc []f64, ldc int) {
 	C.cblas_dgemm(.row_major, c_trans(trans_a), c_trans(trans_b), m, n, k, alpha, unsafe { &a[0] },
 		lda, unsafe { &b[0] }, ldb, beta, unsafe { &cc[0] }, ldc)

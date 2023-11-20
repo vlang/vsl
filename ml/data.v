@@ -19,7 +19,7 @@ import vsl.errors
  *   NOTE: remember to call data.notify_update() after changing x or y components
  *
 */
-[heap]
+@[heap]
 pub struct Data[T] {
 pub mut:
 	observable  util.Observable = util.Observable{}

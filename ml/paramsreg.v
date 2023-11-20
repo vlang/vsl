@@ -3,7 +3,7 @@ module ml
 import vsl.la
 import vsl.util
 
-[heap]
+@[heap]
 pub struct ParamsReg[T] {
 pub mut:
 	observable util.Observable

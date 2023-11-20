@@ -139,7 +139,7 @@ fn bessel_kn(n int, x f64) f64 {
 }
 
 // mbpoly evaluate a polynomial for the modified Bessel functions
-[inline]
+@[inline]
 fn mbpoly(cof []f64, n int, x f64) f64 {
 	return poly.eval(cof[..n - 1], x)
 }

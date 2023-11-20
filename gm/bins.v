@@ -8,7 +8,7 @@ pub const (
 )
 
 // BinEntry holds data of an entry to bin
-[heap]
+@[heap]
 pub struct BinEntry {
 pub mut:
 	id    int     // object Id
@@ -17,7 +17,7 @@ pub mut:
 }
 
 // Bin defines one bin in Bins (holds entries for search)
-[heap]
+@[heap]
 pub struct Bin {
 pub mut:
 	index   int // index of bin
@@ -25,7 +25,7 @@ pub mut:
 }
 
 // Bins implements a set of bins holding entries and is used to fast search entries by given coordinates.
-[heap]
+@[heap]
 pub struct Bins {
 mut:
 	tmp []int // [ndim] temporary (auxiliary) slice
