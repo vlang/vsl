@@ -15,8 +15,8 @@ pub mut:
 @[heap]
 pub struct Segment {
 pub:
-	a &Point
-	b &Point
+	a &Point = unsafe { nil }
+	b &Point = unsafe { nil }
 }
 
 // Point.new creates a new point

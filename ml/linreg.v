@@ -10,12 +10,12 @@ pub struct LinReg {
 mut:
 	// main
 	name string     // name of this "observer"
-	data &Data[f64] // x-y data
+	data &Data[f64] = unsafe { nil } // x-y data
 	// workspace
 	e []f64 // vector e = b⋅o + x⋅theta - y [nb_samples]
 pub mut:
-	stat   &Stat[f64] // statistics
-	params &ParamsReg[f64]
+	stat   &Stat[f64]      = unsafe { nil } // statistics
+	params &ParamsReg[f64] = unsafe { nil }
 }
 
 // LinReg.new returns a new LinReg object

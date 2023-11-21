@@ -46,7 +46,7 @@ fn UnsupportedArgumentTypeError.new(index int, value ArgumentType) IError {
 
 // Kernel represent a single kernel
 pub struct Kernel {
-	d &Device
+	d &Device = unsafe { nil }
 	k ClKernel
 }
 
@@ -61,7 +61,7 @@ pub fn (k &Kernel) global(global_work_sizes ...int) KernelWithGlobal {
 // KernelWithGlobal is a kernel with the global size set
 // to run the kernel it must also set the local size
 pub struct KernelWithGlobal {
-	kernel            &Kernel
+	kernel            &Kernel = unsafe { nil }
 	global_work_sizes []int
 }
 
@@ -77,7 +77,7 @@ pub fn (kg KernelWithGlobal) local(local_work_sizes ...int) KernelCall {
 // KernelCall is a kernel with global and local work sizes set
 // and it's ready to be run
 pub struct KernelCall {
-	kernel            &Kernel
+	kernel            &Kernel = unsafe { nil }
 	global_work_sizes []int
 	local_work_sizes  []int
 }

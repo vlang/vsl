@@ -11,7 +11,7 @@ import vsl.la
 @[heap]
 pub struct Stat[T] {
 pub mut:
-	data   &Data[T] // data
+	data   &Data[T] = unsafe { nil } // data
 	name   string   // name of this object
 	min_x  []T      // [n_features] min x values
 	max_x  []T      // [n_features] max x values

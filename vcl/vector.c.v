@@ -3,7 +3,7 @@ module vcl
 // Vector is a memory buffer on device that holds []T
 pub struct Vector[T] {
 mut:
-	buf &Buffer
+	buf &Buffer = unsafe { nil }
 }
 
 // vector allocates new vector buffer with specified length

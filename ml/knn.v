@@ -9,7 +9,7 @@ import vsl.plot
 pub struct KNN {
 mut:
 	name    string // name of this "observer"
-	data    &Data[f64]
+	data    &Data[f64] = unsafe { nil }
 	weights map[f64]f64 // weights[class] = weight
 pub mut:
 	neighbors []Neighbor
