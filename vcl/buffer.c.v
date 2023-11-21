@@ -3,7 +3,7 @@ module vcl
 // Buffer memory buffer on the device
 struct Buffer {
 	size   int
-	device &Device
+	device &Device = unsafe { nil }
 mut:
 	memobj ClMem
 }

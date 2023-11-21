@@ -21,7 +21,7 @@ pub interface IImage {
 // Image memory buffer on the device with image data
 pub struct Image {
 	format   ClImageFormat
-	desc     &ClImageDesc
+	desc     &ClImageDesc = unsafe { nil }
 	img_data voidptr
 mut:
 	buf &Buffer

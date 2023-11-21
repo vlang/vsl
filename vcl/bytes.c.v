@@ -2,7 +2,7 @@ module vcl
 
 // Bytes is a memory buffer on the device that holds []byte
 pub struct Bytes {
-	buf &Buffer
+	buf &Buffer = unsafe { nil }
 }
 
 // bytes allocates new memory buffer with specified size on device
