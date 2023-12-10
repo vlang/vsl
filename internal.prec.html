@@ -36,7 +36,7 @@
 						<div class="info">
 							<div class="module">vsl</div>
 							<div class="toggle-version-container">
-								<span>0.1.50 f8ed96a</span>
+								<span>0.1.50 08189d6</span>
 								<div
 									id="dark-mode-toggle"
 									role="switch"
@@ -76,65 +76,267 @@
 
 </section>
 		<section id="" class="doc-node const">
-<pre class="signature"><code><span class="token keyword">const</span> <span class="token punctuation">(</span>
-	f64_epsilon           <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>f64_epsilon
-	sqrt_f64_epsilon      <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>sqrt_f64_epsilon
-	root3_f64_epsilon     <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root3_f64_epsilon
-	root4_f64_epsilon     <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root4_f64_epsilon
-	root5_f64_epsilon     <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root5_f64_epsilon
-	root6_f64_epsilon     <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root6_f64_epsilon
-	log_f64_epsilon       <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>log_f64_epsilon
-	f64_min               <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>f64_min
-	sqrt_f64_min          <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>sqrt_f64_min
-	root3_f64_min         <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root3_f64_min
-	root4_f64_min         <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root4_f64_min
-	root5_f64_min         <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root5_f64_min
-	root6_f64_min         <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root6_f64_min
-	log_f64_min           <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>log_f64_min
-	f64_max               <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>f64_max
-	sqrt_f64_max          <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>sqrt_f64_max
-	root3_f64_max         <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root3_f64_max
-	root4_f64_max         <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root4_f64_max
-	root5_f64_max         <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root5_f64_max
-	root6_f64_max         <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root6_f64_max
-	log_f64_max           <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>log_f64_max
-	f32_epsilon           <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>f32_epsilon
-	sqrt_f32_epsilon      <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>sqrt_f32_epsilon
-	root3_f32_epsilon     <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root3_f32_epsilon
-	root4_f32_epsilon     <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root4_f32_epsilon
-	root5_f32_epsilon     <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root5_f32_epsilon
-	root6_f32_epsilon     <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root6_f32_epsilon
-	log_f32_epsilon       <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>log_f32_epsilon
-	f32_min               <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>f32_min
-	sqrt_f32_min          <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>sqrt_f32_min
-	root3_f32_min         <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root3_f32_min
-	root4_f32_min         <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root4_f32_min
-	root5_f32_min         <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root5_f32_min
-	root6_f32_min         <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root6_f32_min
-	log_f32_min           <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>log_f32_min
-	f32_max               <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>f32_max
-	sqrt_f32_max          <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>sqrt_f32_max
-	root3_f32_max         <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root3_f32_max
-	root4_f32_max         <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root4_f32_max
-	root5_f32_max         <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root5_f32_max
-	root6_f32_max         <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root6_f32_max
-	log_f32_max           <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>log_f32_max
-	sflt_epsilon          <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>sflt_epsilon
-	sqrt_sflt_epsilon     <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>sqrt_sflt_epsilon
-	root3_sflt_epsilon    <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root3_sflt_epsilon
-	root4_sflt_epsilon    <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root4_sflt_epsilon
-	root5_sflt_epsilon    <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root5_sflt_epsilon
-	root6_sflt_epsilon    <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root6_sflt_epsilon
-	log_sflt_epsilon      <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>log_sflt_epsilon
-	max_int_fact_arg      <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>max_int_fact_arg
-	max_f64_fact_arg      <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>max_f64_fact_arg
-	max_long_f64_fact_arg <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>max_long_f64_fact_arg
-<span class="token punctuation">)</span></code></pre>
-<p>contants to do fine tuning of precision for the functionsimplemented in pure V.<br />This can be fine tuned for each function, but the defaultvalues are good enough for most cases.<br />Optimizing this in Vlib makes direct impact on the performanceof VSL programs.</p>
+<pre class="signature"><code><span class="token keyword">const</span> f64_epsilon <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>f64_epsilon</code></pre>
+<p>contants to do fine tuning of precision for the functions implemented in pure V. This can be fine tuned for each function, but the default values are good enough for most cases. Optimizing this in Vlib makes direct impact on the performance of VSL programs.</p>
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> sqrt_f64_epsilon <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>sqrt_f64_epsilon</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> root3_f64_epsilon <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root3_f64_epsilon</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> root4_f64_epsilon <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root4_f64_epsilon</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> root5_f64_epsilon <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root5_f64_epsilon</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> root6_f64_epsilon <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root6_f64_epsilon</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> log_f64_epsilon <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>log_f64_epsilon</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> f64_min <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>f64_min</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> sqrt_f64_min <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>sqrt_f64_min</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> root3_f64_min <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root3_f64_min</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> root4_f64_min <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root4_f64_min</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> root5_f64_min <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root5_f64_min</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> root6_f64_min <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root6_f64_min</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> log_f64_min <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>log_f64_min</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> f64_max <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>f64_max</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> sqrt_f64_max <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>sqrt_f64_max</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> root3_f64_max <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root3_f64_max</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> root4_f64_max <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root4_f64_max</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> root5_f64_max <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root5_f64_max</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> root6_f64_max <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root6_f64_max</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> log_f64_max <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>log_f64_max</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> f32_epsilon <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>f32_epsilon</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> sqrt_f32_epsilon <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>sqrt_f32_epsilon</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> root3_f32_epsilon <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root3_f32_epsilon</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> root4_f32_epsilon <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root4_f32_epsilon</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> root5_f32_epsilon <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root5_f32_epsilon</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> root6_f32_epsilon <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root6_f32_epsilon</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> log_f32_epsilon <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>log_f32_epsilon</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> f32_min <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>f32_min</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> sqrt_f32_min <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>sqrt_f32_min</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> root3_f32_min <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root3_f32_min</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> root4_f32_min <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root4_f32_min</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> root5_f32_min <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root5_f32_min</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> root6_f32_min <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root6_f32_min</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> log_f32_min <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>log_f32_min</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> f32_max <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>f32_max</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> sqrt_f32_max <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>sqrt_f32_max</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> root3_f32_max <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root3_f32_max</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> root4_f32_max <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root4_f32_max</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> root5_f32_max <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root5_f32_max</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> root6_f32_max <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root6_f32_max</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> log_f32_max <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>log_f32_max</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> sflt_epsilon <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>sflt_epsilon</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> sqrt_sflt_epsilon <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>sqrt_sflt_epsilon</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> root3_sflt_epsilon <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root3_sflt_epsilon</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> root4_sflt_epsilon <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root4_sflt_epsilon</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> root5_sflt_epsilon <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root5_sflt_epsilon</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> root6_sflt_epsilon <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>root6_sflt_epsilon</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> log_sflt_epsilon <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>log_sflt_epsilon</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> max_int_fact_arg <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>max_int_fact_arg</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> max_f64_fact_arg <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>max_f64_fact_arg</code></pre>
+
+
+</section>
+		<section id="" class="doc-node const">
+<pre class="signature"><code><span class="token keyword">const</span> max_long_f64_fact_arg <span class="token operator">=</span> mathinternal<span class="token punctuation">.</span>max_long_f64_fact_arg</code></pre>
+
 
 </section>
 
-						<div class="footer">Powered by vdoc. Generated on: 21 Nov 2023 03:09:37</div>
+						<div class="footer">Powered by vdoc. Generated on: 10 Dec 2023 00:49:14</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#Constants">Constants</a></li>
 </ul></div>
