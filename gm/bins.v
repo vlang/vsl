@@ -3,9 +3,7 @@ module gm
 import math
 import vsl.errors
 
-pub const (
-	xdelzero = 1e-10 // minimum distance between coordinates; i.e. xmax[i]-xmin[i] mininum
-)
+pub const xdelzero = 1e-10 // minimum distance between coordinates; i.e. xmax[i]-xmin[i] mininum
 
 // BinEntry holds data of an entry to bin
 @[heap]

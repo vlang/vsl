@@ -3,12 +3,10 @@ module float32
 import rand
 import math
 
-const (
-	// Offset sets for testing alignment handling in Unitary assembly functions
-	align1 = [0, 1]
-	align2 = IncSet.new(0, 1)
-	align3 = IncToSet.new(0, 1)
-)
+// Offset sets for testing alignment handling in Unitary assembly functions
+const align1 = [0, 1]
+const align2 = IncSet.new(0, 1)
+const align3 = IncToSet.new(0, 1)
 
 struct IncSet {
 	x int

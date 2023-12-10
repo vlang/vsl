@@ -2,10 +2,8 @@ module poly
 
 import math
 
-const (
-	radix  = 2
-	radix2 = (radix * radix)
-)
+const radix = 2
+const radix2 = (radix * radix)
 
 pub fn eval(c []f64, x f64) f64 {
 	if c.len == 0 {

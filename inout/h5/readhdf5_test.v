@@ -2,13 +2,11 @@ module h5
 
 import os
 
-const (
-	h5dump     = 'h5dump'
-	h5data     = 'hdf_test.h5'
-	testfolder = os.join_path(os.vtmp_dir(), 'vsl', 'readhdf5')
-	testfile   = os.join_path(testfolder, h5data)
-	shortarray = []i32{len: 2}
-)
+const h5dump = 'h5dump'
+const h5data = 'hdf_test.h5'
+const testfolder = os.join_path(os.vtmp_dir(), 'vsl', 'readhdf5')
+const testfile = os.join_path(testfolder, h5data)
+const shortarray = []i32{len: 2}
 
 fn testsuite_begin() {
 	os.rmdir_all(h5.testfolder) or {}

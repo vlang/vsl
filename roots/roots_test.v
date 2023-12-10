@@ -4,11 +4,9 @@ import vsl.func
 import vsl.float.float64
 import math
 
-const (
-	epsabs = 0.0001
-	epsrel = 0.00001
-	n_max  = 100
-)
+const epsabs = 0.0001
+const epsrel = 0.00001
+const n_max = 100
 
 fn f_cos(x f64, _ []f64) f64 {
 	return math.cos(x)

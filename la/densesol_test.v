@@ -2,9 +2,7 @@ module la
 
 import vsl.float.float64
 
-const (
-	debsesol_tests_tol = 1e-12
-)
+const debsesol_tests_tol = 1e-12
 
 fn test_den_solve() {
 	// case 1

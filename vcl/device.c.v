@@ -8,32 +8,30 @@ pub enum DeviceType as i64 {
 	all         = 0xFFFFFFFF
 }
 
-const (
-	// cl_mem_flags and cl_svm_mem_flags - bitfield
-	mem_read_write            = (1 << 0)
-	mem_write_only            = (1 << 1)
-	mem_read_only             = (1 << 2)
-	mem_use_host_ptr          = (1 << 3)
-	mem_alloc_host_ptr        = (1 << 4)
-	mem_copy_host_ptr         = (1 << 5)
-	// reserved (1 << 6)
-	mem_host_write_only       = (1 << 7)
-	mem_host_read_only        = (1 << 8)
-	mem_host_no_access        = (1 << 9)
-	mem_svm_fine_grain_buffer = (1 << 10)
-	mem_svm_atomics           = (1 << 11)
-	mem_kernel_read_and_write = (1 << 12)
+// cl_mem_flags and cl_svm_mem_flags - bitfield
+const mem_read_write = (1 << 0)
+const mem_write_only = (1 << 1)
+const mem_read_only = (1 << 2)
+const mem_use_host_ptr = (1 << 3)
+const mem_alloc_host_ptr = (1 << 4)
+const mem_copy_host_ptr = (1 << 5)
+// reserved (1 << 6)
+const mem_host_write_only = (1 << 7)
+const mem_host_read_only = (1 << 8)
+const mem_host_no_access = (1 << 9)
+const mem_svm_fine_grain_buffer = (1 << 10)
+const mem_svm_atomics = (1 << 11)
+const mem_kernel_read_and_write = (1 << 12)
 
-	device_name               = 0x102B
-	device_vendor             = 0x102C
-	driver_version            = 0x102D
-	device_profile            = 0x102E
-	device_version            = 0x102F
-	device_extensions         = 0x1030
-	device_platform           = 0x1031
-	device_opencl_c_version   = 0x103D
-	program_build_log         = 0x1183
-)
+const device_name = 0x102B
+const device_vendor = 0x102C
+const driver_version = 0x102D
+const device_profile = 0x102E
+const device_version = 0x102F
+const device_extensions = 0x1030
+const device_platform = 0x1031
+const device_opencl_c_version = 0x103D
+const program_build_log = 0x1183
 
 // Device the only needed entrence for the VCL
 // represents the device on which memory can be allocated and kernels run

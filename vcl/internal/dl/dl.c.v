@@ -2,13 +2,11 @@ module dl
 
 import dl.loader
 
-pub const (
-	dl_no_path_issue_code  = loader.dl_no_path_issue_code
-	dl_open_issue_code     = loader.dl_open_issue_code
-	dl_sym_issue_code      = loader.dl_sym_issue_code
-	dl_close_issue_code    = loader.dl_close_issue_code
-	dl_register_issue_code = loader.dl_register_issue_code
-)
+pub const dl_no_path_issue_code = loader.dl_no_path_issue_code
+pub const dl_open_issue_code = loader.dl_open_issue_code
+pub const dl_sym_issue_code = loader.dl_sym_issue_code
+pub const dl_close_issue_code = loader.dl_close_issue_code
+pub const dl_register_issue_code = loader.dl_register_issue_code
 
 fn get_or_create_dynamic_lib_loader() !&loader.DynamicLibLoader {
 	return loader.get_or_create_dynamic_lib_loader(

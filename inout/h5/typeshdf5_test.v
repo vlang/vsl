@@ -2,29 +2,27 @@ module h5
 
 import os
 
-const (
-	h5dump     = 'h5dump'
-	h5data     = 'hdf_types.h5'
-	testfolder = os.join_path(os.vtmp_dir(), 'vsl', 'typeshdf5')
-	testfile   = os.join_path(testfolder, h5data)
+const h5dump = 'h5dump'
+const h5data = 'hdf_types.h5'
+const testfolder = os.join_path(os.vtmp_dir(), 'vsl', 'typeshdf5')
+const testfile = os.join_path(testfolder, h5data)
 
-	i8array    = make1type[i8](2)
-	u8array    = make1type[u8](2)
+const i8array = make1type[i8](2)
+const u8array = make1type[u8](2)
 
-	i16array   = make1type[i16](2)
-	u16array   = make1type[u16](2)
+const i16array = make1type[i16](2)
+const u16array = make1type[u16](2)
 
-	i32array   = make1type[i32](2)
-	u32array   = make1type[u32](2)
+const i32array = make1type[i32](2)
+const u32array = make1type[u32](2)
 
-	i64array   = make1type[i64](2)
-	u64array   = make1type[u64](2)
+const i64array = make1type[i64](2)
+const u64array = make1type[u64](2)
 
-	f32array   = make1type[f32](2)
-	f64array   = make1type[f64](2)
+const f32array = make1type[f32](2)
+const f64array = make1type[f64](2)
 
-	intarray   = make1type[int](2)
-)
+const intarray = make1type[int](2)
 
 fn testsuite_begin() {
 	os.rmdir_all(h5.testfolder) or {}

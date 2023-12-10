@@ -2,12 +2,10 @@ module h5
 
 import os
 
-const (
-	h5dump     = 'h5dump'
-	h5data     = 'hdf_two.h5'
-	testfolder = os.join_path(os.vtmp_dir(), 'vsl', 'two_d_test')
-	testfile   = os.join_path(testfolder, h5data)
-)
+const h5dump = 'h5dump'
+const h5data = 'hdf_two.h5'
+const testfolder = os.join_path(os.vtmp_dir(), 'vsl', 'two_d_test')
+const testfile = os.join_path(testfolder, h5data)
 
 fn test_2d() {
 	mut i8array := make2type[i8](3, 3)

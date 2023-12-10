@@ -2,9 +2,7 @@ module la
 
 import math
 
-const (
-	matrix_tests_tol = 1e-12
-)
+const matrix_tests_tol = 1e-12
 
 fn tolerance_equal[T](data1 []T, data2 []T) bool {
 	if data1.len != data2.len {
