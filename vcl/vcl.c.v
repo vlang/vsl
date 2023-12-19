@@ -12,7 +12,7 @@ pub fn get_devices(device_type DeviceType) ![]&Device {
 		if ret != success {
 			return error_from_code(ret)
 		}
-		mut device_ids := []ClDeviceId{len: int(n)}
+		mut device_ids := unsafe { []ClDeviceId{len: int(n)} }
 		ret = cl_get_device_i_ds(p, ClDeviceType(device_type), n, unsafe { &device_ids[0] },
 			unsafe { nil })
 		if ret != success {

@@ -1,5 +1,4 @@
 import vsl.easings
-import math
 import vsl.float.float64
 
 // Linear tests
