@@ -26,11 +26,8 @@ sudo pacman -S openmpi
 brew install openmpi
 ```
 
-- On Windows, you can install the OpenMPI library with:
-
-```bash
-choco install openmpi
-```
+- On Windows, you can install the OpenMPI following the instructions
+  [here](https://www.open-mpi.org/software/ompi/v1.6/ms-windows.php).
 
 - On FreeBSD, you can install the OpenMPI library with:
 

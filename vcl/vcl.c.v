@@ -45,7 +45,7 @@ fn get_platforms() ![]ClPlatformId {
 	if ret != success {
 		return error_from_code(ret)
 	}
-	mut platform_ids := []ClPlatformId{len: int(n)}
+	mut platform_ids := unsafe { []ClPlatformId{len: int(n)} }
 	ret = cl_get_platform_i_ds(n, unsafe { &platform_ids[0] }, unsafe { nil })
 	return error_or_default(ret, platform_ids)
 }
