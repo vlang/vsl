@@ -1,6 +1,7 @@
 module noise
 
-pub fn perlin3d(x f64, y f64, z f64) f64 {
+// perlin3d is a function that return a single value of perlin noise for a given 3d position
+pub fn (perlin Perlin) perlin3d(x f64, y f64, z f64) f64 {
 	xi := int(x) & 0xFF;
 	yi :=  int(y) & 0xFF;
 	zi :=  int(z) & 0xFF;
@@ -12,14 +13,14 @@ pub fn perlin3d(x f64, y f64, z f64) f64 {
 	v := fade(yf);
 	w := fade(zf);
 
-	aaa := permutations[permutations[permutations[xi]+yi]+zi]
-	aba := permutations[permutations[permutations[xi]+yi+1]+zi]
-	aab := permutations[permutations[permutations[xi]+yi]+zi+1]
-	abb := permutations[permutations[permutations[xi]+yi+1]+zi+1]
-	baa := permutations[permutations[permutations[xi+1]+yi]+zi]
-	bba := permutations[permutations[permutations[xi+1]+yi+1]+zi]
-	bab := permutations[permutations[permutations[xi+1]+yi]+zi+1]
-	bbb := permutations[permutations[permutations[xi+1]+yi+1]+zi+1]
+	aaa := perlin.perm[perlin.perm[perlin.perm[xi]+yi]+zi]
+	aba := perlin.perm[perlin.perm[perlin.perm[xi]+yi+1]+zi]
+	aab := perlin.perm[perlin.perm[perlin.perm[xi]+yi]+zi+1]
+	abb := perlin.perm[perlin.perm[perlin.perm[xi]+yi+1]+zi+1]
+	baa := perlin.perm[perlin.perm[perlin.perm[xi+1]+yi]+zi]
+	bba := perlin.perm[perlin.perm[perlin.perm[xi+1]+yi+1]+zi]
+	bab := perlin.perm[perlin.perm[perlin.perm[xi+1]+yi]+zi+1]
+	bbb := perlin.perm[perlin.perm[perlin.perm[xi+1]+yi+1]+zi+1]
 
 	mut x1 := lerp(grad3d(aaa, xf, yf, zf), grad3d(baa, xf-1, yf, zf), u)
 	mut x2 := lerp(grad3d(aba, xf, yf-1, zf),	grad3d(bba, xf-1, yf-1, zf), u)
