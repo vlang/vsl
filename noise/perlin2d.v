@@ -4,13 +4,13 @@ import rand
 
 pub struct Perlin {
 mut:
-	perm []int = (rand.shuffle_clone(permutations) or { permutations })
+	perm []int = rand.shuffle_clone(permutations) or { permutations }
 }
 
 // randomize is a function that shuffle the permutation set inside the Perlin struct
 // will not shuffle if rand.seed is not changed
 pub fn (mut perlin Perlin) randomize() {
-	perlin.perm = (rand.shuffle_clone(permutations) or { permutations })
+	perlin.perm = rand.shuffle_clone(permutations) or { permutations }
 }
 
 // perlin2d is a function that return a single value of perlin noise for a given 2d position
@@ -24,12 +24,13 @@ pub fn (perlin Perlin) perlin2d(x f64, y f64) f64 {
 	u := fade(xf)
 	v := fade(yf)
 
-	a := perlin.perm[xi] + yi
-	aa := perlin.perm[a]
-	ab := perlin.perm[a + 1]
-	b := perlin.perm[xi + 1] + yi
-	ba := perlin.perm[b]
-	bb := perlin.perm[b + 1]
+	pxi := perlin.perm[xi]
+	pxi1 := perlin.perm[xi + 1]
+
+	aa := perlin.perm[pxi + yi]
+	ab := perlin.perm[pxi + yi + 1]
+	ba := perlin.perm[pxi1 + yi]
+	bb := perlin.perm[pxi1 + yi + 1]
 
 	x1 := lerp(grad2d(aa, xf, yf), grad2d(ba, xf - 1, yf), u)
 	x2 := lerp(grad2d(ab, xf, yf - 1), grad2d(bb, xf - 1, yf - 1), u)
