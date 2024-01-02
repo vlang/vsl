@@ -11,14 +11,22 @@ pub fn (perlin Perlin) perlin3d(x f64, y f64, z f64) f64 {
 	u := fade(xf)
 	v := fade(yf)
 	w := fade(zf)
-	aaa := perlin.perm[perlin.perm[perlin.perm[xi] + yi] + zi]
-	aba := perlin.perm[perlin.perm[perlin.perm[xi] + yi + 1] + zi]
-	aab := perlin.perm[perlin.perm[perlin.perm[xi] + yi] + zi + 1]
-	abb := perlin.perm[perlin.perm[perlin.perm[xi] + yi + 1] + zi + 1]
-	baa := perlin.perm[perlin.perm[perlin.perm[xi + 1] + yi] + zi]
-	bba := perlin.perm[perlin.perm[perlin.perm[xi + 1] + yi + 1] + zi]
-	bab := perlin.perm[perlin.perm[perlin.perm[xi + 1] + yi] + zi + 1]
-	bbb := perlin.perm[perlin.perm[perlin.perm[xi + 1] + yi + 1] + zi + 1]
+
+	pxi := perlin.perm[xi]
+	pxi_yi := perlin.perm[pxi + yi]
+	pxi_yi_b := perlin.perm[pxi + yi + 1]
+	pxib := perlin.perm[xi + 1]
+	pxib_yi := perlin.perm[pxib + yi]
+	pxib_yi_b := perlin.perm[pxib + yi + 1]
+
+	aaa := perlin.perm[pxi_yi + zi]
+	aba := perlin.perm[pxi_yi_b + zi]
+	aab := perlin.perm[pxi_yi + zi + 1]
+	abb := perlin.perm[pxi_yi_b + zi + 1]
+	baa := perlin.perm[pxib_yi + zi]
+	bba := perlin.perm[pxib_yi_b + zi]
+	bab := perlin.perm[pxib_yi + zi + 1]
+	bbb := perlin.perm[pxib_yi_b + zi + 1]
 
 	mut x1 := lerp(grad3d(aaa, xf, yf, zf), grad3d(baa, xf - 1, yf, zf), u)
 	mut x2 := lerp(grad3d(aba, xf, yf - 1, zf), grad3d(bba, xf - 1, yf - 1, zf), u)
