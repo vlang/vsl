@@ -4,13 +4,13 @@ import rand
 
 pub struct Perlin {
 mut:
-	perm []int = rand.shuffle_clone(permutations) or { permutations }
+	perm []int = rand.shuffle_clone(permutations) or { panic(err) }
 }
 
 // randomize is a function that shuffle the permutation set inside the Perlin struct
 // will not shuffle if rand.seed is not changed
 pub fn (mut perlin Perlin) randomize() {
-	perlin.perm = rand.shuffle_clone(permutations) or { permutations }
+	perlin.perm = rand.shuffle_clone(permutations) or { panic(err) }
 }
 
 // perlin2d is a function that return a single value of perlin noise for a given 2d position
