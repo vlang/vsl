@@ -188,7 +188,7 @@ cp -r /tmp/OpenCL-Headers/CL ~/.vmodules/vcl/OpenCL
 
 # or for any other system you can do
 cp -r /tmp/OpenCL-Headers/CL ~/.vmodules/vcl/CL
-</code></pre><h2>Loading OpenCL dynamically</h2><p>By default VCL uses OpenCL loading the library statically. If you want to use OpenCLdynamically, you can use the <code>-d dlopencl</code> flag.</p><p>By default it will look for the OpenCL library in the system path and all the knownlocations for OpenCL libraries (like <code>/usr/lib</code> and <code>/usr/local/lib</code>) and load the firstlibrary it finds. If you want to use a specific OpenCL library,you can declare the environment variable <code>VCL_LIBOPENCL_PATH</code> withthe path to the library. Multiple paths can be separated by <code>:</code>.</p><p>For example, if you want to use the OpenCL library from the NVIDIA CUDA Toolkit, you cando the following:</p><pre><code class="language-sh">export VCL_LIBOPENCL_PATH=/usr/local/cuda/lib64/libOpenCL.so
+</code></pre><h2>Loading OpenCL dynamically</h2><p>By default VCL uses OpenCL loading the library statically. If you want to use OpenCLdynamically, you can use the <code>-d vsl_vcl_dlopencl</code> flag.</p><p>By default it will look for the OpenCL library in the system path and all the knownlocations for OpenCL libraries (like <code>/usr/lib</code> and <code>/usr/local/lib</code>) and load the firstlibrary it finds. If you want to use a specific OpenCL library,you can declare the environment variable <code>VCL_LIBOPENCL_PATH</code> withthe path to the library. Multiple paths can be separated by <code>:</code>.</p><p>For example, if you want to use the OpenCL library from the NVIDIA CUDA Toolkit, you cando the following:</p><pre><code class="language-sh">export VCL_LIBOPENCL_PATH=/usr/local/cuda/lib64/libOpenCL.so
 </code></pre><!-- Images -->
 
 </section>
@@ -699,7 +699,7 @@ cp -r /tmp/OpenCL-Headers/CL ~/.vmodules/vcl/CL
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 6 Jan 2024 05:14:29</div>
+						<div class="footer">Powered by vdoc. Generated on: 6 Jan 2024 08:08:03</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_vcl">README</a></li>
 <li class="open"><a href="#error_from_code">fn error_from_code</a>        <ul>
