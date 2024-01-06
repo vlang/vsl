@@ -163,7 +163,7 @@
 <li class="open active">
 <div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="./vlas.html">vlas</a></div>
 <ul>
-<li><a href="./vlas.internal.vblas.html">internal.vblas</a></li>
+<li><a href="./vlas.internal.blas.html">internal.blas</a></li>
 </ul>
 </li>
 
@@ -199,7 +199,7 @@ makepkg -si
 		<section id="c_trans" class="doc-node">
 			<div class="title"><h2>fn c_trans <a href="#c_trans">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vlas/conversions.v#L9"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token function">c_trans</span><span class="token punctuation">(</span>trans <span class="token builtin">bool</span><span class="token punctuation">)</span> vblas<span class="token punctuation">.</span>Transpose</code></pre>
+<code><span class="token keyword">fn</span> <span class="token function">c_trans</span><span class="token punctuation">(</span>trans <span class="token builtin">bool</span><span class="token punctuation">)</span> blas<span class="token punctuation">.</span>Transpose</code></pre>
 
 
 </section>
@@ -207,7 +207,7 @@ makepkg -si
 		<section id="c_uplo" class="doc-node">
 			<div class="title"><h2>fn c_uplo <a href="#c_uplo">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vlas/conversions.v#L13"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token function">c_uplo</span><span class="token punctuation">(</span>up <span class="token builtin">bool</span><span class="token punctuation">)</span> vblas<span class="token punctuation">.</span>Uplo</code></pre>
+<code><span class="token keyword">fn</span> <span class="token function">c_uplo</span><span class="token punctuation">(</span>up <span class="token builtin">bool</span><span class="token punctuation">)</span> blas<span class="token punctuation">.</span>Uplo</code></pre>
 
 
 </section>
@@ -391,7 +391,7 @@ makepkg -si
 		<section id="dtrmv" class="doc-node">
 			<div class="title"><h2>fn dtrmv <a href="#dtrmv">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vlas/oblas_notd_vsl_vlas_cblas.v#L64"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token function">dtrmv</span><span class="token punctuation">(</span>uplo <span class="token builtin">bool</span><span class="token punctuation">,</span> trans_a <span class="token builtin">bool</span><span class="token punctuation">,</span> diag vblas<span class="token punctuation">.</span>Diagonal<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incx <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<code><span class="token keyword">fn</span> <span class="token function">dtrmv</span><span class="token punctuation">(</span>uplo <span class="token builtin">bool</span><span class="token punctuation">,</span> trans_a <span class="token builtin">bool</span><span class="token punctuation">,</span> diag blas<span class="token punctuation">.</span>Diagonal<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incx <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
 
 
 </section>
@@ -399,7 +399,7 @@ makepkg -si
 		<section id="dtrsv" class="doc-node">
 			<div class="title"><h2>fn dtrsv <a href="#dtrsv">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vlas/oblas_notd_vsl_vlas_cblas.v#L59"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token function">dtrsv</span><span class="token punctuation">(</span>uplo <span class="token builtin">bool</span><span class="token punctuation">,</span> trans_a <span class="token builtin">bool</span><span class="token punctuation">,</span> diag vblas<span class="token punctuation">.</span>Diagonal<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incx <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<code><span class="token keyword">fn</span> <span class="token function">dtrsv</span><span class="token punctuation">(</span>uplo <span class="token builtin">bool</span><span class="token punctuation">,</span> trans_a <span class="token builtin">bool</span><span class="token punctuation">,</span> diag blas<span class="token punctuation">.</span>Diagonal<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incx <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
 
 
 </section>
@@ -557,7 +557,7 @@ makepkg -si
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 6 Jan 2024 08:08:03</div>
+						<div class="footer">Powered by vdoc. Generated on: 6 Jan 2024 08:14:48</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_vlas">README</a></li>
 <li class="open"><a href="#c_trans">fn c_trans</a>        <ul>
