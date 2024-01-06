@@ -1,4 +1,4 @@
-module vblas
+module blas
 
 pub enum MemoryLayout {
 	row_major = 101

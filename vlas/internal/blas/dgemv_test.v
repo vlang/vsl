@@ -1,4 +1,4 @@
-module vblas
+module blas
 
 fn test_dgemv_no_trans_1() {
 	expected := [0.0, 0, 0, 0, 0]
