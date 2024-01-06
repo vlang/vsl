@@ -5,7 +5,8 @@ import vsl.float.float64
 
 fn test_perlin3d() {
 	rand.seed([u32(3155200429), u32(3208395956)])
-	mut gen := Perlin{}
+
+	mut gen := Perlin.new()
 	gen.randomize()
 
 	result := gen.perlin3d(0.125, 0.125, 0.125)

@@ -2,9 +2,15 @@ module noise
 
 import rand
 
+// Perlin is a struct that hold the permutation set for perlin noise
 pub struct Perlin {
 mut:
 	perm []int = rand.shuffle_clone(permutations) or { panic(err) }
+}
+
+// new is a function that return a new Perlin struct
+pub fn Perlin.new() Perlin {
+	return Perlin{}
 }
 
 // randomize is a function that shuffle the permutation set inside the Perlin struct
@@ -38,10 +44,13 @@ pub fn (perlin Perlin) perlin2d(x f64, y f64) f64 {
 	return (lerp(x1, x2, v) + 1) / 2
 }
 
+// fade is a function that return a fade value for a given value
+@[inline]
 fn fade(t f64) f64 {
 	return t * t * t * (t * (t * 6.0 - 15.0) + 10.0)
 }
 
+// grad2d is a function that return a gradient value for a given hash and 2d position
 fn grad2d(hash int, x f64, y f64) f64 {
 	match hash & 0xF {
 		0x0 { return x + y }
@@ -64,6 +73,8 @@ fn grad2d(hash int, x f64, y f64) f64 {
 	}
 }
 
+// lerp is a function that return a linear interpolation value for a given 2 values and a factor
+@[inline]
 fn lerp(a f64, b f64, x f64) f64 {
 	return a + x * (b - a)
 }

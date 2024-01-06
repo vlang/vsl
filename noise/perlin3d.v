@@ -38,6 +38,7 @@ pub fn (perlin Perlin) perlin3d(x f64, y f64, z f64) f64 {
 	return (lerp(y1, y2, w) + 1) / 2
 }
 
+// grad3d is a function that returns a single value of gradient noise for a given 3d position
 fn grad3d(hash int, x f64, y f64, z f64) f64 {
 	match hash & 0xF {
 		0x0 { return x + y }
