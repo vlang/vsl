@@ -1,14 +1,15 @@
 module noise
 
-import math { abs }
 import rand
-
-const single_perlin_3d = f64(0.3713334855776509)
+import vsl.float.float64
 
 fn test_perlin3d() {
 	rand.seed([u32(3155200429), u32(3208395956)])
 	mut gen := Perlin{}
 	gen.randomize()
 
-	assert abs(gen.perlin3d(0.125, 0.125, 0.125) - noise.single_perlin_3d) < 1.0e-6
+	result := gen.perlin3d(0.125, 0.125, 0.125)
+	expected := 0.3713334855776509
+
+	assert float64.tolerance(result, expected, 1.0e-6)
 }
