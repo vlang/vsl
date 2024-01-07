@@ -57,12 +57,12 @@ pub fn dger(m int, n int, alpha f64, x []f64, incx int, y []f64, incy int, mut a
 }
 
 @[inline]
-pub fn dtrsv(uplo bool, trans_a bool, diag blas64.Diagonal, n int, a []f64, lda int, mut x []f64, incx int) {
+pub fn dtrsv(uplo bool, trans_a bool, diag Diagonal, n int, a []f64, lda int, mut x []f64, incx int) {
 	blas64.dtrsv(c_uplo(uplo), c_trans(trans_a), diag, n, a, lda, mut x, incx)
 }
 
 @[inline]
-pub fn dtrmv(uplo bool, trans_a bool, diag blas64.Diagonal, n int, a []f64, lda int, mut x []f64, incx int) {
+pub fn dtrmv(uplo bool, trans_a bool, diag Diagonal, n int, a []f64, lda int, mut x []f64, incx int) {
 	blas64.dtrmv(c_uplo(uplo), c_trans(trans_a), diag, n, a, lda, mut x, incx)
 }
 
