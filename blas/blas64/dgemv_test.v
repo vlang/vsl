@@ -1,4 +1,4 @@
-module blas
+module blas64
 
 fn test_dgemv_no_trans_1() {
 	expected := [0.0, 0, 0, 0, 0]

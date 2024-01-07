@@ -1,8 +1,8 @@
-module vlas
+module lapack
 
-import vsl.vlas.internal.blas
+import vsl.blas.blas64
 
-fn C.LAPACKE_dlange(matrix_layout blas.MemoryLayout, norm &char, m int, n int, a &f64, lda int, work &f64) f64
+fn C.LAPACKE_dlange(matrix_layout blas64.MemoryLayout, norm &char, m int, n int, a &f64, lda int, work &f64) f64
 
 pub fn dlange(norm rune, m int, n int, a []f64, lda int, work []f64) f64 {
 	return unsafe {

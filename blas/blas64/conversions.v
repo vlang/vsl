@@ -1,4 +1,4 @@
-module blas
+module blas64
 
 pub enum MemoryLayout {
 	row_major = 101

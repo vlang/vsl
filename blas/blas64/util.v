@@ -1,4 +1,4 @@
-module blas
+module blas64
 
 // [SD]gemm behavior constants. These are kept here to keep them out of the
 // way during single precision code genration.

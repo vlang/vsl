@@ -1,16 +1,16 @@
-module vlas
+module blas
 
 import strconv
 import math
 import math.complex
 import vsl.errors
-import vsl.vlas.internal.blas
+import vsl.blas.blas64
 
-pub fn c_trans(trans bool) blas.Transpose {
+pub fn c_trans(trans bool) blas64.Transpose {
 	return if trans { .trans } else { .no_trans }
 }
 
-pub fn c_uplo(up bool) blas.Uplo {
+pub fn c_uplo(up bool) blas64.Uplo {
 	return if up { .upper } else { .lower }
 }
 
