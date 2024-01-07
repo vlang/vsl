@@ -32,12 +32,12 @@ pub fn c_uplo(up bool) Uplo {
 }
 
 // l_uplo is a helper function to convert bool to Uplo
-fn l_uplo(up bool) u8 {
+pub fn l_uplo(up bool) u8 {
 	return if up { `U` } else { `L` }
 }
 
 // job_vlr is a helper function to convert bool to char
-fn job_vlr(do_calc bool) rune {
+pub fn job_vlr(do_calc bool) rune {
 	return if do_calc { `V` } else { `N` }
 }
 
