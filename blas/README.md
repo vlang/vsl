@@ -57,10 +57,4 @@ cd /tmp/lapack-openblas
 makepkg -si
 ```
 
-### macOS
-
-```sh
-brew install openblas
-```
-
 </details>
