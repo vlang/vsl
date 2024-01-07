@@ -1,7 +1,7 @@
 module lapack
 
 import math
-import vsl.blas.blas64
+import vsl.blas
 
 // dgesv computes the solution to a real system of linear equations
 //
@@ -32,7 +32,7 @@ pub fn dgesv(n int, nrhs int, mut a []f64, lda int, ipiv []int, mut b []f64, ldb
 	if lda < math.max(1, n) {
 		panic(bad_ld_a)
 	}
-	if ldb < math.max(1, n) {
+	if ldb < math.max(1, nrhs) {
 		panic(bad_ld_b)
 	}
 

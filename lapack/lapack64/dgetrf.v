@@ -1,7 +1,7 @@
 module lapack
 
 import math
-import vsl.blas.blas64
+import vsl.blas
 
 // dgetrf computes the LU decomposition of an m×n matrix A using partial
 // pivoting with row interchanges.
