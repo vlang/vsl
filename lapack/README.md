@@ -2,10 +2,11 @@
 
 This package implements Linear Algebra routines in V.
 
-| Backend | Description                                                                                                                                                       | Status | Compilation Flags       |
-| ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ | ----------------------- |
-| BLAS    | Pure V implementation                                                                                                                                             | WIP    | `NONE`                  |
-| LAPACKE | LAPACKE is a C interface to LAPACK. It is a standard part of the LAPACK distribution. Check the section [LAPACKE Backend](#lapacke-backend) for more information. | Stable | `-d vsl_lapack_lapacke` |
+| Backend                                                                     | Description                                                                           | Status                  | Compilation Flags |
+| --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ----------------------- | ----------------- |
+| BLAS                                                                        | Pure V implementation                                                                 | WIP                     | `NONE`            |
+| LAPACKE                                                                     | LAPACKE is a C interface to LAPACK. It is a standard part of the LAPACK distribution. |
+| Check the section [LAPACKE Backend](#lapacke-backend) for more information. | Stable                                                                                | `-d vsl_lapack_lapacke` |
 
 Therefore, its routines are a little more _lower level_ than the ones in the package `vsl.la`.
 
