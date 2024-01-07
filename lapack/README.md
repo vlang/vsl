@@ -11,7 +11,8 @@ Therefore, its routines are a little more _lower level_ than the ones in the pac
 
 ## LAPACKE Backend
 
-We provide a backend for the LAPACKE library. This backend is probably the fastest one for all platforms
+We provide a backend for the LAPACKE library. This backend is probably
+the fastest one for all platforms
 but it requires the installation of the LAPACKE library.
 
 Use the compilation flag `-d vsl_lapack_lapacke` to use the LAPACKE backend
