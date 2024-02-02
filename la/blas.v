@@ -136,8 +136,8 @@ pub fn matrix_vector_mul[T](alpha T, a &Matrix[T], u []T) []T {
 			}
 			return v
 		}
-		vlas.dgemv(false, a.m, a.n, alpha, arr_to_f64arr[T](a.data), a.m, arr_to_f64arr[T](u),
-			1, 0.0, mut v, v.len)
+		vlas.dgemv(false, a.m, a.n, alpha, arr_to_f64arr[T](a.data), a.n, arr_to_f64arr[T](u),
+			1, 0.0, mut v, 1)
 		return v
 	} $else {
 		mut v := []T{len: a.m}
@@ -168,7 +168,7 @@ pub fn matrix_tr_vector_mul[T](alpha T, a &Matrix[T], u []T) []T {
 			return v
 		}
 		vlas.dgemv(true, a.m, a.n, alpha, arr_to_f64arr[T](a.data), a.n, arr_to_f64arr[T](u),
-			1, 0.0, mut v, v.len)
+			1, 0.0, mut v, 1)
 		return v
 	} $else {
 		mut v := []T{len: a.n}
@@ -200,7 +200,7 @@ pub fn vector_vector_tr_mul[T](alpha T, u []T, v []T) &Matrix[T] {
 		}
 		mut a := []f64{len: u.len * v.len}
 		vlas.dger(m.m, m.n, alpha, arr_to_f64arr[T](u), 1, arr_to_f64arr[T](v), 1, mut
-			a, int(math.max(m.m, m.n)))
+			a, m.n)
 		return Matrix.raw(u.len, v.len, a)
 	} $else {
 		mut m := Matrix.new[T](u.len, v.len)
@@ -240,8 +240,8 @@ pub fn matrix_matrix_mul(mut c Matrix[f64], alpha f64, a &Matrix[f64], b &Matrix
 		}
 		return
 	}
-	vlas.dgemm(false, false, a.m, b.n, a.n, alpha, a.data, a.m, b.data, b.m, 0.0, mut
-		c.data, c.m)
+	vlas.dgemm(false, false, a.m, b.n, a.n, alpha, a.data, a.m, b.data, b.m,
+		0.0, mut c.data, c.m)
 }
 
 // matrix_tr_matrix_mul returns the matrix multiplication (scaled) with transposed(a)
@@ -260,8 +260,8 @@ pub fn matrix_tr_matrix_mul(mut c Matrix[f64], alpha f64, a &Matrix[f64], b &Mat
 		}
 		return
 	}
-	vlas.dgemm(true, false, a.n, b.n, a.m, alpha, a.data, a.n, b.data, b.m, 0.0, mut c.data,
-		c.m)
+	vlas.dgemm(true, false, a.n, b.n, a.m, alpha, a.data, a.n, b.data, b.m, 0.0, mut
+		c.data, c.m)
 }
 
 // matrix_matrix_tr_mul returns the matrix multiplication (scaled) with transposed(b)
@@ -269,8 +269,8 @@ pub fn matrix_tr_matrix_mul(mut c Matrix[f64], alpha f64, a &Matrix[f64], b &Mat
 //  c := alpha⋅a⋅bᵀ    ⇒    cij := alpha * aik * bjk
 //
 pub fn matrix_matrix_tr_mul(mut c Matrix[f64], alpha f64, a &Matrix[f64], b &Matrix[f64]) {
-	vlas.dgemm(false, true, a.m, b.m, a.n, alpha, a.data, a.n, b.data, b.m, 0.0, mut c.data,
-		c.m)
+	vlas.dgemm(false, true, a.m, b.m, a.n, alpha, a.data, a.n, b.data, b.m, 0.0, mut
+		c.data, c.m)
 }
 
 // matrix_tr_matrix_tr_mul returns the matrix multiplication (scaled) with transposed(a) and transposed(b)
@@ -278,8 +278,8 @@ pub fn matrix_matrix_tr_mul(mut c Matrix[f64], alpha f64, a &Matrix[f64], b &Mat
 //  c := alpha⋅aᵀ⋅bᵀ    ⇒    cij := alpha * aki * bjk
 //
 pub fn matrix_tr_matrix_tr_mul(mut c Matrix[f64], alpha f64, a &Matrix[f64], b &Matrix[f64]) {
-	vlas.dgemm(true, true, a.n, b.m, a.m, alpha, a.data, a.n, b.data, b.m, 0.0, mut c.data,
-		c.m)
+	vlas.dgemm(true, true, a.n, b.m, a.m, alpha, a.data, a.n, b.data, b.m, 0.0, mut
+		c.data, c.m)
 }
 
 // matrix_matrix_muladd returns the matrix multiplication (scaled)
@@ -287,8 +287,8 @@ pub fn matrix_tr_matrix_tr_mul(mut c Matrix[f64], alpha f64, a &Matrix[f64], b &
 //  c += alpha⋅a⋅b    ⇒    cij += alpha * aik * bkj
 //
 pub fn matrix_matrix_muladd(mut c Matrix[f64], alpha f64, a &Matrix[f64], b &Matrix[f64]) {
-	vlas.dgemm(false, false, a.m, b.n, a.n, alpha, a.data, a.n, b.data, b.m, 1.0, mut
-		c.data, c.m)
+	vlas.dgemm(false, false, a.m, b.n, a.n, alpha, a.data, a.n, b.data, b.m,
+		1.0, mut c.data, c.m)
 }
 
 // matrix_tr_matrix_muladd returns the matrix multiplication (scaled) with transposed(a)
@@ -296,8 +296,8 @@ pub fn matrix_matrix_muladd(mut c Matrix[f64], alpha f64, a &Matrix[f64], b &Mat
 //  c += alpha⋅aᵀ⋅b    ⇒    cij += alpha * aki * bkj
 //
 pub fn matrix_tr_matrix_muladd(mut c Matrix[f64], alpha f64, a &Matrix[f64], b &Matrix[f64]) {
-	vlas.dgemm(true, false, a.n, b.n, a.m, alpha, a.data, a.n, b.data, b.m, 1.0, mut c.data,
-		c.m)
+	vlas.dgemm(true, false, a.n, b.n, a.m, alpha, a.data, a.n, b.data, b.m, 1.0, mut
+		c.data, c.m)
 }
 
 // matrix_matrix_tr_muladd returns the matrix multiplication (scaled) with transposed(b)
@@ -305,8 +305,8 @@ pub fn matrix_tr_matrix_muladd(mut c Matrix[f64], alpha f64, a &Matrix[f64], b &
 //  c += alpha⋅a⋅bᵀ    ⇒    cij += alpha * aik * bjk
 //
 pub fn matrix_matrix_tr_muladd(mut c Matrix[f64], alpha f64, a &Matrix[f64], b &Matrix[f64]) {
-	vlas.dgemm(false, true, a.m, b.m, a.n, alpha, a.data, a.n, b.data, b.m, 1.0, mut c.data,
-		c.m)
+	vlas.dgemm(false, true, a.m, b.m, a.n, alpha, a.data, a.n, b.data, b.m, 1.0, mut
+		c.data, c.m)
 }
 
 // matrix_tr_matrix_tr_mul_add returns the matrix multiplication (scaled) with transposed(a) and transposed(b)
@@ -314,8 +314,8 @@ pub fn matrix_matrix_tr_muladd(mut c Matrix[f64], alpha f64, a &Matrix[f64], b &
 //  c += alpha⋅aᵀ⋅bᵀ    ⇒    cij += alpha * aki * bjk
 //
 pub fn matrix_tr_matrix_tr_mul_add(mut c Matrix[f64], alpha f64, a &Matrix[f64], b &Matrix[f64]) {
-	vlas.dgemm(true, true, a.n, b.m, a.m, alpha, a.data, a.n, b.data, b.m, 1.0, mut c.data,
-		c.m)
+	vlas.dgemm(true, true, a.n, b.m, a.m, alpha, a.data, a.n, b.data, b.m, 1.0, mut
+		c.data, c.m)
 }
 
 // matrix_add adds the scaled components of two matrices
