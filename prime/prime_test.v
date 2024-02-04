@@ -17,10 +17,10 @@ fn test_is_prime() {
 	// true
 	assert is_prime(7_691)
 	assert is_prime(524_287)
-	assert is_prime(int(math.max_i32))
+	assert is_prime(int(max_i32))
 
 	// false
-	assert is_prime(int(math.max_i32) - 1) == false
+	assert is_prime(int(max_i32) - 1) == false
 }
 
 fn test_prime_sieve() {
