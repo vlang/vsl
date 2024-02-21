@@ -16,8 +16,8 @@ pub mut:
 	tol_den f64
 }
 
-// new_interp_cubic returns a new InterpCubic instance
-pub fn new_interp_cubic() &InterpCubic {
+// InterpCubic.new returns a new InterpCubic instance
+pub fn InterpCubic.new() &InterpCubic {
 	return &InterpCubic{
 		tol_den: 1e-15
 	}

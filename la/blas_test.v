@@ -2,7 +2,7 @@ module la
 
 fn test_mat_vec_mul() {
 	expected := [8.0, 45, -3, 3, 19]
-	a := matrix_deep2([
+	a := Matrix.deep2([
 		[2.0, 3, 0, 0, 0],
 		[3.0, 0, 4, 0, 6],
 		[0.0, -1, -3, 2, 0],

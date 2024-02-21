@@ -1,7 +1,7 @@
 module vcl
 
 // Rect is a struct that represents a rectangle shape
-[params]
+@[params]
 pub struct Rect {
 pub: // pixel need integers
 	x      f32
@@ -12,16 +12,16 @@ pub: // pixel need integers
 
 // IImage holds the fileds and data needed to represent a bitmap/pixel based image in memory.
 pub interface IImage {
-	width int
-	height int
+	width       int
+	height      int
 	nr_channels int
-	data voidptr
+	data        voidptr
 }
 
 // Image memory buffer on the device with image data
 pub struct Image {
 	format   ClImageFormat
-	desc     &ClImageDesc
+	desc     &ClImageDesc = unsafe { nil }
 	img_data voidptr
 mut:
 	buf &Buffer
@@ -72,7 +72,7 @@ fn (d &Device) create_image_2d(image_type ImageChannelOrder, bounds Rect, data v
 	memobj := cl_create_image2d(d.ctx, flags, format, usize(bounds.width), usize(bounds.height),
 		usize(row_pitch), data, &ret)
 	if ret != success {
-		return vcl_error(ret)
+		return error_from_code(ret)
 	}
 
 	if isnil(memobj) {
@@ -106,10 +106,7 @@ pub fn (image &Image) data_2d() ![]u8 {
 	result := []u8{len: image.buf.size, cap: image.buf.size}
 	ret := cl_enqueue_read_image(image.buf.device.queue, image.buf.memobj, true, origin,
 		region, 0, 0, unsafe { &result[0] }, 0, unsafe { nil }, unsafe { nil })
-	if ret != success {
-		return vcl_error(ret)
-	}
-	return result
+	return error_or_default(ret, result)
 }
 
 fn (image &Image) write_queue() !int {
@@ -123,11 +120,7 @@ fn (image &Image) write_queue() !int {
 
 	ret := cl_enqueue_write_image(image.buf.device.queue, image.buf.memobj, true, origin,
 		region, 0, 0, image.img_data, 0, unsafe { nil }, unsafe { nil })
-	if ret != success {
-		println(vcl_error(ret))
-		return vcl_error(ret)
-	}
-	return ret
+	return error_or_default(ret, ret)
 }
 
 // image_general allocates an image buffer TODO not accomplish - broken
@@ -167,7 +160,7 @@ fn (d &Device) create_image_general(image_type ImageChannelOrder, bounds Rect, r
 
 	memobj := cl_create_image(d.ctx, flags, format, desc, data, &ret)
 	if ret != success {
-		return vcl_error(ret)
+		return error_from_code(ret)
 	}
 
 	if isnil(memobj) {

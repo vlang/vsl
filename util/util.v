@@ -9,14 +9,29 @@ pub fn arange(n int) []int {
 	return result
 }
 
+@[params]
+pub struct RangeStep {
+	step int = 1
+}
+
 // range returns a list with int values in the interval [start, stop)
-pub fn range(start int, stop int) []int {
-	if stop <= start {
+pub fn range(start int, stop int, params RangeStep) []int {
+	step := params.step
+	if step == 0 {
 		return []int{}
 	}
-	mut result := []int{cap: stop - start}
-	for i in start .. stop {
-		result << i
+	mut result := []int{}
+	mut val := -1
+	for {
+		val++
+		new_val := start + (val * step)
+		if step > 0 && new_val >= stop {
+			break
+		} else if step < 0 && new_val <= stop {
+			break
+		} else {
+			result << new_val
+		}
 	}
 	return result
 }
@@ -49,27 +64,6 @@ pub fn lin_space(start f64, stop f64, num int) []f64 {
 	}
 	res[num - 1] = stop
 	return res
-}
-
-// Mimics python's range() with a step argument
-pub fn stepped_range(start int, stop int, step int) []int {
-	if step == 0 {
-		return []int{}
-	}
-	mut result := []int{}
-	mut val := -1
-	for {
-		val++
-		new_val := start + (val * step)
-		if step > 0 && new_val >= stop {
-			break
-		} else if step < 0 && new_val <= stop {
-			break
-		} else {
-			result << new_val
-		}
-	}
-	return result
 }
 
 // move_ith_to_end removes element at i from the array, and puts it at the end

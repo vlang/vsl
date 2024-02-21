@@ -13,16 +13,16 @@ on:
 
   push:
     branches:
-      - master
+      - main
 
 jobs:
   docker:
     uses: ./.github/workflows/docker-publish.yml
     with:
-      dockerfile: './.devcontainer/Dockerfile'
+      target: vsl-dev
       tags: ulisesjeremias/vsl:dev
       build-args: |
-        DEV_IMG=true
+        DEV_IMG=false
     secrets:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}

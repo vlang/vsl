@@ -31,18 +31,18 @@ accordingly in the steps below.)
    branch `fix_alabala` ... just do again `git push pullrequest` when you have more
    commits.
 
-9. If there are merge conflicts, or a branch lags too much behind VSL's master,
+9. If there are merge conflicts, or a branch lags too much behind VSL's main,
    you can do the following:
 
-   1. `git pull --rebase origin master` # solve conflicts and do
+   1. `git pull --rebase origin main` # solve conflicts and do
       `git rebase --continue`
    2. `git push pullrequest -f` # this will overwrite your current remote branch
       with the updated version of your changes.
 
 The point of doing the above steps, is to never directly push to the main VSL
-repository, _only to your own fork_. Since your local `master` branch tracks the
-main VSL repository's master, then `git checkout master`, as well as
-`git pull --rebase origin master` will continue to work as expected
+repository, _only to your own fork_. Since your local `main` branch tracks the
+main VSL repository's main, then `git checkout main`, as well as
+`git pull --rebase origin main` will continue to work as expected
 (these are actually used by `v up`) and git can always do it cleanly.
 
 Git is very flexible, so there are other ways to accomplish the same thing.

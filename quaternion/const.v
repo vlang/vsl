@@ -1,5 +1,3 @@
 module quaternion
 
-const (
-	q_epsilon = (1e-14)
-)
+const q_epsilon = (1e-14)

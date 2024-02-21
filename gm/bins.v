@@ -3,12 +3,10 @@ module gm
 import math
 import vsl.errors
 
-pub const (
-	xdelzero = 1e-10 // minimum distance between coordinates; i.e. xmax[i]-xmin[i] mininum
-)
+pub const xdelzero = 1e-10 // minimum distance between coordinates; i.e. xmax[i]-xmin[i] mininum
 
 // BinEntry holds data of an entry to bin
-[heap]
+@[heap]
 pub struct BinEntry {
 pub mut:
 	id    int     // object Id
@@ -17,7 +15,7 @@ pub mut:
 }
 
 // Bin defines one bin in Bins (holds entries for search)
-[heap]
+@[heap]
 pub struct Bin {
 pub mut:
 	index   int // index of bin
@@ -25,7 +23,7 @@ pub mut:
 }
 
 // Bins implements a set of bins holding entries and is used to fast search entries by given coordinates.
-[heap]
+@[heap]
 pub struct Bins {
 mut:
 	tmp []int // [ndim] temporary (auxiliary) slice
@@ -39,11 +37,11 @@ pub mut:
 	all  []&Bin // [nbins] all bins (there will be an extra "ghost" bin along each dimension)
 }
 
-// new_bins initialise bins structure
+// Bins.new initialise bins structure
 //   xmin -- [ndim] min/initial coordinates of the whole space (box/cube)
 //   xmax -- [ndim] max/final coordinates of the whole space (box/cube)
 //   ndiv -- [ndim] number of divisions for xmax-xmin
-pub fn new_bins(xmin []f64, xmax []f64, ndiv_ []int) &Bins {
+pub fn Bins.new(xmin []f64, xmax []f64, ndiv_ []int) &Bins {
 	mut ndiv := ndiv_.clone()
 	mut o := &Bins{}
 	// check for out-of-range values
@@ -89,14 +87,12 @@ pub fn (mut o Bins) append(x []f64, id int, extra voidptr) {
 	if idx < 0 {
 		errors.vsl_panic('coordinates ${x} are out of range', .erange)
 	}
-	bin := o.find_bin_by_index(idx)
+	mut bin := o.find_bin_by_index(idx)
 	if isnil(bin) {
 		errors.vsl_panic('bin index ${idx} is out of range', .erange)
 	}
 	xcopy := x.clone()
-	entry := BinEntry{id, xcopy, extra}
-	mut entries := unsafe { bin.entries }
-	entries << &entry
+	bin.entries << &BinEntry{id, xcopy, extra}
 }
 
 // clear clears all biBinsns
@@ -224,7 +220,7 @@ pub fn (mut o Bins) find_along_segment(xi_ []f64, xf_ []f64, tol f64) []int {
 	mut sbins := []&Bin{} // selected bins
 	mut lmax := math.max(o.size[0], o.size[1])
 	if o.ndim == 3 {
-		lmax = math.max(f64(lmax), o.size[2])
+		lmax = math.max(lmax, o.size[2])
 	}
 	btol := 0.9 * lmax // tolerance for bins
 	pi := point_from_vector(xi, o.ndim)
@@ -254,7 +250,7 @@ pub fn (mut o Bins) find_along_segment(xi_ []f64, xf_ []f64, tol f64) []int {
 			z += o.size[2] / 2.0
 		}
 		// check if bin is near line
-		p := new_point(x, y, z)
+		p := Point.new(x, y, z)
 		d := dist_point_line(p, pi, pf, tol)
 		if d <= btol {
 			sbins << bin
@@ -310,7 +306,7 @@ fn point_from_vector(v []f64, dim int) &Point {
 	if dim == 3 {
 		z = v[3]
 	}
-	return new_point(x, y, z)
+	return Point.new(x, y, z)
 }
 
 // nactive returns the number of active bins; i.e. non-nil bins
@@ -357,9 +353,9 @@ pub fn (o Bin) str() string {
 		if i > 0 {
 			l += ', '
 		}
-		l += "{\"id\":${entry.id}, \"x\":[${entry.x}[0],${entry.x}[1]"
+		l += "{\"id\":${entry.id}, \"x\":[${entry.x[0]},${entry.x[1]}"
 		if entry.x.len > 2 {
-			l += ',${entry.x}[2]'
+			l += ',${entry.x[2]}'
 		}
 		l += ']'
 		if !isnil(entry.extra) {

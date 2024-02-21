@@ -8,10 +8,10 @@ import vsl.la
 //
 // NOTE: Stat is an Observer of Data; thus, data.notify_update() will recompute stat
 //
-[heap]
+@[heap]
 pub struct Stat[T] {
 pub mut:
-	data   &Data[T] // data
+	data   &Data[T] = unsafe { nil } // data
 	name   string   // name of this object
 	min_x  []T      // [n_features] min x values
 	max_x  []T      // [n_features] max x values
@@ -28,7 +28,7 @@ pub mut:
 }
 
 // stat returns a new Stat object
-pub fn stat_from_data[T](mut data Data[T], name string) &Stat[T] {
+pub fn Stat.from_data[T](mut data Data[T], name string) &Stat[T] {
 	mut o := &Stat[T]{
 		name: name
 		data: data

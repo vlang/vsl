@@ -3,20 +3,18 @@ module float32
 import rand
 import math
 
-const (
-	// Offset sets for testing alignment handling in Unitary assembly functions
-	align1 = [0, 1]
-	align2 = new_inc_set(0, 1)
-	align3 = new_inc_to_set(0, 1)
-)
+// Offset sets for testing alignment handling in Unitary assembly functions
+const align1 = [0, 1]
+const align2 = IncSet.new(0, 1)
+const align3 = IncToSet.new(0, 1)
 
 struct IncSet {
 	x int
 	y int
 }
 
-// new_inc_set will generate all (x,y) combinations of the input increment set.
-fn new_inc_set(inc ...int) []IncSet {
+// IncSet.new will generate all (x,y) combinations of the input increment set.
+fn IncSet.new(inc ...int) []IncSet {
 	n := inc.len
 	mut inc_set := []IncSet{len: n * n}
 	for i, x in inc {
@@ -33,8 +31,8 @@ struct IncToSet {
 	y   int
 }
 
-// new_inc_to_set will generate all (dst,x,y) combinations of the input increment set.
-fn new_inc_to_set(inc ...int) []IncToSet {
+// IncToSet.new will generate all (dst,x,y) combinations of the input increment set.
+fn IncToSet.new(inc ...int) []IncToSet {
 	n := inc.len
 	mut inc_to_set := []IncToSet{len: n * n * n}
 	for i, dst in inc {
@@ -100,7 +98,7 @@ fn new_guarded_vector(data []f32, inc int) ([]f32, []f32, []f32) {
 	guard := 2 * inc_
 	size := (data.len - 1) * inc_ + 1
 	mut whole := []f32{len: size + 2 * guard}
-	mut v := whole[guard..whole.len - guard]
+	mut v := unsafe { whole[guard..whole.len - guard] }
 	for i, _ in whole {
 		whole[i] = f32(math.nan())
 	}

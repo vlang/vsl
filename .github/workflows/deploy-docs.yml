@@ -3,17 +3,17 @@ name: Deploy Documentation
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   deploy-docs:
     concurrency: deployment
-  
+
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout VSL
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: vsl
 

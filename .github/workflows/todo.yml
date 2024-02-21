@@ -1,7 +1,9 @@
 name: Todo Checker
 
 on:
-  workflow_call:
+  push:
+    branches:
+      - main
 
 jobs:
   todo:

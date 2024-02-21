@@ -31,7 +31,7 @@ pub fn text_hist(labels []string, counts []int, barlen int) !string {
 	mut l := ''
 	mut total := 0
 	for i, f in counts {
-		l += strconv.v_sprintf('%${sz}s | %${sz_}d ', labels[i], f)
+		l += unsafe { strconv.v_sprintf('%${sz}s | %${sz_}d ', labels[i], f) }
 		mut n := int(f64(f) * scale)
 		if f > 0 { // TODO: improve this
 			n++
@@ -44,13 +44,13 @@ pub fn text_hist(labels []string, counts []int, barlen int) !string {
 	}
 	sz = (lmax + 3).str()
 	count := 'count ='
-	l += strconv.v_sprintf('%${sz}s %${sz_}d\n', count, total)
+	l += unsafe { strconv.v_sprintf('%${sz}s %${sz_}d\n', count, total) }
 	return l
 }
 
 // build_text_hist builds a text histogram
 pub fn build_text_hist(xmin f64, xmax f64, nstations int, values []f64, numfmt string, barlen int) !string {
-	mut hist := new_histogram(util.lin_space(xmin, xmax, nstations))
+	mut hist := Histogram.new(util.lin_space(xmin, xmax, nstations))
 	hist.count(values, true)!
 	labels := hist.gen_labels(numfmt)!
 	return text_hist(labels, hist.counts, barlen)
@@ -72,8 +72,8 @@ pub mut:
 	counts   []int // counts
 }
 
-// new_histogram returns an histogram struct from a given list of stations
-pub fn new_histogram(stations []f64) &Histogram {
+// Histogram.new returns an histogram struct from a given list of stations
+pub fn Histogram.new(stations []f64) &Histogram {
 	return &Histogram{
 		stations: stations
 	}
@@ -139,7 +139,9 @@ pub fn (o Histogram) gen_labels(numfmt string) ![]string {
 	nbins := o.stations.len - 1
 	mut labels := []string{len: nbins}
 	for i in 0 .. nbins {
-		labels[i] = strconv.v_sprintf('[${numfmt},${numfmt})', o.stations[i], o.stations[i + 1])
+		labels[i] = unsafe {
+			strconv.v_sprintf('[${numfmt},${numfmt})', o.stations[i], o.stations[i + 1])
+		}
 	}
 	return labels
 }

@@ -10,7 +10,7 @@ pub:
 	z f64
 }
 
-[inline]
+@[inline]
 pub fn quaternion(w f64, x f64, y f64, z f64) Quaternion {
 	return Quaternion{
 		w: w
@@ -32,7 +32,7 @@ pub fn quaternion(w f64, x f64, y f64, z f64) Quaternion {
  * the term pass.
  *
 */
-[inline]
+@[inline]
 pub fn id() Quaternion {
 	return quaternion(1.0, 0.0, 0.0, 0.0)
 }
@@ -78,7 +78,7 @@ pub fn from_euler_angles(alpha f64, beta f64, gamma f64) Quaternion {
 		sa * sb * sc, sa * cb * cc + ca * cb * sc)
 }
 
-[inline]
+@[inline]
 pub fn (q Quaternion) copy() Quaternion {
 	return quaternion(q.w, q.x, q.y, q.z)
 }

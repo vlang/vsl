@@ -6,7 +6,7 @@ import vsl.mpi
 // The SparseConfig structure holds configuration arguments for sparse solvers
 pub struct SparseConfig {
 mut:
-	communicator   ?&mpi.Communicator = none // MPI communicator for parallel solvers [may be none]
+	communicator   ?&mpi.Communicator // MPI communicator for parallel solvers [may be none]
 	mumps_ordering int  // ICNTL(7) default = "" == "auto"
 	mumps_scaling  int  // Scaling type (check MUMPS solver) [may be empty]
 	symmetric      bool // indicates symmetric system. NOTE: when using MUMPS, only the upper or lower part of the matrix must be provided
@@ -17,10 +17,10 @@ pub mut:
 	mumps_max_memory_per_processor      int  // MUMPS control parameters (check MUMPS solver manual) ICNTL(23) default = 2000Mb
 }
 
-// new_sparse_config returns a new SparseConfig
+// SparseConfig.new returns a new SparseConfig
 // Input:
 //  comm -- may be nil
-pub fn new_sparse_config() SparseConfig {
+pub fn SparseConfig.new() SparseConfig {
 	mut o := SparseConfig{
 		mumps_increase_of_working_space_pct: 100
 		mumps_max_memory_per_processor: 2000
@@ -30,8 +30,8 @@ pub fn new_sparse_config() SparseConfig {
 	return o
 }
 
-// new_sparse_config_with_comm returns a new SparseConfig
-pub fn new_sparse_config_with_comm(comm &mpi.Communicator) SparseConfig {
+// SparseConfig.with_comm returns a new SparseConfig
+pub fn SparseConfig.with_comm(comm &mpi.Communicator) SparseConfig {
 	mut o := SparseConfig{
 		mumps_increase_of_working_space_pct: 100
 		mumps_max_memory_per_processor: 2000

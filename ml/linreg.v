@@ -1,29 +1,31 @@
 module ml
 
 import vsl.la
+import vsl.plot
+import vsl.util
 
 // LinReg implements a linear regression model
-[heap]
+@[heap]
 pub struct LinReg {
 mut:
 	// main
 	name string     // name of this "observer"
-	data &Data[f64] // x-y data
+	data &Data[f64] = unsafe { nil } // x-y data
 	// workspace
 	e []f64 // vector e = b⋅o + x⋅theta - y [nb_samples]
 pub mut:
-	stat   &Stat[f64] // statistics
-	params &ParamsReg[f64]
+	stat   &Stat[f64]      = unsafe { nil } // statistics
+	params &ParamsReg[f64] = unsafe { nil }
 }
 
-// new_lin_reg returns a new LinReg object
+// LinReg.new returns a new LinReg object
 //   Input:
 //     data   -- x,y data
 //     name   -- unique name of this (observer) object
-pub fn new_lin_reg(mut data Data[f64], name string) &LinReg {
-	mut stat := stat_from_data(mut data, 'stat_' + name)
+pub fn LinReg.new(mut data Data[f64], name string) &LinReg {
+	mut stat := Stat.from_data(mut data, 'stat_' + name)
 	stat.update()
-	params := new_params_reg[f64](data.nb_features)
+	params := ParamsReg.new[f64](data.nb_features)
 	mut reg := &LinReg{
 		name: name
 		data: data
@@ -108,8 +110,8 @@ pub fn (mut o LinReg) train() {
 	r = la.matrix_tr_vector_mul(1.0, x, y) // r := a = xᵀy
 	r = la.vector_add(1.0, r, -t * m_1, s) // r := a - (t/m)s
 	// K matrix
-	mut b := la.new_matrix[f64](n, n)
-	mut k := la.new_matrix[f64](n, n)
+	mut b := la.Matrix.new[f64](n, n)
+	mut k := la.Matrix.new[f64](n, n)
 	b = la.vector_vector_tr_mul(1.0 * m_1, s, s) // b := (1/m) ssᵀ
 	la.matrix_tr_matrix_mul(mut k, 1, x, x) // k := A = xᵀx
 	la.matrix_add(mut k, 1, k, -1, b) // k := A - b
@@ -146,4 +148,37 @@ pub fn (o &LinReg) str() string {
 	res << '    e: ${o.e}'
 	res << '}'
 	return res.join('\n')
+}
+
+// get_plotter returns a plot.Plot struct for plotting the data and the linear regression model
+pub fn (o &LinReg) get_plotter() &plot.Plot {
+	// Get the minimum and maximum values of the features
+	min_x := o.stat.min_x[0]
+	max_x := o.stat.max_x[0]
+
+	// Generate a range based on the minimum and maximum values
+	x_values := util.lin_space(min_x, max_x, 100) // You can adjust the number of points (100 in this case)
+
+	// Calculate prediction values for the range
+	y_values := x_values.map(o.predict([it]))
+
+	// Rest of the code for plotting the graph
+	mut plt := plot.Plot.new()
+	plt.layout(
+		title: 'Linear Regression Example'
+	)
+	plt.scatter(
+		name: 'dataset'
+		x: o.data.x.get_col(0)
+		y: o.data.y
+		mode: 'markers'
+	)
+	plt.scatter(
+		name: 'prediction'
+		x: x_values
+		y: y_values
+		mode: 'lines'
+	)
+
+	return plt
 }

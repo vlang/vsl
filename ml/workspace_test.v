@@ -38,10 +38,10 @@ fn test_stat_01() {
 		[1.43, 94.98],
 		[0.95, 87.33],
 	]
-	mut data := data_from_raw_xy(xy)!
+	mut data := Data.from_raw_xy(xy)!
 
 	// stat
-	mut stat := stat_from_data(mut data, 'stat')
+	mut stat := Stat.from_data(mut data, 'stat')
 
 	// notify update
 	data.notify_update()
@@ -50,6 +50,7 @@ fn test_stat_01() {
 	sample_01_check_sat(stat)
 
 	s, t := stat.sum_vars()
-	assert s == [23.92]
+	assert s.len == 1
+	assert float64.tolerance(s[0], 23.92, 3.56e-15)
 	assert float64.tolerance(t, 1843.21, 1e-15)
 }

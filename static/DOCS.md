@@ -1,28 +1,28 @@
 <div align="center">
-<p>
+  <p>
     <img
         style="width: 200px"
         width="200"
-        src="https://raw.githubusercontent.com/vlang/vsl/master/static/vsl-logo.png?sanitize=true"
+        src="https://raw.githubusercontent.com/vlang/vsl/main/static/vsl-logo.png?sanitize=true"
     >
-</p>
-<h1>The V Scientific Library</h1>
+  </p>
+  <h1>The V Scientific Library</h1>
 
 [vlang.io](https://vlang.io) |
 [Docs](https://vlang.github.io/vsl) |
 [Changelog](#) |
-[Contributing](https://github.com/vlang/vsl/blob/master/CONTRIBUTING.md)
+[Contributing](https://github.com/vlang/vsl/blob/main/CONTRIBUTING.md)
 
 </div>
 
 VSL is a V library to develop Artificial Intelligence and High-Performance Scientific Computations.
 
-|                                                                                             |                                                                                       |                                                                       |                                                                              |
-| :-----------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------: | :-------------------------------------------------------------------: | :--------------------------------------------------------------------------: |
-|       ![sierpinski_triangle](https://raw.githubusercontent.com/vlang/vsl/master/vcl/static/sierpinski_triangle.png)       | ![mandelbrot_blue_red_black](https://raw.githubusercontent.com/vlang/vsl/master/vcl/static/mandelbrot_blue_red_black.png) |   ![julia](https://raw.githubusercontent.com/vlang/vsl/master/vcl/static/julia.png)   | ![mandelbrot_basic](https://raw.githubusercontent.com/vlang/vsl/master/vcl/static/mandelbrot_basic.png) |
-| ![mandelbrot_pseudo_random_colors](https://raw.githubusercontent.com/vlang/vsl/master/vcl/static/mandelbrot_pseudo_random_colors.png) |   ![sierpinski_triangle2](https://raw.githubusercontent.com/vlang/vsl/master/vcl/static/sierpinski_triangle2.png)    | ![julia_set](https://raw.githubusercontent.com/vlang/vsl/master/vcl/static/julia_set.png) |   ![julia_basic](https://raw.githubusercontent.com/vlang/vsl/master/vcl/static/julia_basic.png)    |
+|                                      |                                |                |                       |
+| :----------------------------------: | :----------------------------: | :------------: | :-------------------: |
+|       ![][sierpinski_triangle]       | ![][mandelbrot_blue_red_black] |   ![][julia]   | ![][mandelbrot_basic] |
+| ![][mandelbrot_pseudo_random_colors] |   ![][sierpinski_triangle2]    | ![][julia_set] |   ![][julia_basic]    |
 
-## Docs
+## 📖 Docs
 
 Visit [vsl docs](https://vlang.github.io/vsl) to know more about the supported features.
 
@@ -41,37 +41,29 @@ These existing libraries have been fundamental for the development of high-perfo
 simulations over many years. We believe that it is possible to rewrite these
 libraries in native V and at the same time achieve the same speed delivered by them, but at the same
 time, we want to allow to the users of VSL the possibility to choose when to use these libraries
-as backend and when not. That is why each module documents the flags that allow this at the
+as a backend and when not. That is why each module documents the flags that allow this at the
 time of use.
 
-## Installation
+## 🚀 Installation
 
 It is possible to optimize certain modules using different backends.
-For this there are some C dependencies that can be installed optionally.
+For this, there are some C dependencies that can be installed optionally.
 If you want to use these C dependencies and other libraries,
 the easiest way to work with VSL is via Docker.
 Having Docker and VS Code installed, you can start developing powerful numerical simulations
 using VSL in a matter of seconds. Furthermore, the best part of it is that it works on
 Windows, Linux, and macOS out of the box.
 
-### Quick, containerized (recommended)
+### Quick, containerized (recommended!)
 
 1. Install Docker
-2. Install [Visual Studio Code](https://code.visualstudio.com/)
-3. Install the [Remote Development](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) extension for VS Code
-4. Clone <https://github.com/ulises-jeremias/hello-vsl>
-5. Create your application within a container (see gif below)
+2. Clone <https://github.com/ulises-jeremias/hello-vsl>
+3. Follow the instructions in the README.md file of the repository :ok_hand:
 
 Done. And your system will remain "clean".
 
-![](https://raw.githubusercontent.com/vlang/vsl/master/static/vscode-open-in-container.gif)
-
 Our [Docker Image](https://hub.docker.com/repository/docker/ulisesjeremias/vsl)
 also contains V and the V Tools for working with VS Code (or not).
-Below is a video showing the convenience of
-VS Code + the V tools + VSL.
-
-![](https://raw.githubusercontent.com/vlang/vsl/master/static/container.gif)
 
 ## Install VSL locally
 
@@ -89,7 +81,7 @@ vpkg get https://github.com/vlang/vsl
 
 Done. Installation completed.
 
-## Testing
+## 🧪 Testing
 
 To test the module, just type the following command:
 
@@ -97,10 +89,21 @@ To test the module, just type the following command:
 v test .
 ```
 
-## Contributors
+## 👥 Contributors
 
 <a href="https://github.com/vlang/vsl/contributors">
   <img src="https://contrib.rocks/image?repo=vlang/vsl"/>
 </a>
 
 Made with [contributors-img](https://contrib.rocks).
+
+<!-- Images -->
+
+[sierpinski_triangle]: https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/sierpinski_triangle.png
+[mandelbrot_blue_red_black]: https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/mandelbrot_blue_red_black.png
+[julia]: https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/julia.png
+[mandelbrot_basic]: https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/mandelbrot_basic.png
+[mandelbrot_pseudo_random_colors]: https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/mandelbrot_pseudo_random_colors.png
+[sierpinski_triangle2]: https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/sierpinski_triangle2.png
+[julia_set]: https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/julia_set.png
+[julia_basic]: https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/julia_basic.png

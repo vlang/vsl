@@ -5,13 +5,42 @@ import vsl.func
 import vsl.internal.prec
 import math
 
-const (
-	itmax = 100
-)
+const itmax = 100
+
+// Brent implements Brent's method for finding roots of a function
+// in a given interval. The function must be continuous and the
+// interval must contain a root.
+pub struct Brent {
+pub:
+	f func.Fn @[required]
+pub mut:
+	x1      f64
+	x2      f64
+	tol     f64
+	n_max   int
+	n_calls int
+	n_iter  int
+}
+
+// Brent.new creates a new Brent object
+pub fn Brent.new(f func.Fn) &Brent {
+	return &Brent{
+		f: f
+		tol: 1e-6
+	}
+}
+
+// BrentIteration is a single iteration of Brent's method
+pub struct BrentIteration {
+	x       f64
+	fx      f64
+	n_calls int
+	n_iter  int
+}
 
 // Search for the root of func in the interval [x1, x2] with a
 // given tolerance
-pub fn brent(f func.Fn, x1 f64, x2 f64, tol f64) !(f64, f64) {
+fn brent(f func.Fn, x1 f64, x2 f64, tol f64) !(f64, f64) {
 	mut a := x1
 	mut b := x2
 	mut c := a

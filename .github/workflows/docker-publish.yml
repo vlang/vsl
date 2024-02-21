@@ -3,32 +3,27 @@ name: Docker Publish
 on:
   workflow_call:
     inputs:
-      dockerfile:
-        description: 'The dockerfile to use'
+      target:
+        description: "The target to use"
         type: string
         required: false
-        default: './Dockerfile'
-      context:
-        description: 'The context to use'
-        type: string
-        required: false
-        default: '.'
+        default: ""
       build-args:
-        description: 'The build args to use'
+        description: "The build args to use"
         type: string
         required: false
-        default: ''
+        default: ""
       tags:
-        description: 'The tags to use'
+        description: "The tags to use"
         type: string
         required: false
-        default: ''
+        default: ""
     secrets:
       DOCKERHUB_USERNAME:
-        description: 'The username to use for the image'
+        description: "The username to use for the image"
         required: true
       DOCKERHUB_TOKEN:
-        description: 'The password to use for the image'
+        description: "The password to use for the image"
         required: true
 
 jobs:
@@ -51,6 +46,6 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          file: ${{ inputs.dockerfile }}
           tags: ${{ inputs.tags }}
           build-args: ${{ inputs.build-args }}
+          target: ${{ inputs.target }}

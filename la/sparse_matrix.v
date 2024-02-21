@@ -34,8 +34,8 @@ mut:
 	x []T
 }
 
-// new_triplet returns a new Triplet. This is a wrapper to new(Triplet) followed by init()
-pub fn new_triplet[T](m int, n int, max int) &Triplet[T] {
+// Triplet.new returns a new Triplet. This is a wrapper to new(Triplet) followed by init()
+pub fn Triplet.new[T](m int, n int, max int) &Triplet[T] {
 	mut o := &Triplet[T]{}
 	o.init(m, n, max)
 	return o
@@ -133,7 +133,7 @@ pub fn (o Triplet[T]) size() (int, int) {
 
 // to_dense returns the dense matrix corresponding to this Triplet
 pub fn (o Triplet[T]) to_dense() &Matrix[T] {
-	mut a := new_matrix[T](o.m, o.n)
+	mut a := Matrix.new[T](o.m, o.n)
 	for k := 0; k < o.max; k++ {
 		a.add(o.i[k], o.j[k], o.x[k])
 	}

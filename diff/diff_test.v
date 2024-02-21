@@ -1,7 +1,8 @@
 module diff
 
-import vsl.func
 import math
+import vsl.float.float64
+import vsl.func
 
 fn f1(x f64, _ []f64) f64 {
 	return math.exp(x)
@@ -68,18 +69,18 @@ fn df6(x f64, _ []f64) f64 {
 }
 
 fn test_diff() {
-	f1_ := func.new_func(f: f1)
-	df1_ := func.new_func(f: df1)
-	f2_ := func.new_func(f: f2)
-	df2_ := func.new_func(f: df2)
-	f3_ := func.new_func(f: f3)
-	df3_ := func.new_func(f: df3)
-	f4_ := func.new_func(f: f4)
-	df4_ := func.new_func(f: df4)
-	f5_ := func.new_func(f: f5)
-	df5_ := func.new_func(f: df5)
-	f6_ := func.new_func(f: f6)
-	df6_ := func.new_func(f: df6)
+	f1_ := func.Fn.new(f: f1)
+	df1_ := func.Fn.new(f: df1)
+	f2_ := func.Fn.new(f: f2)
+	df2_ := func.Fn.new(f: df2)
+	f3_ := func.Fn.new(f: f3)
+	df3_ := func.Fn.new(f: df3)
+	f4_ := func.Fn.new(f: f4)
+	df4_ := func.Fn.new(f: df4)
+	f5_ := func.Fn.new(f: f5)
+	df5_ := func.Fn.new(f: df5)
+	f6_ := func.Fn.new(f: f6)
+	df6_ := func.Fn.new(f: df6)
 
 	assert diff_test('central', f1_, df1_, 1.0)
 	assert diff_test('forward', f1_, df1_, 1.0)
@@ -102,15 +103,7 @@ fn test_diff() {
 }
 
 fn diff_test(diff_method string, f func.Fn, df func.Fn, x f64) bool {
-	expected := df.eval(x)
-	result, _ := if diff_method == 'backward' {
-		backward(f, x)
-	} else if diff_method == 'forward' {
-		forward(f, x)
-	} else {
-		central(f, x)
-	}
-	return compare(result, expected)
+	return diff_near_test(diff_method, f, df, x, 1e-5)
 }
 
 fn diff_near_test(diff_method string, f func.Fn, df func.Fn, x f64, tolerance f64) bool {
@@ -122,21 +115,5 @@ fn diff_near_test(diff_method string, f func.Fn, df func.Fn, x f64, tolerance f6
 	} else {
 		central(f, x)
 	}
-	return compare_near(result, expected, tolerance)
-}
-
-// Helper methods for comparing floats
-[inline]
-fn compare(x f64, y f64) bool {
-	return compare_near(x, y, 1e-5)
-}
-
-fn compare_near(x f64, y f64, tolerance f64) bool {
-	// Special case for zeroes
-	if x < tolerance && x > (-1.0 * tolerance) && y < tolerance && y > (-1.0 * tolerance) {
-		return true
-	}
-	diff := math.abs(x - y)
-	mean := math.abs(x + y) / 2.0
-	return if math.is_nan(diff / mean) { true } else { ((diff / mean) < tolerance) }
+	return float64.tolerance(result, expected, tolerance)
 }

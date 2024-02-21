@@ -2,13 +2,11 @@ module la
 
 import vsl.float.float64
 
-const (
-	debsesol_tests_tol = 1e-12
-)
+const debsesol_tests_tol = 1e-12
 
 fn test_den_solve() {
 	// case 1
-	mat1 := matrix_deep2([
+	mat1 := Matrix.deep2([
 		[1.0, 0],
 		[0.0, 2],
 	])
@@ -17,7 +15,7 @@ fn test_den_solve() {
 	den_solve(mut x1, mat1, b1, false)
 	assert float64.arrays_tolerance(x1, [1.0, 0.5], la.debsesol_tests_tol)
 	// case 2
-	mat2 := matrix_deep2([
+	mat2 := Matrix.deep2([
 		[2.0, 0, 0, -5.6],
 		[0.0, 3, 0, 1.2],
 		[0.0, 0, 4, 4.5],

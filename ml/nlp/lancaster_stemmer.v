@@ -140,9 +140,9 @@ pub mut:
 ]
 }
 
-// new_lancaster_stemmer returns a LancasterStemmer struct with a
+// LancasterStemmer.new returns a LancasterStemmer struct with a
 // predefined set of stemming rules.
-pub fn new_lancaster_stemmer(strip_prefix bool) LancasterStemmer {
+pub fn LancasterStemmer.new(strip_prefix bool) LancasterStemmer {
 	return LancasterStemmer{
 		strip_prefix: strip_prefix
 	}

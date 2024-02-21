@@ -13,14 +13,14 @@ pub:
 	len i64
 }
 
-[params]
+@[params]
 pub struct IntIterParams {
 	start i64
-	stop  i64 [required]
+	stop  i64 @[required]
 	step  i64 = 1
 }
 
-// new_int_iter returns an iterator of evenly spaced integers numbers in the half-open interval `[start, stop)`.
+// IntIter.new returns an iterator of evenly spaced integers numbers in the half-open interval `[start, stop)`.
 //----------
 // parameters:
 //	IntIterParams {
@@ -28,7 +28,7 @@ pub struct IntIterParams {
 //	  -stop  i64 [required]: the end of the range (exclusive).
 //	  -step  i64 = 1:        the step between the numbers.
 //}
-pub fn new_int_iter(params IntIterParams) !IntIter {
+pub fn IntIter.new(params IntIterParams) !IntIter {
 	if params.step == 0 {
 		return errors.error(@MOD + '.' + @FN + ': step cannot be 0', .erange)
 	}
@@ -69,14 +69,14 @@ pub:
 	len i64
 }
 
-[params]
+@[params]
 pub struct FloatIterParams {
 	start f64
-	stop  f64 [required]
+	stop  f64 @[required]
 	step  f64 = 1.0
 }
 
-// new_float_iter returns an iterator of evenly spaced floats in the half-open interval `[start, stop)`.
+// FloatIter.new returns an iterator of evenly spaced floats in the half-open interval `[start, stop)`.
 //----------
 // parameters:
 //	FloatIterParams {
@@ -84,7 +84,7 @@ pub struct FloatIterParams {
 //	 -stop  f64 [required]: the end of the range (exclusive).
 //	 -step  f64 = 1:        the step between the numbers.
 //}
-pub fn new_float_iter(params FloatIterParams) !FloatIter {
+pub fn FloatIter.new(params FloatIterParams) !FloatIter {
 	if params.step == 0 {
 		return errors.error(@MOD + '.' + @FN + ': step cannot be 0', .erange)
 	}
@@ -124,15 +124,15 @@ pub:
 	step f64
 }
 
-[params]
+@[params]
 pub struct LinearIterParams {
-	start    f64  [required]
-	stop     f64  [required]
+	start    f64  @[required]
+	stop     f64  @[required]
 	len      i64  = 50
 	endpoint bool = true
 }
 
-// new_linear_iter returns an iterator of `len` evenly spaced floats in the interval `[start, stop]`.
+// LinearIter.new returns an iterator of `len` evenly spaced floats in the interval `[start, stop]`.
 // The endpoint of the interval can optionally be excluded.
 //----------
 // parameters:
@@ -142,7 +142,7 @@ pub struct LinearIterParams {
 //	 -len      i64  = 50:      Number of samples to generate. Must be non-negative.
 //   -endpoint bool = true:    If true, `stop` is the last sample. Otherwise, it is not included.
 //}
-pub fn new_linear_iter(params LinearIterParams) !LinearIter {
+pub fn LinearIter.new(params LinearIterParams) !LinearIter {
 	if params.len < 0 {
 		return errors.error(@MOD + '.' + @FN + ': number of samples must be non negative',
 			.erange)
@@ -188,16 +188,16 @@ mut:
 	linear_iter LinearIter
 }
 
-[params]
+@[params]
 pub struct LogIterParams {
-	start    f64  [required]
-	stop     f64  [required]
+	start    f64  @[required]
+	stop     f64  @[required]
 	len      i64  = 50
 	base     f64  = 10.0
 	endpoint bool = true
 }
 
-// log_iter returns an iterator of `len` numbers evenly spaced on a logarithmic scale.
+// LogIter.new returns an iterator of `len` numbers evenly spaced on a logarithmic scale.
 // The sequence starts at `base ^ start` and ends in `base ^ stop` (if `endpoint` = true).
 //-------
 // parameters:
@@ -208,13 +208,13 @@ pub struct LogIterParams {
 //	 -base     f64  = 10.0:    The base of the log space.
 //	 -endpoint bool = true:    If true, bas ^ stop is the last sample. Otherwise, it is not included.
 //}
-pub fn new_log_iter(params LogIterParams) !LogIter {
+pub fn LogIter.new(params LogIterParams) !LogIter {
 	if params.len < 0 {
 		return errors.error(@MOD + '.' + @FN + ': number of samples must be non negative',
 			.erange)
 	}
 	return LogIter{
-		linear_iter: new_linear_iter(
+		linear_iter: LinearIter.new(
 			start: params.start
 			stop: params.stop
 			len: params.len

@@ -11,8 +11,8 @@ fn test_sinusoid_01() {
 	a0 := 1.7 // mean value
 	c1 := 1.0 // amplitude
 	theta := pi / 3.0 // phase shift [rad]
-	sa := new_sinusoid_essential(t, a0, c1, theta)
-	sb := new_sinusoid_basis(t, a0, sa.a[1], sa.b[1])
+	sa := Sinusoid.essential(t, a0, c1, theta)
+	sb := Sinusoid.basis(t, a0, sa.a[1], sa.b[1])
 
 	// check setup data
 	assert float64.tolerance(sa.period, sb.period, 1e-15)

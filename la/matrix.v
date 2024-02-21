@@ -4,7 +4,7 @@ import math
 import strconv
 import vsl.errors
 
-[heap]
+@[heap]
 pub struct Matrix[T] {
 pub mut:
 	m    int
@@ -12,8 +12,8 @@ pub mut:
 	data []T
 }
 
-// new_matrix allocates a new (empty) Matrix with given (m,n) (row/col sizes)
-pub fn new_matrix[T](m int, n int) &Matrix[T] {
+// Matrix.new allocates a new (empty) Matrix with given (m,n) (row/col sizes)
+pub fn Matrix.new[T](m int, n int) &Matrix[T] {
 	data := []T{len: m * n}
 	return &Matrix[T]{
 		m: m
@@ -22,21 +22,21 @@ pub fn new_matrix[T](m int, n int) &Matrix[T] {
 	}
 }
 
-// matrix_deep2 allocates a new Matrix from given (Deep2) nested slice.
+// Matrix.deep2 allocates a new Matrix from given (Deep2) nested slice.
 // NOTE: make sure to have at least 1x1 item
-pub fn matrix_deep2[T](a [][]T) &Matrix[T] {
-	mut o := new_matrix[T](a.len, a[0].len)
+pub fn Matrix.deep2[T](a [][]T) &Matrix[T] {
+	mut o := Matrix.new[T](a.len, a[0].len)
 	o.set_from_deep2(a)
 	return o
 }
 
-// matrix_raw creates a new Matrix using given raw data
+// Matrix.raw creates a new Matrix using given raw data
 // Input:
 // rawdata -- data organized as column-major; e.g. Fortran format
 // NOTE:
 // (1) rawdata is not copied!
 // (2) the external slice rawdata should not be changed or deleted
-pub fn matrix_raw[T](m int, n int, rawdata []T) &Matrix[T] {
+pub fn Matrix.raw[T](m int, n int, rawdata []T) &Matrix[T] {
 	return &Matrix[T]{
 		m: m
 		n: n
@@ -91,14 +91,14 @@ pub fn (o &Matrix[T]) get_deep2() [][]T {
 
 // clone returns a copy of this matrix
 pub fn (o &Matrix[T]) clone() &Matrix[T] {
-	mut clone := new_matrix[T](o.m, o.n)
+	mut clone := Matrix.new[T](o.m, o.n)
 	clone.data = o.data.clone()
 	return clone
 }
 
 // transpose returns the transpose matrix
 pub fn (o &Matrix[T]) transpose() &Matrix[T] {
-	mut tran := new_matrix[T](o.n, o.m)
+	mut tran := Matrix.new[T](o.n, o.m)
 	for i := 0; i < o.n; i++ {
 		for j := 0; j < o.m; j++ {
 			tran.set(i, j, o.get(j, i))
@@ -195,7 +195,7 @@ pub fn (o &Matrix[T]) largest(den T) T {
 // col access column j of this matrix. No copies are made since the internal data are in
 // row-major format already.
 // NOTE: this method can be used to modify the columns; e.g. with o.col(0)[0] = 123
-[inline]
+@[inline]
 pub fn (o &Matrix[T]) col(j int) []T {
 	return o.get_col(j)
 }
@@ -217,13 +217,13 @@ pub fn (o &Matrix[T]) get_col(j int) []T {
 // extract_cols returns columns from j=start to j=endp1-1
 // start -- first column
 // endp1 -- "end-plus-one", the number of the last requested column + 1
-pub fn (o &Matrix[T]) extract_cols(start int, endp1 int) &Matrix[T] {
+pub fn (o &Matrix[T]) extract_cols(start int, endp1 int) !&Matrix[T] {
 	if endp1 <= start {
-		errors.vsl_panic("endp1 'end-plus-one' must be greater than start. start=${start}, endp1=${endp1} invalid",
+		return errors.error("endp1 'end-plus-one' must be greater than start. start=${start}, endp1=${endp1} invalid",
 			.efailed)
 	}
 	ncol := endp1 - start
-	mut reduced := new_matrix[T](o.m, ncol)
+	mut reduced := Matrix.new[T](o.m, ncol)
 	for i in 0 .. o.m {
 		for j := 0; j < ncol; j++ {
 			reduced.set(i, j, o.get(i, j + start))
@@ -235,13 +235,13 @@ pub fn (o &Matrix[T]) extract_cols(start int, endp1 int) &Matrix[T] {
 // extract_rows returns rows from i=start to i=endp1-1
 // start -- first column
 // endp1 -- "end-plus-one", the number of the last requested column + 1
-pub fn (o &Matrix[T]) extract_rows(start int, endp1 int) &Matrix[T] {
+pub fn (o &Matrix[T]) extract_rows(start int, endp1 int) !&Matrix[T] {
 	if endp1 <= start {
-		errors.vsl_panic("endp1 'end-plus-one' must be greater than start. start=${start}, endp1=${endp1} invalid",
+		return errors.error("endp1 'end-plus-one' must be greater than start. start=${start}, endp1=${endp1} invalid",
 			.efailed)
 	}
 	nrow := endp1 - start
-	mut reduced := new_matrix[T](nrow, o.n)
+	mut reduced := Matrix.new[T](nrow, o.n)
 	reduced.data = o.data[start * o.m..endp1 * o.m]
 	return reduced
 }
@@ -258,6 +258,44 @@ pub fn (mut o Matrix[T]) set_col(j int, value T) {
 	for i in 0 .. o.m {
 		o.data[i * o.n + j] = value
 	}
+}
+
+// split_by_col splits this matrix into two matrices at column j
+// j -- column index
+pub fn (o &Matrix[T]) split_by_col(j int) !(&Matrix[T], &Matrix[T]) {
+	if j < 0 || j >= o.n {
+		return errors.error('j=${j} must be in range [0, ${o.n})', .efailed)
+	}
+	mut left := Matrix.new[T](o.m, j)
+	mut right := Matrix.new[T](o.m, o.n - j)
+	for i in 0 .. o.m {
+		for k := 0; k < j; k++ {
+			left.set(i, k, o.get(i, k))
+		}
+		for k := j; k < o.n; k++ {
+			right.set(i, k - j, o.get(i, k))
+		}
+	}
+	return left, right
+}
+
+// split_by_row splits this matrix into two matrices at row i
+// i -- row index
+pub fn (o &Matrix[T]) split_by_row(i int) !(&Matrix[T], &Matrix[T]) {
+	if i < 0 || i >= o.m {
+		return errors.error('i=${i} must be in range [0, ${o.m})', .efailed)
+	}
+	mut top := Matrix.new[T](i, o.n)
+	mut bottom := Matrix.new[T](o.m - i, o.n)
+	for j in 0 .. o.n {
+		for k := 0; k < i; k++ {
+			top.set(k, j, o.get(k, j))
+		}
+		for k := i; k < o.m; k++ {
+			bottom.set(k - i, j, o.get(k, j))
+		}
+	}
+	return top, bottom
 }
 
 // norm_frob returns the Frobenius norm of this matrix
@@ -375,7 +413,7 @@ pub fn (o &Matrix[T]) print_py(nfmt_ string) string {
 	return l
 }
 
-[inline]
+@[inline]
 pub fn safe_print[T](format string, message T) string {
-	return strconv.v_sprintf(format, message)
+	return unsafe { strconv.v_sprintf(format, message) }
 }

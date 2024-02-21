@@ -21,7 +21,7 @@ type ClProgramBuildInfo = u32
 // ImageChannelOrder represents available image types
 pub enum ImageChannelOrder {
 	intensity = C.CL_INTENSITY
-	rgba = C.CL_RGBA
+	rgba      = C.CL_RGBA
 }
 
 // ImageChannelDataType describes the size of the channel data type

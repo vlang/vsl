@@ -4,26 +4,24 @@ import vsl.vcl
 import os
 import stbi
 
-const (
-	cube_size   = 500
-	width       = cube_size
-	height      = cube_size
+const cube_size = 500
+const width = cube_size
+const height = cube_size
 
-	root        = os.dir(@FILE)
-	kernels_dir = os.join_path(root, 'kernels')
-	output_dir  = os.join_path(root, 'output')
+const root = os.dir(@FILE)
+const kernels_dir = os.join_path(root, 'kernels')
+const output_dir = os.join_path(root, 'output')
 
-	kernels     = [
-		'mandelbrot_basic',
-		'mandelbrot_blue_red_black',
-		'mandelbrot_pseudo_random_colors',
-		'julia',
-		'julia_set',
-		'julia_basic',
-		'sierpinski_triangle',
-		'sierpinski_triangle2',
-	]
-)
+const kernels = [
+	'mandelbrot_basic',
+	'mandelbrot_blue_red_black',
+	'mandelbrot_pseudo_random_colors',
+	'julia',
+	'julia_set',
+	'julia_basic',
+	'sierpinski_triangle',
+	'sierpinski_triangle2',
+]
 
 fn run_kernel(kernel_name string) ! {
 	// load kernel

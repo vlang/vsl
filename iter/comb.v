@@ -7,7 +7,7 @@ import vsl.util
 // While waiting on https://github.com/vlang/v/issues/7753 to be fixed, the function
 // assumes f64 array input. Will be easy to change to generic later
 pub fn combinations(data []f64, r int) [][]f64 {
-	mut combinations := new_combinations_iter(data, r)
+	mut combinations := CombinationsIter.new(data, r)
 	mut result := [][]f64{cap: int(combinations.size)}
 	for comb in combinations {
 		result << comb
@@ -25,9 +25,9 @@ pub:
 	data   []f64
 }
 
-// new_combinations_iter will return an iterator that allows
+// CombinationsIter.new will return an iterator that allows
 // lazy computation for all length `r` combinations of `data`
-pub fn new_combinations_iter(data []f64, r int) CombinationsIter {
+pub fn CombinationsIter.new(data []f64, r int) CombinationsIter {
 	n := data.len
 	if r > n {
 		return CombinationsIter{
@@ -84,7 +84,7 @@ pub fn (mut o CombinationsIter) next() ?[]f64 {
 // as I could manage.
 // Using f64 array instead of generic while waiting on https://github.com/vlang/v/issues/7753
 pub fn combinations_with_replacement(data []f64, r int) [][]f64 {
-	mut combinations := new_combinations_with_replacement_iter(data, r)
+	mut combinations := CombinationsWithReplacementIter.new(data, r)
 	mut result := [][]f64{cap: int(combinations.size)}
 	for comb in combinations {
 		result << comb
@@ -102,9 +102,9 @@ pub:
 	data   []f64
 }
 
-// new_combinations_with_replacement_iter will return an iterator that allows
+// CombinationsWithReplacementIter.new will return an iterator that allows
 // lazy computation for all length `r` combinations with replacement of `data`
-pub fn new_combinations_with_replacement_iter(data []f64, r int) CombinationsWithReplacementIter {
+pub fn CombinationsWithReplacementIter.new(data []f64, r int) CombinationsWithReplacementIter {
 	n := data.len
 	if r > n {
 		return CombinationsWithReplacementIter{

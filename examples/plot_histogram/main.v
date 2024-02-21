@@ -3,25 +3,24 @@ module main
 import rand
 import vsl.plot
 
-rand.seed([u32(1), 42])
+fn main() {
+	rand.seed([u32(1), 42])
 
-mut x1 := []f64{cap: 1000}
-for _ in 1 .. 1000 {
-	x1 << rand.f64n(100) or { 0 }
+	x := []f64{len: 1000, init: (0 * index) + rand.f64n(100) or { 0 }}
+
+	mut plt := plot.Plot.new()
+	plt.histogram(
+		x: x
+		xbins: plot.Bins{
+			start: 0.0
+			end: 100.0
+			size: 2
+		}
+	)
+	plt.layout(
+		title: 'Histogram Example'
+		width: 750
+		height: 750
+	)
+	plt.show()!
 }
-mut plt := plot.new_plot()
-plt.add_trace(
-	trace_type: .histogram
-	x: x1
-	xbins: {
-		'start': f32(0)
-		'end':   f32(100)
-		'size':  2
-	}
-)
-plt.set_layout(
-	title: 'Histogram Example'
-	width: 750
-	height: 750
-)
-plt.show()!

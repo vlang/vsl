@@ -33,7 +33,7 @@ pub fn vector_unit(mut o []f64) []f64 {
 // vector_accum sum/accumulates all components in a []T
 // sum := Σ_i v[i]
 pub fn vector_accum[T](o []T) T {
-	mut sum := T(0)
+	mut sum := T{}
 	for i in 0 .. o.len {
 		sum += o[i]
 	}
@@ -49,7 +49,7 @@ pub fn vector_norm(o []f64) f64 {
 // vector_rms returns the root-mean-square of this []T
 //
 pub fn vector_rms[T](o []T) T {
-	mut rms := T(0)
+	mut rms := T{}
 	for i in 0 .. o.len {
 		rms += o[i] * o[i]
 	}
@@ -60,7 +60,7 @@ pub fn vector_rms[T](o []T) T {
 // vector_norm_diff returns the Euclidean norm of the difference:
 // nrm := ||u - v||
 pub fn vector_norm_diff[T](o []T, v []T) T {
-	mut nrm := T(0)
+	mut nrm := T{}
 	for i in 0 .. v.len {
 		nrm += (o[i] - v[i]) * (o[i] - v[i])
 	}

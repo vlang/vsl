@@ -2,7 +2,7 @@ module ml
 
 fn test_kmeans_01() {
 	// data
-	mut data := data_from_raw_x([
+	mut data := Data.from_raw_x([
 		[0.1, 0.7],
 		[0.3, 0.7],
 		[0.1, 0.9],
@@ -15,10 +15,12 @@ fn test_kmeans_01() {
 
 	// model
 	nb_classes := 2
-	mut model := new_kmeans(mut data, nb_classes, 'kmeans')
+	mut model := Kmeans.new(mut data, nb_classes, 'kmeans')
 	model.set_centroids([
-		[0.4, 0.6] /* class 0 */,
-		[0.6, 0.4] /* class 1 */,
+		// class 0
+		[0.4, 0.6],
+		// class 1
+		[0.6, 0.4],
 	])
 
 	// train

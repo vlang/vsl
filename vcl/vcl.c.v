@@ -10,16 +10,16 @@ pub fn get_devices(device_type DeviceType) ![]&Device {
 		mut ret := cl_get_device_i_ds(p, ClDeviceType(device_type), 0, unsafe { nil },
 			&n)
 		if ret != success {
-			return vcl_error(ret)
+			return error_from_code(ret)
 		}
-		mut device_ids := []ClDeviceId{len: int(n)}
+		mut device_ids := unsafe { []ClDeviceId{len: int(n)} }
 		ret = cl_get_device_i_ds(p, ClDeviceType(device_type), n, unsafe { &device_ids[0] },
 			unsafe { nil })
 		if ret != success {
-			return vcl_error(ret)
+			return error_from_code(ret)
 		}
 		for d in device_ids {
-			device := new_device(d)!
+			device := Device.new(d)!
 			devices << device
 		}
 	}
@@ -31,29 +31,26 @@ pub fn get_devices(device_type DeviceType) ![]&Device {
 pub fn get_default_device() !&Device {
 	mut id := ClDeviceId(0)
 	platform_ids := get_platforms()!
-	ret := cl_get_device_i_ds(unsafe { &platform_ids[0] }, ClDeviceType(DeviceType.default_device),
+	ret := cl_get_device_i_ds(unsafe { &platform_ids[0] }, ClDeviceType(DeviceType.cpu),
 		1, &id, unsafe { nil })
 	if ret != success {
-		return vcl_error(ret)
+		return error_from_code(ret)
 	}
-	return new_device(id)
+	return Device.new(id)
 }
 
 fn get_platforms() ![]ClPlatformId {
 	mut n := u32(0)
 	mut ret := cl_get_platform_i_ds(0, unsafe { nil }, &n)
 	if ret != success {
-		return vcl_error(ret)
+		return error_from_code(ret)
 	}
-	mut platform_ids := []ClPlatformId{len: int(n)}
+	mut platform_ids := unsafe { []ClPlatformId{len: int(n)} }
 	ret = cl_get_platform_i_ds(n, unsafe { &platform_ids[0] }, unsafe { nil })
-	if ret != success {
-		return vcl_error(ret)
-	}
-	return platform_ids
+	return error_or_default(ret, platform_ids)
 }
 
-fn new_device(id ClDeviceId) !&Device {
+fn Device.new(id ClDeviceId) !&Device {
 	mut d := &Device{
 		id: id
 	}
@@ -61,7 +58,7 @@ fn new_device(id ClDeviceId) !&Device {
 	d.ctx = cl_create_context(unsafe { nil }, 1, &id, unsafe { nil }, unsafe { nil },
 		&ret)
 	if ret != success {
-		return vcl_error(ret)
+		return error_from_code(ret)
 	}
 	if isnil(d.ctx) {
 		return err_unknown
@@ -72,8 +69,5 @@ fn new_device(id ClDeviceId) !&Device {
 	} else {
 		d.queue = cl_create_command_queue(d.ctx, d.id, usize(0), &ret)
 	}
-	if ret != success {
-		return vcl_error(ret)
-	}
-	return d
+	return error_or_default(ret, d)
 }

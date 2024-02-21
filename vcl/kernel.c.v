@@ -13,14 +13,17 @@ pub fn (d &Device) kernel(name string) !&Kernel {
 			continue
 		}
 		if ret != success {
-			return vcl_error(ret)
+			return error_from_code(ret)
 		}
 		break
 	}
 	if ret == invalid_kernel_name {
 		return error("kernel with name '${name}' not found")
 	}
-	return new_kernel(d, k)
+	return &Kernel{
+		d: d
+		k: k
+	}
 }
 
 pub struct UnsupportedArgumentTypeError {
@@ -34,7 +37,7 @@ pub fn (err UnsupportedArgumentTypeError) msg() string {
 	return 'cl: unsupported argument type for index ${err.index}: ${err.value}'
 }
 
-fn new_unsupported_argument_type_error(index int, value ArgumentType) IError {
+fn UnsupportedArgumentTypeError.new(index int, value ArgumentType) IError {
 	return UnsupportedArgumentTypeError{
 		index: index
 		value: value
@@ -43,7 +46,7 @@ fn new_unsupported_argument_type_error(index int, value ArgumentType) IError {
 
 // Kernel represent a single kernel
 pub struct Kernel {
-	d &Device
+	d &Device = unsafe { nil }
 	k ClKernel
 }
 
@@ -58,7 +61,7 @@ pub fn (k &Kernel) global(global_work_sizes ...int) KernelWithGlobal {
 // KernelWithGlobal is a kernel with the global size set
 // to run the kernel it must also set the local size
 pub struct KernelWithGlobal {
-	kernel            &Kernel
+	kernel            &Kernel = unsafe { nil }
 	global_work_sizes []int
 }
 
@@ -74,7 +77,7 @@ pub fn (kg KernelWithGlobal) local(local_work_sizes ...int) KernelCall {
 // KernelCall is a kernel with global and local work sizes set
 // and it's ready to be run
 pub struct KernelCall {
-	kernel            &Kernel
+	kernel            &Kernel = unsafe { nil }
 	global_work_sizes []int
 	local_work_sizes  []int
 }
@@ -93,13 +96,6 @@ pub fn (kc KernelCall) run(args ...ArgumentType) chan IError {
 
 fn release_kernel(k &Kernel) {
 	cl_release_kernel(k.k)
-}
-
-fn new_kernel(d &Device, k ClKernel) &Kernel {
-	return &Kernel{
-		d: d
-		k: k
-	}
 }
 
 fn (k &Kernel) set_args(args ...ArgumentType) ! {
@@ -180,7 +176,7 @@ fn (k &Kernel) set_arg(index int, arg ArgumentType) ! {
 			return k.set_arg_buffer(index, arg.buf)
 		}
 		else {
-			return new_unsupported_argument_type_error(index, arg)
+			return UnsupportedArgumentTypeError.new(index, arg)
 		}
 	}
 }
@@ -222,16 +218,16 @@ fn (k &Kernel) call(work_sizes []int, lokal_sizes []int) chan IError {
 		unsafe { &global_work_size_ptr[0] }, unsafe { &local_work_size_ptr[0] }, 0, unsafe { nil },
 		unsafe { &event })
 	if res != success {
-		err := vcl_error(res)
+		err := error_from_code(res)
 		ch <- err
 		return ch
 	}
-	spawn fn (ch chan IError, event ClEvent) {
+	go fn (ch chan IError, event ClEvent) {
 		defer {
 			cl_release_event(event)
 		}
 		res := cl_wait_for_events(1, unsafe { &event })
-		ch <- vcl_error(res)
+		ch <- error_from_code(res)
 	}(ch, event)
 	return ch
 }

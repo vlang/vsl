@@ -2,44 +2,41 @@ module vcl
 
 pub enum DeviceType as i64 {
 	// device types - bitfield
-	cpu = (1 << 0)
-	gpu = (1 << 1)
+	cpu         = (1 << 0)
+	gpu         = (1 << 1)
 	accelerator = (1 << 2)
-	default_device = (1 << 0)
-	all = 0xFFFFFFFF
+	all         = 0xFFFFFFFF
 }
 
-const (
-	// cl_mem_flags and cl_svm_mem_flags - bitfield
-	mem_read_write            = (1 << 0)
-	mem_write_only            = (1 << 1)
-	mem_read_only             = (1 << 2)
-	mem_use_host_ptr          = (1 << 3)
-	mem_alloc_host_ptr        = (1 << 4)
-	mem_copy_host_ptr         = (1 << 5)
-	// reserved (1 << 6)
-	mem_host_write_only       = (1 << 7)
-	mem_host_read_only        = (1 << 8)
-	mem_host_no_access        = (1 << 9)
-	mem_svm_fine_grain_buffer = (1 << 10)
-	mem_svm_atomics           = (1 << 11)
-	mem_kernel_read_and_write = (1 << 12)
+// cl_mem_flags and cl_svm_mem_flags - bitfield
+const mem_read_write = (1 << 0)
+const mem_write_only = (1 << 1)
+const mem_read_only = (1 << 2)
+const mem_use_host_ptr = (1 << 3)
+const mem_alloc_host_ptr = (1 << 4)
+const mem_copy_host_ptr = (1 << 5)
+// reserved (1 << 6)
+const mem_host_write_only = (1 << 7)
+const mem_host_read_only = (1 << 8)
+const mem_host_no_access = (1 << 9)
+const mem_svm_fine_grain_buffer = (1 << 10)
+const mem_svm_atomics = (1 << 11)
+const mem_kernel_read_and_write = (1 << 12)
 
-	device_name               = 0x102B
-	device_vendor             = 0x102C
-	driver_version            = 0x102D
-	device_profile            = 0x102E
-	device_version            = 0x102F
-	device_extensions         = 0x1030
-	device_platform           = 0x1031
-	device_opencl_c_version   = 0x103D
-	program_build_log         = 0x1183
-)
+const device_name = 0x102B
+const device_vendor = 0x102C
+const driver_version = 0x102D
+const device_profile = 0x102E
+const device_version = 0x102F
+const device_extensions = 0x1030
+const device_platform = 0x1031
+const device_opencl_c_version = 0x103D
+const program_build_log = 0x1183
 
 // Device the only needed entrence for the VCL
 // represents the device on which memory can be allocated and kernels run
 // it abstracts away all the complexity of contexts/platforms/queues
-[heap]
+@[heap]
 pub struct Device {
 mut:
 	id       ClDeviceId
@@ -67,15 +64,15 @@ pub fn (mut d Device) release() ! {
 	return vcl_error(cl_release_device(d.id))
 }
 
-fn (d &Device) get_info_str(param ClDeviceInfo, panic_on_error bool) !string {
+fn (d &Device) get_info_str(param ClDeviceInfo, should_panic_on_error bool) !string {
 	mut info_bytes := [1024]u8{}
 	mut info_bytes_size := usize(0)
 	code := cl_get_device_info(d.id, param, 1024, &info_bytes[0], &info_bytes_size)
 	if code != success {
-		if panic_on_error {
-			vcl_panic(code)
+		if should_panic_on_error {
+			panic_on_error(code)
 		}
-		return vcl_error(code)
+		return error_or_default(code, '')
 	}
 
 	res := info_bytes[..int(info_bytes_size)].bytestr()

@@ -15,20 +15,20 @@
 ##         --skip-examples                   Skip examples compilation
 ##
 
-ROOT=$(dirname "$0")
+ROOT=$(realpath "$(dirname "$0")")
 
 source "${ROOT}/util/easyoptions/easyoptions.sh" || exit
 source "${ROOT}/util/logs.sh" || exit
 
 set -eo pipefail
 
-vsl_dir_path=$(dirname $(dirname "$0"))
+vsl_dir_path=$(dirname "$(dirname "$0")")
 
 flags=""
 
 if [[ -n "${use_cblas}" ]]; then
     echo "Running tests using Open BLAS"
-    flags="${flags} -d cblas"
+    flags="${flags} -d vsl_vlas_cblas"
 fi
 
 if [[ -n "${use_autofree}" ]]; then
@@ -65,7 +65,7 @@ if [[ -z "${skip_examples}" ]]; then
             continue
         fi
         echo "Compiling ${file}"
-        v ${flags} -o "${file}.o" "${file}"
+        v ${flags} -d vsl_vcl_dlopencl -o "${file}.o" "${file}"
         echo "${file}.o created"
         echo "Removing ${file}.o"
         rm -f "${file}.o"

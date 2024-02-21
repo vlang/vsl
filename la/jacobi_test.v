@@ -3,16 +3,16 @@ module la
 import vsl.float.float64
 
 fn test_jacobi01() {
-	mut a := matrix_deep2([
+	mut a := Matrix.deep2([
 		[2.0, 0, 0],
 		[0.0, 2, 0],
 		[0.0, 0, 2],
 	])
 
-	mut q := new_matrix[f64](3, 3)
+	mut q := Matrix.new[f64](3, 3)
 	mut v := []f64{len: 3}
 
-	mut expected_q := matrix_deep2([
+	mut expected_q := Matrix.deep2([
 		[1.0, 0, 0],
 		[0.0, 1, 0],
 		[0.0, 0, 1],

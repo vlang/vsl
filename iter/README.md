@@ -17,9 +17,9 @@ pub fn combinations(data []f64, r int) [][]f64
 This case is optimal to generate combinations in a lazy way, optimizing memory use:
 
 ```v ignore
-// new_combinations_iter will return an iterator that allows
+// CombinationsIter.new will return an iterator that allows
 // lazy computation for all length `r` combinations of `data`
-pub fn new_combinations_iter(data []f64, r int) CombinationsIter
+pub fn CombinationsIter.new(data []f64, r int) CombinationsIter
 
 // next will return next combination if possible
 pub fn (mut o CombinationsIter) next() ?[]f64

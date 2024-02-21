@@ -4,10 +4,8 @@ import os
 import vsl.vcl
 import stbi
 
-const (
-	root       = os.dir(@FILE)
-	output_dir = os.join_path(root, 'output')
-)
+const root = os.dir(@FILE)
+const output_dir = os.join_path(root, 'output')
 
 fn main() {
 	// create output dir

@@ -3,7 +3,7 @@ module gm
 import math
 
 // Point holds the Cartesian coordinates of a point in 3D space
-[heap]
+@[heap]
 pub struct Point {
 pub mut:
 	x f64
@@ -12,15 +12,15 @@ pub mut:
 }
 
 // Segment represents a directed segment from a to b
-[heap]
+@[heap]
 pub struct Segment {
 pub:
-	a &Point
-	b &Point
+	a &Point = unsafe { nil }
+	b &Point = unsafe { nil }
 }
 
-// new_point creates a new point
-pub fn new_point(x f64, y f64, z f64) &Point {
+// Point.new creates a new point
+pub fn Point.new(x f64, y f64, z f64) &Point {
 	return &Point{x, y, z}
 }
 
@@ -51,8 +51,8 @@ pub fn (o &Segment) len() f64 {
 }
 
 // New creates a new Segment scaled by m and starting from A
-pub fn (o &Segment) new_scaled(m f64) &Segment {
-	return new_segment(o.a.clone(), new_point(o.a.x + m * (o.b.x - o.a.x), o.a.y +
+pub fn (o &Segment) scaled(m f64) &Segment {
+	return Segment.new(o.a.clone(), Point.new(o.a.x + m * (o.b.x - o.a.x), o.a.y +
 		m * (o.b.y - o.a.y), o.a.z + m * (o.b.z - o.a.z)))
 }
 
@@ -66,8 +66,8 @@ pub fn (o &Segment) str() string {
 	return '{${o.a} ${o.b}} len=${o.len()}'
 }
 
-// new_segment creates a new segment from a to b
-pub fn new_segment(a &Point, b &Point) &Segment {
+// Segment.new creates a new segment from a to b
+pub fn Segment.new(a &Point, b &Point) &Segment {
 	return &Segment{a, b}
 }
 
@@ -94,8 +94,8 @@ pub fn vector_add(alpha f64, u []f64, beta f64, v []f64) []f64 {
 
 // dist_point_line computes the distance from p to line passing through a -> b
 pub fn dist_point_line(p &Point, a &Point, b &Point, tol f64) f64 {
-	ns := new_segment(a, b)
-	vs := new_segment(p, a)
+	ns := Segment.new(a, b)
+	vs := Segment.new(p, a)
 	nn := ns.len()
 	if nn < tol { // point-point distance
 		$if debug {

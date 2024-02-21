@@ -4,34 +4,22 @@ import strconv
 import math
 import math.complex
 import vsl.errors
-import vsl.vlas.internal.vblas
+import vsl.vlas.internal.blas
 
-pub fn c_trans(trans bool) vblas.Transpose {
-	if trans {
-		return .trans
-	}
-	return .no_trans
+pub fn c_trans(trans bool) blas.Transpose {
+	return if trans { .trans } else { .no_trans }
 }
 
-pub fn c_uplo(up bool) vblas.Uplo {
-	if up {
-		return .upper
-	}
-	return .lower
+pub fn c_uplo(up bool) blas.Uplo {
+	return if up { .upper } else { .lower }
 }
 
-pub fn l_uplo(up bool) u8 {
-	if up {
-		return `U`
-	}
-	return `L`
+fn l_uplo(up bool) u8 {
+	return if up { `U` } else { `L` }
 }
 
-pub fn job_vlr(do_calc bool) u8 {
-	if do_calc {
-		return `V`
-	}
-	return `N`
+fn job_vlr(do_calc bool) rune {
+	return if do_calc { `V` } else { `N` }
 }
 
 // slice_to_col_major converts nested slice into an array representing a col-major matrix
@@ -74,7 +62,7 @@ pub fn print_col_major(m int, n int, data []f64, nfmt_ string) string {
 			l += '\n'
 		}
 		for j in 0 .. n {
-			l += strconv.v_sprintf(nfmt, data[i + j * m])
+			l += unsafe { strconv.v_sprintf(nfmt, data[i + j * m]) }
 		}
 	}
 	return l
@@ -93,7 +81,7 @@ pub fn print_col_major_v(m int, n int, data []f64, nfmt_ string) string {
 			if j > 0 {
 				l += ','
 			}
-			l += strconv.v_sprintf(nfmt, data[i + j * m])
+			l += unsafe { strconv.v_sprintf(nfmt, data[i + j * m]) }
 		}
 		l += '},\n'
 	}
@@ -114,7 +102,7 @@ pub fn print_col_major_py(m int, n int, data []f64, nfmt_ string) string {
 			if j > 0 {
 				l += ','
 			}
-			l += strconv.v_sprintf(nfmt, data[i + j * m])
+			l += unsafe { strconv.v_sprintf(nfmt, data[i + j * m]) }
 		}
 		l += '],\n'
 	}
@@ -177,7 +165,7 @@ pub fn print_col_major_complex(m int, n int, data []complex.Complex, nfmt_r_ str
 				l += ', '
 			}
 			v := data[i + j * m]
-			l += strconv.v_sprintf(nfmt_r, v.re) + strconv.v_sprintf(nfmt_i, v.im) + 'i'
+			l += unsafe { strconv.v_sprintf(nfmt_r, v.re) + strconv.v_sprintf(nfmt_i, v.im) + 'i' }
 		}
 	}
 	return l
@@ -205,7 +193,7 @@ pub fn print_col_major_complex_v(m int, n int, data []complex.Complex, nfmt_r_ s
 				l += ','
 			}
 			v := data[i + j * m]
-			l += strconv.v_sprintf(nfmt_r, v.re) + strconv.v_sprintf(nfmt_i, v.im) + 'i'
+			l += unsafe { strconv.v_sprintf(nfmt_r, v.re) + strconv.v_sprintf(nfmt_i, v.im) + 'i' }
 		}
 		l += '},\n'
 	}
@@ -235,7 +223,7 @@ pub fn print_col_major_omplex_py(m int, n int, data []complex.Complex, nfmt_r_ s
 				l += ','
 			}
 			v := data[i + j * m]
-			l += strconv.v_sprintf(nfmt_r, v.re) + strconv.v_sprintf(nfmt_i, v.im) + 'j'
+			l += unsafe { strconv.v_sprintf(nfmt_r, v.re) + strconv.v_sprintf(nfmt_i, v.im) + 'j' }
 		}
 		l += '],\n'
 	}

@@ -1,13 +1,13 @@
 # V Computing Language
 
-VCL is a high level way of writting programs with OpenCL using V.
+VCL is a high level way of writing programs with OpenCL using V.
 These are highly opinionated OpenCL bindings for V. It tries to make GPU computing easy,
-with some sugar abstraction, V's concurency and channels.
+with some sugar abstraction, V's concurrency and channels.
 
-|                                                                                             |                                                                                       |                                                                       |                                                                              |
-| :-----------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------: | :-------------------------------------------------------------------: | :--------------------------------------------------------------------------: |
-|       ![sierpinski_triangle](https://raw.githubusercontent.com/vlang/vsl/master/vcl/static/sierpinski_triangle.png)       | ![mandelbrot_blue_red_black](https://raw.githubusercontent.com/vlang/vsl/master/vcl/static/mandelbrot_blue_red_black.png) |   ![julia](https://raw.githubusercontent.com/vlang/vsl/master/vcl/static/julia.png)   | ![mandelbrot_basic](https://raw.githubusercontent.com/vlang/vsl/master/vcl/static/mandelbrot_basic.png) |
-| ![mandelbrot_pseudo_random_colors](https://raw.githubusercontent.com/vlang/vsl/master/vcl/static/mandelbrot_pseudo_random_colors.png) |   ![sierpinski_triangle2](https://raw.githubusercontent.com/vlang/vsl/master/vcl/static/sierpinski_triangle2.png)    | ![julia_set](https://raw.githubusercontent.com/vlang/vsl/master/vcl/static/julia_set.png) |   ![julia_basic](https://raw.githubusercontent.com/vlang/vsl/master/vcl/static/julia_basic.png)    |
+|                                      |                                |                |                       |
+| :----------------------------------: | :----------------------------: | :------------: | :-------------------: |
+|       ![][sierpinski_triangle]       | ![][mandelbrot_blue_red_black] |   ![][julia]   | ![][mandelbrot_basic] |
+| ![][mandelbrot_pseudo_random_colors] |   ![][sierpinski_triangle2]    | ![][julia_set] |   ![][julia_basic]    |
 
 ## Using custom OpenCL headers
 
@@ -59,7 +59,7 @@ cp -r /tmp/OpenCL-Headers/CL ~/.vmodules/vcl/CL
 ## Loading OpenCL dynamically
 
 By default VCL uses OpenCL loading the library statically. If you want to use OpenCL
-dynamically, you can use the `-d dlopencl` flag.
+dynamically, you can use the `-d vsl_vcl_dlopencl` flag.
 
 By default it will look for the OpenCL library in the system path and all the known
 locations for OpenCL libraries (like `/usr/lib` and `/usr/local/lib`) and load the first
@@ -73,3 +73,14 @@ do the following:
 ```sh
 export VCL_LIBOPENCL_PATH=/usr/local/cuda/lib64/libOpenCL.so
 ```
+
+<!-- Images -->
+
+[sierpinski_triangle]: https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/sierpinski_triangle.png
+[mandelbrot_blue_red_black]: https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/mandelbrot_blue_red_black.png
+[julia]: https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/julia.png
+[mandelbrot_basic]: https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/mandelbrot_basic.png
+[mandelbrot_pseudo_random_colors]: https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/mandelbrot_pseudo_random_colors.png
+[sierpinski_triangle2]: https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/sierpinski_triangle2.png
+[julia_set]: https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/julia_set.png
+[julia_basic]: https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/julia_basic.png

@@ -3,15 +3,6 @@ module la
 import vsl.vlas
 import math
 
-// TODO: @ulises-jeremias to remove this once https://github.com/vlang/v/issues/14047 is finished
-fn arr_to_f64arr[T](arr []T) []f64 {
-	mut ret := []f64{cap: arr.len}
-	for v in arr {
-		ret << f64(v)
-	}
-	return ret
-}
-
 /*
 * vector_rms_error returns the scaled root-mean-square of the difference between two vectors
  * with components normalised by a scaling factor
@@ -26,7 +17,7 @@ fn arr_to_f64arr[T](arr []T) []f64 {
  *   scale[i] = a + m*|s[i]|
 */
 pub fn vector_rms_error[T](u []T, v []T, a T, m T, s []T) T {
-	mut rms := T(0)
+	mut rms := T{}
 	for i in 0 .. u.len {
 		scale := a + m * math.abs(s[i])
 		err := math.abs(u[i] - v[i])
@@ -39,7 +30,7 @@ pub fn vector_rms_error[T](u []T, v []T, a T, m T, s []T) T {
 // s := u・v
 pub fn vector_dot[T](u []T, v []T) T {
 	$if T is f64 {
-		mut res := T(0)
+		mut res := T{}
 		cutoff := 150
 		if u.len <= cutoff {
 			for i in 0 .. u.len {
@@ -47,9 +38,9 @@ pub fn vector_dot[T](u []T, v []T) T {
 			}
 			return res
 		}
-		return vlas.ddot(u.len, arr_to_f64arr[T](u), 1, arr_to_f64arr[T](v), 1)
+		return vlas.ddot(u.len, u, 1, v, 1)
 	} $else {
-		mut res := T(0)
+		mut res := T{}
 		for i in 0 .. u.len {
 			res += u[i] * v[i]
 		}
@@ -66,7 +57,7 @@ pub fn vector_add[T](alpha T, u []T, beta T, v []T) []T {
 		cutoff := 150
 		if beta == 1 && n > cutoff {
 			res = v.clone()
-			vlas.daxpy(n, alpha, arr_to_f64arr(u), 1, mut res, 1)
+			vlas.daxpy(n, alpha, u, 1, mut res, 1)
 			return res
 		}
 		m := n % 4
@@ -136,8 +127,7 @@ pub fn matrix_vector_mul[T](alpha T, a &Matrix[T], u []T) []T {
 			}
 			return v
 		}
-		vlas.dgemv(false, a.m, a.n, alpha, arr_to_f64arr[T](a.data), a.m, arr_to_f64arr[T](u),
-			1, 0.0, mut v, v.len)
+		vlas.dgemv(false, a.m, a.n, alpha, a.data, a.n, u, 1, 0.0, mut v, 1)
 		return v
 	} $else {
 		mut v := []T{len: a.m}
@@ -167,8 +157,7 @@ pub fn matrix_tr_vector_mul[T](alpha T, a &Matrix[T], u []T) []T {
 			}
 			return v
 		}
-		vlas.dgemv(true, a.m, a.n, alpha, arr_to_f64arr[T](a.data), a.n, arr_to_f64arr[T](u),
-			1, 0.0, mut v, v.len)
+		vlas.dgemv(true, a.m, a.n, alpha, a.data, a.n, u, 1, 0.0, mut v, 1)
 		return v
 	} $else {
 		mut v := []T{len: a.n}
@@ -189,7 +178,7 @@ pub fn matrix_tr_vector_mul[T](alpha T, a &Matrix[T], u []T) []T {
 //
 pub fn vector_vector_tr_mul[T](alpha T, u []T, v []T) &Matrix[T] {
 	$if T is f64 {
-		mut m := new_matrix[f64](u.len, v.len)
+		mut m := Matrix.new[f64](u.len, v.len)
 		if m.m < 9 && m.n < 9 {
 			for i in 0 .. m.m {
 				for j in 0 .. m.n {
@@ -199,11 +188,10 @@ pub fn vector_vector_tr_mul[T](alpha T, u []T, v []T) &Matrix[T] {
 			return m
 		}
 		mut a := []f64{len: u.len * v.len}
-		vlas.dger(m.m, m.n, alpha, arr_to_f64arr[T](u), 1, arr_to_f64arr[T](v), 1, mut
-			a, int(math.max(m.m, m.n)))
-		return matrix_raw(u.len, v.len, a)
+		vlas.dger(m.m, m.n, alpha, u, 1, v, 1, mut a, math.max(m.m, m.n))
+		return Matrix.raw(u.len, v.len, a)
 	} $else {
-		mut m := new_matrix[T](u.len, v.len)
+		mut m := Matrix.new[T](u.len, v.len)
 
 		for i in 0 .. m.m {
 			for j in 0 .. m.n {
@@ -220,7 +208,7 @@ pub fn vector_vector_tr_mul[T](alpha T, u []T, v []T) &Matrix[T] {
 //
 pub fn matrix_vector_mul_add(alpha f64, a &Matrix[f64], u []f64) []f64 {
 	mut v := []f64{len: a.m}
-	vlas.dgemv(false, a.m, a.n, alpha, a.data, a.m, u, 1, 1.0, mut v, v.len)
+	vlas.dgemv(false, a.m, a.n, alpha, a.data, a.m, u, 1, 1.0, mut v, 1)
 	return v
 }
 
@@ -260,7 +248,7 @@ pub fn matrix_tr_matrix_mul(mut c Matrix[f64], alpha f64, a &Matrix[f64], b &Mat
 		}
 		return
 	}
-	vlas.dgemm(true, false, a.n, b.n, a.m, alpha, a.data, a.n, b.data, b.m, 0.0, mut c.data,
+	vlas.dgemm(true, false, a.n, b.n, a.m, alpha, a.data, a.m, b.data, b.m, 0.0, mut c.data,
 		c.m)
 }
 

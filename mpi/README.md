@@ -26,11 +26,8 @@ sudo pacman -S openmpi
 brew install openmpi
 ```
 
-- On Windows, you can install the OpenMPI library with:
-
-```bash
-choco install openmpi
-```
+- On Windows, you can install the OpenMPI following the instructions
+  [here](https://www.open-mpi.org/software/ompi/v1.6/ms-windows.php).
 
 - On FreeBSD, you can install the OpenMPI library with:
 
@@ -42,10 +39,8 @@ pkg install openmpi
 
 The mpi routines supported include:
 
-- `start()` [deprecated]
 - `initialize()`
 - `finalize()`
-- `stop()` [deprecated]
 - `world_rank() int`
 - `world_size() int`
 - `is_on() bool`

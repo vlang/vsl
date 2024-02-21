@@ -3,7 +3,7 @@ module fun
 import math
 import vsl.poly
 
-[inline]
+@[inline]
 pub fn digamma(x f64) f64 {
 	return psi(x)
 }

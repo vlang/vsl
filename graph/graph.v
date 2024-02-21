@@ -11,7 +11,7 @@ pub enum ShortestPaths {
 }
 
 // Graph defines a graph structure
-[heap]
+@[heap]
 pub struct Graph {
 pub:
 	// input
@@ -26,12 +26,12 @@ pub:
 	next     [][]int       // [nverts][nverts] next tree connection. -1 means no connection
 }
 
-// new_graph initialises graph
+// Graph.new initialises graph
 // edges    -- [nedges][2] edges (connectivity)
 // weights_e -- [nedges] weights of edges
 // verts    -- [nverts][ndim] vertices
 // weights_v -- [nverts] weights of vertices
-pub fn new_graph(edges [][]int, weights_e []f64, verts [][]f64, weights_v []f64) &Graph {
+pub fn Graph.new(edges [][]int, weights_e []f64, verts [][]f64, weights_v []f64) &Graph {
 	mut key2edge := map[int]int{}
 	mut shares := map[int][]int{}
 	for k, edge in edges {
@@ -205,22 +205,22 @@ pub fn (g &Graph) str_dist_matrix() string {
 		for j := 0; j < nv; j++ {
 			i_dist := g.dist[i]
 			if i_dist[j] < math.max_f64 {
-				i_dist_str := strconv.v_sprintf('%g', i_dist[j])
+				i_dist_str := unsafe { strconv.v_sprintf('%g', i_dist[j]) }
 				maxlen = int(math.max(maxlen, i_dist_str.len))
 			}
 		}
 	}
 	mut l := ''
 	maxlen = int(math.max(3, maxlen)) + 1
-	fmts := strconv.v_sprintf('%%d', maxlen)
-	fmtn := strconv.v_sprintf('%%%dg', maxlen)
+	fmts := unsafe { strconv.v_sprintf('%%d', maxlen) }
+	fmtn := unsafe { strconv.v_sprintf('%%%dg', maxlen) }
 	for i := 0; i < nv; i++ {
 		for j := 0; j < nv; j++ {
 			i_dist := g.dist[i]
 			if i_dist[j] < math.max_f64 {
-				l += strconv.v_sprintf(fmtn, i_dist[j])
+				l += unsafe { strconv.v_sprintf(fmtn, i_dist[j]) }
 			} else {
-				l += strconv.v_sprintf(fmts) + '∞'
+				l += unsafe { strconv.v_sprintf(fmts) } + '∞'
 			}
 		}
 		l += '\n'

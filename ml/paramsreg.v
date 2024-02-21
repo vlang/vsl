@@ -3,7 +3,7 @@ module ml
 import vsl.la
 import vsl.util
 
-[heap]
+@[heap]
 pub struct ParamsReg[T] {
 pub mut:
 	observable util.Observable
@@ -19,8 +19,8 @@ pub mut:
 	bkp_degree int // copy of degree
 }
 
-// new_params_reg returns a new object to hold regression parameters
-pub fn new_params_reg[T](nb_features int) &ParamsReg[T] {
+// ParamsReg.new returns a new object to hold regression parameters
+pub fn ParamsReg.new[T](nb_features int) &ParamsReg[T] {
 	theta := []T{len: nb_features}
 	bkp_theta := []T{len: nb_features}
 	return &ParamsReg[T]{

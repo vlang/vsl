@@ -28,12 +28,12 @@ pub mut:
 	b []f64 // B0, b1, B2, ... (if series mode)
 }
 
-// new_sinusoid_essential creates a new sinusoid object with the "essential" parameters set
+// Sinusoid.essential creates a new sinusoid object with the "essential" parameters set
 //   t  -- period; e.g. [s]
 //   a0 -- mean value; e.g. [m]
 //   c1 -- amplitude; e.g. [m]
 //   theta  -- phase shift; e.g. [rad]
-pub fn new_sinusoid_essential(t f64, a0 f64, c1 f64, theta f64) &Sinusoid {
+pub fn Sinusoid.essential(t f64, a0 f64, c1 f64, theta f64) &Sinusoid {
 	// input
 	mut o := &Sinusoid{}
 	o.period = t
@@ -54,12 +54,12 @@ pub fn new_sinusoid_essential(t f64, a0 f64, c1 f64, theta f64) &Sinusoid {
 	return o
 }
 
-// new_sinusoid_basis creates a new sinusoid object with the "basis" parameters set
+// Sinusoid.basis creates a new sinusoid object with the "basis" parameters set
 //   t  -- period; e.g. [s]
 //   a0 -- mean value; e.g. [m]
 //   a1 -- coefficient of the cos term
 //   b1 -- coefficient of the sin term
-pub fn new_sinusoid_basis(t f64, a0 f64, a1 f64, b1 f64) &Sinusoid {
+pub fn Sinusoid.basis(t f64, a0 f64, a1 f64, b1 f64) &Sinusoid {
 	// coefficients
 	c1 := math.sqrt(a1 * a1 + b1 * b1)
 	theta := math.atan2(-b1, a1)

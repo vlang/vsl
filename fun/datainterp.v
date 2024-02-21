@@ -7,7 +7,7 @@ import vsl.errors
 pub type InterpFn = fn (mut o DataInterp, j int, x f64) f64
 
 // DataInterp implements numeric interpolators to be used with discrete data
-[heap]
+@[heap]
 pub struct DataInterp {
 mut:
 	// input data
@@ -22,7 +22,7 @@ mut:
 	use_hunt bool // use hunt code instead of locate
 	ascnd    bool // ascending order of x-values
 	// implementation
-	interp InterpFn
+	interp InterpFn = unsafe { nil }
 pub mut:
 	// configuration data
 	disable_hunt bool // do not use hunt code at all
@@ -30,7 +30,7 @@ pub mut:
 	dy f64 // error estimate
 }
 
-// new_data_interp creates new interpolator for data point sets xx and yy (with same lengths)
+// DataInterp.new creates new interpolator for data point sets xx and yy (with same lengths)
 //
 //     type -- type of interpolator
 //        "lin"  : linear
@@ -39,7 +39,7 @@ pub mut:
 //     p  -- order of interpolator
 //     xx -- x-data
 //     yy -- y-data
-pub fn new_data_interp(itype string, p int, xx []f64, yy []f64) &DataInterp {
+pub fn DataInterp.new(itype string, p int, xx []f64, yy []f64) &DataInterp {
 	mut o := &DataInterp{
 		itype: itype
 	}

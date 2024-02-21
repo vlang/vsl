@@ -2,16 +2,18 @@ module ml
 
 import vsl.float.float64 { l2_distance_unitary }
 import vsl.errors
+import vsl.plot
 
 // KNN is the struct defining a K-Nearest Neighbors classifier.
-[heap]
+@[heap]
 pub struct KNN {
 mut:
 	name    string // name of this "observer"
-	data    &Data[f64]
+	data    &Data[f64] = unsafe { nil }
 	weights map[f64]f64 // weights[class] = weight
 pub mut:
 	neighbors []Neighbor
+	trained   bool
 }
 
 // Neighbor is a support struct to help organizing the code
@@ -23,13 +25,13 @@ mut:
 	distance f64
 }
 
-// new_knn accepts a `vml.ml.Data` parameter called `data`, that will be used
+// KNN.new accepts a `vml.ml.Data` parameter called `data`, that will be used
 // to predict values with `KNN.predict`. You can use the following piece of code to
 // make your life easier:
-// ```mut knn := new_knn(mut data_from_raw_xy_sep([[0.0, 0.0], [10.0, 10.0]], [0.0, 1.0]))```
+// ```mut knn := KNN.new(mut Data.from_raw_xy_sep([[0.0, 0.0], [10.0, 10.0]], [0.0, 1.0]))```
 // If you predict with `knn.predict(1, [9.0, 9.0])`, it should return 1.0 as it is the closest
 // to [10.0, 10.0] (which is class 1.0).
-pub fn new_knn(mut data Data[f64], name string) !&KNN {
+pub fn KNN.new(mut data Data[f64], name string) !&KNN {
 	if data.x.data.len == 0 {
 		return errors.error('with name ${name} expects `data.x` to have at least one element.',
 			.einval)
@@ -77,6 +79,18 @@ pub fn (mut knn KNN) set_weights(weights map[f64]f64) ! {
 
 // update perform updates after data has been changed (as an Observer)
 pub fn (mut knn KNN) update() {
+	knn.train()
+}
+
+// train computes the neighbors and weights during training
+pub fn (mut knn KNN) train() {
+	if knn.data.x.data.len == 0 {
+		return
+	}
+	if knn.data.y.len == 0 {
+		return
+	}
+
 	mut x := knn.data.x.get_deep2()
 	knn.neighbors = []Neighbor{cap: x.len}
 	for i := 0; i < x.len; i++ {
@@ -90,6 +104,7 @@ pub fn (mut knn KNN) update() {
 		weights[class] = 1.0
 	}
 	knn.weights = weights.clone()
+	knn.trained = true
 }
 
 // data needed for KNN.predict
@@ -182,9 +197,46 @@ pub fn (mut knn KNN) predict(config PredictConfig) !f64 {
 pub fn (o &KNN) str() string {
 	mut res := []string{}
 	res << 'vsl.ml.KNN{'
-	res << '	name: ${o.name}'
+	res << '    name: ${o.name}'
 	res << '    weights: ${o.weights}'
 	res << '    neighbors: ${o.neighbors}'
 	res << '}'
 	return res.join('\n')
+}
+
+// get_plotter returns a plot.Plot struct with the data needed to plot
+// the KNN model.
+pub fn (o &KNN) get_plotter() &plot.Plot {
+	mut plt := plot.Plot.new()
+	plt.layout(
+		title: 'K-Nearest Neighbors'
+	)
+
+	x := o.data.x.get_col(0)
+	y := o.data.x.get_col(1)
+
+	// Plot data points with different colors for each class
+	for i in o.data.y {
+		mut x_for_class := []f64{cap: o.data.nb_samples}
+		mut y_for_class := []f64{cap: o.data.nb_samples}
+		for j in 0 .. o.data.nb_samples {
+			if o.data.y[j] == i {
+				x_for_class << x[j]
+				y_for_class << y[j]
+			}
+		}
+
+		plt.scatter(
+			name: 'class #${i}'
+			x: x_for_class
+			y: y_for_class
+			mode: 'markers'
+			colorscale: 'smoker'
+			marker: plot.Marker{
+				size: []f64{len: x_for_class.len, init: 8.0} // Adjust size as needed
+			}
+		)
+	}
+
+	return plt
 }
