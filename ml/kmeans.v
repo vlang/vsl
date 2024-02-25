@@ -34,7 +34,7 @@ pub fn Kmeans.new(mut data Data[f64], nb_classes int, name string) &Kmeans {
 
 	// bins
 	ndiv := [10, 10] // TODO: make this a parameter
-	bins := gm.Bins.new(stat.min_x, stat.max_x, ndiv) // TODO: make sure minx and maxx are 2D or 3D; i.e. nb_features ≤ 2
+	mut bins := gm.Bins.new(stat.min_x, stat.max_x, ndiv) // TODO: make sure minx and maxx are 2D or 3D; i.e. nb_features ≤ 2
 	mut o := Kmeans{
 		name: name
 		data: data
