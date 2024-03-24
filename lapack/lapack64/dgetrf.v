@@ -48,4 +48,32 @@ pub fn dgetrf(m int, n int, mut a []f64, lda int, ipiv []int) {
 	if ipiv.len < mn {
 		panic(bad_len_ipiv)
 	}
+
+	nb := ilaenv(1, 'DGETRF', ' ', m, n, -1, -1)
+
+	if nb <= 1 || nb >= mn {
+		// use the unblocked algorithm.
+		return dgetf2(m, n, mut a, lda, ipiv)
+	}
+
+	for j := 0; j < mn; j += nb {
+		jb := math.min(mn - j, nb)
+
+		// factor diagonal and subdiagonal blocks and test for exact singularity.
+		dgetf2(m - j, jb, mut a[j * lda + j..], lda, ipiv[j..j + jb])
+
+		for i := j; i <= math.min(m - 1, j + jb - 1); i++ {
+			ipiv[i] += j
+		}
+
+		// apply interchanges to columns 1..j-1.
+		dlaswp(j, mut a, lda, j, j + jb - 1, ipiv[..j + jb], 1)
+
+		if j + jb < n {
+			// apply interchanges to columns 1..j-1.
+			mut slice := unsafe { a[j + jb..] }
+			dlaswp(j, mut slice, lda, j, j + jb, ipiv[..j + jb], 1)
+			//
+		}
+	}
 }
