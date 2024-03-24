@@ -36,7 +36,7 @@
 						<div class="info">
 							<div class="module">vsl</div>
 							<div class="toggle-version-container">
-								<span>0.1.50 27e6fef</span>
+								<span>0.1.50 29e5124</span>
 								<div
 									id="dark-mode-toggle"
 									role="switch"
@@ -179,8 +179,8 @@
 
 <span class="token function">println</span><span class="token punctuation">(</span>consts<span class="token punctuation">.</span>mksa_speed_of_light<span class="token punctuation">)</span></code></pre><h2>Fundamental Constants</h2><pre><code class="language-console">consts.mksa_speed_of_light
 </code></pre><p>The speed of light in vacuum.</p><pre><code class="language-console">consts.mksa_vacuum_permeability
-</code></pre><p>The permeability of free space, <code>μ_0</code>. This constant is definedin the MKSA system only.</p><pre><code class="language-console">consts.mksa_vacuum_permittivity
-</code></pre><p>The permittivity of free space, <code>\epsilon_0</code>. This constant isdefined in the MKSA system only.</p><pre><code class="language-console">consts.mksa_plancks_constant_h
+</code></pre><p>The permeability of free space, <code>μ_0</code>. This constant is defined in the MKSA system only.</p><pre><code class="language-console">consts.mksa_vacuum_permittivity
+</code></pre><p>The permittivity of free space, <code>\epsilon_0</code>. This constant is defined in the MKSA system only.</p><pre><code class="language-console">consts.mksa_plancks_constant_h
 </code></pre><p>Planck's constant, <code>h</code>.</p><pre><code class="language-console">consts.mksa_plancks_constant_hbar
 </code></pre><p>Planck's constant divided by <code>2\pi</code>, <code>\hbar</code>.</p><pre><code class="language-console">consts.num_avogadro
 </code></pre><p>Avogadro's number, <code>N_a</code>.</p><pre><code class="language-console">consts.mksa_faraday
@@ -204,13 +204,13 @@
 </code></pre><p>The mass of the proton, <code>m_p</code>.</p><pre><code class="language-console">consts.mksa_mass_neutron
 </code></pre><p>The mass of the neutron, <code>m_n</code>.</p><pre><code class="language-console">consts.num_fine_structure
 </code></pre><p>The electromagnetic fine structure constant <code>\alpha</code>.</p><pre><code class="language-console">consts.mksa_rydberg
-</code></pre><p>The Rydberg constant, <code>Ry</code>, in units of energy. This is related tothe Rydberg inverse wavelength <code>R_\infty</code> by <code>Ry = h c R_\infty</code>.</p><pre><code class="language-console">consts.mksa_bohr_radius
+</code></pre><p>The Rydberg constant, <code>Ry</code>, in units of energy. This is related to the Rydberg inverse wavelength <code>R_\infty</code> by <code>Ry = h c R_\infty</code>.</p><pre><code class="language-console">consts.mksa_bohr_radius
 </code></pre><p>The Bohr radius, <code>a_0</code>.</p><pre><code class="language-console">consts.mksa_angstrom
 </code></pre><p>The length of 1 angstrom.</p><pre><code class="language-console">consts.mksa_barn
 </code></pre><p>The area of 1 barn.</p><pre><code class="language-console">consts.mksa_bohr_magneton
 </code></pre><p>The Bohr Magneton, <code>μ_B</code>.</p><pre><code class="language-console">consts.mksa_nuclear_magneton
 </code></pre><p>The Nuclear Magneton, <code>μ_N</code>.</p><pre><code class="language-console">consts.mksa_electron_magnetic_moment
-</code></pre><p>The absolute value of the magnetic moment of the electron, <code>μ_e</code>.The physical magnetic moment of the electron is negative.</p><pre><code class="language-console">consts.mksa_proton_magnetic_moment
+</code></pre><p>The absolute value of the magnetic moment of the electron, <code>μ_e</code>. The physical magnetic moment of the electron is negative.</p><pre><code class="language-console">consts.mksa_proton_magnetic_moment
 </code></pre><p>The magnetic moment of the proton, <code>μ_p</code>.</p><pre><code class="language-console">consts.mksa_thomson_cross_section
 </code></pre><p>The Thomson cross section, <code>\sigma_T</code>.</p><pre><code class="language-console">consts.mksa_debye
 </code></pre><p>The electric dipole moment of 1 Debye, <code>D</code>.</p><h1>Measurement of Time</h1><pre><code class="language-console">consts.mksa_minute
@@ -292,7 +292,7 @@
 </code></pre><p><code>10^{-15}</code></p><pre><code class="language-console">consts.num_atto
 </code></pre><p><code>10^{-18}</code></p><pre><code class="language-console">consts.num_zepto
 </code></pre><p><code>10^{-21}</code></p><pre><code class="language-console">consts.num_yocto
-</code></pre><p><code>10^{-24}</code></p><h1>Examples</h1><p>The following program demonstrates the use of the physical constants ina calculation. In this case, the goal is to calculate the range oflight-travel times from Earth to Mars.</p><p>The required data is the average distance of each planet from the Sun inastronomical units (the eccentricities and inclinations of the orbitswill be neglected for the purposes of this calculation). The averageradius of the orbit of Mars is 1.52 astronomical units, and for theorbit of Earth it is 1 astronomical unit (by definition). These valuesare combined with the MKSA values of the constants for the speed oflight and the length of an astronomical unit to produce a result for theshortest and longest light-travel times in seconds. The figures areconverted into minutes before being displayed.</p><pre><code class="language-v"><span class="token keyword">module</span> main
+</code></pre><p><code>10^{-24}</code></p><h1>Examples</h1><p>The following program demonstrates the use of the physical constants in a calculation. In this case, the goal is to calculate the range of light-travel times from Earth to Mars.</p><p>The required data is the average distance of each planet from the Sun in astronomical units (the eccentricities and inclinations of the orbits will be neglected for the purposes of this calculation). The average radius of the orbit of Mars is 1.52 astronomical units, and for the orbit of Earth it is 1 astronomical unit (by definition). These values are combined with the MKSA values of the constants for the speed of light and the length of an astronomical unit to produce a result for the shortest and longest light-travel times in seconds. The figures are converted into minutes before being displayed.</p><pre><code class="language-v"><span class="token keyword">module</span> main
 
 <span class="token keyword">import</span> vsl<span class="token punctuation">.</span>consts
 
@@ -310,7 +310,7 @@ max <span class="token operator">:=</span> t_max <span class="token operator">/<
 <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'maximum = </span><span class="token string_interp">$</span>{max}<span class="token string"> minutes'</span><span class="token punctuation">)</span></code></pre><p>will print</p><pre><code class="language-console">light travel time from Earth to Mars:
 minimum = 4.3 minutes
 maximum = 21.0 minutes
-</code></pre><h2>References and Further Reading</h2><p>The authoritative sources for physical constants are the 2006 CODATArecommended values, published in the article below. Furtherinformation on the values of physical constants is also available fromthe NIST website.</p><ul><li>P.J. Mohr, B.N. Taylor, D.B. Newell, "CODATA RecommendedValues of the Fundamental Physical Constants: 2006", Reviews ofModern Physics, 80(2), pp. 633--730 (2008).</li></ul>
+</code></pre><h2>References and Further Reading</h2><p>The authoritative sources for physical constants are the 2006 CODATA recommended values, published in the article below. Further information on the values of physical constants is also available from the NIST website.</p><ul><li>P.J. Mohr, B.N. Taylor, D.B. Newell, "CODATA RecommendedValues of the Fundamental Physical Constants: 2006", Reviews of Modern Physics, 80(2), pp. 633--730 (2008).</li></ul>
 
 </section>
 
@@ -3177,7 +3177,7 @@ maximum = 21.0 minutes
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 21 Feb 2024 15:02:35</div>
+						<div class="footer">Powered by vdoc. Generated on: 24 Mar 2024 05:21:49</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_consts">README</a></li>
 <li class="open"><a href="#Constants">Constants</a></li>
