@@ -1,4 +1,4 @@
-module blas
+module blas64
 
 import math
 import vsl.float.float64

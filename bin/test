@@ -28,7 +28,7 @@ flags=""
 
 if [[ -n "${use_cblas}" ]]; then
     echo "Running tests using Open BLAS"
-    flags="${flags} -d vsl_vlas_cblas"
+    flags="${flags} -d vsl_blas_cblas"
 fi
 
 if [[ -n "${use_autofree}" ]]; then

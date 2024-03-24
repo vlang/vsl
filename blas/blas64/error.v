@@ -1,7 +1,8 @@
-module blas
+module blas64
 
 // Panic strings used during parameter checks.
 // This list is duplicated in netlib/blas/netlib. Keep in sync.
+
 pub const zero_incx = 'blas: zero x index increment'
 pub const zero_incy = 'blas: zero y index increment'
 

@@ -1,24 +1,43 @@
-module vlas
+module blas
 
 import strconv
 import math
 import math.complex
 import vsl.errors
-import vsl.vlas.internal.blas
+import vsl.blas.blas64
 
-pub fn c_trans(trans bool) blas.Transpose {
+// MemoryLayout is used to specify the memory layout of a matrix.
+pub type MemoryLayout = blas64.MemoryLayout
+
+// Transpose is used to specify the transposition of a matrix.
+pub type Transpose = blas64.Transpose
+
+// Uplo is used to specify whether the upper or lower triangle of a matrix is
+pub type Uplo = blas64.Uplo
+
+// Diagonal is used to specify whether the diagonal of a matrix is unit or non-unit.
+pub type Diagonal = blas64.Diagonal
+
+// Side is used to specify whether a matrix is on the left or right side in a matrix-matrix multiplication.
+pub type Side = blas64.Side
+
+// c_trans is a helper function to convert bool to Transpose
+pub fn c_trans(trans bool) Transpose {
 	return if trans { .trans } else { .no_trans }
 }
 
-pub fn c_uplo(up bool) blas.Uplo {
+// c_uplo is a helper function to convert bool to Uplo
+pub fn c_uplo(up bool) Uplo {
 	return if up { .upper } else { .lower }
 }
 
-fn l_uplo(up bool) u8 {
+// l_uplo is a helper function to convert bool to Uplo
+pub fn l_uplo(up bool) u8 {
 	return if up { `U` } else { `L` }
 }
 
-fn job_vlr(do_calc bool) rune {
+// job_vlr is a helper function to convert bool to char
+pub fn job_vlr(do_calc bool) rune {
 	return if do_calc { `V` } else { `N` }
 }
 

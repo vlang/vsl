@@ -1,7 +1,7 @@
-module vlas
+module lapack
 
 import vsl.errors
-import vsl.vlas.internal.blas
+import vsl.blas
 
 fn C.LAPACKE_dgesv(matrix_layout blas.MemoryLayout, n int, nrhs int, a &f64, lda int, ipiv &int, b &f64, ldb int) int
 
@@ -143,7 +143,7 @@ pub fn dgetri(n int, mut a []f64, lda int, ipiv []int) {
 // This is the block version of the algorithm, calling Level 3 BLAS.
 pub fn dpotrf(up bool, n int, mut a []f64, lda int) {
 	unsafe {
-		info := C.LAPACKE_dpotrf(.row_major, l_uplo(up), n, &a[0], lda)
+		info := C.LAPACKE_dpotrf(.row_major, blas.l_uplo(up), n, &a[0], lda)
 		if info != 0 {
 			errors.vsl_panic('lapack failed', .efailed)
 		}
@@ -189,7 +189,7 @@ pub fn dgeev(calc_vl bool, calc_vr bool, n int, mut a []f64, lda int, wr []f64, 
 		ldvr = 1
 	}
 	unsafe {
-		info := C.LAPACKE_dgeev(.row_major, &char(job_vlr(calc_vl).str().str), &char(job_vlr(calc_vr).str().str),
+		info := C.LAPACKE_dgeev(.row_major, &char(blas.job_vlr(calc_vl).str().str), &char(blas.job_vlr(calc_vr).str().str),
 			n, &a[0], lda, &wr[0], &wi[0], &vvl, ldvl, &vvr, ldvr)
 		if info != 0 {
 			errors.vsl_panic('lapack failed', .efailed)

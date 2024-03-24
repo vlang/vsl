@@ -1,6 +1,6 @@
-module vlas
+module lapack
 
-import vsl.vlas.internal.blas
+import vsl.blas
 
 fn C.LAPACKE_dlange(matrix_layout blas.MemoryLayout, norm &char, m int, n int, a &f64, lda int, work &f64) f64
 

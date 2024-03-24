@@ -1,7 +1,7 @@
 module la
 
 import vsl.errors
-import vsl.vlas
+import vsl.lapack
 import math
 
 // det computes the determinant of matrix using the LU factorization
@@ -13,7 +13,7 @@ pub fn matrix_det(o &Matrix[f64]) f64 {
 	}
 	mut ai := o.data.clone()
 	ipiv := []int{len: int(math.min(o.m, o.n))}
-	vlas.dgetrf(o.m, o.n, mut ai, o.m, ipiv) // NOTE: ipiv are 1-based indices
+	lapack.dgetrf(o.m, o.n, mut ai, o.m, ipiv) // NOTE: ipiv are 1-based indices
 	mut det := 1.0
 	for i in 0 .. o.m {
 		if ipiv[i] - 1 == i { // NOTE: ipiv are 1-based indices
@@ -90,7 +90,7 @@ pub fn matrix_svd(mut s []f64, mut u Matrix[f64], mut vt Matrix[f64], mut a Matr
 	if copy_a {
 		acpy = a.clone()
 	}
-	vlas.dgesvd(&char('A'.str), &char('A'.str), a.m, a.n, acpy.data, 1, s, u.data, a.m,
+	lapack.dgesvd(&char('A'.str), &char('A'.str), a.m, a.n, acpy.data, 1, s, u.data, a.m,
 		vt.data, a.n, superb)
 }
 
@@ -108,7 +108,7 @@ pub fn matrix_inv(mut ai Matrix[f64], mut a Matrix[f64], calc_det bool) f64 {
 	if a.m == a.n {
 		ai.data = a.data.clone()
 		ipiv := []int{len: int(math.min(a.m, a.n))}
-		vlas.dgetrf(a.m, a.n, mut ai.data, a.m, ipiv) // NOTE: ipiv are 1-based indices
+		lapack.dgetrf(a.m, a.n, mut ai.data, a.m, ipiv) // NOTE: ipiv are 1-based indices
 		if calc_det {
 			det = 1.0
 			for i := 0; i < a.m; i++ {
@@ -119,7 +119,7 @@ pub fn matrix_inv(mut ai Matrix[f64], mut a Matrix[f64], calc_det bool) f64 {
 				}
 			}
 		}
-		vlas.dgetri(a.n, mut ai.data, a.m, ipiv)
+		lapack.dgetri(a.n, mut ai.data, a.m, ipiv)
 		return det
 	}
 	// singular value decomposition
