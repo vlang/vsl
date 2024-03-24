@@ -35,7 +35,8 @@ fn main() {
 		panic(err)
 	}
 	println('\n\nCreated vector: ${v}')
-	println(v.data()!)
+	vector_data := v.data()!
+	println('\n\nVector data: ${vector_data}')
 
 	// add program source to device, get kernel
 	device.add_program(kernel_source)!
