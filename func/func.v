@@ -13,6 +13,7 @@ pub type VectorValuedFn = fn (x f64, y []f64, params []f64) f64
 
 // Definition of an arbitrary function with parameters
 pub struct Fn {
+pub:
 	f ArbitraryFn @[required]
 mut:
 	params []f64
@@ -46,6 +47,7 @@ pub fn (f Fn) safe_eval(x f64) !f64 {
 
 // Definition of an arbitrary function returning two values, r1, r2
 pub struct FnFdf {
+pub:
 	f   ?ArbitraryFn
 	df  ?DfFn
 	fdf ?FdfFn
