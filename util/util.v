@@ -11,6 +11,7 @@ pub fn arange(n int) []int {
 
 @[params]
 pub struct RangeStep {
+pub:
 	step int = 1
 }
 

@@ -21,6 +21,7 @@ pub mut:
 // BisectionParams contains the parameters for the bisection method
 @[params]
 pub struct BisectionParams {
+pub:
 	xmin   f64
 	xmax   f64
 	epsrel f64 = 1e-6
