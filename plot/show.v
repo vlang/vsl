@@ -70,28 +70,28 @@ pub fn (p Plot) get_plotly_script(element_id string, config PlotlyScriptConfig) 
 		content: 'import "https://cdn.plot.ly/plotly-2.26.2.min.js";
 
 function removeEmptyFieldsDeeply(obj) {
-    if (Array.isArray(obj)) {
-        return obj.map(removeEmptyFieldsDeeply);
-    }
-    if (typeof obj === "object") {
-        const newObj = Object.fromEntries(
-        Object.entries(obj)
-            .map(([key, value]) => [key, removeEmptyFieldsDeeply(value)])
-            .filter(([_, value]) => !!value)
-        );
-        return Object.keys(newObj).length > 0 ? newObj : undefined;
-    }
-    return obj;
+		if (Array.isArray(obj)) {
+				return obj.map(removeEmptyFieldsDeeply);
+		}
+		if (typeof obj === "object") {
+				const newObj = Object.fromEntries(
+				Object.entries(obj)
+						.map(([key, value]) => [key, removeEmptyFieldsDeeply(value)])
+						.filter(([_, value]) => !!value)
+				);
+				return Object.keys(newObj).length > 0 ? newObj : undefined;
+		}
+		return obj;
 }
 
 const layout = ${layout_json};
 const traces_with_type_json = ${traces_with_type_json};
 const data = [...traces_with_type_json]
-    .map(({ type, trace: { CommonTrace, _type, ...trace } }) => ({ type, ...CommonTrace, ...trace }));
+		.map(({ type, trace: { CommonTrace, _type, ...trace } }) => ({ type, ...CommonTrace, ...trace }));
 
 const payload = {
-    data: removeEmptyFieldsDeeply(data),
-    layout: removeEmptyFieldsDeeply(layout),
+		data: removeEmptyFieldsDeeply(data),
+		layout: removeEmptyFieldsDeeply(layout),
 };
 
 Plotly.newPlot("${element_id}", payload);'
@@ -106,14 +106,14 @@ fn (p Plot) get_html(element_id string, config PlotConfig) string {
 
 	return '<!DOCTYPE html>
 <html>
-  <head>
-    <title>${title}</title>
-  </head>
-  <body>
-    <div id="${element_id}"></div>
+	<head>
+		<title>${title}</title>
+	</head>
+	<body>
+		<div id="${element_id}"></div>
 
-    ${*plot_script}
-  </body>
+		${*plot_script}
+	</body>
 </html>'
 }
 
