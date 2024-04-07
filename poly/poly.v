@@ -103,6 +103,15 @@ pub fn solve_cubic(a f64, b f64, c f64) []f64 {
 	if r == 0.0 && q == 0.0 {
 		return [-a / 3.0, -a / 3.0, -a / 3.0]
 	} else if cr2 == cq3 {
+		/*
+		This test is actually r2 == q3, written in a form suitable
+		for exact computation with integers
+		*/
+		/*
+		Due to finite precision some double roots may be missed, and
+		considered to be a pair of complex roots z = x +/- epsilon i
+		close to the real axis.
+		*/
 		sqrt_q := math.sqrt(q)
 		if r > 0.0 {
 			return [-2.0 * sqrt_q - a / 3.0, sqrt_q - a / 3.0, sqrt_q - a / 3.0]
