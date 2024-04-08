@@ -36,7 +36,7 @@
 						<div class="info">
 							<div class="module">vsl</div>
 							<div class="toggle-version-container">
-								<span>0.1.50 24af002</span>
+								<span>0.1.50 3db7b44</span>
 								<div
 									id="dark-mode-toggle"
 									role="switch"
@@ -175,7 +175,7 @@
 					<div class="doc-content">
 								<section id="readme_fft" class="doc-node">
 			<div class="title"><h1> fft <a href="#readme_fft">#</a></h1></div>
-<h1>Fast Fourier Transform</h1><p>The <code>fft</code> package is a wrapper of the C language version of <a href="https://github.com/mreineck/pocketfft">PocketFFT</a> library designed to support FFT of real to complex and complex to real (arrays).</p><p>The result of a real-to-complex transform, because of mathematical symmetry of the result, is stored in the original input array rather than 2x the space.</p><p>The output is the two real values bracketing the complex pairs of conjugate negative frequencies: <em>r0 r1 i1 r2 i2 r3 i3 ... rx</em></p><p>where <em>r0 + i0</em> is the first complex result, <em>r1 - i1</em> is the second, and so on until <em>rx + i0</em> (where <em>x</em> is <em>n/2</em>) is the last. (Note the minus signs.)</p><p>The positive frequencies are the same as the negative frequencies in reverse order. See the reference for <a href="https://www.fftw.org/fftw3.pdf">FFTW</a> for further examples of embeddings.</p>
+<h1>Fast Fourier Transform</h1><p>The <code>fft</code> package is a wrapper of the C language version of <a href="https://github.com/mreineck/pocketfft">PocketFFT</a> library designedto support FFT of real to complex and complex to real (arrays).</p><p>The result of a real-to-complex transform, because of mathematical symmetry of the result, is stored in the original input array rather than 2x the space.</p><p>The output is the two real values bracketing the complex pairs of conjugate negative frequencies: <em>r0 r1 i1 r2 i2 r3 i3 ... rx</em></p><p>where <em>r0 + i0</em> is the first complex result, <em>r1 - i1</em> is the second, and so on until <em>rx + i0</em> (where <em>x</em> is <em>n/2</em>) is the last. (Note the minus signs.)</p><p>The positive frequencies are the same as the negative frequencies in reverse order. See the reference</p>
 
 </section>
 
@@ -204,7 +204,7 @@
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 1 Apr 2024 01:40:02</div>
+						<div class="footer">Powered by vdoc. Generated on: 8 Apr 2024 19:04:00</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_fft">README</a></li>
 <li class="open"><a href="#backward_fft">fn backward_fft</a>        <ul>
