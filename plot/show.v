@@ -12,6 +12,7 @@ import time
 @[params]
 pub struct PlotConfig {
 	net.ListenOptions
+pub:
 	timeout time.Duration = 1 * time.second
 	use_cdn bool
 	saddr   string = ':0'
