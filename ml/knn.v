@@ -109,9 +109,9 @@ pub fn (mut knn KNN) train() {
 
 // data needed for KNN.predict
 pub struct PredictConfig {
+pub:
 	max_iter int
 	k        int
-mut:
 	to_pred []f64
 }
 
