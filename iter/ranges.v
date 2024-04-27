@@ -15,6 +15,7 @@ pub:
 
 @[params]
 pub struct IntIterParams {
+pub:
 	start i64
 	stop  i64 @[required]
 	step  i64 = 1
@@ -71,6 +72,7 @@ pub:
 
 @[params]
 pub struct FloatIterParams {
+pub:
 	start f64
 	stop  f64 @[required]
 	step  f64 = 1.0
@@ -126,6 +128,7 @@ pub:
 
 @[params]
 pub struct LinearIterParams {
+pub:
 	start    f64  @[required]
 	stop     f64  @[required]
 	len      i64  = 50

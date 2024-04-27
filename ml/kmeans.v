@@ -120,6 +120,7 @@ pub fn (mut o Kmeans) compute_centroids() {
 }
 
 pub struct TrainConfig {
+pub:
 	epochs          int
 	tol_norm_change f64
 }
