@@ -112,7 +112,7 @@ pub struct PredictConfig {
 pub:
 	max_iter int
 	k        int
-	to_pred []f64
+	to_pred  []f64
 }
 
 // predict will find the `k` points nearest to the specified `to_pred`.

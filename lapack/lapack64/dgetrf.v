@@ -73,7 +73,15 @@ pub fn dgetrf(m int, n int, mut a []f64, lda int, ipiv []int) {
 			// apply interchanges to columns 1..j-1.
 			mut slice := unsafe { a[j + jb..] }
 			dlaswp(j, mut slice, lda, j, j + jb, ipiv[..j + jb], 1)
-			//
+
+			blas.dtstrf(.left, .lower, .notrans, .unit, jb, n - j - jb, 1, a[j * lda + j..],
+				lda, a[j * lda + j + jb..], lda)
+
+			if j + jb < m {
+				blas.dgemm(.notrans, .notrans, m - j - jb, n - j - jb, jb, -1, a[(j + jb) * lda + j..],
+					lda, a[j * lda + j + jb..], lda, 1, a[(j + jb) * lda + j + jb..],
+					lda)
+			}
 		}
 	}
 }
