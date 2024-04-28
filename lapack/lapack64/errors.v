@@ -1,4 +1,4 @@
-module lapack
+module lapack64
 
 // This list is duplicated in netlib/lapack/netlib. Keep in sync.
 

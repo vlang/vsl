@@ -1,4 +1,4 @@
-module lapack
+module lapack64
 
 import math
 import vsl.blas

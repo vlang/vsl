@@ -72,7 +72,7 @@ fn ilaenv(ispec int, name string, opts string, n1 int, n2 int, n3 int, n4 int) i
 				}
 				'OR', 'UN' {
 					match c3[0] {
-						'G', 'M' {
+						`G`, `M` {
 							match c3[1..] {
 								'QR', 'RQ', 'LQ', 'QL', 'HR', 'TR', 'BR' {
 									return 32
@@ -167,7 +167,7 @@ fn ilaenv(ispec int, name string, opts string, n1 int, n2 int, n3 int, n4 int) i
 						panic(bad_name)
 					}
 					match c3[0] {
-						'G', 'M' {
+						`G`, `M` {
 							match c4 {
 								'QR', 'RQ', 'LQ', 'QL', 'HR', 'TR', 'BR' {
 									return 2
@@ -210,7 +210,7 @@ fn ilaenv(ispec int, name string, opts string, n1 int, n2 int, n3 int, n4 int) i
 				}
 				'OR', 'UN' {
 					match c3[0] {
-						'G' {
+						`G` {
 							match c4 {
 								'QR', 'RQ', 'LQ', 'QL', 'HR', 'TR', 'BR' {
 									return 128
