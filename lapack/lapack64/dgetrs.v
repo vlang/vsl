@@ -16,7 +16,7 @@ import vsl.blas
 //
 // a and ipiv contain the LU factorization of A and the permutation indices as
 // computed by Dgetrf. ipiv is zero-indexed.
-pub fn dgetrs(trans blas.Transpose, n int, nrhs int, mut a []float64, lda int, ipiv []int, mut b []float64, ldb int) {
+pub fn dgetrs(trans blas.Transpose, n int, nrhs int, mut a []f64, lda int, ipiv []int, mut b []f64, ldb int) {
 	if trans != .no_trans && trans != .trans && trans != .conj_trans {
 		panic(bad_trans)
 	}
