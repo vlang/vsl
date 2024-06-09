@@ -7,7 +7,7 @@ beta := 0.5 // rad
 a0 := 10 // V
 
 t := util.lin_space(0, 2 * (1 / f), 150) // 2 periods
-y := t.map(math.sin(2 * math.pi * f * it + beta)) // AC signal: y = A₀·sin(2πft + β)
+y := t.map(a0 * math.sin(2 * math.pi * f * it + beta)) // AC signal: y = A₀·sin(2πft + β)
 
 mut plt := plot.Plot.new()
 
