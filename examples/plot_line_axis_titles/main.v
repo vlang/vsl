@@ -29,11 +29,11 @@ fn main() {
 	)
 	plt.layout(
 		title: 'Line Plot with axis titles'
-		xaxis: plot.Axis { 
-			title: plot.AxisTitle { 'x' } 
+		xaxis: plot.Axis{
+			title: plot.AxisTitle{'x'}
 		}
-		yaxis: plot.Axis { 
-			title: plot.AxisTitle { 'f(x)' } 
+		yaxis: plot.Axis{
+			title: plot.AxisTitle{'f(x)'}
 		}
 	)
 	plt.show()!
