@@ -52,11 +52,11 @@ fn run_kernel(kernel_name string) ! {
 	}
 
 	// get image data from buffer and save it
-	img := img.data()!
+	iimg := img.data()!
 	stbi.stbi_write_bmp(os.join_path(output_dir, '${kernel_name}.bmp'), width, height,
-		4, img.data) or { return err }
+		4, iimg.data) or { return err }
 	stbi.stbi_write_png(os.join_path(output_dir, '${kernel_name}.png'), width, height,
-		4, img.data, 0) or { return err }
+		4, iimg.data, 0) or { return err }
 }
 
 fn main() {
