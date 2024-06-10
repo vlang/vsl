@@ -46,39 +46,43 @@ pub fn (d &Device) image(@type ImageChannelOrder, bounds Rect) !&Image {
 pub fn (d &Device) from_image(img IImage) !&Image {
 	data := img.data
 	mut image_type := ImageChannelOrder.intensity
+	mut row_pitch := img.width * img.nr_channels
 
 	if img.nr_channels in [3, 4] {
 		image_type = ImageChannelOrder.rgba
+		row_pitch = img.width * 4
 	}
 
 	bounds := Rect{0, 0, img.width, img.height}
-	return d.create_image(image_type, bounds, 0, data)
+	return d.create_image(image_type, bounds, row_pitch, data)
 }
 
 // create_image creates a new image
 fn (d &Device) create_image(image_type ImageChannelOrder, bounds Rect, row_pitch int, data voidptr) !&Image {
-	mut row_pitch_ := int(bounds.width)
-	mut size := int(bounds.width * bounds.height)
-	if image_type == ImageChannelOrder.rgba {
-		size *= 4
-		row_pitch_ *= 4
-	}
 	format := create_image_format(usize(image_type), usize(ImageChannelDataType.unorm_int8))
+	desc := create_image_desc(C.CL_MEM_OBJECT_IMAGE2D, usize(bounds.width), usize(bounds.height),
+		0, 0, usize(row_pitch), 0, 0, 0, unsafe { nil })
 
 	mut flags := mem_read_write
 	if !isnil(data) {
 		flags = mem_read_write | mem_copy_host_ptr
 	}
+
 	mut ret := 0
-	// TODO: Figure out how to avoid using the deprecated clCreateImage2D
+	// memobj := cl_create_image(d.ctx, flags, format, desc, data, &ret)
 	memobj := cl_create_image2d(d.ctx, flags, format, usize(bounds.width), usize(bounds.height),
-		usize(row_pitch_), data, &ret)
+		usize(row_pitch), data, &ret)
 	if ret != success {
 		return error_from_code(ret)
 	}
 
 	if isnil(memobj) {
 		return err_unknown
+	}
+
+	mut size := int(bounds.width * bounds.height)
+	if image_type == ImageChannelOrder.rgba {
+		size *= 4
 	}
 
 	buf := &Buffer{
@@ -92,8 +96,8 @@ fn (d &Device) create_image(image_type ImageChannelOrder, bounds Rect, row_pitch
 		bounds: bounds
 		@type: image_type
 		format: format
+		desc: desc
 		img_data: data
-		desc: unsafe { nil }
 	}
 	if !isnil(data) {
 		img.write_queue()!
@@ -108,10 +112,11 @@ pub fn (image &Image) data() !IImage {
 	read_image_result := []u8{len: image.buf.size, cap: image.buf.size}
 	ret := cl_enqueue_read_image(image.buf.device.queue, image.buf.memobj, true, origin,
 		region, 0, 0, unsafe { &read_image_result[0] }, 0, unsafe { nil }, unsafe { nil })
+	nb_channels := if image.@type == ImageChannelOrder.rgba { 4 } else { 1 }
 	img := stbi.Image{
 		width: int(image.bounds.width)
 		height: int(image.bounds.height)
-		nr_channels: 4
+		nr_channels: nb_channels
 		data: unsafe { &read_image_result[0] }
 	}
 	return error_or_default(ret, IImage(img))
