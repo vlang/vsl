@@ -9,22 +9,31 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 jobs:
   super-linter:
+    name: Lint Code Base
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
-      - name: Checkout VSL
+      - name: Checkout Code
         uses: actions/checkout@v4
         with:
-          # Full git history is needed to get a proper list of changed files within `super-linter`
+          # Full git history is needed to get a proper
+          # list of changed files within `super-linter`
           fetch-depth: 0
 
-      - name: Run Super-Linter
-        uses: super-linter/super-linter/slim@v5
+      - name: Lint Code Base
+        uses: super-linter/super-linter/slim@v6
         env:
-          DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_ALL_CODEBASE: false
+          DEFAULT_BRANCH: master
+          LINTER_RULES_PATH: .
+          MARKDOWN_CONFIG_FILE: .markdownlint.json
 
   docs:
     runs-on: ubuntu-latest
