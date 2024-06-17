@@ -1,6 +1,6 @@
 # Example - plot_line_axis_titles 📘
 
-This example demonstrates the usage of the V Scientific Library for various purposes.
+This example demonstrates the usage of the V Scientific Library for creating a line plot with axis titles.
 
 ## Instructions
 

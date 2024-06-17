@@ -1,6 +1,6 @@
 # Example - plot_script_mode_three_phase_signal 📘
 
-This example demonstrates the usage of the V Scientific Library for various purposes.
+This example demonstrates the usage of the V Scientific Library for plotting a three-phase signal in script mode.
 
 ## Instructions
 

@@ -1,6 +1,6 @@
 # Example - plot_heatmap_golden_ratio 📘
 
-This example demonstrates the usage of the V Scientific Library for various purposes.
+This example demonstrates the usage of the V Scientific Library for creating a heatmap with the golden ratio.
 
 ## Instructions
 

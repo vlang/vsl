@@ -1,6 +1,6 @@
 # Example - plot_ripple_surface 📘
 
-This example demonstrates the usage of the V Scientific Library for various purposes.
+This example demonstrates the usage of the V Scientific Library for plotting a ripple surface.
 
 ## Instructions
 

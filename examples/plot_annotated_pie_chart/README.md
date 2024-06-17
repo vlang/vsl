@@ -1,6 +1,6 @@
 # Example - plot_annotated_pie_chart 📘
 
-This example demonstrates the usage of the V Scientific Library for various purposes.
+This example demonstrates the usage of the V Scientific Library for creating an annotated pie chart.
 
 ## Instructions
 

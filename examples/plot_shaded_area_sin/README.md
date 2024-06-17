@@ -1,6 +1,6 @@
 # Example - plot_shaded_area_sin 📘
 
-This example demonstrates the usage of the V Scientific Library for various purposes.
+This example demonstrates the usage of the V Scientific Library for creating a shaded area plot of the sine function.
 
 ## Instructions
 

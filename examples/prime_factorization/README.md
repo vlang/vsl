@@ -1,6 +1,6 @@
 # Example - prime_factorization 📘
 
-This example demonstrates the usage of the V Scientific Library for various purposes.
+This example demonstrates the usage of the V Scientific Library for performing prime factorization.
 
 ## Instructions
 

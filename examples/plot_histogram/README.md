@@ -1,6 +1,6 @@
 # Example - plot_histogram 📘
 
-This example demonstrates the usage of the V Scientific Library for various purposes.
+This example demonstrates the usage of the V Scientific Library for showing how to create a histogram.
 
 ## Instructions
 

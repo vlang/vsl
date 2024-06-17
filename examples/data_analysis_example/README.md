@@ -1,6 +1,6 @@
 # Example - data_analysis_example 📘
 
-This example demonstrates the usage of the V Scientific Library for various purposes.
+This example demonstrates the usage of the V Scientific Library for performing basic data analysis.
 
 ## Instructions
 

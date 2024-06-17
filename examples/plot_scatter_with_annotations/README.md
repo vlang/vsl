@@ -1,6 +1,6 @@
 # Example - plot_scatter_with_annotations 📘
 
-This example demonstrates the usage of the V Scientific Library for various purposes.
+This example demonstrates the usage of the V Scientific Library for creating a scatter plot with annotations.
 
 ## Instructions
 

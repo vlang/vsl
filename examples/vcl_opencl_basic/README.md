@@ -1,6 +1,6 @@
 # Example - vcl_opencl_basic 📘
 
-This example demonstrates the usage of the V Scientific Library for various purposes.
+This example demonstrates the usage of the V Scientific Library for demonstrating basic OpenCL functionality.
 
 ## Instructions
 

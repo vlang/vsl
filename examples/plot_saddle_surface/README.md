@@ -1,6 +1,6 @@
 # Example - plot_saddle_surface 📘
 
-This example demonstrates the usage of the V Scientific Library for various purposes.
+This example demonstrates the usage of the V Scientific Library for plotting a saddle surface.
 
 ## Instructions
 

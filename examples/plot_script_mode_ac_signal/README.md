@@ -1,6 +1,6 @@
 # Example - plot_script_mode_ac_signal 📘
 
-This example demonstrates the usage of the V Scientific Library for various purposes.
+This example demonstrates the usage of the V Scientific Library for plotting an AC signal in script mode.
 
 ## Instructions
 

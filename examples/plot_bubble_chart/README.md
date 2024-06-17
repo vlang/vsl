@@ -1,6 +1,6 @@
 # Example - plot_bubble_chart 📘
 
-This example demonstrates the usage of the V Scientific Library for various purposes.
+This example demonstrates the usage of the V Scientific Library for creating a bubble chart.
 
 ## Instructions
 

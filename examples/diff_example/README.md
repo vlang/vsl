@@ -1,6 +1,6 @@
 # Example - diff_example 📘
 
-This example demonstrates the usage of the V Scientific Library for various purposes.
+This example demonstrates the usage of the V Scientific Library for demonstrating differentiation.
 
 ## Instructions
 

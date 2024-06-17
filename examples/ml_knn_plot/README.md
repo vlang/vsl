@@ -1,6 +1,6 @@
 # Example - ml_knn_plot 📘
 
-This example demonstrates the usage of the V Scientific Library for various purposes.
+This example demonstrates the usage of the V Scientific Library for performing K-Nearest Neighbors algorithm with plotting.
 
 ## Instructions
 

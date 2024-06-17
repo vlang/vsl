@@ -1,6 +1,6 @@
 # Example - fft_plot_example 📘
 
-This example demonstrates the usage of the V Scientific Library for various purposes.
+This example demonstrates the usage of the V Scientific Library for demonstrating Fast Fourier Transform (FFT) with plotting.
 
 ## Instructions
 

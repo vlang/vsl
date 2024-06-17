@@ -1,6 +1,6 @@
 # Example - plot_scatter 📘
 
-This example demonstrates the usage of the V Scientific Library for various purposes.
+This example demonstrates the usage of the V Scientific Library for creating a basic scatter plot.
 
 ## Instructions
 

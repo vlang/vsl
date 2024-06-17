@@ -1,6 +1,6 @@
 # Example - ml_kmeans 📘
 
-This example demonstrates the usage of the V Scientific Library for various purposes.
+This example demonstrates the usage of the V Scientific Library for demonstrating the K-means clustering algorithm.
 
 ## Instructions
 

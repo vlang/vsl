@@ -1,6 +1,6 @@
 # Example - la_triplet01 📘
 
-This example demonstrates the usage of the V Scientific Library for various purposes.
+This example demonstrates the usage of the V Scientific Library for demonstrating linear algebra operations.
 
 ## Instructions
 

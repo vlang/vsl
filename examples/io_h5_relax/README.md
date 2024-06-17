@@ -1,6 +1,6 @@
 # Example - io_h5_relax 📘
 
-This example demonstrates the usage of the V Scientific Library for various purposes.
+This example demonstrates the usage of the V Scientific Library for demonstrating HDF5 I/O for relaxation data.
 
 ## Instructions
 
