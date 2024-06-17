@@ -1,4 +1,4 @@
-# Example - mpi_basic_example 📘
+# Example - plot_script_mode_ac_signal 📘
 
 This example demonstrates the usage of the V Scientific Library for various purposes.
 

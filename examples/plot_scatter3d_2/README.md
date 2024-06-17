@@ -1,4 +1,4 @@
-# Example - mpi_basic_example 📘
+# Example - plot_scatter3d_2 📘
 
 This example demonstrates the usage of the V Scientific Library for various purposes.
 

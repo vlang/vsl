@@ -1,4 +1,4 @@
-# Example - mpi_basic_example 📘
+# Example - fft_plot_example 📘
 
 This example demonstrates the usage of the V Scientific Library for various purposes.
 

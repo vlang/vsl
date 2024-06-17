@@ -1,4 +1,4 @@
-# Example - mpi_basic_example 📘
+# Example - ml_linreg02 📘
 
 This example demonstrates the usage of the V Scientific Library for various purposes.
 

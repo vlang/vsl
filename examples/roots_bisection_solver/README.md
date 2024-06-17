@@ -1,4 +1,4 @@
-# Example - mpi_basic_example 📘
+# Example - roots_bisection_solver 📘
 
 This example demonstrates the usage of the V Scientific Library for various purposes.
 

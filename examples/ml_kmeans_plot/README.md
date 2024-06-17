@@ -1,4 +1,4 @@
-# Example - mpi_basic_example 📘
+# Example - ml_kmeans_plot 📘
 
 This example demonstrates the usage of the V Scientific Library for various purposes.
 
