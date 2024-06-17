@@ -18,6 +18,10 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      pull-requests: write
+      actions: read
+      checks: read
+      statuses: write
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
