@@ -1,6 +1,6 @@
-# Example - mpi_basic_example 📘
+# Example - plot_bubble_chart 📘
 
-This example demonstrates the usage of the V Scientific Library for demonstrating basic MPI functionality.
+This example demonstrates the usage of the V Scientific Library for creating a bubble chart.
 
 ## Instructions
 

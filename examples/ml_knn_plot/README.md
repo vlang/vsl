@@ -1,6 +1,6 @@
-# Example - mpi_basic_example 📘
+# Example - ml_knn_plot 📘
 
-This example demonstrates the usage of the V Scientific Library for demonstrating basic MPI functionality.
+This example demonstrates the usage of the V Scientific Library for performing K-Nearest Neighbors algorithm with plotting.
 
 ## Instructions
 

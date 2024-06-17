@@ -1,6 +1,6 @@
-# Example - mpi_basic_example 📘
+# Example - plot_saddle_surface 📘
 
-This example demonstrates the usage of the V Scientific Library for demonstrating basic MPI functionality.
+This example demonstrates the usage of the V Scientific Library for plotting a saddle surface.
 
 ## Instructions
 

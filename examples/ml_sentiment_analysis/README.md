@@ -1,6 +1,6 @@
-# Example - mpi_basic_example 📘
+# Example - ml_sentiment_analysis 📘
 
-This example demonstrates the usage of the V Scientific Library for demonstrating basic MPI functionality.
+This example demonstrates the usage of the V Scientific Library for performing sentiment analysis using machine learning.
 
 ## Instructions
 

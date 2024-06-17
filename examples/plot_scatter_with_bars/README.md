@@ -1,6 +1,6 @@
-# Example - mpi_basic_example 📘
+# Example - plot_scatter_with_bars 📘
 
-This example demonstrates the usage of the V Scientific Library for demonstrating basic MPI functionality.
+This example demonstrates the usage of the V Scientific Library for creating a scatter plot with bars.
 
 ## Instructions
 

@@ -1,6 +1,6 @@
-# Example - mpi_basic_example 📘
+# Example - data_analysis_example 📘
 
-This example demonstrates the usage of the V Scientific Library for demonstrating basic MPI functionality.
+This example demonstrates the usage of the V Scientific Library for performing basic data analysis.
 
 ## Instructions
 

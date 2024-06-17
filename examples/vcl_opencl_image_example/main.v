@@ -21,13 +21,14 @@ fn main() {
 	stbi_img := stbi.load(os.join_path(root, 'julia.png')) or { panic(err) }
 
 	// Create image buffer (image2d_t) to read_only
-	mut img := device.from_image_2d(stbi_img) or { panic(err) }
+	mut img := device.from_image(stbi_img) or { panic(err) }
 	defer {
 		img.release() or { panic(err) }
 	}
 
 	// Create image buffer (image2d_t) to write_only
-	mut inverted_img := device.image_2d(.rgba, width: img.bounds.width, height: img.bounds.height)!
+	// mut inverted_img := device.image(.rgba, width: img.bounds.width, height: img.bounds.height)!
+	mut inverted_img := device.from_image(stbi_img) or { panic(err) }
 	defer {
 		inverted_img.release() or { panic(err) }
 	}
@@ -42,7 +43,7 @@ fn main() {
 		panic(kernel_err)
 	}
 
-	next_inverted_img := inverted_img.data_2d()!
+	next_inverted_img := inverted_img.data()!
 	// save image
 	stbi.stbi_write_png(os.join_path(output_dir, 'inverted.png'), int(inverted_img.bounds.width),
 		int(inverted_img.bounds.height), 4, next_inverted_img.data, 0)!

@@ -1,7 +1,6 @@
 module h5
 
 import arrays { flatten }
-import math
 
 type Hdf5HidT = i64
 type Hdf5HsizeT = u64

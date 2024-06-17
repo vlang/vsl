@@ -1,6 +1,6 @@
-# Example - mpi_basic_example 📘
+# Example - plot_histogram 📘
 
-This example demonstrates the usage of the V Scientific Library for demonstrating basic MPI functionality.
+This example demonstrates the usage of the V Scientific Library for showing how to create a histogram.
 
 ## Instructions
 

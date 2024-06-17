@@ -1,6 +1,6 @@
-# Example - mpi_basic_example 📘
+# Example - io_h5_relax 📘
 
-This example demonstrates the usage of the V Scientific Library for demonstrating basic MPI functionality.
+This example demonstrates the usage of the V Scientific Library for demonstrating HDF5 I/O for relaxation data.
 
 ## Instructions
 

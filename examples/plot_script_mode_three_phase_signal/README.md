@@ -1,6 +1,6 @@
-# Example - mpi_basic_example 📘
+# Example - plot_script_mode_three_phase_signal 📘
 
-This example demonstrates the usage of the V Scientific Library for demonstrating basic MPI functionality.
+This example demonstrates the usage of the V Scientific Library for plotting a three-phase signal in script mode.
 
 ## Instructions
 

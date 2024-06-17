@@ -1,6 +1,6 @@
-# Example - mpi_basic_example 📘
+# Example - ml_linreg01 📘
 
-This example demonstrates the usage of the V Scientific Library for demonstrating basic MPI functionality.
+This example demonstrates the usage of the V Scientific Library for performing a basic linear regression.
 
 ## Instructions
 

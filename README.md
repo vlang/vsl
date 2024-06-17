@@ -10,6 +10,7 @@
 
 [vlang.io](https://vlang.io) |
 [Docs](https://vlang.github.io/vsl) |
+[Examples](./examples/) |
 [Changelog](#) |
 [Contributing](https://github.com/vlang/vsl/blob/main/CONTRIBUTING.md)
 

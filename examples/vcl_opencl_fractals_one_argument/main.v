@@ -35,7 +35,7 @@ fn run_kernel(kernel_name string) ! {
 	}
 
 	// Create image buffer (image2d_t) to kernel
-	mut img := device.image_2d(.rgba, width: width, height: height)!
+	mut img := device.image(.rgba, width: width, height: height)!
 	defer {
 		img.release() or { panic(err) }
 	}
@@ -52,11 +52,11 @@ fn run_kernel(kernel_name string) ! {
 	}
 
 	// get image data from buffer and save it
-	buffer := img.data_2d()!
+	iimg := img.data()!
 	stbi.stbi_write_bmp(os.join_path(output_dir, '${kernel_name}.bmp'), width, height,
-		4, buffer.data) or { return err }
+		4, iimg.data) or { return err }
 	stbi.stbi_write_png(os.join_path(output_dir, '${kernel_name}.png'), width, height,
-		4, buffer.data, 0) or { return err }
+		4, iimg.data, 0) or { return err }
 }
 
 fn main() {

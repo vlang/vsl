@@ -1,6 +1,6 @@
-# Example - mpi_basic_example 📘
+# Example - dist_histogram 📘
 
-This example demonstrates the usage of the V Scientific Library for demonstrating basic MPI functionality.
+This example demonstrates the usage of the V Scientific Library for creating a distribution histogram.
 
 ## Instructions
 

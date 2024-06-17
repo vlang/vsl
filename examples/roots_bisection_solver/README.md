@@ -1,6 +1,6 @@
-# Example - mpi_basic_example 📘
+# Example - roots_bisection_solver 📘
 
-This example demonstrates the usage of the V Scientific Library for demonstrating basic MPI functionality.
+This example demonstrates the usage of the V Scientific Library for finding roots using the bisection method.
 
 ## Instructions
 

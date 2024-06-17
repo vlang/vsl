@@ -1,6 +1,6 @@
-# Example - mpi_basic_example 📘
+# Example - iter_lazy_generation 📘
 
-This example demonstrates the usage of the V Scientific Library for demonstrating basic MPI functionality.
+This example demonstrates the usage of the V Scientific Library for demonstrating lazy generation using iterators.
 
 ## Instructions
 
