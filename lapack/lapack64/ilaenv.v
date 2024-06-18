@@ -22,7 +22,7 @@ import math
 //
 // ilaenv is an internal routine. It is exported for testing purposes.
 fn ilaenv(ispec int, name string, opts string, n1 int, n2 int, n3 int, n4 int) int {
-	// TODO(btracey): Replace this with a constant lookup? A list of constants?
+	// TODO(ulises-jeremias): Replace this with a constant lookup? A list of constants?
 	sname := name[0] == `S` || name[0] == `D`
 	cname := name[0] == `C` || name[0] == `Z`
 	if !sname && !cname {
