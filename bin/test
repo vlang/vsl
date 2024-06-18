@@ -10,6 +10,7 @@
 ##         --stats                           Execute with stats
 ##         --prod                            Execute with prod build
 ##         --use-cblas                       Execute tests using cblas
+##         --use-lapacke                     Execute tests using lapacke
 ##         --use-autofree                    Execute tests using atofree
 ##         --use-gc=STRATEGY                 Execute tests using garbage collector
 ##         --skip-examples                   Skip examples compilation
@@ -29,6 +30,11 @@ flags=""
 if [[ -n "${use_cblas}" ]]; then
     echo "Running tests using Open BLAS"
     flags="${flags} -d vsl_blas_cblas"
+fi
+
+if [[ -n "${use_lapacke}" ]]; then
+    echo "Running tests using LAPACKE"
+    flags="${flags} -d vsl_lapack_lapacke"
 fi
 
 if [[ -n "${use_autofree}" ]]; then
