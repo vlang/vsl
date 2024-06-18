@@ -518,11 +518,11 @@ struct DgemvSubcase {
 fn test_gemv() {
 	for mut test in float64.dgemv_tests {
 		for case in test.no_trans {
-			dgemvcomp(mut test, false, case)
+			dgemvcomp(mut test, .no_trans, case)
 		}
 
 		for case in test.trans {
-			dgemvcomp(mut test, true, case)
+			dgemvcomp(mut test, .trans, case)
 		}
 	}
 }
