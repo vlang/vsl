@@ -16,7 +16,7 @@ import vsl.blas
 //
 // a and ipiv contain the LU factorization of A and the permutation indices as
 // computed by Dgetrf. ipiv is zero-indexed.
-pub fn dgetrs(trans blas.Transpose, n int, nrhs int, mut a []f64, lda int, ipiv []int, mut b []f64, ldb int) {
+pub fn dgetrs(trans blas.Transpose, n int, nrhs int, mut a []f64, lda int, mut ipiv []int, mut b []f64, ldb int) {
 	if trans != .no_trans && trans != .trans && trans != .conj_trans {
 		panic(bad_trans)
 	}
@@ -50,7 +50,7 @@ pub fn dgetrs(trans blas.Transpose, n int, nrhs int, mut a []f64, lda int, ipiv 
 
 	if trans != .no_trans {
 		// Solve A * X = B.
-		dlaswp(nrhs, b, ldb, 0, n - 1, ipiv, 1)
+		dlaswp(nrhs, mut b, ldb, 0, n - 1, mut ipiv, 1)
 		// Solve L * X = B, overwriting B with X.
 		blas.dtrsm(.left, false, false, .unit, n, nrhs, 1, a, lda, mut b, ldb)
 		// Solve U * X = B, overwriting B with X.
@@ -62,5 +62,5 @@ pub fn dgetrs(trans blas.Transpose, n int, nrhs int, mut a []f64, lda int, ipiv 
 	blas.dtrsm(.left, true, true, .non_unit, n, nrhs, 1, a, lda, mut b, ldb)
 	// Solve Lᵀ * X = B, overwriting B with X.
 	blas.dtrsm(.left, false, true, .unit, n, nrhs, 1, a, lda, mut b, ldb)
-	dlaswp(nrhs, b, ldb, 0, n - 1, ipiv, -1)
+	dlaswp(nrhs, mut b, ldb, 0, n - 1, mut ipiv, -1)
 }

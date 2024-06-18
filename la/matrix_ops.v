@@ -12,8 +12,8 @@ pub fn matrix_det(o &Matrix[f64]) f64 {
 			.efailed)
 	}
 	mut ai := o.data.clone()
-	ipiv := []int{len: int(math.min(o.m, o.n))}
-	lapack.dgetrf(o.m, o.n, mut ai, o.m, ipiv) // NOTE: ipiv are 1-based indices
+	mut ipiv := []int{len: int(math.min(o.m, o.n))}
+	lapack.dgetrf(o.m, o.n, mut ai, o.m, mut ipiv) // NOTE: ipiv are 1-based indices
 	mut det := 1.0
 	for i in 0 .. o.m {
 		if ipiv[i] - 1 == i { // NOTE: ipiv are 1-based indices
@@ -107,8 +107,8 @@ pub fn matrix_inv(mut ai Matrix[f64], mut a Matrix[f64], calc_det bool) f64 {
 	// square inverse
 	if a.m == a.n {
 		ai.data = a.data.clone()
-		ipiv := []int{len: int(math.min(a.m, a.n))}
-		lapack.dgetrf(a.m, a.n, mut ai.data, a.m, ipiv) // NOTE: ipiv are 1-based indices
+		mut ipiv := []int{len: int(math.min(a.m, a.n))}
+		lapack.dgetrf(a.m, a.n, mut ai.data, a.m, mut ipiv) // NOTE: ipiv are 1-based indices
 		if calc_det {
 			det = 1.0
 			for i := 0; i < a.m; i++ {
@@ -119,7 +119,7 @@ pub fn matrix_inv(mut ai Matrix[f64], mut a Matrix[f64], calc_det bool) f64 {
 				}
 			}
 		}
-		lapack.dgetri(a.n, mut ai.data, a.m, ipiv)
+		lapack.dgetri(a.n, mut ai.data, a.m, mut ipiv)
 		return det
 	}
 	// singular value decomposition

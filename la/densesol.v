@@ -15,6 +15,6 @@ pub fn den_solve(mut x []f64, a &Matrix[f64], b []f64, preserve_a bool) {
 	for i in 0 .. x.len {
 		x[i] = b[i]
 	}
-	ipiv := []int{len: a_.m}
-	lapack.dgesv(a_.m, 1, mut a_.data, a_.m, ipiv, mut x, 1)
+	mut ipiv := []int{len: a_.m}
+	lapack.dgesv(a_.m, 1, mut a_.data, a_.m, mut ipiv, mut x, 1)
 }

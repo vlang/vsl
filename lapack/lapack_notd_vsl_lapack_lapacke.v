@@ -27,8 +27,8 @@ import vsl.lapack.lapack64
 //
 // NOTE: matrix 'a' will be modified
 @[inline]
-pub fn dgesv(n int, nrhs int, mut a []f64, lda int, ipiv []int, mut b []f64, ldb int) {
-	lapack64.dgesv(n, nrhs, mut a, lda, ipiv, mut b, ldb)
+pub fn dgesv(n int, nrhs int, mut a []f64, lda int, mut ipiv []int, mut b []f64, ldb int) {
+	lapack64.dgesv(n, nrhs, mut a, lda, mut ipiv, mut b, ldb)
 }
 
 // dgesvd computes the singular value decomposition (SVD) of a real M-by-N matrix A, optionally computing the left and/or right singular vectors.
@@ -75,8 +75,8 @@ pub fn dgesvd(jobu SVDJob, jobvt SVDJob, m int, n int, mut a []f64, lda int, s [
 //
 // NOTE: (1) matrix 'a' will be modified
 // (2) ipiv indices are 1-based (i.e. Fortran)
-pub fn dgetrf(m int, n int, mut a []f64, lda int, ipiv []int) {
-	lapack64.dgetrf(m, n, mut a, lda, ipiv)
+pub fn dgetrf(m int, n int, mut a []f64, lda int, mut ipiv []int) {
+	lapack64.dgetrf(m, n, mut a, lda, mut ipiv)
 }
 
 // dgetri computes the inverse of a matrix using the LU factorization computed by DGETRF.
@@ -87,8 +87,8 @@ pub fn dgetrf(m int, n int, mut a []f64, lda int, ipiv []int) {
 //
 // This method inverts U and then computes inv(A) by solving the system
 // inv(A)*L = inv(U) for inv(A).
-pub fn dgetri(n int, mut a []f64, lda int, ipiv []int) {
-	info := lapack64.dgetri(n, mut a, lda, ipiv)
+pub fn dgetri(n int, mut a []f64, lda int, mut ipiv []int) {
+	info := lapack64.dgetri(n, mut a, lda, mut ipiv)
 	if info != 0 {
 		errors.vsl_panic('lapack failed', .efailed)
 	}

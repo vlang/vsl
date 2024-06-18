@@ -43,11 +43,11 @@ fn C.LAPACKE_dgehrd(matrix_layout blas.MemoryLayout, n int, ilo int, ihi int, a 
 // system of equations A * X = B.
 //
 // NOTE: matrix 'a' will be modified
-pub fn dgesv(n int, nrhs int, mut a []f64, lda int, ipiv []int, mut b []f64, ldb int) {
+pub fn dgesv(n int, nrhs int, mut a []f64, lda int, mut ipiv []int, mut b []f64, ldb int) {
 	if ipiv.len != n {
 		errors.vsl_panic('ipiv.len must be equal to n. ${ipiv.len} != ${n}\n', .efailed)
 	}
-	info := C.LAPACKE_dgesv(.row_major, n, nrhs, unsafe { &a[0] }, lda, &ipiv[0], unsafe { &b[0] },
+	info := C.LAPACKE_dgesv(.row_major, n, nrhs, unsafe { &a[0] }, lda, unsafe { &ipiv[0] }, unsafe { &b[0] },
 		ldb)
 	if info != 0 {
 		errors.vsl_panic('lapack failed', .efailed)
@@ -98,7 +98,7 @@ pub fn dgesvd(jobu SVDJob, jobvt SVDJob, m int, n int, mut a []f64, lda int, s [
 //
 // NOTE: (1) matrix 'a' will be modified
 // (2) ipiv indices are 1-based (i.e. Fortran)
-pub fn dgetrf(m int, n int, mut a []f64, lda int, ipiv []int) {
+pub fn dgetrf(m int, n int, mut a []f64, lda int, mut ipiv []int) {
 	unsafe {
 		info := C.LAPACKE_dgetrf(.row_major, m, n, &a[0], lda, &ipiv[0])
 		if info != 0 {
@@ -115,7 +115,7 @@ pub fn dgetrf(m int, n int, mut a []f64, lda int, ipiv []int) {
 //
 // This method inverts U and then computes inv(A) by solving the system
 // inv(A)*L = inv(U) for inv(A).
-pub fn dgetri(n int, mut a []f64, lda int, ipiv []int) {
+pub fn dgetri(n int, mut a []f64, lda int, mut ipiv []int) {
 	unsafe {
 		info := C.LAPACKE_dgetri(.row_major, n, &a[0], lda, &ipiv[0])
 		if info != 0 {

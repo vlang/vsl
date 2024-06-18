@@ -52,5 +52,5 @@ pub fn dgesv(n int, nrhs int, mut a []f64, lda int, mut ipiv []int, mut b []f64,
 	}
 
 	dgetrf(n, n, mut a, lda, mut ipiv)
-	dgetrs(.no_trans, n, nrhs, mut a, lda, ipiv, mut b, ldb)
+	dgetrs(.no_trans, n, nrhs, mut a, lda, mut ipiv, mut b, ldb)
 }

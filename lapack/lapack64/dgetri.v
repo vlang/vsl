@@ -4,7 +4,7 @@ import math
 import vsl.blas
 
 // dgetri computes the inverse of a matrix using the LU factorization computed by dgetrf.
-pub fn dgetri(n int, mut a []f64, lda int, ipiv []int) int {
+pub fn dgetri(n int, mut a []f64, lda int, mut ipiv []int) int {
 	if n == 0 {
 		return 0
 	}
@@ -26,6 +26,6 @@ pub fn dgetri(n int, mut a []f64, lda int, ipiv []int) int {
 	}
 
 	// Placeholder for the actual LAPACK function calls
-	// Example: info = dgetri(n, a, lda, ipiv, work, lwork)
+	// Example: info = dgetri(n, a, lda, mut ipiv, work, lwork)
 	return info
 }

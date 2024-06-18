@@ -53,7 +53,7 @@ pub fn dgetrf(m int, n int, mut a []f64, lda int, mut ipiv []int) {
 
 	if nb <= 1 || nb >= mn {
 		// use the unblocked algorithm.
-		dgetf2(m, n, mut a, lda, ipiv)
+		dgetf2(m, n, mut a, lda, mut ipiv)
 		return
 	}
 
@@ -61,28 +61,31 @@ pub fn dgetrf(m int, n int, mut a []f64, lda int, mut ipiv []int) {
 		jb := math.min(mn - j, nb)
 
 		// factor diagonal and subdiagonal blocks and test for exact singularity.
-		dgetf2(m - j, jb, mut a[j * lda + j..], lda, ipiv[j..j + jb])
+		mut slice1 := unsafe { ipiv[j..j + jb] }
+		dgetf2(m - j, jb, mut a[j * lda + j..], lda, mut slice1)
 
 		for i := j; i <= math.min(m - 1, j + jb - 1); i++ {
 			ipiv[i] += j
 		}
 
 		// apply interchanges to columns 1..j-1.
-		dlaswp(j, mut a, lda, j, j + jb - 1, ipiv[..j + jb], 1)
+		mut slice_ipiv1 := unsafe { ipiv[..j + jb] }
+		dlaswp(j, mut a, lda, j, j + jb - 1, mut slice_ipiv1, 1)
 
 		if j + jb < n {
 			// apply interchanges to columns 1..j-1.
-			mut slice1 := unsafe { a[j + jb..] }
-			dlaswp(j, mut slice1, lda, j, j + jb, ipiv[..j + jb], 1)
+			mut slice2 := unsafe { a[j + jb..] }
+			mut slice_ipiv2 := unsafe { ipiv[..j + jb] }
+			dlaswp(j, mut slice2, lda, j, j + jb, mut slice_ipiv2, 1)
 
-			mut slice2 := unsafe { a[j * lda + j + jb..] }
-			blas.dtstrf(.left, false, false, .unit, jb, n - j - jb, 1, a[j * lda + j..],
-				lda, mut slice2, lda)
+			mut slice3 := unsafe { a[j * lda + j + jb..] }
+			blas.dtrsm(.left, false, false, .unit, jb, n - j - jb, 1, a[j * lda + j..],
+				lda, mut slice3, lda)
 
 			if j + jb < m {
-				mut slice3 := unsafe { a[(j + jb) * lda + j + jb..] }
+				mut slice4 := unsafe { a[(j + jb) * lda + j + jb..] }
 				blas.dgemm(false, false, m - j - jb, n - j - jb, jb, -1, a[(j + jb) * lda + j..],
-					lda, a[j * lda + j + jb..], lda, 1, mut slice3, lda)
+					lda, a[j * lda + j + jb..], lda, 1, mut slice4, lda)
 			}
 		}
 	}
