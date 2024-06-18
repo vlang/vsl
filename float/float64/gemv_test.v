@@ -1,7 +1,6 @@
 module float64
 
 import math
-import vsl.blas
 
 const dgemv_tests = [
 	DgemvCase{ // 1x1
@@ -519,22 +518,22 @@ struct DgemvSubcase {
 fn test_gemv() {
 	for mut test in float64.dgemv_tests {
 		for case in test.no_trans {
-			dgemvcomp(mut test, .no_trans, case)
+			dgemvcomp(mut test, false, case)
 		}
 
 		for case in test.trans {
-			dgemvcomp(mut test, .trans, case)
+			dgemvcomp(mut test, true, case)
 		}
 	}
 }
 
-fn dgemvcomp(mut test DgemvCase, trans Transpose, case DgemvSubcase) {
+fn dgemvcomp(mut test DgemvCase, trans bool, case DgemvSubcase) {
 	tol := 1e-15
 	x_gd_val, y_gd_val, a_gd_val := 0.5, 1.5, 10
 	gd_ln := 4
 
-	test_x := if trans == .trans { test.y } else { test.x }
-	test_y := if trans == .trans { test.x } else { test.y }
+	test_x := if trans { test.y } else { test.x }
+	test_y := if trans { test.x } else { test.y }
 
 	mut xg, mut yg := guard_vector(test_x, x_gd_val, gd_ln), guard_vector(test_y, y_gd_val,
 		gd_ln)
@@ -544,7 +543,7 @@ fn dgemvcomp(mut test DgemvCase, trans Transpose, case DgemvSubcase) {
 
 	lda := u32(test.n)
 
-	if trans == .trans {
+	if trans {
 		gemv_t(u32(test.m), u32(test.n), case.alpha, a, lda, x, 1, case.beta, mut y, 1)
 	} else {
 		gemv_n(u32(test.m), u32(test.n), case.alpha, a, lda, x, 1, case.beta, mut y, 1)
@@ -578,7 +577,7 @@ fn dgemvcomp(mut test DgemvCase, trans Transpose, case DgemvSubcase) {
 		ag = guard_vector(test.a, a_gd_val, gd_ln)
 		a = ag[gd_ln..ag.len - gd_ln]
 
-		if trans == .trans {
+		if trans {
 			gemv_t(u32(test.m), u32(test.n), case.alpha, a, lda, x, u32(inc.x), case.beta, mut
 				y, u32(inc.y))
 		} else {
