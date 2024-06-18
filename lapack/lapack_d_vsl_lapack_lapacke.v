@@ -2,19 +2,22 @@ module lapack
 
 import vsl.errors
 import vsl.blas
-import vsl.lapack.lapack64
 
-fn C.LAPACKE_dgesvd(matrix_layout blas.MemoryLayout, jobu &char, jobvt &char, m int, n int, a &f64, lda int, s &f64, u &f64, ldu int, vt &f64, ldvt int, superb &f64) int
+fn C.LAPACKE_dgesv(matrix_layout blas.MemoryLayout, n int, nrhs int, a &f64, lda int, ipiv &int, b &f64, ldb int) int
+
+fn C.LAPACKE_dgesvd(matrix_layout blas.MemoryLayout, jobu SVDJob, jobvt SVDJob, m int, n int, a &f64, lda int, s &f64, u &f64, ldu int, vt &f64, ldvt int, superb &f64) int
+
+fn C.LAPACKE_dgetrf(matrix_layout blas.MemoryLayout, m int, n int, a &f64, lda int, ipiv &int) int
 
 fn C.LAPACKE_dgetri(matrix_layout blas.MemoryLayout, n int, a &f64, lda int, ipiv &int) int
 
-fn C.LAPACKE_dpotrf(matrix_layout blas.MemoryLayout, up u32, n int, a &f64, lda int) int
+fn C.LAPACKE_dpotrf(matrix_layout blas.MemoryLayout, uplo blas.Uplo, n int, a &f64, lda int) int
 
-fn C.LAPACKE_dgeev(matrix_layout blas.MemoryLayout, calc_vl &char, calc_vr &char, n int, a &f64, lda int, wr &f64, wi &f64, vl &f64, ldvl_ int, vr &f64, ldvr_ int) int
+fn C.LAPACKE_dgeev(matrix_layout blas.MemoryLayout, calc_vl LeftEVJob, calc_vr LeftEVJob, n int, a &f64, lda int, wr &f64, wi &f64, vl &f64, ldvl_ int, vr &f64, ldvr_ int) int
 
-fn C.LAPACKE_dsyev(matrix_layout blas.MemoryLayout, jobz byte, uplo byte, n int, a &f64, lda int, w &f64, work &f64, lwork int) int
+fn C.LAPACKE_dsyev(matrix_layout blas.MemoryLayout, jobz EVJob, uplo blas.Uplo, n int, a &f64, lda int, w &f64, work &f64, lwork int) int
 
-fn C.LAPACKE_dgebal(matrix_layout blas.MemoryLayout, job &char, n int, a &f64, lda int, ilo int, ihi int, scale &f64) int
+fn C.LAPACKE_dgebal(matrix_layout blas.MemoryLayout, job BalanceJob, n int, a &f64, lda int, ilo int, ihi int, scale &f64) int
 
 fn C.LAPACKE_dgehrd(matrix_layout blas.MemoryLayout, n int, ilo int, ihi int, a &f64, lda int, tau &f64, work &f64, lwork int) int
 
@@ -40,9 +43,15 @@ fn C.LAPACKE_dgehrd(matrix_layout blas.MemoryLayout, n int, ilo int, ihi int, a 
 // system of equations A * X = B.
 //
 // NOTE: matrix 'a' will be modified
-@[inline]
 pub fn dgesv(n int, nrhs int, mut a []f64, lda int, ipiv []int, mut b []f64, ldb int) {
-	lapack64.dgesv(n, nrhs, mut a, lda, ipiv, mut b, ldb)
+	if ipiv.len != n {
+		errors.vsl_panic('ipiv.len must be equal to n. ${ipiv.len} != ${n}\n', .efailed)
+	}
+	info := C.LAPACKE_dgesv(.row_major, n, nrhs, unsafe { &a[0] }, lda, &ipiv[0], unsafe { &b[0] },
+		ldb)
+	if info != 0 {
+		errors.vsl_panic('lapack failed', .efailed)
+	}
 }
 
 // dgesvd computes the singular value decomposition (SVD) of a real M-by-N matrix A, optionally computing the left and/or right singular vectors.
@@ -65,9 +74,9 @@ pub fn dgesv(n int, nrhs int, mut a []f64, lda int, ipiv []int, mut b []f64, ldb
 // Note that the routine returns V**T, not V.
 //
 // NOTE: matrix 'a' will be modified
-pub fn dgesvd(jobu &char, jobvt &char, m int, n int, a []f64, lda int, s []f64, u []f64, ldu int, vt []f64, ldvt int, superb []f64) {
-	info := C.LAPACKE_dgesvd(.row_major, jobu, jobvt, m, n, &a[0], lda, &s[0], &u[0],
-		ldu, &vt[0], ldvt, &superb[0])
+pub fn dgesvd(jobu SVDJob, jobvt SVDJob, m int, n int, mut a []f64, lda int, s []f64, mut u []f64, ldu int, mut vt []f64, ldvt int, superb []f64) {
+	info := C.LAPACKE_dgesvd(.row_major, jobu, jobvt, m, n, unsafe { &a[0] }, lda, &s[0],
+		unsafe { &u[0] }, ldu, unsafe { &vt[0] }, ldvt, &superb[0])
 	if info != 0 {
 		errors.vsl_panic('lapack failed', .efailed)
 	}
@@ -90,7 +99,12 @@ pub fn dgesvd(jobu &char, jobvt &char, m int, n int, a []f64, lda int, s []f64, 
 // NOTE: (1) matrix 'a' will be modified
 // (2) ipiv indices are 1-based (i.e. Fortran)
 pub fn dgetrf(m int, n int, mut a []f64, lda int, ipiv []int) {
-	lapack64.dgetrf(m, n, mut a, lda, ipiv)
+	unsafe {
+		info := C.LAPACKE_dgetrf(.row_major, m, n, &a[0], lda, &ipiv[0])
+		if info != 0 {
+			errors.vsl_panic('lapack failed', .efailed)
+		}
+	}
 }
 
 // dgetri computes the inverse of a matrix using the LU factorization computed by DGETRF.
@@ -127,9 +141,9 @@ pub fn dgetri(n int, mut a []f64, lda int, ipiv []int) {
 // where U is an upper triangular matrix and L is lower triangular.
 //
 // This is the block version of the algorithm, calling Level 3 BLAS.
-pub fn dpotrf(up bool, n int, mut a []f64, lda int) {
+pub fn dpotrf(uplo bool, n int, mut a []f64, lda int) {
 	unsafe {
-		info := C.LAPACKE_dpotrf(.row_major, blas.l_uplo(up), n, &a[0], lda)
+		info := C.LAPACKE_dpotrf(.row_major, blas.c_uplo(uplo), n, &a[0], lda)
 		if info != 0 {
 			errors.vsl_panic('lapack failed', .efailed)
 		}
@@ -159,24 +173,24 @@ pub fn dpotrf(up bool, n int, mut a []f64, lda int) {
 //
 // The computed eigenvectors are normalized to have Euclidean norm
 // equal to 1 and largest component real.
-pub fn dgeev(calc_vl bool, calc_vr bool, n int, mut a []f64, lda int, wr []f64, wi []f64, vl []f64, ldvl_ int, vr []f64, ldvr_ int) {
+pub fn dgeev(calc_vl LeftEVJob, calc_vr LeftEVJob, n int, mut a []f64, lda int, wr []f64, wi []f64, vl []f64, ldvl_ int, vr []f64, ldvr_ int) {
 	mut vvl := 0.0
 	mut vvr := 0.0
 	mut ldvl := ldvl_
 	mut ldvr := ldvr_
-	if calc_vl {
+	if calc_vl == .left_ev_compute {
 		vvl = vl[0]
 	} else {
 		ldvl = 1
 	}
-	if calc_vr {
+	if calc_vr == .left_ev_compute {
 		vvr = vr[0]
 	} else {
 		ldvr = 1
 	}
 	unsafe {
-		info := C.LAPACKE_dgeev(.row_major, &char(blas.job_vlr(calc_vl).str().str), &char(blas.job_vlr(calc_vr).str().str),
-			n, &a[0], lda, &wr[0], &wi[0], &vvl, ldvl, &vvr, ldvr)
+		info := C.LAPACKE_dgeev(.row_major, calc_vl, calc_vr, n, &a[0], lda, &wr[0], &wi[0],
+			&vvl, ldvl, &vvr, ldvr)
 		if info != 0 {
 			errors.vsl_panic('lapack failed', .efailed)
 		}

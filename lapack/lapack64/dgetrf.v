@@ -24,7 +24,7 @@ import vsl.blas
 // Dgetrf returns whether the matrix A is nonsingular. The LU decomposition will
 // be computed regardless of the singularity of A, but the result should not be
 // used to solve a system of equation.
-pub fn dgetrf(m int, n int, mut a []f64, lda int, ipiv []int) {
+pub fn dgetrf(m int, n int, mut a []f64, lda int, mut ipiv []int) {
 	mn := math.min(m, n)
 
 	if m < 0 {
@@ -34,7 +34,7 @@ pub fn dgetrf(m int, n int, mut a []f64, lda int, ipiv []int) {
 		panic(n_lt0)
 	}
 	if lda < math.max(1, n) {
-		panic(bad_lda)
+		panic(bad_ld_a)
 	}
 
 	// quick return if possible
@@ -53,7 +53,8 @@ pub fn dgetrf(m int, n int, mut a []f64, lda int, ipiv []int) {
 
 	if nb <= 1 || nb >= mn {
 		// use the unblocked algorithm.
-		return dgetf2(m, n, mut a, lda, ipiv)
+		dgetf2(m, n, mut a, lda, ipiv)
+		return
 	}
 
 	for j := 0; j < mn; j += nb {
@@ -75,12 +76,12 @@ pub fn dgetrf(m int, n int, mut a []f64, lda int, ipiv []int) {
 			dlaswp(j, mut slice1, lda, j, j + jb, ipiv[..j + jb], 1)
 
 			mut slice2 := unsafe { a[j * lda + j + jb..] }
-			blas.dtstrf(.left, .lower, .notrans, .unit, jb, n - j - jb, 1, a[j * lda + j..],
+			blas.dtstrf(.left, false, false, .unit, jb, n - j - jb, 1, a[j * lda + j..],
 				lda, mut slice2, lda)
 
 			if j + jb < m {
 				mut slice3 := unsafe { a[(j + jb) * lda + j + jb..] }
-				blas.dgemm(.notrans, .notrans, m - j - jb, n - j - jb, jb, -1, a[(j + jb) * lda + j..],
+				blas.dgemm(false, false, m - j - jb, n - j - jb, jb, -1, a[(j + jb) * lda + j..],
 					lda, a[j * lda + j + jb..], lda, 1, mut slice3, lda)
 			}
 		}

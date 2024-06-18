@@ -52,16 +52,15 @@ pub fn dgetrs(trans blas.Transpose, n int, nrhs int, mut a []f64, lda int, ipiv 
 		// Solve A * X = B.
 		dlaswp(nrhs, b, ldb, 0, n - 1, ipiv, 1)
 		// Solve L * X = B, overwriting B with X.
-		blas.dtrsm(.left, .lower, .no_trans, .unit, n, nrhs, 1, mut a, lda, mut b, ldb)
+		blas.dtrsm(.left, false, false, .unit, n, nrhs, 1, a, lda, mut b, ldb)
 		// Solve U * X = B, overwriting B with X.
-		blas.dtrsm(.left, .upper, .no_trans, .non_unit, n, nrhs, 1, mut a, lda, mut b,
-			ldb)
+		blas.dtrsm(.left, true, false, .non_unit, n, nrhs, 1, a, lda, mut b, ldb)
 	}
 
 	// Solve Aᵀ * X = B.
 	// Solve Uᵀ * X = B, overwriting B with X.
-	blas.dtrsm(.left, .upper, .trans, .non_unit, n, nrhs, 1, mut a, lda, mut b, ldb)
+	blas.dtrsm(.left, true, true, .non_unit, n, nrhs, 1, a, lda, mut b, ldb)
 	// Solve Lᵀ * X = B, overwriting B with X.
-	blas.dtrsm(.left, .lower, .trans, .unit, n, nrhs, 1, mut a, lda, mut b, ldb)
+	blas.dtrsm(.left, false, true, .unit, n, nrhs, 1, a, lda, mut b, ldb)
 	dlaswp(nrhs, b, ldb, 0, n - 1, ipiv, -1)
 }

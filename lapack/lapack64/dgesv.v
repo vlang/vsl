@@ -22,7 +22,7 @@ import vsl.blas
 // The factored form of A is then used to solve the system of equations A * X =
 // B. On entry, b contains the right hand side matrix B. On return, if ok is
 // true, b contains the solution matrix X.
-pub fn dgesv(n int, nrhs int, mut a []f64, lda int, ipiv []int, mut b []f64, ldb int) {
+pub fn dgesv(n int, nrhs int, mut a []f64, lda int, mut ipiv []int, mut b []f64, ldb int) {
 	if n < 0 {
 		panic(n_lt0)
 	}
@@ -51,6 +51,6 @@ pub fn dgesv(n int, nrhs int, mut a []f64, lda int, ipiv []int, mut b []f64, ldb
 		panic(short_b)
 	}
 
-	dgetrf(n, n, mut a, lda, ipiv)
+	dgetrf(n, n, mut a, lda, mut ipiv)
 	dgetrs(.no_trans, n, nrhs, mut a, lda, ipiv, mut b, ldb)
 }

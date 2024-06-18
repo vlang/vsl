@@ -1,5 +1,7 @@
 module lapack64
 
+import math
+
 // ilaenv returns algorithm tuning parameters for the algorithm given by the
 // input string. ispec specifies the parameter to return:
 //
@@ -242,7 +244,7 @@ fn ilaenv(ispec int, name string, opts string, n1 int, n2 int, n3 int, n4 int) i
 			// Used by xGELSS and xGESVD
 			// Assuming n1 and n2 are defined elsewhere in your code
 			// Replace `min(n1, n2)` with actual min calculation or function
-			return int(f64(min(n1, n2)) * 1.6)
+			return int(f64(math.min(n1, n2)) * 1.6)
 		}
 		7 {
 			// Not used
