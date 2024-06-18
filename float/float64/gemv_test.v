@@ -1,6 +1,7 @@
 module float64
 
 import math
+import vsl.blas
 
 const dgemv_tests = [
 	DgemvCase{ // 1x1
