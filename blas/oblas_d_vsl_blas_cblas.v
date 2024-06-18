@@ -472,25 +472,25 @@ pub fn zdscal(n int, alpha f64, mut x voidptr, incx int) {
 }
 
 @[inline]
-pub fn sgemv(trans bool, m int, n int, alpha f32, a []f32, lda int, x []f32, incx int, beta f32, mut y []f32, incy int) {
-	C.cblas_sgemv(.row_major, c_trans(trans), m, n, alpha, unsafe { &a[0] }, lda, unsafe { &x[0] },
+pub fn sgemv(trans Transpose, m int, n int, alpha f32, a []f32, lda int, x []f32, incx int, beta f32, mut y []f32, incy int) {
+	C.cblas_sgemv(.row_major, trans, m, n, alpha, unsafe { &a[0] }, lda, unsafe { &x[0] },
 		incx, beta, unsafe { &y[0] }, incy)
 }
 
 @[inline]
-pub fn dgemv(trans bool, m int, n int, alpha f64, a []f64, lda int, x []f64, incx int, beta f64, mut y []f64, incy int) {
-	C.cblas_dgemv(.row_major, c_trans(trans), m, n, alpha, unsafe { &a[0] }, lda, unsafe { &x[0] },
+pub fn dgemv(trans Transpose, m int, n int, alpha f64, a []f64, lda int, x []f64, incx int, beta f64, mut y []f64, incy int) {
+	C.cblas_dgemv(.row_major, trans, m, n, alpha, unsafe { &a[0] }, lda, unsafe { &x[0] },
 		incx, beta, unsafe { &y[0] }, incy)
 }
 
 @[inline]
-pub fn cgemv(trans bool, m int, n int, alpha voidptr, a voidptr, lda int, x voidptr, incx int, beta voidptr, mut y voidptr, incy int) {
-	C.cblas_cgemv(.row_major, c_trans(trans), m, n, alpha, a, lda, x, incx, beta, y, incy)
+pub fn cgemv(trans Transpose, m int, n int, alpha voidptr, a voidptr, lda int, x voidptr, incx int, beta voidptr, mut y voidptr, incy int) {
+	C.cblas_cgemv(.row_major, trans, m, n, alpha, a, lda, x, incx, beta, y, incy)
 }
 
 @[inline]
-pub fn zgemv(trans bool, m int, n int, alpha voidptr, a voidptr, lda int, x voidptr, incx int, beta voidptr, mut y voidptr, incy int) {
-	C.cblas_zgemv(.row_major, c_trans(trans), m, n, alpha, a, lda, x, incx, beta, y, incy)
+pub fn zgemv(trans Transpose, m int, n int, alpha voidptr, a voidptr, lda int, x voidptr, incx int, beta voidptr, mut y voidptr, incy int) {
+	C.cblas_zgemv(.row_major, trans, m, n, alpha, a, lda, x, incx, beta, y, incy)
 }
 
 @[inline]
@@ -526,443 +526,427 @@ pub fn zgerc(m int, n int, alpha voidptr, x voidptr, incx int, y voidptr, incy i
 }
 
 @[inline]
-pub fn strsv(uplo bool, trans bool, diag Diagonal, n int, a []f32, lda int, mut x []f32, incx int) {
-	C.cblas_strsv(.row_major, c_uplo(uplo), c_trans(trans), diag, n, unsafe { &a[0] },
-		lda, unsafe { &x[0] }, incx)
+pub fn strsv(uplo Uplo, trans Transpose, diag Diagonal, n int, a []f32, lda int, mut x []f32, incx int) {
+	C.cblas_strsv(.row_major, uplo, trans, diag, n, unsafe { &a[0] }, lda, unsafe { &x[0] },
+		incx)
 }
 
 @[inline]
-pub fn dtrsv(uplo bool, trans bool, diag Diagonal, n int, a []f64, lda int, mut x []f64, incx int) {
-	C.cblas_dtrsv(.row_major, c_uplo(uplo), c_trans(trans), diag, n, unsafe { &a[0] },
-		lda, unsafe { &x[0] }, incx)
+pub fn dtrsv(uplo Uplo, trans Transpose, diag Diagonal, n int, a []f64, lda int, mut x []f64, incx int) {
+	C.cblas_dtrsv(.row_major, uplo, trans, diag, n, unsafe { &a[0] }, lda, unsafe { &x[0] },
+		incx)
 }
 
 @[inline]
-pub fn ctrsv(uplo bool, trans bool, diag Diagonal, n int, a voidptr, lda int, mut x voidptr, incx int) {
-	C.cblas_ctrsv(.row_major, c_uplo(uplo), c_trans(trans), diag, n, a, lda, x, incx)
+pub fn ctrsv(uplo Uplo, trans Transpose, diag Diagonal, n int, a voidptr, lda int, mut x voidptr, incx int) {
+	C.cblas_ctrsv(.row_major, uplo, trans, diag, n, a, lda, x, incx)
 }
 
 @[inline]
-pub fn ztrsv(uplo bool, trans bool, diag Diagonal, n int, a voidptr, lda int, mut x voidptr, incx int) {
-	C.cblas_ztrsv(.row_major, c_uplo(uplo), c_trans(trans), diag, n, a, lda, x, incx)
+pub fn ztrsv(uplo Uplo, trans Transpose, diag Diagonal, n int, a voidptr, lda int, mut x voidptr, incx int) {
+	C.cblas_ztrsv(.row_major, uplo, trans, diag, n, a, lda, x, incx)
 }
 
 @[inline]
-pub fn strmv(uplo bool, trans bool, diag Diagonal, n int, a []f32, lda int, mut x []f32, incx int) {
-	C.cblas_strmv(.row_major, c_uplo(uplo), c_trans(trans), diag, n, unsafe { &a[0] },
-		lda, unsafe { &x[0] }, incx)
+pub fn strmv(uplo Uplo, trans Transpose, diag Diagonal, n int, a []f32, lda int, mut x []f32, incx int) {
+	C.cblas_strmv(.row_major, uplo, trans, diag, n, unsafe { &a[0] }, lda, unsafe { &x[0] },
+		incx)
 }
 
 @[inline]
-pub fn dtrmv(uplo bool, trans bool, diag Diagonal, n int, a []f64, lda int, mut x []f64, incx int) {
-	C.cblas_dtrmv(.row_major, c_uplo(uplo), c_trans(trans), diag, n, unsafe { &a[0] },
-		lda, unsafe { &x[0] }, incx)
+pub fn dtrmv(uplo Uplo, trans Transpose, diag Diagonal, n int, a []f64, lda int, mut x []f64, incx int) {
+	C.cblas_dtrmv(.row_major, uplo, trans, diag, n, unsafe { &a[0] }, lda, unsafe { &x[0] },
+		incx)
 }
 
 @[inline]
-pub fn ctrmv(uplo bool, trans bool, diag Diagonal, n int, a voidptr, lda int, mut x voidptr, incx int) {
-	C.cblas_ctrmv(.row_major, c_uplo(uplo), c_trans(trans), diag, n, a, lda, x, incx)
+pub fn ctrmv(uplo Uplo, trans Transpose, diag Diagonal, n int, a voidptr, lda int, mut x voidptr, incx int) {
+	C.cblas_ctrmv(.row_major, uplo, trans, diag, n, a, lda, x, incx)
 }
 
 @[inline]
-pub fn ztrmv(uplo bool, trans bool, diag Diagonal, n int, a voidptr, lda int, mut x voidptr, incx int) {
-	C.cblas_ztrmv(.row_major, c_uplo(uplo), c_trans(trans), diag, n, a, lda, x, incx)
+pub fn ztrmv(uplo Uplo, trans Transpose, diag Diagonal, n int, a voidptr, lda int, mut x voidptr, incx int) {
+	C.cblas_ztrmv(.row_major, uplo, trans, diag, n, a, lda, x, incx)
 }
 
 @[inline]
-pub fn ssyr(uplo bool, n int, alpha f32, x []f32, incx int, mut a []f32, lda int) {
-	C.cblas_ssyr(.row_major, c_uplo(uplo), n, alpha, unsafe { &x[0] }, incx, unsafe { &a[0] },
+pub fn ssyr(uplo Uplo, n int, alpha f32, x []f32, incx int, mut a []f32, lda int) {
+	C.cblas_ssyr(.row_major, uplo, n, alpha, unsafe { &x[0] }, incx, unsafe { &a[0] },
 		lda)
 }
 
 @[inline]
-pub fn dsyr(uplo bool, n int, alpha f64, x []f64, incx int, mut a []f64, lda int) {
-	C.cblas_dsyr(.row_major, c_uplo(uplo), n, alpha, unsafe { &x[0] }, incx, unsafe { &a[0] },
+pub fn dsyr(uplo Uplo, n int, alpha f64, x []f64, incx int, mut a []f64, lda int) {
+	C.cblas_dsyr(.row_major, uplo, n, alpha, unsafe { &x[0] }, incx, unsafe { &a[0] },
 		lda)
 }
 
 @[inline]
-pub fn cher(uplo bool, n int, alpha f32, x voidptr, incx int, mut a voidptr, lda int) {
-	C.cblas_cher(.row_major, c_uplo(uplo), n, alpha, x, incx, a, lda)
+pub fn cher(uplo Uplo, n int, alpha f32, x voidptr, incx int, mut a voidptr, lda int) {
+	C.cblas_cher(.row_major, uplo, n, alpha, x, incx, a, lda)
 }
 
 @[inline]
-pub fn zher(uplo bool, n int, alpha f64, x voidptr, incx int, mut a voidptr, lda int) {
-	C.cblas_zher(.row_major, c_uplo(uplo), n, alpha, x, incx, a, lda)
+pub fn zher(uplo Uplo, n int, alpha f64, x voidptr, incx int, mut a voidptr, lda int) {
+	C.cblas_zher(.row_major, uplo, n, alpha, x, incx, a, lda)
 }
 
 @[inline]
-pub fn ssyr2(uplo bool, n int, alpha f32, x []f32, incx int, y []f32, incy int, mut a []f32, lda int) {
-	C.cblas_ssyr2(.row_major, c_uplo(uplo), n, alpha, unsafe { &x[0] }, incx, unsafe { &y[0] },
+pub fn ssyr2(uplo Uplo, n int, alpha f32, x []f32, incx int, y []f32, incy int, mut a []f32, lda int) {
+	C.cblas_ssyr2(.row_major, uplo, n, alpha, unsafe { &x[0] }, incx, unsafe { &y[0] },
 		incy, unsafe { &a[0] }, lda)
 }
 
 @[inline]
-pub fn dsyr2(uplo bool, n int, alpha f64, x []f64, incx int, y []f64, incy int, mut a []f64, lda int) {
-	C.cblas_dsyr2(.row_major, c_uplo(uplo), n, alpha, unsafe { &x[0] }, incx, unsafe { &y[0] },
+pub fn dsyr2(uplo Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, mut a []f64, lda int) {
+	C.cblas_dsyr2(.row_major, uplo, n, alpha, unsafe { &x[0] }, incx, unsafe { &y[0] },
 		incy, unsafe { &a[0] }, lda)
 }
 
 @[inline]
-pub fn cher2(uplo bool, n int, alpha voidptr, x voidptr, incx int, y voidptr, incy int, mut a voidptr, lda int) {
-	C.cblas_cher2(.row_major, c_uplo(uplo), n, alpha, x, incx, y, incy, a, lda)
+pub fn cher2(uplo Uplo, n int, alpha voidptr, x voidptr, incx int, y voidptr, incy int, mut a voidptr, lda int) {
+	C.cblas_cher2(.row_major, uplo, n, alpha, x, incx, y, incy, a, lda)
 }
 
 @[inline]
-pub fn zher2(uplo bool, n int, alpha voidptr, x voidptr, incx int, y voidptr, incy int, mut a voidptr, lda int) {
-	C.cblas_zher2(.row_major, c_uplo(uplo), n, alpha, x, incx, y, incy, a, lda)
+pub fn zher2(uplo Uplo, n int, alpha voidptr, x voidptr, incx int, y voidptr, incy int, mut a voidptr, lda int) {
+	C.cblas_zher2(.row_major, uplo, n, alpha, x, incx, y, incy, a, lda)
 }
 
 @[inline]
-pub fn sgbmv(trans bool, m int, n int, kl int, ku int, alpha f32, a []f32, lda int, x []f32, incx int, beta f32, mut y []f32, incy int) {
-	C.cblas_sgbmv(.row_major, c_trans(trans), m, n, kl, ku, alpha, unsafe { &a[0] }, lda,
-		unsafe { &x[0] }, incx, beta, unsafe { &y[0] }, incy)
-}
-
-@[inline]
-pub fn dgbmv(trans bool, m int, n int, kl int, ku int, alpha f64, a []f64, lda int, x []f64, incx int, beta f64, mut y []f64, incy int) {
-	C.cblas_dgbmv(.row_major, c_trans(trans), m, n, kl, ku, alpha, unsafe { &a[0] }, lda,
-		unsafe { &x[0] }, incx, beta, unsafe { &y[0] }, incy)
-}
-
-@[inline]
-pub fn cgbmv(trans bool, m int, n int, kl int, ku int, alpha voidptr, a voidptr, lda int, x voidptr, incx int, beta voidptr, mut y voidptr, incy int) {
-	C.cblas_cgbmv(.row_major, c_trans(trans), m, n, kl, ku, alpha, a, lda, x, incx, beta,
-		y, incy)
-}
-
-@[inline]
-pub fn zgbmv(trans bool, m int, n int, kl int, ku int, alpha voidptr, a voidptr, lda int, x voidptr, incx int, beta voidptr, mut y voidptr, incy int) {
-	C.cblas_zgbmv(.row_major, c_trans(trans), m, n, kl, ku, alpha, a, lda, x, incx, beta,
-		y, incy)
-}
-
-@[inline]
-pub fn ssbmv(uplo bool, n int, k int, alpha f32, a []f32, lda int, x []f32, incx int, beta f32, mut y []f32, incy int) {
-	C.cblas_ssbmv(.row_major, c_uplo(uplo), n, k, alpha, unsafe { &a[0] }, lda, unsafe { &x[0] },
+pub fn sgbmv(trans Transpose, m int, n int, kl int, ku int, alpha f32, a []f32, lda int, x []f32, incx int, beta f32, mut y []f32, incy int) {
+	C.cblas_sgbmv(.row_major, trans, m, n, kl, ku, alpha, unsafe { &a[0] }, lda, unsafe { &x[0] },
 		incx, beta, unsafe { &y[0] }, incy)
 }
 
 @[inline]
-pub fn dsbmv(uplo bool, n int, k int, alpha f64, a []f64, lda int, x []f64, incx int, beta f64, mut y []f64, incy int) {
-	C.cblas_dsbmv(.row_major, c_uplo(uplo), n, k, alpha, unsafe { &a[0] }, lda, unsafe { &x[0] },
+pub fn dgbmv(trans Transpose, m int, n int, kl int, ku int, alpha f64, a []f64, lda int, x []f64, incx int, beta f64, mut y []f64, incy int) {
+	C.cblas_dgbmv(.row_major, trans, m, n, kl, ku, alpha, unsafe { &a[0] }, lda, unsafe { &x[0] },
 		incx, beta, unsafe { &y[0] }, incy)
 }
 
 @[inline]
-pub fn stbmv(uplo bool, trans bool, diag Diagonal, n int, k int, a []f32, lda int, mut x []f32, incx int) {
-	C.cblas_stbmv(.row_major, c_uplo(uplo), c_trans(trans), diag, n, k, unsafe { &a[0] },
-		lda, unsafe { &x[0] }, incx)
+pub fn cgbmv(trans Transpose, m int, n int, kl int, ku int, alpha voidptr, a voidptr, lda int, x voidptr, incx int, beta voidptr, mut y voidptr, incy int) {
+	C.cblas_cgbmv(.row_major, trans, m, n, kl, ku, alpha, a, lda, x, incx, beta, y, incy)
 }
 
 @[inline]
-pub fn dtbmv(uplo bool, trans bool, diag Diagonal, n int, k int, a []f64, lda int, mut x []f64, incx int) {
-	C.cblas_dtbmv(.row_major, c_uplo(uplo), c_trans(trans), diag, n, k, unsafe { &a[0] },
-		lda, unsafe { &x[0] }, incx)
+pub fn zgbmv(trans Transpose, m int, n int, kl int, ku int, alpha voidptr, a voidptr, lda int, x voidptr, incx int, beta voidptr, mut y voidptr, incy int) {
+	C.cblas_zgbmv(.row_major, trans, m, n, kl, ku, alpha, a, lda, x, incx, beta, y, incy)
 }
 
 @[inline]
-pub fn ctbmv(uplo bool, trans bool, diag Diagonal, n int, k int, a voidptr, lda int, mut x voidptr, incx int) {
-	C.cblas_ctbmv(.row_major, c_uplo(uplo), c_trans(trans), diag, n, k, a, lda, x, incx)
-}
-
-@[inline]
-pub fn ztbmv(uplo bool, trans bool, diag Diagonal, n int, k int, a voidptr, lda int, mut x voidptr, incx int) {
-	C.cblas_ztbmv(.row_major, c_uplo(uplo), c_trans(trans), diag, n, k, a, lda, x, incx)
-}
-
-@[inline]
-pub fn stbsv(uplo bool, trans bool, diag Diagonal, n int, k int, a []f32, lda int, mut x []f32, incx int) {
-	C.cblas_stbsv(.row_major, c_uplo(uplo), c_trans(trans), diag, n, k, unsafe { &a[0] },
-		lda, unsafe { &x[0] }, incx)
-}
-
-@[inline]
-pub fn dtbsv(uplo bool, trans bool, diag Diagonal, n int, k int, a []f64, lda int, mut x []f64, incx int) {
-	C.cblas_dtbsv(.row_major, c_uplo(uplo), c_trans(trans), diag, n, k, unsafe { &a[0] },
-		lda, unsafe { &x[0] }, incx)
-}
-
-@[inline]
-pub fn ctbsv(uplo bool, trans bool, diag Diagonal, n int, k int, a voidptr, lda int, mut x voidptr, incx int) {
-	C.cblas_ctbsv(.row_major, c_uplo(uplo), c_trans(trans), diag, n, k, a, lda, x, incx)
-}
-
-@[inline]
-pub fn ztbsv(uplo bool, trans bool, diag Diagonal, n int, k int, a voidptr, lda int, mut x voidptr, incx int) {
-	C.cblas_ztbsv(.row_major, c_uplo(uplo), c_trans(trans), diag, n, k, a, lda, x, incx)
-}
-
-@[inline]
-pub fn stpmv(uplo bool, trans bool, diag Diagonal, n int, ap []f32, mut x []f32, incx int) {
-	C.cblas_stpmv(.row_major, c_uplo(uplo), c_trans(trans), diag, n, unsafe { &ap[0] },
-		unsafe { &x[0] }, incx)
-}
-
-@[inline]
-pub fn dtpmv(uplo bool, trans bool, diag Diagonal, n int, ap []f64, mut x []f64, incx int) {
-	C.cblas_dtpmv(.row_major, c_uplo(uplo), c_trans(trans), diag, n, unsafe { &ap[0] },
-		unsafe { &x[0] }, incx)
-}
-
-@[inline]
-pub fn ctpmv(uplo bool, trans bool, diag Diagonal, n int, ap voidptr, mut x voidptr, incx int) {
-	C.cblas_ctpmv(.row_major, c_uplo(uplo), c_trans(trans), diag, n, ap, x, incx)
-}
-
-@[inline]
-pub fn ztpmv(uplo bool, trans bool, diag Diagonal, n int, ap voidptr, mut x voidptr, incx int) {
-	C.cblas_ztpmv(.row_major, c_uplo(uplo), c_trans(trans), diag, n, ap, x, incx)
-}
-
-@[inline]
-pub fn stpsv(uplo bool, trans bool, diag Diagonal, n int, ap []f32, mut x []f32, incx int) {
-	C.cblas_stpsv(.row_major, c_uplo(uplo), c_trans(trans), diag, n, unsafe { &ap[0] },
-		unsafe { &x[0] }, incx)
-}
-
-@[inline]
-pub fn dtpsv(uplo bool, trans bool, diag Diagonal, n int, ap []f64, mut x []f64, incx int) {
-	C.cblas_dtpsv(.row_major, c_uplo(uplo), c_trans(trans), diag, n, unsafe { &ap[0] },
-		unsafe { &x[0] }, incx)
-}
-
-@[inline]
-pub fn ctpsv(uplo bool, trans bool, diag Diagonal, n int, ap voidptr, mut x voidptr, incx int) {
-	C.cblas_ctpsv(.row_major, c_uplo(uplo), c_trans(trans), diag, n, ap, x, incx)
-}
-
-@[inline]
-pub fn ztpsv(uplo bool, trans bool, diag Diagonal, n int, ap voidptr, mut x voidptr, incx int) {
-	C.cblas_ztpsv(.row_major, c_uplo(uplo), c_trans(trans), diag, n, ap, x, incx)
-}
-
-@[inline]
-pub fn ssymv(uplo bool, n int, alpha f32, a []f32, lda int, x []f32, incx int, beta f32, mut y []f32, incy int) {
-	C.cblas_ssymv(.row_major, c_uplo(uplo), n, alpha, unsafe { &a[0] }, lda, unsafe { &x[0] },
+pub fn ssbmv(uplo Uplo, n int, k int, alpha f32, a []f32, lda int, x []f32, incx int, beta f32, mut y []f32, incy int) {
+	C.cblas_ssbmv(.row_major, uplo, n, k, alpha, unsafe { &a[0] }, lda, unsafe { &x[0] },
 		incx, beta, unsafe { &y[0] }, incy)
 }
 
 @[inline]
-pub fn dsymv(uplo bool, n int, alpha f64, a []f64, lda int, x []f64, incx int, beta f64, mut y []f64, incy int) {
-	C.cblas_dsymv(.row_major, c_uplo(uplo), n, alpha, unsafe { &a[0] }, lda, unsafe { &x[0] },
+pub fn dsbmv(uplo Uplo, n int, k int, alpha f64, a []f64, lda int, x []f64, incx int, beta f64, mut y []f64, incy int) {
+	C.cblas_dsbmv(.row_major, uplo, n, k, alpha, unsafe { &a[0] }, lda, unsafe { &x[0] },
 		incx, beta, unsafe { &y[0] }, incy)
 }
 
 @[inline]
-pub fn chemv(uplo bool, n int, alpha voidptr, a voidptr, lda int, x voidptr, incx int, beta voidptr, mut y voidptr, incy int) {
-	C.cblas_chemv(.row_major, c_uplo(uplo), n, alpha, a, lda, x, incx, beta, y, incy)
+pub fn stbmv(uplo Uplo, trans Transpose, diag Diagonal, n int, k int, a []f32, lda int, mut x []f32, incx int) {
+	C.cblas_stbmv(.row_major, uplo, trans, diag, n, k, unsafe { &a[0] }, lda, unsafe { &x[0] },
+		incx)
 }
 
 @[inline]
-pub fn zhemv(uplo bool, n int, alpha voidptr, a voidptr, lda int, x voidptr, incx int, beta voidptr, mut y voidptr, incy int) {
-	C.cblas_zhemv(.row_major, c_uplo(uplo), n, alpha, a, lda, x, incx, beta, y, incy)
+pub fn dtbmv(uplo Uplo, trans Transpose, diag Diagonal, n int, k int, a []f64, lda int, mut x []f64, incx int) {
+	C.cblas_dtbmv(.row_major, uplo, trans, diag, n, k, unsafe { &a[0] }, lda, unsafe { &x[0] },
+		incx)
 }
 
 @[inline]
-pub fn sspmv(uplo bool, n int, alpha f32, ap []f32, x []f32, incx int, beta f32, mut y []f32, incy int) {
-	C.cblas_sspmv(.row_major, c_uplo(uplo), n, alpha, unsafe { &ap[0] }, unsafe { &x[0] },
+pub fn ctbmv(uplo Uplo, trans Transpose, diag Diagonal, n int, k int, a voidptr, lda int, mut x voidptr, incx int) {
+	C.cblas_ctbmv(.row_major, uplo, trans, diag, n, k, a, lda, x, incx)
+}
+
+@[inline]
+pub fn ztbmv(uplo Uplo, trans Transpose, diag Diagonal, n int, k int, a voidptr, lda int, mut x voidptr, incx int) {
+	C.cblas_ztbmv(.row_major, uplo, trans, diag, n, k, a, lda, x, incx)
+}
+
+@[inline]
+pub fn stbsv(uplo Uplo, trans Transpose, diag Diagonal, n int, k int, a []f32, lda int, mut x []f32, incx int) {
+	C.cblas_stbsv(.row_major, uplo, trans, diag, n, k, unsafe { &a[0] }, lda, unsafe { &x[0] },
+		incx)
+}
+
+@[inline]
+pub fn dtbsv(uplo Uplo, trans Transpose, diag Diagonal, n int, k int, a []f64, lda int, mut x []f64, incx int) {
+	C.cblas_dtbsv(.row_major, uplo, trans, diag, n, k, unsafe { &a[0] }, lda, unsafe { &x[0] },
+		incx)
+}
+
+@[inline]
+pub fn ctbsv(uplo Uplo, trans Transpose, diag Diagonal, n int, k int, a voidptr, lda int, mut x voidptr, incx int) {
+	C.cblas_ctbsv(.row_major, uplo, trans, diag, n, k, a, lda, x, incx)
+}
+
+@[inline]
+pub fn ztbsv(uplo Uplo, trans Transpose, diag Diagonal, n int, k int, a voidptr, lda int, mut x voidptr, incx int) {
+	C.cblas_ztbsv(.row_major, uplo, trans, diag, n, k, a, lda, x, incx)
+}
+
+@[inline]
+pub fn stpmv(uplo Uplo, trans Transpose, diag Diagonal, n int, ap []f32, mut x []f32, incx int) {
+	C.cblas_stpmv(.row_major, uplo, trans, diag, n, unsafe { &ap[0] }, unsafe { &x[0] },
+		incx)
+}
+
+@[inline]
+pub fn dtpmv(uplo Uplo, trans Transpose, diag Diagonal, n int, ap []f64, mut x []f64, incx int) {
+	C.cblas_dtpmv(.row_major, uplo, trans, diag, n, unsafe { &ap[0] }, unsafe { &x[0] },
+		incx)
+}
+
+@[inline]
+pub fn ctpmv(uplo Uplo, trans Transpose, diag Diagonal, n int, ap voidptr, mut x voidptr, incx int) {
+	C.cblas_ctpmv(.row_major, uplo, trans, diag, n, ap, x, incx)
+}
+
+@[inline]
+pub fn ztpmv(uplo Uplo, trans Transpose, diag Diagonal, n int, ap voidptr, mut x voidptr, incx int) {
+	C.cblas_ztpmv(.row_major, uplo, trans, diag, n, ap, x, incx)
+}
+
+@[inline]
+pub fn stpsv(uplo Uplo, trans Transpose, diag Diagonal, n int, ap []f32, mut x []f32, incx int) {
+	C.cblas_stpsv(.row_major, uplo, trans, diag, n, unsafe { &ap[0] }, unsafe { &x[0] },
+		incx)
+}
+
+@[inline]
+pub fn dtpsv(uplo Uplo, trans Transpose, diag Diagonal, n int, ap []f64, mut x []f64, incx int) {
+	C.cblas_dtpsv(.row_major, uplo, trans, diag, n, unsafe { &ap[0] }, unsafe { &x[0] },
+		incx)
+}
+
+@[inline]
+pub fn ctpsv(uplo Uplo, trans Transpose, diag Diagonal, n int, ap voidptr, mut x voidptr, incx int) {
+	C.cblas_ctpsv(.row_major, uplo, trans, diag, n, ap, x, incx)
+}
+
+@[inline]
+pub fn ztpsv(uplo Uplo, trans Transpose, diag Diagonal, n int, ap voidptr, mut x voidptr, incx int) {
+	C.cblas_ztpsv(.row_major, uplo, trans, diag, n, ap, x, incx)
+}
+
+@[inline]
+pub fn ssymv(uplo Uplo, n int, alpha f32, a []f32, lda int, x []f32, incx int, beta f32, mut y []f32, incy int) {
+	C.cblas_ssymv(.row_major, uplo, n, alpha, unsafe { &a[0] }, lda, unsafe { &x[0] },
 		incx, beta, unsafe { &y[0] }, incy)
 }
 
 @[inline]
-pub fn dspmv(uplo bool, n int, alpha f64, ap []f64, x []f64, incx int, beta f64, mut y []f64, incy int) {
-	C.cblas_dspmv(.row_major, c_uplo(uplo), n, alpha, unsafe { &ap[0] }, unsafe { &x[0] },
+pub fn dsymv(uplo Uplo, n int, alpha f64, a []f64, lda int, x []f64, incx int, beta f64, mut y []f64, incy int) {
+	C.cblas_dsymv(.row_major, uplo, n, alpha, unsafe { &a[0] }, lda, unsafe { &x[0] },
 		incx, beta, unsafe { &y[0] }, incy)
 }
 
 @[inline]
-pub fn sspr(uplo bool, n int, alpha f32, x []f32, incx int, mut ap []f32) {
-	C.cblas_sspr(.row_major, c_uplo(uplo), n, alpha, unsafe { &x[0] }, incx, unsafe { &ap[0] })
+pub fn chemv(uplo Uplo, n int, alpha voidptr, a voidptr, lda int, x voidptr, incx int, beta voidptr, mut y voidptr, incy int) {
+	C.cblas_chemv(.row_major, uplo, n, alpha, a, lda, x, incx, beta, y, incy)
 }
 
 @[inline]
-pub fn dspr(uplo bool, n int, alpha f64, x []f64, incx int, mut ap []f64) {
-	C.cblas_dspr(.row_major, c_uplo(uplo), n, alpha, unsafe { &x[0] }, incx, unsafe { &ap[0] })
+pub fn zhemv(uplo Uplo, n int, alpha voidptr, a voidptr, lda int, x voidptr, incx int, beta voidptr, mut y voidptr, incy int) {
+	C.cblas_zhemv(.row_major, uplo, n, alpha, a, lda, x, incx, beta, y, incy)
 }
 
 @[inline]
-pub fn chpr(uplo bool, n int, alpha f32, x voidptr, incx int, mut a voidptr) {
-	C.cblas_chpr(.row_major, c_uplo(uplo), n, alpha, x, incx, a)
+pub fn sspmv(uplo Uplo, n int, alpha f32, ap []f32, x []f32, incx int, beta f32, mut y []f32, incy int) {
+	C.cblas_sspmv(.row_major, uplo, n, alpha, unsafe { &ap[0] }, unsafe { &x[0] }, incx,
+		beta, unsafe { &y[0] }, incy)
 }
 
 @[inline]
-pub fn zhpr(uplo bool, n int, alpha f64, x voidptr, incx int, mut a voidptr) {
-	C.cblas_zhpr(.row_major, c_uplo(uplo), n, alpha, x, incx, a)
+pub fn dspmv(uplo Uplo, n int, alpha f64, ap []f64, x []f64, incx int, beta f64, mut y []f64, incy int) {
+	C.cblas_dspmv(.row_major, uplo, n, alpha, unsafe { &ap[0] }, unsafe { &x[0] }, incx,
+		beta, unsafe { &y[0] }, incy)
 }
 
 @[inline]
-pub fn sspr2(uplo bool, n int, alpha f32, x []f32, incx int, y []f32, incy int, mut a []f32) {
-	C.cblas_sspr2(.row_major, c_uplo(uplo), n, alpha, unsafe { &x[0] }, incx, unsafe { &y[0] },
+pub fn sspr(uplo Uplo, n int, alpha f32, x []f32, incx int, mut ap []f32) {
+	C.cblas_sspr(.row_major, uplo, n, alpha, unsafe { &x[0] }, incx, unsafe { &ap[0] })
+}
+
+@[inline]
+pub fn dspr(uplo Uplo, n int, alpha f64, x []f64, incx int, mut ap []f64) {
+	C.cblas_dspr(.row_major, uplo, n, alpha, unsafe { &x[0] }, incx, unsafe { &ap[0] })
+}
+
+@[inline]
+pub fn chpr(uplo Uplo, n int, alpha f32, x voidptr, incx int, mut a voidptr) {
+	C.cblas_chpr(.row_major, uplo, n, alpha, x, incx, a)
+}
+
+@[inline]
+pub fn zhpr(uplo Uplo, n int, alpha f64, x voidptr, incx int, mut a voidptr) {
+	C.cblas_zhpr(.row_major, uplo, n, alpha, x, incx, a)
+}
+
+@[inline]
+pub fn sspr2(uplo Uplo, n int, alpha f32, x []f32, incx int, y []f32, incy int, mut a []f32) {
+	C.cblas_sspr2(.row_major, uplo, n, alpha, unsafe { &x[0] }, incx, unsafe { &y[0] },
 		incy, unsafe { &a[0] })
 }
 
 @[inline]
-pub fn dspr2(uplo bool, n int, alpha f64, x []f64, incx int, y []f64, incy int, mut a []f64) {
-	C.cblas_dspr2(.row_major, c_uplo(uplo), n, alpha, unsafe { &x[0] }, incx, unsafe { &y[0] },
+pub fn dspr2(uplo Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, mut a []f64) {
+	C.cblas_dspr2(.row_major, uplo, n, alpha, unsafe { &x[0] }, incx, unsafe { &y[0] },
 		incy, unsafe { &a[0] })
 }
 
 @[inline]
-pub fn chpr2(uplo bool, n int, alpha voidptr, x voidptr, incx int, y voidptr, incy int, mut ap voidptr) {
-	C.cblas_chpr2(.row_major, c_uplo(uplo), n, alpha, x, incx, y, incy, ap)
+pub fn chpr2(uplo Uplo, n int, alpha voidptr, x voidptr, incx int, y voidptr, incy int, mut ap voidptr) {
+	C.cblas_chpr2(.row_major, uplo, n, alpha, x, incx, y, incy, ap)
 }
 
 @[inline]
-pub fn zhpr2(uplo bool, n int, alpha voidptr, x voidptr, incx int, y voidptr, incy int, mut ap voidptr) {
-	C.cblas_zhpr2(.row_major, c_uplo(uplo), n, alpha, x, incx, y, incy, ap)
+pub fn zhpr2(uplo Uplo, n int, alpha voidptr, x voidptr, incx int, y voidptr, incy int, mut ap voidptr) {
+	C.cblas_zhpr2(.row_major, uplo, n, alpha, x, incx, y, incy, ap)
 }
 
 @[inline]
-pub fn chbmv(uplo bool, n int, k int, alpha voidptr, a voidptr, lda int, x voidptr, incx int, beta voidptr, mut y voidptr, incy int) {
-	C.cblas_chbmv(.row_major, c_uplo(uplo), n, k, alpha, a, lda, x, incx, beta, y, incy)
+pub fn chbmv(uplo Uplo, n int, k int, alpha voidptr, a voidptr, lda int, x voidptr, incx int, beta voidptr, mut y voidptr, incy int) {
+	C.cblas_chbmv(.row_major, uplo, n, k, alpha, a, lda, x, incx, beta, y, incy)
 }
 
 @[inline]
-pub fn zhbmv(uplo bool, n int, k int, alpha voidptr, a voidptr, lda int, x voidptr, incx int, beta voidptr, mut y voidptr, incy int) {
-	C.cblas_zhbmv(.row_major, c_uplo(uplo), n, k, alpha, a, lda, x, incx, beta, y, incy)
+pub fn zhbmv(uplo Uplo, n int, k int, alpha voidptr, a voidptr, lda int, x voidptr, incx int, beta voidptr, mut y voidptr, incy int) {
+	C.cblas_zhbmv(.row_major, uplo, n, k, alpha, a, lda, x, incx, beta, y, incy)
 }
 
 @[inline]
-pub fn chpmv(uplo bool, n int, alpha voidptr, ap voidptr, x voidptr, incx int, beta voidptr, mut y voidptr, incy int) {
-	C.cblas_chpmv(.row_major, c_uplo(uplo), n, alpha, ap, x, incx, beta, y, incy)
+pub fn chpmv(uplo Uplo, n int, alpha voidptr, ap voidptr, x voidptr, incx int, beta voidptr, mut y voidptr, incy int) {
+	C.cblas_chpmv(.row_major, uplo, n, alpha, ap, x, incx, beta, y, incy)
 }
 
 @[inline]
-pub fn zhpmv(uplo bool, n int, alpha voidptr, ap voidptr, x voidptr, incx int, beta voidptr, mut y voidptr, incy int) {
-	C.cblas_zhpmv(.row_major, c_uplo(uplo), n, alpha, ap, x, incx, beta, y, incy)
+pub fn zhpmv(uplo Uplo, n int, alpha voidptr, ap voidptr, x voidptr, incx int, beta voidptr, mut y voidptr, incy int) {
+	C.cblas_zhpmv(.row_major, uplo, n, alpha, ap, x, incx, beta, y, incy)
 }
 
 @[inline]
-pub fn ssyrk(uplo bool, trans bool, n int, k int, alpha f32, a []f32, lda int, beta f32, mut c []f32, ldc int) {
-	C.cblas_ssyrk(.row_major, c_uplo(uplo), c_trans(trans), n, k, alpha, unsafe { &a[0] },
-		lda, beta, unsafe { &c[0] }, ldc)
-}
-
-@[inline]
-pub fn dsyrk(uplo bool, trans bool, n int, k int, alpha f64, a []f64, lda int, beta f64, mut c []f64, ldc int) {
-	C.cblas_dsyrk(.row_major, c_uplo(uplo), c_trans(trans), n, k, alpha, unsafe { &a[0] },
-		lda, beta, unsafe { &c[0] }, ldc)
-}
-
-@[inline]
-pub fn csyrk(uplo bool, trans bool, n int, k int, alpha voidptr, a voidptr, lda int, beta voidptr, mut c voidptr, ldc int) {
-	C.cblas_csyrk(.row_major, c_uplo(uplo), c_trans(trans), n, k, alpha, a, lda, beta,
-		c, ldc)
-}
-
-@[inline]
-pub fn zsyrk(uplo bool, trans bool, n int, k int, alpha voidptr, a voidptr, lda int, beta voidptr, mut c voidptr, ldc int) {
-	C.cblas_zsyrk(.row_major, c_uplo(uplo), c_trans(trans), n, k, alpha, a, lda, beta,
-		c, ldc)
-}
-
-@[inline]
-pub fn ssyr2k(uplo bool, trans bool, n int, k int, alpha f32, a []f32, lda int, b []f32, ldb int, beta f32, mut c []f32, ldc int) {
-	C.cblas_ssyr2k(.row_major, c_uplo(uplo), c_trans(trans), n, k, alpha, unsafe { &a[0] },
-		lda, unsafe { &b[0] }, ldb, beta, unsafe { &c[0] }, ldc)
-}
-
-@[inline]
-pub fn dsyr2k(uplo bool, trans bool, n int, k int, alpha f64, a []f64, lda int, b []f64, ldb int, beta f64, mut c []f64, ldc int) {
-	C.cblas_dsyr2k(.row_major, c_uplo(uplo), c_trans(trans), n, k, alpha, unsafe { &a[0] },
-		lda, unsafe { &b[0] }, ldb, beta, unsafe { &c[0] }, ldc)
-}
-
-@[inline]
-pub fn csyr2k(uplo bool, trans bool, n int, k int, alpha voidptr, a voidptr, lda int, b voidptr, ldb int, beta voidptr, mut c voidptr, ldc int) {
-	C.cblas_csyr2k(.row_major, c_uplo(uplo), c_trans(trans), n, k, alpha, a, lda, b, ldb,
-		beta, c, ldc)
-}
-
-@[inline]
-pub fn zsyr2k(uplo bool, trans bool, n int, k int, alpha voidptr, a voidptr, lda int, b voidptr, ldb int, beta voidptr, mut c voidptr, ldc int) {
-	C.cblas_zsyr2k(.row_major, c_uplo(uplo), c_trans(trans), n, k, alpha, a, lda, b, ldb,
-		beta, c, ldc)
-}
-
-@[inline]
-pub fn strmm(side Side, uplo bool, trans bool, diag Diagonal, m int, n int, alpha f32, a []f32, lda int, mut b []f32, ldb int) {
-	C.cblas_strmm(.row_major, side, c_uplo(uplo), c_trans(trans), diag, m, n, alpha, unsafe { &a[0] },
-		lda, unsafe { &b[0] }, ldb)
-}
-
-@[inline]
-pub fn dtrmm(side Side, uplo bool, trans bool, diag Diagonal, m int, n int, alpha f64, a []f64, lda int, mut b []f64, ldb int) {
-	C.cblas_dtrmm(.row_major, side, c_uplo(uplo), c_trans(trans), diag, m, n, alpha, unsafe { &a[0] },
-		lda, unsafe { &b[0] }, ldb)
-}
-
-@[inline]
-pub fn ctrmm(side Side, uplo bool, trans bool, diag Diagonal, m int, n int, alpha voidptr, a voidptr, lda int, mut b voidptr, ldb int) {
-	C.cblas_ctrmm(.row_major, side, c_uplo(uplo), c_trans(trans), diag, m, n, alpha, a,
-		lda, b, ldb)
-}
-
-@[inline]
-pub fn ztrmm(side Side, uplo bool, trans bool, diag Diagonal, m int, n int, alpha voidptr, a voidptr, lda int, mut b voidptr, ldb int) {
-	C.cblas_ztrmm(.row_major, side, c_uplo(uplo), c_trans(trans), diag, m, n, alpha, a,
-		lda, b, ldb)
-}
-
-@[inline]
-pub fn strsm(side Side, uplo bool, trans bool, diag Diagonal, m int, n int, alpha f32, a []f32, lda int, mut b []f32, ldb int) {
-	C.cblas_strsm(.row_major, side, c_uplo(uplo), c_trans(trans), diag, m, n, alpha, unsafe { &a[0] },
-		lda, unsafe { &b[0] }, ldb)
-}
-
-@[inline]
-pub fn dtrsm(side Side, uplo bool, trans bool, diag Diagonal, m int, n int, alpha f64, a []f64, lda int, mut b []f64, ldb int) {
-	C.cblas_dtrsm(.row_major, side, c_uplo(uplo), c_trans(trans), diag, m, n, alpha, unsafe { &a[0] },
-		lda, unsafe { &b[0] }, ldb)
-}
-
-@[inline]
-pub fn ctrsm(side Side, uplo bool, trans bool, diag Diagonal, m int, n int, alpha voidptr, a voidptr, lda int, mut b voidptr, ldb int) {
-	C.cblas_ctrsm(.row_major, side, c_uplo(uplo), c_trans(trans), diag, m, n, alpha, a,
-		lda, b, ldb)
-}
-
-@[inline]
-pub fn ztrsm(side Side, uplo bool, trans bool, diag Diagonal, m int, n int, alpha voidptr, a voidptr, lda int, mut b voidptr, ldb int) {
-	C.cblas_ztrsm(.row_major, side, c_uplo(uplo), c_trans(trans), diag, m, n, alpha, a,
-		lda, b, ldb)
-}
-
-@[inline]
-pub fn chemm(side Side, uplo bool, m int, n int, alpha voidptr, a voidptr, lda int, b voidptr, ldb int, beta voidptr, mut c voidptr, ldc int) {
-	C.cblas_chemm(.row_major, side, c_uplo(uplo), m, n, alpha, a, lda, b, ldb, beta, c,
+pub fn ssyrk(uplo Uplo, trans Transpose, n int, k int, alpha f32, a []f32, lda int, beta f32, mut c []f32, ldc int) {
+	C.cblas_ssyrk(.row_major, uplo, trans, n, k, alpha, unsafe { &a[0] }, lda, beta, unsafe { &c[0] },
 		ldc)
 }
 
 @[inline]
-pub fn zhemm(side Side, uplo bool, m int, n int, alpha voidptr, a voidptr, lda int, b voidptr, ldb int, beta voidptr, mut c voidptr, ldc int) {
-	C.cblas_zhemm(.row_major, side, c_uplo(uplo), m, n, alpha, a, lda, b, ldb, beta, c,
+pub fn dsyrk(uplo Uplo, trans Transpose, n int, k int, alpha f64, a []f64, lda int, beta f64, mut c []f64, ldc int) {
+	C.cblas_dsyrk(.row_major, uplo, trans, n, k, alpha, unsafe { &a[0] }, lda, beta, unsafe { &c[0] },
 		ldc)
 }
 
 @[inline]
-pub fn cherk(uplo bool, trans bool, n int, k int, alpha f32, a voidptr, lda int, beta f32, mut c voidptr, ldc int) {
-	C.cblas_cherk(.row_major, c_uplo(uplo), c_trans(trans), n, k, alpha, a, lda, beta,
-		c, ldc)
+pub fn csyrk(uplo Uplo, trans Transpose, n int, k int, alpha voidptr, a voidptr, lda int, beta voidptr, mut c voidptr, ldc int) {
+	C.cblas_csyrk(.row_major, uplo, trans, n, k, alpha, a, lda, beta, c, ldc)
 }
 
 @[inline]
-pub fn zherk(uplo bool, trans bool, n int, k int, alpha f64, a voidptr, lda int, beta f64, mut c voidptr, ldc int) {
-	C.cblas_zherk(.row_major, c_uplo(uplo), c_trans(trans), n, k, alpha, a, lda, beta,
-		c, ldc)
+pub fn zsyrk(uplo Uplo, trans Transpose, n int, k int, alpha voidptr, a voidptr, lda int, beta voidptr, mut c voidptr, ldc int) {
+	C.cblas_zsyrk(.row_major, uplo, trans, n, k, alpha, a, lda, beta, c, ldc)
 }
 
 @[inline]
-pub fn cher2k(uplo bool, trans bool, n int, k int, alpha voidptr, a voidptr, lda int, b voidptr, ldb int, beta f32, mut c voidptr, ldc int) {
-	C.cblas_cher2k(.row_major, c_uplo(uplo), c_trans(trans), n, k, alpha, a, lda, b, ldb,
-		beta, c, ldc)
+pub fn ssyr2k(uplo Uplo, trans Transpose, n int, k int, alpha f32, a []f32, lda int, b []f32, ldb int, beta f32, mut c []f32, ldc int) {
+	C.cblas_ssyr2k(.row_major, uplo, trans, n, k, alpha, unsafe { &a[0] }, lda, unsafe { &b[0] },
+		ldb, beta, unsafe { &c[0] }, ldc)
 }
 
 @[inline]
-pub fn zher2k(uplo bool, trans bool, n int, k int, alpha voidptr, a voidptr, lda int, b voidptr, ldb int, beta f64, mut c voidptr, ldc int) {
-	C.cblas_zher2k(.row_major, c_uplo(uplo), c_trans(trans), n, k, alpha, a, lda, b, ldb,
-		beta, c, ldc)
+pub fn dsyr2k(uplo Uplo, trans Transpose, n int, k int, alpha f64, a []f64, lda int, b []f64, ldb int, beta f64, mut c []f64, ldc int) {
+	C.cblas_dsyr2k(.row_major, uplo, trans, n, k, alpha, unsafe { &a[0] }, lda, unsafe { &b[0] },
+		ldb, beta, unsafe { &c[0] }, ldc)
+}
+
+@[inline]
+pub fn csyr2k(uplo Uplo, trans Transpose, n int, k int, alpha voidptr, a voidptr, lda int, b voidptr, ldb int, beta voidptr, mut c voidptr, ldc int) {
+	C.cblas_csyr2k(.row_major, uplo, trans, n, k, alpha, a, lda, b, ldb, beta, c, ldc)
+}
+
+@[inline]
+pub fn zsyr2k(uplo Uplo, trans Transpose, n int, k int, alpha voidptr, a voidptr, lda int, b voidptr, ldb int, beta voidptr, mut c voidptr, ldc int) {
+	C.cblas_zsyr2k(.row_major, uplo, trans, n, k, alpha, a, lda, b, ldb, beta, c, ldc)
+}
+
+@[inline]
+pub fn strmm(side Side, uplo Uplo, trans Transpose, diag Diagonal, m int, n int, alpha f32, a []f32, lda int, mut b []f32, ldb int) {
+	C.cblas_strmm(.row_major, side, uplo, trans, diag, m, n, alpha, unsafe { &a[0] },
+		lda, unsafe { &b[0] }, ldb)
+}
+
+@[inline]
+pub fn dtrmm(side Side, uplo Uplo, trans Transpose, diag Diagonal, m int, n int, alpha f64, a []f64, lda int, mut b []f64, ldb int) {
+	C.cblas_dtrmm(.row_major, side, uplo, trans, diag, m, n, alpha, unsafe { &a[0] },
+		lda, unsafe { &b[0] }, ldb)
+}
+
+@[inline]
+pub fn ctrmm(side Side, uplo Uplo, trans Transpose, diag Diagonal, m int, n int, alpha voidptr, a voidptr, lda int, mut b voidptr, ldb int) {
+	C.cblas_ctrmm(.row_major, side, uplo, trans, diag, m, n, alpha, a, lda, b, ldb)
+}
+
+@[inline]
+pub fn ztrmm(side Side, uplo Uplo, trans Transpose, diag Diagonal, m int, n int, alpha voidptr, a voidptr, lda int, mut b voidptr, ldb int) {
+	C.cblas_ztrmm(.row_major, side, uplo, trans, diag, m, n, alpha, a, lda, b, ldb)
+}
+
+@[inline]
+pub fn strsm(side Side, uplo Uplo, trans Transpose, diag Diagonal, m int, n int, alpha f32, a []f32, lda int, mut b []f32, ldb int) {
+	C.cblas_strsm(.row_major, side, uplo, trans, diag, m, n, alpha, unsafe { &a[0] },
+		lda, unsafe { &b[0] }, ldb)
+}
+
+@[inline]
+pub fn dtrsm(side Side, uplo Uplo, trans Transpose, diag Diagonal, m int, n int, alpha f64, a []f64, lda int, mut b []f64, ldb int) {
+	C.cblas_dtrsm(.row_major, side, uplo, trans, diag, m, n, alpha, unsafe { &a[0] },
+		lda, unsafe { &b[0] }, ldb)
+}
+
+@[inline]
+pub fn ctrsm(side Side, uplo Uplo, trans Transpose, diag Diagonal, m int, n int, alpha voidptr, a voidptr, lda int, mut b voidptr, ldb int) {
+	C.cblas_ctrsm(.row_major, side, uplo, trans, diag, m, n, alpha, a, lda, b, ldb)
+}
+
+@[inline]
+pub fn ztrsm(side Side, uplo Uplo, trans Transpose, diag Diagonal, m int, n int, alpha voidptr, a voidptr, lda int, mut b voidptr, ldb int) {
+	C.cblas_ztrsm(.row_major, side, uplo, trans, diag, m, n, alpha, a, lda, b, ldb)
+}
+
+@[inline]
+pub fn chemm(side Side, uplo Uplo, m int, n int, alpha voidptr, a voidptr, lda int, b voidptr, ldb int, beta voidptr, mut c voidptr, ldc int) {
+	C.cblas_chemm(.row_major, side, uplo, m, n, alpha, a, lda, b, ldb, beta, c, ldc)
+}
+
+@[inline]
+pub fn zhemm(side Side, uplo Uplo, m int, n int, alpha voidptr, a voidptr, lda int, b voidptr, ldb int, beta voidptr, mut c voidptr, ldc int) {
+	C.cblas_zhemm(.row_major, side, uplo, m, n, alpha, a, lda, b, ldb, beta, c, ldc)
+}
+
+@[inline]
+pub fn cherk(uplo Uplo, trans Transpose, n int, k int, alpha f32, a voidptr, lda int, beta f32, mut c voidptr, ldc int) {
+	C.cblas_cherk(.row_major, uplo, trans, n, k, alpha, a, lda, beta, c, ldc)
+}
+
+@[inline]
+pub fn zherk(uplo Uplo, trans Transpose, n int, k int, alpha f64, a voidptr, lda int, beta f64, mut c voidptr, ldc int) {
+	C.cblas_zherk(.row_major, uplo, trans, n, k, alpha, a, lda, beta, c, ldc)
+}
+
+@[inline]
+pub fn cher2k(uplo Uplo, trans Transpose, n int, k int, alpha voidptr, a voidptr, lda int, b voidptr, ldb int, beta f32, mut c voidptr, ldc int) {
+	C.cblas_cher2k(.row_major, uplo, trans, n, k, alpha, a, lda, b, ldb, beta, c, ldc)
+}
+
+@[inline]
+pub fn zher2k(uplo Uplo, trans Transpose, n int, k int, alpha voidptr, a voidptr, lda int, b voidptr, ldb int, beta f64, mut c voidptr, ldc int) {
+	C.cblas_zher2k(.row_major, uplo, trans, n, k, alpha, a, lda, b, ldb, beta, c, ldc)
 }
 
 @[inline]
@@ -986,47 +970,45 @@ pub fn zaxpby(n int, alpha voidptr, x voidptr, incx int, beta voidptr, mut y voi
 }
 
 @[inline]
-pub fn somatcopy(order MemoryLayout, trans bool, rows int, cols int, alpha f32, a []f32, lda int, mut b []f32, ldb int) {
-	C.cblas_somatcopy(order, c_trans(trans), rows, cols, alpha, unsafe { &a[0] }, lda,
-		unsafe { &b[0] }, ldb)
-}
-
-@[inline]
-pub fn domatcopy(order MemoryLayout, trans bool, rows int, cols int, alpha f64, a []f64, lda int, mut b []f64, ldb int) {
-	C.cblas_domatcopy(order, c_trans(trans), rows, cols, alpha, unsafe { &a[0] }, lda,
-		unsafe { &b[0] }, ldb)
-}
-
-@[inline]
-pub fn comatcopy(order MemoryLayout, trans bool, rows int, cols int, alpha &f32, a &f32, lda int, mut b &f32, ldb int) {
-	C.cblas_comatcopy(order, c_trans(trans), rows, cols, alpha, a, lda, b, ldb)
-}
-
-@[inline]
-pub fn zomatcopy(order MemoryLayout, trans bool, rows int, cols int, alpha &f64, a &f64, lda int, mut b &f64, ldb int) {
-	C.cblas_zomatcopy(order, c_trans(trans), rows, cols, alpha, a, lda, b, ldb)
-}
-
-@[inline]
-pub fn simatcopy(order MemoryLayout, trans bool, rows int, cols int, alpha f32, mut a []f32, lda int, ldb int) {
-	C.cblas_simatcopy(order, c_trans(trans), rows, cols, alpha, unsafe { &a[0] }, lda,
+pub fn somatcopy(order MemoryLayout, trans Transpose, rows int, cols int, alpha f32, a []f32, lda int, mut b []f32, ldb int) {
+	C.cblas_somatcopy(order, trans, rows, cols, alpha, unsafe { &a[0] }, lda, unsafe { &b[0] },
 		ldb)
 }
 
 @[inline]
-pub fn dimatcopy(order MemoryLayout, trans bool, rows int, cols int, alpha f64, mut a []f64, lda int, ldb int) {
-	C.cblas_dimatcopy(order, c_trans(trans), rows, cols, alpha, unsafe { &a[0] }, lda,
+pub fn domatcopy(order MemoryLayout, trans Transpose, rows int, cols int, alpha f64, a []f64, lda int, mut b []f64, ldb int) {
+	C.cblas_domatcopy(order, trans, rows, cols, alpha, unsafe { &a[0] }, lda, unsafe { &b[0] },
 		ldb)
 }
 
 @[inline]
-pub fn cimatcopy(order MemoryLayout, trans bool, rows int, cols int, alpha &f32, mut a &f32, lda int, ldb int) {
-	C.cblas_cimatcopy(order, c_trans(trans), rows, cols, alpha, a, lda, ldb)
+pub fn comatcopy(order MemoryLayout, trans Transpose, rows int, cols int, alpha &f32, a &f32, lda int, mut b &f32, ldb int) {
+	C.cblas_comatcopy(order, trans, rows, cols, alpha, a, lda, b, ldb)
 }
 
 @[inline]
-pub fn zimatcopy(order MemoryLayout, trans bool, rows int, cols int, alpha &f64, mut a &f64, lda int, ldb int) {
-	C.cblas_zimatcopy(order, c_trans(trans), rows, cols, alpha, a, lda, ldb)
+pub fn zomatcopy(order MemoryLayout, trans Transpose, rows int, cols int, alpha &f64, a &f64, lda int, mut b &f64, ldb int) {
+	C.cblas_zomatcopy(order, trans, rows, cols, alpha, a, lda, b, ldb)
+}
+
+@[inline]
+pub fn simatcopy(order MemoryLayout, trans Transpose, rows int, cols int, alpha f32, mut a []f32, lda int, ldb int) {
+	C.cblas_simatcopy(order, trans, rows, cols, alpha, unsafe { &a[0] }, lda, ldb)
+}
+
+@[inline]
+pub fn dimatcopy(order MemoryLayout, trans Transpose, rows int, cols int, alpha f64, mut a []f64, lda int, ldb int) {
+	C.cblas_dimatcopy(order, trans, rows, cols, alpha, unsafe { &a[0] }, lda, ldb)
+}
+
+@[inline]
+pub fn cimatcopy(order MemoryLayout, trans Transpose, rows int, cols int, alpha &f32, mut a &f32, lda int, ldb int) {
+	C.cblas_cimatcopy(order, trans, rows, cols, alpha, a, lda, ldb)
+}
+
+@[inline]
+pub fn zimatcopy(order MemoryLayout, trans Transpose, rows int, cols int, alpha &f64, mut a &f64, lda int, ldb int) {
+	C.cblas_zimatcopy(order, trans, rows, cols, alpha, a, lda, ldb)
 }
 
 @[inline]
@@ -1052,7 +1034,7 @@ pub fn zgeadd(order MemoryLayout, rows int, cols int, alpha &f64, a &f64, lda in
 }
 
 @[inline]
-pub fn dgemm(trans_a bool, trans_b bool, m int, n int, k int, alpha f64, a []f64, lda int, b []f64, ldb int, beta f64, mut cc []f64, ldc int) {
-	C.cblas_dgemm(.row_major, c_trans(trans_a), c_trans(trans_b), m, n, k, alpha, unsafe { &a[0] },
-		lda, unsafe { &b[0] }, ldb, beta, unsafe { &cc[0] }, ldc)
+pub fn dgemm(trans_a Transpose, trans_b Transpose, m int, n int, k int, alpha f64, a []f64, lda int, b []f64, ldb int, beta f64, mut cc []f64, ldc int) {
+	C.cblas_dgemm(.row_major, trans_a, trans_b, m, n, k, alpha, unsafe { &a[0] }, lda,
+		unsafe { &b[0] }, ldb, beta, unsafe { &cc[0] }, ldc)
 }

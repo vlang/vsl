@@ -21,26 +21,6 @@ pub type Diagonal = blas64.Diagonal
 // Side is used to specify whether a matrix is on the left or right side in a matrix-matrix multiplication.
 pub type Side = blas64.Side
 
-// c_trans is a helper function to convert bool to Transpose
-pub fn c_trans(trans bool) Transpose {
-	return if trans { .trans } else { .no_trans }
-}
-
-// c_uplo is a helper function to convert bool to Uplo
-pub fn c_uplo(up bool) Uplo {
-	return if up { .upper } else { .lower }
-}
-
-// l_uplo is a helper function to convert bool to Uplo
-pub fn l_uplo(up bool) u8 {
-	return if up { `U` } else { `L` }
-}
-
-// job_vlr is a helper function to convert bool to char
-pub fn job_vlr(do_calc bool) rune {
-	return if do_calc { `V` } else { `N` }
-}
-
 // slice_to_col_major converts nested slice into an array representing a col-major matrix
 //
 // _**NOTE**: make sure to have at least 1x1 item_

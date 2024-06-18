@@ -47,8 +47,8 @@ pub fn dgesv(n int, nrhs int, mut a []f64, lda int, mut ipiv []int, mut b []f64,
 	if ipiv.len != n {
 		errors.vsl_panic('ipiv.len must be equal to n. ${ipiv.len} != ${n}\n', .efailed)
 	}
-	info := C.LAPACKE_dgesv(.row_major, n, nrhs, unsafe { &a[0] }, lda, unsafe { &ipiv[0] }, unsafe { &b[0] },
-		ldb)
+	info := C.LAPACKE_dgesv(.row_major, n, nrhs, unsafe { &a[0] }, lda, unsafe { &ipiv[0] },
+		unsafe { &b[0] }, ldb)
 	if info != 0 {
 		errors.vsl_panic('lapack failed', .efailed)
 	}
@@ -141,9 +141,9 @@ pub fn dgetri(n int, mut a []f64, lda int, mut ipiv []int) {
 // where U is an upper triangular matrix and L is lower triangular.
 //
 // This is the block version of the algorithm, calling Level 3 BLAS.
-pub fn dpotrf(uplo bool, n int, mut a []f64, lda int) {
+pub fn dpotrf(uplo blas.Uplo, n int, mut a []f64, lda int) {
 	unsafe {
-		info := C.LAPACKE_dpotrf(.row_major, blas.c_uplo(uplo), n, &a[0], lda)
+		info := C.LAPACKE_dpotrf(.row_major, uplo, n, &a[0], lda)
 		if info != 0 {
 			errors.vsl_panic('lapack failed', .efailed)
 		}

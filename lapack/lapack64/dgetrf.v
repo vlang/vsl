@@ -79,13 +79,13 @@ pub fn dgetrf(m int, n int, mut a []f64, lda int, mut ipiv []int) {
 			dlaswp(j, mut slice2, lda, j, j + jb, mut slice_ipiv2, 1)
 
 			mut slice3 := unsafe { a[j * lda + j + jb..] }
-			blas.dtrsm(.left, false, false, .unit, jb, n - j - jb, 1, a[j * lda + j..],
+			blas.dtrsm(.left, .lower, .no_trans, .unit, jb, n - j - jb, 1, a[j * lda + j..],
 				lda, mut slice3, lda)
 
 			if j + jb < m {
 				mut slice4 := unsafe { a[(j + jb) * lda + j + jb..] }
-				blas.dgemm(false, false, m - j - jb, n - j - jb, jb, -1, a[(j + jb) * lda + j..],
-					lda, a[j * lda + j + jb..], lda, 1, mut slice4, lda)
+				blas.dgemm(.no_trans, .no_trans, m - j - jb, n - j - jb, jb, -1, a[(j + jb) * lda +
+					j..], lda, a[j * lda + j + jb..], lda, 1, mut slice4, lda)
 			}
 		}
 	}

@@ -99,10 +99,11 @@ pub fn dgemm(trans_a Transpose, trans_b Transpose, m int, n int, k int, alpha f6
 		}
 	}
 
-	dgemm_parallel(a_trans, b_trans, m, n, k, a, lda, b, ldb, mut c, ldc, alpha)
+	dgemm_parallel(if a_trans { .trans } else { .no_trans }, if b_trans { .trans } else { .no_trans },
+		m, n, k, a, lda, b, ldb, mut c, ldc, alpha)
 }
 
-fn dgemm_parallel(a_trans bool, b_trans bool, m int, n int, k int, a []f64, lda int, b []f64, ldb int, mut c []f64, ldc int, alpha f64) {
+fn dgemm_parallel(a_trans Transpose, b_trans Transpose, m int, n int, k int, a []f64, lda int, b []f64, ldb int, mut c []f64, ldc int, alpha f64) {
 	// dgemm_parallel computes a parallel matrix multiplication by partitioning
 	// a and b into sub-blocks, and updating c with the multiplication of the sub-block
 	// In all cases,
@@ -155,7 +156,7 @@ fn dgemm_parallel(a_trans bool, b_trans bool, m int, n int, k int, a []f64, lda 
 	for i := 0; i < m; i += block_size {
 		for j := 0; j < n; j += block_size {
 			// worker_limit <- 0
-			go fn (a_trans bool, b_trans bool, m int, n int, max_k_len int, a []f64, lda int, b []f64, ldb int, mut c []f64, ldc int, alpha f64, i int, j int, mut wg sync.WaitGroup) {
+			go fn (a_trans Transpose, b_trans Transpose, m int, n int, max_k_len int, a []f64, lda int, b []f64, ldb int, mut c []f64, ldc int, alpha f64, i int, j int, mut wg sync.WaitGroup) {
 				defer {
 					wg.done()
 					// <-worker_limit
@@ -180,12 +181,12 @@ fn dgemm_parallel(a_trans bool, b_trans bool, m int, n int, k int, a []f64, lda 
 					}
 					mut a_sub := []f64{}
 					mut b_sub := []f64{}
-					if a_trans {
+					if a_trans == .trans {
 						a_sub = slice_view_f64(a, lda, k, i, lenk, leni)
 					} else {
 						a_sub = slice_view_f64(a, lda, i, k, leni, lenk)
 					}
-					if b_trans {
+					if b_trans == .trans {
 						b_sub = slice_view_f64(b, ldb, j, k, lenj, lenk)
 					} else {
 						b_sub = slice_view_f64(b, ldb, k, j, lenk, lenj)
@@ -200,20 +201,20 @@ fn dgemm_parallel(a_trans bool, b_trans bool, m int, n int, k int, a []f64, lda 
 }
 
 // dgemm_serial is serial matrix multiply
-fn dgemm_serial(a_trans bool, b_trans bool, m int, n int, k int, a []f64, lda int, b []f64, ldb int, mut c []f64, ldc int, alpha f64) {
-	if !a_trans && !b_trans {
+fn dgemm_serial(a_trans Transpose, b_trans Transpose, m int, n int, k int, a []f64, lda int, b []f64, ldb int, mut c []f64, ldc int, alpha f64) {
+	if a_trans != .trans && b_trans != .trans {
 		dgemm_serial_not_not(m, n, k, a, lda, b, ldb, mut c, ldc, alpha)
 		return
 	}
-	if a_trans && !b_trans {
+	if a_trans == .trans && b_trans != .trans {
 		dgemm_serial_trans_not(m, n, k, a, lda, b, ldb, mut c, ldc, alpha)
 		return
 	}
-	if !a_trans && b_trans {
+	if a_trans != .trans && b_trans == .trans {
 		dgemm_serial_not_trans(m, n, k, a, lda, b, ldb, mut c, ldc, alpha)
 		return
 	}
-	if a_trans && b_trans {
+	if a_trans == .trans && b_trans == .trans {
 		dgemm_serial_trans_trans(m, n, k, a, lda, b, ldb, mut c, ldc, alpha)
 		return
 	}
