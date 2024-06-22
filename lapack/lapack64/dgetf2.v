@@ -24,7 +24,7 @@ pub fn dgetf2(m int, n int, mut a []f64, lda int, mut ipiv []int) {
 		panic(bad_len_ipiv)
 	}
 
-	sfmin := dlamch_s()
+	sfmin := dlamch_s
 
 	for j := 0; j < mn; j++ {
 		// Find a pivot and test for singularity.
@@ -57,10 +57,4 @@ pub fn dgetf2(m int, n int, mut a []f64, lda int, mut ipiv []int) {
 				1, mut slice4, lda)
 		}
 	}
-}
-
-fn dlamch_s() f64 {
-	// Returns the safe minimum value (sfmin).
-	// This value is used as a threshold for detecting small values in the matrix.
-	return math.ldexp(1.0, -1022) // Smallest positive normal number.
 }

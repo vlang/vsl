@@ -21,6 +21,16 @@ pub type Diagonal = blas64.Diagonal
 // Side is used to specify whether a matrix is on the left or right side in a matrix-matrix multiplication.
 pub type Side = blas64.Side
 
+// uplo_from_bool converts a boolean to Uplo.
+pub fn uplo_from_bool(uplo bool) Uplo {
+	return if uplo { .upper } else { .lower }
+}
+
+// uplo_to_bool converts Uplo to a boolean.
+pub fn uplo_to_bool(uplo Uplo) bool {
+	return uplo == .upper
+}
+
 // slice_to_col_major converts nested slice into an array representing a col-major matrix
 //
 // _**NOTE**: make sure to have at least 1x1 item_
