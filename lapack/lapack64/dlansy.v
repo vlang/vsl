@@ -8,16 +8,16 @@ import vsl.blas
 // at least n, otherwise work is unused.
 pub fn dlansy(norm MatrixNorm, uplo blas.Uplo, n int, a []f64, lda int, mut work []f64) f64 {
 	if norm != .max_row_sum && norm != .max_column_sum && norm != .frobenius && norm != .max_abs {
-		panic(lapack64.bad_norm)
+		panic(bad_norm)
 	}
 	if uplo != .upper && uplo != .lower {
-		panic(lapack64.bad_uplo)
+		panic(bad_uplo)
 	}
 	if n < 0 {
 		panic('lapack: n < 0')
 	}
 	if lda < math.max(1, n) {
-		panic(lapack64.bad_ld_a)
+		panic(bad_ld_a)
 	}
 
 	// Quick return if possible.
@@ -25,11 +25,11 @@ pub fn dlansy(norm MatrixNorm, uplo blas.Uplo, n int, a []f64, lda int, mut work
 		return 0.0
 	}
 
-	if a.len < (n-1) * lda + n {
-		panic(lapack64.short_a)
+	if a.len < (n - 1) * lda + n {
+		panic(short_a)
 	}
 	if (norm == .max_column_sum || norm == .max_row_sum) && work.len < n {
-		panic(lapack64.short_work)
+		panic(short_work)
 	}
 
 	match norm {
