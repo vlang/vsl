@@ -111,8 +111,8 @@ pub fn dgetri(n int, mut a []f64, lda int, mut ipiv []int) {
 // where U is an upper triangular matrix and L is lower triangular.
 //
 // This is the block version of the algorithm, calling Level 3 BLAS.
-pub fn dpotrf(uplo bool, n int, mut a []f64, lda int) {
-	info := lapack64.dpotrf(blas.uplo_from_bool(uplo), n, mut a, lda)
+pub fn dpotrf(uplo blas.Uplo, n int, mut a []f64, lda int) {
+	info := lapack64.dpotrf(uplo, n, mut a, lda)
 	if info != 0 {
 		errors.vsl_panic('lapack failed', .efailed)
 	}
