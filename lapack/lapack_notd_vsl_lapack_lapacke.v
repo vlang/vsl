@@ -31,13 +31,13 @@ pub fn dgesv(n int, nrhs int, mut a []f64, lda int, mut ipiv []int, mut b []f64,
 	lapack64.dgesv(n, nrhs, mut a, lda, mut ipiv, mut b, ldb)
 }
 
-// dgesvd computes the singular value decomposition (SVD) of a real M-by-N matrix A, optionally computing the left and/or right singular vectors.
+// dgesvd computes the singular value decomposition (SingularValueDecomposition) of a real M-by-N matrix A, optionally computing the left and/or right singular vectors.
 //
 // See: http://www.netlib.org/lapack/explore-html/d8/d2d/dgesvd_8f.html
 //
 // See: https://software.intel.com/en-us/mkl-developer-reference-c-gesvd
 //
-// The SVD is written
+// The SingularValueDecomposition is written
 //
 // A = U * SIGMA * transpose(V)
 //
@@ -55,7 +55,7 @@ pub fn dgesvd(jobu SVDJob, jobvt SVDJob, m int, n int, mut a []f64, lda int, s [
 	info := lapack64.dgesvd(jobu, jobvt, m, n, mut a, lda, s, mut u, ldu, mut vt, ldvt,
 		superb)
 	if info != 0 {
-		errors.vsl_panic('LAPACK dgesvd failed with error code: $info', .efailed)
+		errors.vsl_panic('LAPACK dgesvd failed with error code: ${info}', .efailed)
 	}
 }
 
@@ -90,7 +90,7 @@ pub fn dgetrf(m int, n int, mut a []f64, lda int, mut ipiv []int) {
 pub fn dgetri(n int, mut a []f64, lda int, mut ipiv []int) {
 	info := lapack64.dgetri(n, mut a, lda, mut ipiv)
 	if info != 0 {
-		errors.vsl_panic('LAPACK dgesvd failed with error code: $info', .efailed)
+		errors.vsl_panic('LAPACK dgesvd failed with error code: ${info}', .efailed)
 	}
 }
 
@@ -114,7 +114,7 @@ pub fn dgetri(n int, mut a []f64, lda int, mut ipiv []int) {
 pub fn dpotrf(uplo blas.Uplo, n int, mut a []f64, lda int) {
 	info := lapack64.dpotrf(uplo, n, mut a, lda)
 	if info != 0 {
-		errors.vsl_panic('LAPACK dgesvd failed with error code: $info', .efailed)
+		errors.vsl_panic('LAPACK dgesvd failed with error code: ${info}', .efailed)
 	}
 }
 
@@ -141,7 +141,7 @@ pub fn dpotrf(uplo blas.Uplo, n int, mut a []f64, lda int) {
 //
 // The computed eigenvectors are normalized to have Euclidean norm
 // equal to 1 and largest component real.
-pub fn dgeev(calc_vl LeftEVJob, calc_vr LeftEVJob, n int, mut a []f64, lda int, wr []f64, wi []f64, mut vl []f64, ldvl_ int, mut vr []f64, ldvr_ int) {
+pub fn dgeev(calc_vl LeftEigenVectorsJob, calc_vr LeftEigenVectorsJob, n int, mut a []f64, lda int, wr []f64, wi []f64, mut vl []f64, ldvl_ int, mut vr []f64, ldvr_ int) {
 	mut vvl := 0.0
 	mut vvr := 0.0
 	mut ldvl := ldvl_
@@ -163,6 +163,6 @@ pub fn dgeev(calc_vl LeftEVJob, calc_vr LeftEVJob, n int, mut a []f64, lda int, 
 	info := lapack64.dgeev(calc_vl, calc_vr, n, mut a, lda, wr, wi, mut vl, ldvl, mut
 		vr, ldvr)
 	if info != 0 {
-		errors.vsl_panic('LAPACK dgesvd failed with error code: $info', .efailed)
+		errors.vsl_panic('LAPACK dgesvd failed with error code: ${info}', .efailed)
 	}
 }

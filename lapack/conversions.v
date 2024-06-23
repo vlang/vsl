@@ -32,17 +32,17 @@ pub type SVDJob = lapack64.SVDJob
 // GSVDJob specifies the singular vector computation type for Generalized SVD.
 pub type GSVDJob = lapack64.GSVDJob
 
-// EVComp specifies how eigenvectors are computed in Dsteqr.
-pub type EVComp = lapack64.EVComp
+// EigenVectorsComp specifies how eigenvectors are computed in Dsteqr.
+pub type EigenVectorsComp = lapack64.EigenVectorsComp
 
-// EVJob specifies whether eigenvectors are computed in Dsyev.
-pub type EVJob = lapack64.EVJob
+// EigenVectorsJob specifies whether eigenvectors are computed in Dsyev.
+pub type EigenVectorsJob = lapack64.EigenVectorsJob
 
-// LeftEVJob specifies whether left eigenvectors are computed in Dgeev.
-pub type LeftEVJob = lapack64.LeftEVJob
+// LeftEigenVectorsJob specifies whether left eigenvectors are computed in Dgeev.
+pub type LeftEigenVectorsJob = lapack64.LeftEigenVectorsJob
 
-// RightEVJob specifies whether right eigenvectors are computed in Dgeev.
-pub type RightEVJob = lapack64.RightEVJob
+// RightEigenVectorsJob specifies whether right eigenvectors are computed in Dgeev.
+pub type RightEigenVectorsJob = lapack64.RightEigenVectorsJob
 
 // BalanceJob specifies matrix balancing operation.
 pub type BalanceJob = lapack64.BalanceJob
@@ -56,11 +56,11 @@ pub type SchurComp = lapack64.SchurComp
 // UpdateSchurComp specifies whether the matrix of Schur vectors is updated in Dtrexc.
 pub type UpdateSchurComp = lapack64.UpdateSchurComp
 
-// EVSide specifies what eigenvectors are computed in Dtrevc3.
-pub type EVSide = lapack64.EVSide
+// EigenVectorsSide specifies what eigenvectors are computed in Dtrevc3.
+pub type EigenVectorsSide = lapack64.EigenVectorsSide
 
-// EVHowMany specifies which eigenvectors are computed in Dtrevc3 and how.
-pub type EVHowMany = lapack64.EVHowMany
+// EigenVectorsHowMany specifies which eigenvectors are computed in Dtrevc3 and how.
+pub type EigenVectorsHowMany = lapack64.EigenVectorsHowMany
 
 // MaximizeNormXJob specifies the heuristic method for computing a contribution to
 // the reciprocal Dif-estimate in Dlatdf.

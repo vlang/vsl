@@ -13,9 +13,9 @@ fn C.LAPACKE_dgetri(matrix_layout blas.MemoryLayout, n int, a &f64, lda int, ipi
 
 fn C.LAPACKE_dpotrf(matrix_layout blas.MemoryLayout, uplo blas.Uplo, n int, a &f64, lda int) int
 
-fn C.LAPACKE_dgeev(matrix_layout blas.MemoryLayout, calc_vl LeftEVJob, calc_vr LeftEVJob, n int, a &f64, lda int, wr &f64, wi &f64, vl &f64, ldvl_ int, vr &f64, ldvr_ int) int
+fn C.LAPACKE_dgeev(matrix_layout blas.MemoryLayout, calc_vl LeftEigenVectorsJob, calc_vr LeftEigenVectorsJob, n int, a &f64, lda int, wr &f64, wi &f64, vl &f64, ldvl_ int, vr &f64, ldvr_ int) int
 
-fn C.LAPACKE_dsyev(matrix_layout blas.MemoryLayout, jobz EVJob, uplo blas.Uplo, n int, a &f64, lda int, w &f64, work &f64, lwork int) int
+fn C.LAPACKE_dsyev(matrix_layout blas.MemoryLayout, jobz EigenVectorsJob, uplo blas.Uplo, n int, a &f64, lda int, w &f64, work &f64, lwork int) int
 
 fn C.LAPACKE_dgebal(matrix_layout blas.MemoryLayout, job BalanceJob, n int, a &f64, lda int, ilo int, ihi int, scale &f64) int
 
@@ -54,13 +54,13 @@ pub fn dgesv(n int, nrhs int, mut a []f64, lda int, mut ipiv []int, mut b []f64,
 	}
 }
 
-// dgesvd computes the singular value decomposition (SVD) of a real M-by-N matrix A, optionally computing the left and/or right singular vectors.
+// dgesvd computes the singular value decomposition (SingularValueDecomposition) of a real M-by-N matrix A, optionally computing the left and/or right singular vectors.
 //
 // See: http://www.netlib.org/lapack/explore-html/d8/d2d/dgesvd_8f.html
 //
 // See: https://software.intel.com/en-us/mkl-developer-reference-c-gesvd
 //
-// The SVD is written
+// The SingularValueDecomposition is written
 //
 // A = U * SIGMA * transpose(V)
 //
@@ -173,7 +173,7 @@ pub fn dpotrf(uplo blas.Uplo, n int, mut a []f64, lda int) {
 //
 // The computed eigenvectors are normalized to have Euclidean norm
 // equal to 1 and largest component real.
-pub fn dgeev(calc_vl LeftEVJob, calc_vr LeftEVJob, n int, mut a []f64, lda int, wr []f64, wi []f64, vl []f64, ldvl_ int, vr []f64, ldvr_ int) {
+pub fn dgeev(calc_vl LeftEigenVectorsJob, calc_vr LeftEigenVectorsJob, n int, mut a []f64, lda int, wr []f64, wi []f64, vl []f64, ldvl_ int, vr []f64, ldvr_ int) {
 	mut vvl := 0.0
 	mut vvr := 0.0
 	mut ldvl := ldvl_

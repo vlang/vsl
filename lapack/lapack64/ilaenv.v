@@ -11,7 +11,7 @@ import math
 //	   crossover to an unblocked version.
 //	4: The number of shifts.
 //	5: The minimum column dimension for blocking to be used.
-//	6: The crossover point for SVD (to use QR factorization or not).
+//	6: The crossover point for SingularValueDecomposition (to use QR factorization or not).
 //	7: The number of processors.
 //	8: The crossover point for multi-shift in QR and QZ methods for non-symmetric eigenvalue problems.
 //	9: Maximum size of the subproblems in divide-and-conquer algorithms.
@@ -241,7 +241,7 @@ fn ilaenv(ispec int, name string, opts string, n1 int, n2 int, n3 int, n4 int) i
 			return 2
 		}
 		6 {
-			// Used by xGELSS and xGESVD
+			// Used by xGELSS and xGESingularValueDecomposition
 			// Assuming n1 and n2 are defined elsewhere in your code
 			// Replace `min(n1, n2)` with actual min calculation or function
 			return int(f64(math.min(n1, n2)) * 1.6)

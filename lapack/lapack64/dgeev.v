@@ -4,7 +4,7 @@ import math
 import vsl.blas
 
 // dgeev computes the eigenvalues and, optionally, the left and/or right eigenvectors for a real nonsymmetric matrix A.
-pub fn dgeev(jobvl LeftEVJob, jobvr LeftEVJob, n int, mut a []f64, lda int, wr []f64, wi []f64, mut vl []f64, ldvl int, mut vr []f64, ldvr int) int {
+pub fn dgeev(jobvl LeftEigenVectorsJob, jobvr LeftEigenVectorsJob, n int, mut a []f64, lda int, wr []f64, wi []f64, mut vl []f64, ldvl int, mut vr []f64, ldvr int) int {
 	if n == 0 {
 		return 0
 	}

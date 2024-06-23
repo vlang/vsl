@@ -67,7 +67,7 @@ pub enum GenOrtho as u8 {
 	generate_q  = u8(`Q`)
 }
 
-// SVDJob specifies the singular vector computation type for SVD.
+// SVDJob specifies the singular vector computation type for SingularValueDecomposition.
 pub enum SVDJob as u8 {
 	// Compute all columns of the orthogonal matrix U or V.
 	svd_all       = u8(`A`)
@@ -79,7 +79,7 @@ pub enum SVDJob as u8 {
 	svd_none      = u8(`N`)
 }
 
-// GSVDJob specifies the singular vector computation type for Generalized SVD.
+// GSVDJob specifies the singular vector computation type for Generalized SingularValueDecomposition.
 pub enum GSVDJob as u8 {
 	// Compute orthogonal matrix U.
 	gsvd_u    = u8(`U`)
@@ -93,8 +93,8 @@ pub enum GSVDJob as u8 {
 	gsvd_none = u8(`N`)
 }
 
-// EVComp specifies how eigenvectors are computed in Dsteqr.
-pub enum EVComp as u8 {
+// EigenVectorsComp specifies how eigenvectors are computed in Dsteqr.
+pub enum EigenVectorsComp as u8 {
 	// Compute eigenvectors of the original symmetric matrix.
 	ev_orig      = u8(`V`)
 	// Compute eigenvectors of the tridiagonal matrix.
@@ -103,24 +103,24 @@ pub enum EVComp as u8 {
 	ev_comp_none = u8(`N`)
 }
 
-// EVJob specifies whether eigenvectors are computed in Dsyev.
-pub enum EVJob as u8 {
+// EigenVectorsJob specifies whether eigenvectors are computed in Dsyev.
+pub enum EigenVectorsJob as u8 {
 	// Compute eigenvectors.
 	ev_compute = u8(`V`)
 	// Do not compute eigenvectors.
 	ev_none    = u8(`N`)
 }
 
-// LeftEVJob specifies whether left eigenvectors are computed in Dgeev.
-pub enum LeftEVJob as u8 {
+// LeftEigenVectorsJob specifies whether left eigenvectors are computed in Dgeev.
+pub enum LeftEigenVectorsJob as u8 {
 	// Compute left eigenvectors.
 	left_ev_compute = u8(`V`)
 	// Do not compute left eigenvectors.
 	left_ev_none    = u8(`N`)
 }
 
-// RightEVJob specifies whether right eigenvectors are computed in Dgeev.
-pub enum RightEVJob as u8 {
+// RightEigenVectorsJob specifies whether right eigenvectors are computed in Dgeev.
+pub enum RightEigenVectorsJob as u8 {
 	// Compute right eigenvectors.
 	right_ev_compute = u8(`V`)
 	// Do not compute right eigenvectors.
@@ -159,8 +159,8 @@ pub enum UpdateSchurComp as u8 {
 	update_schur_none = u8(`N`)
 }
 
-// EVSide specifies what eigenvectors are computed in Dtrevc3.
-pub enum EVSide as u8 {
+// EigenVectorsSide specifies what eigenvectors are computed in Dtrevc3.
+pub enum EigenVectorsSide as u8 {
 	// Compute only right eigenvectors.
 	ev_right = u8(`R`)
 	// Compute only left eigenvectors.
@@ -169,8 +169,8 @@ pub enum EVSide as u8 {
 	ev_both  = u8(`B`)
 }
 
-// EVHowMany specifies which eigenvectors are computed in Dtrevc3 and how.
-pub enum EVHowMany as u8 {
+// EigenVectorsHowMany specifies which eigenvectors are computed in Dtrevc3 and how.
+pub enum EigenVectorsHowMany as u8 {
 	// Compute all right and/or left eigenvectors.
 	ev_all       = u8(`A`)
 	// Compute all right and/or left eigenvectors multiplied by an input matrix.

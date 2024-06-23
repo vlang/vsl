@@ -17,17 +17,17 @@ import vsl.blas
 // dsteqr will panic otherwise.
 //
 // z, on entry, contains the n×n orthogonal matrix used in the reduction to
-// tridiagonal form if compz == lapack.EVOrig. On exit, if
-// compz == lapack.EVOrig, z contains the orthonormal eigenvectors of the
-// original symmetric matrix, and if compz == lapack.EVTridiag, z contains the
+// tridiagonal form if compz == lapack.EigenVectorsOrig. On exit, if
+// compz == lapack.EigenVectorsOrig, z contains the orthonormal eigenvectors of the
+// original symmetric matrix, and if compz == lapack.EigenVectorsTridiag, z contains the
 // orthonormal eigenvectors of the symmetric tridiagonal matrix. z is not used
-// if compz == lapack.EVCompNone.
+// if compz == lapack.EigenVectorsCompNone.
 //
 // work must have length at least max(1, 2*n-2) if the eigenvectors are computed,
 // and dsteqr will panic otherwise.
 //
 // dsteqr is an internal routine. It is exported for testing purposes.
-pub fn dsteqr(compz EVComp, n int, mut d []f64, mut e []f64, mut z []f64, ldz int, mut work []f64) bool {
+pub fn dsteqr(compz EigenVectorsComp, n int, mut d []f64, mut e []f64, mut z []f64, ldz int, mut work []f64) bool {
 	if compz != .ev_comp_none && compz != .ev_tridiag && compz != .ev_orig {
 		panic('bad_ev_comp')
 	}

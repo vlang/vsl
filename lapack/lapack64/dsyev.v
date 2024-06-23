@@ -3,7 +3,7 @@ module lapack64
 import math
 import vsl.blas
 
-pub fn dsyev(jobz EVJob, uplo blas.Uplo, n int, mut a []f64, lda int, mut w []f64, mut work []f64, lwork int) {
+pub fn dsyev(jobz EigenVectorsJob, uplo blas.Uplo, n int, mut a []f64, lda int, mut w []f64, mut work []f64, lwork int) {
 	if jobz != .ev_none && jobz != .ev_compute {
 		panic(bad_ev_job)
 	}
@@ -89,7 +89,8 @@ pub fn dsyev(jobz EVJob, uplo blas.Uplo, n int, mut a []f64, lda int, mut w []f6
 		}
 	} else {
 		dorgtr(uplo, n, mut a, lda, work[indtau..], mut work[indwork..], llwork)
-		if !dsteqr(EVComp(jobz), n, mut w, mut work[inde..], mut a, lda, mut work[indtau..]) {
+		if !dsteqr(EigenVectorsComp(jobz), n, mut w, mut work[inde..], mut a, lda, mut
+			work[indtau..]) {
 			panic('Dsteqr failed')
 		}
 	}
