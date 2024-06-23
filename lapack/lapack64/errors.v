@@ -173,6 +173,6 @@ pub const bad_ld_z = 'lapack: bad leading dimension of Z'
 
 // Panic strings for bad vector increments.
 pub const abs_inc_not_one = 'lapack: increment not one or negative one'
-pub const bad_inc_x = 'lapack: incXpub const <= 0'
-pub const bad_inc_y = 'lapack: incYpub const <= 0'
-pub const zero_inc_v = 'lapack:pub const incvpub const == 0'
+pub const bad_inc_x = 'lapack: incx <= 0'
+pub const bad_inc_y = 'lapack: incy <= 0'
+pub const zero_inc_v = 'lapack: incv == 0'

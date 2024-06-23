@@ -116,8 +116,8 @@ pub fn dorgql(m int, n int, k int, mut a []f64, lda int, tau []f64, mut work []f
 			if n - k + i > 0 {
 				// Form the triangular factor of the block reflector
 				// H = H_{i+ib-1} * ... * H_{i+1} * H_i.
-				dlarft(.backward, .column_wise, m - k + i + ib, ib, mut a[n - k + i..],
-					lda, tau[i..], mut work, ldwork)
+				dlarft(.backward, .column_wise, m - k + i + ib, ib, a[n - k + i..], lda,
+					tau[i..], mut work, ldwork)
 
 				// Apply H to A[0:m-k+i+ib, 0:n-k+i] from the left.
 				dlarfb(.left, .no_trans, .backward, .column_wise, m - k + i + ib, n - k + i,

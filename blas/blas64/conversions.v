@@ -18,6 +18,7 @@ pub enum Transpose {
 pub enum Uplo {
 	upper = 121
 	lower = 122
+	all   = 99
 }
 
 // Diagonal is used to specify whether the diagonal of a matrix is unit or non-unit.

@@ -88,8 +88,8 @@ pub fn dsyev(jobz EVJob, uplo blas.Uplo, n int, mut a []f64, lda int, mut w []f6
 			panic('Dsterf failed')
 		}
 	} else {
-		dorgtr(uplo, n, mut a, lda, mut work[indtau..], mut work[indwork..], llwork)
-		if !dsteqr(EvComp(jobz), n, mut w, mut work[inde..], mut a, lda, mut work[indtau..]) {
+		dorgtr(uplo, n, mut a, lda, work[indtau..], mut work[indwork..], llwork)
+		if !dsteqr(EVComp(jobz), n, mut w, mut work[inde..], mut a, lda, mut work[indtau..]) {
 			panic('Dsteqr failed')
 		}
 	}

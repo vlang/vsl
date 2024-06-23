@@ -64,7 +64,7 @@ pub fn dorg2l(m int, n int, k int, mut a []f64, lda int, tau []f64, mut work []f
 
 		// Apply H_i to A[0:m-k+i, 0:n-k+i] from the left.
 		a[(m - n + ii) * lda + ii] = 1
-		dlarf(.left, m - n + ii + 1, ii, mut a[ii..], lda, tau[i], mut a, lda, mut work)
+		dlarf(.left, m - n + ii + 1, ii, a[ii..], lda, tau[i], mut a, lda, mut work)
 		blas.dscal(m - n + ii, -tau[i], mut a[ii..], lda)
 		a[(m - n + ii) * lda + ii] = 1 - tau[i]
 
