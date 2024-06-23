@@ -55,7 +55,7 @@ pub fn dgesvd(jobu SVDJob, jobvt SVDJob, m int, n int, mut a []f64, lda int, s [
 	info := lapack64.dgesvd(jobu, jobvt, m, n, mut a, lda, s, mut u, ldu, mut vt, ldvt,
 		superb)
 	if info != 0 {
-		errors.vsl_panic('lapack failed', .efailed)
+		errors.vsl_panic('LAPACK dgesvd failed with error code: $info', .efailed)
 	}
 }
 
@@ -90,7 +90,7 @@ pub fn dgetrf(m int, n int, mut a []f64, lda int, mut ipiv []int) {
 pub fn dgetri(n int, mut a []f64, lda int, mut ipiv []int) {
 	info := lapack64.dgetri(n, mut a, lda, mut ipiv)
 	if info != 0 {
-		errors.vsl_panic('lapack failed', .efailed)
+		errors.vsl_panic('LAPACK dgesvd failed with error code: $info', .efailed)
 	}
 }
 
@@ -114,7 +114,7 @@ pub fn dgetri(n int, mut a []f64, lda int, mut ipiv []int) {
 pub fn dpotrf(uplo blas.Uplo, n int, mut a []f64, lda int) {
 	info := lapack64.dpotrf(uplo, n, mut a, lda)
 	if info != 0 {
-		errors.vsl_panic('lapack failed', .efailed)
+		errors.vsl_panic('LAPACK dgesvd failed with error code: $info', .efailed)
 	}
 }
 
@@ -163,6 +163,6 @@ pub fn dgeev(calc_vl LeftEVJob, calc_vr LeftEVJob, n int, mut a []f64, lda int, 
 	info := lapack64.dgeev(calc_vl, calc_vr, n, mut a, lda, wr, wi, mut vl, ldvl, mut
 		vr, ldvr)
 	if info != 0 {
-		errors.vsl_panic('lapack failed', .efailed)
+		errors.vsl_panic('LAPACK dgesvd failed with error code: $info', .efailed)
 	}
 }
