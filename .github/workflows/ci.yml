@@ -65,7 +65,7 @@ jobs:
         run: mv ./vsl ~/.vmodules
 
       - name: Execute Tests using Pure V Backend
-        run: ~/.vmodules/vsl/bin/test ${{ matrix.flags }}
+        run: ~/.vmodules/vsl/bin/test ${{ matrix.flags }} --use-cblas
 
       - name: Execute Tests using Pure V Backend with Pure C Backend
         run: ~/.vmodules/vsl/bin/test ${{ matrix.flags }} --use-cblas --use-lapacke
