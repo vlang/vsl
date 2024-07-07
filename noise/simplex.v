@@ -12,7 +12,7 @@ const g3 = f64(1.0 / 6.0)
 const f4 = f64((math.sqrt(5.0) - 1.0) / 4)
 const g4 = f64((5.0 - math.sqrt(5.0)) / 20.0)
 
-
+// vfmt off
 const simplex := [
   [0, 1, 2, 3], [0, 1, 3, 2], [0, 0, 0, 0], [0, 2, 3, 1], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [1, 2, 3, 0],
   [0, 2, 1, 3], [0, 0, 0, 0], [0, 3, 1, 2], [0, 3, 2, 1], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [1, 3, 2, 0],
@@ -23,6 +23,7 @@ const simplex := [
   [2, 0, 1, 3], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [3, 0, 1, 2], [3, 0, 2, 1], [0, 0, 0, 0], [3, 1, 2, 0],
   [2, 1, 0, 3], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [3, 1, 0, 2], [0, 0, 0, 0], [3, 2, 0, 1], [3, 2, 1, 0]
 ]
+// vfmt on
 
 fn grad_1d(hash int, x f64) f64 {
 	h := hash & 15
@@ -166,7 +167,7 @@ pub fn simplex_2d(x f64, y f64) f64 {
 
 pub fn simplex_3d(x f64, y f64, z f64) f64 {
 	// skew the input space to determine which simplex cell we're in
-	s := (x + y + z) * f3
+	s := (x + y + z) * noise.f3
 	xs := x + s
 	ys := y + s
 	zs := z + s
@@ -175,15 +176,15 @@ pub fn simplex_3d(x f64, y f64, z f64) f64 {
 	k := int(zs)
 
 	// unskew the cell origin back to x, y, z space
-	t := f64(i + j + k) * g3
+	t := f64(i + j + k) * noise.g3
 	// distances from cell origin
 	x0 := x - (i - t)
 	y0 := y - (j - t)
 	z0 := z - (k - t)
 
-  mut i1 := 0
-  mut j1 := 0
-  mut k1 := 0
+	mut i1 := 0
+	mut j1 := 0
+	mut k1 := 0
 	mut i2 := 0
 	mut j2 := 0
 	mut k2 := 0
@@ -191,77 +192,56 @@ pub fn simplex_3d(x f64, y f64, z f64) f64 {
 	if x0 >= y0 {
 		if y0 >= z0 {
 			i1 = 1
-			j1 = 0
-			k1 = 0
 			i2 = 1
 			j2 = 1
-			k2 = 0
-		}
-		else if x0 >= z0 {
+		} else if x0 >= z0 {
 			i1 = 1
-			j1 = 0
-			k1 = 0
 			i2 = 1
-			j2 = 0
 			k2 = 1
-		}
-		else {
-			i1 = 0
-			j1 = 0
+		} else {
 			k1 = 1
 			i2 = 1
-			j2 = 0
 			k2 = 1
 		}
 	} else {
 		if y0 < z0 {
-			i1 = 0
-			j1 = 0
 			k1 = 1
-			i2 = 0
 			j2 = 1
 			k2 = 1
-		}
-		else if x0 < z0 {
-			i1 = 0
+		} else if x0 < z0 {
 			j1 = 1
-			k1 = 0
-			i2 = 0
 			j2 = 1
 			k2 = 1
-		}
-		else {
-			i1 = 0
+		} else {
 			j1 = 1
-			k1 = 0
 			i2 = 1
 			j2 = 1
-			k2 = 0
 		}
 	}
 
 	// offsets for corners in x, y, z coords
-	x1 := x0 - i1 + g3
-	y1 := y0 - j1 + g3
-	z1 := z0 - k1 + g3
-  x2 := x0 - i2 + 2.0 * g3
-	y2 := y0 - j2 + 2.0 * g3
-	z2 := z0 - k2 + 2.0 * g3
-	x3 := x0 - 1.0 + 3.0 * g3
-	y3 := y0 - 1.0 + 3.0 * g3
-	z3 := z0 - 1.0 + 3.0 * g3
+	x1 := x0 - i1 + noise.g3
+	y1 := y0 - j1 + noise.g3
+	z1 := z0 - k1 + noise.g3
+	x2 := x0 - i2 + 2.0 * noise.g3
+	y2 := y0 - j2 + 2.0 * noise.g3
+	z2 := z0 - k2 + 2.0 * noise.g3
+	x3 := x0 - 1.0 + 3.0 * noise.g3
+	y3 := y0 - 1.0 + 3.0 * noise.g3
+	z3 := z0 - 1.0 + 3.0 * noise.g3
 
-  ii := i & 0xff
-  jj := j & 0xff
+	ii := i & 0xff
+	jj := j & 0xff
 	kk := k & 0xff
 
 	mut t0 := 0.6 - x0 * x0 - y0 * y0 - z0 * z0
 	mut n0 := 0.0
-  if t0 < 0 {
+	if t0 < 0 {
 		n0 = 0.0
 	} else {
-    t0 *= t0
-		n0 = t0 * t0 * grad_3d(permutations[ii + permutations[jj + permutations[kk]]], x0, y0, z0)
+		t0 *= t0
+		n0 = t0 * t0 * grad_3d(permutations[ii + permutations[jj + permutations[kk]]],
+			x0, y0, z0)
 	}
 
 	mut t1 := 0.6 - x1 * x1 - y1 * y1 - z1 * z1
@@ -270,7 +250,8 @@ pub fn simplex_3d(x f64, y f64, z f64) f64 {
 		n1 = 0.0
 	} else {
 		t1 *= t1
-		n1 = t1 * t1 * grad_3d(permutations[ii + i1 + permutations[jj + j1 + permutations[kk + k1]]], x1, y1, z1)
+		n1 = t1 * t1 * grad_3d(permutations[ii + i1 + permutations[jj + j1 + permutations[kk + k1]]],
+			x1, y1, z1)
 	}
 
 	mut t2 := 0.6 - x2 * x2 - y2 * y2 - z2 * z2
@@ -279,7 +260,8 @@ pub fn simplex_3d(x f64, y f64, z f64) f64 {
 		n2 = 0.0
 	} else {
 		t2 *= t2
-		n2 = t2 * t2 * grad_3d(permutations[ii + i2 + permutations[jj + j2 + permutations[kk + k2]]], x2, y2, z2)
+		n2 = t2 * t2 * grad_3d(permutations[ii + i2 + permutations[jj + j2 + permutations[kk + k2]]],
+			x2, y2, z2)
 	}
 
 	mut t3 := 0.6 - x3 * x3 - y3 * y3 - z3 * z3
@@ -288,7 +270,8 @@ pub fn simplex_3d(x f64, y f64, z f64) f64 {
 		n3 = 0.0
 	} else {
 		t3 *= t3
-		n3 = t3 * t3 * grad_3d(permutations[ii + 1 + permutations[jj + 1 + permutations[kk + 1]]], x3, y3, z3)
+		n3 = t3 * t3 * grad_3d(permutations[ii + 1 + permutations[jj + 1 + permutations[kk + 1]]],
+			x3, y3, z3)
 	}
 
 	// scale the return value to [-1, 1]
@@ -296,111 +279,116 @@ pub fn simplex_3d(x f64, y f64, z f64) f64 {
 }
 
 pub fn simplex_4d(x f64, y f64, z f64, w f64) f64 {
-  s := (x + y + z + w) * f4
-  xs := x + s
-  ys := y + s
-  zs := z + s
-  ws := w + s
-  i := int(xs)
-  j := int(ys)
-  k := int(zs)
-  l := int(ws)
+	s := (x + y + z + w) * noise.f4
+	xs := x + s
+	ys := y + s
+	zs := z + s
+	ws := w + s
+	i := int(xs)
+	j := int(ys)
+	k := int(zs)
+	l := int(ws)
 
-  t := f64(i + j + k + l) * g4
-  x0 := x - (i - t)
-  y0 := y - (j - t)
-  z0 := z - (k - t)
-  w0 := w - (l - t)
+	t := f64(i + j + k + l) * noise.g4
+	x0 := x - (i - t)
+	y0 := y - (j - t)
+	z0 := z - (k - t)
+	w0 := w - (l - t)
 
-  c1 := if x0 > y0 { 32 } else { 0 }
-  c2 := if x0 > z0 { 16 } else { 0 }
-  c3 := if y0 > z0 { 8 } else { 0 }
-  c4 := if x0 > w0 { 4 } else { 0 }
-  c5 := if y0 > w0 { 2 } else { 0 }
-  c6 := if z0 > w0 { 1 } else { 0 }
-  c := c1 + c2 + c3 + c4 + c5 + c6
+	c1 := if x0 > y0 { 32 } else { 0 }
+	c2 := if x0 > z0 { 16 } else { 0 }
+	c3 := if y0 > z0 { 8 } else { 0 }
+	c4 := if x0 > w0 { 4 } else { 0 }
+	c5 := if y0 > w0 { 2 } else { 0 }
+	c6 := if z0 > w0 { 1 } else { 0 }
+	c := c1 + c2 + c3 + c4 + c5 + c6
 
-  i1 := if simplex[c][0] >= 3 { 1 } else { 0 }
-  j1 := if simplex[c][1] >= 3 { 1 } else { 0 }
-  k1 := if simplex[c][2] >= 3 { 1 } else { 0 }
-  l1 := if simplex[c][3] >= 3 { 1 } else { 0 }
+	i1 := if noise.simplex[c][0] >= 3 { 1 } else { 0 }
+	j1 := if noise.simplex[c][1] >= 3 { 1 } else { 0 }
+	k1 := if noise.simplex[c][2] >= 3 { 1 } else { 0 }
+	l1 := if noise.simplex[c][3] >= 3 { 1 } else { 0 }
 
-  i2 := if simplex[c][0] >= 2 { 1 } else { 0 }
-  j2 := if simplex[c][1] >= 2 { 1 } else { 0 }
-  k2 := if simplex[c][2] >= 2 { 1 } else { 0 }
-  l2 := if simplex[c][3] >= 2 { 1 } else { 0 }
+	i2 := if noise.simplex[c][0] >= 2 { 1 } else { 0 }
+	j2 := if noise.simplex[c][1] >= 2 { 1 } else { 0 }
+	k2 := if noise.simplex[c][2] >= 2 { 1 } else { 0 }
+	l2 := if noise.simplex[c][3] >= 2 { 1 } else { 0 }
 
-  i3 := if simplex[c][0] >= 1 { 1 } else { 0 }
-  j3 := if simplex[c][1] >= 1 { 1 } else { 0 }
-  k3 := if simplex[c][2] >= 1 { 1 } else { 0 }
-  l3 := if simplex[c][3] >= 1 { 1 } else { 0 }
+	i3 := if noise.simplex[c][0] >= 1 { 1 } else { 0 }
+	j3 := if noise.simplex[c][1] >= 1 { 1 } else { 0 }
+	k3 := if noise.simplex[c][2] >= 1 { 1 } else { 0 }
+	l3 := if noise.simplex[c][3] >= 1 { 1 } else { 0 }
 
-  x1 := x0 - i1 + g4
-  y1 := y0 - j1 + g4
-  z1 := z0 - k1 + g4
-  w1 := w0 - l1 + g4
-  x2 := x0 - i2 + 2.0 * g4
-  y2 := y0 - j2 + 2.0 * g4
-  z2 := z0 - k2 + 2.0 * g4
-  w2 := w0 - l2 + 2.0 * g4
-  x3 := x0 - i3 + 3.0 * g4
-  y3 := y0 - j3 + 3.0 * g4
-  z3 := z0 - k3 + 3.0 * g4
-  w3 := w0 - l3 + 3.0 * g4
-  x4 := x0 - 1.0 + 4.0 * g4
-  y4 := y0 - 1.0 + 4.0 * g4
-  z4 := z0 - 1.0 + 4.0 * g4
-  w4 := w0 - 1.0 + 4.0 * g4
+	x1 := x0 - i1 + noise.g4
+	y1 := y0 - j1 + noise.g4
+	z1 := z0 - k1 + noise.g4
+	w1 := w0 - l1 + noise.g4
+	x2 := x0 - i2 + 2.0 * noise.g4
+	y2 := y0 - j2 + 2.0 * noise.g4
+	z2 := z0 - k2 + 2.0 * noise.g4
+	w2 := w0 - l2 + 2.0 * noise.g4
+	x3 := x0 - i3 + 3.0 * noise.g4
+	y3 := y0 - j3 + 3.0 * noise.g4
+	z3 := z0 - k3 + 3.0 * noise.g4
+	w3 := w0 - l3 + 3.0 * noise.g4
+	x4 := x0 - 1.0 + 4.0 * noise.g4
+	y4 := y0 - 1.0 + 4.0 * noise.g4
+	z4 := z0 - 1.0 + 4.0 * noise.g4
+	w4 := w0 - 1.0 + 4.0 * noise.g4
 
-  ii := i & 0xff
-  jj := j & 0xff
-  kk := k & 0xff
-  ll := l & 0xff
+	ii := i & 0xff
+	jj := j & 0xff
+	kk := k & 0xff
+	ll := l & 0xff
 
-  mut t0 := 0.6 - x0 * x0 - y0 * y0 - z0 * z0 - w0 * w0
-  mut n0 := 0.0
+	mut t0 := 0.6 - x0 * x0 - y0 * y0 - z0 * z0 - w0 * w0
+	mut n0 := 0.0
 	if t0 < 0.0 {
-    n0 = 0.0
-  } else {
-    t0 *= t0
-    n0 = t0 * t0 * grad_4d(permutations[ii + permutations[jj + permutations[kk + permutations[ll]]]], x0, y0, z0, w0)
-  }
+		n0 = 0.0
+	} else {
+		t0 *= t0
+		n0 = t0 * t0 * grad_4d(permutations[ii + permutations[jj + permutations[kk +
+			permutations[ll]]]], x0, y0, z0, w0)
+	}
 
-  mut t1 := 0.6 - x1 * x1 - y1 * y1 - z1 * z1 - w1 * w1
-  mut n1 := 0.0
+	mut t1 := 0.6 - x1 * x1 - y1 * y1 - z1 * z1 - w1 * w1
+	mut n1 := 0.0
 	if t1 < 0.0 {
-    n1 = 0.0
-  } else {
-    t1 *= t1
-    n1 = t1 * t1 * grad_4d(permutations[ii + i1 + permutations[jj + j1 + permutations[kk + k1 + permutations[ll + l1]]]], x1, y1, z1, w1)
-  }
+		n1 = 0.0
+	} else {
+		t1 *= t1
+		n1 = t1 * t1 * grad_4d(permutations[ii + i1 + permutations[jj + j1 + permutations[kk + k1 +
+			permutations[ll + l1]]]], x1, y1, z1, w1)
+	}
 
-  mut t2 := 0.6 - x2 * x2 - y2 * y2 - z2 * z2 - w2 * w2
-  mut n2 := 0.0
+	mut t2 := 0.6 - x2 * x2 - y2 * y2 - z2 * z2 - w2 * w2
+	mut n2 := 0.0
 	if t2 < 0.0 {
-    n2 = 0.0
-  } else {
-    t2 *= t2
-    n2 = t2 * t2 * grad_4d(permutations[ii + i2 + permutations[jj + j2 + permutations[kk + k2 + permutations[ll + l2]]]], x2, y2, z2, w2)
-  }
+		n2 = 0.0
+	} else {
+		t2 *= t2
+		n2 = t2 * t2 * grad_4d(permutations[ii + i2 + permutations[jj + j2 + permutations[kk + k2 +
+			permutations[ll + l2]]]], x2, y2, z2, w2)
+	}
 
-  mut t3 := 0.6 - x3 * x3 - y3 * y3 - z3 * z3 - w3 * w3
-  mut n3 := 0.0
+	mut t3 := 0.6 - x3 * x3 - y3 * y3 - z3 * z3 - w3 * w3
+	mut n3 := 0.0
 	if t3 < 0.0 {
-    n3 = 0.0
-  } else {
-    t3 *= t3
-    n3 = t3 * t3 * grad_4d(permutations[ii + i3 + permutations[jj + j3 + permutations[kk + k3 + permutations[ll + l3]]]], x3, y3, z3, w3)
-  }
+		n3 = 0.0
+	} else {
+		t3 *= t3
+		n3 = t3 * t3 * grad_4d(permutations[ii + i3 + permutations[jj + j3 + permutations[kk + k3 +
+			permutations[ll + l3]]]], x3, y3, z3, w3)
+	}
 
-  mut t4 := 0.6 - x4 * x4 - y4 * y4 - z4 * z4 - w4 * w4
-  mut n4 := 0.0
+	mut t4 := 0.6 - x4 * x4 - y4 * y4 - z4 * z4 - w4 * w4
+	mut n4 := 0.0
 	if t4 < 0.0 {
-    n4 = 0.0
-  } else {
-    t4 *= t4
-    n4 = t4 * t4 * grad_4d(permutations[ii + 1 + permutations[jj + 1 + permutations[kk + 1 + permutations[ll + 1]]]], x4, y4, z4, w4)
-  }
+		n4 = 0.0
+	} else {
+		t4 *= t4
+		n4 = t4 * t4 * grad_4d(permutations[ii + 1 + permutations[jj + 1 + permutations[kk + 1 +
+			permutations[ll + 1]]]], x4, y4, z4, w4)
+	}
 
-  return 27.0 * (n0 + n1 + n2 + n3 + n4)
+	return 27.0 * (n0 + n1 + n2 + n3 + n4)
 }
