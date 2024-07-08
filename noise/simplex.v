@@ -86,7 +86,7 @@ fn grad_4d(hash int, x f64, y f64, z f64, t f64) f64 {
 	})
 }
 
-pub fn simplex_1d(x f64) f64 {
+pub fn (generator Generator) simplex_1d(x f64) f64 {
 	i0 := int(x)
 	i1 := i0 + 1
 	x0 := x - i0
@@ -94,17 +94,17 @@ pub fn simplex_1d(x f64) f64 {
 
 	mut t0 := 1.0 - x0 * x0
 	t0 *= t0
-	n0 := t0 * t0 * grad_1d(permutations[i0 & 0xff], x0)
+	n0 := t0 * t0 * grad_1d(generator.perm[i0 & 0xff], x0)
 
 	mut t1 := 1.0 - x1 * x1
 	t1 *= t1
-	n1 := t1 * t1 * grad_1d(permutations[i1 & 0xff], x1)
+	n1 := t1 * t1 * grad_1d(generator.perm[i1 & 0xff], x1)
 
 	// we scale it to [-1, 1]
 	return 0.395 * (n0 + n1)
 }
 
-pub fn simplex_2d(x f64, y f64) f64 {
+pub fn (generator Generator) simplex_2d(x f64, y f64) f64 {
 	// skew the input space to determine which simplex cell we're in
 	s := (x + y) * noise.f2
 	i := int(x + s)
@@ -140,7 +140,7 @@ pub fn simplex_2d(x f64, y f64) f64 {
 		n0 = 0.0
 	} else {
 		t0 *= t0
-		n0 = t0 * t0 * grad_2d(permutations[ii + permutations[jj]], x0, y0)
+		n0 = t0 * t0 * grad_2d(generator.perm[ii + generator.perm[jj]], x0, y0)
 	}
 
 	mut t1 := 0.5 - x1 * x1 - y1 * y1
@@ -149,7 +149,8 @@ pub fn simplex_2d(x f64, y f64) f64 {
 		n1 = 0.0
 	} else {
 		t1 *= t1
-		n1 = t1 * t1 * grad_2d(permutations[ii + i1 + permutations[jj + j1]], x1, y1)
+		n1 = t1 * t1 * grad_2d(generator.perm[ii + i1 + generator.perm[jj + j1]], x1,
+			y1)
 	}
 
 	mut t2 := 0.5 - x2 * x2 - y2 * y2
@@ -158,14 +159,14 @@ pub fn simplex_2d(x f64, y f64) f64 {
 		n2 = 0.0
 	} else {
 		t2 *= t2
-		n2 = t2 * t2 * grad_2d(permutations[ii + 1 + permutations[jj + 1]], x2, y2)
+		n2 = t2 * t2 * grad_2d(generator.perm[ii + 1 + generator.perm[jj + 1]], x2, y2)
 	}
 
 	// scale the return value to [-1, 1]
 	return 40.0 * (n0 + n1 + n2)
 }
 
-pub fn simplex_3d(x f64, y f64, z f64) f64 {
+pub fn (generator Generator) simplex_3d(x f64, y f64, z f64) f64 {
 	// skew the input space to determine which simplex cell we're in
 	s := (x + y + z) * noise.f3
 	xs := x + s
@@ -240,7 +241,7 @@ pub fn simplex_3d(x f64, y f64, z f64) f64 {
 		n0 = 0.0
 	} else {
 		t0 *= t0
-		n0 = t0 * t0 * grad_3d(permutations[ii + permutations[jj + permutations[kk]]],
+		n0 = t0 * t0 * grad_3d(generator.perm[ii + generator.perm[jj + generator.perm[kk]]],
 			x0, y0, z0)
 	}
 
@@ -250,8 +251,8 @@ pub fn simplex_3d(x f64, y f64, z f64) f64 {
 		n1 = 0.0
 	} else {
 		t1 *= t1
-		n1 = t1 * t1 * grad_3d(permutations[ii + i1 + permutations[jj + j1 + permutations[kk + k1]]],
-			x1, y1, z1)
+		n1 = t1 * t1 * grad_3d(generator.perm[ii + i1 + generator.perm[jj + j1 + generator.perm[kk +
+			k1]]], x1, y1, z1)
 	}
 
 	mut t2 := 0.6 - x2 * x2 - y2 * y2 - z2 * z2
@@ -260,8 +261,8 @@ pub fn simplex_3d(x f64, y f64, z f64) f64 {
 		n2 = 0.0
 	} else {
 		t2 *= t2
-		n2 = t2 * t2 * grad_3d(permutations[ii + i2 + permutations[jj + j2 + permutations[kk + k2]]],
-			x2, y2, z2)
+		n2 = t2 * t2 * grad_3d(generator.perm[ii + i2 + generator.perm[jj + j2 + generator.perm[kk +
+			k2]]], x2, y2, z2)
 	}
 
 	mut t3 := 0.6 - x3 * x3 - y3 * y3 - z3 * z3
@@ -270,15 +271,15 @@ pub fn simplex_3d(x f64, y f64, z f64) f64 {
 		n3 = 0.0
 	} else {
 		t3 *= t3
-		n3 = t3 * t3 * grad_3d(permutations[ii + 1 + permutations[jj + 1 + permutations[kk + 1]]],
-			x3, y3, z3)
+		n3 = t3 * t3 * grad_3d(generator.perm[ii + 1 + generator.perm[jj + 1 + generator.perm[kk +
+			1]]], x3, y3, z3)
 	}
 
 	// scale the return value to [-1, 1]
 	return 32.0 * (n0 + n1 + n2 + n3)
 }
 
-pub fn simplex_4d(x f64, y f64, z f64, w f64) f64 {
+pub fn (generator Generator) simplex_4d(x f64, y f64, z f64, w f64) f64 {
 	s := (x + y + z + w) * noise.f4
 	xs := x + s
 	ys := y + s
@@ -346,8 +347,8 @@ pub fn simplex_4d(x f64, y f64, z f64, w f64) f64 {
 		n0 = 0.0
 	} else {
 		t0 *= t0
-		n0 = t0 * t0 * grad_4d(permutations[ii + permutations[jj + permutations[kk +
-			permutations[ll]]]], x0, y0, z0, w0)
+		n0 = t0 * t0 * grad_4d(generator.perm[ii + generator.perm[jj + generator.perm[kk +
+			generator.perm[ll]]]], x0, y0, z0, w0)
 	}
 
 	mut t1 := 0.6 - x1 * x1 - y1 * y1 - z1 * z1 - w1 * w1
@@ -356,8 +357,8 @@ pub fn simplex_4d(x f64, y f64, z f64, w f64) f64 {
 		n1 = 0.0
 	} else {
 		t1 *= t1
-		n1 = t1 * t1 * grad_4d(permutations[ii + i1 + permutations[jj + j1 + permutations[kk + k1 +
-			permutations[ll + l1]]]], x1, y1, z1, w1)
+		n1 = t1 * t1 * grad_4d(generator.perm[ii + i1 + generator.perm[jj + j1 + generator.perm[kk +
+			k1 + generator.perm[ll + l1]]]], x1, y1, z1, w1)
 	}
 
 	mut t2 := 0.6 - x2 * x2 - y2 * y2 - z2 * z2 - w2 * w2
@@ -366,8 +367,8 @@ pub fn simplex_4d(x f64, y f64, z f64, w f64) f64 {
 		n2 = 0.0
 	} else {
 		t2 *= t2
-		n2 = t2 * t2 * grad_4d(permutations[ii + i2 + permutations[jj + j2 + permutations[kk + k2 +
-			permutations[ll + l2]]]], x2, y2, z2, w2)
+		n2 = t2 * t2 * grad_4d(generator.perm[ii + i2 + generator.perm[jj + j2 + generator.perm[kk +
+			k2 + generator.perm[ll + l2]]]], x2, y2, z2, w2)
 	}
 
 	mut t3 := 0.6 - x3 * x3 - y3 * y3 - z3 * z3 - w3 * w3
@@ -376,8 +377,8 @@ pub fn simplex_4d(x f64, y f64, z f64, w f64) f64 {
 		n3 = 0.0
 	} else {
 		t3 *= t3
-		n3 = t3 * t3 * grad_4d(permutations[ii + i3 + permutations[jj + j3 + permutations[kk + k3 +
-			permutations[ll + l3]]]], x3, y3, z3, w3)
+		n3 = t3 * t3 * grad_4d(generator.perm[ii + i3 + generator.perm[jj + j3 + generator.perm[kk +
+			k3 + generator.perm[ll + l3]]]], x3, y3, z3, w3)
 	}
 
 	mut t4 := 0.6 - x4 * x4 - y4 * y4 - z4 * z4 - w4 * w4
@@ -386,8 +387,8 @@ pub fn simplex_4d(x f64, y f64, z f64, w f64) f64 {
 		n4 = 0.0
 	} else {
 		t4 *= t4
-		n4 = t4 * t4 * grad_4d(permutations[ii + 1 + permutations[jj + 1 + permutations[kk + 1 +
-			permutations[ll + 1]]]], x4, y4, z4, w4)
+		n4 = t4 * t4 * grad_4d(generator.perm[ii + 1 + generator.perm[jj + 1 + generator.perm[kk +
+			1 + generator.perm[ll + 1]]]], x4, y4, z4, w4)
 	}
 
 	return 27.0 * (n0 + n1 + n2 + n3 + n4)
