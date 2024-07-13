@@ -2,13 +2,13 @@ module noise
 
 import math
 
-// skewing factors for 2d case
+// skewing factors for 2D case
 const f2 = 0.5 * (math.sqrt(3.0) - 1.0)
 const g2 = (3.0 - math.sqrt(3)) / 6.0
-// skewing factors for 3d case
+// skewing factors for 3D case
 const f3 = f64(1.0 / 3.0)
 const g3 = f64(1.0 / 6.0)
-// skewing factors for 4d case
+// skewing factors for 4D case
 const f4 = f64((math.sqrt(5.0) - 1.0) / 4)
 const g4 = f64((5.0 - math.sqrt(5.0)) / 20.0)
 
@@ -25,6 +25,7 @@ const simplex := [
 ]
 // vfmt on
 
+// grad_1d returns a gradient value for a given hash and x position
 fn grad_1d(hash int, x f64) f64 {
 	h := hash & 15
 	mut grad := 1.0 + f64(h & 7)
@@ -32,6 +33,7 @@ fn grad_1d(hash int, x f64) f64 {
 	return grad * x
 }
 
+// grad_2d returns a gradient value for a given hash and x, y position
 fn grad_2d(hash int, x f64, y f64) f64 {
 	h := hash & 7
 	u := if h < 4 { x } else { y }
@@ -47,6 +49,7 @@ fn grad_2d(hash int, x f64, y f64) f64 {
 	})
 }
 
+// grad_3d returns a gradient value for a given hash and x, y, z position
 fn grad_3d(hash int, x f64, y f64, z f64) f64 {
 	h := hash & 15
 	u := if h < 8 { x } else { y }
@@ -66,6 +69,7 @@ fn grad_3d(hash int, x f64, y f64, z f64) f64 {
 	})
 }
 
+// grad_4d returns a gradient value for a given hash and x, y, z, t position
 fn grad_4d(hash int, x f64, y f64, z f64, t f64) f64 {
 	h := hash & 31
 	u := if h < 24 { x } else { y }
@@ -86,6 +90,7 @@ fn grad_4d(hash int, x f64, y f64, z f64, t f64) f64 {
 	})
 }
 
+// simplex_1d returns a simplex noise value for a given x position
 pub fn (generator Generator) simplex_1d(x f64) f64 {
 	i0 := int(x)
 	i1 := i0 + 1
@@ -100,27 +105,22 @@ pub fn (generator Generator) simplex_1d(x f64) f64 {
 	t1 *= t1
 	n1 := t1 * t1 * grad_1d(generator.perm[i1 & 0xff], x1)
 
-	// we scale it to [-1, 1]
 	return 0.395 * (n0 + n1)
 }
 
+// simplex_2d returns a simplex noise value for a given x, y position
 pub fn (generator Generator) simplex_2d(x f64, y f64) f64 {
-	// skew the input space to determine which simplex cell we're in
 	s := (x + y) * noise.f2
 	i := int(x + s)
 	j := int(y + s)
 
-	// unskew the cell origin back to x, y space
 	t := f64(i + j) * noise.g2
-	// distances from the cell origin
 	x0 := x - (i - t)
 	y0 := y - (j - t)
 
 	i1, j1 := if x0 > y0 {
-		// lower triangle
 		1, 0
 	} else {
-		// upper triangle
 		0, 1
 	}
 
@@ -129,11 +129,9 @@ pub fn (generator Generator) simplex_2d(x f64, y f64) f64 {
 	x2 := x0 - 1.0 + noise.g2 * 2.0
 	y2 := y0 - 1.0 + noise.g2 * 2.0
 
-	// avoid oob
 	ii := i & 0xff
 	jj := j & 0xff
 
-	// calculate the 3 corners
 	mut t0 := 0.5 - x0 * x0 - y0 * y0
 	mut n0 := 0.0
 	if t0 < 0 {
@@ -162,12 +160,11 @@ pub fn (generator Generator) simplex_2d(x f64, y f64) f64 {
 		n2 = t2 * t2 * grad_2d(generator.perm[ii + 1 + generator.perm[jj + 1]], x2, y2)
 	}
 
-	// scale the return value to [-1, 1]
 	return 40.0 * (n0 + n1 + n2)
 }
 
+// simplex_3d returns a simplex noise value for a given x, y, z position
 pub fn (generator Generator) simplex_3d(x f64, y f64, z f64) f64 {
-	// skew the input space to determine which simplex cell we're in
 	s := (x + y + z) * noise.f3
 	xs := x + s
 	ys := y + s
@@ -176,9 +173,7 @@ pub fn (generator Generator) simplex_3d(x f64, y f64, z f64) f64 {
 	j := int(ys)
 	k := int(zs)
 
-	// unskew the cell origin back to x, y, z space
 	t := f64(i + j + k) * noise.g3
-	// distances from cell origin
 	x0 := x - (i - t)
 	y0 := y - (j - t)
 	z0 := z - (k - t)
@@ -220,7 +215,6 @@ pub fn (generator Generator) simplex_3d(x f64, y f64, z f64) f64 {
 		}
 	}
 
-	// offsets for corners in x, y, z coords
 	x1 := x0 - i1 + noise.g3
 	y1 := y0 - j1 + noise.g3
 	z1 := z0 - k1 + noise.g3
@@ -275,10 +269,10 @@ pub fn (generator Generator) simplex_3d(x f64, y f64, z f64) f64 {
 			1]]], x3, y3, z3)
 	}
 
-	// scale the return value to [-1, 1]
 	return 32.0 * (n0 + n1 + n2 + n3)
 }
 
+// simplex_4d returns a simplex noise value for a given x, y, z, w position
 pub fn (generator Generator) simplex_4d(x f64, y f64, z f64, w f64) f64 {
 	s := (x + y + z + w) * noise.f4
 	xs := x + s
