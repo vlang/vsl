@@ -30,10 +30,10 @@ fn test_add() {
 	assert add(a, b) == [7.0, 22, -7]
 }
 
-fn test_substract() {
+fn test_subtract() {
 	a := [6.0, 777, -3]
 	b := [1.0, -755, -4]
-	assert substract(a, b) == [5.0, 1532, 1]
+	assert subtract(a, b) == [5.0, 1532, 1]
 }
 
 fn test_multiply() {

@@ -275,7 +275,7 @@ pub fn add(a []f64, b []f64) []f64 {
 	return c
 }
 
-pub fn substract(a []f64, b []f64) []f64 {
+pub fn subtract(a []f64, b []f64) []f64 {
 	na := a.len
 	nb := b.len
 	nc := int(math.max(na, nb))
