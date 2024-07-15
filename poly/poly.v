@@ -10,9 +10,11 @@ pub fn eval(c []f64, x f64) f64 {
 		panic('coeficients can not be empty')
 	}
 	len := c.len
-	mut ans := c[len - 1]
-	for e in c[..len - 1] {
-		ans = e + x * ans
+	mut ans := 0.0
+	mut i := len-1
+	for i >= 0{
+		ans = c[i] + x * ans
+		i--
 	}
 	return ans
 }
@@ -131,13 +133,13 @@ fn sorted_3_(x_ f64, y_ f64, z_ f64) (f64, f64, f64) {
 	mut y := y_
 	mut z := z_
 	if x > y {
-		y, x = swap_(x, y)
+		x, y = swap_(x, y)
+	}
+	if x > z {
+		 x, z = swap_(x, z)
 	}
 	if y > z {
-		z, y = swap_(y, z)
-	}
-	if x > y {
-		y, x = swap_(x, y)
+		y, z = swap_(y, z)
 	}
 	return x, y, z
 }
