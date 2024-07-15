@@ -10,10 +10,10 @@ fn main() {
 	result_add := poly.add(poly_1, poly_2)
 	println('Addition result: ${result_add}')
 
-	// Substraction
+	// Subtraction
 	// Degree is not modified unless highest coefficients cancel each other out
-	result_sub := poly.substract(poly_1, poly_2)
-	println('Substraction result: ${result_sub}')
+	result_sub := poly.subtract(poly_1, poly_2)
+	println('Subtraction result: ${result_sub}')
 
 	// Multiplication
 	// with given degree n and m for poly_1 and poly_2
