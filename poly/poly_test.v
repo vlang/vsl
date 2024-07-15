@@ -4,11 +4,11 @@ import math
 
 fn test_eval() {
 	// ans = 2
-	// ans = 4.0 + 4 * 2 = 12
-	// ans = 5 + 4 * 12 = 53
+	// ans = 5 + 4 * 2 = 13
+	// ans = 4 + 4 * 13 = 56
 	x := 4
 	cof := [4.0, 5, 2]
-	assert eval(cof, 4) == 53
+	assert eval(cof, 4) == 56
 }
 
 fn test_swap() {
@@ -16,6 +16,15 @@ fn test_swap() {
 	mut b := 202.0
 	a, b = swap_(a, b)
 	assert a == 202.0 && b == 101.0
+}
+
+fn test_sorted_3_() {
+	for values in [[5.0, 7.0, -8.0], [-8.0, 5.0, 7.0], [7.0, -8.0, 5.0]] {
+		x, y, z := sorted_3_(values[0], values[1], values[2])
+		assert x == -8.0
+		assert y == 5.0
+		assert z == 7.0
+	}
 }
 
 fn test_add() {
