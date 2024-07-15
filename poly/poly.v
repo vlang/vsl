@@ -11,8 +11,8 @@ pub fn eval(c []f64, x f64) f64 {
 	}
 	len := c.len
 	mut ans := 0.0
-	mut i := len-1
-	for i >= 0{
+	mut i := len - 1
+	for i >= 0 {
 		ans = c[i] + x * ans
 		i--
 	}
@@ -136,7 +136,7 @@ fn sorted_3_(x_ f64, y_ f64, z_ f64) (f64, f64, f64) {
 		x, y = swap_(x, y)
 	}
 	if x > z {
-		 x, z = swap_(x, z)
+		x, z = swap_(x, z)
 	}
 	if y > z {
 		y, z = swap_(y, z)

@@ -16,12 +16,12 @@ fn test_swap() {
 	assert a == 202.0 && b == 101.0
 }
 
-fn test_sorted_3_(){
+fn test_sorted_3_() {
 	a := 5.0
 	b := 7.0
-  c := -8.0
-  x, y, z := sorted_3_(a, b, c)
-  assert y == 5.0
+	c := -8.0
+	x, y, z := sorted_3_(a, b, c)
+	assert x == -8.0 && y == 5.0 && z == 7.0
 }
 
 fn test_add() {
@@ -36,10 +36,9 @@ fn test_substract() {
 	assert substract(a, b) == [5.0, 1532, 1]
 }
 
-fn test_multiply(){
-  a := [9.0, -1, 5]
+fn test_multiply() {
+	a := [9.0, -1, 5]
 	b := [0.0, -1, 7]
 
 	assert multiply(a, b) == [0.0, -9, 64, -12, 35, 0]
 }
-
