@@ -21,7 +21,9 @@ fn test_sorted_3_() {
 	b := 7.0
 	c := -8.0
 	x, y, z := sorted_3_(a, b, c)
-	assert x == -8.0 && y == 5.0 && z == 7.0
+	assert x == -8.0
+	assert y == 5.0
+	assert z == 7.0
 }
 
 fn test_add() {
@@ -39,6 +41,13 @@ fn test_subtract() {
 fn test_multiply() {
 	a := [9.0, -1, 5]
 	b := [0.0, -1, 7]
-
 	assert multiply(a, b) == [0.0, -9, 64, -12, 35, 0]
+}
+
+fn test_division() {
+	dividend := [6.0, -5.0, 1.0]
+	divisor := [2.0, 1.0]
+	quotient, remainder := divide(dividend, divisor)
+	assert quotient == [-7.0, 1]
+	assert remainder == [20.0]
 }
