@@ -9,6 +9,21 @@ fn test_eval() {
 	assert eval(cof, 4) == 56
 }
 
+fn test_eval_derivs() {
+	cof := [4.0, 3.0, 2.0]
+	x := 1.0
+	lenres := 3
+	assert eval_derivs(cof, x, lenres) == [9.0, 7.0, 4.0]
+}
+
+fn test_solve_quadratic() {
+	a := 1.0
+	b := -3.0
+	c := 2.0
+	roots := solve_quadratic(a, b, c)
+	assert roots == [1.0, 2.0]
+}
+
 fn test_swap() {
 	mut a := 101.0
 	mut b := 202.0
@@ -21,9 +36,7 @@ fn test_sorted_3_() {
 	b := 7.0
 	c := -8.0
 	x, y, z := sorted_3_(a, b, c)
-	assert x == -8.0
-	assert y == 5.0
-	assert z == 7.0
+	assert x == -8.0 && y == 5.0 && z == 7.0
 }
 
 fn test_add() {
@@ -48,6 +61,5 @@ fn test_division() {
 	dividend := [6.0, -5.0, 1.0]
 	divisor := [2.0, 1.0]
 	quotient, remainder := divide(dividend, divisor)
-	assert quotient == [-7.0, 1]
-	assert remainder == [20.0]
+	assert quotient == [-7.0, 1] && remainder == [20.0]
 }
