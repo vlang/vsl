@@ -15,8 +15,8 @@ fn main() {
 	mut y := []f64{}
 	mut z := []f64{}
 
-  // 5 layers of simplex noise
-  octaves := 5
+	// 5 layers of simplex noise
+	octaves := 5
 	persistence := 0.5
 
 	for xx in 0 .. 200 {
@@ -26,7 +26,7 @@ fn main() {
 			mut amplitude := 1.0
 			mut max_value := 0.0
 
-			for _ in 0..octaves {
+			for _ in 0 .. octaves {
 				total += generator.simplex_2d(0.03 * xx * frequency, 0.03 * yy * frequency) * amplitude
 				max_value += amplitude
 				amplitude *= persistence
