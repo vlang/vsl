@@ -11,9 +11,9 @@ fn main() {
 	mut generator := noise.Generator.new()
 	generator.randomize()
 
-	mut x := []f64{cap: 1600}
-	mut y := []f64{cap: 1600}
-	mut z := []f64{cap: 1600}
+	mut x := []f64{}
+	mut y := []f64{}
+	mut z := []f64{}
 
 	for xx in 0 .. 40 {
 		for yy in 0 .. 40 {
