@@ -5,15 +5,15 @@ fn test_eval() {
 	// ans = 5 + 4 * 2 = 13
 	// ans = 4 + 4 * 13 = 56
 	x := 4
-	cof := [4.0, 5, 2]
-	assert eval(cof, 4) == 56
+	coef := [4.0, 5, 2]
+	assert eval(coef, 4) == 56
 }
 
 fn test_eval_derivs() {
-	cof := [4.0, 3.0, 2.0]
+	coef := [4.0, 3.0, 2.0]
 	x := 1.0
 	lenres := 3
-	assert eval_derivs(cof, x, lenres) == [9.0, 7.0, 4.0]
+	assert eval_derivs(coef, x, lenres) == [9.0, 7.0, 4.0]
 }
 
 fn test_solve_quadratic() {
@@ -37,6 +37,25 @@ fn test_sorted_3_() {
 	c := -8.0
 	x, y, z := sorted_3_(a, b, c)
 	assert x == -8.0 && y == 5.0 && z == 7.0
+}
+
+fn test_companion_matrix() {
+	coef := [2.0, -4.0, 3.0, -5.0]
+	assert companion_matrix(coef) == [
+		[0.0, 0.0, 0.4],
+		[1.0, 0.0, -0.8],
+		[0.0, 1.0, 0.6],
+	]
+}
+
+fn test_balance_companion_matrix() {
+	coef := [2.0, -4.0, 3.0, -5.0]
+	matrix := companion_matrix(coef)
+	assert balance_companion_matrix(matrix) == [
+		[0.0, 0.0, 0.8],
+		[0.5, 0.0, -0.8],
+		[0.0, 1.0, 0.6],
+	]
 }
 
 fn test_add() {
