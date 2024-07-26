@@ -1,6 +1,9 @@
 # V Scientific Library - Examples Directory 📚
 
-This directory contains various examples demonstrating the capabilities and usage of the V Scientific Library. Each example showcases different functionalities, from machine learning algorithms to plotting and mathematical computations. Below is a summary of the examples included in this directory:
+This directory contains various examples demonstrating the capabilities and usage
+of the V Scientific Library. Each example showcases different functionalities,
+from machine learning algorithms to plotting and mathematical computations.
+Below is a summary of the examples included in this directory:
 
 ## Machine Learning Examples 🤖
 
@@ -91,7 +94,11 @@ This directory contains various examples demonstrating the capabilities and usag
 
 ### Important Information ⚠️
 
-- Each example contains a `main.v` file with the V code demonstrating the specific functionality.
-- Some examples include an additional `README.md` file. **You must read the `README.md` before running the example** to understand any prerequisites or specific instructions.
+- Each example contains a `main.v` file with the V code demonstrating
+the specific functionality.
+- Some examples include an additional `README.md` file.
+**You must read the `README.md` before running the example** to understand
+any prerequisites or specific instructions.
 
-To get started, navigate to the respective example directory and run the `main.v` file using the V compiler.
+To get started, navigate to the respective example directory
+and run the `main.v` file using the V compiler.

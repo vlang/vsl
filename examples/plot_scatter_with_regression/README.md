@@ -1,6 +1,7 @@
 # Example - plot_scatter_with_regression 📘
 
-This example demonstrates the usage of the V Scientific Library for creating a scatter plot with regression line.
+This example demonstrates the usage of the V Scientific Library
+for creating a scatter plot with regression line.
 
 ## Instructions
 

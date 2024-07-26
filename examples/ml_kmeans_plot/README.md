@@ -1,6 +1,7 @@
 # Example - ml_kmeans_plot 📘
 
-This example demonstrates the usage of the V Scientific Library for performing K-means clustering with plotting.
+This example demonstrates the usage of the V Scientific Library
+for performing K-means clustering with plotting.
 
 ## Instructions
 
