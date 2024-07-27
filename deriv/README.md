@@ -1,11 +1,3 @@
-It seems like I can’t do more advanced data analysis right now. Please try again later.
-
-However, you can create the `README.md` file on your local machine using the content provided. Here’s how you can do it:
-
-1. Open a text editor of your choice.
-2. Copy and paste the following content into the editor:
-
-```markdown
 # 🚀 Numerical Differentiation
 
 This module provides functions for computing numerical derivatives of functions. 🧮
