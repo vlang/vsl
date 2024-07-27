@@ -1,3 +1,11 @@
+It seems like I can’t do more advanced data analysis right now. Please try again later.
+
+However, you can create the `README.md` file on your local machine using the content provided. Here’s how you can do it:
+
+1. Open a text editor of your choice.
+2. Copy and paste the following content into the editor:
+
+```markdown
 # 🚀 Numerical Differentiation
 
 This module provides functions for computing numerical derivatives of functions. 🧮
@@ -63,9 +71,26 @@ for values greater than `x`. 📉
 
 This function is equivalent to calling `deriv.forward` with a negative step-size.
 
+### `partial`
+
+```v ignore
+pub fn partial(f fn ([]f64) f64, x []f64, variable int, h f64) (f64, f64)
+```
+
+This function computes the partial derivative of a multivariable function `f` with respect to a specified variable at the point `x` using the central difference method with a step-size of `h`. The partial derivative is returned in `result` and an estimate of its absolute error is returned in `abserr`.
+
+The function `f` should take an array of coordinates as input and return a single value. The `variable` parameter specifies the index of the variable with respect to which the partial derivative is to be computed.
+
+The initial value of `h` is used to estimate an optimal step-size, based on the scaling of the truncation error and round-off error in the derivative calculation. The partial derivative is computed by converting the multivariable function into a univariate function for the specified variable and then applying the central difference method.
+
 ## References and Further Reading
 
 This work is a spiritual descendent of the Differentiation module in [GSL](https://github.com/ampl/gsl). 📖
 
 Feel free to explore and utilize these numerical differentiation functions in
 your projects! 🤖📊🔬
+```
+
+3. Save the file with the name `README.md`.
+
+Bu şekilde, `README.md` dosyanız hazır olacaktır. Başka bir yardıma ihtiyacınız olursa lütfen bildirin!
