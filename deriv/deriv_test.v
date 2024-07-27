@@ -68,7 +68,6 @@ fn df6(x f64, _ []f64) f64 {
 	return -1.0 / (x * x)
 }
 
-// Newly added multivariable function and its partial derivatives
 fn f_multi(x []f64) f64 {
 	return x[0] * x[0] + x[1] * x[1] // f(x,y) = x^2 + y^2
 }
