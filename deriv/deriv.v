@@ -116,7 +116,7 @@ pub fn backward(f func.Fn, x f64, h f64) (f64, f64) {
 
 pub fn partial(f fn ([]f64) f64, x []f64, variable int, h f64) (f64, f64) {
 	/**
-     * Computes the partial derivative of a multivariable function with respect to a specified variable.
+     * partial is a function that computes the partial derivative of a multivariable function with respect to a specified variable.
      *
      * @param f       The multivariable function for which the partial derivative is to be computed.
      * @param x       The point at which the partial derivative is to be computed, represented as an array of coordinates.
