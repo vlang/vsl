@@ -69,7 +69,11 @@ This function is equivalent to calling `deriv.forward` with a negative step-size
 pub fn partial(f fn ([]f64) f64, x []f64, variable int, h f64) (f64, f64)
 ```
 
-This function computes the partial derivative of the function `f` with respect to a specified variable at point `x` using step-size `h`. It returns the derivative in `result` and an error estimate in `abserr`. The function `f` should take an array of coordinates and return a single value. This method provides both the derivative and its error estimate. 📈
+This function computes the partial derivative of the function `f` with respect to
+a specified variable at point `x` using step-size `h`. It returns the derivative
+in `result` and an error estimate in `abserr`. The function `f` should take an array
+of coordinates and return a single value. This method provides both the derivative
+and its error estimate.
 
 ## References and Further Reading
 
