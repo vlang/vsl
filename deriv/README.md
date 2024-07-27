@@ -81,8 +81,3 @@ This work is a spiritual descendent of the Differentiation module in [GSL](https
 
 Feel free to explore and utilize these numerical differentiation functions in
 your projects! 🤖📊🔬
-```
-
-3. Save the file with the name `README.md`.
-
-Bu şekilde, `README.md` dosyanız hazır olacaktır. Başka bir yardıma ihtiyacınız olursa lütfen bildirin!
