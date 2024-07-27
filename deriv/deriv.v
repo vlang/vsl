@@ -115,7 +115,7 @@ pub fn backward(f func.Fn, x f64, h f64) (f64, f64) {
 }
 
 pub fn partial(f fn ([]f64) f64, x []f64, variable int, h f64) (f64, f64) {
-    /**
+	/**
      * Computes the partial derivative of a multivariable function with respect to a specified variable.
      *
      * @param f       The multivariable function for which the partial derivative is to be computed.
@@ -126,21 +126,20 @@ pub fn partial(f fn ([]f64) f64, x []f64, variable int, h f64) (f64, f64) {
      * @return        A tuple containing the value of the partial derivative and the estimated error.
     */
 
-    if variable < 0 || variable >= x.len {
-        panic('Invalid variable index')
-    }
+	if variable < 0 || variable >= x.len {
+		panic('Invalid variable index')
+	}
 
-    // Define a helper function that converts the multivariate function
-    // to a univariate function for the specified variable
-    partial_helper := func.Fn{
-        f: fn [f, x, variable] (t f64, _ []f64) f64 {
-            mut x_new := x.clone()
-            x_new[variable] = t
-            return f(x_new)
-        }
-    }
+	// Define a helper function that converts the multivariate function
+	// to a univariate function for the specified variable
+	partial_helper := func.Fn{
+		f: fn [f, x, variable] (t f64, _ []f64) f64 {
+			mut x_new := x.clone()
+			x_new[variable] = t
+			return f(x_new)
+		}
+	}
 
-    // Use the central difference method to compute the partial derivative
-    return central(partial_helper, x[variable], h)
+	// Use the central difference method to compute the partial derivative
+	return central(partial_helper, x[variable], h)
 }
-
