@@ -126,8 +126,6 @@ pub fn backward(f func.Fn, x f64, h f64) (f64, f64) {
 * @return        A tuple containing the value of the partial derivative and the estimated error.
 */
 pub fn partial(f fn ([]f64) f64, x []f64, variable int, h f64) (f64, f64) {
-
-
 	if variable < 0 || variable >= x.len {
 		errors.vsl_panic('Invalid variable index', .efailed)
 	}
