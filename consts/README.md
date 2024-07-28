@@ -50,7 +50,7 @@ Planck's constant divided by `2\pi`, `\hbar`.
 consts.mksa_planck_temperature
 ```
 
-Planck Temperature `T_p`.
+Planck temperature `T_p`.
 
 ```console
 consts.num_avogadro
