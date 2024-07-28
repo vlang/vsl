@@ -8,6 +8,8 @@ pub const cgs_plancks_constant_h = 6.62606896e-27 // g cm^2 / s
 
 pub const cgs_plancks_constant_hbar = 1.05457162825e-27 // g cm^2 / s
 
+pub const cgs_planck_temperature = 1.416785e+32 // Kelvin
+
 pub const cgs_astronomical_unit = 1.49597870691e+13 // cm
 
 pub const cgs_light_year = 9.46053620707e+17 // cm
