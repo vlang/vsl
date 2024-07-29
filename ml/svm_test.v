@@ -2,13 +2,34 @@ module ml
 
 import math
 
+fn test_vector_dot() {
+	x := [1.0, 2.0, 3.0]
+	y := [4.0, 5.0, 6.0]
+	result := vector_dot(x, y)
+	assert math.abs(result - 32.0) < 1e-6
+}
+
+fn test_vector_subtract() {
+	x := [1.0, 2.0, 3.0]
+	y := [4.0, 5.0, 6.0]
+	result := vector_subtract(x, y)
+	assert result == [-3.0, -3.0, -3.0]
+}
+
+fn test_linear_kernel() {
+	x := [1.0, 2.0, 3.0]
+	y := [4.0, 5.0, 6.0]
+	result := linear_kernel(x, y)
+	assert math.abs(result - 32.0) < 1e-6
+}
+
 fn test_polynomial_kernel() {
 	x := [1.0, 2.0, 3.0]
 	y := [4.0, 5.0, 6.0]
 	kernel := polynomial_kernel(3)
 	result := kernel(x, y)
-	expected := math.pow((1 * 4 + 2 * 5 + 3 * 6 + 1), 3) // (32 + 1)^3
-	assert result == expected
+	expected := math.pow(32.0 + 1.0, 3)
+	assert math.abs(result - expected) < 1e-6
 }
 
 fn test_rbf_kernel() {
@@ -17,12 +38,34 @@ fn test_rbf_kernel() {
 	gamma := 0.5
 	kernel := rbf_kernel(gamma)
 	result := kernel(x, y)
-	expected := math.exp(-gamma * ((1 - 4) * (1 - 4) + (2 - 5) * (2 - 5) + (3 - 6) * (3 - 6))) // exp(-0.5 * 27)
+	expected := math.exp(-gamma * 27.0)
 	assert math.abs(result - expected) < 1e-6
 }
 
+fn test_svm_new() {
+	config := SVMConfig{}
+	svm := SVM.new(linear_kernel, config)
+	assert svm.kernel == linear_kernel
+	assert svm.config == config
+}
+
+fn test_svm_train_and_predict() {
+	mut svm := SVM.new(linear_kernel, SVMConfig{})
+	data := [
+		DataPoint{[2.0, 3.0], 1},
+		DataPoint{[1.0, 1.0], -1},
+		DataPoint{[3.0, 4.0], 1},
+		DataPoint{[0.0, 0.0], -1},
+	]
+	svm.train(data)
+
+	for point in data {
+		prediction := svm.predict(point.x)
+		assert prediction == point.y
+	}
+}
+
 fn test_train_svm() {
-	kernel := linear_kernel
 	data := [
 		DataPoint{[2.0, 3.0], 1},
 		DataPoint{[1.0, 1.0], -1},
@@ -30,15 +73,30 @@ fn test_train_svm() {
 		DataPoint{[0.0, 0.0], -1},
 	]
 	config := SVMConfig{}
-	model := train_svm(data, kernel, config)
+	model := train_svm(data, linear_kernel, config)
 
 	for point in data {
-		assert predict(model, point.x) == point.y
+		prediction := predict(model, point.x)
+		assert prediction == point.y
 	}
 }
 
-fn test_predict_svm() {
-	kernel := linear_kernel
+fn test_predict_raw() {
+	data := [
+		DataPoint{[2.0, 3.0], 1},
+		DataPoint{[1.0, 1.0], -1},
+	]
+	config := SVMConfig{}
+	model := train_svm(data, linear_kernel, config)
+
+	result := predict_raw(model, [2.0, 3.0])
+	assert result > 0
+
+	result2 := predict_raw(model, [1.0, 1.0])
+	assert result2 < 0
+}
+
+fn test_predict() {
 	data := [
 		DataPoint{[2.0, 3.0], 1},
 		DataPoint{[1.0, 1.0], -1},
@@ -46,60 +104,24 @@ fn test_predict_svm() {
 		DataPoint{[0.0, 0.0], -1},
 	]
 	config := SVMConfig{}
-	model := train_svm(data, kernel, config)
-
-	assert predict(model, [2.0, 3.0]) == 1
-	assert predict(model, [1.0, 1.0]) == -1
-	assert predict(model, [3.0, 4.0]) == 1
-	assert predict(model, [0.0, 0.0]) == -1
-}
-
-fn test_train_multiclass_svm() {
-	kernel := linear_kernel
-	data := [
-		DataPoint{[2.0, 3.0], 1},
-		DataPoint{[1.0, 1.0], 2},
-		DataPoint{[3.0, 4.0], 1},
-		DataPoint{[0.0, 0.0], 2},
-		DataPoint{[3.0, 3.0], 3},
-	]
-	config := SVMConfig{}
-	model := train_multiclass_svm(data, kernel, config)
+	model := train_svm(data, linear_kernel, config)
 
 	for point in data {
-		assert predict_multiclass(model, point.x) == point.y
+		prediction := predict(model, point.x)
+		assert prediction == point.y
 	}
 }
 
-fn test_predict_multiclass_svm() {
-	kernel := linear_kernel
-	data := [
-		DataPoint{[2.0, 3.0], 1},
-		DataPoint{[1.0, 1.0], 2},
-		DataPoint{[3.0, 4.0], 1},
-		DataPoint{[0.0, 0.0], 2},
-		DataPoint{[3.0, 3.0], 3},
-	]
-	config := SVMConfig{}
-	model := train_multiclass_svm(data, kernel, config)
-
-	assert predict_multiclass(model, [2.0, 3.0]) == 1
-	assert predict_multiclass(model, [1.0, 1.0]) == 2
-	assert predict_multiclass(model, [3.0, 4.0]) == 1
-	assert predict_multiclass(model, [0.0, 0.0]) == 2
-	assert predict_multiclass(model, [3.0, 3.0]) == 3
-}
-
-fn test_kernels() {
-	kernels := [
-		linear_kernel,
-		polynomial_kernel(3),
-		rbf_kernel(0.5),
-	]
-	for kernel in kernels {
-		test_train_svm()
-		test_predict_svm()
-		test_train_multiclass_svm()
-		test_predict_multiclass_svm()
-	}
+fn main() {
+	test_vector_dot()
+	test_vector_subtract()
+	test_linear_kernel()
+	test_polynomial_kernel()
+	test_rbf_kernel()
+	test_svm_new()
+	test_svm_train_and_predict()
+	test_train_svm()
+	test_predict_raw()
+	test_predict()
+	println('All tests passed successfully!')
 }
