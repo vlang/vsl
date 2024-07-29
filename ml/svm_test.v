@@ -7,7 +7,7 @@ fn test_polynomial_kernel() {
 	y := [4.0, 5.0, 6.0]
 	kernel := polynomial_kernel(3)
 	result := kernel(x, y)
-	expected := math.pow(1 * 4 + 2 * 5 + 3 * 6 + 1, 3) // (32 + 1)^3
+	expected := math.pow((1 * 4 + 2 * 5 + 3 * 6 + 1), 3) // (32 + 1)^3
 	assert result == expected
 }
 
