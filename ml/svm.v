@@ -71,7 +71,7 @@ pub fn train_svm(data []DataPoint, kernel KernelFunction, config SVMConfig) &SVM
 	}
 
 	mut passes := 0
-	for {
+	for passes < model.config.max_iterations {
 		mut num_changed_alphas := 0
 		for i in 0 .. data.len {
 			ei := predict_raw(model, data[i].x) - f64(data[i].y)
@@ -96,8 +96,7 @@ pub fn train_svm(data []DataPoint, kernel KernelFunction, config SVMConfig) &SVM
 					continue
 				}
 
-				eta := 2 * model.kernel(data[i].x, data[j].x) - model.kernel(data[i].x,
-					data[i].x) - model.kernel(data[j].x, data[j].x)
+				eta := 2 * model.kernel(data[i].x, data[j].x) - model.kernel(data[i].x, data[i].x) - model.kernel(data[j].x, data[j].x)
 
 				if eta >= 0 {
 					continue
@@ -110,16 +109,11 @@ pub fn train_svm(data []DataPoint, kernel KernelFunction, config SVMConfig) &SVM
 					continue
 				}
 
-				model.alphas[i] = alpha_i_old +
-					f64(data[i].y * data[j].y) * (alpha_j_old - model.alphas[j])
+				model.alphas[i] = alpha_i_old + f64(data[i].y * data[j].y) * (alpha_j_old - model.alphas[j])
 
-				b1 := model.b - ei - f64(data[i].y) * (model.alphas[i] - alpha_i_old) * model.kernel(data[i].x,
-					data[i].x) - f64(data[j].y) * (model.alphas[j] - alpha_j_old) * model.kernel(data[i].x,
-					data[j].x)
+				b1 := model.b - ei - f64(data[i].y) * (model.alphas[i] - alpha_i_old) * model.kernel(data[i].x, data[i].x) - f64(data[j].y) * (model.alphas[j] - alpha_j_old) * model.kernel(data[i].x, data[j].x)
 
-				b2 := model.b - ej - f64(data[i].y) * (model.alphas[i] - alpha_i_old) * model.kernel(data[i].x,
-					data[j].x) - f64(data[j].y) * (model.alphas[j] - alpha_j_old) * model.kernel(data[j].x,
-					data[j].x)
+				b2 := model.b - ej - f64(data[i].y) * (model.alphas[i] - alpha_i_old) * model.kernel(data[i].x, data[j].x) - f64(data[j].y) * (model.alphas[j] - alpha_j_old) * model.kernel(data[j].x, data[j].x)
 
 				if 0 < model.alphas[i] && model.alphas[i] < model.config.c {
 					model.b = b1
@@ -137,10 +131,6 @@ pub fn train_svm(data []DataPoint, kernel KernelFunction, config SVMConfig) &SVM
 			passes++
 		} else {
 			passes = 0
-		}
-
-		if passes >= model.config.max_iterations {
-			break
 		}
 	}
 
@@ -205,23 +195,24 @@ pub fn train_multiclass_svm(data []DataPoint, kernel KernelFunction, config SVMC
 }
 
 pub fn predict_multiclass(model &MulticlassSVM, x []f64) int {
-	mut votes := map[int]int{}
+	mut class_votes := map[int]int{}
+
 	for i in 0 .. model.classes.len {
 		for j in i + 1 .. model.classes.len {
 			prediction := predict(model.models[i][j], x)
 			if prediction == 1 {
-				votes[model.classes[i]]++
+				class_votes[model.classes[i]]++
 			} else {
-				votes[model.classes[j]]++
+				class_votes[model.classes[j]]++
 			}
 		}
 	}
 
 	mut max_votes := 0
 	mut predicted_class := 0
-	for class, vote_count in votes {
-		if vote_count > max_votes {
-			max_votes = vote_count
+	for class, votes in class_votes {
+		if votes > max_votes {
+			max_votes = votes
 			predicted_class = class
 		}
 	}
