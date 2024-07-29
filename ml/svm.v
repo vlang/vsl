@@ -219,3 +219,4 @@ pub fn predict_multiclass(model &MulticlassSVM, x []f64) int {
 
 	return predicted_class
 }
+
