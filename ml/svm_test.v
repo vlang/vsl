@@ -103,4 +103,3 @@ fn test_kernels() {
 		test_predict_multiclass_svm()
 	}
 }
-

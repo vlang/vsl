@@ -96,7 +96,8 @@ pub fn train_svm(data []DataPoint, kernel KernelFunction, config SVMConfig) &SVM
 					continue
 				}
 
-				eta := 2 * model.kernel(data[i].x, data[j].x) - model.kernel(data[i].x, data[i].x) - model.kernel(data[j].x, data[j].x)
+				eta := 2 * model.kernel(data[i].x, data[j].x) - model.kernel(data[i].x,
+					data[i].x) - model.kernel(data[j].x, data[j].x)
 
 				if eta >= 0 {
 					continue
@@ -109,11 +110,16 @@ pub fn train_svm(data []DataPoint, kernel KernelFunction, config SVMConfig) &SVM
 					continue
 				}
 
-				model.alphas[i] = alpha_i_old + f64(data[i].y * data[j].y) * (alpha_j_old - model.alphas[j])
+				model.alphas[i] = alpha_i_old +
+					f64(data[i].y * data[j].y) * (alpha_j_old - model.alphas[j])
 
-				b1 := model.b - ei - f64(data[i].y) * (model.alphas[i] - alpha_i_old) * model.kernel(data[i].x, data[i].x) - f64(data[j].y) * (model.alphas[j] - alpha_j_old) * model.kernel(data[i].x, data[j].x)
+				b1 := model.b - ei - f64(data[i].y) * (model.alphas[i] - alpha_i_old) * model.kernel(data[i].x,
+					data[i].x) - f64(data[j].y) * (model.alphas[j] - alpha_j_old) * model.kernel(data[i].x,
+					data[j].x)
 
-				b2 := model.b - ej - f64(data[i].y) * (model.alphas[i] - alpha_i_old) * model.kernel(data[i].x, data[j].x) - f64(data[j].y) * (model.alphas[j] - alpha_j_old) * model.kernel(data[j].x, data[j].x)
+				b2 := model.b - ej - f64(data[i].y) * (model.alphas[i] - alpha_i_old) * model.kernel(data[i].x,
+					data[j].x) - f64(data[j].y) * (model.alphas[j] - alpha_j_old) * model.kernel(data[j].x,
+					data[j].x)
 
 				if 0 < model.alphas[i] && model.alphas[i] < model.config.c {
 					model.b = b1
@@ -219,4 +225,3 @@ pub fn predict_multiclass(model &MulticlassSVM, x []f64) int {
 
 	return predicted_class
 }
-
