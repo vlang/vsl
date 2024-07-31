@@ -6,12 +6,12 @@ pub struct Sample {
 pub mut:
 	features []f64
 pub:
-	label    int
+	label int
 }
 
 pub struct Dataset {
 pub mut:
-	samples   []Sample
+	samples []Sample
 pub:
 	n_features int
 	n_classes  int
@@ -28,8 +28,8 @@ mut:
 
 pub struct DecisionTree {
 mut:
-	root      &Node
-	max_depth int
+	root              &Node
+	max_depth         int
 	min_samples_split int
 }
 
@@ -42,13 +42,13 @@ pub fn DecisionTree.new(max_depth int, min_samples_split int) &DecisionTree {
 }
 
 pub fn index_of_max(arr []int) int {
-    mut max_index := 0
-    for i := 1; i < arr.len; i++ {
-        if arr[i] > arr[max_index] {
-            max_index = i
-        }
-    }
-    return max_index
+	mut max_index := 0
+	for i := 1; i < arr.len; i++ {
+		if arr[i] > arr[max_index] {
+			max_index = i
+		}
+	}
+	return max_index
 }
 
 pub fn create_dataset(n_features int, n_classes int) &Dataset {
@@ -108,7 +108,8 @@ fn find_best_split(dataset &Dataset) (int, f64, f64) {
 			if left.samples.len > 0 && right.samples.len > 0 {
 				p_left := f64(left.samples.len) / f64(dataset.samples.len)
 				p_right := f64(right.samples.len) / f64(dataset.samples.len)
-				gain := dataset.calculate_entropy() - (p_left * left.calculate_entropy() + p_right * right.calculate_entropy())
+				gain := dataset.calculate_entropy() - (p_left * left.calculate_entropy() +
+					p_right * right.calculate_entropy())
 
 				if gain > best_gain {
 					best_gain = gain
@@ -201,5 +202,6 @@ fn predict_recursive(node &Node, features []f64) int {
 pub fn calculate_information_gain(parent &Dataset, left &Dataset, right &Dataset) f64 {
 	p_left := f64(left.samples.len) / f64(parent.samples.len)
 	p_right := f64(right.samples.len) / f64(parent.samples.len)
-	return parent.calculate_entropy() - (p_left * left.calculate_entropy() + p_right * right.calculate_entropy())
+	return parent.calculate_entropy() - (p_left * left.calculate_entropy() +
+		p_right * right.calculate_entropy())
 }

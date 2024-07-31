@@ -91,4 +91,3 @@ fn main() {
 	test_decision_tree_training_and_prediction()
 	test_information_gain()
 }
-
