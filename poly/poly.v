@@ -1,13 +1,14 @@
 module poly
 
 import math
+import vsl.errors
 
 const radix = 2
 const radix2 = (radix * radix)
 
 pub fn eval(c []f64, x f64) f64 {
 	if c.len == 0 {
-		panic('coeficients can not be empty')
+		errors.vsl_panic('coeficients can not be empty', .efailed)
 	}
 	len := c.len
 	mut ans := c[len - 1]
