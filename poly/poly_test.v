@@ -1,5 +1,7 @@
 module poly
 
+import math
+
 fn test_eval() {
 	// ans = 2
 	// ans = 4.0 + 4 * 2 = 12
@@ -16,29 +18,38 @@ fn test_swap() {
 	assert a == 202.0 && b == 101.0
 }
 
-// fn test_sorted_3_(){
-// 	a := 5.0
-// 	b := 7.0
-// 	c := -8.0
-// 	x, y, z := sorted_3_(a, b, c)
-// 	assert y == 7.0
-// }
-
 fn test_add() {
-	a := [6.0, 777, -3]
-	b := [1.0, -755, -4]
-	assert add(a, b) == [7.0, 22, -7]
+	a := [1.0, 2.0, 3.0]
+	b := [6.0, 20.0, -10.0]
+	result := add(a, b)
+	println('Add result: ${result}')
+	assert result == [7.0, 22.0, -7.0]
 }
 
-fn test_substract() {
-	a := [6.0, 777, -3]
-	b := [1.0, -755, -4]
-	assert substract(a, b) == [5.0, 1532, 1]
+fn test_subtract() {
+	a := [6.0, 1532.0, -4.0]
+	b := [1.0, -1.0, -5.0]
+	result := subtract(a, b)
+	println('Subtract result: ${result}')
+	assert result == [5.0, 1533.0, 1.0]
 }
 
-// fn test_multiply(){
-// 	a := [9.0, -1, 5]
-// 	b := [0.0, -1, 7]
+fn test_multiply() {
+	// (2+3x+4x^2) * (-3x+2x^2) = (-6x -5x^2 -6x^3 + 8x^4)
+	a := [2.0, 3.0, 4.0]
+	b := [0.0, -3.0, 2.0]
+	result := multiply(a, b)
+	println('Multiply result: ${result}')
+	assert result == [0.0, -6.0, -5.0, -6.0, 8.0]
+}
 
-// 	assert multiply(a, b) == [0.0, -9, 73, -12, 35, 0]
-// }
+fn test_divide() {
+	// (x^2 + 2x + 1) / (x + 1) = (x + 1)
+	a := [1.0, 2.0, 1.0]
+	b := [1.0, 1.0]
+	quotient, remainder := divide(a, b)
+	println('Divide quotient: ${quotient}')
+	println('Divide remainder: ${remainder}')
+	assert quotient == [1.0, 1.0]
+	assert remainder == [] // boş küme bu iki polinomun tam bölündüğünü(kalansız bölündüğünü) ifade eder
+}
