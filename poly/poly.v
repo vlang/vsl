@@ -6,6 +6,11 @@ import vsl.errors
 const radix = 2
 const radix2 = (radix * radix)
 
+/* Evaluates a polynomial P(x) = a_n * x^n + a_{n-1} * x^{n-1} + ... + a_1 * x + a_0
+   using Horner's method: P(x) = (...((a_n * x + a_{n-1}) * x + a_{n-2}) * x + ... + a_1) * x + a_0
+   Input: c = [a_0, a_1, ..., a_n], x
+   Output: P(x)
+*/
 pub fn eval(c []f64, x f64) f64 {
 	if c.len == 0 {
 		errors.vsl_panic('coeficients can not be empty', .efailed)
@@ -18,6 +23,10 @@ pub fn eval(c []f64, x f64) f64 {
 	return ans
 }
 
+/* Evaluates a polynomial P(x) and its derivatives P'(x), P''(x), ..., P^(k)(x)
+   Input: c = [a_0, a_1, ..., a_n] representing P(x), x, and lenres (k+1)
+   Output: [P(x), P'(x), P''(x), ..., P^(k)(x)]
+*/
 pub fn eval_derivs(c []f64, x f64, lenres int) []f64 {
 	mut res := []f64{}
 	lenc := c.len
@@ -49,7 +58,12 @@ pub fn eval_derivs(c []f64, x f64, lenres int) []f64 {
 	return res
 }
 
-pub fn solve_quadratic(a f64, b f64, c f64) []f64 { // Handle linear case
+/* Solves the quadratic equation ax^2 + bx + c = 0
+   using the quadratic formula: x = (-b ± √(b^2 - 4ac)) / (2a)
+   Input: a, b, c
+   Output: Array of real roots (if any)
+*/
+pub fn solve_quadratic(a f64, b f64, c f64) []f64 {
 	if a == 0 {
 		if b == 0 {
 			return []
@@ -76,6 +90,11 @@ pub fn solve_quadratic(a f64, b f64, c f64) []f64 { // Handle linear case
 	}
 }
 
+/* Solves the cubic equation x^3 + ax^2 + bx + c = 0
+   using Cardano's formula and trigonometric solution
+   Input: a, b, c
+   Output: Array of real roots
+*/
 pub fn solve_cubic(a f64, b f64, c f64) []f64 {
 	q_ := (a * a - 3.0 * b)
 	r_ := (2.0 * a * a * a - 9.0 * a * b + 27.0 * c)
@@ -88,15 +107,6 @@ pub fn solve_cubic(a f64, b f64, c f64) []f64 {
 	if r == 0.0 && q == 0.0 {
 		return [-a / 3.0, -a / 3.0, -a / 3.0]
 	} else if cr2 == cq3 {
-		/*
-		this test is actually r2 == q3, written in a form suitable
-                        for exact computation with integers
-		*/
-		/*
-		Due to finite precision some double roots may be missed, and
-                        considered to be a pair of complex roots z = x +/- epsilon i
-                        close to the real axis.
-		*/
 		sqrt_q := math.sqrt(q)
 		if r > 0.0 {
 			return [-2.0 * sqrt_q - a / 3.0, sqrt_q - a / 3.0, sqrt_q - a / 3.0]
@@ -121,11 +131,19 @@ pub fn solve_cubic(a f64, b f64, c f64) []f64 {
 	}
 }
 
+/* Swaps two numbers: f(a, b) = (b, a)
+   Input: a, b
+   Output: (b, a)
+*/
 @[inline]
 fn swap_(a f64, b f64) (f64, f64) {
 	return b, a
 }
 
+/* Sorts three numbers in ascending order: f(x, y, z) = (min(x,y,z), median(x,y,z), max(x,y,z))
+   Input: x, y, z
+   Output: (min, median, max)
+*/
 @[inline]
 fn sorted_3_(x_ f64, y_ f64, z_ f64) (f64, f64, f64) {
 	mut x := x_
@@ -143,6 +161,16 @@ fn sorted_3_(x_ f64, y_ f64, z_ f64) (f64, f64, f64) {
 	return x, y, z
 }
 
+/* Creates a companion matrix for the polynomial P(x) = a_n * x^n + a_{n-1} * x^{n-1} + ... + a_1 * x + a_0
+   The companion matrix C is defined as:
+   [0 0 0 ... 0 -a_0/a_n]
+   [1 0 0 ... 0 -a_1/a_n]
+   [0 1 0 ... 0 -a_2/a_n]
+   [. . . ... . ........]
+   [0 0 0 ... 1 -a_{n-1}/a_n]
+   Input: a = [a_0, a_1, ..., a_n]
+   Output: Companion matrix C
+*/
 pub fn companion_matrix(a []f64) [][]f64 {
 	nc := a.len - 1
 	mut cm := [][]f64{len: nc, init: []f64{len: nc}}
@@ -161,6 +189,11 @@ pub fn companion_matrix(a []f64) [][]f64 {
 	return cm
 }
 
+/* Balances a companion matrix C to improve numerical stability
+   Uses an iterative scaling process to make the row and column norms as close to each other as possible
+   Input: Companion matrix C
+   Output: Balanced matrix B such that D^(-1)CD = B, where D is a diagonal matrix
+*/
 pub fn balance_companion_matrix(cm [][]f64) [][]f64 {
 	nc := cm.len
 	mut m := cm.clone()
@@ -169,7 +202,7 @@ pub fn balance_companion_matrix(cm [][]f64) [][]f64 {
 	mut col_norm := 0.0
 	for not_converged {
 		not_converged = false
-		for i := 0; i < nc; i++ { // column norm, excluding the diagonal
+		for i := 0; i < nc; i++ {
 			if i != nc - 1 {
 				col_norm = math.abs(m[i + 1][i])
 			} else {
@@ -177,7 +210,7 @@ pub fn balance_companion_matrix(cm [][]f64) [][]f64 {
 				for j := 0; j < nc - 1; j++ {
 					col_norm += math.abs(m[j][nc - 1])
 				}
-			} // row norm, excluding the diagonal
+			}
 			if i == 0 {
 				row_norm = math.abs(m[0][nc - 1])
 			} else if i == nc - 1 {
@@ -222,86 +255,70 @@ pub fn balance_companion_matrix(cm [][]f64) [][]f64 {
 	return m
 }
 
-// Arithmetic operations on polynomials
-//
-// In the following descriptions a, b, c are polynomials of degree
-// na, nb, nc respectively.
-//
-// Each polynomial is represented by an array containing its
-// coefficients, together with a separately declared integer equal
-// to the degree of the polynomial.  The coefficients appear in
-// ascending order; that is,
-//
-// a(x)  =  a[0]  +  a[1] * x  +  a[2] * x^2   +  ...  +  a[na] * x^na  .
-//
-//
-//
-// sum = eval( a, x )    Evaluate polynomial a(t) at t = x.
-// c = add( a, b )   c = a + b, nc = max(na, nb)
-// c = sub( a, b )   c = a - b, nc = max(na, nb)
-// c = mul( a, b )   c = a * b, nc = na+nb
-//
-//
-// Division:
-//
-// c = div( a, b )       c = a / b, nc = MAXPOL
-//
-// returns i = the degree of the first nonzero coefficient of a.
-// The computed quotient c must be divided by x^i.  An error message
-// is printed if a is identically zero.
-//
-//
-// Change of variables:
-// If a and b are polynomials, and t = a(x), then
-//     c(t) = b(a(x))
-// is a polynomial found by substituting a(x) for t.  The
-// subroutine call for this is
-//
+/* Adds two polynomials: (a_n * x^n + ... + a_0) + (b_m * x^m + ... + b_0)
+   Input: a = [a_0, ..., a_n], b = [b_0, ..., b_m]
+   Output: [a_0 + b_0, a_1 + b_1, ..., max(a_k, b_k), ...]
+*/
 pub fn add(a []f64, b []f64) []f64 {
-	na := a.len
-	nb := b.len
-	nc := int(math.max(na, nb))
-	mut c := []f64{len: nc}
-	for i := 0; i < nc; i++ {
-		if i > na {
-			c[i] = b[i]
-		} else if i > nb {
-			c[i] = a[i]
-		} else {
-			c[i] = a[i] + b[i]
-		}
+	mut result := []f64{len: math.max(a.len, b.len)}
+	for i in 0 .. result.len {
+		result[i] = if i < a.len { a[i] } else { 0.0 } + if i < b.len { b[i] } else { 0.0 }
 	}
-	return c
+	return result
 }
 
-pub fn substract(a []f64, b []f64) []f64 {
-	na := a.len
-	nb := b.len
-	nc := int(math.max(na, nb))
-	mut c := []f64{len: nc}
-	for i := 0; i < nc; i++ {
-		if i > na {
-			c[i] = -b[i]
-		} else if i > nb {
-			c[i] = a[i]
-		} else {
-			c[i] = a[i] - b[i]
-		}
+/* Subtracts two polynomials: (a_n * x^n + ... + a_0) - (b_m * x^m + ... + b_0)
+   Input: a = [a_0, ..., a_n], b = [b_0, ..., b_m]
+   Output: [a_0 - b_0, a_1 - b_1, ..., a_k - b_k, ...]
+*/
+pub fn subtract(a []f64, b []f64) []f64 {
+	mut result := []f64{len: math.max(a.len, b.len)}
+	for i in 0 .. result.len {
+		result[i] = if i < a.len { a[i] } else { 0.0 } - if i < b.len { b[i] } else { 0.0 }
 	}
-	return c
+	return result
 }
 
+/* Multiplies two polynomials: (a_n * x^n + ... + a_0) * (b_m * x^m + ... + b_0)
+   Input: a = [a_0, ..., a_n], b = [b_0, ..., b_m]
+   Output: [c_0, c_1, ..., c_{n+m}] where c_k = ∑_{i+j=k} a_i * b_j
+*/
 pub fn multiply(a []f64, b []f64) []f64 {
-	na := a.len
-	nb := b.len
-	nc := na + nb
-	mut c := []f64{len: nc}
-	for i := 0; i < na; i++ {
-		x := a[i]
-		for j := 0; j < nb; j++ {
-			k := i + j
-			c[k] += x * b[j]
+	mut result := []f64{len: a.len + b.len - 1}
+	for i in 0 .. a.len {
+		for j in 0 .. b.len {
+			result[i + j] += a[i] * b[j]
 		}
 	}
-	return c
+	return result
+}
+
+/* Divides two polynomials: (a_n * x^n + ... + a_0) / (b_m * x^m + ... + b_0)
+   Uses polynomial long division algorithm
+   Input: a = [a_0, ..., a_n], b = [b_0, ..., b_m]
+   Output: (q, r) where q is the quotient and r is the remainder
+   such that a(x) = b(x) * q(x) + r(x) and degree(r) < degree(b)
+*/
+pub fn divide(a []f64, b []f64) ([]f64, []f64) {
+	mut quotient := []f64{}
+	mut remainder := a.clone()
+	b_lead_coef := b[0]
+
+	for remainder.len >= b.len {
+		lead_coef := remainder[0] / b_lead_coef
+		quotient << lead_coef
+		for i in 0 .. b.len {
+			remainder[i] -= lead_coef * b[i]
+		}
+		remainder = remainder[1..]
+		for remainder.len > 0 && math.abs(remainder[0]) < 1e-10 {
+			remainder = remainder[1..]
+		}
+	}
+
+	if remainder.len == 0 {
+		remainder = []f64{}
+	}
+
+	return quotient, remainder
 }
