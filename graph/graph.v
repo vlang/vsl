@@ -92,7 +92,7 @@ pub fn (g &Graph) get_edge(i int, j int) !int {
 */
 pub fn (g &Graph) shortest_paths(method ShortestPaths) Graph {
 	if method != .fw {
-		panic('shortest_paths works with FW (Floyd-Warshall) method only for now')
+		errors.vsl_panic('shortest_paths works with FW (Floyd-Warshall) method only for now', .efailed)
 	}
 	g2 := g.calc_dist()
 	nv := g2.dist.len
@@ -176,7 +176,7 @@ pub fn (g &Graph) calc_dist() Graph {
 		dist[i][j] = d
 		next[i][j] = j
 		if dist[i][j] < 0 {
-			panic('distance between vertices cannot be negative: ${dist}[i][j]')
+			errors.vsl_panic('distance between vertices cannot be negative: ${dist}[i][j]', .efailed)
 		}
 	}
 	return Graph{
