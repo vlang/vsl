@@ -8,10 +8,10 @@ import math
 fn central_deriv(f func.Fn, x f64, h f64) (f64, f64, f64) {
 	/*
 	Compute the derivative using the 5-point rule (x-h, x-h/2, x,
-         * x+h/2, x+h). Note that the central point is not used.
-         * Compute the error using the difference between the 5-point and
-         * the 3-point rule (x-h,x,x+h). Again the central point is not
-         * used.
+	* x+h/2, x+h). Note that the central point is not used.
+	* Compute the error using the difference between the 5-point and
+	* the 3-point rule (x-h,x,x+h). Again the central point is not
+	* used.
 	*/
 	fm1 := f.eval(x - h)
 	fp1 := f.eval(x + h)
@@ -24,9 +24,9 @@ fn central_deriv(f func.Fn, x f64, h f64) (f64, f64, f64) {
 	dy := math.max(math.abs(r3 / h), math.abs(r5 / h)) * (math.abs(x) / h) * prec.f64_epsilon
 	/*
 	The truncation error in the r5 approximation itself is O(h^4).
-         * However, for safety, we estimate the error from r5-r3, which is
-         * O(h^2).  By scaling h we will minimise this estimated error, not
-         * the actual truncation error in r5.
+	* However, for safety, we estimate the error from r5-r3, which is
+	* O(h^2).  By scaling h we will minimise this estimated error, not
+	* the actual truncation error in r5.
 	*/
 	result := r5 / h
 	abserr_trunc := math.abs((r5 - r3) / h) // Estimated truncation error O(h^2)
@@ -41,15 +41,15 @@ pub fn central(f func.Fn, x f64, h f64) (f64, f64) {
 	if round < trunc && (round > 0.0 && trunc > 0.0) {
 		/*
 		Compute an optimised stepsize to minimize the total error,
-                 * using the scaling of the truncation error (O(h^2)) and
-                 * rounding error (O(1/h)).
+		* using the scaling of the truncation error (O(h^2)) and
+		* rounding error (O(1/h)).
 		*/
 		h_opt := h * math.pow(round / (2.0 * trunc), 1.0 / 3.0)
 		r_opt, round_opt, trunc_opt := central_deriv(f, x, h_opt)
 		error_opt := round_opt + trunc_opt
 		/*
 		Check that the new error is smaller, and that the new derivative
-                 * is consistent with the error bounds of the original estimate.
+		* is consistent with the error bounds of the original estimate.
 		*/
 		if error_opt < error && math.abs(r_opt - r_0) < 4.0 * error {
 			result = r_opt
@@ -62,9 +62,9 @@ pub fn central(f func.Fn, x f64, h f64) (f64, f64) {
 fn forward_deriv(f func.Fn, x f64, h f64) (f64, f64, f64) {
 	/*
 	Compute the derivative using the 4-point rule (x+h/4, x+h/2,
-         * x+3h/4, x+h).
-         * Compute the error using the difference between the 4-point and
-         * the 2-point rule (x+h/2,x+h).
+	* x+3h/4, x+h).
+	* Compute the error using the difference between the 4-point and
+	* the 2-point rule (x+h/2,x+h).
 	*/
 	f1 := f.eval(x + h / 4.0)
 	f2 := f.eval(x + h / 2.0)
@@ -76,9 +76,9 @@ fn forward_deriv(f func.Fn, x f64, h f64) (f64, f64, f64) {
 	dy := math.max(math.abs(r2 / h), math.abs(r4 / h)) * math.abs(x / h) * prec.f64_epsilon
 	/*
 	The truncation error in the r4 approximation itself is O(h^3).
-         * However, for safety, we estimate the error from r4-r2, which is
-         * O(h).  By scaling h we will minimise this estimated error, not
-         * the actual truncation error in r4.
+	* However, for safety, we estimate the error from r4-r2, which is
+	* O(h).  By scaling h we will minimise this estimated error, not
+	* the actual truncation error in r4.
 	*/
 	result := r4 / h
 	abserr_trunc := math.abs((r4 - r2) / h) // Estimated truncation error O(h)
@@ -93,15 +93,15 @@ pub fn forward(f func.Fn, x f64, h f64) (f64, f64) {
 	if round < trunc && (round > 0.0 && trunc > 0.0) {
 		/*
 		Compute an optimised stepsize to minimize the total error,
-                 * using the scaling of the estimated truncation error (O(h)) and
-                 * rounding error (O(1/h)).
+		* using the scaling of the estimated truncation error (O(h)) and
+		* rounding error (O(1/h)).
 		*/
 		h_opt := h * math.pow(round / trunc, 1.0 / 2.0)
 		r_opt, round_opt, trunc_opt := forward_deriv(f, x, h_opt)
 		error_opt := round_opt + trunc_opt
 		/*
 		Check that the new error is smaller, and that the new derivative
-                 * is consistent with the error bounds of the original estimate.
+		* is consistent with the error bounds of the original estimate.
 		*/
 		if error_opt < error && math.abs(r_opt - r_0) < 4.0 * error {
 			result = r_opt
