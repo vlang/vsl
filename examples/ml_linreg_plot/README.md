@@ -1,6 +1,7 @@
 # Example - ml_linreg_plot 📘
 
-This example demonstrates the usage of the V Scientific Library for performing linear regression with plotting.
+This example demonstrates the usage of the V Scientific Library
+for performing linear regression with plotting.
 
 ## Instructions
 

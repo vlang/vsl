@@ -1,6 +1,7 @@
 # Example - plot_script_mode_simple_plot 📘
 
-This example demonstrates the usage of the V Scientific Library for creating a simple plot in script mode.
+This example demonstrates the usage of the V Scientific Library
+for creating a simple plot in script mode.
 
 ## Instructions
 

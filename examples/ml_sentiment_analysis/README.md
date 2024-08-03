@@ -1,6 +1,7 @@
 # Example - ml_sentiment_analysis 📘
 
-This example demonstrates the usage of the V Scientific Library for performing sentiment analysis using machine learning.
+This example demonstrates the usage of the V Scientific Library
+for performing sentiment analysis using machine learning.
 
 ## Instructions
 

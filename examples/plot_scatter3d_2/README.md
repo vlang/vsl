@@ -1,6 +1,7 @@
 # Example - plot_scatter3d_2 📘
 
-This example demonstrates the usage of the V Scientific Library for creating a 3D scatter plot (example 2).
+This example demonstrates the usage of the V Scientific Library
+for creating a 3D scatter plot (example 2).
 
 ## Instructions
 

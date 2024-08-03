@@ -1,6 +1,7 @@
 # Example - roots_bisection_solver 📘
 
-This example demonstrates the usage of the V Scientific Library for finding roots using the bisection method.
+This example demonstrates the usage of the V Scientific Library
+for finding roots using the bisection method.
 
 ## Instructions
 

@@ -47,6 +47,12 @@ consts.mksa_plancks_constant_hbar
 Planck's constant divided by `2\pi`, `\hbar`.
 
 ```console
+consts.mksa_planck_temperature
+```
+
+Planck temperature `T_p`.
+
+```console
 consts.num_avogadro
 ```
 

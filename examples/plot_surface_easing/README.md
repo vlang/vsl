@@ -1,6 +1,7 @@
 # Example - plot_surface_easing 📘
 
-This example demonstrates the usage of the V Scientific Library for plotting a surface with easing functions.
+This example demonstrates the usage of the V Scientific Library
+for plotting a surface with easing functions.
 
 ## Instructions
 

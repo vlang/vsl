@@ -1,6 +1,7 @@
 # Example - ml_linreg01 📘
 
-This example demonstrates the usage of the V Scientific Library for performing a basic linear regression.
+This example demonstrates the usage of the V Scientific Library
+for performing a basic linear regression.
 
 ## Instructions
 

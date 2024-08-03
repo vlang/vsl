@@ -68,6 +68,18 @@ fn df6(x f64, _ []f64) f64 {
 	return -1.0 / (x * x)
 }
 
+fn f_multi(x []f64) f64 {
+	return x[0] * x[0] + x[1] * x[1] // f(x,y) = x^2 + y^2
+}
+
+fn df_multi_dx(x []f64) f64 {
+	return 2 * x[0] // ∂f/∂x = 2x
+}
+
+fn df_multi_dy(x []f64) f64 {
+	return 2 * x[1] // ∂f/∂y = 2y
+}
+
 fn test_deriv() {
 	f1_ := func.Fn.new(f: f1)
 	df1_ := func.Fn.new(f: df1)
@@ -100,6 +112,18 @@ fn test_deriv() {
 	assert deriv_test('central', f6_, df6_, 10.0)
 	assert deriv_test('forward', f6_, df6_, 10.0)
 	assert deriv_test('backward', f6_, df6_, 10.0)
+
+	// Partial derivative test
+	x := [2.0, 3.0]
+	h := 1e-5
+
+	// Partial derivative with respect to x
+	dx, _ := partial(f_multi, x, 0, h)
+	assert float64.tolerance(dx, df_multi_dx(x), 1e-5)
+
+	// Partial derivative with respect to y
+	dy, _ := partial(f_multi, x, 1, h)
+	assert float64.tolerance(dy, df_multi_dy(x), 1e-5)
 }
 
 fn deriv_test(deriv_method string, f func.Fn, df func.Fn, x f64) bool {

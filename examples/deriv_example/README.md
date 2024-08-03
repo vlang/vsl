@@ -1,6 +1,7 @@
 # Example - deriv_example 📘
 
-This example demonstrates the usage of the V Scientific Library for demonstrating derivative calculation.
+This example demonstrates the usage of the V Scientific Library
+for demonstrating derivative calculation.
 
 ## Instructions
 
