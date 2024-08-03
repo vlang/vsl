@@ -51,5 +51,5 @@ fn test_divide() {
 	println('Divide quotient: ${quotient}')
 	println('Divide remainder: ${remainder}')
 	assert quotient == [1.0, 1.0]
-	assert remainder == [] // boş küme bu iki polinomun tam bölündüğünü(kalansız bölündüğünü) ifade eder
+	assert remainder == [] // The empty set indicates that two polynomials divide each other exactly (without remainder).
 }

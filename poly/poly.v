@@ -6,11 +6,10 @@ import vsl.errors
 const radix = 2
 const radix2 = (radix * radix)
 
-/* Evaluates a polynomial P(x) = a_n * x^n + a_{n-1} * x^{n-1} + ... + a_1 * x + a_0
-   using Horner's method: P(x) = (...((a_n * x + a_{n-1}) * x + a_{n-2}) * x + ... + a_1) * x + a_0
-   Input: c = [a_0, a_1, ..., a_n], x
-   Output: P(x)
-*/
+// eval is a function that evaluates a polynomial P(x) = a_n * x^n + a_{n-1} * x^{n-1} + ... + a_1 * x + a_0
+// using Horner's method: P(x) = (...((a_n * x + a_{n-1}) * x + a_{n-2}) * x + ... + a_1) * x + a_0
+// Input: c = [a_0, a_1, ..., a_n], x
+// Output: P(x)
 pub fn eval(c []f64, x f64) f64 {
 	if c.len == 0 {
 		errors.vsl_panic('coeficients can not be empty', .efailed)
@@ -23,10 +22,9 @@ pub fn eval(c []f64, x f64) f64 {
 	return ans
 }
 
-/* Evaluates a polynomial P(x) and its derivatives P'(x), P''(x), ..., P^(k)(x)
-   Input: c = [a_0, a_1, ..., a_n] representing P(x), x, and lenres (k+1)
-   Output: [P(x), P'(x), P''(x), ..., P^(k)(x)]
-*/
+// eval_derivs evaluates a polynomial P(x) and its derivatives P'(x), P''(x), ..., P^(k)(x)
+// Input: c = [a_0, a_1, ..., a_n] representing P(x), x, and lenres (k+1)
+// Output: [P(x), P'(x), P''(x), ..., P^(k)(x)]
 pub fn eval_derivs(c []f64, x f64, lenres int) []f64 {
 	mut res := []f64{}
 	lenc := c.len
@@ -58,11 +56,10 @@ pub fn eval_derivs(c []f64, x f64, lenres int) []f64 {
 	return res
 }
 
-/* Solves the quadratic equation ax^2 + bx + c = 0
-   using the quadratic formula: x = (-b ± √(b^2 - 4ac)) / (2a)
-   Input: a, b, c
-   Output: Array of real roots (if any)
-*/
+// solve_quadratic solves the quadratic equation ax^2 + bx + c = 0
+// using the quadratic formula: x = (-b ± √(b^2 - 4ac)) / (2a)
+// Input: a, b, c
+// Output: Array of real roots (if any)
 pub fn solve_quadratic(a f64, b f64, c f64) []f64 {
 	if a == 0 {
 		if b == 0 {
@@ -90,11 +87,10 @@ pub fn solve_quadratic(a f64, b f64, c f64) []f64 {
 	}
 }
 
-/* Solves the cubic equation x^3 + ax^2 + bx + c = 0
-   using Cardano's formula and trigonometric solution
-   Input: a, b, c
-   Output: Array of real roots
-*/
+// solve_cubic solves the cubic equation x^3 + ax^2 + bx + c = 0
+// using Cardano's formula and trigonometric solution
+// Input: a, b, c
+// Output: Array of real roots
 pub fn solve_cubic(a f64, b f64, c f64) []f64 {
 	q_ := (a * a - 3.0 * b)
 	r_ := (2.0 * a * a * a - 9.0 * a * b + 27.0 * c)
@@ -131,19 +127,17 @@ pub fn solve_cubic(a f64, b f64, c f64) []f64 {
 	}
 }
 
-/* Swaps two numbers: f(a, b) = (b, a)
-   Input: a, b
-   Output: (b, a)
-*/
+// swap_ swaps two numbers: f(a, b) = (b, a)
+// Input: a, b
+// Output: (b, a)
 @[inline]
 fn swap_(a f64, b f64) (f64, f64) {
 	return b, a
 }
 
-/* Sorts three numbers in ascending order: f(x, y, z) = (min(x,y,z), median(x,y,z), max(x,y,z))
-   Input: x, y, z
-   Output: (min, median, max)
-*/
+// sorted_3_ sorts three numbers in ascending order: f(x, y, z) = (min(x,y,z), median(x,y,z), max(x,y,z))
+// Input: x, y, z
+// Output: (min, median, max)
 @[inline]
 fn sorted_3_(x_ f64, y_ f64, z_ f64) (f64, f64, f64) {
 	mut x := x_
@@ -161,16 +155,15 @@ fn sorted_3_(x_ f64, y_ f64, z_ f64) (f64, f64, f64) {
 	return x, y, z
 }
 
-/* Creates a companion matrix for the polynomial P(x) = a_n * x^n + a_{n-1} * x^{n-1} + ... + a_1 * x + a_0
-   The companion matrix C is defined as:
-   [0 0 0 ... 0 -a_0/a_n]
-   [1 0 0 ... 0 -a_1/a_n]
-   [0 1 0 ... 0 -a_2/a_n]
-   [. . . ... . ........]
-   [0 0 0 ... 1 -a_{n-1}/a_n]
-   Input: a = [a_0, a_1, ..., a_n]
-   Output: Companion matrix C
-*/
+// companion_matrix creates a companion matrix for the polynomial P(x) = a_n * x^n + a_{n-1} * x^{n-1} + ... + a_1 * x + a_0
+// The companion matrix C is defined as:
+// [0 0 0 ... 0 -a_0/a_n]
+// [1 0 0 ... 0 -a_1/a_n]
+// [0 1 0 ... 0 -a_2/a_n]
+// [. . . ... . ........]
+// [0 0 0 ... 1 -a_{n-1}/a_n]
+// Input: a = [a_0, a_1, ..., a_n]
+// Output: Companion matrix C
 pub fn companion_matrix(a []f64) [][]f64 {
 	nc := a.len - 1
 	mut cm := [][]f64{len: nc, init: []f64{len: nc}}
@@ -189,11 +182,10 @@ pub fn companion_matrix(a []f64) [][]f64 {
 	return cm
 }
 
-/* Balances a companion matrix C to improve numerical stability
-   Uses an iterative scaling process to make the row and column norms as close to each other as possible
-   Input: Companion matrix C
-   Output: Balanced matrix B such that D^(-1)CD = B, where D is a diagonal matrix
-*/
+// balance_companion_matrix balances a companion matrix C to improve numerical stability
+// Uses an iterative scaling process to make the row and column norms as close to each other as possible
+// Input: Companion matrix C
+// Output: Balanced matrix B such that D^(-1)CD = B, where D is a diagonal matrix
 pub fn balance_companion_matrix(cm [][]f64) [][]f64 {
 	nc := cm.len
 	mut m := cm.clone()
@@ -255,10 +247,9 @@ pub fn balance_companion_matrix(cm [][]f64) [][]f64 {
 	return m
 }
 
-/* Adds two polynomials: (a_n * x^n + ... + a_0) + (b_m * x^m + ... + b_0)
-   Input: a = [a_0, ..., a_n], b = [b_0, ..., b_m]
-   Output: [a_0 + b_0, a_1 + b_1, ..., max(a_k, b_k), ...]
-*/
+// add adds two polynomials: (a_n * x^n + ... + a_0) + (b_m * x^m + ... + b_0)
+// Input: a = [a_0, ..., a_n], b = [b_0, ..., b_m]
+// Output: [a_0 + b_0, a_1 + b_1, ..., max(a_k, b_k), ...]
 pub fn add(a []f64, b []f64) []f64 {
 	mut result := []f64{len: math.max(a.len, b.len)}
 	for i in 0 .. result.len {
@@ -267,10 +258,9 @@ pub fn add(a []f64, b []f64) []f64 {
 	return result
 }
 
-/* Subtracts two polynomials: (a_n * x^n + ... + a_0) - (b_m * x^m + ... + b_0)
-   Input: a = [a_0, ..., a_n], b = [b_0, ..., b_m]
-   Output: [a_0 - b_0, a_1 - b_1, ..., a_k - b_k, ...]
-*/
+// subtract subtracts two polynomials: (a_n * x^n + ... + a_0) - (b_m * x^m + ... + b_0)
+// Input: a = [a_0, ..., a_n], b = [b_0, ..., b_m]
+// Output: [a_0 - b_0, a_1 - b_1, ..., a_k - b_k, ...]
 pub fn subtract(a []f64, b []f64) []f64 {
 	mut result := []f64{len: math.max(a.len, b.len)}
 	for i in 0 .. result.len {
@@ -279,10 +269,9 @@ pub fn subtract(a []f64, b []f64) []f64 {
 	return result
 }
 
-/* Multiplies two polynomials: (a_n * x^n + ... + a_0) * (b_m * x^m + ... + b_0)
-   Input: a = [a_0, ..., a_n], b = [b_0, ..., b_m]
-   Output: [c_0, c_1, ..., c_{n+m}] where c_k = ∑_{i+j=k} a_i * b_j
-*/
+// multiply multiplies two polynomials: (a_n * x^n + ... + a_0) * (b_m * x^m + ... + b_0)
+// Input: a = [a_0, ..., a_n], b = [b_0, ..., b_m]
+// Output: [c_0, c_1, ..., c_{n+m}] where c_k = ∑_{i+j=k} a_i * b_j
 pub fn multiply(a []f64, b []f64) []f64 {
 	mut result := []f64{len: a.len + b.len - 1}
 	for i in 0 .. a.len {
@@ -293,12 +282,11 @@ pub fn multiply(a []f64, b []f64) []f64 {
 	return result
 }
 
-/* Divides two polynomials: (a_n * x^n + ... + a_0) / (b_m * x^m + ... + b_0)
-   Uses polynomial long division algorithm
-   Input: a = [a_0, ..., a_n], b = [b_0, ..., b_m]
-   Output: (q, r) where q is the quotient and r is the remainder
-   such that a(x) = b(x) * q(x) + r(x) and degree(r) < degree(b)
-*/
+// divide divides two polynomials: (a_n * x^n + ... + a_0) / (b_m * x^m + ... + b_0)
+// Uses polynomial long division algorithm
+// Input: a = [a_0, ..., a_n], b = [b_0, ..., b_m]
+// Output: (q, r) where q is the quotient and r is the remainder
+// such that a(x) = b(x) * q(x) + r(x) and degree(r) < degree(b)
 pub fn divide(a []f64, b []f64) ([]f64, []f64) {
 	mut quotient := []f64{}
 	mut remainder := a.clone()
