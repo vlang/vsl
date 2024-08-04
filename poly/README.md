@@ -7,6 +7,10 @@ with real coefficients (of any order). The functions are declared in the module 
 
 ## Polynomial Evaluation
 
+```v ignore
+fn eval(c []f64, x f64) f64
+```
+
 The functions described here evaluate the polynomial
 
 ```console
@@ -14,14 +18,6 @@ P(x) = c[0] + c[1] x + c[2] x^2 + . . . + c[len-1] x^(len-1)
 ```
 
 using Horner's method for stability.
-
-```v ignore
-fn eval(c []f64, x f64) f64
-```
-
-This function evaluates a polynomial and its derivatives, storing the results in the array
-`res` of size `lenres`. The output array contains the values of `d^k P(x)/d x^k` for the
-specified value of `x`, starting with `k = 0`.
 
 ```v ignore
 fn eval_derivs(c []f64, x f64, lenres u64) []f64
