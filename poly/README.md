@@ -115,7 +115,7 @@ Adds two polynomials:
 (a_n * x^n + ... + a_0) + (b_m * x^m + ... + b_0)
 ```
 
-Returns the result as `[a_0 + b_0, a_1 + b_1, ..., max(a_k, b_k), ...]`.
+Returns the result as `[a_0 + b_0, a_1 + b_1, ..., a_k + b_k ...]`.
 
 ```v ignore
 fn subtract(a []f64, b []f64) []f64
