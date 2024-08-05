@@ -1,4 +1,4 @@
-# Example - plot_bar 📘
+# Example - noise_fractal_2d 📘
 
 This example demonstrates the usage of the V Scientific Library for generating pink noise.
 
