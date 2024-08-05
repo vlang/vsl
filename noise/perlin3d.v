@@ -1,7 +1,7 @@
 module noise
 
 // perlin3d is a function that return a single value of perlin noise for a given 3d position
-pub fn (perlin Perlin) perlin3d(x f64, y f64, z f64) f64 {
+pub fn (generator Generator) perlin3d(x f64, y f64, z f64) f64 {
 	xi := int(x) & 0xFF
 	yi := int(y) & 0xFF
 	zi := int(z) & 0xFF
@@ -12,21 +12,21 @@ pub fn (perlin Perlin) perlin3d(x f64, y f64, z f64) f64 {
 	v := fade(yf)
 	w := fade(zf)
 
-	pxi := perlin.perm[xi]
-	pxi_yi := perlin.perm[pxi + yi]
-	pxi_yi1 := perlin.perm[pxi + yi + 1]
-	pxi1 := perlin.perm[xi + 1]
-	pxi1_yi := perlin.perm[pxi1 + yi]
-	pxi1_yi1 := perlin.perm[pxi1 + yi + 1]
+	pxi := generator.perm[xi]
+	pxi_yi := generator.perm[pxi + yi]
+	pxi_yi1 := generator.perm[pxi + yi + 1]
+	pxi1 := generator.perm[xi + 1]
+	pxi1_yi := generator.perm[pxi1 + yi]
+	pxi1_yi1 := generator.perm[pxi1 + yi + 1]
 
-	aaa := perlin.perm[pxi_yi + zi]
-	aba := perlin.perm[pxi_yi1 + zi]
-	aab := perlin.perm[pxi_yi + zi + 1]
-	abb := perlin.perm[pxi_yi1 + zi + 1]
-	baa := perlin.perm[pxi1_yi + zi]
-	bba := perlin.perm[pxi1_yi1 + zi]
-	bab := perlin.perm[pxi1_yi + zi + 1]
-	bbb := perlin.perm[pxi1_yi1 + zi + 1]
+	aaa := generator.perm[pxi_yi + zi]
+	aba := generator.perm[pxi_yi1 + zi]
+	aab := generator.perm[pxi_yi + zi + 1]
+	abb := generator.perm[pxi_yi1 + zi + 1]
+	baa := generator.perm[pxi1_yi + zi]
+	bba := generator.perm[pxi1_yi1 + zi]
+	bab := generator.perm[pxi1_yi + zi + 1]
+	bbb := generator.perm[pxi1_yi1 + zi + 1]
 
 	mut x1 := lerp(grad3d(aaa, xf, yf, zf), grad3d(baa, xf - 1, yf, zf), u)
 	mut x2 := lerp(grad3d(aba, xf, yf - 1, zf), grad3d(bba, xf - 1, yf - 1, zf), u)
