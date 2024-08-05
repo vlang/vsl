@@ -1,26 +1,7 @@
 module noise
 
-import rand
-
-// Perlin is a struct that hold the permutation set for perlin noise
-pub struct Perlin {
-mut:
-	perm []int = rand.shuffle_clone(permutations) or { panic(err) }
-}
-
-// new is a function that return a new Perlin struct
-pub fn Perlin.new() Perlin {
-	return Perlin{}
-}
-
-// randomize is a function that shuffle the permutation set inside the Perlin struct
-// will not shuffle if rand.seed is not changed
-pub fn (mut perlin Perlin) randomize() {
-	perlin.perm = rand.shuffle_clone(permutations) or { panic(err) }
-}
-
 // perlin2d is a function that return a single value of perlin noise for a given 2d position
-pub fn (perlin Perlin) perlin2d(x f64, y f64) f64 {
+pub fn (generator Generator) perlin2d(x f64, y f64) f64 {
 	xi := int(x) & 0xFF
 	yi := int(y) & 0xFF
 
@@ -30,13 +11,13 @@ pub fn (perlin Perlin) perlin2d(x f64, y f64) f64 {
 	u := fade(xf)
 	v := fade(yf)
 
-	pxi := perlin.perm[xi]
-	pxi1 := perlin.perm[xi + 1]
+	pxi := generator.perm[xi]
+	pxi1 := generator.perm[xi + 1]
 
-	aa := perlin.perm[pxi + yi]
-	ab := perlin.perm[pxi + yi + 1]
-	ba := perlin.perm[pxi1 + yi]
-	bb := perlin.perm[pxi1 + yi + 1]
+	aa := generator.perm[pxi + yi]
+	ab := generator.perm[pxi + yi + 1]
+	ba := generator.perm[pxi1 + yi]
+	bb := generator.perm[pxi1 + yi + 1]
 
 	x1 := lerp(grad2d(aa, xf, yf), grad2d(ba, xf - 1, yf), u)
 	x2 := lerp(grad2d(ab, xf, yf - 1), grad2d(bb, xf - 1, yf - 1), u)
