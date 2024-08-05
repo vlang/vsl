@@ -1,18 +1,18 @@
 # VSL Machine Learning (vsl.ml)
 
 VSL aims to provide a robust set of tools for scientific computing with an emphasis
-on performance and ease of use. In the `vsl.ml` module, some machine learning 
-models are designed as observers of data, meaning they re-train automatically when 
+on performance and ease of use. In the `vsl.ml` module, some machine learning
+models are designed as observers of data, meaning they re-train automatically when
 data changes, while others do not require this functionality.
 
 ## Key Features
 
 - **Observers of Data**: Some machine learning models in VSL act as observers,
-re-training automatically when data changes.
+  re-training automatically when data changes.
 - **High Performance**: Leverages V’s performance optimizations and can integrate
-with C and Fortran libraries like Open BLAS and LAPACK.
+  with C and Fortran libraries like Open BLAS and LAPACK.
 - **Versatile Algorithms**: Supports a variety of machine learning algorithms and
-models.
+  models.
 
 ## Usage
 
