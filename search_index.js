@@ -919,7 +919,7 @@ var searchModuleData = [
 ["","internal.prec.html"],
 ["This module provides two different ways of managing combinatorics. Let see an ex","iter.html"],
 ["","la.html"],
-["","ml.html"],
+["VSL aims to provide a robust set of tools for scientific computing with an empha","ml.html"],
 ["This submodule offers tools for Natural Language Processing.","ml.nlp.html"],
 ["The `mpi` package is a simplified wrapper to the [OpenMPI](https://www.open-mpi.","mpi.html"],
 ["This module aims to to implement noise algorithms.","noise.html"],
