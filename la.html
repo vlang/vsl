@@ -36,7 +36,7 @@
 						<div class="info">
 							<div class="module">vsl</div>
 							<div class="toggle-version-container">
-								<span>0.1.50 49f5ebf</span>
+								<span>0.1.50 ed3acac</span>
 								<div
 									id="dark-mode-toggle"
 									role="switch"
@@ -859,10 +859,10 @@
 <code><span class="token keyword">struct</span> <span class="token symbol">SparseConfig</span> <span class="token punctuation">{</span>
 <span class="token keyword">mut</span><span class="token punctuation">:</span>
 	communicator   <span class="token operator">?</span><span class="token operator">&</span>mpi<span class="token punctuation">.</span>Communicator <span class="token comment">// MPI communicator for parallel solvers [may be none]</span>
-	mumps_ordering <span class="token builtin">int</span>  <span class="token comment">// ICNTL(7) default = "" == "auto"</span>
-	mumps_scaling  <span class="token builtin">int</span>  <span class="token comment">// Scaling type (check MUMPS solver) [may be empty]</span>
-	symmetric      <span class="token builtin">bool</span> <span class="token comment">// indicates symmetric system. NOTE: when using MUMPS, only the upper or lower part of the matrix must be provided</span>
-	sym_pos_def    <span class="token builtin">bool</span> <span class="token comment">// indicates symmetric-positive-defined system. NOTE: when using MUMPS, only the upper or lower part of the matrix must be provided</span>
+	mumps_ordering <span class="token builtin">int</span>                <span class="token comment">// ICNTL(7) default = "" == "auto"</span>
+	mumps_scaling  <span class="token builtin">int</span>                <span class="token comment">// Scaling type (check MUMPS solver) [may be empty]</span>
+	symmetric      <span class="token builtin">bool</span>               <span class="token comment">// indicates symmetric system. NOTE: when using MUMPS, only the upper or lower part of the matrix must be provided</span>
+	sym_pos_def    <span class="token builtin">bool</span>               <span class="token comment">// indicates symmetric-positive-defined system. NOTE: when using MUMPS, only the upper or lower part of the matrix must be provided</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
 	verbose                             <span class="token builtin">bool</span> <span class="token comment">// run on verbose mode</span>
 	mumps_increase_of_working_space_pct <span class="token builtin">int</span>  <span class="token comment">// MUMPS control parameters (check MUMPS solver manual) ICNTL(14) default = 100%</span>
@@ -926,7 +926,7 @@
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 5 Aug 2024 04:15:04</div>
+						<div class="footer">Powered by vdoc. Generated on: 10 Aug 2024 11:44:50</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#den_solve">fn den_solve</a>        <ul>
 </ul>
