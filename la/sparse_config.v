@@ -7,10 +7,10 @@ import vsl.mpi
 pub struct SparseConfig {
 mut:
 	communicator   ?&mpi.Communicator // MPI communicator for parallel solvers [may be none]
-	mumps_ordering int  // ICNTL(7) default = "" == "auto"
-	mumps_scaling  int  // Scaling type (check MUMPS solver) [may be empty]
-	symmetric      bool // indicates symmetric system. NOTE: when using MUMPS, only the upper or lower part of the matrix must be provided
-	sym_pos_def    bool // indicates symmetric-positive-defined system. NOTE: when using MUMPS, only the upper or lower part of the matrix must be provided
+	mumps_ordering int                // ICNTL(7) default = "" == "auto"
+	mumps_scaling  int                // Scaling type (check MUMPS solver) [may be empty]
+	symmetric      bool               // indicates symmetric system. NOTE: when using MUMPS, only the upper or lower part of the matrix must be provided
+	sym_pos_def    bool               // indicates symmetric-positive-defined system. NOTE: when using MUMPS, only the upper or lower part of the matrix must be provided
 pub mut:
 	verbose                             bool // run on verbose mode
 	mumps_increase_of_working_space_pct int  // MUMPS control parameters (check MUMPS solver manual) ICNTL(14) default = 100%

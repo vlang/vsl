@@ -129,8 +129,8 @@ pub:
 @[params]
 pub struct LinearIterParams {
 pub:
-	start    f64  @[required]
-	stop     f64  @[required]
+	start    f64 @[required]
+	stop     f64 @[required]
 	len      i64  = 50
 	endpoint bool = true
 }
@@ -193,8 +193,8 @@ mut:
 
 @[params]
 pub struct LogIterParams {
-	start    f64  @[required]
-	stop     f64  @[required]
+	start    f64 @[required]
+	stop     f64 @[required]
 	len      i64  = 50
 	base     f64  = 10.0
 	endpoint bool = true
