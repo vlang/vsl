@@ -298,9 +298,9 @@ pub fn divide(a []f64, b []f64) ([]f64, []f64) {
 		for i in 0 .. b.len {
 			remainder[i] -= lead_coef * b[i]
 		}
-		remainder = remainder[1..]
+		remainder = unsafe { remainder[1..] }
 		for remainder.len > 0 && math.abs(remainder[0]) < 1e-10 {
-			remainder = remainder[1..]
+			remainder = unsafe { remainder[1..] }
 		}
 	}
 
