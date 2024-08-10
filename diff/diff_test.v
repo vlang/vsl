@@ -126,7 +126,7 @@ fn diff_near_test(diff_method string, f func.Fn, df func.Fn, x f64, tolerance f6
 }
 
 // Helper methods for comparing floats
-[inline]
+@[inline]
 fn compare(x f64, y f64) bool {
 	return compare_near(x, y, 1e-5)
 }

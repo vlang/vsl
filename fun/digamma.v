@@ -3,7 +3,7 @@ module fun
 import math
 import vsl.poly
 
-[inline]
+@[inline]
 pub fn digamma(x f64) f64 {
 	return psi(x)
 }
@@ -18,7 +18,7 @@ pub fn psi(x_ f64) f64 {
 		q := x
 		mut p := math.floor(q)
 		if p == q {
-			return math.max_f64
+			return max_f64
 		}
 		// Remove the zeros of tan(PI x)
 		// by subtracting the nearest integer from x

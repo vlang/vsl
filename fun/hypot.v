@@ -18,7 +18,7 @@ pub fn hypot(x f64, y f64) f64 {
 		min, max := math.minmax(abs_x, abs_y)
 		rat := min / max
 		root_term := math.sqrt(1.0 + rat * rat)
-		if max < math.max_f64 / root_term {
+		if max < max_f64 / root_term {
 			result = max * root_term
 		} else {
 			errors.vsl_panic('overflow in hypot function', .eovrflw)
@@ -42,7 +42,7 @@ pub fn hypot_e(x f64, y f64) (f64, f64) {
 		min, max := math.minmax(abs_x, abs_y)
 		rat := min / max
 		root_term := math.sqrt(1.0 + rat * rat)
-		if max < math.max_f64 / root_term {
+		if max < max_f64 / root_term {
 			result = max * root_term
 			result_err = f64(2.0) * prec.f64_epsilon * math.abs(result)
 		} else {

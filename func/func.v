@@ -19,12 +19,12 @@ mut:
 }
 
 // new_func returns an arbitrary function with parameters
-[inline]
+@[inline]
 pub fn new_func(f Fn) Fn {
 	return f
 }
 
-[inline]
+@[inline]
 pub fn (f Fn) eval(x f64) f64 {
 	return f.f(x, f.params)
 }
@@ -35,7 +35,7 @@ fn is_finite(a f64) bool {
 
 // Call the pointed-to function with argument x, put its result in y, and
 // return an error if the function value is inf/nan.
-[inline]
+@[inline]
 pub fn (f Fn) safe_eval(x f64) !f64 {
 	y := f.f(x, f.params)
 	if is_finite(y) {
@@ -54,22 +54,22 @@ mut:
 }
 
 // new_func_fdf returns an arbitrary function returning two values, r1, r2
-[inline]
+@[inline]
 pub fn new_func_fdf(fn_fdf FnFdf) FnFdf {
 	return fn_fdf
 }
 
-[inline]
+@[inline]
 pub fn (fdf FnFdf) eval_f(x f64) f64 {
 	return fdf.f(x, fdf.params)
 }
 
-[inline]
+@[inline]
 pub fn (fdf FnFdf) eval_df(x f64) f64 {
 	return fdf.df(x, fdf.params)
 }
 
-[inline]
+@[inline]
 pub fn (fdf FnFdf) eval_f_df(x f64) (f64, f64) {
 	return fdf.fdf(x, fdf.params)
 }
@@ -82,12 +82,12 @@ mut:
 }
 
 // new_func_vec returns an arbitrary vector-valued function with parameters
-[inline]
+@[inline]
 pub fn new_func_vec(f FnVec) FnVec {
 	return f
 }
 
-[inline]
+@[inline]
 pub fn (f FnVec) eval(x f64, y []f64) f64 {
 	return f.f(x, y, f.params)
 }

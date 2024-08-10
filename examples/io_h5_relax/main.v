@@ -14,7 +14,7 @@ linedata[20] = 3.0
 mut maxdiff := 0.0
 
 for loop in 0 .. 1000 {
-	maxdiff = -math.max_f64
+	maxdiff = -max_f64
 	for i in 1 .. linedata.len - 1 {
 		newv = (linedata[i - 1] + linedata[i] + linedata[i + 1]) / 3.00
 		maxdiff = math.max(maxdiff, math.abs(newv - linedata[i]))

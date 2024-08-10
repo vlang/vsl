@@ -3,18 +3,18 @@ module noise
 import math
 import rand
 
-[inline]
+@[inline]
 fn random_gradient() !(f32, f32) {
 	nr := rand.f32_in_range(0.0, math.pi * 2) or { return err }
 	return math.cosf(nr), math.sinf(nr)
 }
 
-[inline]
+@[inline]
 fn interpolate(a f32, b f32, w f32) f32 {
 	return ((a - b) * w) + a
 }
 
-[inline]
+@[inline]
 fn dot(ix int, iy int, x f32, y f32) !f32 {
 	vec_x, vec_y := random_gradient()!
 	dx := x - f32(ix)

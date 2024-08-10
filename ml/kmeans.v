@@ -79,7 +79,7 @@ pub fn (mut o Kmeans) find_closest_centroids() {
 	mut del := []f64{len: o.data.nb_features}
 	for i := 0; i < o.data.nb_samples; i++ {
 		// set min distance to max value possible
-		mut dist_min := math.max_f64
+		mut dist_min := max_f64
 		xi := o.data.x.get_row(i)
 		// for each class
 		for j := 0; j < o.nb_classes; j++ {

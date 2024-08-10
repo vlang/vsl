@@ -122,12 +122,12 @@ pub fn solve_cubic(a f64, b f64, c f64) []f64 {
 	}
 }
 
-[inline]
+@[inline]
 fn swap_(a f64, b f64) (f64, f64) {
 	return b, a
 }
 
-[inline]
+@[inline]
 fn sorted_3_(x_ f64, y_ f64, z_ f64) (f64, f64, f64) {
 	mut x := x_
 	mut y := y_

@@ -1,7 +1,6 @@
 module h5
 
 import arrays { flatten }
-import math
 
 type Hdf5HidT = i64
 type Hdf5HsizeT = u64
@@ -227,7 +226,7 @@ pub fn open_file(filename string) !Hdf5File {
 
 // read_dataset1d reads a 1-d numeric array (vector) from a named HDF5 dataset in an HDF5 file.
 //   Replaces the value of the array.
-//   Maximum dimension is math.max_i32 or less (this is checked).
+//   Maximum dimension is max_i32 or less (this is checked).
 pub fn (f &Hdf5File) read_dataset1d[T](dset_name string, mut dataset []T) {
 	mut rank := 0
 	mut class_id := Hdf5ClassT(0)
@@ -242,7 +241,7 @@ pub fn (f &Hdf5File) read_dataset1d[T](dset_name string, mut dataset []T) {
 		&class_id, &type_size)
 	assert errc >= 0
 	assert curdims[0] > 0
-	assert curdims[0] < math.max_i32
+	assert curdims[0] < max_i32
 
 	dtype := hdftype(dataset[0])
 	// note: V dims are int while hdf5 dims are u64
@@ -257,8 +256,8 @@ pub fn (f &Hdf5File) read_dataset1d[T](dset_name string, mut dataset []T) {
 
 // read_dataset2d reads a 2-d numeric array from a named HDF5 dataset in an HDF5 file.
 //   Replaces the value of the array.
-//   Maximum of any dimension is math.max_i32 or less (this is checked).
-//   Maximum total elements is also math.max_i32.
+//   Maximum of any dimension is max_i32 or less (this is checked).
+//   Maximum total elements is also max_i32.
 pub fn (f &Hdf5File) read_dataset2d[T](dset_name string, mut dataset [][]T) {
 	mut rank := 0
 	mut class_id := Hdf5ClassT(0)
@@ -274,8 +273,8 @@ pub fn (f &Hdf5File) read_dataset2d[T](dset_name string, mut dataset [][]T) {
 	assert errc >= 0
 	assert curdims[0] > 0
 	assert curdims[1] > 0
-	assert curdims[0] < math.max_i32
-	assert curdims[1] < math.max_i32
+	assert curdims[0] < max_i32
+	assert curdims[1] < max_i32
 
 	dtype := hdftype(dataset[0][0])
 	mut y := make1type[T](int(curdims[0] * curdims[1]))
@@ -291,8 +290,8 @@ pub fn (f &Hdf5File) read_dataset2d[T](dset_name string, mut dataset [][]T) {
 
 // read_dataset3d reads a 3-d numeric array from a named HDF5 dataset in an HDF5 file.
 //   Replaces the value of the array with correctly dimensioned array.
-//   Maximum of any dimension is math.max_i32 or less (this is checked).
-//   Maximum total elements is also math.max_i32.
+//   Maximum of any dimension is max_i32 or less (this is checked).
+//   Maximum total elements is also max_i32.
 pub fn (f &Hdf5File) read_dataset3d[T](dset_name string, mut dataset [][][]T) {
 	mut rank := 0
 	mut class_id := Hdf5ClassT(0)
@@ -309,9 +308,9 @@ pub fn (f &Hdf5File) read_dataset3d[T](dset_name string, mut dataset [][][]T) {
 	assert curdims[0] > 0
 	assert curdims[1] > 0
 	assert curdims[2] > 0
-	assert curdims[0] < math.max_i32
-	assert curdims[1] < math.max_i32
-	assert curdims[2] < math.max_i32
+	assert curdims[0] < max_i32
+	assert curdims[1] < max_i32
+	assert curdims[2] < max_i32
 
 	dtype := hdftype(dataset[0][0][0])
 	mut y := make1type[T](int(curdims[0] * curdims[1] * curdims[2]))
@@ -584,7 +583,7 @@ pub fn (f &Hdf5File) read_attribute[T](dset_name string, attr_name string, mut a
 
 // read_attribute1d reads a 1-d numeric array (vector) from a named HDF5 dataset and named attribute in an HDF5 file.
 //   Replaces the value of the given array.
-//   Maximum dimension is math.max_i32 or less (this is checked).
+//   Maximum dimension is max_i32 or less (this is checked).
 pub fn (f &Hdf5File) read_attribute1d[T](dset_name string, attr_name string, mut attr_value []T) !bool {
 	mut rank := 0
 	mut class_id := Hdf5ClassT(0)
@@ -603,8 +602,8 @@ pub fn (f &Hdf5File) read_attribute1d[T](dset_name string, attr_name string, mut
 		&class_id, &type_size)
 	assert errc >= 0
 	assert curdims[0] > 0
-	assert curdims[0] <= math.max_i32
-	if curdims[0] > math.max_i32 {
+	assert curdims[0] <= max_i32
+	if curdims[0] > max_i32 {
 		return false
 	}
 

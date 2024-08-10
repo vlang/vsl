@@ -152,7 +152,7 @@ pub fn (g &Graph) calc_dist() Graph {
 			if i == j {
 				dist[i][j] = 0
 			} else {
-				dist[i][j] = math.max_f64
+				dist[i][j] = max_f64
 			}
 			next[i][j] = -1
 		}
@@ -204,7 +204,7 @@ pub fn (g &Graph) str_dist_matrix() string {
 	for i := 0; i < nv; i++ {
 		for j := 0; j < nv; j++ {
 			i_dist := g.dist[i]
-			if i_dist[j] < math.max_f64 {
+			if i_dist[j] < max_f64 {
 				i_dist_str := strconv.v_sprintf('%g', i_dist[j])
 				maxlen = int(math.max(maxlen, i_dist_str.len))
 			}
@@ -217,7 +217,7 @@ pub fn (g &Graph) str_dist_matrix() string {
 	for i := 0; i < nv; i++ {
 		for j := 0; j < nv; j++ {
 			i_dist := g.dist[i]
-			if i_dist[j] < math.max_f64 {
+			if i_dist[j] < max_f64 {
 				l += strconv.v_sprintf(fmtn, i_dist[j])
 			} else {
 				l += strconv.v_sprintf(fmts) + '∞'

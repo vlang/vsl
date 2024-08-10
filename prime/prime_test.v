@@ -1,7 +1,5 @@
 module prime
 
-import math
-
 fn test_is_prime() {
 	// true
 	assert is_prime(2)
@@ -17,10 +15,10 @@ fn test_is_prime() {
 	// true
 	assert is_prime(7_691)
 	assert is_prime(524_287)
-	assert is_prime(math.max_i32)
+	assert is_prime(max_i32)
 
 	// false
-	assert is_prime(math.max_i32 - 1) == false
+	assert is_prime(max_i32 - 1) == false
 }
 
 fn test_prime_sieve() {

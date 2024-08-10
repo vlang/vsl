@@ -5,7 +5,7 @@ import vsl.internal.prec
 
 // sinh(x) series
 // double-precision for |x| < 1.0
-[inline]
+@[inline]
 fn sinh_series(x f64) f64 {
 	y := x * x
 	c0 := 1.0 / 6.0
@@ -22,7 +22,7 @@ fn sinh_series(x f64) f64 {
 
 // cosh(x)-1 series
 // double-precision for |x| < 1.0
-[inline]
+@[inline]
 fn cosh_m1_series(x f64) f64 {
 	y := x * x
 	c0 := f64(0.5)

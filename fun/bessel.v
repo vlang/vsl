@@ -74,7 +74,7 @@ pub fn bessel_j0(x_ f64) f64 {
 		mut ss := s - c
 		mut cc := s + c
 		// make sure x+x does not overflow
-		if x < math.max_f64 / 2.0 {
+		if x < max_f64 / 2.0 {
 			z := -math.cos(x + x)
 			if s * c < 0.0 {
 				cc = z / ss
@@ -139,7 +139,7 @@ pub fn bessel_j1(x_ f64) f64 {
 		mut ss := -s - c
 		mut cc := s - c
 		// make sure x+x does not overflow
-		if x < math.max_f64 / 2 {
+		if x < max_f64 / 2 {
 			z := math.cos(x + x)
 			if s * c > 0 {
 				cc = z / ss
@@ -401,7 +401,7 @@ pub fn bessel_y0(x f64) f64 {
 		// j0(x) = 1/sqrt(pi) * (P(0,x)*cc - Q(0,x)*ss) / sqrt(x)
 		// y0(x) = 1/sqrt(pi) * (P(0,x)*ss + Q(0,x)*cc) / sqrt(x)
 		// make sure x+x does not overflow
-		if x < math.max_f64 / 2.0 {
+		if x < max_f64 / 2.0 {
 			z := -math.cos(x + x)
 			if s * c < 0.0 {
 				cc = z / ss
@@ -455,7 +455,7 @@ pub fn bessel_y1(x f64) f64 {
 		mut ss := -s - c
 		mut cc := s - c
 		// make sure x+x does not overflow
-		if x < math.max_f64 / 2.0 {
+		if x < max_f64 / 2.0 {
 			z := math.cos(x + x)
 			if s * c > 0.0 {
 				cc = z / ss
