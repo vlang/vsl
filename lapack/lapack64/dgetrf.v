@@ -1,0 +1,92 @@
+module lapack64
+
+import math
+import vsl.blas
+
+// dgetrf computes the LU decomposition of an m×n matrix A using partial
+// pivoting with row interchanges.
+//
+// The LU decomposition is a factorization of A into
+//
+//	A = P * L * U
+//
+// where P is a permutation matrix, L is a lower triangular with unit diagonal
+// elements (lower trapezoidal if m > n), and U is upper triangular (upper
+// trapezoidal if m < n).
+//
+// On entry, a contains the matrix A. On return, L and U are stored in place
+// into a, and P is represented by ipiv.
+//
+// ipiv contains a sequence of row interchanges. It indicates that row i of the
+// matrix was interchanged with ipiv[i]. ipiv must have length min(m,n), and
+// Dgetrf will panic otherwise. ipiv is zero-indexed.
+//
+// Dgetrf returns whether the matrix A is nonsingular. The LU decomposition will
+// be computed regardless of the singularity of A, but the result should not be
+// used to solve a system of equation.
+pub fn dgetrf(m int, n int, mut a []f64, lda int, mut ipiv []int) {
+	mn := math.min(m, n)
+
+	if m < 0 {
+		panic(m_lt0)
+	}
+	if n < 0 {
+		panic(n_lt0)
+	}
+	if lda < math.max(1, n) {
+		panic(bad_ld_a)
+	}
+
+	// quick return if possible
+	if mn == 0 {
+		return
+	}
+
+	if a.len < (m - 1) * lda + n {
+		panic(short_a)
+	}
+	if ipiv.len < mn {
+		panic(bad_len_ipiv)
+	}
+
+	nb := ilaenv(1, 'DGETRF', ' ', m, n, -1, -1)
+
+	if nb <= 1 || nb >= mn {
+		// use the unblocked algorithm.
+		dgetf2(m, n, mut a, lda, mut ipiv)
+		return
+	}
+
+	for j := 0; j < mn; j += nb {
+		jb := math.min(mn - j, nb)
+
+		// factor diagonal and subdiagonal blocks and test for exact singularity.
+		mut slice1 := unsafe { ipiv[j..j + jb] }
+		dgetf2(m - j, jb, mut a[j * lda + j..], lda, mut slice1)
+
+		for i := j; i <= math.min(m - 1, j + jb - 1); i++ {
+			ipiv[i] += j
+		}
+
+		// apply interchanges to columns 1..j-1.
+		mut slice_ipiv1 := unsafe { ipiv[..j + jb] }
+		dlaswp(j, mut a, lda, j, j + jb - 1, mut slice_ipiv1, 1)
+
+		if j + jb < n {
+			// apply interchanges to columns 1..j-1.
+			mut slice2 := unsafe { a[j + jb..] }
+			mut slice_ipiv2 := unsafe { ipiv[..j + jb] }
+			dlaswp(j, mut slice2, lda, j, j + jb, mut slice_ipiv2, 1)
+
+			mut slice3 := unsafe { a[j * lda + j + jb..] }
+			blas.dtrsm(.left, .lower, .no_trans, .unit, jb, n - j - jb, 1, a[j * lda + j..],
+				lda, mut slice3, lda)
+
+			if j + jb < m {
+				mut slice4 := unsafe { a[(j + jb) * lda + j + jb..] }
+				blas.dgemm(.no_trans, .no_trans, m - j - jb, n - j - jb, jb, -1, a[(j + jb) * lda +
+					j..], lda, a[j * lda + j + jb..], lda, 1, mut slice4, lda)
+			}
+		}
+	}
+}
