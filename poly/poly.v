@@ -310,3 +310,32 @@ pub fn divide(a []f64, b []f64) ([]f64, []f64) {
 
 	return quotient, remainder
 }
+
+// degree returns the degree of the given polynomial
+// Input: c = [a_0, a_1, ..., a_n]
+// Output: Degree of the polynomial as an integer
+pub fn degree(c []f64) int {
+	return c.len - 1
+}
+
+// sum_odd_coeffs calculates the sum of the coefficients at odd indices
+// Input: c = [a_0, a_1, ..., a_n]
+// Output: Sum of the coefficients at odd indices as a floating-point number
+pub fn sum_odd_coeffs(c []f64) f64 {
+	mut sum := 0.0
+	for i := 1; i < c.len; i += 2 {
+		sum += c[i]
+	}
+	return sum
+}
+
+// sum_even_coeffs calculates the sum of the coefficients at even indices
+// Input: c = [a_0, a_1, ..., a_n]
+// Output: Sum of the coefficients at even indices as a floating-point number
+pub fn sum_even_coeffs(c []f64) f64 {
+	mut sum := 0.0
+	for i := 0; i < c.len; i += 2 {
+		sum += c[i]
+	}
+	return sum
+}
