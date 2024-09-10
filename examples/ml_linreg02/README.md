@@ -1,6 +1,7 @@
 # Example - ml_linreg02 📘
 
-This example demonstrates the usage of the V Scientific Library for performing an advanced linear regression.
+This example demonstrates the usage of the V Scientific Library
+for performing an advanced linear regression.
 
 ## Instructions
 

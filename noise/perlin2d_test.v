@@ -6,7 +6,7 @@ import vsl.float.float64
 fn test_perlin2d() {
 	rand.seed([u32(3155200429), u32(3208395956)])
 
-	mut gen := Perlin.new()
+	mut gen := Generator.new()
 	gen.randomize()
 
 	result := gen.perlin2d(0.125, 0.125)

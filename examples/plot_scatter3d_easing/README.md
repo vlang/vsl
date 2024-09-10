@@ -1,6 +1,7 @@
 # Example - plot_scatter3d_easing 📘
 
-This example demonstrates the usage of the V Scientific Library for creating a 3D scatter plot with easing.
+This example demonstrates the usage of the V Scientific Library
+for creating a 3D scatter plot with easing.
 
 ## Instructions
 

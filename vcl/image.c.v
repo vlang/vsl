@@ -17,7 +17,7 @@ pub interface IImage {
 	width       int
 	height      int
 	nr_channels int
-	data        voidptr
+	data        &u8
 }
 
 // Image memory buffer on the device with image data

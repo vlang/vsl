@@ -1,6 +1,7 @@
 # Example - iter_lazy_generation 📘
 
-This example demonstrates the usage of the V Scientific Library for demonstrating lazy generation using iterators.
+This example demonstrates the usage of the V Scientific Library
+for demonstrating lazy generation using iterators.
 
 ## Instructions
 

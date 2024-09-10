@@ -74,9 +74,13 @@ pub fn dgesv(n int, nrhs int, mut a []f64, lda int, ipiv []int, mut b []f64, ldb
 // Note that the routine returns V**T, not V.
 //
 // NOTE: matrix 'a' will be modified
-pub fn dgesvd(jobu &char, jobvt &char, m int, n int, a []f64, lda int, s []f64, u []f64, ldu int, vt []f64, ldvt int, superb []f64) {
-	info := C.LAPACKE_dgesvd(.row_major, jobu, jobvt, m, n, &a[0], lda, &s[0], &u[0],
-		ldu, &vt[0], ldvt, &superb[0])
+pub fn dgesvd(jobu rune, jobvt rune, m int, n int, a []f64, lda int, s []f64, u []f64, ldu int, vt []f64, ldvt int, superb []f64) {
+	// lapack_int LAPACKE_dgesvd( int matrix_order, char jobu, char jobvt,
+	//                       lapack_int m, lapack_int n, double* a,
+	//                       lapack_int lda, double* s, double* u, lapack_int ldu,
+	//                       double* vt, lapack_int ldvt, double* superb );
+	info := C.LAPACKE_dgesvd(.row_major, char(jobu), char(jobvt), m, n, &a[0], lda, &s[0],
+		&u[0], ldu, &vt[0], ldvt, &superb[0])
 	if info != 0 {
 		errors.vsl_panic('lapack failed', .efailed)
 	}
@@ -189,7 +193,7 @@ pub fn dgeev(calc_vl bool, calc_vr bool, n int, mut a []f64, lda int, wr []f64, 
 		ldvr = 1
 	}
 	unsafe {
-		info := C.LAPACKE_dgeev(.row_major, &char(job_vlr(calc_vl).str().str), &char(job_vlr(calc_vr).str().str),
+		info := C.LAPACKE_dgeev(.row_major, char(job_vlr(calc_vl)), char(job_vlr(calc_vr)),
 			n, &a[0], lda, &wr[0], &wi[0], &vvl, ldvl, &vvr, ldvr)
 		if info != 0 {
 			errors.vsl_panic('lapack failed', .efailed)

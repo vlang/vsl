@@ -77,3 +77,7 @@ EOF
 
 # install Docker tools (cli, buildx, compose)
 COPY --from=gloursdocker/docker / /
+
+USER ${USERNAME}
+HEALTHCHECK CMD true
+

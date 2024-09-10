@@ -26,7 +26,7 @@ pub mut:
 	nb_samples  int // number of data points (samples). number of rows in x and y
 	nb_features int // number of features. number of columns in x
 	x           &la.Matrix[T] = unsafe { nil } // [nb_samples][nb_features] x values
-	y           []T           // [nb_samples] y values [optional]
+	y           []T // [nb_samples] y values [optional]
 }
 
 // Data.new returns a new object to hold ML data

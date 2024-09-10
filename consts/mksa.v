@@ -8,6 +8,8 @@ pub const mksa_plancks_constant_h = 6.62606896e-34 // kg m^2 / s
 
 pub const mksa_plancks_constant_hbar = 1.05457162825e-34 // kg m^2 / s
 
+pub const mksa_planck_temperature = 1.416785e+32 // Kelvin
+
 pub const mksa_astronomical_unit = 1.49597870691e+11 // m
 
 pub const mksa_light_year = 9.46053620707e+15 // m

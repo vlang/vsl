@@ -18,7 +18,7 @@ pub mut:
 @[heap]
 pub struct Bin {
 pub mut:
-	index   int // index of bin
+	index   int         // index of bin
 	entries []&BinEntry // entries
 }
 

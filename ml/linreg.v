@@ -9,7 +9,7 @@ import vsl.util
 pub struct LinReg {
 mut:
 	// main
-	name string     // name of this "observer"
+	name string // name of this "observer"
 	data &Data[f64] = unsafe { nil } // x-y data
 	// workspace
 	e []f64 // vector e = b⋅o + x⋅theta - y [nb_samples]
