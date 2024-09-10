@@ -24,8 +24,15 @@ fn main() {
 	// Division TODO:Fix this
 	// Result includes the quotient and the remainder
 	// To get the real remainder, divide it by the divisor.
-	poly_dividend := [2.0, -4.0, -4.0, 1.0] // 2 - 4x - 4x^2 + x^3
-	poly_divisor := [-2.0, 1.0] // -2 + x
+
+	// OLD WAY
+	// poly_dividend := [2.0, -4.0, -4.0, 1.0] // 2 - 4x - 4x^2 + x^3
+	// poly_divisor := [-2.0, 1.0] // -2 + x
+
+	// REVERSED WAY
+	poly_dividend := [1.0, -4.0, -4.0, 2.0] // 2 - 4x - 4x^2 + x^3
+	poly_divisor := [1.0, -2.0] // -2 + x
+
 	quotient, remainder := poly.divide(poly_dividend, poly_divisor)
 	println('Division quotient: ${quotient}') // Expected quotient: [-8.0, -2.0, 1.0] (-8 - 2x + x^2)
 	println('Division remainder: ${remainder}') // Expected remainder: [-14.0]
