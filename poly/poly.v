@@ -290,26 +290,47 @@ pub fn multiply(a []f64, b []f64) []f64 {
 // Output: (q, r) where q is the quotient and r is the remainder
 // such that a(x) = b(x) * q(x) + r(x) and degree(r) < degree(b)
 pub fn divide(a []f64, b []f64) ([]f64, []f64) {
-	mut quotient := []f64{}
+	if b.len == 0 {
+		panic('divisor cannot be an empty polynomial')
+	}
+	mut divisor := b.clone()
+	for divisor.len > 0 && divisor[divisor.len - 1] == 0.0 {
+		divisor = divisor[..divisor.len - 1].clone()
+	}
+	if divisor.len == 0 {
+		panic('cannot divide by the zero polynomial')
+	}
+	if a.len == 0 {
+		return []f64{}, []f64{}
+	}
 	mut remainder := a.clone()
-	b_lead_coef := b[0]
-
-	for remainder.len >= b.len {
-		lead_coef := remainder[0] / b_lead_coef
-		quotient << lead_coef
-		for i in 0 .. b.len {
-			remainder[i] -= lead_coef * b[i]
-		}
-		remainder = unsafe { remainder[1..] }
-		for remainder.len > 0 && math.abs(remainder[0]) < 1e-10 {
-			remainder = unsafe { remainder[1..] }
-		}
+	for remainder.len > 0 && remainder[remainder.len - 1] == 0.0 {
+		remainder = remainder[..remainder.len - 1].clone()
+	}
+	if remainder.len < divisor.len {
+		return []f64{}, remainder
 	}
 
-	if remainder.len == 0 {
-		remainder = []f64{}
-	}
+	mut quotient := []f64{len: remainder.len - divisor.len + 1, init: 0.0}
+	b_degree := divisor.len - 1
+	b_lead_coeff := divisor[b_degree]
 
+	for remainder.len >= divisor.len {
+		remainder_degree := remainder.len - 1
+		quotient_idx := remainder_degree - b_degree
+		quotient_term := remainder[remainder_degree] / b_lead_coeff
+		quotient[quotient_idx] = quotient_term
+
+		for i in 0 .. divisor.len {
+			remainder[quotient_idx + i] -= quotient_term * divisor[i]
+		}
+		// The leading term is mathematically canceled; discard floating-point
+		// roundoff there so the degree decreases on every iteration.
+		remainder[remainder_degree] = 0.0
+		for remainder.len > 0 && remainder[remainder.len - 1] == 0.0 {
+			remainder = remainder[0..remainder.len - 1].clone()
+		}
+	}
 	return quotient, remainder
 }
 
@@ -340,37 +361,4 @@ pub fn sum_even_coeffs(c []f64) f64 {
 		sum += c[i]
 	}
 	return sum
-}
-
-pub fn divide(dividend []f64, divisor []f64) ([]f64, []f64) {
-	if divisor.len == 0 {
-		panic('divisor cannot be an empty polynomial')
-	}
-	if dividend.len == 0 {
-		return []f64{len: 0}, []f64{len: 0}
-	}
-
-	mut quotient := []f64{len: dividend.len - divisor.len + 1, init: 0.0}
-	mut remainder := dividend.clone()
-
-	divisor_degree := divisor.len - 1
-	divisor_lead_coeff := divisor[divisor_degree]
-
-	for remainder.len >= divisor.len {
-		remainder_degree := remainder.len - 1
-		lead_coeff := remainder[remainder_degree]
-
-		quotient_term := lead_coeff / divisor_lead_coeff
-		quotient_idx := remainder_degree - divisor_degree
-		quotient[quotient_idx] = quotient_term
-
-		for i in 0 .. divisor.len {
-			remainder[quotient_idx + i] -= quotient_term * divisor[i]
-		}
-
-		for remainder.len > 0 && remainder[remainder.len - 1] == 0.0 {
-			remainder = remainder[0..remainder.len - 1].clone()
-		}
-	}
-	return quotient, remainder
 }

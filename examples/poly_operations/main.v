@@ -21,7 +21,7 @@ fn main() {
 	result_mult := poly.multiply(poly_1, poly_2)
 	println('Multplication result: ${result_mult}') // Expected: [3.0, 38.0, 40.0, 90.0, 21.0] (3 + 38x + 400x^2 + 90x^3 + 21x^4)
 
-	// Division TODO:Fix this
+	// Division
 	// Result includes the quotient and the remainder
 	// To get the real remainder, divide it by the divisor.
 
@@ -30,8 +30,8 @@ fn main() {
 	// poly_divisor := [-2.0, 1.0] // -2 + x
 
 	// REVERSED WAY
-	poly_dividend := [1.0, -4.0, -4.0, 2.0] // 2 - 4x - 4x^2 + x^3
-	poly_divisor := [1.0, -2.0] // -2 + x
+	poly_dividend := [2.0, -4.0, -4.0, 1.0] // 2 - 4x - 4x^2 + x^3
+	poly_divisor := [-2.0, 1.0] // -2 + x
 
 	quotient, remainder := poly.divide(poly_dividend, poly_divisor)
 	println('Division quotient: ${quotient}') // Expected quotient: [-8.0, -2.0, 1.0] (-8 - 2x + x^2)

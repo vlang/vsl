@@ -1,5 +1,7 @@
 module poly
 
+import math
+
 fn test_eval() {
 	// ans = 2
 	// ans = 5 + 4 * 2 = 13
@@ -53,32 +55,50 @@ fn test_divide() {
 	b := [1.0, 1.0]
 	quotient, remainder := divide(a, b)
 	assert quotient == [1.0, 1.0]
-	assert remainder == [] // The empty set indicates that the two polynomials divide each other exactly (without remainder).
+	assert remainder == [] // Empty remainder means exact division.
+
+	a2 := [0.0, 0.0, 1.0, 1.0]
+	b2 := [-2.0, 1.0, 1]
+	quotient2, remainder2 := divide(a2, b2)
+	assert quotient2 == [0.0, 1.0]
+	assert remainder2 == [0.0, 2.0]
+
+	c := [5.0, -11.0, -7.0, 4.0]
+	d := [5.0, 4.0]
+	quotient3, remainder3 := divide(c, d)
+	assert quotient3 == [1.0, -3.0, 1]
+	assert remainder3 == []
+
+	quotient4, remainder4 := divide([1.0, 2.0], [1.0, 2.0, 3.0])
+	assert quotient4 == []
+	assert remainder4 == [1.0, 2.0]
+
+	quotient5, remainder5 := divide([1.0, 2.0, 1.0, 0.0], [1.0, 1.0, 0.0])
+	assert quotient5 == [1.0, 1.0]
+	assert remainder5 == []
 }
 
 fn test_degree() {
-	assert degree([4.0, 5.0, 2.0]) == 2 // Degree should be 2
-	assert degree([1.0]) == 0 // Degree should be 0 for a single coefficient polynomial
-	assert degree([]) == -1 // Degree should be -1 for an empty coefficient array
+	assert degree([4.0, 5.0, 2.0]) == 2
+	assert degree([1.0]) == 0
+	assert degree([]) == -1
 }
 
 fn test_sum_odd_coeffs() {
-	assert sum_odd_coeffs([4.0, 5.0, 2.0]) == 5.0 // 5 is at an odd index
-	assert sum_odd_coeffs([7.0, 456.0, 21.0, 87.0]) == 543.0 // 456 and 87 are at odd indices
-	assert sum_odd_coeffs([]) == 0.0 // The sum should be 0 for an empty coefficient array
+	assert sum_odd_coeffs([4.0, 5.0, 2.0]) == 5.0
+	assert sum_odd_coeffs([7.0, 456.0, 21.0, 87.0]) == 543.0
+	assert sum_odd_coeffs([]) == 0.0
 }
 
 fn test_sum_even_coeffs() {
-	assert sum_even_coeffs([4.0, 5.0, 2.0]) == 6.0 // 4.0 and 2 are at even indices
-	assert sum_even_coeffs([7.0, 456.0, 21.0, 87.0]) == 28.0 // 7 and 21 are at even indices
-	assert sum_even_coeffs([]) == 0 // The sum should be 0 for an empty coefficient array
+	assert sum_even_coeffs([4.0, 5.0, 2.0]) == 6.0
+	assert sum_even_coeffs([7.0, 456.0, 21.0, 87.0]) == 28.0
+	assert sum_even_coeffs([]) == 0.0
 }
 
 fn test_eval_derivs() {
-	// P(x) = 1 + 2x + 3x^2
 	coeffs := [1.0, 2.0, 3.0]
 	res := eval_derivs(coeffs, 2.0, 3)
-	// P(2) = 17, P'(2) = 14, P''(2) = 6
 	assert res.len == 3
 	assert math.abs(res[0] - 17.0) < 1e-12
 	assert math.abs(res[1] - 14.0) < 1e-12
@@ -93,7 +113,6 @@ fn test_solve_quadratic_roots() {
 }
 
 fn test_solve_cubic_roots() {
-	// x^3 - 6x^2 + 11x - 6 = 0 has roots 1,2,3
 	roots := solve_cubic(-6.0, 11.0, -6.0)
 	assert roots.len == 3
 	mut sorted := roots.clone()
@@ -104,7 +123,6 @@ fn test_solve_cubic_roots() {
 }
 
 fn test_companion_matrix() {
-	// P(x) = x^2 - 3x + 2 -> coefficients [2, -3, 1]
 	cm := companion_matrix([2.0, -3.0, 1.0])
 	assert cm.len == 2
 	assert cm[0].len == 2
