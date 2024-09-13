@@ -215,17 +215,17 @@ pub fn balance_companion_matrix(cm [][]f64) [][]f64 {
 			if col_norm == 0.0 || row_norm == 0.0 {
 				continue
 			}
-			mut g := row_norm / poly.radix
+			mut g := row_norm / radix
 			mut f := 1.0
 			s := col_norm + row_norm
 			for col_norm < g {
-				f *= poly.radix
-				col_norm *= poly.radix2
+				f *= radix
+				col_norm *= radix2
 			}
-			g = row_norm * poly.radix
+			g = row_norm * radix
 			for col_norm > g {
-				f /= poly.radix
-				col_norm /= poly.radix2
+				f /= radix
+				col_norm /= radix2
 			}
 			if (row_norm + col_norm) < 0.95 * s * f {
 				not_converged = true
@@ -290,25 +290,34 @@ pub fn multiply(a []f64, b []f64) []f64 {
 // Output: (q, r) where q is the quotient and r is the remainder
 // such that a(x) = b(x) * q(x) + r(x) and degree(r) < degree(b)
 pub fn divide(a []f64, b []f64) ([]f64, []f64) {
-	mut quotient := []f64{}
+	if b.len == 0 {
+		panic('divisor cannot be an empty polynomial')
+	}
+	if a.len == 0 {
+		return []f64{len: 0}, []f64{len: 0}
+	}
+
+	mut quotient := []f64{len: a.len - b.len + 1, init: 0.0}
 	mut remainder := a.clone()
-	b_lead_coef := b[0]
+
+	b_degree := b.len - 1
+	b_lead_coeff := b[b_degree]
 
 	for remainder.len >= b.len {
-		lead_coef := remainder[0] / b_lead_coef
-		quotient << lead_coef
+		remainder_degree := remainder.len - 1
+		lead_coeff := remainder[remainder_degree]
+
+		quotient_term := lead_coeff / b_lead_coeff
+		quotient_idx := remainder_degree - b_degree
+		quotient[quotient_idx] = quotient_term
+
 		for i in 0 .. b.len {
-			remainder[i] -= lead_coef * b[i]
+			remainder[quotient_idx + i] -= quotient_term * b[i]
 		}
-		remainder = unsafe { remainder[1..] }
-		for remainder.len > 0 && math.abs(remainder[0]) < 1e-10 {
-			remainder = unsafe { remainder[1..] }
+
+		for remainder.len > 0 && remainder[remainder.len - 1] == 0.0 {
+			remainder = remainder[0..remainder.len - 1].clone()
 		}
 	}
-
-	if remainder.len == 0 {
-		remainder = []f64{}
-	}
-
 	return quotient, remainder
 }

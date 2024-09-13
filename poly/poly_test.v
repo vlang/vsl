@@ -78,10 +78,15 @@ fn test_multiply() {
 }
 
 fn test_divide() {
-	// (x^2 + 2x + 1) / (x + 1) = (x + 1)
-	a := [1.0, 2.0, 1.0]
-	b := [1.0, 1.0]
-	quotient, remainder := divide(a, b)
-	assert quotient == [1.0, 1.0]
-	assert remainder == [] // The empty set indicates that two polynomials divide each other exactly (without remainder).
+	a := [0.0, 0.0, 1.0, 1.0]
+	b := [-2.0, 1.0, 1]
+	mut quotient, mut remainder := divide(a, b)
+	assert quotient == [0.0, 1.0]
+	assert remainder == [0.0, 2.0]
+
+	c := [5.0, -11.0, -7.0, 4.0]
+	d := [5.0, 4.0]
+	quotient, remainder = divide(c, d)
+	assert quotient == [1.0, -3.0, 1]
+	assert remainder == []
 }
