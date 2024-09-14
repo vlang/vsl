@@ -53,7 +53,7 @@ pub struct Kernel {
 // global returns an kernel with global size set
 pub fn (k &Kernel) global(global_work_sizes ...int) KernelWithGlobal {
 	return KernelWithGlobal{
-		kernel: unsafe { k }
+		kernel:            unsafe { k }
 		global_work_sizes: global_work_sizes
 	}
 }
@@ -68,9 +68,9 @@ pub struct KernelWithGlobal {
 // local ets the local work sizes and returns an KernelCall which takes kernel arguments and runs the kernel
 pub fn (kg KernelWithGlobal) local(local_work_sizes ...int) KernelCall {
 	return KernelCall{
-		kernel: kg.kernel
+		kernel:            kg.kernel
 		global_work_sizes: kg.global_work_sizes
-		local_work_sizes: local_work_sizes
+		local_work_sizes:  local_work_sizes
 	}
 }
 

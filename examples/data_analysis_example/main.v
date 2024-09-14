@@ -86,23 +86,23 @@ fn main() {
 
 	// Add traces for each class in the 3D plot
 	plt_3d.scatter3d(
-		x: x1_class0
-		y: x2_class0
-		z: [][]f64{len: x1_class0.len, init: [0.0]}
-		mode: 'markers'
+		x:      x1_class0
+		y:      x2_class0
+		z:      [][]f64{len: x1_class0.len, init: [0.0]}
+		mode:   'markers'
 		marker: plot.Marker{
-			size: []f64{len: x1_class0.len, init: 8.0}
+			size:  []f64{len: x1_class0.len, init: 8.0}
 			color: []string{len: x1_class0.len, init: 'blue'}
 		}
 		name: 'Class 0'
 	)
 	plt_3d.scatter3d(
-		x: x1_class1
-		y: x2_class1
-		z: [][]f64{len: x1_class1.len, init: [0.0]}
-		mode: 'markers'
+		x:      x1_class1
+		y:      x2_class1
+		z:      [][]f64{len: x1_class1.len, init: [0.0]}
+		mode:   'markers'
 		marker: plot.Marker{
-			size: []f64{len: x1_class1.len, init: 8.0}
+			size:  []f64{len: x1_class1.len, init: 8.0}
 			color: []string{len: x1_class1.len, init: 'red'}
 		}
 		name: 'Class 1'
@@ -134,14 +134,14 @@ fn main() {
 	mut plt_bars := plot.Plot.new()
 
 	plt_bars.bar(
-		x: []string{len: stat.mean_x.len, init: 'Class ${index}'}
-		y: stat.mean_x
+		x:    []string{len: stat.mean_x.len, init: 'Class ${index}'}
+		y:    stat.mean_x
 		name: 'Mean'
 	)
 
 	plt_bars.bar(
-		x: []string{len: stat.sig_x.len, init: 'Class ${index}'}
-		y: stat.sig_x
+		x:    []string{len: stat.sig_x.len, init: 'Class ${index}'}
+		y:    stat.sig_x
 		name: 'Standard Deviation'
 	)
 

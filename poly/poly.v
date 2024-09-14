@@ -213,17 +213,17 @@ pub fn balance_companion_matrix(cm [][]f64) [][]f64 {
 			if col_norm == 0.0 || row_norm == 0.0 {
 				continue
 			}
-			mut g := row_norm / poly.radix
+			mut g := row_norm / radix
 			mut f := 1.0
 			s := col_norm + row_norm
 			for col_norm < g {
-				f *= poly.radix
-				col_norm *= poly.radix2
+				f *= radix
+				col_norm *= radix2
 			}
-			g = row_norm * poly.radix
+			g = row_norm * radix
 			for col_norm > g {
-				f /= poly.radix
-				col_norm /= poly.radix2
+				f /= radix
+				col_norm /= radix2
 			}
 			if (row_norm + col_norm) < 0.95 * s * f {
 				not_converged = true

@@ -31,8 +31,8 @@ fn main() {
 		z: z
 	)
 	plt.layout(
-		title: 'Heatmap with Unequal Block Sizes'
-		width: 750
+		title:  'Heatmap with Unequal Block Sizes'
+		width:  750
 		height: 750
 	)
 

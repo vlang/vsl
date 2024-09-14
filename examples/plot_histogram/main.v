@@ -10,16 +10,16 @@ fn main() {
 
 	mut plt := plot.Plot.new()
 	plt.histogram(
-		x: x
+		x:     x
 		xbins: plot.Bins{
 			start: 0.0
-			end: 100.0
-			size: 2
+			end:   100.0
+			size:  2
 		}
 	)
 	plt.layout(
-		title: 'Histogram Example'
-		width: 750
+		title:  'Histogram Example'
+		width:  750
 		height: 750
 	)
 	plt.show()!

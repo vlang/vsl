@@ -8,8 +8,8 @@ fn main() {
 
 	mut plt := plot.Plot.new()
 	plt.pie(
-		labels: labels
-		values: values
+		labels:   labels
+		values:   values
 		textinfo: 'percent+label'
 	)
 	plt.layout(

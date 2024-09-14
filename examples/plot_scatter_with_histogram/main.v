@@ -10,11 +10,11 @@ fn main() {
 
 	mut plt := plot.Plot.new()
 	plt.scatter(
-		x: x
-		y: x
-		mode: 'markers'
+		x:      x
+		y:      x
+		mode:   'markers'
 		marker: plot.Marker{
-			size: []f64{len: x.len, init: 10.0}
+			size:  []f64{len: x.len, init: 10.0}
 			color: []string{len: x.len, init: '#FF0000'}
 		}
 	)

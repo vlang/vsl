@@ -16,8 +16,8 @@ pub mut:
 pub fn Matrix.new[T](m int, n int) &Matrix[T] {
 	data := []T{len: m * n}
 	return &Matrix[T]{
-		m: m
-		n: n
+		m:    m
+		n:    n
 		data: data
 	}
 }
@@ -38,8 +38,8 @@ pub fn Matrix.deep2[T](a [][]T) &Matrix[T] {
 // (2) the external slice rawdata should not be changed or deleted
 pub fn Matrix.raw[T](m int, n int, rawdata []T) &Matrix[T] {
 	return &Matrix[T]{
-		m: m
-		n: n
+		m:    m
+		n:    n
 		data: rawdata
 	}
 }

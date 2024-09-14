@@ -25,29 +25,29 @@ const f64array = make1type[f64](2)
 const intarray = make1type[int](2)
 
 fn testsuite_begin() {
-	os.rmdir_all(h5.testfolder) or {}
-	os.mkdir_all(h5.testfolder)!
+	os.rmdir_all(testfolder) or {}
+	os.mkdir_all(testfolder)!
 
-	assert os.exists_in_system_path(h5.h5dump)
+	assert os.exists_in_system_path(h5dump)
 
-	f := Hdf5File.new(h5.testfile)!
+	f := Hdf5File.new(testfile)!
 
-	f.write_dataset1d('i8array', h5.i8array)!
-	f.write_dataset1d('u8array', h5.u8array)!
+	f.write_dataset1d('i8array', i8array)!
+	f.write_dataset1d('u8array', u8array)!
 
-	f.write_dataset1d('i16array', h5.i16array)!
-	f.write_dataset1d('u16array', h5.u16array)!
+	f.write_dataset1d('i16array', i16array)!
+	f.write_dataset1d('u16array', u16array)!
 
-	f.write_dataset1d('i32array', h5.i32array)!
-	f.write_dataset1d('u32array', h5.u32array)!
+	f.write_dataset1d('i32array', i32array)!
+	f.write_dataset1d('u32array', u32array)!
 
-	f.write_dataset1d('i64array', h5.i64array)!
-	f.write_dataset1d('u64array', h5.u64array)!
+	f.write_dataset1d('i64array', i64array)!
+	f.write_dataset1d('u64array', u64array)!
 
-	f.write_dataset1d('intarray', h5.intarray)!
+	f.write_dataset1d('intarray', intarray)!
 
-	f.write_dataset1d('f32array', h5.f32array)!
-	f.write_dataset1d('f64array', h5.f64array)!
+	f.write_dataset1d('f32array', f32array)!
+	f.write_dataset1d('f64array', f64array)!
 
 	f.close()
 }
@@ -58,7 +58,7 @@ fn testsuite_end() {
 
 // verify all datatypes in 1 dimension
 fn test_run() {
-	res := os.execute('h5dump ${h5.testfile}')
+	res := os.execute('h5dump ${testfile}')
 	output := res.output.trim_space()
 	assert output.contains('i8array')
 	assert output.contains('u8array')
@@ -117,35 +117,35 @@ fn readback() ! {
 
 	mut intarrayrd := make1type[int](1)
 
-	f := open_file(h5.testfile)!
+	f := open_file(testfile)!
 
 	f.read_dataset1d('i8array', mut i8arrayrd)
 	f.read_dataset1d('u8array', mut u8arrayrd)
-	compare1d(h5.i8array, i8arrayrd)
-	compare1d(h5.u8array, u8arrayrd)
+	compare1d(i8array, i8arrayrd)
+	compare1d(u8array, u8arrayrd)
 
 	f.read_dataset1d('i16array', mut i16arrayrd)
 	f.read_dataset1d('u16array', mut u16arrayrd)
-	compare1d(h5.i16array, i16arrayrd)
-	compare1d(h5.u16array, u16arrayrd)
+	compare1d(i16array, i16arrayrd)
+	compare1d(u16array, u16arrayrd)
 
 	f.read_dataset1d('i32array', mut i32arrayrd)
 	f.read_dataset1d('u32array', mut u32arrayrd)
-	compare1d(h5.i32array, i32arrayrd)
-	compare1d(h5.u32array, u32arrayrd)
+	compare1d(i32array, i32arrayrd)
+	compare1d(u32array, u32arrayrd)
 
 	f.read_dataset1d('i64array', mut i64arrayrd)
 	f.read_dataset1d('u64array', mut u64arrayrd)
-	compare1d(h5.i64array, i64arrayrd)
-	compare1d(h5.u64array, u64arrayrd)
+	compare1d(i64array, i64arrayrd)
+	compare1d(u64array, u64arrayrd)
 
 	f.read_dataset1d('f32array', mut f32arrayrd)
 	f.read_dataset1d('f64array', mut f64arrayrd)
-	compare1d(h5.f32array, f32arrayrd)
-	compare1d(h5.f64array, f64arrayrd)
+	compare1d(f32array, f32arrayrd)
+	compare1d(f64array, f64arrayrd)
 
 	f.read_dataset1d('intarray', mut intarrayrd)
-	compare1d(h5.intarray, intarrayrd)
+	compare1d(intarray, intarrayrd)
 
 	f.close()
 }

@@ -42,14 +42,14 @@ fn test_graph01() {
 	mut weights_e := g2.weights_e.clone()
 	weights_e[3] = 13
 	g3 := &Graph{
-		edges: g.edges
+		edges:     g.edges
 		weights_e: weights_e
-		verts: g.verts
+		verts:     g.verts
 		weights_v: g.weights_v
-		shares: g.shares
-		key2edge: g.key2edge
-		dist: g.dist
-		next: g.next
+		shares:    g.shares
+		key2edge:  g.key2edge
+		dist:      g.dist
+		next:      g.next
 	}
 	g4 := g3.shortest_paths(.fw)
 	g4_path_0_3 := g4.path(0, 3)

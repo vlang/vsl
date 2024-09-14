@@ -15,8 +15,8 @@ fn main() {
 		z: z
 	)
 	plt.layout(
-		title: 'Heatmap Basic Implementation'
-		width: 750
+		title:  'Heatmap Basic Implementation'
+		width:  750
 		height: 750
 	)
 

@@ -63,8 +63,8 @@ pub fn Bins.new(xmin []f64, xmax []f64, ndiv_ []int) &Bins {
 		}
 		o.xdel[k] = o.xmax[k] - o.xmin[k]
 		o.size[k] = o.xdel[k] / f64(ndiv[k])
-		if o.xdel[k] < gm.xdelzero {
-			errors.vsl_panic('xmax[${k}]-xmin[${k}]=${o.xdel[k]} must be greater than ${gm.xdelzero}',
+		if o.xdel[k] < xdelzero {
+			errors.vsl_panic('xmax[${k}]-xmin[${k}]=${o.xdel[k]} must be greater than ${xdelzero}',
 				.efailed)
 		}
 	}

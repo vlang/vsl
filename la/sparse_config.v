@@ -23,7 +23,7 @@ pub mut:
 pub fn SparseConfig.new() SparseConfig {
 	mut o := SparseConfig{
 		mumps_increase_of_working_space_pct: 100
-		mumps_max_memory_per_processor: 2000
+		mumps_max_memory_per_processor:      2000
 	}
 	o.set_mumps_ordering('')
 	o.set_mumps_scaling('')
@@ -34,8 +34,8 @@ pub fn SparseConfig.new() SparseConfig {
 pub fn SparseConfig.with_comm(comm &mpi.Communicator) SparseConfig {
 	mut o := SparseConfig{
 		mumps_increase_of_working_space_pct: 100
-		mumps_max_memory_per_processor: 2000
-		communicator: unsafe { comm }
+		mumps_max_memory_per_processor:      2000
+		communicator:                        unsafe { comm }
 	}
 	o.set_mumps_ordering('')
 	o.set_mumps_scaling('')

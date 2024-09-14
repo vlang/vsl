@@ -15,10 +15,10 @@ fn main() {
 	// Create the Surface plot
 	mut plt := plot.Plot.new()
 	plt.surface(
-		name: 'Easing Surface'
-		x: x_values
-		y: y_values
-		z: [][]f64{len: z_values.len, init: z_values}
+		name:       'Easing Surface'
+		x:          x_values
+		y:          y_values
+		z:          [][]f64{len: z_values.len, init: z_values}
 		colorscale: 'viridis'
 	)
 

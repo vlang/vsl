@@ -20,9 +20,9 @@ fn main() {
 
 	mut plt := plot.Plot.new()
 	plt.surface(
-		x: x
-		y: y
-		z: z
+		x:          x
+		y:          y
+		z:          z
 		colorscale: 'Viridis'
 	)
 	plt.layout(

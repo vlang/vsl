@@ -31,8 +31,7 @@ pub fn get_devices(device_type DeviceType) ![]&Device {
 pub fn get_default_device() !&Device {
 	mut id := ClDeviceId(0)
 	platform_ids := get_platforms()!
-	ret := cl_get_device_i_ds(unsafe { &platform_ids[0] }, ClDeviceType(DeviceType.cpu),
-		1, &id, unsafe { nil })
+	ret := cl_get_device_i_ds(platform_ids[0], ClDeviceType(DeviceType.cpu), 1, &id, unsafe { nil })
 	if ret != success {
 		return error_from_code(ret)
 	}

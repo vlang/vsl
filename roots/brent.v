@@ -25,7 +25,7 @@ pub mut:
 // Brent.new creates a new Brent object
 pub fn Brent.new(f func.Fn) &Brent {
 	return &Brent{
-		f: f
+		f:   f
 		tol: 1e-6
 	}
 }
@@ -62,7 +62,7 @@ fn brent(f func.Fn, x1 f64, x2 f64, tol f64) !(f64, f64) {
 	mut p := 0.0
 	mut q := 0.0
 	mut r := 0.0
-	for iter := 1; iter <= roots.itmax; iter++ {
+	for iter := 1; iter <= itmax; iter++ {
 		prev_step = b - a
 		if math.abs(fc) < math.abs(fb) {
 			a = b

@@ -9,11 +9,11 @@ fn main() {
 
 	mut plt := plot.Plot.new()
 	plt.scatter(
-		x: x
-		y: y
-		mode: 'markers'
+		x:      x
+		y:      y
+		mode:   'markers'
 		marker: plot.Marker{
-			size: size
+			size:  size
 			color: []string{len: x.len * y.len, init: '#FF0000'}
 		}
 		name: 'Bubble Chart'
