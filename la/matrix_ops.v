@@ -90,7 +90,7 @@ pub fn matrix_svd(mut s []f64, mut u Matrix[f64], mut vt Matrix[f64], mut a Matr
 	if copy_a {
 		acpy = a.clone()
 	}
-	vlas.dgesvd(`A`, `A`, a.m, a.n, acpy.data, 1, s, u.data, a.m, vt.data, a.n, superb)
+	vlas.dgesvd(c'A', c'A', a.m, a.n, acpy.data, 1, s, u.data, a.m, vt.data, a.n, superb)
 }
 
 // matrix_inv computes the inverse of a general matrix (square or not). It also computes the
