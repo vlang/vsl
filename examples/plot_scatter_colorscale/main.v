@@ -23,11 +23,11 @@ fn main() {
 
 	mut plt := plot.Plot.new()
 	plt.scatter(
-		x: x
-		y: y
-		mode: 'lines+markers'
+		x:          x
+		y:          y
+		mode:       'lines+markers'
 		colorscale: 'smoker'
-		marker: plot.Marker{
+		marker:     plot.Marker{
 			size: []f64{len: x.len, init: 10.0}
 		}
 	)

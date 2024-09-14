@@ -17,14 +17,14 @@ fn main() {
 	// Create the Scatter3D plot
 	mut plt := plot.Plot.new()
 	plt.scatter3d(
-		name: 'Easing Scatter3D'
-		x: x_values
-		y: y_values
-		z: [][]f64{len: z_values.len, init: z_values}
-		mode: 'markers'
+		name:   'Easing Scatter3D'
+		x:      x_values
+		y:      y_values
+		z:      [][]f64{len: z_values.len, init: z_values}
+		mode:   'markers'
 		marker: plot.Marker{
-			size: []f64{len: x_values.len, init: 10.0}
-			color: time // Color based on time
+			size:       []f64{len: x_values.len, init: 10.0}
+			color:      time // Color based on time
 			colorscale: 'viridis'
 		}
 	)

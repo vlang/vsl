@@ -20,7 +20,7 @@ pub fn PermutationsIter.new(data []f64, r int) PermutationsIter {
 	n := data.len
 	if r > n {
 		return PermutationsIter{
-			data: data
+			data:   data
 			repeat: r
 		}
 	}
@@ -28,10 +28,10 @@ pub fn PermutationsIter.new(data []f64, r int) PermutationsIter {
 	idxs := util.arange(n)
 	cycles := util.range(n, n - r, step: -1)
 	return PermutationsIter{
-		data: data
+		data:   data
 		repeat: r
-		size: size
-		idxs: idxs
+		size:   size
+		idxs:   idxs
 		cycles: cycles
 	}
 }

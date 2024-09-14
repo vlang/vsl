@@ -9,8 +9,8 @@ fn main() {
 
 	mut plt := plot.Plot.new()
 	plt.scatter(
-		x: x
-		y: y
+		x:    x
+		y:    y
 		mode: 'lines'
 		line: plot.Line{
 			color: '#0000FF'
@@ -18,12 +18,12 @@ fn main() {
 		name: 'sin(x)'
 	)
 	plt.scatter(
-		x: x
-		y: []f64{len: x.len}
-		mode: 'lines'
-		fill: 'tozeroy'
+		x:         x
+		y:         []f64{len: x.len}
+		mode:      'lines'
+		fill:      'tozeroy'
 		fillcolor: 'rgba(0, 0, 255, 0.2)'
-		line: plot.Line{
+		line:      plot.Line{
 			color: 'rgba(0, 0, 255, 0)'
 		}
 		name: 'Shaded Area'

@@ -19,7 +19,7 @@ fn (d &Device) buffer(size int) !&Buffer {
 		return err_unknown
 	}
 	return &Buffer{
-		size: size
+		size:   size
 		device: d
 		memobj: buffer
 	}

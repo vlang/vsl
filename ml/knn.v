@@ -227,12 +227,12 @@ pub fn (o &KNN) get_plotter() &plot.Plot {
 		}
 
 		plt.scatter(
-			name: 'class #${i}'
-			x: x_for_class
-			y: y_for_class
-			mode: 'markers'
+			name:       'class #${i}'
+			x:          x_for_class
+			y:          y_for_class
+			mode:       'markers'
 			colorscale: 'smoker'
-			marker: plot.Marker{
+			marker:     plot.Marker{
 				size: []f64{len: x_for_class.len, init: 8.0} // Adjust size as needed
 			}
 		)

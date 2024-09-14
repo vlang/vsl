@@ -31,17 +31,17 @@ pub fn CombinationsIter.new(data []f64, r int) CombinationsIter {
 	n := data.len
 	if r > n {
 		return CombinationsIter{
-			data: data
+			data:   data
 			repeat: r
 		}
 	}
 	size := u64(fun.choose(n, r))
 	idxs := util.arange(r)
 	return CombinationsIter{
-		data: data
+		data:   data
 		repeat: r
-		size: size
-		idxs: idxs
+		size:   size
+		idxs:   idxs
 	}
 }
 
@@ -108,17 +108,17 @@ pub fn CombinationsWithReplacementIter.new(data []f64, r int) CombinationsWithRe
 	n := data.len
 	if r > n {
 		return CombinationsWithReplacementIter{
-			data: data
+			data:   data
 			repeat: r
 		}
 	}
 	size := fun.n_combos_w_replacement(n, r)
 	idxs := []int{len: r, init: 0}
 	return CombinationsWithReplacementIter{
-		data: data
+		data:   data
 		repeat: r
-		size: size
-		idxs: idxs
+		size:   size
+		idxs:   idxs
 	}
 }
 

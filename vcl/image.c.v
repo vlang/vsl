@@ -5,7 +5,8 @@ import stbi
 // Rect is a struct that represents a rectangle shape
 @[params]
 pub struct Rect {
-pub: // pixel need integers
+pub:
+	// pixel need integers
 	x      f32
 	y      f32
 	width  f32
@@ -87,16 +88,16 @@ fn (d &Device) create_image(image_type ImageChannelOrder, bounds Rect, row_pitch
 
 	buf := &Buffer{
 		memobj: memobj
-		size: size
+		size:   size
 		device: d
 	}
 
 	img := &Image{
-		buf: buf
-		bounds: bounds
-		@type: image_type
-		format: format
-		desc: desc
+		buf:      buf
+		bounds:   bounds
+		@type:    image_type
+		format:   format
+		desc:     desc
 		img_data: data
 	}
 	if !isnil(data) {
@@ -114,10 +115,10 @@ pub fn (image &Image) data() !IImage {
 		region, 0, 0, unsafe { &read_image_result[0] }, 0, unsafe { nil }, unsafe { nil })
 	nb_channels := if image.@type == ImageChannelOrder.rgba { 4 } else { 1 }
 	img := stbi.Image{
-		width: int(image.bounds.width)
-		height: int(image.bounds.height)
+		width:       int(image.bounds.width)
+		height:      int(image.bounds.height)
 		nr_channels: nb_channels
-		data: unsafe { &read_image_result[0] }
+		data:        unsafe { &read_image_result[0] }
 	}
 	return error_or_default(ret, IImage(img))
 }

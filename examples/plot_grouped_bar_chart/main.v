@@ -9,13 +9,13 @@ fn main() {
 
 	mut plt := plot.Plot.new()
 	plt.bar(
-		x: categories
-		y: values1
+		x:    categories
+		y:    values1
 		name: 'Group 1'
 	)
 	plt.bar(
-		x: categories
-		y: values2
+		x:    categories
+		y:    values2
 		name: 'Group 2'
 	)
 	plt.layout(

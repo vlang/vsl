@@ -87,7 +87,7 @@ mut:
 //   Note there is currently no means to use groups.
 pub fn Communicator.new(ranks []int) !&Communicator {
 	mut o := &Communicator{
-		comm: MPI_Comm(C.MPI_COMM_WORLD)
+		comm:  MPI_Comm(C.MPI_COMM_WORLD)
 		group: unsafe { nil }
 	}
 	if ranks.len == 0 {

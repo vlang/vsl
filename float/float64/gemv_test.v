@@ -11,62 +11,62 @@ const dgemv_tests = [
 		y: [6.8]
 		// (1x1)
 		no_trans: [DgemvSubcase{
-			alpha: 0
-			beta: 0
-			want: [0.0]
-			want_rev_x: [0.0]
-			want_rev_y: [0.0]
+			alpha:       0
+			beta:        0
+			want:        [0.0]
+			want_rev_x:  [0.0]
+			want_rev_y:  [0.0]
 			want_rev_xy: [0.0]
 		}, DgemvSubcase{
-			alpha: 0
-			beta: 1
-			want: [6.8]
-			want_rev_x: [6.8]
-			want_rev_y: [6.8]
+			alpha:       0
+			beta:        1
+			want:        [6.8]
+			want_rev_x:  [6.8]
+			want_rev_y:  [6.8]
 			want_rev_xy: [6.8]
 		}, DgemvSubcase{
-			alpha: 1
-			beta: 0
-			want: [9.02]
-			want_rev_x: [9.02]
-			want_rev_y: [9.02]
+			alpha:       1
+			beta:        0
+			want:        [9.02]
+			want_rev_x:  [9.02]
+			want_rev_y:  [9.02]
 			want_rev_xy: [9.02]
 		}, DgemvSubcase{
-			alpha: 8
-			beta: -6
-			want: [31.36]
-			want_rev_x: [31.36]
-			want_rev_y: [31.36]
+			alpha:       8
+			beta:        -6
+			want:        [31.36]
+			want_rev_x:  [31.36]
+			want_rev_y:  [31.36]
 			want_rev_xy: [31.36]
 		}]
 		// (1x1)
 		trans: [DgemvSubcase{
-			alpha: 0
-			beta: 0
-			want: [0.0]
-			want_rev_x: [0.0]
-			want_rev_y: [0.0]
+			alpha:       0
+			beta:        0
+			want:        [0.0]
+			want_rev_x:  [0.0]
+			want_rev_y:  [0.0]
 			want_rev_xy: [0.0]
 		}, DgemvSubcase{
-			alpha: 0
-			beta: 1
-			want: [2.2]
-			want_rev_x: [2.2]
-			want_rev_y: [2.2]
+			alpha:       0
+			beta:        1
+			want:        [2.2]
+			want_rev_x:  [2.2]
+			want_rev_y:  [2.2]
 			want_rev_xy: [2.2]
 		}, DgemvSubcase{
-			alpha: 1
-			beta: 0
-			want: [27.88]
-			want_rev_x: [27.88]
-			want_rev_y: [27.88]
+			alpha:       1
+			beta:        0
+			want:        [27.88]
+			want_rev_x:  [27.88]
+			want_rev_y:  [27.88]
 			want_rev_xy: [27.88]
 		}, DgemvSubcase{
-			alpha: 8
-			beta: -6
-			want: [209.84]
-			want_rev_x: [209.84]
-			want_rev_y: [209.84]
+			alpha:       8
+			beta:        -6
+			want:        [209.84]
+			want_rev_x:  [209.84]
+			want_rev_y:  [209.84]
 			want_rev_xy: [209.84]
 		}]
 	},
@@ -78,62 +78,62 @@ const dgemv_tests = [
 		y: [2.8, 1.71, 2.64]
 		// (2x2, 1x2)
 		no_trans: [DgemvSubcase{
-			alpha: 0
-			beta: 0
-			want: [0.0, 0, 0]
-			want_rev_x: [0.0, 0, 0]
-			want_rev_y: [0.0, 0, 0]
+			alpha:       0
+			beta:        0
+			want:        [0.0, 0, 0]
+			want_rev_x:  [0.0, 0, 0]
+			want_rev_y:  [0.0, 0, 0]
 			want_rev_xy: [0.0, 0, 0]
 		}, DgemvSubcase{
-			alpha: 0
-			beta: 1
-			want: [2.8, 1.71, 2.64]
-			want_rev_x: [2.8, 1.71, 2.64]
-			want_rev_y: [2.8, 1.71, 2.64]
+			alpha:       0
+			beta:        1
+			want:        [2.8, 1.71, 2.64]
+			want_rev_x:  [2.8, 1.71, 2.64]
+			want_rev_y:  [2.8, 1.71, 2.64]
 			want_rev_xy: [2.8, 1.71, 2.64]
 		}, DgemvSubcase{
-			alpha: 1
-			beta: 0
-			want: [24.0346, 5.2524, 16.1664]
-			want_rev_x: [23.305, 5.5298, 16.3716]
-			want_rev_y: [16.1664, 5.2524, 24.0346]
+			alpha:       1
+			beta:        0
+			want:        [24.0346, 5.2524, 16.1664]
+			want_rev_x:  [23.305, 5.5298, 16.3716]
+			want_rev_y:  [16.1664, 5.2524, 24.0346]
 			want_rev_xy: [16.3716, 5.5298, 23.305]
 		}, DgemvSubcase{
-			alpha: 8
-			beta: -6
-			want: [175.4768, 31.7592, 113.4912]
-			want_rev_x: [169.64, 33.9784, 115.1328]
-			want_rev_y: [112.5312, 31.7592, 176.4368]
+			alpha:       8
+			beta:        -6
+			want:        [175.4768, 31.7592, 113.4912]
+			want_rev_x:  [169.64, 33.9784, 115.1328]
+			want_rev_y:  [112.5312, 31.7592, 176.4368]
 			want_rev_xy: [114.1728, 33.9784, 170.6]
 		}]
 		// (2x2)
 		trans: [DgemvSubcase{
-			alpha: 0
-			beta: 0
-			want: [0.0, 0]
-			want_rev_x: [0.0, 0]
-			want_rev_y: [0.0, 0]
+			alpha:       0
+			beta:        0
+			want:        [0.0, 0]
+			want_rev_x:  [0.0, 0]
+			want_rev_y:  [0.0, 0]
 			want_rev_xy: [0.0, 0]
 		}, DgemvSubcase{
-			alpha: 0
-			beta: 1
-			want: [3.38, 3]
-			want_rev_x: [3.38, 3]
-			want_rev_y: [3.38, 3]
+			alpha:       0
+			beta:        1
+			want:        [3.38, 3]
+			want_rev_x:  [3.38, 3]
+			want_rev_y:  [3.38, 3]
 			want_rev_xy: [3.38, 3]
 		}, DgemvSubcase{
-			alpha: 1
-			beta: 0
-			want: [19.916, 17.2139]
-			want_rev_x: [19.5336, 17.2251]
-			want_rev_y: [17.2139, 19.916]
+			alpha:       1
+			beta:        0
+			want:        [19.916, 17.2139]
+			want_rev_x:  [19.5336, 17.2251]
+			want_rev_y:  [17.2139, 19.916]
 			want_rev_xy: [17.2251, 19.5336]
 		}, DgemvSubcase{
-			alpha: 8
-			beta: -6
-			want: [139.048, 119.7112]
-			want_rev_x: [135.9888, 119.8008]
-			want_rev_y: [117.4312, 141.328]
+			alpha:       8
+			beta:        -6
+			want:        [139.048, 119.7112]
+			want_rev_x:  [135.9888, 119.8008]
+			want_rev_y:  [117.4312, 141.328]
 			want_rev_xy: [117.5208, 138.2688]
 		}]
 	},
@@ -145,62 +145,62 @@ const dgemv_tests = [
 		y: [0.24, 1.41, 3.45]
 		// (2x2, 2x1, 1x2, 1x1)
 		no_trans: [DgemvSubcase{
-			alpha: 0
-			beta: 0
-			want: [0.0, 0, 0]
-			want_rev_x: [0.0, 0, 0]
-			want_rev_y: [0.0, 0, 0]
+			alpha:       0
+			beta:        0
+			want:        [0.0, 0, 0]
+			want_rev_x:  [0.0, 0, 0]
+			want_rev_y:  [0.0, 0, 0]
 			want_rev_xy: [0.0, 0, 0]
 		}, DgemvSubcase{
-			alpha: 0
-			beta: 1
-			want: [0.24, 1.41, 3.45]
-			want_rev_x: [0.24, 1.41, 3.45]
-			want_rev_y: [0.24, 1.41, 3.45]
+			alpha:       0
+			beta:        1
+			want:        [0.24, 1.41, 3.45]
+			want_rev_x:  [0.24, 1.41, 3.45]
+			want_rev_y:  [0.24, 1.41, 3.45]
 			want_rev_xy: [0.24, 1.41, 3.45]
 		}, DgemvSubcase{
-			alpha: 1
-			beta: 0
-			want: [33.8908, 24.0452, 16.7664]
-			want_rev_x: [33.4468, 18.0882, 8.8854]
-			want_rev_y: [16.7664, 24.0452, 33.8908]
+			alpha:       1
+			beta:        0
+			want:        [33.8908, 24.0452, 16.7664]
+			want_rev_x:  [33.4468, 18.0882, 8.8854]
+			want_rev_y:  [16.7664, 24.0452, 33.8908]
 			want_rev_xy: [8.8854, 18.0882, 33.4468]
 		}, DgemvSubcase{
-			alpha: 8
-			beta: -6
-			want: [269.6864, 183.9016, 113.4312]
-			want_rev_x: [266.1344, 136.2456, 50.3832]
-			want_rev_y: [132.6912, 183.9016, 250.4264]
+			alpha:       8
+			beta:        -6
+			want:        [269.6864, 183.9016, 113.4312]
+			want_rev_x:  [266.1344, 136.2456, 50.3832]
+			want_rev_y:  [132.6912, 183.9016, 250.4264]
 			want_rev_xy: [69.6432, 136.2456, 246.8744]
 		}]
 		// (2x2, 1x2, 2x1, 1x1)
 		trans: [DgemvSubcase{
-			alpha: 0
-			beta: 0
-			want: [0.0, 0, 0]
-			want_rev_x: [0.0, 0, 0]
-			want_rev_y: [0.0, 0, 0]
+			alpha:       0
+			beta:        0
+			want:        [0.0, 0, 0]
+			want_rev_x:  [0.0, 0, 0]
+			want_rev_y:  [0.0, 0, 0]
 			want_rev_xy: [0.0, 0, 0]
 		}, DgemvSubcase{
-			alpha: 0
-			beta: 1
-			want: [4.82, 1.82, 1.12]
-			want_rev_x: [4.82, 1.82, 1.12]
-			want_rev_y: [4.82, 1.82, 1.12]
+			alpha:       0
+			beta:        1
+			want:        [4.82, 1.82, 1.12]
+			want_rev_x:  [4.82, 1.82, 1.12]
+			want_rev_y:  [4.82, 1.82, 1.12]
 			want_rev_xy: [4.82, 1.82, 1.12]
 		}, DgemvSubcase{
-			alpha: 1
-			beta: 0
-			want: [15.8805, 8.9871, 6.2331]
-			want_rev_x: [21.6264, 16.4664, 18.4311]
-			want_rev_y: [6.2331, 8.9871, 15.8805]
+			alpha:       1
+			beta:        0
+			want:        [15.8805, 8.9871, 6.2331]
+			want_rev_x:  [21.6264, 16.4664, 18.4311]
+			want_rev_y:  [6.2331, 8.9871, 15.8805]
 			want_rev_xy: [18.4311, 16.4664, 21.6264]
 		}, DgemvSubcase{
-			alpha: 8
-			beta: -6
-			want: [98.124, 60.9768, 43.1448]
-			want_rev_x: [144.0912, 120.8112, 140.7288]
-			want_rev_y: [20.9448, 60.9768, 120.324]
+			alpha:       8
+			beta:        -6
+			want:        [98.124, 60.9768, 43.1448]
+			want_rev_x:  [144.0912, 120.8112, 140.7288]
+			want_rev_y:  [20.9448, 60.9768, 120.324]
 			want_rev_xy: [118.5288, 120.8112, 166.2912]
 		}]
 	},
@@ -212,62 +212,62 @@ const dgemv_tests = [
 		y: [7.0, 8, 9, 10, 11]
 		//(4x2, 4x1, 1x2, 1x1)
 		no_trans: [DgemvSubcase{
-			alpha: 0
-			beta: 0
-			want: [0.0, 0, 0, 0, 0]
-			want_rev_x: [0.0, 0, 0, 0, 0]
-			want_rev_y: [0.0, 0, 0, 0, 0]
+			alpha:       0
+			beta:        0
+			want:        [0.0, 0, 0, 0, 0]
+			want_rev_x:  [0.0, 0, 0, 0, 0]
+			want_rev_y:  [0.0, 0, 0, 0, 0]
 			want_rev_xy: [0.0, 0, 0, 0, 0]
 		}, DgemvSubcase{
-			alpha: 0
-			beta: 1
-			want: [7.0, 8, 9, 10, 11]
-			want_rev_x: [7.0, 8, 9, 10, 11]
-			want_rev_y: [7.0, 8, 9, 10, 11]
+			alpha:       0
+			beta:        1
+			want:        [7.0, 8, 9, 10, 11]
+			want_rev_x:  [7.0, 8, 9, 10, 11]
+			want_rev_y:  [7.0, 8, 9, 10, 11]
 			want_rev_xy: [7.0, 8, 9, 10, 11]
 		}, DgemvSubcase{
-			alpha: 1
-			beta: 0
-			want: [40.8, 43.9, 33, 9, 28]
-			want_rev_x: [32.8, 44.9, 47, 7, 36]
-			want_rev_y: [28.0, 9, 33, 43.9, 40.8]
+			alpha:       1
+			beta:        0
+			want:        [40.8, 43.9, 33, 9, 28]
+			want_rev_x:  [32.8, 44.9, 47, 7, 36]
+			want_rev_y:  [28.0, 9, 33, 43.9, 40.8]
 			want_rev_xy: [36.0, 7, 47, 44.9, 32.8]
 		}, DgemvSubcase{
-			alpha: 8
-			beta: -6
-			want: [284.4, 303.2, 210, 12, 158]
-			want_rev_x: [220.4, 311.2, 322, -4, 222]
-			want_rev_y: [182.0, 24, 210, 291.2, 260.4]
+			alpha:       8
+			beta:        -6
+			want:        [284.4, 303.2, 210, 12, 158]
+			want_rev_x:  [220.4, 311.2, 322, -4, 222]
+			want_rev_y:  [182.0, 24, 210, 291.2, 260.4]
 			want_rev_xy: [246.0, 8, 322, 299.2, 196.4]
 		}]
 		//( 2x4, 1x4, 2x1, 1x1)
 		trans: [DgemvSubcase{
-			alpha: 0
-			beta: 0
-			want: [0.0, 0, 0]
-			want_rev_x: [0.0, 0, 0]
-			want_rev_y: [0.0, 0, 0]
+			alpha:       0
+			beta:        0
+			want:        [0.0, 0, 0]
+			want_rev_x:  [0.0, 0, 0]
+			want_rev_y:  [0.0, 0, 0]
 			want_rev_xy: [0.0, 0, 0]
 		}, DgemvSubcase{
-			alpha: 0
-			beta: 1
-			want: [1.0, 2, 3]
-			want_rev_x: [1.0, 2, 3]
-			want_rev_y: [1.0, 2, 3]
+			alpha:       0
+			beta:        1
+			want:        [1.0, 2, 3]
+			want_rev_x:  [1.0, 2, 3]
+			want_rev_y:  [1.0, 2, 3]
 			want_rev_xy: [1.0, 2, 3]
 		}, DgemvSubcase{
-			alpha: 1
-			beta: 0
-			want: [304.5, 166.4, 231.5]
-			want_rev_x: [302.1, 188.2, 258.1]
-			want_rev_y: [231.5, 166.4, 304.5]
+			alpha:       1
+			beta:        0
+			want:        [304.5, 166.4, 231.5]
+			want_rev_x:  [302.1, 188.2, 258.1]
+			want_rev_y:  [231.5, 166.4, 304.5]
 			want_rev_xy: [258.1, 188.2, 302.1]
 		}, DgemvSubcase{
-			alpha: 8
-			beta: -6
-			want: [2430.0, 1319.2, 1834]
-			want_rev_x: [2410.8, 1493.6, 2046.8]
-			want_rev_y: [1846.0, 1319.2, 2418]
+			alpha:       8
+			beta:        -6
+			want:        [2430.0, 1319.2, 1834]
+			want_rev_x:  [2410.8, 1493.6, 2046.8]
+			want_rev_y:  [1846.0, 1319.2, 2418]
 			want_rev_xy: [2058.8, 1493.6, 2398.8]
 		}]
 	},
@@ -279,62 +279,62 @@ const dgemv_tests = [
 		y: [2.46, 2.22, 4.75]
 		// (2x4, 2x1, 1x4, 1x1)
 		no_trans: [DgemvSubcase{
-			alpha: 0
-			beta: 0
-			want: [0.0, 0, 0]
-			want_rev_x: [0.0, 0, 0]
-			want_rev_y: [0.0, 0, 0]
+			alpha:       0
+			beta:        0
+			want:        [0.0, 0, 0]
+			want_rev_x:  [0.0, 0, 0]
+			want_rev_y:  [0.0, 0, 0]
 			want_rev_xy: [0.0, 0, 0]
 		}, DgemvSubcase{
-			alpha: 0
-			beta: 1
-			want: [2.46, 2.22, 4.75]
-			want_rev_x: [2.46, 2.22, 4.75]
-			want_rev_y: [2.46, 2.22, 4.75]
+			alpha:       0
+			beta:        1
+			want:        [2.46, 2.22, 4.75]
+			want_rev_x:  [2.46, 2.22, 4.75]
+			want_rev_y:  [2.46, 2.22, 4.75]
 			want_rev_xy: [2.46, 2.22, 4.75]
 		}, DgemvSubcase{
-			alpha: 1
-			beta: 0
-			want: [37.8098, 28.8939, 22.5949]
-			want_rev_x: [32.8088, 27.5978, 25.8927]
-			want_rev_y: [22.5949, 28.8939, 37.8098]
+			alpha:       1
+			beta:        0
+			want:        [37.8098, 28.8939, 22.5949]
+			want_rev_x:  [32.8088, 27.5978, 25.8927]
+			want_rev_y:  [22.5949, 28.8939, 37.8098]
 			want_rev_xy: [25.8927, 27.5978, 32.8088]
 		}, DgemvSubcase{
-			alpha: 8
-			beta: -6
-			want: [287.7184, 217.8312, 152.2592]
-			want_rev_x: [247.7104, 207.4624, 178.6416]
-			want_rev_y: [165.9992, 217.8312, 273.9784]
+			alpha:       8
+			beta:        -6
+			want:        [287.7184, 217.8312, 152.2592]
+			want_rev_x:  [247.7104, 207.4624, 178.6416]
+			want_rev_y:  [165.9992, 217.8312, 273.9784]
 			want_rev_xy: [192.3816, 207.4624, 233.9704]
 		}]
 		// (4x2, 1x2, 4x1, 1x1)
 		trans: [DgemvSubcase{
-			alpha: 0
-			beta: 0
-			want: [0.0, 0, 0, 0, 0]
-			want_rev_x: [0.0, 0, 0, 0, 0]
-			want_rev_y: [0.0, 0, 0, 0, 0]
+			alpha:       0
+			beta:        0
+			want:        [0.0, 0, 0, 0, 0]
+			want_rev_x:  [0.0, 0, 0, 0, 0]
+			want_rev_y:  [0.0, 0, 0, 0, 0]
 			want_rev_xy: [0.0, 0, 0, 0, 0]
 		}, DgemvSubcase{
-			alpha: 0
-			beta: 1
-			want: [2.34, 2.82, 4.73, 0.22, 3.91]
-			want_rev_x: [2.34, 2.82, 4.73, 0.22, 3.91]
-			want_rev_y: [2.34, 2.82, 4.73, 0.22, 3.91]
+			alpha:       0
+			beta:        1
+			want:        [2.34, 2.82, 4.73, 0.22, 3.91]
+			want_rev_x:  [2.34, 2.82, 4.73, 0.22, 3.91]
+			want_rev_y:  [2.34, 2.82, 4.73, 0.22, 3.91]
 			want_rev_xy: [2.34, 2.82, 4.73, 0.22, 3.91]
 		}, DgemvSubcase{
-			alpha: 1
-			beta: 0
-			want: [16.5211, 9.8878, 30.2114, 8.3156, 13.6087]
-			want_rev_x: [17.0936, 13.9182, 30.5778, 7.8576, 18.8528]
-			want_rev_y: [13.6087, 8.3156, 30.2114, 9.8878, 16.5211]
+			alpha:       1
+			beta:        0
+			want:        [16.5211, 9.8878, 30.2114, 8.3156, 13.6087]
+			want_rev_x:  [17.0936, 13.9182, 30.5778, 7.8576, 18.8528]
+			want_rev_y:  [13.6087, 8.3156, 30.2114, 9.8878, 16.5211]
 			want_rev_xy: [18.8528, 7.8576, 30.5778, 13.9182, 17.0936]
 		}, DgemvSubcase{
-			alpha: 8
-			beta: -6
-			want: [118.1288, 62.1824, 213.3112, 65.2048, 85.4096]
-			want_rev_x: [122.7088, 94.4256, 216.2424, 61.5408, 127.3624]
-			want_rev_y: [94.8296, 49.6048, 213.3112, 77.7824, 108.7088]
+			alpha:       8
+			beta:        -6
+			want:        [118.1288, 62.1824, 213.3112, 65.2048, 85.4096]
+			want_rev_x:  [122.7088, 94.4256, 216.2424, 61.5408, 127.3624]
+			want_rev_y:  [94.8296, 49.6048, 213.3112, 77.7824, 108.7088]
 			want_rev_xy: [136.7824, 45.9408, 216.2424, 110.0256, 113.2888]
 		}]
 	},
@@ -348,62 +348,62 @@ const dgemv_tests = [
 		y: [3.2, 4.4, 5.0, 4.3, 4.1, 1.4, 0.2]
 		// (4x4, 4x2, 4x1, 2x4, 2x2, 2x1, 1x4, 1x2, 1x1)
 		no_trans: [DgemvSubcase{
-			alpha: 0
-			beta: 0
-			want: [0.0, 0, 0, math.nan(), 0, 0, 0]
-			want_rev_x: [0.0, 0, 0, math.nan(), 0, 0, 0]
-			want_rev_y: [0.0, 0, 0, math.nan(), 0, 0, 0]
+			alpha:       0
+			beta:        0
+			want:        [0.0, 0, 0, math.nan(), 0, 0, 0]
+			want_rev_x:  [0.0, 0, 0, math.nan(), 0, 0, 0]
+			want_rev_y:  [0.0, 0, 0, math.nan(), 0, 0, 0]
 			want_rev_xy: [0.0, 0, 0, math.nan(), 0, 0, 0]
 		}, DgemvSubcase{
-			alpha: 0
-			beta: 1
-			want: [3.2, 4.4, 5.0, math.nan(), 4.1, 1.4, 0.2]
-			want_rev_x: [3.2, 4.4, 5.0, math.nan(), 4.1, 1.4, 0.2]
-			want_rev_y: [3.2, 4.4, 5.0, math.nan(), 4.1, 1.4, 0.2]
+			alpha:       0
+			beta:        1
+			want:        [3.2, 4.4, 5.0, math.nan(), 4.1, 1.4, 0.2]
+			want_rev_x:  [3.2, 4.4, 5.0, math.nan(), 4.1, 1.4, 0.2]
+			want_rev_y:  [3.2, 4.4, 5.0, math.nan(), 4.1, 1.4, 0.2]
 			want_rev_xy: [3.2, 4.4, 5.0, math.nan(), 4.1, 1.4, 0.2]
 		}, DgemvSubcase{
-			alpha: 1
-			beta: 0
-			want: [13.43, 11.82, 22.78, math.nan(), 21.93, 18.19, 15.39]
-			want_rev_x: [19.94, 14.21, 23.95, math.nan(), 19.29, 14.81, 18.52]
-			want_rev_y: [15.39, 18.19, 21.93, math.nan(), 22.78, 11.82, 13.43]
+			alpha:       1
+			beta:        0
+			want:        [13.43, 11.82, 22.78, math.nan(), 21.93, 18.19, 15.39]
+			want_rev_x:  [19.94, 14.21, 23.95, math.nan(), 19.29, 14.81, 18.52]
+			want_rev_y:  [15.39, 18.19, 21.93, math.nan(), 22.78, 11.82, 13.43]
 			want_rev_xy: [18.52, 14.81, 19.29, math.nan(), 23.95, 14.21, 19.94]
 		}, DgemvSubcase{
-			alpha: 8
-			beta: -6
-			want: [88.24, 68.16, 152.24, math.nan(), 150.84, 137.12, 121.92]
-			want_rev_x: [140.32, 87.28, 161.6, math.nan(), 129.72, 110.08, 146.96]
-			want_rev_y: [103.92, 119.12, 145.44, math.nan(), 157.64, 86.16, 106.24]
+			alpha:       8
+			beta:        -6
+			want:        [88.24, 68.16, 152.24, math.nan(), 150.84, 137.12, 121.92]
+			want_rev_x:  [140.32, 87.28, 161.6, math.nan(), 129.72, 110.08, 146.96]
+			want_rev_y:  [103.92, 119.12, 145.44, math.nan(), 157.64, 86.16, 106.24]
 			want_rev_xy: [128.96, 92.08, 124.32, math.nan(), 167.0, 105.28, 158.32]
 		}]
 		// (4x4, 2x4, 1x4, 4x2, 2x2, 1x2, 4x1, 2x1, 1x1)
 		trans: [DgemvSubcase{
-			alpha: 0
-			beta: 0
-			want: [0.0, 0, 0, 0, math.nan(), 0, 0]
-			want_rev_x: [0.0, 0, 0, 0, math.nan(), 0, 0]
-			want_rev_y: [0.0, 0, math.nan(), 0, 0, 0, 0]
+			alpha:       0
+			beta:        0
+			want:        [0.0, 0, 0, 0, math.nan(), 0, 0]
+			want_rev_x:  [0.0, 0, 0, 0, math.nan(), 0, 0]
+			want_rev_y:  [0.0, 0, math.nan(), 0, 0, 0, 0]
 			want_rev_xy: [0.0, 0, math.nan(), 0, 0, 0, 0]
 		}, DgemvSubcase{
-			alpha: 0
-			beta: 1
-			want: [0.4, 2.8, 3.5, 0.3, math.nan(), 2.5, 3.1]
-			want_rev_x: [0.4, 2.8, 3.5, 0.3, math.nan(), 2.5, 3.1]
-			want_rev_y: [0.4, 2.8, math.nan(), 0.3, 0.6, 2.5, 3.1]
+			alpha:       0
+			beta:        1
+			want:        [0.4, 2.8, 3.5, 0.3, math.nan(), 2.5, 3.1]
+			want_rev_x:  [0.4, 2.8, 3.5, 0.3, math.nan(), 2.5, 3.1]
+			want_rev_y:  [0.4, 2.8, math.nan(), 0.3, 0.6, 2.5, 3.1]
 			want_rev_xy: [0.4, 2.8, math.nan(), 0.3, 0.6, 2.5, 3.1]
 		}, DgemvSubcase{
-			alpha: 1
-			beta: 0
-			want: [39.22, 38.86, 38.61, 39.55, math.nan(), 27.53, 25.71]
-			want_rev_x: [40.69, 40.33, 42.06, 41.92, math.nan(), 24.98, 30.63]
-			want_rev_y: [25.71, 27.53, math.nan(), 39.55, 38.61, 38.86, 39.22]
+			alpha:       1
+			beta:        0
+			want:        [39.22, 38.86, 38.61, 39.55, math.nan(), 27.53, 25.71]
+			want_rev_x:  [40.69, 40.33, 42.06, 41.92, math.nan(), 24.98, 30.63]
+			want_rev_y:  [25.71, 27.53, math.nan(), 39.55, 38.61, 38.86, 39.22]
 			want_rev_xy: [30.63, 24.98, math.nan(), 41.92, 42.06, 40.33, 40.69]
 		}, DgemvSubcase{
-			alpha: 8
-			beta: -6
-			want: [311.36, 294.08, 287.88, 314.6, math.nan(), 205.24, 187.08]
-			want_rev_x: [323.12, 305.84, 315.48, 333.56, math.nan(), 184.84, 226.44]
-			want_rev_y: [203.28, 203.44, math.nan(), 314.6, 305.28, 295.88, 295.16]
+			alpha:       8
+			beta:        -6
+			want:        [311.36, 294.08, 287.88, 314.6, math.nan(), 205.24, 187.08]
+			want_rev_x:  [323.12, 305.84, 315.48, 333.56, math.nan(), 184.84, 226.44]
+			want_rev_y:  [203.28, 203.44, math.nan(), 314.6, 305.28, 295.88, 295.16]
 			want_rev_xy: [242.64, 183.04, math.nan(), 333.56, 332.88, 307.64, 306.92]
 		}]
 	},
@@ -422,31 +422,32 @@ const dgemv_tests = [
 		y: [3.8, 3.4, 1.6, 4.8, 4.3, 0.5, 2.0, 2.5, 1.5, 2.8, 3.9]
 		// (4x4, 4x2, 4x1, 2x4, 2x2, 2x1, 1x4, 1x2, 1x1)
 		no_trans: [DgemvSubcase{
-			alpha: 0
-			beta: 0
-			want: [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-			want_rev_x: [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-			want_rev_y: [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+			alpha:       0
+			beta:        0
+			want:        [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+			want_rev_x:  [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+			want_rev_y:  [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 			want_rev_xy: [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 		}, DgemvSubcase{
-			alpha: 0
-			beta: 1
-			want: [3.8, 3.4, 1.6, 4.8, 4.3, 0.5, 2.0, 2.5, 1.5, 2.8, 3.9]
-			want_rev_x: [3.8, 3.4, 1.6, 4.8, 4.3, 0.5, 2.0, 2.5, 1.5, 2.8, 3.9]
-			want_rev_y: [3.8, 3.4, 1.6, 4.8, 4.3, 0.5, 2.0, 2.5, 1.5, 2.8, 3.9]
+			alpha:       0
+			beta:        1
+			want:        [3.8, 3.4, 1.6, 4.8, 4.3, 0.5, 2.0, 2.5, 1.5, 2.8, 3.9]
+			want_rev_x:  [3.8, 3.4, 1.6, 4.8, 4.3, 0.5, 2.0, 2.5, 1.5, 2.8, 3.9]
+			want_rev_y:  [3.8, 3.4, 1.6, 4.8, 4.3, 0.5, 2.0, 2.5, 1.5, 2.8, 3.9]
 			want_rev_xy: [3.8, 3.4, 1.6, 4.8, 4.3, 0.5, 2.0, 2.5, 1.5, 2.8, 3.9]
 		}, DgemvSubcase{
-			alpha: 1
-			beta: 0
-			want: [32.71, 38.93, 33.55, 45.46, 39.24, 38.41, 46.23, 25.78, 37.33, 37.42, 24.63]
+			alpha:      1
+			beta:       0
+			want:       [32.71, 38.93, 33.55, 45.46, 39.24, 38.41, 46.23, 25.78, 37.33, 37.42,
+				24.63]
 			want_rev_x: [39.82, 43.78, 37.73, 41.19, 40.17, 44.41, 42.75, 28.14, 35.6, 41.25, 23.9]
 			want_rev_y: [24.63, 37.42, 37.33, 25.78, 46.23, 38.41, 39.24, 45.46, 33.55, 38.93,
 				32.71]
 			want_rev_xy: [23.9, 41.25, 35.6, 28.14, 42.75, 44.41, 40.17, 41.19, 37.73, 43.78, 39.82]
 		}, DgemvSubcase{
 			alpha: 8
-			beta: -6
-			want: [238.88, 291.04, 258.8, 334.88, 288.12, 304.28, 357.84, 191.24, 289.64, 282.56,
+			beta:  -6
+			want:  [238.88, 291.04, 258.8, 334.88, 288.12, 304.28, 357.84, 191.24, 289.64, 282.56,
 				173.64]
 			want_rev_x: [295.76, 329.84, 292.24, 300.72, 295.56, 352.28, 330.0, 210.12, 275.8,
 				313.2, 167.8]
@@ -457,23 +458,24 @@ const dgemv_tests = [
 		}]
 		// (4x4, 2x4, 1x4, 4x2, 2x2, 1x2, 4x1, 2x1, 1x1)
 		trans: [DgemvSubcase{
-			alpha: 0
-			beta: 0
-			want: [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-			want_rev_x: [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-			want_rev_y: [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+			alpha:       0
+			beta:        0
+			want:        [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+			want_rev_x:  [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+			want_rev_y:  [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 			want_rev_xy: [0.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 		}, DgemvSubcase{
-			alpha: 0
-			beta: 1
-			want: [2.5, 1.2, 0.8, 2.9, 3.4, 1.8, 4.6, 3.3, 3.8, 0.9, 1.1]
-			want_rev_x: [2.5, 1.2, 0.8, 2.9, 3.4, 1.8, 4.6, 3.3, 3.8, 0.9, 1.1]
-			want_rev_y: [2.5, 1.2, 0.8, 2.9, 3.4, 1.8, 4.6, 3.3, 3.8, 0.9, 1.1]
+			alpha:       0
+			beta:        1
+			want:        [2.5, 1.2, 0.8, 2.9, 3.4, 1.8, 4.6, 3.3, 3.8, 0.9, 1.1]
+			want_rev_x:  [2.5, 1.2, 0.8, 2.9, 3.4, 1.8, 4.6, 3.3, 3.8, 0.9, 1.1]
+			want_rev_y:  [2.5, 1.2, 0.8, 2.9, 3.4, 1.8, 4.6, 3.3, 3.8, 0.9, 1.1]
 			want_rev_xy: [2.5, 1.2, 0.8, 2.9, 3.4, 1.8, 4.6, 3.3, 3.8, 0.9, 1.1]
 		}, DgemvSubcase{
-			alpha: 1
-			beta: 0
-			want: [37.07, 55.58, 46.05, 47.34, 33.88, 54.19, 50.85, 39.31, 31.29, 55.31, 46.98]
+			alpha:      1
+			beta:       0
+			want:       [37.07, 55.58, 46.05, 47.34, 33.88, 54.19, 50.85, 39.31, 31.29, 55.31,
+				46.98]
 			want_rev_x: [38.11, 63.38, 46.44, 40.04, 34.63, 59.27, 50.13, 35.45, 28.26, 51.64,
 				46.22]
 			want_rev_y: [46.98, 55.31, 31.29, 39.31, 50.85, 54.19, 33.88, 47.34, 46.05, 55.58,
@@ -482,8 +484,8 @@ const dgemv_tests = [
 				38.11]
 		}, DgemvSubcase{
 			alpha: 8
-			beta: -6
-			want: [281.56, 437.44, 363.6, 361.32, 250.64, 422.72, 379.2, 294.68, 227.52, 437.08,
+			beta:  -6
+			want:  [281.56, 437.44, 363.6, 361.32, 250.64, 422.72, 379.2, 294.68, 227.52, 437.08,
 				369.24]
 			want_rev_x: [289.88, 499.84, 366.72, 302.92, 256.64, 463.36, 373.44, 263.8, 203.28,
 				407.72, 363.16]
@@ -516,7 +518,7 @@ struct DgemvSubcase {
 }
 
 fn test_gemv() {
-	for mut test in float64.dgemv_tests {
+	for mut test in dgemv_tests {
 		for case in test.no_trans {
 			dgemvcomp(mut test, false, case)
 		}

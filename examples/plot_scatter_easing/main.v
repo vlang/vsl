@@ -16,14 +16,14 @@ fn main() {
 	// Create the Scatter plot
 	mut plt := plot.Plot.new()
 	plt.scatter(
-		name: 'Easing Scatter'
-		x: x_values
-		y: y_values
-		mode: 'markers'
+		name:       'Easing Scatter'
+		x:          x_values
+		y:          y_values
+		mode:       'markers'
 		colorscale: 'viridis'
-		marker: plot.Marker{
-			size: []f64{len: x_values.len, init: 10.0}
-			color: time // Color based on time
+		marker:     plot.Marker{
+			size:       []f64{len: x_values.len, init: 10.0}
+			color:      time // Color based on time
 			colorscale: 'viridis'
 		}
 	)

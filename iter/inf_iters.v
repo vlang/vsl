@@ -9,7 +9,7 @@ pub mut:
 
 pub fn Counter.new(start f64, step f64) Counter {
 	return Counter{
-		step: step
+		step:  step
 		state: start
 	}
 }
@@ -30,7 +30,7 @@ pub:
 pub fn Cycler.new(data []f64) Cycler {
 	return Cycler{
 		data: data
-		idx: 0
+		idx:  0
 	}
 }
 

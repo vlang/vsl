@@ -39,17 +39,17 @@ fn main() {
 	y := x.map(f_cos(it, []f64{}))
 
 	plt.scatter(
-		x: x
-		y: y
+		x:    x
+		y:    y
 		mode: 'lines'
 		line: plot.Line{
 			color: '#FF0000'
 		}
 	)
 	plt.scatter(
-		x: [result.x]
-		y: [result.fx]
-		mode: 'markers'
+		x:      [result.x]
+		y:      [result.fx]
+		mode:   'markers'
 		marker: plot.Marker{
 			color: ['#0000FF']
 		}
