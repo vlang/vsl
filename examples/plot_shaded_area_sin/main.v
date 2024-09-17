@@ -26,7 +26,7 @@ fn main() {
 		line:      plot.Line{
 			color: 'rgba(0, 0, 255, 0)'
 		}
-		name: 'Shaded Area'
+		name:      'Shaded Area'
 	)
 	plt.layout(
 		title: 'Shaded Area under sin(x)'

@@ -94,7 +94,7 @@ fn main() {
 			size:  []f64{len: x1_class0.len, init: 8.0}
 			color: []string{len: x1_class0.len, init: 'blue'}
 		}
-		name: 'Class 0'
+		name:   'Class 0'
 	)
 	plt_3d.scatter3d(
 		x:      x1_class1
@@ -105,7 +105,7 @@ fn main() {
 			size:  []f64{len: x1_class1.len, init: 8.0}
 			color: []string{len: x1_class1.len, init: 'red'}
 		}
-		name: 'Class 1'
+		name:   'Class 1'
 	)
 
 	// Configure the layout of the 3D plot

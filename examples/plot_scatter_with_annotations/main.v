@@ -29,7 +29,7 @@ fn main() {
 			size:  []f64{len: x.len, init: 10.0}
 			color: []string{len: x.len, init: '#FF0000'}
 		}
-		line: plot.Line{
+		line:   plot.Line{
 			color: '#FF0000'
 		}
 	)

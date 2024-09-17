@@ -16,7 +16,7 @@ fn main() {
 			size:  size
 			color: []string{len: x.len * y.len, init: '#FF0000'}
 		}
-		name: 'Bubble Chart'
+		name:   'Bubble Chart'
 	)
 	plt.layout(
 		title: 'Bubble Chart'

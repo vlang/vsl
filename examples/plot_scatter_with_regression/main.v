@@ -15,7 +15,7 @@ fn main() {
 			size:  []f64{len: x.len, init: 10.0}
 			color: []string{len: x.len, init: '#00FF00'}
 		}
-		name: 'Data Points'
+		name:   'Data Points'
 	)
 	plt.scatter(
 		x:    x

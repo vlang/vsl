@@ -223,8 +223,8 @@ pub fn LogIter.new(params LogIterParams) !LogIter {
 			len:      params.len
 			endpoint: params.endpoint
 		)!
-		base: params.base
-		len:  params.len
+		base:        params.base
+		len:         params.len
 	}
 }
 
