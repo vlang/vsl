@@ -70,3 +70,23 @@ fn test_vector_largest() {
 	l := 2.0
 	assert float64.close(vector_largest(a, 2), l)
 }
+
+fn test_vector_cosine_similarity() {
+	a := [1.0, 2.0, 3.0]
+	b := [4.0, 5.0, 6.0]
+	c := [1.0, 0.0, 0.0]
+	d := [0.0, 1.0, 0.0]
+
+	// Cosine similarity of a and b (should be close to 0.974631846)
+	assert float64.tolerance(vector_cosine_similarity(a, b), 0.974631846, 1e-8)
+
+	// Cosine similarity of a with itself (should be exactly 1)
+	assert float64.close(vector_cosine_similarity(a, a), 1.0)
+
+	// Cosine similarity of perpendicular vectors (should be 0)
+	assert float64.close(vector_cosine_similarity(c, d), 0.0)
+
+	// Cosine similarity of a zero vector with another vector (should be 0)
+	zero_vector := [0.0, 0.0, 0.0]
+	assert float64.close(vector_cosine_similarity(zero_vector, a), 0.0)
+}
