@@ -32,7 +32,7 @@ jobs:
 
     steps:
       - name: Checkout VSL
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           path: vsl
 
@@ -84,7 +84,7 @@ jobs:
 
     steps:
       - name: Checkout VSL
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           path: vsl
 
