@@ -1,7 +1,5 @@
 module prime
 
-import math
-
 fn test_is_prime() {
 	// true
 	assert is_prime(2)

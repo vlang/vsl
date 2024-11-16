@@ -1,7 +1,5 @@
 module poly
 
-import math
-
 fn test_eval() {
 	// ans = 2
 	// ans = 4.0 + 4 * 2 = 12

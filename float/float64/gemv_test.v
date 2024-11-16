@@ -563,9 +563,9 @@ fn dgemvcomp(mut test DgemvCase, trans bool, case DgemvSubcase) {
 
 		xg, yg = guard_inc_vector(test_x, x_gd_val, inc.x, gd_ln), guard_inc_vector(test_y,
 			y_gd_val, inc.y, gd_ln)
-		x, y = xg[gd_ln..xg.len - gd_ln], yg[gd_ln..yg.len - gd_ln]
+		x, y = xg[gd_ln..xg.len - gd_ln].clone(), yg[gd_ln..yg.len - gd_ln].clone()
 		ag = guard_vector(test.a, a_gd_val, gd_ln)
-		a = ag[gd_ln..ag.len - gd_ln]
+		a = ag[gd_ln..ag.len - gd_ln].clone()
 
 		if trans {
 			gemv_t(u32(test.m), u32(test.n), case.alpha, a, lda, x, u32(inc.x), case.beta, mut
