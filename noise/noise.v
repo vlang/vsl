@@ -14,7 +14,6 @@ pub fn Generator.new() Generator {
 }
 
 // randomize is a function that shuffle the permutation set inside the Generator struct
-// will not shuffle if rand.seed is not changed
-pub fn (mut generator Generator) randomize() {
-	generator.perm = rand.shuffle_clone(permutations) or { panic(err) }
+pub fn (mut gen Generator) randomize() {
+	gen.perm = rand.shuffle_clone(permutations) or { panic(err) }
 }
