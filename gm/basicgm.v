@@ -163,3 +163,36 @@ pub fn is_point_in_line(p &Point, a &Point, b &Point, zero f64, told f64, tolin 
 	}
 	return false
 }
+
+// pythagorean_theorem calculates the length of the hypotenuse given the lengths of the other two sides
+pub fn pythagorean_theorem(a f64, b f64) f64 {
+	return math.sqrt(a * a + b * b)
+}
+
+// euclidean_theorem calculates the lengths of segments created by the altitude to the hypotenuse
+pub fn euclidean_theorem(a f64, b f64, c f64) (f64, f64) {
+	h := (a * b) / c
+	p := (h * h) / a
+	q := (h * h) / b
+	return p, q
+}
+
+// triangle_area_sine calculates the area of a triangle given two sides and the angle between them
+pub fn triangle_area_sine(a f64, b f64, angle_rad f64) f64 {
+	return 0.5 * a * b * math.sin(angle_rad)
+}
+
+// triangle_missing_side calculates the length of the missing side of a triangle
+// given two sides and the angle between them
+pub fn triangle_missing_side(a f64, b f64, angle_rad f64) f64 {
+	return math.sqrt(a * a + b * b - 2 * a * b * math.cos(angle_rad))
+}
+
+// triangle_area_from_points calculates the area of a triangle given its three vertices
+pub fn triangle_area_from_points(p1 &Point, p2 &Point, p3 &Point) f64 {
+	a := dist_point_point(p1, p2)
+	b := dist_point_point(p2, p3)
+	c := dist_point_point(p3, p1)
+	s := (a + b + c) / 2 // semi-perimeter
+	return math.sqrt(s * (s - a) * (s - b) * (s - c))
+}
