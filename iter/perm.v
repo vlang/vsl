@@ -3,7 +3,7 @@ module iter
 import vsl.util
 import math
 
-pub struct PermutationsIter {
+pub struct PermutationsIter[T] {
 mut:
 	pos    u64
 	idxs   []int
@@ -11,15 +11,15 @@ mut:
 pub:
 	repeat int
 	size   u64
-	data   []f64
+	data   []T
 }
 
 // PermutationsIter.new will return an iterator that allows
 // lazy computation for all length `r` permutations of `data`
-pub fn PermutationsIter.new(data []f64, r int) PermutationsIter {
+pub fn PermutationsIter.new[T](data []T, r int) PermutationsIter[T] {
 	n := data.len
 	if r > n {
-		return PermutationsIter{
+		return PermutationsIter[T]{
 			data:   data
 			repeat: r
 		}
@@ -27,7 +27,7 @@ pub fn PermutationsIter.new(data []f64, r int) PermutationsIter {
 	size := u64(math.factorial(n) / math.factorial(n - r))
 	idxs := util.arange(n)
 	cycles := util.range(n, n - r, step: -1)
-	return PermutationsIter{
+	return PermutationsIter[T]{
 		data:   data
 		repeat: r
 		size:   size
@@ -37,7 +37,7 @@ pub fn PermutationsIter.new(data []f64, r int) PermutationsIter {
 }
 
 // next will return next permutation if possible
-pub fn (mut o PermutationsIter) next() ?[]f64 {
+pub fn (mut o PermutationsIter[T]) next[T]() ?[]T {
 	// base case for every iterator
 	if o.pos == o.size {
 		return none
@@ -69,9 +69,9 @@ pub fn (mut o PermutationsIter) next() ?[]f64 {
 }
 
 // permutations returns successive `r` length permutations of elements in `data`
-pub fn permutations(data []f64, r int) [][]f64 {
-	mut perms := PermutationsIter.new(data, r)
-	mut result := [][]f64{cap: int(perms.size)}
+pub fn permutations[T](data []T, r int) [][]T {
+	mut perms := PermutationsIter.new[T](data, r)
+	mut result := [][]T{cap: int(perms.size)}
 	for perm in perms {
 		result << perm
 	}
