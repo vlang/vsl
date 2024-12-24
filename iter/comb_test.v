@@ -44,14 +44,14 @@ fn test_combinations_longer() {
 	assert expected == result
 }
 
-fn test_combinations_with_genric_type_string() {
+fn test_combinations_with_generic_type_string() {
 	data := ['a', 'b', 'c']
 	expected := [['a', 'b'], ['a', 'c'], ['b', 'c']]
 	result := combinations(data, 2)
 	assert expected == result
 }
 
-fn test_combinations_with_genric_type_int() {
+fn test_combinations_with_generic_type_int() {
 	data := [1, 2, 3]
 	expected := [[1, 2], [1, 3], [2, 3]]
 	result := combinations(data, 2)
