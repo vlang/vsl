@@ -64,7 +64,22 @@ fn test_permutations_simple_5() {
 	assert assert_permutation(expected, result)
 }
 
-fn assert_permutation(a [][]f64, b [][]f64) bool {
+fn test_permutations_generic_type_string() {
+	data := ['a', 'b', 'c']
+	expected := [['a', 'b'], ['a', 'c'], ['b', 'a'], ['b', 'c'],
+		['c', 'a'], ['c', 'b']]
+	result := permutations(data, 2)
+	assert assert_permutation(expected, result)
+}
+
+fn test_permutations_generic_type_int() {
+	data := [1, 2, 3]
+	expected := [[1, 2], [1, 3], [2, 1], [2, 3], [3, 1], [3, 2]]
+	result := permutations(data, 2)
+	assert assert_permutation(expected, result)
+}
+
+fn assert_permutation[T](a [][]T, b [][]T) bool {
 	if a.len != b.len {
 		return false
 	}

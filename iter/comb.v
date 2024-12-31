@@ -4,40 +4,38 @@ import vsl.fun
 import vsl.util
 
 // combinations will return an array of all length `r` combinations of `data`
-// While waiting on https://github.com/vlang/v/issues/7753 to be fixed, the function
-// assumes f64 array input. Will be easy to change to generic later
-pub fn combinations(data []f64, r int) [][]f64 {
+pub fn combinations[T](data []T, r int) [][]T {
 	mut combinations := CombinationsIter.new(data, r)
-	mut result := [][]f64{cap: int(combinations.size)}
+	mut result := [][]T{cap: int(combinations.size)}
 	for comb in combinations {
 		result << comb
 	}
 	return result
 }
 
-pub struct CombinationsIter {
+pub struct CombinationsIter[T] {
 mut:
 	pos  u64
 	idxs []int
 pub:
 	repeat int
 	size   u64
-	data   []f64
+	data   []T
 }
 
 // CombinationsIter.new will return an iterator that allows
 // lazy computation for all length `r` combinations of `data`
-pub fn CombinationsIter.new(data []f64, r int) CombinationsIter {
+pub fn CombinationsIter.new[T](data []T, r int) CombinationsIter[T] {
 	n := data.len
 	if r > n {
-		return CombinationsIter{
+		return CombinationsIter[T]{
 			data:   data
 			repeat: r
 		}
 	}
 	size := u64(fun.choose(n, r))
 	idxs := util.arange(r)
-	return CombinationsIter{
+	return CombinationsIter[T]{
 		data:   data
 		repeat: r
 		size:   size
@@ -46,7 +44,7 @@ pub fn CombinationsIter.new(data []f64, r int) CombinationsIter {
 }
 
 // next will return next combination if possible
-pub fn (mut o CombinationsIter) next() ?[]f64 {
+pub fn (mut o CombinationsIter[T]) next() ?[]T {
 	// base case for every iterator
 	if o.pos == o.size {
 		return none
@@ -82,39 +80,38 @@ pub fn (mut o CombinationsIter) next() ?[]f64 {
 // This is as close a translation of python's [itertools.combinations_with_replacement]
 // (https://docs.python.org/3.9/library/itertools.html#itertools.combinations_with_replacement)
 // as I could manage.
-// Using f64 array instead of generic while waiting on https://github.com/vlang/v/issues/7753
-pub fn combinations_with_replacement(data []f64, r int) [][]f64 {
+pub fn combinations_with_replacement[T](data []T, r int) [][]T {
 	mut combinations := CombinationsWithReplacementIter.new(data, r)
-	mut result := [][]f64{cap: int(combinations.size)}
+	mut result := [][]T{cap: int(combinations.size)}
 	for comb in combinations {
 		result << comb
 	}
 	return result
 }
 
-pub struct CombinationsWithReplacementIter {
+pub struct CombinationsWithReplacementIter[T] {
 mut:
 	pos  u64
 	idxs []int
 pub:
 	repeat int
 	size   u64
-	data   []f64
+	data   []T
 }
 
 // CombinationsWithReplacementIter.new will return an iterator that allows
 // lazy computation for all length `r` combinations with replacement of `data`
-pub fn CombinationsWithReplacementIter.new(data []f64, r int) CombinationsWithReplacementIter {
+pub fn CombinationsWithReplacementIter.new[T](data []T, r int) CombinationsWithReplacementIter[T] {
 	n := data.len
 	if r > n {
-		return CombinationsWithReplacementIter{
+		return CombinationsWithReplacementIter[T]{
 			data:   data
 			repeat: r
 		}
 	}
 	size := fun.n_combos_w_replacement(n, r)
 	idxs := []int{len: r, init: 0}
-	return CombinationsWithReplacementIter{
+	return CombinationsWithReplacementIter[T]{
 		data:   data
 		repeat: r
 		size:   size
@@ -123,7 +120,7 @@ pub fn CombinationsWithReplacementIter.new(data []f64, r int) CombinationsWithRe
 }
 
 // next will return next combination if possible
-pub fn (mut o CombinationsWithReplacementIter) next() ?[]f64 {
+pub fn (mut o CombinationsWithReplacementIter[T]) next[T]() ?[]T {
 	// base case for every iterator
 	if o.pos == o.size {
 		return none
