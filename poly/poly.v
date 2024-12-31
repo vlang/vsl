@@ -15,9 +15,11 @@ pub fn eval(c []f64, x f64) f64 {
 		errors.vsl_panic('coeficients can not be empty', .efailed)
 	}
 	len := c.len
-	mut ans := c[len - 1]
-	for e in c[..len - 1] {
-		ans = e + x * ans
+	mut ans := 0.0
+	mut i := len - 1
+	for i >= 0 {
+		ans = c[i] + x * ans
+		i--
 	}
 	return ans
 }
@@ -144,13 +146,13 @@ fn sorted_3_(x_ f64, y_ f64, z_ f64) (f64, f64, f64) {
 	mut y := y_
 	mut z := z_
 	if x > y {
-		y, x = swap_(x, y)
+		x, y = swap_(x, y)
+	}
+	if x > z {
+		x, z = swap_(x, z)
 	}
 	if y > z {
-		z, y = swap_(y, z)
-	}
-	if x > y {
-		y, x = swap_(x, y)
+		y, z = swap_(y, z)
 	}
 	return x, y, z
 }
@@ -288,25 +290,34 @@ pub fn multiply(a []f64, b []f64) []f64 {
 // Output: (q, r) where q is the quotient and r is the remainder
 // such that a(x) = b(x) * q(x) + r(x) and degree(r) < degree(b)
 pub fn divide(a []f64, b []f64) ([]f64, []f64) {
-	mut quotient := []f64{}
+	if b.len == 0 {
+		panic('divisor cannot be an empty polynomial')
+	}
+	if a.len == 0 {
+		return []f64{len: 0}, []f64{len: 0}
+	}
+
+	mut quotient := []f64{len: a.len - b.len + 1, init: 0.0}
 	mut remainder := a.clone()
-	b_lead_coef := b[0]
+
+	b_degree := b.len - 1
+	b_lead_coeff := b[b_degree]
 
 	for remainder.len >= b.len {
-		lead_coef := remainder[0] / b_lead_coef
-		quotient << lead_coef
+		remainder_degree := remainder.len - 1
+		lead_coeff := remainder[remainder_degree]
+
+		quotient_term := lead_coeff / b_lead_coeff
+		quotient_idx := remainder_degree - b_degree
+		quotient[quotient_idx] = quotient_term
+
 		for i in 0 .. b.len {
-			remainder[i] -= lead_coef * b[i]
+			remainder[quotient_idx + i] -= quotient_term * b[i]
 		}
-		remainder = unsafe { remainder[1..] }
-		for remainder.len > 0 && math.abs(remainder[0]) < 1e-10 {
-			remainder = unsafe { remainder[1..] }
+
+		for remainder.len > 0 && remainder[remainder.len - 1] == 0.0 {
+			remainder = remainder[0..remainder.len - 1].clone()
 		}
 	}
-
-	if remainder.len == 0 {
-		remainder = []f64{}
-	}
-
 	return quotient, remainder
 }
