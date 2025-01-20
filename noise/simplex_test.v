@@ -1,14 +1,6 @@
 module noise
 
-import rand
 import vsl.float.float64
-
-fn setup_generator() !Generator {
-	rand.seed([u32(3155200429), u32(3208395956)])
-	mut gen := Generator.new()
-	gen.randomize()
-	return gen
-}
 
 fn test_simplex_1d() {
 	gen := setup_generator()!
