@@ -49,5 +49,23 @@ fn test_divide() {
 	println('Divide quotient: ${quotient}')
 	println('Divide remainder: ${remainder}')
 	assert quotient == [1.0, 1.0]
-	assert remainder == [] // The empty set indicates that two polynomials divide each other exactly (without remainder).
+	assert remainder == [] // The empty set indicates that the two polynomials divide each other exactly (without remainder).
+}
+
+fn test_degree() {
+	assert degree([4.0, 5.0, 2.0]) == 2 // Degree should be 2
+	assert degree([1.0]) == 0 // Degree should be 0 for a single coefficient polynomial
+	assert degree([]) == -1 // Degree should be -1 for an empty coefficient array
+}
+
+fn test_sum_odd_coeffs() {
+	assert sum_odd_coeffs([4.0, 5.0, 2.0]) == 5.0 // 5 is at an odd index
+	assert sum_odd_coeffs([7.0, 456.0, 21.0, 87.0]) == 543.0 // 456 and 87 are at odd indices
+	assert sum_odd_coeffs([]) == 0.0 // The sum should be 0 for an empty coefficient array
+}
+
+fn test_sum_even_coeffs() {
+	assert sum_even_coeffs([4.0, 5.0, 2.0]) == 6.0 // 4.0 and 2 are at even indices
+	assert sum_even_coeffs([7.0, 456.0, 21.0, 87.0]) == 28.0 // 7 and 21 are at even indices
+	assert sum_even_coeffs([]) == 0 // The sum should be 0 for an empty coefficient array
 }
