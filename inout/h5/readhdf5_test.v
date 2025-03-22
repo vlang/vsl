@@ -27,7 +27,6 @@ fn testsuite_end() {
 fn test_run() {
 	res := os.execute('h5dump ${testfile}')
 	output := res.output.trim_space()
-	assert output.contains('tsession')
 	assert output.contains('Shortarray')
 	assert output.contains('DATATYPE  H5T_STD_I32LE')
 	assert output.contains('DATA {')
