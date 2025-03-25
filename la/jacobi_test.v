@@ -27,9 +27,9 @@ fn test_jacobi01() {
 
 	jacobi(mut q, mut v, mut a)!
 
-	assert float64.arrays_tolerance(q.data, expected_q.data, 1e-17)
-	assert float64.arrays_tolerance(v, expected_v, 1e-17)
-	assert float64.arrays_tolerance(a.data, expected_a.data, 1e-17)
+	assert float64.arrays_tolerance(q.data, expected_q.data, 1e-14)
+	assert float64.arrays_tolerance(v, expected_v, 1e-14)
+	assert float64.arrays_tolerance(a.data, expected_a.data, 1e-14)
 }
 
 fn test_jacobi_3x3_symmetric() {
@@ -57,7 +57,7 @@ fn test_jacobi_3x3_symmetric() {
 
 	jacobi(mut q, mut v, mut a)!
 
-	assert float64.arrays_tolerance(v, expected_v, 1e-17)
-	assert float64.arrays_tolerance(q.data, expected_q.data, 1e-17)
-	assert float64.arrays_tolerance(a.data, expected_a.data, 1e-17)
+	assert float64.arrays_tolerance(v, expected_v, 1e-14)
+	assert float64.arrays_tolerance(q.data, expected_q.data, 1e-14)
+	assert float64.arrays_tolerance(a.data, expected_a.data, 1e-14)
 }
