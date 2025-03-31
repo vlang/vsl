@@ -51,9 +51,9 @@ fn perlin_grad_3d(hash int, x f64, y f64, z f64) f64 {
 		0xA { return y - z }
 		0xB { return -y - z }
 		0xC { return y + x }
-		0xD { return -y + z }
+		0xD { return -y + x }
 		0xE { return y - x }
-		0xF { return -y - z }
+		0xF { return -y - x }
 		else { return 0 }
 	}
 }
