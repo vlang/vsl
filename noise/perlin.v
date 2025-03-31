@@ -14,47 +14,47 @@ fn fade(t f64) f64 {
 
 // perlin_grad_2d is a function that return a gradient value for a given hash and 2d position
 fn perlin_grad_2d(hash int, x f64, y f64) f64 {
-	match hash & 0xF {
-		0x0 { return x + y }
-		0x1 { return -x + y }
-		0x2 { return x - y }
-		0x3 { return -x - y }
-		0x4 { return x }
-		0x5 { return -x }
-		0x6 { return x }
-		0x7 { return -x }
-		0x8 { return y }
-		0x9 { return -y }
-		0xA { return y }
-		0xB { return -y }
-		0xC { return y + x }
-		0xD { return -y }
-		0xE { return y - x }
-		0xF { return -y }
-		else { return 0 }
+	return match hash & 0xF {
+		0x0 { x + y }
+		0x1 { -x + y }
+		0x2 { x - y }
+		0x3 { -x - y }
+		0x4 { x }
+		0x5 { -x }
+		0x6 { x }
+		0x7 { -x }
+		0x8 { y }
+		0x9 { -y }
+		0xA { y }
+		0xB { -y }
+		0xC { y + x }
+		0xD { -y }
+		0xE { y - x }
+		0xF { -y }
+		else { 0 }
 	}
 }
 
 // perlin_grad_3d is a function that returns a single value of gradient gen for a given 3d position
 fn perlin_grad_3d(hash int, x f64, y f64, z f64) f64 {
-	match hash & 0xF {
-		0x0 { return x + y }
-		0x1 { return -x + y }
-		0x2 { return x - y }
-		0x3 { return -x - y }
-		0x4 { return x + z }
-		0x5 { return -x + z }
-		0x6 { return x - z }
-		0x7 { return -x - z }
-		0x8 { return y + z }
-		0x9 { return -y + z }
-		0xA { return y - z }
-		0xB { return -y - z }
-		0xC { return y + x }
-		0xD { return -y + x }
-		0xE { return y - x }
-		0xF { return -y - x }
-		else { return 0 }
+	return match hash & 0xF {
+		0x0 { x + y }
+		0x1 { -x + y }
+		0x2 { x - y }
+		0x3 { -x - y }
+		0x4 { x + z }
+		0x5 { -x + z }
+		0x6 { x - z }
+		0x7 { -x - z }
+		0x8 { y + z }
+		0x9 { -y + z }
+		0xA { y - z }
+		0xB { -y - z }
+		0xC { y + x }
+		0xD { -y + x }
+		0xE { y - x }
+		0xF { -y - x }
+		else { 0 }
 	}
 }
 
