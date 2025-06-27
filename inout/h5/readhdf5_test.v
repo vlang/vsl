@@ -10,7 +10,7 @@ const shortarray = []i32{len: 2}
 
 fn testsuite_begin() {
 	os.rmdir_all(testfolder) or {}
-	os.mkdir_all(testfolder)!
+	os.mkdir_all(testfolder) or {}
 
 	assert os.exists_in_system_path(h5dump)
 
