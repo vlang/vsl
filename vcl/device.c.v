@@ -129,7 +129,7 @@ pub fn (mut d Device) add_program(source string) ! {
 	if ret != success {
 		return vcl_error(ret)
 	}
-	ret = cl_build_program(p, 1, &d.id, &char(0), unsafe { nil }, unsafe { nil })
+	ret = cl_build_program(p, 1, &d.id, unsafe{ &char(0) }, unsafe { nil }, unsafe { nil })
 	if ret != success {
 		if ret == build_program_failure {
 			mut n := usize(0)
