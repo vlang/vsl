@@ -228,7 +228,7 @@ v2 := [4.0, 5.0, 6.0]
 
 dot_product := gm.vector_dot(v1, v2)
 norm := gm.vector_norm(v1)
-result := gm.vector_add(2.0, v1, -1.0, v2)  // 2*v1 - v2
+result := gm.vector_add(2.0, v1, -1.0, v2) // 2*v1 - v2
 ```
 
 ## 🔗 Related VSL Modules

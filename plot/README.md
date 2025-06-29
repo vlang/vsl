@@ -32,7 +32,7 @@ import vsl.util
 
 // Generate data
 x := util.arange(10).map(f64(it))
-y := x.map(it * it)  // y = x²
+y := x.map(it * it) // y = x²
 
 // Create plot
 mut plt := plot.Plot.new()
@@ -61,9 +61,7 @@ plt.show()!
 import vsl.plot
 
 // 2D data matrix
-z := [[1.0, 20.0, 30.0],
-      [20.0, 1.0, 60.0],
-      [30.0, 60.0, 1.0]]
+z := [[1.0, 20.0, 30.0], [20.0, 1.0, 60.0], [30.0, 60.0, 1.0]]
 
 mut plt := plot.Plot.new()
 plt.heatmap(z: z)
@@ -80,20 +78,24 @@ plt.show()!
 **Markers**: Control size, color, symbol, and opacity
 
 ```v
-marker: plot.Marker{
-    size: []f64{len: data.len, init: 12.0}
-    color: ['#FF0000', '#00FF00', '#0000FF']
-    symbol: 'circle'  // Options: circle, square, diamond, triangle, etc.
+marker:
+plot.Marker
+{
+	size:   []f64{len: data.len, init: 12.0}
+	color:  ['#FF0000', '#00FF00', '#0000FF']
+	symbol: 'circle' // Options: circle, square, diamond, triangle, etc.
 }
 ```
 
 **Lines**: Customize thickness, style, and color
 
 ```v
-line: plot.Line{
-    color: '#FF0000'
-    width: 3.0
-    dash: 'solid'  // Options: solid, dash, dot, dashdot
+line:
+plot.Line
+{
+	color: '#FF0000'
+	width: 3.0
+	dash:  'solid' // Options: solid, dash, dot, dashdot
 }
 ```
 
@@ -143,23 +145,26 @@ plt.layout(
 ### Text Styling
 
 ```v
-font: plot.Font{
-    family: 'Arial, sans-serif'
-    size: 16
-    color: '#333333'
+font:
+plot.Font
+{
+	family: 'Arial, sans-serif'
+	size:   16
+	color:  '#333333'
 }
 ```
 
 ### Arrow Customization
 
 ```v
-annotation := plot.Annotation{
-    text: 'Point with Arrow'
-    x: 5.0
-    y: 10.0
-    showarrow: true
-    arrowhead: 2           // Arrow style (0-8)
-    arrowcolor: '#FF0000'  // Red arrow color
+annotation := plot.Annotation
+{
+	text:       'Point with Arrow'
+	x:          5.0
+	y:          10.0
+	showarrow:  true
+	arrowhead:  2 // Arrow style (0-8)
+	arrowcolor: '#FF0000' // Red arrow color
 }
 ```
 
