@@ -175,7 +175,110 @@
 					<div class="doc-content">
 								<section id="readme_plot" class="doc-node">
 			<div class="title"><h1> plot <a href="#readme_plot">#</a></h1></div>
-<h1>VSL Plot</h1><p>This library implements high-level functions to generate plots and drawings.</p><p><code>vsl.plot</code> follows the structure of <a href="https://plotly.com/python/graph-objects/">Plotly's graph_objects</a>. Check the examples folder and compare it to Plotly's Python examples for a better understanding.</p><h2>Supported Graph Types</h2><ul><li>Bar</li><li>Heatmap</li><li>Histogram</li><li>Pie</li><li>Scatter</li><li>Scatter 3D</li><li>Surface</li></ul>
+<h1>VSL Plot Module 📊</h1><p>This library implements high-level plotting functions for scientific data visualization using a Plotly-inspired API. Create interactive, publication-quality plots with minimal code while maintaining full customization control.</p><h2>🚀 Features</h2><h3>Plot Types</h3><ul><li><strong>Scatter Plots</strong>: Points, lines, or combined with extensive marker customization</li><li><strong>Bar Charts</strong>: Vertical and horizontal bars with grouping support</li><li><strong>Heatmaps</strong>: 2D data visualization with color mapping</li><li><strong>Histograms</strong>: Distribution visualization with binning control</li><li><strong>Pie Charts</strong>: Proportion visualization with labels and annotations</li><li><strong>3D Scatter</strong>: Three-dimensional data visualization</li><li><strong>Surface Plots</strong>: 3D surface rendering for mathematical functions</li></ul><h3>Interactive Features</h3><ul><li><strong>Zoom &amp; Pan</strong>: Mouse-driven plot navigation</li><li><strong>Hover Information</strong>: Dynamic data point details</li><li><strong>Legend Control</strong>: Show/hide data series</li><li><strong>Export Options</strong>: Save as PNG, SVG, or HTML</li><li><strong>Responsive Design</strong>: Automatic layout adjustment</li></ul><h2>📖 Quick Start</h2><h3>Basic Scatter Plot</h3><pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>plot
+<span class="token keyword">import</span> vsl<span class="token punctuation">.</span>util
+
+<span class="token comment">// Generate data</span>
+x <span class="token operator">:=</span> util<span class="token punctuation">.</span><span class="token function">arange</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token builtin">map</span><span class="token punctuation">(</span><span class="token builtin">f64</span><span class="token punctuation">(</span>it<span class="token punctuation">)</span><span class="token punctuation">)</span>
+y <span class="token operator">:=</span> x<span class="token punctuation">.</span><span class="token builtin">map</span><span class="token punctuation">(</span>it <span class="token operator">*</span> it<span class="token punctuation">)</span>  <span class="token comment">// y = x²</span>
+
+<span class="token comment">// Create plot</span>
+<span class="token keyword">mut</span> plt <span class="token operator">:=</span> plot<span class="token punctuation">.</span>Plot<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+plt<span class="token punctuation">.</span><span class="token function">scatter</span><span class="token punctuation">(</span>x<span class="token punctuation">:</span> x<span class="token punctuation">,</span> y<span class="token punctuation">:</span> y<span class="token punctuation">,</span> mode<span class="token punctuation">:</span> <span class="token string">'lines+markers'</span><span class="token punctuation">)</span>
+plt<span class="token punctuation">.</span><span class="token function">layout</span><span class="token punctuation">(</span>title<span class="token punctuation">:</span> <span class="token string">'Quadratic Function'</span><span class="token punctuation">)</span>
+plt<span class="token punctuation">.</span><span class="token function">show</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">!</span></code></pre><h3>Bar Chart</h3><pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>plot
+
+categories <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token string">'A'</span><span class="token punctuation">,</span> <span class="token string">'B'</span><span class="token punctuation">,</span> <span class="token string">'C'</span><span class="token punctuation">,</span> <span class="token string">'D'</span><span class="token punctuation">]</span>
+values <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token number">23.0</span><span class="token punctuation">,</span> <span class="token number">45.0</span><span class="token punctuation">,</span> <span class="token number">56.0</span><span class="token punctuation">,</span> <span class="token number">78.0</span><span class="token punctuation">]</span>
+
+<span class="token keyword">mut</span> plt <span class="token operator">:=</span> plot<span class="token punctuation">.</span>Plot<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+plt<span class="token punctuation">.</span><span class="token function">bar</span><span class="token punctuation">(</span>x<span class="token punctuation">:</span> categories<span class="token punctuation">,</span> y<span class="token punctuation">:</span> values<span class="token punctuation">)</span>
+plt<span class="token punctuation">.</span><span class="token function">layout</span><span class="token punctuation">(</span>title<span class="token punctuation">:</span> <span class="token string">'Category Comparison'</span><span class="token punctuation">)</span>
+plt<span class="token punctuation">.</span><span class="token function">show</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">!</span></code></pre><h3>Heatmap</h3><pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>plot
+
+<span class="token comment">// 2D data matrix</span>
+z <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">20.0</span><span class="token punctuation">,</span> <span class="token number">30.0</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+      <span class="token punctuation">[</span><span class="token number">20.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">60.0</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+      <span class="token punctuation">[</span><span class="token number">30.0</span><span class="token punctuation">,</span> <span class="token number">60.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
+
+<span class="token keyword">mut</span> plt <span class="token operator">:=</span> plot<span class="token punctuation">.</span>Plot<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+plt<span class="token punctuation">.</span><span class="token function">heatmap</span><span class="token punctuation">(</span>z<span class="token punctuation">:</span> z<span class="token punctuation">)</span>
+plt<span class="token punctuation">.</span><span class="token function">layout</span><span class="token punctuation">(</span>title<span class="token punctuation">:</span> <span class="token string">'Correlation Matrix'</span><span class="token punctuation">)</span>
+plt<span class="token punctuation">.</span><span class="token function">show</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">!</span></code></pre><h2>🎨 Customization Guide</h2><h3>Styling Options</h3><p><strong>Colors</strong>: Use hex codes (<code>#FF0000</code>), RGB (<code>rgb(255,0,0)</code>), or named colors (<code>red</code>)</p><p><strong>Markers</strong>: Control size, color, symbol, and opacity</p><pre><code class="language-v">marker<span class="token punctuation">:</span> plot<span class="token punctuation">.</span><span class="token symbol">Marker</span><span class="token punctuation">{</span>
+    size<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">{</span>len<span class="token punctuation">:</span> data<span class="token punctuation">.</span>len<span class="token punctuation">,</span> init<span class="token punctuation">:</span> <span class="token number">12.0</span><span class="token punctuation">}</span>
+    color<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'#FF0000'</span><span class="token punctuation">,</span> <span class="token string">'#00FF00'</span><span class="token punctuation">,</span> <span class="token string">'#0000FF'</span><span class="token punctuation">]</span>
+    symbol<span class="token punctuation">:</span> <span class="token string">'circle'</span>  <span class="token comment">// Options: circle, square, diamond, triangle, etc.</span>
+<span class="token punctuation">}</span></code></pre><p><strong>Lines</strong>: Customize thickness, style, and color</p><pre><code class="language-v">line<span class="token punctuation">:</span> plot<span class="token punctuation">.</span><span class="token symbol">Line</span><span class="token punctuation">{</span>
+    color<span class="token punctuation">:</span> <span class="token string">'#FF0000'</span>
+    width<span class="token punctuation">:</span> <span class="token number">3.0</span>
+    dash<span class="token punctuation">:</span> <span class="token string">'solid'</span>  <span class="token comment">// Options: solid, dash, dot, dashdot</span>
+<span class="token punctuation">}</span></code></pre><h3>Layout Configuration</h3><pre><code class="language-v">plt<span class="token punctuation">.</span><span class="token function">layout</span><span class="token punctuation">(</span>
+    title<span class="token punctuation">:</span> <span class="token string">'My Plot Title'</span>
+    xaxis<span class="token punctuation">:</span> plot<span class="token punctuation">.</span><span class="token symbol">Axis</span><span class="token punctuation">{</span>
+        title<span class="token punctuation">:</span> plot<span class="token punctuation">.</span><span class="token symbol">AxisTitle</span><span class="token punctuation">{</span>text<span class="token punctuation">:</span> <span class="token string">'X-axis Label'</span><span class="token punctuation">}</span>
+        range<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">10.0</span><span class="token punctuation">]</span>  <span class="token comment">// Set axis range</span>
+    <span class="token punctuation">}</span>
+    yaxis<span class="token punctuation">:</span> plot<span class="token punctuation">.</span><span class="token symbol">Axis</span><span class="token punctuation">{</span>
+        title<span class="token punctuation">:</span> plot<span class="token punctuation">.</span><span class="token symbol">AxisTitle</span><span class="token punctuation">{</span>text<span class="token punctuation">:</span> <span class="token string">'Y-axis Label'</span><span class="token punctuation">}</span>
+        <span class="token keyword">type</span><span class="token punctuation">:</span> <span class="token string">'log'</span>  <span class="token comment">// Linear or logarithmic scale</span>
+    <span class="token punctuation">}</span>
+    width<span class="token punctuation">:</span> <span class="token number">800</span>
+    height<span class="token punctuation">:</span> <span class="token number">600</span>
+<span class="token punctuation">)</span></code></pre><h2>🔧 Annotations &amp; Text</h2><h3>Adding Annotations (Fixed Arrow Issue)</h3><p>The most important fix for annotation arrows:</p><pre><code class="language-v"><span class="token comment">// ✅ CORRECT: No unwanted arrows</span>
+annotation <span class="token operator">:=</span> plot<span class="token punctuation">.</span><span class="token symbol">Annotation</span><span class="token punctuation">{</span>
+    text<span class="token punctuation">:</span> <span class="token string">'Important Point'</span>
+    x<span class="token punctuation">:</span> <span class="token number">5.0</span>
+    y<span class="token punctuation">:</span> <span class="token number">25.0</span>
+    showarrow<span class="token punctuation">:</span> <span class="token boolean">false</span>  <span class="token comment">// This prevents unwanted arrows!</span>
+    font<span class="token punctuation">:</span> plot<span class="token punctuation">.</span><span class="token symbol">Font</span><span class="token punctuation">{</span>
+        size<span class="token punctuation">:</span> <span class="token number">14</span>
+        color<span class="token punctuation">:</span> <span class="token string">'#000000'</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+plt<span class="token punctuation">.</span><span class="token function">layout</span><span class="token punctuation">(</span>
+    title<span class="token punctuation">:</span> <span class="token string">'Plot with Clean Annotations'</span>
+    annotations<span class="token punctuation">:</span> <span class="token punctuation">[</span>annotation<span class="token punctuation">]</span>
+<span class="token punctuation">)</span></code></pre><h3>Text Styling</h3><pre><code class="language-v">font<span class="token punctuation">:</span> plot<span class="token punctuation">.</span><span class="token symbol">Font</span><span class="token punctuation">{</span>
+    family<span class="token punctuation">:</span> <span class="token string">'Arial, sans-serif'</span>
+    size<span class="token punctuation">:</span> <span class="token number">16</span>
+    color<span class="token punctuation">:</span> <span class="token string">'#333333'</span>
+<span class="token punctuation">}</span></code></pre><h3>Arrow Customization</h3><pre><code class="language-v">annotation <span class="token operator">:=</span> plot<span class="token punctuation">.</span><span class="token symbol">Annotation</span><span class="token punctuation">{</span>
+    text<span class="token punctuation">:</span> <span class="token string">'Point with Arrow'</span>
+    x<span class="token punctuation">:</span> <span class="token number">5.0</span>
+    y<span class="token punctuation">:</span> <span class="token number">10.0</span>
+    showarrow<span class="token punctuation">:</span> <span class="token boolean">true</span>
+    arrowhead<span class="token punctuation">:</span> <span class="token number">2</span>           <span class="token comment">// Arrow style (0-8)</span>
+    arrowcolor<span class="token punctuation">:</span> <span class="token string">'#FF0000'</span>  <span class="token comment">// Red arrow color</span>
+<span class="token punctuation">}</span></code></pre><h2>🐛 Common Issues &amp; Solutions</h2><h3>Annotation Arrows Appearing Unexpectedly</h3><p><strong>Problem</strong>: Unwanted arrows show up with annotations <strong>Solution</strong>: Always set <code>showarrow: false</code> unless arrows are specifically needed</p><pre><code class="language-v"><span class="token comment">// ❌ WRONG: May show unwanted arrows</span>
+annotation <span class="token operator">:=</span> plot<span class="token punctuation">.</span><span class="token symbol">Annotation</span><span class="token punctuation">{</span>
+    text<span class="token punctuation">:</span> <span class="token string">'My annotation'</span>
+    x<span class="token punctuation">:</span> <span class="token number">1.0</span>
+    y<span class="token punctuation">:</span> <span class="token number">2.0</span>
+    <span class="token comment">// Missing showarrow property</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// ✅ CORRECT: Clean text annotation</span>
+annotation <span class="token operator">:=</span> plot<span class="token punctuation">.</span><span class="token symbol">Annotation</span><span class="token punctuation">{</span>
+    text<span class="token punctuation">:</span> <span class="token string">'My annotation'</span>
+    x<span class="token punctuation">:</span> <span class="token number">1.0</span>
+    y<span class="token punctuation">:</span> <span class="token number">2.0</span>
+    showarrow<span class="token punctuation">:</span> <span class="token boolean">false</span>  <span class="token comment">// Explicitly prevent arrows</span>
+<span class="token punctuation">}</span></code></pre><h3>Plot Not Displaying</h3><p><strong>Common causes:</strong></p><ul><li>Missing <code>plt.show()!</code> call</li><li>Browser not opening HTML file</li><li>Invalid data format (ensure f64 for numeric data)</li></ul><h3>Performance Issues</h3><p><strong>Large datasets:</strong></p><ul><li>Consider data sampling for &gt;10,000 points</li><li>Use appropriate plot types (heatmap for dense 2D data)</li><li>Optimize marker sizes and line widths</li></ul><h2>📚 Advanced Examples</h2><h3>Multiple Data Series</h3><pre><code class="language-v"><span class="token keyword">mut</span> plt <span class="token operator">:=</span> plot<span class="token punctuation">.</span>Plot<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment">// First series</span>
+plt<span class="token punctuation">.</span><span class="token function">scatter</span><span class="token punctuation">(</span>
+    x<span class="token punctuation">:</span> x1<span class="token punctuation">,</span> y<span class="token punctuation">:</span> y1
+    name<span class="token punctuation">:</span> <span class="token string">'Dataset 1'</span>
+    marker<span class="token punctuation">:</span> plot<span class="token punctuation">.</span><span class="token symbol">Marker</span><span class="token punctuation">{</span>color<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'#FF0000'</span><span class="token punctuation">]</span><span class="token punctuation">}</span>
+<span class="token punctuation">)</span>
+
+<span class="token comment">// Second series</span>
+plt<span class="token punctuation">.</span><span class="token function">scatter</span><span class="token punctuation">(</span>
+    x<span class="token punctuation">:</span> x2<span class="token punctuation">,</span> y<span class="token punctuation">:</span> y2
+    name<span class="token punctuation">:</span> <span class="token string">'Dataset 2'</span>
+    marker<span class="token punctuation">:</span> plot<span class="token punctuation">.</span><span class="token symbol">Marker</span><span class="token punctuation">{</span>color<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'#0000FF'</span><span class="token punctuation">]</span><span class="token punctuation">}</span>
+<span class="token punctuation">)</span></code></pre><h3>Subplots (Coming Soon)</h3><p>The VSL plot module is actively developed. Subplot functionality is planned for future releases.</p><h2>🎯 Examples Directory</h2><p>Explore complete examples:</p><ul><li><code>plot_scatter</code> - Basic scatter plotting</li><li><code>plot_scatter_annotations_fixed</code> - Annotations without arrows</li><li><code>plot_bar</code> - Bar chart examples</li><li><code>plot_heatmap_golden_ratio</code> - Advanced heatmap styling</li><li><code>plot_surface</code> - 3D surface visualization</li></ul><h2>🔗 API Reference</h2><h3>Core Functions</h3><ul><li><code>Plot.new()</code> - Create new plot instance</li><li><code>plt.scatter()</code> - Add scatter/line traces</li><li><code>plt.bar()</code> - Add bar charts</li><li><code>plt.heatmap()</code> - Add heatmap visualization</li><li><code>plt.layout()</code> - Configure plot appearance</li><li><code>plt.show()</code> - Render and display plot</li></ul><h3>Data Types</h3><ul><li><code>Plot</code> - Main plotting object</li><li><code>Marker</code> - Point styling configuration</li><li><code>Line</code> - Line styling configuration</li><li><code>Axis</code> - Axis configuration</li><li><code>Annotation</code> - Text annotation settings</li></ul><hr /><p>Create beautiful, interactive visualizations with VSL Plot! 🚀</p><p>Based on <a href="https://plotly.com/python/graph-objects/">Plotly's graph_objects</a> API design.</p>
 
 </section>
 
@@ -611,7 +714,7 @@
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 29 Jun 2025 07:34:14</div>
+						<div class="footer">Powered by vdoc. Generated on: 29 Jun 2025 07:55:08</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_plot">README</a></li>
 <li class="open"><a href="#Plot.new">fn Plot.new</a>        <ul>
