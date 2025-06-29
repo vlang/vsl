@@ -80,11 +80,11 @@ fn generate_custom_html(traces_json string, layout_json string) string {
     <script>
         const traces = ${traces_json};
         const layout = ${layout_json};
-        
+
         // Transform traces to Plotly format
-        const data = traces.map(({ type, trace: { CommonTrace, _type, ...trace } }) => 
+        const data = traces.map(({ type, trace: { CommonTrace, _type, ...trace } }) =>
             ({ type, ...CommonTrace, ...trace }));
-        
+
         Plotly.newPlot("my-plot", data, layout);
     </script>
 </body>

@@ -129,20 +129,20 @@ fn generate_standalone_plot(traces_json string, layout_json string) string {
 <body>
     <div class="container">
         <h1>🚀 VSL Plot Export Example</h1>
-        
+
         <div class="info">
             <strong>🎯 Generated with VSL Plot JSON Export</strong><br>
-            This plot was created using V Scientific Library (VSL) and exported using the new JSON export methods 
+            This plot was created using V Scientific Library (VSL) and exported using the new JSON export methods
             that address <a href="https://github.com/vlang/vsl/issues/179" target="_blank">GitHub Issue #179</a>.
         </div>
-        
+
         <div id="plot-container"></div>
-        
+
         <script>
             // Raw data exported from VSL Plot
             const traces = ${traces_json};
             const layout = ${layout_json};
-            
+
             function removeEmptyFieldsDeeply(obj) {
                 if (Array.isArray(obj)) {
                     return obj.map(removeEmptyFieldsDeeply);
@@ -157,20 +157,20 @@ fn generate_standalone_plot(traces_json string, layout_json string) string {
                 }
                 return obj;
             }
-            
+
             // Transform VSL format to Plotly.js format
-            const data = traces.map(({ type, trace: { CommonTrace, _type, ...trace } }) => 
+            const data = traces.map(({ type, trace: { CommonTrace, _type, ...trace } }) =>
                 ({ type, ...CommonTrace, ...trace }));
-            
+
             // Clean up empty fields and render plot
             const payload = {
                 data: removeEmptyFieldsDeeply(data),
                 layout: removeEmptyFieldsDeeply(layout),
             };
-            
+
             // Create the interactive plot
             Plotly.newPlot("plot-container", payload);
-            
+
             console.log("📊 Plot rendered successfully!");
             console.log("🔧 Traces:", payload.data);
             console.log("📐 Layout:", payload.layout);
