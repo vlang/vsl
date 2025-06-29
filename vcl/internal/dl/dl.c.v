@@ -10,9 +10,9 @@ pub const dl_register_issue_code = loader.dl_register_issue_code
 
 fn get_or_create_dynamic_lib_loader() !&loader.DynamicLibLoader {
 	return loader.get_or_create_dynamic_lib_loader(
-		key: @MOD + '.' + 'LibOpenCL'
+		key:      @MOD + '.' + 'LibOpenCL'
 		env_path: 'VCL_LIBOPENCL_PATH'
-		paths: default_paths
+		paths:    default_paths
 	)
 }
 

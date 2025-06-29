@@ -53,7 +53,7 @@ pub struct Kernel {
 // global returns an kernel with global size set
 pub fn (k &Kernel) global(global_work_sizes ...int) KernelWithGlobal {
 	return KernelWithGlobal{
-		kernel: unsafe { k }
+		kernel:            unsafe { k }
 		global_work_sizes: global_work_sizes
 	}
 }
@@ -68,9 +68,9 @@ pub struct KernelWithGlobal {
 // local ets the local work sizes and returns an KernelCall which takes kernel arguments and runs the kernel
 pub fn (kg KernelWithGlobal) local(local_work_sizes ...int) KernelCall {
 	return KernelCall{
-		kernel: kg.kernel
+		kernel:            kg.kernel
 		global_work_sizes: kg.global_work_sizes
-		local_work_sizes: local_work_sizes
+		local_work_sizes:  local_work_sizes
 	}
 }
 
@@ -107,34 +107,37 @@ fn (k &Kernel) set_args(args ...ArgumentType) ! {
 fn (k &Kernel) set_arg(index int, arg ArgumentType) ! {
 	match arg {
 		u8 {
-			return k.set_arg_unsafe(index, int(sizeof(arg)), unsafe { &arg })
-		}
-		f32 {
-			return k.set_arg_unsafe(index, int(sizeof(arg)), unsafe { &arg })
-		}
-		f64 {
-			return k.set_arg_unsafe(index, int(sizeof(arg)), unsafe { &arg })
-		}
-		i16 {
-			return k.set_arg_unsafe(index, int(sizeof(arg)), unsafe { &arg })
-		}
-		i64 {
-			return k.set_arg_unsafe(index, int(sizeof(arg)), unsafe { &arg })
+			return k.set_arg_unsafe(index, int(sizeof(*arg)), *arg)
 		}
 		i8 {
-			return k.set_arg_unsafe(index, int(sizeof(arg)), unsafe { &arg })
-		}
-		int {
-			return k.set_arg_unsafe(index, int(sizeof(arg)), unsafe { &arg })
+			return k.set_arg_unsafe(index, int(sizeof(*arg)), *arg)
 		}
 		u16 {
-			return k.set_arg_unsafe(index, int(sizeof(arg)), unsafe { &arg })
+			return k.set_arg_unsafe(index, int(sizeof(*arg)), *arg)
+		}
+		i16 {
+			return k.set_arg_unsafe(index, int(sizeof(*arg)), *arg)
+		}
+		int {
+			return k.set_arg_unsafe(index, int(sizeof(*arg)), *arg)
 		}
 		u32 {
-			return k.set_arg_unsafe(index, int(sizeof(arg)), unsafe { &arg })
+			return k.set_arg_unsafe(index, int(sizeof(*arg)), *arg)
+		}
+		i32 {
+			return k.set_arg_unsafe(index, int(sizeof(*arg)), *arg)
 		}
 		u64 {
-			return k.set_arg_unsafe(index, int(sizeof(arg)), unsafe { &arg })
+			return k.set_arg_unsafe(index, int(sizeof(*arg)), *arg)
+		}
+		i64 {
+			return k.set_arg_unsafe(index, int(sizeof(*arg)), *arg)
+		}
+		f32 {
+			return k.set_arg_unsafe(index, int(sizeof(*arg)), *arg)
+		}
+		f64 {
+			return k.set_arg_unsafe(index, int(sizeof(*arg)), *arg)
 		}
 		Buffer {
 			return k.set_arg_buffer(index, arg)

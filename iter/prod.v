@@ -14,10 +14,10 @@ pub:
 
 pub fn ProductIterator.new(data [][]f64) ProductIterator {
 	return ProductIterator{
-		repeat_lengths: calc_repeat_lengths(data.map(it.len)).map(u64(it))
+		repeat_lengths:  calc_repeat_lengths(data.map(it.len)).map(u64(it))
 		indices_to_grab: []int{len: data.len, init: -1}
-		data: data
-		size: u64(arrays.fold(data.map(it.len), 1, int_prod))
+		data:            data
+		size:            u64(arrays.fold(data.map(it.len), 1, int_prod))
 	}
 }
 

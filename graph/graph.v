@@ -45,14 +45,14 @@ pub fn Graph.new(edges [][]int, weights_e []f64, verts [][]f64, weights_v []f64)
 	mut dist := [][]f64{len: nv, init: []f64{len: nv}}
 	mut next := [][]int{len: nv, init: []int{len: nv}}
 	return &Graph{
-		edges: edges
+		edges:     edges
 		weights_e: weights_e
-		verts: verts
+		verts:     verts
 		weights_v: weights_v
-		shares: shares
-		key2edge: key2edge
-		dist: dist
-		next: next
+		shares:    shares
+		key2edge:  key2edge
+		dist:      dist
+		next:      next
 	}
 }
 
@@ -111,14 +111,14 @@ pub fn (g &Graph) shortest_paths(method ShortestPaths) Graph {
 		}
 	}
 	return Graph{
-		edges: g2.edges
+		edges:     g2.edges
 		weights_e: g2.weights_e
-		verts: g2.verts
+		verts:     g2.verts
 		weights_v: g2.weights_v
-		shares: g2.shares
-		key2edge: g2.key2edge
-		dist: dist
-		next: next
+		shares:    g2.shares
+		key2edge:  g2.key2edge
+		dist:      dist
+		next:      next
 	}
 }
 
@@ -182,14 +182,14 @@ pub fn (g &Graph) calc_dist() Graph {
 		}
 	}
 	return Graph{
-		edges: g.edges
+		edges:     g.edges
 		weights_e: g.weights_e
-		verts: g.verts
+		verts:     g.verts
 		weights_v: g.weights_v
-		shares: g.shares
-		key2edge: g.key2edge
-		dist: dist
-		next: next
+		shares:    g.shares
+		key2edge:  g.key2edge
+		dist:      dist
+		next:      next
 	}
 }
 

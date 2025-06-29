@@ -9,7 +9,7 @@ import vsl.util
 pub struct LinReg {
 mut:
 	// main
-	name string     // name of this "observer"
+	name string // name of this "observer"
 	data &Data[f64] = unsafe { nil } // x-y data
 	// workspace
 	e []f64 // vector e = b⋅o + x⋅theta - y [nb_samples]
@@ -27,10 +27,10 @@ pub fn LinReg.new(mut data Data[f64], name string) &LinReg {
 	stat.update()
 	params := ParamsReg.new[f64](data.nb_features)
 	mut reg := &LinReg{
-		name: name
-		data: data
-		stat: stat
-		e: []f64{len: data.nb_samples}
+		name:   name
+		data:   data
+		stat:   stat
+		e:      []f64{len: data.nb_samples}
 		params: params
 	}
 	return reg
@@ -169,14 +169,14 @@ pub fn (o &LinReg) get_plotter() &plot.Plot {
 	)
 	plt.scatter(
 		name: 'dataset'
-		x: o.data.x.get_col(0)
-		y: o.data.y
+		x:    o.data.x.get_col(0)
+		y:    o.data.y
 		mode: 'markers'
 	)
 	plt.scatter(
 		name: 'prediction'
-		x: x_values
-		y: y_values
+		x:    x_values
+		y:    y_values
 		mode: 'lines'
 	)
 

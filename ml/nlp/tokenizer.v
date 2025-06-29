@@ -10,7 +10,7 @@ pub const ngram_sep = 'NGRAMSEP'
 // `,.[]()[]-=_*;:+><\\"`´~^!?@#$%¨&/|'`
 pub fn remove_punctuation(x string) string {
 	mut new_x := x
-	for punct in (nlp.punctuation.join('') + "'").split('') {
+	for punct in (punctuation.join('') + "'").split('') {
 		new_x = new_x.replace(punct, '')
 	}
 	return new_x
@@ -42,7 +42,7 @@ pub fn tokenize(x string) []string {
 			continue
 		}
 
-		if current_char in nlp.punctuation {
+		if current_char in punctuation {
 			tokens << current_piece
 			tokens << current_char
 			current_piece = ''

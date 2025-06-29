@@ -110,11 +110,11 @@ pub fn (generator Generator) simplex_1d(x f64) f64 {
 
 // simplex_2d returns a simplex noise value for a given x, y position
 pub fn (generator Generator) simplex_2d(x f64, y f64) f64 {
-	s := (x + y) * noise.f2
+	s := (x + y) * f2
 	i := int(x + s)
 	j := int(y + s)
 
-	t := f64(i + j) * noise.g2
+	t := f64(i + j) * g2
 	x0 := x - (i - t)
 	y0 := y - (j - t)
 
@@ -124,10 +124,10 @@ pub fn (generator Generator) simplex_2d(x f64, y f64) f64 {
 		0, 1
 	}
 
-	x1 := x0 - f64(i1) + noise.g2
-	y1 := y0 - f64(j1) + noise.g2
-	x2 := x0 - 1.0 + noise.g2 * 2.0
-	y2 := y0 - 1.0 + noise.g2 * 2.0
+	x1 := x0 - f64(i1) + g2
+	y1 := y0 - f64(j1) + g2
+	x2 := x0 - 1.0 + g2 * 2.0
+	y2 := y0 - 1.0 + g2 * 2.0
 
 	ii := i & 0xff
 	jj := j & 0xff
@@ -165,7 +165,7 @@ pub fn (generator Generator) simplex_2d(x f64, y f64) f64 {
 
 // simplex_3d returns a simplex noise value for a given x, y, z position
 pub fn (generator Generator) simplex_3d(x f64, y f64, z f64) f64 {
-	s := (x + y + z) * noise.f3
+	s := (x + y + z) * f3
 	xs := x + s
 	ys := y + s
 	zs := z + s
@@ -173,7 +173,7 @@ pub fn (generator Generator) simplex_3d(x f64, y f64, z f64) f64 {
 	j := int(ys)
 	k := int(zs)
 
-	t := f64(i + j + k) * noise.g3
+	t := f64(i + j + k) * g3
 	x0 := x - (i - t)
 	y0 := y - (j - t)
 	z0 := z - (k - t)
@@ -215,15 +215,15 @@ pub fn (generator Generator) simplex_3d(x f64, y f64, z f64) f64 {
 		}
 	}
 
-	x1 := x0 - i1 + noise.g3
-	y1 := y0 - j1 + noise.g3
-	z1 := z0 - k1 + noise.g3
-	x2 := x0 - i2 + 2.0 * noise.g3
-	y2 := y0 - j2 + 2.0 * noise.g3
-	z2 := z0 - k2 + 2.0 * noise.g3
-	x3 := x0 - 1.0 + 3.0 * noise.g3
-	y3 := y0 - 1.0 + 3.0 * noise.g3
-	z3 := z0 - 1.0 + 3.0 * noise.g3
+	x1 := x0 - i1 + g3
+	y1 := y0 - j1 + g3
+	z1 := z0 - k1 + g3
+	x2 := x0 - i2 + 2.0 * g3
+	y2 := y0 - j2 + 2.0 * g3
+	z2 := z0 - k2 + 2.0 * g3
+	x3 := x0 - 1.0 + 3.0 * g3
+	y3 := y0 - 1.0 + 3.0 * g3
+	z3 := z0 - 1.0 + 3.0 * g3
 
 	ii := i & 0xff
 	jj := j & 0xff
@@ -274,7 +274,7 @@ pub fn (generator Generator) simplex_3d(x f64, y f64, z f64) f64 {
 
 // simplex_4d returns a simplex noise value for a given x, y, z, w position
 pub fn (generator Generator) simplex_4d(x f64, y f64, z f64, w f64) f64 {
-	s := (x + y + z + w) * noise.f4
+	s := (x + y + z + w) * f4
 	xs := x + s
 	ys := y + s
 	zs := z + s
@@ -284,7 +284,7 @@ pub fn (generator Generator) simplex_4d(x f64, y f64, z f64, w f64) f64 {
 	k := int(zs)
 	l := int(ws)
 
-	t := f64(i + j + k + l) * noise.g4
+	t := f64(i + j + k + l) * g4
 	x0 := x - (i - t)
 	y0 := y - (j - t)
 	z0 := z - (k - t)
@@ -298,37 +298,37 @@ pub fn (generator Generator) simplex_4d(x f64, y f64, z f64, w f64) f64 {
 	c6 := if z0 > w0 { 1 } else { 0 }
 	c := c1 + c2 + c3 + c4 + c5 + c6
 
-	i1 := if noise.simplex[c][0] >= 3 { 1 } else { 0 }
-	j1 := if noise.simplex[c][1] >= 3 { 1 } else { 0 }
-	k1 := if noise.simplex[c][2] >= 3 { 1 } else { 0 }
-	l1 := if noise.simplex[c][3] >= 3 { 1 } else { 0 }
+	i1 := if simplex[c][0] >= 3 { 1 } else { 0 }
+	j1 := if simplex[c][1] >= 3 { 1 } else { 0 }
+	k1 := if simplex[c][2] >= 3 { 1 } else { 0 }
+	l1 := if simplex[c][3] >= 3 { 1 } else { 0 }
 
-	i2 := if noise.simplex[c][0] >= 2 { 1 } else { 0 }
-	j2 := if noise.simplex[c][1] >= 2 { 1 } else { 0 }
-	k2 := if noise.simplex[c][2] >= 2 { 1 } else { 0 }
-	l2 := if noise.simplex[c][3] >= 2 { 1 } else { 0 }
+	i2 := if simplex[c][0] >= 2 { 1 } else { 0 }
+	j2 := if simplex[c][1] >= 2 { 1 } else { 0 }
+	k2 := if simplex[c][2] >= 2 { 1 } else { 0 }
+	l2 := if simplex[c][3] >= 2 { 1 } else { 0 }
 
-	i3 := if noise.simplex[c][0] >= 1 { 1 } else { 0 }
-	j3 := if noise.simplex[c][1] >= 1 { 1 } else { 0 }
-	k3 := if noise.simplex[c][2] >= 1 { 1 } else { 0 }
-	l3 := if noise.simplex[c][3] >= 1 { 1 } else { 0 }
+	i3 := if simplex[c][0] >= 1 { 1 } else { 0 }
+	j3 := if simplex[c][1] >= 1 { 1 } else { 0 }
+	k3 := if simplex[c][2] >= 1 { 1 } else { 0 }
+	l3 := if simplex[c][3] >= 1 { 1 } else { 0 }
 
-	x1 := x0 - i1 + noise.g4
-	y1 := y0 - j1 + noise.g4
-	z1 := z0 - k1 + noise.g4
-	w1 := w0 - l1 + noise.g4
-	x2 := x0 - i2 + 2.0 * noise.g4
-	y2 := y0 - j2 + 2.0 * noise.g4
-	z2 := z0 - k2 + 2.0 * noise.g4
-	w2 := w0 - l2 + 2.0 * noise.g4
-	x3 := x0 - i3 + 3.0 * noise.g4
-	y3 := y0 - j3 + 3.0 * noise.g4
-	z3 := z0 - k3 + 3.0 * noise.g4
-	w3 := w0 - l3 + 3.0 * noise.g4
-	x4 := x0 - 1.0 + 4.0 * noise.g4
-	y4 := y0 - 1.0 + 4.0 * noise.g4
-	z4 := z0 - 1.0 + 4.0 * noise.g4
-	w4 := w0 - 1.0 + 4.0 * noise.g4
+	x1 := x0 - i1 + g4
+	y1 := y0 - j1 + g4
+	z1 := z0 - k1 + g4
+	w1 := w0 - l1 + g4
+	x2 := x0 - i2 + 2.0 * g4
+	y2 := y0 - j2 + 2.0 * g4
+	z2 := z0 - k2 + 2.0 * g4
+	w2 := w0 - l2 + 2.0 * g4
+	x3 := x0 - i3 + 3.0 * g4
+	y3 := y0 - j3 + 3.0 * g4
+	z3 := z0 - k3 + 3.0 * g4
+	w3 := w0 - l3 + 3.0 * g4
+	x4 := x0 - 1.0 + 4.0 * g4
+	y4 := y0 - 1.0 + 4.0 * g4
+	z4 := z0 - 1.0 + 4.0 * g4
+	w4 := w0 - 1.0 + 4.0 * g4
 
 	ii := i & 0xff
 	jj := j & 0xff

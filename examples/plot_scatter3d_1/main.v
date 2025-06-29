@@ -24,15 +24,15 @@ fn main() {
 
 	mut plt := plot.Plot.new()
 	plt.scatter3d(
-		x: x
-		y: y
-		z: z
-		mode: 'lines+markers'
+		x:      x
+		y:      y
+		z:      z
+		mode:   'lines+markers'
 		marker: plot.Marker{
-			size: []f64{len: x.len, init: 10.0}
+			size:  []f64{len: x.len, init: 10.0}
 			color: []string{len: x.len, init: '#0000FF'}
 		}
-		line: plot.Line{
+		line:   plot.Line{
 			color: '#0000FF'
 		}
 	)

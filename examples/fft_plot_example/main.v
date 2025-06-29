@@ -26,24 +26,24 @@ fn main() {
 
 	// Add a scatter plot for the original signal
 	plt.scatter(
-		x: []f64{len: original_signal.len, init: f64(index)}
-		y: original_signal
-		mode: 'markers'
+		x:      []f64{len: original_signal.len, init: f64(index)}
+		y:      original_signal
+		mode:   'markers'
 		marker: plot.Marker{
 			size: []f64{len: original_signal.len, init: 8.0}
 		}
-		name: 'Original Signal'
+		name:   'Original Signal'
 	)
 
 	// Add a scatter plot for the imaginary part of the spectrum
 	plt.scatter(
-		x: []f64{len: spectrum.len, init: f64(index)}
-		y: spectrum
-		mode: 'markers'
+		x:      []f64{len: spectrum.len, init: f64(index)}
+		y:      spectrum
+		mode:   'markers'
 		marker: plot.Marker{
 			size: []f64{len: spectrum.len, init: 8.0}
 		}
-		name: 'FFT Spectrum'
+		name:   'FFT Spectrum'
 	)
 
 	// Set up the layout

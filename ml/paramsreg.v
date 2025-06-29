@@ -24,7 +24,7 @@ pub fn ParamsReg.new[T](nb_features int) &ParamsReg[T] {
 	theta := []T{len: nb_features}
 	bkp_theta := []T{len: nb_features}
 	return &ParamsReg[T]{
-		theta: theta
+		theta:     theta
 		bkp_theta: bkp_theta
 	}
 }

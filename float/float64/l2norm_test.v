@@ -24,35 +24,35 @@ fn test_l2_norm_unitary() {
 	l2_norm_unitary_tests := [
 		L2NormTest{
 			want: 0.0
-			x: []f64{}
+			x:    []f64{}
 		},
 		L2NormTest{
 			want: 2.0
-			x: [2.0]
+			x:    [2.0]
 		},
 		L2NormTest{
 			want: 3.7416573867739413
-			x: [1.0, 2, 3]
+			x:    [1.0, 2, 3]
 		},
 		L2NormTest{
 			want: 3.7416573867739413
-			x: [-1.0, -2, -3]
+			x:    [-1.0, -2, -3]
 		},
 		L2NormTest{
 			want: math.nan()
-			x: [math.nan()]
+			x:    [math.nan()]
 		},
 		L2NormTest{
 			want: math.nan()
-			x: [1.0, math.inf(1), 3, nanwith(25), 5]
+			x:    [1.0, math.inf(1), 3, nanwith(25), 5]
 		},
 		L2NormTest{
 			want: 17.88854381999832
-			x: [8.0, -8, 8, -8, 8]
+			x:    [8.0, -8, 8, -8, 8]
 		},
 		L2NormTest{
 			want: 2.23606797749979
-			x: [0.0, 1, 0, -1, 0, 1, 0, -1, 0, 1]
+			x:    [0.0, 1, 0, -1, 0, 1, 0, -1, 0, 1]
 		},
 	]
 
@@ -73,39 +73,39 @@ fn test_l2_norm_inc() {
 
 	l2_norm_inc_tests := [
 		L2NormTest{
-			inc: 2
+			inc:  2
 			want: 0.0
-			x: []f64{}
+			x:    []f64{}
 		},
 		L2NormTest{
-			inc: 3
+			inc:  3
 			want: 2.0
-			x: [2.0]
+			x:    [2.0]
 		},
 		L2NormTest{
-			inc: 10
+			inc:  10
 			want: 3.7416573867739413
-			x: [1.0, 2, 3]
+			x:    [1.0, 2, 3]
 		},
 		L2NormTest{
-			inc: 5
+			inc:  5
 			want: 3.7416573867739413
-			x: [-1.0, -2, -3]
+			x:    [-1.0, -2, -3]
 		},
 		L2NormTest{
-			inc: 3
+			inc:  3
 			want: math.nan()
-			x: [math.nan()]
+			x:    [math.nan()]
 		},
 		L2NormTest{
-			inc: 15
+			inc:  15
 			want: 17.88854381999832
-			x: [8.0, -8, 8, -8, 8]
+			x:    [8.0, -8, 8, -8, 8]
 		},
 		L2NormTest{
-			inc: 1
+			inc:  1
 			want: 2.23606797749979
-			x: [0.0, 1, 0, -1, 0, 1, 0, -1, 0, 1]
+			x:    [0.0, 1, 0, -1, 0, 1, 0, -1, 0, 1]
 		},
 	]
 
@@ -127,38 +127,38 @@ fn test_l2_distance_unitary() {
 	l2_distance_unitary_tests := [
 		L2NormTest{
 			want: 0.0
-			x: []f64{}
-			y: []f64{}
+			x:    []f64{}
+			y:    []f64{}
 		},
 		L2NormTest{
 			want: 2.0
-			x: [3.0]
-			y: [1.0]
+			x:    [3.0]
+			y:    [1.0]
 		},
 		L2NormTest{
 			want: 3.7416573867739413
-			x: [2.0, 4, 6]
-			y: [1.0, 2, 3]
+			x:    [2.0, 4, 6]
+			y:    [1.0, 2, 3]
 		},
 		L2NormTest{
 			want: 3.7416573867739413
-			x: [1.0, 2, 3]
-			y: [2.0, 4, 6]
+			x:    [1.0, 2, 3]
+			y:    [2.0, 4, 6]
 		},
 		L2NormTest{
 			want: math.nan()
-			x: [math.nan()]
-			y: [0.0]
+			x:    [math.nan()]
+			y:    [0.0]
 		},
 		L2NormTest{
 			want: 17.88854381999832
-			x: [9.0, -9, 9, -9, 9]
-			y: [1.0, -1, 1, -1, 1]
+			x:    [9.0, -9, 9, -9, 9]
+			y:    [1.0, -1, 1, -1, 1]
 		},
 		L2NormTest{
 			want: 2.23606797749979
-			x: [0.0, 1, 0, -1, 0, 1, 0, -1, 0, 1]
-			y: [0.0, 2, 0, -2, 0, 2, 0, -2, 0, 2]
+			x:    [0.0, 1, 0, -1, 0, 1, 0, -1, 0, 1]
+			y:    [0.0, 2, 0, -2, 0, 2, 0, -2, 0, 2]
 		},
 	]
 

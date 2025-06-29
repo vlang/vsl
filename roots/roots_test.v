@@ -19,19 +19,19 @@ fn fdf_cos(x f64, _ []f64) (f64, f64) {
 fn test_root_bisection() {
 	f := func.Fn.new(f: f_cos)
 	mut solver := Bisection.new(f,
-		xmin: 0.0
-		xmax: 3.0
-		epsrel: roots.epsrel
-		epsabs: roots.epsabs
-		n_max: roots.n_max
+		xmin:   0.0
+		xmax:   3.0
+		epsrel: epsrel
+		epsabs: epsabs
+		n_max:  n_max
 	)
 	result := solver.solve()?
-	assert float64.soclose(result.x, math.pi / 2.00, roots.epsabs)
+	assert float64.soclose(result.x, math.pi / 2.00, epsabs)
 }
 
 fn test_root_newton() {
 	x0 := f64(0.5)
 	f := func.FnFdf.new(fdf: fdf_cos)
-	result := newton(f, x0, roots.epsrel, roots.epsabs, roots.n_max)!
-	assert float64.soclose(result, math.pi / 2.00, roots.epsabs)
+	result := newton(f, x0, epsrel, epsabs, n_max)!
+	assert float64.soclose(result, math.pi / 2.00, epsabs)
 }

@@ -42,10 +42,10 @@ pub fn IntIter.new(params IntIterParams) !IntIter {
 
 	return IntIter{
 		start: params.start
-		stop: params.stop
-		step: params.step
-		i: 0
-		len: len
+		stop:  params.stop
+		step:  params.step
+		i:     0
+		len:   len
 	}
 }
 
@@ -97,10 +97,10 @@ pub fn FloatIter.new(params FloatIterParams) !FloatIter {
 	}
 	return FloatIter{
 		start: params.start
-		stop: params.stop
-		step: params.step
-		i: 0
-		len: len
+		stop:  params.stop
+		step:  params.step
+		i:     0
+		len:   len
 	}
 }
 
@@ -129,8 +129,8 @@ pub:
 @[params]
 pub struct LinearIterParams {
 pub:
-	start    f64  @[required]
-	stop     f64  @[required]
+	start    f64 @[required]
+	stop     f64 @[required]
 	len      i64  = 50
 	endpoint bool = true
 }
@@ -157,10 +157,10 @@ pub fn LinearIter.new(params LinearIterParams) !LinearIter {
 		step = (params.stop - params.start) / params.len
 	}
 	return LinearIter{
-		start: params.start
-		stop: params.stop
-		step: step
-		len: params.len
+		start:    params.start
+		stop:     params.stop
+		step:     step
+		len:      params.len
 		endpoint: params.endpoint
 	}
 }
@@ -193,8 +193,8 @@ mut:
 
 @[params]
 pub struct LogIterParams {
-	start    f64  @[required]
-	stop     f64  @[required]
+	start    f64 @[required]
+	stop     f64 @[required]
 	len      i64  = 50
 	base     f64  = 10.0
 	endpoint bool = true
@@ -218,13 +218,13 @@ pub fn LogIter.new(params LogIterParams) !LogIter {
 	}
 	return LogIter{
 		linear_iter: LinearIter.new(
-			start: params.start
-			stop: params.stop
-			len: params.len
+			start:    params.start
+			stop:     params.stop
+			len:      params.len
 			endpoint: params.endpoint
 		)!
-		base: params.base
-		len: params.len
+		base:        params.base
+		len:         params.len
 	}
 }
 

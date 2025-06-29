@@ -25,16 +25,16 @@ pub fn (p Plot) show(config PlotConfig) ! {
 	} $else {
 		mut handler := PlotlyHandler{
 			use_cdn: true
-			plot: p
+			plot:    p
 		}
 		listener := net.listen_tcp(net.AddrFamily.ip, config.saddr,
 			dualstack: config.dualstack
-			backlog: config.backlog
+			backlog:   config.backlog
 		)!
 		mut server := &http.Server{
 			accept_timeout: config.timeout
-			listener: listener
-			handler: handler
+			listener:       listener
+			handler:        handler
 		}
 		handler.server = server
 		t := spawn server.listen_and_serve()
@@ -63,11 +63,11 @@ pub fn (p Plot) get_plotly_script(element_id string, config PlotlyScriptConfig) 
 	layout_json := encode(p.layout)
 
 	plot_script := &html.Tag{
-		name: 'script'
+		name:       'script'
 		attributes: {
 			'type': 'module'
 		}
-		content: 'import "https://cdn.plot.ly/plotly-2.26.2.min.js";
+		content:    'import "https://cdn.plot.ly/plotly-2.26.2.min.js";
 
 function removeEmptyFieldsDeeply(obj) {
     if (Array.isArray(obj)) {
@@ -126,7 +126,7 @@ mut:
 
 fn (mut handler PlotlyHandler) handle(req http.Request) http.Response {
 	mut r := http.Response{
-		body: handler.plot.get_html('gd', use_cdn: handler.use_cdn)
+		body:   handler.plot.get_html('gd', use_cdn: handler.use_cdn)
 		header: req.header
 	}
 	r.set_status(.ok)

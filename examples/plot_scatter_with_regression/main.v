@@ -8,18 +8,18 @@ fn main() {
 
 	mut plt := plot.Plot.new()
 	plt.scatter(
-		x: x
-		y: y
-		mode: 'markers'
+		x:      x
+		y:      y
+		mode:   'markers'
 		marker: plot.Marker{
-			size: []f64{len: x.len, init: 10.0}
+			size:  []f64{len: x.len, init: 10.0}
 			color: []string{len: x.len, init: '#00FF00'}
 		}
-		name: 'Data Points'
+		name:   'Data Points'
 	)
 	plt.scatter(
-		x: x
-		y: y
+		x:    x
+		y:    y
 		mode: 'lines'
 		line: plot.Line{
 			color: '#FF0000'

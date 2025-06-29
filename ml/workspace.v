@@ -12,32 +12,32 @@ import vsl.la
 pub struct Stat[T] {
 pub mut:
 	data   &Data[T] = unsafe { nil } // data
-	name   string   // name of this object
-	min_x  []T      // [n_features] min x values
-	max_x  []T      // [n_features] max x values
-	sum_x  []T      // [n_features] sum of x values
-	mean_x []T      // [n_features] mean of x values
-	sig_x  []T      // [n_features] standard deviations of x
-	del_x  []T      // [n_features] difference: max(x) - min(x)
-	min_y  T        // min of y values
-	max_y  T        // max of y values
-	sum_y  T        // sum of y values
-	mean_y T        // mean of y values
-	sig_y  T        // standard deviation of y
-	del_y  T        // difference: max(y) - min(y)
+	name   string // name of this object
+	min_x  []T    // [n_features] min x values
+	max_x  []T    // [n_features] max x values
+	sum_x  []T    // [n_features] sum of x values
+	mean_x []T    // [n_features] mean of x values
+	sig_x  []T    // [n_features] standard deviations of x
+	del_x  []T    // [n_features] difference: max(x) - min(x)
+	min_y  T      // min of y values
+	max_y  T      // max of y values
+	sum_y  T      // sum of y values
+	mean_y T      // mean of y values
+	sig_y  T      // standard deviation of y
+	del_y  T      // difference: max(y) - min(y)
 }
 
 // stat returns a new Stat object
 pub fn Stat.from_data[T](mut data Data[T], name string) &Stat[T] {
 	mut o := &Stat[T]{
-		name: name
-		data: data
-		min_x: []T{len: data.nb_features}
-		max_x: []T{len: data.nb_features}
-		sum_x: []T{len: data.nb_features}
+		name:   name
+		data:   data
+		min_x:  []T{len: data.nb_features}
+		max_x:  []T{len: data.nb_features}
+		sum_x:  []T{len: data.nb_features}
 		mean_x: []T{len: data.nb_features}
-		sig_x: []T{len: data.nb_features}
-		del_x: []T{len: data.nb_features}
+		sig_x:  []T{len: data.nb_features}
+		del_x:  []T{len: data.nb_features}
 	}
 	data.add_observer(o)
 	return o

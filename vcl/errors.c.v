@@ -7,75 +7,75 @@ const err_unknown = error('vcl_cl: unknown error')
 pub type ErrVCL = int
 
 pub fn (e ErrVCL) err() IError {
-	if e == vcl.success {
+	if e == success {
 		return none
 	}
 
 	err := match e {
-		vcl.device_not_found { vcl.err_device_not_found }
-		vcl.device_not_available { vcl.err_device_not_available }
-		vcl.compiler_not_available { vcl.err_compiler_not_available }
-		vcl.mem_object_allocation_failure { vcl.err_mem_object_allocation_failure }
-		vcl.out_of_resources { vcl.err_out_of_resources }
-		vcl.out_of_host_memory { vcl.err_out_of_host_memory }
-		vcl.profiling_info_not_available { vcl.err_profiling_info_not_available }
-		vcl.mem_copy_overlap { vcl.err_mem_copy_overlap }
-		vcl.image_format_mismatch { vcl.err_image_format_mismatch }
-		vcl.image_format_not_supported { vcl.err_image_format_not_supported }
-		vcl.build_program_failure { vcl.err_build_program_failure }
-		vcl.map_failure { vcl.err_map_failure }
-		vcl.misaligned_sub_buffer_offset { vcl.err_misaligned_sub_buffer_offset }
-		vcl.exec_status_error_for_events_in_wait_list { vcl.err_exec_status_error_for_events_in_wait_list }
-		vcl.compile_program_failure { vcl.err_compile_program_failure }
-		vcl.linker_not_available { vcl.err_linker_not_available }
-		vcl.link_program_failure { vcl.err_link_program_failure }
-		vcl.device_partition_failed { vcl.err_device_partition_failed }
-		vcl.kernel_arg_info_not_available { vcl.err_kernel_arg_info_not_available }
-		vcl.invalid_value { vcl.err_invalid_value }
-		vcl.invalid_device_type { vcl.err_invalid_device_type }
-		vcl.invalid_platform { vcl.err_invalid_platform }
-		vcl.invalid_device { vcl.err_invalid_device }
-		vcl.invalid_context { vcl.err_invalid_context }
-		vcl.invalid_queue_properties { vcl.err_invalid_queue_properties }
-		vcl.invalid_command_queue { vcl.err_invalid_command_queue }
-		vcl.invalid_host_ptr { vcl.err_invalid_host_ptr }
-		vcl.invalid_mem_object { vcl.err_invalid_mem_object }
-		vcl.invalid_image_format_descriptor { vcl.err_invalid_image_format_descriptor }
-		vcl.invalid_image_size { vcl.err_invalid_image_size }
-		vcl.invalid_sampler { vcl.err_invalid_sampler }
-		vcl.invalid_binary { vcl.err_invalid_binary }
-		vcl.invalid_build_options { vcl.err_invalid_build_options }
-		vcl.invalid_program { vcl.err_invalid_program }
-		vcl.invalid_program_executable { vcl.err_invalid_program_executable }
-		vcl.invalid_kernel_name { vcl.err_invalid_kernel_name }
-		vcl.invalid_kernel_definition { vcl.err_invalid_kernel_definition }
-		vcl.invalid_kernel { vcl.err_invalid_kernel }
-		vcl.invalid_arg_index { vcl.err_invalid_arg_index }
-		vcl.invalid_arg_value { vcl.err_invalid_arg_value }
-		vcl.invalid_arg_size { vcl.err_invalid_arg_size }
-		vcl.invalid_kernel_args { vcl.err_invalid_kernel_args }
-		vcl.invalid_work_dimension { vcl.err_invalid_work_dimension }
-		vcl.invalid_work_group_size { vcl.err_invalid_work_group_size }
-		vcl.invalid_work_item_size { vcl.err_invalid_work_item_size }
-		vcl.invalid_global_offset { vcl.err_invalid_global_offset }
-		vcl.invalid_event_wait_list { vcl.err_invalid_event_wait_list }
-		vcl.invalid_event { vcl.err_invalid_event }
-		vcl.invalid_operation { vcl.err_invalid_operation }
-		vcl.invalid_gl_object { vcl.err_invalid_gl_object }
-		vcl.invalid_buffer_size { vcl.err_invalid_buffer_size }
-		vcl.invalid_mip_level { vcl.err_invalid_mip_level }
-		vcl.invalid_global_work_size { vcl.err_invalid_global_work_size }
-		vcl.invalid_property { vcl.err_invalid_property }
-		vcl.invalid_image_descriptor { vcl.err_invalid_image_descriptor }
-		vcl.invalid_compiler_options { vcl.err_invalid_compiler_options }
-		vcl.invalid_linker_options { vcl.err_invalid_linker_options }
-		vcl.invalid_device_partition_count { vcl.err_invalid_device_partition_count }
-		vcl.invalid_pipe_size { vcl.err_invalid_pipe_size }
-		vcl.invalid_device_queue { vcl.err_invalid_device_queue }
-		vcl.invalid_spec_id { vcl.err_invalid_spec_id }
-		vcl.max_size_restriction_exceeded { vcl.err_max_size_restriction_exceeded }
-		vcl.dl_sym_issue { vcl.err_dl_sym_issue }
-		vcl.dl_open_issue { vcl.err_dl_open_issue }
+		device_not_found { err_device_not_found }
+		device_not_available { err_device_not_available }
+		compiler_not_available { err_compiler_not_available }
+		mem_object_allocation_failure { err_mem_object_allocation_failure }
+		out_of_resources { err_out_of_resources }
+		out_of_host_memory { err_out_of_host_memory }
+		profiling_info_not_available { err_profiling_info_not_available }
+		mem_copy_overlap { err_mem_copy_overlap }
+		image_format_mismatch { err_image_format_mismatch }
+		image_format_not_supported { err_image_format_not_supported }
+		build_program_failure { err_build_program_failure }
+		map_failure { err_map_failure }
+		misaligned_sub_buffer_offset { err_misaligned_sub_buffer_offset }
+		exec_status_error_for_events_in_wait_list { err_exec_status_error_for_events_in_wait_list }
+		compile_program_failure { err_compile_program_failure }
+		linker_not_available { err_linker_not_available }
+		link_program_failure { err_link_program_failure }
+		device_partition_failed { err_device_partition_failed }
+		kernel_arg_info_not_available { err_kernel_arg_info_not_available }
+		invalid_value { err_invalid_value }
+		invalid_device_type { err_invalid_device_type }
+		invalid_platform { err_invalid_platform }
+		invalid_device { err_invalid_device }
+		invalid_context { err_invalid_context }
+		invalid_queue_properties { err_invalid_queue_properties }
+		invalid_command_queue { err_invalid_command_queue }
+		invalid_host_ptr { err_invalid_host_ptr }
+		invalid_mem_object { err_invalid_mem_object }
+		invalid_image_format_descriptor { err_invalid_image_format_descriptor }
+		invalid_image_size { err_invalid_image_size }
+		invalid_sampler { err_invalid_sampler }
+		invalid_binary { err_invalid_binary }
+		invalid_build_options { err_invalid_build_options }
+		invalid_program { err_invalid_program }
+		invalid_program_executable { err_invalid_program_executable }
+		invalid_kernel_name { err_invalid_kernel_name }
+		invalid_kernel_definition { err_invalid_kernel_definition }
+		invalid_kernel { err_invalid_kernel }
+		invalid_arg_index { err_invalid_arg_index }
+		invalid_arg_value { err_invalid_arg_value }
+		invalid_arg_size { err_invalid_arg_size }
+		invalid_kernel_args { err_invalid_kernel_args }
+		invalid_work_dimension { err_invalid_work_dimension }
+		invalid_work_group_size { err_invalid_work_group_size }
+		invalid_work_item_size { err_invalid_work_item_size }
+		invalid_global_offset { err_invalid_global_offset }
+		invalid_event_wait_list { err_invalid_event_wait_list }
+		invalid_event { err_invalid_event }
+		invalid_operation { err_invalid_operation }
+		invalid_gl_object { err_invalid_gl_object }
+		invalid_buffer_size { err_invalid_buffer_size }
+		invalid_mip_level { err_invalid_mip_level }
+		invalid_global_work_size { err_invalid_global_work_size }
+		invalid_property { err_invalid_property }
+		invalid_image_descriptor { err_invalid_image_descriptor }
+		invalid_compiler_options { err_invalid_compiler_options }
+		invalid_linker_options { err_invalid_linker_options }
+		invalid_device_partition_count { err_invalid_device_partition_count }
+		invalid_pipe_size { err_invalid_pipe_size }
+		invalid_device_queue { err_invalid_device_queue }
+		invalid_spec_id { err_invalid_spec_id }
+		max_size_restriction_exceeded { err_max_size_restriction_exceeded }
+		dl_sym_issue { err_dl_sym_issue }
+		dl_open_issue { err_dl_open_issue }
 		else { 'vcl_cl: error ${e}' }
 	}
 	return error_with_code(err, int(e))
@@ -86,14 +86,14 @@ pub fn error_from_code(code int) IError {
 }
 
 pub fn error_or_default[T](code int, default T) !T {
-	if code == vcl.success {
+	if code == success {
 		return default
 	}
 	return ErrVCL(code).err()
 }
 
 pub fn typed_error[T](code int) !T {
-	if code == vcl.success {
+	if code == success {
 		return
 	}
 	return ErrVCL(code).err()

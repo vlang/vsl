@@ -2,87 +2,87 @@ module float32
 
 const axpy_tests = [
 	AxpyTest{
-		alpha: f32(0.0)
-		x: []f32{}
-		y: []f32{}
-		want: []f32{}
+		alpha:    f32(0.0)
+		x:        []f32{}
+		y:        []f32{}
+		want:     []f32{}
 		want_rev: []f32{}
 	},
 	AxpyTest{
-		alpha: f32(0)
-		x: [f32(2.0)]
-		y: [f32(-3.0)]
-		want: [f32(-3.0)]
+		alpha:    f32(0)
+		x:        [f32(2.0)]
+		y:        [f32(-3.0)]
+		want:     [f32(-3.0)]
 		want_rev: [f32(-3.0)]
 	},
 	AxpyTest{
-		alpha: f32(1.0)
-		x: [f32(2.0)]
-		y: [f32(-3.0)]
-		want: [f32(-1.0)]
+		alpha:    f32(1.0)
+		x:        [f32(2.0)]
+		y:        [f32(-3.0)]
+		want:     [f32(-1.0)]
 		want_rev: [f32(-1.0)]
 	},
 	AxpyTest{
-		alpha: f32(3.0)
-		x: [f32(2.0)]
-		y: [f32(-3.0)]
-		want: [f32(3.0)]
+		alpha:    f32(3.0)
+		x:        [f32(2.0)]
+		y:        [f32(-3.0)]
+		want:     [f32(3.0)]
 		want_rev: [f32(3.0)]
 	},
 	AxpyTest{
-		alpha: f32(-3.0)
-		x: [f32(2.0)]
-		y: [f32(-3.0)]
-		want: [f32(-9.0)]
+		alpha:    f32(-3.0)
+		x:        [f32(2.0)]
+		y:        [f32(-3.0)]
+		want:     [f32(-9.0)]
 		want_rev: [f32(-9.0)]
 	},
 	AxpyTest{
-		alpha: f32(1.0)
-		x: [f32(1.0), 5]
-		y: [f32(2.0), -3]
-		want: [f32(3.0), 2]
+		alpha:    f32(1.0)
+		x:        [f32(1.0), 5]
+		y:        [f32(2.0), -3]
+		want:     [f32(3.0), 2]
 		want_rev: [f32(7.0), -2]
 	},
 	AxpyTest{
-		alpha: f32(1.0)
-		x: [f32(2.0), 3, 4]
-		y: [f32(-3.0), -2, -1]
-		want: [f32(-1.0), 1, 3]
+		alpha:    f32(1.0)
+		x:        [f32(2.0), 3, 4]
+		y:        [f32(-3.0), -2, -1]
+		want:     [f32(-1.0), 1, 3]
 		want_rev: [f32(1.0), 1, 1]
 	},
 	AxpyTest{
-		alpha: f32(0.0)
-		x: [f32(0.0), 0, 1, 1, 2, -3, -4]
-		y: [f32(0.0), 1, 0, 3, -4, 5, -6]
-		want: [f32(0.0), 1, 0, 3, -4, 5, -6]
+		alpha:    f32(0.0)
+		x:        [f32(0.0), 0, 1, 1, 2, -3, -4]
+		y:        [f32(0.0), 1, 0, 3, -4, 5, -6]
+		want:     [f32(0.0), 1, 0, 3, -4, 5, -6]
 		want_rev: [f32(0.0), 1, 0, 3, -4, 5, -6]
 	},
 	AxpyTest{
-		alpha: f32(1.0)
-		x: [f32(0.0), 0, 1, 1, 2, -3, -4]
-		y: [f32(0.0), 1, 0, 3, -4, 5, -6]
-		want: [f32(0.0), 1, 1, 4, -2, 2, -10]
+		alpha:    f32(1.0)
+		x:        [f32(0.0), 0, 1, 1, 2, -3, -4]
+		y:        [f32(0.0), 1, 0, 3, -4, 5, -6]
+		want:     [f32(0.0), 1, 1, 4, -2, 2, -10]
 		want_rev: [f32(-4.0), -2, 2, 4, -3, 5, -6]
 	},
 	AxpyTest{
-		alpha: f32(3.0)
-		x: [f32(0.0), 0, 1, 1, 2, -3, -4]
-		y: [f32(0.0), 1, 0, 3, -4, 5, -6]
-		want: [f32(0.0), 1, 3, 6, 2, -4, -18]
+		alpha:    f32(3.0)
+		x:        [f32(0.0), 0, 1, 1, 2, -3, -4]
+		y:        [f32(0.0), 1, 0, 3, -4, 5, -6]
+		want:     [f32(0.0), 1, 3, 6, 2, -4, -18]
 		want_rev: [f32(-12.0), -8, 6, 6, -1, 5, -6]
 	},
 	AxpyTest{
-		alpha: f32(-3.0)
-		x: [f32(0.0), 0, 1, 1, 2, -3, -4, 0, 0, 1, 1, 2, -3, -4]
-		y: [f32(0.0), 1, 0, 3, -4, 5, -6, 0, 1, 0, 3, -4, 5, -6]
-		want: [f32(0.0), 1, -3, 0, -10, 14, 6, 0, 1, -3, 0, -10, 14, 6]
+		alpha:    f32(-3.0)
+		x:        [f32(0.0), 0, 1, 1, 2, -3, -4, 0, 0, 1, 1, 2, -3, -4]
+		y:        [f32(0.0), 1, 0, 3, -4, 5, -6, 0, 1, 0, 3, -4, 5, -6]
+		want:     [f32(0.0), 1, -3, 0, -10, 14, 6, 0, 1, -3, 0, -10, 14, 6]
 		want_rev: [f32(12.0), 10, -6, 0, -7, 5, -6, 12, 10, -6, 0, -7, 5, -6]
 	},
 	AxpyTest{
-		alpha: f32(-5.0)
-		x: [f32(0.0), 0, 1, 1, 2, -3, -4, 5, 1, 2, -3, -4, 5]
-		y: [f32(0.0), 1, 0, 3, -4, 5, -6, 7, 3, -4, 5, -6, 7]
-		want: [f32(0.0), 1, -5, -2, -14, 20, 14, -18, -2, -14, 20, 14, -18]
+		alpha:    f32(-5.0)
+		x:        [f32(0.0), 0, 1, 1, 2, -3, -4, 5, 1, 2, -3, -4, 5]
+		y:        [f32(0.0), 1, 0, 3, -4, 5, -6, 7, 3, -4, 5, -6, 7]
+		want:     [f32(0.0), 1, -5, -2, -14, 20, 14, -18, -2, -14, 20, 14, -18]
 		want_rev: [f32(-25.0), 21, 15, -7, -9, -20, 14, 22, -7, -9, 0, -6, 7]
 	},
 ]
@@ -98,7 +98,7 @@ struct AxpyTest {
 fn test_axpy_unitary() {
 	x_gd_val, y_gd_val := f32(-1.0), f32(1.5)
 
-	for test in float32.axpy_tests {
+	for test in axpy_tests {
 		for align in align2 {
 			xg_ln, yg_ln := 4 + align.x, 4 + align.y
 			xg, yg := guard_vector(test.x, x_gd_val, xg_ln), guard_vector(test.y, y_gd_val,
@@ -120,7 +120,7 @@ fn test_axpy_unitary() {
 fn test_axpy_unitary_to() {
 	dst_gd_val, x_gd_val, y_gd_val := f32(1.0), f32(-1.0), f32(1.5)
 
-	for test in float32.axpy_tests {
+	for test in axpy_tests {
 		for align in align3 {
 			dg_ln, xg_ln, yg_ln := 4 + align.dst, 4 + align.x, 4 + align.y
 			dst_orig := []f32{len: test.x.len}
@@ -148,7 +148,7 @@ fn test_axpy_inc() {
 	x_gd_val, y_gd_val := f32(-1.0), f32(1.5)
 	gd_ln := 4
 
-	for test in float32.axpy_tests {
+	for test in axpy_tests {
 		n := test.x.len
 
 		for inc in IncSet.new(-7, -4, -3, -2, -1, 1, 2, 3, 4, 7) {
@@ -188,7 +188,7 @@ fn test_axpy_inc_to() {
 	dst_gd_val, x_gd_val, y_gd_val := 1, f32(-1.0), f32(1.5)
 	gd_ln := 4
 
-	for test in float32.axpy_tests {
+	for test in axpy_tests {
 		n := test.x.len
 
 		for inc in IncToSet.new(-7, -4, -3, -2, -1, 1, 2, 3, 4, 7) {

@@ -26,20 +26,20 @@ pub struct CommonTrace {
 pub mut:
 	x          XType
 	xbins      map[string]f32
-	y          YType          @[omitempty]
-	z          ZType          @[omitempty]
-	name       string         @[omitempty]
-	mode       string         @[omitempty]
-	marker     Marker         @[omitempty]
-	line       Line           @[omitempty]
-	pull       []f64          @[omitempty]
-	hole       f64            @[omitempty]
-	fill       string         @[omitempty]
-	fillcolor  string         @[omitempty]
-	customdata [][]string     @[omitempty]
-	colorscale string = 'Viridis'         @[omitempty]
-	textinfo   string         @[omitempty]
-	text       []string       @[omitempty]
+	y          YType      @[omitempty]
+	z          ZType      @[omitempty]
+	name       string     @[omitempty]
+	mode       string     @[omitempty]
+	marker     Marker     @[omitempty]
+	line       Line       @[omitempty]
+	pull       []f64      @[omitempty]
+	hole       f64        @[omitempty]
+	fill       string     @[omitempty]
+	fillcolor  string     @[omitempty]
+	customdata [][]string @[omitempty]
+	colorscale string = 'Viridis'     @[omitempty]
+	textinfo   string     @[omitempty]
+	text       []string   @[omitempty]
 }
 
 // ScatterTrace is a struct for Scatter trace type

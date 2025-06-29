@@ -87,37 +87,37 @@ pub fn (d &Device) str() string {
 
 // name device info - name
 pub fn (d &Device) name() !string {
-	return d.get_info_str(vcl.device_name, true)
+	return d.get_info_str(device_name, true)
 }
 
 // vendor device info - vendor
 pub fn (d &Device) vendor() !string {
-	return d.get_info_str(vcl.device_vendor, true)
+	return d.get_info_str(device_vendor, true)
 }
 
 // extensions device info - extensions
 pub fn (d &Device) extensions() !string {
-	return d.get_info_str(vcl.device_extensions, true)
+	return d.get_info_str(device_extensions, true)
 }
 
 // open_clc_version device info - OpenCL C version
 pub fn (d &Device) open_clc_version() !string {
-	return d.get_info_str(vcl.device_opencl_c_version, true)
+	return d.get_info_str(device_opencl_c_version, true)
 }
 
 // profile device info - profile
 pub fn (d &Device) profile() !string {
-	return d.get_info_str(vcl.device_profile, true)
+	return d.get_info_str(device_profile, true)
 }
 
 // version device info - version
 pub fn (d &Device) version() !string {
-	return d.get_info_str(vcl.device_version, true)
+	return d.get_info_str(device_version, true)
 }
 
 // driver_version device info - driver version
 pub fn (d &Device) driver_version() !string {
-	return d.get_info_str(vcl.driver_version, true)
+	return d.get_info_str(driver_version, true)
 }
 
 // add_program copiles program source
@@ -129,14 +129,13 @@ pub fn (mut d Device) add_program(source string) ! {
 	if ret != success {
 		return vcl_error(ret)
 	}
-	ret = cl_build_program(p, 1, &d.id, &char(0), unsafe { nil }, unsafe { nil })
+	ret = cl_build_program(p, 1, &d.id, unsafe{ &char(0) }, unsafe { nil }, unsafe { nil })
 	if ret != success {
 		if ret == build_program_failure {
 			mut n := usize(0)
-			cl_get_program_build_info(p, d.id, vcl.program_build_log, 0, unsafe { nil },
-				&n)
+			cl_get_program_build_info(p, d.id, program_build_log, 0, unsafe { nil }, &n)
 			log := []u8{len: int(n)}
-			cl_get_program_build_info(p, d.id, vcl.program_build_log, n, &log[0], unsafe { nil })
+			cl_get_program_build_info(p, d.id, program_build_log, n, &log[0], unsafe { nil })
 			return error(log.bytestr())
 		}
 		return vcl_error(ret)

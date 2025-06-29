@@ -10,8 +10,8 @@ fn main() {
 
 	mut plt := plot.Plot.new()
 	plt.scatter(
-		x: x
-		y: y1
+		x:    x
+		y:    y1
 		mode: 'lines'
 		line: plot.Line{
 			color: '#FF0000'
@@ -19,8 +19,8 @@ fn main() {
 		name: 'sin(x)'
 	)
 	plt.scatter(
-		x: x
-		y: y2
+		x:    x
+		y:    y2
 		mode: 'lines'
 		line: plot.Line{
 			color: '#0000FF'

@@ -11,65 +11,65 @@ struct ScalTest {
 const scal_tests = [
 	ScalTest{
 		alpha: f32(0.0)
-		x: []f32{}
-		want: []f32{}
+		x:     []f32{}
+		want:  []f32{}
 	},
 	ScalTest{
 		alpha: f32(0.0)
-		x: [f32(1.0)]
-		want: [f32(0.0)]
+		x:     [f32(1.0)]
+		want:  [f32(0.0)]
 	},
 	ScalTest{
 		alpha: f32(1.0)
-		x: [f32(1.0)]
-		want: [f32(1.0)]
+		x:     [f32(1.0)]
+		want:  [f32(1.0)]
 	},
 	ScalTest{
 		alpha: f32(2.0)
-		x: [f32(1.0), -2]
-		want: [f32(2.0), -4]
+		x:     [f32(1.0), -2]
+		want:  [f32(2.0), -4]
 	},
 	ScalTest{
 		alpha: f32(2.0)
-		x: [f32(1.0), -2, 3]
-		want: [f32(2.0), -4, 6]
+		x:     [f32(1.0), -2, 3]
+		want:  [f32(2.0), -4, 6]
 	},
 	ScalTest{
 		alpha: f32(2.0)
-		x: [f32(1.0), -2, 3, 4]
-		want: [f32(2.0), -4, 6, 8]
+		x:     [f32(1.0), -2, 3, 4]
+		want:  [f32(2.0), -4, 6, 8]
 	},
 	ScalTest{
 		alpha: f32(2.0)
-		x: [f32(1.0), -2, 3, 4, -5]
-		want: [f32(2.0), -4, 6, 8, -10]
+		x:     [f32(1.0), -2, 3, 4, -5]
+		want:  [f32(2.0), -4, 6, 8, -10]
 	},
 	ScalTest{
 		alpha: f32(2.0)
-		x: [f32(0.0), 1, -2, 3, 4, -5, 6, -7]
-		want: [f32(0.0), 2, -4, 6, 8, -10, 12, -14]
+		x:     [f32(0.0), 1, -2, 3, 4, -5, 6, -7]
+		want:  [f32(0.0), 2, -4, 6, 8, -10, 12, -14]
 	},
 	ScalTest{
 		alpha: f32(2.0)
-		x: [f32(0.0), 1, -2, 3, 4, -5, 6, -7, 8]
-		want: [f32(0.0), 2, -4, 6, 8, -10, 12, -14, 16]
+		x:     [f32(0.0), 1, -2, 3, 4, -5, 6, -7, 8]
+		want:  [f32(0.0), 2, -4, 6, 8, -10, 12, -14, 16]
 	},
 	ScalTest{
 		alpha: f32(2.0)
-		x: [f32(0.0), 1, -2, 3, 4, -5, 6, -7, 8, 9]
-		want: [f32(0.0), 2, -4, 6, 8, -10, 12, -14, 16, 18]
+		x:     [f32(0.0), 1, -2, 3, 4, -5, 6, -7, 8, 9]
+		want:  [f32(0.0), 2, -4, 6, 8, -10, 12, -14, 16, 18]
 	},
 	ScalTest{
 		alpha: f32(3.0)
-		x: [f32(0.0), 1, -2, 3, 4, -5, 6, -7, 8, 9, 12]
-		want: [f32(0.0), 3, -6, 9, 12, -15, 18, -21, 24, 27, 36]
+		x:     [f32(0.0), 1, -2, 3, 4, -5, 6, -7, 8, 9, 12]
+		want:  [f32(0.0), 3, -6, 9, 12, -15, 18, -21, 24, 27, 36]
 	},
 ]
 
 fn test_scal_unitary() {
 	x_gd_val := f32(-0.5)
 
-	for test in float32.scal_tests {
+	for test in scal_tests {
 		for align in align1 {
 			xg_ln := 4 + align
 			xg := guard_vector(test.x, x_gd_val, xg_ln)
@@ -90,7 +90,7 @@ fn test_scal_unitary_to() {
 	rand.seed([u32(42), u32(42)])
 	x_gd_val, dst_gd_val := f32(-1.0), f32(0.5)
 
-	for test in float32.scal_tests {
+	for test in scal_tests {
 		n := test.x.len
 		for align in align2 {
 			xg_ln, dg_ln := 4 + align.x, 4 + align.y
@@ -116,7 +116,7 @@ fn test_scal_inc() {
 	x_gd_val := f32(-0.5)
 	gd_ln := 4
 
-	for test in float32.scal_tests {
+	for test in scal_tests {
 		n := test.x.len
 		for incx in [1, 2, 3, 4, 7, 10] {
 			xg := guard_inc_vector(test.x, x_gd_val, incx, gd_ln)
@@ -138,7 +138,7 @@ fn test_scal_inc_to() {
 	x_gd_val, dst_gd_val := f32(-1.0), f32(0.5)
 	gd_ln := 4
 
-	for test in float32.scal_tests {
+	for test in scal_tests {
 		n := test.x.len
 		for inc in IncSet.new(1, 2, 3, 4, 7, 10) {
 			xg := guard_inc_vector(test.x, x_gd_val, inc.x, gd_ln)

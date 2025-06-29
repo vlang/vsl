@@ -32,12 +32,12 @@ pub:
 // Bisection.new creates a new Bisection object with the given parameters
 pub fn Bisection.new(f func.Fn, params BisectionParams) &Bisection {
 	return &Bisection{
-		f: f
-		xmin: params.xmin
-		xmax: params.xmax
+		f:      f
+		xmin:   params.xmin
+		xmax:   params.xmax
 		epsrel: params.epsrel
 		epsabs: params.epsabs
-		n_max: params.n_max
+		n_max:  params.n_max
 	}
 }
 
@@ -60,10 +60,10 @@ pub fn (mut solver Bisection) next() ?&BisectionIteration {
 	solver.n_f_calls += 1
 	if math.abs(fxmid) < solver.epsabs || math.abs(fxmid) < solver.epsrel * math.abs(fxmid) {
 		solver.last_iter = &BisectionIteration{
-			x: xmid
-			fx: fxmid
+			x:         xmid
+			fx:        fxmid
 			n_f_calls: solver.n_f_calls
-			n_iter: solver.n_iter
+			n_iter:    solver.n_iter
 		}
 		return solver.last_iter?
 	}
@@ -75,10 +75,10 @@ pub fn (mut solver Bisection) next() ?&BisectionIteration {
 	}
 
 	solver.last_iter = &BisectionIteration{
-		x: xmid
-		fx: fxmid
+		x:         xmid
+		fx:        fxmid
 		n_f_calls: solver.n_f_calls
-		n_iter: solver.n_iter
+		n_iter:    solver.n_iter
 	}
 	return solver.last_iter?
 }

@@ -13,20 +13,20 @@ y3 := t.map(a0 * math.sin(2 * math.pi * f * it + 4 * math.pi / 3)) // yâ‚ƒ = Aâ‚
 mut plt := plot.Plot.new()
 
 plt.scatter(
-	x: t
-	y: y1
+	x:    t
+	y:    y1
 	name: 'y1(t)'
 )
 
 plt.scatter(
-	x: t
-	y: y2
+	x:    t
+	y:    y2
 	name: 'y2(t)'
 )
 
 plt.scatter(
-	x: t
-	y: y3
+	x:    t
+	y:    y3
 	name: 'y3(t)'
 )
 

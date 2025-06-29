@@ -26,7 +26,7 @@ pub mut:
 	nb_samples  int // number of data points (samples). number of rows in x and y
 	nb_features int // number of features. number of columns in x
 	x           &la.Matrix[T] = unsafe { nil } // [nb_samples][nb_features] x values
-	y           []T           // [nb_samples] y values [optional]
+	y           []T // [nb_samples] y values [optional]
 }
 
 // Data.new returns a new object to hold ML data
@@ -49,9 +49,9 @@ pub fn Data.new[T](nb_samples int, nb_features int, use_y bool, allocate bool) !
 		y = []T{len: nb_samples}
 	}
 	return &Data[T]{
-		x: x
-		y: y
-		nb_samples: nb_samples
+		x:           x
+		y:           y
+		nb_samples:  nb_samples
 		nb_features: nb_features
 	}
 }
@@ -175,9 +175,9 @@ pub fn (o &Data[T]) clone() !&Data[T] {
 pub fn (o &Data[T]) clone_with_same_x() !&Data[T] {
 	use_y := o.y.len > 0
 	return &Data[T]{
-		x: o.x
-		y: if use_y { o.y.clone() } else { []T{} }
-		nb_samples: o.nb_samples
+		x:           o.x
+		y:           if use_y { o.y.clone() } else { []T{} }
+		nb_samples:  o.nb_samples
 		nb_features: o.nb_features
 	}
 }

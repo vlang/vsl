@@ -11,57 +11,57 @@ struct DotTest {
 
 const dot_tests = [
 	DotTest{
-		x: [f32(2.0)]
-		y: [f32(-3.0)]
-		want: -6
+		x:        [f32(2.0)]
+		y:        [f32(-3.0)]
+		want:     -6
 		want_rev: -6
 	},
 	DotTest{
-		x: [f32(2.0), 3]
-		y: [f32(-3.0), 4]
-		want: 6
+		x:        [f32(2.0), 3]
+		y:        [f32(-3.0), 4]
+		want:     6
 		want_rev: -1
 	},
 	DotTest{
-		x: [f32(2.0), 3, -4]
-		y: [f32(-3.0), 4, 5]
-		want: -14
+		x:        [f32(2.0), 3, -4]
+		y:        [f32(-3.0), 4, 5]
+		want:     -14
 		want_rev: 34
 	},
 	DotTest{
-		x: [f32(2.0), 3, -4, -5]
-		y: [f32(-3.0), 4, 5, -6]
-		want: 16
+		x:        [f32(2.0), 3, -4, -5]
+		y:        [f32(-3.0), 4, 5, -6]
+		want:     16
 		want_rev: 2
 	},
 	DotTest{
-		x: [f32(0.0), 2, 3, -4, -5]
-		y: [f32(0.0), -3, 4, 5, -6]
-		want: 16
+		x:        [f32(0.0), 2, 3, -4, -5]
+		y:        [f32(0.0), -3, 4, 5, -6]
+		want:     16
 		want_rev: 34
 	},
 	DotTest{
-		x: [f32(0.0), 0, 2, 3, -4, -5]
-		y: [f32(0.0), 1, -3, 4, 5, -6]
-		want: 16
+		x:        [f32(0.0), 0, 2, 3, -4, -5]
+		y:        [f32(0.0), 1, -3, 4, 5, -6]
+		want:     16
 		want_rev: -5
 	},
 	DotTest{
-		x: [f32(0.0), 0, 1, 1, 2, -3, -4]
-		y: [f32(0.0), 1, 0, 3, -4, 5, -6]
-		want: 4
+		x:        [f32(0.0), 0, 1, 1, 2, -3, -4]
+		y:        [f32(0.0), 1, 0, 3, -4, 5, -6]
+		want:     4
 		want_rev: -4
 	},
 	DotTest{
-		x: [f32(0.0), 0, 1, 1, 2, -3, -4, 5]
-		y: [f32(0.0), 1, 0, 3, -4, 5, -6, 7]
-		want: 39
+		x:        [f32(0.0), 0, 1, 1, 2, -3, -4, 5]
+		y:        [f32(0.0), 1, 0, 3, -4, 5, -6, 7]
+		want:     39
 		want_rev: 3
 	},
 ]
 
 fn test_dot_unitary() {
-	for i, test in float32.dot_tests {
+	for i, test in dot_tests {
 		x, x_front, x_back := new_guarded_vector(test.x, 1)
 		y, y_front, y_back := new_guarded_vector(test.y, 1)
 		got := dot_unitary(x, y)
@@ -82,7 +82,7 @@ fn test_dot_unitary() {
 }
 
 fn test_dot_inc() {
-	for i, test in float32.dot_tests {
+	for i, test in dot_tests {
 		for incx in [-7, -3, -2, -1, 1, 2, 3, 7] {
 			for incy in [-7, -3, -2, -1, 1, 2, 3, 7] {
 				n := test.x.len

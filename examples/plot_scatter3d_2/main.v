@@ -17,12 +17,12 @@ fn main() {
 
 	mut plt := plot.Plot.new()
 	plt.scatter3d(
-		x: x
-		y: y
-		z: z
-		mode: 'markers'
+		x:      x
+		y:      y
+		z:      z
+		mode:   'markers'
 		marker: plot.Marker{
-			size: []f64{len: x.len, init: 15.0}
+			size:  []f64{len: x.len, init: 15.0}
 			color: []string{len: x.len, init: '#0000FF'}
 		}
 	)

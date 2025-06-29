@@ -9,12 +9,12 @@ import vsl.plot
 @[heap]
 pub struct Kmeans {
 mut:
-	name       string     // name of this "observer"
+	name       string // name of this "observer"
 	data       &Data[f64] = unsafe { nil } // x data
 	stat       &Stat[f64] = unsafe { nil } // statistics about x (data)
-	nb_classes int        // expected number of classes
+	nb_classes int // expected number of classes
 	bins       &gm.Bins = unsafe { nil } // "bins" to speed up searching for data points given their coordinates (2D or 3D only at the moment)
-	nb_iter    int        // number of iterations
+	nb_iter    int // number of iterations
 pub mut:
 	classes    []int   // [nb_samples] indices of classes of each sample
 	centroids  [][]f64 // [nb_classes][nb_features] coordinates of centroids
@@ -36,14 +36,14 @@ pub fn Kmeans.new(mut data Data[f64], nb_classes int, name string) &Kmeans {
 	ndiv := [10, 10] // TODO: make this a parameter
 	mut bins := gm.Bins.new(stat.min_x, stat.max_x, ndiv) // TODO: make sure minx and maxx are 2D or 3D; i.e. nb_features ≤ 2
 	mut o := Kmeans{
-		name: name
-		data: data
-		stat: stat
+		name:       name
+		data:       data
+		stat:       stat
 		nb_classes: nb_classes
-		classes: classes
-		centroids: centroids
+		classes:    classes
+		centroids:  centroids
 		nb_members: nb_members
-		bins: bins
+		bins:       bins
 	}
 	data.add_observer(o) // need to recompute bins upon data changes
 	o.update() // compute first bins
@@ -172,12 +172,12 @@ pub fn (o &Kmeans) get_plotter() &plot.Plot {
 		}
 
 		plt.scatter(
-			name: 'class #${i}'
-			x: x_for_class
-			y: y_for_class
-			mode: 'markers'
+			name:       'class #${i}'
+			x:          x_for_class
+			y:          y_for_class
+			mode:       'markers'
 			colorscale: 'smoker'
-			marker: plot.Marker{
+			marker:     plot.Marker{
 				size: []f64{len: x_for_class.len, init: 8.0} // Adjust size as needed
 			}
 		)
@@ -185,12 +185,12 @@ pub fn (o &Kmeans) get_plotter() &plot.Plot {
 
 	// Plot centroids
 	plt.scatter(
-		name: 'centroids'
-		x: o.centroids.map(it[0])
-		y: o.centroids.map(it[1])
-		mode: 'markers'
+		name:       'centroids'
+		x:          o.centroids.map(it[0])
+		y:          o.centroids.map(it[1])
+		mode:       'markers'
 		colorscale: 'smoker'
-		marker: plot.Marker{
+		marker:     plot.Marker{
 			size: []f64{len: o.centroids.len, init: 12.0} // Adjust size as needed
 		}
 	)
