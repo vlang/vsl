@@ -45,7 +45,10 @@ fn main() {
 	)
 
 	// === FIX FOR ANNOTATION ARROW BUG ===
-	// The key is to explicitly set 'showarrow: false' to prevent unwanted arrows
+	// Multi-layered approach to prevent unwanted arrows:
+	// 1. Set 'showarrow: false'
+	// 2. Set 'arrowhead: 0' as additional protection
+	// 3. Use transparent arrow color 'rgba(0,0,0,0)' as final fallback
 
 	// Annotation 1: Simple text annotation at peak point
 	annotation1 := plot.Annotation{
@@ -53,6 +56,8 @@ fn main() {
 		x:         2.0          // X coordinate (data coordinates)
 		y:         3.2          // Y coordinate (slightly above peak)
 		showarrow: false        // CRITICAL: This prevents the unwanted arrow!
+		arrowhead: 0            // Additional fix: Set arrowhead to 0
+		arrowcolor: 'rgba(0,0,0,0)' // Make arrow transparent if it still appears
 		font:      plot.Font{
 			size:  14        // Font size
 			color: '#000000' // Black text
@@ -65,6 +70,8 @@ fn main() {
 		x:         6.0   // X coordinate at valley
 		y:         -2.8  // Y coordinate (slightly below valley)
 		showarrow: false // No arrow for clean appearance
+		arrowhead: 0     // Additional fix: Set arrowhead to 0
+		arrowcolor: 'rgba(0,0,0,0)' // Make arrow transparent
 		font:      plot.Font{
 			size:  14
 			color: '#0000FF' // Blue text for contrast
@@ -77,6 +84,8 @@ fn main() {
 		x:         8.8   // Position on right side
 		y:         1.2   // Middle height
 		showarrow: false // Clean text without arrow
+		arrowhead: 0     // Additional fix: Set arrowhead to 0
+		arrowcolor: 'rgba(0,0,0,0)' // Make arrow transparent
 		font:      plot.Font{
 			size:  12
 			color: '#000000' // Black text for visibility
@@ -95,6 +104,6 @@ fn main() {
 
 	// Print confirmation message
 	println('✅ Plot generated successfully with clean annotations (no unwanted arrows)!')
-	println('🎯 Key fix: Set showarrow: false for all annotations')
+	println('🎯 Multi-layer fix applied: showarrow: false + arrowhead: 0 + transparent arrow')
 	println('📍 Annotations positioned at data coordinates for precision')
 }
