@@ -29,64 +29,81 @@ VSL is a V library to develop Artificial Intelligence and High-Performance Scien
 |       ![][sierpinski_triangle]       | ![][mandelbrot_blue_red_black] |   ![][julia]   | ![][mandelbrot_basic] |
 | ![][mandelbrot_pseudo_random_colors] |   ![][sierpinski_triangle2]    | ![][julia_set] |   ![][julia_basic]    |
 
-## 📖 Docs
+## 📖 Documentation
 
-Visit [vsl docs](https://vlang.github.io/vsl) to know more about the supported features.
+Visit [VSL Documentation](https://vlang.github.io/vsl) to explore all supported features and APIs.
 
-VSL is a Scientific Library with a great variety of different modules.
-Although most modules offer pure-V definitions, VSL also provides modules
-that wrap known C libraries among other backends that allow
-high performance computing as an alternative.
+VSL is a comprehensive Scientific Computing Library offering a rich ecosystem of mathematical and computational modules. The library provides both pure-V implementations and optional high-performance backends through established C and Fortran libraries.
 
-This library contains essential functions for linear algebra computations
-(operations between all combinations of vectors and matrices, eigenvalues and eigenvectors,
-linear solvers) and the development of numerical methods (e.g. numerical quadrature).
+### 🔬 Core Capabilities
 
-Optionally, we link VSL with existent libraries written
-in C and Fortran, such as Open BLAS and LAPACK.
-These existing libraries have been fundamental for the development of high-performant
-simulations over many years. We believe that it is possible to rewrite these
-libraries in native V and at the same time achieve the same speed delivered by them, but at the same
-time, we want to allow to the users of VSL the possibility to choose when to use these libraries
-as a backend and when not. That is why each module documents the flags that allow this at the
-time of use.
+- **Linear Algebra**: Complete matrix and vector operations, eigenvalue decomposition, linear solvers
+- **Machine Learning**: Clustering algorithms (K-means), classification (KNN), regression, and NLP tools
+- **Numerical Methods**: Differentiation, integration, root finding, polynomial operations
+- **Data Visualization**: Advanced plotting with Plotly-style API supporting 2D/3D charts
+- **Scientific Computing**: FFT, statistical analysis, probability distributions
+- **Parallel Computing**: MPI support and OpenCL acceleration
+- **Data I/O**: HDF5 integration for scientific data formats
 
-## 🚀 Installation
+### ⚡ Performance Architecture
 
-It is possible to optimize certain modules using different backends.
-For this, there are some C dependencies that can be installed optionally.
-If you want to use these C dependencies and other libraries,
-the easiest way to work with VSL is via Docker.
-Having Docker and VS Code installed, you can start developing powerful numerical simulations
-using VSL in a matter of seconds. Furthermore, the best part of it is that it works on
-Windows, Linux, and macOS out of the box.
+VSL provides flexible performance options:
 
-### Quick, containerized (recommended!)
+- **Pure V Implementation**: Cross-platform, dependency-free operation
+- **Optimized Backends**: Optional integration with OpenBLAS, LAPACK, and MPI
+- **GPU Acceleration**: OpenCL support for computationally intensive operations
 
-1. Install Docker
-2. Clone <https://github.com/ulises-jeremias/hello-vsl>
-3. Follow the instructions in the README.md file of the repository :ok_hand:
+Each module clearly documents compilation flags and backend requirements, allowing users to choose the optimal configuration for their specific use case.
 
-Done. And your system will remain "clean".
+## 🚀 Installation & Quick Start
 
-Our [Docker Image](https://hub.docker.com/repository/docker/ulisesjeremias/vsl)
-also contains V and the V Tools for working with VS Code (or not).
+VSL supports multiple installation methods and deployment options to fit different development workflows.
 
-## Install VSL locally
+### 📦 Package Manager Installation
 
-### Via vpm
+**Via V's built-in package manager:**
 
 ```sh
 v install vsl
 ```
 
-### Via [vpkg](https://github.com/v-pkg/vpkg)
+**Via vpkg:**
 
 ```sh
 vpkg get https://github.com/vlang/vsl
 ```
 
-Done. Installation completed.
+### 🐳 Docker Development Environment (Recommended)
+
+For the best development experience with all optional dependencies pre-configured:
+
+1. **Install Docker** on your system
+2. **Clone the starter template:**
+
+   ```sh
+   git clone https://github.com/ulises-jeremias/hello-vsl
+   cd hello-vsl
+   ```
+
+3. **Follow the setup instructions** in the template's README
+
+This approach provides:
+
+- Pre-configured environment with V, VSL, and all optional dependencies
+- Cross-platform compatibility (Windows, Linux, macOS)
+- Isolated development environment
+- Access to optimized BLAS/LAPACK libraries
+
+### 🔧 System Dependencies (Optional)
+
+For enhanced performance, you can install optional system libraries:
+
+- **OpenBLAS/LAPACK**: Linear algebra acceleration
+- **OpenMPI**: Parallel computing support
+- **OpenCL**: GPU acceleration
+- **HDF5**: Scientific data format support
+
+Refer to individual module documentation for specific compilation flags.
 
 ## 🧪 Testing
 
