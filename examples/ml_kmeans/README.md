@@ -1,6 +1,7 @@
 # K-Means Clustering Example 🤖
 
-This example demonstrates unsupervised machine learning using VSL's K-means clustering algorithm. Learn how to group data points into meaningful clusters automatically.
+This example demonstrates unsupervised machine learning using VSL's K-means clustering algorithm.
+Learn how to group data points into meaningful clusters automatically.
 
 ## 🎯 What You'll Learn
 
@@ -79,7 +80,8 @@ Try modifying the example:
 
 ## 🔬 Technical Details
 
-The example uses VSL's **observer pattern**: the model automatically updates when data changes, making it suitable for dynamic datasets.
+The example uses VSL's **observer pattern**: the model automatically updates when data changes,
+making it suitable for dynamic datasets.
 
 **Key VSL Components:**
 
@@ -97,4 +99,5 @@ The example uses VSL's **observer pattern**: the model automatically updates whe
 
 ---
 
-Ready to explore machine learning with VSL! 🚀 Check out more ML examples in the [examples directory](../).
+Ready to explore machine learning with VSL! 🚀 Check out more ML examples in the
+[examples directory](../).

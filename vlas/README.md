@@ -2,11 +2,12 @@
 
 This package implements BLAS and LAPACKE functions. It provides different backends:
 
-| Backend  | Description                                                                                                                                                        | Status  | Compilation Flags     |
-| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- | --------------------- |
-| VLAS     | Pure V implementation                                                                                                                                              | WIP     | `NONE`                |
-| OpenBLAS | OpenBLAS is an optimized BLAS library based on <https://github.com/xianyi/OpenBLAS>. Check the section [OpenBLAS Backend](#openblas-backend) for more information. | Working | `-d vsl_vlas_cblas`   |
-| LAPACKE  | LAPACKE is a C interface to the LAPACK linear algebra routines                                                                                                     | Working | `-d vsl_vlas_lapacke` |
+| Backend  | Description                                         | Status  | Compilation Flags     |
+| -------- | --------------------------------------------------- | ------- | --------------------- |
+| VLAS     | Pure V implementation                               | WIP     | `NONE`                |
+| OpenBLAS | OpenBLAS optimized BLAS library. See [OpenBLAS     | Working | `-d vsl_vlas_cblas`   |
+|          | Backend](#openblas-backend) for more information.  |         |                       |
+| LAPACKE  | C interface to LAPACK linear algebra routines      | Working | `-d vsl_vlas_lapacke` |
 
 Therefore, its routines are a little more _lower level_ than the ones in the package `vsl.la`.
 

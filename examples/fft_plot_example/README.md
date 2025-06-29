@@ -1,6 +1,8 @@
 # Fast Fourier Transform (FFT) Example 🌊
 
-This example demonstrates signal processing using VSL's FFT implementation combined with data visualization. Learn how to analyze frequency components of signals and visualize the results.
+This example demonstrates signal processing using VSL's FFT implemenDive into signal processing with VSL! � Explore more scientific computing examples in the
+[examples directory](../).ation combined with data
+visualization. Learn how to analyze frequency components of signals and visualize the results.
 
 ## 🎯 What You'll Learn
 

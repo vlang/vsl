@@ -4,7 +4,8 @@ This example demonstrates the new JSON export functionality that addresses [GitH
 
 ## 🎯 Purpose
 
-Provides flexible methods to extract plot data as JSON strings for embedding plots in custom web pages or using the data in other contexts.
+Provides flexible methods to extract plot data as JSON strings for embedding plots in custom
+web pages or using the data in other contexts.
 
 ## 🚀 New Methods
 

@@ -1,10 +1,13 @@
 # Scatter Plot with Annotations Example 📊✍️
 
-This example demonstrates how to create scatter plots with text annotations without unwanted arrows. This addresses common annotation display issues and shows best practices for plot annotations.
+This example demonstrates how to create scatter plots with text annotations without unwanted
+arrows. This addresses common annotation display issues and shows best practices for plot
+annotations.
 
 ## 🐛 Bug Fix: Unwanted Annotation Arrows
 
-This example specifically addresses the bug where annotations show unwanted arrows. The solution involves:
+This example specifically addresses the bug where annotations show unwanted arrows. The
+solution involves:
 
 1. **Explicitly setting arrow properties to hide them**
 2. **Using proper annotation positioning**
@@ -118,4 +121,5 @@ Try modifying the example to:
 
 ---
 
-Clean annotations without unwanted arrows! 🚀 Explore more plotting examples in the [examples directory](../).
+Clean annotations without unwanted arrows! 🚀 Explore more plotting examples in the
+[examples directory](../).

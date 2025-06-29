@@ -1,6 +1,7 @@
 # Scatter Plot Example �
 
-This example demonstrates VSL's plotting capabilities by creating an interactive scatter plot with both line and marker elements. Perfect for beginners learning data visualization with VSL.
+This example demonstrates VSL's plotting capabilities by creating an interactive scatter plot
+with both line and marker elements. Perfect for beginners learning data visualization with VSL.
 
 ## 🎯 What You'll Learn
 

@@ -1,6 +1,9 @@
 # VSL Examples Collection 📚
 
-Welcome to the VSL Examples Directory! This comprehensive collection demonstrates the full capabilities of the V Scientific Library through practical, well-documented examples. Each example is designed to showcase specific features while providing clear learning paths for both beginners and advanced users.
+Welcome to the VSL Examples Directory! This comprehensive collection demonstrates the full
+capabilities of the V Scientific Library through practical, well-documented examples. Each
+example is designed to showcase specific features while providing clear learning paths for
+both beginners and advanced users.
 
 ## 🎯 Quick Start Guide
 
@@ -120,9 +123,11 @@ v -cflags <flags> run main.v
 
 ### 📋 Important Guidelines ⚠️
 
-- **Documentation First**: Each example includes a detailed `README.md` - always read it before running
+- **Documentation First**: Each example includes a detailed `README.md` - always read it
+  before running
 - **Dependencies**: Check for system requirements in individual example READMEs
-- **Output**: Examples may generate plots, files, or terminal output - check the documentation for expected results
+- **Output**: Examples may generate plots, files, or terminal output - check the
+  documentation for expected results
 - **Troubleshooting**: If an example fails, verify all prerequisites are installed and refer to the main [VSL documentation](https://vlang.github.io/vsl)
 
 ### 🔧 Building & Compilation

@@ -1,6 +1,8 @@
 # OpenCL GPU Computing Example �️
 
-This example demonstrates GPU-accelerated computing using VSL's VCL (V Computing Language) module with OpenCL. Learn how to leverage GPU parallel processing for scientific computations.
+This example demonstrates GPU-accelerated computing using VSL's VCL (V Computing Language)
+module with OpenCL. Learn how to leverage GPU parallel pAccelerate your computations with GPU power! � Explore more OpenCL examples in the
+[examples directory](../).ocessing for scientific computations.
 
 ## 🎯 What You'll Learn
 
