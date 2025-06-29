@@ -11,21 +11,25 @@ fn main() {
 	// Create plot
 	mut plt := plot.Plot.new()
 	plt.scatter(
-		x: x
-		y: y
-		mode: 'lines+markers'
+		x:      x
+		y:      y
+		mode:   'lines+markers'
 		marker: plot.Marker{
-			size: []f64{len: x.len, init: 8.0}
+			size:  []f64{len: x.len, init: 8.0}
 			color: []string{len: x.len, init: '#1f77b4'}
 		}
 	)
 	plt.layout(
 		title: 'JSON Export Example'
 		xaxis: plot.Axis{
-			title: plot.AxisTitle{text: 'X values'}
+			title: plot.AxisTitle{
+				text: 'X values'
+			}
 		}
 		yaxis: plot.Axis{
-			title: plot.AxisTitle{text: 'Y values (X²)'}
+			title: plot.AxisTitle{
+				text: 'Y values (X²)'
+			}
 		}
 	)
 

@@ -52,13 +52,13 @@ fn main() {
 
 	// Annotation 1: Simple text annotation at peak point
 	annotation1 := plot.Annotation{
-		text:      'Peak Point' // Text to display
-		x:         2.0          // X coordinate (data coordinates)
-		y:         3.2          // Y coordinate (slightly above peak)
-		showarrow: false        // CRITICAL: This prevents the unwanted arrow!
-		arrowhead: 0            // Additional fix: Set arrowhead to 0
+		text:       'Peak Point'    // Text to display
+		x:          2.0             // X coordinate (data coordinates)
+		y:          3.2             // Y coordinate (slightly above peak)
+		showarrow:  false           // CRITICAL: This prevents the unwanted arrow!
+		arrowhead:  0               // Additional fix: Set arrowhead to 0
 		arrowcolor: 'rgba(0,0,0,0)' // Make arrow transparent if it still appears
-		font:      plot.Font{
+		font:       plot.Font{
 			size:  14        // Font size
 			color: '#000000' // Black text
 		}
@@ -66,13 +66,13 @@ fn main() {
 
 	// Annotation 2: Valley point annotation
 	annotation2 := plot.Annotation{
-		text:      'Valley Point'
-		x:         6.0   // X coordinate at valley
-		y:         -2.8  // Y coordinate (slightly below valley)
-		showarrow: false // No arrow for clean appearance
-		arrowhead: 0     // Additional fix: Set arrowhead to 0
+		text:       'Valley Point'
+		x:          6.0             // X coordinate at valley
+		y:          -2.8            // Y coordinate (slightly below valley)
+		showarrow:  false           // No arrow for clean appearance
+		arrowhead:  0               // Additional fix: Set arrowhead to 0
 		arrowcolor: 'rgba(0,0,0,0)' // Make arrow transparent
-		font:      plot.Font{
+		font:       plot.Font{
 			size:  14
 			color: '#0000FF' // Blue text for contrast
 		}
@@ -80,13 +80,13 @@ fn main() {
 
 	// Annotation 3: General description
 	annotation3 := plot.Annotation{
-		text:      'Sine Wave Pattern'
-		x:         8.8   // Position on right side
-		y:         1.2   // Middle height
-		showarrow: false // Clean text without arrow
-		arrowhead: 0     // Additional fix: Set arrowhead to 0
+		text:       'Sine Wave Pattern'
+		x:          8.8             // Position on right side
+		y:          1.2             // Middle height
+		showarrow:  false           // Clean text without arrow
+		arrowhead:  0               // Additional fix: Set arrowhead to 0
 		arrowcolor: 'rgba(0,0,0,0)' // Make arrow transparent
-		font:      plot.Font{
+		font:       plot.Font{
 			size:  12
 			color: '#000000' // Black text for visibility
 		}

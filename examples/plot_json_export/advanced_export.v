@@ -7,68 +7,72 @@ import os
 fn main() {
 	// Create a more complex plot with multiple traces
 	x := util.arange(20).map(f64(it))
-	y1 := x.map(f64(it) * 0.5 + 2.0)  // Linear
-	y2 := x.map(f64(it * it) * 0.1)   // Quadratic
-	
+	y1 := x.map(f64(it) * 0.5 + 2.0) // Linear
+	y2 := x.map(f64(it * it) * 0.1) // Quadratic
+
 	mut plt := plot.Plot.new()
-	
+
 	// Add first trace
 	plt.scatter(
-		x: x
-		y: y1
-		mode: 'lines+markers'
-		name: 'Linear Function'
+		x:      x
+		y:      y1
+		mode:   'lines+markers'
+		name:   'Linear Function'
 		marker: plot.Marker{
-			size: []f64{len: x.len, init: 6.0}
+			size:  []f64{len: x.len, init: 6.0}
 			color: []string{len: x.len, init: '#1f77b4'}
 		}
-		line: plot.Line{
+		line:   plot.Line{
 			color: '#1f77b4'
 			width: 2.0
 		}
 	)
-	
+
 	// Add second trace
 	plt.scatter(
-		x: x
-		y: y2
-		mode: 'lines+markers'
-		name: 'Quadratic Function'
+		x:      x
+		y:      y2
+		mode:   'lines+markers'
+		name:   'Quadratic Function'
 		marker: plot.Marker{
-			size: []f64{len: x.len, init: 6.0}
+			size:  []f64{len: x.len, init: 6.0}
 			color: []string{len: x.len, init: '#ff7f0e'}
 		}
-		line: plot.Line{
+		line:   plot.Line{
 			color: '#ff7f0e'
 			width: 2.0
 		}
 	)
-	
+
 	// Configure layout with annotations
 	plt.layout(
-		title: 'Multi-Trace Plot for JSON Export'
-		xaxis: plot.Axis{
-			title: plot.AxisTitle{text: 'X Values'}
+		title:  'Multi-Trace Plot for JSON Export'
+		xaxis:  plot.Axis{
+			title: plot.AxisTitle{
+				text: 'X Values'
+			}
 		}
-		yaxis: plot.Axis{
-			title: plot.AxisTitle{text: 'Y Values'}
+		yaxis:  plot.Axis{
+			title: plot.AxisTitle{
+				text: 'Y Values'
+			}
 		}
-		width: 800
+		width:  800
 		height: 600
 	)
-	
+
 	// Export JSON data
 	traces_json, layout_json := plt.to_json()
-	
+
 	// Generate a complete standalone HTML file
 	html_content := generate_standalone_plot(traces_json, layout_json)
-	
+
 	// Write to file
 	os.write_file('exported_plot.html', html_content) or {
 		eprintln('Error writing file: ${err}')
 		return
 	}
-	
+
 	println('✅ Advanced plot exported successfully!')
 	println('📁 Generated file: exported_plot.html')
 	println('🌐 Open the file in your browser to view the interactive plot')

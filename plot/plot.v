@@ -109,7 +109,7 @@ pub fn (p Plot) to_json() (string, string) {
 // The returned JSON is compatible with Plotly.js format
 pub fn (p Plot) traces_json() string {
 	traces_with_type := p.traces.map({
-		'type': PlotValue(it.trace_type())
+		'type':  PlotValue(it.trace_type())
 		'trace': PlotValue(it)
 	})
 	return plot_encode(traces_with_type)
