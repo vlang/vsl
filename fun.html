@@ -175,7 +175,47 @@
 					<div class="doc-content">
 								<section id="readme_fun" class="doc-node">
 			<div class="title"><h1> fun <a href="#readme_fun">#</a></h1></div>
+<h1>Special Functions (fun) Module</h1><p>The <code>vsl.fun</code> module provides a comprehensive collection of special mathematical functions commonly used in scientific computing, engineering, and mathematical analysis.</p><h2>🚀 Features</h2><h3>Bessel Functions</h3><ul><li><strong>Standard Bessel Functions</strong>: J, Y, I, K functions of integer and fractional orders</li><li><strong>Modified Bessel Functions</strong>: Enhanced performance for specific use cases</li><li><strong>Spherical Bessel Functions</strong>: For spherical coordinate problems</li></ul><h3>Gamma Functions</h3><ul><li><strong>Gamma Function</strong>: Γ(x) and related functions</li><li><strong>Log Gamma</strong>: Numerically stable logarithmic form</li><li><strong>Complex Gamma</strong>: Support for complex arguments</li><li><strong>Digamma Function</strong>: Ψ(x) - logarithmic derivative of gamma</li></ul><h3>Error Functions</h3><ul><li><strong>Error Function</strong>: erf(x) and complementary erfc(x)</li><li><strong>Inverse Error Functions</strong>: For statistical applications</li><li><strong>Scaled Error Functions</strong>: Optimized variants</li></ul><h3>Interpolation</h3><ul><li><strong>Cubic Interpolation</strong>: Smooth curve fitting</li><li><strong>Quadratic Interpolation</strong>: Efficient polynomial fitting</li><li><strong>Data Interpolation</strong>: General-purpose data fitting</li></ul><h3>Trigonometric Extensions</h3><ul><li><strong>Hyperbolic Functions</strong>: Enhanced sinh, cosh, tanh</li><li><strong>Inverse Trigonometric</strong>: Complete set of inverse functions</li><li><strong>Sinusoidal Functions</strong>: Parameterized sine waves</li></ul><h2>📖 Usage Examples</h2><h3>Bessel Functions</h3><pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>fun
 
+<span class="token comment">// Standard Bessel function of the first kind</span>
+x <span class="token operator">:=</span> <span class="token number">2.5</span>
+order <span class="token operator">:=</span> <span class="token number">1</span>
+result <span class="token operator">:=</span> fun<span class="token punctuation">.</span><span class="token function">bessel_j</span><span class="token punctuation">(</span>order<span class="token punctuation">,</span> x<span class="token punctuation">)</span>
+<span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'J_1(2.5) = </span><span class="token string_interp">$</span>{result}<span class="token string">'</span><span class="token punctuation">)</span>
+
+<span class="token comment">// Modified Bessel function</span>
+result_i <span class="token operator">:=</span> fun<span class="token punctuation">.</span><span class="token function">bessel_i</span><span class="token punctuation">(</span>order<span class="token punctuation">,</span> x<span class="token punctuation">)</span>
+<span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'I_1(2.5) = </span><span class="token string_interp">$</span>{result_i}<span class="token string">'</span><span class="token punctuation">)</span></code></pre><h3>Gamma Functions</h3><pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>fun
+
+<span class="token comment">// Standard gamma function</span>
+x <span class="token operator">:=</span> <span class="token number">3.5</span>
+gamma_val <span class="token operator">:=</span> fun<span class="token punctuation">.</span><span class="token function">gamma</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+<span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'Γ(3.5) = </span><span class="token string_interp">$</span>{gamma_val}<span class="token string">'</span><span class="token punctuation">)</span>
+
+<span class="token comment">// Log gamma for large arguments (numerically stable)</span>
+log_gamma_val <span class="token operator">:=</span> fun<span class="token punctuation">.</span><span class="token function">log_gamma</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+<span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'ln(Γ(3.5)) = </span><span class="token string_interp">$</span>{log_gamma_val}<span class="token string">'</span><span class="token punctuation">)</span></code></pre><h3>Error Functions</h3><pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>fun
+
+<span class="token comment">// Error function - common in statistics</span>
+x <span class="token operator">:=</span> <span class="token number">1.0</span>
+erf_val <span class="token operator">:=</span> fun<span class="token punctuation">.</span><span class="token function">erf</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+<span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'erf(1.0) = </span><span class="token string_interp">$</span>{erf_val}<span class="token string">'</span><span class="token punctuation">)</span>
+
+<span class="token comment">// Complementary error function</span>
+erfc_val <span class="token operator">:=</span> fun<span class="token punctuation">.</span><span class="token function">erfc</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+<span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'erfc(1.0) = </span><span class="token string_interp">$</span>{erfc_val}<span class="token string">'</span><span class="token punctuation">)</span></code></pre><h3>Interpolation</h3><pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>fun
+
+<span class="token comment">// Data points for interpolation</span>
+x_data <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">2.0</span><span class="token punctuation">,</span> <span class="token number">3.0</span><span class="token punctuation">]</span>
+y_data <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">4.0</span><span class="token punctuation">,</span> <span class="token number">9.0</span><span class="token punctuation">,</span> <span class="token number">16.0</span><span class="token punctuation">]</span>
+
+<span class="token comment">// Create cubic interpolator</span>
+<span class="token keyword">mut</span> interp <span class="token operator">:=</span> fun<span class="token punctuation">.</span><span class="token function">cubic_interpolator</span><span class="token punctuation">(</span>x_data<span class="token punctuation">,</span> y_data<span class="token punctuation">)</span>
+
+<span class="token comment">// Evaluate at intermediate point</span>
+x_new <span class="token operator">:=</span> <span class="token number">1.5</span>
+y_new <span class="token operator">:=</span> interp<span class="token punctuation">.</span><span class="token function">eval</span><span class="token punctuation">(</span>x_new<span class="token punctuation">)</span>
+<span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'Interpolated value at x=1.5: </span><span class="token string_interp">$</span>{y_new}<span class="token string">'</span><span class="token punctuation">)</span></code></pre><h2>🔬 Mathematical Background</h2><h3>Bessel Functions</h3><p>Bessel functions arise in solving Laplace's equation in cylindrical coordinates. They appear in:- Wave propagation problems</p><ul><li>Heat conduction in cylinders</li><li>Quantum mechanics (radial wave functions)</li><li>Electromagnetic field problems</li></ul><h3>Gamma Function</h3><p>The gamma function extends the factorial to real and complex numbers:- Γ(n) = (n-1)! for positive integers</p><ul><li>Used in probability distributions</li><li>Appears in many integrals and series</li></ul><h3>Error Function</h3><p>Related to the Gaussian distribution:- erf(x) = (2/√π) ∫₀ˣ e^(-t²) dt</p><ul><li>Fundamental in statistics and probability</li><li>Used in diffusion processes</li></ul><h2>🎯 Examples</h2><p>See these examples for practical applications:- <code>prime_factorization</code> - Uses gamma function properties</p><ul><li><code>data_analysis_example</code> - Statistical functions</li><li><code>noise_*</code> examples - Error functions in random processes</li></ul><h2>🔧 Performance Notes</h2><ul><li><strong>Table-based functions</strong>: Some functions use precomputed tables for speed</li><li><strong>Asymptotic expansions</strong>: Used for large arguments</li><li><strong>Continued fractions</strong>: Employed for intermediate ranges</li><li><strong>Error handling</strong>: Graceful handling of domain errors</li></ul><h2>🐛 Current Limitations</h2><p><strong>Note</strong>: Some functions are under development. See <code>TODO</code> file for status:</p><ul><li>Error estimates for Bessel functions</li><li>Complex gamma function implementation</li><li>Extended precision modes</li><li>Additional inverse functions</li></ul><h2>📚 API Reference</h2><h3>Core Functions</h3><p><strong>Bessel Functions:</strong>- <code>bessel_j(n, x)</code> - Bessel function of the first kind</p><ul><li><code>bessel_y(n, x)</code> - Bessel function of the second kind</li><li><code>bessel_i(n, x)</code> - Modified Bessel function of the first kind</li><li><code>bessel_k(n, x)</code> - Modified Bessel function of the second kind</li></ul><p><strong>Gamma Functions:</strong>- <code>gamma(x)</code> - Gamma function</p><ul><li><code>log_gamma(x)</code> - Logarithm of gamma function</li><li><code>digamma(x)</code> - Digamma function (ψ function)</li></ul><p><strong>Error Functions:</strong>- <code>erf(x)</code> - Error function</p><ul><li><code>erfc(x)</code> - Complementary error function</li></ul><h2>🔗 References</h2><ul><li>Abramowitz &amp; Stegun: "Handbook of Mathematical Functions"</li><li>NIST Digital Library of Mathematical Functions</li><li>Numerical Recipes in Scientific Computing</li></ul><hr /><p>For more special functions, see the <a href="https://vlang.github.io/vsl">VSL documentation</a> and <a href="../examples/">examples directory</a>.</p>
 
 </section>
 
@@ -974,9 +1014,10 @@
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 27 Jun 2025 07:24:25</div>
+						<div class="footer">Powered by vdoc. Generated on: 29 Jun 2025 07:34:14</div>
 					</div>
-					<div class="doc-toc"><ul><li class="open"><a href="#atan2p">fn atan2p</a>        <ul>
+					<div class="doc-toc"><ul><li class="open"><a href="#readme_fun">README</a></li>
+<li class="open"><a href="#atan2p">fn atan2p</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#atan2pdeg">fn atan2pdeg</a>        <ul>

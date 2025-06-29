@@ -175,7 +175,59 @@
 					<div class="doc-content">
 								<section id="readme_la" class="doc-node">
 			<div class="title"><h1> la <a href="#readme_la">#</a></h1></div>
+<h1>Linear Algebra (la) Module</h1><p>The <code>vsl.la</code> module provides comprehensive linear algebra operations for scientific computing, including matrix operations, vector manipulations, and numerical linear algebra algorithms.</p><h2>🚀 Features</h2><h3>Matrix Operations</h3><ul><li><strong>Basic Operations</strong>: Addition, subtraction, multiplication, transposition</li><li><strong>Advanced Operations</strong>: Decompositions (LU, QR, SVD), eigenvalue analysis</li><li><strong>Sparse Matrices</strong>: Efficient storage and operations for sparse data</li><li><strong>BLAS Integration</strong>: Optional high-performance BLAS backend</li></ul><h3>Vector Operations</h3><ul><li><strong>Basic Arithmetic</strong>: Element-wise operations, dot products, norms</li><li><strong>Advanced Functions</strong>: Cross products, projections, rotations</li><li><strong>Memory Efficient</strong>: Optimized storage and computation patterns</li></ul><h3>Dense Linear Systems</h3><ul><li><strong>Direct Solvers</strong>: LU decomposition, Gaussian elimination</li><li><strong>Iterative Solvers</strong>: Conjugate gradient, GMRES</li><li><strong>Condition Analysis</strong>: Matrix conditioning and stability assessment</li></ul><h2>📖 Usage Examples</h2><h3>Basic Matrix Operations</h3><pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>la
 
+<span class="token comment">// Create matrices</span>
+<span class="token keyword">mut</span> a <span class="token operator">:=</span> la<span class="token punctuation">.</span><span class="token function">matrix_new</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span>
+<span class="token keyword">mut</span> b <span class="token operator">:=</span> la<span class="token punctuation">.</span><span class="token function">matrix_new</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span>
+
+<span class="token comment">// Set values</span>
+a<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">)</span>
+a<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2.0</span><span class="token punctuation">)</span>
+<span class="token comment">// ... fill matrices</span>
+
+<span class="token comment">// Matrix multiplication</span>
+<span class="token keyword">mut</span> c <span class="token operator">:=</span> la<span class="token punctuation">.</span><span class="token function">matrix_mul</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">)</span>
+
+<span class="token comment">// Print result</span>
+<span class="token function">println</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span></code></pre><h3>Vector Operations</h3><pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>la
+
+<span class="token comment">// Create vectors</span>
+<span class="token keyword">mut</span> v1 <span class="token operator">:=</span> la<span class="token punctuation">.</span><span class="token function">vector_new</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span>
+<span class="token keyword">mut</span> v2 <span class="token operator">:=</span> la<span class="token punctuation">.</span><span class="token function">vector_new</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span>
+
+<span class="token comment">// Set values</span>
+v1<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">)</span>
+v1<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2.0</span><span class="token punctuation">)</span>
+v1<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3.0</span><span class="token punctuation">)</span>
+
+<span class="token comment">// Calculate dot product</span>
+dot <span class="token operator">:=</span> la<span class="token punctuation">.</span><span class="token function">vector_dot</span><span class="token punctuation">(</span>v1<span class="token punctuation">,</span> v2<span class="token punctuation">)</span></code></pre><h3>Solving Linear Systems</h3><pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>la
+
+<span class="token comment">// Solve Ax = b</span>
+<span class="token keyword">mut</span> a <span class="token operator">:=</span> la<span class="token punctuation">.</span><span class="token function">matrix_new</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span>
+<span class="token keyword">mut</span> b <span class="token operator">:=</span> la<span class="token punctuation">.</span><span class="token function">vector_new</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span>
+
+<span class="token comment">// Fill A and b with your data</span>
+<span class="token comment">// ...</span>
+
+<span class="token comment">// Solve system</span>
+<span class="token keyword">mut</span> x <span class="token operator">:=</span> la<span class="token punctuation">.</span><span class="token function">solve_linear_system</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">)</span></code></pre><h2>🔧 Performance Options</h2><h3>Pure V Implementation</h3><pre><code class="language-sh">v run your_program<span class="token punctuation">.</span>v</code></pre><h3>With OpenBLAS Backend</h3><pre><code class="language-sh">v <span class="token operator">-</span>cflags <span class="token operator">-</span>lopenblas run your_program<span class="token punctuation">.</span>v</code></pre><h3>With LAPACK Support</h3><pre><code class="language-sh">v <span class="token operator">-</span>cflags <span class="token string">'-lopenblas -llapack'</span> run your_program<span class="token punctuation">.</span>v</code></pre><h2>📚 API Reference</h2><h3>Core Types</h3><ul><li><code>Matrix</code> - Dense matrix representation</li><li><code>Vector</code> - Dense vector representation</li><li><code>SparseMatrix</code> - Sparse matrix for large, sparse data</li></ul><h3>Key Functions</h3><ul><li><code>matrix_new(rows, cols)</code> - Create new matrix</li><li><code>vector_new(size)</code> - Create new vector</li><li><code>matrix_mul(a, b)</code> - Matrix multiplication</li><li><code>solve_linear_system(a, b)</code> - Linear system solver</li></ul><h2>🎯 Examples</h2><p>See the following examples for practical usage:</p><ul><li><code>la_triplet01</code> - Basic linear algebra operations</li><li><code>data_analysis_example</code> - Statistical computations with matrices</li><li><code>ml_*</code> examples - Machine learning applications</li></ul><h2>🔬 Advanced Features</h2><h3>Eigenvalue Analysis</h3><pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>la
+
+<span class="token keyword">mut</span> a <span class="token operator">:=</span> la<span class="token punctuation">.</span><span class="token function">matrix_new</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span>
+<span class="token comment">// Fill matrix...</span>
+
+<span class="token comment">// Compute eigenvalues and eigenvectors</span>
+eigenvals<span class="token punctuation">,</span> eigenvecs <span class="token operator">:=</span> la<span class="token punctuation">.</span><span class="token function">eigen</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span></code></pre><h3>Matrix Decompositions</h3><pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>la
+
+<span class="token comment">// LU decomposition</span>
+l<span class="token punctuation">,</span> u<span class="token punctuation">,</span> p <span class="token operator">:=</span> la<span class="token punctuation">.</span><span class="token function">lu_decompose</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span>
+
+<span class="token comment">// QR decomposition</span>
+q<span class="token punctuation">,</span> r <span class="token operator">:=</span> la<span class="token punctuation">.</span><span class="token function">qr_decompose</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span>
+
+<span class="token comment">// SVD</span>
+u<span class="token punctuation">,</span> s<span class="token punctuation">,</span> vt <span class="token operator">:=</span> la<span class="token punctuation">.</span><span class="token function">svd</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span></code></pre><h2>🐛 Troubleshooting</h2><p><strong>Compilation errors with BLAS</strong>: Ensure OpenBLAS development packages are installed <strong>Memory issues</strong>: Use sparse matrices for large, sparse problems <strong>Numerical instability</strong>: Check matrix conditioning before solving systems</p><hr /><p>For more information, see the <a href="https://vlang.github.io/vsl">VSL documentation</a> and <a href="../examples/">examples directory</a>.</p>
 
 </section>
 
@@ -926,9 +978,10 @@
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 27 Jun 2025 07:24:25</div>
+						<div class="footer">Powered by vdoc. Generated on: 29 Jun 2025 07:34:14</div>
 					</div>
-					<div class="doc-toc"><ul><li class="open"><a href="#den_solve">fn den_solve</a>        <ul>
+					<div class="doc-toc"><ul><li class="open"><a href="#readme_la">README</a></li>
+<li class="open"><a href="#den_solve">fn den_solve</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#jacobi">fn jacobi</a>        <ul>
