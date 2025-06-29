@@ -33,12 +33,17 @@ VSL is a V library to develop Artificial Intelligence and High-Performance Scien
 
 Visit [VSL Documentation](https://vlang.github.io/vsl) to explore all supported features and APIs.
 
-VSL is a comprehensive Scientific Computing Library offering a rich ecosystem of mathematical and computational modules. The library provides both pure-V implementations and optional high-performance backends through established C and Fortran libraries.
+VSL is a comprehensive Scientific Computing Library offering a rich ecosystem of
+mathematical and computational modules. The library provides both pure-V
+implementations and optional high-performance backends through established C and
+Fortran libraries.
 
 ### 🔬 Core Capabilities
 
-- **Linear Algebra**: Complete matrix and vector operations, eigenvalue decomposition, linear solvers
-- **Machine Learning**: Clustering algorithms (K-means), classification (KNN), regression, and NLP tools
+- **Linear Algebra**: Complete matrix and vector operations, eigenvalue
+  decomposition, linear solvers
+- **Machine Learning**: Clustering algorithms (K-means), classification (KNN),
+  regression, and NLP tools
 - **Numerical Methods**: Differentiation, integration, root finding, polynomial operations
 - **Data Visualization**: Advanced plotting with Plotly-style API supporting 2D/3D charts
 - **Scientific Computing**: FFT, statistical analysis, probability distributions
@@ -53,11 +58,13 @@ VSL provides flexible performance options:
 - **Optimized Backends**: Optional integration with OpenBLAS, LAPACK, and MPI
 - **GPU Acceleration**: OpenCL support for computationally intensive operations
 
-Each module clearly documents compilation flags and backend requirements, allowing users to choose the optimal configuration for their specific use case.
+Each module clearly documents compilation flags and backend requirements, allowing
+users to choose the optimal configuration for their specific use case.
 
 ## 🚀 Installation & Quick Start
 
-VSL supports multiple installation methods and deployment options to fit different development workflows.
+VSL supports multiple installation methods and deployment options to fit
+different development workflows.
 
 ### 📦 Package Manager Installation
 

@@ -1,6 +1,8 @@
 # VSL Plot Module 📊
 
-This library implements high-level plotting functions for scientific data visualization using a Plotly-inspired API. Create interactive, publication-quality plots with minimal code while maintaining full customization control.
+This library implements high-level plotting functions for scientific data
+visualization using a Plotly-inspired API. Create interactive, publication-quality
+plots with minimal code while maintaining full customization control.
 
 ## 🚀 Features
 

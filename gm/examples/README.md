@@ -1,6 +1,8 @@
 # VSL Geometry Module Examples 🔬📐
 
-This directory contains comprehensive examples demonstrating the capabilities of the VSL Geometry Module (`vsl.gm`). The module provides fundamental geometric algorithms and data structures for 3D computational geometry.
+This directory contains comprehensive examples demonstrating the capabilities of
+the VSL Geometry Module (`vsl.gm`). The module provides fundamental geometric
+algorithms and data structures for 3D computational geometry.
 
 ## 🚀 Quick Start
 
@@ -246,4 +248,6 @@ result := gm.vector_add(2.0, v1, -1.0, v2) // 2*v1 - v2
 
 ---
 
-🎯 **Master 3D geometry with VSL!** These examples provide a comprehensive foundation for computational geometry applications in scientific computing, engineering, and game development.
+🎯 **Master 3D geometry with VSL!** These examples provide a comprehensive
+foundation for computational geometry applications in scientific computing,
+engineering, and game development.

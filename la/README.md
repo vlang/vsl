@@ -1,6 +1,8 @@
 # Linear Algebra (la) Module
 
-The `vsl.la` module provides comprehensive linear algebra operations for scientific computing, including matrix operations, vector manipulations, and numerical linear algebra algorithms.
+The `vsl.la` module provides comprehensive linear algebra operations for
+scientific computing, including matrix operations, vector manipulations, and
+numerical linear algebra algorithms.
 
 ## 🚀 Features
 

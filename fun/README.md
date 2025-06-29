@@ -1,6 +1,8 @@
 # Special Functions (fun) Module
 
-The `vsl.fun` module provides a comprehensive collection of special mathematical functions commonly used in scientific computing, engineering, and mathematical analysis.
+The `vsl.fun` module provides a comprehensive collection of special mathematical
+functions commonly used in scientific computing, engineering, and mathematical
+analysis.
 
 ## 🚀 Features
 

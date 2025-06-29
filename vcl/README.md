@@ -1,6 +1,9 @@
 # V Computing Language (VCL) 🖥️
 
-VCL is a high-level, V-native interface for GPU computing with OpenCL. It provides an opinionated, simplified approach to GPU programming that emphasizes ease of use while maintaining high performance for scientific computing applications.
+VCL is a high-level, V-native interface for GPU computing with OpenCL. It
+provides an opinionated, simplified approach to GPU programming that emphasizes
+ease of use while maintaining high performance for scientific computing
+applications.
 
 ## 🚀 Features
 
@@ -163,7 +166,8 @@ export VCL_LIBOPENCL_PATH=/usr/local/cuda/lib64/libOpenCL.so
 
 ## 🔧 Custom OpenCL Headers (Advanced)
 
-> **IMPORTANT**: Header version compatibility is crucial. Mismatched OpenCL headers can cause runtime failures.
+> **IMPORTANT**: Header version compatibility is crucial. Mismatched OpenCL
+> headers can cause runtime failures.
 
 By default, VCL uses system OpenCL headers. For custom installations:
 
