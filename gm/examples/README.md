@@ -213,6 +213,11 @@ xmax := [10.0, 10.0, 10.0]
 ndiv := [5, 5, 5]
 mut bins := gm.Bins.new(xmin, xmax, ndiv)
 
+// Define point data
+x, y, z := 2.5, 3.5, 4.0
+id := 1
+extra_data := 42
+
 // Add points
 bins.append([x, y, z], id, extra_data)
 
