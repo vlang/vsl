@@ -1,4 +1,4 @@
-name: Lint
+name: V Lint
 
 on:
   push:
@@ -46,38 +46,3 @@ jobs:
         # NOTE: `cd` into module dir required. Currently, running `v fmt -verify` from outside the module dir
         # would encounter errors and `v fmt -w` would even break the module.
         run: cd ~/.vmodules/vsl && v fmt -verify .
-
-  megalinter:
-    name: MegaLinter
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      issues: write
-      pull-requests: write
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          fetch-depth: 0
-
-      - name: MegaLinter
-        uses: oxsecurity/megalinter@v8
-        id: ml
-        env:
-          VALIDATE_ALL_CODEBASE: >-
-            ${{
-              github.event_name == 'push' &&
-              github.ref == 'refs/heads/main'
-            }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Archive MegaLinter reports
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: MegaLinter reports
-          include-hidden-files: "true"
-          path: |
-            megalinter-reports
-            mega-linter.log
