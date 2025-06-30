@@ -2,9 +2,11 @@ module vcl
 
 pub enum DeviceType as i64 {
 	// device types - bitfield
-	cpu         = (1 << 0)
-	gpu         = (1 << 1)
-	accelerator = (1 << 2)
+	default     = (1 << 0)
+	cpu         = (1 << 1)
+	gpu         = (1 << 2)
+	accelerator = (1 << 3)
+	custom      = (1 << 4)
 	all         = 0xFFFFFFFF
 }
 
