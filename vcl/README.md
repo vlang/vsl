@@ -15,7 +15,7 @@ applications.
 
 ## 🎯 Quick Start Example
 
-```v
+```v ignore
 import vsl.vcl
 
 // Initialize VCL and get the first available device
