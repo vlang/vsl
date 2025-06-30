@@ -1,6 +1,10 @@
 # Fast Fourier Transform (FFT) Example 🌊
 
-This example demonstrates signal processing using VSL's FFT implemenDive into signal processing with VSL! � Explore more scientific computing examples in the
+This example demonstrates signal processing using VSL's FFT impleme---
+
+Dve into signal processing with VSL! 🚀 Explore more examples in the  
+[examples directory](../).ive into signal processing with VSL! 🚀 Explore more examples in the  
+[examples directory](../).ve into signal processing with VSL! 🚀 Explore more examples in the  
 [examples directory](../).ation combined with data
 visualization. Learn how to analyze frequency components of signals and visualize the results.
 
@@ -107,7 +111,7 @@ Try modifying the example:
 - [FFT Algorithm Theory](https://en.wikipedia.org/wiki/Fast_Fourier_transform)
 - [FFTW3 Documentation](http://www.fftw.org/fftw3_doc/)
 - [VSL FFT Module Reference](https://vlang.github.io/vsl/fft/)
-
 ---
 
-Dive into signal processing with VSL! � Explore more scientific computing examples in the [examples directory](../).
+Dive into signal processing with VSL! 🚀 Explore more examples in the
+[examples directory](../).

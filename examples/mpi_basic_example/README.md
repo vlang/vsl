@@ -1,8 +1,7 @@
 # Message Passing Interface (MPI) Example 🌐
 
-This example demonstrates parallel computing using VSL's MPI wrapper for distributed computScale your computations with parallel processing! � Explore more parallel computing examples
-in the [examples directory](../).ng
-across multiple processes. Learn the fundamentals of parallel programming with MPI.
+This example demonstrates parallel computing using VSL's MPI wrapper for distributed  
+computing across multiple processes. Learn the fundamentals of parallel programming with MPI.
 
 ## 🎯 What You'll Learn
 
@@ -136,4 +135,5 @@ After mastering this example, explore:
 
 ---
 
-Scale your computations with parallel processing! � Explore more parallel computing examples in the [examples directory](../).
+Scale your computations with parallel processing! 🚀 Explore more examples in the
+[examples directory](../).

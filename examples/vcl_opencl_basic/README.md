@@ -1,8 +1,7 @@
-# OpenCL GPU Computing Example �️
+# OpenCL GPU Computing Example ⚡️
 
-This example demonstrates GPU-accelerated computing using VSL's VCL (V Computing Language)
-module with OpenCL. Learn how to leverage GPU parallel pAccelerate your computations with GPU power! � Explore more OpenCL examples in the
-[examples directory](../).ocessing for scientific computations.
+This example demonstrates GPU-accelerated computing using VSL's VCL (V Computing Language)  
+module with OpenCL. Learn how to leverage GPU parallel processing for scientific computations.
 
 ## 🎯 What You'll Learn
 
@@ -22,11 +21,12 @@ module with OpenCL. Learn how to leverage GPU parallel pAccelerate your computat
 ### Installing OpenCL
 
 **Ubuntu/Debian:**
+
 ```sh
 # For NVIDIA GPUs
 sudo apt-get install nvidia-opencl-dev
 
-# For AMD GPUs  
+# For AMD GPUs
 sudo apt-get install amd-opencl-dev
 
 # For Intel integrated graphics
@@ -73,17 +73,20 @@ GPU acceleration successful! ✅
 ## 🔍 OpenCL Concepts Explained
 
 ### Platform and Device Model
+
 - **Platform**: OpenCL implementation (NVIDIA, AMD, Intel)
 - **Device**: Compute unit (GPU, CPU, FPGA)
 - **Context**: Environment for kernels and memory objects
 - **Command Queue**: Manages kernel execution order
 
 ### Memory Hierarchy
+
 - **Global Memory**: Large, accessible by all work-items
 - **Local Memory**: Fast, shared within work-groups
 - **Private Memory**: Fastest, per work-item storage
 
 ### Execution Model
+
 - **Work-item**: Single execution thread
 - **Work-group**: Collection of work-items
 - **NDRange**: Complete problem space
@@ -107,12 +110,14 @@ Try modifying the example to:
 ## 🔬 Technical Details
 
 **VCL Integration:**
+
 - Automatic platform/device detection
 - Memory management abstraction
 - Kernel compilation and caching
 - Error handling and debugging
 
 **Performance Optimization:**
+
 - Memory coalescing for efficiency
 - Work-group size optimization
 - Kernel occupancy maximization
@@ -121,16 +126,19 @@ Try modifying the example to:
 ## 🚀 GPU Programming Best Practices
 
 ### Memory Management
+
 - Minimize CPU-GPU data transfers
 - Use appropriate memory types
 - Consider memory access patterns
 
 ### Kernel Optimization
+
 - Maximize thread utilization
 - Avoid divergent branches
 - Use local memory effectively
 
 ### Algorithm Design
+
 - Decompose problems for parallelism
 - Balance computation vs. communication
 - Consider GPU architecture constraints
@@ -150,16 +158,19 @@ Try modifying the example to:
 ## 🔧 Platform-Specific Notes
 
 ### NVIDIA GPUs
+
 - Best performance with CUDA toolkit installed
 - Supports double precision on newer cards
 - Excellent for compute-intensive workloads
 
 ### AMD GPUs
+
 - Strong OpenCL support across all generations
 - Good for both compute and graphics workloads
 - ROCm platform for professional computing
 
 ### Intel Integrated Graphics
+
 - Good for learning and development
 - Limited by memory bandwidth
 - Useful for CPU+GPU heterogeneous computing
@@ -181,4 +192,5 @@ After mastering this example, explore:
 
 ---
 
-Accelerate your computations with GPU power! � Explore more OpenCL examples in the [examples directory](../).
+Accelerate your computations with GPU power! 🚀 Explore more examples in the
+[examples directory](../).
