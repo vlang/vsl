@@ -1,0 +1,46 @@
+# Configuration file for MegaLinter
+#
+# See all available variables at https://megalinter.io/latest/config-file/ and in
+# linters documentation
+
+# all, none, or list of linter keys
+APPLY_FIXES: all
+
+# Disable some linters that are not applicable to V language or too heavy
+DISABLE:
+  - COPYPASTE # Disable copy-paste detection (can be noisy for scientific code)
+  - PYTHON    # Disable Python linters (not needed for V project)
+  - JAVASCRIPT # Disable JS linters (not needed for V project)
+  - TYPESCRIPT # Disable TS linters (not needed for V project)
+  - PHP       # Disable PHP linters (not needed for V project)
+  - JAVA      # Disable Java linters (not needed for V project)
+  - C         # V has its own formatting, disable C linters
+  - CPP       # V has its own formatting, disable C++ linters
+  - RUST      # Disable Rust linters (not needed for V project)
+  - GO        # Disable Go linters (not needed for V project)
+
+# Enable only relevant linters for a V scientific library
+ENABLE:
+  - MARKDOWN    # For documentation
+  - YAML        # For GitHub Actions and config files
+  - JSON        # For package.json and config files
+  - DOCKERFILE  # For containerization
+  - ACTION      # For GitHub Actions validation
+  - REPOSITORY  # For security and repository checks
+  - SPELL       # For spell checking
+  - BASH        # For shell scripts
+
+SHOW_ELAPSED_TIME: true
+
+# File filtering
+FILTER_REGEX_EXCLUDE: |
+  (megalinter-reports/|\.git/|\.vscode/|node_modules/|examples/.*/.*\.png|examples/.*/.*\.jpg|examples/.*/.*\.jpeg|examples/.*/.*\.gif|\.svg$)
+
+# Configure specific linters
+MARKDOWN_MARKDOWNLINT_DISABLE_ERRORS: true  # Don't fail on markdown issues
+SPELL_CSPELL_DISABLE_ERRORS: true           # Don't fail on spell check issues
+REPOSITORY_SECRETLINT_DISABLE_ERRORS: true  # Don't fail on secrets check
+REPOSITORY_GITLEAKS_DISABLE_ERRORS: true    # Don't fail on git leaks check
+
+# Uncomment if you want MegaLinter to detect errors but not block CI to pass
+# DISABLE_ERRORS: true

@@ -13,3 +13,5 @@ vsl
 *.bak
 
 /vls.log
+
+megalinter-reports/
