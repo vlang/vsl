@@ -52,7 +52,7 @@ The example generates an interactive HTML plot showing:
 
 The key fix is to explicitly configure annotation properties to hide arrows:
 
-```v
+```v ignore
 annotation1 := plot.Annotation{
     text: 'Peak point'
     x: 2.0

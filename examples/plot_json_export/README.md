@@ -11,19 +11,19 @@ web pages or using the data in other contexts.
 
 ### `to_json() (string, string)`
 Returns both traces and layout JSON strings in one call:
-```v
+```v ignore
 traces_json, layout_json := plt.to_json()
 ```
 
 ### `traces_json() string`
 Returns only the traces data as JSON:
-```v
+```v ignore
 traces_json := plt.traces_json()
 ```
 
 ### `layout_json() string`
 Returns only the layout configuration as JSON:
-```v
+```v ignore
 layout_json := plt.layout_json()
 ```
 
@@ -57,7 +57,7 @@ The example will:
 
 ## 🔧 Integration Example
 
-```v
+```v ignore
 import vsl.plot
 
 // Create your plot

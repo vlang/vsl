@@ -79,7 +79,7 @@ plt.show()!
 
 **Markers**: Control size, color, symbol, and opacity
 
-```v
+```v ignore
 marker:
 plot.Marker
 {
@@ -91,7 +91,7 @@ plot.Marker
 
 **Lines**: Customize thickness, style, and color
 
-```v
+```v ignore
 line:
 plot.Line
 {
@@ -103,7 +103,7 @@ plot.Line
 
 ### Layout Configuration
 
-```v
+```v ignore
 plt.layout(
     title: 'My Plot Title'
     xaxis: plot.Axis{
@@ -125,7 +125,7 @@ plt.layout(
 
 The most important fix for annotation arrows:
 
-```v
+```v ignore
 // ✅ CORRECT: No unwanted arrows
 annotation := plot.Annotation{
     text: 'Important Point'
@@ -146,7 +146,7 @@ plt.layout(
 
 ### Text Styling
 
-```v
+```v ignore
 font:
 plot.Font
 {
@@ -158,7 +158,7 @@ plot.Font
 
 ### Arrow Customization
 
-```v
+```v ignore
 annotation := plot.Annotation
 {
 	text:       'Point with Arrow'
@@ -177,7 +177,7 @@ annotation := plot.Annotation
 **Problem**: Unwanted arrows show up with annotations
 **Solution**: Always set `showarrow: false` unless arrows are specifically needed
 
-```v
+```v ignore
 // ❌ WRONG: May show unwanted arrows
 annotation := plot.Annotation{
     text: 'My annotation'
@@ -215,7 +215,7 @@ annotation := plot.Annotation{
 
 ### Multiple Data Series
 
-```v
+```v ignore
 mut plt := plot.Plot.new()
 
 // First series
