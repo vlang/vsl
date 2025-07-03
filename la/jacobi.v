@@ -62,15 +62,19 @@ pub fn jacobi(mut q Matrix[f64], mut v []f64, mut a Matrix[f64]) ! {
 
 		// Check for convergence
 		if sum < tol {
-			return
+			break
 		}
 
 		// Rotations
 		for i in 0 .. n - 1 {
 			for j in i + 1 .. n {
-				mut h := v[i] - v[j]
+				h := v[j] - v[i]
+				if math.abs(a.get(i, j)) < tol {
+					continue
+				}
+
 				mut t := 0.0
-				if math.abs(h) <= tol {
+				if math.abs(h) < tol && math.abs(a.get(i, j)) < tol {
 					t = 1.0
 				} else {
 					theta := 0.5 * h / a.get(i, j)
@@ -82,46 +86,55 @@ pub fn jacobi(mut q Matrix[f64], mut v []f64, mut a Matrix[f64]) ! {
 
 				c := 1.0 / math.sqrt(1.0 + t * t)
 				s := t * c
-				tau := s / (1.0 + c)
-				h = t * a.get(i, j)
-				z[i] -= h
-				z[j] += h
-				v[i] -= h
-				v[j] += h
+
+				aii := a.get(i, i)
+				ajj := a.get(j, j)
+				aij := a.get(i, j)
+				a.set(i, i, aii - t * aij)
+				a.set(j, j, ajj + t * aij)
+				v[i] = a.get(i, i)
+				v[j] = a.get(j, j)
+
 				a.set(i, j, 0.0)
-				for k in 0 .. i {
-					g := a.get(k, i)
-					h = a.get(k, j)
-					a.set(k, i, g - s * (h + g * tau))
-					a.set(k, j, h + s * (g - h * tau))
-				}
-				for k in i + 1 .. j {
-					g := a.get(i, k)
-					h = a.get(k, j)
-					a.set(i, k, g - s * (h + g * tau))
-					a.set(k, j, h + s * (g - h * tau))
-				}
-				for k in j + 1 .. n {
-					g := a.get(i, k)
-					h = a.get(j, k)
-					a.set(i, k, g - s * (h + g * tau))
-					a.set(j, k, h + s * (g - h * tau))
-				}
+				a.set(j, i, 0.0)
+
 				for k in 0 .. n {
-					g := q.get(k, i)
-					h = q.get(k, j)
-					q.set(k, i, g - s * (h + g * tau))
-					q.set(k, j, h + s * (g - h * tau))
+					if k != i && k != j {
+						aik := a.get(i, k)
+						ajk := a.get(j, k)
+						a.set(i, k, c * aik - s * ajk)
+						a.set(j, k, c * ajk + s * aik)
+						a.set(k, i, a.get(i, k))
+						a.set(k, j, a.get(j, k))
+					}
+				}
+
+				for k in 0 .. n {
+					qik := q.get(k, i)
+					qjk := q.get(k, j)
+					q.set(k, i, c * qik - s * qjk)
+					q.set(k, j, c * qjk + s * qik)
 				}
 			}
 		}
+	}
 
-		for i in 0 .. n {
-			b[i] += z[i]
-			v[i] = b[i]
-			z[i] = 0.0
+	for i in 0 .. n {
+		a.set(i, i, v[i])
+		for j in 0 .. n {
+			if i != j {
+				a.set(i, j, 0.0)
+			}
 		}
 	}
 
-	return errors.error('Jacobi method did not converge', .efailed)
+	mut sum := 0.0
+	for i in 0 .. n - 1 {
+		for j in i + 1 .. n {
+			sum += math.abs(a.get(i, j))
+		}
+	}
+	if sum >= tol {
+		return errors.error('Jacobi method did not converge', .efailed)
+	}
 }
