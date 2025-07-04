@@ -1,6 +1,10 @@
 module plot
 
 import arrays
+import json
+
+// Type alias for plot data encoding (similar to show.v)
+type PlotValue = Trace | string
 
 // Plot is the main structure that contains layout and traces
 // to generate plots
@@ -90,4 +94,49 @@ pub fn (mut p Plot) layout(layout Layout) Plot {
 	}
 	p.layout = next_layout
 	return p
+}
+
+// to_json returns the plot's traces and layout as separate JSON strings
+// This method provides flexibility for embedding plots in custom web pages
+// or using the plot data in other contexts
+pub fn (p Plot) to_json() (string, string) {
+	traces_json := p.traces_json()
+	layout_json := p.layout_json()
+	return traces_json, layout_json
+}
+
+// traces_json returns the traces data as a JSON string
+// The returned JSON is compatible with Plotly.js format
+pub fn (p Plot) traces_json() string {
+	traces_with_type := p.traces.map({
+		'type':  PlotValue(it.trace_type())
+		'trace': PlotValue(it)
+	})
+	return plot_encode(traces_with_type)
+}
+
+// layout_json returns the layout configuration as a JSON string
+// The returned JSON is compatible with Plotly.js format
+pub fn (p Plot) layout_json() string {
+	return plot_encode(p.layout)
+}
+
+// Helper function for encoding plot data to JSON
+// This is a local version of the encode function to avoid circular imports
+fn plot_encode[T](obj T) string {
+	strings_to_replace := [
+		',"[]f64"',
+		'"[]f64"',
+		',"[][]f64"',
+		'"[][]f64"',
+		',"[]int"',
+		'"[]int"',
+		',"[]string"',
+		'"[]string"',
+	]
+	mut obj_json := json.encode(obj)
+	for string_to_replace in strings_to_replace {
+		obj_json = obj_json.replace(string_to_replace, '')
+	}
+	return obj_json
 }

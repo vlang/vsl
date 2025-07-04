@@ -2,9 +2,11 @@ module vcl
 
 pub enum DeviceType as i64 {
 	// device types - bitfield
-	cpu         = (1 << 0)
-	gpu         = (1 << 1)
-	accelerator = (1 << 2)
+	default     = (1 << 0)
+	cpu         = (1 << 1)
+	gpu         = (1 << 2)
+	accelerator = (1 << 3)
+	custom      = (1 << 4)
 	all         = 0xFFFFFFFF
 }
 
@@ -120,25 +122,51 @@ pub fn (d &Device) driver_version() !string {
 	return d.get_info_str(driver_version, true)
 }
 
-// add_program copiles program source
-// if an error occurs in building the program the add_program will panic
+// add_program compiles program source from OpenCL C code
+// This method takes OpenCL C source code, compiles it, and stores the resulting program
+// for later kernel creation and execution.
+//
+// Parameters:
+//   source: OpenCL C source code as a string
+//
+// Returns:
+//   Error if compilation fails, including detailed build log for debugging
+//
+// Example:
+//   kernel_source := '
+//   __kernel void vector_add(__global float* a, __global float* b, __global float* c) {
+//       int id = get_global_id(0);
+//       c[id] = a[id] + b[id];
+//   }'
+//   device.add_program(kernel_source)!
+//
+// Note: If compilation fails, the error will include the complete build log
+// with line numbers and specific error messages from the OpenCL compiler.
 pub fn (mut d Device) add_program(source string) ! {
 	mut ret := 0
 	source_ptr := &char(source.str)
+
+	// Create program object from source code
 	p := cl_create_program_with_source(d.ctx, 1, &source_ptr, unsafe { nil }, &ret)
 	if ret != success {
 		return vcl_error(ret)
 	}
-	ret = cl_build_program(p, 1, &d.id, unsafe{ &char(0) }, unsafe { nil }, unsafe { nil })
+
+	// Build (compile) the program for this device
+	ret = cl_build_program(p, 1, &d.id, unsafe { &char(0) }, unsafe { nil }, unsafe { nil })
 	if ret != success {
 		if ret == build_program_failure {
+			// Get detailed build log for debugging
 			mut n := usize(0)
 			cl_get_program_build_info(p, d.id, program_build_log, 0, unsafe { nil }, &n)
 			log := []u8{len: int(n)}
 			cl_get_program_build_info(p, d.id, program_build_log, n, &log[0], unsafe { nil })
-			return error(log.bytestr())
+			// Return the build log as error message for debugging
+			return error('OpenCL program compilation failed:\n${log.bytestr()}')
 		}
 		return vcl_error(ret)
 	}
+
+	// Store the compiled program for later kernel creation
 	d.programs << p
 }

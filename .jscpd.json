@@ -1,0 +1,26 @@
+{
+  "threshold": 5,
+  "reporters": ["html", "markdown"],
+  "minLines": 10,
+  "minTokens": 50,
+  "ignore": [
+    "**/node_modules/**",
+    "**/.git/**",
+    "**/.rbenv/**",
+    "**/.venv/**",
+    "**/*cache*/**",
+    "**/.github/**",
+    "**/.idea/**",
+    "**/report/**",
+    "**/megalinter-reports/**",
+    "**/*.svg",
+    "**/*.png",
+    "**/*.jpg",
+    "**/*.jpeg",
+    "**/*.gif",
+    "**/examples/**",
+    "**/static/**",
+    "**/bin/**"
+  ],
+  "formats": ["v", "markdown", "yaml", "json"]
+}

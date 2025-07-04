@@ -1,4 +1,4 @@
-name: Lint
+name: V Lint
 
 on:
   push:
@@ -13,32 +13,6 @@ permissions:
   contents: read
 
 jobs:
-##  super-linter:
-##    name: Lint Code Base
-##    runs-on: ubuntu-latest
-##    permissions:
-##      contents: read
-##      pull-requests: write
-##      actions: read
-##      checks: read
-##      statuses: write
-##    steps:
-##      - name: Checkout Code
-##        uses: actions/checkout@v4
-##        with:
-##          # Full git history is needed to get a proper
-##          # list of changed files within `super-linter`
-##          fetch-depth: 0
-##
-##      - name: Lint Code Base
-##        uses: super-linter/super-linter/slim@v6.7.0
-##        env:
-##          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-##          VALIDATE_ALL_CODEBASE: false
-##          DEFAULT_BRANCH: main
-##          LINTER_RULES_PATH: .
-##          MARKDOWN_CONFIG_FILE: .markdownlint.json
-
   docs:
     runs-on: ubuntu-latest
     steps:
@@ -50,6 +24,22 @@ jobs:
         uses: vlang/setup-v@v1.3
         with:
           check-latest: true
+      - name: Install dependencies
+        run: |
+          sudo apt-get update && \
+          sudo apt-get install --quiet -y --no-install-recommends \
+            gfortran \
+            libxi-dev \
+            libxcursor-dev \
+            mesa-common-dev \
+            liblapacke-dev \
+            libopenblas-dev \
+            libgc-dev \
+            libgl1-mesa-dev \
+            libopenmpi-dev \
+            libhdf5-dev \
+            hdf5-tools \
+            opencl-headers
       - name: Setup VSL as V module
         run: mv vsl ~/.vmodules/
       - name: Validate Docs

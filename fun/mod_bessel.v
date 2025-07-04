@@ -4,7 +4,7 @@ import vsl.poly
 import math
 
 // bessel_i0 returns the modified Bessel function i0(x) for any real x.
-fn bessel_i0(x f64) f64 {
+pub fn bessel_i0(x f64) f64 {
 	ax := math.abs(x)
 	if ax < 15.0 { // Rational approximation.
 		y := x * x
@@ -16,7 +16,7 @@ fn bessel_i0(x f64) f64 {
 }
 
 // bessel_i1 returns the modified Bessel function i1(x) for any real x.
-fn bessel_i1(x f64) f64 {
+pub fn bessel_i1(x f64) f64 {
 	ax := math.abs(x)
 	if ax < 15.0 { // Rational approximation.
 		y := x * x
@@ -32,7 +32,7 @@ fn bessel_i1(x f64) f64 {
 }
 
 // bessel_in returns the modified Bessel function in(x) for any real x and n ≥ 0
-fn bessel_in(n int, x f64) f64 {
+pub fn bessel_in(n int, x f64) f64 {
 	if n == 0 {
 		return bessel_i0(x)
 	}
@@ -74,7 +74,7 @@ fn bessel_in(n int, x f64) f64 {
 // special cases:
 // K0(x=0) = +inf
 // K0(x<0) = nan
-fn bessel_k0(x f64) f64 {
+pub fn bessel_k0(x f64) f64 {
 	if x < 0 {
 		return math.nan()
 	}
@@ -95,7 +95,7 @@ fn bessel_k0(x f64) f64 {
 // special cases:
 // K0(x=0) = +inf
 // K0(x<0) = nan
-fn bessel_k1(x f64) f64 {
+pub fn bessel_k1(x f64) f64 {
 	if x < 0 {
 		return math.nan()
 	}
@@ -113,7 +113,7 @@ fn bessel_k1(x f64) f64 {
 }
 
 // bessel_kn returns the modified Bessel function kn(x) for positive x and n ≥ 0
-fn bessel_kn(n int, x f64) f64 {
+pub fn bessel_kn(n int, x f64) f64 {
 	if n == 0 {
 		return bessel_k0(x)
 	}
