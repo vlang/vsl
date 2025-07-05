@@ -58,39 +58,6 @@ plots with minimal code while maintaining full customization control.
 - **Export Options**: Save as PNG, SVG, or HTML
 - **Responsive Design**: Automatic layout adjustment
 
-## 🆕 What's New
-
-### Latest Enhancements (2024-2025)
-
-**Phase 1: Core Plot Types**
-- ✅ Line charts with time series support
-- ✅ Box plots for statistical analysis
-- ✅ Violin plots for distribution visualization
-- ✅ Contour plots for topographical data
-- ✅ Waterfall charts for financial analysis
-- ✅ Sunburst charts for hierarchical data
-- ✅ Treemap charts for nested data
-- ✅ Candlestick charts for OHLC financial data
-- ✅ Funnel charts for conversion analysis
-- ✅ Radar/Polar charts for multi-dimensional comparison
-
-**Phase 2: Advanced Analytics**
-- ✅ 2D Histograms for bivariate analysis
-- ✅ Parallel Coordinates for high-dimensional data
-- ✅ Sankey Diagrams for flow visualization
-- ✅ Choropleth Maps for geographic data
-- ✅ Scatter Mapbox for location-based plots
-- ✅ Density plots and ridgeline plots
-- ✅ Network graphs and chord diagrams
-- ✅ Advanced geographic projections
-
-**Infrastructure Improvements**
-- ✅ Enhanced axis configuration (polar coordinates, log scales)
-- ✅ Geographic layout support (projections, mapbox integration)
-- ✅ Improved JSON serialization and Plotly.js compatibility
-- ✅ Comprehensive example library with 15+ working examples
-- ✅ Better error handling and debugging utilities
-
 ## 📖 Quick Start
 
 ### Basic Scatter Plot
@@ -435,9 +402,10 @@ The VSL plot module is actively developed. Subplot functionality is planned for 
 Explore complete examples for all chart types:
 
 ### Core Plot Types
+
 - `plot_scatter` - Basic scatter plotting with customization
 - `plot_line_timeseries` - Time series line chart
-- `plot_bar` - Bar chart examples  
+- `plot_bar` - Bar chart examples
 - `plot_histogram` - Distribution histograms
 - `plot_pie` - Pie chart proportions
 - `plot_heatmap_golden_ratio` - Advanced heatmap styling
@@ -445,30 +413,36 @@ Explore complete examples for all chart types:
 - `plot_scatter3d_*` - 3D scatter plot variations
 
 ### Statistical & Distribution Charts
+
 - `plot_box_statistics` - Box plot statistical analysis
 - `plot_violin_distributions` - Violin plot distributions
 - `plot_contour_topography` - Contour plot examples
 
-### Business & Financial Charts  
+### Business & Financial Charts
+
 - `plot_waterfall_financial` - Financial waterfall analysis
 - `plot_candlestick_stocks` - Stock OHLC candlestick charts
 - `plot_funnel_conversion` - Conversion funnel analysis
 
 ### Hierarchical & Network Charts
+
 - `plot_sunburst_hierarchy` - Hierarchical sunburst charts
 - `plot_treemap_portfolio` - Portfolio treemap visualization
 - `plot_sankey_energy` - Energy flow Sankey diagrams
 
 ### Advanced Analytics
+
 - `plot_radar_performance` - Multi-dimensional radar charts
 - `plot_parcoords_analysis` - Parallel coordinates analysis
 - `plot_histogram2d_correlation` - 2D histogram correlations
 
 ### Geographic & Mapping
+
 - `plot_choropleth_population` - Geographic choropleth maps
 - `plot_scattermapbox_cities` - Location scatter on maps
 
 ### Annotation & Styling
+
 - `plot_scatter_annotations_fixed` - Clean annotations without arrows
 - `plot_scatter_colorscale` - Custom color scaling
 - `plot_scatter_easing` - Animation easing examples
@@ -484,7 +458,7 @@ Explore complete examples for all chart types:
 
 ### Basic Chart Types
 
-- `plt.scatter()` - Add scatter/line traces  
+- `plt.scatter()` - Add scatter/line traces
 - `plt.line()` - Add line charts for time series
 - `plt.bar()` - Add bar charts
 - `plt.histogram()` - Add histogram distributions
@@ -533,7 +507,7 @@ Explore complete examples for all chart types:
 - `Trace` - Base trace interface (sum type)
 - `ScatterTrace`, `LineTrace`, `BarTrace`, etc. - Specific trace types
 - `Marker` - Point styling configuration
-- `Line` - Line styling configuration  
+- `Line` - Line styling configuration
 - `Axis` - Axis configuration
 - `Layout` - Overall plot layout
 - `Annotation` - Text annotation settings
