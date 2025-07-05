@@ -6,15 +6,49 @@ plots with minimal code while maintaining full customization control.
 
 ## 🚀 Features
 
-### Plot Types
+### Core Plot Types
 
 - **Scatter Plots**: Points, lines, or combined with extensive marker customization
+- **Line Charts**: Time series and continuous data visualization
 - **Bar Charts**: Vertical and horizontal bars with grouping support
-- **Heatmaps**: 2D data visualization with color mapping
 - **Histograms**: Distribution visualization with binning control
 - **Pie Charts**: Proportion visualization with labels and annotations
+- **Heatmaps**: 2D data visualization with color mapping
 - **3D Scatter**: Three-dimensional data visualization
 - **Surface Plots**: 3D surface rendering for mathematical functions
+
+### Statistical & Distribution Charts
+
+- **Box Plots**: Statistical distribution analysis with quartiles
+- **Violin Plots**: Kernel density estimation for distributions
+- **Contour Plots**: Topographical and mathematical contour visualization
+
+### Business & Financial Charts
+
+- **Waterfall Charts**: Financial flow and variance analysis
+- **Candlestick Charts**: OHLC stock price visualization
+- **Funnel Charts**: Conversion and process flow analysis
+
+### Hierarchical & Network Charts
+
+- **Sunburst Charts**: Hierarchical data with radial layout
+- **Treemap Charts**: Hierarchical data with nested rectangles
+- **Sankey Diagrams**: Flow and process visualization
+- **Network Graphs**: Node-link relationship visualization
+
+### Advanced Analytics
+
+- **Radar/Polar Charts**: Multi-dimensional comparison
+- **Parallel Coordinates**: High-dimensional data analysis
+- **2D Histograms**: Bivariate distribution analysis
+- **Density Plots**: Continuous probability distributions
+- **Ridgeline Plots**: Multiple distribution comparison
+
+### Geographic & Mapping
+
+- **Choropleth Maps**: Geographic data visualization
+- **Scatter Mapbox**: Location-based scatter plots
+- **Density Mapbox**: Geographic density visualization
 
 ### Interactive Features
 
@@ -23,6 +57,39 @@ plots with minimal code while maintaining full customization control.
 - **Legend Control**: Show/hide data series
 - **Export Options**: Save as PNG, SVG, or HTML
 - **Responsive Design**: Automatic layout adjustment
+
+## 🆕 What's New
+
+### Latest Enhancements (2024-2025)
+
+**Phase 1: Core Plot Types**
+- ✅ Line charts with time series support
+- ✅ Box plots for statistical analysis
+- ✅ Violin plots for distribution visualization
+- ✅ Contour plots for topographical data
+- ✅ Waterfall charts for financial analysis
+- ✅ Sunburst charts for hierarchical data
+- ✅ Treemap charts for nested data
+- ✅ Candlestick charts for OHLC financial data
+- ✅ Funnel charts for conversion analysis
+- ✅ Radar/Polar charts for multi-dimensional comparison
+
+**Phase 2: Advanced Analytics**
+- ✅ 2D Histograms for bivariate analysis
+- ✅ Parallel Coordinates for high-dimensional data
+- ✅ Sankey Diagrams for flow visualization
+- ✅ Choropleth Maps for geographic data
+- ✅ Scatter Mapbox for location-based plots
+- ✅ Density plots and ridgeline plots
+- ✅ Network graphs and chord diagrams
+- ✅ Advanced geographic projections
+
+**Infrastructure Improvements**
+- ✅ Enhanced axis configuration (polar coordinates, log scales)
+- ✅ Geographic layout support (projections, mapbox integration)
+- ✅ Improved JSON serialization and Plotly.js compatibility
+- ✅ Comprehensive example library with 15+ working examples
+- ✅ Better error handling and debugging utilities
 
 ## 📖 Quick Start
 
@@ -40,6 +107,132 @@ y := x.map(it * it) // y = x²
 mut plt := plot.Plot.new()
 plt.scatter(x: x, y: y, mode: 'lines+markers')
 plt.layout(title: 'Quadratic Function')
+plt.show()!
+```
+
+### Line Chart (Time Series)
+
+```v
+import vsl.plot
+
+dates := ['2024-01', '2024-02', '2024-03', '2024-04']
+prices := [100.0, 120.0, 110.0, 130.0]
+
+mut plt := plot.Plot.new()
+plt.line(x: dates, y: prices, mode: 'lines+markers')
+plt.layout(title: 'Stock Price Trend')
+plt.show()!
+```
+
+### Box Plot (Statistical Analysis)
+
+```v
+import vsl.plot
+
+data1 := [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0]
+data2 := [2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0]
+
+mut plt := plot.Plot.new()
+plt.box(y: data1, name: 'Dataset A')
+plt.box(y: data2, name: 'Dataset B')
+plt.layout(title: 'Distribution Comparison')
+plt.show()!
+```
+
+### Violin Plot (Distribution Shape)
+
+```v
+import vsl.plot
+
+values := [1.0, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0]
+
+mut plt := plot.Plot.new()
+plt.violin(y: values, name: 'Distribution')
+plt.layout(title: 'Data Distribution Shape')
+plt.show()!
+```
+
+### Candlestick Chart (Financial)
+
+```v
+import vsl.plot
+
+dates := ['2024-01-01', '2024-01-02', '2024-01-03']
+open_prices := [100.0, 105.0, 102.0]
+high_prices := [110.0, 108.0, 107.0]
+low_prices := [95.0, 100.0, 98.0]
+close_prices := [105.0, 102.0, 106.0]
+
+mut plt := plot.Plot.new()
+plt.candlestick(
+	x:     dates
+	open:  open_prices
+	high:  high_prices
+	low:   low_prices
+	close: close_prices
+)
+plt.layout(title: 'Stock Price OHLC')
+plt.show()!
+```
+
+### Sunburst Chart (Hierarchical Data)
+
+```v
+import vsl.plot
+
+mut plt := plot.Plot.new()
+plt.sunburst(
+	labels:  ['Root', 'A', 'B', 'A1', 'A2', 'B1']
+	parents: ['', 'Root', 'Root', 'A', 'A', 'B']
+	values:  [100.0, 60.0, 40.0, 30.0, 30.0, 40.0]
+)
+plt.layout(title: 'Hierarchical Structure')
+plt.show()!
+```
+
+### Choropleth Map (Geographic)
+
+```v
+import vsl.plot
+
+state_codes := ['CA', 'TX', 'NY', 'FL']
+population := [39500000.0, 29000000.0, 19500000.0, 21500000.0]
+
+mut plt := plot.Plot.new()
+plt.choropleth(
+	locations:    state_codes
+	z:            population
+	locationmode: 'USA-states'
+	colorscale:   'Viridis'
+)
+plt.layout(
+	title: 'US Population by State'
+	geo:   plot.Geo{
+		scope: 'usa'
+	}
+)
+plt.show()!
+```
+
+### Parallel Coordinates (Multi-dimensional)
+
+```v
+import vsl.plot
+
+mut plt := plot.Plot.new()
+plt.parcoords(
+	dimensions: [
+		plot.Dimension{
+			label:  'Feature 1'
+			values: [1.0, 2.0, 3.0, 4.0]
+		},
+		plot.Dimension{
+			label:  'Feature 2'
+			values: [10.0, 20.0, 30.0, 40.0]
+		},
+	]
+)
+plt.layout(title: 'Multi-dimensional Analysis')
 plt.show()!
 ```
 
@@ -239,32 +432,115 @@ The VSL plot module is actively developed. Subplot functionality is planned for 
 
 ## 🎯 Examples Directory
 
-Explore complete examples:
+Explore complete examples for all chart types:
 
-- `plot_scatter` - Basic scatter plotting
-- `plot_scatter_annotations_fixed` - Annotations without arrows
-- `plot_bar` - Bar chart examples
+### Core Plot Types
+- `plot_scatter` - Basic scatter plotting with customization
+- `plot_line_timeseries` - Time series line chart
+- `plot_bar` - Bar chart examples  
+- `plot_histogram` - Distribution histograms
+- `plot_pie` - Pie chart proportions
 - `plot_heatmap_golden_ratio` - Advanced heatmap styling
 - `plot_surface` - 3D surface visualization
+- `plot_scatter3d_*` - 3D scatter plot variations
+
+### Statistical & Distribution Charts
+- `plot_box_statistics` - Box plot statistical analysis
+- `plot_violin_distributions` - Violin plot distributions
+- `plot_contour_topography` - Contour plot examples
+
+### Business & Financial Charts  
+- `plot_waterfall_financial` - Financial waterfall analysis
+- `plot_candlestick_stocks` - Stock OHLC candlestick charts
+- `plot_funnel_conversion` - Conversion funnel analysis
+
+### Hierarchical & Network Charts
+- `plot_sunburst_hierarchy` - Hierarchical sunburst charts
+- `plot_treemap_portfolio` - Portfolio treemap visualization
+- `plot_sankey_energy` - Energy flow Sankey diagrams
+
+### Advanced Analytics
+- `plot_radar_performance` - Multi-dimensional radar charts
+- `plot_parcoords_analysis` - Parallel coordinates analysis
+- `plot_histogram2d_correlation` - 2D histogram correlations
+
+### Geographic & Mapping
+- `plot_choropleth_population` - Geographic choropleth maps
+- `plot_scattermapbox_cities` - Location scatter on maps
+
+### Annotation & Styling
+- `plot_scatter_annotations_fixed` - Clean annotations without arrows
+- `plot_scatter_colorscale` - Custom color scaling
+- `plot_scatter_easing` - Animation easing examples
 
 ## 🔗 API Reference
 
 ### Core Functions
 
 - `Plot.new()` - Create new plot instance
-- `plt.scatter()` - Add scatter/line traces
-- `plt.bar()` - Add bar charts
-- `plt.heatmap()` - Add heatmap visualization
-- `plt.layout()` - Configure plot appearance
 - `plt.show()` - Render and display plot
+- `plt.layout()` - Configure plot appearance
+- `plt.annotation()` - Add text annotations
+
+### Basic Chart Types
+
+- `plt.scatter()` - Add scatter/line traces  
+- `plt.line()` - Add line charts for time series
+- `plt.bar()` - Add bar charts
+- `plt.histogram()` - Add histogram distributions
+- `plt.pie()` - Add pie charts
+- `plt.heatmap()` - Add heatmap visualization
+- `plt.scatter3d()` - Add 3D scatter plots
+- `plt.surface()` - Add 3D surface plots
+
+### Statistical Chart Types
+
+- `plt.box()` - Add box plots for statistics
+- `plt.violin()` - Add violin plots for distributions
+- `plt.contour()` - Add contour plots
+
+### Business Chart Types
+
+- `plt.waterfall()` - Add waterfall charts
+- `plt.candlestick()` - Add OHLC candlestick charts
+- `plt.funnel()` - Add funnel charts
+
+### Hierarchical Chart Types
+
+- `plt.sunburst()` - Add sunburst charts
+- `plt.treemap()` - Add treemap charts
+- `plt.sankey()` - Add Sankey diagrams
+
+### Advanced Chart Types
+
+- `plt.scatterpolar()` - Add radar/polar charts
+- `plt.parcoords()` - Add parallel coordinates
+- `plt.histogram2d()` - Add 2D histograms
+- `plt.density()` - Add density plots
+- `plt.ridgeline()` - Add ridgeline plots
+- `plt.chord()` - Add chord diagrams
+- `plt.network()` - Add network/graph plots
+
+### Geographic Chart Types
+
+- `plt.choropleth()` - Add choropleth maps
+- `plt.scattermapbox()` - Add scatter on mapbox
+- `plt.densitymapbox()` - Add density on mapbox
 
 ### Data Types
 
 - `Plot` - Main plotting object
+- `Trace` - Base trace interface (sum type)
+- `ScatterTrace`, `LineTrace`, `BarTrace`, etc. - Specific trace types
 - `Marker` - Point styling configuration
-- `Line` - Line styling configuration
+- `Line` - Line styling configuration  
 - `Axis` - Axis configuration
+- `Layout` - Overall plot layout
 - `Annotation` - Text annotation settings
+- `Geo` - Geographic projection settings
+- `Mapbox` - Mapbox configuration
+- `Dimension` - Parallel coordinates dimension
+- `SankeyNode` - Sankey diagram node configuration
 
 ---
 
