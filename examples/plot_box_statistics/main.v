@@ -18,48 +18,52 @@ fn main() {
 
 	// Add box plots for each group
 	plt.box(
-		x: ['Class A']  // Explicit x position
-		y: group_a
-		name: 'Class A (High Performers)'
-		boxpoints: 'outliers'  // Show outlier points
-		marker: plot.Marker{
-			color: ['#2E8B57']  // Sea green
+		x:         ['Class A'] // Explicit x position
+		y:         group_a
+		name:      'Class A (High Performers)'
+		boxpoints: 'outliers' // Show outlier points
+		marker:    plot.Marker{
+			color: ['#2E8B57'] // Sea green
 		}
 	)
 
 	plt.box(
-		x: ['Class B']  // Explicit x position
-		y: group_b
-		name: 'Class B (Average Performers)'
+		x:         ['Class B'] // Explicit x position
+		y:         group_b
+		name:      'Class B (Average Performers)'
 		boxpoints: 'outliers'
-		marker: plot.Marker{
-			color: ['#4682B4']  // Steel blue
+		marker:    plot.Marker{
+			color: ['#4682B4'] // Steel blue
 		}
 	)
 
 	plt.box(
-		x: ['Class C']  // Explicit x position
-		y: group_c
-		name: 'Class C (Variable Performers)'
+		x:         ['Class C'] // Explicit x position
+		y:         group_c
+		name:      'Class C (Variable Performers)'
 		boxpoints: 'outliers'
-		marker: plot.Marker{
-			color: ['#CD853F']  // Peru
+		marker:    plot.Marker{
+			color: ['#CD853F'] // Peru
 		}
 	)
 
 	// Configure the plot layout
 	plt.layout(
-		title: 'Test Score Distribution by Class'
-		xaxis: plot.Axis{
-			title: plot.AxisTitle{text: 'Class Groups'}
+		title:         'Test Score Distribution by Class'
+		xaxis:         plot.Axis{
+			title: plot.AxisTitle{
+				text: 'Class Groups'
+			}
 		}
-		yaxis: plot.Axis{
-			title: plot.AxisTitle{text: 'Test Scores'}
+		yaxis:         plot.Axis{
+			title: plot.AxisTitle{
+				text: 'Test Scores'
+			}
 			range: [50.0, 100.0]
 		}
-		plot_bgcolor: '#f8f9fa'
+		plot_bgcolor:  '#f8f9fa'
 		paper_bgcolor: '#ffffff'
-		showlegend: true
+		showlegend:    true
 	)
 
 	// Display the plot

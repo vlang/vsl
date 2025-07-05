@@ -45,7 +45,7 @@ pub type ZType = [][]f64 | [][]int | []f64 | []int
 pub struct CommonTrace {
 pub mut:
 	x          XType
-	x0         string     @[omitempty] // Single x position for violin/box plots
+	x0         string @[omitempty] // Single x position for violin/box plots
 	xbins      map[string]f32
 	y          YType      @[omitempty]
 	y0         string     @[omitempty] // Single y position for horizontal plots
@@ -149,15 +149,15 @@ pub mut:
 pub struct ViolinTrace {
 pub mut:
 	// Core violin fields
-	x          []string   @[omitempty] // For grouped violin plots
-	y          YType      @[omitempty]
-	x0         string     @[omitempty] // Single x position for violin plots
-	name       string     @[omitempty]
-	marker     Marker     @[omitempty]
-	line       Line       @[omitempty]
-	colorscale string = 'Viridis'     @[omitempty]
-	fillcolor  string     @[omitempty] // Fill color for violin
-	opacity    f64        @[omitempty] // Opacity for violin
+	x          []string @[omitempty] // For grouped violin plots
+	y          YType    @[omitempty]
+	x0         string   @[omitempty] // Single x position for violin plots
+	name       string   @[omitempty]
+	marker     Marker   @[omitempty]
+	line       Line     @[omitempty]
+	colorscale string = 'Viridis'   @[omitempty]
+	fillcolor  string   @[omitempty] // Fill color for violin
+	opacity    f64      @[omitempty] // Opacity for violin
 
 	// Violin-specific fields
 	side        string @[omitempty] // 'both', 'positive', 'negative'
@@ -173,10 +173,10 @@ pub mut:
 pub struct ContourTrace {
 	CommonTrace
 pub mut:
-	contours     Contours @[omitempty]
+	contours      Contours @[omitempty]
 	hovertemplate string   @[omitempty]
-	autocontour  bool     @[omitempty]
-	ncontours    int      @[omitempty]
+	autocontour   bool     @[omitempty]
+	ncontours     int      @[omitempty]
 }
 
 // WaterfallTrace is a struct for Waterfall trace type
@@ -184,13 +184,13 @@ pub mut:
 pub struct WaterfallTrace {
 	CommonTrace
 pub mut:
-	measure        []string @[omitempty] // 'relative', 'total', 'absolute'
-	base           f64      @[omitempty]
-	orientation    string   @[omitempty] // 'v' or 'h'
-	connector      Connector @[omitempty]
-	decreasing     Decreasing @[omitempty]
-	increasing     Increasing @[omitempty]
-	totals         Totals     @[omitempty]
+	measure     []string   @[omitempty] // 'relative', 'total', 'absolute'
+	base        f64        @[omitempty]
+	orientation string     @[omitempty] // 'v' or 'h'
+	connector   Connector  @[omitempty]
+	decreasing  Decreasing @[omitempty]
+	increasing  Increasing @[omitempty]
+	totals      Totals     @[omitempty]
 }
 
 // SunburstTrace is a struct for Sunburst trace type
@@ -229,14 +229,14 @@ pub mut:
 pub struct CandlestickTrace {
 	CommonTrace
 pub mut:
-	open         []f64      @[omitempty]
-	high         []f64      @[omitempty]
-	low          []f64      @[omitempty]
-	close        []f64      @[omitempty]
-	increasing   Increasing @[omitempty]
-	decreasing   Decreasing @[omitempty]
-	xperiod      string     @[omitempty]
-	xperiodalignment string @[omitempty]
+	open             []f64      @[omitempty]
+	high             []f64      @[omitempty]
+	low              []f64      @[omitempty]
+	close            []f64      @[omitempty]
+	increasing       Increasing @[omitempty]
+	decreasing       Decreasing @[omitempty]
+	xperiod          string     @[omitempty]
+	xperiodalignment string     @[omitempty]
 }
 
 // FunnelTrace is a struct for Funnel trace type
@@ -244,9 +244,9 @@ pub mut:
 pub struct FunnelTrace {
 	CommonTrace
 pub mut:
-	values       []f64  @[omitempty]
-	orientation  string @[omitempty] // 'v' or 'h'
-	connector    Connector @[omitempty]
+	values      []f64     @[omitempty]
+	orientation string    @[omitempty] // 'v' or 'h'
+	connector   Connector @[omitempty]
 }
 
 // ScatterPolarTrace is a struct for Radar/Polar trace type
@@ -254,8 +254,8 @@ pub mut:
 pub struct ScatterPolarTrace {
 	CommonTrace
 pub mut:
-	r      []f64  @[omitempty]
-	theta  []f64  @[omitempty]
+	r         []f64  @[omitempty]
+	theta     []f64  @[omitempty]
 	thetaunit string @[omitempty] // 'radians', 'degrees'
 	subplot   string @[omitempty]
 }
@@ -296,12 +296,12 @@ pub mut:
 // Contours is a struct for contour configuration
 pub struct Contours {
 pub mut:
-	start     f64    @[omitempty]
-	end       f64    @[omitempty]
-	size      f64    @[omitempty]
-	coloring  string @[omitempty] // 'fill', 'heatmap', 'lines', 'none'
-	showlines bool   @[omitempty]
-	showlabels bool  @[omitempty]
+	start      f64    @[omitempty]
+	end        f64    @[omitempty]
+	size       f64    @[omitempty]
+	coloring   string @[omitempty] // 'fill', 'heatmap', 'lines', 'none'
+	showlines  bool   @[omitempty]
+	showlabels bool   @[omitempty]
 }
 
 // Connector is a struct for waterfall and funnel connectors
@@ -406,26 +406,26 @@ pub fn (t Trace) trace_type() string {
 // Dimension is a struct for parallel coordinates dimensions
 pub struct Dimension {
 pub mut:
-	label      string  @[omitempty]
-	values     []f64   @[omitempty]
-	range      []f64   @[omitempty]
-	constraintrange [][]f64 @[omitempty]
-	tickvals   []f64   @[omitempty]
-	ticktext   []string @[omitempty]
-	visible    bool    @[omitempty]
-	multiselect bool   @[omitempty]
+	label           string   @[omitempty]
+	values          []f64    @[omitempty]
+	range           []f64    @[omitempty]
+	constraintrange [][]f64  @[omitempty]
+	tickvals        []f64    @[omitempty]
+	ticktext        []string @[omitempty]
+	visible         bool     @[omitempty]
+	multiselect     bool     @[omitempty]
 }
 
 // ParallelLine is a struct for parallel coordinates line styling
 pub struct ParallelLine {
 pub mut:
-	color      []f64   @[omitempty]
-	colorscale string  @[omitempty]
-	showscale  bool    @[omitempty]
-	reversescale bool  @[omitempty]
-	cmin       f64     @[omitempty]
-	cmax       f64     @[omitempty]
-	cmid       f64     @[omitempty]
+	color        []f64  @[omitempty]
+	colorscale   string @[omitempty]
+	showscale    bool   @[omitempty]
+	reversescale bool   @[omitempty]
+	cmin         f64    @[omitempty]
+	cmax         f64    @[omitempty]
+	cmid         f64    @[omitempty]
 }
 
 // SankeyNode is a struct for Sankey diagram nodes
@@ -444,13 +444,13 @@ pub mut:
 // SankeyLink is a struct for Sankey diagram links
 pub struct SankeyLink {
 pub mut:
-	source    []int    @[omitempty]
-	target    []int    @[omitempty]
-	value     []f64    @[omitempty]
-	label     []string @[omitempty]
-	color     []string @[omitempty]
-	line      Line     @[omitempty]
-	hovertemplate string @[omitempty]
+	source        []int    @[omitempty]
+	target        []int    @[omitempty]
+	value         []f64    @[omitempty]
+	label         []string @[omitempty]
+	color         []string @[omitempty]
+	line          Line     @[omitempty]
+	hovertemplate string   @[omitempty]
 }
 
 // NetworkNodes is a struct for network graph nodes
@@ -480,12 +480,12 @@ pub mut:
 // Cluster is a struct for mapbox clustering
 pub struct Cluster {
 pub mut:
-	enabled    bool   @[omitempty]
-	color      []string @[omitempty]
-	size       []f64  @[omitempty]
-	opacity    f64    @[omitempty]
-	step       f64    @[omitempty]
-	maxzoom    int    @[omitempty]
+	enabled bool     @[omitempty]
+	color   []string @[omitempty]
+	size    []f64    @[omitempty]
+	opacity f64      @[omitempty]
+	step    f64      @[omitempty]
+	maxzoom int      @[omitempty]
 }
 
 // Histogram2DTrace is a struct for 2D Histogram trace type
@@ -493,16 +493,16 @@ pub mut:
 pub struct Histogram2DTrace {
 	CommonTrace
 pub mut:
-	nbinsx      int    @[omitempty]
-	nbinsy      int    @[omitempty]
-	autobinx    bool   @[omitempty]
-	autobiny    bool   @[omitempty]
-	xbins       Bins   @[omitempty]
-	ybins       Bins   @[omitempty]
-	histfunc    string @[omitempty] // 'count', 'sum', 'avg', 'min', 'max'
-	histnorm    string @[omitempty] // '', 'percent', 'probability', 'density', 'probability density'
-	showscale   bool   @[omitempty]
-	reversescale bool  @[omitempty]
+	nbinsx       int    @[omitempty]
+	nbinsy       int    @[omitempty]
+	autobinx     bool   @[omitempty]
+	autobiny     bool   @[omitempty]
+	xbins        Bins   @[omitempty]
+	ybins        Bins   @[omitempty]
+	histfunc     string @[omitempty] // 'count', 'sum', 'avg', 'min', 'max'
+	histnorm     string @[omitempty] // '', 'percent', 'probability', 'density', 'probability density'
+	showscale    bool   @[omitempty]
+	reversescale bool   @[omitempty]
 }
 
 // DensityTrace is a struct for Density plot trace type
@@ -510,9 +510,9 @@ pub mut:
 pub struct DensityTrace {
 	CommonTrace
 pub mut:
-	bandwidth    f64    @[omitempty]
-	showscale    bool   @[omitempty]
-	reversescale bool   @[omitempty]
+	bandwidth    f64      @[omitempty]
+	showscale    bool     @[omitempty]
+	reversescale bool     @[omitempty]
 	contours     Contours @[omitempty]
 }
 
@@ -531,23 +531,23 @@ pub mut:
 @[params]
 pub struct ParallelCoordinatesTrace {
 pub mut:
-	dimensions []Dimension @[omitempty]
+	dimensions []Dimension  @[omitempty]
 	line       ParallelLine @[omitempty]
-	name       string      @[omitempty]
-	labelangle f64         @[omitempty]
-	labelside  string      @[omitempty] // 'top', 'bottom'
+	name       string       @[omitempty]
+	labelangle f64          @[omitempty]
+	labelside  string       @[omitempty] // 'top', 'bottom'
 }
 
 // SankeyTrace is a struct for Sankey diagram trace type
 @[params]
 pub struct SankeyTrace {
 pub mut:
-	node       SankeyNode @[omitempty]
-	link       SankeyLink @[omitempty]
-	orientation string    @[omitempty] // 'v' or 'h'
-	valueformat string    @[omitempty]
-	valuesuffix string    @[omitempty]
-	name        string    @[omitempty]
+	node        SankeyNode @[omitempty]
+	link        SankeyLink @[omitempty]
+	orientation string     @[omitempty] // 'v' or 'h'
+	valueformat string     @[omitempty]
+	valuesuffix string     @[omitempty]
+	name        string     @[omitempty]
 }
 
 // ChordTrace is a struct for Chord diagram trace type
@@ -555,11 +555,11 @@ pub mut:
 pub struct ChordTrace {
 	CommonTrace
 pub mut:
-	matrix      [][]f64   @[omitempty]
-	labels      []string  @[omitempty]
-	rotation    f64       @[omitempty]
-	sort        string    @[omitempty] // 'ascending', 'descending', 'none'
-	thickness   f64       @[omitempty]
+	matrix    [][]f64  @[omitempty]
+	labels    []string @[omitempty]
+	rotation  f64      @[omitempty]
+	sort      string   @[omitempty] // 'ascending', 'descending', 'none'
+	thickness f64      @[omitempty]
 }
 
 // NetworkTrace is a struct for Network/Graph trace type
@@ -567,12 +567,12 @@ pub mut:
 pub struct NetworkTrace {
 	CommonTrace
 pub mut:
-	nodes       NetworkNodes @[omitempty]
-	edges       NetworkEdges @[omitempty]
-	layout      string       @[omitempty] // 'force', 'circle', 'tree', 'random'
-	iterations  int          @[omitempty]
-	node_trace  bool         @[omitempty]
-	edge_trace  bool         @[omitempty]
+	nodes      NetworkNodes @[omitempty]
+	edges      NetworkEdges @[omitempty]
+	layout     string       @[omitempty] // 'force', 'circle', 'tree', 'random'
+	iterations int          @[omitempty]
+	node_trace bool         @[omitempty]
+	edge_trace bool         @[omitempty]
 }
 
 // ChoroplethTrace is a struct for Choropleth map trace type
@@ -580,12 +580,12 @@ pub mut:
 pub struct ChoroplethTrace {
 	CommonTrace
 pub mut:
-	locations    []string  @[omitempty]
-	geojson      string    @[omitempty]
-	featureidkey string    @[omitempty]
-	locationmode string    @[omitempty] // 'ISO-3', 'USA-states', 'country names', 'geojson-id'
-	reversescale bool      @[omitempty]
-	showscale    bool      @[omitempty]
+	locations     []string @[omitempty]
+	geojson       string   @[omitempty]
+	featureidkey  string   @[omitempty]
+	locationmode  string   @[omitempty] // 'ISO-3', 'USA-states', 'country names', 'geojson-id'
+	reversescale  bool     @[omitempty]
+	showscale     bool     @[omitempty]
 	hovertemplate string   @[omitempty]
 }
 
@@ -594,12 +594,12 @@ pub mut:
 pub struct ScatterMapboxTrace {
 	CommonTrace
 pub mut:
-	lat          []f64  @[omitempty]
-	lon          []f64  @[omitempty]
-	mode         string @[omitempty] // 'markers', 'lines', 'lines+markers'
-	cluster      Cluster @[omitempty]
-	hovertemplate string @[omitempty]
-	subplot      string @[omitempty]
+	lat           []f64   @[omitempty]
+	lon           []f64   @[omitempty]
+	mode          string  @[omitempty] // 'markers', 'lines', 'lines+markers'
+	cluster       Cluster @[omitempty]
+	hovertemplate string  @[omitempty]
+	subplot       string  @[omitempty]
 }
 
 // DensityMapboxTrace is a struct for Density on mapbox trace type

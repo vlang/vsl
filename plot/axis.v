@@ -5,14 +5,14 @@ pub struct Axis {
 pub mut:
 	title       AxisTitle
 	tickmode    string = 'auto'
-	tick0       f64      @[omitempty]
-	dtick       f64      @[omitempty]
-	tickvals    []f64    @[omitempty]
-	ticktext    []string @[omitempty]
-	range       []f64    @[omitempty]
-	showgrid    bool     @[omitempty]
-	tickangle   f64      @[omitempty]
-	scaleanchor string   @[omitempty]
+	tick0       f64         @[omitempty]
+	dtick       f64         @[omitempty]
+	tickvals    []f64       @[omitempty]
+	ticktext    []string    @[omitempty]
+	range       []f64       @[omitempty]
+	showgrid    bool        @[omitempty]
+	tickangle   f64         @[omitempty]
+	scaleanchor string      @[omitempty]
 	rangeslider RangeSlider @[omitempty]
 }
 
@@ -25,7 +25,7 @@ pub mut:
 // RangeSlider handles range slider configuration for axes
 pub struct RangeSlider {
 pub mut:
-	visible bool @[omitempty]
-	range   []f64 @[omitempty]
-	thickness f64 @[omitempty]
+	visible   bool  @[omitempty]
+	range     []f64 @[omitempty]
+	thickness f64   @[omitempty]
 }

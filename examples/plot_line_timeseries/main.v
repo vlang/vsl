@@ -29,27 +29,31 @@ fn main() {
 
 	// Add a line trace for the time series
 	plt.line(
-		x: x
-		y: prices
+		x:    x
+		y:    prices
 		name: 'Stock Price'
 		line: plot.Line{
-			color: '#1f77b4'  // Professional blue color
+			color: '#1f77b4' // Professional blue color
 			width: 2.5
 		}
 	)
 
 	// Configure the plot layout for time series
 	plt.layout(
-		title: 'Stock Price Time Series - 30 Day Trend'
-		xaxis: plot.Axis{
-			title: plot.AxisTitle{text: 'Days'}
+		title:         'Stock Price Time Series - 30 Day Trend'
+		xaxis:         plot.Axis{
+			title:    plot.AxisTitle{
+				text: 'Days'
+			}
 			showgrid: true
 		}
-		yaxis: plot.Axis{
-			title: plot.AxisTitle{text: 'Price ($)'}
+		yaxis:         plot.Axis{
+			title:    plot.AxisTitle{
+				text: 'Price ($)'
+			}
 			showgrid: true
 		}
-		plot_bgcolor: '#f8f9fa'
+		plot_bgcolor:  '#f8f9fa'
 		paper_bgcolor: '#ffffff'
 	)
 

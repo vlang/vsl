@@ -23,7 +23,7 @@ fn main() {
 			reaction_times << val
 		} else {
 			// Slow reactions (novice group)
-			val := 280.0 + 25.0 * math.cos(f64(i-50) * 0.314)
+			val := 280.0 + 25.0 * math.cos(f64(i - 50) * 0.314)
 			reaction_times << val
 		}
 	}
@@ -50,77 +50,81 @@ fn main() {
 
 	// Violin plot for Heights
 	plt.violin(
-		y: all_heights
-		x: ['Heights'].repeat(all_heights.len)  // Create x array with category names
-		name: 'Heights (cm)'
-		side: 'both'
-		points: 'outliers'
-		box: plot.Box{
+		y:         all_heights
+		x:         ['Heights'].repeat(all_heights.len) // Create x array with category names
+		name:      'Heights (cm)'
+		side:      'both'
+		points:    'outliers'
+		box:       plot.Box{
 			visible: true
-			width: 0.3
+			width:   0.3
 		}
-		meanline: plot.Line{
+		meanline:  plot.Line{
 			visible: true
 		}
-		line: plot.Line{
+		line:      plot.Line{
 			color: '#4ECDC4'
 		}
 		fillcolor: '#4ECDC4'
-		opacity: 0.6
+		opacity:   0.6
 	)
 
 	plt.violin(
-		y: all_reaction_times
-		x: ['Reaction Times'].repeat(all_reaction_times.len)  // Create x array
-		name: 'Reaction Times (ms)'
-		side: 'both'
-		points: 'outliers'
-		box: plot.Box{
+		y:         all_reaction_times
+		x:         ['Reaction Times'].repeat(all_reaction_times.len) // Create x array
+		name:      'Reaction Times (ms)'
+		side:      'both'
+		points:    'outliers'
+		box:       plot.Box{
 			visible: true
-			width: 0.3
+			width:   0.3
 		}
-		meanline: plot.Line{
+		meanline:  plot.Line{
 			visible: true
 		}
-		line: plot.Line{
+		line:      plot.Line{
 			color: '#45B7D1'
 		}
 		fillcolor: '#45B7D1'
-		opacity: 0.6
+		opacity:   0.6
 	)
 
 	plt.violin(
-		y: all_incomes
-		x: ['Annual Income'].repeat(all_incomes.len)  // Create x array
-		name: 'Annual Income ($)'
-		side: 'both'
-		points: 'outliers'
-		box: plot.Box{
+		y:         all_incomes
+		x:         ['Annual Income'].repeat(all_incomes.len) // Create x array
+		name:      'Annual Income ($)'
+		side:      'both'
+		points:    'outliers'
+		box:       plot.Box{
 			visible: true
-			width: 0.3
+			width:   0.3
 		}
-		meanline: plot.Line{
+		meanline:  plot.Line{
 			visible: true
 		}
-		line: plot.Line{
+		line:      plot.Line{
 			color: '#96CEB4'
 		}
 		fillcolor: '#96CEB4'
-		opacity: 0.6
+		opacity:   0.6
 	)
 
 	// Configure the plot layout
 	plt.layout(
-		title: 'Distribution Comparison with Violin Plots'
-		xaxis: plot.Axis{
-			title: plot.AxisTitle{text: 'Variables'}
+		title:         'Distribution Comparison with Violin Plots'
+		xaxis:         plot.Axis{
+			title: plot.AxisTitle{
+				text: 'Variables'
+			}
 		}
-		yaxis: plot.Axis{
-			title: plot.AxisTitle{text: 'Values'}
+		yaxis:         plot.Axis{
+			title: plot.AxisTitle{
+				text: 'Values'
+			}
 		}
-		plot_bgcolor: '#f8f9fa'
+		plot_bgcolor:  '#f8f9fa'
 		paper_bgcolor: '#ffffff'
-		showlegend: true
+		showlegend:    true
 	)
 
 	// Display the plot

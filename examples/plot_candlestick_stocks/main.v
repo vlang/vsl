@@ -53,15 +53,15 @@ fn main() {
 
 	// Add candlestick trace
 	plt.candlestick(
-		x: dates
-		open: open_prices
-		high: high_prices
-		low: low_prices
-		close: close_prices
-		name: 'Stock Price'
+		x:          dates
+		open:       open_prices
+		high:       high_prices
+		low:        low_prices
+		close:      close_prices
+		name:       'Stock Price'
 		increasing: plot.Increasing{
-			line: plot.Line{
-				color: '#2E8B57'  // Green for bullish candles
+			line:   plot.Line{
+				color: '#2E8B57' // Green for bullish candles
 				width: 1.0
 			}
 			marker: plot.Marker{
@@ -69,8 +69,8 @@ fn main() {
 			}
 		}
 		decreasing: plot.Decreasing{
-			line: plot.Line{
-				color: '#DC143C'  // Red for bearish candles
+			line:   plot.Line{
+				color: '#DC143C' // Red for bearish candles
 				width: 1.0
 			}
 			marker: plot.Marker{
@@ -81,21 +81,25 @@ fn main() {
 
 	// Configure the plot layout
 	plt.layout(
-		title: 'Stock Price Candlestick Chart - 20 Trading Days'
-		xaxis: plot.Axis{
-			title: plot.AxisTitle{text: 'Trading Day'}
-			showgrid: true
+		title:         'Stock Price Candlestick Chart - 20 Trading Days'
+		xaxis:         plot.Axis{
+			title:       plot.AxisTitle{
+				text: 'Trading Day'
+			}
+			showgrid:    true
 			rangeslider: plot.RangeSlider{
-				visible: false  // Disable range slider for simplicity
+				visible: false // Disable range slider for simplicity
 			}
 		}
-		yaxis: plot.Axis{
-			title: plot.AxisTitle{text: 'Price ($)'}
+		yaxis:         plot.Axis{
+			title:    plot.AxisTitle{
+				text: 'Price ($)'
+			}
 			showgrid: true
 		}
-		plot_bgcolor: '#f8f9fa'
+		plot_bgcolor:  '#f8f9fa'
 		paper_bgcolor: '#ffffff'
-		showlegend: false
+		showlegend:    false
 	)
 
 	// Display the plot

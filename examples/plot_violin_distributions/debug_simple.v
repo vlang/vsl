@@ -10,9 +10,9 @@ fn main() {
 	data := [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0]
 
 	plt.violin(
-		y: data
+		y:    data
 		name: 'Test Data'
-		x0: 'Test'
+		x0:   'Test'
 	)
 
 	// Debug the JSON generation
