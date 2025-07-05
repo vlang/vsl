@@ -19,6 +19,16 @@ pub enum TraceType {
 	candlestick
 	funnel
 	scatterpolar
+	histogram2d
+	density
+	ridgeline
+	parcoords
+	sankey
+	chord
+	network
+	choropleth
+	scattermapbox
+	densitymapbox
 }
 
 // XType is a type for x-axis data
@@ -350,6 +360,16 @@ pub type Trace = BarTrace
 	| TreemapTrace
 	| ViolinTrace
 	| WaterfallTrace
+	| Histogram2DTrace
+	| DensityTrace
+	| RidgelineTrace
+	| ParallelCoordinatesTrace
+	| SankeyTrace
+	| ChordTrace
+	| NetworkTrace
+	| ChoroplethTrace
+	| ScatterMapboxTrace
+	| DensityMapboxTrace
 
 pub fn (t Trace) trace_type() string {
 	return match t {
@@ -370,5 +390,228 @@ pub fn (t Trace) trace_type() string {
 		CandlestickTrace { 'candlestick' }
 		FunnelTrace { 'funnel' }
 		ScatterPolarTrace { 'scatterpolar' }
+		Histogram2DTrace { 'histogram2d' }
+		DensityTrace { 'histogram2dcontour' } // Plotly uses this for density plots
+		RidgelineTrace { 'violin' } // Ridgeline plots use violin type with special config
+		ParallelCoordinatesTrace { 'parcoords' }
+		SankeyTrace { 'sankey' }
+		ChordTrace { 'chord' }
+		NetworkTrace { 'scatter' } // Network plots use scatter for nodes and lines for edges
+		ChoroplethTrace { 'choropleth' }
+		ScatterMapboxTrace { 'scattermapbox' }
+		DensityMapboxTrace { 'densitymapbox' }
 	}
+}
+
+// Dimension is a struct for parallel coordinates dimensions
+pub struct Dimension {
+pub mut:
+	label      string  @[omitempty]
+	values     []f64   @[omitempty]
+	range      []f64   @[omitempty]
+	constraintrange [][]f64 @[omitempty]
+	tickvals   []f64   @[omitempty]
+	ticktext   []string @[omitempty]
+	visible    bool    @[omitempty]
+	multiselect bool   @[omitempty]
+}
+
+// ParallelLine is a struct for parallel coordinates line styling
+pub struct ParallelLine {
+pub mut:
+	color      []f64   @[omitempty]
+	colorscale string  @[omitempty]
+	showscale  bool    @[omitempty]
+	reversescale bool  @[omitempty]
+	cmin       f64     @[omitempty]
+	cmax       f64     @[omitempty]
+	cmid       f64     @[omitempty]
+}
+
+// SankeyNode is a struct for Sankey diagram nodes
+pub struct SankeyNode {
+pub mut:
+	label     []string @[omitempty]
+	color     []string @[omitempty]
+	line      Line     @[omitempty]
+	thickness f64      @[omitempty]
+	pad       f64      @[omitempty]
+	x         []f64    @[omitempty]
+	y         []f64    @[omitempty]
+	groups    [][]int  @[omitempty]
+}
+
+// SankeyLink is a struct for Sankey diagram links
+pub struct SankeyLink {
+pub mut:
+	source    []int    @[omitempty]
+	target    []int    @[omitempty]
+	value     []f64    @[omitempty]
+	label     []string @[omitempty]
+	color     []string @[omitempty]
+	line      Line     @[omitempty]
+	hovertemplate string @[omitempty]
+}
+
+// NetworkNodes is a struct for network graph nodes
+pub struct NetworkNodes {
+pub mut:
+	x         []f64    @[omitempty]
+	y         []f64    @[omitempty]
+	text      []string @[omitempty]
+	ids       []string @[omitempty]
+	values    []f64    @[omitempty]
+	labels    []string @[omitempty]
+	marker    Marker   @[omitempty]
+	line      Line     @[omitempty]
+	hoverinfo string   @[omitempty]
+}
+
+// NetworkEdges is a struct for network graph edges
+pub struct NetworkEdges {
+pub mut:
+	x         []f64  @[omitempty]
+	y         []f64  @[omitempty]
+	line      Line   @[omitempty]
+	hoverinfo string @[omitempty]
+	mode      string @[omitempty]
+}
+
+// Cluster is a struct for mapbox clustering
+pub struct Cluster {
+pub mut:
+	enabled    bool   @[omitempty]
+	color      []string @[omitempty]
+	size       []f64  @[omitempty]
+	opacity    f64    @[omitempty]
+	step       f64    @[omitempty]
+	maxzoom    int    @[omitempty]
+}
+
+// Histogram2DTrace is a struct for 2D Histogram trace type
+@[params]
+pub struct Histogram2DTrace {
+	CommonTrace
+pub mut:
+	nbinsx      int    @[omitempty]
+	nbinsy      int    @[omitempty]
+	autobinx    bool   @[omitempty]
+	autobiny    bool   @[omitempty]
+	xbins       Bins   @[omitempty]
+	ybins       Bins   @[omitempty]
+	histfunc    string @[omitempty] // 'count', 'sum', 'avg', 'min', 'max'
+	histnorm    string @[omitempty] // '', 'percent', 'probability', 'density', 'probability density'
+	showscale   bool   @[omitempty]
+	reversescale bool  @[omitempty]
+}
+
+// DensityTrace is a struct for Density plot trace type
+@[params]
+pub struct DensityTrace {
+	CommonTrace
+pub mut:
+	bandwidth    f64    @[omitempty]
+	showscale    bool   @[omitempty]
+	reversescale bool   @[omitempty]
+	contours     Contours @[omitempty]
+}
+
+// RidgelineTrace is a struct for Ridgeline plot trace type
+@[params]
+pub struct RidgelineTrace {
+	CommonTrace
+pub mut:
+	orientation string @[omitempty] // 'v' or 'h'
+	bandwidth   f64    @[omitempty]
+	scale       f64    @[omitempty] // Scaling factor for ridge height
+	overlap     f64    @[omitempty] // Overlap between ridges
+}
+
+// ParallelCoordinatesTrace is a struct for Parallel Coordinates trace type
+@[params]
+pub struct ParallelCoordinatesTrace {
+pub mut:
+	dimensions []Dimension @[omitempty]
+	line       ParallelLine @[omitempty]
+	name       string      @[omitempty]
+	labelangle f64         @[omitempty]
+	labelside  string      @[omitempty] // 'top', 'bottom'
+}
+
+// SankeyTrace is a struct for Sankey diagram trace type
+@[params]
+pub struct SankeyTrace {
+pub mut:
+	node       SankeyNode @[omitempty]
+	link       SankeyLink @[omitempty]
+	orientation string    @[omitempty] // 'v' or 'h'
+	valueformat string    @[omitempty]
+	valuesuffix string    @[omitempty]
+	name        string    @[omitempty]
+}
+
+// ChordTrace is a struct for Chord diagram trace type
+@[params]
+pub struct ChordTrace {
+	CommonTrace
+pub mut:
+	matrix      [][]f64   @[omitempty]
+	labels      []string  @[omitempty]
+	rotation    f64       @[omitempty]
+	sort        string    @[omitempty] // 'ascending', 'descending', 'none'
+	thickness   f64       @[omitempty]
+}
+
+// NetworkTrace is a struct for Network/Graph trace type
+@[params]
+pub struct NetworkTrace {
+	CommonTrace
+pub mut:
+	nodes       NetworkNodes @[omitempty]
+	edges       NetworkEdges @[omitempty]
+	layout      string       @[omitempty] // 'force', 'circle', 'tree', 'random'
+	iterations  int          @[omitempty]
+	node_trace  bool         @[omitempty]
+	edge_trace  bool         @[omitempty]
+}
+
+// ChoroplethTrace is a struct for Choropleth map trace type
+@[params]
+pub struct ChoroplethTrace {
+	CommonTrace
+pub mut:
+	locations    []string  @[omitempty]
+	geojson      string    @[omitempty]
+	featureidkey string    @[omitempty]
+	locationmode string    @[omitempty] // 'ISO-3', 'USA-states', 'country names', 'geojson-id'
+	reversescale bool      @[omitempty]
+	showscale    bool      @[omitempty]
+	hovertemplate string   @[omitempty]
+}
+
+// ScatterMapboxTrace is a struct for Scatter on mapbox trace type
+@[params]
+pub struct ScatterMapboxTrace {
+	CommonTrace
+pub mut:
+	lat          []f64  @[omitempty]
+	lon          []f64  @[omitempty]
+	mode         string @[omitempty] // 'markers', 'lines', 'lines+markers'
+	cluster      Cluster @[omitempty]
+	hovertemplate string @[omitempty]
+	subplot      string @[omitempty]
+}
+
+// DensityMapboxTrace is a struct for Density on mapbox trace type
+@[params]
+pub struct DensityMapboxTrace {
+	CommonTrace
+pub mut:
+	lat          []f64  @[omitempty]
+	lon          []f64  @[omitempty]
+	radius       []f64  @[omitempty]
+	opacity      f64    @[omitempty]
+	reversescale bool   @[omitempty]
+	showscale    bool   @[omitempty]
+	subplot      string @[omitempty]
 }

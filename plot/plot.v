@@ -203,6 +203,66 @@ pub fn (p Plot) debug_json() {
 	println('=======================')
 }
 
+// histogram2d adds a 2D histogram trace to the plot
+@[inline]
+pub fn (mut p Plot) histogram2d(trace Histogram2DTrace) Plot {
+	return p.add_trace(trace)
+}
+
+// density adds a density plot trace to the plot
+@[inline]
+pub fn (mut p Plot) density(trace DensityTrace) Plot {
+	return p.add_trace(trace)
+}
+
+// ridgeline adds a ridgeline plot trace to the plot
+@[inline]
+pub fn (mut p Plot) ridgeline(trace RidgelineTrace) Plot {
+	return p.add_trace(trace)
+}
+
+// parcoords adds a parallel coordinates trace to the plot
+@[inline]
+pub fn (mut p Plot) parcoords(trace ParallelCoordinatesTrace) Plot {
+	return p.add_trace(trace)
+}
+
+// sankey adds a Sankey diagram trace to the plot
+@[inline]
+pub fn (mut p Plot) sankey(trace SankeyTrace) Plot {
+	return p.add_trace(trace)
+}
+
+// chord adds a chord diagram trace to the plot
+@[inline]
+pub fn (mut p Plot) chord(trace ChordTrace) Plot {
+	return p.add_trace(trace)
+}
+
+// network adds a network/graph trace to the plot
+@[inline]
+pub fn (mut p Plot) network(trace NetworkTrace) Plot {
+	return p.add_trace(trace)
+}
+
+// choropleth adds a choropleth map trace to the plot
+@[inline]
+pub fn (mut p Plot) choropleth(trace ChoroplethTrace) Plot {
+	return p.add_trace(trace)
+}
+
+// scattermapbox adds a scatter on mapbox trace to the plot
+@[inline]
+pub fn (mut p Plot) scattermapbox(trace ScatterMapboxTrace) Plot {
+	return p.add_trace(trace)
+}
+
+// densitymapbox adds a density on mapbox trace to the plot
+@[inline]
+pub fn (mut p Plot) densitymapbox(trace DensityMapboxTrace) Plot {
+	return p.add_trace(trace)
+}
+
 // Helper function for encoding plot data to JSON
 // This is a local version of the encode function to avoid circular imports
 fn plot_encode[T](obj T) string {
