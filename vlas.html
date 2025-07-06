@@ -81,13 +81,6 @@
 <div class="menu-row"><a href="./errors.html">errors</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="#">internal</a></div>
-<ul>
-<li><a href="./internal.dataset.html">dataset</a></li>
-<li><a href="./internal.prec.html">prec</a></li>
-</ul>
-</li>
-<li class="open">
 <div class="menu-row"><a href="./fft.html">fft</a></div>
 </li>
 <li class="open">
@@ -116,6 +109,12 @@
 <div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="#">inout</a></div>
 <ul>
 <li><a href="./inout.h5.html">h5</a></li>
+</ul>
+</li>
+<li class="open">
+<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="#">internal</a></div>
+<ul>
+<li><a href="./internal.prec.html">prec</a></li>
 </ul>
 </li>
 <li class="open">
@@ -175,7 +174,7 @@
 					<div class="doc-content">
 								<section id="readme_vlas" class="doc-node">
 			<div class="title"><h1> vlas <a href="#readme_vlas">#</a></h1></div>
-<h1>V Linear Algebra System</h1><p>This package implements BLAS and LAPACKE functions. It provides different backends:</p><table><thead><tr><th>Backend</th><th>Description</th><th>Status</th><th>Compilation Flags</th></tr></thead><tbody><tr><td>VLAS</td><td>Pure V implementation</td><td>WIP</td><td><code>NONE</code></td></tr><tr><td>OpenBLAS</td><td>OpenBLAS is an optimized BLAS library based on <a href="https://github.com/xianyi/OpenBLAS">https://github.com/xianyi/OpenBLAS</a>. Check the section <a href="#openblas-backend">OpenBLAS Backend</a> for more information.</td><td>Working</td><td><code>-d vsl_vlas_cblas</code></td></tr><tr><td>LAPACKE</td><td>LAPACKE is a C interface to the LAPACK linear algebra routines</td><td>Working</td><td><code>-d vsl_vlas_lapacke</code></td></tr></tbody></table><p>Therefore, its routines are a little more <em>lower level</em> than the ones in the package <code>vsl.la</code>.</p><h2>OpenBLAS Backend</h2><p>Use the flag <code>-d vsl_vlas_cblas</code> to use the OpenBLAS backend.</p><h3>Install dependencies</h3><h4>Debian/Ubuntu GNU Linux</h4><p><code>libopenblas-dev</code> is not needed when using the pure V backend.</p><pre><code class="language-sh">sudo apt<span class="token operator">-</span>get install <span class="token operator">-</span>y <span class="token operator">--</span>no<span class="token operator">-</span>install<span class="token operator">-</span>recommends</code></pre><h4>Arch Linux/Manjaro GNU Linux</h4><p>The best way of installing OpenBlas is using <a href="https://aur.archlinux.org/packages/lapack-openblas/">lapack-openblas</a>.</p><pre><code class="language-sh">yay <span class="token operator">-</span>S lapack<span class="token operator">-</span>openblas</code></pre><p>or</p><pre><code class="language-sh">git clone https<span class="token punctuation">:</span><span class="token comment">//aur.archlinux.org/lapack-openblas.git /tmp/lapack-openblas</span>
+<h1>V Linear Algebra System</h1><p>This package implements BLAS and LAPACKE functions. It provides different backends:</p><table><thead><tr><th>Backend</th><th>Description</th><th>Status</th><th>Compilation Flags</th></tr></thead><tbody><tr><td>VLAS</td><td>Pure V implementation</td><td>WIP</td><td><code>NONE</code></td></tr><tr><td>OpenBLAS</td><td>OpenBLAS optimized BLAS library. See [OpenBLAS</td><td>Working</td><td><code>-d vsl_vlas_cblas</code></td></tr><tr><td></td><td>Backend](#openblas-backend) for more information.</td><td></td><td></td></tr><tr><td>LAPACKE</td><td>C interface to LAPACK linear algebra routines</td><td>Working</td><td><code>-d vsl_vlas_lapacke</code></td></tr></tbody></table><p>Therefore, its routines are a little more <em>lower level</em> than the ones in the package <code>vsl.la</code>.</p><h2>OpenBLAS Backend</h2><p>Use the flag <code>-d vsl_vlas_cblas</code> to use the OpenBLAS backend.</p><h3>Install dependencies</h3><h4>Debian/Ubuntu GNU Linux</h4><p><code>libopenblas-dev</code> is not needed when using the pure V backend.</p><pre><code class="language-sh">sudo apt<span class="token operator">-</span>get install <span class="token operator">-</span>y <span class="token operator">--</span>no<span class="token operator">-</span>install<span class="token operator">-</span>recommends</code></pre><h4>Arch Linux/Manjaro GNU Linux</h4><p>The best way of installing OpenBlas is using <a href="https://aur.archlinux.org/packages/lapack-openblas/">lapack-openblas</a>.</p><pre><code class="language-sh">yay <span class="token operator">-</span>S lapack<span class="token operator">-</span>openblas</code></pre><p>or</p><pre><code class="language-sh">git clone https<span class="token punctuation">:</span><span class="token comment">//aur.archlinux.org/lapack-openblas.git /tmp/lapack-openblas</span>
 cd <span class="token operator">/</span>tmp<span class="token operator">/</span>lapack<span class="token operator">-</span>openblas
 makepkg <span class="token operator">-</span>si</code></pre><h4>macOS</h4><pre><code class="language-sh">brew install openblas</code></pre><h2>LAPACKE Backend</h2><p>Use the flag <code>-d vsl_vlas_lapacke</code> to use the LAPACKE backend (enabled by default for now).</p><h3>Install dependencies</h3><h4>Debian/Ubuntu GNU Linux</h4><pre><code class="language-sh">sudo apt<span class="token operator">-</span>get install <span class="token operator">-</span>y <span class="token operator">--</span>no<span class="token operator">-</span>install<span class="token operator">-</span>recommends</code></pre><h4>Arch Linux/Manjaro GNU Linux</h4><p>The best way of installing LAPACKE is using <a href="https://aur.archlinux.org/packages/lapack-openblas/">lapack-openblas</a>.</p><pre><code class="language-sh">yay <span class="token operator">-</span>S lapack<span class="token operator">-</span>openblas</code></pre><p>or</p><pre><code class="language-sh">git clone https<span class="token punctuation">:</span><span class="token comment">//aur.archlinux.org/lapack-openblas.git /tmp/lapack-openblas</span>
 cd <span class="token operator">/</span>tmp<span class="token operator">/</span>lapack<span class="token operator">-</span>openblas
@@ -544,7 +543,7 @@ makepkg <span class="token operator">-</span>si</code></pre>
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 29 Jun 2025 08:01:50</div>
+						<div class="footer">Powered by vdoc. Generated on: 6 Jul 2025 01:22:15</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_vlas">README</a></li>
 <li class="open"><a href="#c_trans">fn c_trans</a>        <ul>
