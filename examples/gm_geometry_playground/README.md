@@ -1,6 +1,7 @@
 # Geometry Module - Geometry Playground Example
 
-This example provides an interactive playground for exploring geometric concepts using VSL's Geometry Module (gm).
+This example provides an interactive playground for exploring geometric concepts using VSL's
+Geometry Module (gm).
 
 ## Overview
 

@@ -6,15 +6,49 @@ plots with minimal code while maintaining full customization control.
 
 ## 🚀 Features
 
-### Plot Types
+### Core Plot Types
 
 - **Scatter Plots**: Points, lines, or combined with extensive marker customization
+- **Line Charts**: Time series and continuous data visualization
 - **Bar Charts**: Vertical and horizontal bars with grouping support
-- **Heatmaps**: 2D data visualization with color mapping
 - **Histograms**: Distribution visualization with binning control
 - **Pie Charts**: Proportion visualization with labels and annotations
+- **Heatmaps**: 2D data visualization with color mapping
 - **3D Scatter**: Three-dimensional data visualization
 - **Surface Plots**: 3D surface rendering for mathematical functions
+
+### Statistical & Distribution Charts
+
+- **Box Plots**: Statistical distribution analysis with quartiles
+- **Violin Plots**: Kernel density estimation for distributions
+- **Contour Plots**: Topographical and mathematical contour visualization
+
+### Business & Financial Charts
+
+- **Waterfall Charts**: Financial flow and variance analysis
+- **Candlestick Charts**: OHLC stock price visualization
+- **Funnel Charts**: Conversion and process flow analysis
+
+### Hierarchical & Network Charts
+
+- **Sunburst Charts**: Hierarchical data with radial layout
+- **Treemap Charts**: Hierarchical data with nested rectangles
+- **Sankey Diagrams**: Flow and process visualization
+- **Network Graphs**: Node-link relationship visualization
+
+### Advanced Analytics
+
+- **Radar/Polar Charts**: Multi-dimensional comparison
+- **Parallel Coordinates**: High-dimensional data analysis
+- **2D Histograms**: Bivariate distribution analysis
+- **Density Plots**: Continuous probability distributions
+- **Ridgeline Plots**: Multiple distribution comparison
+
+### Geographic & Mapping
+
+- **Choropleth Maps**: Geographic data visualization
+- **Scatter Mapbox**: Location-based scatter plots
+- **Density Mapbox**: Geographic density visualization
 
 ### Interactive Features
 
@@ -40,6 +74,132 @@ y := x.map(it * it) // y = x²
 mut plt := plot.Plot.new()
 plt.scatter(x: x, y: y, mode: 'lines+markers')
 plt.layout(title: 'Quadratic Function')
+plt.show()!
+```
+
+### Line Chart (Time Series)
+
+```v
+import vsl.plot
+
+dates := ['2024-01', '2024-02', '2024-03', '2024-04']
+prices := [100.0, 120.0, 110.0, 130.0]
+
+mut plt := plot.Plot.new()
+plt.line(x: dates, y: prices, mode: 'lines+markers')
+plt.layout(title: 'Stock Price Trend')
+plt.show()!
+```
+
+### Box Plot (Statistical Analysis)
+
+```v
+import vsl.plot
+
+data1 := [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0]
+data2 := [2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0]
+
+mut plt := plot.Plot.new()
+plt.box(y: data1, name: 'Dataset A')
+plt.box(y: data2, name: 'Dataset B')
+plt.layout(title: 'Distribution Comparison')
+plt.show()!
+```
+
+### Violin Plot (Distribution Shape)
+
+```v
+import vsl.plot
+
+values := [1.0, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0]
+
+mut plt := plot.Plot.new()
+plt.violin(y: values, name: 'Distribution')
+plt.layout(title: 'Data Distribution Shape')
+plt.show()!
+```
+
+### Candlestick Chart (Financial)
+
+```v
+import vsl.plot
+
+dates := ['2024-01-01', '2024-01-02', '2024-01-03']
+open_prices := [100.0, 105.0, 102.0]
+high_prices := [110.0, 108.0, 107.0]
+low_prices := [95.0, 100.0, 98.0]
+close_prices := [105.0, 102.0, 106.0]
+
+mut plt := plot.Plot.new()
+plt.candlestick(
+	x:     dates
+	open:  open_prices
+	high:  high_prices
+	low:   low_prices
+	close: close_prices
+)
+plt.layout(title: 'Stock Price OHLC')
+plt.show()!
+```
+
+### Sunburst Chart (Hierarchical Data)
+
+```v
+import vsl.plot
+
+mut plt := plot.Plot.new()
+plt.sunburst(
+	labels:  ['Root', 'A', 'B', 'A1', 'A2', 'B1']
+	parents: ['', 'Root', 'Root', 'A', 'A', 'B']
+	values:  [100.0, 60.0, 40.0, 30.0, 30.0, 40.0]
+)
+plt.layout(title: 'Hierarchical Structure')
+plt.show()!
+```
+
+### Choropleth Map (Geographic)
+
+```v
+import vsl.plot
+
+state_codes := ['CA', 'TX', 'NY', 'FL']
+population := [39500000.0, 29000000.0, 19500000.0, 21500000.0]
+
+mut plt := plot.Plot.new()
+plt.choropleth(
+	locations:    state_codes
+	z:            population
+	locationmode: 'USA-states'
+	colorscale:   'Viridis'
+)
+plt.layout(
+	title: 'US Population by State'
+	geo:   plot.Geo{
+		scope: 'usa'
+	}
+)
+plt.show()!
+```
+
+### Parallel Coordinates (Multi-dimensional)
+
+```v
+import vsl.plot
+
+mut plt := plot.Plot.new()
+plt.parcoords(
+	dimensions: [
+		plot.Dimension{
+			label:  'Feature 1'
+			values: [1.0, 2.0, 3.0, 4.0]
+		},
+		plot.Dimension{
+			label:  'Feature 2'
+			values: [10.0, 20.0, 30.0, 40.0]
+		},
+	]
+)
+plt.layout(title: 'Multi-dimensional Analysis')
 plt.show()!
 ```
 
@@ -236,35 +396,6 @@ plt.scatter(
 ### Subplots (Coming Soon)
 
 The VSL plot module is actively developed. Subplot functionality is planned for future releases.
-
-## 🎯 Examples Directory
-
-Explore complete examples:
-
-- `plot_scatter` - Basic scatter plotting
-- `plot_scatter_annotations_fixed` - Annotations without arrows
-- `plot_bar` - Bar chart examples
-- `plot_heatmap_golden_ratio` - Advanced heatmap styling
-- `plot_surface` - 3D surface visualization
-
-## 🔗 API Reference
-
-### Core Functions
-
-- `Plot.new()` - Create new plot instance
-- `plt.scatter()` - Add scatter/line traces
-- `plt.bar()` - Add bar charts
-- `plt.heatmap()` - Add heatmap visualization
-- `plt.layout()` - Configure plot appearance
-- `plt.show()` - Render and display plot
-
-### Data Types
-
-- `Plot` - Main plotting object
-- `Marker` - Point styling configuration
-- `Line` - Line styling configuration
-- `Axis` - Axis configuration
-- `Annotation` - Text annotation settings
 
 ---
 

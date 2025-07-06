@@ -74,6 +74,71 @@ pub fn (mut p Plot) histogram(trace HistogramTrace) Plot {
 	return p.add_trace(trace)
 }
 
+// line adds a line trace to the plot
+@[inline]
+pub fn (mut p Plot) line(trace LineTrace) Plot {
+	mut line_trace := trace
+	// Set default mode to 'lines' if not specified
+	if line_trace.mode == '' {
+		line_trace.mode = 'lines'
+	}
+	return p.add_trace(line_trace)
+}
+
+// box adds a box trace to the plot
+@[inline]
+pub fn (mut p Plot) box(trace BoxTrace) Plot {
+	return p.add_trace(trace)
+}
+
+// violin adds a violin trace to the plot
+@[inline]
+pub fn (mut p Plot) violin(trace ViolinTrace) Plot {
+	return p.add_trace(trace)
+}
+
+// contour adds a contour trace to the plot
+@[inline]
+pub fn (mut p Plot) contour(trace ContourTrace) Plot {
+	return p.add_trace(trace)
+}
+
+// waterfall adds a waterfall trace to the plot
+@[inline]
+pub fn (mut p Plot) waterfall(trace WaterfallTrace) Plot {
+	return p.add_trace(trace)
+}
+
+// sunburst adds a sunburst trace to the plot
+@[inline]
+pub fn (mut p Plot) sunburst(trace SunburstTrace) Plot {
+	return p.add_trace(trace)
+}
+
+// treemap adds a treemap trace to the plot
+@[inline]
+pub fn (mut p Plot) treemap(trace TreemapTrace) Plot {
+	return p.add_trace(trace)
+}
+
+// candlestick adds a candlestick trace to the plot
+@[inline]
+pub fn (mut p Plot) candlestick(trace CandlestickTrace) Plot {
+	return p.add_trace(trace)
+}
+
+// funnel adds a funnel trace to the plot
+@[inline]
+pub fn (mut p Plot) funnel(trace FunnelTrace) Plot {
+	return p.add_trace(trace)
+}
+
+// scatterpolar adds a polar/radar trace to the plot
+@[inline]
+pub fn (mut p Plot) scatterpolar(trace ScatterPolarTrace) Plot {
+	return p.add_trace(trace)
+}
+
 // box adds a box trace to the plot
 @[inline]
 pub fn (mut p Plot) annotation(annotation Annotation) Plot {
@@ -119,6 +184,83 @@ pub fn (p Plot) traces_json() string {
 // The returned JSON is compatible with Plotly.js format
 pub fn (p Plot) layout_json() string {
 	return plot_encode(p.layout)
+}
+
+// debug_json prints the JSON that would be sent to Plotly.js for debugging
+pub fn (p Plot) debug_json() {
+	traces_with_type := p.traces.map({
+		'type':  PlotValue(it.trace_type())
+		'trace': PlotValue(it)
+	})
+	traces_json := plot_encode(traces_with_type)
+	layout_json := plot_encode(p.layout)
+
+	println('=== PLOT DEBUG JSON ===')
+	println('Traces JSON:')
+	println(traces_json)
+	println('\nLayout JSON:')
+	println(layout_json)
+	println('=======================')
+}
+
+// histogram2d adds a 2D histogram trace to the plot
+@[inline]
+pub fn (mut p Plot) histogram2d(trace Histogram2DTrace) Plot {
+	return p.add_trace(trace)
+}
+
+// density adds a density plot trace to the plot
+@[inline]
+pub fn (mut p Plot) density(trace DensityTrace) Plot {
+	return p.add_trace(trace)
+}
+
+// ridgeline adds a ridgeline plot trace to the plot
+@[inline]
+pub fn (mut p Plot) ridgeline(trace RidgelineTrace) Plot {
+	return p.add_trace(trace)
+}
+
+// parcoords adds a parallel coordinates trace to the plot
+@[inline]
+pub fn (mut p Plot) parcoords(trace ParallelCoordinatesTrace) Plot {
+	return p.add_trace(trace)
+}
+
+// sankey adds a Sankey diagram trace to the plot
+@[inline]
+pub fn (mut p Plot) sankey(trace SankeyTrace) Plot {
+	return p.add_trace(trace)
+}
+
+// chord adds a chord diagram trace to the plot
+@[inline]
+pub fn (mut p Plot) chord(trace ChordTrace) Plot {
+	return p.add_trace(trace)
+}
+
+// network adds a network/graph trace to the plot
+@[inline]
+pub fn (mut p Plot) network(trace NetworkTrace) Plot {
+	return p.add_trace(trace)
+}
+
+// choropleth adds a choropleth map trace to the plot
+@[inline]
+pub fn (mut p Plot) choropleth(trace ChoroplethTrace) Plot {
+	return p.add_trace(trace)
+}
+
+// scattermapbox adds a scatter on mapbox trace to the plot
+@[inline]
+pub fn (mut p Plot) scattermapbox(trace ScatterMapboxTrace) Plot {
+	return p.add_trace(trace)
+}
+
+// densitymapbox adds a density on mapbox trace to the plot
+@[inline]
+pub fn (mut p Plot) densitymapbox(trace DensityMapboxTrace) Plot {
+	return p.add_trace(trace)
 }
 
 // Helper function for encoding plot data to JSON

@@ -28,11 +28,15 @@ v -cflags <flags> run main.v
 
 ### 📖 Learning Path
 
-**Beginners**: Start with → `plot_scatter` → `ml_kmeans` → `data_analysis_example`
+**Beginners**: Start with → `plot_scatter` → `plot_line_timeseries` → `plot_bar` → `data_analysis_example`
 
-**Intermediate**: Explore → `fft_plot_example` → `ml_linreg_plot` → `noise_fractal_2d`
+**Intermediate**: Explore → `plot_box_statistics` → `plot_violin_distributions` → `ml_linreg_plot` → `fft_plot_example`
 
-**Advanced**: Try → `mpi_basic_example` → `vcl_opencl_basic` → `io_h5_dataset`
+**Advanced Plotting**: Try → `plot_sunburst_hierarchy` → `plot_choropleth_population` → `plot_sankey_energy` → `plot_export_png`
+
+**Machine Learning**: Progress → `ml_kmeans` → `ml_linreg_plot` → `ml_sentiment_analysis`
+
+**Scientific Computing**: Dive into → `fft_plot_example` → `deriv_example` → `mpi_basic_example`
 
 ## Machine Learning Examples 🤖
 
@@ -48,32 +52,97 @@ v -cflags <flags> run main.v
 
 ## Plotting Examples 📊
 
+### Core Plot Types
+
+| Example                                                  | Description                                |
+| -------------------------------------------------------- | ------------------------------------------ |
+| [plot_scatter](./plot_scatter)                           | Basic scatter plot example.                |
+| [plot_line_timeseries](./plot_line_timeseries)           | Time series line chart plotting.           |
+| [plot_bar](./plot_bar)                                   | Basic bar plot example.                    |
+| [plot_histogram](./plot_histogram)                       | Example showing how to create a histogram. |
+| [plot_pie](./plot_pie)                                   | Pie chart plotting example.                |
+| [plot_basic_heatmap](./plot_basic_heatmap)               | Basic heatmap example.                     |
+| [plot_heatmap_golden_ratio](./plot_heatmap_golden_ratio) | Heatmap example with the golden ratio.     |
+| [plot_scatter3d_1](./plot_scatter3d_1)                   | 3D scatter plot example 1.                 |
+| [plot_scatter3d_2](./plot_scatter3d_2)                   | 3D scatter plot example 2.                 |
+| [plot_scatter3d_easing](./plot_scatter3d_easing)         | 3D scatter plot with easing.               |
+| [plot_saddle_surface](./plot_saddle_surface)             | Plotting a saddle surface.                 |
+| [plot_ripple_surface](./plot_ripple_surface)             | Plotting a ripple surface.                 |
+| [plot_sin_cos_surface](./plot_sin_cos_surface)           | Plotting the sine and cosine surface.      |
+| [plot_surface](./plot_surface)                           | 3D surface plotting example.               |
+| [plot_surface_easing](./plot_surface_easing)             | 3D surface with animation easing.          |
+
+### Statistical & Distribution Charts
+
+| Example                                                        | Description                                 |
+| -------------------------------------------------------------- | ------------------------------------------- |
+| [plot_box_statistics](./plot_box_statistics)                   | Box plot for statistical analysis.          |
+| [plot_violin_distributions](./plot_violin_distributions)       | Violin plot for distribution visualization. |
+| [plot_contour_topography](./plot_contour_topography)           | Contour plot for topographical data.        |
+| [plot_histogram2d_correlation](./plot_histogram2d_correlation) | 2D histogram for correlation analysis.      |
+
+### Business & Financial Charts
+
+| Example                                                | Description                             |
+| ------------------------------------------------------ | --------------------------------------- |
+| [plot_waterfall_financial](./plot_waterfall_financial) | Waterfall chart for financial analysis. |
+| [plot_candlestick_stocks](./plot_candlestick_stocks)   | Candlestick chart for stock data.       |
+| [plot_funnel_conversion](./plot_funnel_conversion)     | Funnel chart for conversion analysis.   |
+
+### Hierarchical & Network Charts
+
+| Example                                              | Description                                |
+| ---------------------------------------------------- | ------------------------------------------ |
+| [plot_sunburst_hierarchy](./plot_sunburst_hierarchy) | Sunburst chart for hierarchical data.      |
+| [plot_treemap_portfolio](./plot_treemap_portfolio)   | Treemap chart for portfolio visualization. |
+| [plot_sankey_energy](./plot_sankey_energy)           | Sankey diagram for energy flow analysis.   |
+
+### Advanced Analytics
+
+| Example                                              | Description                                     |
+| ---------------------------------------------------- | ----------------------------------------------- |
+| [plot_radar_performance](./plot_radar_performance)   | Radar chart for multi-dimensional analysis.     |
+| [plot_parcoords_analysis](./plot_parcoords_analysis) | Parallel coordinates for high-dimensional data. |
+
+### Geographic & Mapping
+
+| Example                                                    | Description                               |
+| ---------------------------------------------------------- | ----------------------------------------- |
+| [plot_choropleth_population](./plot_choropleth_population) | Choropleth map for geographic data.       |
+| [plot_scattermapbox_cities](./plot_scattermapbox_cities)   | Scatter plot on mapbox for location data. |
+
+### Export & Automation
+
+| Example                              | Description                                   |
+| ------------------------------------ | --------------------------------------------- |
+| [plot_export_png](./plot_export_png) | **Direct PNG/PDF/SVG export without server.** |
+
+### Styling & Customization
+
+| Example                                                            | Description                                |
+| ------------------------------------------------------------------ | ------------------------------------------ |
+| [plot_line_axis_titles](./plot_line_axis_titles)                   | Line plot with axis titles.                |
+| [plot_scatter_with_annotations](./plot_scatter_with_annotations)   | Scatter plot with annotations.             |
+| [plot_annotated_pie_chart](./plot_annotated_pie_chart)             | Annotated pie chart example.               |
+| [plot_grouped_bar_chart](./plot_grouped_bar_chart)                 | Grouped bar chart plotting example.        |
+| [plot_scatter_with_bars](./plot_scatter_with_bars)                 | Scatter plot with bars.                    |
+| [plot_line_plot_with_areas](./plot_line_plot_with_areas)           | Line plot with shaded areas.               |
+| [plot_scatter_with_regression](./plot_scatter_with_regression)     | Scatter plot with regression line.         |
+| [plot_bubble_chart](./plot_bubble_chart)                           | Bubble chart plotting example.             |
+| [plot_shaded_area_sin](./plot_shaded_area_sin)                     | Shaded area plot of the sine function.     |
+| [plot_scatter_easing](./plot_scatter_easing)                       | Scatter plot with animation easing.        |
+| [plot_scatter_colorscale](./plot_scatter_colorscale)               | Scatter plot with custom color scaling.    |
+| [plot_scatter_annotations_fixed](./plot_scatter_annotations_fixed) | Clean annotations without unwanted arrows. |
+| [plot_scatter_with_histogram](./plot_scatter_with_histogram)       | Scatter plot combined with histogram.      |
+| [plot_json_export](./plot_json_export)                             | Export plot data to JSON format.           |
+
+### Script Mode Examples
+
 | Example                                                                      | Description                                 |
 | ---------------------------------------------------------------------------- | ------------------------------------------- |
-| [plot_scatter](./plot_scatter)                                               | Basic scatter plot example.                 |
-| [plot_histogram](./plot_histogram)                                           | Example showing how to create a histogram.  |
-| [plot_pie](./plot_pie)                                                       | Pie chart plotting example.                 |
-| [plot_saddle_surface](./plot_saddle_surface)                                 | Plotting a saddle surface.                  |
-| [plot_line_axis_titles](./plot_line_axis_titles)                             | Line plot with axis titles.                 |
-| [plot_scatter_with_annotations](./plot_scatter_with_annotations)             | Scatter plot with annotations.              |
-| [plot_basic_heatmap](./plot_basic_heatmap)                                   | Basic heatmap example.                      |
-| [plot_scatter3d_1](./plot_scatter3d_1)                                       | 3D scatter plot example 1.                  |
-| [plot_ripple_surface](./plot_ripple_surface)                                 | Plotting a ripple surface.                  |
-| [plot_grouped_bar_chart](./plot_grouped_bar_chart)                           | Grouped bar chart plotting example.         |
-| [plot_annotated_pie_chart](./plot_annotated_pie_chart)                       | Annotated pie chart example.                |
-| [plot_scatter_with_bars](./plot_scatter_with_bars)                           | Scatter plot with bars.                     |
 | [plot_script_mode_ac_signal](./plot_script_mode_ac_signal)                   | AC signal plotting in script mode.          |
-| [plot_line_plot_with_areas](./plot_line_plot_with_areas)                     | Line plot with shaded areas.                |
-| [plot_scatter3d_easing](./plot_scatter3d_easing)                             | 3D scatter plot with easing.                |
-| [plot_scatter_with_regression](./plot_scatter_with_regression)               | Scatter plot with regression line.          |
-| [plot_scatter3d_2](./plot_scatter3d_2)                                       | 3D scatter plot example 2.                  |
-| [plot_heatmap_golden_ratio](./plot_heatmap_golden_ratio)                     | Heatmap example with the golden ratio.      |
-| [plot_bubble_chart](./plot_bubble_chart)                                     | Bubble chart plotting example.              |
-| [plot_shaded_area_sin](./plot_shaded_area_sin)                               | Shaded area plot of the sine function.      |
-| [plot_sin_cos_surface](./plot_sin_cos_surface)                               | Plotting the sine and cosine surface.       |
 | [plot_script_mode_simple_plot](./plot_script_mode_simple_plot)               | Simple plot in script mode.                 |
 | [plot_script_mode_three_phase_signal](./plot_script_mode_three_phase_signal) | Three-phase signal plotting in script mode. |
-| [plot_bar](./plot_bar)                                                       | Basic bar plot example.                     |
 
 ## Mathematical and Scientific Computation Examples 🔢
 
@@ -84,6 +153,24 @@ v -cflags <flags> run main.v
 | [prime_factorization](./prime_factorization)       | Prime factorization example.                                      |
 | [roots_bisection_solver](./roots_bisection_solver) | Root finding using the bisection method.                          |
 | [deriv_example](./deriv_example)                   | Derivative calculation example.                                   |
+
+## Geometry Module Examples 📐
+
+| Example                                                | Description                              |
+| ------------------------------------------------------ | ---------------------------------------- |
+| [gm_basic_geometry](./gm_basic_geometry)               | Fundamental 3D geometry operations.      |
+| [gm_advanced_analysis](./gm_advanced_analysis)         | Advanced geometric analysis techniques.  |
+| [gm_distance_analysis](./gm_distance_analysis)         | Distance calculation and shape analysis. |
+| [gm_spatial_binning](./gm_spatial_binning)             | Spatial indexing and binning systems.    |
+| [gm_geometry_playground](./gm_geometry_playground)     | Interactive geometry exploration.        |
+| [gm_trajectory_simulation](./gm_trajectory_simulation) | Motion and trajectory analysis.          |
+
+## Noise & Signal Processing Examples 🌊
+
+| Example                                | Description                  |
+| -------------------------------------- | ---------------------------- |
+| [noise_fractal_2d](./noise_fractal_2d) | 2D fractal noise generation. |
+| [noise_simplex_2d](./noise_simplex_2d) | 2D simplex noise generation. |
 
 ## Data Analysis Examples 📈
 
@@ -122,6 +209,8 @@ v -cflags <flags> run main.v
 | [dist_histogram](./dist_histogram) | Distribution histogram example.                  |
 
 ### 📋 Important Guidelines ⚠️
+
+**Total Examples**: This collection includes **75+ working examples** covering all VSL modules.
 
 - **Documentation First**: Each example includes a detailed `README.md` - always read it
   before running

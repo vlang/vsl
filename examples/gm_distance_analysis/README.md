@@ -1,6 +1,7 @@
 # Geometry Module - Distance Analysis Example
 
-This example demonstrates comprehensive distance analysis techniques using VSL's Geometry Module (gm).
+This example demonstrates comprehensive distance analysis techniques using VSL's Geometry
+Module (gm).
 
 ## Overview
 
