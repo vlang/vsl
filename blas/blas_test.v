@@ -67,217 +67,243 @@ fn f64_strided_equal(n int, a []f64, inca int, b []f64, incb int) bool {
 
 // Test data structures for Level 1 BLAS operations
 struct Level1TestCase {
-	name     string
-	x        []f64
-	incx     int
-	n        int
+	name            string
+	x               []f64
+	incx            int
+	n               int
 	expected_dasum  f64
 	expected_dnrm2  f64
 	expected_idamax int
-	scal_tests []ScalTestCase
+	scal_tests      []ScalTestCase
 }
 
 struct ScalTestCase {
-	alpha f64
+	alpha    f64
 	expected []f64
-	name  string
+	name     string
 }
 
 // Test cases for Level 1 BLAS operations
 const level1_test_cases = [
 	Level1TestCase{
-		name: 'AllPositive'
-		x: [6.0, 5.0, 4.0, 2.0, 6.0]
-		incx: 1
-		n: 5
-		expected_dasum: 23.0
-		expected_dnrm2: 10.81665382639196787935766380241148783875388972153573863813135
+		name:            'AllPositive'
+		x:               [6.0, 5.0, 4.0, 2.0, 6.0]
+		incx:            1
+		n:               5
+		expected_dasum:  23.0
+		expected_dnrm2:  10.81665382639196787935766380241148783875388972153573863813135
 		expected_idamax: 0
-		scal_tests: [
-			ScalTestCase{
-				alpha: 0.0
-				expected: [0.0, 0.0, 0.0, 0.0, 0.0]
-				name: 'ZeroScale'
-			},
-			ScalTestCase{
-				alpha: 1.0
-				expected: [6.0, 5.0, 4.0, 2.0, 6.0]
-				name: 'OneScale'
-			},
-			ScalTestCase{
-				alpha: 2.0
-				expected: [12.0, 10.0, 8.0, 4.0, 12.0]
-				name: 'TwoScale'
-			},
-		]
+		scal_tests:      [ScalTestCase{
+			alpha:    0.0
+			expected: [0.0, 0.0, 0.0, 0.0, 0.0]
+			name:     'ZeroScale'
+		}, ScalTestCase{
+			alpha:    1.0
+			expected: [6.0, 5.0, 4.0, 2.0, 6.0]
+			name:     'OneScale'
+		}, ScalTestCase{
+			alpha:    2.0
+			expected: [12.0, 10.0, 8.0, 4.0, 12.0]
+			name:     'TwoScale'
+		}]
 	},
 	Level1TestCase{
-		name: 'WithNegatives'
-		x: [-6.0, 5.0, -4.0, 2.0, -6.0]
-		incx: 1
-		n: 5
-		expected_dasum: 23.0
-		expected_dnrm2: 10.81665382639196787935766380241148783875388972153573863813135
+		name:            'WithNegatives'
+		x:               [-6.0, 5.0, -4.0, 2.0, -6.0]
+		incx:            1
+		n:               5
+		expected_dasum:  23.0
+		expected_dnrm2:  10.81665382639196787935766380241148783875388972153573863813135
 		expected_idamax: 0
-		scal_tests: [
-			ScalTestCase{
-				alpha: -1.0
-				expected: [6.0, -5.0, 4.0, -2.0, 6.0]
-				name: 'NegOneScale'
-			},
-		]
+		scal_tests:      [ScalTestCase{
+			alpha:    -1.0
+			expected: [6.0, -5.0, 4.0, -2.0, 6.0]
+			name:     'NegOneScale'
+		}]
 	},
 	Level1TestCase{
-		name: 'Stride2'
-		x: [1.0, 100.0, 2.0, 200.0, 3.0, 300.0, 4.0]
-		incx: 2
-		n: 4
-		expected_dasum: 10.0
-		expected_dnrm2: math.sqrt(30.0)
+		name:            'Stride2'
+		x:               [1.0, 100.0, 2.0, 200.0, 3.0, 300.0, 4.0]
+		incx:            2
+		n:               4
+		expected_dasum:  10.0
+		expected_dnrm2:  math.sqrt(30.0)
 		expected_idamax: 3
-		scal_tests: [
-			ScalTestCase{
-				alpha: 3.0
-				expected: [3.0, 100.0, 6.0, 200.0, 9.0, 300.0, 12.0]
-				name: 'ThreeScale'
-			},
-		]
+		scal_tests:      [ScalTestCase{
+			alpha:    3.0
+			expected: [3.0, 100.0, 6.0, 200.0, 9.0, 300.0, 12.0]
+			name:     'ThreeScale'
+		}]
 	},
 ]
 
 // Test data for Level 2 BLAS operations (GEMV)
 struct GemvTestCase {
-	name   string
-	trans  Transpose
-	m      int
-	n      int
-	alpha  f64
-	a      [][]f64
-	x      []f64
-	beta   f64
-	y      []f64
+	name     string
+	trans    Transpose
+	m        int
+	n        int
+	alpha    f64
+	a        [][]f64
+	x        []f64
+	beta     f64
+	y        []f64
 	expected []f64
 }
 
 const gemv_test_cases = [
 	GemvTestCase{
-		name: 'NoTrans_3x3'
-		trans: .no_trans
-		m: 3
-		n: 3
-		alpha: 1.0
-		a: [
+		name:     'NoTrans_3x3'
+		trans:    .no_trans
+		m:        3
+		n:        3
+		alpha:    1.0
+		a:        [
 			[1.0, 2.0, 3.0],
 			[4.0, 5.0, 6.0],
 			[7.0, 8.0, 9.0],
 		]
-		x: [1.0, 2.0, 3.0]
-		beta: 0.0
-		y: [0.0, 0.0, 0.0]
-		expected: [14.0, 32.0, 50.0]  // [1*1+2*2+3*3, 4*1+5*2+6*3, 7*1+8*2+9*3]
+		x:        [
+			1.0,
+			2.0,
+			3.0,
+		]
+		beta:     0.0
+		y:        [
+			0.0,
+			0.0,
+			0.0,
+		]
+		expected: [
+			14.0,
+			32.0,
+			50.0,
+		] // [1*1+2*2+3*3, 4*1+5*2+6*3, 7*1+8*2+9*3]
 	},
 	GemvTestCase{
-		name: 'Trans_3x3'
-		trans: .trans
-		m: 3
-		n: 3
-		alpha: 1.0
-		a: [
+		name:     'Trans_3x3'
+		trans:    .trans
+		m:        3
+		n:        3
+		alpha:    1.0
+		a:        [
 			[1.0, 2.0, 3.0],
 			[4.0, 5.0, 6.0],
 			[7.0, 8.0, 9.0],
 		]
-		x: [1.0, 2.0, 3.0]
-		beta: 0.0
-		y: [0.0, 0.0, 0.0]
-		expected: [30.0, 36.0, 42.0]  // [1*1+4*2+7*3, 2*1+5*2+8*3, 3*1+6*2+9*3]
+		x:        [
+			1.0,
+			2.0,
+			3.0,
+		]
+		beta:     0.0
+		y:        [
+			0.0,
+			0.0,
+			0.0,
+		]
+		expected: [
+			30.0,
+			36.0,
+			42.0,
+		] // [1*1+4*2+7*3, 2*1+5*2+8*3, 3*1+6*2+9*3]
 	},
 	GemvTestCase{
-		name: 'AlphaBeta_2x3'
-		trans: .no_trans
-		m: 2
-		n: 3
-		alpha: 2.0
-		a: [
+		name:     'AlphaBeta_2x3'
+		trans:    .no_trans
+		m:        2
+		n:        3
+		alpha:    2.0
+		a:        [
 			[1.0, 2.0, 3.0],
 			[4.0, 5.0, 6.0],
 		]
-		x: [1.0, 1.0, 1.0]
-		beta: 0.5
-		y: [10.0, 20.0]
-		expected: [17.0, 40.0]  // [2*(1+2+3) + 0.5*10, 2*(4+5+6) + 0.5*20] = [12+5, 30+10] = [17, 40]
+		x:        [
+			1.0,
+			1.0,
+			1.0,
+		]
+		beta:     0.5
+		y:        [
+			10.0,
+			20.0,
+		]
+		expected: [
+			17.0,
+			40.0,
+		] // [2*(1+2+3) + 0.5*10, 2*(4+5+6) + 0.5*20] = [12+5, 30+10] = [17, 40]
 	},
 ]
 
 // Test data for Level 3 BLAS operations (GEMM)
 struct GemmTestCase {
-	name   string
-	trans_a Transpose
-	trans_b Transpose
-	m      int
-	n      int
-	k      int
-	alpha  f64
-	a      [][]f64
-	b      [][]f64
-	beta   f64
-	c      [][]f64
+	name     string
+	trans_a  Transpose
+	trans_b  Transpose
+	m        int
+	n        int
+	k        int
+	alpha    f64
+	a        [][]f64
+	b        [][]f64
+	beta     f64
+	c        [][]f64
 	expected [][]f64
 }
 
 const gemm_test_cases = [
 	GemmTestCase{
-		name: 'NoTrans_4x3x2'
-		trans_a: .no_trans
-		trans_b: .no_trans
-		m: 4
-		n: 3
-		k: 2
-		alpha: 2.0
-		a: [
+		name:     'NoTrans_4x3x2'
+		trans_a:  .no_trans
+		trans_b:  .no_trans
+		m:        4
+		n:        3
+		k:        2
+		alpha:    2.0
+		a:        [
 			[1.0, 2.0],
 			[4.0, 5.0],
 			[7.0, 8.0],
 			[10.0, 11.0],
 		]
-		b: [
+		b:        [
 			[1.0, 5.0, 6.0],
 			[5.0, -8.0, 8.0],
 		]
-		beta: 0.5
-		c: [
+		beta:     0.5
+		c:        [
 			[4.0, 8.0, -9.0],
 			[12.0, 16.0, -8.0],
 			[1.0, 5.0, 15.0],
 			[-3.0, -4.0, 7.0],
 		]
 		expected: [
-			[24.0, -18.0, 39.5],    // 2*(1*1+2*5) + 0.5*4, 2*(1*5+2*(-8)) + 0.5*8, 2*(1*6+2*8) + 0.5*(-9)
-			[64.0, -32.0, 124.0],   // 2*(4*1+5*5) + 0.5*12, 2*(4*5+5*(-8)) + 0.5*16, 2*(4*6+5*8) + 0.5*(-8)
-			[94.5, -55.5, 219.5],  // 2*(7*1+8*5) + 0.5*1, 2*(7*5+8*(-8)) + 0.5*5, 2*(7*6+8*8) + 0.5*15
+			[24.0, -18.0, 39.5], // 2*(1*1+2*5) + 0.5*4, 2*(1*5+2*(-8)) + 0.5*8, 2*(1*6+2*8) + 0.5*(-9)
+			[64.0, -32.0, 124.0], // 2*(4*1+5*5) + 0.5*12, 2*(4*5+5*(-8)) + 0.5*16, 2*(4*6+5*8) + 0.5*(-8)
+			[94.5, -55.5, 219.5], // 2*(7*1+8*5) + 0.5*1, 2*(7*5+8*(-8)) + 0.5*5, 2*(7*6+8*8) + 0.5*15
 			[128.5, -78.0, 299.5], // 2*(10*1+11*5) + 0.5*(-3), 2*(10*5+11*(-8)) + 0.5*(-4), 2*(10*6+11*8) + 0.5*7
 		]
 	},
 	GemmTestCase{
-		name: 'Identity_3x3'
-		trans_a: .no_trans
-		trans_b: .no_trans
-		m: 3
-		n: 3
-		k: 3
-		alpha: 1.0
-		a: [
+		name:     'Identity_3x3'
+		trans_a:  .no_trans
+		trans_b:  .no_trans
+		m:        3
+		n:        3
+		k:        3
+		alpha:    1.0
+		a:        [
 			[1.0, 0.0, 0.0],
 			[0.0, 1.0, 0.0],
 			[0.0, 0.0, 1.0],
 		]
-		b: [
+		b:        [
 			[1.0, 2.0, 3.0],
 			[4.0, 5.0, 6.0],
 			[7.0, 8.0, 9.0],
 		]
-		beta: 0.0
-		c: [
+		beta:     0.0
+		c:        [
 			[0.0, 0.0, 0.0],
 			[0.0, 0.0, 0.0],
 			[0.0, 0.0, 0.0],
@@ -374,7 +400,7 @@ fn test_daxpy() {
 	mut y := [4.0, 5.0, 6.0]
 	alpha := 2.0
 	daxpy(3, alpha, x, 1, mut y, 1)
-	expected := [6.0, 9.0, 12.0]  // y = alpha*x + y = 2*[1,2,3] + [4,5,6]
+	expected := [6.0, 9.0, 12.0] // y = alpha*x + y = 2*[1,2,3] + [4,5,6]
 	assert f64_array_equal(y, expected), 'DAXPY failed: expected ${expected}, got ${y}'
 }
 
@@ -387,7 +413,7 @@ fn test_ddot() {
 	x := [1.0, 2.0, 3.0]
 	y := [4.0, 5.0, 6.0]
 	result := ddot(3, x, 1, y, 1)
-	expected := 32.0  // 1*4 + 2*5 + 3*6
+	expected := 32.0 // 1*4 + 2*5 + 3*6
 	assert f64_equal(result, expected), 'DDOT failed: expected ${expected}, got ${result}'
 }
 
@@ -426,7 +452,8 @@ fn test_dgemv() {
 		}
 
 		mut y := case.y.clone()
-		dgemv(case.trans, case.m, case.n, case.alpha, a_flat, case.n, case.x, 1, case.beta, mut y, 1)
+		dgemv(case.trans, case.m, case.n, case.alpha, a_flat, case.n, case.x, 1, case.beta, mut
+			y, 1)
 
 		assert f64_array_equal(y, case.expected), 'DGEMV failed for case ${case.name}: expected ${case.expected}, got ${y}'
 	}
@@ -496,8 +523,8 @@ fn test_dgemm() {
 			}
 		}
 
-		dgemm(case.trans_a, case.trans_b, case.m, case.n, case.k, case.alpha,
-			  a_flat, case.k, b_flat, case.n, case.beta, mut c_flat, case.n)
+		dgemm(case.trans_a, case.trans_b, case.m, case.n, case.k, case.alpha, a_flat,
+			case.k, b_flat, case.n, case.beta, mut c_flat, case.n)
 
 		// Convert expected result to flat array
 		mut expected_flat := []f64{len: case.m * case.n}
@@ -535,7 +562,7 @@ fn test_large_vectors() {
 	}
 
 	// Test with moderately large vectors to ensure performance is reasonable
-	n := 1000  // Reduced from 10000 to avoid numerical precision issues
+	n := 1000 // Reduced from 10000 to avoid numerical precision issues
 	mut x := []f64{len: n}
 	mut y := []f64{len: n}
 
@@ -550,7 +577,7 @@ fn test_large_vectors() {
 	// Manual calculation for verification
 	mut expected := 0.0
 	for i in 0 .. n {
-		expected += x[i] * y[i]  // (i+1) * (2*i) = (i+1) * 2i
+		expected += x[i] * y[i] // (i+1) * (2*i) = (i+1) * 2i
 	}
 	assert f64_equal(result, expected), 'Large vector DDOT failed: expected ${expected}, got ${result}'
 

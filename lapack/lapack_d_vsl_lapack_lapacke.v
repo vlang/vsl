@@ -234,13 +234,13 @@ pub fn gesv(mut a [][]f64, mut b [][]f64) ! {
 	}
 
 	unsafe {
-		info := C.LAPACKE_dgesv(.row_major, n, nrhs, &a_flat[0], n, &ipiv[0], &b_flat[0], nrhs)
+		info := C.LAPACKE_dgesv(.row_major, n, nrhs, &a_flat[0], n, &ipiv[0], &b_flat[0],
+			nrhs)
 
 		if info != 0 {
 			return errors.error('LAPACK dgesv failed with info=${info}', .efailed)
 		}
 	}
-
 	// Copy results back
 	for i in 0 .. n {
 		for j in 0 .. nrhs {
@@ -253,7 +253,8 @@ pub fn gesv(mut a [][]f64, mut b [][]f64) ! {
 @[inline]
 pub fn dgesvd(jobu SVDJob, jobvt SVDJob, m int, n int, mut a []f64, lda int, s []f64, mut u []f64, ldu int, mut vt []f64, ldvt int, superb []f64) int {
 	unsafe {
-		return C.LAPACKE_dgesvd(.row_major, jobu, jobvt, m, n, &a[0], lda, &s[0], &u[0], ldu, &vt[0], ldvt, &superb[0])
+		return C.LAPACKE_dgesvd(.row_major, jobu, jobvt, m, n, &a[0], lda, &s[0], &u[0],
+			ldu, &vt[0], ldvt, &superb[0])
 	}
 }
 
@@ -279,13 +280,13 @@ pub fn gesvd(a [][]f64, jobu SVDJob, jobvt SVDJob) !([]f64, [][]f64, [][]f64) {
 	}
 
 	unsafe {
-		info := C.LAPACKE_dgesvd(.row_major, jobu, jobvt, m, n, &a_flat[0], n, &s[0], &u[0], m, &vt[0], n, &superb[0])
+		info := C.LAPACKE_dgesvd(.row_major, jobu, jobvt, m, n, &a_flat[0], n, &s[0],
+			&u[0], m, &vt[0], n, &superb[0])
 
 		if info != 0 {
 			return errors.error('LAPACK dgesvd failed with info=${info}', .efailed)
 		}
 	}
-
 	// Convert back to 2D arrays
 	mut u_mat := [][]f64{len: m, init: []f64{len: m}}
 	mut vt_mat := [][]f64{len: n, init: []f64{len: n}}
@@ -314,7 +315,7 @@ pub fn dgetrf(m int, n int, mut a []f64, lda int, mut ipiv []int) int {
 
 // getrf - Computes LU factorization of a general matrix
 @[inline]
-pub fn getrf(mut a [][]f64) !([]int) {
+pub fn getrf(mut a [][]f64) ![]int {
 	m := a.len
 	n := a[0].len
 
@@ -335,7 +336,6 @@ pub fn getrf(mut a [][]f64) !([]int) {
 			return errors.error('LAPACK dgetrf failed with info=${info}', .efailed)
 		}
 	}
-
 	// Copy result back
 	for i in 0 .. m {
 		for j in 0 .. n {
@@ -381,7 +381,6 @@ pub fn getri(mut a [][]f64, mut ipiv []int) ! {
 			return errors.error('LAPACK dgetri failed with info=${info}', .efailed)
 		}
 	}
-
 	// Copy result back
 	for i in 0 .. n {
 		for j in 0 .. n {
@@ -414,7 +413,6 @@ pub fn potrf(mut a [][]f64, uplo blas.Uplo) ! {
 			return errors.error('LAPACK dpotrf failed with info=${info}', .efailed)
 		}
 	}
-
 	// Copy result back
 	for i in 0 .. n {
 		for j in 0 .. n {
@@ -445,13 +443,13 @@ pub fn geev(a [][]f64, calc_vl LeftEigenVectorsJob, calc_vr LeftEigenVectorsJob)
 	}
 
 	unsafe {
-		info := C.LAPACKE_dgeev(.row_major, calc_vl, calc_vr, n, &a_flat[0], n, &wr[0], &wi[0], &vl[0], n, &vr[0], n)
+		info := C.LAPACKE_dgeev(.row_major, calc_vl, calc_vr, n, &a_flat[0], n, &wr[0],
+			&wi[0], &vl[0], n, &vr[0], n)
 
 		if info != 0 {
 			return errors.error('LAPACK dgeev failed with info=${info}', .efailed)
 		}
 	}
-
 	// Convert eigenvector arrays back to 2D
 	mut vl_mat := [][]f64{len: n, init: []f64{len: n}}
 	mut vr_mat := [][]f64{len: n, init: []f64{len: n}}
@@ -468,7 +466,7 @@ pub fn geev(a [][]f64, calc_vl LeftEigenVectorsJob, calc_vr LeftEigenVectorsJob)
 
 // syev - Computes eigenvalues and eigenvectors of a symmetric matrix
 @[inline]
-pub fn syev(mut a [][]f64, jobz EigenVectorsJob, uplo blas.Uplo) !([]f64) {
+pub fn syev(mut a [][]f64, jobz EigenVectorsJob, uplo blas.Uplo) ![]f64 {
 	n := a.len
 	if a[0].len != n {
 		return errors.error('Matrix must be square', .efailed)
@@ -491,7 +489,6 @@ pub fn syev(mut a [][]f64, jobz EigenVectorsJob, uplo blas.Uplo) !([]f64) {
 			return errors.error('LAPACK dsyev failed with info=${info}', .efailed)
 		}
 	}
-
 	// Copy eigenvectors back if requested
 	if jobz == .ev_compute {
 		for i in 0 .. n {
@@ -506,7 +503,7 @@ pub fn syev(mut a [][]f64, jobz EigenVectorsJob, uplo blas.Uplo) !([]f64) {
 
 // geqrf - Computes QR factorization of a general matrix
 @[inline]
-pub fn geqrf(mut a [][]f64) !([]f64) {
+pub fn geqrf(mut a [][]f64) ![]f64 {
 	m := a.len
 	n := a[0].len
 	min_mn := if m < n { m } else { n }
@@ -528,7 +525,6 @@ pub fn geqrf(mut a [][]f64) !([]f64) {
 			return errors.error('LAPACK dgeqrf failed with info=${info}', .efailed)
 		}
 	}
-
 	// Copy result back
 	for i in 0 .. m {
 		for j in 0 .. n {
@@ -562,7 +558,6 @@ pub fn orgqr(mut a [][]f64, tau []f64) ! {
 			return errors.error('LAPACK dorgqr failed with info=${info}', .efailed)
 		}
 	}
-
 	// Copy result back
 	for i in 0 .. m {
 		for j in 0 .. n {
