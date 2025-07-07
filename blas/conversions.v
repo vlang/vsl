@@ -7,19 +7,37 @@ import vsl.errors
 import vsl.blas.blas64
 
 // MemoryLayout is used to specify the memory layout of a matrix.
-pub type MemoryLayout = blas64.MemoryLayout
+pub enum MemoryLayout {
+	row_major = 101
+	col_major = 102
+}
 
 // Transpose is used to specify the transposition of a matrix.
-pub type Transpose = blas64.Transpose
+pub enum Transpose {
+	no_trans      = 111
+	trans         = 112
+	conj_trans    = 113
+	conj_no_trans = 114
+}
 
 // Uplo is used to specify whether the upper or lower triangle of a matrix is
-pub type Uplo = blas64.Uplo
+pub enum Uplo {
+	upper = 121
+	lower = 122
+	all   = 99
+}
 
 // Diagonal is used to specify whether the diagonal of a matrix is unit or non-unit.
-pub type Diagonal = blas64.Diagonal
+pub enum Diagonal {
+	non_unit = 131
+	unit     = 132
+}
 
 // Side is used to specify whether a matrix is on the left or right side in a matrix-matrix multiplication.
-pub type Side = blas64.Side
+pub enum Side {
+	left  = 141
+	right = 142
+}
 
 // slice_to_col_major converts nested slice into an array representing a col-major matrix
 //
@@ -390,5 +408,98 @@ pub fn eigenvecs_build_both(mut vvl []complex.Complex, mut vvr []complex.Complex
 			}
 			dj = 1
 		}
+	}
+}
+
+// ========================================================================
+// ENUM CONVERSION FUNCTIONS
+// ========================================================================
+// These functions provide explicit conversion between VSL enum types and
+// the underlying blas64 enum types. This is necessary because V's enum
+// type aliases don't work as expected - they're treated as distinct types.
+
+// Convert VSL MemoryLayout to blas64.MemoryLayout
+pub fn to_blas64_layout(layout MemoryLayout) blas64.MemoryLayout {
+	return match layout {
+		.row_major { blas64.MemoryLayout.row_major }
+		.col_major { blas64.MemoryLayout.col_major }
+	}
+}
+
+// Convert blas64.MemoryLayout to VSL MemoryLayout
+pub fn from_blas64_layout(layout blas64.MemoryLayout) MemoryLayout {
+	return match layout {
+		.row_major { MemoryLayout.row_major }
+		.col_major { MemoryLayout.col_major }
+	}
+}
+
+// Convert VSL Transpose to blas64.Transpose
+pub fn to_blas64_transpose(trans Transpose) blas64.Transpose {
+	return match trans {
+		.no_trans { blas64.Transpose.no_trans }
+		.trans { blas64.Transpose.trans }
+		.conj_trans { blas64.Transpose.conj_trans }
+		.conj_no_trans { blas64.Transpose.conj_no_trans }
+	}
+}
+
+// Convert blas64.Transpose to VSL Transpose
+pub fn from_blas64_transpose(trans blas64.Transpose) Transpose {
+	return match trans {
+		.no_trans { Transpose.no_trans }
+		.trans { Transpose.trans }
+		.conj_trans { Transpose.conj_trans }
+		.conj_no_trans { Transpose.conj_no_trans }
+	}
+}
+
+// Convert VSL Uplo to blas64.Uplo
+pub fn to_blas64_uplo(uplo Uplo) blas64.Uplo {
+	return match uplo {
+		.upper { blas64.Uplo.upper }
+		.lower { blas64.Uplo.lower }
+		.all { blas64.Uplo.all }
+	}
+}
+
+// Convert blas64.Uplo to VSL Uplo
+pub fn from_blas64_uplo(uplo blas64.Uplo) Uplo {
+	return match uplo {
+		.upper { Uplo.upper }
+		.lower { Uplo.lower }
+		.all { Uplo.all }
+	}
+}
+
+// Convert VSL Diagonal to blas64.Diagonal
+pub fn to_blas64_diagonal(diag Diagonal) blas64.Diagonal {
+	return match diag {
+		.non_unit { blas64.Diagonal.non_unit }
+		.unit { blas64.Diagonal.unit }
+	}
+}
+
+// Convert blas64.Diagonal to VSL Diagonal
+pub fn from_blas64_diagonal(diag blas64.Diagonal) Diagonal {
+	return match diag {
+		.non_unit { Diagonal.non_unit }
+		.unit { Diagonal.unit }
+	}
+}
+
+// Convert VSL Side to blas64.Side
+pub fn to_blas64_side(side Side) blas64.Side {
+	return match side {
+		.left { blas64.Side.left }
+		.right { blas64.Side.right }
+	}
+}
+
+// Convert blas64.Side to VSL Side
+pub fn from_blas64_side(side blas64.Side) Side {
+	return match side {
+		.left { Side.left }
+		.right { Side.right }
 	}
 }

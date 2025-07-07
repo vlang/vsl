@@ -52,8 +52,8 @@ pub fn dgesv(n int, nrhs int, mut a []f64, lda int, mut ipiv []int, mut b []f64,
 //
 // NOTE: matrix 'a' will be modified
 pub fn dgesvd(jobu SVDJob, jobvt SVDJob, m int, n int, mut a []f64, lda int, s []f64, mut u []f64, ldu int, mut vt []f64, ldvt int, superb []f64) {
-	info := lapack64.dgesvd(jobu, jobvt, m, n, mut a, lda, s, mut u, ldu, mut vt, ldvt,
-		superb)
+	info := lapack64.dgesvd(to_lapack64_svd_job(jobu), to_lapack64_svd_job(jobvt), m,
+		n, mut a, lda, s, mut u, ldu, mut vt, ldvt, superb)
 	if info != 0 {
 		errors.vsl_panic('LAPACK dgesvd failed with error code: ${info}', .efailed)
 	}
@@ -112,7 +112,7 @@ pub fn dgetri(n int, mut a []f64, lda int, mut ipiv []int) {
 //
 // This is the block version of the algorithm, calling Level 3 BLAS.
 pub fn dpotrf(uplo blas.Uplo, n int, mut a []f64, lda int) {
-	info := lapack64.dpotrf(uplo, n, mut a, lda)
+	info := lapack64.dpotrf(blas.to_blas64_uplo(uplo), n, mut a, lda)
 	if info != 0 {
 		errors.vsl_panic('LAPACK dgesvd failed with error code: ${info}', .efailed)
 	}
@@ -160,8 +160,8 @@ pub fn dgeev(calc_vl LeftEigenVectorsJob, calc_vr LeftEigenVectorsJob, n int, mu
 	vl[0] = vvl
 	vr[0] = vvr
 
-	info := lapack64.dgeev(calc_vl, calc_vr, n, mut a, lda, wr, wi, mut vl, ldvl, mut
-		vr, ldvr)
+	info := lapack64.dgeev(to_lapack64_left_eigen_vectors_job(calc_vl), to_lapack64_left_eigen_vectors_job(calc_vr),
+		n, mut a, lda, wr, wi, mut vl, ldvl, mut vr, ldvr)
 	if info != 0 {
 		errors.vsl_panic('LAPACK dgesvd failed with error code: ${info}', .efailed)
 	}
