@@ -32,10 +32,10 @@ fn C.LAPACKE_dorgqr(matrix_layout blas.MemoryLayout, m int, n int, k int, a &f64
 fn C.LAPACKE_cungqr(matrix_layout blas.MemoryLayout, m int, n int, k int, a voidptr, lda int, tau voidptr) int
 fn C.LAPACKE_zungqr(matrix_layout blas.MemoryLayout, m int, n int, k int, a voidptr, lda int, tau voidptr) int
 
-fn C.LAPACKE_sormqr(matrix_layout blas.MemoryLayout, side byte, trans byte, m int, n int, k int, a &f32, lda int, tau &f32, c &f32, ldc int) int
-fn C.LAPACKE_dormqr(matrix_layout blas.MemoryLayout, side byte, trans byte, m int, n int, k int, a &f64, lda int, tau &f64, c &f64, ldc int) int
-fn C.LAPACKE_cunmqr(matrix_layout blas.MemoryLayout, side byte, trans byte, m int, n int, k int, a voidptr, lda int, tau voidptr, c voidptr, ldc int) int
-fn C.LAPACKE_zunmqr(matrix_layout blas.MemoryLayout, side byte, trans byte, m int, n int, k int, a voidptr, lda int, tau voidptr, c voidptr, ldc int) int
+fn C.LAPACKE_sormqr(matrix_layout blas.MemoryLayout, side blas.Side, trans blas.Transpose, m int, n int, k int, a &f32, lda int, tau &f32, c &f32, ldc int) int
+fn C.LAPACKE_dormqr(matrix_layout blas.MemoryLayout, side blas.Side, trans blas.Transpose, m int, n int, k int, a &f64, lda int, tau &f64, c &f64, ldc int) int
+fn C.LAPACKE_cunmqr(matrix_layout blas.MemoryLayout, side blas.Side, trans blas.Transpose, m int, n int, k int, a voidptr, lda int, tau voidptr, c voidptr, ldc int) int
+fn C.LAPACKE_zunmqr(matrix_layout blas.MemoryLayout, side blas.Side, trans blas.Transpose, m int, n int, k int, a voidptr, lda int, tau voidptr, c voidptr, ldc int) int
 
 // LQ Factorization family
 fn C.LAPACKE_sgelqf(matrix_layout blas.MemoryLayout, m int, n int, a &f32, lda int, tau &f32) int
@@ -48,10 +48,10 @@ fn C.LAPACKE_dorglq(matrix_layout blas.MemoryLayout, m int, n int, k int, a &f64
 fn C.LAPACKE_cunglq(matrix_layout blas.MemoryLayout, m int, n int, k int, a voidptr, lda int, tau voidptr) int
 fn C.LAPACKE_zunglq(matrix_layout blas.MemoryLayout, m int, n int, k int, a voidptr, lda int, tau voidptr) int
 
-fn C.LAPACKE_sormlq(matrix_layout blas.MemoryLayout, side byte, trans byte, m int, n int, k int, a &f32, lda int, tau &f32, c &f32, ldc int) int
-fn C.LAPACKE_dormlq(matrix_layout blas.MemoryLayout, side byte, trans byte, m int, n int, k int, a &f64, lda int, tau &f64, c &f64, ldc int) int
-fn C.LAPACKE_cunmlq(matrix_layout blas.MemoryLayout, side byte, trans byte, m int, n int, k int, a voidptr, lda int, tau voidptr, c voidptr, ldc int) int
-fn C.LAPACKE_zunmlq(matrix_layout blas.MemoryLayout, side byte, trans byte, m int, n int, k int, a voidptr, lda int, tau voidptr, c voidptr, ldc int) int
+fn C.LAPACKE_sormlq(matrix_layout blas.MemoryLayout, side blas.Side, trans blas.Transpose, m int, n int, k int, a &f32, lda int, tau &f32, c &f32, ldc int) int
+fn C.LAPACKE_dormlq(matrix_layout blas.MemoryLayout, side blas.Side, trans blas.Transpose, m int, n int, k int, a &f64, lda int, tau &f64, c &f64, ldc int) int
+fn C.LAPACKE_cunmlq(matrix_layout blas.MemoryLayout, side blas.Side, trans blas.Transpose, m int, n int, k int, a voidptr, lda int, tau voidptr, c voidptr, ldc int) int
+fn C.LAPACKE_zunmlq(matrix_layout blas.MemoryLayout, side blas.Side, trans blas.Transpose, m int, n int, k int, a voidptr, lda int, tau voidptr, c voidptr, ldc int) int
 
 // Enhanced LU Factorization
 fn C.LAPACKE_sgetrf(matrix_layout blas.MemoryLayout, m int, n int, a &f32, lda int, ipiv &int) int
@@ -62,15 +62,15 @@ fn C.LAPACKE_sgetri(matrix_layout blas.MemoryLayout, n int, a &f32, lda int, ipi
 fn C.LAPACKE_cgetri(matrix_layout blas.MemoryLayout, n int, a voidptr, lda int, ipiv &int) int
 fn C.LAPACKE_zgetri(matrix_layout blas.MemoryLayout, n int, a voidptr, lda int, ipiv &int) int
 
-fn C.LAPACKE_sgetrs(matrix_layout blas.MemoryLayout, trans byte, n int, nrhs int, a &f32, lda int, ipiv &int, b &f32, ldb int) int
-fn C.LAPACKE_dgetrs(matrix_layout blas.MemoryLayout, trans byte, n int, nrhs int, a &f64, lda int, ipiv &int, b &f64, ldb int) int
-fn C.LAPACKE_cgetrs(matrix_layout blas.MemoryLayout, trans byte, n int, nrhs int, a voidptr, lda int, ipiv &int, b voidptr, ldb int) int
-fn C.LAPACKE_zgetrs(matrix_layout blas.MemoryLayout, trans byte, n int, nrhs int, a voidptr, lda int, ipiv &int, b voidptr, ldb int) int
+fn C.LAPACKE_sgetrs(matrix_layout blas.MemoryLayout, trans blas.Transpose, n int, nrhs int, a &f32, lda int, ipiv &int, b &f32, ldb int) int
+fn C.LAPACKE_dgetrs(matrix_layout blas.MemoryLayout, trans blas.Transpose, n int, nrhs int, a &f64, lda int, ipiv &int, b &f64, ldb int) int
+fn C.LAPACKE_cgetrs(matrix_layout blas.MemoryLayout, trans blas.Transpose, n int, nrhs int, a voidptr, lda int, ipiv &int, b voidptr, ldb int) int
+fn C.LAPACKE_zgetrs(matrix_layout blas.MemoryLayout, trans blas.Transpose, n int, nrhs int, a voidptr, lda int, ipiv &int, b voidptr, ldb int) int
 
-fn C.LAPACKE_sgecon(matrix_layout blas.MemoryLayout, norm byte, n int, a &f32, lda int, anorm f32, rcond &f32) int
-fn C.LAPACKE_dgecon(matrix_layout blas.MemoryLayout, norm byte, n int, a &f64, lda int, anorm f64, rcond &f64) int
-fn C.LAPACKE_cgecon(matrix_layout blas.MemoryLayout, norm byte, n int, a voidptr, lda int, anorm f32, rcond &f32) int
-fn C.LAPACKE_zgecon(matrix_layout blas.MemoryLayout, norm byte, n int, a voidptr, lda int, anorm f64, rcond &f64) int
+fn C.LAPACKE_sgecon(matrix_layout blas.MemoryLayout, norm MatrixNorm, n int, a &f32, lda int, anorm f32, rcond &f32) int
+fn C.LAPACKE_dgecon(matrix_layout blas.MemoryLayout, norm MatrixNorm, n int, a &f64, lda int, anorm f64, rcond &f64) int
+fn C.LAPACKE_cgecon(matrix_layout blas.MemoryLayout, norm MatrixNorm, n int, a voidptr, lda int, anorm f32, rcond &f32) int
+fn C.LAPACKE_zgecon(matrix_layout blas.MemoryLayout, norm MatrixNorm, n int, a voidptr, lda int, anorm f64, rcond &f64) int
 
 // Cholesky Factorization
 fn C.LAPACKE_spotrf(matrix_layout blas.MemoryLayout, uplo blas.Uplo, n int, a &f32, lda int) int
@@ -127,10 +127,10 @@ fn C.LAPACKE_sgebal(matrix_layout blas.MemoryLayout, job BalanceJob, n int, a &f
 fn C.LAPACKE_cgebal(matrix_layout blas.MemoryLayout, job BalanceJob, n int, a voidptr, lda int, ilo &int, ihi &int, scale &f32) int
 fn C.LAPACKE_zgebal(matrix_layout blas.MemoryLayout, job BalanceJob, n int, a voidptr, lda int, ilo &int, ihi &int, scale &f64) int
 
-fn C.LAPACKE_sgebak(matrix_layout blas.MemoryLayout, job BalanceJob, side byte, n int, ilo int, ihi int, scale &f32, m int, v &f32, ldv int) int
-fn C.LAPACKE_dgebak(matrix_layout blas.MemoryLayout, job BalanceJob, side byte, n int, ilo int, ihi int, scale &f64, m int, v &f64, ldv int) int
-fn C.LAPACKE_cgebak(matrix_layout blas.MemoryLayout, job BalanceJob, side byte, n int, ilo int, ihi int, scale &f32, m int, v voidptr, ldv int) int
-fn C.LAPACKE_zgebak(matrix_layout blas.MemoryLayout, job BalanceJob, side byte, n int, ilo int, ihi int, scale &f64, m int, v voidptr, ldv int) int
+fn C.LAPACKE_sgebak(matrix_layout blas.MemoryLayout, job BalanceJob, side blas.Side, n int, ilo int, ihi int, scale &f32, m int, v &f32, ldv int) int
+fn C.LAPACKE_dgebak(matrix_layout blas.MemoryLayout, job BalanceJob, side blas.Side, n int, ilo int, ihi int, scale &f64, m int, v &f64, ldv int) int
+fn C.LAPACKE_cgebak(matrix_layout blas.MemoryLayout, job BalanceJob, side blas.Side, n int, ilo int, ihi int, scale &f32, m int, v voidptr, ldv int) int
+fn C.LAPACKE_zgebak(matrix_layout blas.MemoryLayout, job BalanceJob, side blas.Side, n int, ilo int, ihi int, scale &f64, m int, v voidptr, ldv int) int
 
 fn C.LAPACKE_sgehrd(matrix_layout blas.MemoryLayout, n int, ilo int, ihi int, a &f32, lda int, tau &f32) int
 fn C.LAPACKE_cgehrd(matrix_layout blas.MemoryLayout, n int, ilo int, ihi int, a voidptr, lda int, tau voidptr) int
@@ -152,10 +152,10 @@ fn C.LAPACKE_dgbtrf(matrix_layout blas.MemoryLayout, m int, n int, kl int, ku in
 fn C.LAPACKE_cgbtrf(matrix_layout blas.MemoryLayout, m int, n int, kl int, ku int, ab voidptr, ldab int, ipiv &int) int
 fn C.LAPACKE_zgbtrf(matrix_layout blas.MemoryLayout, m int, n int, kl int, ku int, ab voidptr, ldab int, ipiv &int) int
 
-fn C.LAPACKE_sgbtrs(matrix_layout blas.MemoryLayout, trans byte, n int, kl int, ku int, nrhs int, ab &f32, ldab int, ipiv &int, b &f32, ldb int) int
-fn C.LAPACKE_dgbtrs(matrix_layout blas.MemoryLayout, trans byte, n int, kl int, ku int, nrhs int, ab &f64, ldab int, ipiv &int, b &f64, ldb int) int
-fn C.LAPACKE_cgbtrs(matrix_layout blas.MemoryLayout, trans byte, n int, kl int, ku int, nrhs int, ab voidptr, ldab int, ipiv &int, b voidptr, ldb int) int
-fn C.LAPACKE_zgbtrs(matrix_layout blas.MemoryLayout, trans byte, n int, kl int, ku int, nrhs int, ab voidptr, ldab int, ipiv &int, b voidptr, ldb int) int
+fn C.LAPACKE_sgbtrs(matrix_layout blas.MemoryLayout, trans blas.Transpose, n int, kl int, ku int, nrhs int, ab &f32, ldab int, ipiv &int, b &f32, ldb int) int
+fn C.LAPACKE_dgbtrs(matrix_layout blas.MemoryLayout, trans blas.Transpose, n int, kl int, ku int, nrhs int, ab &f64, ldab int, ipiv &int, b &f64, ldb int) int
+fn C.LAPACKE_cgbtrs(matrix_layout blas.MemoryLayout, trans blas.Transpose, n int, kl int, ku int, nrhs int, ab voidptr, ldab int, ipiv &int, b voidptr, ldb int) int
+fn C.LAPACKE_zgbtrs(matrix_layout blas.MemoryLayout, trans blas.Transpose, n int, kl int, ku int, nrhs int, ab voidptr, ldab int, ipiv &int, b voidptr, ldb int) int
 
 // Positive definite band systems
 fn C.LAPACKE_spbsv(matrix_layout blas.MemoryLayout, uplo blas.Uplo, n int, kd int, nrhs int, ab &f32, ldab int, b &f32, ldb int) int
@@ -180,15 +180,15 @@ fn C.LAPACKE_cgtsv(matrix_layout blas.MemoryLayout, n int, nrhs int, dl voidptr,
 fn C.LAPACKE_zgtsv(matrix_layout blas.MemoryLayout, n int, nrhs int, dl voidptr, d voidptr, du voidptr, b voidptr, ldb int) int
 
 // Additional matrix functions
-fn C.LAPACKE_slansy(matrix_layout blas.MemoryLayout, norm byte, uplo blas.Uplo, n int, a &f32, lda int) f32
-fn C.LAPACKE_dlansy(matrix_layout blas.MemoryLayout, norm byte, uplo blas.Uplo, n int, a &f64, lda int) f64
-fn C.LAPACKE_clanhe(matrix_layout blas.MemoryLayout, norm byte, uplo blas.Uplo, n int, a voidptr, lda int) f32
-fn C.LAPACKE_zlanhe(matrix_layout blas.MemoryLayout, norm byte, uplo blas.Uplo, n int, a voidptr, lda int) f64
+fn C.LAPACKE_slansy(matrix_layout blas.MemoryLayout, norm MatrixNorm, uplo blas.Uplo, n int, a &f32, lda int) f32
+fn C.LAPACKE_dlansy(matrix_layout blas.MemoryLayout, norm MatrixNorm, uplo blas.Uplo, n int, a &f64, lda int) f64
+fn C.LAPACKE_clanhe(matrix_layout blas.MemoryLayout, norm MatrixNorm, uplo blas.Uplo, n int, a voidptr, lda int) f32
+fn C.LAPACKE_zlanhe(matrix_layout blas.MemoryLayout, norm MatrixNorm, uplo blas.Uplo, n int, a voidptr, lda int) f64
 
-fn C.LAPACKE_slange(matrix_layout blas.MemoryLayout, norm byte, m int, n int, a &f32, lda int) f32
-fn C.LAPACKE_dlange(matrix_layout blas.MemoryLayout, norm byte, m int, n int, a &f64, lda int) f64
-fn C.LAPACKE_clange(matrix_layout blas.MemoryLayout, norm byte, m int, n int, a voidptr, lda int) f32
-fn C.LAPACKE_zlange(matrix_layout blas.MemoryLayout, norm byte, m int, n int, a voidptr, lda int) f64
+fn C.LAPACKE_slange(matrix_layout blas.MemoryLayout, norm MatrixNorm, m int, n int, a &f32, lda int) f32
+fn C.LAPACKE_dlange(matrix_layout blas.MemoryLayout, norm MatrixNorm, m int, n int, a &f64, lda int) f64
+fn C.LAPACKE_clange(matrix_layout blas.MemoryLayout, norm MatrixNorm, m int, n int, a voidptr, lda int) f32
+fn C.LAPACKE_zlange(matrix_layout blas.MemoryLayout, norm MatrixNorm, m int, n int, a voidptr, lda int) f64
 
 // ========================================
 // V WRAPPER FUNCTIONS
