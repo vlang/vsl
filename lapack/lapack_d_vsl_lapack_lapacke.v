@@ -168,11 +168,6 @@ fn C.LAPACKE_dpbtrf(matrix_layout blas.MemoryLayout, uplo blas.Uplo, n int, kd i
 fn C.LAPACKE_cpbtrf(matrix_layout blas.MemoryLayout, uplo blas.Uplo, n int, kd int, ab voidptr, ldab int) int
 fn C.LAPACKE_zpbtrf(matrix_layout blas.MemoryLayout, uplo blas.Uplo, n int, kd int, ab voidptr, ldab int) int
 
-fn C.LAPACKE_spbtrs(matrix_layout blas.MemoryLayout, uplo blas.Uplo, n int, kd int, nrhs int, ab &f32, ldab int, b &f32, ldb int) int
-fn C.LAPACKE_dpbtrs(matrix_layout blas.MemoryLayout, uplo blas.Uplo, n int, kd int, nrhs int, ab &f64, ldab int, b &f64, ldb int) int
-fn C.LAPACKE_cpbtrs(matrix_layout blas.MemoryLayout, uplo blas.Uplo, n int, kd int, nrhs int, ab voidptr, ldab int, b voidptr, ldb int) int
-fn C.LAPACKE_zpbtrs(matrix_layout blas.MemoryLayout, uplo blas.Uplo, n int, kd int, nrhs int, ab voidptr, ldab int, b voidptr, ldb int) int
-
 // Tridiagonal systems
 fn C.LAPACKE_sgtsv(matrix_layout blas.MemoryLayout, n int, nrhs int, dl &f32, d &f32, du &f32, b &f32, ldb int) int
 fn C.LAPACKE_dgtsv(matrix_layout blas.MemoryLayout, n int, nrhs int, dl &f64, d &f64, du &f64, b &f64, ldb int) int
@@ -202,53 +197,6 @@ pub fn dgesv(n int, nrhs int, mut a []f64, lda int, mut ipiv []int, mut b []f64,
 	}
 }
 
-// gesv - Solves a general system of linear equations AX=B using LU factorization
-// Returns 0 on success
-@[inline]
-pub fn gesv(mut a [][]f64, mut b [][]f64) ! {
-	m := a.len
-	n := a[0].len
-	nrhs := b[0].len
-
-	if m != n {
-		return errors.error('Matrix a must be square', .efailed)
-	}
-	if b.len != n {
-		return errors.error('Matrix b must have same number of rows as a', .efailed)
-	}
-
-	mut a_flat := []f64{len: m * n}
-	mut b_flat := []f64{len: n * nrhs}
-	mut ipiv := []int{len: n}
-
-	// Copy data to flat arrays (row-major)
-	for i in 0 .. m {
-		for j in 0 .. n {
-			a_flat[i * n + j] = a[i][j]
-		}
-	}
-	for i in 0 .. n {
-		for j in 0 .. nrhs {
-			b_flat[i * nrhs + j] = b[i][j]
-		}
-	}
-
-	unsafe {
-		info := C.LAPACKE_dgesv(.row_major, n, nrhs, &a_flat[0], n, &ipiv[0], &b_flat[0],
-			nrhs)
-
-		if info != 0 {
-			return errors.error('LAPACK dgesv failed with info=${info}', .efailed)
-		}
-	}
-	// Copy results back
-	for i in 0 .. n {
-		for j in 0 .. nrhs {
-			b[i][j] = b_flat[i * nrhs + j]
-		}
-	}
-}
-
 // dgesvd - Direct wrapper for LAPACKE_dgesvd (flat array interface)
 @[inline]
 pub fn dgesvd(jobu SVDJob, jobvt SVDJob, m int, n int, mut a []f64, lda int, s []f64, mut u []f64, ldu int, mut vt []f64, ldvt int, superb []f64) int {
@@ -258,51 +206,59 @@ pub fn dgesvd(jobu SVDJob, jobvt SVDJob, m int, n int, mut a []f64, lda int, s [
 	}
 }
 
-// gesvd - Computes the singular value decomposition (SVD) of a general rectangular matrix
-// A = U * S * V^T
+// dpotrf - Direct wrapper for LAPACKE_dpotrf (flat array interface)
 @[inline]
-pub fn gesvd(a [][]f64, jobu SVDJob, jobvt SVDJob) !([]f64, [][]f64, [][]f64) {
-	m := a.len
-	n := a[0].len
-	min_mn := if m < n { m } else { n }
-
-	mut a_flat := []f64{len: m * n}
-	mut s := []f64{len: min_mn}
-	mut u := []f64{len: m * m}
-	mut vt := []f64{len: n * n}
-	mut superb := []f64{len: min_mn - 1}
-
-	// Copy input matrix
-	for i in 0 .. m {
-		for j in 0 .. n {
-			a_flat[i * n + j] = a[i][j]
-		}
+pub fn dpotrf(uplo blas.Uplo, n int, mut a []f64, lda int) int {
+	uplo_char := match uplo {
+		.upper { u8(`U`) }
+		.lower { u8(`L`) }
+		else { u8(`U`) }
 	}
-
 	unsafe {
-		info := C.LAPACKE_dgesvd(.row_major, jobu, jobvt, m, n, &a_flat[0], n, &s[0],
-			&u[0], m, &vt[0], n, &superb[0])
-
-		if info != 0 {
-			return errors.error('LAPACK dgesvd failed with info=${info}', .efailed)
-		}
+		return C.LAPACKE_dpotrf(.row_major, uplo_char, n, &a[0], lda)
 	}
-	// Convert back to 2D arrays
-	mut u_mat := [][]f64{len: m, init: []f64{len: m}}
-	mut vt_mat := [][]f64{len: n, init: []f64{len: n}}
+}
 
-	for i in 0 .. m {
-		for j in 0 .. m {
-			u_mat[i][j] = u[i * m + j]
-		}
+// dgeev - Direct wrapper for LAPACKE_dgeev (flat array interface)
+@[inline]
+pub fn dgeev(jobvl LeftEigenVectorsJob, jobvr RightEigenVectorsJob, n int, mut a []f64, lda int, mut wr []f64, mut wi []f64, mut vl []f64, ldvl int, mut vr []f64, ldvr int) int {
+	unsafe {
+		return C.LAPACKE_dgeev(.row_major, jobvl, jobvr, n, &a[0], lda, &wr[0], &wi[0],
+			&vl[0], ldvl, &vr[0], ldvr)
 	}
-	for i in 0 .. n {
-		for j in 0 .. n {
-			vt_mat[i][j] = vt[i * n + j]
-		}
-	}
+}
 
-	return s, u_mat, vt_mat
+// dsyev - Direct wrapper for LAPACKE_dsyev (flat array interface)
+@[inline]
+pub fn dsyev(jobz EigenVectorsJob, uplo blas.Uplo, n int, mut a []f64, lda int, mut w []f64) int {
+	jobz_char := match jobz {
+		.ev_compute { u8(`V`) }
+		.ev_none { u8(`N`) }
+	}
+	uplo_char := match uplo {
+		.upper { u8(`U`) }
+		.lower { u8(`L`) }
+		else { u8(`U`) }
+	}
+	unsafe {
+		return C.LAPACKE_dsyev(.row_major, jobz_char, uplo_char, n, &a[0], lda, &w[0])
+	}
+}
+
+// dgeqrf - Direct wrapper for LAPACKE_dgeqrf (flat array interface)
+@[inline]
+pub fn dgeqrf(m int, n int, mut a []f64, lda int, mut tau []f64) int {
+	unsafe {
+		return C.LAPACKE_dgeqrf(.row_major, m, n, &a[0], lda, &tau[0])
+	}
+}
+
+// dorgqr - Direct wrapper for LAPACKE_dorgqr (flat array interface)
+@[inline]
+pub fn dorgqr(m int, n int, k int, mut a []f64, lda int, tau []f64) int {
+	unsafe {
+		return C.LAPACKE_dorgqr(.row_major, m, n, k, &a[0], lda, &tau[0])
+	}
 }
 
 // dgetrf - Direct wrapper for LAPACKE_dgetrf (flat array interface)
@@ -313,296 +269,10 @@ pub fn dgetrf(m int, n int, mut a []f64, lda int, mut ipiv []int) int {
 	}
 }
 
-// getrf - Computes LU factorization of a general matrix
-@[inline]
-pub fn getrf(mut a [][]f64) ![]int {
-	m := a.len
-	n := a[0].len
-
-	mut a_flat := []f64{len: m * n}
-	mut ipiv := []int{len: if m < n { m } else { n }}
-
-	// Copy matrix to flat array
-	for i in 0 .. m {
-		for j in 0 .. n {
-			a_flat[i * n + j] = a[i][j]
-		}
-	}
-
-	unsafe {
-		info := C.LAPACKE_dgetrf(.row_major, m, n, &a_flat[0], n, &ipiv[0])
-
-		if info != 0 {
-			return errors.error('LAPACK dgetrf failed with info=${info}', .efailed)
-		}
-	}
-	// Copy result back
-	for i in 0 .. m {
-		for j in 0 .. n {
-			a[i][j] = a_flat[i * n + j]
-		}
-	}
-
-	// Convert 1-based LAPACK indices to 0-based V indices
-	for i in 0 .. ipiv.len {
-		ipiv[i] -= 1
-	}
-
-	return ipiv
-}
-
 // dgetri - Direct wrapper for LAPACKE_dgetri (flat array interface)
 @[inline]
 pub fn dgetri(n int, mut a []f64, lda int, mut ipiv []int) int {
 	unsafe {
 		return C.LAPACKE_dgetri(.row_major, n, &a[0], lda, &ipiv[0])
-	}
-}
-
-// getri - Computes the inverse of a matrix using LU factorization
-@[inline]
-pub fn getri(mut a [][]f64, mut ipiv []int) ! {
-	n := a.len
-	if a[0].len != n {
-		return errors.error('Matrix must be square', .efailed)
-	}
-	if ipiv.len != n {
-		return errors.error('ipiv array must have length n', .efailed)
-	}
-
-	mut a_flat := []f64{len: n * n}
-	mut ipiv_lapack := []int{len: n}
-
-	// Copy matrix to flat array
-	for i in 0 .. n {
-		for j in 0 .. n {
-			a_flat[i * n + j] = a[i][j]
-		}
-	}
-
-	// Convert 0-based V indices back to 1-based LAPACK indices
-	for i in 0 .. n {
-		ipiv_lapack[i] = ipiv[i] + 1
-	}
-
-	unsafe {
-		info := C.LAPACKE_dgetri(.row_major, n, &a_flat[0], n, &ipiv_lapack[0])
-
-		if info != 0 {
-			return errors.error('LAPACK dgetri failed with info=${info}', .efailed)
-		}
-	}
-	// Copy result back
-	for i in 0 .. n {
-		for j in 0 .. n {
-			a[i][j] = a_flat[i * n + j]
-		}
-	}
-}
-
-// potrf - Computes Cholesky factorization of a positive definite matrix
-@[inline]
-pub fn potrf(mut a [][]f64, uplo blas.Uplo) ! {
-	n := a.len
-	if a[0].len != n {
-		return errors.error('Matrix must be square', .efailed)
-	}
-
-	mut a_flat := []f64{len: n * n}
-
-	// Copy matrix to flat array
-	for i in 0 .. n {
-		for j in 0 .. n {
-			a_flat[i * n + j] = a[i][j]
-		}
-	}
-
-	// Convert blas.Uplo to LAPACKE character
-	uplo_char := match uplo {
-		.upper { u8(`U`) }
-		.lower { u8(`L`) }
-		else { u8(`U`) } // default to upper
-	}
-
-	unsafe {
-		info := C.LAPACKE_dpotrf(.row_major, uplo_char, n, &a_flat[0], n)
-
-		if info != 0 {
-			return errors.error('LAPACK dpotrf failed with info=${info}', .efailed)
-		}
-	}
-	// Copy result back
-	for i in 0 .. n {
-		for j in 0 .. n {
-			a[i][j] = a_flat[i * n + j]
-		}
-	}
-}
-
-// geev - Computes eigenvalues and eigenvectors of a general matrix
-@[inline]
-pub fn geev(a [][]f64, calc_vl LeftEigenVectorsJob, calc_vr RightEigenVectorsJob) !([]f64, []f64, [][]f64, [][]f64) {
-	n := a.len
-	if a[0].len != n {
-		return errors.error('Matrix must be square', .efailed)
-	}
-
-	mut a_flat := []f64{len: n * n}
-	mut wr := []f64{len: n}
-	mut wi := []f64{len: n}
-	mut vl := []f64{len: n * n}
-	mut vr := []f64{len: n * n}
-
-	// Copy matrix to flat array
-	for i in 0 .. n {
-		for j in 0 .. n {
-			a_flat[i * n + j] = a[i][j]
-		}
-	}
-
-	unsafe {
-		info := C.LAPACKE_dgeev(.row_major, calc_vl, calc_vr, n, &a_flat[0], n, &wr[0],
-			&wi[0], &vl[0], n, &vr[0], n)
-
-		if info != 0 {
-			return errors.error('LAPACK dgeev failed with info=${info}', .efailed)
-		}
-	}
-	// Convert eigenvector arrays back to 2D
-	mut vl_mat := [][]f64{len: n, init: []f64{len: n}}
-	mut vr_mat := [][]f64{len: n, init: []f64{len: n}}
-
-	for i in 0 .. n {
-		for j in 0 .. n {
-			vl_mat[i][j] = vl[i * n + j]
-			vr_mat[i][j] = vr[i * n + j]
-		}
-	}
-
-	return wr, wi, vl_mat, vr_mat
-}
-
-// syev - Computes eigenvalues and eigenvectors of a symmetric matrix
-@[inline]
-pub fn syev(mut a [][]f64, jobz EigenVectorsJob, uplo blas.Uplo) ![]f64 {
-	n := a.len
-	if a[0].len != n {
-		return errors.error('Matrix must be square', .efailed)
-	}
-
-	mut a_flat := []f64{len: n * n}
-	mut w := []f64{len: n}
-
-	// Copy matrix to flat array
-	for i in 0 .. n {
-		for j in 0 .. n {
-			a_flat[i * n + j] = a[i][j]
-		}
-	}
-
-	// Convert VSL enums to LAPACKE characters
-	jobz_char := match jobz {
-		.ev_compute { u8(`V`) }
-		.ev_none { u8(`N`) }
-	}
-	uplo_char := match uplo {
-		.upper { u8(`U`) }
-		.lower { u8(`L`) }
-		else { u8(`U`) } // default to upper
-	}
-
-	unsafe {
-		info := C.LAPACKE_dsyev(.row_major, jobz_char, uplo_char, n, &a_flat[0], n, &w[0])
-
-		if info != 0 {
-			return errors.error('LAPACK dsyev failed with info=${info}', .efailed)
-		}
-	}
-	// Copy eigenvectors back if requested
-	if jobz == .ev_compute {
-		for i in 0 .. n {
-			for j in 0 .. n {
-				a[i][j] = a_flat[i * n + j]
-			}
-		}
-	}
-
-	return w
-}
-
-// geqrf - Computes QR factorization of a general matrix
-@[inline]
-pub fn geqrf(mut a [][]f64) ![]f64 {
-	m := a.len
-	n := a[0].len
-	min_mn := if m < n { m } else { n }
-
-	mut a_flat := []f64{len: m * n}
-	mut tau := []f64{len: min_mn}
-
-	// Copy matrix to flat array
-	for i in 0 .. m {
-		for j in 0 .. n {
-			a_flat[i * n + j] = a[i][j]
-		}
-	}
-
-	unsafe {
-		info := C.LAPACKE_dgeqrf(.row_major, m, n, &a_flat[0], n, &tau[0])
-
-		if info != 0 {
-			return errors.error('LAPACK dgeqrf failed with info=${info}', .efailed)
-		}
-	}
-	// Copy result back
-	for i in 0 .. m {
-		for j in 0 .. n {
-			a[i][j] = a_flat[i * n + j]
-		}
-	}
-
-	return tau
-}
-
-// orgqr - Generates the orthogonal matrix Q from QR factorization
-@[inline]
-pub fn orgqr(mut a [][]f64, tau []f64) ! {
-	m := a.len
-	n := a[0].len
-	k := tau.len
-
-	// For ORGQR, we need to ensure n <= m. For wide matrices (m < n),
-	// we should only generate Q as an m×m matrix, taking the first m columns.
-	n_q := if n > m { m } else { n }
-
-	mut a_flat := []f64{len: m * n_q}
-
-	// Copy matrix to flat array (only first n_q columns)
-	for i in 0 .. m {
-		for j in 0 .. n_q {
-			a_flat[i * n_q + j] = a[i][j]
-		}
-	}
-
-	unsafe {
-		info := C.LAPACKE_dorgqr(.row_major, m, n_q, k, &a_flat[0], n_q, &tau[0])
-
-		if info != 0 {
-			return errors.error('LAPACK dorgqr failed with info=${info}', .efailed)
-		}
-	}
-	
-	// For wide matrices (m < n), resize the matrix to be m×m (economy size)
-	if m < n {
-		for i in 0 .. m {
-			a[i] = []f64{len: m}
-		}
-	}
-	
-	// Copy result back to the (possibly resized) matrix
-	for i in 0 .. m {
-		for j in 0 .. n_q {
-			a[i][j] = a_flat[i * n_q + j]
-		}
 	}
 }

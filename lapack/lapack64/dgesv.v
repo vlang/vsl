@@ -22,7 +22,7 @@ import vsl.blas
 // The factored form of A is then used to solve the system of equations A * X =
 // B. On entry, b contains the right hand side matrix B. On return, if ok is
 // true, b contains the solution matrix X.
-pub fn dgesv(n int, nrhs int, mut a []f64, lda int, mut ipiv []int, mut b []f64, ldb int) {
+pub fn dgesv(n int, nrhs int, mut a []f64, lda int, mut ipiv []int, mut b []f64, ldb int) int {
 	if n < 0 {
 		panic(n_lt0)
 	}
@@ -38,7 +38,7 @@ pub fn dgesv(n int, nrhs int, mut a []f64, lda int, mut ipiv []int, mut b []f64,
 
 	// Quick return if possible.
 	if n == 0 || nrhs == 0 {
-		return
+		return 0
 	}
 
 	if a.len < (n - 1) * lda + n {
@@ -51,6 +51,14 @@ pub fn dgesv(n int, nrhs int, mut a []f64, lda int, mut ipiv []int, mut b []f64,
 		panic(short_b)
 	}
 
-	dgetrf(n, n, mut a, lda, mut ipiv)
-	dgetrs(.no_trans, n, nrhs, mut a, lda, mut ipiv, mut b, ldb)
+	ok := dgetrf(n, n, mut a, lda, mut ipiv)
+	if ok {
+		dgetrs(.no_trans, n, nrhs, mut a, lda, mut ipiv, mut b, ldb)
+		return 0
+	} else {
+		// Matrix is singular, return error code
+		// In LAPACK, info > 0 indicates the pivot index where singularity was detected
+		// For simplicity, we return 1 to indicate general singularity
+		return 1
+	}
 }

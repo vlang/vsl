@@ -24,7 +24,7 @@ import vsl.blas
 // Dgetrf returns whether the matrix A is nonsingular. The LU decomposition will
 // be computed regardless of the singularity of A, but the result should not be
 // used to solve a system of equation.
-pub fn dgetrf(m int, n int, mut a []f64, lda int, mut ipiv []int) {
+pub fn dgetrf(m int, n int, mut a []f64, lda int, mut ipiv []int) bool {
 	mn := math.min(m, n)
 
 	if m < 0 {
@@ -39,7 +39,7 @@ pub fn dgetrf(m int, n int, mut a []f64, lda int, mut ipiv []int) {
 
 	// quick return if possible
 	if mn == 0 {
-		return
+		return true
 	}
 
 	if a.len < (m - 1) * lda + n {
@@ -53,16 +53,19 @@ pub fn dgetrf(m int, n int, mut a []f64, lda int, mut ipiv []int) {
 
 	if nb <= 1 || nb >= mn {
 		// use the unblocked algorithm.
-		dgetf2(m, n, mut a, lda, mut ipiv)
-		return
+		return dgetf2(m, n, mut a, lda, mut ipiv)
 	}
 
+	mut ok := true
 	for j := 0; j < mn; j += nb {
 		jb := math.min(mn - j, nb)
 
 		// factor diagonal and subdiagonal blocks and test for exact singularity.
 		mut slice1 := unsafe { ipiv[j..j + jb] }
-		dgetf2(m - j, jb, mut a[j * lda + j..], lda, mut slice1)
+		block_ok := dgetf2(m - j, jb, mut a[j * lda + j..], lda, mut slice1)
+		if !block_ok {
+			ok = false
+		}
 
 		for i := j; i <= math.min(m - 1, j + jb - 1); i++ {
 			ipiv[i] += j
@@ -89,4 +92,6 @@ pub fn dgetrf(m int, n int, mut a []f64, lda int, mut ipiv []int) {
 			}
 		}
 	}
+
+	return ok
 }

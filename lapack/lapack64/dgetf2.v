@@ -3,7 +3,7 @@ module lapack64
 import math
 import vsl.blas
 
-pub fn dgetf2(m int, n int, mut a []f64, lda int, mut ipiv []int) {
+pub fn dgetf2(m int, n int, mut a []f64, lda int, mut ipiv []int) bool {
 	mn := math.min(m, n)
 	if m < 0 {
 		panic(m_lt0)
@@ -15,7 +15,7 @@ pub fn dgetf2(m int, n int, mut a []f64, lda int, mut ipiv []int) {
 
 	// Quick return if possible.
 	if mn == 0 {
-		return
+		return true
 	}
 
 	if a.len < (m - 1) * lda + n {
@@ -25,13 +25,14 @@ pub fn dgetf2(m int, n int, mut a []f64, lda int, mut ipiv []int) {
 	}
 
 	sfmin := dlamch_s
+	mut ok := true
 
 	for j := 0; j < mn; j++ {
 		// Find a pivot and test for singularity.
 		jp := j + blas.idamax(m - j, a[j * lda + j..], lda)
 		ipiv[j] = jp
 		if a[jp * lda + j] == 0.0 {
-			panic('lapack: matrix is singular')
+			ok = false
 		} else {
 			// Swap the rows if necessary.
 			if jp != j {
@@ -46,7 +47,7 @@ pub fn dgetf2(m int, n int, mut a []f64, lda int, mut ipiv []int) {
 					blas.dscal(m - j - 1, 1.0 / aj, mut slice3, lda)
 				} else {
 					for i := 0; i < m - j - 1; i++ {
-						a[(j + 1) * lda + j] /= aj
+						a[(j + 1 + i) * lda + j] /= aj
 					}
 				}
 			}
@@ -57,4 +58,6 @@ pub fn dgetf2(m int, n int, mut a []f64, lda int, mut ipiv []int) {
 				1, mut slice4, lda)
 		}
 	}
+
+	return ok
 }

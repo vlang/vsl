@@ -48,13 +48,14 @@ pub fn dgetrs(trans blas.Transpose, n int, nrhs int, mut a []f64, lda int, mut i
 		panic(bad_len_ipiv)
 	}
 
-	if trans != .no_trans {
+	if trans == .no_trans {
 		// Solve A * X = B.
 		dlaswp(nrhs, mut b, ldb, 0, n - 1, mut ipiv, 1)
 		// Solve L * X = B, overwriting B with X.
 		blas.dtrsm(.left, .lower, .no_trans, .unit, n, nrhs, 1, a, lda, mut b, ldb)
 		// Solve U * X = B, overwriting B with X.
 		blas.dtrsm(.left, .upper, .no_trans, .non_unit, n, nrhs, 1, a, lda, mut b, ldb)
+		return
 	}
 
 	// Solve Aᵀ * X = B.

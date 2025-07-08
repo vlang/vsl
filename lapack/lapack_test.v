@@ -12,8 +12,6 @@ import rand
 const test_tolerance = 1e-12
 const ortho_tolerance = 1e-15
 
-
-
 // Test utilities and helpers
 
 // nearly_equal_matrix checks if two matrices are nearly equal within tolerance
@@ -206,7 +204,6 @@ fn test_gesv_basic() {
 }
 
 fn test_gesv_square_systems() {
-
 	// Test various sizes following gonum patterns
 	sizes := [1, 3, 5, 10, 20]
 
@@ -250,7 +247,6 @@ fn test_gesv_square_systems() {
 // ============================================================================
 
 fn test_getrf_basic() {
-
 	// Test 1: Simple 3x3 matrix
 	mut a := [[2.0, 1.0, 1.0], [4.0, 3.0, 3.0], [8.0, 7.0, 9.0]]
 
@@ -329,7 +325,6 @@ fn test_getri_basic() {
 // ============================================================================
 
 fn test_potrf_basic() {
-
 	// Test 1: Simple 2x2 SPD matrix
 	mut a := [[4.0, 2.0], [2.0, 3.0]] // SPD matrix
 	original_a := a.clone()
@@ -374,7 +369,6 @@ fn test_potrf_basic() {
 // ============================================================================
 
 fn test_geev_basic() {
-
 	// Test 1: Simple 2x2 symmetric matrix (real eigenvalues)
 	a := [[3.0, 1.0], [1.0, 3.0]]
 
@@ -421,7 +415,6 @@ fn test_geev_basic() {
 // ============================================================================
 
 fn test_syev_basic() {
-
 	// Test 1: Simple 2x2 symmetric matrix
 	mut a := [[3.0, 1.0], [1.0, 3.0]]
 	original_a := a.clone()
@@ -455,7 +448,6 @@ fn test_syev_basic() {
 // ============================================================================
 
 fn test_geqrf_orgqr() {
-
 	// Test QR factorization on various matrix sizes
 	test_cases := [
 		[3, 3], // Square matrix
@@ -510,7 +502,6 @@ fn test_geqrf_orgqr() {
 // ============================================================================
 
 fn test_gesvd_basic() {
-
 	// Test 1: Simple 3x2 matrix
 	a := [[1.0, 2.0], [3.0, 4.0], [5.0, 6.0]]
 
@@ -551,7 +542,6 @@ fn test_gesvd_basic() {
 // ============================================================================
 
 fn test_integration_linear_system_methods() {
-
 	// Test that different methods give same result for solving Ax = b
 	n := 4
 	a_orig := create_random_matrix(n, n, 789)
@@ -580,7 +570,6 @@ fn test_integration_linear_system_methods() {
 }
 
 fn test_cholesky_vs_lu() {
-
 	// For SPD matrices, both Cholesky and LU should work
 	n := 3
 	spd := create_spd_matrix(n, 654)
