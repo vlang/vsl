@@ -1,5 +1,8 @@
 module blas64
 
+// Test tolerance for floating point comparisons
+const test_tol = 1e-14
+
 // [SD]gemm behavior constants. These are kept here to keep them out of the
 // way during single precision code genration.
 const block_size = 64 // b x b matrix
