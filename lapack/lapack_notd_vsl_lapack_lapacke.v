@@ -75,6 +75,10 @@ pub fn dgesvd(jobu SVDJob, jobvt SVDJob, m int, n int, mut a []f64, lda int, s [
 // (2) ipiv indices are 1-based (i.e. Fortran)
 pub fn dgetrf(m int, n int, mut a []f64, lda int, mut ipiv []int) int {
 	ok := lapack64.dgetrf(m, n, mut a, lda, mut ipiv)
+	// Convert 0-based indices to 1-based indices to match LAPACKE behavior
+	for i in 0 .. ipiv.len {
+		ipiv[i] += 1
+	}
 	return if ok { 0 } else { 1 } // Convert boolean to LAPACK info code
 }
 

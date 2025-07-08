@@ -68,7 +68,7 @@ pub fn dgetrf(m int, n int, mut a []f64, lda int, mut ipiv []int) bool {
 		}
 
 		for i := j; i <= math.min(m - 1, j + jb - 1); i++ {
-			ipiv[i] += j
+			ipiv[i] = j + ipiv[i]  // Convert from relative to absolute 0-based indices
 		}
 
 		// apply interchanges to columns 1..j-1.
