@@ -1,6 +1,7 @@
 module blas
 
 import math
+import vsl.float.float64
 
 // Test tolerance for floating point comparisons
 const test_tol = 1e-14
@@ -15,54 +16,6 @@ fn is_cblas_working() bool {
 
 	// If result is wildly incorrect, CBLAS is not working
 	return math.abs(result - expected) < 1.0
-}
-
-// Helper function to check if two f64 values are approximately equal
-fn f64_equal(a f64, b f64) bool {
-	if math.is_nan(a) && math.is_nan(b) {
-		return true
-	}
-	if a == b {
-		return true
-	}
-	m := math.max(math.abs(a), math.abs(b))
-	if m > 1 {
-		return math.abs(a / m - b / m) < test_tol
-	}
-	return math.abs(a - b) < test_tol
-}
-
-// Helper function to check if two f64 arrays are approximately equal
-fn f64_array_equal(a []f64, b []f64) bool {
-	if a.len != b.len {
-		return false
-	}
-	for i in 0 .. a.len {
-		if !f64_equal(a[i], b[i]) {
-			return false
-		}
-	}
-	return true
-}
-
-// Helper function to check strided array equality
-fn f64_strided_equal(n int, a []f64, inca int, b []f64, incb int) bool {
-	mut ia := 0
-	mut ib := 0
-	if inca <= 0 {
-		ia = -(n - 1) * inca
-	}
-	if incb <= 0 {
-		ib = -(n - 1) * incb
-	}
-	for i in 0 .. n {
-		if !f64_equal(a[ia], b[ib]) {
-			return false
-		}
-		ia += inca
-		ib += incb
-	}
-	return true
 }
 
 // Test data structures for Level 1 BLAS operations
@@ -328,7 +281,7 @@ fn test_dasum() {
 
 	for case in level1_test_cases {
 		result := dasum(case.n, case.x, case.incx)
-		assert f64_equal(result, case.expected_dasum), 'DASUM failed for case ${case.name}: expected ${case.expected_dasum}, got ${result}'
+		assert float64.tolerance(result, case.expected_dasum, test_tol), 'DASUM failed for case ${case.name}: expected ${case.expected_dasum}, got ${result}'
 	}
 }
 
@@ -340,7 +293,7 @@ fn test_dnrm2() {
 
 	for case in level1_test_cases {
 		result := dnrm2(case.n, case.x, case.incx)
-		assert f64_equal(result, case.expected_dnrm2), 'DNRM2 failed for case ${case.name}: expected ${case.expected_dnrm2}, got ${result}'
+		assert float64.tolerance(result, case.expected_dnrm2, test_tol), 'DNRM2 failed for case ${case.name}: expected ${case.expected_dnrm2}, got ${result}'
 	}
 }
 
@@ -366,7 +319,7 @@ fn test_dscal() {
 		for scal_case in case.scal_tests {
 			mut x := case.x.clone()
 			dscal(case.n, scal_case.alpha, mut x, case.incx)
-			assert f64_array_equal(x, scal_case.expected), 'DSCAL failed for case ${case.name}/${scal_case.name}: expected ${scal_case.expected}, got ${x}'
+			assert float64.arrays_tolerance(x, scal_case.expected, test_tol), 'DSCAL failed for case ${case.name}/${scal_case.name}: expected ${scal_case.expected}, got ${x}'
 		}
 	}
 }
@@ -380,14 +333,14 @@ fn test_dcopy() {
 	x := [1.0, 2.0, 3.0, 4.0, 5.0]
 	mut y := [0.0, 0.0, 0.0, 0.0, 0.0]
 	dcopy(5, x, 1, mut y, 1)
-	assert f64_array_equal(x, y), 'DCOPY failed: expected ${x}, got ${y}'
+	assert float64.arrays_tolerance(x, y, test_tol), 'DCOPY failed: expected ${x}, got ${y}'
 
 	// Test with stride
 	x2 := [1.0, 100.0, 2.0, 200.0, 3.0, 300.0]
 	mut y2 := [0.0, 0.0, 0.0]
 	dcopy(3, x2, 2, mut y2, 1)
 	expected := [1.0, 2.0, 3.0]
-	assert f64_array_equal(y2, expected), 'DCOPY with stride failed: expected ${expected}, got ${y2}'
+	assert float64.arrays_tolerance(y2, expected, test_tol), 'DCOPY with stride failed: expected ${expected}, got ${y2}'
 }
 
 fn test_daxpy() {
@@ -401,7 +354,7 @@ fn test_daxpy() {
 	alpha := 2.0
 	daxpy(3, alpha, x, 1, mut y, 1)
 	expected := [6.0, 9.0, 12.0] // y = alpha*x + y = 2*[1,2,3] + [4,5,6]
-	assert f64_array_equal(y, expected), 'DAXPY failed: expected ${expected}, got ${y}'
+	assert float64.arrays_tolerance(y, expected, test_tol), 'DAXPY failed: expected ${expected}, got ${y}'
 }
 
 fn test_ddot() {
@@ -414,7 +367,7 @@ fn test_ddot() {
 	y := [4.0, 5.0, 6.0]
 	result := ddot(3, x, 1, y, 1)
 	expected := 32.0 // 1*4 + 2*5 + 3*6
-	assert f64_equal(result, expected), 'DDOT failed: expected ${expected}, got ${result}'
+	assert float64.tolerance(result, expected, test_tol), 'DDOT failed: expected ${expected}, got ${result}'
 }
 
 fn test_dswap() {
@@ -428,8 +381,8 @@ fn test_dswap() {
 	x_orig := x.clone()
 	y_orig := y.clone()
 	dswap(3, mut x, 1, mut y, 1)
-	assert f64_array_equal(x, y_orig), 'DSWAP failed: x should equal original y, got ${x}'
-	assert f64_array_equal(y, x_orig), 'DSWAP failed: y should equal original x, got ${y}'
+	assert float64.arrays_tolerance(x, y_orig, test_tol), 'DSWAP failed: x should equal original y, got ${x}'
+	assert float64.arrays_tolerance(y, x_orig, test_tol), 'DSWAP failed: y should equal original x, got ${y}'
 }
 
 // ====================
@@ -455,7 +408,7 @@ fn test_dgemv() {
 		dgemv(case.trans, case.m, case.n, case.alpha, a_flat, case.n, case.x, 1, case.beta, mut
 			y, 1)
 
-		assert f64_array_equal(y, case.expected), 'DGEMV failed for case ${case.name}: expected ${case.expected}, got ${y}'
+		assert float64.arrays_tolerance(y, case.expected, test_tol), 'DGEMV failed for case ${case.name}: expected ${case.expected}, got ${y}'
 	}
 }
 
@@ -486,7 +439,7 @@ fn test_dger() {
 
 	// Expected: A + 2 * [1, 2]^T * [1, 1, 1] = A + 2 * [[1,1,1], [2,2,2]]
 	expected_flat := [3.0, 4.0, 5.0, 8.0, 9.0, 10.0]
-	assert f64_array_equal(a_flat, expected_flat), 'DGER failed: expected ${expected_flat}, got ${a_flat}'
+	assert float64.arrays_tolerance(a_flat, expected_flat, test_tol), 'DGER failed: expected ${expected_flat}, got ${a_flat}'
 }
 
 // ====================
@@ -534,7 +487,7 @@ fn test_dgemm() {
 			}
 		}
 
-		assert f64_array_equal(c_flat, expected_flat), 'DGEMM failed for case ${case.name}: expected ${expected_flat}, got ${c_flat}'
+		assert float64.arrays_tolerance(c_flat, expected_flat, test_tol), 'DGEMM failed for case ${case.name}: expected ${expected_flat}, got ${c_flat}'
 	}
 }
 
@@ -579,7 +532,7 @@ fn test_large_vectors() {
 	for i in 0 .. n {
 		expected += x[i] * y[i] // (i+1) * (2*i) = (i+1) * 2i
 	}
-	assert f64_equal(result, expected), 'Large vector DDOT failed: expected ${expected}, got ${result}'
+	assert float64.tolerance(result, expected, test_tol), 'Large vector DDOT failed: expected ${expected}, got ${result}'
 
 	// Test DAXPY
 	alpha := 2.0
@@ -589,6 +542,6 @@ fn test_large_vectors() {
 	// Verify a few elements
 	for i in 0 .. 10 {
 		expected_val := y[i] + alpha * x[i]
-		assert f64_equal(y_copy[i], expected_val), 'Large vector DAXPY failed at index ${i}: expected ${expected_val}, got ${y_copy[i]}'
+		assert float64.tolerance(y_copy[i], expected_val, test_tol), 'Large vector DAXPY failed at index ${i}: expected ${expected_val}, got ${y_copy[i]}'
 	}
 }

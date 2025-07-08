@@ -5,6 +5,7 @@ module lapack
 
 import math
 import vsl.blas
+import vsl.float.float64
 import rand
 
 // Test tolerance similar to gonum's LAPACK tests
@@ -40,14 +41,6 @@ fn is_lapacke_working() bool {
 
 // Test utilities and helpers
 
-// nearly_equal_f64 checks if two f64 values are nearly equal within tolerance
-fn nearly_equal_f64(a f64, b f64, tol f64) bool {
-	if math.is_nan(a) || math.is_nan(b) {
-		return false
-	}
-	return math.abs(a - b) <= tol
-}
-
 // nearly_equal_matrix checks if two matrices are nearly equal within tolerance
 fn nearly_equal_matrix(a [][]f64, b [][]f64, tol f64) bool {
 	if a.len != b.len {
@@ -58,7 +51,7 @@ fn nearly_equal_matrix(a [][]f64, b [][]f64, tol f64) bool {
 			return false
 		}
 		for j in 0 .. a[i].len {
-			if !nearly_equal_f64(a[i][j], b[i][j], tol) {
+			if !float64.tolerance(a[i][j], b[i][j], tol) {
 				return false
 			}
 		}
@@ -442,18 +435,18 @@ fn test_geev_basic() {
 	}
 
 	// Check eigenvalues are real (wi should be zero)
-	assert nearly_equal_f64(wi[0], 0.0, test_tolerance), 'geev: expected real eigenvalue'
-	assert nearly_equal_f64(wi[1], 0.0, test_tolerance), 'geev: expected real eigenvalue'
+	assert float64.tolerance(wi[0], 0.0, test_tolerance), 'geev: expected real eigenvalue'
+	assert float64.tolerance(wi[1], 0.0, test_tolerance), 'geev: expected real eigenvalue'
 
 	// For symmetric matrix, eigenvalues should be 4 and 2
 	mut eigenvals := [wr[0], wr[1]]
 	eigenvals.sort()
-	assert nearly_equal_f64(eigenvals[0], 2.0, test_tolerance), 'geev: incorrect eigenvalue'
-	assert nearly_equal_f64(eigenvals[1], 4.0, test_tolerance), 'geev: incorrect eigenvalue'
+	assert float64.tolerance(eigenvals[0], 2.0, test_tolerance), 'geev: incorrect eigenvalue'
+	assert float64.tolerance(eigenvals[1], 4.0, test_tolerance), 'geev: incorrect eigenvalue'
 
 	// Test 2: Verify eigenvalue equation A*v = λ*v for right eigenvectors
 	for i in 0 .. 2 {
-		if nearly_equal_f64(wi[i], 0.0, test_tolerance) {
+		if float64.tolerance(wi[i], 0.0, test_tolerance) {
 			// Real eigenvalue
 			mut v := [vr[0][i], vr[1][i]]
 			mut av := [0.0, 0.0]
@@ -468,8 +461,8 @@ fn test_geev_basic() {
 			// Compute λ*v
 			mut lv := [wr[i] * v[0], wr[i] * v[1]]
 
-			assert nearly_equal_f64(av[0], lv[0], test_tolerance), 'geev: A*v != λ*v for eigenvalue ${i}'
-			assert nearly_equal_f64(av[1], lv[1], test_tolerance), 'geev: A*v != λ*v for eigenvalue ${i}'
+			assert float64.tolerance(av[0], lv[0], test_tolerance), 'geev: A*v != λ*v for eigenvalue ${i}'
+			assert float64.tolerance(av[1], lv[1], test_tolerance), 'geev: A*v != λ*v for eigenvalue ${i}'
 		}
 	}
 }
@@ -495,8 +488,8 @@ fn test_syev_basic() {
 
 	// Check eigenvalues (should be 2 and 4 for this matrix)
 	assert eigenvals.len == 2, 'syev: wrong number of eigenvalues'
-	assert nearly_equal_f64(eigenvals[0], 2.0, test_tolerance), 'syev: incorrect first eigenvalue'
-	assert nearly_equal_f64(eigenvals[1], 4.0, test_tolerance), 'syev: incorrect second eigenvalue'
+	assert float64.tolerance(eigenvals[0], 2.0, test_tolerance), 'syev: incorrect first eigenvalue'
+	assert float64.tolerance(eigenvals[1], 4.0, test_tolerance), 'syev: incorrect second eigenvalue'
 
 	// Check that eigenvectors are orthonormal
 	assert check_orthogonal(a, true), 'syev: eigenvectors not orthonormal'
