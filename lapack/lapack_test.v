@@ -12,32 +12,7 @@ import rand
 const test_tolerance = 1e-12
 const ortho_tolerance = 1e-15
 
-// is_lapacke_working checks if LAPACKE backend is functioning properly
-// This is critical since the pure V backend is incomplete
-fn is_lapacke_working() bool {
-	// Simple test with a 2x2 system: [1 2; 3 4] * [x y] = [5 7; 11 15]
-	// Known solution: x=1, y=2
-	mut a := [[1.0, 2.0], [3.0, 4.0]]
-	mut b := [[5.0, 7.0], [11.0, 15.0]]
 
-	// Clone for testing
-	mut a_test := a.clone()
-	mut b_test := b.clone()
-
-	if _ := gesv(mut a_test, mut b_test) {
-		// Check if solution is correct within tolerance
-		expected := [[1.0, 1.0], [2.0, 2.0]]
-		for i in 0 .. 2 {
-			for j in 0 .. 2 {
-				if math.abs(b_test[i][j] - expected[i][j]) > 1e-10 {
-					return false
-				}
-			}
-		}
-		return true
-	}
-	return false
-}
 
 // Test utilities and helpers
 
@@ -123,7 +98,7 @@ fn create_identity(n int) [][]f64 {
 
 // create_random_matrix creates an m x n matrix with random values between -1 and 1
 fn create_random_matrix(m int, n int, seed int) [][]f64 {
-	rand.seed([u32(seed)])
+	rand.seed([u32(seed), u32(seed)])
 	mut mat := [][]f64{len: m, init: []f64{len: n}}
 	for i in 0 .. m {
 		for j in 0 .. n {
@@ -212,17 +187,12 @@ fn check_orthogonal(q [][]f64, check_columns bool) bool {
 // ============================================================================
 
 fn test_gesv_basic() {
-	if !is_lapacke_working() {
-		eprintln('Skipping gesv test: LAPACKE backend not working')
-		return
-	}
-
 	// Test 1: Simple 2x2 system
 	mut a := [[2.0, 1.0], [1.0, 1.0]]
 	mut b := [[3.0, 5.0], [2.0, 3.0]] // Two RHS vectors
 
 	original_a := a.clone()
-	expected_x := [[1.0, 1.0], [1.0, 2.0]] // Known solution
+	expected_x := [[1.0, 2.0], [1.0, 1.0]] // Known solution: Column 1: [1,1], Column 2: [2,1]
 
 	gesv(mut a, mut b) or { assert false, 'gesv failed on simple 2x2 system' }
 
@@ -236,10 +206,6 @@ fn test_gesv_basic() {
 }
 
 fn test_gesv_square_systems() {
-	if !is_lapacke_working() {
-		eprintln('Skipping gesv square systems test: LAPACKE backend not working')
-		return
-	}
 
 	// Test various sizes following gonum patterns
 	sizes := [1, 3, 5, 10, 20]
@@ -284,10 +250,6 @@ fn test_gesv_square_systems() {
 // ============================================================================
 
 fn test_getrf_basic() {
-	if !is_lapacke_working() {
-		eprintln('Skipping getrf test: LAPACKE backend not working')
-		return
-	}
 
 	// Test 1: Simple 3x3 matrix
 	mut a := [[2.0, 1.0, 1.0], [4.0, 3.0, 3.0], [8.0, 7.0, 9.0]]
@@ -339,11 +301,6 @@ fn test_getrf_basic() {
 }
 
 fn test_getri_basic() {
-	if !is_lapacke_working() {
-		eprintln('Skipping getri test: LAPACKE backend not working')
-		return
-	}
-
 	// Test matrix inversion
 	mut a := [[4.0, 3.0], [3.0, 2.0]] // Well-conditioned 2x2
 	original_a := a.clone()
@@ -372,10 +329,6 @@ fn test_getri_basic() {
 // ============================================================================
 
 fn test_potrf_basic() {
-	if !is_lapacke_working() {
-		eprintln('Skipping potrf test: LAPACKE backend not working')
-		return
-	}
 
 	// Test 1: Simple 2x2 SPD matrix
 	mut a := [[4.0, 2.0], [2.0, 3.0]] // SPD matrix
@@ -421,15 +374,11 @@ fn test_potrf_basic() {
 // ============================================================================
 
 fn test_geev_basic() {
-	if !is_lapacke_working() {
-		eprintln('Skipping geev test: LAPACKE backend not working')
-		return
-	}
 
 	// Test 1: Simple 2x2 symmetric matrix (real eigenvalues)
 	a := [[3.0, 1.0], [1.0, 3.0]]
 
-	wr, wi, vl, vr := geev(a, .left_ev_compute, .left_ev_compute) or {
+	wr, wi, vl, vr := geev(a, .left_ev_compute, .right_ev_compute) or {
 		assert false, 'geev failed on 2x2 symmetric matrix'
 		return
 	}
@@ -472,10 +421,6 @@ fn test_geev_basic() {
 // ============================================================================
 
 fn test_syev_basic() {
-	if !is_lapacke_working() {
-		eprintln('Skipping syev test: LAPACKE backend not working')
-		return
-	}
 
 	// Test 1: Simple 2x2 symmetric matrix
 	mut a := [[3.0, 1.0], [1.0, 3.0]]
@@ -510,10 +455,6 @@ fn test_syev_basic() {
 // ============================================================================
 
 fn test_geqrf_orgqr() {
-	if !is_lapacke_working() {
-		eprintln('Skipping QR factorization test: LAPACKE backend not working')
-		return
-	}
 
 	// Test QR factorization on various matrix sizes
 	test_cases := [
@@ -569,10 +510,6 @@ fn test_geqrf_orgqr() {
 // ============================================================================
 
 fn test_gesvd_basic() {
-	if !is_lapacke_working() {
-		eprintln('Skipping gesvd test: LAPACKE backend not working')
-		return
-	}
 
 	// Test 1: Simple 3x2 matrix
 	a := [[1.0, 2.0], [3.0, 4.0], [5.0, 6.0]]
@@ -614,10 +551,6 @@ fn test_gesvd_basic() {
 // ============================================================================
 
 fn test_integration_linear_system_methods() {
-	if !is_lapacke_working() {
-		eprintln('Skipping integration test: LAPACKE backend not working')
-		return
-	}
 
 	// Test that different methods give same result for solving Ax = b
 	n := 4
@@ -647,10 +580,6 @@ fn test_integration_linear_system_methods() {
 }
 
 fn test_cholesky_vs_lu() {
-	if !is_lapacke_working() {
-		eprintln('Skipping Cholesky vs LU test: LAPACKE backend not working')
-		return
-	}
 
 	// For SPD matrices, both Cholesky and LU should work
 	n := 3

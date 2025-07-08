@@ -6,18 +6,6 @@ import vsl.float.float64
 // Test tolerance for floating point comparisons
 const test_tol = 1e-14
 
-// Detect if CBLAS backend is working properly
-fn is_cblas_working() bool {
-	// Try a simple operation to detect if CBLAS is working
-	x := [1.0, 2.0]
-	y := [3.0, 4.0]
-	result := ddot(2, x, 1, y, 1)
-	expected := 11.0 // 1*3 + 2*4 = 11
-
-	// If result is wildly incorrect, CBLAS is not working
-	return math.abs(result - expected) < 1.0
-}
-
 // Test data structures for Level 1 BLAS operations
 struct Level1TestCase {
 	name            string
@@ -274,11 +262,6 @@ const gemm_test_cases = [
 // ====================
 
 fn test_dasum() {
-	if !is_cblas_working() {
-		println('CBLAS backend not working properly, skipping dasum test')
-		return
-	}
-
 	for case in level1_test_cases {
 		result := dasum(case.n, case.x, case.incx)
 		assert float64.tolerance(result, case.expected_dasum, test_tol), 'DASUM failed for case ${case.name}: expected ${case.expected_dasum}, got ${result}'
@@ -286,11 +269,6 @@ fn test_dasum() {
 }
 
 fn test_dnrm2() {
-	if !is_cblas_working() {
-		println('CBLAS backend not working properly, skipping dnrm2 test')
-		return
-	}
-
 	for case in level1_test_cases {
 		result := dnrm2(case.n, case.x, case.incx)
 		assert float64.tolerance(result, case.expected_dnrm2, test_tol), 'DNRM2 failed for case ${case.name}: expected ${case.expected_dnrm2}, got ${result}'
@@ -298,11 +276,6 @@ fn test_dnrm2() {
 }
 
 fn test_idamax() {
-	if !is_cblas_working() {
-		println('CBLAS backend not working properly, skipping idamax test')
-		return
-	}
-
 	for case in level1_test_cases {
 		result := idamax(case.n, case.x, case.incx)
 		assert result == case.expected_idamax, 'IDAMAX failed for case ${case.name}: expected ${case.expected_idamax}, got ${result}'
@@ -310,11 +283,6 @@ fn test_idamax() {
 }
 
 fn test_dscal() {
-	if !is_cblas_working() {
-		println('CBLAS backend not working properly, skipping dscal test')
-		return
-	}
-
 	for case in level1_test_cases {
 		for scal_case in case.scal_tests {
 			mut x := case.x.clone()
@@ -325,11 +293,6 @@ fn test_dscal() {
 }
 
 fn test_dcopy() {
-	if !is_cblas_working() {
-		println('CBLAS backend not working properly, skipping dcopy test')
-		return
-	}
-
 	x := [1.0, 2.0, 3.0, 4.0, 5.0]
 	mut y := [0.0, 0.0, 0.0, 0.0, 0.0]
 	dcopy(5, x, 1, mut y, 1)
@@ -344,11 +307,6 @@ fn test_dcopy() {
 }
 
 fn test_daxpy() {
-	if !is_cblas_working() {
-		println('CBLAS backend not working properly, skipping daxpy test')
-		return
-	}
-
 	x := [1.0, 2.0, 3.0]
 	mut y := [4.0, 5.0, 6.0]
 	alpha := 2.0
@@ -358,11 +316,6 @@ fn test_daxpy() {
 }
 
 fn test_ddot() {
-	if !is_cblas_working() {
-		println('CBLAS backend not working properly, skipping ddot test')
-		return
-	}
-
 	x := [1.0, 2.0, 3.0]
 	y := [4.0, 5.0, 6.0]
 	result := ddot(3, x, 1, y, 1)
@@ -371,11 +324,6 @@ fn test_ddot() {
 }
 
 fn test_dswap() {
-	if !is_cblas_working() {
-		println('CBLAS backend not working properly, skipping dswap test')
-		return
-	}
-
 	mut x := [1.0, 2.0, 3.0]
 	mut y := [4.0, 5.0, 6.0]
 	x_orig := x.clone()
@@ -390,11 +338,6 @@ fn test_dswap() {
 // ====================
 
 fn test_dgemv() {
-	if !is_cblas_working() {
-		println('CBLAS backend not working properly, skipping dgemv test')
-		return
-	}
-
 	for case in gemv_test_cases {
 		// Convert 2D matrix to flat array
 		mut a_flat := []f64{len: case.m * case.n}
@@ -413,11 +356,6 @@ fn test_dgemv() {
 }
 
 fn test_dger() {
-	if !is_cblas_working() {
-		println('CBLAS backend not working properly, skipping dger test')
-		return
-	}
-
 	// Test rank-1 update: A = alpha * x * y^T + A
 	mut a := [
 		[1.0, 2.0, 3.0],
@@ -447,11 +385,6 @@ fn test_dger() {
 // ====================
 
 fn test_dgemm() {
-	if !is_cblas_working() {
-		println('CBLAS backend not working properly, skipping dgemm test')
-		return
-	}
-
 	for case in gemm_test_cases {
 		// Convert matrices to flat arrays
 		mut a_flat := []f64{len: case.m * case.k}
@@ -492,11 +425,6 @@ fn test_dgemm() {
 }
 
 fn test_dtrmm() {
-	if !is_cblas_working() {
-		println('CBLAS backend not working properly, skipping dtrmm test')
-		return
-	}
-
 	// Test: Triangular matrix multiplication B := alpha * op(A) * B
 	// Where A is a 3x3 upper triangular matrix, B is 3x2 matrix
 	// Data stored in column-major order as expected by BLAS
@@ -523,11 +451,6 @@ fn test_dtrmm() {
 }
 
 fn test_dtrsm() {
-	if !is_cblas_working() {
-		println('CBLAS backend not working properly, skipping dtrsm test')
-		return
-	}
-
 	// Test: Triangular matrix solve B := alpha * op(A)^(-1) * B
 	// Simple 2x2 case to match BLAS64 test pattern
 	// A = [[2, 1], [0, 2]] (upper triangular), B = [[3, 6], [2, 4]]
@@ -569,11 +492,6 @@ fn test_dtrsm() {
 }
 
 fn test_dsyr2k() {
-	if !is_cblas_working() {
-		println('CBLAS backend not working properly, skipping dsyr2k test')
-		return
-	}
-
 	// Test: Symmetric rank-2k update C := alpha*A*B^T + alpha*B*A^T + beta*C
 	// Using a simple 2x2 case, data stored in column-major order
 	alpha := 2.0
@@ -627,11 +545,6 @@ fn test_invalid_inputs() {
 // ====================
 
 fn test_large_vectors() {
-	if !is_cblas_working() {
-		println('CBLAS backend not working properly, skipping large vectors test')
-		return
-	}
-
 	// Test with moderately large vectors to ensure performance is reasonable
 	n := 1000 // Reduced from 10000 to avoid numerical precision issues
 	mut x := []f64{len: n}

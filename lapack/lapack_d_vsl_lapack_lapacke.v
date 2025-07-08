@@ -11,11 +11,11 @@ fn C.LAPACKE_dgetrf(matrix_layout blas.MemoryLayout, m int, n int, a &f64, lda i
 
 fn C.LAPACKE_dgetri(matrix_layout blas.MemoryLayout, n int, a &f64, lda int, ipiv &int) int
 
-fn C.LAPACKE_dpotrf(matrix_layout blas.MemoryLayout, uplo blas.Uplo, n int, a &f64, lda int) int
+fn C.LAPACKE_dpotrf(matrix_layout blas.MemoryLayout, uplo u8, n int, a &f64, lda int) int
 
-fn C.LAPACKE_dgeev(matrix_layout blas.MemoryLayout, calc_vl LeftEigenVectorsJob, calc_vr LeftEigenVectorsJob, n int, a &f64, lda int, wr &f64, wi &f64, vl &f64, ldvl_ int, vr &f64, ldvr_ int) int
+fn C.LAPACKE_dgeev(matrix_layout blas.MemoryLayout, calc_vl LeftEigenVectorsJob, calc_vr RightEigenVectorsJob, n int, a &f64, lda int, wr &f64, wi &f64, vl &f64, ldvl_ int, vr &f64, ldvr_ int) int
 
-fn C.LAPACKE_dsyev(matrix_layout blas.MemoryLayout, jobz EigenVectorsJob, uplo blas.Uplo, n int, a &f64, lda int, w &f64) int
+fn C.LAPACKE_dsyev(matrix_layout blas.MemoryLayout, jobz u8, uplo u8, n int, a &f64, lda int, w &f64) int
 
 fn C.LAPACKE_dgebal(matrix_layout blas.MemoryLayout, job BalanceJob, n int, a &f64, lda int, ilo int, ihi int, scale &f64) int
 
@@ -108,9 +108,9 @@ fn C.LAPACKE_cheevr(matrix_layout blas.MemoryLayout, jobz EigenVectorsJob, range
 fn C.LAPACKE_zheevr(matrix_layout blas.MemoryLayout, jobz EigenVectorsJob, range byte, uplo blas.Uplo, n int, a voidptr, lda int, vl f64, vu f64, il int, iu int, abstol f64, m &int, w &f64, z voidptr, ldz int, isuppz &int) int
 
 // General eigenvalue problems
-fn C.LAPACKE_sgeev(matrix_layout blas.MemoryLayout, calc_vl LeftEigenVectorsJob, calc_vr LeftEigenVectorsJob, n int, a &f32, lda int, wr &f32, wi &f32, vl &f32, ldvl int, vr &f32, ldvr int) int
-fn C.LAPACKE_cgeev(matrix_layout blas.MemoryLayout, calc_vl LeftEigenVectorsJob, calc_vr LeftEigenVectorsJob, n int, a voidptr, lda int, w voidptr, vl voidptr, ldvl int, vr voidptr, ldvr int) int
-fn C.LAPACKE_zgeev(matrix_layout blas.MemoryLayout, calc_vl LeftEigenVectorsJob, calc_vr LeftEigenVectorsJob, n int, a voidptr, lda int, w voidptr, vl voidptr, ldvl int, vr voidptr, ldvr int) int
+fn C.LAPACKE_sgeev(matrix_layout blas.MemoryLayout, calc_vl LeftEigenVectorsJob, calc_vr RightEigenVectorsJob, n int, a &f32, lda int, wr &f32, wi &f32, vl &f32, ldvl int, vr &f32, ldvr int) int
+fn C.LAPACKE_cgeev(matrix_layout blas.MemoryLayout, calc_vl LeftEigenVectorsJob, calc_vr RightEigenVectorsJob, n int, a voidptr, lda int, w voidptr, vl voidptr, ldvl int, vr voidptr, ldvr int) int
+fn C.LAPACKE_zgeev(matrix_layout blas.MemoryLayout, calc_vl LeftEigenVectorsJob, calc_vr RightEigenVectorsJob, n int, a voidptr, lda int, w voidptr, vl voidptr, ldvl int, vr voidptr, ldvr int) int
 
 // SVD - Singular Value Decomposition
 fn C.LAPACKE_sgesvd(matrix_layout blas.MemoryLayout, jobu SVDJob, jobvt SVDJob, m int, n int, a &f32, lda int, s &f32, u &f32, ldu int, vt &f32, ldvt int, superb &f32) int
@@ -343,6 +343,11 @@ pub fn getrf(mut a [][]f64) ![]int {
 		}
 	}
 
+	// Convert 1-based LAPACK indices to 0-based V indices
+	for i in 0 .. ipiv.len {
+		ipiv[i] -= 1
+	}
+
 	return ipiv
 }
 
@@ -366,6 +371,7 @@ pub fn getri(mut a [][]f64, mut ipiv []int) ! {
 	}
 
 	mut a_flat := []f64{len: n * n}
+	mut ipiv_lapack := []int{len: n}
 
 	// Copy matrix to flat array
 	for i in 0 .. n {
@@ -374,8 +380,13 @@ pub fn getri(mut a [][]f64, mut ipiv []int) ! {
 		}
 	}
 
+	// Convert 0-based V indices back to 1-based LAPACK indices
+	for i in 0 .. n {
+		ipiv_lapack[i] = ipiv[i] + 1
+	}
+
 	unsafe {
-		info := C.LAPACKE_dgetri(.row_major, n, &a_flat[0], n, &ipiv[0])
+		info := C.LAPACKE_dgetri(.row_major, n, &a_flat[0], n, &ipiv_lapack[0])
 
 		if info != 0 {
 			return errors.error('LAPACK dgetri failed with info=${info}', .efailed)
@@ -406,8 +417,15 @@ pub fn potrf(mut a [][]f64, uplo blas.Uplo) ! {
 		}
 	}
 
+	// Convert blas.Uplo to LAPACKE character
+	uplo_char := match uplo {
+		.upper { u8(`U`) }
+		.lower { u8(`L`) }
+		else { u8(`U`) } // default to upper
+	}
+
 	unsafe {
-		info := C.LAPACKE_dpotrf(.row_major, uplo, n, &a_flat[0], n)
+		info := C.LAPACKE_dpotrf(.row_major, uplo_char, n, &a_flat[0], n)
 
 		if info != 0 {
 			return errors.error('LAPACK dpotrf failed with info=${info}', .efailed)
@@ -423,7 +441,7 @@ pub fn potrf(mut a [][]f64, uplo blas.Uplo) ! {
 
 // geev - Computes eigenvalues and eigenvectors of a general matrix
 @[inline]
-pub fn geev(a [][]f64, calc_vl LeftEigenVectorsJob, calc_vr LeftEigenVectorsJob) !([]f64, []f64, [][]f64, [][]f64) {
+pub fn geev(a [][]f64, calc_vl LeftEigenVectorsJob, calc_vr RightEigenVectorsJob) !([]f64, []f64, [][]f64, [][]f64) {
 	n := a.len
 	if a[0].len != n {
 		return errors.error('Matrix must be square', .efailed)
@@ -482,8 +500,19 @@ pub fn syev(mut a [][]f64, jobz EigenVectorsJob, uplo blas.Uplo) ![]f64 {
 		}
 	}
 
+	// Convert VSL enums to LAPACKE characters
+	jobz_char := match jobz {
+		.ev_compute { u8(`V`) }
+		.ev_none { u8(`N`) }
+	}
+	uplo_char := match uplo {
+		.upper { u8(`U`) }
+		.lower { u8(`L`) }
+		else { u8(`U`) } // default to upper
+	}
+
 	unsafe {
-		info := C.LAPACKE_dsyev(.row_major, jobz, uplo, n, &a_flat[0], n, &w[0])
+		info := C.LAPACKE_dsyev(.row_major, jobz_char, uplo_char, n, &a_flat[0], n, &w[0])
 
 		if info != 0 {
 			return errors.error('LAPACK dsyev failed with info=${info}', .efailed)
@@ -542,26 +571,38 @@ pub fn orgqr(mut a [][]f64, tau []f64) ! {
 	n := a[0].len
 	k := tau.len
 
-	mut a_flat := []f64{len: m * n}
+	// For ORGQR, we need to ensure n <= m. For wide matrices (m < n),
+	// we should only generate Q as an m×m matrix, taking the first m columns.
+	n_q := if n > m { m } else { n }
 
-	// Copy matrix to flat array
+	mut a_flat := []f64{len: m * n_q}
+
+	// Copy matrix to flat array (only first n_q columns)
 	for i in 0 .. m {
-		for j in 0 .. n {
-			a_flat[i * n + j] = a[i][j]
+		for j in 0 .. n_q {
+			a_flat[i * n_q + j] = a[i][j]
 		}
 	}
 
 	unsafe {
-		info := C.LAPACKE_dorgqr(.row_major, m, n, k, &a_flat[0], n, &tau[0])
+		info := C.LAPACKE_dorgqr(.row_major, m, n_q, k, &a_flat[0], n_q, &tau[0])
 
 		if info != 0 {
 			return errors.error('LAPACK dorgqr failed with info=${info}', .efailed)
 		}
 	}
-	// Copy result back
+	
+	// For wide matrices (m < n), resize the matrix to be m×m (economy size)
+	if m < n {
+		for i in 0 .. m {
+			a[i] = []f64{len: m}
+		}
+	}
+	
+	// Copy result back to the (possibly resized) matrix
 	for i in 0 .. m {
-		for j in 0 .. n {
-			a[i][j] = a_flat[i * n + j]
+		for j in 0 .. n_q {
+			a[i][j] = a_flat[i * n_q + j]
 		}
 	}
 }
