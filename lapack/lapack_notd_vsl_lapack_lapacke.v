@@ -112,8 +112,8 @@ pub fn dgetri(n int, mut a []f64, lda int, mut ipiv []int) {
 //
 // This is the block version of the algorithm, calling Level 3 BLAS.
 pub fn dpotrf(uplo blas.Uplo, n int, mut a []f64, lda int) {
-	info := lapack64.dpotrf(blas.to_blas64_uplo(uplo), n, mut a, lda)
-	if info != 0 {
+	info := lapack64.dpotrf(uplo, n, mut a, lda)
+	if !info {
 		errors.vsl_panic('LAPACK dgesvd failed with error code: ${info}', .efailed)
 	}
 }

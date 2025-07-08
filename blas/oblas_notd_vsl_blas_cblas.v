@@ -177,3 +177,24 @@ pub fn dsyrk(uplo Uplo, trans_a Transpose, n int, k int, alpha f64, a []f64, lda
 	blas64.dsyrk(to_blas64_uplo(uplo), to_blas64_transpose(trans_a), n, k, alpha, a, lda,
 		beta, mut c, ldc)
 }
+
+// dsyr2k performs a symmetric rank-2k update.
+@[inline]
+pub fn dsyr2k(uplo Uplo, trans_a Transpose, n int, k int, alpha f64, a []f64, lda int, b []f64, ldb int, beta f64, mut c []f64, ldc int) {
+	blas64.dsyr2k(to_blas64_uplo(uplo), to_blas64_transpose(trans_a), n, k, alpha, a,
+		lda, b, ldb, beta, mut c, ldc)
+}
+
+// dtrmm performs triangular matrix-matrix multiplication.
+@[inline]
+pub fn dtrmm(side Side, uplo Uplo, trans Transpose, diag Diagonal, m int, n int, alpha f64, a []f64, lda int, mut b []f64, ldb int) {
+	blas64.dtrmm(to_blas64_side(side), to_blas64_uplo(uplo), to_blas64_transpose(trans),
+		to_blas64_diagonal(diag), m, n, alpha, a, lda, mut b, ldb)
+}
+
+// dtrsm solves triangular system of equations with multiple right-hand sides.
+@[inline]
+pub fn dtrsm(side Side, uplo Uplo, trans Transpose, diag Diagonal, m int, n int, alpha f64, a []f64, lda int, mut b []f64, ldb int) {
+	blas64.dtrsm(to_blas64_side(side), to_blas64_uplo(uplo), to_blas64_transpose(trans),
+		to_blas64_diagonal(diag), m, n, alpha, a, lda, mut b, ldb)
+}
