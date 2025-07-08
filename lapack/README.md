@@ -42,19 +42,11 @@ sudo apt-get install -y --no-install-recommends \
 
 ### Arch Linux/Manjaro GNU Linux
 
-The best way of installing LAPACKE is using
-[lapack-openblas](https://aur.archlinux.org/packages/lapack-openblas/).
+The best way of installing OpenBLAS is using
+[blas-openblas](https://archlinux.org/packages/extra/x86_64/blas-openblas/).
 
 ```sh
-yay -S lapack-openblas
-```
-
-or
-
-```sh
-git clone https://aur.archlinux.org/lapack-openblas.git /tmp/lapack-openblas
-cd /tmp/lapack-openblas
-makepkg -si
+sudo pacman -S blas-openblas
 ```
 
 </details>
