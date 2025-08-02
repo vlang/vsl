@@ -174,7 +174,18 @@
 					<div class="doc-content">
 								<section id="readme_gm" class="doc-node">
 			<div class="title"><h1> gm <a href="#readme_gm">#</a></h1></div>
-<h1>Geometry algorithms and structures</h1><p>This package provides some functions to help with the solution of geometry problems. It also includes some routines loosely related with geometry.</p><h2>Examples</h2><p>You can find comprehensive examples demonstrating the geometry module features in the main examples directory:</p><ul><li><a href="../examples/gm_basic_geometry/"><code>gm_basic_geometry</code></a> - Fundamental 3D geometry operations</li><li><a href="../examples/gm_advanced_analysis/"><code>gm_advanced_analysis</code></a> - Advanced geometric analysis</li><li><a href="../examples/gm_distance_analysis/"><code>gm_distance_analysis</code></a> - Distance calculation analysis</li><li><a href="../examples/gm_spatial_binning/"><code>gm_spatial_binning</code></a> - Spatial indexing and binning systems</li><li><a href="../examples/gm_geometry_playground/"><code>gm_geometry_playground</code></a> - Interactive geometry exploration</li><li><a href="../examples/gm_trajectory_simulation/"><code>gm_trajectory_simulation</code></a> - Motion analysis</li></ul><p>Each example includes a complete <code>main.v</code> file and detailed <code>README.md</code> with mathematical explanations.</p>
+<h1 id="geometry-algorithms-and-structures">Geometry algorithms and structures</h1>
+<p>This package provides some functions to help with the solution of geometry problems. It also includes some routines loosely related with geometry.</p>
+<h2 id="examples">Examples</h2>
+<p>You can find comprehensive examples demonstrating the geometry module features in the main examples directory:</p>
+<ul>
+<li><a href="../examples/gm_basic_geometry/"><code>gm_basic_geometry</code></a> - Fundamental 3D geometry operations</li>
+<li><a href="../examples/gm_advanced_analysis/"><code>gm_advanced_analysis</code></a> - Advanced geometric analysis</li>
+<li><a href="../examples/gm_distance_analysis/"><code>gm_distance_analysis</code></a> - Distance calculation analysis</li>
+<li><a href="../examples/gm_spatial_binning/"><code>gm_spatial_binning</code></a> - Spatial indexing and binning systems</li>
+<li><a href="../examples/gm_geometry_playground/"><code>gm_geometry_playground</code></a> - Interactive geometry exploration</li>
+<li><a href="../examples/gm_trajectory_simulation/"><code>gm_trajectory_simulation</code></a> - Motion analysis</li></ul>
+<p>Each example includes a complete <code>main.v</code> file and detailed <code>README.md</code> with mathematical explanations.</p>
 
 </section>
 
@@ -386,7 +397,8 @@
 			<div class="title"><h2>fn (Bins) find_closest <a href="#Bins.find_closest">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/gm/bins.v#L146"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o Bins<span class="token punctuation">)</span> <span class="token function">find_closest</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
-<p>find_closest returns the id of the entry whose coordinates are closest to x id_closest  -- the id of the closest entity. return -1 if out-of-range or not found sq_dist_min -- the minimum distance (squared) between x and the closest entity in the same bin</p><p>Note: find_closest does search the whole area.It only locates neighbours in the same bin where the given x is located. So, if there area no entries in the bin containing x, no entry will be found.</p>
+<p>find_closest returns the id of the entry whose coordinates are closest to x id_closest  -- the id of the closest entity. return -1 if out-of-range or not found sq_dist_min -- the minimum distance (squared) between x and the closest entity in the same bin</p>
+<p>Note: find_closest does search the whole area.It only locates neighbours in the same bin where the given x is located. So, if there area no entries in the bin containing x, no entry will be found.</p>
 
 </section>
 
@@ -402,7 +414,8 @@
 			<div class="title"><h2>fn (Bins) find_along_segment <a href="#Bins.find_along_segment">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/gm/bins.v#L216"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o Bins<span class="token punctuation">)</span> <span class="token function">find_along_segment</span><span class="token punctuation">(</span>xi_ <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> xf_ <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> tol <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span></code></pre>
-<p>find_along_segment gets the ids of entries that lie close to a segment</p><p>Note: the initial (xi) and final (xf) points on segment define a bounding box to filter points</p>
+<p>find_along_segment gets the ids of entries that lie close to a segment</p>
+<p>Note: the initial (xi) and final (xf) points on segment define a bounding box to filter points</p>
 
 </section>
 
@@ -530,7 +543,7 @@
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 6 Jul 2025 01:22:15</div>
+						<div class="footer">Powered by vdoc. Generated on: 2 Aug 2025 05:16:14</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_gm">README</a></li>
 <li class="open"><a href="#Constants">Constants</a></li>

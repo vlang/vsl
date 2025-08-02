@@ -174,7 +174,26 @@
 					<div class="doc-content">
 								<section id="readme_inout.h5" class="doc-node">
 			<div class="title"><h1> inout.h5 <a href="#readme_inout.h5">#</a></h1></div>
-<h1>HDF5</h1><p>The functions described in this chapter will read or write data to a file in the <a href="https://hdfgroup.org">HDF5</a> format. These contain <code>datasets</code> together with a set of <code>attributes</code> for each dataset.</p><p>Datasets are arranged in a heirarchical name space similar to Unix file system. Each namespace is called a <code>group</code>. Datasets are stored in a group in an area of the file called a <code>dataspace</code>.</p><h2>Supported Features</h2><ul><li>Datasets consisting of a vector (<code>[]i64</code>, <code>[]f64</code>, etc).</li><li>Datasets consisting of a 2-d array (<code>[][]u8</code>, <code>[][]i16</code>, etc).</li><li>Datasets consisting of a 3-d array (<code>[][][]u32</code>, <code>[][][]f32</code>, etc).</li><li>Any number of attributes for each dataset (<code>int</code>, <code>[]f64</code>, <code>string</code>, etc).Attributes can be scalars or vectors. These are often metadata of the dataset describing how it was acquired or created.</li></ul><h2>Unsupported Features - Planned</h2><ul><li>Writing to groups other than <code>/</code> (which is the default)</li><li>Datasets of arrays of strings.</li><li>Compound data structures (akin to <code>struct</code>).</li><li>Images or tables.</li><li>Compression.</li><li>Distributed datasets (pointers to other HDF5 files).</li><li>Parallel reading or writing.</li></ul><h2>References and Further Reading</h2><p>See the <a href="https://hdfgroup.org">HDF5</a> website for documentation and examples in C or Fortran.</p>
+<h1 id="hdf5">HDF5</h1>
+<p>The functions described in this chapter will read or write data to a file in the <a href="https://hdfgroup.org">HDF5</a> format. These contain <code>datasets</code> together with a set of <code>attributes</code> for each dataset.</p>
+<p>Datasets are arranged in a heirarchical name space similar to Unix file system. Each namespace is called a <code>group</code>. Datasets are stored in a group in an area of the file called a <code>dataspace</code>.</p>
+<h2 id="supported-features">Supported Features</h2>
+<ul>
+<li>Datasets consisting of a vector (<code>[]i64</code>, <code>[]f64</code>, etc).</li>
+<li>Datasets consisting of a 2-d array (<code>[][]u8</code>, <code>[][]i16</code>, etc).</li>
+<li>Datasets consisting of a 3-d array (<code>[][][]u32</code>, <code>[][][]f32</code>, etc).</li>
+<li>Any number of attributes for each dataset (<code>int</code>, <code>[]f64</code>, <code>string</code>, etc).Attributes can be scalars or vectors. These are often metadata of the dataset describing how it was acquired or created.</li></ul>
+<h2 id="unsupported-features---planned">Unsupported Features - Planned</h2>
+<ul>
+<li>Writing to groups other than <code>/</code> (which is the default)</li>
+<li>Datasets of arrays of strings.</li>
+<li>Compound data structures (akin to <code>struct</code>).</li>
+<li>Images or tables.</li>
+<li>Compression.</li>
+<li>Distributed datasets (pointers to other HDF5 files).</li>
+<li>Parallel reading or writing.</li></ul>
+<h2 id="references-and-further-reading">References and Further Reading</h2>
+<p>See the <a href="https://hdfgroup.org">HDF5</a> website for documentation and examples in C or Fortran.</p>
 
 </section>
 
@@ -217,7 +236,8 @@
 			<div class="title"><h2>fn (Hdf5File) write_dataset2d <a href="#Hdf5File.write_dataset2d">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/inout/h5/hdf5_nix.c.v#L120"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>f <span class="token operator">&</span>Hdf5File<span class="token punctuation">)</span> write_dataset2d<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">(</span>dset_name <span class="token builtin">string</span><span class="token punctuation">,</span> buffer <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">T</span><span class="token punctuation">)</span> <span class="token operator">!</span>Hdf5HerrT</code></pre>
-<p>write_dataset2d writes a 2-d numeric array to a named HDF5 dataset in an HDF5 file.</p><p>Note: creates and deletes a temporary copy of the array.</p>
+<p>write_dataset2d writes a 2-d numeric array to a named HDF5 dataset in an HDF5 file.</p>
+<p>Note: creates and deletes a temporary copy of the array.</p>
 
 </section>
 
@@ -225,7 +245,8 @@
 			<div class="title"><h2>fn (Hdf5File) write_dataset3d <a href="#Hdf5File.write_dataset3d">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/inout/h5/hdf5_nix.c.v#L131"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>f <span class="token operator">&</span>Hdf5File<span class="token punctuation">)</span> write_dataset3d<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">(</span>dset_name <span class="token builtin">string</span><span class="token punctuation">,</span> buffer <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">T</span><span class="token punctuation">)</span> <span class="token operator">!</span>Hdf5HerrT</code></pre>
-<p>write_dataset3d writes a numeric 3-d array (layers of 2-d arrays) to a named HDF5 dataset in an HDF5 file.</p><p>Note: creates and deletes a temporary copy of the array.</p>
+<p>write_dataset3d writes a numeric 3-d array (layers of 2-d arrays) to a named HDF5 dataset in an HDF5 file.</p>
+<p>Note: creates and deletes a temporary copy of the array.</p>
 
 </section>
 
@@ -294,7 +315,7 @@
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 6 Jul 2025 01:22:15</div>
+						<div class="footer">Powered by vdoc. Generated on: 2 Aug 2025 05:16:14</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_inout.h5">README</a></li>
 <li class="open"><a href="#open_file">fn open_file</a>        <ul>

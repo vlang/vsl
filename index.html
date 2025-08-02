@@ -175,14 +175,61 @@
 								<section id="readme_README" class="doc-node">
 			<div class="title"><h1> README <a href="#readme_README">#</a></h1></div>
 <div align="center"> <p> <img style="width: 200px" width="200" src="https://raw.githubusercontent.com/vlang/vsl/main/static/vsl-logo.png?sanitize=true" > </p> <h1>The V Scientific Library</h1>
+
 <p><a href="https://vlang.io">vlang.io</a> | <a href="https://vlang.github.io/vsl">Docs</a> | <a href="#">Changelog</a> | <a href="https://github.com/vlang/vsl/blob/main/CONTRIBUTING.md">Contributing</a></p></div>
-<p>VSL is a V library to develop Artificial Intelligence and High-Performance Scientific Computations.</p><table><thead><tr><th align="center"></th><th align="center"></th><th align="center"></th><th align="center"></th></tr></thead><tbody><tr><td align="center">![][sierpinski_triangle]</td><td align="center">![][mandelbrot_blue_red_black]</td><td align="center">![][julia]</td><td align="center">![][mandelbrot_basic]</td></tr><tr><td align="center">![][mandelbrot_pseudo_random_colors]</td><td align="center">![][sierpinski_triangle2]</td><td align="center">![][julia_set]</td><td align="center">![][julia_basic]</td></tr></tbody></table><h2>📖 Docs</h2><p>Visit <a href="https://vlang.github.io/vsl">vsl docs</a> to know more about the supported features.</p><p>VSL is a Scientific Library with a great variety of different modules. Although most modules offer pure-V definitions, VSL also provides modules that wrap known C libraries among other backends that allow high performance computing as an alternative.</p><p>This library contains essential functions for linear algebra computations (operations between all combinations of vectors and matrices, eigenvalues and eigenvectors, linear solvers) and the development of numerical methods (e.g. numerical quadrature).</p><p>Optionally, we link VSL with existent libraries written in C and Fortran, such as Open BLAS and LAPACK. These existing libraries have been fundamental for the development of high-performant simulations over many years. We believe that it is possible to rewrite these libraries in native V and at the same time achieve the same speed delivered by them, but at the same time, we want to allow to the users of VSL the possibility to choose when to use these libraries as a backend and when not. That is why each module documents the flags that allow this at the time of use.</p><h2>🚀 Installation</h2><p>It is possible to optimize certain modules using different backends. For this, there are some C dependencies that can be installed optionally. If you want to use these C dependencies and other libraries, the easiest way to work with VSL is via Docker. Having Docker and VS Code installed, you can start developing powerful numerical simulations using VSL in a matter of seconds. Furthermore, the best part of it is that it works on Windows, Linux, and macOS out of the box.</p><h3>Quick, containerized (recommended!)</h3><ol><li>Install Docker</li><li>Clone <a href="https://github.com/ulises-jeremias/hello-vsl">https://github.com/ulises-jeremias/hello-vsl</a></li><li>Follow the instructions in the README.md file of the repository :ok_hand:</li></ol><p>Done. And your system will remain "clean".</p><p>Our <a href="https://hub.docker.com/repository/docker/ulisesjeremias/vsl">Docker Image</a> also contains V and the V Tools for working with VS Code (or not).</p><h2>Install VSL locally</h2><h3>Via vpm</h3><pre><code class="language-sh">v install vsl</code></pre><h3>Via <a href="https://github.com/v-pkg/vpkg">vpkg</a></h3><pre><code class="language-sh">vpkg get https<span class="token punctuation">:</span><span class="token comment">//github.com/vlang/vsl</span></code></pre><p>Done. Installation completed.</p><h2>🧪 Testing</h2><p>To test the module, just type the following command:</p><pre><code class="language-sh">v test <span class="token punctuation">.</span></code></pre><h2>👥 Contributors</h2><p><a href="https://github.com/vlang/vsl/contributors"> <img src="https://contrib.rocks/image?repo=vlang/vsl"/> </a></p><p>Made with <a href="https://contrib.rocks">contributors-img</a>.</p><!-- Images -->
+
+<p>VSL is a V library to develop Artificial Intelligence and High-Performance Scientific Computations.</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th></tr></thead>
+<tbody>
+<tr>
+<td align="center">![][sierpinski_triangle]</td>
+<td align="center">![][mandelbrot_blue_red_black]</td>
+<td align="center">![][julia]</td>
+<td align="center">![][mandelbrot_basic]</td></tr>
+<tr>
+<td align="center">![][mandelbrot_pseudo_random_colors]</td>
+<td align="center">![][sierpinski_triangle2]</td>
+<td align="center">![][julia_set]</td>
+<td align="center">![][julia_basic]</td></tr></tbody></table>
+<h2 id="-docs">📖 Docs</h2>
+<p>Visit <a href="https://vlang.github.io/vsl">vsl docs</a> to know more about the supported features.</p>
+<p>VSL is a Scientific Library with a great variety of different modules. Although most modules offer pure-V definitions, VSL also provides modules that wrap known C libraries among other backends that allow high performance computing as an alternative.</p>
+<p>This library contains essential functions for linear algebra computations (operations between all combinations of vectors and matrices, eigenvalues and eigenvectors, linear solvers) and the development of numerical methods (e.g. numerical quadrature).</p>
+<p>Optionally, we link VSL with existent libraries written in C and Fortran, such as Open BLAS and LAPACK. These existing libraries have been fundamental for the development of high-performant simulations over many years. We believe that it is possible to rewrite these libraries in native V and at the same time achieve the same speed delivered by them, but at the same time, we want to allow to the users of VSL the possibility to choose when to use these libraries as a backend and when not. That is why each module documents the flags that allow this at the time of use.</p>
+<h2 id="-installation">🚀 Installation</h2>
+<p>It is possible to optimize certain modules using different backends. For this, there are some C dependencies that can be installed optionally. If you want to use these C dependencies and other libraries, the easiest way to work with VSL is via Docker. Having Docker and VS Code installed, you can start developing powerful numerical simulations using VSL in a matter of seconds. Furthermore, the best part of it is that it works on Windows, Linux, and macOS out of the box.</p>
+<h3 id="quick-containerized-recommended">Quick, containerized (recommended!)</h3>
+<ol>
+<li>Install Docker</li>
+<li>Clone <a href="https://github.com/ulises-jeremias/hello-vsl">https://github.com/ulises-jeremias/hello-vsl</a></li>
+<li>Follow the instructions in the README.md file of the repository :ok_hand:</li></ol>
+<p>Done. And your system will remain "clean".</p>
+<p>Our <a href="https://hub.docker.com/repository/docker/ulisesjeremias/vsl">Docker Image</a> also contains V and the V Tools for working with VS Code (or not).</p>
+<h2 id="install-vsl-locally">Install VSL locally</h2>
+<h3 id="via-vpm">Via vpm</h3>
+<pre><code class="language-sh">v install vsl</code></pre>
+<h3 id="via-">Via <a href="https://github.com/v-pkg/vpkg">vpkg</a></h3>
+<pre><code class="language-sh">vpkg get https<span class="token punctuation">:</span><span class="token comment">//github.com/vlang/vsl</span></code></pre>
+<p>Done. Installation completed.</p>
+<h2 id="-testing">🧪 Testing</h2>
+<p>To test the module, just type the following command:</p>
+<pre><code class="language-sh">v test <span class="token punctuation">.</span></code></pre>
+<h2 id="-contributors">👥 Contributors</h2>
+<p><a href="https://github.com/vlang/vsl/contributors"> <img src="https://contrib.rocks/image?repo=vlang/vsl"/> </a></p>
+<p>Made with <a href="https://contrib.rocks">contributors-img</a>.</p><!-- Images -->
+
 <p>[sierpinski_triangle]: <a href="https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/sierpinski_triangle.png">https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/sierpinski_triangle.png</a> [mandelbrot_blue_red_black]: <a href="https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/mandelbrot_blue_red_black.png">https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/mandelbrot_blue_red_black.png</a> [julia]: <a href="https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/julia.png">https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/julia.png</a> [mandelbrot_basic]: <a href="https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/mandelbrot_basic.png">https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/mandelbrot_basic.png</a> [mandelbrot_pseudo_random_colors]: <a href="https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/mandelbrot_pseudo_random_colors.png">https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/mandelbrot_pseudo_random_colors.png</a> [sierpinski_triangle2]: <a href="https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/sierpinski_triangle2.png">https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/sierpinski_triangle2.png</a> [julia_set]: <a href="https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/julia_set.png">https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/julia_set.png</a> [julia_basic]: <a href="https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/julia_basic.png">https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/julia_basic.png</a></p>
 
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 6 Jul 2025 01:22:15</div>
+						<div class="footer">Powered by vdoc. Generated on: 2 Aug 2025 05:16:14</div>
 					</div>
 					
 				</div>

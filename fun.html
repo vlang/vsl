@@ -174,7 +174,38 @@
 					<div class="doc-content">
 								<section id="readme_fun" class="doc-node">
 			<div class="title"><h1> fun <a href="#readme_fun">#</a></h1></div>
-<h1>Special Functions (fun) Module</h1><p>The <code>vsl.fun</code> module provides a comprehensive collection of special mathematical functions commonly used in scientific computing, engineering, and mathematical analysis.</p><h2>🚀 Features</h2><h3>Bessel Functions</h3><ul><li><strong>Standard Bessel Functions</strong>: J, Y, I, K functions of integer and fractional orders</li><li><strong>Modified Bessel Functions</strong>: Enhanced performance for specific use cases</li><li><strong>Spherical Bessel Functions</strong>: For spherical coordinate problems</li></ul><h3>Gamma Functions</h3><ul><li><strong>Gamma Function</strong>: Γ(x) and related functions</li><li><strong>Log Gamma</strong>: Numerically stable logarithmic form</li><li><strong>Complex Gamma</strong>: Support for complex arguments</li><li><strong>Digamma Function</strong>: Ψ(x) - logarithmic derivative of gamma</li></ul><h3>Error Functions</h3><ul><li><strong>Error Function</strong>: erf(x) and complementary erfc(x)</li><li><strong>Inverse Error Functions</strong>: For statistical applications</li><li><strong>Scaled Error Functions</strong>: Optimized variants</li></ul><h3>Interpolation</h3><ul><li><strong>Cubic Interpolation</strong>: Smooth curve fitting</li><li><strong>Quadratic Interpolation</strong>: Efficient polynomial fitting</li><li><strong>Data Interpolation</strong>: General-purpose data fitting</li></ul><h3>Trigonometric Extensions</h3><ul><li><strong>Hyperbolic Functions</strong>: Enhanced sinh, cosh, tanh</li><li><strong>Inverse Trigonometric</strong>: Complete set of inverse functions</li><li><strong>Sinusoidal Functions</strong>: Parameterized sine waves</li></ul><h2>📖 Usage Examples</h2><h3>Bessel Functions</h3><pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>fun
+<h1 id="special-functions-fun-module">Special Functions (fun) Module</h1>
+<p>The <code>vsl.fun</code> module provides a comprehensive collection of special mathematical functions commonly used in scientific computing, engineering, and mathematical analysis.</p>
+<h2 id="-features">🚀 Features</h2>
+<h3 id="bessel-functions">Bessel Functions</h3>
+<ul>
+<li><strong>Standard Bessel Functions</strong>: J, Y, I, K functions of integer and fractional orders</li>
+<li><strong>Modified Bessel Functions</strong>: Enhanced performance for specific use cases</li>
+<li><strong>Spherical Bessel Functions</strong>: For spherical coordinate problems</li></ul>
+<h3 id="gamma-functions">Gamma Functions</h3>
+<ul>
+<li><strong>Gamma Function</strong>: Γ(x) and related functions</li>
+<li><strong>Log Gamma</strong>: Numerically stable logarithmic form</li>
+<li><strong>Complex Gamma</strong>: Support for complex arguments</li>
+<li><strong>Digamma Function</strong>: Ψ(x) - logarithmic derivative of gamma</li></ul>
+<h3 id="error-functions">Error Functions</h3>
+<ul>
+<li><strong>Error Function</strong>: erf(x) and complementary erfc(x)</li>
+<li><strong>Inverse Error Functions</strong>: For statistical applications</li>
+<li><strong>Scaled Error Functions</strong>: Optimized variants</li></ul>
+<h3 id="interpolation">Interpolation</h3>
+<ul>
+<li><strong>Cubic Interpolation</strong>: Smooth curve fitting</li>
+<li><strong>Quadratic Interpolation</strong>: Efficient polynomial fitting</li>
+<li><strong>Data Interpolation</strong>: General-purpose data fitting</li></ul>
+<h3 id="trigonometric-extensions">Trigonometric Extensions</h3>
+<ul>
+<li><strong>Hyperbolic Functions</strong>: Enhanced sinh, cosh, tanh</li>
+<li><strong>Inverse Trigonometric</strong>: Complete set of inverse functions</li>
+<li><strong>Sinusoidal Functions</strong>: Parameterized sine waves</li></ul>
+<h2 id="-usage-examples">📖 Usage Examples</h2>
+<h3 id="bessel-functions">Bessel Functions</h3>
+<pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>fun
 
 <span class="token comment">// Standard Bessel function of the first kind</span>
 x <span class="token operator">:=</span> <span class="token number">2.5</span>
@@ -184,7 +215,9 @@ result <span class="token operator">:=</span> fun<span class="token punctuation"
 
 <span class="token comment">// Modified Bessel function</span>
 result_i <span class="token operator">:=</span> fun<span class="token punctuation">.</span><span class="token function">bessel_in</span><span class="token punctuation">(</span>order<span class="token punctuation">,</span> x<span class="token punctuation">)</span>
-<span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'I_1(2.5) = </span><span class="token string_interp">$</span>{result_i}<span class="token string">'</span><span class="token punctuation">)</span></code></pre><h3>Gamma Functions</h3><pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>fun
+<span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'I_1(2.5) = </span><span class="token string_interp">$</span>{result_i}<span class="token string">'</span><span class="token punctuation">)</span></code></pre>
+<h3 id="gamma-functions">Gamma Functions</h3>
+<pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>fun
 
 <span class="token comment">// Standard gamma function</span>
 x <span class="token operator">:=</span> <span class="token number">3.5</span>
@@ -193,7 +226,9 @@ gamma_val <span class="token operator">:=</span> fun<span class="token punctuati
 
 <span class="token comment">// Log gamma for large arguments (numerically stable)</span>
 log_gamma_val <span class="token operator">:=</span> fun<span class="token punctuation">.</span><span class="token function">log_gamma</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span>
-<span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'ln(Γ(3.5)) = </span><span class="token string_interp">$</span>{log_gamma_val}<span class="token string">'</span><span class="token punctuation">)</span></code></pre><h3>Error Functions</h3><pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>fun
+<span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'ln(Γ(3.5)) = </span><span class="token string_interp">$</span>{log_gamma_val}<span class="token string">'</span><span class="token punctuation">)</span></code></pre>
+<h3 id="error-functions">Error Functions</h3>
+<pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>fun
 
 <span class="token comment">// Error function - common in statistics</span>
 x <span class="token operator">:=</span> <span class="token number">1.0</span>
@@ -202,7 +237,9 @@ erf_val <span class="token operator">:=</span> fun<span class="token punctuation
 
 <span class="token comment">// Complementary error function</span>
 erfc_val <span class="token operator">:=</span> fun<span class="token punctuation">.</span><span class="token function">erfc</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span>
-<span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'erfc(1.0) = </span><span class="token string_interp">$</span>{erfc_val}<span class="token string">'</span><span class="token punctuation">)</span></code></pre><h3>Interpolation</h3><pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>fun
+<span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'erfc(1.0) = </span><span class="token string_interp">$</span>{erfc_val}<span class="token string">'</span><span class="token punctuation">)</span></code></pre>
+<h3 id="interpolation">Interpolation</h3>
+<pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>fun
 
 <span class="token comment">// Data points for interpolation</span>
 x_data <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">2.0</span><span class="token punctuation">,</span> <span class="token number">3.0</span><span class="token punctuation">]</span>
@@ -216,7 +253,63 @@ interp<span class="token punctuation">.</span><span class="token function">fit_4
 <span class="token comment">// Evaluate at intermediate point</span>
 x_new <span class="token operator">:=</span> <span class="token number">1.5</span>
 y_new <span class="token operator">:=</span> interp<span class="token punctuation">.</span><span class="token function">f</span><span class="token punctuation">(</span>x_new<span class="token punctuation">)</span>
-<span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'Interpolated value at x=1.5: </span><span class="token string_interp">$</span>{y_new}<span class="token string">'</span><span class="token punctuation">)</span></code></pre><h2>🔬 Mathematical Background</h2><h3>Bessel Functions</h3><p>Bessel functions arise in solving Laplace's equation in cylindrical coordinates. They appear in:- Wave propagation problems</p><ul><li>Heat conduction in cylinders</li><li>Quantum mechanics (radial wave functions)</li><li>Electromagnetic field problems</li></ul><h3>Gamma Function</h3><p>The gamma function extends the factorial to real and complex numbers:- Γ(n) = (n-1)! for positive integers</p><ul><li>Used in probability distributions</li><li>Appears in many integrals and series</li></ul><h3>Error Function</h3><p>Related to the Gaussian distribution:- erf(x) = (2/√π) ∫₀ˣ e^(-t²) dt</p><ul><li>Fundamental in statistics and probability</li><li>Used in diffusion processes</li></ul><h2>🎯 Examples</h2><p>See these examples for practical applications:- <code>prime_factorization</code> - Uses gamma function properties</p><ul><li><code>data_analysis_example</code> - Statistical functions</li><li><code>noise_*</code> examples - Error functions in random processes</li></ul><h2>🔧 Performance Notes</h2><ul><li><strong>Table-based functions</strong>: Some functions use precomputed tables for speed</li><li><strong>Asymptotic expansions</strong>: Used for large arguments</li><li><strong>Continued fractions</strong>: Employed for intermediate ranges</li><li><strong>Error handling</strong>: Graceful handling of domain errors</li></ul><h2>🐛 Current Limitations</h2><p><strong>Note</strong>: Some functions are under development. See <code>TODO</code> file for status:</p><ul><li>Error estimates for Bessel functions</li><li>Complex gamma function implementation</li><li>Extended precision modes</li><li>Additional inverse functions</li></ul><h2>📚 API Reference</h2><h3>Core Functions</h3><p><strong>Bessel Functions:</strong>- <code>bessel_jn(n, x)</code> - Bessel function of the first kind</p><ul><li><code>bessel_yn(n, x)</code> - Bessel function of the second kind</li><li><code>bessel_in(n, x)</code> - Modified Bessel function of the first kind</li><li><code>bessel_kn(n, x)</code> - Modified Bessel function of the second kind</li></ul><p><strong>Gamma Functions:</strong>- <code>gamma(x)</code> - Gamma function</p><ul><li><code>log_gamma(x)</code> - Logarithm of gamma function</li><li><code>digamma(x)</code> - Digamma function (ψ function)</li></ul><p><strong>Error Functions:</strong>- <code>erf(x)</code> - Error function</p><ul><li><code>erfc(x)</code> - Complementary error function</li></ul><h2>🔗 References</h2><ul><li>Abramowitz &amp; Stegun: "Handbook of Mathematical Functions"</li><li>NIST Digital Library of Mathematical Functions</li><li>Numerical Recipes in Scientific Computing</li></ul><hr /><p>For more special functions, see the <a href="https://vlang.github.io/vsl">VSL documentation</a> and <a href="../examples/">examples directory</a>.</p>
+<span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'Interpolated value at x=1.5: </span><span class="token string_interp">$</span>{y_new}<span class="token string">'</span><span class="token punctuation">)</span></code></pre>
+<h2 id="-mathematical-background">🔬 Mathematical Background</h2>
+<h3 id="bessel-functions">Bessel Functions</h3>
+<p>Bessel functions arise in solving Laplace's equation in cylindrical coordinates. They appear in:- Wave propagation problems</p>
+<ul>
+<li>Heat conduction in cylinders</li>
+<li>Quantum mechanics (radial wave functions)</li>
+<li>Electromagnetic field problems</li></ul>
+<h3 id="gamma-function">Gamma Function</h3>
+<p>The gamma function extends the factorial to real and complex numbers:- Γ(n) = (n-1)! for positive integers</p>
+<ul>
+<li>Used in probability distributions</li>
+<li>Appears in many integrals and series</li></ul>
+<h3 id="error-function">Error Function</h3>
+<p>Related to the Gaussian distribution:- erf(x) = (2/√π) ∫₀ˣ e^(-t²) dt</p>
+<ul>
+<li>Fundamental in statistics and probability</li>
+<li>Used in diffusion processes</li></ul>
+<h2 id="-examples">🎯 Examples</h2>
+<p>See these examples for practical applications:- <code>prime_factorization</code> - Uses gamma function properties</p>
+<ul>
+<li><code>data_analysis_example</code> - Statistical functions</li>
+<li><code>noise_*</code> examples - Error functions in random processes</li></ul>
+<h2 id="-performance-notes">🔧 Performance Notes</h2>
+<ul>
+<li><strong>Table-based functions</strong>: Some functions use precomputed tables for speed</li>
+<li><strong>Asymptotic expansions</strong>: Used for large arguments</li>
+<li><strong>Continued fractions</strong>: Employed for intermediate ranges</li>
+<li><strong>Error handling</strong>: Graceful handling of domain errors</li></ul>
+<h2 id="-current-limitations">🐛 Current Limitations</h2>
+<p><strong>Note</strong>: Some functions are under development. See <code>TODO</code> file for status:</p>
+<ul>
+<li>Error estimates for Bessel functions</li>
+<li>Complex gamma function implementation</li>
+<li>Extended precision modes</li>
+<li>Additional inverse functions</li></ul>
+<h2 id="-api-reference">📚 API Reference</h2>
+<h3 id="core-functions">Core Functions</h3>
+<p><strong>Bessel Functions:</strong>- <code>bessel_jn(n, x)</code> - Bessel function of the first kind</p>
+<ul>
+<li><code>bessel_yn(n, x)</code> - Bessel function of the second kind</li>
+<li><code>bessel_in(n, x)</code> - Modified Bessel function of the first kind</li>
+<li><code>bessel_kn(n, x)</code> - Modified Bessel function of the second kind</li></ul>
+<p><strong>Gamma Functions:</strong>- <code>gamma(x)</code> - Gamma function</p>
+<ul>
+<li><code>log_gamma(x)</code> - Logarithm of gamma function</li>
+<li><code>digamma(x)</code> - Digamma function (ψ function)</li></ul>
+<p><strong>Error Functions:</strong>- <code>erf(x)</code> - Error function</p>
+<ul>
+<li><code>erfc(x)</code> - Complementary error function</li></ul>
+<h2 id="-references">🔗 References</h2>
+<ul>
+<li>Abramowitz &amp; Stegun: "Handbook of Mathematical Functions"</li>
+<li>NIST Digital Library of Mathematical Functions</li>
+<li>Numerical Recipes in Scientific Computing</li></ul>
+<hr />
+<p>For more special functions, see the <a href="https://vlang.github.io/vsl">VSL documentation</a> and <a href="../examples/">examples directory</a>.</p>
 
 </section>
 
@@ -264,7 +357,8 @@ y_new <span class="token operator">:=</span> interp<span class="token punctuatio
 			<div class="title"><h2>fn bessel_j0 <a href="#bessel_j0">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fun/bessel.v#L99"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">bessel_j0</span><span class="token punctuation">(</span>x_ <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
-<p>bessel_j0 returns the order-zero Bessel function of the first kind.</p><p>special cases are: bessel_j0(±inf) = 0 bessel_j0(0) = 1 bessel_j0(nan) = nan</p>
+<p>bessel_j0 returns the order-zero Bessel function of the first kind.</p>
+<p>special cases are: bessel_j0(±inf) = 0 bessel_j0(0) = 1 bessel_j0(nan) = nan</p>
 
 </section>
 
@@ -272,7 +366,8 @@ y_new <span class="token operator">:=</span> interp<span class="token punctuatio
 			<div class="title"><h2>fn bessel_j1 <a href="#bessel_j1">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fun/bessel.v#L163"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">bessel_j1</span><span class="token punctuation">(</span>x_ <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
-<p>bessel_j1 returns the order-one Bessel function of the first kind.</p><p>special cases are: bessel_j1(±inf) = 0 bessel_j1(nan) = nan</p>
+<p>bessel_j1 returns the order-one Bessel function of the first kind.</p>
+<p>special cases are: bessel_j1(±inf) = 0 bessel_j1(nan) = nan</p>
 
 </section>
 
@@ -280,7 +375,8 @@ y_new <span class="token operator">:=</span> interp<span class="token punctuatio
 			<div class="title"><h2>fn bessel_jn <a href="#bessel_jn">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fun/bessel.v#L225"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">bessel_jn</span><span class="token punctuation">(</span>n_ <span class="token builtin">int</span><span class="token punctuation">,</span> x_ <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
-<p>bessel_jn returns the order-n Bessel function of the first kind.</p><p>special cases are: bessel_jn(n, ±inf) = 0 bessel_jn(n, nan) = nan</p>
+<p>bessel_jn returns the order-n Bessel function of the first kind.</p>
+<p>special cases are: bessel_jn(n, ±inf) = 0 bessel_jn(n, nan) = nan</p>
 
 </section>
 
@@ -312,7 +408,8 @@ y_new <span class="token operator">:=</span> interp<span class="token punctuatio
 			<div class="title"><h2>fn bessel_y0 <a href="#bessel_y0">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fun/bessel.v#L414"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">bessel_y0</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
-<p>bessel_y0 returns the order-zero Bessel function of the second kind.</p><p>special cases are: bessel_y0(+inf) = 0 bessel_y0(0) = -inf bessel_y0(x &lt; 0) = nan bessel_y0(nan) = nan</p>
+<p>bessel_y0 returns the order-zero Bessel function of the second kind.</p>
+<p>special cases are: bessel_y0(+inf) = 0 bessel_y0(0) = -inf bessel_y0(x &lt; 0) = nan bessel_y0(nan) = nan</p>
 
 </section>
 
@@ -320,7 +417,8 @@ y_new <span class="token operator">:=</span> interp<span class="token punctuatio
 			<div class="title"><h2>fn bessel_y1 <a href="#bessel_y1">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fun/bessel.v#L481"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">bessel_y1</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
-<p>bessel_y1 returns the order-one Bessel function of the second kind.</p><p>special cases are: bessel_y1(+inf) = 0 bessel_y1(0) = -inf bessel_y1(x &lt; 0) = nan bessel_y1(nan) = nan</p>
+<p>bessel_y1 returns the order-one Bessel function of the second kind.</p>
+<p>special cases are: bessel_y1(+inf) = 0 bessel_y1(0) = -inf bessel_y1(x &lt; 0) = nan bessel_y1(nan) = nan</p>
 
 </section>
 
@@ -328,7 +426,8 @@ y_new <span class="token operator">:=</span> interp<span class="token punctuatio
 			<div class="title"><h2>fn bessel_yn <a href="#bessel_yn">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fun/bessel.v#L543"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">bessel_yn</span><span class="token punctuation">(</span>n_ <span class="token builtin">int</span><span class="token punctuation">,</span> x <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
-<p>bessel_yn returns the order-n Bessel function of the second kind.</p><p>special cases are: bessel_yn(n, +inf) = 0 bessel_yn(n ≥ 0, 0) = -inf bessel_yn(n &lt; 0, 0) = +inf if n is odd, -inf if n is even bessel_yn(n, x &lt; 0) = nan bessel_yn(n, nan) = nan</p>
+<p>bessel_yn returns the order-n Bessel function of the second kind.</p>
+<p>special cases are: bessel_yn(n, +inf) = 0 bessel_yn(n ≥ 0, 0) = -inf bessel_yn(n &lt; 0, 0) = +inf if n is odd, -inf if n is even bessel_yn(n, x &lt; 0) = nan bessel_yn(n, nan) = nan</p>
 
 </section>
 
@@ -352,7 +451,9 @@ y_new <span class="token operator">:=</span> interp<span class="token punctuatio
 			<div class="title"><h2>fn boxcar <a href="#boxcar">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fun/fun.v#L168"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">boxcar</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">,</span> a <span class="token builtin">f64</span><span class="token punctuation">,</span> b <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
-<p>boxcar implements the boxcar function</p><p><code>boxcar(x;a,b) = heav(x-a) - heav(x-b)</code></p><p><em><strong>NOTE</strong>: a ≤ x ≤ b; i.e. b ≥ a (not checked)</em></p>
+<p>boxcar implements the boxcar function</p>
+<p><code>boxcar(x;a,b) = heav(x-a) - heav(x-b)</code></p>
+<p><em><strong>NOTE</strong>: a ≤ x ≤ b; i.e. b ≥ a (not checked)</em></p>
 
 </section>
 
@@ -408,7 +509,8 @@ y_new <span class="token operator">:=</span> interp<span class="token punctuatio
 			<div class="title"><h2>fn erf <a href="#erf">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fun/erf.v#L217"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">erf</span><span class="token punctuation">(</span>x_ <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
-<p>erf returns the error function of x.</p><p>special cases are: erf(+inf) = 1 erf(-inf) = -1 erf(nan) = nan</p>
+<p>erf returns the error function of x.</p>
+<p>special cases are: erf(+inf) = 1 erf(-inf) = -1 erf(nan) = nan</p>
 
 </section>
 
@@ -416,7 +518,8 @@ y_new <span class="token operator">:=</span> interp<span class="token punctuatio
 			<div class="title"><h2>fn erfc <a href="#erfc">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fun/erf.v#L301"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">erfc</span><span class="token punctuation">(</span>x_ <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
-<p>erfc returns the complementary error function of x.</p><p>special cases are: erfc(+inf) = 0 erfc(-inf) = 2 erfc(nan) = nan</p>
+<p>erfc returns the complementary error function of x.</p>
+<p>special cases are: erfc(+inf) = 0 erfc(-inf) = 2 erfc(nan) = nan</p>
 
 </section>
 
@@ -448,7 +551,8 @@ y_new <span class="token operator">:=</span> interp<span class="token punctuatio
 			<div class="title"><h2>fn gamma <a href="#gamma">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fun/gamma.v#L44"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">gamma</span><span class="token punctuation">(</span>x_ <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
-<p>gamma returns the gamma function of x.</p><p>special ifs are: gamma(+inf) = +inf gamma(+0) = +inf gamma(-0) = -inf gamma(x) = nan for integer x &lt; 0 gamma(-inf) = nan gamma(nan) = nan</p>
+<p>gamma returns the gamma function of x.</p>
+<p>special ifs are: gamma(+inf) = +inf gamma(+0) = +inf gamma(-0) = -inf gamma(x) = nan for integer x &lt; 0 gamma(-inf) = nan gamma(nan) = nan</p>
 
 </section>
 
@@ -472,7 +576,8 @@ y_new <span class="token operator">:=</span> interp<span class="token punctuatio
 			<div class="title"><h2>fn heav <a href="#heav">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fun/fun.v#L142"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">heav</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
-<p>heav computes the heaviside step function (== derivative of ramp(x))</p><p>│ 0    if x &lt; 0 heav(x) = ┤ 1/2  if x = 0 │ 1    if x &gt; 0</p>
+<p>heav computes the heaviside step function (== derivative of ramp(x))</p>
+<p>│ 0    if x &lt; 0 heav(x) = ┤ 1/2  if x = 0 │ 1    if x &gt; 0</p>
 
 </section>
 
@@ -520,7 +625,8 @@ y_new <span class="token operator">:=</span> interp<span class="token punctuatio
 			<div class="title"><h2>fn log_gamma <a href="#log_gamma">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fun/gamma.v#L140"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">log_gamma</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
-<p>log_gamma returns the natural logarithm and sign (-1 or +1) of Gamma(x).</p><p>special ifs are: log_gamma(+inf) = +inf log_gamma(0) = +inf log_gamma(-integer) = +inf log_gamma(-inf) = -inf log_gamma(nan) = nan</p>
+<p>log_gamma returns the natural logarithm and sign (-1 or +1) of Gamma(x).</p>
+<p>special ifs are: log_gamma(+inf) = +inf log_gamma(0) = +inf log_gamma(-integer) = +inf log_gamma(-inf) = -inf log_gamma(nan) = nan</p>
 
 </section>
 
@@ -656,7 +762,8 @@ y_new <span class="token operator">:=</span> interp<span class="token punctuatio
 			<div class="title"><h2>fn rect <a href="#rect">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fun/fun.v#L181"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">rect</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
-<p>rect implements the rectangular function</p><p><code>rect(x) = boxcar(x;-0.5,0.5)</code></p>
+<p>rect implements the rectangular function</p>
+<p><code>rect(x) = boxcar(x;-0.5,0.5)</code></p>
 
 </section>
 
@@ -712,7 +819,8 @@ y_new <span class="token operator">:=</span> interp<span class="token punctuatio
 			<div class="title"><h2>fn sinc <a href="#sinc">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fun/fun.v#L302"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">sinc</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
-<p>sinc computes the sine cardinal (sinc) function</p><p>sinc(x) = |     1      if x = 0 | sin(x)/x   otherwise</p>
+<p>sinc computes the sine cardinal (sinc) function</p>
+<p>sinc(x) = |     1      if x = 0 | sin(x)/x   otherwise</p>
 
 </section>
 
@@ -768,7 +876,9 @@ y_new <span class="token operator">:=</span> interp<span class="token punctuatio
 			<div class="title"><h2>fn DataInterp.new <a href="#DataInterp.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fun/datainterp.v#L42"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> DataInterp<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>itype <span class="token builtin">string</span><span class="token punctuation">,</span> p <span class="token builtin">int</span><span class="token punctuation">,</span> xx <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> yy <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">&</span>DataInterp</code></pre>
-<p>DataInterp.new creates new interpolator for data point sets xx and yy (with same lengths)</p><p>type -- type of interpolator "lin"  : linear "poly" : polynomial</p><p>p  -- order of interpolator xx -- x-data yy -- y-data</p>
+<p>DataInterp.new creates new interpolator for data point sets xx and yy (with same lengths)</p>
+<p>type -- type of interpolator "lin"  : linear "poly" : polynomial</p>
+<p>p  -- order of interpolator xx -- x-data yy -- y-data</p>
 
 </section>
 
@@ -1026,7 +1136,10 @@ y_new <span class="token operator">:=</span> interp<span class="token punctuatio
 	a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span> <span class="token comment">// a0, a1, A2, ... (if series mode)</span>
 	b <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span> <span class="token comment">// B0, b1, B2, ... (if series mode)</span>
 <span class="token punctuation">}</span></code></pre>
-<p>Sinusoid implements the sinusoid equation:</p><p>y(t) = a0 + c1⋅cos(omega_0⋅t + theta)             [essential-form]</p><p>y(t) = a0 + a1⋅cos(omega_0⋅t) + b1⋅sin(omega_0⋅t)  [basis-form]</p><p>a1 =  c1⋅cos(theta) b1 = -c1⋅sin(theta) theta  = arctan(-b1 / a1)   if a1&lt;0, theta += π c1 = sqrt(a1² + b1²)</p>
+<p>Sinusoid implements the sinusoid equation:</p>
+<p>y(t) = a0 + c1⋅cos(omega_0⋅t + theta)             [essential-form]</p>
+<p>y(t) = a0 + a1⋅cos(omega_0⋅t) + b1⋅sin(omega_0⋅t)  [basis-form]</p>
+<p>a1 =  c1⋅cos(theta) b1 = -c1⋅sin(theta) theta  = arctan(-b1 / a1)   if a1&lt;0, theta += π c1 = sqrt(a1² + b1²)</p>
 
 </section>
 
@@ -1063,7 +1176,7 @@ y_new <span class="token operator">:=</span> interp<span class="token punctuatio
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 6 Jul 2025 01:22:15</div>
+						<div class="footer">Powered by vdoc. Generated on: 2 Aug 2025 05:16:14</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_fun">README</a></li>
 <li class="open"><a href="#atan2p">fn atan2p</a>        <ul>

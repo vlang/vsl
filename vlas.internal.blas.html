@@ -415,7 +415,10 @@
 			<div class="title"><h2>fn drotg <a href="#drotg">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vlas/internal/blas/level1f64.v#L249"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">drotg</span><span class="token punctuation">(</span>a <span class="token builtin">f64</span><span class="token punctuation">,</span> b <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
-<p>drotg computes the plane rotation</p><hr /><p>|  c s |    | a |     | r || -s c |  * | b |   = | 0 |‾    ‾      ‾ ‾       ‾ ‾ where r = ±√(a^2 + b^2) c = a/r, the cosine of the plane rotation s = b/r, the sine of the plane rotation</p><p>Note: There is a discrepancy between the reference implementation and the BLAStechnical manual regarding the sign for r when a or b are zero. drotg agrees with the definition in the manual and other common BLAS implementations.</p>
+<p>drotg computes the plane rotation</p>
+<hr />
+<p>|  c s |    | a |     | r || -s c |  * | b |   = | 0 |‾    ‾      ‾ ‾       ‾ ‾ where r = ±√(a^2 + b^2) c = a/r, the cosine of the plane rotation s = b/r, the sine of the plane rotation</p>
+<p>Note: There is a discrepancy between the reference implementation and the BLAStechnical manual regarding the sign for r when a or b are zero. drotg agrees with the definition in the manual and other common BLAS implementations.</p>
 
 </section>
 
@@ -511,7 +514,9 @@
 			<div class="title"><h2>fn dtbsv <a href="#dtbsv">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vlas/internal/blas/level2f64.v#L1074"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">dtbsv</span><span class="token punctuation">(</span>ul Uplo<span class="token punctuation">,</span> trans_a Transpose<span class="token punctuation">,</span> d Diagonal<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> k <span class="token builtin">int</span><span class="token punctuation">,</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incx <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
-<p>dtbsv solves one of the systems of equations A * x = b   if trans_a == .no_trans Aᵀ * x = b  if trans_a == .trans or trans_a == .conj_trans where A is an n×n triangular band matrix with k+1 diagonals, and x and b are vectors.</p><p>At entry to the function, x contains the values of b, and the result is stored in-place into x.</p><p>No test for singularity or near-singularity is included in this routine. Such tests must be performed before calling this routine.</p>
+<p>dtbsv solves one of the systems of equations A * x = b   if trans_a == .no_trans Aᵀ * x = b  if trans_a == .trans or trans_a == .conj_trans where A is an n×n triangular band matrix with k+1 diagonals, and x and b are vectors.</p>
+<p>At entry to the function, x contains the values of b, and the result is stored in-place into x.</p>
+<p>No test for singularity or near-singularity is included in this routine. Such tests must be performed before calling this routine.</p>
 
 </section>
 
@@ -527,7 +532,9 @@
 			<div class="title"><h2>fn dtpsv <a href="#dtpsv">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vlas/internal/blas/level2f64.v#L1646"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">dtpsv</span><span class="token punctuation">(</span>ul Uplo<span class="token punctuation">,</span> trans_a Transpose<span class="token punctuation">,</span> d Diagonal<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> ap <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incx <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
-<p>dtpsv solves one of the systems of equations A * x = b   if trans_a == .no_trans Aᵀ * x = b  if trans_a == .trans or .conj_trans where A is an n×n triangular matrix in packed format, and x and b are vectors.</p><p>At entry to the function, x contains the values of b, and the result is stored in-place into x.</p><p>No test for singularity or near-singularity is included in this routine. Such tests must be performed before calling this routine.</p>
+<p>dtpsv solves one of the systems of equations A * x = b   if trans_a == .no_trans Aᵀ * x = b  if trans_a == .trans or .conj_trans where A is an n×n triangular matrix in packed format, and x and b are vectors.</p>
+<p>At entry to the function, x contains the values of b, and the result is stored in-place into x.</p>
+<p>No test for singularity or near-singularity is included in this routine. Such tests must be performed before calling this routine.</p>
 
 </section>
 
@@ -543,7 +550,9 @@
 			<div class="title"><h2>fn dtrsv <a href="#dtrsv">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vlas/internal/blas/level2f64.v#L367"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">dtrsv</span><span class="token punctuation">(</span>ul Uplo<span class="token punctuation">,</span> trans_a Transpose<span class="token punctuation">,</span> d Diagonal<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incx <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
-<p>dtrsv solves one of the systems of equations A * x = b   if trans_a == .no_trans Aᵀ * x = b  if trans_a == .trans or .conj_trans where A is an n×n triangular matrix, and x and b are vectors.</p><p>At entry to the function, x contains the values of b, and the result is stored in-place into x.</p><p>No test for singularity or near-singularity is included in this routine. Such tests must be performed before calling this routine.</p>
+<p>dtrsv solves one of the systems of equations A * x = b   if trans_a == .no_trans Aᵀ * x = b  if trans_a == .trans or .conj_trans where A is an n×n triangular matrix, and x and b are vectors.</p>
+<p>At entry to the function, x contains the values of b, and the result is stored in-place into x.</p>
+<p>No test for singularity or near-singularity is included in this routine. Such tests must be performed before calling this routine.</p>
 
 </section>
 
@@ -613,7 +622,7 @@
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 6 Jul 2025 01:22:15</div>
+						<div class="footer">Powered by vdoc. Generated on: 2 Aug 2025 05:16:14</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#Constants">Constants</a></li>
 <li class="open"><a href="#dasum">fn dasum</a>        <ul>
