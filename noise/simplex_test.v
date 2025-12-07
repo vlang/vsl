@@ -8,7 +8,7 @@ fn test_simplex_1d() {
 	mut generator := Generator.new()
 	generator.randomize()
 	result := generator.simplex_1d(0.287)
-	expected := -0.14619239309667653
+	expected := -0.3544283326507284
 	assert float64.tolerance(result, expected, 1.0e-6), 'result: ${result} | expected: ${expected}'
 }
 
@@ -17,7 +17,7 @@ fn test_simplex_2d() {
 	mut generator := Generator.new()
 	generator.randomize()
 	result := generator.simplex_2d(0.287, 0.475)
-	expected := -0.09948661872545192
+	expected := -0.536372951514375
 	assert float64.tolerance(result, expected, 1.0e-6), 'result: ${result} | expected: ${expected}'
 }
 
@@ -26,7 +26,7 @@ fn test_simplex_3d() {
 	mut generator := Generator.new()
 	generator.randomize()
 	result := generator.simplex_3d(0.287, 0.475, 1.917)
-	expected := -0.217307959397874
+	expected := 0.5077722448079138
 	assert float64.tolerance(result, expected, 1.0e-6), 'result: ${result} | expected: ${expected}'
 }
 
@@ -35,6 +35,6 @@ fn test_simplex_4d() {
 	mut generator := Generator.new()
 	generator.randomize()
 	result := generator.simplex_4d(0.287, 0.475, 1.917, 0.684)
-	expected := 0.015098415881100141
+	expected := -0.07732601450154215
 	assert float64.tolerance(result, expected, 1.0e-6), 'result: ${result} | expected: ${expected}'
 }

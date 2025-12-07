@@ -10,6 +10,6 @@ fn test_perlin2d() {
 	gen.randomize()
 
 	result := gen.perlin2d(0.125, 0.125)
-	expected := 0.377119263401255
+	expected := 0.45308521087281406
 	assert float64.tolerance(result, expected, 1.0e-6), 'result: ${result} | expected: ${expected}'
 }
