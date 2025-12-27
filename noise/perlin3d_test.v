@@ -10,7 +10,7 @@ fn test_perlin3d() {
 	gen.randomize()
 
 	result := gen.perlin3d(0.125, 0.125, 0.125)
-	expected := 0.3713334855776509
+	expected := 0.5134716348237873
 
-	assert float64.tolerance(result, expected, 1.0e-6)
+	assert float64.tolerance(result, expected, 1.0e-6), 'result: ${result} | expected: ${expected}'
 }

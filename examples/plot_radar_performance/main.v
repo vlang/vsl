@@ -1,7 +1,6 @@
 module main
 
 import vsl.plot
-import math
 
 fn main() {
 	// Define performance metrics for employee evaluation
@@ -79,7 +78,7 @@ fn main() {
 				tickvals: [0.0, 2.0, 4.0, 6.0, 8.0, 10.0]
 			}
 			angularaxis: plot.AngularAxis{
-				tickvals:  angles[..num_metrics] // Exclude the duplicate first point
+				tickvals:  angles[..num_metrics].clone() // Exclude the duplicate first point
 				ticktext:  metrics
 				direction: 'clockwise'
 				period:    360.0

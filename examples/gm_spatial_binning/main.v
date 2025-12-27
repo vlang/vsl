@@ -88,7 +88,7 @@ fn main() {
 
 	// Analyze bin occupancy
 	mut bin_counts := map[int]int{}
-	for i, particle in particles {
+	for particle in particles {
 		bin_idx := bins_3d.calc_index(particle)
 		bin_counts[bin_idx] = bin_counts[bin_idx] + 1
 	}
@@ -98,7 +98,7 @@ fn main() {
 	mut max_particles := 0
 	mut min_particles := num_particles
 
-	for bin_idx, count in bin_counts {
+	for _, count in bin_counts {
 		if count > 0 {
 			total_occupied_bins++
 			if count > max_particles {

@@ -1,6 +1,5 @@
 module main
 
-import json
 import vsl.plot
 import math
 

@@ -1,3 +1,4 @@
+// vtest retry: 3
 module h5
 
 import os

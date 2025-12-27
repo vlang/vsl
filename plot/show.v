@@ -20,7 +20,7 @@ pub:
 
 // show starts a web server and opens a browser window to display the plot.
 pub fn (p Plot) show(config PlotConfig) ! {
-	$if test ? {
+	$if test {
 		println('Ignoring plot.show() because we are running in test mode')
 	} $else {
 		mut handler := PlotlyHandler{
