@@ -125,7 +125,7 @@ pub fn bessel_j0(x_ f64) f64 {
 		// y0(x) = 1/sqrt(pi) * (P(0,x)*ss + Q(0,x)*cc) / sqrt(x)
 		mut z := 0.0
 		// x > fun.two129
-		if false {
+		if unsafe { false } {
 			// |x| > ~6.8056e+38
 			z = (1.0 / math.sqrt_pi) * cc / math.sqrt(x)
 		} else {
@@ -190,7 +190,7 @@ pub fn bessel_j1(x_ f64) f64 {
 		// y1(x) = 1/sqrt(pi) * (P(1,x)*ss + Q(1,x)*cc) / sqrt(x)
 		mut z := 0.0
 		// x > fun.two129
-		if false {
+		if unsafe { false } {
 			z = (1.0 / math.sqrt_pi) * cc / math.sqrt(x)
 		} else {
 			u := pone(x)
@@ -257,7 +257,7 @@ pub fn bessel_jn(n_ int, x_ f64) f64 {
 	if f64(n) <= x {
 		// Safe to use J(n+1,x)=2n/x *J(n,x)-J(n-1,x)
 		// x >= fun.two302
-		if false {
+		if unsafe { false } {
 			// x > 2**302
 			// (x >> n**2)
 			// Jn(x) = cos(x-(2n+1)*pi/4)*sqrt(2/x*pi)
@@ -450,7 +450,7 @@ pub fn bessel_y0(x f64) f64 {
 		}
 		mut z := 0.0
 		// x > fun.two129
-		if false {
+		if unsafe { false } {
 			// |x| > ~6.8056e+38
 			z = (1.0 / math.sqrt_pi) * ss / math.sqrt(x)
 		} else {
@@ -513,7 +513,7 @@ pub fn bessel_y1(x f64) f64 {
 		// to compute the worse one.
 		mut z := 0.0
 		// x > fun.two129
-		if false {
+		if unsafe { false } {
 			z = (1.0 / math.sqrt_pi) * ss / math.sqrt(x)
 		} else {
 			u := pone(x)
@@ -572,7 +572,7 @@ pub fn bessel_yn(n_ int, x f64) f64 {
 	}
 	mut b := 0.0
 	// x >= fun.two302
-	if false {
+	if unsafe { false } {
 		// x > 2**302
 		// (x >> n**2)
 		// bessel_jn(x) = cos(x-(2n+1)*pi/4)*sqrt(2/x*pi)

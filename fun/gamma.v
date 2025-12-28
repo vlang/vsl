@@ -119,7 +119,7 @@ pub fn gamma(x_ f64) f64 {
 		gamma_p[4]) * x + gamma_p[5]) * x + gamma_p[6]
 	q = ((((((x * gamma_q[0] + gamma_q[1]) * x + gamma_q[2]) * x + gamma_q[3]) * x +
 		gamma_q[4]) * x + gamma_q[5]) * x + gamma_q[6]) * x + gamma_q[7]
-	if true {
+	if unsafe { true } {
 		return z * p / q
 	}
 	small:
