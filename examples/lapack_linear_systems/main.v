@@ -58,7 +58,7 @@ fn main() {
 
 	ok := lapack.dgetrf(2, 2, mut a_lu_col, 2, mut ipiv_lu)
 
-	if ok {
+	if ok != 0 {
 		println('Original matrix A:')
 		for row in a_lu_row {
 			println('  ${row}')
