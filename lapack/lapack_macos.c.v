@@ -1,6 +1,6 @@
 module lapack
 
-import vsl.vlas.internal.blas
+import vsl.blas
 
 // double LAPACKE_dlange( int matrix_order, char norm, lapack_int m,
 //                        lapack_int n, const double* a, lapack_int lda );
