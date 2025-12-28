@@ -1,0 +1,1063 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="x-ua-compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>blas | vdoc</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&display=swap"
+			rel="stylesheet"
+		/>
+		<link
+			href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+		<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+		<link rel="manifest" href="site.webmanifest" />
+		<link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5" />
+		<meta name="msapplication-TileColor" content="#da532c" />
+		<meta name="theme-color" content="#ffffff" />
+		<link rel="stylesheet" href="doc.css" />
+		<link rel="stylesheet" href="normalize.css" />
+		<script src="dark-mode.js"></script>
+	</head>
+
+	<body>
+		<div><a id="skip-to-content-link" href="#main-content">Skip to content</a></div>
+		<div id="page">
+			<header class="doc-nav hidden">
+				<div class="heading-container">
+					<div class="heading">
+						<div class="info">
+							<div class="module">vsl</div>
+							<div class="toggle-version-container">
+								<span>0.1.50 fa4151b</span>
+								<div
+									id="dark-mode-toggle"
+									role="switch"
+									aria-checked="false"
+									aria-label="Toggle dark mode"
+								>
+									<svg xmlns="http://www.w3.org/2000/svg" class="light-icon" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.7l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-5c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-1 16.95h2V19.5h-2v2.95zm-7.45-3.91l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8z"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" class="dark-icon" enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24"><g><rect fill="none" height="24" width="24"/></g><g><g><g><path d="M11.1,12.08C8.77,7.57,10.6,3.6,11.63,2.01C6.27,2.2,1.98,6.59,1.98,12c0,0.14,0.02,0.28,0.02,0.42 C2.62,12.15,3.29,12,4,12c1.66,0,3.18,0.83,4.1,2.15C9.77,14.63,11,16.17,11,18c0,1.52-0.87,2.83-2.12,3.51 c0.98,0.32,2.03,0.5,3.11,0.5c3.5,0,6.58-1.8,8.37-4.52C18,17.72,13.38,16.52,11.1,12.08z"/></g><path d="M7,16l-0.18,0C6.4,14.84,5.3,14,4,14c-1.66,0-3,1.34-3,3s1.34,3,3,3c0.62,0,2.49,0,3,0c1.1,0,2-0.9,2-2 C9,16.9,8.1,16,7,16z"/></g></g></svg>
+
+								</div>
+							</div>
+							<svg xmlns="http://www.w3.org/2000/svg" id="toggle-menu" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+
+						</div>
+						<div id="search">
+							<input type="text" placeholder="Search... (beta)" autocomplete="off" />
+						</div>
+					</div>
+				</div>
+				<nav class="search hidden"></nav>
+				<nav class="content hidden">
+					<ul>
+						<li class="open">
+<div class="menu-row"><a href="./index.html">README</a></div>
+</li>
+<li class="open active">
+<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="./blas.html">blas</a></div>
+<ul>
+<li><a href="./blas.blas64.html">blas64</a></li>
+</ul>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./consts.html">consts</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./deriv.html">deriv</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./diff.html">diff</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./dist.html">dist</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./easings.html">easings</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./errors.html">errors</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./fft.html">fft</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./fit.html">fit</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="#">float</a></div>
+<ul>
+<li><a href="./float.float32.html">float32</a></li>
+<li><a href="./float.float64.html">float64</a></li>
+</ul>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./fun.html">fun</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./func.html">func</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./gm.html">gm</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./graph.html">graph</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="#">inout</a></div>
+<ul>
+<li><a href="./inout.h5.html">h5</a></li>
+</ul>
+</li>
+<li class="open">
+<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="#">internal</a></div>
+<ul>
+<li><a href="./internal.prec.html">prec</a></li>
+</ul>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./iter.html">iter</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./la.html">la</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="./lapack.html">lapack</a></div>
+<ul>
+<li><a href="./lapack.lapack64.html">lapack64</a></li>
+</ul>
+</li>
+<li class="open">
+<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="./ml.html">ml</a></div>
+<ul>
+<li><a href="./ml.nlp.html">nlp</a></li>
+</ul>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./mpi.html">mpi</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./noise.html">noise</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./plot.html">plot</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./poly.html">poly</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./prime.html">prime</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./quaternion.html">quaternion</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./roots.html">roots</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./util.html">util</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="./vcl.html">vcl</a></div>
+<ul>
+<li><a href="./vcl.internal.dl.html">internal.dl</a></li>
+</ul>
+</li>
+
+					</ul>
+				</nav>
+			</header>
+			<div class="doc-scrollview" tabindex="-1" id="main-content">
+				<div class="doc-container">
+					<div class="doc-content">
+								<section id="readme_blas" class="doc-node">
+			<div class="title"><h1> blas <a href="#readme_blas">#</a></h1></div>
+<h1 id="the-v-basic-linear-algebra-system">The V Basic Linear Algebra System</h1>
+<p>This package implements Basic Linear Algebra System (BLAS) routines in V.</p>
+<table>
+<thead>
+<tr>
+<th>Backend</th>
+<th>Description</th>
+<th>Status</th>
+<th>Compilation Flags</th></tr></thead>
+<tbody>
+<tr>
+<td>BLAS</td>
+<td>Pure V implementation</td>
+<td>Stable</td>
+<td><code>NONE</code></td></tr>
+<tr>
+<td>OpenBLAS</td>
+<td>OpenBLAS is an optimized BLAS library based on <a href="https://github.com/xianyi/OpenBLAS">https://github.com/xianyi/OpenBLAS</a>. Check the section <a href="#openblas-backend">OpenBLAS Backend</a> for more information.</td>
+<td>Stable</td>
+<td><code>-d vsl_blas_cblas</code></td></tr></tbody></table>
+<p>Therefore, its routines are a little more <em>lower level</em> than the ones in the package <code>vsl.la</code>.</p>
+<h2 id="openblas-backend">OpenBLAS Backend</h2>
+<p>We provide a backend for the OpenBLAS library. This backend is probably the fastest one for all platforms but it requires the installation of the OpenBLAS library.</p>
+<p>Use the compilation flag <code>-d vsl_blas_cblas</code> to use the OpenBLAS backend instead of the pure V implementation and make sure that the OpenBLAS library is installed in your system.</p>
+<p>Check the section below for more information about installing the OpenBLAS library.</p><details> <summary>Install dependencies</summary>
+
+<h3 id="homebrew-macos">Homebrew (macOS)</h3>
+<pre><code class="language-sh">brew install openblas</code></pre>
+<h3 id="debianubuntu-gnu-linux">Debian/Ubuntu GNU Linux</h3>
+<p><code>libopenblas-dev</code> is not needed when using the pure V backend.</p>
+<pre><code class="language-sh">sudo apt<span class="token operator">-</span>get install <span class="token operator">-</span>y <span class="token operator">--</span>no<span class="token operator">-</span>install<span class="token operator">-</span>recommends</code></pre>
+<h3 id="arch-linuxmanjaro-gnu-linux">Arch Linux/Manjaro GNU Linux</h3>
+<p>The best way of installing OpenBLAS is using <a href="https://archlinux.org/packages/extra/x86_64/blas-openblas/">blas-openblas</a>.</p>
+<pre><code class="language-sh">sudo pacman <span class="token operator">-</span>S blas<span class="token operator">-</span>openblas</code></pre></details>
+
+</section>
+
+		<section id="cm_daxpy" class="doc-node">
+			<div class="title"><h2>fn cm_daxpy <a href="#cm_daxpy">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/colmajor.v#L16"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">cm_daxpy</span><span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incx <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> y <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incy <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="cm_ddot" class="doc-node">
+			<div class="title"><h2>fn cm_ddot <a href="#cm_ddot">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/colmajor.v#L6"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">cm_ddot</span><span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">,</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incx <span class="token builtin">int</span><span class="token punctuation">,</span> y <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incy <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+
+
+</section>
+
+		<section id="cm_dgemm" class="doc-node">
+			<div class="title"><h2>fn cm_dgemm <a href="#cm_dgemm">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/colmajor.v#L27"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">cm_dgemm</span><span class="token punctuation">(</span>trans_a Transpose<span class="token punctuation">,</span> trans_b Transpose<span class="token punctuation">,</span> m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> k <span class="token builtin">int</span><span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> b <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> ldb <span class="token builtin">int</span><span class="token punctuation">,</span> beta <span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> c <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> ldc <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="cm_dgemv" class="doc-node">
+			<div class="title"><h2>fn cm_dgemv <a href="#cm_dgemv">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/colmajor.v#L21"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">cm_dgemv</span><span class="token punctuation">(</span>trans Transpose<span class="token punctuation">,</span> m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incx <span class="token builtin">int</span><span class="token punctuation">,</span> beta <span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> y <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incy <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="cm_dscal" class="doc-node">
+			<div class="title"><h2>fn cm_dscal <a href="#cm_dscal">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/colmajor.v#L11"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">cm_dscal</span><span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incx <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="cm_dsyrk" class="doc-node">
+			<div class="title"><h2>fn cm_dsyrk <a href="#cm_dsyrk">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/colmajor.v#L33"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">cm_dsyrk</span><span class="token punctuation">(</span>uplo Uplo<span class="token punctuation">,</span> trans Transpose<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> k <span class="token builtin">int</span><span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> beta <span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> c <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> ldc <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="cm_dtrsm" class="doc-node">
+			<div class="title"><h2>fn cm_dtrsm <a href="#cm_dtrsm">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/colmajor.v#L39"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">cm_dtrsm</span><span class="token punctuation">(</span>side Side<span class="token punctuation">,</span> uplo Uplo<span class="token punctuation">,</span> trans_a Transpose<span class="token punctuation">,</span> diag Diagonal<span class="token punctuation">,</span> m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> b <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> ldb <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="col_major_complex_to_slice" class="doc-node">
+			<div class="title"><h2>fn col_major_complex_to_slice <a href="#col_major_complex_to_slice">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/conversions.v#L151"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">col_major_complex_to_slice</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> data <span class="token punctuation">[</span><span class="token punctuation">]</span>complex<span class="token punctuation">.</span>Complex<span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span>complex<span class="token punctuation">.</span>Complex</code></pre>
+<p>col_major_complex_to_slice converts col-major matrix to nested slice</p>
+
+</section>
+
+		<section id="col_major_to_slice" class="doc-node">
+			<div class="title"><h2>fn col_major_to_slice <a href="#col_major_to_slice">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/conversions.v#L60"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">col_major_to_slice</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>col_major_to_slice converts col-major matrix to nested slice</p>
+
+</section>
+
+		<section id="dasum" class="doc-node">
+			<div class="title"><h2>fn dasum <a href="#dasum">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/oblas_notd_vsl_blas_cblas.v#L18"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dasum</span><span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">,</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incx <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>dasum computes the sum of the absolute values of elements in a vector.</p>
+
+</section>
+
+		<section id="daxpy" class="doc-node">
+			<div class="title"><h2>fn daxpy <a href="#daxpy">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/oblas_notd_vsl_blas_cblas.v#L30"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">daxpy</span><span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incx <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> y <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incy <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>daxpy computes y := alpha * x + y.</p>
+
+</section>
+
+		<section id="dcopy" class="doc-node">
+			<div class="title"><h2>fn dcopy <a href="#dcopy">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/oblas_notd_vsl_blas_cblas.v#L36"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dcopy</span><span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">,</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incx <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> y <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incy <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>dcopy copies a vector x to a vector y.</p>
+
+</section>
+
+		<section id="ddot" class="doc-node">
+			<div class="title"><h2>fn ddot <a href="#ddot">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/oblas_notd_vsl_blas_cblas.v#L12"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">ddot</span><span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">,</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incx <span class="token builtin">int</span><span class="token punctuation">,</span> y <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incy <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>ddot computes the dot product of two vectors.</p>
+
+</section>
+
+		<section id="dgbmv" class="doc-node">
+			<div class="title"><h2>fn dgbmv <a href="#dgbmv">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/oblas_notd_vsl_blas_cblas.v#L118"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dgbmv</span><span class="token punctuation">(</span>trans_a Transpose<span class="token punctuation">,</span> m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> kl <span class="token builtin">int</span><span class="token punctuation">,</span> ku <span class="token builtin">int</span><span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incx <span class="token builtin">int</span><span class="token punctuation">,</span> beta <span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> y <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incy <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>dgbmv performs a matrix-vector multiplication with a band matrix.</p>
+
+</section>
+
+		<section id="dgemm" class="doc-node">
+			<div class="title"><h2>fn dgemm <a href="#dgemm">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/oblas_notd_vsl_blas_cblas.v#L111"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dgemm</span><span class="token punctuation">(</span>trans_a Transpose<span class="token punctuation">,</span> trans_b Transpose<span class="token punctuation">,</span> m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> k <span class="token builtin">int</span><span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> b <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> ldb <span class="token builtin">int</span><span class="token punctuation">,</span> beta <span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> cc <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> ldc <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>dgemm performs matrix-matrix multiplication. Input matrices are expected in row-major format (as used by la/ module and tests). The Pure V backend (blas64) also expects row-major format, so no conversion is needed.</p>
+
+</section>
+
+		<section id="dgemv" class="doc-node">
+			<div class="title"><h2>fn dgemv <a href="#dgemv">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/oblas_notd_vsl_blas_cblas.v#L68"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dgemv</span><span class="token punctuation">(</span>trans Transpose<span class="token punctuation">,</span> m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incx <span class="token builtin">int</span><span class="token punctuation">,</span> beta <span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> y <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incy <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>dgemv performs matrix-vector multiplication. Input matrices are expected in row-major format (as used by la/ module and tests). The Pure V backend (blas64) also expects row-major format, so no conversion is needed.</p>
+
+</section>
+
+		<section id="dger" class="doc-node">
+			<div class="title"><h2>fn dger <a href="#dger">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/oblas_notd_vsl_blas_cblas.v#L77"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dger</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incx <span class="token builtin">int</span><span class="token punctuation">,</span> y <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incy <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>dger performs the rank-1 update of a matrix. Input matrix is expected in row-major format (as used by la/ module and tests). The Pure V backend (blas64) also expects row-major format, so no conversion is needed.</p>
+
+</section>
+
+		<section id="dnrm2" class="doc-node">
+			<div class="title"><h2>fn dnrm2 <a href="#dnrm2">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/oblas_notd_vsl_blas_cblas.v#L24"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dnrm2</span><span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">,</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incx <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>dnrm2 computes the Euclidean norm of a vector.</p>
+
+</section>
+
+		<section id="drot" class="doc-node">
+			<div class="title"><h2>fn drot <a href="#drot">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/oblas_notd_vsl_blas_cblas.v#L48"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">drot</span><span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incx <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> y <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incy <span class="token builtin">int</span><span class="token punctuation">,</span> c <span class="token builtin">f64</span><span class="token punctuation">,</span> s <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+<p>drot applies a plane rotation to points in the plane.</p>
+
+</section>
+
+		<section id="dsbmv" class="doc-node">
+			<div class="title"><h2>fn dsbmv <a href="#dsbmv">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/oblas_notd_vsl_blas_cblas.v#L131"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dsbmv</span><span class="token punctuation">(</span>uplo Uplo<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> k <span class="token builtin">int</span><span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incx <span class="token builtin">int</span><span class="token punctuation">,</span> beta <span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> y <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incy <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>dsbmv performs a matrix-vector multiplication with a symmetric band matrix.</p>
+
+</section>
+
+		<section id="dscal" class="doc-node">
+			<div class="title"><h2>fn dscal <a href="#dscal">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/oblas_notd_vsl_blas_cblas.v#L54"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dscal</span><span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incx <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>dscal scales a vector by a constant.</p>
+
+</section>
+
+		<section id="dspmv" class="doc-node">
+			<div class="title"><h2>fn dspmv <a href="#dspmv">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/oblas_notd_vsl_blas_cblas.v#L165"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dspmv</span><span class="token punctuation">(</span>uplo Uplo<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> ap <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incx <span class="token builtin">int</span><span class="token punctuation">,</span> beta <span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> y <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incy <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>dspmv performs a matrix-vector multiplication with a symmetric packed matrix.</p>
+
+</section>
+
+		<section id="dspr" class="doc-node">
+			<div class="title"><h2>fn dspr <a href="#dspr">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/oblas_notd_vsl_blas_cblas.v#L171"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dspr</span><span class="token punctuation">(</span>uplo Uplo<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incx <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> ap <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+<p>dspr performs a symmetric rank-1 update for a packed matrix.</p>
+
+</section>
+
+		<section id="dspr2" class="doc-node">
+			<div class="title"><h2>fn dspr2 <a href="#dspr2">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/oblas_notd_vsl_blas_cblas.v#L177"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dspr2</span><span class="token punctuation">(</span>uplo Uplo<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incx <span class="token builtin">int</span><span class="token punctuation">,</span> y <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incy <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> ap <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+<p>dspr2 performs a symmetric rank-2 update for a packed matrix.</p>
+
+</section>
+
+		<section id="dswap" class="doc-node">
+			<div class="title"><h2>fn dswap <a href="#dswap">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/oblas_notd_vsl_blas_cblas.v#L42"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dswap</span><span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incx <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> y <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incy <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>dswap swaps the elements of two vectors.</p>
+
+</section>
+
+		<section id="dsymv" class="doc-node">
+			<div class="title"><h2>fn dsymv <a href="#dsymv">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/oblas_notd_vsl_blas_cblas.v#L125"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dsymv</span><span class="token punctuation">(</span>uplo Uplo<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incx <span class="token builtin">int</span><span class="token punctuation">,</span> beta <span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> y <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incy <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>dsymv performs a matrix-vector multiplication for a symmetric matrix.</p>
+
+</section>
+
+		<section id="dsyr" class="doc-node">
+			<div class="title"><h2>fn dsyr <a href="#dsyr">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/oblas_notd_vsl_blas_cblas.v#L97"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dsyr</span><span class="token punctuation">(</span>uplo Uplo<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incx <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>dsyr performs a symmetric rank-1 update of a matrix.</p>
+
+</section>
+
+		<section id="dsyr2" class="doc-node">
+			<div class="title"><h2>fn dsyr2 <a href="#dsyr2">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/oblas_notd_vsl_blas_cblas.v#L103"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dsyr2</span><span class="token punctuation">(</span>uplo Uplo<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incx <span class="token builtin">int</span><span class="token punctuation">,</span> y <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incy <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>dsyr2 performs a symmetric rank-2 update of a matrix.</p>
+
+</section>
+
+		<section id="dsyr2k" class="doc-node">
+			<div class="title"><h2>fn dsyr2k <a href="#dsyr2k">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/oblas_notd_vsl_blas_cblas.v#L190"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dsyr2k</span><span class="token punctuation">(</span>uplo Uplo<span class="token punctuation">,</span> trans_a Transpose<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> k <span class="token builtin">int</span><span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> b <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> ldb <span class="token builtin">int</span><span class="token punctuation">,</span> beta <span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> c <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> ldc <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>dsyr2k performs a symmetric rank-2k update.</p>
+
+</section>
+
+		<section id="dsyrk" class="doc-node">
+			<div class="title"><h2>fn dsyrk <a href="#dsyrk">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/oblas_notd_vsl_blas_cblas.v#L183"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dsyrk</span><span class="token punctuation">(</span>uplo Uplo<span class="token punctuation">,</span> trans_a Transpose<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> k <span class="token builtin">int</span><span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> beta <span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> c <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> ldc <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>dsyrk performs a symmetric rank-k update.</p>
+
+</section>
+
+		<section id="dtbmv" class="doc-node">
+			<div class="title"><h2>fn dtbmv <a href="#dtbmv">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/oblas_notd_vsl_blas_cblas.v#L137"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dtbmv</span><span class="token punctuation">(</span>uplo Uplo<span class="token punctuation">,</span> trans_a Transpose<span class="token punctuation">,</span> diag Diagonal<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> k <span class="token builtin">int</span><span class="token punctuation">,</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incx <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>dtbmv performs a matrix-vector multiplication with a triangular band matrix.</p>
+
+</section>
+
+		<section id="dtbsv" class="doc-node">
+			<div class="title"><h2>fn dtbsv <a href="#dtbsv">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/oblas_notd_vsl_blas_cblas.v#L144"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dtbsv</span><span class="token punctuation">(</span>uplo Uplo<span class="token punctuation">,</span> trans_a Transpose<span class="token punctuation">,</span> diag Diagonal<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> k <span class="token builtin">int</span><span class="token punctuation">,</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incx <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>dtbsv solves a system of linear equations with a triangular band matrix.</p>
+
+</section>
+
+		<section id="dtpmv" class="doc-node">
+			<div class="title"><h2>fn dtpmv <a href="#dtpmv">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/oblas_notd_vsl_blas_cblas.v#L151"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dtpmv</span><span class="token punctuation">(</span>uplo Uplo<span class="token punctuation">,</span> trans_a Transpose<span class="token punctuation">,</span> diag Diagonal<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> ap <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incx <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>dtpmv performs a matrix-vector multiplication with a triangular packed matrix.</p>
+
+</section>
+
+		<section id="dtpsv" class="doc-node">
+			<div class="title"><h2>fn dtpsv <a href="#dtpsv">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/oblas_notd_vsl_blas_cblas.v#L158"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dtpsv</span><span class="token punctuation">(</span>uplo Uplo<span class="token punctuation">,</span> trans_a Transpose<span class="token punctuation">,</span> diag Diagonal<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> ap <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incx <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>dtpsv solves a system of linear equations with a triangular packed matrix.</p>
+
+</section>
+
+		<section id="dtrmm" class="doc-node">
+			<div class="title"><h2>fn dtrmm <a href="#dtrmm">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/oblas_notd_vsl_blas_cblas.v#L199"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dtrmm</span><span class="token punctuation">(</span>side Side<span class="token punctuation">,</span> uplo Uplo<span class="token punctuation">,</span> trans Transpose<span class="token punctuation">,</span> diag Diagonal<span class="token punctuation">,</span> m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> b <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> ldb <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>dtrmm performs triangular matrix multiplication. Input matrices are expected in row-major format (as used by la/ module and tests). blas64.dtrmm uses row-major access pattern but validates ldb &gt;= m (inconsistent). We pass matrices directly but ensure ldb &gt;= m for validation.</p>
+
+</section>
+
+		<section id="dtrmv" class="doc-node">
+			<div class="title"><h2>fn dtrmv <a href="#dtrmv">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/oblas_notd_vsl_blas_cblas.v#L90"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dtrmv</span><span class="token punctuation">(</span>uplo Uplo<span class="token punctuation">,</span> trans_a Transpose<span class="token punctuation">,</span> diag Diagonal<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incx <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>dtrmv performs matrix-vector operations using a triangular matrix.</p>
+
+</section>
+
+		<section id="dtrsm" class="doc-node">
+			<div class="title"><h2>fn dtrsm <a href="#dtrsm">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/oblas_notd_vsl_blas_cblas.v#L238"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dtrsm</span><span class="token punctuation">(</span>side Side<span class="token punctuation">,</span> uplo Uplo<span class="token punctuation">,</span> trans Transpose<span class="token punctuation">,</span> diag Diagonal<span class="token punctuation">,</span> m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> b <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> ldb <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>dtrsm solves triangular system of equations with multiple right-hand sides.</p>
+
+</section>
+
+		<section id="dtrsv" class="doc-node">
+			<div class="title"><h2>fn dtrsv <a href="#dtrsv">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/oblas_notd_vsl_blas_cblas.v#L83"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dtrsv</span><span class="token punctuation">(</span>uplo Uplo<span class="token punctuation">,</span> trans_a Transpose<span class="token punctuation">,</span> diag Diagonal<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incx <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>dtrsv solves a system of linear equations with a triangular matrix.</p>
+
+</section>
+
+		<section id="eigenvecs_build" class="doc-node">
+			<div class="title"><h2>fn eigenvecs_build <a href="#eigenvecs_build">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/conversions.v#L340"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">eigenvecs_build</span><span class="token punctuation">(</span><span class="token keyword">mut</span> vv <span class="token punctuation">[</span><span class="token punctuation">]</span>complex<span class="token punctuation">.</span>Complex<span class="token punctuation">,</span> wr <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> wi <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> v <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+<p>eigenvecs_build builds complex eigenvectros created by Dgeev function</p>
+<p><strong>input:</strong> <code>wr</code>, <code>wi</code>: real and imag parts of eigenvalues. <code>v</code>: left or right eigenvectors from Dgeev.</p>
+<p><strong>output:</strong> <code>vv</code>: complex version of left or right eigenvector [pre-allocated].</p>
+<p><em><strong>NOTE</strong>: (no checks made)</em>.</p>
+<p><code>n = wr.len = wi.len = v.len</code> <code>2 * n = vv.len</code></p>
+
+</section>
+
+		<section id="eigenvecs_build_both" class="doc-node">
+			<div class="title"><h2>fn eigenvecs_build_both <a href="#eigenvecs_build_both">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/conversions.v#L382"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">eigenvecs_build_both</span><span class="token punctuation">(</span><span class="token keyword">mut</span> vvl <span class="token punctuation">[</span><span class="token punctuation">]</span>complex<span class="token punctuation">.</span>Complex<span class="token punctuation">,</span> <span class="token keyword">mut</span> vvr <span class="token punctuation">[</span><span class="token punctuation">]</span>complex<span class="token punctuation">.</span>Complex<span class="token punctuation">,</span> wr <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> wi <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> vl <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> vr <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+<p>eigenvecs_build_both builds complex left and right eigenvectros created by Dgeev function</p>
+<p><strong>input:</strong> <code>wr</code>, <code>wi</code>:real and imag parts of eigenvalues. <code>vl</code>, <code>vr</code>:left and right eigenvectors from Dgeev.</p>
+<p><strong>output:</strong> <code>vvl</code>, <code>vvr</code>:complex version of left and right eigenvectors [pre-allocated].</p>
+<p><em><strong>NOTE</strong>: (no checks made)</em>.</p>
+<p><code>n = wr.len = wi.len = vl.len = vr.len</code> <code>2 * n = vvl.len = vvr.len</code></p>
+
+</section>
+
+		<section id="extract_col" class="doc-node">
+			<div class="title"><h2>fn extract_col <a href="#extract_col">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/conversions.v#L301"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">extract_col</span><span class="token punctuation">(</span>j <span class="token builtin">int</span><span class="token punctuation">,</span> m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>extract_col extracts j column from (m,n) col-major matrix</p>
+
+</section>
+
+		<section id="extract_col_complex" class="doc-node">
+			<div class="title"><h2>fn extract_col_complex <a href="#extract_col_complex">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/conversions.v#L319"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">extract_col_complex</span><span class="token punctuation">(</span>j <span class="token builtin">int</span><span class="token punctuation">,</span> m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span>complex<span class="token punctuation">.</span>Complex<span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>complex<span class="token punctuation">.</span>Complex</code></pre>
+<p>extract_col_complex extracts j column from (m,n) col-major matrix (complex version)</p>
+
+</section>
+
+		<section id="extract_row" class="doc-node">
+			<div class="title"><h2>fn extract_row <a href="#extract_row">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/conversions.v#L292"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">extract_row</span><span class="token punctuation">(</span>i <span class="token builtin">int</span><span class="token punctuation">,</span> m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>extract_row extracts i row from (m,n) col-major matrix</p>
+
+</section>
+
+		<section id="extract_row_complex" class="doc-node">
+			<div class="title"><h2>fn extract_row_complex <a href="#extract_row_complex">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/conversions.v#L310"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">extract_row_complex</span><span class="token punctuation">(</span>i <span class="token builtin">int</span><span class="token punctuation">,</span> m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span>complex<span class="token punctuation">.</span>Complex<span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>complex<span class="token punctuation">.</span>Complex</code></pre>
+<p>extract_row_complex extracts i row from (m,n) col-major matrix (complex version)</p>
+
+</section>
+
+		<section id="from_blas64_diagonal" class="doc-node">
+			<div class="title"><h2>fn from_blas64_diagonal <a href="#from_blas64_diagonal">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/conversions.v#L484"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">from_blas64_diagonal</span><span class="token punctuation">(</span>diag blas64<span class="token punctuation">.</span>Diagonal<span class="token punctuation">)</span> Diagonal</code></pre>
+<p>Convert blas64.Diagonal to VSL Diagonal</p>
+
+</section>
+
+		<section id="from_blas64_layout" class="doc-node">
+			<div class="title"><h2>fn from_blas64_layout <a href="#from_blas64_layout">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/conversions.v#L430"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">from_blas64_layout</span><span class="token punctuation">(</span>layout blas64<span class="token punctuation">.</span>MemoryLayout<span class="token punctuation">)</span> MemoryLayout</code></pre>
+<p>Convert blas64.MemoryLayout to VSL MemoryLayout</p>
+
+</section>
+
+		<section id="from_blas64_side" class="doc-node">
+			<div class="title"><h2>fn from_blas64_side <a href="#from_blas64_side">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/conversions.v#L500"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">from_blas64_side</span><span class="token punctuation">(</span>side blas64<span class="token punctuation">.</span>Side<span class="token punctuation">)</span> Side</code></pre>
+<p>Convert blas64.Side to VSL Side</p>
+
+</section>
+
+		<section id="from_blas64_transpose" class="doc-node">
+			<div class="title"><h2>fn from_blas64_transpose <a href="#from_blas64_transpose">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/conversions.v#L448"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">from_blas64_transpose</span><span class="token punctuation">(</span>trans blas64<span class="token punctuation">.</span>Transpose<span class="token punctuation">)</span> Transpose</code></pre>
+<p>Convert blas64.Transpose to VSL Transpose</p>
+
+</section>
+
+		<section id="from_blas64_uplo" class="doc-node">
+			<div class="title"><h2>fn from_blas64_uplo <a href="#from_blas64_uplo">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/conversions.v#L467"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">from_blas64_uplo</span><span class="token punctuation">(</span>uplo blas64<span class="token punctuation">.</span>Uplo<span class="token punctuation">)</span> Uplo</code></pre>
+<p>Convert blas64.Uplo to VSL Uplo</p>
+
+</section>
+
+		<section id="get_join_complex" class="doc-node">
+			<div class="title"><h2>fn get_join_complex <a href="#get_join_complex">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/conversions.v#L252"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">get_join_complex</span><span class="token punctuation">(</span>v_real <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> v_imag <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>complex<span class="token punctuation">.</span>Complex</code></pre>
+<p>get_join_complex joins real and imag parts of array</p>
+
+</section>
+
+		<section id="get_split_complex" class="doc-node">
+			<div class="title"><h2>fn get_split_complex <a href="#get_split_complex">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/conversions.v#L261"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">get_split_complex</span><span class="token punctuation">(</span>v <span class="token punctuation">[</span><span class="token punctuation">]</span>complex<span class="token punctuation">.</span>Complex<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+<p>get_split_complex splits real and imag parts of array</p>
+
+</section>
+
+		<section id="idamax" class="doc-node">
+			<div class="title"><h2>fn idamax <a href="#idamax">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/oblas_notd_vsl_blas_cblas.v#L60"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">idamax</span><span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">,</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incx <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>idamax finds the index of the element with the maximum absolute value.</p>
+
+</section>
+
+		<section id="join_complex" class="doc-node">
+			<div class="title"><h2>fn join_complex <a href="#join_complex">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/conversions.v#L272"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">join_complex</span><span class="token punctuation">(</span>v_real <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> v_imag <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>complex<span class="token punctuation">.</span>Complex</code></pre>
+<p>join_complex joins real and imag parts of array</p>
+
+</section>
+
+		<section id="print_col_major" class="doc-node">
+			<div class="title"><h2>fn print_col_major <a href="#print_col_major">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/conversions.v#L71"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">print_col_major</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> nfmt_ <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span></code></pre>
+<p>print_col_major prints matrix (without commas or brackets)</p>
+
+</section>
+
+		<section id="print_col_major_complex" class="doc-node">
+			<div class="title"><h2>fn print_col_major_complex <a href="#print_col_major_complex">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/conversions.v#L163"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">print_col_major_complex</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> data <span class="token punctuation">[</span><span class="token punctuation">]</span>complex<span class="token punctuation">.</span>Complex<span class="token punctuation">,</span> nfmt_r_ <span class="token builtin">string</span><span class="token punctuation">,</span> nfmt_i_ <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span></code></pre>
+<p>print_col_major_complex prints matrix (without commas or brackets). <em><strong>NOTE</strong>: if non-empty, nfmt_i must have '+' e.g. %+g</em></p>
+
+</section>
+
+		<section id="print_col_major_complex_v" class="doc-node">
+			<div class="title"><h2>fn print_col_major_complex_v <a href="#print_col_major_complex_v">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/conversions.v#L193"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">print_col_major_complex_v</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> data <span class="token punctuation">[</span><span class="token punctuation">]</span>complex<span class="token punctuation">.</span>Complex<span class="token punctuation">,</span> nfmt_r_ <span class="token builtin">string</span><span class="token punctuation">,</span> nfmt_i_ <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span></code></pre>
+<p>print_col_major_complex_v prints matrix in v format <em><strong>NOTE</strong>: if non-empty, nfmt_i must have '+' e.g. %+g</em></p>
+
+</section>
+
+		<section id="print_col_major_omplex_py" class="doc-node">
+			<div class="title"><h2>fn print_col_major_omplex_py <a href="#print_col_major_omplex_py">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/conversions.v#L223"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">print_col_major_omplex_py</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> data <span class="token punctuation">[</span><span class="token punctuation">]</span>complex<span class="token punctuation">.</span>Complex<span class="token punctuation">,</span> nfmt_r_ <span class="token builtin">string</span><span class="token punctuation">,</span> nfmt_i_ <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span></code></pre>
+<p>print_col_major_omplex_py prints matrix in Python format <em><strong>NOTE</strong>: if non-empty, nfmt_i must have '+' e.g. %+g</em></p>
+
+</section>
+
+		<section id="print_col_major_py" class="doc-node">
+			<div class="title"><h2>fn print_col_major_py <a href="#print_col_major_py">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/conversions.v#L110"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">print_col_major_py</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> nfmt_ <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span></code></pre>
+<p>print_col_major_py prints matrix in Python format</p>
+
+</section>
+
+		<section id="print_col_major_v" class="doc-node">
+			<div class="title"><h2>fn print_col_major_v <a href="#print_col_major_v">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/conversions.v#L89"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">print_col_major_v</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> nfmt_ <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">string</span></code></pre>
+<p>print_col_major_v prints matrix in v format</p>
+
+</section>
+
+		<section id="set_num_threads" class="doc-node">
+			<div class="title"><h2>fn set_num_threads <a href="#set_num_threads">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/oblas_notd_vsl_blas_cblas.v#L8"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">set_num_threads</span><span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>set_num_threads sets the number of threads in BLAS</p>
+
+</section>
+
+		<section id="slice_to_col_major" class="doc-node">
+			<div class="title"><h2>fn slice_to_col_major <a href="#slice_to_col_major">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/conversions.v#L45"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">slice_to_col_major</span><span class="token punctuation">(</span>a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>slice_to_col_major converts nested slice into an array representing a col-major matrix</p>
+<p><em><strong>NOTE</strong>: make sure to have at least 1x1 item</em></p>
+
+</section>
+
+		<section id="slice_to_col_major_complex" class="doc-node">
+			<div class="title"><h2>fn slice_to_col_major_complex <a href="#slice_to_col_major_complex">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/conversions.v#L136"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">slice_to_col_major_complex</span><span class="token punctuation">(</span>a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span>complex<span class="token punctuation">.</span>Complex<span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>complex<span class="token punctuation">.</span>Complex</code></pre>
+<p>slice_to_col_major_complex converts nested slice into an array representing a col-major matrix of complex numbers.</p>
+<p><code>data[i+j*m] = a[i][j]</code></p>
+<p><em><strong>NOTE</strong>: make sure to have at least 1x1 item</em></p>
+
+</section>
+
+		<section id="split_complex" class="doc-node">
+			<div class="title"><h2>fn split_complex <a href="#split_complex">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/conversions.v#L281"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">split_complex</span><span class="token punctuation">(</span>v <span class="token punctuation">[</span><span class="token punctuation">]</span>complex<span class="token punctuation">.</span>Complex<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+<p>split_complex splits real and imag parts of array</p>
+
+</section>
+
+		<section id="to_blas64_diagonal" class="doc-node">
+			<div class="title"><h2>fn to_blas64_diagonal <a href="#to_blas64_diagonal">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/conversions.v#L476"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">to_blas64_diagonal</span><span class="token punctuation">(</span>diag Diagonal<span class="token punctuation">)</span> blas64<span class="token punctuation">.</span>Diagonal</code></pre>
+<p>Convert VSL Diagonal to blas64.Diagonal</p>
+
+</section>
+
+		<section id="to_blas64_layout" class="doc-node">
+			<div class="title"><h2>fn to_blas64_layout <a href="#to_blas64_layout">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/conversions.v#L422"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">to_blas64_layout</span><span class="token punctuation">(</span>layout MemoryLayout<span class="token punctuation">)</span> blas64<span class="token punctuation">.</span>MemoryLayout</code></pre>
+<p>Convert VSL MemoryLayout to blas64.MemoryLayout</p>
+
+</section>
+
+		<section id="to_blas64_side" class="doc-node">
+			<div class="title"><h2>fn to_blas64_side <a href="#to_blas64_side">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/conversions.v#L492"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">to_blas64_side</span><span class="token punctuation">(</span>side Side<span class="token punctuation">)</span> blas64<span class="token punctuation">.</span>Side</code></pre>
+<p>Convert VSL Side to blas64.Side</p>
+
+</section>
+
+		<section id="to_blas64_transpose" class="doc-node">
+			<div class="title"><h2>fn to_blas64_transpose <a href="#to_blas64_transpose">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/conversions.v#L438"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">to_blas64_transpose</span><span class="token punctuation">(</span>trans Transpose<span class="token punctuation">)</span> blas64<span class="token punctuation">.</span>Transpose</code></pre>
+<p>Convert VSL Transpose to blas64.Transpose</p>
+
+</section>
+
+		<section id="to_blas64_uplo" class="doc-node">
+			<div class="title"><h2>fn to_blas64_uplo <a href="#to_blas64_uplo">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/conversions.v#L458"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">to_blas64_uplo</span><span class="token punctuation">(</span>uplo Uplo<span class="token punctuation">)</span> blas64<span class="token punctuation">.</span>Uplo</code></pre>
+<p>Convert VSL Uplo to blas64.Uplo</p>
+
+</section>
+
+		<section id="Diagonal" class="doc-node">
+			<div class="title"><h2>enum Diagonal <a href="#Diagonal">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/conversions.v#L31"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> <span class="token symbol">Diagonal</span> <span class="token punctuation">{</span>
+	non_unit <span class="token operator">=</span> <span class="token number">131</span>
+	unit     <span class="token operator">=</span> <span class="token number">132</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Diagonal is used to specify whether the diagonal of a matrix is unit or non-unit.</p>
+
+</section>
+
+		<section id="MemoryLayout" class="doc-node">
+			<div class="title"><h2>enum MemoryLayout <a href="#MemoryLayout">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/conversions.v#L10"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> <span class="token symbol">MemoryLayout</span> <span class="token punctuation">{</span>
+	row_major <span class="token operator">=</span> <span class="token number">101</span>
+	col_major <span class="token operator">=</span> <span class="token number">102</span>
+<span class="token punctuation">}</span></code></pre>
+<p>MemoryLayout is used to specify the memory layout of a matrix.</p>
+
+</section>
+
+		<section id="Side" class="doc-node">
+			<div class="title"><h2>enum Side <a href="#Side">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/conversions.v#L37"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> <span class="token symbol">Side</span> <span class="token punctuation">{</span>
+	left  <span class="token operator">=</span> <span class="token number">141</span>
+	right <span class="token operator">=</span> <span class="token number">142</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Side is used to specify whether a matrix is on the left or right side in a matrix-matrix multiplication.</p>
+
+</section>
+
+		<section id="Transpose" class="doc-node">
+			<div class="title"><h2>enum Transpose <a href="#Transpose">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/conversions.v#L16"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> <span class="token symbol">Transpose</span> <span class="token punctuation">{</span>
+	no_trans      <span class="token operator">=</span> <span class="token number">111</span>
+	trans         <span class="token operator">=</span> <span class="token number">112</span>
+	conj_trans    <span class="token operator">=</span> <span class="token number">113</span>
+	conj_no_trans <span class="token operator">=</span> <span class="token number">114</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Transpose is used to specify the transposition of a matrix.</p>
+
+</section>
+
+		<section id="Uplo" class="doc-node">
+			<div class="title"><h2>enum Uplo <a href="#Uplo">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/blas/conversions.v#L24"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> <span class="token symbol">Uplo</span> <span class="token punctuation">{</span>
+	upper <span class="token operator">=</span> <span class="token number">121</span>
+	lower <span class="token operator">=</span> <span class="token number">122</span>
+	all   <span class="token operator">=</span> <span class="token number">99</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Uplo is used to specify whether the upper or lower triangle of a matrix is</p>
+
+</section>
+
+
+						<div class="footer">Powered by vdoc. Generated on: 28 Dec 2025 09:36:46</div>
+					</div>
+					<div class="doc-toc"><ul><li class="open"><a href="#readme_blas">README</a></li>
+<li class="open"><a href="#cm_daxpy">fn cm_daxpy</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#cm_ddot">fn cm_ddot</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#cm_dgemm">fn cm_dgemm</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#cm_dgemv">fn cm_dgemv</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#cm_dscal">fn cm_dscal</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#cm_dsyrk">fn cm_dsyrk</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#cm_dtrsm">fn cm_dtrsm</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#col_major_complex_to_slice">fn col_major_complex_to_slice</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#col_major_to_slice">fn col_major_to_slice</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dasum">fn dasum</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#daxpy">fn daxpy</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dcopy">fn dcopy</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#ddot">fn ddot</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dgbmv">fn dgbmv</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dgemm">fn dgemm</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dgemv">fn dgemv</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dger">fn dger</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dnrm2">fn dnrm2</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#drot">fn drot</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dsbmv">fn dsbmv</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dscal">fn dscal</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dspmv">fn dspmv</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dspr">fn dspr</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dspr2">fn dspr2</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dswap">fn dswap</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dsymv">fn dsymv</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dsyr">fn dsyr</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dsyr2">fn dsyr2</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dsyr2k">fn dsyr2k</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dsyrk">fn dsyrk</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dtbmv">fn dtbmv</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dtbsv">fn dtbsv</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dtpmv">fn dtpmv</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dtpsv">fn dtpsv</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dtrmm">fn dtrmm</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dtrmv">fn dtrmv</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dtrsm">fn dtrsm</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dtrsv">fn dtrsv</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#eigenvecs_build">fn eigenvecs_build</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#eigenvecs_build_both">fn eigenvecs_build_both</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#extract_col">fn extract_col</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#extract_col_complex">fn extract_col_complex</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#extract_row">fn extract_row</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#extract_row_complex">fn extract_row_complex</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#from_blas64_diagonal">fn from_blas64_diagonal</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#from_blas64_layout">fn from_blas64_layout</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#from_blas64_side">fn from_blas64_side</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#from_blas64_transpose">fn from_blas64_transpose</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#from_blas64_uplo">fn from_blas64_uplo</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#get_join_complex">fn get_join_complex</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#get_split_complex">fn get_split_complex</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#idamax">fn idamax</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#join_complex">fn join_complex</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#print_col_major">fn print_col_major</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#print_col_major_complex">fn print_col_major_complex</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#print_col_major_complex_v">fn print_col_major_complex_v</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#print_col_major_omplex_py">fn print_col_major_omplex_py</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#print_col_major_py">fn print_col_major_py</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#print_col_major_v">fn print_col_major_v</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#set_num_threads">fn set_num_threads</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#slice_to_col_major">fn slice_to_col_major</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#slice_to_col_major_complex">fn slice_to_col_major_complex</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#split_complex">fn split_complex</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#to_blas64_diagonal">fn to_blas64_diagonal</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#to_blas64_layout">fn to_blas64_layout</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#to_blas64_side">fn to_blas64_side</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#to_blas64_transpose">fn to_blas64_transpose</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#to_blas64_uplo">fn to_blas64_uplo</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#Diagonal">enum Diagonal</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#MemoryLayout">enum MemoryLayout</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#Side">enum Side</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#Transpose">enum Transpose</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#Uplo">enum Uplo</a>        <ul>
+</ul>
+</li>
+</ul></div>
+				</div>
+			</div>
+		</div>
+		<script src="doc.js"></script>
+		<script async src="search_index.js"></script>
+	</body>
+</html>

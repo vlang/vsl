@@ -1,0 +1,2369 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="x-ua-compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>lapack.lapack64 | vdoc</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&display=swap"
+			rel="stylesheet"
+		/>
+		<link
+			href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+		<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+		<link rel="manifest" href="site.webmanifest" />
+		<link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5" />
+		<meta name="msapplication-TileColor" content="#da532c" />
+		<meta name="theme-color" content="#ffffff" />
+		<link rel="stylesheet" href="doc.css" />
+		<link rel="stylesheet" href="normalize.css" />
+		<script src="dark-mode.js"></script>
+	</head>
+
+	<body>
+		<div><a id="skip-to-content-link" href="#main-content">Skip to content</a></div>
+		<div id="page">
+			<header class="doc-nav hidden">
+				<div class="heading-container">
+					<div class="heading">
+						<div class="info">
+							<div class="module">vsl</div>
+							<div class="toggle-version-container">
+								<span>0.1.50 fa4151b</span>
+								<div
+									id="dark-mode-toggle"
+									role="switch"
+									aria-checked="false"
+									aria-label="Toggle dark mode"
+								>
+									<svg xmlns="http://www.w3.org/2000/svg" class="light-icon" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.7l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-5c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-1 16.95h2V19.5h-2v2.95zm-7.45-3.91l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8z"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" class="dark-icon" enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24"><g><rect fill="none" height="24" width="24"/></g><g><g><g><path d="M11.1,12.08C8.77,7.57,10.6,3.6,11.63,2.01C6.27,2.2,1.98,6.59,1.98,12c0,0.14,0.02,0.28,0.02,0.42 C2.62,12.15,3.29,12,4,12c1.66,0,3.18,0.83,4.1,2.15C9.77,14.63,11,16.17,11,18c0,1.52-0.87,2.83-2.12,3.51 c0.98,0.32,2.03,0.5,3.11,0.5c3.5,0,6.58-1.8,8.37-4.52C18,17.72,13.38,16.52,11.1,12.08z"/></g><path d="M7,16l-0.18,0C6.4,14.84,5.3,14,4,14c-1.66,0-3,1.34-3,3s1.34,3,3,3c0.62,0,2.49,0,3,0c1.1,0,2-0.9,2-2 C9,16.9,8.1,16,7,16z"/></g></g></svg>
+
+								</div>
+							</div>
+							<svg xmlns="http://www.w3.org/2000/svg" id="toggle-menu" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+
+						</div>
+						<div id="search">
+							<input type="text" placeholder="Search... (beta)" autocomplete="off" />
+						</div>
+					</div>
+				</div>
+				<nav class="search hidden"></nav>
+				<nav class="content hidden">
+					<ul>
+						<li class="open">
+<div class="menu-row"><a href="./index.html">README</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="./blas.html">blas</a></div>
+<ul>
+<li><a href="./blas.blas64.html">blas64</a></li>
+</ul>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./consts.html">consts</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./deriv.html">deriv</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./diff.html">diff</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./dist.html">dist</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./easings.html">easings</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./errors.html">errors</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./fft.html">fft</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./fit.html">fit</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="#">float</a></div>
+<ul>
+<li><a href="./float.float32.html">float32</a></li>
+<li><a href="./float.float64.html">float64</a></li>
+</ul>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./fun.html">fun</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./func.html">func</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./gm.html">gm</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./graph.html">graph</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="#">inout</a></div>
+<ul>
+<li><a href="./inout.h5.html">h5</a></li>
+</ul>
+</li>
+<li class="open">
+<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="#">internal</a></div>
+<ul>
+<li><a href="./internal.prec.html">prec</a></li>
+</ul>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./iter.html">iter</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./la.html">la</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="./lapack.html">lapack</a></div>
+<ul>
+<li class="active"><a href="./lapack.lapack64.html">lapack64</a></li>
+</ul>
+</li>
+<li class="open">
+<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="./ml.html">ml</a></div>
+<ul>
+<li><a href="./ml.nlp.html">nlp</a></li>
+</ul>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./mpi.html">mpi</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./noise.html">noise</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./plot.html">plot</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./poly.html">poly</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./prime.html">prime</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./quaternion.html">quaternion</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./roots.html">roots</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./util.html">util</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="./vcl.html">vcl</a></div>
+<ul>
+<li><a href="./vcl.internal.dl.html">internal.dl</a></li>
+</ul>
+</li>
+
+					</ul>
+				</nav>
+			</header>
+			<div class="doc-scrollview" tabindex="-1" id="main-content">
+				<div class="doc-container">
+					<div class="doc-content">
+								<section id="readme_lapack.lapack64" class="doc-node">
+			<div class="title"><h1> lapack.lapack64 <a href="#readme_lapack.lapack64">#</a></h1></div>
+
+
+</section>
+
+		<section id="Constants" class="doc-node const">
+			<div class="title"><h2>Constants <a href="#Constants">#</a></h2></div>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_apply_ortho <span class="token operator">=</span> <span class="token string">'lapack: bad ApplyOrtho'</span></code></pre>
+<p>Panic strings for bad enumeration values.</p>
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_balance_job <span class="token operator">=</span> <span class="token string">'lapack: bad BalanceJob'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_diag <span class="token operator">=</span> <span class="token string">'lapack: bad Diag'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_direct <span class="token operator">=</span> <span class="token string">'lapack: bad Direct'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_ev_comp <span class="token operator">=</span> <span class="token string">'lapack: bad EigenVectorsComp'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_ev_how_many <span class="token operator">=</span> <span class="token string">'lapack: bad EigenVectorsHowMany'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_ev_job <span class="token operator">=</span> <span class="token string">'lapack: bad EigenVectorsJob'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_ev_side <span class="token operator">=</span> <span class="token string">'lapack: bad EigenVectorsSide'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_gsvd_job <span class="token operator">=</span> <span class="token string">'lapack: bad GSVDJob'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_gen_ortho <span class="token operator">=</span> <span class="token string">'lapack: bad GenOrtho'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_left_ev_job <span class="token operator">=</span> <span class="token string">'lapack: bad LeftEigenVectorsJob'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_matrix_type <span class="token operator">=</span> <span class="token string">'lapack: bad MatrixType'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_maximize_norm_x_job <span class="token operator">=</span> <span class="token string">'lapack: bad MaximizeNormXJob'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_norm <span class="token operator">=</span> <span class="token string">'lapack: bad Norm'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_ortho_comp <span class="token operator">=</span> <span class="token string">'lapack: bad OrthoComp'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_pivot <span class="token operator">=</span> <span class="token string">'lapack: bad Pivot'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_right_ev_job <span class="token operator">=</span> <span class="token string">'lapack: bad RightEigenVectorsJob'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_svd_job <span class="token operator">=</span> <span class="token string">'lapack: bad SVDJob'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_schur_comp <span class="token operator">=</span> <span class="token string">'lapack: bad SchurComp'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_schur_job <span class="token operator">=</span> <span class="token string">'lapack: bad SchurJob'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_side <span class="token operator">=</span> <span class="token string">'lapack: bad Side'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_sort <span class="token operator">=</span> <span class="token string">'lapack: bad Sort'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_store_v <span class="token operator">=</span> <span class="token string">'lapack: bad StoreV'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_trans <span class="token operator">=</span> <span class="token string">'lapack: bad Trans'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_update_schur_comp <span class="token operator">=</span> <span class="token string">'lapack: bad UpdateSchurComp'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_uplo <span class="token operator">=</span> <span class="token string">'lapack: bad Uplo'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> both_svd_over <span class="token operator">=</span> <span class="token string">'lapack: both jobU and jobVT are lapack.SingularValueDecompositionOverwrite'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_ifst <span class="token operator">=</span> <span class="token string">'lapack: ifst out of range'</span></code></pre>
+<p>Panic strings for bad numerical and string values.</p>
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_ihi <span class="token operator">=</span> <span class="token string">'lapack: ihi out of range'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_ihiz <span class="token operator">=</span> <span class="token string">'lapack: ihiz out of range'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_ilo <span class="token operator">=</span> <span class="token string">'lapack: ilo out of range'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_iloz <span class="token operator">=</span> <span class="token string">'lapack: iloz out of range'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_ilst <span class="token operator">=</span> <span class="token string">'lapack: ilst out of range'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_isave <span class="token operator">=</span> <span class="token string">'lapack: bad isave value'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_ispec <span class="token operator">=</span> <span class="token string">'lapack: bad ispec value'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_j1 <span class="token operator">=</span> <span class="token string">'lapack: j1 out of range'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_jpvt <span class="token operator">=</span> <span class="token string">'lapack: bad element of jpvt'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_k1 <span class="token operator">=</span> <span class="token string">'lapack: k1 out of range'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_k2 <span class="token operator">=</span> <span class="token string">'lapack: k2 out of range'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_kacc22 <span class="token operator">=</span> <span class="token string">'lapack: invalid value of kacc22'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_kbot <span class="token operator">=</span> <span class="token string">'lapack: kbot out of range'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_ktop <span class="token operator">=</span> <span class="token string">'lapack: ktop out of range'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_l_work <span class="token operator">=</span> <span class="token string">'lapack: insufficient declared workspace length'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_mm <span class="token operator">=</span> <span class="token string">'lapack: mm out of range'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_n1 <span class="token operator">=</span> <span class="token string">'lapack: bad value of n1'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_n2 <span class="token operator">=</span> <span class="token string">'lapack: bad value of n2'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_na <span class="token operator">=</span> <span class="token string">'lapack: bad value of na'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_name <span class="token operator">=</span> <span class="token string">'lapack: bad name'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_nh <span class="token operator">=</span> <span class="token string">'lapack: bad value of nh'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_nw <span class="token operator">=</span> <span class="token string">'lapack: bad value of nw'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_pp <span class="token operator">=</span> <span class="token string">'lapack: bad value of pp'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_shifts <span class="token operator">=</span> <span class="token string">'lapack: bad shifts'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> i0lt0 <span class="token operator">=</span> <span class="token string">'lapack: i0 &lt; 0'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> k_gtm <span class="token operator">=</span> <span class="token string">'lapack: k &gt; m'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> k_gtn <span class="token operator">=</span> <span class="token string">'lapack: k &gt; n'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> k_lt0 <span class="token operator">=</span> <span class="token string">'lapack: k &lt; 0'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> k_lt1 <span class="token operator">=</span> <span class="token string">'lapack: k &lt; 1'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> kd_lt0 <span class="token operator">=</span> <span class="token string">'lapack: kd &lt; 0'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> kl_lt0 <span class="token operator">=</span> <span class="token string">'lapack: kl &lt; 0'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> ku_lt0 <span class="token operator">=</span> <span class="token string">'lapack: ku &lt; 0'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> m_gtn <span class="token operator">=</span> <span class="token string">'lapack: m &gt; n'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> m_lt0 <span class="token operator">=</span> <span class="token string">'lapack: m &lt; 0'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> mm_lt0 <span class="token operator">=</span> <span class="token string">'lapack: mm &lt; 0'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> n0lt0 <span class="token operator">=</span> <span class="token string">'lapack: n0 &lt; 0'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> n_gtm <span class="token operator">=</span> <span class="token string">'lapack: n &gt; m'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> n_lt0 <span class="token operator">=</span> <span class="token string">'lapack: n &lt; 0'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> n_lt1 <span class="token operator">=</span> <span class="token string">'lapack: n &lt; 1'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> n_ltm <span class="token operator">=</span> <span class="token string">'lapack: n &lt; m'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> nan_c_from <span class="token operator">=</span> <span class="token string">'lapack: cfrom is NaN'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> nan_c_to <span class="token operator">=</span> <span class="token string">'lapack: cto is NaN'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> nb_gtm <span class="token operator">=</span> <span class="token string">'lapack: nb &gt; m'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> nb_gtn <span class="token operator">=</span> <span class="token string">'lapack: nb &gt; n'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> nb_lt0 <span class="token operator">=</span> <span class="token string">'lapack: nb &lt; 0'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> ncc_lt0 <span class="token operator">=</span> <span class="token string">'lapack: ncc &lt; 0'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> ncvt_lt0 <span class="token operator">=</span> <span class="token string">'lapack: ncvt &lt; 0'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> neg_a_norm <span class="token operator">=</span> <span class="token string">'lapack: anorm &lt; 0'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> neg_z <span class="token operator">=</span> <span class="token string">'lapack: negative z value'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> nh_lt0 <span class="token operator">=</span> <span class="token string">'lapack: nh &lt; 0'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> not_isolated <span class="token operator">=</span> <span class="token string">'lapack: block is not isolated'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> nrhs_lt0 <span class="token operator">=</span> <span class="token string">'lapack: nrhs &lt; 0'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> nru_lt0 <span class="token operator">=</span> <span class="token string">'lapack: nru &lt; 0'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> nshfts_lt0 <span class="token operator">=</span> <span class="token string">'lapack: nshfts &lt; 0'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> nshfts_odd <span class="token operator">=</span> <span class="token string">'lapack: nshfts must be even'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> nv_lt0 <span class="token operator">=</span> <span class="token string">'lapack: nv &lt; 0'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> offset_gtm <span class="token operator">=</span> <span class="token string">'lapack: offset &gt; m'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> offset_lt0 <span class="token operator">=</span> <span class="token string">'lapack: offset &lt; 0'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> p_lt0 <span class="token operator">=</span> <span class="token string">'lapack: p &lt; 0'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> recur_lt0 <span class="token operator">=</span> <span class="token string">'lapack: recur &lt; 0'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> zero_c_from <span class="token operator">=</span> <span class="token string">'lapack: zero cfrom'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_len_alpha <span class="token operator">=</span> <span class="token string">'lapack: bad length of alpha'</span></code></pre>
+<p>Panic strings for bad slice lengths.</p>
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_len_beta <span class="token operator">=</span> <span class="token string">'lapack: bad length of beta'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_len_ipiv <span class="token operator">=</span> <span class="token string">'lapack: bad length of ipiv'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_len_jpiv <span class="token operator">=</span> <span class="token string">'lapack: bad length of jpiv'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_len_jpvt <span class="token operator">=</span> <span class="token string">'lapack: bad length of jpvt'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_len_k <span class="token operator">=</span> <span class="token string">'lapack: bad length of k'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_len_piv <span class="token operator">=</span> <span class="token string">'lapack: bad length of piv'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_len_selected <span class="token operator">=</span> <span class="token string">'lapack: bad length of selected'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_len_si <span class="token operator">=</span> <span class="token string">'lapack: bad length of si'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_len_sr <span class="token operator">=</span> <span class="token string">'lapack: bad length of sr'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_len_tau <span class="token operator">=</span> <span class="token string">'lapack: bad length of tau'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_len_wi <span class="token operator">=</span> <span class="token string">'lapack: bad length of wi'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_len_wr <span class="token operator">=</span> <span class="token string">'lapack: bad length of wr'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> short_a <span class="token operator">=</span> <span class="token string">'lapack: insufficient length of a'</span></code></pre>
+<p>Panic strings for insufficient slice lengths.</p>
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> short_ab <span class="token operator">=</span> <span class="token string">'lapack: insufficient length of ab'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> short_auxv <span class="token operator">=</span> <span class="token string">'lapack: insufficient length of auxv'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> short_b <span class="token operator">=</span> <span class="token string">'lapack: insufficient length of b'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> short_c <span class="token operator">=</span> <span class="token string">'lapack: insufficient length of c'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> short_c_norm <span class="token operator">=</span> <span class="token string">'lapack: insufficient length of cnorm'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> short_d <span class="token operator">=</span> <span class="token string">'lapack: insufficient length of d'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> short_dl <span class="token operator">=</span> <span class="token string">'lapack: insufficient length of dl'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> short_du <span class="token operator">=</span> <span class="token string">'lapack: insufficient length of du'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> short_e <span class="token operator">=</span> <span class="token string">'lapack: insufficient length of e'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> short_f <span class="token operator">=</span> <span class="token string">'lapack: insufficient length of f'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> short_h <span class="token operator">=</span> <span class="token string">'lapack: insufficient length of h'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> short_i_work <span class="token operator">=</span> <span class="token string">'lapack: insufficient length of iwork'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> short_isgn <span class="token operator">=</span> <span class="token string">'lapack: insufficient length of isgn'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> short_q <span class="token operator">=</span> <span class="token string">'lapack: insufficient length of q'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> short_rhs <span class="token operator">=</span> <span class="token string">'lapack: insufficient length of rhs'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> short_s <span class="token operator">=</span> <span class="token string">'lapack: insufficient length of s'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> short_scale <span class="token operator">=</span> <span class="token string">'lapack: insufficient length of scale'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> short_t <span class="token operator">=</span> <span class="token string">'lapack: insufficient length of t'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> short_tau <span class="token operator">=</span> <span class="token string">'lapack: insufficient length of tau'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> short_tau_p <span class="token operator">=</span> <span class="token string">'lapack: insufficient length of tauP'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> short_tau_q <span class="token operator">=</span> <span class="token string">'lapack: insufficient length of tauQ'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> short_u <span class="token operator">=</span> <span class="token string">'lapack: insufficient length of u'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> short_v <span class="token operator">=</span> <span class="token string">'lapack: insufficient length of v'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> short_vl <span class="token operator">=</span> <span class="token string">'lapack: insufficient length of vl'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> short_vr <span class="token operator">=</span> <span class="token string">'lapack: insufficient length of vr'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> short_vt <span class="token operator">=</span> <span class="token string">'lapack: insufficient length of vt'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> short_vn1 <span class="token operator">=</span> <span class="token string">'lapack: insufficient length of vn1'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> short_vn2 <span class="token operator">=</span> <span class="token string">'lapack: insufficient length of vn2'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> short_w <span class="token operator">=</span> <span class="token string">'lapack: insufficient length of w'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> short_wh <span class="token operator">=</span> <span class="token string">'lapack: insufficient length of wh'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> short_wv <span class="token operator">=</span> <span class="token string">'lapack: insufficient length of wv'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> short_wi <span class="token operator">=</span> <span class="token string">'lapack: insufficient length of wi'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> short_work <span class="token operator">=</span> <span class="token string">'lapack: insufficient length of work'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> short_wr <span class="token operator">=</span> <span class="token string">'lapack: insufficient length of wr'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> short_x <span class="token operator">=</span> <span class="token string">'lapack: insufficient length of x'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> short_y <span class="token operator">=</span> <span class="token string">'lapack: insufficient length of y'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> short_z <span class="token operator">=</span> <span class="token string">'lapack: insufficient length of z'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_ld_a <span class="token operator">=</span> <span class="token string">'lapack: bad leading dimension of A'</span></code></pre>
+<p>Panic strings for bad leading dimensions of matrices.</p>
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_ld_b <span class="token operator">=</span> <span class="token string">'lapack: bad leading dimension of B'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_ld_c <span class="token operator">=</span> <span class="token string">'lapack: bad leading dimension of C'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_ld_f <span class="token operator">=</span> <span class="token string">'lapack: bad leading dimension of F'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_ld_h <span class="token operator">=</span> <span class="token string">'lapack: bad leading dimension of H'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_ld_q <span class="token operator">=</span> <span class="token string">'lapack: bad leading dimension of Q'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_ld_t <span class="token operator">=</span> <span class="token string">'lapack: bad leading dimension of T'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_ld_u <span class="token operator">=</span> <span class="token string">'lapack: bad leading dimension of U'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_ld_v <span class="token operator">=</span> <span class="token string">'lapack: bad leading dimension of V'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_ld_vl <span class="token operator">=</span> <span class="token string">'lapack: bad leading dimension of VL'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_ld_vr <span class="token operator">=</span> <span class="token string">'lapack: bad leading dimension of VR'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_ld_vt <span class="token operator">=</span> <span class="token string">'lapack: bad leading dimension of VT'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_ld_w <span class="token operator">=</span> <span class="token string">'lapack: bad leading dimension of W'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_ld_wh <span class="token operator">=</span> <span class="token string">'lapack: bad leading dimension of WH'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_ld_wv <span class="token operator">=</span> <span class="token string">'lapack: bad leading dimension of WV'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_ld_work <span class="token operator">=</span> <span class="token string">'lapack: bad leading dimension of Work'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_ld_x <span class="token operator">=</span> <span class="token string">'lapack: bad leading dimension of X'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_ld_y <span class="token operator">=</span> <span class="token string">'lapack: bad leading dimension of Y'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_ld_z <span class="token operator">=</span> <span class="token string">'lapack: bad leading dimension of Z'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> abs_inc_not_one <span class="token operator">=</span> <span class="token string">'lapack: increment not one or negative one'</span></code></pre>
+<p>Panic strings for bad vector increments.</p>
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_inc_x <span class="token operator">=</span> <span class="token string">'lapack: incx &lt;= 0'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> bad_inc_y <span class="token operator">=</span> <span class="token string">'lapack: incy &lt;= 0'</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> zero_inc_v <span class="token operator">=</span> <span class="token string">'lapack: incv == 0'</span></code></pre>
+
+
+</section>
+
+		<section id="dgebal" class="doc-node">
+			<div class="title"><h2>fn dgebal <a href="#dgebal">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dgebal.v#L50"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dgebal</span><span class="token punctuation">(</span>job BalanceJob<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> scale <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>dgebal balances an n×n matrix A. Balancing consists of two stages, permuting and scaling. Both steps are optional and depend on the value of job.</p>
+<p>Permuting consists of applying a permutation matrix P such that the matrix that results from Pᵀ<em>A</em>P takes the upper block triangular form</p>
+<p>[ T1  X  Y  ] Pᵀ A P = [  0  B  Z  ], [  0  0  T2 ]</p>
+<p>where T1 and T2 are upper triangular matrices and B contains at least one nonzero off-diagonal element in each row and column. The indices ilo and ihi mark the starting and ending columns of the submatrix B. The eigenvalues of A isolated in the first 0 to ilo-1 and last ihi+1 to n-1 elements on the diagonal can be read off without any roundoff error.</p>
+<p>Scaling consists of applying a diagonal similarity transformation D such that D^{-1}<em>B</em>D has the 1-norm of each row and its corresponding column nearly equal. The output matrix is</p>
+<p>[ T1     X*D          Y    ] [  0  inv(D)<em>B</em>D  inv(D)*Z ]. [  0      0           T2   ]</p>
+<p>Scaling may reduce the 1-norm of the matrix, and improve the accuracy of the computed eigenvalues and/or eigenvectors.</p>
+<p>job specifies the operations that will be performed on A. If job is BalanceJob.balance_none, dgebal sets scale[i] = 1 for all i and returns 0. If job is BalanceJob.permute, only permuting will be done. If job is BalanceJob.scale, only scaling will be done. If job is BalanceJob.permute_scale, both permuting and scaling will be done.</p>
+<p>On return, scale will contain information about the permutations and scaling factors applied to A. If π(j) denotes the index of the column interchanged with column j, and D[j,j] denotes the scaling factor applied to column j, then</p>
+<p>scale[j] == π(j),     for j ∈ {0, ..., ilo-1, ihi+1, ..., n-1}, == D[j,j],   for j ∈ {ilo, ..., ihi}.</p>
+<p>scale must have length equal to n, otherwise dgebal will panic.</p>
+<p>dgebal returns 0 on success, or a negative error code.</p>
+
+</section>
+
+		<section id="dgeev" class="doc-node">
+			<div class="title"><h2>fn dgeev <a href="#dgeev">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dgeev.v#L7"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dgeev</span><span class="token punctuation">(</span>jobvl LeftEigenVectorsJob<span class="token punctuation">,</span> jobvr RightEigenVectorsJob<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> wr <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> wi <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> vl <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> ldvl <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> vr <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> ldvr <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>dgeev: minimal real 2x2 eigen solver (row-major input/output for this pure-V path). For n&gt;2, returns info=1 (not implemented).</p>
+
+</section>
+
+		<section id="dgehrd" class="doc-node">
+			<div class="title"><h2>fn dgehrd <a href="#dgehrd">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dgehrd.v#L7"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dgehrd</span><span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">,</span> ilo <span class="token builtin">int</span><span class="token punctuation">,</span> ihi <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> tau <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>dgehrd reduces a general real matrix A to upper Hessenberg form H by an orthogonal similarity transformation.</p>
+
+</section>
+
+		<section id="dgeqr2" class="doc-node">
+			<div class="title"><h2>fn dgeqr2 <a href="#dgeqr2">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dgeqr2.v#L32"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dgeqr2</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> tau <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> work <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+<p>dgeqr2 computes a QR factorization of the m×n matrix A.</p>
+<p>In a QR factorization, Q is an m×m orthonormal matrix, and R is an upper triangular m×n matrix.</p>
+<p>A is modified to contain the information to construct Q and R. The upper triangle of a contains the matrix R. The lower triangular elements (not including the diagonal) contain the elementary reflectors. tau is modified to contain the reflector scales. tau must have length min(m,n), and this function will panic otherwise.</p>
+<p>The ith elementary reflector can be explicitly constructed by first extracting the</p>
+<p>v[j] = 0           j &lt; i v[j] = 1           j == i v[j] = a[j*lda+i]  j &gt; i</p>
+<p>and computing H_i = I - tau[i] * v * vᵀ.</p>
+<p>The orthonormal matrix Q can be constructed from a product of these elementary reflectors, Q = H_0 * H_1 * ... * H_{k-1}, where k = min(m,n).</p>
+<p>work is temporary storage of length at least n and this function will panic otherwise.</p>
+<p>dgeqr2 is an internal routine. It is exported for testing purposes.</p>
+
+</section>
+
+		<section id="dgeqrf" class="doc-node">
+			<div class="title"><h2>fn dgeqrf <a href="#dgeqrf">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dgeqrf.v#L17"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dgeqrf</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> tau <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> work <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lwork <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>dgeqrf computes the QR factorization of the m×n matrix A using a blocked algorithm. See the documentation for dgeqr2 for a description of the parameters at entry and exit.</p>
+<p>work is temporary storage, and lwork specifies the usable memory length. The length of work must be at least max(1, lwork) and lwork must be -1 or at least n, otherwise this function will panic. dgeqrf is a blocked QR factorization, but the block size is limited by the temporary space available. If lwork == -1, instead of performing dgeqrf, the optimal work length will be stored into work[0].</p>
+<p>tau must have length min(m,n), and this function will panic otherwise.</p>
+
+</section>
+
+		<section id="dgesv" class="doc-node">
+			<div class="title"><h2>fn dgesv <a href="#dgesv">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dgesv.v#L25"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dgesv</span><span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">,</span> nrhs <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> ipiv <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> b <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> ldb <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>dgesv computes the solution to a real system of linear equations</p>
+<p>A * X = B</p>
+<p>where A is an n×n matrix and X and B are n×nrhs matrices.</p>
+<p>The LU decomposition with partial pivoting and row interchanges is used to factor A as</p>
+<p>A = P * L * U</p>
+<p>where P is a permutation matrix, L is unit lower triangular, and U is upper triangular. On return, the factors L and U are stored in a; the unit diagonal elements of L are not stored. The row pivot indices that define the permutation matrix P are stored in ipiv.</p>
+<p>The factored form of A is then used to solve the system of equations A * X = B. On entry, b contains the right hand side matrix B. On return, if ok is true, b contains the solution matrix X.</p>
+
+</section>
+
+		<section id="dgesvd" class="doc-node">
+			<div class="title"><h2>fn dgesvd <a href="#dgesvd">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dgesvd.v#L7"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dgesvd</span><span class="token punctuation">(</span>jobu SVDJob<span class="token punctuation">,</span> jobvt SVDJob<span class="token punctuation">,</span> m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> s <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> u <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> ldu <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> vt <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> ldvt <span class="token builtin">int</span><span class="token punctuation">,</span> superb <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>dgesvd computes the singular value decomposition (SingularValueDecomposition) of a real matrix A.</p>
+
+</section>
+
+		<section id="dgetf2" class="doc-node">
+			<div class="title"><h2>fn dgetf2 <a href="#dgetf2">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dgetf2.v#L6"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dgetf2</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> ipiv <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">bool</span></code></pre>
+
+
+</section>
+
+		<section id="dgetrf" class="doc-node">
+			<div class="title"><h2>fn dgetrf <a href="#dgetrf">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dgetrf.v#L27"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dgetrf</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> ipiv <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">bool</span></code></pre>
+<p>dgetrf computes the LU decomposition of an m×n matrix A using partial pivoting with row interchanges.</p>
+<p>The LU decomposition is a factorization of A into</p>
+<p>A = P * L * U</p>
+<p>where P is a permutation matrix, L is a lower triangular with unit diagonal elements (lower trapezoidal if m &gt; n), and U is upper triangular (upper trapezoidal if m &lt; n).</p>
+<p>On entry, a contains the matrix A. On return, L and U are stored in place into a, and P is represented by ipiv.</p>
+<p>ipiv contains a sequence of row interchanges. It indicates that row i of the matrix was interchanged with ipiv[i]. ipiv must have length min(m,n), and Dgetrf will panic otherwise. ipiv is zero-indexed.</p>
+<p>Dgetrf returns whether the matrix A is nonsingular. The LU decomposition will be computed regardless of the singularity of A, but the result should not be used to solve a system of equation.</p>
+
+</section>
+
+		<section id="dgetri" class="doc-node">
+			<div class="title"><h2>fn dgetri <a href="#dgetri">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dgetri.v#L18"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dgetri</span><span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> ipiv <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> work <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lwork <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">bool</span></code></pre>
+<p>dgetri computes the inverse of the matrix A using the LU factorization computed by dgetrf. On entry, a contains the PLU decomposition of A as computed by dgetrf and on exit contains the reciprocal of the original matrix.</p>
+<p>dgetri will not perform the inversion if the matrix is singular, and returns a boolean indicating whether the inversion was successful.</p>
+<p>work is temporary storage, and lwork specifies the usable memory length. At minimum, lwork &gt;= n and this function will panic otherwise. dgetri is a blocked inversion, but the block size is limited by the temporary space available. If lwork == -1, instead of performing dgetri, the optimal work length will be stored into work[0].</p>
+
+</section>
+
+		<section id="dgetrs" class="doc-node">
+			<div class="title"><h2>fn dgetrs <a href="#dgetrs">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dgetrs.v#L19"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dgetrs</span><span class="token punctuation">(</span>trans blas<span class="token punctuation">.</span>Transpose<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> nrhs <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> ipiv <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> b <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> ldb <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>dgetrs solves a system of equations using an LU factorization. The system of equations solved is</p>
+<p>A * X = B  if trans == blas.Trans Aᵀ * X = B if trans == blas.NoTrans</p>
+<p>A is a general n×n matrix with stride lda. B is a general matrix of size n×nrhs.</p>
+<p>On entry b contains the elements of the matrix B. On exit, b contains the elements of X, the solution to the system of equations.</p>
+<p>a and ipiv contain the LU factorization of A and the permutation indices as computed by Dgetrf. ipiv is zero-indexed.</p>
+
+</section>
+
+		<section id="dlacpy" class="doc-node">
+			<div class="title"><h2>fn dlacpy <a href="#dlacpy">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dlacpy.v#L11"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dlacpy</span><span class="token punctuation">(</span>uplo blas<span class="token punctuation">.</span>Uplo<span class="token punctuation">,</span> m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> b <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> ldb <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>dlacpy copies the elements of A specified by uplo into B. Uplo can specify a triangular portion with blas.Uplo.upper or blas.Uplo.lower, or can specify all of the elements with blas.Uplo.all.</p>
+<p>dlacpy is an internal routine. It is exported for testing purposes.</p>
+
+</section>
+
+		<section id="dlae2" class="doc-node">
+			<div class="title"><h2>fn dlae2 <a href="#dlae2">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dlae2.v#L14"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dlae2</span><span class="token punctuation">(</span>a <span class="token builtin">f64</span><span class="token punctuation">,</span> b <span class="token builtin">f64</span><span class="token punctuation">,</span> c <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+<p>dlae2 computes the eigenvalues of a 2×2 symmetric matrix</p>
+<p>[a b] [b c]</p>
+<p>and returns the eigenvalue with the larger absolute value as rt1 and the smaller as rt2.</p>
+<p>dlae2 is an internal routine. It is exported for testing purposes.</p>
+
+</section>
+
+		<section id="dlaev2" class="doc-node">
+			<div class="title"><h2>fn dlaev2 <a href="#dlaev2">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dlaev2.v#L5"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dlaev2</span><span class="token punctuation">(</span>a <span class="token builtin">f64</span><span class="token punctuation">,</span> b <span class="token builtin">f64</span><span class="token punctuation">,</span> c <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="dlange" class="doc-node">
+			<div class="title"><h2>fn dlange <a href="#dlange">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dlange.v#L14"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dlange</span><span class="token punctuation">(</span>norm MatrixNorm<span class="token punctuation">,</span> m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> work <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>dlange returns the value of the specified norm of a general m×n matrix A:</p>
+<p>MatrixNorm.max_abs:       the maximum absolute value of any element. MatrixNorm.max_column_sum: the maximum column sum of the absolute values of the elements (1-norm). MatrixNorm.max_row_sum:    the maximum row sum of the absolute values of the elements (infinity-norm). MatrixNorm.frobenius:    the square root of the sum of the squares of the elements (Frobenius norm).</p>
+<p>If norm == MatrixNorm.max_column_sum, work must be of length n, and this function will panic otherwise. There are no restrictions on work for the other matrix norms.</p>
+
+</section>
+
+		<section id="dlanst" class="doc-node">
+			<div class="title"><h2>fn dlanst <a href="#dlanst">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dlanst.v#L8"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dlanst</span><span class="token punctuation">(</span>norm MatrixNorm<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> d <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> e <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>dlanst computes the specified norm of a symmetric tridiagonal matrix A. The diagonal elements of A are stored in d and the off-diagonal elements are stored in e.</p>
+
+</section>
+
+		<section id="dlansy" class="doc-node">
+			<div class="title"><h2>fn dlansy <a href="#dlansy">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dlansy.v#L9"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dlansy</span><span class="token punctuation">(</span>norm MatrixNorm<span class="token punctuation">,</span> uplo blas<span class="token punctuation">.</span>Uplo<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> work <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>dlansy returns the value of the specified norm of an n×n symmetric matrix. If norm == MatrixNorm.max_column_sum or norm == MatrixNorm.max_row_sum, work must have length at least n, otherwise work is unused.</p>
+
+</section>
+
+		<section id="dlapy2" class="doc-node">
+			<div class="title"><h2>fn dlapy2 <a href="#dlapy2">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dlapy2.v#L8"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dlapy2</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">,</span> y <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>dlapy2 is the LAPACK version of math.hypot.</p>
+<p>dlapy2 is an internal routine. It is exported for testing purposes.</p>
+
+</section>
+
+		<section id="dlarf" class="doc-node">
+			<div class="title"><h2>fn dlarf <a href="#dlarf">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dlarf.v#L21"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dlarf</span><span class="token punctuation">(</span>side blas<span class="token punctuation">.</span>Side<span class="token punctuation">,</span> m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> v <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incv <span class="token builtin">int</span><span class="token punctuation">,</span> tau <span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> c <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> ldc <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> work <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+<p>dlarf applies an elementary reflector H to an m×n matrix C:</p>
+<p>C = H * C  if side == .left C = C * H  if side == .right</p>
+<p>H is represented in the form</p>
+<p>H = I - tau * v * vᵀ</p>
+<p>where tau is a scalar and v is a vector.</p>
+<p>work must have length at least m if side == .left and at least n if side == .right.</p>
+<p>dlarf is an internal routine. It is exported for testing purposes.</p>
+
+</section>
+
+		<section id="dlarfb" class="doc-node">
+			<div class="title"><h2>fn dlarfb <a href="#dlarfb">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dlarfb.v#L6"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dlarfb</span><span class="token punctuation">(</span>side blas<span class="token punctuation">.</span>Side<span class="token punctuation">,</span> trans blas<span class="token punctuation">.</span>Transpose<span class="token punctuation">,</span> direct Direct<span class="token punctuation">,</span> store StoreV<span class="token punctuation">,</span> m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> k <span class="token builtin">int</span><span class="token punctuation">,</span> v <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> ldv <span class="token builtin">int</span><span class="token punctuation">,</span> t <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> ldt <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> c <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> ldc <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> work <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> ldwork <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="dlarfg" class="doc-node">
+			<div class="title"><h2>fn dlarfg <a href="#dlarfg">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dlarfg.v#L6"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dlarfg</span><span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incx <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="dlarft" class="doc-node">
+			<div class="title"><h2>fn dlarft <a href="#dlarft">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dlarft.v#L27"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dlarft</span><span class="token punctuation">(</span>direct Direct<span class="token punctuation">,</span> store StoreV<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> k <span class="token builtin">int</span><span class="token punctuation">,</span> v <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> ldv <span class="token builtin">int</span><span class="token punctuation">,</span> tau <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> t <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> ldt <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>dlarft forms the triangular factor T of a block reflector H, storing the answer in t.</p>
+<p>H = I - V * T * Vᵀ  if store == .column_wise H = I - Vᵀ * T * V  if store == .row_wise</p>
+<p>H is defined by a product of the elementary reflectors where</p>
+<p>H = H_0 * H_1 * ... * H_{k-1}  if direct == .forward H = H_{k-1} * ... * H_1 * H_0  if direct == .backward</p>
+<p>t is a k×k triangular matrix. t is upper triangular if direct = .forward and lower triangular otherwise. This function will panic if t is not of sufficient size.</p>
+<p>store describes the storage of the elementary reflectors in v. See dlarfb for a description of layout.</p>
+<p>tau contains the scalar factors of the elementary reflectors H_i.</p>
+<p>dlarft is an internal routine. It is exported for testing purposes.</p>
+
+</section>
+
+		<section id="dlartg" class="doc-node">
+			<div class="title"><h2>fn dlartg <a href="#dlartg">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dlartg.v#L19"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dlartg</span><span class="token punctuation">(</span>f <span class="token builtin">f64</span><span class="token punctuation">,</span> g <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+<p>dlartg generates a plane rotation so that</p>
+<p>[ cs sn] * [f] = [r] [-sn cs]   [g] = [0]</p>
+<p>where cs<em>cs + sn</em>sn = 1.</p>
+<p>This is a more accurate version of BLAS Drotg that uses scaling to avoid overflow or underflow, with the other differences that- cs &gt;= 0</p>
+<ul>
+<li>if g = 0, then cs = 1 and sn = 0</li>
+<li>if f = 0 and g != 0, then cs = 0 and sn = sign(1,g)</li></ul>
+<p>dlartg is an internal routine. It is exported for testing purposes.</p>
+
+</section>
+
+		<section id="dlascl" class="doc-node">
+			<div class="title"><h2>fn dlascl <a href="#dlascl">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dlascl.v#L11"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dlascl</span><span class="token punctuation">(</span>kind MatrixType<span class="token punctuation">,</span> kl <span class="token builtin">int</span><span class="token punctuation">,</span> ku <span class="token builtin">int</span><span class="token punctuation">,</span> cfrom <span class="token builtin">f64</span><span class="token punctuation">,</span> cto <span class="token builtin">f64</span><span class="token punctuation">,</span> m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>dlascl multiplies an m×n matrix by the scalar cto/cfrom.</p>
+<p>cfrom must not be zero, and cto and cfrom must not be NaN, otherwise dlascl will panic.</p>
+<p>dlascl is an internal routine. It is exported for testing purposes.</p>
+
+</section>
+
+		<section id="dlaset" class="doc-node">
+			<div class="title"><h2>fn dlaset <a href="#dlaset">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dlaset.v#L13"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dlaset</span><span class="token punctuation">(</span>uplo blas<span class="token punctuation">.</span>Uplo<span class="token punctuation">,</span> m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> beta <span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>dlaset sets the off-diagonal elements of A to alpha, and the diagonal elements to beta. If uplo == blas.upper, only the elements in the upper triangular part are set. If uplo == blas.lower, only the elements in the lower triangular part are set. If uplo is otherwise, all of the elements of A are set.</p>
+<p>dlaset is an internal routine. It is exported for testing purposes.</p>
+
+</section>
+
+		<section id="dlasr" class="doc-node">
+			<div class="title"><h2>fn dlasr <a href="#dlasr">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dlasr.v#L58"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dlasr</span><span class="token punctuation">(</span>side blas<span class="token punctuation">.</span>Side<span class="token punctuation">,</span> pivot Pivot<span class="token punctuation">,</span> direct Direct<span class="token punctuation">,</span> m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> c <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> s <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>Dlasr applies a sequence of plane rotations to the m×n matrix A. This series of plane rotations is implicitly represented by a matrix P. P is multiplied by a depending on the value of side -- A = P * A if side == Side.left, A = A * Pᵀ if side == Side.right.</p>
+<p>The exact value of P depends on the value of pivot, but in all cases P is implicitly represented by a series of 2×2 rotation matrices. The entries of rotation matrix k are defined by s[k] and c[k]</p>
+<p>R(k) = [ c[k] s[k]] [-s[k] s[k]]</p>
+<p>If direct == Direct.forward, the rotation matrices are applied as P = P(z-1) * ... * P(2) * P(1), while if direct == Direct.backward they are applied as P = P(1) * P(2) * ... * P(n).</p>
+<p>pivot defines the mapping of the elements in R(k) to P(k). If pivot == Pivot.variable, the rotation is performed for the (k, k+1) plane.</p>
+<p>P(k) = [1                    ] [    ...              ] [     1               ] [       c[k] s[k]     ] [      -s[k] c[k]     ] [                 1   ] [                ...  ] [                    1]</p>
+<p>if pivot == Pivot.top, the rotation is performed for the (1, k+1) plane,</p>
+<p>P(k) = [c[k]        s[k]     ] [    1                ] [     ...             ] [         1           ] [-s[k]       c[k]     ] [                 1   ] [                ...  ] [                    1]</p>
+<p>and if pivot == Pivot.bottom, the rotation is performed for the (k, z) plane.</p>
+<p>P(k) = [1                    ] [  ...                ] [      1              ] [        c[k]     s[k]] [           1         ] [            ...      ] [              1      ] [       -s[k]     c[k]]</p>
+<p>s and c have length m - 1 if side == Side.left, and n - 1 if side == Side.right.</p>
+
+</section>
+
+		<section id="dlasrt" class="doc-node">
+			<div class="title"><h2>fn dlasrt <a href="#dlasrt">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dlasrt.v#L11"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dlasrt</span><span class="token punctuation">(</span>s Sort<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> d <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+<p>dlasrt sorts the numbers in the input slice d. If s == .increasing, the elements are sorted in increasing order. If s == .decreasing, the elements are sorted in decreasing order. For other values of s dlasrt will panic.</p>
+<p>dlasrt is an internal routine. It is exported for testing purposes.</p>
+
+</section>
+
+		<section id="dlassq" class="doc-node">
+			<div class="title"><h2>fn dlassq <a href="#dlassq">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dlassq.v#L11"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dlassq</span><span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">,</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incx <span class="token builtin">int</span><span class="token punctuation">,</span> scale <span class="token builtin">f64</span><span class="token punctuation">,</span> sumsq <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+<p>dlassq updates a sum of squares represented in scaled form. It returns the values scl and smsq such that</p>
+<p>scl^2<em>smsq = X[0]^2 + ... + X[n-1]^2 + scale^2</em>sumsq</p>
+<p>The value of sumsq is assumed to be non-negative.</p>
+
+</section>
+
+		<section id="dlaswp" class="doc-node">
+			<div class="title"><h2>fn dlaswp <a href="#dlaswp">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dlaswp.v#L6"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dlaswp</span><span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> k1 <span class="token builtin">int</span><span class="token punctuation">,</span> k2 <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> ipiv <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> incx <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="dlatrd" class="doc-node">
+			<div class="title"><h2>fn dlatrd <a href="#dlatrd">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dlatrd.v#L6"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dlatrd</span><span class="token punctuation">(</span>uplo blas<span class="token punctuation">.</span>Uplo<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> nb <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> e <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> tau <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> w <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> ldw <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="dorg2l" class="doc-node">
+			<div class="title"><h2>fn dorg2l <a href="#dorg2l">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dorg2l.v#L20"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dorg2l</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> k <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> tau <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> work <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+<p>dorg2l generates an m×n matrix Q with orthonormal columns which is defined as the last n columns of a product of k elementary reflectors of order m.</p>
+<p>Q = H_{k-1} * ... * H_1 * H_0</p>
+<p>See dgelqf for more information. It must be that m &gt;= n &gt;= k.</p>
+<p>tau contains the scalar reflectors computed by dgeqlf. tau must have length at least k, and dorg2l will panic otherwise.</p>
+<p>work contains temporary memory, and must have length at least n. dorg2l will panic otherwise.</p>
+<p>dorg2l is an internal routine. It is exported for testing purposes.</p>
+
+</section>
+
+		<section id="dorg2r" class="doc-node">
+			<div class="title"><h2>fn dorg2r <a href="#dorg2r">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dorg2r.v#L6"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dorg2r</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> k <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> tau <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> work <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="dorgql" class="doc-node">
+			<div class="title"><h2>fn dorgql <a href="#dorgql">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dorgql.v#L31"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dorgql</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> k <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> tau <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> work <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lwork <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>dorgql generates the m×n matrix Q with orthonormal columns defined as the last n columns of a product of k elementary reflectors of order m</p>
+<p>Q = H_{k-1} * ... * H_1 * H_0.</p>
+<p>It must hold that</p>
+<p>0 &lt;= k &lt;= n &lt;= m,</p>
+<p>and dorgql will panic otherwise.</p>
+<p>On entry, the (n-k+i)-th column of A must contain the vector which defines the elementary reflector H_i, for i=0,...,k-1, and tau[i] must contain its scalar factor. On return, a contains the m×n matrix Q.</p>
+<p>tau must have length at least k, and dorgql will panic otherwise.</p>
+<p>work must have length at least max(1,lwork), and lwork must be at least max(1,n), otherwise dorgql will panic. For optimum performance lwork must be a sufficiently large multiple of n.</p>
+<p>If lwork == -1, instead of computing dorgql the optimal work length is stored into work[0].</p>
+<p>dorgql is an internal routine. It is exported for testing purposes.</p>
+
+</section>
+
+		<section id="dorgqr" class="doc-node">
+			<div class="title"><h2>fn dorgqr <a href="#dorgqr">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dorgqr.v#L6"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dorgqr</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> k <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> tau <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> work <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lwork <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="dorgtr" class="doc-node">
+			<div class="title"><h2>fn dorgtr <a href="#dorgtr">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dorgtr.v#L26"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dorgtr</span><span class="token punctuation">(</span>uplo blas<span class="token punctuation">.</span>Uplo<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> tau <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> work <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lwork <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>dorgtr generates a real orthogonal matrix Q which is defined as the product of n-1 elementary reflectors of order n as returned by dsytrd.</p>
+<p>The construction of Q depends on the value of uplo:</p>
+<p>Q = H_{n-1} * ... * H_1 * H_0  if uplo == blas.Upper Q = H_0 * H_1 * ... * H_{n-1}  if uplo == blas.Lower</p>
+<p>where H_i is constructed from the elementary reflectors as computed by dsytrd. See the documentation for dsytrd for more information.</p>
+<p>tau must have length at least n-1, and dorgtr will panic otherwise.</p>
+<p>work is temporary storage, and lwork specifies the usable memory length. At minimum, lwork &gt;= max(1,n-1), and dorgtr will panic otherwise. The amount of blocking is limited by the usable length. If lwork == -1, instead of computing dorgtr the optimal work length is stored into work[0].</p>
+<p>dorgtr is an internal routine. It is exported for testing purposes.</p>
+
+</section>
+
+		<section id="dpotf2" class="doc-node">
+			<div class="title"><h2>fn dpotf2 <a href="#dpotf2">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dpotf2.v#L13"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dpotf2</span><span class="token punctuation">(</span>ul blas<span class="token punctuation">.</span>Uplo<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">bool</span></code></pre>
+<p>dpotf2 computes the Cholesky decomposition of the symmetric positive definite matrix a. If ul == .upper, then a is stored as an upper-triangular matrix, and a = Uᵀ U is stored in place into a. If ul == .lower, then a = L Lᵀ is computed and stored in-place into a. If a is not positive definite, false is returned. This is the unblocked version of the algorithm.</p>
+<p>dpotf2 is an internal routine. It is exported for testing purposes.</p>
+
+</section>
+
+		<section id="dpotrf" class="doc-node">
+			<div class="title"><h2>fn dpotrf <a href="#dpotrf">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dpotrf.v#L6"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dpotrf</span><span class="token punctuation">(</span>ul blas<span class="token punctuation">.</span>Uplo<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">bool</span></code></pre>
+
+
+</section>
+
+		<section id="dsteqr" class="doc-node">
+			<div class="title"><h2>fn dsteqr <a href="#dsteqr">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dsteqr.v#L30"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dsteqr</span><span class="token punctuation">(</span>compz EigenVectorsComp<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> d <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> e <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> z <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> ldz <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> work <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">bool</span></code></pre>
+<p>dsteqr computes the eigenvalues and optionally the eigenvectors of a symmetric tridiagonal matrix using the implicit QL or QR method. The eigenvectors of a full or band symmetric matrix can also be found if dsytrd, dsptrd, or dsbtrd have been used to reduce this matrix to tridiagonal form.</p>
+<p>d, on entry, contains the diagonal elements of the tridiagonal matrix. On exit, d contains the eigenvalues in ascending order. d must have length n and dsteqr will panic otherwise.</p>
+<p>e, on entry, contains the off-diagonal elements of the tridiagonal matrix on entry, and is overwritten during the call to dsteqr. e must have length n-1 and dsteqr will panic otherwise.</p>
+<p>z, on entry, contains the n×n orthogonal matrix used in the reduction to tridiagonal form if compz == lapack.EigenVectorsOrig. On exit, if compz == lapack.EigenVectorsOrig, z contains the orthonormal eigenvectors of the original symmetric matrix, and if compz == lapack.EigenVectorsTridiag, z contains the orthonormal eigenvectors of the symmetric tridiagonal matrix. z is not used if compz == lapack.EigenVectorsCompNone.</p>
+<p>work must have length at least max(1, 2*n-2) if the eigenvectors are computed, and dsteqr will panic otherwise.</p>
+<p>dsteqr is an internal routine. It is exported for testing purposes.</p>
+
+</section>
+
+		<section id="dsterf" class="doc-node">
+			<div class="title"><h2>fn dsterf <a href="#dsterf">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dsterf.v#L17"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dsterf</span><span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> d <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> e <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">bool</span></code></pre>
+<p>dsterf computes all eigenvalues of a symmetric tridiagonal matrix using the Pal-Walker-Kahan variant of the QL or QR algorithm.</p>
+<p>d contains the diagonal elements of the tridiagonal matrix on entry, and contains the eigenvalues in ascending order on exit. d must have length at least n, or dsterf will panic.</p>
+<p>e contains the off-diagonal elements of the tridiagonal matrix on entry, and is overwritten during the call to dsterf. e must have length of at least n-1 or dsterf will panic.</p>
+<p>dsterf is an internal routine. It is exported for testing purposes.</p>
+
+</section>
+
+		<section id="dsyev" class="doc-node">
+			<div class="title"><h2>fn dsyev <a href="#dsyev">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dsyev.v#L6"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dsyev</span><span class="token punctuation">(</span>jobz EigenVectorsJob<span class="token punctuation">,</span> uplo blas<span class="token punctuation">.</span>Uplo<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> w <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> work <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lwork <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+
+
+</section>
+
+		<section id="dsytd2" class="doc-node">
+			<div class="title"><h2>fn dsytd2 <a href="#dsytd2">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dsytd2.v#L55"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dsytd2</span><span class="token punctuation">(</span>uplo blas<span class="token punctuation">.</span>Uplo<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> d <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> e <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> tau <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+<p>Dsytd2 reduces a symmetric n×n matrix A to symmetric tridiagonal form T by an orthogonal similarity transformation</p>
+<p>Qᵀ * A * Q = T</p>
+<p>On entry, the matrix is contained in the specified triangle of a. On exit, if uplo == Uplo.upper, the diagonal and first super-diagonal of a are overwritten with the elements of T. The elements above the first super-diagonal are overwritten with the elementary reflectors that are used with the elements written to tau in order to construct Q. If uplo == Uplo.lower, the elements are written in the lower triangular region.</p>
+<p>d must have length at least n. e and tau must have length at least n-1. Dsytd2 will panic if these sizes are not met.</p>
+<p>Q is represented as a product of elementary reflectors. If uplo == Uplo.upper</p>
+<p>Q = H_{n-2} * ... * H_1 * H_0</p>
+<p>and if uplo == Uplo.lower</p>
+<p>Q = H_0 * H_1 * ... * H_{n-2}</p>
+<p>where</p>
+<p>H_i = I - tau * v * vᵀ</p>
+<p>where tau is stored in tau[i], and v is stored in a.</p>
+<p>If uplo == Uplo.upper, v[0:i-1] is stored in A[0:i-1,i+1], v[i] = 1, and v[i+1:] = 0. The elements of a are</p>
+<p>[ d   e  v2  v3  v4] [     d   e  v3  v4] [         d   e  v4] [             d   e] [                 d]</p>
+<p>If uplo == Uplo.lower, v[0:i+1] = 0, v[i+1] = 1, and v[i+2:] is stored in A[i+2:n,i]. The elements of a are</p>
+<p>[ d                ] [ e   d            ] [v1   e   d        ] [v1  v2   e   d    ] [v1  v2  v3   e   d]</p>
+
+</section>
+
+		<section id="dsytrd" class="doc-node">
+			<div class="title"><h2>fn dsytrd <a href="#dsytrd">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dsytrd.v#L63"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dsytrd</span><span class="token punctuation">(</span>uplo blas<span class="token punctuation">.</span>Uplo<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> d <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> e <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> tau <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> work <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lwork <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>dsytrd reduces a symmetric n×n matrix A to symmetric tridiagonal form by an orthogonal similarity transformation</p>
+<p>Qᵀ * A * Q = T</p>
+<p>where Q is an orthonormal matrix and T is symmetric and tridiagonal.</p>
+<p>On entry, a contains the elements of the input matrix in the triangle specified by uplo. On exit, the diagonal and sub/super-diagonal are overwritten by the corresponding elements of the tridiagonal matrix T. The remaining elements in the triangle, along with the array tau, contain the data to construct Q as the product of elementary reflectors.</p>
+<p>If uplo == blas.upper, Q is constructed with</p>
+<p>Q = H_{n-2} * ... * H_1 * H_0</p>
+<p>where</p>
+<p>H_i = I - tau_i * v * vᵀ</p>
+<p>v is constructed as v[i+1:n] = 0, v[i] = 1, v[0:i-1] is stored in A[0:i-1, i+1]. The elements of A are</p>
+<p>[ d   e  v1  v2  v3] [     d   e  v2  v3] [         d   e  v3] [             d   e] [                 e]</p>
+<p>If uplo == blas.lower, Q is constructed with</p>
+<p>Q = H_0 * H_1 * ... * H_{n-2}</p>
+<p>where</p>
+<p>H_i = I - tau_i * v * vᵀ</p>
+<p>v is constructed as v[0:i+1] = 0, v[i+1] = 1, v[i+2:n] is stored in A[i+2:n, i]. The elements of A are</p>
+<p>[ d                ] [ e   d            ] [v0   e   d        ] [v0  v1   e   d    ] [v0  v1  v2   e   d]</p>
+<p>d must have length n, and e and tau must have length n-1. dsytrd will panic if these conditions are not met.</p>
+<p>work is temporary storage, and lwork specifies the usable memory length. At minimum, lwork &gt;= 1, and dsytrd will panic otherwise. The amount of blocking is limited by the usable length. If lwork == -1, instead of computing dsytrd the optimal work length is stored into work[0].</p>
+<p>dsytrd is an internal routine. It is exported for testing purposes.</p>
+
+</section>
+
+		<section id="dtrti2" class="doc-node">
+			<div class="title"><h2>fn dtrti2 <a href="#dtrti2">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dtrti2.v#L10"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dtrti2</span><span class="token punctuation">(</span>uplo blas<span class="token punctuation">.</span>Uplo<span class="token punctuation">,</span> diag blas<span class="token punctuation">.</span>Diagonal<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>dtrti2 computes the inverse of a triangular matrix, storing the result in place into a. This is the BLAS level 2 version of the algorithm.</p>
+<p>dtrti2 is an internal routine. It is exported for testing purposes.</p>
+
+</section>
+
+		<section id="dtrtri" class="doc-node">
+			<div class="title"><h2>fn dtrtri <a href="#dtrtri">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/dtrtri.v#L12"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dtrtri</span><span class="token punctuation">(</span>uplo blas<span class="token punctuation">.</span>Uplo<span class="token punctuation">,</span> diag blas<span class="token punctuation">.</span>Diagonal<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">bool</span></code></pre>
+<p>dtrtri computes the inverse of a triangular matrix, storing the result in place into a. This is the BLAS level 3 version of the algorithm which builds upon dtrti2 to operate on matrix blocks instead of only individual columns.</p>
+<p>dtrtri will not perform the inversion if the matrix is singular, and returns a boolean indicating whether the inversion was successful.</p>
+
+</section>
+
+		<section id="iladlc" class="doc-node">
+			<div class="title"><h2>fn iladlc <a href="#iladlc">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/iladlc.v#L7"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">iladlc</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>iladlc scans a matrix for its last non-zero column. Returns -1 if the matrix is all zeros.</p>
+
+</section>
+
+		<section id="iladlr" class="doc-node">
+			<div class="title"><h2>fn iladlr <a href="#iladlr">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/iladlr.v#L7"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">iladlr</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>iladlr scans a matrix for its last non-zero row. Returns -1 if the matrix is all zeros.</p>
+
+</section>
+
+		<section id="ApplyOrtho" class="doc-node">
+			<div class="title"><h2>enum ApplyOrtho <a href="#ApplyOrtho">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/conversions.v#L55"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> ApplyOrtho <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
+	<span class="token comment">// Apply P or Pᵀ.</span>
+	apply_p <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`P`</span><span class="token punctuation">)</span>
+	<span class="token comment">// Apply Q or Qᵀ.</span>
+	apply_q <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`Q`</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
+<p>ApplyOrtho specifies which orthogonal matrix is applied in Dormbr.</p>
+
+</section>
+
+		<section id="BalanceJob" class="doc-node">
+			<div class="title"><h2>enum BalanceJob <a href="#BalanceJob">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/conversions.v#L131"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> BalanceJob <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
+	permute       <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`P`</span><span class="token punctuation">)</span>
+	scale         <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`S`</span><span class="token punctuation">)</span>
+	permute_scale <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`B`</span><span class="token punctuation">)</span>
+	balance_none  <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`N`</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
+<p>BalanceJob specifies matrix balancing operation.</p>
+
+</section>
+
+		<section id="Direct" class="doc-node">
+			<div class="title"><h2>enum Direct <a href="#Direct">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/conversions.v#L4"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> Direct <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
+	<span class="token comment">// Reflectors are right-multiplied, H_0 * H_1 * ... * H_{k-1}.</span>
+	forward <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`F`</span><span class="token punctuation">)</span>
+	<span class="token comment">// Reflectors are left-multiplied, H_{k-1} * ... * H_1 * H_0.</span>
+	backward <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`B`</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Direct specifies the direction of the multiplication for the Householder matrix.</p>
+
+</section>
+
+		<section id="EigenVectorsComp" class="doc-node">
+			<div class="title"><h2>enum EigenVectorsComp <a href="#EigenVectorsComp">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/conversions.v#L97"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> EigenVectorsComp <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
+	<span class="token comment">// Compute eigenvectors of the original symmetric matrix.</span>
+	ev_orig <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`V`</span><span class="token punctuation">)</span>
+	<span class="token comment">// Compute eigenvectors of the tridiagonal matrix.</span>
+	ev_tridiag <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`I`</span><span class="token punctuation">)</span>
+	<span class="token comment">// Do not compute eigenvectors.</span>
+	ev_comp_none <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`N`</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
+<p>EigenVectorsComp specifies how eigenvectors are computed in Dsteqr.</p>
+
+</section>
+
+		<section id="EigenVectorsHowMany" class="doc-node">
+			<div class="title"><h2>enum EigenVectorsHowMany <a href="#EigenVectorsHowMany">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/conversions.v#L173"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> EigenVectorsHowMany <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
+	<span class="token comment">// Compute all right and/or left eigenvectors.</span>
+	ev_all <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`A`</span><span class="token punctuation">)</span>
+	<span class="token comment">// Compute all right and/or left eigenvectors multiplied by an input matrix.</span>
+	ev_all_mul_q <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`B`</span><span class="token punctuation">)</span>
+	<span class="token comment">// Compute selected right and/or left eigenvectors.</span>
+	ev_selected <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`S`</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
+<p>EigenVectorsHowMany specifies which eigenvectors are computed in Dtrevc3 and how.</p>
+
+</section>
+
+		<section id="EigenVectorsJob" class="doc-node">
+			<div class="title"><h2>enum EigenVectorsJob <a href="#EigenVectorsJob">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/conversions.v#L107"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> EigenVectorsJob <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
+	<span class="token comment">// Compute eigenvectors.</span>
+	ev_compute <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`V`</span><span class="token punctuation">)</span>
+	<span class="token comment">// Do not compute eigenvectors.</span>
+	ev_none <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`N`</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
+<p>EigenVectorsJob specifies whether eigenvectors are computed in Dsyev.</p>
+
+</section>
+
+		<section id="EigenVectorsSide" class="doc-node">
+			<div class="title"><h2>enum EigenVectorsSide <a href="#EigenVectorsSide">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/conversions.v#L163"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> EigenVectorsSide <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
+	<span class="token comment">// Compute only right eigenvectors.</span>
+	ev_right <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`R`</span><span class="token punctuation">)</span>
+	<span class="token comment">// Compute only left eigenvectors.</span>
+	ev_left <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`L`</span><span class="token punctuation">)</span>
+	<span class="token comment">// Compute both right and left eigenvectors.</span>
+	ev_both <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`B`</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
+<p>EigenVectorsSide specifies what eigenvectors are computed in Dtrevc3.</p>
+
+</section>
+
+		<section id="GSVDJob" class="doc-node">
+			<div class="title"><h2>enum GSVDJob <a href="#GSVDJob">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/conversions.v#L83"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> GSVDJob <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
+	<span class="token comment">// Compute orthogonal matrix U.</span>
+	gsvd_u <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`U`</span><span class="token punctuation">)</span>
+	<span class="token comment">// Compute orthogonal matrix V.</span>
+	gsvd_v <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`V`</span><span class="token punctuation">)</span>
+	<span class="token comment">// Compute orthogonal matrix Q.</span>
+	gsvd_q <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`Q`</span><span class="token punctuation">)</span>
+	<span class="token comment">// Use unit-initialized matrix.</span>
+	gsvd_unit <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`I`</span><span class="token punctuation">)</span>
+	<span class="token comment">// Do not compute orthogonal matrix.</span>
+	gsvd_none <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`N`</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
+<p>GSVDJob specifies the singular vector computation type for Generalized SingularValueDecomposition.</p>
+
+</section>
+
+		<section id="GenOrtho" class="doc-node">
+			<div class="title"><h2>enum GenOrtho <a href="#GenOrtho">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/conversions.v#L63"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> GenOrtho <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
+	<span class="token comment">// Generate Pᵀ.</span>
+	generate_pt <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`P`</span><span class="token punctuation">)</span>
+	<span class="token comment">// Generate Q.</span>
+	generate_q <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`Q`</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
+<p>GenOrtho specifies which orthogonal matrix is generated in Dorgbr.</p>
+
+</section>
+
+		<section id="LeftEigenVectorsJob" class="doc-node">
+			<div class="title"><h2>enum LeftEigenVectorsJob <a href="#LeftEigenVectorsJob">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/conversions.v#L115"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> LeftEigenVectorsJob <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
+	<span class="token comment">// Compute left eigenvectors.</span>
+	left_ev_compute <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`V`</span><span class="token punctuation">)</span>
+	<span class="token comment">// Do not compute left eigenvectors.</span>
+	left_ev_none <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`N`</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
+<p>LeftEigenVectorsJob specifies whether left eigenvectors are computed in Dgeev.</p>
+
+</section>
+
+		<section id="MatrixNorm" class="doc-node">
+			<div class="title"><h2>enum MatrixNorm <a href="#MatrixNorm">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/conversions.v#L26"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> MatrixNorm <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
+	<span class="token comment">// max(abs(A(i,j)))</span>
+	max_abs <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`M`</span><span class="token punctuation">)</span>
+	<span class="token comment">// Maximum absolute column sum (one norm)</span>
+	max_column_sum <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`O`</span><span class="token punctuation">)</span>
+	<span class="token comment">// Maximum absolute row sum (infinity norm)</span>
+	max_row_sum <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`I`</span><span class="token punctuation">)</span>
+	<span class="token comment">// Frobenius norm (sqrt of sum of squares)</span>
+	frobenius <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`F`</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
+<p>MatrixNorm represents the kind of matrix norm to compute.</p>
+
+</section>
+
+		<section id="MatrixType" class="doc-node">
+			<div class="title"><h2>enum MatrixType <a href="#MatrixType">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/conversions.v#L38"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> MatrixType <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
+	<span class="token comment">// A general dense matrix.</span>
+	general <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`G`</span><span class="token punctuation">)</span>
+	<span class="token comment">// An upper triangular matrix.</span>
+	upper_tri <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`U`</span><span class="token punctuation">)</span>
+	<span class="token comment">// A lower triangular matrix.</span>
+	lower_tri <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`L`</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
+<p>MatrixType represents the kind of matrix represented in the data.</p>
+
+</section>
+
+		<section id="MaximizeNormXJob" class="doc-node">
+			<div class="title"><h2>enum MaximizeNormXJob <a href="#MaximizeNormXJob">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/conversions.v#L184"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> MaximizeNormXJob <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
+	<span class="token comment">// Solve Z*x=h-f where h is a vector of ±1.</span>
+	local_look_ahead <span class="token operator">=</span> <span class="token number">0</span>
+	<span class="token comment">// Compute an approximate null-vector e of Z, normalize e and solve Z*x=±e-f.</span>
+	normalized_null_vector <span class="token operator">=</span> <span class="token number">2</span>
+<span class="token punctuation">}</span></code></pre>
+<p>MaximizeNormXJob specifies the heuristic method for computing a contribution to the reciprocal Dif-estimate in Dlatdf.</p>
+
+</section>
+
+		<section id="OrthoComp" class="doc-node">
+			<div class="title"><h2>enum OrthoComp <a href="#OrthoComp">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/conversions.v#L192"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> OrthoComp <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
+	<span class="token comment">// Do not compute the orthogonal matrix.</span>
+	ortho_none <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`N`</span><span class="token punctuation">)</span>
+	<span class="token comment">// The orthogonal matrix is formed explicitly and returned in the argument.</span>
+	ortho_explicit <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`I`</span><span class="token punctuation">)</span>
+	<span class="token comment">// The orthogonal matrix is post-multiplied into the matrix stored in the argument on entry.</span>
+	ortho_postmul <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`V`</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
+<p>OrthoComp specifies whether and how the orthogonal matrix is computed in Dgghrd.</p>
+
+</section>
+
+		<section id="Pivot" class="doc-node">
+			<div class="title"><h2>enum Pivot <a href="#Pivot">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/conversions.v#L48"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> Pivot <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
+	variable <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`V`</span><span class="token punctuation">)</span>
+	top      <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`T`</span><span class="token punctuation">)</span>
+	bottom   <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`B`</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Pivot specifies the pivot type for plane rotations.</p>
+
+</section>
+
+		<section id="RightEigenVectorsJob" class="doc-node">
+			<div class="title"><h2>enum RightEigenVectorsJob <a href="#RightEigenVectorsJob">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/conversions.v#L123"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> RightEigenVectorsJob <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
+	<span class="token comment">// Compute right eigenvectors.</span>
+	right_ev_compute <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`V`</span><span class="token punctuation">)</span>
+	<span class="token comment">// Do not compute right eigenvectors.</span>
+	right_ev_none <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`N`</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
+<p>RightEigenVectorsJob specifies whether right eigenvectors are computed in Dgeev.</p>
+
+</section>
+
+		<section id="SVDJob" class="doc-node">
+			<div class="title"><h2>enum SVDJob <a href="#SVDJob">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/conversions.v#L71"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> SVDJob <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
+	<span class="token comment">// Compute all columns of the orthogonal matrix U or V.</span>
+	svd_all <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`A`</span><span class="token punctuation">)</span>
+	<span class="token comment">// Compute the singular vectors and store them in the orthogonal matrix U or V.</span>
+	svd_store <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`S`</span><span class="token punctuation">)</span>
+	<span class="token comment">// Compute the singular vectors and overwrite them on the input matrix A.</span>
+	svd_overwrite <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`O`</span><span class="token punctuation">)</span>
+	<span class="token comment">// Do not compute singular vectors.</span>
+	svd_none <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`N`</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
+<p>SVDJob specifies the singular vector computation type for SingularValueDecomposition.</p>
+
+</section>
+
+		<section id="SchurComp" class="doc-node">
+			<div class="title"><h2>enum SchurComp <a href="#SchurComp">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/conversions.v#L145"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> SchurComp <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
+	<span class="token comment">// Compute Schur vectors of the original matrix.</span>
+	schur_orig <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`V`</span><span class="token punctuation">)</span>
+	<span class="token comment">// Compute Schur vectors of the upper Hessenberg matrix.</span>
+	schur_hess <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`I`</span><span class="token punctuation">)</span>
+	<span class="token comment">// Do not compute Schur vectors.</span>
+	schur_none <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`N`</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
+<p>SchurComp specifies whether and how the Schur vectors are computed in Dhseqr.</p>
+
+</section>
+
+		<section id="SchurJob" class="doc-node">
+			<div class="title"><h2>enum SchurJob <a href="#SchurJob">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/conversions.v#L139"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> SchurJob <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
+	eigenvalues_only      <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`E`</span><span class="token punctuation">)</span>
+	eigenvalues_and_schur <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`S`</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
+<p>SchurJob specifies whether the Schur form is computed in Dhseqr.</p>
+
+</section>
+
+		<section id="Sort" class="doc-node">
+			<div class="title"><h2>enum Sort <a href="#Sort">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/conversions.v#L12"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> Sort <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
+	sort_increasing <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`I`</span><span class="token punctuation">)</span>
+	sort_decreasing <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`D`</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Sort is the sorting order.</p>
+
+</section>
+
+		<section id="StoreV" class="doc-node">
+			<div class="title"><h2>enum StoreV <a href="#StoreV">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/conversions.v#L18"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> StoreV <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
+	<span class="token comment">// Reflector stored in a column of the matrix.</span>
+	column_wise <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`C`</span><span class="token punctuation">)</span>
+	<span class="token comment">// Reflector stored in a row of the matrix.</span>
+	row_wise <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`R`</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
+<p>StoreV indicates the storage direction of elementary reflectors.</p>
+
+</section>
+
+		<section id="UpdateSchurComp" class="doc-node">
+			<div class="title"><h2>enum UpdateSchurComp <a href="#UpdateSchurComp">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack64/conversions.v#L155"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> UpdateSchurComp <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
+	<span class="token comment">// Update the matrix of Schur vectors.</span>
+	update_schur <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`V`</span><span class="token punctuation">)</span>
+	<span class="token comment">// Do not update the matrix of Schur vectors.</span>
+	update_schur_none <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`N`</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
+<p>UpdateSchurComp specifies whether the matrix of Schur vectors is updated in Dtrexc.</p>
+
+</section>
+
+
+						<div class="footer">Powered by vdoc. Generated on: 28 Dec 2025 09:36:46</div>
+					</div>
+					<div class="doc-toc"><ul><li class="open"><a href="#Constants">Constants</a></li>
+<li class="open"><a href="#dgebal">fn dgebal</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dgeev">fn dgeev</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dgehrd">fn dgehrd</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dgeqr2">fn dgeqr2</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dgeqrf">fn dgeqrf</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dgesv">fn dgesv</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dgesvd">fn dgesvd</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dgetf2">fn dgetf2</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dgetrf">fn dgetrf</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dgetri">fn dgetri</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dgetrs">fn dgetrs</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dlacpy">fn dlacpy</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dlae2">fn dlae2</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dlaev2">fn dlaev2</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dlange">fn dlange</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dlanst">fn dlanst</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dlansy">fn dlansy</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dlapy2">fn dlapy2</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dlarf">fn dlarf</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dlarfb">fn dlarfb</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dlarfg">fn dlarfg</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dlarft">fn dlarft</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dlartg">fn dlartg</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dlascl">fn dlascl</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dlaset">fn dlaset</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dlasr">fn dlasr</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dlasrt">fn dlasrt</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dlassq">fn dlassq</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dlaswp">fn dlaswp</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dlatrd">fn dlatrd</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dorg2l">fn dorg2l</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dorg2r">fn dorg2r</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dorgql">fn dorgql</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dorgqr">fn dorgqr</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dorgtr">fn dorgtr</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dpotf2">fn dpotf2</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dpotrf">fn dpotrf</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dsteqr">fn dsteqr</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dsterf">fn dsterf</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dsyev">fn dsyev</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dsytd2">fn dsytd2</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dsytrd">fn dsytrd</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dtrti2">fn dtrti2</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dtrtri">fn dtrtri</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#iladlc">fn iladlc</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#iladlr">fn iladlr</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#ApplyOrtho">enum ApplyOrtho</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#BalanceJob">enum BalanceJob</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#Direct">enum Direct</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#EigenVectorsComp">enum EigenVectorsComp</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#EigenVectorsHowMany">enum EigenVectorsHowMany</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#EigenVectorsJob">enum EigenVectorsJob</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#EigenVectorsSide">enum EigenVectorsSide</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#GSVDJob">enum GSVDJob</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#GenOrtho">enum GenOrtho</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#LeftEigenVectorsJob">enum LeftEigenVectorsJob</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#MatrixNorm">enum MatrixNorm</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#MatrixType">enum MatrixType</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#MaximizeNormXJob">enum MaximizeNormXJob</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#OrthoComp">enum OrthoComp</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#Pivot">enum Pivot</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#RightEigenVectorsJob">enum RightEigenVectorsJob</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#SVDJob">enum SVDJob</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#SchurComp">enum SchurComp</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#SchurJob">enum SchurJob</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#Sort">enum Sort</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#StoreV">enum StoreV</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#UpdateSchurComp">enum UpdateSchurComp</a>        <ul>
+</ul>
+</li>
+</ul></div>
+				</div>
+			</div>
+		</div>
+		<script src="doc.js"></script>
+		<script async src="search_index.js"></script>
+	</body>
+</html>
