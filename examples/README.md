@@ -144,6 +144,15 @@ v -cflags <flags> run main.v
 | [plot_script_mode_simple_plot](./plot_script_mode_simple_plot)               | Simple plot in script mode.                 |
 | [plot_script_mode_three_phase_signal](./plot_script_mode_three_phase_signal) | Three-phase signal plotting in script mode. |
 
+## BLAS & LAPACK Examples 🚀
+
+| Example                                                    | Description                                                       |
+| ---------------------------------------------------------- | ----------------------------------------------------------------- |
+| [blas_basic_operations](./blas_basic_operations)           | Basic BLAS operations (Level 1, 2, 3) - vector and matrix ops.   |
+| [blas_performance_comparison](./blas_performance_comparison) | Performance benchmarking of BLAS operations.                      |
+| [lapack_linear_systems](./lapack_linear_systems)          | Solving linear systems using LAPACK (dgesv, dgetrf, dpotrf).      |
+| [lapack_eigenvalue_problems](./lapack_eigenvalue_problems) | Eigenvalue decomposition using LAPACK (dsyev).                   |
+
 ## Mathematical and Scientific Computation Examples 🔢
 
 | Example                                            | Description                                                       |
