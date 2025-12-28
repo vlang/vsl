@@ -29,7 +29,10 @@ pub fn dgetrs(trans blas.Transpose, n int, nrhs int, mut a []f64, lda int, mut i
 	if lda < math.max(1, n) {
 		panic(bad_ld_a)
 	}
-	if ldb < math.max(1, nrhs) {
+	// For column-major format: ldb is the leading dimension (number of rows)
+	// We need ldb >= n (number of rows) and ldb >= nrhs (number of columns)
+	// because dlaswp will be called with nrhs columns and requires lda >= nrhs
+	if ldb < math.max(1, math.max(n, nrhs)) {
 		panic(bad_ld_b)
 	}
 
@@ -52,16 +55,16 @@ pub fn dgetrs(trans blas.Transpose, n int, nrhs int, mut a []f64, lda int, mut i
 		// Solve A * X = B.
 		dlaswp(nrhs, mut b, ldb, 0, n - 1, mut ipiv, 1)
 		// Solve L * X = B, overwriting B with X.
-		blas.dtrsm(.left, .lower, .no_trans, .unit, n, nrhs, 1, a, lda, mut b, ldb)
+		blas.cm_dtrsm(.left, .lower, .no_trans, .unit, n, nrhs, 1, a, lda, mut b, ldb)
 		// Solve U * X = B, overwriting B with X.
-		blas.dtrsm(.left, .upper, .no_trans, .non_unit, n, nrhs, 1, a, lda, mut b, ldb)
+		blas.cm_dtrsm(.left, .upper, .no_trans, .non_unit, n, nrhs, 1, a, lda, mut b, ldb)
 		return
 	}
 
 	// Solve Aᵀ * X = B.
 	// Solve Uᵀ * X = B, overwriting B with X.
-	blas.dtrsm(.left, .upper, .trans, .non_unit, n, nrhs, 1, a, lda, mut b, ldb)
+	blas.cm_dtrsm(.left, .upper, .trans, .non_unit, n, nrhs, 1, a, lda, mut b, ldb)
 	// Solve Lᵀ * X = B, overwriting B with X.
-	blas.dtrsm(.left, .lower, .trans, .unit, n, nrhs, 1, a, lda, mut b, ldb)
+	blas.cm_dtrsm(.left, .lower, .trans, .unit, n, nrhs, 1, a, lda, mut b, ldb)
 	dlaswp(nrhs, mut b, ldb, 0, n - 1, mut ipiv, -1)
 }

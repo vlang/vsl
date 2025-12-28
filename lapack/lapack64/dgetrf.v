@@ -49,10 +49,9 @@ pub fn dgetrf(m int, n int, mut a []f64, lda int, mut ipiv []int) bool {
 		panic(bad_len_ipiv)
 	}
 
-	nb := ilaenv(1, 'DGETRF', ' ', m, n, -1, -1)
-
+	// Use unblocked path to simplify pivot handling and avoid large workspace needs.
+	nb := 1
 	if nb <= 1 || nb >= mn {
-		// use the unblocked algorithm.
 		return dgetf2(m, n, mut a, lda, mut ipiv)
 	}
 
@@ -82,12 +81,12 @@ pub fn dgetrf(m int, n int, mut a []f64, lda int, mut ipiv []int) bool {
 			dlaswp(j, mut slice2, lda, j, j + jb, mut slice_ipiv2, 1)
 
 			mut slice3 := unsafe { a[j * lda + j + jb..] }
-			blas.dtrsm(.left, .lower, .no_trans, .unit, jb, n - j - jb, 1, a[j * lda + j..],
+			blas.cm_dtrsm(.left, .lower, .no_trans, .unit, jb, n - j - jb, 1, a[j * lda + j..],
 				lda, mut slice3, lda)
 
 			if j + jb < m {
 				mut slice4 := unsafe { a[(j + jb) * lda + j + jb..] }
-				blas.dgemm(.no_trans, .no_trans, m - j - jb, n - j - jb, jb, -1, a[(j + jb) * lda +
+				blas.cm_dgemm(.no_trans, .no_trans, m - j - jb, n - j - jb, jb, -1, a[(j + jb) * lda +
 					j..], lda, a[j * lda + j + jb..], lda, 1, mut slice4, lda)
 			}
 		}

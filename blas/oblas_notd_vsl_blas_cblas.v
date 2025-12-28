@@ -1,5 +1,6 @@
 module blas
 
+import math
 import vsl.blas.blas64
 
 // set_num_threads sets the number of threads in BLAS
@@ -61,13 +62,16 @@ pub fn idamax(n int, x []f64, incx int) int {
 }
 
 // dgemv performs matrix-vector multiplication.
+// Input matrices are expected in row-major format (as used by la/ module and tests).
+// The Pure V backend (blas64) also expects row-major format, so no conversion is needed.
 @[inline]
 pub fn dgemv(trans Transpose, m int, n int, alpha f64, a []f64, lda int, x []f64, incx int, beta f64, mut y []f64, incy int) {
-	blas64.dgemv(to_blas64_transpose(trans), m, n, alpha, a, lda, x, incx, beta, mut y,
-		incy)
+	blas64.dgemv(to_blas64_transpose(trans), m, n, alpha, a, lda, x, incx, beta, mut y, incy)
 }
 
 // dger performs the rank-1 update of a matrix.
+// Input matrix is expected in row-major format (as used by la/ module and tests).
+// The Pure V backend (blas64) also expects row-major format, so no conversion is needed.
 @[inline]
 pub fn dger(m int, n int, alpha f64, x []f64, incx int, y []f64, incy int, mut a []f64, lda int) {
 	blas64.dger(m, n, alpha, x, incx, y, incy, mut a, lda)
@@ -100,10 +104,12 @@ pub fn dsyr2(uplo Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, 
 }
 
 // dgemm performs matrix-matrix multiplication.
+// Input matrices are expected in row-major format (as used by la/ module and tests).
+// The Pure V backend (blas64) also expects row-major format, so no conversion is needed.
 @[inline]
 pub fn dgemm(trans_a Transpose, trans_b Transpose, m int, n int, k int, alpha f64, a []f64, lda int, b []f64, ldb int, beta f64, mut cc []f64, ldc int) {
-	blas64.dgemm(to_blas64_transpose(trans_a), to_blas64_transpose(trans_b), m, n, k,
-		alpha, a, lda, b, ldb, beta, mut cc, ldc)
+	blas64.dgemm(to_blas64_transpose(trans_a), to_blas64_transpose(trans_b), m, n, k, alpha, a,
+		lda, b, ldb, beta, mut cc, ldc)
 }
 
 // dgbmv performs a matrix-vector multiplication with a band matrix.
@@ -185,16 +191,71 @@ pub fn dsyr2k(uplo Uplo, trans_a Transpose, n int, k int, alpha f64, a []f64, ld
 		lda, b, ldb, beta, mut c, ldc)
 }
 
-// dtrmm performs triangular matrix-matrix multiplication.
-@[inline]
+// dtrmm performs triangular matrix multiplication.
+// Input matrices are expected in row-major format (as used by la/ module and tests).
+// blas64.dtrmm uses row-major access pattern but validates ldb >= m (inconsistent).
+// We pass matrices directly but ensure ldb >= m for validation.
 pub fn dtrmm(side Side, uplo Uplo, trans Transpose, diag Diagonal, m int, n int, alpha f64, a []f64, lda int, mut b []f64, ldb int) {
-	blas64.dtrmm(to_blas64_side(side), to_blas64_uplo(uplo), to_blas64_transpose(trans),
-		to_blas64_diagonal(diag), m, n, alpha, a, lda, mut b, ldb)
+	// blas64.dtrmm validates ldb >= m, but uses row-major access b[i*ldb..i*ldb+n]
+	// Since we're using row-major and ldb is typically n (number of columns),
+	// we need to ensure ldb >= m. If not, we pad.
+	effective_ldb := math.max(ldb, m)
+	if effective_ldb > ldb {
+		// Need to create a padded version of b with ldb >= m
+		// Maximum index accessed: (m-1)*effective_ldb + (n-1)
+		b_padded_len := (m - 1) * effective_ldb + n
+		mut b_padded := []f64{len: b_padded_len}
+		for i in 0 .. m {
+			for j in 0 .. n {
+				idx_padded := i * effective_ldb + j
+				idx_orig := i * ldb + j
+				if idx_padded < b_padded.len && idx_orig < b.len {
+					b_padded[idx_padded] = b[idx_orig]
+				}
+			}
+		}
+		blas64.dtrmm(to_blas64_side(side), to_blas64_uplo(uplo), to_blas64_transpose(trans),
+			to_blas64_diagonal(diag), m, n, alpha, a, lda, mut b_padded, effective_ldb)
+		// Copy back
+		for i in 0 .. m {
+			for j in 0 .. n {
+				idx_padded := i * effective_ldb + j
+				idx_orig := i * ldb + j
+				if idx_padded < b_padded.len && idx_orig < b.len {
+					b[idx_orig] = b_padded[idx_padded]
+				}
+			}
+		}
+	} else {
+		blas64.dtrmm(to_blas64_side(side), to_blas64_uplo(uplo), to_blas64_transpose(trans),
+			to_blas64_diagonal(diag), m, n, alpha, a, lda, mut b, ldb)
+	}
 }
 
 // dtrsm solves triangular system of equations with multiple right-hand sides.
 @[inline]
 pub fn dtrsm(side Side, uplo Uplo, trans Transpose, diag Diagonal, m int, n int, alpha f64, a []f64, lda int, mut b []f64, ldb int) {
-	blas64.dtrsm(to_blas64_side(side), to_blas64_uplo(uplo), to_blas64_transpose(trans),
-		to_blas64_diagonal(diag), m, n, alpha, a, lda, mut b, ldb)
+	k := if side == .left { m } else { n }
+	// Convert A (row-major) to column-major buffer of size k x k
+	mut a_col := []f64{len: k * k}
+	for i in 0 .. k {
+		for j in 0 .. k {
+			a_col[i + j * k] = a[i * lda + j]
+		}
+	}
+	// Convert B (row-major) to column-major buffer of size m x n
+	mut b_col := []f64{len: m * n}
+	for i in 0 .. m {
+		for j in 0 .. n {
+			b_col[i + j * m] = b[i * ldb + j]
+		}
+	}
+	blas64.cm_dtrsm(to_blas64_side(side), to_blas64_uplo(uplo), to_blas64_transpose(trans),
+		to_blas64_diagonal(diag), m, n, alpha, a_col, k, mut b_col, m)
+	// Convert back to row-major
+	for i in 0 .. m {
+		for j in 0 .. n {
+			b[i * ldb + j] = b_col[i + j * m]
+		}
+	}
 }

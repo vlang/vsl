@@ -1,5 +1,7 @@
 module blas
 
+import vsl.blas.blas64
+
 fn C.openblas_set_num_threads(n int)
 
 fn C.cblas_sdsdot(n int, alpha f32, x &f32, incx int, y &f32, incy int) f32
@@ -208,7 +210,7 @@ pub fn sdot(n int, x []f32, incx int, y []f32, incy int) f32 {
 
 @[inline]
 pub fn ddot(n int, x []f64, incx int, y []f64, incy int) f64 {
-	return C.cblas_ddot(n, unsafe { &x[0] }, incx, unsafe { &y[0] }, incy)
+	return blas64.ddot(n, x, incx, y, incy)
 }
 
 @[inline]
@@ -218,7 +220,10 @@ pub fn sasum(n int, x []f32, incx int) f32 {
 
 @[inline]
 pub fn dasum(n int, x []f64, incx int) f64 {
-	return C.cblas_dasum(n, unsafe { &x[0] }, incx)
+	if n <= 0 || x.len == 0 {
+		return 0.0
+	}
+	return blas64.dasum(n, x, incx)
 }
 
 @[inline]
@@ -248,7 +253,10 @@ pub fn snrm2(n int, x []f32, incx int) f32 {
 
 @[inline]
 pub fn dnrm2(n int, x []f64, incx int) f64 {
-	return C.cblas_dnrm2(n, unsafe { &x[0] }, incx)
+	if n <= 0 || x.len == 0 {
+		return 0.0
+	}
+	return blas64.dnrm2(n, x, incx)
 }
 
 @[inline]

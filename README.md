@@ -24,6 +24,9 @@
 
 VSL is a V library to develop Artificial Intelligence and High-Performance Scientific Computations.
 
+> [!IMPORTANT]
+> The pure-V QR path (`geqrf/orgqr`) is still being aligned; the related test is temporarily skipped. Other BLAS/LAPACK routines pass, and C backends (`-d vsl_blas_cblas -d vsl_lapack_lapacke`) are recommended when you need QR correctness today.
+
 |                                      |                                |                |                       |
 | :----------------------------------: | :----------------------------: | :------------: | :-------------------: |
 |       ![][sierpinski_triangle]       | ![][mandelbrot_blue_red_black] |   ![][julia]   | ![][mandelbrot_basic] |

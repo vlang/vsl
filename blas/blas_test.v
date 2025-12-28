@@ -339,15 +339,17 @@ fn test_dswap() {
 
 fn test_dgemv() {
 	for case in gemv_test_cases {
-		// Convert 2D matrix to flat array
+		// Convert 2D matrix to flat array in row-major format (as expected by API, like gonum)
 		mut a_flat := []f64{len: case.m * case.n}
 		for i in 0 .. case.m {
 			for j in 0 .. case.n {
+				// Row-major: a[i * n + j] = case.a[i][j]
 				a_flat[i * case.n + j] = case.a[i][j]
 			}
 		}
 
 		mut y := case.y.clone()
+		// lda should be n (number of columns) for row-major format
 		dgemv(case.trans, case.m, case.n, case.alpha, a_flat, case.n, case.x, 1, case.beta, mut
 			y, 1)
 
@@ -365,17 +367,20 @@ fn test_dger() {
 	y := [1.0, 1.0, 1.0]
 	alpha := 2.0
 
-	// Convert to flat array
+	// Convert to flat array in row-major format (as expected by API, like gonum)
 	mut a_flat := []f64{len: 6}
 	for i in 0 .. 2 {
 		for j in 0 .. 3 {
+			// Row-major: a[i * n + j] = a[i][j]
 			a_flat[i * 3 + j] = a[i][j]
 		}
 	}
 
+	// lda should be n (number of columns) for row-major format
 	dger(2, 3, alpha, x, 1, y, 1, mut a_flat, 3)
 
 	// Expected: A + 2 * [1, 2]^T * [1, 1, 1] = A + 2 * [[1,1,1], [2,2,2]]
+	// In row-major format: [1,2,3, 4,5,6] + 2*[1,1,1, 2,2,2] = [3,4,5, 8,9,10]
 	expected_flat := [3.0, 4.0, 5.0, 8.0, 9.0, 10.0]
 	assert float64.arrays_tolerance(a_flat, expected_flat, test_tol), 'DGER failed: expected ${expected_flat}, got ${a_flat}'
 }
@@ -386,33 +391,37 @@ fn test_dger() {
 
 fn test_dgemm() {
 	for case in gemm_test_cases {
-		// Convert matrices to flat arrays
+		// Convert matrices to flat arrays in row-major format (as expected by API, like gonum)
 		mut a_flat := []f64{len: case.m * case.k}
 		mut b_flat := []f64{len: case.k * case.n}
 		mut c_flat := []f64{len: case.m * case.n}
 
 		for i in 0 .. case.m {
 			for j in 0 .. case.k {
+				// Row-major: a[i * k + j] = case.a[i][j]
 				a_flat[i * case.k + j] = case.a[i][j]
 			}
 		}
 
 		for i in 0 .. case.k {
 			for j in 0 .. case.n {
+				// Row-major: b[i * n + j] = case.b[i][j]
 				b_flat[i * case.n + j] = case.b[i][j]
 			}
 		}
 
 		for i in 0 .. case.m {
 			for j in 0 .. case.n {
+				// Row-major: c[i * n + j] = case.c[i][j]
 				c_flat[i * case.n + j] = case.c[i][j]
 			}
 		}
 
+		// lda, ldb, ldc should be k, n, n respectively for row-major format
 		dgemm(case.trans_a, case.trans_b, case.m, case.n, case.k, case.alpha, a_flat,
 			case.k, b_flat, case.n, case.beta, mut c_flat, case.n)
 
-		// Convert expected result to flat array
+		// Convert expected result to flat array in row-major format
 		mut expected_flat := []f64{len: case.m * case.n}
 		for i in 0 .. case.m {
 			for j in 0 .. case.n {
@@ -427,25 +436,29 @@ fn test_dgemm() {
 fn test_dtrmm() {
 	// Test: Triangular matrix multiplication B := alpha * op(A) * B
 	// Where A is a 3x3 upper triangular matrix, B is 3x2 matrix
-	// Data stored in column-major order as expected by BLAS
+	// Data stored in row-major format (as expected by API, like gonum)
 	alpha := 2.0
 
-	// A is 3x3 upper triangular matrix (column-major storage)
+	// A is 3x3 upper triangular matrix (row-major storage)
 	// Row-major view: [[1, 2, 3], [0, 4, 5], [0, 0, 6]]
-	// Column-major: [1, 0, 0, 2, 4, 0, 3, 5, 6]
-	mut a := [1.0, 0.0, 0.0, 2.0, 4.0, 0.0, 3.0, 5.0, 6.0]
+	// Row-major: [1, 2, 3, 0, 4, 5, 0, 0, 6]
+	mut a := [1.0, 2.0, 3.0, 0.0, 4.0, 5.0, 0.0, 0.0, 6.0]
 
-	// B is 3x2 matrix (column-major storage)
+	// B is 3x2 matrix (row-major storage)
 	// Row-major view: [[1, 2], [3, 4], [5, 6]]
-	// Column-major: [1, 3, 5, 2, 4, 6]
-	// Need to pad to stride=3: [1, 3, 5, 0, 2, 4, 6, 0]
-	mut b := [1.0, 3.0, 5.0, 0.0, 2.0, 4.0, 6.0, 0.0]
+	// Row-major: [1, 2, 3, 4, 5, 6]
+	mut b := [1.0, 2.0, 3.0, 4.0, 5.0, 6.0]
 
 	// Expected result for B := 2.0 * A * B where A is upper triangular
-	// Result verified with CBLAS reference implementation
-	expected := [2.0, 6.0, 5.0, 0.0, 16.0, 4.0, 72.0, 0.0]
+	// B = 2 * [[1,2,3],[0,4,5],[0,0,6]] * [[1,2],[3,4],[5,6]]
+	// Row 0: 2 * [1*1+2*3+3*5, 1*2+2*4+3*6] = 2 * [22, 28] = [44, 56]
+	// Row 1: 2 * [0*1+4*3+5*5, 0*2+4*4+5*6] = 2 * [37, 46] = [74, 92]
+	// Row 2: 2 * [0*1+0*3+6*5, 0*2+0*4+6*6] = 2 * [30, 36] = [60, 72]
+	// In row-major: [44, 56, 74, 92, 60, 72]
+	expected := [44.0, 56.0, 74.0, 92.0, 60.0, 72.0]
 
-	dtrmm(.left, .upper, .no_trans, .non_unit, 3, 2, alpha, a, 3, mut b, 3)
+	// For CBLAS with row-major, lda should be number of columns of A (3), ldb should be number of columns of B (2)
+	dtrmm(.left, .upper, .no_trans, .non_unit, 3, 2, alpha, a, 3, mut b, 2)
 
 	assert float64.arrays_tolerance(b, expected, test_tol), 'DTRMM failed: expected ${expected}, got ${b}'
 }
@@ -457,19 +470,25 @@ fn test_dtrsm() {
 	// Solve A*X = B => X should be [[1, 2], [1, 2]]
 	alpha := 1.0
 
-	// A is 2x2 upper triangular matrix (column-major storage)
-	a := [2.0, 0.0, 1.0, 2.0]
+	// A is 2x2 upper triangular matrix (row-major storage)
+	// Row-major view: [[2, 1], [0, 2]]
+	// Row-major: [2, 1, 0, 2]
+	a := [2.0, 1.0, 0.0, 2.0]
 
-	// B is 2x2 matrix (column-major storage)
-	mut b := [3.0, 2.0, 6.0, 4.0]
+	// B is 2x2 matrix (row-major storage)
+	// Row-major view: [[3, 6], [2, 4]]
+	// Row-major: [3, 6, 2, 4]
+	mut b := [3.0, 6.0, 2.0, 4.0]
 
 	// Store original B to verify the solve
 	original_b := b.clone()
 
+	// lda and ldb should be 2 (number of columns) for row-major format
 	dtrsm(.left, .upper, .no_trans, .non_unit, 2, 2, alpha, a, 2, mut b, 2)
 
-	// Expected result: X = [[1, 2], [1, 2]] = [1, 1, 2, 2] in column-major
-	expected := [1.0, 1.0, 2.0, 2.0]
+	// Expected result: X = [[1, 2], [1, 2]]
+	// In row-major: [1, 2, 1, 2]
+	expected := [1.0, 2.0, 1.0, 2.0]
 
 	// Verify the solve result first
 	assert float64.arrays_tolerance(b, expected, test_tol), 'DTRSM solve failed: expected ${expected}, got ${b}'
@@ -480,11 +499,13 @@ fn test_dtrsm() {
 		for j in 0 .. 2 {
 			mut sum := 0.0
 			for k in i .. 2 { // Upper triangular, so start from i
-				a_val := a[i + k * 2] // A[i,k] in column-major format
-				x_val := b[k + j * 2] // X[k,j] in column-major format
+				// A[i,k] in row-major: a[i * 2 + k]
+				// X[k,j] in row-major: b[k * 2 + j]
+				a_val := a[i * 2 + k]
+				x_val := b[k * 2 + j]
 				sum += a_val * x_val
 			}
-			verification[i + j * 2] = sum
+			verification[i * 2 + j] = sum
 		}
 	}
 
@@ -493,35 +514,38 @@ fn test_dtrsm() {
 
 fn test_dsyr2k() {
 	// Test: Symmetric rank-2k update C := alpha*A*B^T + alpha*B*A^T + beta*C
-	// Using a simple 2x2 case, data stored in column-major order
+	// Using a simple 2x2 case, data stored in row-major format (as expected by API, like gonum)
 	alpha := 2.0
 	beta := 0.5
 
-	// A is 2x2 matrix (column-major storage)
+	// A is 2x2 matrix (row-major storage)
 	// Row-major view: [[1, 2], [3, 4]]
-	// Column-major: [1, 3, 2, 4]
-	a := [1.0, 3.0, 2.0, 4.0]
+	// Row-major: [1, 2, 3, 4]
+	a := [1.0, 2.0, 3.0, 4.0]
 
-	// B is 2x2 matrix (column-major storage)
+	// B is 2x2 matrix (row-major storage)
 	// Row-major view: [[0.5, 1], [1.5, 2]]
-	// Column-major: [0.5, 1.5, 1, 2]
-	b := [0.5, 1.5, 1.0, 2.0]
+	// Row-major: [0.5, 1.0, 1.5, 2.0]
+	b := [0.5, 1.0, 1.5, 2.0]
 
-	// C is 2x2 symmetric matrix (column-major storage)
+	// C is 2x2 symmetric matrix (row-major storage)
 	// Row-major view: [[1, 2], [2, 4]]
-	// Column-major: [1, 2, 2, 4]
+	// Row-major: [1, 2, 2, 4]
 	mut c := [1.0, 2.0, 2.0, 4.0]
 
 	// Calculate expected result:
-	// A*B^T = [[1*0.5+2*1.5, 1*1.0+2*2.0], [3*0.5+4*1.5, 3*1.0+4*2.0]] = [[3.5, 5.0], [7.5, 11.0]]
-	// B*A^T = [[0.5*1+1.0*3, 0.5*2+1.0*4], [1.5*1+2.0*3, 1.5*2+2.0*4]] = [[3.5, 4.5], [7.5, 11.0]]
-	// alpha*(A*B^T + B*A^T) = 2.0*([[3.5, 5.0], [7.5, 11.0]] + [[3.5, 4.5], [7.5, 11.0]])
-	//                       = 2.0*[[7.0, 9.5], [15.0, 22.0]] = [[14.0, 19.0], [30.0, 44.0]]
-	// beta*C = 0.5*[[1.0, 2.0], [2.0, 4.0]] = [[0.5, 1.0], [1.0, 2.0]]
-	// Final: [[14.0+0.5, 19.0+1.0], [30.0+1.0, 44.0+2.0]] = [[14.5, 20.0], [31.0, 46.0]]
-	// In column-major: [14.5, 31.0, 20.0, 46.0]
-	expected := [20.5, 29.0, 2.0, 42.0]
+	// A*B^T = [[1*0.5+2*1.0, 1*1.5+2*2.0], [3*0.5+4*1.0, 3*1.5+4*2.0]] = [[2.5, 5.5], [5.5, 12.5]]
+	// B*A^T = [[0.5*1+1.0*2, 0.5*3+1.0*4], [1.5*1+2.0*2, 1.5*3+2.0*4]] = [[2.5, 5.5], [5.5, 12.5]]
+	// alpha*(A*B^T + B*A^T) = 2.0*([[2.5, 5.5], [5.5, 12.5]] + [[2.5, 5.5], [5.5, 12.5]])
+	//                       = 2.0*[[5.0, 11.0], [11.0, 25.0]] = [[10.0, 22.0], [22.0, 50.0]]
+	// beta*C (upper part only for .upper) = 0.5*[[1.0, 2.0], [0, 4.0]] = [[0.5, 1.0], [0, 2.0]]
+	// Final upper part: [[10.0+0.5, 22.0+1.0], [22.0+0, 50.0+2.0]] = [[10.5, 23.0], [22.0, 52.0]]
+	// For symmetric matrix with .upper, CBLAS only updates upper part (C[0,0], C[0,1], C[1,1])
+	// C[1,0] is not updated by CBLAS, so it remains as the original value (2.0)
+	// Result: [10.5, 23.0, 2.0, 52.0]
+	expected := [10.5, 23.0, 2.0, 52.0]
 
+	// lda, ldb, ldc should be 2 (number of columns) for row-major format
 	dsyr2k(.upper, .no_trans, 2, 2, alpha, a, 2, b, 2, beta, mut c, 2)
 
 	assert float64.arrays_tolerance(c, expected, test_tol), 'DSYR2K failed: expected ${expected}, got ${c}'

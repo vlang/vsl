@@ -19,7 +19,7 @@ pub fn dorgqr(m int, n int, k int, mut a []f64, lda int, tau []f64, mut work []f
 	if k > n {
 		panic(k_gtn)
 	}
-	if lda < math.max(1, n) && lwork != -1 {
+	if lda < math.max(1, m) && lwork != -1 {
 		panic(bad_ld_a)
 	}
 	if lwork < math.max(1, n) && lwork != -1 {

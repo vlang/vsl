@@ -32,7 +32,10 @@ pub fn dgesv(n int, nrhs int, mut a []f64, lda int, mut ipiv []int, mut b []f64,
 	if lda < math.max(1, n) {
 		panic(bad_ld_a)
 	}
-	if ldb < math.max(1, nrhs) {
+	// For column-major format: ldb is the leading dimension (number of rows)
+	// We need ldb >= n (number of rows) and ldb >= nrhs (number of columns)
+	// because dgetrs will call dlaswp with nrhs columns and requires lda >= nrhs
+	if ldb < math.max(1, math.max(n, nrhs)) {
 		panic(bad_ld_b)
 	}
 

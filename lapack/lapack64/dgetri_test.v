@@ -27,11 +27,12 @@ fn test_dgetri_basic() {
 	println('ipiv: ${ipiv}')
 	
 	// Now compute the inverse
-	info := dgetri(3, mut a, 3, mut ipiv)
+	mut work := []f64{len: 9}
+	ok_inv := dgetri(3, mut a, 3, ipiv, mut work, work.len)
 	
-	println('dgetri info: ${info}')
+	println('dgetri ok: ${ok_inv}')
 	
-	if info == 0 {
+	if ok_inv {
 		println('Inverse matrix:')
 		for i in 0..3 {
 			for j in 0..3 {
@@ -41,7 +42,7 @@ fn test_dgetri_basic() {
 		}
 	}
 	
-	assert info == 0, 'dgetri should succeed'
+	assert ok_inv == true, 'dgetri should succeed'
 }
 
 fn test_dgetri_simple() {
@@ -57,8 +58,9 @@ fn test_dgetri_simple() {
 	ok := dgetrf(3, 3, mut a, 3, mut ipiv)
 	assert ok == true, 'dgetrf should succeed for identity'
 	
-	info := dgetri(3, mut a, 3, mut ipiv)
-	assert info == 0, 'dgetri should succeed for identity'
+	mut work := []f64{len: 9}
+	ok_inv := dgetri(3, mut a, 3, ipiv, mut work, work.len)
+	assert ok_inv == true, 'dgetri should succeed for identity'
 	
 	// Result should still be identity
 	expected := [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]

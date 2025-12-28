@@ -13,7 +13,8 @@ pub fn dlaswp(n int, mut a []f64, lda int, k1 int, k2 int, mut ipiv []int, incx 
 	} else if lda < math.max(1, n) {
 		panic(bad_ld_a)
 	} else if a.len < k2 * lda + n {
-		// A must have at least k2+1 rows.
+		// A must have at least k2+1 rows, each with at least n elements
+		// For row k2, we need a[k2*lda] through a[k2*lda + n - 1]
 		panic(short_a)
 	} else if ipiv.len != k2 + 1 {
 		panic(bad_len_ipiv)
