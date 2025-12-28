@@ -1,7 +1,6 @@
 module lapack64
 
 import math
-import vsl.blas
 
 // dgeqr2 computes a QR factorization of the m×n matrix A.
 //

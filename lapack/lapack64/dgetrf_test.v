@@ -1,7 +1,5 @@
 module lapack64
 
-import vsl.float.float64
-
 fn test_dgetrf_basic() {
 	// Test case from Gonum: https://github.com/gonum/gonum/blob/master/lapack/gonum/dgetrf.go
 	// Simple 3x3 matrix

@@ -83,7 +83,9 @@ pub fn dgebal(job BalanceJob, n int, mut a []f64, lda int, mut scale []f64) int 
 	mut swapped := true
 
 	if job == .scale {
-		goto scaling
+		unsafe {
+			goto scaling
+		}
 	}
 
 	// Permutation to isolate eigenvalues if possible.

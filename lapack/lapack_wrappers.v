@@ -1,6 +1,5 @@
 module lapack
 
-import vsl.errors
 import vsl.blas
 import vsl.lapack.lapack64
 import math

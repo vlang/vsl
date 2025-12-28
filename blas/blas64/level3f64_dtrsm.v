@@ -1,6 +1,5 @@
 module blas64
 
-import vsl.float.float64
 import math
 
 // dtrsm solves one of the matrix equations

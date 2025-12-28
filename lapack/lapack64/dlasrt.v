@@ -1,7 +1,5 @@
 module lapack64
 
-import math
-
 // dlasrt sorts the numbers in the input slice d. If s == .increasing,
 // the elements are sorted in increasing order. If s == .decreasing,
 // the elements are sorted in decreasing order. For other values of s dlasrt

@@ -1,7 +1,6 @@
 module blas64
 
 import vsl.float.float64
-import math
 
 // ====================
 // LEVEL 3 BLAS TESTS

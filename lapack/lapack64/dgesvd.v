@@ -1,7 +1,6 @@
 module lapack64
 
 import math
-import vsl.blas
 
 // dgesvd computes the singular value decomposition (SingularValueDecomposition) of a real matrix A.
 pub fn dgesvd(jobu SVDJob, jobvt SVDJob, m int, n int, mut a []f64, lda int, s []f64, mut u []f64, ldu int, mut vt []f64, ldvt int, superb []f64) int {

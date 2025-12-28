@@ -1,7 +1,6 @@
 module lapack64
 
 import math
-import vsl.blas
 
 pub fn dorgqr(m int, n int, k int, mut a []f64, lda int, tau []f64, mut work []f64, lwork int) {
 	if m < 0 {

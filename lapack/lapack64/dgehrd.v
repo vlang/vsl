@@ -1,7 +1,6 @@
 module lapack64
 
 import math
-import vsl.blas
 
 // dgehrd reduces a general real matrix A to upper Hessenberg form H by an orthogonal similarity transformation.
 pub fn dgehrd(n int, ilo int, ihi int, mut a []f64, lda int, tau []f64) int {

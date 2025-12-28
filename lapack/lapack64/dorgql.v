@@ -1,7 +1,6 @@
 module lapack64
 
 import math
-import vsl.blas
 
 // dorgql generates the m×n matrix Q with orthonormal columns defined as the
 // last n columns of a product of k elementary reflectors of order m

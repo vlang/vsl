@@ -1,7 +1,6 @@
 module lapack64
 
 import math
-import vsl.blas
 
 // dgesv computes the solution to a real system of linear equations
 //
