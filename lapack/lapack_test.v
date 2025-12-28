@@ -457,7 +457,6 @@ fn test_geqrf_orgqr() {
 	// TODO: fix this test
 
 	$if false {
-
 		// Test QR factorization on various matrix sizes
 		test_cases := [
 			[3, 3], // Square matrix
@@ -505,7 +504,6 @@ fn test_geqrf_orgqr() {
 			qr_product := matrix_multiply(a, r)
 			assert nearly_equal_matrix(qr_product, a_original, test_tolerance), 'QR: Q*R != A for ${m}x${n}'
 		}
-
 	}
 }
 

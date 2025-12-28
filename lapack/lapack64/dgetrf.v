@@ -67,7 +67,7 @@ pub fn dgetrf(m int, n int, mut a []f64, lda int, mut ipiv []int) bool {
 		}
 
 		for i := j; i <= math.min(m - 1, j + jb - 1); i++ {
-			ipiv[i] = j + ipiv[i]  // Convert from relative to absolute 0-based indices
+			ipiv[i] = j + ipiv[i] // Convert from relative to absolute 0-based indices
 		}
 
 		// apply interchanges to columns 1..j-1.
@@ -86,8 +86,9 @@ pub fn dgetrf(m int, n int, mut a []f64, lda int, mut ipiv []int) bool {
 
 			if j + jb < m {
 				mut slice4 := unsafe { a[(j + jb) * lda + j + jb..] }
-				blas.cm_dgemm(.no_trans, .no_trans, m - j - jb, n - j - jb, jb, -1, a[(j + jb) * lda +
-					j..], lda, a[j * lda + j + jb..], lda, 1, mut slice4, lda)
+				blas.cm_dgemm(.no_trans, .no_trans, m - j - jb, n - j - jb, jb, -1, a[(j +
+					jb) * lda + j..], lda, a[j * lda + j + jb..], lda, 1, mut slice4,
+					lda)
 			}
 		}
 	}

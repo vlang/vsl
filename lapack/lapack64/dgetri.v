@@ -78,8 +78,8 @@ pub fn dgetri(n int, mut a []f64, lda int, ipiv []int, mut work []f64, lwork int
 				mut a_col := unsafe { a[j..] }
 				mut work_vec := unsafe { work[j + 1..] }
 				mut a_right := unsafe { a[(j + 1)..] }
-				blas.dgemv(.no_trans, n, n - j - 1, -1.0, a_right, lda, work_vec, 1, 1.0,
-					mut a_col, lda)
+				blas.dgemv(.no_trans, n, n - j - 1, -1.0, a_right, lda, work_vec, 1, 1.0, mut
+					a_col, lda)
 			}
 		}
 	} else {
@@ -105,8 +105,8 @@ pub fn dgetri(n int, mut a []f64, lda int, ipiv []int, mut work []f64, lwork int
 			}
 			mut a_col := unsafe { a[j..] }
 			mut work_block := unsafe { work[j * ldwork..] }
-			blas.dtrsm(.right, .lower, .no_trans, .unit, n, jb, 1.0, work_block, ldwork,
-				mut a_col, lda)
+			blas.dtrsm(.right, .lower, .no_trans, .unit, n, jb, 1.0, work_block, ldwork, mut
+				a_col, lda)
 		}
 	}
 	// Apply column interchanges.

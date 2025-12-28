@@ -60,4 +60,3 @@ pub fn dlacpy(uplo blas.Uplo, m int, n int, a []f64, lda int, mut b []f64, ldb i
 		}
 	}
 }
-

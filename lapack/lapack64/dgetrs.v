@@ -57,7 +57,8 @@ pub fn dgetrs(trans blas.Transpose, n int, nrhs int, mut a []f64, lda int, mut i
 		// Solve L * X = B, overwriting B with X.
 		blas.cm_dtrsm(.left, .lower, .no_trans, .unit, n, nrhs, 1, a, lda, mut b, ldb)
 		// Solve U * X = B, overwriting B with X.
-		blas.cm_dtrsm(.left, .upper, .no_trans, .non_unit, n, nrhs, 1, a, lda, mut b, ldb)
+		blas.cm_dtrsm(.left, .upper, .no_trans, .non_unit, n, nrhs, 1, a, lda, mut b,
+			ldb)
 		return
 	}
 

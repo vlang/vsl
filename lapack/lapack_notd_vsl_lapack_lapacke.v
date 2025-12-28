@@ -177,8 +177,8 @@ pub fn dgesvd(jobu SVDJob, jobvt SVDJob, m int, n int, mut a []f64, lda int, s [
 			}
 		}
 	}
-	info := lapack64.dgesvd(to_lapack64_svd_job(jobu), to_lapack64_svd_job(jobvt), m, n, mut
-		a_col, m, s, mut u_col, m, mut vt_col, n, superb)
+	info := lapack64.dgesvd(to_lapack64_svd_job(jobu), to_lapack64_svd_job(jobvt), m,
+		n, mut a_col, m, s, mut u_col, m, mut vt_col, n, superb)
 	// Convert back to row-major
 	for i in 0 .. m {
 		for j in 0 .. n {

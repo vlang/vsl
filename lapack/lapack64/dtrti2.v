@@ -69,4 +69,3 @@ pub fn dtrti2(uplo blas.Uplo, diag blas.Diagonal, n int, mut a []f64, lda int) {
 		}
 	}
 }
-

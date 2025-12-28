@@ -66,7 +66,8 @@ pub fn idamax(n int, x []f64, incx int) int {
 // The Pure V backend (blas64) also expects row-major format, so no conversion is needed.
 @[inline]
 pub fn dgemv(trans Transpose, m int, n int, alpha f64, a []f64, lda int, x []f64, incx int, beta f64, mut y []f64, incy int) {
-	blas64.dgemv(to_blas64_transpose(trans), m, n, alpha, a, lda, x, incx, beta, mut y, incy)
+	blas64.dgemv(to_blas64_transpose(trans), m, n, alpha, a, lda, x, incx, beta, mut y,
+		incy)
 }
 
 // dger performs the rank-1 update of a matrix.
@@ -108,8 +109,8 @@ pub fn dsyr2(uplo Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, 
 // The Pure V backend (blas64) also expects row-major format, so no conversion is needed.
 @[inline]
 pub fn dgemm(trans_a Transpose, trans_b Transpose, m int, n int, k int, alpha f64, a []f64, lda int, b []f64, ldb int, beta f64, mut cc []f64, ldc int) {
-	blas64.dgemm(to_blas64_transpose(trans_a), to_blas64_transpose(trans_b), m, n, k, alpha, a,
-		lda, b, ldb, beta, mut cc, ldc)
+	blas64.dgemm(to_blas64_transpose(trans_a), to_blas64_transpose(trans_b), m, n, k,
+		alpha, a, lda, b, ldb, beta, mut cc, ldc)
 }
 
 // dgbmv performs a matrix-vector multiplication with a band matrix.

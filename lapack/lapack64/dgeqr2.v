@@ -70,9 +70,9 @@ pub fn dgeqr2(m int, n int, mut a []f64, lda int, mut tau []f64, mut work []f64)
 			a[i * lda + i] = 1.0
 			mut a_slice := unsafe { a[i * lda + i..] }
 			mut a_right := unsafe { a[i * lda + i + 1..] }
-			dlarf(.left, m - i, n - i - 1, a_slice, lda, tau[i], mut a_right, lda, mut work)
+			dlarf(.left, m - i, n - i - 1, a_slice, lda, tau[i], mut a_right, lda, mut
+				work)
 			a[i * lda + i] = aii
 		}
 	}
 }
-

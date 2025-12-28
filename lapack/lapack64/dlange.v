@@ -83,4 +83,3 @@ pub fn dlange(norm MatrixNorm, m int, n int, a []f64, lda int, mut work []f64) f
 		}
 	}
 }
-

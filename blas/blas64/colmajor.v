@@ -97,7 +97,11 @@ pub fn cm_dgemm(trans_a Transpose, trans_b Transpose, m int, n int, k int, alpha
 			}
 			mut aval_idx := if trans_a == .no_trans { l * lda } else { l }
 			for i in 0 .. m {
-				mut aval := if trans_a == .no_trans { a[i + aval_idx] } else { a[aval_idx + i * lda] }
+				mut aval := if trans_a == .no_trans {
+					a[i + aval_idx]
+				} else {
+					a[aval_idx + i * lda]
+				}
 				c[i + j * ldc] += alpha * aval * bval
 			}
 		}
@@ -316,4 +320,3 @@ pub fn cm_dtrsm(side Side, uplo Uplo, trans_a Transpose, diag Diagonal, m int, n
 		}
 	}
 }
-

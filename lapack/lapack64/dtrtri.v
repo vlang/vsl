@@ -49,9 +49,10 @@ pub fn dtrtri(uplo blas.Uplo, diag blas.Diagonal, n int, mut a []f64, lda int) b
 			jb := math.min(nb, n - j)
 			mut a_block := unsafe { a[j..] }
 			mut a_diag := unsafe { a[j * lda + j..] }
-			blas.dtrmm(.left, .upper, .no_trans, diag, j, jb, 1.0, a, lda, mut a_block, lda)
-			blas.dtrsm(.right, .upper, .no_trans, diag, j, jb, -1.0, a_diag, lda, mut a_block,
+			blas.dtrmm(.left, .upper, .no_trans, diag, j, jb, 1.0, a, lda, mut a_block,
 				lda)
+			blas.dtrsm(.right, .upper, .no_trans, diag, j, jb, -1.0, a_diag, lda, mut
+				a_block, lda)
 			dtrti2(.upper, diag, jb, mut a_diag, lda)
 		}
 		return true
@@ -63,14 +64,13 @@ pub fn dtrtri(uplo blas.Uplo, diag blas.Diagonal, n int, mut a []f64, lda int) b
 			mut a_right := unsafe { a[(j + jb) * lda + j + jb..] }
 			mut a_block := unsafe { a[(j + jb) * lda + j..] }
 			mut a_diag := unsafe { a[j * lda + j..] }
-			blas.dtrmm(.left, .lower, .no_trans, diag, n - j - jb, jb, 1.0, a_right, lda,
-				mut a_block, lda)
-			blas.dtrsm(.right, .lower, .no_trans, diag, n - j - jb, jb, -1.0, a_diag, lda,
-				mut a_block, lda)
+			blas.dtrmm(.left, .lower, .no_trans, diag, n - j - jb, jb, 1.0, a_right, lda, mut
+				a_block, lda)
+			blas.dtrsm(.right, .lower, .no_trans, diag, n - j - jb, jb, -1.0, a_diag,
+				lda, mut a_block, lda)
 		}
 		mut a_diag := unsafe { a[j * lda + j..] }
 		dtrti2(.lower, diag, jb, mut a_diag, lda)
 	}
 	return true
 }
-

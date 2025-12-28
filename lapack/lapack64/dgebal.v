@@ -91,8 +91,8 @@ pub fn dgebal(job BalanceJob, n int, mut a []f64, lda int, mut scale []f64) int 
 	// Search for rows isolating an eigenvalue and push them down.
 	for swapped {
 		swapped = false
-	rows:
-		for i := ihi; i >= 0; i-- {
+
+		rows: for i := ihi; i >= 0; i-- {
 			for j := 0; j <= ihi; j++ {
 				if i == j {
 					continue
@@ -125,8 +125,8 @@ pub fn dgebal(job BalanceJob, n int, mut a []f64, lda int, mut scale []f64) int 
 	swapped = true
 	for swapped {
 		swapped = false
-	columns:
-		for j := ilo; j <= ihi; j++ {
+
+		columns: for j := ilo; j <= ihi; j++ {
 			for i := ilo; i <= ihi; i++ {
 				if i == j {
 					continue
@@ -152,8 +152,7 @@ pub fn dgebal(job BalanceJob, n int, mut a []f64, lda int, mut scale []f64) int 
 		}
 	}
 
-scaling:
-	for i := ilo; i <= ihi; i++ {
+	scaling: for i := ilo; i <= ihi; i++ {
 		scale[i] = 1.0
 	}
 
@@ -198,7 +197,8 @@ scaling:
 			mut g := r / sclfac
 			mut f := 1.0
 			s := c + r
-			for c < g && math.max(f, math.max(c, ca)) < sfmax2 && math.min(r, math.min(g, ra)) > sfmin2 {
+			for c < g && math.max(f, math.max(c, ca)) < sfmax2
+				&& math.min(r, math.min(g, ra)) > sfmin2 {
 				if math.is_nan(c + f + ca + r + g + ra) {
 					// Panic if NaN to avoid infinite loop.
 					panic('lapack: NaN')
@@ -211,7 +211,8 @@ scaling:
 				ra /= sclfac
 			}
 			g = c / sclfac
-			for r <= g && math.max(r, ra) < sfmax2 && math.min(math.min(f, c), math.min(g, ca)) > sfmin2 {
+			for r <= g && math.max(r, ra) < sfmax2
+				&& math.min(math.min(f, c), math.min(g, ca)) > sfmin2 {
 				f /= sclfac
 				c /= sclfac
 				ca /= sclfac

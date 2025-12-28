@@ -30,7 +30,7 @@ pub fn dgetf2(m int, n int, mut a []f64, lda int, mut ipiv []int) bool {
 	for j := 0; j < mn; j++ {
 		// Find a pivot and test for singularity.
 		jp := j + blas.idamax(m - j, a[j * lda + j..], lda)
-		ipiv[j] = jp  // Store 0-based pivot index
+		ipiv[j] = jp // Store 0-based pivot index
 		if a[jp * lda + j] == 0.0 {
 			ok = false
 		} else {

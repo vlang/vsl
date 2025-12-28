@@ -32,49 +32,49 @@ pub fn dpotf2(ul blas.Uplo, n int, mut a []f64, lda int) bool {
 
 	if ul == .upper {
 		for j := 0; j < n; j++ {
-			mut ajj := a[j*lda + j]
+			mut ajj := a[j * lda + j]
 			// subtract dot product of current column up to j-1
 			for k in 0 .. j {
-				val := a[k + j*lda]
+				val := a[k + j * lda]
 				ajj -= val * val
 			}
 			if ajj <= 0 || math.is_nan(ajj) {
-				a[j*lda + j] = ajj
+				a[j * lda + j] = ajj
 				return false
 			}
 			ajj = math.sqrt(ajj)
-			a[j*lda + j] = ajj
-			if j < n-1 {
-				for k in j+1 .. n {
-					mut val := a[j + k*lda]
+			a[j * lda + j] = ajj
+			if j < n - 1 {
+				for k in j + 1 .. n {
+					mut val := a[j + k * lda]
 					for i in 0 .. j {
-						val -= a[i + j*lda] * a[i + k*lda]
+						val -= a[i + j * lda] * a[i + k * lda]
 					}
-					a[j + k*lda] = val / ajj
+					a[j + k * lda] = val / ajj
 				}
 			}
 		}
 		return true
 	}
 	for j := 0; j < n; j++ {
-		mut ajj := a[j*lda + j]
+		mut ajj := a[j * lda + j]
 		for k in 0 .. j {
-			val := a[j*lda + k]
+			val := a[j * lda + k]
 			ajj -= val * val
 		}
 		if ajj <= 0 || math.is_nan(ajj) {
-			a[j*lda + j] = ajj
+			a[j * lda + j] = ajj
 			return false
 		}
 		ajj = math.sqrt(ajj)
-		a[j*lda + j] = ajj
-		if j < n-1 {
-			for k in j+1 .. n {
-				mut val := a[k*lda + j]
+		a[j * lda + j] = ajj
+		if j < n - 1 {
+			for k in j + 1 .. n {
+				mut val := a[k * lda + j]
 				for i in 0 .. j {
-					val -= a[k*lda + i] * a[j*lda + i]
+					val -= a[k * lda + i] * a[j * lda + i]
 				}
-				a[k*lda + j] = val / ajj
+				a[k * lda + j] = val / ajj
 			}
 		}
 	}
