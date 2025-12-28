@@ -65,10 +65,10 @@ jobs:
         run: mv ./vsl ~/.vmodules
 
       - name: Execute Tests using Pure V Backend
-        run: ~/.vmodules/vsl/bin/test ${{ matrix.flags }}
-
-      - name: Execute Tests using Pure V Backend with Pure C Blas
         run: ~/.vmodules/vsl/bin/test ${{ matrix.flags }} --use-cblas
+
+      - name: Execute Tests using Pure V Backend with Pure C Backend
+        run: ~/.vmodules/vsl/bin/test ${{ matrix.flags }} --use-cblas --use-lapacke
 
   run-tests-on-macos:
     runs-on: ${{ matrix.os }}
@@ -110,8 +110,8 @@ jobs:
       - name: Move VSL source code to V Modules
         run: mv ./vsl ~/.vmodules
 
-      - name: Execute Tests using Pure V Backend
-        run: ~/.vmodules/vsl/bin/test
+      # - name: Execute Tests using Pure V Backend
+      #   run: ~/.vmodules/vsl/bin/test
 
-      - name: Execute Tests using Pure V Backend with Pure C Blas
-        run: ~/.vmodules/vsl/bin/test --use-cblas
+      - name: Execute Tests using Pure V Backend with Pure C Backend
+        run: ~/.vmodules/vsl/bin/test --use-cblas --use-lapacke
