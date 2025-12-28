@@ -2,7 +2,7 @@ module lapack
 
 #flag linux -O2 -I/usr/local/include -I/usr/lib -I/usr/include
 #flag linux -L/usr/local/lib -L/usr/lib
-#flag linux -llapacke -lopenblas
+#flag linux -llapacke
 #flag windows -O2
 #flag windows -lgfortran
 // Intel, M1 brew, and MacPorts
