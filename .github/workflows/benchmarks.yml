@@ -1,0 +1,219 @@
+name: VSL Performance Benchmarks
+
+concurrency:
+  group: benchmarks-${{ github.event.number }}
+  cancel-in-progress: true
+
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+  # Run on schedule (weekly on Monday at 2 AM UTC)
+  schedule:
+    - cron: '0 2 * * 1'
+
+  # Run on pushes to main and release branches
+  push:
+    branches:
+      - main
+      - 'release/**'
+
+  # Run on pull requests
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  run-benchmarks-linux:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-24.04
+          - ubuntu-22.04
+        backend:
+          - name: "Pure V"
+            id: "pure_v"
+            flags: ""
+          - name: "Pure V BLAS + LAPACKE"
+            id: "pure_v_blas_lapacke"
+            flags: "-d vsl_lapack_lapacke"
+          - name: "OpenBLAS + Pure V LAPACK"
+            id: "openblas_pure_v_lapack"
+            flags: "-d vsl_blas_cblas"
+          - name: "OpenBLAS + LAPACKE"
+            id: "openblas_lapacke"
+            flags: "-d vsl_blas_cblas -d vsl_lapack_lapacke"
+
+    steps:
+      - name: Checkout VSL
+        uses: actions/checkout@v4
+        with:
+          path: vsl
+
+      - name: Setup V
+        uses: vlang/setup-v@v1.3
+        with:
+          check-latest: true
+
+      - name: V doctor
+        run: v doctor
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update && \
+          sudo apt-get install --quiet -y --no-install-recommends \
+            gfortran \
+            libxi-dev \
+            libxcursor-dev \
+            mesa-common-dev \
+            liblapacke-dev \
+            libopenblas-dev \
+            libgc-dev \
+            libgl1-mesa-dev \
+            libopenmpi-dev \
+            libhdf5-dev \
+            hdf5-tools \
+            opencl-headers
+
+      - name: Move VSL source code to V Modules
+        run: mv ./vsl ~/.vmodules
+
+      - name: Run BLAS Benchmarks (${{ matrix.backend.name }})
+        run: |
+          echo "=========================================="
+          echo "Running BLAS benchmarks"
+          echo "Backend: ${{ matrix.backend.name }}"
+          echo "Flags: ${{ matrix.backend.flags }}"
+          echo "OS: ${{ matrix.os }}"
+          echo "=========================================="
+          cd ~/.vmodules && \
+          v ${{ matrix.backend.flags }} run vsl/benchmarks/blas_bench.v 2>&1 | tee blas_bench_${{ matrix.backend.id }}.log
+
+      - name: Run LAPACK Benchmarks (${{ matrix.backend.name }})
+        run: |
+          echo "=========================================="
+          echo "Running LAPACK benchmarks"
+          echo "Backend: ${{ matrix.backend.name }}"
+          echo "Flags: ${{ matrix.backend.flags }}"
+          echo "OS: ${{ matrix.os }}"
+          echo "=========================================="
+          cd ~/.vmodules && \
+          v ${{ matrix.backend.flags }} run vsl/benchmarks/lapack_bench.v 2>&1 | tee lapack_bench_${{ matrix.backend.id }}.log
+
+      - name: Run Backend Comparison (${{ matrix.backend.name }})
+        run: |
+          echo "=========================================="
+          echo "Running backend comparison"
+          echo "Backend: ${{ matrix.backend.name }}"
+          echo "Flags: ${{ matrix.backend.flags }}"
+          echo "OS: ${{ matrix.os }}"
+          echo "=========================================="
+          cd ~/.vmodules && \
+          v ${{ matrix.backend.flags }} run vsl/benchmarks/compare_backends.v 2>&1 | tee compare_backends_${{ matrix.backend.id }}.log
+
+      - name: Upload benchmark results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-results-${{ matrix.os }}-${{ matrix.backend.id }}
+          path: |
+            ~/.vmodules/blas_bench_${{ matrix.backend.id }}.log
+            ~/.vmodules/lapack_bench_${{ matrix.backend.id }}.log
+            ~/.vmodules/compare_backends_${{ matrix.backend.id }}.log
+          retention-days: 30
+
+  run-benchmarks-macos:
+    runs-on: macos-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        backend:
+          - name: "Pure V"
+            id: "pure_v"
+            flags: ""
+          - name: "Pure V BLAS + LAPACKE"
+            id: "pure_v_blas_lapacke"
+            flags: "-d vsl_lapack_lapacke"
+          - name: "OpenBLAS + Pure V LAPACK"
+            id: "openblas_pure_v_lapack"
+            flags: "-d vsl_blas_cblas"
+          - name: "OpenBLAS + LAPACKE"
+            id: "openblas_lapacke"
+            flags: "-d vsl_blas_cblas -d vsl_lapack_lapacke"
+
+    steps:
+      - name: Checkout VSL
+        uses: actions/checkout@v4
+        with:
+          path: vsl
+
+      - name: Setup V
+        uses: vlang/setup-v@v1.3
+        with:
+          check-latest: true
+
+      - name: V doctor
+        run: v doctor
+
+      - name: Install dependencies
+        run: |
+          brew install coreutils
+          brew install gcc
+          brew install libomp
+          brew install hdf5
+          brew install open-mpi
+          brew install openblas
+          brew install lapack
+          brew install opencl-headers
+
+      - name: Move VSL source code to V Modules
+        run: mv ./vsl ~/.vmodules
+
+      - name: Run BLAS Benchmarks (${{ matrix.backend.name }})
+        run: |
+          echo "=========================================="
+          echo "Running BLAS benchmarks"
+          echo "Backend: ${{ matrix.backend.name }}"
+          echo "Flags: ${{ matrix.backend.flags }}"
+          echo "OS: macOS"
+          echo "=========================================="
+          cd ~/.vmodules && \
+          v ${{ matrix.backend.flags }} run vsl/benchmarks/blas_bench.v 2>&1 | tee blas_bench_${{ matrix.backend.id }}.log
+
+      - name: Run LAPACK Benchmarks (${{ matrix.backend.name }})
+        run: |
+          echo "=========================================="
+          echo "Running LAPACK benchmarks"
+          echo "Backend: ${{ matrix.backend.name }}"
+          echo "Flags: ${{ matrix.backend.flags }}"
+          echo "OS: macOS"
+          echo "=========================================="
+          cd ~/.vmodules && \
+          v ${{ matrix.backend.flags }} run vsl/benchmarks/lapack_bench.v 2>&1 | tee lapack_bench_${{ matrix.backend.id }}.log
+
+      - name: Run Backend Comparison (${{ matrix.backend.name }})
+        run: |
+          echo "=========================================="
+          echo "Running backend comparison"
+          echo "Backend: ${{ matrix.backend.name }}"
+          echo "Flags: ${{ matrix.backend.flags }}"
+          echo "OS: macOS"
+          echo "=========================================="
+          cd ~/.vmodules && \
+          v ${{ matrix.backend.flags }} run vsl/benchmarks/compare_backends.v 2>&1 | tee compare_backends_${{ matrix.backend.id }}.log
+
+      - name: Upload benchmark results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-results-macos-${{ matrix.backend.id }}
+          path: |
+            ~/.vmodules/blas_bench_${{ matrix.backend.id }}.log
+            ~/.vmodules/lapack_bench_${{ matrix.backend.id }}.log
+            ~/.vmodules/compare_backends_${{ matrix.backend.id }}.log
+          retention-days: 30
+

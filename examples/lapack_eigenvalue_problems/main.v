@@ -27,17 +27,14 @@ fn main() {
 	mut a_col := row_to_col_major(a_row)
 	n := 3
 
-	// Query workspace size
+	// Compute eigenvalues and eigenvectors (public API handles work array internally)
 	mut w := []f64{len: n}
-	mut work := []f64{len: 1}
-	mut lwork := -1
+	info := lapack.dsyev(.ev_compute, .upper, n, mut a_col, n, mut w)
 
-	lapack.dsyev(.ev_compute, .upper, n, mut a_col.clone(), n, mut w, mut work, lwork)
-	lwork = int(work[0])
-	work = []f64{len: lwork}
-
-	// Compute eigenvalues and eigenvectors
-	lapack.dsyev(.ev_compute, .upper, n, mut a_col, n, mut w, mut work, lwork)
+	if info != 0 {
+		println('Error computing eigenvalues: info = ${info}')
+		return
+	}
 
 	println('\nEigenvalues (in ascending order):')
 	for i, eigenval in w {
@@ -64,10 +61,8 @@ fn main() {
 		mut av := []f64{len: n}
 		blas.dgemv(.no_trans, n, n, 1.0, a_flat, n, v, 1, 0.0, mut av, 1)
 
-		// Compute λ * v
-		mut lambda_v := []f64{len: n}
-		blas.dscal(n, w[i], mut lambda_v, 1)
-		blas.dcopy(n, v, 1, mut lambda_v, 1)
+		// Compute λ * v (copy v first, then scale)
+		mut lambda_v := v.clone()
 		blas.dscal(n, w[i], mut lambda_v, 1)
 
 		println('  For eigenvalue λ${i + 1} = ${w[i]:.6f}:')

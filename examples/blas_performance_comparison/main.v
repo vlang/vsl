@@ -45,8 +45,8 @@ fn main() {
 			blas.dgemv(.no_trans, m, n, 1.0, a_flat, n, x_vec, 1, 0.0, mut y_vec, 1)
 			b.stop()
 		}
-		avg_time = b.total() / f64(iterations)
-		gflops := calculate_gflops_gemv(m, n, avg_time)
+		avg_time = f64(b.total_duration()) / f64(iterations)
+		mut gflops := calculate_gflops_gemv(m, n, avg_time)
 		println('${'dgemv':-20} | ${'${m}x${n}':-15} | ${format_time(avg_time):-20} | ${'${gflops:.2f}':-15}')
 
 		// Level 3: Matrix-matrix multiply
@@ -64,7 +64,7 @@ fn main() {
 				n, 0.0, mut c_flat_mat, n)
 			b.stop()
 		}
-		avg_time = b.total() / f64(iterations)
+		avg_time = f64(b.total_duration()) / f64(iterations)
 		gflops = calculate_gflops_gemm(m, n, k, avg_time)
 		println('${'dgemm':-20} | ${'${m}x${n}x${k}':-15} | ${format_time(avg_time):-20} | ${'${gflops:.2f}':-15}')
 	}
@@ -80,7 +80,7 @@ fn main() {
 fn random_vector(n int) []f64 {
 	mut v := []f64{len: n}
 	for i in 0 .. n {
-		v[i] = rand.f64_in_range(-1.0, 1.0)
+		v[i] = rand.f64_in_range(-1.0, 1.0) or { 0.0 }
 	}
 	return v
 }
