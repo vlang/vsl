@@ -1,6 +1,5 @@
 module lapack
 
-import vsl.errors
 import vsl.blas
 
 fn C.LAPACKE_dgesv(matrix_layout blas.MemoryLayout, n int, nrhs int, a &f64, lda int, ipiv &int, b &f64, ldb int) int

@@ -139,32 +139,21 @@ fn benchmark_eigenvalue(config benchmark_util.BenchmarkConfig) {
 		n := size
 
 		// dsyev - symmetric eigenvalue decomposition
+		// Use public API that works with both pure V and LAPACKE backends
 		a_sym := benchmark_util.random_symmetric(n)
-		mut w := []f64{len: n}
-		mut work := []f64{len: 1}
-		mut lwork := -1
-
-		// Query workspace size
-		lapack.dsyev(.ev_compute, .upper, n, mut a_sym.clone(), n, mut w, mut work, lwork)
-		lwork = int(work[0])
-		work = []f64{len: lwork}
 
 		mut bench := benchmark.new_benchmark()
 		for _ in 0 .. config.warmup_runs {
 			mut a_warmup := benchmark_util.random_symmetric(n)
 			mut w_warmup := []f64{len: n}
-			mut work_warmup := []f64{len: lwork}
-			lapack.dsyev(.ev_compute, .upper, n, mut a_warmup, n, mut w_warmup, mut work_warmup,
-				lwork)
+			lapack.dsyev(.ev_compute, .upper, n, mut a_warmup, n, mut w_warmup)
 		}
 		bench.step()
 		for _ in 0 .. config.iterations {
 			mut a_copy := a_sym.clone()
 			mut w_copy := []f64{len: n}
-			mut work_copy := []f64{len: lwork}
 			bench.step()
-			lapack.dsyev(.ev_compute, .upper, n, mut a_copy, n, mut w_copy, mut work_copy,
-				lwork)
+			lapack.dsyev(.ev_compute, .upper, n, mut a_copy, n, mut w_copy)
 			bench.stop()
 		}
 		mut avg_time := f64(bench.total_duration()) / f64(config.iterations)
