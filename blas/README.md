@@ -18,7 +18,9 @@ The pure V BLAS implementation is **stable and production-ready**, offering:
 
 ### Performance
 
-The pure V implementation delivers excellent performance across a wide range of problem sizes. Benchmark results demonstrate competitive performance with optimized C backends while maintaining zero-dependency operation.
+The pure V implementation delivers excellent performance across a wide range of
+problem sizes. Benchmark results demonstrate competitive performance with
+optimized C backends while maintaining zero-dependency operation.
 
 Run benchmarks to see performance characteristics:
 

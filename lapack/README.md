@@ -19,7 +19,9 @@ The pure V LAPACK implementation is **stable and production-ready**, offering:
 
 ### Performance
 
-The pure V implementation delivers excellent performance while maintaining numerical stability. Benchmark results demonstrate competitive performance with C backends.
+The pure V implementation delivers excellent performance while maintaining
+numerical stability. Benchmark results demonstrate competitive performance with
+C backends.
 
 Run benchmarks to see performance characteristics:
 

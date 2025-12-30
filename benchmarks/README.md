@@ -1,10 +1,13 @@
 # VSL Performance Benchmarks
 
-This directory contains comprehensive performance benchmarks for VSL's pure V BLAS and LAPACK implementations.
+This directory contains comprehensive performance benchmarks for VSL's pure V BLAS
+and LAPACK implementations.
 
 ## Overview
 
-The benchmark suite demonstrates the performance characteristics of VSL's pure V implementations compared to C backends (OpenBLAS/LAPACKE). All benchmarks use V's built-in `benchmark` module for accurate timing measurements.
+The benchmark suite demonstrates the performance characteristics of VSL's pure V
+implementations compared to C backends (OpenBLAS/LAPACKE). All benchmarks use V's
+built-in `benchmark` module for accurate timing measurements.
 
 ## Running Benchmarks
 

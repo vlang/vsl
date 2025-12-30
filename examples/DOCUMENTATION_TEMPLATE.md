@@ -29,6 +29,7 @@ Each example should contain:
 - V compiler installed ([download here](https://vlang.io))
 - VSL library installed ([installation guide](https://github.com/vlang/vsl#-installation--quick-start))
 - [Any additional system dependencies]
+- [Recommended: Link to relevant tutorial if applicable]
 
 ## 🚀 Running the Example
 
@@ -41,22 +42,30 @@ v run main.v
 
 # Alternative with flags (if needed)
 v -cflags [flags] run main.v
+# Or with backend flags
+v -d vsl_blas_cblas run main.v
 ```
-````
 
 ## 📊 Expected Output
 
 [Describe what users should expect to see when running the example]
 
-- [Output type 1: e.g., generated plot]
-- [Output type 2: e.g., console output]
+- [Output type 1: e.g., generated plot with description]
+- [Output type 2: e.g., console output with sample]
 - [Output type 3: e.g., created files]
 
 ## 🔍 Code Walkthrough
 
 ### [Section 1: e.g., Data Preparation]
 
-[Explain this part of the code and its purpose]
+[Explain this part of the code and its purpose with code snippets]
+
+```v
+// Example code snippet with explanation
+code_here()
+```
+
+[Explanation of what the code does and why]
 
 ### [Section 2: e.g., Algorithm Implementation]
 
@@ -66,19 +75,36 @@ v -cflags [flags] run main.v
 
 [Explain this part of the code and its purpose]
 
+## 📐 Mathematical Background
+
+[Optional but recommended section explaining the mathematical/theoretical concepts]
+
+### [Concept 1]
+
+[Mathematical explanation, formulas, or theory]
+
+### [Concept 2]
+
+[Additional mathematical details]
+
 ## 🎨 Experiment Ideas
 
 Try modifying the example to:
 
-- [Suggestion 1]
-- [Suggestion 2]
-- [Suggestion 3]
+- [Suggestion 1 with specific guidance]
+- [Suggestion 2 with expected outcome]
+- [Suggestion 3 with learning objective]
 
 ## 📚 Related Examples
 
+- `[example_name]` - [Brief description and why it's related]
 - `[example_name]` - [Brief description]
 - `[example_name]` - [Brief description]
-- `[example_name]` - [Brief description]
+
+## 📖 Related Tutorials
+
+- [Tutorial Name](../../docs/category/tutorial.md) - [Why it's relevant]
+- [Another Tutorial](../../docs/category/tutorial.md) - [Relevance]
 
 ## 🔬 Technical Details
 
@@ -86,8 +112,32 @@ Try modifying the example to:
 
 **Key VSL Components:**
 
-- `[module.function()]` - [Description]
-- `[module.struct]` - [Description]
+- `[module.function()]` - [Description and usage]
+- `[module.struct]` - [Description and when to use]
+
+**Performance Notes:**
+
+- [Any performance considerations]
+- [Optimization tips if applicable]
+
+## 🐛 Troubleshooting
+
+**Common Issue 1**: [Description]
+- Solution: [How to fix]
+
+**Common Issue 2**: [Description]
+- Solution: [How to fix]
+
+**Module errors**: Verify VSL installation with `v list` command
+
+**Build failures**: Check V compiler version compatibility
+
+**Plot doesn't open**: Ensure web browser is installed and set as default
+
+---
+
+Happy coding! Explore more VSL examples in the [examples directory](../).
+````
 
 **Performance Notes:**
 
@@ -130,22 +180,21 @@ module main
 
 // Brief description of what this example demonstrates
 // Include any important notes about dependencies or requirements
-
-import vsl.module1
-import vsl.module2
+import vsl.plot
+import vsl.util
 
 fn main() {
-    // === Section 1: Data Preparation ===
-    // Explain what kind of data we're creating and why
+	// === Section 1: Data Preparation ===
+	// Explain what kind of data we're creating and why
 
-    // === Section 2: Algorithm Configuration ===
-    // Explain parameter choices and their significance
+	// === Section 2: Algorithm Configuration ===
+	// Explain parameter choices and their significance
 
-    // === Section 3: Computation/Processing ===
-    // Break down the main algorithm steps
+	// === Section 3: Computation/Processing ===
+	// Break down the main algorithm steps
 
-    // === Section 4: Results and Output ===
-    // Explain what the output means and how to interpret it
+	// === Section 4: Results and Output ===
+	// Explain what the output means and how to interpret it
 }
 ```
 ````

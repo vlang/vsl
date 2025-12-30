@@ -1,6 +1,7 @@
 # Example - blas_performance_comparison 📊
 
-This example demonstrates performance benchmarking of BLAS operations using V's built-in `benchmark` module.
+This example demonstrates performance benchmarking of BLAS operations using
+V's built-in `benchmark` module.
 
 ## Instructions
 

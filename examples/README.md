@@ -28,15 +28,19 @@ v -cflags <flags> run main.v
 
 ### 📖 Learning Path
 
-**Beginners**: Start with → `plot_scatter` → `plot_line_timeseries` → `plot_bar` → `data_analysis_example`
+**Beginners**: Start with → `plot_scatter` → `plot_line_timeseries` →
+`plot_bar` → `data_analysis_example`
 
-**Intermediate**: Explore → `plot_box_statistics` → `plot_violin_distributions` → `ml_linreg_plot` → `fft_plot_example`
+**Intermediate**: Explore → `plot_box_statistics` → `plot_violin_distributions`
+→ `ml_linreg_plot` → `fft_plot_example`
 
-**Advanced Plotting**: Try → `plot_sunburst_hierarchy` → `plot_choropleth_population` → `plot_sankey_energy` → `plot_export_png`
+**Advanced Plotting**: Try → `plot_sunburst_hierarchy` →
+`plot_choropleth_population` → `plot_sankey_energy` → `plot_export_png`
 
 **Machine Learning**: Progress → `ml_kmeans` → `ml_linreg_plot` → `ml_sentiment_analysis`
 
-**Scientific Computing**: Dive into → `fft_plot_example` → `deriv_example` → `mpi_basic_example`
+**Scientific Computing**: Dive into → `fft_plot_example` → `deriv_example` →
+`mpi_basic_example`
 
 ## Machine Learning Examples 🤖
 
@@ -174,6 +178,26 @@ v -cflags <flags> run main.v
 | [gm_geometry_playground](./gm_geometry_playground)     | Interactive geometry exploration.        |
 | [gm_trajectory_simulation](./gm_trajectory_simulation) | Motion and trajectory analysis.          |
 
+## Quaternion Examples 🔄
+
+| Example                                                      | Description                                           |
+| ------------------------------------------------------------ | ----------------------------------------------------- |
+| [quaternion_rotation_3d](./quaternion_rotation_3d)           | Visualize 3D rotations using quaternions and plotting. |
+| [quaternion_interpolation_animation](./quaternion_interpolation_animation) | Animated quaternion interpolation visualization.      |
+| [quaternion_julia_fractal](./quaternion_julia_fractal)       | Quaternion Julia set fractal visualization.          |
+| [quaternion_orientation_tracking](./quaternion_orientation_tracking) | Track object orientation over time with visualization. |
+| [quaternion_rotation_composition](./quaternion_rotation_composition) | Compose multiple rotations and visualize the path.    |
+
+## Library Integration Examples 🔗
+
+| Example                                                | Description                                           |
+| ------------------------------------------------------ | ----------------------------------------------------- |
+| [ml_quaternion_features](./ml_quaternion_features)     | Use quaternions as ML features for clustering.        |
+| [fft_quaternion_signal](./fft_quaternion_signal)      | Process quaternion-valued signals and visualize.      |
+| [geometry_ml_clustering](./geometry_ml_clustering)     | Combine geometry module with ML clustering.          |
+| [lapack_plot_eigenvalues](./lapack_plot_eigenvalues)  | Visualize eigenvalue problems solved with LAPACK.     |
+| [noise_quaternion_fractal](./noise_quaternion_fractal) | Combine quaternions and noise for textured fractals.  |
+
 ## Noise & Signal Processing Examples 🌊
 
 | Example                                | Description                  |
@@ -219,7 +243,7 @@ v -cflags <flags> run main.v
 
 ### 📋 Important Guidelines ⚠️
 
-**Total Examples**: This collection includes **75+ working examples** covering all VSL modules.
+**Total Examples**: This collection includes **85+ working examples** covering all VSL modules.
 
 - **Documentation First**: Each example includes a detailed `README.md` - always read it
   before running

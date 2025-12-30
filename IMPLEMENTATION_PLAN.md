@@ -1,8 +1,10 @@
 # VSL BLAS & LAPACK Implementation Plan
 
 **Date**: January 27, 2025  
-**Purpose**: Comprehensive plan to implement missing BLAS and LAPACK functions using Gonum as reference  
-**Updated**: Clarified that all C function bindings must be added directly to existing .v files, not as new .h files
+**Purpose**: Comprehensive plan to implement missing BLAS and LAPACK functions
+using Gonum as reference  
+**Updated**: Clarified that all C function bindings must be added directly to
+existing .v files, not as new .h files
 
 ## 📊 Current State Analysis
 
@@ -26,11 +28,13 @@
 
 ### Reference Implementation
 
-- **Gonum**: Complete Go implementation in `/reference/gonum/` with comprehensive BLAS and LAPACK interfaces
+- **Gonum**: Complete Go implementation in `/reference/gonum/` with comprehensive
+  BLAS and LAPACK interfaces
 
 ### Testing Framework
 
-- **Command**: `cd /home/ulisesjcf/.vmodules && v -d vsl_lapack_lapacke -d vsl_blas_cblas test ./vsl`
+- **Command**: `cd /home/ulisesjcf/.vmodules && v -d vsl_lapack_lapacke -d
+  vsl_blas_cblas test ./vsl`
 - **Current Status**: All 56 tests passing ✅
 - **Coverage**: Basic functionality tested, but many functions missing comprehensive tests
 
@@ -603,4 +607,7 @@
 
 ---
 
-**Next Steps**: Start with Phase 1.1 - analyzing `lapack_d_vsl_lapack_lapacke.v` and `oblas_d_vsl_blas_cblas.v` to identify missing C function bindings, then add them directly to these .v files based on gaps identified when comparing with the Gonum reference implementation.
+**Next Steps**: Start with Phase 1.1 - analyzing `lapack_d_vsl_lapack_lapacke.v`
+and `oblas_d_vsl_blas_cblas.v` to identify missing C function bindings, then add
+them directly to these .v files based on gaps identified when comparing with
+the Gonum reference implementation.

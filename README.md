@@ -26,11 +26,17 @@
 VSL is a V library to develop Artificial Intelligence and High-Performance Scientific Computations.
 
 > [!IMPORTANT]
-> The pure-V QR path (`geqrf/orgqr`) is still being aligned; the related test is temporarily skipped. Other BLAS/LAPACK routines pass, and C backends (`-d vsl_blas_cblas -d vsl_lapack_lapacke`) are recommended when you need QR correctness today.
+> The pure-V QR path (`geqrf/orgqr`) is still being aligned; the related test is
+> temporarily skipped. Other BLAS/LAPACK routines pass, and C backends
+> (`-d vsl_blas_cblas -d vsl_lapack_lapacke`) are recommended when you need QR
+> correctness today.
 
 ## 🎉 Pure V BLAS/LAPACK: High Performance, Zero Dependencies
 
-VSL now features **100% pure V implementations** of BLAS and LAPACK that deliver **excellent performance** while requiring **zero external dependencies**. These implementations are production-ready and provide a compelling alternative to C backends.
+VSL now features **100% pure V implementations** of BLAS and LAPACK that deliver
+**excellent performance** while requiring **zero external dependencies**. These
+implementations are production-ready and provide a compelling alternative to C
+backends.
 
 ### Key Benefits
 
@@ -62,7 +68,9 @@ v run benchmarks/compare_backends.v
 | **OpenBLAS** | Optimized C library | `-d vsl_blas_cblas` | Maximum performance when C libraries available |
 | **LAPACKE** | Standard LAPACK C interface | `-d vsl_lapack_lapacke` | Maximum performance for LAPACK operations |
 
-**Recommendation**: Start with the pure V backend for simplicity and zero dependencies. Use C backends when maximum performance is critical and system libraries are available.
+**Recommendation**: Start with the pure V backend for simplicity and zero
+dependencies. Use C backends when maximum performance is critical and system
+libraries are available.
 
 See [Pure V BLAS/LAPACK Release Notes](./RELEASE_NOTES_PURE_V.md) for detailed information.
 
@@ -97,12 +105,16 @@ Fortran libraries.
 VSL provides flexible performance options:
 
 - **Pure V Implementation**: High-performance, dependency-free BLAS/LAPACK implementations
-- **Optimized Backends**: Optional integration with OpenBLAS, LAPACK, and MPI for maximum performance
+- **Optimized Backends**: Optional integration with OpenBLAS, LAPACK, and MPI
+  for maximum performance
 - **GPU Acceleration**: OpenCL support for computationally intensive operations
 
-**Pure V BLAS/LAPACK** implementations deliver competitive performance while eliminating external dependencies. Benchmark results demonstrate excellent performance characteristics across a wide range of problem sizes.
+**Pure V BLAS/LAPACK** implementations deliver competitive performance while
+eliminating external dependencies. Benchmark results demonstrate excellent
+performance characteristics across a wide range of problem sizes.
 
-Each module clearly documents compilation flags and backend requirements, allowing
+Each module clearly documents compilation flags and backend requirements,
+allowing
 users to choose the optimal configuration for their specific use case.
 
 ## 🚀 Installation & Quick Start
