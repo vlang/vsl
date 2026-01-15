@@ -67,6 +67,30 @@ K-Nearest Neighbors (KNN) is used for classification tasks where the target
 variable is categorical. As an observer model, it re-trains automatically when the
 data changes, which is beneficial for datasets that are frequently updated.
 
+### Logistic Regression
+
+Logistic Regression is used for binary classification tasks. As an observer model,
+it automatically updates when data changes, recalculating internal statistics and
+preparing for retraining.
+
+### Support Vector Machine (SVM)
+
+Support Vector Machine (SVM) is used for binary classification with support for
+non-linear decision boundaries through kernel functions. As an observer model, it
+marks itself for retraining when data changes.
+
+### Decision Tree
+
+Decision Tree can handle both classification and regression tasks. As an observer
+model, it marks itself for retraining when data changes, allowing the tree to be
+rebuilt with new data.
+
+### Random Forest
+
+Random Forest is an ensemble method combining multiple decision trees. As an
+observer model, it marks itself for retraining when data changes, allowing the
+entire forest to be rebuilt.
+
 ## Non-Observer Models
 
 The following machine learning models in VSL do not require the observer pattern

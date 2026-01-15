@@ -53,6 +53,10 @@ v -cflags <flags> run main.v
 | [ml_linreg_plot](./ml_linreg_plot)               | Linear regression with plotting.                        |
 | [ml_kmeans_plot](./ml_kmeans_plot)               | K-means clustering with plotting.                       |
 | [ml_knn_plot](./ml_knn_plot)                     | K-Nearest Neighbors algorithm with plotting.            |
+| [ml_logreg](./ml_logreg)                         | Logistic regression for binary classification.          |
+| [ml_svm](./ml_svm)                                | Support Vector Machine with kernel functions.           |
+| [ml_decision_tree](./ml_decision_tree)           | Decision tree for classification and regression.       |
+| [ml_random_forest](./ml_random_forest)          | Random Forest ensemble learning.                        |
 
 ## Plotting Examples 📊
 

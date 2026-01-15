@@ -61,9 +61,11 @@ pub fn Data.new[T](nb_samples int, nb_features int, use_y bool, allocate bool) !
 // x -- x values
 // y -- y values [optional]
 pub fn (mut o Data[T]) set(x &la.Matrix[T], y []T) ! {
-	if y.len < o.nb_samples || x.n < o.nb_features || x.m < o.nb_samples {
-		return errors.error('x matrix must have same dimensions as number of samples and features',
-			.efailed)
+	// Update dimensions from the new data
+	o.nb_samples = x.m
+	o.nb_features = x.n
+	if y.len < o.nb_samples {
+		return errors.error('y vector must have same length as number of samples', .efailed)
 	}
 	o.x = x
 	o.y = y
