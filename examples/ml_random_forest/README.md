@@ -60,14 +60,14 @@ Setosa-like flower:
 
 The example uses a flower classification dataset:
 
-```v
+```v ignore
 mut data := ml.Data.from_raw_xy_sep([
-    [5.1, 3.5, 1.4, 0.2],  // Features: [sepal_length, sepal_width, petal_length, petal_width]
-    // ...
+	[5.1, 3.5, 1.4, 0.2], // Features: [sepal_length, sepal_width, petal_length, petal_width]
+	// ...
 ], [
-    0.0,  // Target: setosa
-    1.0,  // Target: versicolor
-    // ...
+	0.0, // Target: setosa
+	1.0, // Target: versicolor
+	// ...
 ])!
 ```
 
@@ -75,17 +75,17 @@ mut data := ml.Data.from_raw_xy_sep([
 
 Configure the Random Forest:
 
-```v
+```v ignore
 mut model := ml.RandomForest.new(mut data, 'flower_classifier')
-model.set_n_estimators(50)  // Number of trees
-model.set_bootstrap(true)  // Use bootstrap sampling
+model.set_n_estimators(50) // Number of trees
+model.set_bootstrap(true) // Use bootstrap sampling
 ```
 
 ### 3. Training
 
 Train the ensemble:
 
-```v
+```v ignore
 model.train()
 ```
 
@@ -98,7 +98,7 @@ The algorithm:
 
 Make predictions:
 
-```v
+```v ignore
 predicted_class := model.predict([6.2, 3.0, 4.5, 1.5])
 probability := model.predict_proba([6.2, 3.0, 4.5, 1.5])
 ```
@@ -192,4 +192,3 @@ Try modifying the example to:
 ---
 
 Happy coding! Explore more ML examples in the [examples directory](../).
-

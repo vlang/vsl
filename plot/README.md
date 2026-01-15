@@ -397,6 +397,119 @@ plt.scatter(
 
 The VSL plot module is actively developed. Subplot functionality is planned for future releases.
 
+## 🤖 Machine Learning Visualization Helpers
+
+The plot module includes convenient functions for common ML visualizations:
+
+### Confusion Matrix
+
+```v
+import vsl.plot
+
+cm := [[50, 10], [5, 35]]
+class_names := ['Negative', 'Positive']
+
+mut plt := plot.plot_confusion_matrix(cm, class_names)
+plt.show()!
+```
+
+### ROC Curve
+
+```v ignore
+import vsl.plot
+import vsl.metrics
+
+// After getting predictions
+roc := metrics.roc_curve(y_true, y_score)!
+auc := metrics.roc_auc_score(y_true, y_score)!
+
+mut plt := plot.plot_roc_curve(roc.fpr, roc.tpr, auc)
+plt.show()!
+```
+
+### Precision-Recall Curve
+
+```v ignore
+import vsl.plot
+import vsl.metrics
+
+pr := metrics.precision_recall_curve(y_true, y_score)!
+ap := metrics.average_precision_score(y_true, y_score)!
+
+mut plt := plot.plot_precision_recall_curve(pr.precision, pr.recall, ap)
+plt.show()!
+```
+
+### Correlation Matrix
+
+```v ignore
+import vsl.plot
+import vsl.la
+
+// Compute correlation matrix
+corr := la.correlation_matrix(data)
+feature_names := ['Feature A', 'Feature B', 'Feature C']
+
+mut plt := plot.plot_correlation_matrix(corr, feature_names)
+plt.show()!
+```
+
+### Feature Importance
+
+```v
+import vsl.plot
+
+importances := [0.3, 0.1, 0.4, 0.2]
+names := ['Feature A', 'Feature B', 'Feature C', 'Feature D']
+
+mut plt := plot.plot_feature_importance(importances, names, 10) // top 10
+plt.show()!
+```
+
+### Learning Curve
+
+```v
+import vsl.plot
+
+train_sizes := [100.0, 200.0, 500.0, 1000.0]
+train_scores := [0.7, 0.75, 0.82, 0.85]
+val_scores := [0.65, 0.72, 0.80, 0.82]
+
+mut plt := plot.plot_learning_curve(train_sizes, train_scores, val_scores)
+plt.show()!
+```
+
+### Residual Plot (Regression)
+
+```v ignore
+import vsl.plot
+
+mut plt := plot.plot_residuals(y_pred, residuals)
+plt.show()!
+```
+
+### Actual vs Predicted (Regression)
+
+```v ignore
+import vsl.plot
+
+mut plt := plot.plot_actual_vs_predicted(y_true, y_pred)
+plt.show()!
+```
+
+### Available ML Plotting Functions
+
+| Function | Description |
+|----------|-------------|
+| `plot_confusion_matrix(cm, class_names)` | Heatmap of confusion matrix |
+| `plot_roc_curve(fpr, tpr, auc)` | ROC curve with AUC in legend |
+| `plot_precision_recall_curve(precision, recall, ap)` | PR curve |
+| `plot_correlation_matrix(corr, feature_names)` | Correlation heatmap |
+| `plot_feature_importance(importances, names, top_n)` | Horizontal bar chart |
+| `plot_learning_curve(sizes, train, val)` | Train vs validation curves |
+| `plot_residuals(y_pred, residuals)` | Residual scatter plot |
+| `plot_actual_vs_predicted(y_true, y_pred)` | Actual vs predicted scatter |
+
 ---
 
 Create beautiful, interactive visualizations with VSL Plot! 🚀

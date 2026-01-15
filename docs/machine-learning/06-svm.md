@@ -12,7 +12,9 @@ Learn Support Vector Machines for classification in VSL.
 
 ## Introduction
 
-Support Vector Machine (SVM) is a powerful classification algorithm that finds the optimal decision boundary by maximizing the margin between classes. It can handle both linearly and non-linearly separable data using kernel functions.
+Support Vector Machine (SVM) is a powerful classification algorithm that finds
+the optimal decision boundary by maximizing the margin between classes. It can
+handle both linearly and non-linearly separable data using kernel functions.
 
 ### When to Use SVM
 
@@ -115,7 +117,8 @@ K(xi, xj) = (1 + xi·xj)^d
 K(xi, xj) = exp(-γ||xi - xj||²)
 ```
 
-The kernel trick allows SVM to work in high-dimensional feature spaces without explicitly computing the transformation.
+The kernel trick allows SVM to work in high-dimensional feature spaces
+without explicitly computing the transformation.
 
 ### Support Vectors
 

@@ -12,7 +12,9 @@ Learn logistic regression for binary classification in VSL.
 
 ## Introduction
 
-Logistic regression is a classification algorithm used to predict binary outcomes (0 or 1). Unlike linear regression which predicts continuous values, logistic regression predicts probabilities using the sigmoid (logistic) function.
+Logistic regression is a classification algorithm used to predict binary
+outcomes (0 or 1). Unlike linear regression which predicts continuous values,
+logistic regression predicts probabilities using the sigmoid function.
 
 ### When to Use Logistic Regression
 
@@ -222,7 +224,7 @@ The plot shows:
 - **Solution**: Increase epochs, adjust learning rate, try Newton's method
 
 **Problem**: Overfitting
-- **Solution**: Add regularization (increase lambda), use more training data, reduce model complexity
+- **Solution**: Add regularization (increase lambda), use more training data
 
 ## Performance Considerations
 

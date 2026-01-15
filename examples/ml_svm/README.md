@@ -1,7 +1,8 @@
 # Support Vector Machine (SVM) Example 🤖
 
 This example demonstrates binary classification using VSL's Support Vector Machine algorithm.
-Learn how to find optimal decision boundaries and handle non-linearly separable data using kernel functions.
+Learn how to find optimal decision boundaries and handle non-linearly
+separable data using kernel functions.
 
 ## 🎯 What You'll Learn
 
@@ -60,15 +61,15 @@ The example uses a circle classification dataset where:
 - **Features**: `[x, y]` coordinates
 - **Target**: `0.0` (outside circle) or `1.0` (inside circle)
 
-```v
+```v ignore
 mut data := ml.Data.from_raw_xy_sep([
-    [2.0, 2.0],  // Outside points
-    [0.0, 0.0],  // Inside points
-    // ...
+	[2.0, 2.0], // Outside points
+	[0.0, 0.0], // Inside points
+	// ...
 ], [
-    0.0,  // outside
-    1.0,  // inside
-    // ...
+	0.0, // outside
+	1.0, // inside
+	// ...
 ])!
 ```
 
@@ -76,10 +77,10 @@ mut data := ml.Data.from_raw_xy_sep([
 
 Create an SVM model and configure the kernel:
 
-```v
+```v ignore
 mut model := ml.SVM.new(mut data, 'circle_classifier')
-model.set_kernel(.rbf, 1.0, 3)  // RBF kernel with gamma=1.0
-model.set_C(10.0)  // Regularization parameter
+model.set_kernel(.rbf, 1.0, 3) // RBF kernel with gamma=1.0
+model.set_C(10.0) // Regularization parameter
 ```
 
 **Kernel Types:**
@@ -91,7 +92,7 @@ model.set_C(10.0)  // Regularization parameter
 
 Train the model using SMO (Sequential Minimal Optimization):
 
-```v
+```v ignore
 model.train(max_iter: 200, tolerance: 1e-3)
 ```
 
@@ -101,7 +102,7 @@ The algorithm finds support vectors and optimal decision boundary.
 
 Make predictions and get probabilities:
 
-```v
+```v ignore
 predicted_class := model.predict([0.5, 0.5])
 probability := model.predict_proba([0.5, 0.5])
 ```
@@ -127,7 +128,8 @@ For non-linearly separable data, SVM uses kernel functions to map data to higher
 
 ### Support Vectors
 
-Support vectors are data points closest to the decision boundary. They determine the boundary and margin.
+Support vectors are data points closest to the decision boundary.
+They determine the boundary and margin.
 
 ## 🎨 Experiment Ideas
 
@@ -148,7 +150,7 @@ Try modifying the example to:
 
 ## 📖 Related Tutorials
 
-- [Classification](../../docs/machine-learning/04-classification.md) - Classification algorithms overview
+- [Classification](../../docs/machine-learning/04-classification.md) - Classification overview
 - [SVM](../../docs/machine-learning/06-svm.md) - Detailed SVM guide
 
 ## 🔬 Technical Details
@@ -186,4 +188,3 @@ Try modifying the example to:
 ---
 
 Happy coding! Explore more ML examples in the [examples directory](../).
-

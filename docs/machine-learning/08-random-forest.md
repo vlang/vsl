@@ -12,7 +12,9 @@ Learn Random Forest for classification and regression in VSL.
 
 ## Introduction
 
-Random Forest is an ensemble learning method that combines multiple decision trees to improve prediction accuracy and reduce overfitting. It uses bootstrap aggregation and random feature selection to create diverse trees.
+Random Forest is an ensemble learning method that combines multiple decision
+trees to improve prediction accuracy and reduce overfitting. It uses bootstrap
+aggregation and random feature selection to create diverse trees.
 
 ### When to Use Random Forest
 

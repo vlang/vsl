@@ -23,7 +23,7 @@ import math
 q := quaternion.from_axis_anglef3(math.pi / 2.0, 1.0, 0.0, 0.0)
 
 // Rotate a point
-p := quaternion.quaternion(0.0, 1.0, 0.0, 0.0)  // Point (1, 0, 0)
+p := quaternion.quaternion(0.0, 1.0, 0.0, 0.0) // Point (1, 0, 0)
 q_conj := q.conjugate()
 rotated := q.multiply(p).multiply(q_conj)
 println('Rotated: (${rotated.x}, ${rotated.y}, ${rotated.z})')

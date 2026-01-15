@@ -12,7 +12,9 @@ Learn decision trees for classification and regression in VSL.
 
 ## Introduction
 
-Decision trees are versatile algorithms that can handle both classification and regression tasks. They make predictions by recursively splitting data based on feature values, creating a tree-like structure of decisions.
+Decision trees are versatile algorithms that can handle both classification and
+regression tasks. They make predictions by recursively splitting data based on
+feature values, creating a tree-like structure of decisions.
 
 ### When to Use Decision Trees
 

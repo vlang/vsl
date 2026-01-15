@@ -1,7 +1,8 @@
 # Logistic Regression Example 🤖
 
 This example demonstrates binary classification using VSL's logistic regression algorithm.
-Learn how to predict categorical outcomes (pass/fail, spam/not spam, etc.) using the sigmoid function.
+Learn how to predict categorical outcomes (pass/fail, spam/not spam, etc.)
+using the sigmoid function.
 
 ## 🎯 What You'll Learn
 
@@ -61,15 +62,15 @@ The example uses a student dataset where:
 - **Features**: `[hours_studied, hours_slept]`
 - **Target**: `0.0` (fail) or `1.0` (pass)
 
-```v
+```v ignore
 mut data := ml.Data.from_raw_xy_sep([
-    [1.0, 4.0],  // Failed students
-    [5.0, 7.0],  // Passed students
-    // ...
+	[1.0, 4.0], // Failed students
+	[5.0, 7.0], // Passed students
+	// ...
 ], [
-    0.0,  // fail
-    1.0,  // pass
-    // ...
+	0.0, // fail
+	1.0, // pass
+	// ...
 ])!
 ```
 
@@ -77,7 +78,7 @@ mut data := ml.Data.from_raw_xy_sep([
 
 Create a logistic regression model:
 
-```v
+```v ignore
 mut model := ml.LogReg.new(mut data, 'student_pass_predictor')
 ```
 
@@ -87,13 +88,13 @@ The model automatically registers as an observer of the data, so it will update 
 
 Train the model using gradient descent:
 
-```v
+```v ignore
 model.train(epochs: 1000, learning_rate: 0.1)
 ```
 
 You can also use Newton's method for faster convergence:
 
-```v
+```v ignore
 model.train(epochs: 10, use_newton: true)
 ```
 
@@ -101,18 +102,20 @@ model.train(epochs: 10, use_newton: true)
 
 Make predictions and interpret probabilities:
 
-```v
+```v ignore
 probability := model.predict([4.0, 6.0])
 predicted_class := if probability >= 0.5 { 'PASS' } else { 'FAIL' }
 ```
 
-The `predict()` method returns a probability between 0 and 1, representing the likelihood of the positive class.
+The `predict()` method returns a probability between 0 and 1,
+representing the likelihood of the positive class.
 
 ## 📐 Mathematical Background
 
 ### Sigmoid Function
 
-Logistic regression uses the sigmoid (logistic) function to map linear combinations to probabilities:
+Logistic regression uses the sigmoid function to map linear combinations
+to probabilities:
 
 ```
 σ(z) = 1 / (1 + e^(-z))
@@ -158,8 +161,8 @@ Try modifying the example to:
 
 ## 📖 Related Tutorials
 
-- [Classification](../../docs/machine-learning/04-classification.md) - Classification algorithms overview
-- [Logistic Regression](../../docs/machine-learning/05-logistic-regression.md) - Detailed logistic regression guide
+- [Classification](../../docs/machine-learning/04-classification.md) - Classification overview
+- [Logistic Regression](../../docs/machine-learning/05-logistic-regression.md) - LogReg guide
 
 ## 🔬 Technical Details
 
@@ -195,4 +198,3 @@ Try modifying the example to:
 ---
 
 Happy coding! Explore more ML examples in the [examples directory](../).
-

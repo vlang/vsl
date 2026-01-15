@@ -56,14 +56,14 @@ Sunny, mild, normal:
 
 The example uses a weather dataset for classification:
 
-```v
+```v ignore
 mut data := ml.Data.from_raw_xy_sep([
-    [0.0, 0.0, 0.0],  // Features: [outlook, temperature, humidity]
-    // ...
+	[0.0, 0.0, 0.0], // Features: [outlook, temperature, humidity]
+	// ...
 ], [
-    0.0,  // Target: don't play
-    1.0,  // Target: play
-    // ...
+	0.0, // Target: don't play
+	1.0, // Target: play
+	// ...
 ])!
 ```
 
@@ -71,19 +71,19 @@ mut data := ml.Data.from_raw_xy_sep([
 
 Configure the decision tree:
 
-```v
+```v ignore
 mut model := ml.DecisionTree.new(mut data, 'weather_classifier')
-model.set_criterion(.gini)  // Gini impurity for classification
-model.set_max_depth(5)  // Limit depth to prevent overfitting
-model.set_min_samples_split(2)  // Minimum samples to split
-model.set_min_samples_leaf(1)  // Minimum samples in leaf
+model.set_criterion(.gini) // Gini impurity for classification
+model.set_max_depth(5) // Limit depth to prevent overfitting
+model.set_min_samples_split(2) // Minimum samples to split
+model.set_min_samples_leaf(1) // Minimum samples in leaf
 ```
 
 ### 3. Training
 
 Build the decision tree:
 
-```v
+```v ignore
 model.train()
 ```
 
@@ -93,7 +93,7 @@ The algorithm recursively splits data based on feature values to minimize impuri
 
 Make predictions:
 
-```v
+```v ignore
 predicted_class := model.predict([0.0, 1.0, 1.0])
 ```
 
@@ -182,4 +182,3 @@ Try modifying the example to:
 ---
 
 Happy coding! Explore more ML examples in the [examples directory](../).
-
