@@ -25,7 +25,7 @@ pub fn (b &Bytes) release() ! {
 
 // load copies the data from host data to device buffer
 // it's a non-blocking call, channel will return an error or nil if the data transfer is complete
-pub fn (b &Bytes) load(data []byte) chan IError {
+pub fn (b &Bytes) load(data []u8) chan IError {
 	return b.buf.load(data.len, unsafe { &data[0] })
 }
 

@@ -145,7 +145,7 @@ fn (k &Kernel) set_arg(index int, arg ArgumentType) ! {
 		Bytes {
 			return k.set_arg_buffer(index, arg.buf)
 		}
-		Vector[byte] {
+		Vector[u8] {
 			return k.set_arg_buffer(index, arg.buf)
 		}
 		Vector[f32] {

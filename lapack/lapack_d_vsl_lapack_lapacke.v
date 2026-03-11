@@ -101,10 +101,10 @@ fn C.LAPACKE_dsyevd(matrix_layout blas.MemoryLayout, jobz EigenVectorsJob, uplo 
 fn C.LAPACKE_cheevd(matrix_layout blas.MemoryLayout, jobz EigenVectorsJob, uplo blas.Uplo, n int, a voidptr, lda int, w &f32) int
 fn C.LAPACKE_zheevd(matrix_layout blas.MemoryLayout, jobz EigenVectorsJob, uplo blas.Uplo, n int, a voidptr, lda int, w &f64) int
 
-fn C.LAPACKE_ssyevr(matrix_layout blas.MemoryLayout, jobz EigenVectorsJob, range byte, uplo blas.Uplo, n int, a &f32, lda int, vl f32, vu f32, il int, iu int, abstol f32, m &int, w &f32, z &f32, ldz int, isuppz &int) int
-fn C.LAPACKE_dsyevr(matrix_layout blas.MemoryLayout, jobz EigenVectorsJob, range byte, uplo blas.Uplo, n int, a &f64, lda int, vl f64, vu f64, il int, iu int, abstol f64, m &int, w &f64, z &f64, ldz int, isuppz &int) int
-fn C.LAPACKE_cheevr(matrix_layout blas.MemoryLayout, jobz EigenVectorsJob, range byte, uplo blas.Uplo, n int, a voidptr, lda int, vl f32, vu f32, il int, iu int, abstol f32, m &int, w &f32, z voidptr, ldz int, isuppz &int) int
-fn C.LAPACKE_zheevr(matrix_layout blas.MemoryLayout, jobz EigenVectorsJob, range byte, uplo blas.Uplo, n int, a voidptr, lda int, vl f64, vu f64, il int, iu int, abstol f64, m &int, w &f64, z voidptr, ldz int, isuppz &int) int
+fn C.LAPACKE_ssyevr(matrix_layout blas.MemoryLayout, jobz EigenVectorsJob, range u8, uplo blas.Uplo, n int, a &f32, lda int, vl f32, vu f32, il int, iu int, abstol f32, m &int, w &f32, z &f32, ldz int, isuppz &int) int
+fn C.LAPACKE_dsyevr(matrix_layout blas.MemoryLayout, jobz EigenVectorsJob, range u8, uplo blas.Uplo, n int, a &f64, lda int, vl f64, vu f64, il int, iu int, abstol f64, m &int, w &f64, z &f64, ldz int, isuppz &int) int
+fn C.LAPACKE_cheevr(matrix_layout blas.MemoryLayout, jobz EigenVectorsJob, range u8, uplo blas.Uplo, n int, a voidptr, lda int, vl f32, vu f32, il int, iu int, abstol f32, m &int, w &f32, z voidptr, ldz int, isuppz &int) int
+fn C.LAPACKE_zheevr(matrix_layout blas.MemoryLayout, jobz EigenVectorsJob, range u8, uplo blas.Uplo, n int, a voidptr, lda int, vl f64, vu f64, il int, iu int, abstol f64, m &int, w &f64, z voidptr, ldz int, isuppz &int) int
 
 // General eigenvalue problems
 fn C.LAPACKE_sgeev(matrix_layout blas.MemoryLayout, calc_vl LeftEigenVectorsJob, calc_vr RightEigenVectorsJob, n int, a &f32, lda int, wr &f32, wi &f32, vl &f32, ldvl int, vr &f32, ldvr int) int

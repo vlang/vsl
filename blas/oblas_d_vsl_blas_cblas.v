@@ -169,7 +169,7 @@ fn C.cblas_cherk(order MemoryLayout, uplo Uplo, trans Transpose, n int, k int, a
 fn C.cblas_zherk(order MemoryLayout, uplo Uplo, trans Transpose, n int, k int, alpha f64, a voidptr, lda int, beta f64, c voidptr, ldc int)
 fn C.cblas_cher2k(order MemoryLayout, uplo Uplo, trans Transpose, n int, k int, alpha voidptr, a voidptr, lda int, B voidptr, ldb int, beta f32, c voidptr, ldc int)
 fn C.cblas_zher2k(order MemoryLayout, uplo Uplo, trans Transpose, n int, k int, alpha voidptr, a voidptr, lda int, B voidptr, ldb int, beta f64, c voidptr, ldc int)
-fn C.cblas_xerbla(p int, rout &byte, form &byte, other voidptr)
+fn C.cblas_xerbla(p int, rout &u8, form &u8, other voidptr)
 
 fn C.cblas_saxpby(n int, alpha f32, x &f32, incx int, beta f32, y &f32, incy int)
 fn C.cblas_daxpby(n int, alpha f64, x &f64, incx int, beta f64, y &f64, incy int)
