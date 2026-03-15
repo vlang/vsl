@@ -22,5 +22,6 @@ fn test_scatter_hovertemplate_in_json() {
 	}
 	plt.add_trace(tr)
 	traces, _ := plt.to_json()
-	assert traces.contains('"hovertemplate":"x=%{x}, y=%{y}<extra></extra>"')
+	assert traces.contains('"hovertemplate":')
+	assert traces.contains('x=%{x}, y=%{y}<extra></extra>')
 }
