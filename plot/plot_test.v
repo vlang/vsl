@@ -12,3 +12,15 @@ fn test_bar() {
 	)
 	plt.show()!
 }
+
+fn test_scatter_hovertemplate_in_json() {
+    mut plt := plot.Plot.new()
+    mut tr := plot.ScatterTrace{
+        x: [1.0]
+        y: [2.0]
+        hovertemplate: 'x=%{x}, y=%{y}<extra></extra>'
+    }
+    plt.add_trace(tr)
+    traces, _ := plt.to_json()
+    assert traces.contains('"hovertemplate":"x=%{x}, y=%{y}<extra></extra>"')
+}
