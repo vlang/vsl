@@ -68,6 +68,8 @@ pub mut:
 @[params]
 pub struct ScatterTrace {
 	CommonTrace
+pub mut:
+	hovertemplate string @[omitempty]
 }
 
 // PieTrace is a struct for Pie trace type
