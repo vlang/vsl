@@ -31,7 +31,7 @@ pub mut:
 pub fn Stat.from_data[T](mut data Data[T], name string) &Stat[T] {
 	mut o := &Stat[T]{
 		name:   name
-		data:   data
+		data:   &data
 		min_x:  []T{len: data.nb_features}
 		max_x:  []T{len: data.nb_features}
 		sum_x:  []T{len: data.nb_features}
