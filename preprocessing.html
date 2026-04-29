@@ -1,0 +1,982 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="x-ua-compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>preprocessing | vdoc</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&display=swap"
+			rel="stylesheet"
+		/>
+		<link
+			href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+		<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+		<link rel="manifest" href="site.webmanifest" />
+		<link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5" />
+		<meta name="msapplication-TileColor" content="#da532c" />
+		<meta name="theme-color" content="#ffffff" />
+		<link rel="stylesheet" href="doc.css" />
+		<link rel="stylesheet" href="normalize.css" />
+		<script src="dark-mode.js"></script>
+	</head>
+
+	<body>
+		<div><a id="skip-to-content-link" href="#main-content">Skip to content</a></div>
+		<div id="page">
+			<header class="doc-nav hidden">
+				<div class="heading-container">
+					<div class="heading">
+						<div class="info">
+							<div class="module">vsl</div>
+							<div class="toggle-version-container">
+								<span>0.1.51 </span>
+								<div
+									id="dark-mode-toggle"
+									role="switch"
+									aria-checked="false"
+									aria-label="Toggle dark mode"
+								>
+									<svg xmlns="http://www.w3.org/2000/svg" class="light-icon" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.7l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-5c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-1 16.95h2V19.5h-2v2.95zm-7.45-3.91l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8z"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" class="dark-icon" enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24"><g><rect fill="none" height="24" width="24"/></g><g><g><g><path d="M11.1,12.08C8.77,7.57,10.6,3.6,11.63,2.01C6.27,2.2,1.98,6.59,1.98,12c0,0.14,0.02,0.28,0.02,0.42 C2.62,12.15,3.29,12,4,12c1.66,0,3.18,0.83,4.1,2.15C9.77,14.63,11,16.17,11,18c0,1.52-0.87,2.83-2.12,3.51 c0.98,0.32,2.03,0.5,3.11,0.5c3.5,0,6.58-1.8,8.37-4.52C18,17.72,13.38,16.52,11.1,12.08z"/></g><path d="M7,16l-0.18,0C6.4,14.84,5.3,14,4,14c-1.66,0-3,1.34-3,3s1.34,3,3,3c0.62,0,2.49,0,3,0c1.1,0,2-0.9,2-2 C9,16.9,8.1,16,7,16z"/></g></g></svg>
+
+								</div>
+							</div>
+							<svg xmlns="http://www.w3.org/2000/svg" id="toggle-menu" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+
+						</div>
+						<div id="search">
+							<input type="text" placeholder="Search... (beta)" autocomplete="off" />
+						</div>
+					</div>
+				</div>
+				<nav class="search hidden"></nav>
+				<nav class="content hidden">
+					<ul>
+						<li class="open">
+<div class="menu-row"><a href="./index.html">README</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./main.html">main</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>benchmarks</a></div>
+<ul>
+<li><a href="./benchmarks.util.html">util</a></li>
+</ul>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./blas.html">blas</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./blas64.html">blas64</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./consts.html">consts</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./deriv.html">deriv</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./diff.html">diff</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./dist.html">dist</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./easings.html">easings</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./errors.html">errors</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./fft.html">fft</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./fit.html">fit</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>float</a></div>
+<ul>
+<li><a href="./float.float32.html">float32</a></li>
+<li><a href="./float.float64.html">float64</a></li>
+</ul>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./fun.html">fun</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./func.html">func</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./gm.html">gm</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./graph.html">graph</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>inout</a></div>
+<ul>
+<li><a href="./inout.csv.html">csv</a></li>
+</ul>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./h5.html">h5</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>internal</a></div>
+<ul>
+<li><a href="./internal.prec.html">prec</a></li>
+<li><a href="./internal.dl.html">dl</a></li>
+</ul>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./iter.html">iter</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./la.html">la</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./lapack.html">lapack</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./lapack64.html">lapack64</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./metrics.html">metrics</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="./ml.html">ml</a></div>
+<ul>
+<li><a href="./ml.nlp.html">nlp</a></li>
+</ul>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./model_selection.html">model_selection</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./mpi.html">mpi</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./noise.html">noise</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./plot.html">plot</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./poly.html">poly</a></div>
+</li>
+<li class="open active">
+<div class="menu-row"><a href="./preprocessing.html">preprocessing</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./prime.html">prime</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./quaternion.html">quaternion</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./roots.html">roots</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./util.html">util</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./vcl.html">vcl</a></div>
+</li>
+
+					</ul>
+				</nav>
+			</header>
+			<div class="doc-scrollview" tabindex="-1" id="main-content">
+				<div class="doc-container">
+					<div class="doc-content">
+								<section id="readme_preprocessing" class="doc-node">
+			<div class="title"><h1> preprocessing <a href="#readme_preprocessing">#</a></h1></div>
+<h1 id="vsl-preprocessing-module">VSL Preprocessing Module</h1>
+<p>The <code>vsl.preprocessing</code> module provides utilities for data preprocessing commonly used in machine learning pipelines.</p>
+<h2 id="features">Features</h2>
+<h3 id="scalers">Scalers</h3>
+<ul>
+<li><strong>StandardScaler</strong>: Standardizes features by removing the mean and scaling to unit variance (Z-score normalization)</li>
+<li><strong>MinMaxScaler</strong>: Transforms features by scaling to a given range (default [0, 1])</li>
+<li><strong>RobustScaler</strong>: Scales features using statistics robust to outliers (median and IQR)</li></ul>
+<h3 id="encoders">Encoders</h3>
+<ul>
+<li><strong>LabelEncoder</strong>: Encodes categorical labels as integers</li>
+<li><strong>OneHotEncoder</strong>: Encodes categorical features as one-hot numeric arrays</li>
+<li><strong>OrdinalEncoder</strong>: Encodes categorical features as ordinal integers</li></ul>
+<h3 id="binning">Binning</h3>
+<ul>
+<li><strong>cut</strong>: Bins values into discrete intervals using equal-width binning</li>
+<li><strong>qcut</strong>: Bins values using quantile-based (equal-frequency) binning</li>
+<li><strong>Binner</strong>: Fitted binning transformer for consistent bin assignment</li></ul>
+<h2 id="quick-start">Quick Start</h2>
+<h3 id="standard-scaling-z-score-normalization">Standard Scaling (Z-Score Normalization)</h3>
+<pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>preprocessing
+
+data <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">2.0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">3.0</span><span class="token punctuation">,</span> <span class="token number">4.0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">5.0</span><span class="token punctuation">,</span> <span class="token number">6.0</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
+
+<span class="token keyword">mut</span> scaler <span class="token operator">:=</span> preprocessing<span class="token punctuation">.</span>StandardScaler<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+scaled <span class="token operator">:=</span> scaler<span class="token punctuation">.</span><span class="token function">fit_transform</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token operator">!</span>
+
+<span class="token comment">// Inverse transform to recover original values</span>
+recovered <span class="token operator">:=</span> scaler<span class="token punctuation">.</span><span class="token function">inverse_transform</span><span class="token punctuation">(</span>scaled<span class="token punctuation">)</span><span class="token operator">!</span></code></pre>
+<h3 id="min-max-scaling">Min-Max Scaling</h3>
+<pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>preprocessing
+
+data <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">0.0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">50.0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">100.0</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
+
+<span class="token comment">// Scale to [0, 1] range</span>
+<span class="token keyword">mut</span> scaler <span class="token operator">:=</span> preprocessing<span class="token punctuation">.</span>MinMaxScaler<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">)</span>
+scaled <span class="token operator">:=</span> scaler<span class="token punctuation">.</span><span class="token function">fit_transform</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token operator">!</span>
+<span class="token comment">// Result: [[0.0], [0.5], [1.0]]</span>
+
+<span class="token comment">// Or scale to custom range [-1, 1]</span>
+<span class="token keyword">mut</span> scaler2 <span class="token operator">:=</span> preprocessing<span class="token punctuation">.</span>MinMaxScaler<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">)</span>
+scaled2 <span class="token operator">:=</span> scaler2<span class="token punctuation">.</span><span class="token function">fit_transform</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token operator">!</span>
+<span class="token comment">// Result: [[-1.0], [0.0], [1.0]]</span></code></pre>
+<h3 id="robust-scaling">Robust Scaling</h3>
+<pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>preprocessing
+
+<span class="token comment">// Data with outliers</span>
+data <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1.0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">2.0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">3.0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">4.0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">5.0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">100.0</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
+
+<span class="token keyword">mut</span> scaler <span class="token operator">:=</span> preprocessing<span class="token punctuation">.</span>RobustScaler<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+scaled <span class="token operator">:=</span> scaler<span class="token punctuation">.</span><span class="token function">fit_transform</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token operator">!</span>
+<span class="token comment">// Uses median and IQR, so outlier has less effect</span></code></pre>
+<h3 id="label-encoding">Label Encoding</h3>
+<pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>preprocessing
+
+labels <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token string">'cat'</span><span class="token punctuation">,</span> <span class="token string">'dog'</span><span class="token punctuation">,</span> <span class="token string">'bird'</span><span class="token punctuation">,</span> <span class="token string">'cat'</span><span class="token punctuation">,</span> <span class="token string">'dog'</span><span class="token punctuation">]</span>
+
+<span class="token keyword">mut</span> encoder <span class="token operator">:=</span> preprocessing<span class="token punctuation">.</span>LabelEncoder<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+encoded <span class="token operator">:=</span> encoder<span class="token punctuation">.</span><span class="token function">fit_transform</span><span class="token punctuation">(</span>labels<span class="token punctuation">)</span><span class="token operator">!</span>
+<span class="token comment">// Result: [0, 1, 2, 0, 1] (order depends on first occurrence)</span>
+
+<span class="token comment">// Inverse transform</span>
+decoded <span class="token operator">:=</span> encoder<span class="token punctuation">.</span><span class="token function">inverse_transform</span><span class="token punctuation">(</span>encoded<span class="token punctuation">)</span><span class="token operator">!</span>
+<span class="token comment">// Result: [&#39;cat&#39;, &#39;dog&#39;, &#39;bird&#39;, &#39;cat&#39;, &#39;dog&#39;]</span></code></pre>
+<h3 id="one-hot-encoding">One-Hot Encoding</h3>
+<pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>preprocessing
+
+data <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token string">'red'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'blue'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'green'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'red'</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
+
+<span class="token keyword">mut</span> encoder <span class="token operator">:=</span> preprocessing<span class="token punctuation">.</span>OneHotEncoder<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span>
+encoded <span class="token operator">:=</span> encoder<span class="token punctuation">.</span><span class="token function">fit_transform</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token operator">!</span>
+<span class="token comment">// Result: [[1,0,0], [0,1,0], [0,0,1], [1,0,0]]</span>
+
+<span class="token comment">// Get feature names</span>
+names <span class="token operator">:=</span> encoder<span class="token punctuation">.</span><span class="token function">get_feature_names</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'color'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">!</span>
+<span class="token comment">// Result: [&#39;color_red&#39;, &#39;color_blue&#39;, &#39;color_green&#39;]</span>
+
+<span class="token comment">// Dummy encoding (drop first category)</span>
+<span class="token keyword">mut</span> dummy_encoder <span class="token operator">:=</span> preprocessing<span class="token punctuation">.</span>OneHotEncoder<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span>
+dummy <span class="token operator">:=</span> dummy_encoder<span class="token punctuation">.</span><span class="token function">fit_transform</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token operator">!</span>
+<span class="token comment">// Result: [[0,0], [1,0], [0,1], [0,0]]</span></code></pre>
+<h3 id="binning">Binning</h3>
+<pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>preprocessing
+
+values <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">2.0</span><span class="token punctuation">,</span> <span class="token number">3.0</span><span class="token punctuation">,</span> <span class="token number">4.0</span><span class="token punctuation">,</span> <span class="token number">5.0</span><span class="token punctuation">,</span> <span class="token number">6.0</span><span class="token punctuation">,</span> <span class="token number">7.0</span><span class="token punctuation">,</span> <span class="token number">8.0</span><span class="token punctuation">,</span> <span class="token number">9.0</span><span class="token punctuation">,</span> <span class="token number">10.0</span><span class="token punctuation">]</span>
+
+<span class="token comment">// Equal-width binning</span>
+result <span class="token operator">:=</span> preprocessing<span class="token punctuation">.</span><span class="token function">cut</span><span class="token punctuation">(</span>values<span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'low'</span><span class="token punctuation">,</span> <span class="token string">'high'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">!</span>
+
+<span class="token comment">// Quantile binning (equal-frequency)</span>
+result2 <span class="token operator">:=</span> preprocessing<span class="token punctuation">.</span><span class="token function">qcut</span><span class="token punctuation">(</span>values<span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'Q1'</span><span class="token punctuation">,</span> <span class="token string">'Q2'</span><span class="token punctuation">,</span> <span class="token string">'Q3'</span><span class="token punctuation">,</span> <span class="token string">'Q4'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">!</span>
+
+<span class="token comment">// Using Binner for consistent transformation</span>
+<span class="token keyword">mut</span> binner <span class="token operator">:=</span> preprocessing<span class="token punctuation">.</span>Binner<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token punctuation">.</span>uniform<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'small'</span><span class="token punctuation">,</span> <span class="token string">'medium'</span><span class="token punctuation">,</span> <span class="token string">'large'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+binner<span class="token punctuation">.</span><span class="token function">fit</span><span class="token punctuation">(</span>values<span class="token punctuation">)</span><span class="token operator">!</span>
+binned <span class="token operator">:=</span> binner<span class="token punctuation">.</span><span class="token function">transform</span><span class="token punctuation">(</span>values<span class="token punctuation">)</span><span class="token operator">!</span></code></pre>
+<h2 id="api-reference">API Reference</h2>
+<h3 id="standardscaler">StandardScaler</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th></tr></thead>
+<tbody>
+<tr>
+<td><code>new()</code></td>
+<td>Creates a new StandardScaler</td></tr>
+<tr>
+<td><code>fit(x)</code></td>
+<td>Computes mean and std from data</td></tr>
+<tr>
+<td><code>transform(x)</code></td>
+<td>Applies standardization</td></tr>
+<tr>
+<td><code>fit_transform(x)</code></td>
+<td>Fits and transforms in one step</td></tr>
+<tr>
+<td><code>inverse_transform(x)</code></td>
+<td>Reverses standardization</td></tr></tbody></table>
+<p><strong>Attributes after fitting:</strong></p>
+<ul>
+<li><code>mean_</code>: Mean of each feature</li>
+<li><code>std_</code>: Standard deviation of each feature</li></ul>
+<h3 id="minmaxscaler">MinMaxScaler</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th></tr></thead>
+<tbody>
+<tr>
+<td><code>new(feature_min, feature_max)</code></td>
+<td>Creates scaler with desired range</td></tr>
+<tr>
+<td><code>fit(x)</code></td>
+<td>Computes min and max from data</td></tr>
+<tr>
+<td><code>transform(x)</code></td>
+<td>Applies min-max scaling</td></tr>
+<tr>
+<td><code>fit_transform(x)</code></td>
+<td>Fits and transforms in one step</td></tr>
+<tr>
+<td><code>inverse_transform(x)</code></td>
+<td>Reverses scaling</td></tr></tbody></table>
+<h3 id="robustscaler">RobustScaler</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th></tr></thead>
+<tbody>
+<tr>
+<td><code>new()</code></td>
+<td>Creates a new RobustScaler</td></tr>
+<tr>
+<td><code>fit(x)</code></td>
+<td>Computes median and IQR from data</td></tr>
+<tr>
+<td><code>transform(x)</code></td>
+<td>Applies robust scaling</td></tr>
+<tr>
+<td><code>fit_transform(x)</code></td>
+<td>Fits and transforms in one step</td></tr></tbody></table>
+<h3 id="labelencoder">LabelEncoder</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th></tr></thead>
+<tbody>
+<tr>
+<td><code>new()</code></td>
+<td>Creates a new LabelEncoder</td></tr>
+<tr>
+<td><code>fit(y)</code></td>
+<td>Learns unique classes</td></tr>
+<tr>
+<td><code>transform(y)</code></td>
+<td>Encodes labels to integers</td></tr>
+<tr>
+<td><code>fit_transform(y)</code></td>
+<td>Fits and transforms in one step</td></tr>
+<tr>
+<td><code>inverse_transform(y)</code></td>
+<td>Converts integers back to labels</td></tr></tbody></table>
+<h3 id="onehotencoder">OneHotEncoder</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th></tr></thead>
+<tbody>
+<tr>
+<td><code>new(drop_first)</code></td>
+<td>Creates encoder; drop_first for dummy encoding</td></tr>
+<tr>
+<td><code>fit(x)</code></td>
+<td>Learns categories for each feature</td></tr>
+<tr>
+<td><code>transform(x)</code></td>
+<td>Applies one-hot encoding</td></tr>
+<tr>
+<td><code>fit_transform(x)</code></td>
+<td>Fits and transforms in one step</td></tr>
+<tr>
+<td><code>get_feature_names(input_names)</code></td>
+<td>Returns output feature names</td></tr></tbody></table>
+<h3 id="binner">Binner</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th></tr></thead>
+<tbody>
+<tr>
+<td><code>new(n_bins, strategy, labels)</code></td>
+<td>Creates binner with specified strategy</td></tr>
+<tr>
+<td><code>fit(values)</code></td>
+<td>Computes bin edges</td></tr>
+<tr>
+<td><code>transform(values)</code></td>
+<td>Assigns values to bins</td></tr>
+<tr>
+<td><code>fit_transform(values)</code></td>
+<td>Fits and transforms in one step</td></tr>
+<tr>
+<td><code>transform_to_indices(values)</code></td>
+<td>Returns bin indices instead of labels</td></tr></tbody></table>
+<p><strong>BinningStrategy:</strong></p>
+<ul>
+<li><code>.uniform</code>: Equal-width bins</li>
+<li><code>.quantile</code>: Equal-frequency bins</li></ul>
+<h2 id="integration-with-ml-pipeline">Integration with ML Pipeline</h2>
+<pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>preprocessing
+<span class="token keyword">import</span> vsl<span class="token punctuation">.</span>inout<span class="token punctuation">.</span>csv
+<span class="token keyword">import</span> vsl<span class="token punctuation">.</span>ml
+
+<span class="token comment">// Load data</span>
+csv_data <span class="token operator">:=</span> csv<span class="token punctuation">.</span><span class="token function">read_csv</span><span class="token punctuation">(</span><span class="token string">'data.csv'</span><span class="token punctuation">,</span> csv<span class="token punctuation">.</span><span class="token symbol">CsvReadConfig</span><span class="token punctuation">{</span> skip_header<span class="token punctuation">:</span> <span class="token boolean">true</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token operator">!</span>
+
+<span class="token comment">// Scale features</span>
+<span class="token keyword">mut</span> scaler <span class="token operator">:=</span> preprocessing<span class="token punctuation">.</span>StandardScaler<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+scaled_data <span class="token operator">:=</span> scaler<span class="token punctuation">.</span><span class="token function">fit_transform</span><span class="token punctuation">(</span>csv_data<span class="token punctuation">.</span>data<span class="token punctuation">)</span><span class="token operator">!</span>
+
+<span class="token comment">// Create ML Data object</span>
+<span class="token keyword">mut</span> data <span class="token operator">:=</span> ml<span class="token punctuation">.</span>Data<span class="token punctuation">.</span><span class="token function">from_raw_xy</span><span class="token punctuation">(</span>scaled_data<span class="token punctuation">)</span><span class="token operator">!</span>
+
+<span class="token comment">// Train model</span>
+<span class="token keyword">mut</span> model <span class="token operator">:=</span> ml<span class="token punctuation">.</span>LinReg<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token keyword">mut</span> data<span class="token punctuation">,</span> <span class="token string">'my_model'</span><span class="token punctuation">)</span>
+model<span class="token punctuation">.</span><span class="token function">train</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment">// For new predictions, use the same scaler</span>
+new_data <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">2.0</span><span class="token punctuation">,</span> <span class="token number">3.0</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
+scaled_new <span class="token operator">:=</span> scaler<span class="token punctuation">.</span><span class="token function">transform</span><span class="token punctuation">(</span>new_data<span class="token punctuation">)</span><span class="token operator">!</span>
+prediction <span class="token operator">:=</span> model<span class="token punctuation">.</span><span class="token function">predict</span><span class="token punctuation">(</span>scaled_new<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>
+<h2 id="see-also">See Also</h2>
+<ul>
+<li><a href="https://github.com/vlang/vsl/blob/master/inout/csv/README.md">CSV Module</a></li>
+<li><a href="https://github.com/vlang/vsl/blob/master/ml/README.md">Machine Learning</a></li>
+<li><a href="https://github.com/vlang/vsl/blob/master/metrics/README.md">Metrics</a></li></ul>
+
+</section>
+
+		<section id="cut" class="doc-node">
+			<div class="title"><h2>fn cut <a href="#cut">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/binning.v#L13"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">cut</span><span class="token punctuation">(</span>values <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> n_bins <span class="token builtin">int</span><span class="token punctuation">,</span> labels <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span></code></pre>
+<p>cut bins values into discrete intervals using equal-width binning. Returns the bin labels for each value.</p>
+
+</section>
+
+		<section id="digitize" class="doc-node">
+			<div class="title"><h2>fn digitize <a href="#digitize">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/binning.v#L231"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">digitize</span><span class="token punctuation">(</span>values <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> bins <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span></code></pre>
+<p>digitize returns indices of the bins to which each value belongs. Similar to numpy.digitize</p>
+
+</section>
+
+		<section id="qcut" class="doc-node">
+			<div class="title"><h2>fn qcut <a href="#qcut">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/binning.v#L63"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">qcut</span><span class="token punctuation">(</span>values <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> n_bins <span class="token builtin">int</span><span class="token punctuation">,</span> labels <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span></code></pre>
+<p>qcut bins values into discrete intervals using quantile-based binning. Returns the bin labels for each value.</p>
+
+</section>
+
+		<section id="Binner.new" class="doc-node">
+			<div class="title"><h2>fn Binner.new <a href="#Binner.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/binning.v#L131"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> Binner<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>n_bins <span class="token builtin">int</span><span class="token punctuation">,</span> strategy BinningStrategy<span class="token punctuation">,</span> labels <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>Binner</code></pre>
+<p>Binner.new creates a new Binner</p>
+
+</section>
+
+		<section id="BinningStrategy.from" class="doc-node">
+			<div class="title"><h2>fn BinningStrategy.from <a href="#BinningStrategy.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/binning.v#L3"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> BinningStrategy<span class="token punctuation">.</span>from<span class="token punctuation">[</span><span class="token builtin">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token builtin">W</span><span class="token punctuation">)</span> <span class="token operator">!</span>BinningStrategy</code></pre>
+
+
+</section>
+
+		<section id="LabelEncoder.new" class="doc-node">
+			<div class="title"><h2>fn LabelEncoder.new <a href="#LabelEncoder.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/encoders.v#L16"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> LabelEncoder<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>LabelEncoder</code></pre>
+<p>LabelEncoder.new creates a new LabelEncoder</p>
+
+</section>
+
+		<section id="MinMaxScaler.new" class="doc-node">
+			<div class="title"><h2>fn MinMaxScaler.new <a href="#MinMaxScaler.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/scalers.v#L117"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> MinMaxScaler<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>feature_min <span class="token builtin">f64</span><span class="token punctuation">,</span> feature_max <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>MinMaxScaler</code></pre>
+<p>MinMaxScaler.new creates a new MinMaxScaler with optional range</p>
+
+</section>
+
+		<section id="OneHotEncoder.new" class="doc-node">
+			<div class="title"><h2>fn OneHotEncoder.new <a href="#OneHotEncoder.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/encoders.v#L89"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> OneHotEncoder<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>drop_first <span class="token builtin">bool</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>OneHotEncoder</code></pre>
+<p>OneHotEncoder.new creates a new OneHotEncoder</p>
+
+</section>
+
+		<section id="OrdinalEncoder.new" class="doc-node">
+			<div class="title"><h2>fn OrdinalEncoder.new <a href="#OrdinalEncoder.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/encoders.v#L190"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> OrdinalEncoder<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>OrdinalEncoder</code></pre>
+<p>OrdinalEncoder.new creates a new OrdinalEncoder</p>
+
+</section>
+
+		<section id="RobustScaler.new" class="doc-node">
+			<div class="title"><h2>fn RobustScaler.new <a href="#RobustScaler.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/scalers.v#L213"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> RobustScaler<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>RobustScaler</code></pre>
+<p>RobustScaler.new creates a new RobustScaler</p>
+
+</section>
+
+		<section id="StandardScaler.new" class="doc-node">
+			<div class="title"><h2>fn StandardScaler.new <a href="#StandardScaler.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/scalers.v#L19"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> StandardScaler<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>StandardScaler</code></pre>
+<p>StandardScaler.new creates a new StandardScaler</p>
+
+</section>
+
+		<section id="BinningStrategy" class="doc-node">
+			<div class="title"><h2>enum BinningStrategy <a href="#BinningStrategy">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/binning.v#L6"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> <span class="token symbol">BinningStrategy</span> <span class="token punctuation">{</span>
+	uniform  <span class="token comment">// equal-width bins</span>
+	quantile <span class="token comment">// equal-frequency bins</span>
+<span class="token punctuation">}</span></code></pre>
+<p>BinningStrategy specifies how to create bin edges</p>
+
+</section>
+
+		<section id="Binner" class="doc-node">
+			<div class="title"><h2>struct Binner <a href="#Binner">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/binning.v#L120"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<div class="attributes"><div class="attribute">@[heap]</div></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">Binner</span> <span class="token punctuation">{</span>
+<span class="token keyword">mut</span><span class="token punctuation">:</span>
+	fitted <span class="token builtin">bool</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	edges_   <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token comment">// bin edges</span>
+	labels_  <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token comment">// bin labels</span>
+	n_bins   <span class="token builtin">int</span>
+	strategy BinningStrategy
+<span class="token punctuation">}</span></code></pre>
+<p>Binner provides a fitted binning transformer</p>
+
+</section>
+
+		<section id="Binner.fit" class="doc-node">
+			<div class="title"><h2>fn (Binner) fit <a href="#Binner.fit">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/binning.v#L140"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> b Binner<span class="token punctuation">)</span> <span class="token function">fit</span><span class="token punctuation">(</span>values <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
+<p>fit computes the bin edges based on the data</p>
+
+</section>
+
+		<section id="Binner.transform" class="doc-node">
+			<div class="title"><h2>fn (Binner) transform <a href="#Binner.transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/binning.v#L197"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>b <span class="token operator">&amp;</span>Binner<span class="token punctuation">)</span> <span class="token function">transform</span><span class="token punctuation">(</span>values <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span></code></pre>
+<p>transform applies the binning to the data</p>
+
+</section>
+
+		<section id="Binner.fit_transform" class="doc-node">
+			<div class="title"><h2>fn (Binner) fit_transform <a href="#Binner.fit_transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/binning.v#L211"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> b Binner<span class="token punctuation">)</span> <span class="token function">fit_transform</span><span class="token punctuation">(</span>values <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span></code></pre>
+<p>fit_transform fits and transforms in one step</p>
+
+</section>
+
+		<section id="Binner.transform_to_indices" class="doc-node">
+			<div class="title"><h2>fn (Binner) transform_to_indices <a href="#Binner.transform_to_indices">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/binning.v#L217"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>b <span class="token operator">&amp;</span>Binner<span class="token punctuation">)</span> <span class="token function">transform_to_indices</span><span class="token punctuation">(</span>values <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span></code></pre>
+<p>transform_to_indices returns bin indices instead of labels</p>
+
+</section>
+
+		<section id="LabelEncoder" class="doc-node">
+			<div class="title"><h2>struct LabelEncoder <a href="#LabelEncoder">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/encoders.v#L7"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<div class="attributes"><div class="attribute">@[heap]</div></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">LabelEncoder</span> <span class="token punctuation">{</span>
+<span class="token keyword">mut</span><span class="token punctuation">:</span>
+	fitted <span class="token builtin">bool</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	classes_     <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span>       <span class="token comment">// unique classes in order</span>
+	class_to_idx <span class="token builtin">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token builtin">int</span> <span class="token comment">// mapping from class to index</span>
+<span class="token punctuation">}</span></code></pre>
+<p>LabelEncoder encodes categorical labels with values between 0 and n_classes-1.</p>
+
+</section>
+
+		<section id="LabelEncoder.fit" class="doc-node">
+			<div class="title"><h2>fn (LabelEncoder) fit <a href="#LabelEncoder.fit">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/encoders.v#L21"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> e LabelEncoder<span class="token punctuation">)</span> <span class="token function">fit</span><span class="token punctuation">(</span>y <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
+<p>fit learns the unique classes from the data</p>
+
+</section>
+
+		<section id="LabelEncoder.transform" class="doc-node">
+			<div class="title"><h2>fn (LabelEncoder) transform <a href="#LabelEncoder.transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/encoders.v#L40"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>e <span class="token operator">&amp;</span>LabelEncoder<span class="token punctuation">)</span> <span class="token function">transform</span><span class="token punctuation">(</span>y <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span></code></pre>
+<p>transform encodes labels to integers</p>
+
+</section>
+
+		<section id="LabelEncoder.fit_transform" class="doc-node">
+			<div class="title"><h2>fn (LabelEncoder) fit_transform <a href="#LabelEncoder.fit_transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/encoders.v#L56"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> e LabelEncoder<span class="token punctuation">)</span> <span class="token function">fit_transform</span><span class="token punctuation">(</span>y <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span></code></pre>
+<p>fit_transform fits and transforms in one step</p>
+
+</section>
+
+		<section id="LabelEncoder.inverse_transform" class="doc-node">
+			<div class="title"><h2>fn (LabelEncoder) inverse_transform <a href="#LabelEncoder.inverse_transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/encoders.v#L62"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>e <span class="token operator">&amp;</span>LabelEncoder<span class="token punctuation">)</span> <span class="token function">inverse_transform</span><span class="token punctuation">(</span>y <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span></code></pre>
+<p>inverse_transform converts integer labels back to original labels</p>
+
+</section>
+
+		<section id="MinMaxScaler" class="doc-node">
+			<div class="title"><h2>struct MinMaxScaler <a href="#MinMaxScaler">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/scalers.v#L104"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<div class="attributes"><div class="attribute">@[heap]</div></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">MinMaxScaler</span> <span class="token punctuation">{</span>
+<span class="token keyword">mut</span><span class="token punctuation">:</span>
+	fitted <span class="token builtin">bool</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	min_        <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span> <span class="token comment">// minimum of each feature</span>
+	max_        <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span> <span class="token comment">// maximum of each feature</span>
+	data_range_ <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span> <span class="token comment">// max - min for each feature</span>
+	n_features  <span class="token builtin">int</span>
+	feature_min <span class="token builtin">f64</span> <span class="token operator">=</span> <span class="token number">0.0</span> <span class="token comment">// desired minimum of transformed feature</span>
+	feature_max <span class="token builtin">f64</span> <span class="token operator">=</span> <span class="token number">1.0</span> <span class="token comment">// desired maximum of transformed feature</span>
+<span class="token punctuation">}</span></code></pre>
+<p>MinMaxScaler transforms features by scaling each feature to a given range. Formula: x_scaled = (x - min) / (max - min) * (feature_max - feature_min) + feature_min</p>
+
+</section>
+
+		<section id="MinMaxScaler.fit" class="doc-node">
+			<div class="title"><h2>fn (MinMaxScaler) fit <a href="#MinMaxScaler.fit">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/scalers.v#L125"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> s MinMaxScaler<span class="token punctuation">)</span> <span class="token function">fit</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
+<p>fit computes the min and max to be used for later scaling</p>
+
+</section>
+
+		<section id="MinMaxScaler.transform" class="doc-node">
+			<div class="title"><h2>fn (MinMaxScaler) transform <a href="#MinMaxScaler.transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/scalers.v#L157"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>s <span class="token operator">&amp;</span>MinMaxScaler<span class="token punctuation">)</span> <span class="token function">transform</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>transform applies the min-max scaling to the data</p>
+
+</section>
+
+		<section id="MinMaxScaler.fit_transform" class="doc-node">
+			<div class="title"><h2>fn (MinMaxScaler) fit_transform <a href="#MinMaxScaler.fit_transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/scalers.v#L176"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> s MinMaxScaler<span class="token punctuation">)</span> <span class="token function">fit_transform</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>fit_transform fits and transforms in one step</p>
+
+</section>
+
+		<section id="MinMaxScaler.inverse_transform" class="doc-node">
+			<div class="title"><h2>fn (MinMaxScaler) inverse_transform <a href="#MinMaxScaler.inverse_transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/scalers.v#L182"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>s <span class="token operator">&amp;</span>MinMaxScaler<span class="token punctuation">)</span> <span class="token function">inverse_transform</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>inverse_transform reverses the min-max scaling</p>
+
+</section>
+
+		<section id="OneHotEncoder" class="doc-node">
+			<div class="title"><h2>struct OneHotEncoder <a href="#OneHotEncoder">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/encoders.v#L79"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<div class="attributes"><div class="attribute">@[heap]</div></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">OneHotEncoder</span> <span class="token punctuation">{</span>
+<span class="token keyword">mut</span><span class="token punctuation">:</span>
+	fitted <span class="token builtin">bool</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	categories_ <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token comment">// categories for each feature</span>
+	n_features  <span class="token builtin">int</span>
+	drop_first  <span class="token builtin">bool</span> <span class="token comment">// whether to drop the first category (for dummy encoding)</span>
+<span class="token punctuation">}</span></code></pre>
+<p>OneHotEncoder encodes categorical features as a one-hot (or dummy) numeric array.</p>
+
+</section>
+
+		<section id="OneHotEncoder.fit" class="doc-node">
+			<div class="title"><h2>fn (OneHotEncoder) fit <a href="#OneHotEncoder.fit">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/encoders.v#L96"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> e OneHotEncoder<span class="token punctuation">)</span> <span class="token function">fit</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
+<p>fit learns the categories for each feature</p>
+
+</section>
+
+		<section id="OneHotEncoder.transform" class="doc-node">
+			<div class="title"><h2>fn (OneHotEncoder) transform <a href="#OneHotEncoder.transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/encoders.v#L120"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>e <span class="token operator">&amp;</span>OneHotEncoder<span class="token punctuation">)</span> <span class="token function">transform</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>transform applies one-hot encoding to the data</p>
+
+</section>
+
+		<section id="OneHotEncoder.fit_transform" class="doc-node">
+			<div class="title"><h2>fn (OneHotEncoder) fit_transform <a href="#OneHotEncoder.fit_transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/encoders.v#L156"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> e OneHotEncoder<span class="token punctuation">)</span> <span class="token function">fit_transform</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>fit_transform fits and transforms in one step</p>
+
+</section>
+
+		<section id="OneHotEncoder.get_feature_names" class="doc-node">
+			<div class="title"><h2>fn (OneHotEncoder) get_feature_names <a href="#OneHotEncoder.get_feature_names">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/encoders.v#L162"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>e <span class="token operator">&amp;</span>OneHotEncoder<span class="token punctuation">)</span> <span class="token function">get_feature_names</span><span class="token punctuation">(</span>input_names <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span></code></pre>
+<p>get_feature_names returns the names of the output features</p>
+
+</section>
+
+		<section id="OrdinalEncoder" class="doc-node">
+			<div class="title"><h2>struct OrdinalEncoder <a href="#OrdinalEncoder">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/encoders.v#L181"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<div class="attributes"><div class="attribute">@[heap]</div></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">OrdinalEncoder</span> <span class="token punctuation">{</span>
+<span class="token keyword">mut</span><span class="token punctuation">:</span>
+	fitted <span class="token builtin">bool</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	categories_ <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token comment">// categories for each feature</span>
+	n_features  <span class="token builtin">int</span>
+<span class="token punctuation">}</span></code></pre>
+<p>OrdinalEncoder encodes categorical features as ordinal integers.</p>
+
+</section>
+
+		<section id="OrdinalEncoder.fit" class="doc-node">
+			<div class="title"><h2>fn (OrdinalEncoder) fit <a href="#OrdinalEncoder.fit">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/encoders.v#L195"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> e OrdinalEncoder<span class="token punctuation">)</span> <span class="token function">fit</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
+<p>fit learns the categories for each feature</p>
+
+</section>
+
+		<section id="OrdinalEncoder.transform" class="doc-node">
+			<div class="title"><h2>fn (OrdinalEncoder) transform <a href="#OrdinalEncoder.transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/encoders.v#L219"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>e <span class="token operator">&amp;</span>OrdinalEncoder<span class="token punctuation">)</span> <span class="token function">transform</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>transform applies ordinal encoding to the data</p>
+
+</section>
+
+		<section id="OrdinalEncoder.fit_transform" class="doc-node">
+			<div class="title"><h2>fn (OrdinalEncoder) fit_transform <a href="#OrdinalEncoder.fit_transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/encoders.v#L247"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> e OrdinalEncoder<span class="token punctuation">)</span> <span class="token function">fit_transform</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>fit_transform fits and transforms in one step</p>
+
+</section>
+
+		<section id="RobustScaler" class="doc-node">
+			<div class="title"><h2>struct RobustScaler <a href="#RobustScaler">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/scalers.v#L203"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<div class="attributes"><div class="attribute">@[heap]</div></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">RobustScaler</span> <span class="token punctuation">{</span>
+<span class="token keyword">mut</span><span class="token punctuation">:</span>
+	fitted <span class="token builtin">bool</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	median_    <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span> <span class="token comment">// median of each feature</span>
+	iqr_       <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span> <span class="token comment">// interquartile range of each feature</span>
+	n_features <span class="token builtin">int</span>
+<span class="token punctuation">}</span></code></pre>
+<p>RobustScaler scales features using statistics that are robust to outliers. Uses median and interquartile range (IQR) instead of mean and std.</p>
+
+</section>
+
+		<section id="RobustScaler.fit" class="doc-node">
+			<div class="title"><h2>fn (RobustScaler) fit <a href="#RobustScaler.fit">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/scalers.v#L218"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> s RobustScaler<span class="token punctuation">)</span> <span class="token function">fit</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
+<p>fit computes the median and IQR to be used for later scaling</p>
+
+</section>
+
+		<section id="RobustScaler.transform" class="doc-node">
+			<div class="title"><h2>fn (RobustScaler) transform <a href="#RobustScaler.transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/scalers.v#L260"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>s <span class="token operator">&amp;</span>RobustScaler<span class="token punctuation">)</span> <span class="token function">transform</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>transform applies the robust scaling to the data</p>
+
+</section>
+
+		<section id="RobustScaler.fit_transform" class="doc-node">
+			<div class="title"><h2>fn (RobustScaler) fit_transform <a href="#RobustScaler.fit_transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/scalers.v#L277"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> s RobustScaler<span class="token punctuation">)</span> <span class="token function">fit_transform</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>fit_transform fits and transforms in one step</p>
+
+</section>
+
+		<section id="StandardScaler" class="doc-node">
+			<div class="title"><h2>struct StandardScaler <a href="#StandardScaler">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/scalers.v#L9"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<div class="attributes"><div class="attribute">@[heap]</div></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">StandardScaler</span> <span class="token punctuation">{</span>
+<span class="token keyword">mut</span><span class="token punctuation">:</span>
+	fitted <span class="token builtin">bool</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	mean_      <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span> <span class="token comment">// mean of each feature</span>
+	std_       <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span> <span class="token comment">// standard deviation of each feature</span>
+	n_features <span class="token builtin">int</span>
+<span class="token punctuation">}</span></code></pre>
+<p>StandardScaler standardizes features by removing the mean and scaling to unit variance. Formula: z = (x - mean) / std</p>
+
+</section>
+
+		<section id="StandardScaler.fit" class="doc-node">
+			<div class="title"><h2>fn (StandardScaler) fit <a href="#StandardScaler.fit">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/scalers.v#L24"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> s StandardScaler<span class="token punctuation">)</span> <span class="token function">fit</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
+<p>fit computes the mean and std to be used for later scaling</p>
+
+</section>
+
+		<section id="StandardScaler.transform" class="doc-node">
+			<div class="title"><h2>fn (StandardScaler) transform <a href="#StandardScaler.transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/scalers.v#L61"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>s <span class="token operator">&amp;</span>StandardScaler<span class="token punctuation">)</span> <span class="token function">transform</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>transform applies the standardization to the data</p>
+
+</section>
+
+		<section id="StandardScaler.fit_transform" class="doc-node">
+			<div class="title"><h2>fn (StandardScaler) fit_transform <a href="#StandardScaler.fit_transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/scalers.v#L78"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> s StandardScaler<span class="token punctuation">)</span> <span class="token function">fit_transform</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>fit_transform fits and transforms in one step</p>
+
+</section>
+
+		<section id="StandardScaler.inverse_transform" class="doc-node">
+			<div class="title"><h2>fn (StandardScaler) inverse_transform <a href="#StandardScaler.inverse_transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/preprocessing/scalers.v#L84"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>s <span class="token operator">&amp;</span>StandardScaler<span class="token punctuation">)</span> <span class="token function">inverse_transform</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>inverse_transform reverses the standardization</p>
+
+</section>
+
+
+						<div class="footer">Powered by vdoc. Generated on: 29 Apr 2026 05:02:07</div>
+					</div>
+					<div class="doc-toc"><ul><li class="open"><a href="#readme_preprocessing">README</a></li>
+<li class="open"><a href="#cut">fn cut</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#digitize">fn digitize</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#qcut">fn qcut</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#Binner.new">fn Binner.new</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#BinningStrategy.from">fn BinningStrategy.from</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#LabelEncoder.new">fn LabelEncoder.new</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#MinMaxScaler.new">fn MinMaxScaler.new</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#OneHotEncoder.new">fn OneHotEncoder.new</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#OrdinalEncoder.new">fn OrdinalEncoder.new</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#RobustScaler.new">fn RobustScaler.new</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#StandardScaler.new">fn StandardScaler.new</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#BinningStrategy">enum BinningStrategy</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#Binner">struct Binner</a>        <ul>
+<li><a href="#Binner.fit">fn fit</a></li>
+<li><a href="#Binner.transform">fn transform</a></li>
+<li><a href="#Binner.fit_transform">fn fit_transform</a></li>
+<li><a href="#Binner.transform_to_indices">fn transform_to_indices</a></li>
+</ul>
+</li>
+<li class="open"><a href="#LabelEncoder">struct LabelEncoder</a>        <ul>
+<li><a href="#LabelEncoder.fit">fn fit</a></li>
+<li><a href="#LabelEncoder.transform">fn transform</a></li>
+<li><a href="#LabelEncoder.fit_transform">fn fit_transform</a></li>
+<li><a href="#LabelEncoder.inverse_transform">fn inverse_transform</a></li>
+</ul>
+</li>
+<li class="open"><a href="#MinMaxScaler">struct MinMaxScaler</a>        <ul>
+<li><a href="#MinMaxScaler.fit">fn fit</a></li>
+<li><a href="#MinMaxScaler.transform">fn transform</a></li>
+<li><a href="#MinMaxScaler.fit_transform">fn fit_transform</a></li>
+<li><a href="#MinMaxScaler.inverse_transform">fn inverse_transform</a></li>
+</ul>
+</li>
+<li class="open"><a href="#OneHotEncoder">struct OneHotEncoder</a>        <ul>
+<li><a href="#OneHotEncoder.fit">fn fit</a></li>
+<li><a href="#OneHotEncoder.transform">fn transform</a></li>
+<li><a href="#OneHotEncoder.fit_transform">fn fit_transform</a></li>
+<li><a href="#OneHotEncoder.get_feature_names">fn get_feature_names</a></li>
+</ul>
+</li>
+<li class="open"><a href="#OrdinalEncoder">struct OrdinalEncoder</a>        <ul>
+<li><a href="#OrdinalEncoder.fit">fn fit</a></li>
+<li><a href="#OrdinalEncoder.transform">fn transform</a></li>
+<li><a href="#OrdinalEncoder.fit_transform">fn fit_transform</a></li>
+</ul>
+</li>
+<li class="open"><a href="#RobustScaler">struct RobustScaler</a>        <ul>
+<li><a href="#RobustScaler.fit">fn fit</a></li>
+<li><a href="#RobustScaler.transform">fn transform</a></li>
+<li><a href="#RobustScaler.fit_transform">fn fit_transform</a></li>
+</ul>
+</li>
+<li class="open"><a href="#StandardScaler">struct StandardScaler</a>        <ul>
+<li><a href="#StandardScaler.fit">fn fit</a></li>
+<li><a href="#StandardScaler.transform">fn transform</a></li>
+<li><a href="#StandardScaler.fit_transform">fn fit_transform</a></li>
+<li><a href="#StandardScaler.inverse_transform">fn inverse_transform</a></li>
+</ul>
+</li>
+</ul></div>
+				</div>
+			</div>
+		</div>
+		<script src="doc.js"></script>
+		<script async src="search_index.js"></script>
+	</body>
+</html>
