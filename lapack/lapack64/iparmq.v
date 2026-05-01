@@ -2,7 +2,7 @@ module lapack64
 
 import math
 
-fn iparmq(ispec int, name string, opts string, n int, ilo int, ihi int, lwork int) int {
+fn iparmq(ispec int, name string, _ string, _ int, ilo int, ihi int, _ int) int {
 	nh := ihi - ilo + 1
 	mut ns := 2
 	if nh >= 30 {
