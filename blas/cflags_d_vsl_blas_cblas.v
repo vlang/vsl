@@ -9,7 +9,3 @@ module blas
 #flag darwin -L/usr/local/opt/openblas/lib -L/opt/homebrew/opt/openblas/lib -L/opt/local/opt/openblas/lib
 #flag -I@VMODROOT
 #flag -lopenblas
-
-$if macos {
-	#include <cblas.h>
-}
