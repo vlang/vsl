@@ -71,10 +71,10 @@ if [[ -z "${skip_examples}" ]]; then
             continue
         fi
         echo "Compiling ${file}"
-        v ${flags} -d vsl_vcl_dlopencl -o "${file}.o" "${file}"
-        echo "${file}.o created"
-        echo "Removing ${file}.o"
-        rm -f "${file}.o"
+        v ${flags} -d vsl_vcl_dlopencl -o "${file}.bin" "${file}"
+        echo "${file}.bin created"
+        echo "Removing ${file}.bin"
+        rm -f "${file}.bin"
     done
 else
     echo "Skipping examples compilation"
