@@ -4,7 +4,16 @@ import vsl.lapack.lapack64
 import vsl.errors
 import math
 
-// trace returns the sum of the diagonal elements of a matrix.
+// trace returns the sum of the diagonal elements of a square matrix.
+//
+// Panics if `a` is not square.
+//
+// Example:
+// ```v
+// import vsl.la
+// a := la.matrix_raw(3, 3, [1.0, 0, 0,  0, 2.0, 0,  0, 0, 3.0])
+// tr := la.trace(a)  // 6.0
+// ```
 pub fn trace(a &Matrix[f64]) f64 {
 	if a.m != a.n {
 		errors.vsl_panic('trace: matrix must be square (${a.m}x${a.n})', .efailed)
@@ -17,10 +26,19 @@ pub fn trace(a &Matrix[f64]) f64 {
 }
 
 // norm returns the specified norm of a matrix.
-// ord:
-//   "" or "F" -> Frobenius norm
-//   "I"       -> infinity norm (max row sum)
-//   "1"       -> 1-norm (max column sum)
+//
+// `ord` selects the norm type:
+//   - `""` or `"F"` — Frobenius norm (sqrt of sum of squares of all elements)
+//   - `"I"`         — Infinity norm (maximum absolute row sum)
+//   - `"1"`         — 1-norm (maximum absolute column sum)
+//
+// Example:
+// ```v
+// a := la.matrix_raw(2, 2, [3.0, 4.0, 0.0, 0.0])
+// frob := la.norm(a, "F")  // 5.0
+// inf  := la.norm(a, "I")  // 7.0
+// one  := la.norm(a, "1")  // 3.0
+// ```
 pub fn norm(a &Matrix[f64], ord string) f64 {
 	if ord == 'I' {
 		return a.norm_inf()
@@ -42,9 +60,26 @@ pub fn norm(a &Matrix[f64], ord string) f64 {
 	return a.norm_frob()
 }
 
-// lstsq solves the linear least-squares problem: min ||Ax - B||_2
-// using SVD-based pseudo-inverse.
-// Returns (x, residuals, rank, singular_values)
+// lstsq solves the linear least-squares problem: minimise ||A·x − B||₂ for each column of B.
+//
+// Uses a full SVD-based pseudo-inverse. Singular values below `tol = 1e-8` are treated as zero.
+//
+// Returns `(x, residuals, rank, singular_values)` where:
+//   - `x`               — solution matrix (n × nrhs)
+//   - `residuals`       — Euclidean residual per RHS column (only meaningful when m ≥ n)
+//   - `rank`            — effective numerical rank (= min(m, n) when full-rank)
+//   - `singular_values` — descending singular values of A
+//
+// Panics if `b.m != a.m`.
+//
+// Example:
+// ```v
+// // Fit y = c0 + c1*x to three points
+// a := la.matrix_raw(3, 2, [1.0, 0.0,  1.0, 1.0,  1.0, 2.0])
+// b := la.matrix_raw(3, 1, [1.0, 3.0, 5.0])
+// x, _, _, _ := la.lstsq(a, b)
+// // x ≈ [[1.0], [2.0]]  →  y = 1 + 2·x
+// ```
 pub fn lstsq(a &Matrix[f64], b &Matrix[f64]) ([][]f64, []f64, int, []f64) {
 	if b.m != a.m {
 		errors.vsl_panic('lstsq: A and B must have the same number of rows', .efailed)
@@ -95,7 +130,17 @@ pub fn lstsq(a &Matrix[f64], b &Matrix[f64]) ([][]f64, []f64, int, []f64) {
 	return x, residuals, int_min(m, n), s
 }
 
-// outer computes the outer product of two vectors: result[i,j] = u[i] * v[j]
+// outer computes the outer product of two vectors.
+//
+// `result[i, j] = u[i] * v[j]`
+//
+// Returns an `u.len × v.len` matrix.
+//
+// Example:
+// ```v
+// r := la.outer([1.0, 2.0, 3.0], [4.0, 5.0])
+// // r = [[4,5],[8,10],[12,15]]
+// ```
 pub fn outer(u []f64, v []f64) &Matrix[f64] {
 	mut result := Matrix.new[f64](u.len, v.len)
 	for i := 0; i < u.len; i++ {
@@ -106,7 +151,15 @@ pub fn outer(u []f64, v []f64) &Matrix[f64] {
 	return result
 }
 
-// cross computes the 3D cross product of two vectors: result = u × v
+// cross computes the 3-D cross product of two vectors: result = u × v.
+//
+// Both `u` and `v` must have length 3; panics otherwise.
+//
+// Example:
+// ```v
+// r := la.cross([1.0, 0.0, 0.0], [0.0, 1.0, 0.0])
+// // r = [0.0, 0.0, 1.0]
+// ```
 pub fn cross(u []f64, v []f64) []f64 {
 	if u.len != 3 || v.len != 3 {
 		errors.vsl_panic('cross: both vectors must have length 3', .efailed)
@@ -118,8 +171,21 @@ pub fn cross(u []f64, v []f64) []f64 {
 	]
 }
 
-// qr computes QR factorization of A via LAPACKgeqrf + orgqr.
-// Returns (Q, R) where Q is orthonormal (m x min_mn) and R is upper triangular (min_mn x n).
+// qr computes the QR factorisation of `a` (m × n) via LAPACK `dgeqrf` + `dorgqr`.
+//
+// Returns `(Q, R)` where:
+//   - `Q` is orthonormal with shape `m × min(m,n)`
+//   - `R` is upper-triangular with shape `min(m,n) × n`
+//
+// So `A ≈ Q · R`.
+//
+// Example:
+// ```v
+// a := la.matrix_raw(3, 2, [1.0, 2.0, 3.0, 4.0, 5.0, 6.0])
+// q, r := la.qr(a)!
+// // q.m == 3, q.n == 2  (orthonormal columns)
+// // r.m == 2, r.n == 2  (upper triangular)
+// ```
 pub fn qr(a &Matrix[f64]) !(&Matrix[f64], &Matrix[f64]) {
 	m := a.m
 	n := a.n
@@ -173,8 +239,18 @@ pub fn qr(a &Matrix[f64]) !(&Matrix[f64], &Matrix[f64]) {
 	return q_mat, r_mat
 }
 
-// lu computes LU decomposition with partial pivoting: PA = LU.
-// Returns (L, U, piv) where L is lower triangular, U is upper, piv are pivot indices.
+// lu computes the LU factorisation of `a` with partial pivoting: P·A = L·U.
+//
+// Returns `(L, U, piv)` where:
+//   - `L` is lower-triangular with unit diagonal, shape `m × min(m,n)`
+//   - `U` is upper-triangular, shape `min(m,n) × n`
+//   - `piv` are the zero-based pivot row indices (length `min(m,n)`)
+//
+// Example:
+// ```v
+// a := la.matrix_raw(3, 3, [2.0, 1.0, 1.0, 4.0, 3.0, 3.0, 8.0, 7.0, 9.0])
+// l, u, piv := la.lu(a)!
+// ```
 pub fn lu(a &Matrix[f64]) !(&Matrix[f64], &Matrix[f64], []int) {
 	m := a.m
 	n := a.n
@@ -242,7 +318,17 @@ pub fn lu(a &Matrix[f64]) !(&Matrix[f64], &Matrix[f64], []int) {
 	return l_mat, u_mat, ipiv
 }
 
-// rank returns the effective numerical rank of A using SVD.
+// rank returns the effective numerical rank of `a` using SVD.
+//
+// Singular values strictly greater than `tol` are counted.
+// A common choice is `tol = max(m, n) * eps * sigma_max` where `sigma_max` is
+// the largest singular value; pass `tol = 0` to count all non-zero singular values.
+//
+// Example:
+// ```v
+// a := la.matrix_raw(3, 3, [1.0, 0, 0,  0, 1.0, 0,  0, 0, 0])
+// r := la.rank(a, 1e-10)  // 2
+// ```
 pub fn rank(a &Matrix[f64], tol f64) int {
 	m := a.m
 	n := a.n
