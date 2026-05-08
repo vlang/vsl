@@ -381,6 +381,20 @@ a<span class="token punctuation">.</span><span class="token function">set</span>
 
 </section>
 
+		<section id="cross" class="doc-node">
+			<div class="title"><h2>fn cross <a href="#cross">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/extra.v#L163"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">cross</span><span class="token punctuation">(</span>u <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> v <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>cross computes the 3-D cross product of two vectors: result = u × v.</p>
+<p>Both <code>u</code> and <code>v</code> must have length 3; panics otherwise.</p>
+
+<section class="doc-node examples"><h4>Example</h4>
+<pre>
+<code class="language-v">r <span class="token operator">:=</span> la<span class="token punctuation">.</span><span class="token function">cross</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token comment">// r = [0.0, 0.0, 1.0]</span></code></pre>
+</section>
+</section>
+
 		<section id="den_solve" class="doc-node">
 			<div class="title"><h2>fn den_solve <a href="#den_solve">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/densesol.v#L9"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
@@ -401,6 +415,46 @@ a<span class="token punctuation">.</span><span class="token function">set</span>
 <p>Input: A -- matrix to compute eigenvalues (SYMMETRIC and SQUARE) Output: A -- modified Q -- matrix which columns are the eigenvectors v -- vector with the eigenvalues</p>
 <p>Note: for matrices of order greater than about 10, say, the algorithm is slower,by a significant constant factor, than the QR method.</p>
 
+</section>
+
+		<section id="lstsq" class="doc-node">
+			<div class="title"><h2>fn lstsq <a href="#lstsq">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/extra.v#L83"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">lstsq</span><span class="token punctuation">(</span>a <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> b <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
+<p>lstsq solves the linear least-squares problem: minimise ||A·x − B||₂ for each column of B.</p>
+<p>Uses a full SVD-based pseudo-inverse. Singular values below <code>tol = 1e-8</code> are treated as zero.</p>
+<p>Returns <code>(x, residuals, rank, singular_values)</code> where:- <code>x</code>               — solution matrix (n × nrhs)</p>
+<ul>
+<li><code>residuals</code>       — Euclidean residual per RHS column (only meaningful when m ≥ n)</li>
+<li><code>rank</code>            — effective numerical rank (= min(m, n) when full-rank)</li>
+<li><code>singular_values</code> — descending singular values of A</li></ul>
+<p>Panics if <code>b.m != a.m</code>.</p>
+
+<section class="doc-node examples"><h4>Example</h4>
+<pre>
+<code class="language-v"><span class="token comment">// Fit y = c0 + c1*x to three points</span>
+a <span class="token operator">:=</span> la<span class="token punctuation">.</span><span class="token function">matrix_raw</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">,</span>  <span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">,</span>  <span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">2.0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+b <span class="token operator">:=</span> la<span class="token punctuation">.</span><span class="token function">matrix_raw</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">3.0</span><span class="token punctuation">,</span> <span class="token number">5.0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+x<span class="token punctuation">,</span> _<span class="token punctuation">,</span> _<span class="token punctuation">,</span> _ <span class="token operator">:=</span> la<span class="token punctuation">.</span><span class="token function">lstsq</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">)</span>
+<span class="token comment">// x ≈ [[1.0], [2.0]]  →  y = 1 + 2·x</span></code></pre>
+</section>
+</section>
+
+		<section id="lu" class="doc-node">
+			<div class="title"><h2>fn lu <a href="#lu">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/extra.v#L254"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">lu</span><span class="token punctuation">(</span>a <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<p>lu computes the LU factorisation of <code>a</code> with partial pivoting: P·A = L·U.</p>
+<p>Returns <code>(L, U, piv)</code> where:- <code>L</code> is lower-triangular with unit diagonal, shape <code>m × min(m,n)</code></p>
+<ul>
+<li><code>U</code> is upper-triangular, shape <code>min(m,n) × n</code></li>
+<li><code>piv</code> are the zero-based pivot row indices (length <code>min(m,n)</code>)</li></ul>
+
+<section class="doc-node examples"><h4>Example</h4>
+<pre>
+<code class="language-v">a <span class="token operator">:=</span> la<span class="token punctuation">.</span><span class="token function">matrix_raw</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">2.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">4.0</span><span class="token punctuation">,</span> <span class="token number">3.0</span><span class="token punctuation">,</span> <span class="token number">3.0</span><span class="token punctuation">,</span> <span class="token number">8.0</span><span class="token punctuation">,</span> <span class="token number">7.0</span><span class="token punctuation">,</span> <span class="token number">9.0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+l<span class="token punctuation">,</span> u<span class="token punctuation">,</span> piv <span class="token operator">:=</span> la<span class="token punctuation">.</span><span class="token function">lu</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token operator">!</span></code></pre>
+</section>
 </section>
 
 		<section id="matrix_add" class="doc-node">
@@ -552,6 +606,73 @@ a<span class="token punctuation">.</span><span class="token function">set</span>
 
 </section>
 
+		<section id="norm" class="doc-node">
+			<div class="title"><h2>fn norm <a href="#norm">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/extra.v#L42"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">norm</span><span class="token punctuation">(</span>a <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> ord <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>norm returns the specified norm of a matrix.</p>
+<p><code>ord</code> selects the norm type:- <code>""</code> or <code>"F"</code> — Frobenius norm (sqrt of sum of squares of all elements)</p>
+<ul>
+<li><code>"I"</code>         — Infinity norm (maximum absolute row sum)</li>
+<li><code>"1"</code>         — 1-norm (maximum absolute column sum)</li></ul>
+
+<section class="doc-node examples"><h4>Example</h4>
+<pre>
+<code class="language-v">a <span class="token operator">:=</span> la<span class="token punctuation">.</span><span class="token function">matrix_raw</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">3.0</span><span class="token punctuation">,</span> <span class="token number">4.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+frob <span class="token operator">:=</span> la<span class="token punctuation">.</span><span class="token function">norm</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> <span class="token string">'F'</span><span class="token punctuation">)</span>  <span class="token comment">// 5.0</span>
+inf  <span class="token operator">:=</span> la<span class="token punctuation">.</span><span class="token function">norm</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> <span class="token string">'I'</span><span class="token punctuation">)</span>  <span class="token comment">// 7.0</span>
+one  <span class="token operator">:=</span> la<span class="token punctuation">.</span><span class="token function">norm</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> <span class="token string">'1'</span><span class="token punctuation">)</span>  <span class="token comment">// 3.0</span></code></pre>
+</section>
+</section>
+
+		<section id="outer" class="doc-node">
+			<div class="title"><h2>fn outer <a href="#outer">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/extra.v#L144"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">outer</span><span class="token punctuation">(</span>u <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> v <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span></code></pre>
+<p>outer computes the outer product of two vectors.</p>
+<p><code>result[i, j] = u[i] * v[j]</code></p>
+<p>Returns an <code>u.len × v.len</code> matrix.</p>
+
+<section class="doc-node examples"><h4>Example</h4>
+<pre>
+<code class="language-v">r <span class="token operator">:=</span> la<span class="token punctuation">.</span><span class="token function">outer</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">2.0</span><span class="token punctuation">,</span> <span class="token number">3.0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">4.0</span><span class="token punctuation">,</span> <span class="token number">5.0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token comment">// r = [[4,5],[8,10],[12,15]]</span></code></pre>
+</section>
+</section>
+
+		<section id="qr" class="doc-node">
+			<div class="title"><h2>fn qr <a href="#qr">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/extra.v#L189"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">qr</span><span class="token punctuation">(</span>a <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>
+<p>qr computes the QR factorisation of <code>a</code> (m × n) via LAPACK <code>dgeqrf</code> + <code>dorgqr</code>.</p>
+<p>Returns <code>(Q, R)</code> where:- <code>Q</code> is orthonormal with shape <code>m × min(m,n)</code></p>
+<ul>
+<li><code>R</code> is upper-triangular with shape <code>min(m,n) × n</code></li></ul>
+<p>So <code>A ≈ Q · R</code>.</p>
+
+<section class="doc-node examples"><h4>Example</h4>
+<pre>
+<code class="language-v">a <span class="token operator">:=</span> la<span class="token punctuation">.</span><span class="token function">matrix_raw</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">2.0</span><span class="token punctuation">,</span> <span class="token number">3.0</span><span class="token punctuation">,</span> <span class="token number">4.0</span><span class="token punctuation">,</span> <span class="token number">5.0</span><span class="token punctuation">,</span> <span class="token number">6.0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+q<span class="token punctuation">,</span> r <span class="token operator">:=</span> la<span class="token punctuation">.</span><span class="token function">qr</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token operator">!</span>
+<span class="token comment">// q.m == 3, q.n == 2  (orthonormal columns)</span>
+<span class="token comment">// r.m == 2, r.n == 2  (upper triangular)</span></code></pre>
+</section>
+</section>
+
+		<section id="rank" class="doc-node">
+			<div class="title"><h2>fn rank <a href="#rank">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/extra.v#L332"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">rank</span><span class="token punctuation">(</span>a <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> tol <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>rank returns the effective numerical rank of <code>a</code> using SVD.</p>
+<p>Singular values strictly greater than <code>tol</code> are counted. A common choice is <code>tol = max(m, n) * eps * sigma_max</code> where <code>sigma_max</code> is the largest singular value; pass <code>tol = 0</code> to count all non-zero singular values.</p>
+
+<section class="doc-node examples"><h4>Example</h4>
+<pre>
+<code class="language-v">a <span class="token operator">:=</span> la<span class="token punctuation">.</span><span class="token function">matrix_raw</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span>  <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span>  <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+r <span class="token operator">:=</span> la<span class="token punctuation">.</span><span class="token function">rank</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> <span class="token number">1e-10</span><span class="token punctuation">)</span>  <span class="token comment">// 2</span></code></pre>
+</section>
+</section>
+
 		<section id="safe_print" class="doc-node">
 			<div class="title"><h2>fn safe_print <a href="#safe_print">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/matrix.v#L417"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
@@ -566,6 +687,21 @@ a<span class="token punctuation">.</span><span class="token function">set</span>
 <code><span class="token keyword">fn</span> <span class="token function">standardize_matrix</span><span class="token punctuation">(</span>data <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span></code></pre>
 <p>standardize_matrix standardizes each column (z-score)</p>
 
+</section>
+
+		<section id="trace" class="doc-node">
+			<div class="title"><h2>fn trace <a href="#trace">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/extra.v#L17"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">trace</span><span class="token punctuation">(</span>a <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>trace returns the sum of the diagonal elements of a square matrix.</p>
+<p>Panics if <code>a</code> is not square.</p>
+
+<section class="doc-node examples"><h4>Example</h4>
+<pre>
+<code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>la
+a <span class="token operator">:=</span> la<span class="token punctuation">.</span><span class="token function">matrix_raw</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span>  <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">2.0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span>  <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3.0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+tr <span class="token operator">:=</span> la<span class="token punctuation">.</span><span class="token function">trace</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span>  <span class="token comment">// 6.0</span></code></pre>
+</section>
 </section>
 
 		<section id="vector_accum" class="doc-node">
@@ -1153,7 +1289,7 @@ a<span class="token punctuation">.</span><span class="token function">set</span>
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 7 May 2026 20:04:19</div>
+						<div class="footer">Powered by vdoc. Generated on: 8 May 2026 06:08:17</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_la">README</a></li>
 <li class="open"><a href="#center_matrix">fn center_matrix</a>        <ul>
@@ -1180,10 +1316,19 @@ a<span class="token punctuation">.</span><span class="token function">set</span>
 <li class="open"><a href="#covariance_matrix">fn covariance_matrix</a>        <ul>
 </ul>
 </li>
+<li class="open"><a href="#cross">fn cross</a>        <ul>
+</ul>
+</li>
 <li class="open"><a href="#den_solve">fn den_solve</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#jacobi">fn jacobi</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#lstsq">fn lstsq</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#lu">fn lu</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#matrix_add">fn matrix_add</a>        <ul>
@@ -1237,10 +1382,25 @@ a<span class="token punctuation">.</span><span class="token function">set</span>
 <li class="open"><a href="#matrix_vector_mul_add">fn matrix_vector_mul_add</a>        <ul>
 </ul>
 </li>
+<li class="open"><a href="#norm">fn norm</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#outer">fn outer</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#qr">fn qr</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#rank">fn rank</a>        <ul>
+</ul>
+</li>
 <li class="open"><a href="#safe_print">fn safe_print</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#standardize_matrix">fn standardize_matrix</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#trace">fn trace</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#vector_accum">fn vector_accum</a>        <ul>
