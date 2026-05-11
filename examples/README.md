@@ -123,7 +123,6 @@ v -cflags <flags> run main.v
 
 | Example                              | Description                                   |
 | ------------------------------------ | --------------------------------------------- |
-| [plot_export_png](./plot_export_png) | **Direct PNG/PDF/SVG export without server.** |
 
 ### Styling & Customization
 
