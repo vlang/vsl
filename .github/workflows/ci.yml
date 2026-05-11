@@ -59,7 +59,10 @@ jobs:
             libopenmpi-dev \
             libhdf5-dev \
             hdf5-tools \
-            opencl-headers
+            opencl-headers \
+            vulkan-tools \
+            mesa-vulkan-drivers \
+            libvulkan-dev
 
       - name: Move VSL source code to V Modules
         run: mv ./vsl ~/.vmodules
@@ -69,6 +72,9 @@ jobs:
 
       - name: Execute Tests using Pure V Backend with Pure C Backend
         run: ~/.vmodules/vsl/bin/test ${{ matrix.flags }} --use-cblas --use-lapacke
+
+      - name: Execute Tests using Vulkan Compute Backend
+        run: ~/.vmodules/vsl/bin/test ${{ matrix.flags }} --use-vulkan
 
   run-tests-on-macos:
     runs-on: ${{ matrix.os }}
