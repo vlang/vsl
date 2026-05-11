@@ -35,6 +35,8 @@ enum PipelineType {
 	avgpool2d
 	global_avgpool2d
 	embedding_gather
+	gelu
+	maxpool2d
 }
 
 // vector_add computes element-wise addition: dst = a + b
@@ -455,6 +457,8 @@ fn pipeline_get(d &Device, t PipelineType) !&ComputePipeline {
 		.avgpool2d { pl = d.create_pipeline(avgpool2d_spv, 'main')! }
 		.global_avgpool2d { pl = d.create_pipeline(global_avgpool2d_spv, 'main')! }
 		.embedding_gather { pl = d.create_pipeline(embedding_gather_spv, 'main')! }
+		.gelu { pl = d.create_pipeline(gelu_spv, 'main')! }
+		.maxpool2d { pl = d.create_pipeline(maxpool2d_spv, 'main')! }
 	}
 	unsafe {
 		d.pipeline_cache[t] = pl
@@ -488,4 +492,38 @@ pub fn embedding_gather(dev &Device, dst &GpuBuffer, indices_buf &GpuBuffer, emb
 	// Dispatch: total elements = num_indices * embed_dim
 	total_elems := num_indices * embed_dim
 	dispatch_sync(dev, pl, total_elems, 1, 1)!
+}
+
+// gelu computes the GELU activation: dst[i] = 0.5 * x * (1 + tanh(sqrt(2/pi) * (x + 0.044715*x^3)))
+pub fn gelu(dev &Device, dst &GpuBuffer, src &GpuBuffer, n u32) ! {
+	mut pc_buf := dev.buffer(DeviceSize(4))!
+	defer { pc_buf.release() }
+	mut pb := []u8{len: 4}
+	unsafe { *(&u32(&pb[0])) = n }
+	pc_buf.load(pb)!
+
+	pl := pipeline_get(dev, .gelu)!
+	pl.update_buffer(0, dst)!
+	pl.update_buffer(1, src)!
+	pl.update_buffer(2, pc_buf)!
+	dispatch_sync(dev, pl, n, 1, 1)!
+}
+
+// maxpool2d performs 2D max pooling on NCHW input.
+pub fn maxpool2d(dev &Device, dst &GpuBuffer, src &GpuBuffer, batch u32, in_ch u32, in_h u32, in_w u32, k_h u32, k_w u32, out_h u32, out_w u32, pad_h u32, pad_w u32, stride_h u32, stride_w u32) ! {
+	mut pc_buf := dev.buffer(DeviceSize(12 * 4))!
+	defer { pc_buf.release() }
+	mut pb := []u8{len: 12 * 4}
+	params := [batch, in_ch, in_h, in_w, k_h, k_w, out_h, out_w, pad_h, pad_w, stride_h, stride_w]
+	for i, v in params {
+		unsafe { *(&u32(&pb[i * 4])) = v }
+	}
+	pc_buf.load(pb)!
+
+	pl := pipeline_get(dev, .maxpool2d)!
+	pl.update_buffer(0, dst)!
+	pl.update_buffer(1, src)!
+	pl.update_buffer(2, pc_buf)!
+	total := batch * in_ch * out_h * out_w
+	dispatch_sync(dev, pl, total, 1, 1)!
 }
