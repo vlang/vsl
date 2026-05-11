@@ -32,6 +32,7 @@ enum PipelineType {
 	layernorm
 	reduction
 	im2col
+	avgpool2d
 }
 
 // vector_add computes element-wise addition: dst = a + b
@@ -238,15 +239,82 @@ pub fn reduce(dev &Device, dst &GpuBuffer, src &GpuBuffer, n u32, op ReductionOp
 // Output: [N*out_h*out_w, C*k_h*k_w] (im2col matrix)
 // Params: N, C, H, W, k_h, k_w, out_h, out_w, pad_h, pad_w, stride_h, stride_w, dil_h, dil_w
 pub fn im2col(dev &Device, dst &GpuBuffer, src &GpuBuffer, n u32, c u32, h u32, w u32, k_h u32, k_w u32, out_h u32, out_w u32, pad_h u32, pad_w u32, stride_h u32, stride_w u32, dil_h u32, dil_w u32) ! {
+pub fn im2col(dev &Device, dst &GpuBuffer, src &GpuBuffer, n u32, c u32, h u32, w u32, k_h u32, k_w u32, out_h u32, out_w u32, pad_h u32, pad_w u32, stride_h u32, stride_w u32, dil_h u32, dil_w u32) ! {
+	// Allocate params buffer
 	// Allocate params buffer
 	mut params_buf := dev.buffer(DeviceSize(14 * 4))!
+	mut params_buf := dev.buffer(DeviceSize(14 * 4))!
+	defer { params_buf.release() }
 	defer { params_buf.release() }
 	mut pb := []u8{len: 14 * 4}
+	mut pb := []u8{len: 14 * 4}
+	unsafe {
 	unsafe {
 		*(&u32(&pb[0])) = n
+		*(&u32(&pb[0])) = n
+		*(&u32(&pb[4])) = c
 		*(&u32(&pb[4])) = c
 		*(&u32(&pb[8])) = h
+		*(&u32(&pb[8])) = h
 		*(&u32(&pb[12])) = w
+		*(&u32(&pb[12])) = w
+		*(&u32(&pb[16])) = k_h
+		*(&u32(&pb[16])) = k_h
+		*(&u32(&pb[20])) = k_w
+		*(&u32(&pb[20])) = k_w
+		*(&u32(&pb[24])) = out_h
+		*(&u32(&pb[24])) = out_h
+		*(&u32(&pb[28])) = out_w
+		*(&u32(&pb[28])) = out_w
+		*(&u32(&pb[32])) = pad_h
+		*(&u32(&pb[32])) = pad_h
+		*(&u32(&pb[36])) = pad_w
+		*(&u32(&pb[36])) = pad_w
+		*(&u32(&pb[40])) = stride_h
+		*(&u32(&pb[40])) = stride_h
+		*(&u32(&pb[44])) = stride_w
+		*(&u32(&pb[44])) = stride_w
+		*(&u32(&pb[48])) = dil_h
+		*(&u32(&pb[48])) = dil_h
+		*(&u32(&pb[52])) = dil_w
+		*(&u32(&pb[52])) = dil_w
+	}
+	}
+	params_buf.load(pb)!
+	params_buf.load(pb)!
+
+
+	pl := pipeline_get(dev, .im2col)!
+	pl := pipeline_get(dev, .im2col)!
+	pl.update_buffer(0, src)!
+	pl.update_buffer(0, src)!
+	pl.update_buffer(1, dst)!
+	pl.update_buffer(1, dst)!
+	pl.update_buffer(2, params_buf)!
+	pl.update_buffer(2, params_buf)!
+
+
+	// Dispatch: total elements = N * out_h * out_w * C * k_h * k_w
+	// Dispatch: total elements = N * out_h * out_w * C * k_h * k_w
+	total_elems := n * out_h * out_w * c * k_h * k_w
+	total_elems := n * out_h * out_w * c * k_h * k_w
+	dispatch_sync(dev, pl, total_elems, 1, 1)!
+	dispatch_sync(dev, pl, total_elems, 1, 1)!
+}
+// avgpool2d performs 2D average pooling on GPU.
+// input: [batch, in_ch, in_h, in_w]
+// output: [batch, in_ch, out_h, out_w]
+// Params: [batch, in_ch, in_h, in_w, k_h, k_w, out_h, out_w, pad_h, pad_w, stride_h, stride_w]
+pub fn avgpool2d(dev &Device, dst &GpuBuffer, src &GpuBuffer, batch u32, in_ch u32, in_h u32, in_w u32, k_h u32, k_w u32, out_h u32, out_w u32, pad_h u32, pad_w u32, stride_h u32, stride_w u32) ! {
+	// Allocate params buffer (12 u32 values)
+	mut params_buf := dev.buffer(DeviceSize(12 * 4))!
+	defer { params_buf.release() }
+	mut pb := []u8{len: 12 * 4}
+	unsafe {
+		*(&u32(&pb[0])) = batch
+		*(&u32(&pb[4])) = in_ch
+		*(&u32(&pb[8])) = in_h
+		*(&u32(&pb[12])) = in_w
 		*(&u32(&pb[16])) = k_h
 		*(&u32(&pb[20])) = k_w
 		*(&u32(&pb[24])) = out_h
@@ -255,19 +323,19 @@ pub fn im2col(dev &Device, dst &GpuBuffer, src &GpuBuffer, n u32, c u32, h u32, 
 		*(&u32(&pb[36])) = pad_w
 		*(&u32(&pb[40])) = stride_h
 		*(&u32(&pb[44])) = stride_w
-		*(&u32(&pb[48])) = dil_h
-		*(&u32(&pb[52])) = dil_w
 	}
 	params_buf.load(pb)!
 
-	pl := pipeline_get(dev, .im2col)!
-	pl.update_buffer(0, src)!
-	pl.update_buffer(1, dst)!
+	pl := pipeline_get(dev, .avgpool2d)!
+	pl.update_buffer(0, dst)!
+	pl.update_buffer(1, src)!
 	pl.update_buffer(2, params_buf)!
 
-	// Dispatch: total elements = N * out_h * out_w * C * k_h * k_w
-	total_elems := n * out_h * out_w * c * k_h * k_w
+	// Dispatch: total elements = batch * in_ch * out_h * out_w
+	total_elems := batch * in_ch * out_h * out_w
 	dispatch_sync(dev, pl, total_elems, 1, 1)!
+}
+
 }
 
 
@@ -387,6 +455,7 @@ fn pipeline_get(d &Device, t PipelineType) !&ComputePipeline {
 		.layernorm { pl = d.create_pipeline(layernorm_spv, 'main')! }
 		.reduction { pl = d.create_pipeline(reduction_spv, 'main')! }
 		.im2col { pl = d.create_pipeline(im2col_spv, 'main')! }
+		.avgpool2d { pl = d.create_pipeline(avgpool2d_spv, 'main')! }
 	}
 	unsafe {
 		d.pipeline_cache[t] = pl
