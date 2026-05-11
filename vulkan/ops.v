@@ -37,6 +37,7 @@ enum PipelineType {
 	embedding_gather
 	gelu
 	maxpool2d
+	batchnorm1d
 }
 
 // vector_add computes element-wise addition: dst = a + b
@@ -459,6 +460,7 @@ fn pipeline_get(d &Device, t PipelineType) !&ComputePipeline {
 		.embedding_gather { pl = d.create_pipeline(embedding_gather_spv, 'main')! }
 		.gelu { pl = d.create_pipeline(gelu_spv, 'main')! }
 		.maxpool2d { pl = d.create_pipeline(maxpool2d_spv, 'main')! }
+		.batchnorm1d { pl = d.create_pipeline(batchnorm1d_spv, 'main')! }
 	}
 	unsafe {
 		d.pipeline_cache[t] = pl
@@ -526,4 +528,26 @@ pub fn maxpool2d(dev &Device, dst &GpuBuffer, src &GpuBuffer, batch u32, in_ch u
 	pl.update_buffer(2, pc_buf)!
 	total := batch * in_ch * out_h * out_w
 	dispatch_sync(dev, pl, total, 1, 1)!
+}
+
+// batchnorm1d normalises input[N, C] along the batch (N) dimension per feature.
+// params SSBO: [n, c, eps_bits] where eps_bits = uintBitsToFloat(eps).
+// Output is normalised only — caller applies gamma/beta on CPU.
+pub fn batchnorm1d(dev &Device, dst &GpuBuffer, src &GpuBuffer, n u32, c u32, eps f32) ! {
+	mut pc_buf := dev.buffer(DeviceSize(3 * 4))!
+	defer { pc_buf.release() }
+	mut pb := []u8{len: 3 * 4}
+	unsafe {
+		*(&u32(&pb[0])) = n
+		*(&u32(&pb[4])) = c
+		*(&f32(&pb[8])) = eps
+	}
+	pc_buf.load(pb)!
+
+	pl := pipeline_get(dev, .batchnorm1d)!
+	pl.update_buffer(0, dst)!
+	pl.update_buffer(1, src)!
+	pl.update_buffer(2, pc_buf)!
+	// dispatch one workgroup per feature; 256 threads per group handle N samples
+	dispatch_sync(dev, pl, c * u32(workgroup_size_x), 1, 1)!
 }

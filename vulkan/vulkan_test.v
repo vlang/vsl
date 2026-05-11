@@ -546,3 +546,52 @@ fn test_maxpool2d() {
 	assert math.abs(out[2] - 14.0) < 0.01, 'maxpool[2] = ${out[2]}'
 	assert math.abs(out[3] - 16.0) < 0.01, 'maxpool[3] = ${out[3]}'
 }
+
+fn test_batchnorm1d() {
+	mut dev := new_device() or {
+		eprintln('no Vulkan device — skipping batchnorm1d test')
+		return
+	}
+	defer { dev.release() or {} }
+
+	// 4 samples, 2 features
+	// col0: [1,2,3,4] mean=2.5 var=1.25  → normalised: [-1.342, -0.447, 0.447, 1.342]
+	// col1: [2,4,6,8] mean=5   var=5     → normalised: [-1.342, -0.447, 0.447, 1.342]
+	n := u32(4)
+	c := u32(2)
+	input := [
+		f32(1), f32(2),
+		f32(2), f32(4),
+		f32(3), f32(6),
+		f32(4), f32(8),
+	]
+	eps := f32(1e-5)
+	total := int(n * c)
+
+	mut src_bytes := []u8{len: total * 4}
+	for i, v in input {
+		unsafe { *(&f32(&src_bytes[i * 4])) = v }
+	}
+	mut src_buf := dev.buffer(DeviceSize(u64(total) * 4))!
+	defer { src_buf.release() }
+	src_buf.load(src_bytes)!
+
+	mut dst_buf := dev.buffer(DeviceSize(u64(total) * 4))!
+	defer { dst_buf.release() }
+
+	batchnorm1d(dev, dst_buf, src_buf, n, c, eps)!
+
+	mut raw := []u8{len: total * 4}
+	dst_buf.store(mut raw)!
+
+	mut out := []f32{len: total}
+	for i in 0 .. total {
+		unsafe { out[i] = *(&f32(&raw[i * 4])) }
+	}
+
+	// Both columns should have same normalised pattern
+	assert math.abs(f64(out[0]) - (-1.342)) < 0.01, 'out[0]=${out[0]}'
+	assert math.abs(f64(out[2]) - (-0.447)) < 0.01, 'out[2]=${out[2]}'
+	assert math.abs(f64(out[4]) -   0.447)  < 0.01, 'out[4]=${out[4]}'
+	assert math.abs(f64(out[6]) -   1.342)  < 0.01, 'out[6]=${out[6]}'
+}
