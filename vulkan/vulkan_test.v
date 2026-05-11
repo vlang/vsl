@@ -357,3 +357,104 @@ fn test_sigmoid_op() {
 		assert result[i] < 1.0, 'sigmoid at ${i}: ${result[i]} is not < 1'
 	}
 }
+
+fn test_softmax() {
+	mut dev := new_device() or {
+		eprintln('no Vulkan device — skip')
+		return
+	}
+	defer { dev.release() or {} }
+
+	n := u32(64)
+	mut src_data := []f32{len: int(n), init: f32(index) * 0.1}
+	src_bytes := bytes_from_f32(src_data)
+
+	mut src_buf := dev.buffer(DeviceSize(src_bytes.len)) or { assert false, 'buf src'; return }
+	defer { src_buf.release() }
+	mut dst_buf := dev.buffer(DeviceSize(src_bytes.len)) or { assert false, 'buf dst'; return }
+	defer { dst_buf.release() }
+
+	src_buf.load(src_bytes) or { assert false, 'upload: ${err}'; return }
+
+	softmax(dev, dst_buf, src_buf, n) or { assert false, 'softmax: ${err}'; return }
+
+	mut raw := []u8{len: int(n) * 4}
+	raw = dst_buf.store(mut raw) or { assert false, 'store: ${err}'; return }
+	result := bytes_to_f32(raw)
+
+	mut total := f32(0.0)
+	for v in result {
+		assert v > 0.0, 'softmax output must be positive'
+		total += v
+	}
+	// Sum should be approximately 1.0
+	assert total > 0.99 && total < 1.01, 'softmax sum=${total} not ≈ 1'
+}
+
+fn test_layernorm() {
+	mut dev := new_device() or {
+		eprintln('no Vulkan device — skip')
+		return
+	}
+	defer { dev.release() or {} }
+
+	n := u32(64)
+	mut src_data := []f32{len: int(n), init: f32(index) - f32(n) / 2.0}
+	src_bytes := bytes_from_f32(src_data)
+
+	mut src_buf := dev.buffer(DeviceSize(src_bytes.len)) or { assert false, 'buf src'; return }
+	defer { src_buf.release() }
+	mut dst_buf := dev.buffer(DeviceSize(src_bytes.len)) or { assert false, 'buf dst'; return }
+	defer { dst_buf.release() }
+
+	src_buf.load(src_bytes) or { assert false, 'upload: ${err}'; return }
+
+	eps := f32(1e-5)
+	layernorm(dev, dst_buf, src_buf, n, eps) or { assert false, 'layernorm: ${err}'; return }
+
+	mut raw := []u8{len: int(n) * 4}
+	raw = dst_buf.store(mut raw) or { assert false, 'store: ${err}'; return }
+	result := bytes_to_f32(raw)
+
+	// Normalised output should have mean ≈ 0 and values in [-3, 3]
+	mut s := f32(0.0)
+	for v in result {
+		s += v
+	}
+	mean := s / f32(n)
+	assert mean > -0.1 && mean < 0.1, 'layernorm mean=${mean} not ≈ 0'
+}
+
+fn test_reduce_sum() {
+	mut dev := new_device() or {
+		eprintln('no Vulkan device — skip')
+		return
+	}
+	defer { dev.release() or {} }
+
+	n := u32(256)
+	src_data := []f32{len: int(n), init: f32(1)} // all ones → sum = n
+	src_bytes := bytes_from_f32(src_data)
+
+	wg_size := u32(256)
+	num_groups := (n + wg_size - 1) / wg_size
+
+	mut src_buf := dev.buffer(DeviceSize(src_bytes.len)) or { assert false, 'buf src'; return }
+	defer { src_buf.release() }
+	mut dst_buf := dev.buffer(DeviceSize(u64(num_groups) * 4)) or { assert false, 'buf dst'; return }
+	defer { dst_buf.release() }
+
+	src_buf.load(src_bytes) or { assert false, 'upload: ${err}'; return }
+
+	reduce(dev, dst_buf, src_buf, n, .sum) or { assert false, 'reduce: ${err}'; return }
+
+	mut raw := []u8{len: int(num_groups) * 4}
+	raw = dst_buf.store(mut raw) or { assert false, 'store: ${err}'; return }
+	partial := bytes_to_f32(raw)
+
+	mut total := f32(0.0)
+	for v in partial {
+		total += v
+	}
+	assert total > f32(n) - 1.0 && total < f32(n) + 1.0, 'reduce sum=${total} expected ${n}'
+}

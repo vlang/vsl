@@ -14,6 +14,9 @@ module vulkan
 //   sum(buf)                       returns sum of all f32 elements
 //   relu(dst, src)                  dst[i] = max(0, src[i])
 //   sigmoid(dst, src)             dst[i] = 1/(1+exp(-src[i]))
+//   softmax(dst, src, n)           numerically-stable row softmax
+//   layernorm(dst, src, n, eps)    layer norm (no affine; apply gamma/beta on CPU)
+//   reduce(dst, src, n, op)        per-workgroup sum or max into dst[num_groups]
 // ============================================================================
 
 // ComputePipeline type enum for the cache.
@@ -25,6 +28,9 @@ enum PipelineType {
 	relu
 	sigmoid
 	gemm
+	softmax
+	layernorm
+	reduction
 }
 
 // vector_add computes element-wise addition: dst = a + b
@@ -131,6 +137,98 @@ pub fn gemm(dev &Device, dst &GpuBuffer, a &GpuBuffer, b &GpuBuffer, m u32, n u3
 	pl.update_buffer(2, dst)!
 	pl.update_buffer(3, params_buf)!
 	dispatch_sync(dev, pl, m, n, 1)!
+}
+
+// softmax computes per-row numerically stable softmax on a 1-D vector of length n.
+// Binding layout (v2 shader, no push_constants):
+//   0: in_data (f32[n])  1: out_data (f32[n])  2: params_data (u32[2] = [n, num_groups])  3: scratch_data (f32[2*num_groups])
+pub fn softmax(dev &Device, dst &GpuBuffer, src &GpuBuffer, n u32) ! {
+	wg_size := u32(256)
+	num_groups := (n + wg_size - 1) / wg_size
+
+	// params: [n, num_groups]
+	mut params_buf := dev.buffer(DeviceSize(8))!
+	defer { params_buf.release() }
+	mut pb := []u8{len: 8}
+	unsafe {
+		*(&u32(&pb[0])) = n
+		*(&u32(&pb[4])) = num_groups
+	}
+	params_buf.load(pb)!
+
+	// scratch: 2 * num_groups f32s (max phase + sum phase)
+	scratch_size := DeviceSize(u64(num_groups) * 2 * 4)
+	mut scratch_buf := dev.buffer(scratch_size)!
+	defer { scratch_buf.release() }
+
+	pl := pipeline_get(dev, .softmax)!
+	pl.update_buffer(0, src)!
+	pl.update_buffer(1, dst)!
+	pl.update_buffer(2, params_buf)!
+	pl.update_buffer(3, scratch_buf)!
+	dispatch_sync(dev, pl, n, 1, 1)!
+}
+
+// layernorm computes layer normalisation: out[i] = (x[i] - mean) * inv_std.
+// Gamma/beta affine transform must be applied by the caller on CPU.
+// Binding layout (v2 shader):
+//   0: in_data (f32[n])  1: out_data (f32[n])  2: params_data (u32[2] = [n, eps_bits])  3: scratch_data (f32[2])
+pub fn layernorm(dev &Device, dst &GpuBuffer, src &GpuBuffer, n u32, eps f32) ! {
+	// Encode eps as raw bits so it survives the u32 SSBO
+	eps_bits := unsafe { *(&u32(&eps)) }
+
+	mut params_buf := dev.buffer(DeviceSize(8))!
+	defer { params_buf.release() }
+	mut pb := []u8{len: 8}
+	unsafe {
+		*(&u32(&pb[0])) = n
+		*(&u32(&pb[4])) = eps_bits
+	}
+	params_buf.load(pb)!
+
+	// scratch: [mean, variance] — 2 f32s shared across workgroups
+	mut scratch_buf := dev.buffer(DeviceSize(8))!
+	defer { scratch_buf.release() }
+
+	pl := pipeline_get(dev, .layernorm)!
+	pl.update_buffer(0, src)!
+	pl.update_buffer(1, dst)!
+	pl.update_buffer(2, params_buf)!
+	pl.update_buffer(3, scratch_buf)!
+	dispatch_sync(dev, pl, n, 1, 1)!
+}
+
+// ReductionOp selects the operation performed by the reduction kernel.
+pub enum ReductionOp {
+	sum = 0
+	max = 1
+}
+
+// reduce computes a per-workgroup reduction (sum or max) into out_data[num_groups].
+// Binding layout (v2 shader):
+//   0: in_data (f32[n])  1: out_data (f32[num_groups])  2: params_data (u32[2] = [n, op])  3: scratch_data (f32[num_groups])
+pub fn reduce(dev &Device, dst &GpuBuffer, src &GpuBuffer, n u32, op ReductionOp) ! {
+	wg_size := u32(256)
+	num_groups := (n + wg_size - 1) / wg_size
+
+	mut params_buf := dev.buffer(DeviceSize(8))!
+	defer { params_buf.release() }
+	mut pb := []u8{len: 8}
+	unsafe {
+		*(&u32(&pb[0])) = n
+		*(&u32(&pb[4])) = u32(op)
+	}
+	params_buf.load(pb)!
+
+	mut scratch_buf := dev.buffer(DeviceSize(u64(num_groups) * 4))!
+	defer { scratch_buf.release() }
+
+	pl := pipeline_get(dev, .reduction)!
+	pl.update_buffer(0, src)!
+	pl.update_buffer(1, dst)!
+	pl.update_buffer(2, params_buf)!
+	pl.update_buffer(3, scratch_buf)!
+	dispatch_sync(dev, pl, n, 1, 1)!
 }
 
 // dispatch_sync submits a 3D compute dispatch and waits for completion.
@@ -245,6 +343,9 @@ fn pipeline_get(d &Device, t PipelineType) !&ComputePipeline {
 		.relu { pl = d.create_pipeline(relu_spv, 'main')! }
 		.sigmoid { pl = d.create_pipeline(sigmoid_spv, 'main')! }
 		.gemm { pl = d.create_pipeline(gemm_spv, 'main')! }
+		.softmax { pl = d.create_pipeline(softmax_spv, 'main')! }
+		.layernorm { pl = d.create_pipeline(layernorm_spv, 'main')! }
+		.reduction { pl = d.create_pipeline(reduction_spv, 'main')! }
 	}
 	unsafe {
 		d.pipeline_cache[t] = pl
