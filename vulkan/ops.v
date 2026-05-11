@@ -34,6 +34,7 @@ enum PipelineType {
 	im2col
 	avgpool2d
 	global_avgpool2d
+	embedding_gather
 }
 
 // vector_add computes element-wise addition: dst = a + b
@@ -453,9 +454,38 @@ fn pipeline_get(d &Device, t PipelineType) !&ComputePipeline {
 		.im2col { pl = d.create_pipeline(im2col_spv, 'main')! }
 		.avgpool2d { pl = d.create_pipeline(avgpool2d_spv, 'main')! }
 		.global_avgpool2d { pl = d.create_pipeline(global_avgpool2d_spv, 'main')! }
+		.embedding_gather { pl = d.create_pipeline(embedding_gather_spv, 'main')! }
 	}
 	unsafe {
 		d.pipeline_cache[t] = pl
 	}
 	return pl
+}
+
+// embedding_gather performs embedding table lookups by index.
+// indices: [num_indices] (u32)
+// embedding_table: [vocab_size, embed_dim] row-major (f32)
+// output: [num_indices, embed_dim] (f32)
+// Params: [num_indices, vocab_size, embed_dim]
+pub fn embedding_gather(dev &Device, dst &GpuBuffer, indices_buf &GpuBuffer, embedding_table_buf &GpuBuffer, num_indices u32, vocab_size u32, embed_dim u32) ! {
+	// Allocate params buffer (3 u32 values)
+	mut params_buf := dev.buffer(DeviceSize(3 * 4))!
+	defer { params_buf.release() }
+	mut pb := []u8{len: 3 * 4}
+	unsafe {
+		*(&u32(&pb[0])) = num_indices
+		*(&u32(&pb[4])) = vocab_size
+		*(&u32(&pb[8])) = embed_dim
+	}
+	params_buf.load(pb)!
+
+	pl := pipeline_get(dev, .embedding_gather)!
+	pl.update_buffer(0, indices_buf)!
+	pl.update_buffer(1, embedding_table_buf)!
+	pl.update_buffer(2, dst)!
+	pl.update_buffer(3, params_buf)!
+
+	// Dispatch: total elements = num_indices * embed_dim
+	total_elems := num_indices * embed_dim
+	dispatch_sync(dev, pl, total_elems, 1, 1)!
 }
