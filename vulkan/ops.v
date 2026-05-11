@@ -38,6 +38,16 @@ enum PipelineType {
 	gelu
 	maxpool2d
 	batchnorm1d
+	// Backward kernels
+	d_relu
+	d_sigmoid
+	d_tanh
+	d_gelu
+	d_gemm_da
+	d_gemm_db
+	d_softmax
+	d_layernorm
+	broadcast_grad
 }
 
 // vector_add computes element-wise addition: dst = a + b
@@ -461,6 +471,16 @@ fn pipeline_get(d &Device, t PipelineType) !&ComputePipeline {
 		.gelu { pl = d.create_pipeline(gelu_spv, 'main')! }
 		.maxpool2d { pl = d.create_pipeline(maxpool2d_spv, 'main')! }
 		.batchnorm1d { pl = d.create_pipeline(batchnorm1d_spv, 'main')! }
+		// Backward kernels
+		.d_relu { pl = d.create_pipeline(spv_d_relu, 'main')! }
+		.d_sigmoid { pl = d.create_pipeline(spv_d_sigmoid, 'main')! }
+		.d_tanh { pl = d.create_pipeline(spv_d_tanh, 'main')! }
+		.d_gelu { pl = d.create_pipeline(spv_d_gelu, 'main')! }
+		.d_gemm_da { pl = d.create_pipeline(spv_d_gemm_da, 'main')! }
+		.d_gemm_db { pl = d.create_pipeline(spv_d_gemm_db, 'main')! }
+		.d_softmax { pl = d.create_pipeline(spv_d_softmax, 'main')! }
+		.d_layernorm { pl = d.create_pipeline(spv_d_layernorm, 'main')! }
+		.broadcast_grad { pl = d.create_pipeline(spv_broadcast_grad, 'main')! }
 	}
 	unsafe {
 		d.pipeline_cache[t] = pl
@@ -550,4 +570,151 @@ pub fn batchnorm1d(dev &Device, dst &GpuBuffer, src &GpuBuffer, n u32, c u32, ep
 	pl.update_buffer(2, pc_buf)!
 	// dispatch one workgroup per feature; 256 threads per group handle N samples
 	dispatch_sync(dev, pl, c * u32(workgroup_size_x), 1, 1)!
+}
+
+// ===========================================================================
+// Backward-pass GPU operations
+// ===========================================================================
+
+// d_relu computes the ReLU backward pass.
+// grad_out: upstream gradient [n], input_val: forward input [n]
+// grad_in: output gradient [n]
+// grad_in[i] = grad_out[i] if input_val[i] > 0 else 0
+pub fn d_relu(dev &Device, grad_in &GpuBuffer, grad_out &GpuBuffer, input_val &GpuBuffer) ! {
+	pl := pipeline_get(dev, .d_relu)!
+	pl.update_buffer(0, grad_out)!
+	pl.update_buffer(1, input_val)!
+	pl.update_buffer(2, grad_in)!
+	dispatch_sync(dev, pl, u32(grad_out.size / 4), 1, 1)!
+}
+
+// d_sigmoid computes the sigmoid backward pass.
+// grad_in[i] = grad_out[i] * sigmoid_out[i] * (1 - sigmoid_out[i])
+pub fn d_sigmoid(dev &Device, grad_in &GpuBuffer, grad_out &GpuBuffer, sigmoid_out &GpuBuffer) ! {
+	pl := pipeline_get(dev, .d_sigmoid)!
+	pl.update_buffer(0, grad_out)!
+	pl.update_buffer(1, sigmoid_out)!
+	pl.update_buffer(2, grad_in)!
+	dispatch_sync(dev, pl, u32(grad_out.size / 4), 1, 1)!
+}
+
+// d_tanh computes the tanh backward pass.
+// grad_in[i] = grad_out[i] * (1 - tanh_out[i]^2)
+pub fn d_tanh(dev &Device, grad_in &GpuBuffer, grad_out &GpuBuffer, tanh_out &GpuBuffer) ! {
+	pl := pipeline_get(dev, .d_tanh)!
+	pl.update_buffer(0, grad_out)!
+	pl.update_buffer(1, tanh_out)!
+	pl.update_buffer(2, grad_in)!
+	dispatch_sync(dev, pl, u32(grad_out.size / 4), 1, 1)!
+}
+
+// d_gelu computes the GELU backward pass.
+// grad_in[i] = grad_out[i] * gelu'(input_val[i])
+pub fn d_gelu(dev &Device, grad_in &GpuBuffer, grad_out &GpuBuffer, input_val &GpuBuffer) ! {
+	pl := pipeline_get(dev, .d_gelu)!
+	pl.update_buffer(0, grad_out)!
+	pl.update_buffer(1, input_val)!
+	pl.update_buffer(2, grad_in)!
+	dispatch_sync(dev, pl, u32(grad_out.size / 4), 1, 1)!
+}
+
+// d_gemm_da computes the gradient of A in C = A @ B.
+// dA [M x K] = grad_out [M x N] @ B^T [N x K]
+// dims_buf holds [M, N, K] as three u32 values.
+pub fn d_gemm_da(dev &Device, da &GpuBuffer, grad_out &GpuBuffer, b_mat &GpuBuffer, m u32, n u32, k u32) ! {
+	mut dims_buf := dev.buffer(DeviceSize(3 * 4))!
+	defer { dims_buf.release() }
+	mut pb := []u8{len: 12}
+	unsafe {
+		*(&u32(&pb[0])) = m
+		*(&u32(&pb[4])) = n
+		*(&u32(&pb[8])) = k
+	}
+	dims_buf.load(pb)!
+	pl := pipeline_get(dev, .d_gemm_da)!
+	pl.update_buffer(0, grad_out)!
+	pl.update_buffer(1, b_mat)!
+	pl.update_buffer(2, da)!
+	pl.update_buffer(3, dims_buf)!
+	dispatch_sync(dev, pl, m * k, 1, 1)!
+}
+
+// d_gemm_db computes the gradient of B in C = A @ B.
+// dB [K x N] = A^T [K x M] @ grad_out [M x N]
+pub fn d_gemm_db(dev &Device, db &GpuBuffer, grad_out &GpuBuffer, a_mat &GpuBuffer, m u32, n u32, k u32) ! {
+	mut dims_buf := dev.buffer(DeviceSize(3 * 4))!
+	defer { dims_buf.release() }
+	mut pb := []u8{len: 12}
+	unsafe {
+		*(&u32(&pb[0])) = m
+		*(&u32(&pb[4])) = n
+		*(&u32(&pb[8])) = k
+	}
+	dims_buf.load(pb)!
+	pl := pipeline_get(dev, .d_gemm_db)!
+	pl.update_buffer(0, grad_out)!
+	pl.update_buffer(1, a_mat)!
+	pl.update_buffer(2, db)!
+	pl.update_buffer(3, dims_buf)!
+	dispatch_sync(dev, pl, k * n, 1, 1)!
+}
+
+// d_softmax computes the softmax backward pass (Jacobian-vector product).
+// grad_in[i] = softmax_out[i] * (grad_out[i] - dot(grad_out_row, softmax_out_row))
+// rows: number of independent softmax rows, n: row length
+pub fn d_softmax(dev &Device, grad_in &GpuBuffer, grad_out &GpuBuffer, softmax_out &GpuBuffer, rows u32, n u32) ! {
+	mut dims_buf := dev.buffer(DeviceSize(2 * 4))!
+	defer { dims_buf.release() }
+	mut pb := []u8{len: 8}
+	unsafe {
+		*(&u32(&pb[0])) = rows
+		*(&u32(&pb[4])) = n
+	}
+	dims_buf.load(pb)!
+	pl := pipeline_get(dev, .d_softmax)!
+	pl.update_buffer(0, grad_out)!
+	pl.update_buffer(1, softmax_out)!
+	pl.update_buffer(2, grad_in)!
+	pl.update_buffer(3, dims_buf)!
+	// One workgroup per row
+	dispatch_sync(dev, pl, rows * u32(workgroup_size_x), 1, 1)!
+}
+
+// d_layernorm computes the layer normalization backward pass (no affine).
+// rows: number of independent layer-norm rows, n: row length, eps: small epsilon
+pub fn d_layernorm(dev &Device, grad_in &GpuBuffer, grad_out &GpuBuffer, input_val &GpuBuffer, rows u32, n u32, eps f32) ! {
+	mut params_buf := dev.buffer(DeviceSize(2 * 4))!
+	defer { params_buf.release() }
+	mut pb := []u8{len: 8}
+	unsafe {
+		*(&u32(&pb[0])) = n
+		*(&f32(&pb[4])) = eps
+	}
+	params_buf.load(pb)!
+	pl := pipeline_get(dev, .d_layernorm)!
+	pl.update_buffer(0, grad_out)!
+	pl.update_buffer(1, input_val)!
+	pl.update_buffer(2, grad_in)!
+	pl.update_buffer(3, params_buf)!
+	// One workgroup per row
+	dispatch_sync(dev, pl, rows * u32(workgroup_size_x), 1, 1)!
+}
+
+// broadcast_grad broadcasts a reduced gradient back to full shape.
+// grad_out[0..n-1] is the reduced gradient; grad_in[0..total-1] is the output.
+// scale: multiplier applied to each element (1.0 for sum backward, 1/k for mean backward).
+pub fn broadcast_grad(dev &Device, grad_in &GpuBuffer, grad_out &GpuBuffer, n u32, scale f32) ! {
+	mut params_buf := dev.buffer(DeviceSize(2 * 4))!
+	defer { params_buf.release() }
+	mut pb := []u8{len: 8}
+	unsafe {
+		*(&u32(&pb[0])) = n
+		*(&f32(&pb[4])) = scale
+	}
+	params_buf.load(pb)!
+	pl := pipeline_get(dev, .broadcast_grad)!
+	pl.update_buffer(0, grad_out)!
+	pl.update_buffer(1, grad_in)!
+	pl.update_buffer(2, params_buf)!
+	dispatch_sync(dev, pl, u32(grad_in.size / 4), 1, 1)!
 }
