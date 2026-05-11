@@ -217,9 +217,9 @@ fn (k &Kernel) call(work_sizes []int, lokal_sizes []int) chan IError {
 		local_work_size_ptr[i] = usize(lokal_sizes[i])
 	}
 	mut event := ClEvent(0)
-	res := cl_enqueue_nd_range_kernel(k.d.queue, k.k, u32(work_dim), unsafe { &global_work_offset_ptr[0] },
-		unsafe { &global_work_size_ptr[0] }, unsafe { &local_work_size_ptr[0] }, 0, unsafe { nil },
-		unsafe { &event })
+	res := cl_enqueue_nd_range_kernel(k.d.queue, k.k, u32(work_dim),
+		unsafe { &global_work_offset_ptr[0] }, unsafe { &global_work_size_ptr[0] },
+		unsafe { &local_work_size_ptr[0] }, 0, unsafe { nil }, unsafe { &event })
 	if res != success {
 		err := error_from_code(res)
 		ch <- err

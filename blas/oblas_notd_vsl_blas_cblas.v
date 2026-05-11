@@ -66,8 +66,7 @@ pub fn idamax(n int, x []f64, incx int) int {
 // The Pure V backend (blas64) also expects row-major format, so no conversion is needed.
 @[inline]
 pub fn dgemv(trans Transpose, m int, n int, alpha f64, a []f64, lda int, x []f64, incx int, beta f64, mut y []f64, incy int) {
-	blas64.dgemv(to_blas64_transpose(trans), m, n, alpha, a, lda, x, incx, beta, mut y,
-		incy)
+	blas64.dgemv(to_blas64_transpose(trans), m, n, alpha, a, lda, x, incx, beta, mut y, incy)
 }
 
 // dger performs the rank-1 update of a matrix.
@@ -81,15 +80,15 @@ pub fn dger(m int, n int, alpha f64, x []f64, incx int, y []f64, incy int, mut a
 // dtrsv solves a system of linear equations with a triangular matrix.
 @[inline]
 pub fn dtrsv(uplo Uplo, trans_a Transpose, diag Diagonal, n int, a []f64, lda int, mut x []f64, incx int) {
-	blas64.dtrsv(to_blas64_uplo(uplo), to_blas64_transpose(trans_a), to_blas64_diagonal(diag),
-		n, a, lda, mut x, incx)
+	blas64.dtrsv(to_blas64_uplo(uplo), to_blas64_transpose(trans_a), to_blas64_diagonal(diag), n,
+		a, lda, mut x, incx)
 }
 
 // dtrmv performs matrix-vector operations using a triangular matrix.
 @[inline]
 pub fn dtrmv(uplo Uplo, trans_a Transpose, diag Diagonal, n int, a []f64, lda int, mut x []f64, incx int) {
-	blas64.dtrmv(to_blas64_uplo(uplo), to_blas64_transpose(trans_a), to_blas64_diagonal(diag),
-		n, a, lda, mut x, incx)
+	blas64.dtrmv(to_blas64_uplo(uplo), to_blas64_transpose(trans_a), to_blas64_diagonal(diag), n,
+		a, lda, mut x, incx)
 }
 
 // dsyr performs a symmetric rank-1 update of a matrix.
@@ -109,15 +108,15 @@ pub fn dsyr2(uplo Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, 
 // The Pure V backend (blas64) also expects row-major format, so no conversion is needed.
 @[inline]
 pub fn dgemm(trans_a Transpose, trans_b Transpose, m int, n int, k int, alpha f64, a []f64, lda int, b []f64, ldb int, beta f64, mut cc []f64, ldc int) {
-	blas64.dgemm(to_blas64_transpose(trans_a), to_blas64_transpose(trans_b), m, n, k,
-		alpha, a, lda, b, ldb, beta, mut cc, ldc)
+	blas64.dgemm(to_blas64_transpose(trans_a), to_blas64_transpose(trans_b), m, n, k, alpha, a,
+		lda, b, ldb, beta, mut cc, ldc)
 }
 
 // dgbmv performs a matrix-vector multiplication with a band matrix.
 @[inline]
 pub fn dgbmv(trans_a Transpose, m int, n int, kl int, ku int, alpha f64, a []f64, lda int, x []f64, incx int, beta f64, mut y []f64, incy int) {
-	blas64.dgbmv(to_blas64_transpose(trans_a), m, n, kl, ku, alpha, a, lda, x, incx, beta, mut
-		y, incy)
+	blas64.dgbmv(to_blas64_transpose(trans_a), m, n, kl, ku, alpha, a, lda, x, incx, beta, mut y,
+		incy)
 }
 
 // dsymv performs a matrix-vector multiplication for a symmetric matrix.
@@ -135,29 +134,29 @@ pub fn dsbmv(uplo Uplo, n int, k int, alpha f64, a []f64, lda int, x []f64, incx
 // dtbmv performs a matrix-vector multiplication with a triangular band matrix.
 @[inline]
 pub fn dtbmv(uplo Uplo, trans_a Transpose, diag Diagonal, n int, k int, a []f64, lda int, mut x []f64, incx int) {
-	blas64.dtbmv(to_blas64_uplo(uplo), to_blas64_transpose(trans_a), to_blas64_diagonal(diag),
-		n, k, a, lda, mut x, incx)
+	blas64.dtbmv(to_blas64_uplo(uplo), to_blas64_transpose(trans_a), to_blas64_diagonal(diag), n,
+		k, a, lda, mut x, incx)
 }
 
 // dtbsv solves a system of linear equations with a triangular band matrix.
 @[inline]
 pub fn dtbsv(uplo Uplo, trans_a Transpose, diag Diagonal, n int, k int, a []f64, lda int, mut x []f64, incx int) {
-	blas64.dtbsv(to_blas64_uplo(uplo), to_blas64_transpose(trans_a), to_blas64_diagonal(diag),
-		n, k, a, lda, mut x, incx)
+	blas64.dtbsv(to_blas64_uplo(uplo), to_blas64_transpose(trans_a), to_blas64_diagonal(diag), n,
+		k, a, lda, mut x, incx)
 }
 
 // dtpmv performs a matrix-vector multiplication with a triangular packed matrix.
 @[inline]
 pub fn dtpmv(uplo Uplo, trans_a Transpose, diag Diagonal, n int, ap []f64, mut x []f64, incx int) {
-	blas64.dtpmv(to_blas64_uplo(uplo), to_blas64_transpose(trans_a), to_blas64_diagonal(diag),
-		n, ap, mut x, incx)
+	blas64.dtpmv(to_blas64_uplo(uplo), to_blas64_transpose(trans_a), to_blas64_diagonal(diag), n,
+		ap, mut x, incx)
 }
 
 // dtpsv solves a system of linear equations with a triangular packed matrix.
 @[inline]
 pub fn dtpsv(uplo Uplo, trans_a Transpose, diag Diagonal, n int, ap []f64, mut x []f64, incx int) {
-	blas64.dtpsv(to_blas64_uplo(uplo), to_blas64_transpose(trans_a), to_blas64_diagonal(diag),
-		n, ap, mut x, incx)
+	blas64.dtpsv(to_blas64_uplo(uplo), to_blas64_transpose(trans_a), to_blas64_diagonal(diag), n,
+		ap, mut x, incx)
 }
 
 // dspmv performs a matrix-vector multiplication with a symmetric packed matrix.
@@ -181,15 +180,15 @@ pub fn dspr2(uplo Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, 
 // dsyrk performs a symmetric rank-k update.
 @[inline]
 pub fn dsyrk(uplo Uplo, trans_a Transpose, n int, k int, alpha f64, a []f64, lda int, beta f64, mut c []f64, ldc int) {
-	blas64.dsyrk(to_blas64_uplo(uplo), to_blas64_transpose(trans_a), n, k, alpha, a, lda,
-		beta, mut c, ldc)
+	blas64.dsyrk(to_blas64_uplo(uplo), to_blas64_transpose(trans_a), n, k, alpha, a, lda, beta, mut
+		c, ldc)
 }
 
 // dsyr2k performs a symmetric rank-2k update.
 @[inline]
 pub fn dsyr2k(uplo Uplo, trans_a Transpose, n int, k int, alpha f64, a []f64, lda int, b []f64, ldb int, beta f64, mut c []f64, ldc int) {
-	blas64.dsyr2k(to_blas64_uplo(uplo), to_blas64_transpose(trans_a), n, k, alpha, a,
-		lda, b, ldb, beta, mut c, ldc)
+	blas64.dsyr2k(to_blas64_uplo(uplo), to_blas64_transpose(trans_a), n, k, alpha, a, lda, b, ldb,
+		beta, mut c, ldc)
 }
 
 // dtrmm performs triangular matrix multiplication.

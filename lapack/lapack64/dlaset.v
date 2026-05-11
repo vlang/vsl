@@ -53,6 +53,7 @@ pub fn dlaset(uplo blas.Uplo, m int, n int, alpha f64, beta f64, mut a []f64, ld
 			}
 		}
 	}
+
 	for i in 0 .. minmn {
 		a[i * lda + i] = beta
 	}

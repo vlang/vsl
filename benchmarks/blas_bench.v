@@ -227,15 +227,15 @@ fn benchmark_level3(config benchmark_util.BenchmarkConfig) {
 		mut bench2 := benchmark.new_benchmark()
 		for _ in 0 .. config.warmup_runs {
 			mut c_warmup := benchmark_util.random_symmetric(n_syrk)
-			blas.dsyrk(.upper, .no_trans, n_syrk, k_syrk, alpha, a_syrk_flat, k_syrk,
-				beta, mut c_warmup, n_syrk)
+			blas.dsyrk(.upper, .no_trans, n_syrk, k_syrk, alpha, a_syrk_flat, k_syrk, beta, mut
+				c_warmup, n_syrk)
 		}
 		bench2.step()
 		for _ in 0 .. config.iterations {
 			c_syrk = benchmark_util.random_symmetric(n_syrk)
 			bench2.step()
-			blas.dsyrk(.upper, .no_trans, n_syrk, k_syrk, alpha, a_syrk_flat, k_syrk,
-				beta, mut c_syrk, n_syrk)
+			blas.dsyrk(.upper, .no_trans, n_syrk, k_syrk, alpha, a_syrk_flat, k_syrk, beta, mut
+				c_syrk, n_syrk)
 			bench2.stop()
 		}
 		avg_time = f64(bench2.total_duration()) / f64(config.iterations)

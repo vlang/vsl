@@ -467,7 +467,9 @@ type FnCmdPipelineBarrier = fn (VkCommandBuffer, PipelineStageFlags, PipelineSta
 fn vk_cmd_pipeline_barrier(cmdbuf VkCommandBuffer, srcStageMask PipelineStageFlags, dstStageMask PipelineStageFlags, dependencyFlags u32, memoryBarrierCount u32, pMemoryBarriers &C.VkMemoryBarrier, bufferMemoryBarrierCount u32, pBufferMemoryBarriers &C.VkBufferMemoryBarrier, imageMemoryBarrierCount u32, pImageMemoryBarriers &C.VkImageMemoryBarrier) {
 	f := dl.get_sym('vkCmdPipelineBarrier') or { return }
 	sfn := FnCmdPipelineBarrier(f)
-	sfn(cmdbuf, srcStageMask, dstStageMask, dependencyFlags, memoryBarrierCount, pMemoryBarriers, bufferMemoryBarrierCount, pBufferMemoryBarriers, imageMemoryBarrierCount, pImageMemoryBarriers)
+	sfn(cmdbuf, srcStageMask, dstStageMask, dependencyFlags, memoryBarrierCount, pMemoryBarriers,
+		bufferMemoryBarrierCount, pBufferMemoryBarriers, imageMemoryBarrierCount,
+		pImageMemoryBarriers)
 }
 
 type FnCmdDispatch = fn (VkCommandBuffer, u32, u32, u32)
@@ -494,13 +496,16 @@ type FnCmdBindDescriptorSets = fn (VkCommandBuffer, u32, VkPipelineLayout, u32, 
 fn vk_cmd_bind_descriptor_sets(cmdbuf VkCommandBuffer, pipelineBindPoint u32, layout VkPipelineLayout, firstSet u32, descriptorSetCount u32, pDescriptorSets &VkDescriptorSet, dynamicOffsetCount u32, pDynamicOffsets &u32) {
 	f := dl.get_sym('vkCmdBindDescriptorSets') or { return }
 	sfn := FnCmdBindDescriptorSets(f)
-	sfn(cmdbuf, pipelineBindPoint, layout, firstSet, descriptorSetCount, pDescriptorSets, dynamicOffsetCount, pDynamicOffsets)
+	sfn(cmdbuf, pipelineBindPoint, layout, firstSet, descriptorSetCount, pDescriptorSets,
+		dynamicOffsetCount, pDynamicOffsets)
 }
 
 type FnEnumerateInstanceLayerProperties = fn (&u32, &C.VkLayerProperties) Result
 
 fn vk_enumerate_instance_layer_properties(pPropertyCount &u32, pProperties &C.VkLayerProperties) Result {
-	f := dl.get_sym('vkEnumerateInstanceLayerProperties') or { return result_error_feature_not_present }
+	f := dl.get_sym('vkEnumerateInstanceLayerProperties') or {
+		return result_error_feature_not_present
+	}
 	sfn := FnEnumerateInstanceLayerProperties(f)
 	return sfn(pPropertyCount, pProperties)
 }

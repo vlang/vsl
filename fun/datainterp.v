@@ -56,6 +56,7 @@ pub fn DataInterp.new(itype string, p int, xx []f64, yy []f64) &DataInterp {
 			errors.vsl_panic('cannot find interpolator type == ${itype}', .efailed)
 		}
 	}
+
 	o.reset(xx, yy)
 	return o
 }
@@ -63,12 +64,10 @@ pub fn DataInterp.new(itype string, p int, xx []f64, yy []f64) &DataInterp {
 // reset re-assigns xx and yy data sets
 pub fn (mut o DataInterp) reset(xx []f64, yy []f64) {
 	if xx.len != yy.len {
-		errors.vsl_panic('lengths of data sets must be the same. ${xx.len} != ${yy.len}',
-			.efailed)
+		errors.vsl_panic('lengths of data sets must be the same. ${xx.len} != ${yy.len}', .efailed)
 	}
 	if xx.len < 2 {
-		errors.vsl_panic('length of data sets must be at least 2. ${xx.len} is invalid',
-			.efailed)
+		errors.vsl_panic('length of data sets must be at least 2. ${xx.len} is invalid', .efailed)
 	}
 	if xx.len < o.m {
 		errors.vsl_panic('length of data sets must be greater than or equal to ${o.m} when using ${o.itype} interpolator\n',

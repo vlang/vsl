@@ -26,7 +26,8 @@ fn main() {
 	axis_normalized := [axis[0] / axis_norm, axis[1] / axis_norm, axis[2] / axis_norm]
 
 	angle := math.pi / 4.0 // 45 degrees
-	q := quaternion.from_axis_anglef3(angle, axis_normalized[0], axis_normalized[1], axis_normalized[2])
+	q := quaternion.from_axis_anglef3(angle, axis_normalized[0], axis_normalized[1],
+		axis_normalized[2])
 
 	println('Rotation quaternion: ${q}')
 	println('Quaternion magnitude: ${q.abs()}')

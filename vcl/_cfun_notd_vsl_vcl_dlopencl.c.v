@@ -65,7 +65,8 @@ fn cl_release_device(device ClDeviceId) int {
 fn C.clGetDeviceInfo(device ClDeviceId, param_name ClDeviceInfo, param_value_size usize, param_value voidptr, param_value_size_ret &usize) int
 @[inline]
 fn cl_get_device_info(device ClDeviceId, param_name ClDeviceInfo, param_value_size usize, param_value voidptr, param_value_size_ret &usize) int {
-	return C.clGetDeviceInfo(device, param_name, param_value_size, param_value, param_value_size_ret)
+	return C.clGetDeviceInfo(device, param_name, param_value_size, param_value,
+		param_value_size_ret)
 }
 
 fn C.clGetDeviceIDs(platform ClPlatformId, device_type ClDeviceType, num_entries u32, devices &ClDeviceId, num_devices &u32) int
@@ -139,8 +140,7 @@ fn cl_get_platform_i_ds(num_entries u32, platforms &ClPlatformId, num_platforms 
 fn C.clCreateContext(properties &ClContextProperties, num_devices u32, devices &ClDeviceId, pfn_notify voidptr, user_data voidptr, errcode_ret &int) ClContext
 @[inline]
 fn cl_create_context(properties &ClContextProperties, num_devices u32, devices &ClDeviceId, pfn_notify voidptr, user_data voidptr, errcode_ret &int) ClContext {
-	return C.clCreateContext(properties, num_devices, devices, pfn_notify, user_data,
-		errcode_ret)
+	return C.clCreateContext(properties, num_devices, devices, pfn_notify, user_data, errcode_ret)
 }
 
 fn C.clCreateImage2D(context ClContext, flags ClMemFlags, format &ClImageFormat, width usize, height usize, row_pitch usize, data voidptr, errcode_ret &int) ClMem
@@ -152,15 +152,15 @@ fn cl_create_image2d(context ClContext, flags ClMemFlags, format &ClImageFormat,
 fn C.clEnqueueReadImage(command_queue ClCommandQueue, image ClMem, blocking_read bool, origin3 [3]usize, region3 [3]usize, row_pitch usize, slice_pitch usize, ptr voidptr, num_events_in_wait_list u32, event_wait_list &ClEvent, event &ClEvent) int
 @[inline]
 fn cl_enqueue_read_image(command_queue ClCommandQueue, image ClMem, blocking_read bool, origin3 [3]usize, region3 [3]usize, row_pitch usize, slice_pitch usize, ptr voidptr, num_events_in_wait_list u32, event_wait_list &ClEvent, event &ClEvent) int {
-	return C.clEnqueueReadImage(command_queue, image, blocking_read, origin3, region3,
-		row_pitch, slice_pitch, ptr, num_events_in_wait_list, event_wait_list, event)
+	return C.clEnqueueReadImage(command_queue, image, blocking_read, origin3, region3, row_pitch,
+		slice_pitch, ptr, num_events_in_wait_list, event_wait_list, event)
 }
 
 fn C.clEnqueueWriteImage(command_queue ClCommandQueue, image ClMem, blocking_write bool, origin3 [3]usize, region3 [3]usize, row_pitch usize, slice_pitch usize, ptr voidptr, num_events_in_wait_list u32, event_wait_list &ClEvent, event &ClEvent) int
 @[inline]
 fn cl_enqueue_write_image(command_queue ClCommandQueue, image ClMem, blocking_write bool, origin3 [3]usize, region3 [3]usize, row_pitch usize, slice_pitch usize, ptr voidptr, num_events_in_wait_list u32, event_wait_list &ClEvent, event &ClEvent) int {
-	return C.clEnqueueWriteImage(command_queue, image, blocking_write, origin3, region3,
-		row_pitch, slice_pitch, ptr, num_events_in_wait_list, event_wait_list, event)
+	return C.clEnqueueWriteImage(command_queue, image, blocking_write, origin3, region3, row_pitch,
+		slice_pitch, ptr, num_events_in_wait_list, event_wait_list, event)
 }
 
 fn C.clCreateImage(context ClContext, flags ClMemFlags, format &ClImageFormat, desc ClImageDesc, data voidptr, errcode_ret &int) ClMem

@@ -99,8 +99,8 @@ pub fn dgemm(trans_a Transpose, trans_b Transpose, m int, n int, k int, alpha f6
 		}
 	}
 
-	dgemm_parallel(if a_trans { .trans } else { .no_trans }, if b_trans { .trans } else { .no_trans },
-		m, n, k, a, lda, b, ldb, mut c, ldc, alpha)
+	dgemm_parallel(if a_trans { .trans } else { .no_trans },
+		if b_trans { .trans } else { .no_trans }, m, n, k, a, lda, b, ldb, mut c, ldc, alpha)
 }
 
 fn dgemm_parallel(a_trans Transpose, b_trans Transpose, m int, n int, k int, a []f64, lda int, b []f64, ldb int, mut c []f64, ldc int, alpha f64) {
@@ -191,11 +191,10 @@ fn dgemm_parallel(a_trans Transpose, b_trans Transpose, m int, n int, k int, a [
 					} else {
 						b_sub = slice_view_f64(b, ldb, k, j, lenk, lenj)
 					}
-					dgemm_serial(a_trans, b_trans, leni, lenj, lenk, a_sub, lda, b_sub,
-						ldb, mut c_sub, ldc, alpha)
+					dgemm_serial(a_trans, b_trans, leni, lenj, lenk, a_sub, lda, b_sub, ldb, mut
+						c_sub, ldc, alpha)
 				}
-			}(a_trans, b_trans, m, n, max_k_len, a, lda, b, ldb, mut c, ldc, alpha, i,
-				j, mut wg)
+			}(a_trans, b_trans, m, n, max_k_len, a, lda, b, ldb, mut c, ldc, alpha, i, j, mut wg)
 		}
 	}
 }

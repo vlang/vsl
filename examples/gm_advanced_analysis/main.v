@@ -184,8 +184,8 @@ fn main() {
 		for j, seg in lines {
 			name := line_names[j]
 
-			is_on_line := gm.is_point_in_line(point, seg.a, seg.b, zero_threshold, tolerance_distance,
-				tolerance_inline)
+			is_on_line := gm.is_point_in_line(point, seg.a, seg.b, zero_threshold,
+				tolerance_distance, tolerance_inline)
 
 			status := if is_on_line { '✓ ON LINE' } else { '✗ off line' }
 			distance := gm.dist_point_line(point, seg.a, seg.b, zero_threshold)

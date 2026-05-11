@@ -75,8 +75,7 @@ fn test_ger() {
 		n := test.y.len
 		for align in align2 {
 			xg_ln, yg_ln, ag_ln := gd_ln + align.x, gd_ln + align.y, gd_ln + align.x ^ align.y
-			xg, yg := guard_vector(test.x, x_gd_val, xg_ln), guard_vector(test.y, y_gd_val,
-				yg_ln)
+			xg, yg := guard_vector(test.x, x_gd_val, xg_ln), guard_vector(test.y, y_gd_val, yg_ln)
 			x, y := xg[xg_ln..xg.len - xg_ln], yg[yg_ln..yg.len - yg_ln]
 			ag := guard_vector(test.a, a_gd_val, ag_ln)
 			mut a := unsafe { ag[ag_ln..ag.len - ag_ln] }

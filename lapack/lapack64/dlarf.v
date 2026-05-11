@@ -77,15 +77,13 @@ pub fn dlarf(side blas.Side, m int, n int, v []f64, incv int, tau f64, mut c []f
 	if applyleft {
 		// Form H * C
 		// w[0:lastc+1] = c[1:lastv+1, 1:lastc+1]ᵀ * v[1:lastv+1,1]
-		blas.dgemv(.trans, lastv + 1, lastc + 1, 1.0, c, ldc, v, incv, 0.0, mut work,
-			1)
+		blas.dgemv(.trans, lastv + 1, lastc + 1, 1.0, c, ldc, v, incv, 0.0, mut work, 1)
 		// c[0: lastv, 0: lastc] = c[...] - w[0:lastv, 1] * v[1:lastc, 1]ᵀ
 		blas.dger(lastv + 1, lastc + 1, -tau, v, incv, work, 1, mut c, ldc)
 	} else {
 		// Form C * H
 		// w[0:lastc+1,1] := c[0:lastc+1,0:lastv+1] * v[0:lastv+1,1]
-		blas.dgemv(.no_trans, lastc + 1, lastv + 1, 1.0, c, ldc, v, incv, 0.0, mut work,
-			1)
+		blas.dgemv(.no_trans, lastc + 1, lastv + 1, 1.0, c, ldc, v, incv, 0.0, mut work, 1)
 		// c[0:lastc+1,0:lastv+1] = c[...] - w[0:lastc+1,0] * v[0:lastv+1,0]ᵀ
 		blas.dger(lastc + 1, lastv + 1, -tau, work, 1, v, incv, mut c, ldc)
 	}

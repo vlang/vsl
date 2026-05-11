@@ -96,8 +96,7 @@ pub fn dtrmm(side Side, ul Uplo, trans_a Transpose, d Diagonal, m int, n int, al
 				for k_idx in 0 .. i {
 					va := a[i * lda + k_idx] // A[i,k] where k < i
 					if va != 0 {
-						float64.axpy_unitary(alpha * va, b[k_idx * ldb..k_idx * ldb + n], mut
-							btmp)
+						float64.axpy_unitary(alpha * va, b[k_idx * ldb..k_idx * ldb + n], mut btmp)
 					}
 				}
 			}

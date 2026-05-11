@@ -86,12 +86,12 @@ pub fn dgeqrf(m int, n int, mut a []f64, lda int, mut tau []f64, mut work []f64,
 				// Form the triangular factor of the block reflector and apply Hᵀ
 				// In dlarft, work becomes the T matrix.
 				mut t_work := unsafe { work[..ib * ldwork] }
-				dlarft(.forward, .column_wise, m - i, ib, a_block, lda, tau_block, mut
-					t_work, ldwork)
+				dlarft(.forward, .column_wise, m - i, ib, a_block, lda, tau_block, mut t_work,
+					ldwork)
 				mut a_right := unsafe { a[i * lda + i + ib..] }
 				mut work_right := unsafe { work[ib * ldwork..] }
-				dlarfb(.left, .trans, .forward, .column_wise, m - i, n - i - ib, ib, a_block,
-					lda, t_work, ldwork, mut a_right, lda, mut work_right, ldwork)
+				dlarfb(.left, .trans, .forward, .column_wise, m - i, n - i - ib, ib, a_block, lda,
+					t_work, ldwork, mut a_right, lda, mut work_right, ldwork)
 			}
 			i += nb
 		}

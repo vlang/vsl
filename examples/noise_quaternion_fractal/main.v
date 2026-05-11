@@ -53,6 +53,7 @@ fn main() {
 			noise_y := noise_gen.simplex_2d(x_val * 2.0, y_val * 2.0) * 0.1
 
 			c_noisy := quaternion.quaternion(c_base.w + noise_x * 0.1, c_base.x + noise_x,
+
 				c_base.y + noise_y, c_base.z + noise_x * 0.05)
 
 			z_init := quaternion.quaternion(w_fixed, x_val, y_val, z_fixed)

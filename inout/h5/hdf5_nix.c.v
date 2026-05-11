@@ -110,8 +110,8 @@ pub fn (f &Hdf5File) write_dataset1d[T](dset_name string, buffer []T) !Hdf5HerrT
 	rank := int(1)
 	dims := [i64(buffer.len)]
 	dtype := hdftype(buffer[0])
-	mut errc := C.H5LTmake_dataset(f.filedesc, dset_name.str, rank, unsafe { dims.data },
-		dtype, unsafe { buffer.data })
+	mut errc := C.H5LTmake_dataset(f.filedesc, dset_name.str, rank, unsafe { dims.data }, dtype,
+		unsafe { buffer.data })
 	return errc
 }
 
@@ -121,8 +121,8 @@ pub fn (f &Hdf5File) write_dataset2d[T](dset_name string, buffer [][]T) !Hdf5Her
 	rank := int(2)
 	dims := [i64(buffer.len), buffer[0].len]
 	dtype := hdftype(buffer[0][0])
-	mut errc := C.H5LTmake_dataset(f.filedesc, dset_name.str, rank, unsafe { dims.data },
-		dtype, unsafe { flatten(buffer).data })
+	mut errc := C.H5LTmake_dataset(f.filedesc, dset_name.str, rank, unsafe { dims.data }, dtype,
+		unsafe { flatten(buffer).data })
 	return errc
 }
 
@@ -133,43 +133,43 @@ pub fn (f &Hdf5File) write_dataset3d[T](dset_name string, buffer [][][]T) !Hdf5H
 	dims := [i64(buffer.len), buffer[0].len, buffer[0][0].len]
 	dtype := hdftype(buffer[0][0][0])
 	// must flatten[T] else V cannot guess correctly
-	mut errc := C.H5LTmake_dataset(f.filedesc, dset_name.str, rank, unsafe { dims.data },
-		dtype, unsafe { flatten[T](flatten(buffer)).data })
+	mut errc := C.H5LTmake_dataset(f.filedesc, dset_name.str, rank, unsafe { dims.data }, dtype,
+		unsafe { flatten[T](flatten(buffer)).data })
 	return errc
 }
 
 // write_attribute1d adds a named 1-d numeric array (vector) attribute to a named HDF5 dataset.
 pub fn (f &Hdf5File) write_attribute1d[T](dset_name string, attr_name string, buffer []T) !Hdf5HerrT {
 	$if T is f64 {
-		return C.H5LTset_attribute_double(f.filedesc, dset_name.str, attr_name.str, unsafe { buffer.data },
-			u64(buffer.len))
+		return C.H5LTset_attribute_double(f.filedesc, dset_name.str, attr_name.str,
+			unsafe { buffer.data }, u64(buffer.len))
 	} $else $if T is f32 {
-		return C.H5LTset_attribute_float(f.filedesc, dset_name.str, attr_name.str, unsafe { buffer.data },
-			u64(buffer.len))
+		return C.H5LTset_attribute_float(f.filedesc, dset_name.str, attr_name.str,
+			unsafe { buffer.data }, u64(buffer.len))
 	} $else $if T is i64 {
 		return C.H5LTset_attribute_long_long(f.filedesc, dset_name.str, attr_name.str,
 			unsafe { buffer.data }, u64(buffer.len))
 	} $else $if T is int {
-		return C.H5LTset_attribute_int(f.filedesc, dset_name.str, attr_name.str, unsafe { buffer.data },
-			u64(buffer.len))
+		return C.H5LTset_attribute_int(f.filedesc, dset_name.str, attr_name.str,
+			unsafe { buffer.data }, u64(buffer.len))
 	} $else $if T is i16 {
-		return C.H5LTset_attribute_short(f.filedesc, dset_name.str, attr_name.str, unsafe { buffer.data },
-			u64(buffer.len))
+		return C.H5LTset_attribute_short(f.filedesc, dset_name.str, attr_name.str,
+			unsafe { buffer.data }, u64(buffer.len))
 	} $else $if T is i8 {
-		return C.H5LTset_attribute_char(f.filedesc, dset_name.str, attr_name.str, unsafe { buffer.data },
-			u64(buffer.len))
+		return C.H5LTset_attribute_char(f.filedesc, dset_name.str, attr_name.str,
+			unsafe { buffer.data }, u64(buffer.len))
 	} $else $if T is u64 {
-		return C.H5LTset_attribute_ulong(f.filedesc, dset_name.str, attr_name.str, unsafe { buffer.data },
-			u64(buffer.len))
+		return C.H5LTset_attribute_ulong(f.filedesc, dset_name.str, attr_name.str,
+			unsafe { buffer.data }, u64(buffer.len))
 	} $else $if T is u32 {
-		return C.H5LTset_attribute_uint(f.filedesc, dset_name.str, attr_name.str, unsafe { buffer.data },
-			u64(buffer.len))
+		return C.H5LTset_attribute_uint(f.filedesc, dset_name.str, attr_name.str,
+			unsafe { buffer.data }, u64(buffer.len))
 	} $else $if T is u16 {
-		return C.H5LTset_attribute_ushort(f.filedesc, dset_name.str, attr_name.str, unsafe { buffer.data },
-			u64(buffer.len))
+		return C.H5LTset_attribute_ushort(f.filedesc, dset_name.str, attr_name.str,
+			unsafe { buffer.data }, u64(buffer.len))
 	} $else $if T is u8 {
-		return C.H5LTset_attribute_uchar(f.filedesc, dset_name.str, attr_name.str, unsafe { buffer.data },
-			u64(buffer.len))
+		return C.H5LTset_attribute_uchar(f.filedesc, dset_name.str, attr_name.str,
+			unsafe { buffer.data }, u64(buffer.len))
 	} $else {
 		return Hdf5HerrT(-1)
 	}
@@ -180,37 +180,29 @@ pub fn (f &Hdf5File) write_attribute1d[T](dset_name string, attr_name string, bu
 //   It also supports writing a string attribute.
 pub fn (f &Hdf5File) write_attribute[T](dset_name string, attr_name string, buffer T) !Hdf5HerrT {
 	$if T is f64 {
-		return C.H5LTset_attribute_double(f.filedesc, dset_name.str, attr_name.str, &buffer,
-			u64(1))
+		return C.H5LTset_attribute_double(f.filedesc, dset_name.str, attr_name.str, &buffer, u64(1))
 	} $else $if T is f32 {
-		return C.H5LTset_attribute_float(f.filedesc, dset_name.str, attr_name.str, &buffer,
-			u64(1))
+		return C.H5LTset_attribute_float(f.filedesc, dset_name.str, attr_name.str, &buffer, u64(1))
 	} $else $if T is i64 {
-		return C.H5LTset_attribute_long_long(f.filedesc, dset_name.str, attr_name.str,
-			&buffer, u64(1))
+		return C.H5LTset_attribute_long_long(f.filedesc, dset_name.str, attr_name.str, &buffer,
+			u64(1))
 	} $else $if T is i32 {
-		return C.H5LTset_attribute_int(f.filedesc, dset_name.str, attr_name.str, &buffer,
-			u64(1))
+		return C.H5LTset_attribute_int(f.filedesc, dset_name.str, attr_name.str, &buffer, u64(1))
 	} $else $if T is i16 {
-		return C.H5LTset_attribute_short(f.filedesc, dset_name.str, attr_name.str, &buffer,
-			u64(1))
+		return C.H5LTset_attribute_short(f.filedesc, dset_name.str, attr_name.str, &buffer, u64(1))
 	} $else $if T is i8 {
-		return C.H5LTset_attribute_char(f.filedesc, dset_name.str, attr_name.str, &buffer,
-			u64(1))
+		return C.H5LTset_attribute_char(f.filedesc, dset_name.str, attr_name.str, &buffer, u64(1))
 	} $else $if T is u64 {
-		return C.H5LTset_attribute_ulong(f.filedesc, dset_name.str, attr_name.str, &buffer,
-			u64(1))
+		return C.H5LTset_attribute_ulong(f.filedesc, dset_name.str, attr_name.str, &buffer, u64(1))
 	} $else $if T is u32 {
-		return C.H5LTset_attribute_uint(f.filedesc, dset_name.str, attr_name.str, &buffer,
-			u64(1))
+		return C.H5LTset_attribute_uint(f.filedesc, dset_name.str, attr_name.str, &buffer, u64(1))
 	} $else $if T is u16 {
-		return C.H5LTset_attribute_ushort(f.filedesc, dset_name.str, attr_name.str, &buffer,
-			u64(1))
+		return C.H5LTset_attribute_ushort(f.filedesc, dset_name.str, attr_name.str, &buffer, u64(1))
 	} $else $if T is u8 {
-		return C.H5LTset_attribute_uchar(f.filedesc, dset_name.str, attr_name.str, &buffer,
-			u64(1))
+		return C.H5LTset_attribute_uchar(f.filedesc, dset_name.str, attr_name.str, &buffer, u64(1))
 	} $else $if T is string {
-		return C.H5LTset_attribute_string(f.filedesc, dset_name.str, attr_name.str, &char(buffer.str))
+		return C.H5LTset_attribute_string(f.filedesc, dset_name.str, attr_name.str,
+			&char(buffer.str))
 	} $else {
 		return Hdf5HerrT(-1)
 	}
@@ -237,8 +229,8 @@ pub fn (f &Hdf5File) read_dataset1d[T](dset_name string, mut dataset []T) {
 	assert rank == 1
 
 	mut curdims := []Hdf5HsizeT{len: rank, init: 0}
-	errc = C.H5LTget_dataset_info(f.filedesc, dset_name.str, unsafe { curdims.data },
-		&class_id, &type_size)
+	errc = C.H5LTget_dataset_info(f.filedesc, dset_name.str, unsafe { curdims.data }, &class_id,
+		&type_size)
 	assert errc >= 0
 	assert curdims[0] > 0
 	assert curdims[0] < max_i32
@@ -268,8 +260,8 @@ pub fn (f &Hdf5File) read_dataset2d[T](dset_name string, mut dataset [][]T) {
 	assert rank == 2
 
 	mut curdims := []Hdf5HsizeT{len: rank, init: 0}
-	errc = C.H5LTget_dataset_info(f.filedesc, dset_name.str, unsafe { curdims.data },
-		&class_id, &type_size)
+	errc = C.H5LTget_dataset_info(f.filedesc, dset_name.str, unsafe { curdims.data }, &class_id,
+		&type_size)
 	assert errc >= 0
 	assert curdims[0] > 0
 	assert curdims[1] > 0
@@ -302,8 +294,8 @@ pub fn (f &Hdf5File) read_dataset3d[T](dset_name string, mut dataset [][][]T) {
 	assert rank == 3
 
 	mut curdims := []Hdf5HsizeT{len: rank, init: 0}
-	errc = C.H5LTget_dataset_info(f.filedesc, dset_name.str, unsafe { curdims.data },
-		&class_id, &type_size)
+	errc = C.H5LTget_dataset_info(f.filedesc, dset_name.str, unsafe { curdims.data }, &class_id,
+		&type_size)
 	assert errc >= 0
 	assert curdims[0] > 0
 	assert curdims[1] > 0
@@ -392,8 +384,8 @@ fn (f &Hdf5File) getattr_class_size(dset_name string, attr_name string) (Hdf5Cla
 	assert rank == 1
 
 	mut curdims := []Hdf5HsizeT{len: if rank == 1 { rank } else { 1 }, init: 0}
-	errc = C.H5LTget_attribute_info(f.filedesc, dset_name.str, attr_name.str, unsafe { curdims.data },
-		&type_class, &type_size)
+	errc = C.H5LTget_attribute_info(f.filedesc, dset_name.str, attr_name.str,
+		unsafe { curdims.data }, &type_class, &type_size)
 	assert errc >= 0
 	assert curdims[0] >= 1
 	return type_class, type_size
@@ -492,24 +484,21 @@ pub fn (f &Hdf5File) read_attribute[T](dset_name string, attr_name string, mut a
 
 	$if T is f64 {
 		if f.checktype(dset_name, attr_name, C.H5T_FLOAT, 8) {
-			errc = C.H5LTget_attribute_double(f.filedesc, dset_name.str, attr_name.str,
-				&attr_value)
+			errc = C.H5LTget_attribute_double(f.filedesc, dset_name.str, attr_name.str, &attr_value)
 			assert errc >= 0
 			return true
 		}
 		return false
 	} $else $if T is f32 {
 		if f.checktype(dset_name, attr_name, C.H5T_FLOAT, 4) {
-			errc = C.H5LTget_attribute_float(f.filedesc, dset_name.str, attr_name.str,
-				&attr_value)
+			errc = C.H5LTget_attribute_float(f.filedesc, dset_name.str, attr_name.str, &attr_value)
 			assert errc >= 0
 			return true
 		}
 		return false
 	} $else $if T is i64 {
 		if f.checktype(dset_name, attr_name, C.H5T_INTEGER, 8) {
-			errc = C.H5LTget_attribute_long(f.filedesc, dset_name.str, attr_name.str,
-				&attr_value)
+			errc = C.H5LTget_attribute_long(f.filedesc, dset_name.str, attr_name.str, &attr_value)
 			assert errc >= 0
 			return true
 		}
@@ -523,48 +512,42 @@ pub fn (f &Hdf5File) read_attribute[T](dset_name string, attr_name string, mut a
 		return false
 	} $else $if T is i16 {
 		if f.checktype(dset_name, attr_name, C.H5T_INTEGER, 2) {
-			errc = C.H5LTget_attribute_short(f.filedesc, dset_name.str, attr_name.str,
-				&attr_value)
+			errc = C.H5LTget_attribute_short(f.filedesc, dset_name.str, attr_name.str, &attr_value)
 			assert errc >= 0
 			return true
 		}
 		return false
 	} $else $if T is i8 {
 		if f.checktype(dset_name, attr_name, C.H5T_INTEGER, 1) {
-			errc = C.H5LTget_attribute_char(f.filedesc, dset_name.str, attr_name.str,
-				&attr_value)
+			errc = C.H5LTget_attribute_char(f.filedesc, dset_name.str, attr_name.str, &attr_value)
 			assert errc >= 0
 			return true
 		}
 		return false
 	} $else $if T is u64 {
 		if f.checktype(dset_name, attr_name, C.H5T_INTEGER, 8) {
-			errc = C.H5LTget_attribute_ulong(f.filedesc, dset_name.str, attr_name.str,
-				&attr_value)
+			errc = C.H5LTget_attribute_ulong(f.filedesc, dset_name.str, attr_name.str, &attr_value)
 			assert errc >= 0
 			return true
 		}
 		return false
 	} $else $if T is u32 {
 		if f.checktype(dset_name, attr_name, C.H5T_INTEGER, 4) {
-			errc = C.H5LTget_attribute_uint(f.filedesc, dset_name.str, attr_name.str,
-				&attr_value)
+			errc = C.H5LTget_attribute_uint(f.filedesc, dset_name.str, attr_name.str, &attr_value)
 			assert errc >= 0
 			return true
 		}
 		return false
 	} $else $if T is u16 {
 		if f.checktype(dset_name, attr_name, C.H5T_INTEGER, 2) {
-			errc = C.H5LTget_attribute_ushort(f.filedesc, dset_name.str, attr_name.str,
-				&attr_value)
+			errc = C.H5LTget_attribute_ushort(f.filedesc, dset_name.str, attr_name.str, &attr_value)
 			assert errc >= 0
 			return true
 		}
 		return false
 	} $else $if T is u8 {
 		if f.checktype(dset_name, attr_name, C.H5T_INTEGER, 1) {
-			errc = C.H5LTget_attribute_uchar(f.filedesc, dset_name.str, attr_name.str,
-				&attr_value)
+			errc = C.H5LTget_attribute_uchar(f.filedesc, dset_name.str, attr_name.str, &attr_value)
 			assert errc >= 0
 			return true
 		}
@@ -598,8 +581,8 @@ pub fn (f &Hdf5File) read_attribute1d[T](dset_name string, attr_name string, mut
 	assert rank == 1
 
 	mut curdims := []Hdf5HsizeT{len: rank, init: 0}
-	errc = C.H5LTget_attribute_info(f.filedesc, dset_name.str, attr_name.str, unsafe { curdims.data },
-		&class_id, &type_size)
+	errc = C.H5LTget_attribute_info(f.filedesc, dset_name.str, attr_name.str,
+		unsafe { curdims.data }, &class_id, &type_size)
 	assert errc >= 0
 	assert curdims[0] > 0
 	assert curdims[0] <= max_i32
@@ -638,7 +621,8 @@ pub fn (f &Hdf5File) read_attribute1d[T](dset_name string, attr_name string, mut
 		return false
 	} $else $if T is i32 {
 		if f.checktype(dset_name, attr_name, C.H5T_INTEGER, 4) {
-			errc = C.H5LTget_attribute_int(f.filedesc, dset_name.str, attr_name.str, unsafe { attr_value.data })
+			errc = C.H5LTget_attribute_int(f.filedesc, dset_name.str, attr_name.str,
+				unsafe { attr_value.data })
 			assert errc >= 0
 			return true
 		}

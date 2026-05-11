@@ -147,8 +147,7 @@ pub fn (generator Generator) simplex_2d(x f64, y f64) f64 {
 		n1 = 0.0
 	} else {
 		t1 *= t1
-		n1 = t1 * t1 * grad_2d(generator.perm[ii + i1 + generator.perm[jj + j1]], x1,
-			y1)
+		n1 = t1 * t1 * grad_2d(generator.perm[ii + i1 + generator.perm[jj + j1]], x1, y1)
 	}
 
 	mut t2 := 0.5 - x2 * x2 - y2 * y2
@@ -235,8 +234,8 @@ pub fn (generator Generator) simplex_3d(x f64, y f64, z f64) f64 {
 		n0 = 0.0
 	} else {
 		t0 *= t0
-		n0 = t0 * t0 * grad_3d(generator.perm[ii + generator.perm[jj + generator.perm[kk]]],
-			x0, y0, z0)
+		n0 = t0 * t0 * grad_3d(generator.perm[ii + generator.perm[jj + generator.perm[kk]]], x0,
+			y0, z0)
 	}
 
 	mut t1 := 0.6 - x1 * x1 - y1 * y1 - z1 * z1

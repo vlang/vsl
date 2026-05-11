@@ -52,8 +52,8 @@ pub fn dorg2r(m int, n int, k int, mut a []f64, lda int, tau []f64, mut work []f
 		}
 		if i < n - 1 {
 			a[i * lda + i] = 1.0
-			dlarf(.left, m - i, n - i - 1, a[(i * lda + i)..], lda, tau[i], mut a[(i * lda + i + 1)..],
-				lda, mut work)
+			dlarf(.left, m - i, n - i - 1, a[(i * lda + i)..], lda, tau[i], mut
+				a[(i * lda + i + 1)..], lda, mut work)
 		}
 		if i < m - 1 {
 			blas.dscal(m - i - 1, -tau[i], mut a[(i + 1) * lda + i..], lda)

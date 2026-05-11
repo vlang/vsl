@@ -22,8 +22,7 @@ pub fn ger(m u32, n u32, alpha f32, x []f32, incx u32, y []f32, incy u32, mut a 
 
 	mut ix := kx
 	for i := 0; i < int(m); i++ {
-		axpy_inc(alpha * x[ix], y, mut a[u32(i) * lda..u32(i) * lda + n], n, incy, 1,
-			ky, 0)
+		axpy_inc(alpha * x[ix], y, mut a[u32(i) * lda..u32(i) * lda + n], n, incy, 1, ky, 0)
 		ix += incx
 	}
 }

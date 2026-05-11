@@ -154,11 +154,13 @@ pub fn dgesvd(jobu SVDJob, jobvt SVDJob, m int, n int, mut a []f64, lda int, s [
 		.svd_store { math.min(m, n) }
 		else { 0 }
 	}
+
 	vt_rows := match jobvt {
 		.svd_all { n }
 		.svd_store { math.min(m, n) }
 		else { 0 }
 	}
+
 	mut u_col := []f64{len: if u_cols > 0 { m * u_cols } else { 0 }}
 	mut vt_col := []f64{len: if vt_rows > 0 { vt_rows * n } else { 0 }}
 	// Convert U and VT from row-major to column-major if needed
@@ -176,8 +178,8 @@ pub fn dgesvd(jobu SVDJob, jobvt SVDJob, m int, n int, mut a []f64, lda int, s [
 			}
 		}
 	}
-	info := lapack64.dgesvd(to_lapack64_svd_job(jobu), to_lapack64_svd_job(jobvt), m,
-		n, mut a_col, m, s, mut u_col, m, mut vt_col, n, superb)
+	info := lapack64.dgesvd(to_lapack64_svd_job(jobu), to_lapack64_svd_job(jobvt), m, n, mut a_col,
+		m, s, mut u_col, m, mut vt_col, n, superb)
 	// Convert back to row-major
 	for i in 0 .. m {
 		for j in 0 .. n {
@@ -333,8 +335,9 @@ pub fn dpotrf(uplo blas.Uplo, n int, mut a []f64, lda int) int {
 // The computed eigenvectors are normalized to have Euclidean norm
 // equal to 1 and largest component real.
 pub fn dgeev(calc_vl LeftEigenVectorsJob, calc_vr RightEigenVectorsJob, n int, mut a []f64, lda int, mut wr []f64, mut wi []f64, mut vl []f64, ldvl int, mut vr []f64, ldvr int) int {
-	return lapack64.dgeev(to_lapack64_left_eigen_vectors_job(calc_vl), to_lapack64_right_eigen_vectors_job(calc_vr),
-		n, mut a, lda, mut wr, mut wi, mut vl, ldvl, mut vr, ldvr)
+	return lapack64.dgeev(to_lapack64_left_eigen_vectors_job(calc_vl),
+		to_lapack64_right_eigen_vectors_job(calc_vr), n, mut a, lda, mut wr, mut wi, mut vl, ldvl, mut
+		vr, ldvr)
 }
 
 // Low-level wrapper functions with standardized signatures
@@ -351,16 +354,17 @@ pub fn dpotrf_standardized(uplo blas.Uplo, n int, mut a []f64, lda int) int {
 @[inline]
 pub fn dsyev_standardized(jobz EigenVectorsJob, uplo blas.Uplo, n int, mut a []f64, lda int, mut w []f64) int {
 	mut work := []f64{len: math.max(1, 3 * n - 1)}
-	lapack64.dsyev(to_lapack64_eigen_vectors_job(jobz), uplo, n, mut a, lda, mut w, mut
-		work, work.len)
+	lapack64.dsyev(to_lapack64_eigen_vectors_job(jobz), uplo, n, mut a, lda, mut w, mut work,
+		work.len)
 	return 0 // lapack64 functions don't return error codes
 }
 
 // dgeev_standardized - Standardized dgeev wrapper
 @[inline]
 pub fn dgeev_standardized(jobvl LeftEigenVectorsJob, jobvr RightEigenVectorsJob, n int, mut a []f64, lda int, mut wr []f64, mut wi []f64, mut vl []f64, ldvl int, mut vr []f64, ldvr int) int {
-	info := lapack64.dgeev(to_lapack64_left_eigen_vectors_job(jobvl), to_lapack64_right_eigen_vectors_job(jobvr),
-		n, mut a, lda, mut wr, mut wi, mut vl, ldvl, mut vr, ldvr)
+	info := lapack64.dgeev(to_lapack64_left_eigen_vectors_job(jobvl),
+		to_lapack64_right_eigen_vectors_job(jobvr), n, mut a, lda, mut wr, mut wi, mut vl, ldvl, mut
+		vr, ldvr)
 	return if info == 0 { 0 } else { info }
 }
 
@@ -384,8 +388,8 @@ pub fn dorgqr_standardized(m int, n int, k int, mut a []f64, lda int, tau []f64)
 pub fn dsyev(jobz EigenVectorsJob, uplo blas.Uplo, n int, mut a []f64, lda int, mut w []f64) int {
 	// Call lapack64 with work array
 	mut work := []f64{len: math.max(1, 3 * n - 1)}
-	lapack64.dsyev(to_lapack64_eigen_vectors_job(jobz), uplo, n, mut a, lda, mut w, mut
-		work, work.len)
+	lapack64.dsyev(to_lapack64_eigen_vectors_job(jobz), uplo, n, mut a, lda, mut w, mut work,
+		work.len)
 	return 0 // lapack64 functions don't return error codes
 }
 

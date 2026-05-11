@@ -229,7 +229,8 @@ fn C.vkCreateComputePipelines(VkDevice, VkPipelineCache, u32, &C.VkComputePipeli
 
 @[inline]
 fn vk_create_compute_pipelines(device VkDevice, pipelineCache VkPipelineCache, createInfoCount u32, pCreateInfos &C.VkComputePipelineCreateInfo, pAllocator &AllocationCallbacks, pPipelines &VkPipeline) Result {
-	return C.vkCreateComputePipelines(device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines)
+	return C.vkCreateComputePipelines(device, pipelineCache, createInfoCount, pCreateInfos,
+		pAllocator, pPipelines)
 }
 
 fn C.vkDestroyPipeline(VkDevice, VkPipeline, &AllocationCallbacks)
@@ -377,7 +378,9 @@ fn C.vkCmdPipelineBarrier(VkCommandBuffer, PipelineStageFlags, PipelineStageFlag
 
 @[inline]
 fn vk_cmd_pipeline_barrier(cmdbuf VkCommandBuffer, srcStageMask PipelineStageFlags, dstStageMask PipelineStageFlags, dependencyFlags u32, memoryBarrierCount u32, pMemoryBarriers &C.VkMemoryBarrier, bufferMemoryBarrierCount u32, pBufferMemoryBarriers &C.VkBufferMemoryBarrier, imageMemoryBarrierCount u32, pImageMemoryBarriers &C.VkImageMemoryBarrier) {
-	C.vkCmdPipelineBarrier(cmdbuf, srcStageMask, dstStageMask, dependencyFlags, memoryBarrierCount, pMemoryBarriers, bufferMemoryBarrierCount, pBufferMemoryBarriers, imageMemoryBarrierCount, pImageMemoryBarriers)
+	C.vkCmdPipelineBarrier(cmdbuf, srcStageMask, dstStageMask, dependencyFlags, memoryBarrierCount,
+		pMemoryBarriers, bufferMemoryBarrierCount, pBufferMemoryBarriers, imageMemoryBarrierCount,
+		pImageMemoryBarriers)
 }
 
 fn C.vkCmdDispatch(VkCommandBuffer, u32, u32, u32)
@@ -398,7 +401,8 @@ fn C.vkCmdBindDescriptorSets(VkCommandBuffer, u32, VkPipelineLayout, u32, u32, &
 
 @[inline]
 fn vk_cmd_bind_descriptor_sets(cmdbuf VkCommandBuffer, pipelineBindPoint u32, layout VkPipelineLayout, firstSet u32, descriptorSetCount u32, pDescriptorSets &VkDescriptorSet, dynamicOffsetCount u32, pDynamicOffsets &u32) {
-	C.vkCmdBindDescriptorSets(cmdbuf, pipelineBindPoint, layout, firstSet, descriptorSetCount, pDescriptorSets, dynamicOffsetCount, pDynamicOffsets)
+	C.vkCmdBindDescriptorSets(cmdbuf, pipelineBindPoint, layout, firstSet, descriptorSetCount,
+		pDescriptorSets, dynamicOffsetCount, pDynamicOffsets)
 }
 
 // --------------------------------------------------------------------------

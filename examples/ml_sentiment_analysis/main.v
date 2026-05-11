@@ -52,7 +52,8 @@ fn main() {
 	// Well, stemming is keeping the radicals of words so that terms such
 	// as "try", "tried" and "trying" are considered the same token: "try".
 	// Let's create a stemmer:
-	mut lancaster := nlp.LancasterStemmer.new(true) // Parameter is strip_prefix. If true, "kilogram" becomes "gram", for example.
+	mut lancaster :=
+		nlp.LancasterStemmer.new(true) // Parameter is strip_prefix. If true, "kilogram" becomes "gram", for example.
 
 	// List of sentences as ngrams, read the comments
 	// below to understand.
@@ -121,8 +122,8 @@ fn main() {
 	// our training samples: tokenize, stem and ngramize (does that term
 	// even exist?)
 	bow := fn (sent string, mut lan nlp.LancasterStemmer, mf [][]string) ![]f64 {
-		sent_tokenized := nlp.remove_stopwords_en(nlp.tokenize(nlp.remove_punctuation(sent).to_lower()),
-			true)
+		sent_tokenized :=
+			nlp.remove_stopwords_en(nlp.tokenize(nlp.remove_punctuation(sent).to_lower()), true)
 		mut sent_stemmed := []string{}
 		for tok in sent_tokenized {
 			sent_stemmed << lan.stem(tok)!
@@ -180,8 +181,8 @@ fn main() {
 	mut tf_idf_knn := ml.KNN.new(mut training_data, 'TfIdfKNN')!
 
 	tfidf := fn (sent string, mut lan nlp.LancasterStemmer, document [][][]string, unique [][]string) ![]f64 {
-		sent_tokenized := nlp.remove_stopwords_en(nlp.tokenize(nlp.remove_punctuation(sent).to_lower()),
-			true)
+		sent_tokenized :=
+			nlp.remove_stopwords_en(nlp.tokenize(nlp.remove_punctuation(sent).to_lower()), true)
 		mut sent_stemmed := []string{}
 		for tok in sent_tokenized {
 			sent_stemmed << lan.stem(tok)!

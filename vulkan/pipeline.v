@@ -34,18 +34,8 @@ pub fn (d &Device) create_pipeline(spv []u32, entry string) !&ComputePipeline {
 	mut ds := VkDescriptorSet(unsafe { nil })
 
 	// Delegate all Vulkan struct construction to C helper (avoids V's struct layout bug)
-	vk_create_compute_pipeline_simple(
-		d.device,
-		entry.str,
-		&spv[0],
-		usize(spv.len * 4),
-		&shader_mod,
-		&layout,
-		&pl,
-		&dsl,
-		&dp,
-		&ds,
-	)!
+	vk_create_compute_pipeline_simple(d.device, entry.str, &spv[0], usize(spv.len * 4),
+		&shader_mod, &layout, &pl, &dsl, &dp, &ds)!
 
 	// Shader module is no longer needed after pipeline creation
 	vk_destroy_shader_module(d.device, shader_mod, unsafe { nil })
@@ -86,7 +76,7 @@ pub fn (p &ComputePipeline) update_buffer(binding u32, buf &GpuBuffer) ! {
 		dstBinding:      binding
 		descriptorCount: 1
 		descriptorType:  descriptor_type_storage_buffer
-		pBufferInfo:    &buffer_info
+		pBufferInfo:     &buffer_info
 	}
 	vk_update_descriptor_sets(p.device.device, 1, &write, 0, unsafe { nil })
 }

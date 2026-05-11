@@ -218,8 +218,7 @@ pub fn (o &RandomForest) predict_proba(x []f64) f64 {
 // get_feature_importance returns feature importance scores
 pub fn (o &RandomForest) get_feature_importance() []f64 {
 	if !o.trained {
-		errors.vsl_panic('RandomForest must be trained before getting feature importance',
-			.einval)
+		errors.vsl_panic('RandomForest must be trained before getting feature importance', .einval)
 	}
 	// Simplified: count how often each feature is used
 	// In a full implementation, would track impurity reduction

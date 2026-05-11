@@ -350,8 +350,8 @@ fn test_dgemv() {
 
 		mut y := case.y.clone()
 		// lda should be n (number of columns) for row-major format
-		dgemv(case.trans, case.m, case.n, case.alpha, a_flat, case.n, case.x, 1, case.beta, mut
-			y, 1)
+		dgemv(case.trans, case.m, case.n, case.alpha, a_flat, case.n, case.x, 1, case.beta, mut y,
+			1)
 
 		assert float64.arrays_tolerance(y, case.expected, test_tol), 'DGEMV failed for case ${case.name}: expected ${case.expected}, got ${y}'
 	}
@@ -418,8 +418,8 @@ fn test_dgemm() {
 		}
 
 		// lda, ldb, ldc should be k, n, n respectively for row-major format
-		dgemm(case.trans_a, case.trans_b, case.m, case.n, case.k, case.alpha, a_flat,
-			case.k, b_flat, case.n, case.beta, mut c_flat, case.n)
+		dgemm(case.trans_a, case.trans_b, case.m, case.n, case.k, case.alpha, a_flat, case.k,
+			b_flat, case.n, case.beta, mut c_flat, case.n)
 
 		// Convert expected result to flat array in row-major format
 		mut expected_flat := []f64{len: case.m * case.n}

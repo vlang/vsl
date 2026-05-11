@@ -34,8 +34,8 @@ pub fn IntIter.new(params IntIterParams) !IntIter {
 		return errors.error(@MOD + '.' + @FN + ': step cannot be 0', .erange)
 	}
 
-	mut len := i64((params.stop - params.start) / params.step) +
-		i64((params.stop - params.start) % params.step != 0)
+	mut len := i64((params.stop - params.start) / params.step) + i64((params.stop -
+		params.start) % params.step != 0)
 	if len < 0 {
 		len = 0
 	}
@@ -90,8 +90,8 @@ pub fn FloatIter.new(params FloatIterParams) !FloatIter {
 	if params.step == 0 {
 		return errors.error(@MOD + '.' + @FN + ': step cannot be 0', .erange)
 	}
-	mut len := int((params.stop - params.start) / params.step) +
-		int(math.fmod((params.stop - params.start), params.step) != 0)
+	mut len := int((params.stop - params.start) / params.step) + int(math.fmod((params.stop -
+		params.start), params.step) != 0)
 	if len < 0 {
 		len = 0
 	}
@@ -147,8 +147,7 @@ pub:
 //}
 pub fn LinearIter.new(params LinearIterParams) !LinearIter {
 	if params.len < 0 {
-		return errors.error(@MOD + '.' + @FN + ': number of samples must be non negative',
-			.erange)
+		return errors.error(@MOD + '.' + @FN + ': number of samples must be non negative', .erange)
 	}
 	mut step := f64(1)
 	if params.endpoint {
@@ -213,8 +212,7 @@ pub struct LogIterParams {
 //}
 pub fn LogIter.new(params LogIterParams) !LogIter {
 	if params.len < 0 {
-		return errors.error(@MOD + '.' + @FN + ': number of samples must be non negative',
-			.erange)
+		return errors.error(@MOD + '.' + @FN + ': number of samples must be non negative', .erange)
 	}
 	return LogIter{
 		linear_iter: LinearIter.new(

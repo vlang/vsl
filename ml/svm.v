@@ -187,8 +187,10 @@ pub fn (mut o SVM) train(max_iter int, tolerance f64) {
 					o.alpha[i] = o.alpha[i] + y[i] * y[j] * (alpha_j_old - o.alpha[j])
 
 					// Update bias
-					b1 := o.bias - ei - y[i] * (o.alpha[i] - alpha_i_old) * kii - y[j] * (o.alpha[j] - alpha_j_old) * kij
-					b2 := o.bias - ej - y[i] * (o.alpha[i] - alpha_i_old) * kij - y[j] * (o.alpha[j] - alpha_j_old) * kjj
+					b1 := o.bias - ei - y[i] * (o.alpha[i] - alpha_i_old) * kii -
+						y[j] * (o.alpha[j] - alpha_j_old) * kij
+					b2 := o.bias - ej - y[i] * (o.alpha[i] - alpha_i_old) * kij -
+						y[j] * (o.alpha[j] - alpha_j_old) * kjj
 
 					if o.alpha[i] > 0 && o.alpha[i] < o.c {
 						o.bias = b1

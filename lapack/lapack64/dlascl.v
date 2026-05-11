@@ -16,6 +16,7 @@ pub fn dlascl(kind MatrixType, kl int, ku int, cfrom f64, cto f64, m int, n int,
 			}
 		}
 	}
+
 	if cfrom == 0.0 {
 		panic(zero_c_from)
 	}
@@ -101,6 +102,7 @@ pub fn dlascl(kind MatrixType, kl int, ku int, cfrom f64, cto f64, m int, n int,
 				}
 			}
 		}
+
 		if done {
 			break
 		}

@@ -109,8 +109,8 @@ pub fn dsytrd(uplo blas.Uplo, n int, mut a []f64, lda int, mut d []f64, mut e []
 	if 1 < nb && nb < n {
 		// Determine when to cross over from blocked to unblocked code. The last
 		// block is always handled by unblocked code.
-		nx = math.max(nb, ilaenv(3, 'DSYTRD', if uplo == .upper { 'U' } else { 'L' },
-			n, -1, -1, -1))
+		nx = math.max(nb,
+			ilaenv(3, 'DSYTRD', if uplo == .upper { 'U' } else { 'L' }, n, -1, -1, -1))
 		if nx < n {
 			// Determine if workspace is large enough for blocked code.
 			ldwork = nb
@@ -120,8 +120,7 @@ pub fn dsytrd(uplo blas.Uplo, n int, mut a []f64, lda int, mut d []f64, mut e []
 				// value of nb and reduce nb or force use of unblocked code by
 				// setting nx = n.
 				nb = math.max(lwork / n, 1)
-				nbmin := ilaenv(2, 'DSYTRD', if uplo == .upper { 'U' } else { 'L' }, n,
-					-1, -1, -1)
+				nbmin := ilaenv(2, 'DSYTRD', if uplo == .upper { 'U' } else { 'L' }, n, -1, -1, -1)
 				if nb < nbmin {
 					nx = n
 				}
@@ -146,8 +145,8 @@ pub fn dsytrd(uplo blas.Uplo, n int, mut a []f64, lda int, mut d []f64, mut e []
 
 			// Update the unreduced submatrix A[0:i-1,0:i-1], using an update
 			// of the form A = A - V*Wᵀ - W*Vᵀ.
-			blas.dsyr2k(uplo, .no_trans, i, nb, -1.0, a[i * lda..], lda, work, ldwork,
-				1.0, mut a, lda)
+			blas.dsyr2k(uplo, .no_trans, i, nb, -1.0, a[i * lda..], lda, work, ldwork, 1.0, mut a,
+				lda)
 
 			// Copy superdiagonal elements back into A, and diagonal elements into D.
 			for j := i; j < i + nb; j++ {
@@ -163,14 +162,13 @@ pub fn dsytrd(uplo blas.Uplo, n int, mut a []f64, lda int, mut d []f64, mut e []
 		for i = 0; i < n - nx; i += nb {
 			// Reduce columns 0:i+nb to tridiagonal form and form the matrix W
 			// which is needed to update the unreduced part of the matrix.
-			dlatrd(uplo, n - i, nb, mut a[i * lda + i..], lda, mut e[i..], mut tau[i..], mut
-				work, ldwork)
+			dlatrd(uplo, n - i, nb, mut a[i * lda + i..], lda, mut e[i..], mut tau[i..], mut work,
+				ldwork)
 
 			// Update the unreduced submatrix A[i+ib:n, i+ib:n], using an update
 			// of the form A = A + V*Wᵀ - W*Vᵀ.
-			blas.dsyr2k(uplo, .no_trans, n - i - nb, nb, -1.0, a[(i + nb) * lda + i..],
-				lda, work[nb * ldwork..], ldwork, 1.0, mut a[(i + nb) * lda + i + nb..],
-				lda)
+			blas.dsyr2k(uplo, .no_trans, n - i - nb, nb, -1.0, a[(i + nb) * lda + i..], lda,
+				work[nb * ldwork..], ldwork, 1.0, mut a[(i + nb) * lda + i + nb..], lda)
 
 			// Copy subdiagonal elements back into A, and diagonal elements into D.
 			for j := i; j < i + nb; j++ {

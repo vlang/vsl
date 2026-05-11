@@ -53,8 +53,8 @@ pub fn matrix_inv_small(mut ai Matrix[f64], a Matrix[f64], tol f64) f64 {
 		ai.set(1, 0, -(a.get(1, 0)) / det)
 		ai.set(1, 1, a.get(0, 0) / det)
 	} else if a.m == 3 && a.n == 3 {
-		det =
-			a.get(0, 0) * (a.get(1, 1) * a.get(2, 2) - a.get(1, 2) * a.get(2, 1)) - (a.get(0, 1)) * (a.get(1, 0) * a.get(2, 2) - a.get(1, 2) * a.get(2, 0)) +
+		det = a.get(0, 0) * (a.get(1, 1) * a.get(2, 2) - a.get(1, 2) * a.get(2, 1)) -
+			(a.get(0, 1)) * (a.get(1, 0) * a.get(2, 2) - a.get(1, 2) * a.get(2, 0)) +
 			a.get(0, 2) * (a.get(1, 0) * a.get(2, 1) - a.get(1, 1) * a.get(2, 0))
 		if math.abs(det) < tol {
 			errors.vsl_panic('inverse of (${a.m} x ${a.n}) matrix failed with zero determinant: |det(a)| = ${det} < ${tol}',
@@ -90,8 +90,8 @@ pub fn matrix_svd(mut s []f64, mut u Matrix[f64], mut vt Matrix[f64], mut a Matr
 	if copy_a {
 		acpy = a.clone()
 	}
-	lapack.dgesvd(.svd_all, .svd_all, a.m, a.n, mut acpy.data, 1, s, mut u.data, a.m, mut
-		vt.data, a.n, superb)
+	lapack.dgesvd(.svd_all, .svd_all, a.m, a.n, mut acpy.data, 1, s, mut u.data, a.m, mut vt.data,
+		a.n, superb)
 }
 
 // matrix_inv computes the inverse of a general matrix (square or not). It also computes the

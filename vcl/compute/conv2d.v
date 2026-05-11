@@ -8,7 +8,6 @@ module compute
 //
 // Algorithm: im2col transforms input patches into a matrix, then GEMM.
 // im2col output: [C_in*KH*KW, N*OH*OW] column-major for GEMM compatibility.
-
 import vsl.vcl
 
 const im2col_kernel_source = '

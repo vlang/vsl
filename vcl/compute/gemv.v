@@ -3,7 +3,6 @@ module compute
 // gemv.v — GPU-accelerated GEMV (General Matrix-Vector Multiply) via OpenCL.
 //
 // Computes y = A * x where A is [m x k] column-major, x is [k], y is [m].
-
 import vsl.vcl
 
 const gemv_kernel_source = '

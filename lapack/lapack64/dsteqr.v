@@ -199,8 +199,7 @@ pub fn dsteqr(compz EigenVectorsComp, n int, mut d []f64, mut e []f64, mut z []f
 				// If remaining matrix is 2×2, use dlaev2 to compute its eigensystem.
 				if m == l + 1 {
 					if icompz > 0 {
-						d[l], d[l + 1], work[l], work[n - 1 + l] = dlaev2(d[l], e[l],
-							d[l + 1])
+						d[l], d[l + 1], work[l], work[n - 1 + l] = dlaev2(d[l], e[l], d[l + 1])
 						dlasr(.right, .variable, .backward, n, 2, work[l..], work[n - 1 + l..], mut
 							z[l..], ldz)
 					} else {
@@ -286,8 +285,7 @@ pub fn dsteqr(compz EigenVectorsComp, n int, mut d []f64, mut e []f64, mut z []f
 				// If remaining matrix is 2×2, use dlae2 to compute its eigenvalues.
 				if m == l - 1 {
 					if icompz > 0 {
-						d[l - 1], d[l], work[m], work[n - 1 + m] = dlaev2(d[l - 1], e[l - 1],
-							d[l])
+						d[l - 1], d[l], work[m], work[n - 1 + m] = dlaev2(d[l - 1], e[l - 1], d[l])
 						dlasr(.right, .variable, .forward, n, 2, work[m..], work[n - 1 + m..], mut
 							z[l - 1..], ldz)
 					} else {
@@ -349,13 +347,11 @@ pub fn dsteqr(compz EigenVectorsComp, n int, mut d []f64, mut e []f64, mut z []f
 		match iscale {
 			down {
 				// Pretend that d and e are matrices with 1 column.
-				dlascl(.general, 0, 0, ssfmax, anorm, lendsv - lsv + 1, 1, mut d[lsv..],
-					1)
+				dlascl(.general, 0, 0, ssfmax, anorm, lendsv - lsv + 1, 1, mut d[lsv..], 1)
 				dlascl(.general, 0, 0, ssfmax, anorm, lendsv - lsv, 1, mut e[lsv..], 1)
 			}
 			up {
-				dlascl(.general, 0, 0, ssfmin, anorm, lendsv - lsv + 1, 1, mut d[lsv..],
-					1)
+				dlascl(.general, 0, 0, ssfmin, anorm, lendsv - lsv + 1, 1, mut d[lsv..], 1)
 				dlascl(.general, 0, 0, ssfmin, anorm, lendsv - lsv, 1, mut e[lsv..], 1)
 			}
 			else {}
