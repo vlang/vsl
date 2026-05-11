@@ -418,3 +418,10 @@ fn C.vkDestroySemaphore(VkDevice, VkSemaphore, &AllocationCallbacks)
 fn vk_destroy_semaphore(device VkDevice, semaphore VkSemaphore, pAllocator &AllocationCallbacks) {
 	C.vkDestroySemaphore(device, semaphore, pAllocator)
 }
+
+fn C.vkEnumerateInstanceLayerProperties(&u32, &C.VkLayerProperties) Result
+
+@[inline]
+fn vk_enumerate_instance_layer_properties(pPropertyCount &u32, pProperties &C.VkLayerProperties) Result {
+	return C.vkEnumerateInstanceLayerProperties(pPropertyCount, pProperties)
+}

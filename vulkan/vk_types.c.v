@@ -456,3 +456,12 @@ pub fn (r Result) error() ! {
 	}
 	return error('vulkan: ${r.str()}')
 }
+
+@[typedef]
+pub struct C.VkLayerProperties {
+pub:
+	layerName          [256]char
+	specVersion        u32
+	implementationVersion u32
+	description        [256]char
+}
