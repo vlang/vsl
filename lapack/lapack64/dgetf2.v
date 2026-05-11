@@ -54,8 +54,8 @@ pub fn dgetf2(m int, n int, mut a []f64, lda int, mut ipiv []int) bool {
 		}
 		if j < mn - 1 {
 			mut slice4 := unsafe { a[(j + 1) * lda + j + 1..] }
-			blas.dger(m - j - 1, n - j - 1, -1.0, a[(j + 1) * lda + j..], lda, a[j * lda + j + 1..],
-				1, mut slice4, lda)
+			blas.dger(m - j - 1, n - j - 1, -1.0, a[(j + 1) * lda + j..], lda,
+				a[j * lda + j + 1..], 1, mut slice4, lda)
 		}
 	}
 

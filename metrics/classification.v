@@ -133,8 +133,7 @@ pub fn roc_curve(y_true []f64, y_score []f64) !RocCurveResult {
 	}
 
 	if n_pos == 0 || n_neg == 0 {
-		return errors.error('y_true must contain both positive and negative samples',
-			.einval)
+		return errors.error('y_true must contain both positive and negative samples', .einval)
 	}
 
 	mut fpr := []f64{}

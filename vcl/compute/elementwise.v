@@ -3,7 +3,6 @@ module compute
 // elementwise.v — GPU-accelerated element-wise activation functions via OpenCL.
 //
 // All functions operate on flat f64 arrays and return flat f64 arrays.
-
 import vsl.vcl
 
 const elementwise_kernel_source = '

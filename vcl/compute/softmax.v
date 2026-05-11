@@ -4,7 +4,6 @@ module compute
 //
 // Input: flat column-major matrix [rows x cols].
 // Computes softmax across each row: exp(x - max) / sum(exp(x - max)).
-
 import vsl.vcl
 
 const softmax_kernel_source = '

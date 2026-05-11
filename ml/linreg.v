@@ -157,7 +157,8 @@ pub fn (o &LinReg) get_plotter() &plot.Plot {
 	max_x := o.stat.max_x[0]
 
 	// Generate a range based on the minimum and maximum values
-	x_values := util.lin_space(min_x, max_x, 100) // You can adjust the number of points (100 in this case)
+	x_values :=
+		util.lin_space(min_x, max_x, 100) // You can adjust the number of points (100 in this case)
 
 	// Calculate prediction values for the range
 	y_values := x_values.map(o.predict([it]))

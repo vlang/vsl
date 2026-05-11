@@ -78,6 +78,7 @@ pub fn (e ErrVCL) err() IError {
 		dl_open_issue { err_dl_open_issue }
 		else { 'vcl_cl: error ${e}' }
 	}
+
 	return error_with_code(err, int(e))
 }
 

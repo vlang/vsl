@@ -341,8 +341,8 @@ fn generate_sierpinski_points(iterations int, size f64) []gm.Point {
 		target := vertices[vertex_idx]
 
 		// Move halfway towards the target
-		current = gm.Point.new((current.x + target.x) / 2.0, (current.y + target.y) / 2.0,
-			(current.z + target.z) / 2.0)
+		current = gm.Point.new((current.x + target.x) / 2.0, (current.y + target.y) / 2.0, (
+			current.z + target.z) / 2.0)
 
 		points << current
 	}

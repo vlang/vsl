@@ -60,8 +60,8 @@ fn main() {
 		b = benchmark.new_benchmark()
 		for _ in 0 .. iterations {
 			b.step()
-			blas.dgemm(.no_trans, .no_trans, m, n, k, 1.0, a_flat_mat, k, b_flat_mat,
-				n, 0.0, mut c_flat_mat, n)
+			blas.dgemm(.no_trans, .no_trans, m, n, k, 1.0, a_flat_mat, k, b_flat_mat, n, 0.0, mut
+				c_flat_mat, n)
 			b.stop()
 		}
 		avg_time = f64(b.total_duration()) / f64(iterations)

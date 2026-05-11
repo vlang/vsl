@@ -274,17 +274,18 @@ pub fn erf(x_ f64) f64 {
 	mut s := 0.0
 	if x < 1.0 / 0.35 {
 		// x| < 1 / 0.35  ~ 2.857143
-		r = ra0 + s_ * (ra1 + s_ * (ra2 + s_ * (ra3 + s_ * (ra4 + s_ * (ra5 + s_ * (ra6 +
-			s_ * ra7))))))
-		s = 1.0 + s_ * (sa1 + s_ * (sa2 + s_ * (sa3 + s_ * (sa4 + s_ * (sa5 + s_ * (sa6 +
-			s_ * (sa7 + s_ * sa8)))))))
+		r = ra0 +
+			s_ * (ra1 + s_ * (ra2 + s_ * (ra3 + s_ * (ra4 + s_ * (ra5 + s_ * (ra6 + s_ * ra7))))))
+		s = 1.0 +
+			s_ * (sa1 + s_ * (sa2 + s_ * (sa3 + s_ * (sa4 + s_ * (sa5 + s_ * (sa6 + s_ * (sa7 + s_ * sa8)))))))
 	} else {
 		// x| >= 1 / 0.35  ~ 2.857143
 		r = rb0 + s_ * (rb1 + s_ * (rb2 + s_ * (rb3 + s_ * (rb4 + s_ * (rb5 + s_ * rb6)))))
-		s = 1.0 + s_ * (sb1 + s_ * (sb2 + s_ * (sb3 + s_ * (sb4 + s_ * (sb5 + s_ * (sb6 +
-			s_ * sb7))))))
+		s = 1.0 +
+			s_ * (sb1 + s_ * (sb2 + s_ * (sb3 + s_ * (sb4 + s_ * (sb5 + s_ * (sb6 + s_ * sb7))))))
 	}
-	z := math.f64_from_bits(math.f64_bits(x) & 0xffffffff00000000) // pseudo-single (20-bit) precision x
+	z :=
+		math.f64_from_bits(math.f64_bits(x) & 0xffffffff00000000) // pseudo-single (20-bit) precision x
 	r_ := math.exp(-z * z - 0.5625) * math.exp((z - x) * (z + x) + r / s)
 	if sign {
 		return r_ / x - 1.0
@@ -355,20 +356,21 @@ pub fn erfc(x_ f64) f64 {
 		mut s := 0.0
 		if x < 1.0 / 0.35 {
 			// x| < 1 / 0.35 ~ 2.857143
-			r = ra0 + s_ * (ra1 + s_ * (ra2 + s_ * (ra3 + s_ * (ra4 + s_ * (ra5 + s_ * (ra6 +
-				s_ * ra7))))))
-			s = 1.0 + s_ * (sa1 + s_ * (sa2 + s_ * (sa3 + s_ * (sa4 + s_ * (sa5 + s_ * (sa6 +
-				s_ * (sa7 + s_ * sa8)))))))
+			r = ra0 +
+				s_ * (ra1 + s_ * (ra2 + s_ * (ra3 + s_ * (ra4 + s_ * (ra5 + s_ * (ra6 + s_ * ra7))))))
+			s = 1.0 +
+				s_ * (sa1 + s_ * (sa2 + s_ * (sa3 + s_ * (sa4 + s_ * (sa5 + s_ * (sa6 + s_ * (sa7 + s_ * sa8)))))))
 		} else {
 			// x| >= 1 / 0.35 ~ 2.857143
 			if sign && x > 6 {
 				return f64(2) // x < -6
 			}
 			r = rb0 + s_ * (rb1 + s_ * (rb2 + s_ * (rb3 + s_ * (rb4 + s_ * (rb5 + s_ * rb6)))))
-			s = 1.0 + s_ * (sb1 + s_ * (sb2 + s_ * (sb3 + s_ * (sb4 + s_ * (sb5 + s_ * (sb6 +
-				s_ * sb7))))))
+			s = 1.0 +
+				s_ * (sb1 + s_ * (sb2 + s_ * (sb3 + s_ * (sb4 + s_ * (sb5 + s_ * (sb6 + s_ * sb7))))))
 		}
-		z := math.f64_from_bits(math.f64_bits(x) & 0xffffffff00000000) // pseudo-single (20-bit) precision x
+		z :=
+			math.f64_from_bits(math.f64_bits(x) & 0xffffffff00000000) // pseudo-single (20-bit) precision x
 		r_ := math.exp(-z * z - 0.5625) * math.exp((z - x) * (z + x) + r / s)
 		if sign {
 			return f64(2) - r_ / x

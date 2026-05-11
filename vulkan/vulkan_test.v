@@ -164,15 +164,30 @@ fn test_vector_add_op() {
 	a_bytes := bytes_from_f32(a_data)
 	b_bytes := bytes_from_f32(b_data)
 
-	mut a_buf := dev.buffer(DeviceSize(a_bytes.len)) or { assert false, 'buf A failed'; return }
+	mut a_buf := dev.buffer(DeviceSize(a_bytes.len)) or {
+		assert false, 'buf A failed'
+		return
+	}
 	defer { a_buf.release() }
-	mut b_buf := dev.buffer(DeviceSize(b_bytes.len)) or { assert false, 'buf B failed'; return }
+	mut b_buf := dev.buffer(DeviceSize(b_bytes.len)) or {
+		assert false, 'buf B failed'
+		return
+	}
 	defer { b_buf.release() }
-	mut c_buf := dev.buffer(DeviceSize(n * 4)) or { assert false, 'buf C failed'; return }
+	mut c_buf := dev.buffer(DeviceSize(n * 4)) or {
+		assert false, 'buf C failed'
+		return
+	}
 	defer { c_buf.release() }
 
-	a_buf.load(a_bytes) or { assert false, 'upload A failed: ${err}'; return }
-	b_buf.load(b_bytes) or { assert false, 'upload B failed: ${err}'; return }
+	a_buf.load(a_bytes) or {
+		assert false, 'upload A failed: ${err}'
+		return
+	}
+	b_buf.load(b_bytes) or {
+		assert false, 'upload B failed: ${err}'
+		return
+	}
 
 	vector_add(dev, c_buf, a_buf, b_buf) or {
 		assert false, 'vector_add failed: ${err}'
@@ -180,7 +195,10 @@ fn test_vector_add_op() {
 	}
 
 	mut raw := []u8{len: n * 4}
-	raw = c_buf.store(mut raw) or { assert false, 'store failed: ${err}'; return }
+	raw = c_buf.store(mut raw) or {
+		assert false, 'store failed: ${err}'
+		return
+	}
 	result := bytes_to_f32(raw)
 
 	for i := 0; i < n; i++ {
@@ -210,12 +228,21 @@ fn test_scale_op() {
 	src_data := []f32{len: n, init: f32(index) * 2.0}
 	src_bytes := bytes_from_f32(src_data)
 
-	mut src_buf := dev.buffer(DeviceSize(src_bytes.len)) or { assert false, 'buf src failed'; return }
+	mut src_buf := dev.buffer(DeviceSize(src_bytes.len)) or {
+		assert false, 'buf src failed'
+		return
+	}
 	defer { src_buf.release() }
-	mut dst_buf := dev.buffer(DeviceSize(src_bytes.len)) or { assert false, 'buf dst failed'; return }
+	mut dst_buf := dev.buffer(DeviceSize(src_bytes.len)) or {
+		assert false, 'buf dst failed'
+		return
+	}
 	defer { dst_buf.release() }
 
-	src_buf.load(src_bytes) or { assert false, 'upload failed: ${err}'; return }
+	src_buf.load(src_bytes) or {
+		assert false, 'upload failed: ${err}'
+		return
+	}
 
 	scale(dev, dst_buf, src_buf, alpha) or {
 		assert false, 'scale failed: ${err}'
@@ -223,7 +250,10 @@ fn test_scale_op() {
 	}
 
 	mut raw := []u8{len: n * 4}
-	raw = dst_buf.store(mut raw) or { assert false, 'store failed: ${err}'; return }
+	raw = dst_buf.store(mut raw) or {
+		assert false, 'store failed: ${err}'
+		return
+	}
 	result := bytes_to_f32(raw)
 
 	for i := 0; i < n; i++ {
@@ -252,9 +282,15 @@ fn test_sum_op() {
 	data := []f32{len: n, init: f32(index)}
 	bytes := bytes_from_f32(data)
 
-	mut buf := dev.buffer(DeviceSize(bytes.len)) or { assert false, 'buf failed'; return }
+	mut buf := dev.buffer(DeviceSize(bytes.len)) or {
+		assert false, 'buf failed'
+		return
+	}
 	defer { buf.release() }
-	buf.load(bytes) or { assert false, 'upload failed: ${err}'; return }
+	buf.load(bytes) or {
+		assert false, 'upload failed: ${err}'
+		return
+	}
 
 	total := sum(dev, buf) or {
 		assert false, 'sum failed: ${err}'
@@ -288,12 +324,21 @@ fn test_relu_op() {
 	src_data := []f32{len: n, init: f32(index) - 50.0}
 	src_bytes := bytes_from_f32(src_data)
 
-	mut src_buf := dev.buffer(DeviceSize(src_bytes.len)) or { assert false, 'buf src failed'; return }
+	mut src_buf := dev.buffer(DeviceSize(src_bytes.len)) or {
+		assert false, 'buf src failed'
+		return
+	}
 	defer { src_buf.release() }
-	mut dst_buf := dev.buffer(DeviceSize(src_bytes.len)) or { assert false, 'buf dst failed'; return }
+	mut dst_buf := dev.buffer(DeviceSize(src_bytes.len)) or {
+		assert false, 'buf dst failed'
+		return
+	}
 	defer { dst_buf.release() }
 
-	src_buf.load(src_bytes) or { assert false, 'upload failed: ${err}'; return }
+	src_buf.load(src_bytes) or {
+		assert false, 'upload failed: ${err}'
+		return
+	}
 
 	relu(dev, dst_buf, src_buf) or {
 		assert false, 'relu failed: ${err}'
@@ -301,7 +346,10 @@ fn test_relu_op() {
 	}
 
 	mut raw := []u8{len: n * 4}
-	raw = dst_buf.store(mut raw) or { assert false, 'store failed: ${err}'; return }
+	raw = dst_buf.store(mut raw) or {
+		assert false, 'store failed: ${err}'
+		return
+	}
 	result := bytes_to_f32(raw)
 
 	for i := 0; i < n; i++ {
@@ -335,12 +383,21 @@ fn test_sigmoid_op() {
 	src_data := []f32{len: n, init: f32(index) * 0.25 - 8.0}
 	src_bytes := bytes_from_f32(src_data)
 
-	mut src_buf := dev.buffer(DeviceSize(src_bytes.len)) or { assert false, 'buf src failed'; return }
+	mut src_buf := dev.buffer(DeviceSize(src_bytes.len)) or {
+		assert false, 'buf src failed'
+		return
+	}
 	defer { src_buf.release() }
-	mut dst_buf := dev.buffer(DeviceSize(src_bytes.len)) or { assert false, 'buf dst failed'; return }
+	mut dst_buf := dev.buffer(DeviceSize(src_bytes.len)) or {
+		assert false, 'buf dst failed'
+		return
+	}
 	defer { dst_buf.release() }
 
-	src_buf.load(src_bytes) or { assert false, 'upload failed: ${err}'; return }
+	src_buf.load(src_bytes) or {
+		assert false, 'upload failed: ${err}'
+		return
+	}
 
 	sigmoid(dev, dst_buf, src_buf) or {
 		assert false, 'sigmoid failed: ${err}'
@@ -348,7 +405,10 @@ fn test_sigmoid_op() {
 	}
 
 	mut raw := []u8{len: n * 4}
-	raw = dst_buf.store(mut raw) or { assert false, 'store failed: ${err}'; return }
+	raw = dst_buf.store(mut raw) or {
+		assert false, 'store failed: ${err}'
+		return
+	}
 	result := bytes_to_f32(raw)
 
 	// Sigmoid should be in (0, 1) range
@@ -369,17 +429,32 @@ fn test_softmax() {
 	mut src_data := []f32{len: int(n), init: f32(index) * 0.1}
 	src_bytes := bytes_from_f32(src_data)
 
-	mut src_buf := dev.buffer(DeviceSize(src_bytes.len)) or { assert false, 'buf src'; return }
+	mut src_buf := dev.buffer(DeviceSize(src_bytes.len)) or {
+		assert false, 'buf src'
+		return
+	}
 	defer { src_buf.release() }
-	mut dst_buf := dev.buffer(DeviceSize(src_bytes.len)) or { assert false, 'buf dst'; return }
+	mut dst_buf := dev.buffer(DeviceSize(src_bytes.len)) or {
+		assert false, 'buf dst'
+		return
+	}
 	defer { dst_buf.release() }
 
-	src_buf.load(src_bytes) or { assert false, 'upload: ${err}'; return }
+	src_buf.load(src_bytes) or {
+		assert false, 'upload: ${err}'
+		return
+	}
 
-	softmax(dev, dst_buf, src_buf, n) or { assert false, 'softmax: ${err}'; return }
+	softmax(dev, dst_buf, src_buf, n) or {
+		assert false, 'softmax: ${err}'
+		return
+	}
 
 	mut raw := []u8{len: int(n) * 4}
-	raw = dst_buf.store(mut raw) or { assert false, 'store: ${err}'; return }
+	raw = dst_buf.store(mut raw) or {
+		assert false, 'store: ${err}'
+		return
+	}
 	result := bytes_to_f32(raw)
 
 	mut total := f32(0.0)
@@ -402,18 +477,33 @@ fn test_layernorm() {
 	mut src_data := []f32{len: int(n), init: f32(index) - f32(n) / 2.0}
 	src_bytes := bytes_from_f32(src_data)
 
-	mut src_buf := dev.buffer(DeviceSize(src_bytes.len)) or { assert false, 'buf src'; return }
+	mut src_buf := dev.buffer(DeviceSize(src_bytes.len)) or {
+		assert false, 'buf src'
+		return
+	}
 	defer { src_buf.release() }
-	mut dst_buf := dev.buffer(DeviceSize(src_bytes.len)) or { assert false, 'buf dst'; return }
+	mut dst_buf := dev.buffer(DeviceSize(src_bytes.len)) or {
+		assert false, 'buf dst'
+		return
+	}
 	defer { dst_buf.release() }
 
-	src_buf.load(src_bytes) or { assert false, 'upload: ${err}'; return }
+	src_buf.load(src_bytes) or {
+		assert false, 'upload: ${err}'
+		return
+	}
 
 	eps := f32(1e-5)
-	layernorm(dev, dst_buf, src_buf, n, eps) or { assert false, 'layernorm: ${err}'; return }
+	layernorm(dev, dst_buf, src_buf, n, eps) or {
+		assert false, 'layernorm: ${err}'
+		return
+	}
 
 	mut raw := []u8{len: int(n) * 4}
-	raw = dst_buf.store(mut raw) or { assert false, 'store: ${err}'; return }
+	raw = dst_buf.store(mut raw) or {
+		assert false, 'store: ${err}'
+		return
+	}
 	result := bytes_to_f32(raw)
 
 	// Normalised output should have mean ≈ 0 and values in [-3, 3]
@@ -439,17 +529,32 @@ fn test_reduce_sum() {
 	wg_size := u32(256)
 	num_groups := (n + wg_size - 1) / wg_size
 
-	mut src_buf := dev.buffer(DeviceSize(src_bytes.len)) or { assert false, 'buf src'; return }
+	mut src_buf := dev.buffer(DeviceSize(src_bytes.len)) or {
+		assert false, 'buf src'
+		return
+	}
 	defer { src_buf.release() }
-	mut dst_buf := dev.buffer(DeviceSize(u64(num_groups) * 4)) or { assert false, 'buf dst'; return }
+	mut dst_buf := dev.buffer(DeviceSize(u64(num_groups) * 4)) or {
+		assert false, 'buf dst'
+		return
+	}
 	defer { dst_buf.release() }
 
-	src_buf.load(src_bytes) or { assert false, 'upload: ${err}'; return }
+	src_buf.load(src_bytes) or {
+		assert false, 'upload: ${err}'
+		return
+	}
 
-	reduce(dev, dst_buf, src_buf, n, .sum) or { assert false, 'reduce: ${err}'; return }
+	reduce(dev, dst_buf, src_buf, n, .sum) or {
+		assert false, 'reduce: ${err}'
+		return
+	}
 
 	mut raw := []u8{len: int(num_groups) * 4}
-	raw = dst_buf.store(mut raw) or { assert false, 'store: ${err}'; return }
+	raw = dst_buf.store(mut raw) or {
+		assert false, 'store: ${err}'
+		return
+	}
 	partial := bytes_to_f32(raw)
 
 	mut total := f32(0.0)
@@ -471,16 +576,31 @@ fn test_gelu() {
 	src_data := [f32(0.0), 1.0, -1.0, 2.0]
 	src_bytes := bytes_from_f32(src_data)
 
-	mut src_buf := dev.buffer(DeviceSize(src_bytes.len)) or { assert false, 'buf src'; return }
+	mut src_buf := dev.buffer(DeviceSize(src_bytes.len)) or {
+		assert false, 'buf src'
+		return
+	}
 	defer { src_buf.release() }
-	mut dst_buf := dev.buffer(DeviceSize(u64(n) * 4)) or { assert false, 'buf dst'; return }
+	mut dst_buf := dev.buffer(DeviceSize(u64(n) * 4)) or {
+		assert false, 'buf dst'
+		return
+	}
 	defer { dst_buf.release() }
 
-	src_buf.load(src_bytes) or { assert false, 'upload'; return }
-	gelu(dev, dst_buf, src_buf, n) or { assert false, 'gelu: ${err}'; return }
+	src_buf.load(src_bytes) or {
+		assert false, 'upload'
+		return
+	}
+	gelu(dev, dst_buf, src_buf, n) or {
+		assert false, 'gelu: ${err}'
+		return
+	}
 
 	mut raw := []u8{len: int(n) * 4}
-	raw = dst_buf.store(mut raw) or { assert false, 'store'; return }
+	raw = dst_buf.store(mut raw) or {
+		assert false, 'store'
+		return
+	}
 	out := bytes_to_f32(raw)
 
 	// gelu(0) = 0
@@ -507,35 +627,65 @@ fn test_maxpool2d() {
 	// 9  10 11 12
 	// 13 14 15 16
 	src_data := [
-		f32(1), 2, 3, 4,
-		f32(5), 6, 7, 8,
-		f32(9), 10, 11, 12,
-		f32(13), 14, 15, 16,
+		f32(1),
+		2,
+		3,
+		4,
+		f32(5),
+		6,
+		7,
+		8,
+		f32(9),
+		10,
+		11,
+		12,
+		f32(13),
+		14,
+		15,
+		16,
 	]
 	src_bytes := bytes_from_f32(src_data)
 
-	batch := u32(1); in_ch := u32(1)
-	in_h := u32(4); in_w := u32(4)
-	k_h := u32(2); k_w := u32(2)
-	stride_h := u32(2); stride_w := u32(2)
-	pad_h := u32(0); pad_w := u32(0)
-	out_h := (in_h + 2 * pad_h - k_h) / stride_h + 1  // = 2
-	out_w := (in_w + 2 * pad_w - k_w) / stride_w + 1  // = 2
+	batch := u32(1)
+	in_ch := u32(1)
+	in_h := u32(4)
+	in_w := u32(4)
+	k_h := u32(2)
+	k_w := u32(2)
+	stride_h := u32(2)
+	stride_w := u32(2)
+	pad_h := u32(0)
+	pad_w := u32(0)
+	out_h := (in_h + 2 * pad_h - k_h) / stride_h + 1 // = 2
+	out_w := (in_w + 2 * pad_w - k_w) / stride_w + 1 // = 2
 	n_out := batch * in_ch * out_h * out_w
 
-	mut src_buf := dev.buffer(DeviceSize(src_bytes.len)) or { assert false; return }
+	mut src_buf := dev.buffer(DeviceSize(src_bytes.len)) or {
+		assert false
+		return
+	}
 	defer { src_buf.release() }
-	mut dst_buf := dev.buffer(DeviceSize(u64(n_out) * 4)) or { assert false; return }
+	mut dst_buf := dev.buffer(DeviceSize(u64(n_out) * 4)) or {
+		assert false
+		return
+	}
 	defer { dst_buf.release() }
 
-	src_buf.load(src_bytes) or { assert false; return }
-	maxpool2d(dev, dst_buf, src_buf, batch, in_ch, in_h, in_w, k_h, k_w, out_h, out_w, pad_h, pad_w, stride_h, stride_w) or {
+	src_buf.load(src_bytes) or {
+		assert false
+		return
+	}
+	maxpool2d(dev, dst_buf, src_buf, batch, in_ch, in_h, in_w, k_h, k_w, out_h, out_w, pad_h,
+		pad_w, stride_h, stride_w) or {
 		assert false, 'maxpool2d: ${err}'
 		return
 	}
 
 	mut raw := []u8{len: int(n_out) * 4}
-	raw = dst_buf.store(mut raw) or { assert false; return }
+	raw = dst_buf.store(mut raw) or {
+		assert false
+		return
+	}
 	out := bytes_to_f32(raw)
 
 	// Expected max values per 2x2 block:
@@ -560,17 +710,23 @@ fn test_batchnorm1d() {
 	n := u32(4)
 	c := u32(2)
 	input := [
-		f32(1), f32(2),
-		f32(2), f32(4),
-		f32(3), f32(6),
-		f32(4), f32(8),
+		f32(1),
+		f32(2),
+		f32(2),
+		f32(4),
+		f32(3),
+		f32(6),
+		f32(4),
+		f32(8),
 	]
 	eps := f32(1e-5)
 	total := int(n * c)
 
 	mut src_bytes := []u8{len: total * 4}
 	for i, v in input {
-		unsafe { *(&f32(&src_bytes[i * 4])) = v }
+		unsafe {
+			*(&f32(&src_bytes[i * 4])) = v
+		}
 	}
 	mut src_buf := dev.buffer(DeviceSize(u64(total) * 4))!
 	defer { src_buf.release() }
@@ -586,14 +742,16 @@ fn test_batchnorm1d() {
 
 	mut out := []f32{len: total}
 	for i in 0 .. total {
-		unsafe { out[i] = *(&f32(&raw[i * 4])) }
+		unsafe {
+			out[i] = *(&f32(&raw[i * 4]))
+		}
 	}
 
 	// Both columns should have same normalised pattern
 	assert math.abs(f64(out[0]) - (-1.342)) < 0.01, 'out[0]=${out[0]}'
 	assert math.abs(f64(out[2]) - (-0.447)) < 0.01, 'out[2]=${out[2]}'
-	assert math.abs(f64(out[4]) -   0.447)  < 0.01, 'out[4]=${out[4]}'
-	assert math.abs(f64(out[6]) -   1.342)  < 0.01, 'out[6]=${out[6]}'
+	assert math.abs(f64(out[4]) - 0.447) < 0.01, 'out[4]=${out[4]}'
+	assert math.abs(f64(out[6]) - 1.342) < 0.01, 'out[6]=${out[6]}'
 }
 
 // ── Edge-case sizes ──────────────────────────────────────────────────────────
@@ -678,7 +836,9 @@ fn test_multiple_consecutive_dispatches() {
 	a := []f32{len: n, init: f32(1)}
 	mut ab := []u8{len: n * 4}
 	for i in 0 .. n {
-		unsafe { *(&f32(&ab[i * 4])) = a[i] }
+		unsafe {
+			*(&f32(&ab[i * 4])) = a[i]
+		}
 	}
 
 	mut buf_a := dev.buffer(DeviceSize(u64(n) * 4)) or { return }
@@ -734,7 +894,9 @@ fn test_multiple_pipelines_active() {
 	mut data := []u8{len: n * 4}
 	for i in 0 .. n {
 		val := f32(i) + 1
-		unsafe { *(&f32(&data[i * 4])) = val }
+		unsafe {
+			*(&f32(&data[i * 4])) = val
+		}
 	}
 
 	// Run relu and sigmoid on the same data in sequence (exercises pipeline cache with 2 entries)
@@ -773,8 +935,9 @@ fn test_scale_single_element() {
 	defer { dev.release() or {} }
 
 	mut data := []u8{len: 4}
-	unsafe { *(&f32(&data[0])) = f32(7.0) }
-
+	unsafe {
+		*(&f32(&data[0])) = f32(7.0)
+	}
 	mut buf_in := dev.buffer(DeviceSize(4)) or { return }
 	defer { buf_in.release() }
 	buf_in.load(data) or { return }

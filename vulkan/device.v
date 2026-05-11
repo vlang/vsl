@@ -20,7 +20,7 @@ pub:
 	queue              VkQueue
 	queue_family_index u32
 mut:
-	cmd_pool           VkCommandPool
+	cmd_pool VkCommandPool
 	// cached resources
 	buffers []VkBuffer
 	memory  []VkDeviceMemory
@@ -143,6 +143,18 @@ fn create_instance() !VkInstance {
 		return create_instance_plain()
 	} $else {
 		return create_instance_debug()
+	}
+}
+
+// device_type_name returns a human-readable string for a VkPhysicalDeviceType integer.
+fn device_type_name(dtype u32) string {
+	return match dtype {
+		1 { 'Other' }
+		2 { 'Integrated GPU' }
+		3 { 'Discrete GPU' }
+		4 { 'Virtual GPU' }
+		5 { 'CPU' }
+		else { 'Unknown' }
 	}
 }
 

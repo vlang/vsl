@@ -273,8 +273,8 @@ type ClEnqueueReadImageType = fn (command_queue ClCommandQueue, image ClMem, blo
 fn cl_enqueue_read_image(command_queue ClCommandQueue, image ClMem, blocking_read bool, origin3 [3]usize, region3 [3]usize, row_pitch usize, slice_pitch usize, ptr voidptr, num_events_in_wait_list u32, event_wait_list &ClEvent, event &ClEvent) int {
 	f := dl.get_sym('clEnqueueReadImage') or { return err.code() }
 	sfn := ClEnqueueReadImageType(f)
-	return sfn(command_queue, image, blocking_read, origin3, region3, row_pitch, slice_pitch,
-		ptr, num_events_in_wait_list, event_wait_list, event)
+	return sfn(command_queue, image, blocking_read, origin3, region3, row_pitch, slice_pitch, ptr,
+		num_events_in_wait_list, event_wait_list, event)
 }
 
 type ClEnqueueWriteImageType = fn (command_queue ClCommandQueue, image ClMem, blocking_write bool, origin3 [3]usize, region3 [3]usize, row_pitch usize, slice_pitch usize, ptr voidptr, num_events_in_wait_list u32, event_wait_list &ClEvent, event &ClEvent) int
@@ -283,8 +283,8 @@ type ClEnqueueWriteImageType = fn (command_queue ClCommandQueue, image ClMem, bl
 fn cl_enqueue_write_image(command_queue ClCommandQueue, image ClMem, blocking_write bool, origin3 [3]usize, region3 [3]usize, row_pitch usize, slice_pitch usize, ptr voidptr, num_events_in_wait_list u32, event_wait_list &ClEvent, event &ClEvent) int {
 	f := dl.get_sym('clEnqueueWriteImage') or { return err.code() }
 	sfn := ClEnqueueWriteImageType(f)
-	return sfn(command_queue, image, blocking_write, origin3, region3, row_pitch, slice_pitch,
-		ptr, num_events_in_wait_list, event_wait_list, event)
+	return sfn(command_queue, image, blocking_write, origin3, region3, row_pitch, slice_pitch, ptr,
+		num_events_in_wait_list, event_wait_list, event)
 }
 
 type ClCreateImageType = fn (context ClContext, flags ClMemFlags, format &ClImageFormat, desc ClImageDesc, data voidptr, errcode_ret &int) ClMem

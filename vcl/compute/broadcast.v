@@ -1,7 +1,6 @@
 module compute
 
 // broadcast.v — GPU-accelerated broadcast operations via OpenCL.
-
 import vsl.vcl
 
 const broadcast_kernel_source = '
@@ -171,8 +170,8 @@ pub fn broadcast_bias_vcl(mut dev vcl.Device, mat_data []f64, bias_data []f64, r
 	}
 	mut out_vec := dev.vector[f64](rows * cols)!
 	kernel := dev.kernel('broadcast_bias')!
-	err_k := <-kernel.global(rows, cols).local(local_size_2d, local_size_2d).run(mat_vec,
-		bias_vec, out_vec, rows, cols)
+	err_k := <-kernel.global(rows, cols).local(local_size_2d, local_size_2d).run(mat_vec, bias_vec,
+		out_vec, rows, cols)
 	if err_k !is none {
 		return err_k
 	}

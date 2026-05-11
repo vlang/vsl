@@ -59,7 +59,9 @@ pub fn gemm_gpu(ctx &ComputeContext, a_data []f64, a_m int, a_n int, b_data []f6
 
 	// Read back C from GPU
 	mut c_bytes := []u8{len: int(c_size)}
-	c_bytes = c_buf.store(mut c_bytes) or { return error('compute.gemm_gpu: readback failed: ${err}') }
+	c_bytes = c_buf.store(mut c_bytes) or {
+		return error('compute.gemm_gpu: readback failed: ${err}')
+	}
 
 	// Convert f32 → f64
 	mut c_data := []f64{len: int(m * n)}
@@ -69,6 +71,5 @@ pub fn gemm_gpu(ctx &ComputeContext, a_data []f64, a_m int, a_n int, b_data []f6
 			c_data[i] = f64(c_f32[i])
 		}
 	}
-
 	return c_data
 }

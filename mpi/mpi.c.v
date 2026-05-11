@@ -301,8 +301,8 @@ pub fn (o &Communicator) bcast_from_root_f64(x []f64) {
 // reduce_sum_i32 sums all values in 'orig' to 'dest' in root (Rank == 0) processor
 //   note (important): orig and dest must be different slices
 pub fn (o &Communicator) reduce_sum_i32(mut dest []i32, orig []i32) {
-	C.MPI_Reduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_INT, C.MPI_SUM,
-		0, o.comm)
+	C.MPI_Reduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_INT, C.MPI_SUM, 0,
+		o.comm)
 }
 
 // all_reduce_sum_i32 combines all values from orig into dest summing values
@@ -315,8 +315,8 @@ pub fn (o &Communicator) all_reduce_sum_i32(mut dest []i32, orig []i32) {
 // reduce_min_i32 minimizes all values in 'orig' to 'dest' in root (Rank == 0) processor
 //   note (important): orig and dest must be different slices
 pub fn (o &Communicator) reduce_min_i32(mut dest []i32, orig []i32) {
-	C.MPI_Reduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_INT, C.MPI_MIN,
-		0, o.comm)
+	C.MPI_Reduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_INT, C.MPI_MIN, 0,
+		o.comm)
 }
 
 // all_reduce_min_i32 minimizes all values from orig into all dest values
@@ -329,8 +329,8 @@ pub fn (o &Communicator) all_reduce_min_i32(mut dest []i32, orig []i32) {
 // reduce_max_i32 maximizes all values in 'orig' to 'dest' in root (Rank == 0) processor
 //   note (important): orig and dest must be different slices
 pub fn (o &Communicator) reduce_max_i32(mut dest []i32, orig []i32) {
-	C.MPI_Reduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_INT, C.MPI_MAX,
-		0, o.comm)
+	C.MPI_Reduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_INT, C.MPI_MAX, 0,
+		o.comm)
 }
 
 // all_reduce_max_i32 maximizes all values from orig into all dest values
@@ -343,50 +343,50 @@ pub fn (o &Communicator) all_reduce_max_i32(mut dest []i32, orig []i32) {
 // reduce_sum_u32 sums all values in 'orig' to 'dest' in root (Rank == 0) processor
 //   note (important): orig and dest must be different slices
 pub fn (o &Communicator) reduce_sum_u32(mut dest []u32, orig []u32) {
-	C.MPI_Reduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_UNSIGNED, C.MPI_SUM,
-		0, o.comm)
+	C.MPI_Reduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_UNSIGNED, C.MPI_SUM, 0,
+		o.comm)
 }
 
 // all_reduce_sum_u32 combines all values from orig into dest summing values
 //   note (important): orig and dest must be different slices
 pub fn (o &Communicator) all_reduce_sum_u32(mut dest []u32, orig []u32) {
-	C.MPI_Allreduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_UNSIGNED,
-		C.MPI_SUM, o.comm)
+	C.MPI_Allreduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_UNSIGNED, C.MPI_SUM,
+		o.comm)
 }
 
 // reduce_min_u32 minimizes all values in 'orig' to 'dest' in root (Rank == 0) processor
 //   note (important): orig and dest must be different slices
 pub fn (o &Communicator) reduce_min_u32(mut dest []u32, orig []u32) {
-	C.MPI_Reduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_UNSIGNED, C.MPI_MIN,
-		0, o.comm)
+	C.MPI_Reduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_UNSIGNED, C.MPI_MIN, 0,
+		o.comm)
 }
 
 // all_reduce_min_u32 minimizes all values from orig into all dest values
 //   note (important): orig and dest must be different slices
 pub fn (o &Communicator) all_reduce_min_u32(mut dest []u32, orig []u32) {
-	C.MPI_Allreduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_UNSIGNED,
-		C.MPI_MIN, o.comm)
+	C.MPI_Allreduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_UNSIGNED, C.MPI_MIN,
+		o.comm)
 }
 
 // reduce_max_u32 maximizes all values in 'orig' to 'dest' in root (Rank == 0) processor
 //   note (important): orig and dest must be different slices
 pub fn (o &Communicator) reduce_max_u32(mut dest []u32, orig []u32) {
-	C.MPI_Reduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_UNSIGNED, C.MPI_MAX,
-		0, o.comm)
+	C.MPI_Reduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_UNSIGNED, C.MPI_MAX, 0,
+		o.comm)
 }
 
 // all_reduce_max_u32 maximizes all values from orig into all dest values
 //   note (important): orig and dest must be different slices
 pub fn (o &Communicator) all_reduce_max_u32(mut dest []u32, orig []u32) {
-	C.MPI_Allreduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_UNSIGNED,
-		C.MPI_MAX, o.comm)
+	C.MPI_Allreduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_UNSIGNED, C.MPI_MAX,
+		o.comm)
 }
 
 // reduce_sum_i64 sums all values in 'orig' to 'dest' in root (Rank == 0) processor
 //   note (important): orig and dest must be different slices
 pub fn (o &Communicator) reduce_sum_i64(mut dest []i64, orig []i64) {
-	C.MPI_Reduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_LONG, C.MPI_SUM,
-		0, o.comm)
+	C.MPI_Reduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_LONG, C.MPI_SUM, 0,
+		o.comm)
 }
 
 // all_reduce_sum_i64 combines all values from orig into dest summing values
@@ -399,8 +399,8 @@ pub fn (o &Communicator) all_reduce_sum_i64(mut dest []i64, orig []i64) {
 // reduce_min_i64 minimizes all values in 'orig' to 'dest' in root (Rank == 0) processor
 //   note (important): orig and dest must be different slices
 pub fn (o &Communicator) reduce_min_i64(mut dest []i64, orig []i64) {
-	C.MPI_Reduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_LONG, C.MPI_MIN,
-		0, o.comm)
+	C.MPI_Reduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_LONG, C.MPI_MIN, 0,
+		o.comm)
 }
 
 // all_reduce_min_i64 minimizes all values from orig into all dest values
@@ -413,8 +413,8 @@ pub fn (o &Communicator) all_reduce_min_i64(mut dest []i64, orig []i64) {
 // reduce_max_i64 maximizes all values in 'orig' to 'dest' in root (Rank == 0) processor
 //   note (important): orig and dest must be different slices
 pub fn (o &Communicator) reduce_max_i64(mut dest []i64, orig []i64) {
-	C.MPI_Reduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_LONG, C.MPI_MAX,
-		0, o.comm)
+	C.MPI_Reduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_LONG, C.MPI_MAX, 0,
+		o.comm)
 }
 
 // all_reduce_max_i64 maximizes all values from orig into all dest values
@@ -469,8 +469,8 @@ pub fn (o &Communicator) all_reduce_max_u64(mut dest []u64, orig []u64) {
 // reduce_sum_f32 sums all values in 'orig' to 'dest' in root (Rank == 0) processor
 //   note (important): orig and dest must be different slices
 pub fn (o &Communicator) reduce_sum_f32(mut dest []f32, orig []f32) {
-	C.MPI_Reduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_FLOAT, C.MPI_SUM,
-		0, o.comm)
+	C.MPI_Reduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_FLOAT, C.MPI_SUM, 0,
+		o.comm)
 }
 
 // all_reduce_sum_f32 combines all values from orig into dest summing values
@@ -483,8 +483,8 @@ pub fn (o &Communicator) all_reduce_sum_f32(mut dest []f32, orig []f32) {
 // reduce_min_f32 minimizes all values in 'orig' to 'dest' in root (Rank == 0) processor
 //   note (important): orig and dest must be different slices
 pub fn (o &Communicator) reduce_min_f32(mut dest []f32, orig []f32) {
-	C.MPI_Reduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_FLOAT, C.MPI_MIN,
-		0, o.comm)
+	C.MPI_Reduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_FLOAT, C.MPI_MIN, 0,
+		o.comm)
 }
 
 // all_reduce_min_f32 minimizes all values from orig into all dest values
@@ -497,8 +497,8 @@ pub fn (o &Communicator) all_reduce_min_f32(mut dest []f32, orig []f32) {
 // reduce_max_f32 maximizes all values in 'orig' to 'dest' in root (Rank == 0) processor
 //   note (important): orig and dest must be different slices
 pub fn (o &Communicator) reduce_max_f32(mut dest []f32, orig []f32) {
-	C.MPI_Reduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_FLOAT, C.MPI_MAX,
-		0, o.comm)
+	C.MPI_Reduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_FLOAT, C.MPI_MAX, 0,
+		o.comm)
 }
 
 // all_reduce_max_f32 maximizes all values from orig into all dest values
@@ -511,41 +511,41 @@ pub fn (o &Communicator) all_reduce_max_f32(mut dest []f32, orig []f32) {
 // reduce_sum_f64 sums all values in 'orig' to 'dest' in root (Rank == 0) processor
 //   note (important): orig and dest must be different slices
 pub fn (o &Communicator) reduce_sum_f64(mut dest []f64, orig []f64) {
-	C.MPI_Reduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_DOUBLE, C.MPI_SUM,
-		0, o.comm)
+	C.MPI_Reduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_DOUBLE, C.MPI_SUM, 0,
+		o.comm)
 }
 
 // all_reduce_sum_f64 combines all values from orig into dest summing values
 //   note (important): orig and dest must be different slices
 pub fn (o &Communicator) all_reduce_sum_f64(mut dest []f64, orig []f64) {
-	C.MPI_Allreduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_DOUBLE,
-		C.MPI_SUM, o.comm)
+	C.MPI_Allreduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_DOUBLE, C.MPI_SUM,
+		o.comm)
 }
 
 // reduce_min_f64 minimizes all values in 'orig' to 'dest' in root (Rank == 0) processor
 //   note (important): orig and dest must be different slices
 pub fn (o &Communicator) reduce_min_f64(mut dest []f64, orig []f64) {
-	C.MPI_Reduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_DOUBLE, C.MPI_MIN,
-		0, o.comm)
+	C.MPI_Reduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_DOUBLE, C.MPI_MIN, 0,
+		o.comm)
 }
 
 // all_reduce_min_f64 minimizes all values from orig into all dest values
 //   note (important): orig and dest must be different slices
 pub fn (o &Communicator) all_reduce_min_f64(mut dest []f64, orig []f64) {
-	C.MPI_Allreduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_DOUBLE,
-		C.MPI_MIN, o.comm)
+	C.MPI_Allreduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_DOUBLE, C.MPI_MIN,
+		o.comm)
 }
 
 // reduce_max_f64 maximizes all values in 'orig' to 'dest' in root (Rank == 0) processor
 //   note (important): orig and dest must be different slices
 pub fn (o &Communicator) reduce_max_f64(mut dest []f64, orig []f64) {
-	C.MPI_Reduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_DOUBLE, C.MPI_MAX,
-		0, o.comm)
+	C.MPI_Reduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_DOUBLE, C.MPI_MAX, 0,
+		o.comm)
 }
 
 // all_reduce_max_f64 maximizes all values from orig into all dest values
 //   note (important): orig and dest must be different slices
 pub fn (o &Communicator) all_reduce_max_f64(mut dest []f64, orig []f64) {
-	C.MPI_Allreduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_DOUBLE,
-		C.MPI_MAX, o.comm)
+	C.MPI_Allreduce(unsafe { &orig[0] }, unsafe { &dest[0] }, orig.len, C.MPI_DOUBLE, C.MPI_MAX,
+		o.comm)
 }

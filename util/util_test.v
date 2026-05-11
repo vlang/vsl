@@ -28,13 +28,11 @@ fn test_stepped_range() {
 
 fn test_lin_space() {
 	assert float64.arrays_tolerance(lin_space(0, 1, 5), [0.0, 0.25, 0.5, 0.75, 1], 1e-14)
-	assert float64.arrays_tolerance(lin_space(0, 1, 6), [0.0, 0.2, 0.4, 0.6, 0.8, 1],
-		1e-14)
+	assert float64.arrays_tolerance(lin_space(0, 1, 6), [0.0, 0.2, 0.4, 0.6, 0.8, 1], 1e-14)
 	assert float64.arrays_tolerance(lin_space(0, 1, 7), [0.0, 0.16666666666666666, 0.3333333333333333,
 		0.5, 0.6666666666666666, 0.8333333333333334, 1], 1e-14)
 	assert float64.arrays_tolerance(lin_space(0, 1, 8), [0.0, 0.14285714285714285, 0.2857142857142857,
-		0.42857142857142855, 0.5714285714285714, 0.7142857142857143, 0.8571428571428571, 1],
-		1e-14)
+		0.42857142857142855, 0.5714285714285714, 0.7142857142857143, 0.8571428571428571, 1], 1e-14)
 	assert float64.arrays_tolerance(lin_space(0, 1, 9), [0.0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75,
 		0.875, 1], 1e-14)
 	assert float64.arrays_tolerance(lin_space(0, 1, 10), [0.0, 0.1111111111111111, 0.2222222222222222,

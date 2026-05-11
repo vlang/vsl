@@ -60,12 +60,14 @@ pub fn (mut knn KNN) set_weights(weights map[f64]f64) ! {
 	mut new_weights := map[f64]f64{}
 	for k, v in weights {
 		if k !in knn.data.y {
-			return errors.error('expects weights (map[f64]f64) to have ' +
-				"all its keys present in the KNN's classes.", .einval)
+			return errors.error(
+				'expects weights (map[f64]f64) to have ' + "all its keys present in the KNN's classes.",
+				.einval)
 		}
 		if v == 0.0 {
-			return errors.error('expects weights (map[f64]f64) to not have ' +
-				'zeroes, as it cannot divide by zero.', .ezerodiv)
+			return errors.error(
+				'expects weights (map[f64]f64) to not have ' + 'zeroes, as it cannot divide by zero.',
+				.ezerodiv)
 		}
 		new_weights[k] = v
 	}

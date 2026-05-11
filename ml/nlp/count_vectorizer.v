@@ -8,15 +8,13 @@ import vsl.errors
 // "NGRAMSEP". If `n_features` is <= 0, it will be set to ngrams.len.
 pub fn most_frequent_ngrams(ngrams [][]string, n_features int) ![][]string {
 	if ngrams.len == 0 {
-		return errors.error('ngram_frequency_map expects a non-empty array of ngrams.',
-			.einval)
+		return errors.error('ngram_frequency_map expects a non-empty array of ngrams.', .einval)
 	}
 	mut n_features_ := n_features
 	if n_features <= 0 {
 		n_features_ = ngrams.len
 	} else if n_features > ngrams.len {
-		return errors.error('n_features cannot be greater than the amount of ngrams.',
-			.einval)
+		return errors.error('n_features cannot be greater than the amount of ngrams.', .einval)
 	}
 	mut freq_map := map[string]int{}
 	mut joined := ngrams.map(it.join(ngram_sep))

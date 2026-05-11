@@ -101,8 +101,7 @@ fn test_axpy_unitary() {
 	for test in axpy_tests {
 		for align in align2 {
 			xg_ln, yg_ln := 4 + align.x, 4 + align.y
-			xg, yg := guard_vector(test.x, x_gd_val, xg_ln), guard_vector(test.y, y_gd_val,
-				yg_ln)
+			xg, yg := guard_vector(test.x, x_gd_val, xg_ln), guard_vector(test.y, y_gd_val, yg_ln)
 			x, mut y := xg[xg_ln..xg.len - xg_ln], unsafe { yg[yg_ln..yg.len - yg_ln] }
 			axpy_unitary(test.alpha, x, mut y)
 
@@ -124,8 +123,7 @@ fn test_axpy_unitary_to() {
 		for align in align3 {
 			dg_ln, xg_ln, yg_ln := 4 + align.dst, 4 + align.x, 4 + align.y
 			dst_orig := []f32{len: test.x.len}
-			xg, yg := guard_vector(test.x, x_gd_val, xg_ln), guard_vector(test.y, y_gd_val,
-				yg_ln)
+			xg, yg := guard_vector(test.x, x_gd_val, xg_ln), guard_vector(test.y, y_gd_val, yg_ln)
 			dstg := guard_vector(dst_orig, dst_gd_val, dg_ln)
 			x, y := xg[xg_ln..xg.len - xg_ln], yg[yg_ln..yg.len - yg_ln]
 			mut dst := unsafe { dstg[dg_ln..dstg.len - dg_ln] }

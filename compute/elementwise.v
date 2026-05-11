@@ -122,13 +122,17 @@ pub fn gemv_gpu(ctx &ComputeContext, a_data []f64, m int, n int, x_data []f64) !
 	defer { y_buf.release() }
 
 	mut a_f32 := []f32{len: m * n}
-	for i in 0 .. a_f32.len { a_f32[i] = f32(a_data[i]) }
+	for i in 0 .. a_f32.len {
+		a_f32[i] = f32(a_data[i])
+	}
 	mut a_bytes := []u8{len: m * n * 4}
 	unsafe { C.memcpy(a_bytes.data, a_f32.data, m * n * 4) }
 	a_buf.load(a_bytes)!
 
 	mut x_f32 := []f32{len: n}
-	for i in 0 .. n { x_f32[i] = f32(x_data[i]) }
+	for i in 0 .. n {
+		x_f32[i] = f32(x_data[i])
+	}
 	mut x_bytes := []u8{len: n * 4}
 	unsafe { C.memcpy(x_bytes.data, x_f32.data, n * 4) }
 	x_buf.load(x_bytes)!

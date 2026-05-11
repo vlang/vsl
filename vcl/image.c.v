@@ -111,8 +111,8 @@ pub fn (image &Image) data() !IImage {
 	region0 := [usize(image.bounds.width), usize(image.bounds.height), 1]
 	region := [3]usize{init: region0[index]}
 	read_image_result := []u8{len: image.buf.size, cap: image.buf.size}
-	ret := cl_enqueue_read_image(image.buf.device.queue, image.buf.memobj, true, origin,
-		region, 0, 0, unsafe { &read_image_result[0] }, 0, unsafe { nil }, unsafe { nil })
+	ret := cl_enqueue_read_image(image.buf.device.queue, image.buf.memobj, true, origin, region, 0,
+		0, unsafe { &read_image_result[0] }, 0, unsafe { nil }, unsafe { nil })
 	nb_channels := if image.@type == ImageChannelOrder.rgba { 4 } else { 1 }
 	img := stbi.Image{
 		width:       int(image.bounds.width)
@@ -132,8 +132,8 @@ fn (image &Image) write_queue() !int {
 		region[i] = temp[i]
 	}
 
-	ret := cl_enqueue_write_image(image.buf.device.queue, image.buf.memobj, true, origin,
-		region, 0, 0, image.img_data, 0, unsafe { nil }, unsafe { nil })
+	ret := cl_enqueue_write_image(image.buf.device.queue, image.buf.memobj, true, origin, region,
+		0, 0, image.img_data, 0, unsafe { nil }, unsafe { nil })
 	return error_or_default(ret, ret)
 }
 

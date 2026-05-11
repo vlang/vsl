@@ -72,6 +72,7 @@ x_val, y_val := 0.5, 0.5
 noise_x := noise_gen.simplex_2d(x_val, y_val) * 0.1
 noise_y := noise_gen.simplex_2d(x_val * 2.0, y_val * 2.0) * 0.1
 c_noisy := quaternion.quaternion(c_base.w + noise_x * 0.1, c_base.x + noise_x, c_base.y + noise_y,
+
 	c_base.z + noise_x * 0.05)
 ```
 

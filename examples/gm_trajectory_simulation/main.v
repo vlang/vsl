@@ -200,8 +200,8 @@ fn main() {
 	detour_length := path2_seg1.len() + path2_seg2.len()
 
 	// Path 3: Staircase path (Manhattan distance in 3D)
-	manhattan_length := math.abs(goal.x - start.x) + math.abs(goal.y - start.y) +
-		math.abs(goal.z - start.z)
+	manhattan_length := math.abs(goal.x - start.x) + math.abs(goal.y - start.y) + math.abs(goal.z -
+		start.z)
 
 	println('🛣️ Path comparison from ${start} to ${goal}:')
 	println('  Direct path: ${direct_length:.2f} units')

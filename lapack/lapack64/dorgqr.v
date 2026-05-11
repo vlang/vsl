@@ -85,9 +85,9 @@ pub fn dorgqr(m int, n int, k int, mut a []f64, lda int, tau []f64, mut work []f
 				dlarft(.forward, .column_wise, m - i, ib, a[(i * lda + i)..], lda, tau[i..], mut
 					work, ldwork)
 
-				dlarfb(.left, .no_trans, .forward, .column_wise, m - i, n - i - ib, ib,
-					a[(i * lda + i)..], lda, work, ldwork, mut a[(i * lda + i + ib)..],
-					lda, mut work[(ib * ldwork)..], ldwork)
+				dlarfb(.left, .no_trans, .forward, .column_wise, m - i, n - i - ib, ib, a[(
+					i * lda + i)..], lda, work, ldwork, mut a[(i * lda + i + ib)..], lda, mut
+					work[(ib * ldwork)..], ldwork)
 			}
 			dorg2r(m - i, ib, ib, mut a[(i * lda + i)..], lda, tau[i..(i + ib)], mut work)
 			for j := i; j < i + ib; j++ {

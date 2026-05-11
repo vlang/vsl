@@ -525,8 +525,7 @@ fn dgemvcomp(mut test DgemvCase, trans bool, case DgemvSubcase) {
 	test_x := if trans { test.y } else { test.x }
 	test_y := if trans { test.x } else { test.y }
 
-	mut xg, mut yg := guard_vector(test_x, x_gd_val, gd_ln), guard_vector(test_y, y_gd_val,
-		gd_ln)
+	mut xg, mut yg := guard_vector(test_x, x_gd_val, gd_ln), guard_vector(test_y, y_gd_val, gd_ln)
 	mut x, mut y := unsafe { xg[gd_ln..xg.len - gd_ln] }, unsafe { yg[gd_ln..yg.len - gd_ln] }
 	mut ag := guard_vector(test.a, a_gd_val, gd_ln)
 	mut a := unsafe { ag[gd_ln..ag.len - gd_ln] }
@@ -568,11 +567,11 @@ fn dgemvcomp(mut test DgemvCase, trans bool, case DgemvSubcase) {
 		a = ag[gd_ln..ag.len - gd_ln].clone()
 
 		if trans {
-			gemv_t(u32(test.m), u32(test.n), case.alpha, a, lda, x, u32(inc.x), case.beta, mut
-				y, u32(inc.y))
+			gemv_t(u32(test.m), u32(test.n), case.alpha, a, lda, x, u32(inc.x), case.beta, mut y,
+				u32(inc.y))
 		} else {
-			gemv_n(u32(test.m), u32(test.n), case.alpha, a, lda, x, u32(inc.x), case.beta, mut
-				y, u32(inc.y))
+			gemv_n(u32(test.m), u32(test.n), case.alpha, a, lda, x, u32(inc.x), case.beta, mut y,
+				u32(inc.y))
 		}
 
 		for i, w in want {

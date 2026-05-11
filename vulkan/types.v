@@ -228,15 +228,17 @@ pub const ext_debug_utils_extension_name = 'VK_EXT_debug_utils'
 
 // VkDebugUtilsMessageSeverityFlagBitsEXT
 pub type DebugUtilsMessageSeverityFlagsEXT = u32
+
 pub const debug_utils_message_severity_verbose_bit_ext = DebugUtilsMessageSeverityFlagsEXT(0x0001)
-pub const debug_utils_message_severity_info_bit_ext    = DebugUtilsMessageSeverityFlagsEXT(0x0010)
+pub const debug_utils_message_severity_info_bit_ext = DebugUtilsMessageSeverityFlagsEXT(0x0010)
 pub const debug_utils_message_severity_warning_bit_ext = DebugUtilsMessageSeverityFlagsEXT(0x0100)
-pub const debug_utils_message_severity_error_bit_ext   = DebugUtilsMessageSeverityFlagsEXT(0x1000)
+pub const debug_utils_message_severity_error_bit_ext = DebugUtilsMessageSeverityFlagsEXT(0x1000)
 
 // VkDebugUtilsMessageTypeFlagBitsEXT
 pub type DebugUtilsMessageTypeFlagsEXT = u32
-pub const debug_utils_message_type_general_bit_ext     = DebugUtilsMessageTypeFlagsEXT(0x0001)
-pub const debug_utils_message_type_validation_bit_ext  = DebugUtilsMessageTypeFlagsEXT(0x0002)
+
+pub const debug_utils_message_type_general_bit_ext = DebugUtilsMessageTypeFlagsEXT(0x0001)
+pub const debug_utils_message_type_validation_bit_ext = DebugUtilsMessageTypeFlagsEXT(0x0002)
 pub const debug_utils_message_type_performance_bit_ext = DebugUtilsMessageTypeFlagsEXT(0x0004)
 
 // VkStructureType extensions (debug utils)

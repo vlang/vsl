@@ -255,12 +255,10 @@ pub fn dsterf(n int, mut d []f64, mut e []f64) bool {
 		// Undo scaling if necessary
 		match iscale {
 			down {
-				dlascl(.general, 0, 0, ssfmax, anorm, lendsv - lsv + 1, 1, mut d[lsv..],
-					n)
+				dlascl(.general, 0, 0, ssfmax, anorm, lendsv - lsv + 1, 1, mut d[lsv..], n)
 			}
 			up {
-				dlascl(.general, 0, 0, ssfmin, anorm, lendsv - lsv + 1, 1, mut d[lsv..],
-					n)
+				dlascl(.general, 0, 0, ssfmin, anorm, lendsv - lsv + 1, 1, mut d[lsv..], n)
 			}
 			else {}
 		}

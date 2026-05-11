@@ -248,7 +248,6 @@ pub fn reduce(dev &Device, dst &GpuBuffer, src &GpuBuffer, n u32, op ReductionOp
 	dispatch_sync(dev, pl, n, 1, 1)!
 }
 
-
 // im2col performs im2col transformation for GEMM-based convolution.
 // Input: [N, C, H, W] (NCHW layout)
 // Output: [N*out_h*out_w, C*k_h*k_w] (im2col matrix)
@@ -285,6 +284,7 @@ pub fn im2col(dev &Device, dst &GpuBuffer, src &GpuBuffer, n u32, c u32, h u32, 
 	total_elems := n * out_h * out_w * c * k_h * k_w
 	dispatch_sync(dev, pl, total_elems, 1, 1)!
 }
+
 // avgpool2d performs 2D average pooling on GPU.
 // input: [batch, in_ch, in_h, in_w]
 // output: [batch, in_ch, out_h, out_w]
@@ -348,7 +348,6 @@ pub fn global_avgpool2d(dev &Device, dst &GpuBuffer, src &GpuBuffer, batch u32, 
 	dispatch_sync(dev, pl, global_x, 1, 1)!
 }
 
-
 // dispatch_sync submits a 3D compute dispatch and waits for completion.
 // global_x, global_y, global_z = total work items (not workgroups).
 // The function divides by WORKGROUP_SIZE_X to compute workgroup counts.
@@ -373,15 +372,15 @@ pub fn dispatch_sync(dev &Device, pl &ComputePipeline, global_x u32, global_y u3
 		srcAccessMask: access_host_write_bit
 		dstAccessMask: access_shader_read_bit
 	}
-	vk_cmd_pipeline_barrier(cmd, pipeline_stage_host_bit, pipeline_stage_compute_shader_bit,
-		0, 1, &barrier, 0, unsafe { nil }, 0, unsafe { nil })
+	vk_cmd_pipeline_barrier(cmd, pipeline_stage_host_bit, pipeline_stage_compute_shader_bit, 0, 1,
+		&barrier, 0, unsafe { nil }, 0, unsafe { nil })
 
 	// Bind compute pipeline
 	vk_cmd_bind_pipeline(cmd, pipeline_bind_point_compute, pl.pipeline_handle)
 
 	// Bind descriptor sets
-	vk_cmd_bind_descriptor_sets(cmd, pipeline_bind_point_compute, pl.layout,
-		0, 1, &pl.ds, 0, unsafe { nil })
+	vk_cmd_bind_descriptor_sets(cmd, pipeline_bind_point_compute, pl.layout, 0, 1, &pl.ds, 0,
+		unsafe { nil })
 
 	// Convert global work items to workgroup counts (vkCmdDispatch expects workgroups).
 	// All current shaders use local_size_x = WORKGROUP_SIZE_X.
@@ -482,6 +481,7 @@ fn pipeline_get(d &Device, t PipelineType) !&ComputePipeline {
 		.d_layernorm { pl = d.create_pipeline(spv_d_layernorm, 'main')! }
 		.broadcast_grad { pl = d.create_pipeline(spv_broadcast_grad, 'main')! }
 	}
+
 	unsafe {
 		d.pipeline_cache[t] = pl
 	}
@@ -521,7 +521,9 @@ pub fn gelu(dev &Device, dst &GpuBuffer, src &GpuBuffer, n u32) ! {
 	mut pc_buf := dev.buffer(DeviceSize(4))!
 	defer { pc_buf.release() }
 	mut pb := []u8{len: 4}
-	unsafe { *(&u32(&pb[0])) = n }
+	unsafe {
+		*(&u32(&pb[0])) = n
+	}
 	pc_buf.load(pb)!
 
 	pl := pipeline_get(dev, .gelu)!
@@ -538,7 +540,9 @@ pub fn maxpool2d(dev &Device, dst &GpuBuffer, src &GpuBuffer, batch u32, in_ch u
 	mut pb := []u8{len: 12 * 4}
 	params := [batch, in_ch, in_h, in_w, k_h, k_w, out_h, out_w, pad_h, pad_w, stride_h, stride_w]
 	for i, v in params {
-		unsafe { *(&u32(&pb[i * 4])) = v }
+		unsafe {
+			*(&u32(&pb[i * 4])) = v
+		}
 	}
 	pc_buf.load(pb)!
 

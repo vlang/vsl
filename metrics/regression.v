@@ -218,8 +218,7 @@ pub fn mean_squared_log_error(y_true []f64, y_pred []f64) !f64 {
 	mut sum := 0.0
 	for i in 0 .. y_true.len {
 		if y_true[i] < 0 || y_pred[i] < 0 {
-			return errors.error('mean_squared_log_error requires non-negative values',
-				.einval)
+			return errors.error('mean_squared_log_error requires non-negative values', .einval)
 		}
 		diff := math.log(y_true[i] + 1.0) - math.log(y_pred[i] + 1.0)
 		sum += diff * diff

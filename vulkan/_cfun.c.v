@@ -41,7 +41,8 @@ fn C.vk_create_compute_pipeline_simple(VkDevice, &char, &u32, usize, &VkShaderMo
 
 @[inline]
 fn vk_create_compute_pipeline_simple(device VkDevice, entry_name &char, spv_code &u32, spv_size usize, out_shader_mod &VkShaderModule, out_layout &VkPipelineLayout, out_pipeline &VkPipeline, out_dsl &VkDescriptorSetLayout, out_dp &VkDescriptorPool, out_ds &VkDescriptorSet) ! {
-	res := C.vk_create_compute_pipeline_simple(device, entry_name, spv_code, spv_size, out_shader_mod, out_layout, out_pipeline, out_dsl, out_dp, out_ds)
+	res := C.vk_create_compute_pipeline_simple(device, entry_name, spv_code, spv_size,
+		out_shader_mod, out_layout, out_pipeline, out_dsl, out_dp, out_ds)
 	if res != 0 {
 		return error('vulkan: vkCreateComputePipelines failed: ${res}')
 	}

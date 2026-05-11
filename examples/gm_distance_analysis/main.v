@@ -148,7 +148,8 @@ fn main() {
 		sum_z += point.z
 	}
 
-	centroid := gm.Point.new(sum_x / cloud_points.len, sum_y / cloud_points.len, sum_z / cloud_points.len)
+	centroid := gm.Point.new(sum_x / cloud_points.len, sum_y / cloud_points.len,
+		sum_z / cloud_points.len)
 	println('Centroid: ${centroid}')
 
 	// Calculate distances from each point to centroid

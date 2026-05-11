@@ -491,6 +491,7 @@ pub fn gesvd(a [][]f64, jobu SVDJob, jobvt SVDJob) !([]f64, [][]f64, [][]f64) {
 		.svd_store { min_mn }
 		else { 0 }
 	}
+
 	vt_rows := match jobvt {
 		.svd_all { n }
 		.svd_store { min_mn }

@@ -12,13 +12,13 @@ module vulkan
 @[typedef]
 pub struct C.VkInstanceCreateInfo {
 pub mut:
-	sType            u32
-	pNext            voidptr
-	flags            u32
-	pApplicationInfo &C.VkApplicationInfo
-	enabledLayerCount u32
-	ppEnabledLayerNames &char
-	enabledExtensionCount u32
+	sType                   u32
+	pNext                   voidptr
+	flags                   u32
+	pApplicationInfo        &C.VkApplicationInfo
+	enabledLayerCount       u32
+	ppEnabledLayerNames     &char
+	enabledExtensionCount   u32
 	ppEnabledExtensionNames &char
 }
 
@@ -98,7 +98,7 @@ pub mut:
 	textureCompressionASTC_LDR              u32
 	textureCompressionBC                    u32
 	occlusionQueryPrecise                   u32
-	pipelineStatisticsQuery                  u32
+	pipelineStatisticsQuery                 u32
 	vertexPipelineStoresAndAtomics          u32
 	fragmentStoresAndAtomics                u32
 	shaderTessellationAndGeometryPointSize  u32
@@ -109,7 +109,7 @@ pub mut:
 	shaderStorageImageWriteWithoutFormat    u32
 	shaderUniformBufferArrayDynamicIndexing u32
 	shaderSampledImageArrayDynamicIndexing  u32
-	shaderStorageBufferArrayDynamicIndexing  u32
+	shaderStorageBufferArrayDynamicIndexing u32
 	shaderStorageImageArrayDynamicIndexing  u32
 	shaderClipDistance                      u32
 	shaderCullDistance                      u32
@@ -135,9 +135,9 @@ pub mut:
 pub struct C.VkPhysicalDeviceMemoryProperties {
 pub mut:
 	memoryTypeCount u32
-	memoryTypes    [32]C.VkMemoryType
+	memoryTypes     [32]C.VkMemoryType
 	memoryHeapCount u32
-	memoryHeaps    [16]C.VkMemoryHeap
+	memoryHeaps     [16]C.VkMemoryHeap
 }
 
 @[typedef]
@@ -157,9 +157,9 @@ pub mut:
 @[typedef]
 pub struct C.VkQueueFamilyProperties {
 pub mut:
-	queueFlags         u32
-	queueCount         u32
-	timestampValidBits u32
+	queueFlags                  u32
+	queueCount                  u32
+	timestampValidBits          u32
 	minImageTransferGranularity [3]u32
 }
 
@@ -216,13 +216,13 @@ pub mut:
 @[typedef]
 pub struct C.VkComputePipelineCreateInfo {
 pub mut:
-	sType               u32
-	pNext               voidptr
-	flags               u32
-	stage               C.VkPipelineShaderStageCreateInfo
-	layout              VkPipelineLayout
-	basePipelineHandle  VkPipeline
-	basePipelineIndex   i32
+	sType              u32
+	pNext              voidptr
+	flags              u32
+	stage              C.VkPipelineShaderStageCreateInfo
+	layout             VkPipelineLayout
+	basePipelineHandle VkPipeline
+	basePipelineIndex  i32
 }
 
 @[typedef]
@@ -250,10 +250,10 @@ pub mut:
 @[typedef]
 pub struct C.VkDescriptorSetLayoutBinding {
 pub mut:
-	binding          u32
-	descriptorType    u32
-	descriptorCount   u32
-	stageFlags       u32
+	binding            u32
+	descriptorType     u32
+	descriptorCount    u32
+	stageFlags         u32
 	pImmutableSamplers voidptr
 }
 
@@ -272,7 +272,7 @@ pub mut:
 pub struct C.VkDescriptorPoolSize {
 pub mut:
 	type            u32
-	descriptorCount  u32
+	descriptorCount u32
 }
 
 @[typedef]
@@ -280,7 +280,7 @@ pub struct C.VkDescriptorSetAllocateInfo {
 pub mut:
 	sType              u32
 	pNext              voidptr
-	descriptorPool      VkDescriptorPool
+	descriptorPool     VkDescriptorPool
 	descriptorSetCount u32
 	pSetLayouts        &VkDescriptorSetLayout
 }
@@ -295,23 +295,23 @@ pub mut:
 	dstArrayElement  u32
 	descriptorCount  u32
 	descriptorType   u32
-	pImageInfo      voidptr
-	pBufferInfo     &C.VkDescriptorBufferInfo
+	pImageInfo       voidptr
+	pBufferInfo      &C.VkDescriptorBufferInfo
 	pTexelBufferView voidptr
 }
 
 @[typedef]
 pub struct C.VkCopyDescriptorSet {
 pub mut:
-	sType            u32
-	pNext            voidptr
-	srcSet           VkDescriptorSet
-	srcBinding       u32
-	srcArrayElement  u32
-	dstSet           VkDescriptorSet
-	dstBinding       u32
-	dstArrayElement  u32
-	descriptorCount  u32
+	sType           u32
+	pNext           voidptr
+	srcSet          VkDescriptorSet
+	srcBinding      u32
+	srcArrayElement u32
+	dstSet          VkDescriptorSet
+	dstBinding      u32
+	dstArrayElement u32
+	descriptorCount u32
 }
 
 @[typedef]
@@ -344,24 +344,24 @@ pub mut:
 @[typedef]
 pub struct C.VkCommandBufferBeginInfo {
 pub mut:
-	sType    u32
-	pNext    voidptr
-	flags    u32
+	sType            u32
+	pNext            voidptr
+	flags            u32
 	pInheritanceInfo voidptr
 }
 
 @[typedef]
 pub struct C.VkSubmitInfo {
 pub mut:
-	sType              u32
-	pNext              voidptr
-	waitSemaphoreCount  u32
-	pWaitSemaphores     &VkSemaphore
-	pWaitDstStageMask   &u32
-	commandBufferCount  u32
-	pCommandBuffers     &VkCommandBuffer
+	sType                u32
+	pNext                voidptr
+	waitSemaphoreCount   u32
+	pWaitSemaphores      &VkSemaphore
+	pWaitDstStageMask    &u32
+	commandBufferCount   u32
+	pCommandBuffers      &VkCommandBuffer
 	signalSemaphoreCount u32
-	pSignalSemaphores   &VkSemaphore
+	pSignalSemaphores    &VkSemaphore
 }
 
 @[typedef]
@@ -404,13 +404,13 @@ pub struct C.VkBufferMemoryBarrier {
 pub mut:
 	sType               u32
 	pNext               voidptr
-	srcAccessMask        u32
-	dstAccessMask        u32
+	srcAccessMask       u32
+	dstAccessMask       u32
 	srcQueueFamilyIndex u32
 	dstQueueFamilyIndex u32
-	buffer             VkBuffer
-	offset             DeviceSize
-	size              DeviceSize
+	buffer              VkBuffer
+	offset              DeviceSize
+	size                DeviceSize
 }
 
 @[typedef]
@@ -418,8 +418,8 @@ pub struct C.VkImageMemoryBarrier {
 pub mut:
 	sType               u32
 	pNext               voidptr
-	srcAccessMask        u32
-	dstAccessMask        u32
+	srcAccessMask       u32
+	dstAccessMask       u32
 	oldLayout           u32
 	newLayout           u32
 	srcQueueFamilyIndex u32
@@ -460,8 +460,8 @@ pub fn (r Result) error() ! {
 @[typedef]
 pub struct C.VkLayerProperties {
 pub:
-	layerName          [256]char
-	specVersion        u32
+	layerName             [256]char
+	specVersion           u32
 	implementationVersion u32
-	description        [256]char
+	description           [256]char
 }

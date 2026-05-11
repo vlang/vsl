@@ -5,7 +5,6 @@ module compute
 // Input: flat column-major matrix [rows x cols].
 // axis=0: reduce over rows -> output shape [cols]
 // axis=1: reduce over cols -> output shape [rows]
-
 import vsl.vcl
 
 const reduction_kernel_source = '

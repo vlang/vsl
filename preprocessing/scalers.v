@@ -83,8 +83,7 @@ pub fn (mut s StandardScaler) fit_transform(x [][]f64) ![][]f64 {
 // inverse_transform reverses the standardization
 pub fn (s &StandardScaler) inverse_transform(x [][]f64) ![][]f64 {
 	if !s.fitted {
-		return errors.error('StandardScaler must be fitted before inverse_transform',
-			.efailed)
+		return errors.error('StandardScaler must be fitted before inverse_transform', .efailed)
 	}
 
 	mut result := [][]f64{len: x.len}

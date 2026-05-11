@@ -78,8 +78,7 @@ pub fn uint_binomial(n_ u64, k_ u64) u64 {
 // rbinomial computes the binomial coefficient with real (non-negative) arguments by calling the gamma function
 pub fn rbinomial(x f64, y f64) f64 {
 	if x < 0 || y < 0 {
-		errors.vsl_panic('rbinomial requires x and y to be non-negative, at this moment',
-			.erange)
+		errors.vsl_panic('rbinomial requires x and y to be non-negative, at this moment', .erange)
 	}
 	ga := math.gamma(x + 1.0)
 	gb := math.gamma(y + 1.0)
@@ -325,6 +324,7 @@ pub fn imag_pow_n(n int) cmplx.Complex {
 		3 { return cmplx.complex(0.0, -1.0) }
 		else { cmplx.complex(1.0, 0.0) }
 	}
+
 	return cmplx.complex(1.0, 0.0)
 }
 
@@ -340,6 +340,7 @@ pub fn imag_x_pow_n(x f64, n int) cmplx.Complex {
 		3 { return cmplx.complex(0.0, -xn) }
 		else { cmplx.complex(xn, 0.0) }
 	}
+
 	return cmplx.complex(xn, 0.0)
 }
 
