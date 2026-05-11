@@ -31,12 +31,12 @@ VSL is a V library to develop Artificial Intelligence and High-Performance Scien
 > (`-d vsl_blas_cblas -d vsl_lapack_lapacke`) are recommended when you need QR
 > correctness today.
 
-## 🎉 Pure V BLAS/LAPACK: High Performance, Zero Dependencies
+## 🔢 Pure V BLAS/LAPACK: High Performance, Zero Dependencies
 
-VSL now features **100% pure V implementations** of BLAS and LAPACK that deliver
-**excellent performance** while requiring **zero external dependencies**. These
-implementations are production-ready and provide a compelling alternative to C
-backends.
+VSL includes **100% pure V implementations** of BLAS and LAPACK — no external
+libraries required. These implementations are production-ready and provide a
+solid alternative to C backends when system libraries are unavailable or
+cross-platform portability matters.
 
 ### Key Benefits
 
@@ -47,13 +47,13 @@ backends.
 
 ### Performance Benchmarks
 
-Run comprehensive benchmarks to see performance characteristics:
+Run comprehensive benchmarks to compare backends:
 
 ```sh
 # BLAS benchmarks
 v run benchmarks/blas_bench.v
 
-# LAPACK benchmarks  
+# LAPACK benchmarks
 v run benchmarks/lapack_bench.v
 
 # Compare backends
@@ -68,11 +68,8 @@ v run benchmarks/compare_backends.v
 | **OpenBLAS** | Optimized C library | `-d vsl_blas_cblas` | Maximum performance when C libraries available |
 | **LAPACKE** | Standard LAPACK C interface | `-d vsl_lapack_lapacke` | Maximum performance for LAPACK operations |
 
-**Recommendation**: Start with the pure V backend for simplicity and zero
-dependencies. Use C backends when maximum performance is critical and system
-libraries are available.
-
-See [Pure V BLAS/LAPACK Release Notes](./RELEASE_NOTES_PURE_V.md) for detailed information.
+Start with the pure V backend for simplicity and zero dependencies. Switch to a
+C backend when maximum performance is critical and system libraries are available.
 
 |                                      |                                |                |                       |
 | :----------------------------------: | :----------------------------: | :------------: | :-------------------: |
