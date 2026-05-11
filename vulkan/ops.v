@@ -31,6 +31,7 @@ enum PipelineType {
 	softmax
 	layernorm
 	reduction
+	im2col
 }
 
 // vector_add computes element-wise addition: dst = a + b
@@ -231,6 +232,45 @@ pub fn reduce(dev &Device, dst &GpuBuffer, src &GpuBuffer, n u32, op ReductionOp
 	dispatch_sync(dev, pl, n, 1, 1)!
 }
 
+
+// im2col performs im2col transformation for GEMM-based convolution.
+// Input: [N, C, H, W] (NCHW layout)
+// Output: [N*out_h*out_w, C*k_h*k_w] (im2col matrix)
+// Params: N, C, H, W, k_h, k_w, out_h, out_w, pad_h, pad_w, stride_h, stride_w, dil_h, dil_w
+pub fn im2col(dev &Device, dst &GpuBuffer, src &GpuBuffer, n u32, c u32, h u32, w u32, k_h u32, k_w u32, out_h u32, out_w u32, pad_h u32, pad_w u32, stride_h u32, stride_w u32, dil_h u32, dil_w u32) ! {
+	// Allocate params buffer
+	mut params_buf := dev.buffer(DeviceSize(14 * 4))!
+	defer { params_buf.release() }
+	mut pb := []u8{len: 14 * 4}
+	unsafe {
+		*(&u32(&pb[0])) = n
+		*(&u32(&pb[4])) = c
+		*(&u32(&pb[8])) = h
+		*(&u32(&pb[12])) = w
+		*(&u32(&pb[16])) = k_h
+		*(&u32(&pb[20])) = k_w
+		*(&u32(&pb[24])) = out_h
+		*(&u32(&pb[28])) = out_w
+		*(&u32(&pb[32])) = pad_h
+		*(&u32(&pb[36])) = pad_w
+		*(&u32(&pb[40])) = stride_h
+		*(&u32(&pb[44])) = stride_w
+		*(&u32(&pb[48])) = dil_h
+		*(&u32(&pb[52])) = dil_w
+	}
+	params_buf.load(pb)!
+
+	pl := pipeline_get(dev, .im2col)!
+	pl.update_buffer(0, src)!
+	pl.update_buffer(1, dst)!
+	pl.update_buffer(2, params_buf)!
+
+	// Dispatch: total elements = N * out_h * out_w * C * k_h * k_w
+	total_elems := n * out_h * out_w * c * k_h * k_w
+	dispatch_sync(dev, pl, total_elems, 1, 1)!
+}
+
+
 // dispatch_sync submits a 3D compute dispatch and waits for completion.
 // global_x, global_y, global_z = total work items (not workgroups).
 // The function divides by WORKGROUP_SIZE_X to compute workgroup counts.
@@ -346,6 +386,7 @@ fn pipeline_get(d &Device, t PipelineType) !&ComputePipeline {
 		.softmax { pl = d.create_pipeline(softmax_spv, 'main')! }
 		.layernorm { pl = d.create_pipeline(layernorm_spv, 'main')! }
 		.reduction { pl = d.create_pipeline(reduction_spv, 'main')! }
+		.im2col { pl = d.create_pipeline(im2col_spv, 'main')! }
 	}
 	unsafe {
 		d.pipeline_cache[t] = pl
