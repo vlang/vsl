@@ -496,3 +496,11 @@ fn vk_cmd_bind_descriptor_sets(cmdbuf VkCommandBuffer, pipelineBindPoint u32, la
 	sfn := FnCmdBindDescriptorSets(f)
 	sfn(cmdbuf, pipelineBindPoint, layout, firstSet, descriptorSetCount, pDescriptorSets, dynamicOffsetCount, pDynamicOffsets)
 }
+
+type FnEnumerateInstanceLayerProperties = fn (&u32, &C.VkLayerProperties) Result
+
+fn vk_enumerate_instance_layer_properties(pPropertyCount &u32, pProperties &C.VkLayerProperties) Result {
+	f := dl.get_sym('vkEnumerateInstanceLayerProperties') or { return result_error_feature_not_present }
+	sfn := FnEnumerateInstanceLayerProperties(f)
+	return sfn(pPropertyCount, pProperties)
+}

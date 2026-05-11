@@ -139,9 +139,11 @@ pub fn (d &Device) str() string {
 // --------------------------------------------------------------------------
 
 fn create_instance() !VkInstance {
-	mut inst := VkInstance(unsafe { nil })
-	vk_create_instance_simple(unsafe { nil }, 1, unsafe { nil }, 1, &inst)!
-	return inst
+	$if prod {
+		return create_instance_plain()
+	} $else {
+		return create_instance_debug()
+	}
 }
 
 // device_type_priority returns a sort key for GPU selection (lower = more preferred).
