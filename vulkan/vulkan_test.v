@@ -595,3 +595,197 @@ fn test_batchnorm1d() {
 	assert math.abs(f64(out[4]) -   0.447)  < 0.01, 'out[4]=${out[4]}'
 	assert math.abs(f64(out[6]) -   1.342)  < 0.01, 'out[6]=${out[6]}'
 }
+
+// ── Edge-case sizes ──────────────────────────────────────────────────────────
+
+fn run_vector_add_size(n int) ! {
+	mut dev := new_device() or { return }
+	defer { dev.release() or {} }
+
+	a := []f32{len: n, init: f32(index) + 1}
+	b := []f32{len: n, init: f32(index) * 2}
+
+	mut ab := []u8{len: n * 4}
+	mut bb := []u8{len: n * 4}
+	for i in 0 .. n {
+		unsafe {
+			*(&f32(&ab[i * 4])) = a[i]
+			*(&f32(&bb[i * 4])) = b[i]
+		}
+	}
+
+	mut buf_a := dev.buffer(DeviceSize(u64(n) * 4))!
+	defer { buf_a.release() }
+	buf_a.load(ab)!
+
+	mut buf_b := dev.buffer(DeviceSize(u64(n) * 4))!
+	defer { buf_b.release() }
+	buf_b.load(bb)!
+
+	mut buf_c := dev.buffer(DeviceSize(u64(n) * 4))!
+	defer { buf_c.release() }
+
+	vector_add(dev, buf_c, buf_a, buf_b)!
+
+	mut raw := []u8{len: n * 4}
+	buf_c.store(mut raw)!
+
+	for i in 0 .. n {
+		got := unsafe { *(&f32(&raw[i * 4])) }
+		want := a[i] + b[i]
+		assert math.abs(f64(got) - f64(want)) < 1e-4, 'n=${n} i=${i}: got=${got} want=${want}'
+	}
+}
+
+fn test_vector_add_size_1() {
+	run_vector_add_size(1) or {
+		eprintln('no Vulkan device — skipping')
+		return
+	}
+}
+
+fn test_vector_add_size_64() {
+	run_vector_add_size(64) or {
+		eprintln('no Vulkan device — skipping')
+		return
+	}
+}
+
+fn test_vector_add_size_1024() {
+	run_vector_add_size(1024) or {
+		eprintln('no Vulkan device — skipping')
+		return
+	}
+}
+
+fn test_vector_add_size_4096() {
+	run_vector_add_size(4096) or {
+		eprintln('no Vulkan device — skipping')
+		return
+	}
+}
+
+// ── Multiple consecutive dispatches on the same pipeline ─────────────────────
+
+fn test_multiple_consecutive_dispatches() {
+	mut dev := new_device() or {
+		eprintln('no Vulkan device — skipping')
+		return
+	}
+	defer { dev.release() or {} }
+
+	n := 128
+	a := []f32{len: n, init: f32(1)}
+	mut ab := []u8{len: n * 4}
+	for i in 0 .. n {
+		unsafe { *(&f32(&ab[i * 4])) = a[i] }
+	}
+
+	mut buf_a := dev.buffer(DeviceSize(u64(n) * 4)) or { return }
+	defer { buf_a.release() }
+	buf_a.load(ab) or { return }
+
+	mut buf_b := dev.buffer(DeviceSize(u64(n) * 4)) or { return }
+	defer { buf_b.release() }
+	buf_b.load(ab) or { return }
+
+	mut buf_out := dev.buffer(DeviceSize(u64(n) * 4)) or { return }
+	defer { buf_out.release() }
+
+	// First dispatch: a + b = 2
+	vector_add(dev, buf_out, buf_a, buf_b) or { return }
+	mut raw1 := []u8{len: n * 4}
+	buf_out.store(mut raw1) or { return }
+	got1 := unsafe { *(&f32(&raw1[0])) }
+	assert math.abs(f64(got1) - 2.0) < 1e-4, 'first dispatch: got=${got1}'
+
+	// Second dispatch: out + a = 3
+	vector_add(dev, buf_out, buf_out, buf_a) or { return }
+	mut raw2 := []u8{len: n * 4}
+	buf_out.store(mut raw2) or { return }
+	got2 := unsafe { *(&f32(&raw2[0])) }
+	assert math.abs(f64(got2) - 3.0) < 1e-4, 'second dispatch: got=${got2}'
+}
+
+// ── Device teardown and re-creation ──────────────────────────────────────────
+
+fn test_device_recreate() {
+	for _ in 0 .. 3 {
+		mut dev := new_device() or {
+			eprintln('no Vulkan device — skipping')
+			return
+		}
+		name := dev.gpu_name()
+		assert name.len > 0
+		dev.release() or { return }
+	}
+}
+
+// ── Multiple pipelines active simultaneously ──────────────────────────────────
+
+fn test_multiple_pipelines_active() {
+	mut dev := new_device() or {
+		eprintln('no Vulkan device — skipping')
+		return
+	}
+	defer { dev.release() or {} }
+
+	n := 64
+	mut data := []u8{len: n * 4}
+	for i in 0 .. n {
+		val := f32(i) + 1
+		unsafe { *(&f32(&data[i * 4])) = val }
+	}
+
+	// Run relu and sigmoid on the same data in sequence (exercises pipeline cache with 2 entries)
+	mut buf_in := dev.buffer(DeviceSize(u64(n) * 4)) or { return }
+	defer { buf_in.release() }
+	buf_in.load(data) or { return }
+
+	mut buf_relu := dev.buffer(DeviceSize(u64(n) * 4)) or { return }
+	defer { buf_relu.release() }
+
+	mut buf_sig := dev.buffer(DeviceSize(u64(n) * 4)) or { return }
+	defer { buf_sig.release() }
+
+	relu(dev, buf_relu, buf_in) or { return }
+	sigmoid(dev, buf_sig, buf_in) or { return }
+
+	mut raw_relu := []u8{len: n * 4}
+	buf_relu.store(mut raw_relu) or { return }
+	mut raw_sig := []u8{len: n * 4}
+	buf_sig.store(mut raw_sig) or { return }
+
+	// relu(1) = 1, sigmoid(1) ≈ 0.731
+	r0 := unsafe { *(&f32(&raw_relu[0])) }
+	s0 := unsafe { *(&f32(&raw_sig[0])) }
+	assert math.abs(f64(r0) - 1.0) < 1e-4, 'relu[0]=${r0}'
+	assert math.abs(f64(s0) - 0.7311) < 0.001, 'sigmoid[0]=${s0}'
+}
+
+// ── Single-element scale (boundary n=1) ──────────────────────────────────────
+
+fn test_scale_single_element() {
+	mut dev := new_device() or {
+		eprintln('no Vulkan device — skipping')
+		return
+	}
+	defer { dev.release() or {} }
+
+	mut data := []u8{len: 4}
+	unsafe { *(&f32(&data[0])) = f32(7.0) }
+
+	mut buf_in := dev.buffer(DeviceSize(4)) or { return }
+	defer { buf_in.release() }
+	buf_in.load(data) or { return }
+
+	mut buf_out := dev.buffer(DeviceSize(4)) or { return }
+	defer { buf_out.release() }
+
+	scale(dev, buf_out, buf_in, f32(3.0)) or { return }
+
+	mut raw := []u8{len: 4}
+	buf_out.store(mut raw) or { return }
+	got := unsafe { *(&f32(&raw[0])) }
+	assert math.abs(f64(got) - 21.0) < 1e-4, 'scale(7*3)=${got}'
+}
