@@ -29,7 +29,7 @@ fn is_validation_layer_available() bool {
 			if c == 0 {
 				break
 			}
-			name += c.ascii_str()
+			name += u8(c).ascii_str()
 		}
 		if name == target {
 			return true
