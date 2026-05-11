@@ -100,8 +100,8 @@ pub const pipeline_stage_color_attachment_output_bit = PipelineStageFlags(1 << 1
 pub const pipeline_stage_compute_shader_bit = PipelineStageFlags(1 << 11)
 pub const pipeline_stage_transfer_bit = PipelineStageFlags(1 << 12)
 pub const pipeline_stage_host_bit = PipelineStageFlags(1 << 14)
-pub const pipeline_stage_all_graphics_bit = PipelineStageFlags(1 << 14)
-pub const pipeline_stage_all_commands_bit = PipelineStageFlags(1 << 15)
+pub const pipeline_stage_all_graphics_bit = PipelineStageFlags(1 << 15)
+pub const pipeline_stage_all_commands_bit = PipelineStageFlags(1 << 16)
 
 // ============================================================================
 // VkAccessFlagBits
@@ -221,3 +221,23 @@ pub type DeviceSize = u64
 
 // All GLSL compute shaders use local_size_x = 256.
 pub const workgroup_size_x = u32(256)
+
+// Validation layer and debug extension names (used with VK_LAYER_KHRONOS_validation)
+pub const khronos_validation_layer_name = 'VK_LAYER_KHRONOS_validation'
+pub const ext_debug_utils_extension_name = 'VK_EXT_debug_utils'
+
+// VkDebugUtilsMessageSeverityFlagBitsEXT
+pub type DebugUtilsMessageSeverityFlagsEXT = u32
+pub const debug_utils_message_severity_verbose_bit_ext = DebugUtilsMessageSeverityFlagsEXT(0x0001)
+pub const debug_utils_message_severity_info_bit_ext    = DebugUtilsMessageSeverityFlagsEXT(0x0010)
+pub const debug_utils_message_severity_warning_bit_ext = DebugUtilsMessageSeverityFlagsEXT(0x0100)
+pub const debug_utils_message_severity_error_bit_ext   = DebugUtilsMessageSeverityFlagsEXT(0x1000)
+
+// VkDebugUtilsMessageTypeFlagBitsEXT
+pub type DebugUtilsMessageTypeFlagsEXT = u32
+pub const debug_utils_message_type_general_bit_ext     = DebugUtilsMessageTypeFlagsEXT(0x0001)
+pub const debug_utils_message_type_validation_bit_ext  = DebugUtilsMessageTypeFlagsEXT(0x0002)
+pub const debug_utils_message_type_performance_bit_ext = DebugUtilsMessageTypeFlagsEXT(0x0004)
+
+// VkStructureType extensions (debug utils)
+pub const structure_type_debug_utils_messenger_create_info_ext = u32(1000128004)
