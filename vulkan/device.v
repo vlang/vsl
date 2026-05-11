@@ -126,14 +126,7 @@ pub fn (d &Device) gpu_name() string {
 pub fn (d &Device) device_type() string {
 	mut props := C.VkPhysicalDeviceProperties{}
 	vk_get_physical_device_properties(d.physical_device, &props)
-	match props.deviceType {
-		1 { return 'Other' }
-		2 { return 'Integrated GPU' }
-		3 { return 'Discrete GPU' }
-		4 { return 'Virtual GPU' }
-		5 { return 'CPU' }
-		else { return 'Unknown' }
-	}
+	return device_type_name(props.deviceType)
 }
 
 // str returns a summary string for the device.
@@ -151,6 +144,46 @@ fn create_instance() !VkInstance {
 	return inst
 }
 
+// device_type_priority returns a sort key for GPU selection (lower = more preferred).
+// Discrete GPU → 0, Integrated GPU → 1, Virtual GPU → 2, Other → 3, CPU → 4.
+fn device_type_priority(dtype u32) int {
+	return match dtype {
+		3 { 0 } // VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU
+		2 { 1 } // VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU
+		4 { 2 } // VK_PHYSICAL_DEVICE_TYPE_VIRTUAL_GPU
+		1 { 3 } // VK_PHYSICAL_DEVICE_TYPE_OTHER
+		5 { 4 } // VK_PHYSICAL_DEVICE_TYPE_CPU
+		else { 5 }
+	}
+}
+
+fn gpu_name_from_props(props C.VkPhysicalDeviceProperties) string {
+	mut name := ''
+	for c in props.deviceName {
+		if c == 0 {
+			break
+		}
+		name += c.ascii_str()
+	}
+	return name
+}
+
+fn physical_has_compute_queue(gpu VkPhysicalDevice) bool {
+	mut count := u32(0)
+	vk_get_physical_device_queue_family_properties(gpu, &count, unsafe { nil })
+	if count == 0 {
+		return false
+	}
+	mut families := unsafe { []C.VkQueueFamilyProperties{len: int(count)} }
+	vk_get_physical_device_queue_family_properties(gpu, &count, unsafe { &families[0] })
+	for i := u32(0); i < count; i++ {
+		if (families[i].queueFlags & queue_compute_bit) != 0 {
+			return true
+		}
+	}
+	return false
+}
+
 fn find_compute_gpu(inst VkInstance) !VkPhysicalDevice {
 	mut count := u32(0)
 	mut res := vk_enumerate_physical_devices(inst, &count, unsafe { nil })
@@ -165,17 +198,34 @@ fn find_compute_gpu(inst VkInstance) !VkPhysicalDevice {
 	if res != result_success {
 		return error('vulkan: vkEnumeratePhysicalDevices (2nd) failed: ${res.str()}')
 	}
-	// Prefer discrete GPU
+
+	mut best := VkPhysicalDevice(unsafe { nil })
+	mut best_priority := 999
+	mut best_name := ''
+	mut best_dtype := u32(0)
+
 	for i := 0; i < int(count); i++ {
+		gpu := devs[i]
+		if !physical_has_compute_queue(gpu) {
+			continue
+		}
 		mut props := C.VkPhysicalDeviceProperties{}
-		vk_get_physical_device_properties(devs[i], &props)
-		if props.deviceType == 3 {
-			// Discrete GPU
-			return devs[i]
+		vk_get_physical_device_properties(gpu, &props)
+		prio := device_type_priority(props.deviceType)
+		if prio < best_priority {
+			best_priority = prio
+			best = gpu
+			best_name = gpu_name_from_props(props)
+			best_dtype = props.deviceType
 		}
 	}
-	// Fall back to first device
-	return devs[0]
+
+	if best == VkPhysicalDevice(unsafe { nil }) {
+		return error('vulkan: no GPU with compute support found')
+	}
+
+	eprintln('vulkan: selected ${best_name} (${device_type_name(best_dtype)})')
+	return best
 }
 
 fn find_compute_queue_family(gpu VkPhysicalDevice) !u32 {
