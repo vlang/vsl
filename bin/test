@@ -40,7 +40,7 @@ fi
 
 if [[ -n "${use_vulkan}" ]]; then
     echo "Running tests using Vulkan compute"
-    flags="${flags} -enable-globals -d vulkan"
+    flags="${flags} -d vulkan"
 fi
 
 if [[ -n "${use_autofree}" ]]; then

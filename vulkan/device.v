@@ -24,6 +24,8 @@ mut:
 	// cached resources
 	buffers []VkBuffer
 	memory  []VkDeviceMemory
+	// pipeline cache keyed by pipeline type
+	pipeline_cache map[PipelineType]&ComputePipeline
 }
 
 // new_device finds a physical device with a compute queue and creates a Device.
@@ -66,9 +68,6 @@ pub fn new_device() !&Device {
 		queue_family_index: qfi
 		cmd_pool:           cmd_pool
 	}
-	unsafe {
-		g_last_dev = dev_obj
-	}
 	return dev_obj
 	// NOTE: Instance is NOT destroyed here — Device.release() handles all
 	// cleanup. Do NOT add a defer that destroys inst (it would leave the
@@ -81,6 +80,11 @@ pub fn (mut d Device) release() ! {
 	res := vk_device_wait_idle(d.device)
 	if res != result_success {
 		return error('vulkan: vkDeviceWaitIdle failed: ${res.str()}')
+	}
+
+	// Free cached pipelines
+	for _, mut pl in d.pipeline_cache {
+		pl.release()
 	}
 
 	// Free command pool

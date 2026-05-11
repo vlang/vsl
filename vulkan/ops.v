@@ -4,39 +4,43 @@ module vulkan
 // Linear algebra operations on Vulkan GPU
 //
 // Provides GPU-accelerated BLAS-style operations. All ops are blocking
-// (synchronous) for simplicity.
+// (synchronous) for simplicity. The Device is passed explicitly so no
+// module-level globals are needed.
 //
 // Operations:
 //   vector_add(dst, a, b)           dst[i] = a[i] + b[i]
-//   scale(dst, src, alpha)          dst[i] = alpha * src[i]
+//   scale(dst, src, alpha)         dst[i] = alpha * src[i]
 //   gemv(y, A, x, m, n)            y[m] = A[m,n] * x[n] (row-major)
-//   sum(buf)                        returns sum of all f32 elements
+//   sum(buf)                       returns sum of all f32 elements
 //   relu(dst, src)                  dst[i] = max(0, src[i])
-//   sigmoid(dst, src)              dst[i] = 1/(1+exp(-src[i]))
+//   sigmoid(dst, src)             dst[i] = 1/(1+exp(-src[i]))
 // ============================================================================
 
-// Module-level device reference for pipeline dispatch.
-// Set by pipeline_get() and used by submit_and_wait() / current_device().
-__global g_last_dev = &Device(unsafe { nil })
-
-// pipeline_cache maps type -> compiled pipeline.
-// Module-level to avoid recompiling shaders on every op.
-__global pipeline_cache = map[PipelineType]&ComputePipeline{}
+// ComputePipeline type enum for the cache.
+enum PipelineType {
+	vector_add
+	scale
+	gemv
+	reduce_sum
+	relu
+	sigmoid
+	gemm
+}
 
 // vector_add computes element-wise addition: dst = a + b
-pub fn vector_add(dst &GpuBuffer, a &GpuBuffer, b &GpuBuffer) ! {
-	pl := pipeline_get(.vector_add)!
+pub fn vector_add(dev &Device, dst &GpuBuffer, a &GpuBuffer, b &GpuBuffer) ! {
+	pl := pipeline_get(dev, .vector_add)!
 	pl.update_buffer(0, a)!
 	pl.update_buffer(1, b)!
 	pl.update_buffer(2, dst)!
-	dispatch_sync(pl, u32(dst.size / 4), 1, 1)!
+	dispatch_sync(dev, pl, u32(dst.size / 4), 1, 1)!
 }
 
 // scale computes dst = alpha * src
-pub fn scale(dst &GpuBuffer, src &GpuBuffer, alpha f32) ! {
-	pl := pipeline_get(.scale)!
+pub fn scale(dev &Device, dst &GpuBuffer, src &GpuBuffer, alpha f32) ! {
+	pl := pipeline_get(dev, .scale)!
 	// Upload alpha as a small GPU buffer (binding 3)
-	mut abuf := pl.device.buffer(DeviceSize(4))!
+	mut abuf := dev.buffer(DeviceSize(4))!
 	defer {
 		abuf.release()
 	}
@@ -49,31 +53,31 @@ pub fn scale(dst &GpuBuffer, src &GpuBuffer, alpha f32) ! {
 	pl.update_buffer(0, src)!
 	pl.update_buffer(2, dst)!
 	pl.update_buffer(3, abuf)!
-	dispatch_sync(pl, u32(dst.size / 4), 1, 1)!
+	dispatch_sync(dev, pl, u32(dst.size / 4), 1, 1)!
 }
 
 // gemv computes y = A * x (row-major: A[i*n + j])
-pub fn gemv(y &GpuBuffer, a &GpuBuffer, x &GpuBuffer, m int, n int) ! {
-	pl := pipeline_get(.gemv)!
+pub fn gemv(dev &Device, y &GpuBuffer, a &GpuBuffer, x &GpuBuffer, m int, n int) ! {
+	pl := pipeline_get(dev, .gemv)!
 	pl.update_buffer(1, a)!
 	pl.update_buffer(2, x)!
 	pl.update_buffer(3, y)!
-	dispatch_sync(pl, u32(m), 1, 1)!
+	dispatch_sync(dev, pl, u32(m), 1, 1)!
 }
 
 // sum computes the sum of all f32 elements in the buffer.
-pub fn sum(buf &GpuBuffer) !f32 {
+pub fn sum(dev &Device, buf &GpuBuffer) !f32 {
 	n := int(buf.size / 4)
 	workgroup_size := 256
 	num_groups := (n + workgroup_size - 1) / workgroup_size
-	mut scratch := buf.device.buffer(DeviceSize(num_groups * 4))!
+	mut scratch := dev.buffer(DeviceSize(num_groups * 4))!
 	defer {
 		scratch.release()
 	}
-	pl := pipeline_get(.reduce_sum)!
+	pl := pipeline_get(dev, .reduce_sum)!
 	pl.update_buffer(0, buf)!
 	pl.update_buffer(2, scratch)!
-	dispatch_sync(pl, u32(num_groups), 1, 1)!
+	dispatch_sync(dev, pl, u32(n), 1, 1)!
 	mut partial := []f32{len: num_groups}
 	// Read back partial sums
 	mut raw := []u8{len: num_groups * 4}
@@ -91,27 +95,27 @@ pub fn sum(buf &GpuBuffer) !f32 {
 }
 
 // relu computes dst[i] = max(0, src[i])
-pub fn relu(dst &GpuBuffer, src &GpuBuffer) ! {
-	pl := pipeline_get(.relu)!
+pub fn relu(dev &Device, dst &GpuBuffer, src &GpuBuffer) ! {
+	pl := pipeline_get(dev, .relu)!
 	pl.update_buffer(0, src)!
 	pl.update_buffer(1, dst)!
-	dispatch_sync(pl, u32(src.size / 4), 1, 1)!
+	dispatch_sync(dev, pl, u32(src.size / 4), 1, 1)!
 }
 
 // sigmoid computes dst[i] = 1/(1+exp(-src[i]))
-pub fn sigmoid(dst &GpuBuffer, src &GpuBuffer) ! {
-	pl := pipeline_get(.sigmoid)!
+pub fn sigmoid(dev &Device, dst &GpuBuffer, src &GpuBuffer) ! {
+	pl := pipeline_get(dev, .sigmoid)!
 	pl.update_buffer(0, src)!
 	pl.update_buffer(1, dst)!
-	dispatch_sync(pl, u32(src.size / 4), 1, 1)!
+	dispatch_sync(dev, pl, u32(src.size / 4), 1, 1)!
 }
 
 // gemm computes C = A * B (row-major, f32) on GPU.
 // A: [M x K] row-major, B: [K x N] row-major, C: [M x N] row-major.
 // All buffers must be f32 GpuBuffers.
-pub fn gemm(dst &GpuBuffer, a &GpuBuffer, b &GpuBuffer, m u32, n u32, k u32) ! {
+pub fn gemm(dev &Device, dst &GpuBuffer, a &GpuBuffer, b &GpuBuffer, m u32, n u32, k u32) ! {
 	// Create small params buffer with [M, N, K]
-	mut params_buf := dst.device.buffer(DeviceSize(12))!
+	mut params_buf := dev.buffer(DeviceSize(12))!
 	defer { params_buf.release() }
 	mut params_bytes := []u8{len: 12}
 	unsafe {
@@ -121,21 +125,21 @@ pub fn gemm(dst &GpuBuffer, a &GpuBuffer, b &GpuBuffer, m u32, n u32, k u32) ! {
 	}
 	params_buf.load(params_bytes)!
 
-	pl := pipeline_get(.gemm)!
+	pl := pipeline_get(dev, .gemm)!
 	pl.update_buffer(0, a)!
 	pl.update_buffer(1, b)!
 	pl.update_buffer(2, dst)!
 	pl.update_buffer(3, params_buf)!
-	dispatch_sync(pl, m, n, 1)!
+	dispatch_sync(dev, pl, m, n, 1)!
 }
 
 // dispatch_sync submits a 3D compute dispatch and waits for completion.
 // global_x, global_y, global_z = total work items (not workgroups).
 // The function divides by WORKGROUP_SIZE_X to compute workgroup counts.
-pub fn dispatch_sync(pl &ComputePipeline, global_x u32, global_y u32, global_z u32) ! {
-	mut cmd := alloc_cmd_buffer(pl.device)!
+pub fn dispatch_sync(dev &Device, pl &ComputePipeline, global_x u32, global_y u32, global_z u32) ! {
+	mut cmd := alloc_cmd_buffer(dev)!
 	defer {
-		vk_free_command_buffers(pl.device.device, pl.device.cmd_pool, 1, &cmd)
+		vk_free_command_buffers(dev.device, dev.cmd_pool, 1, &cmd)
 	}
 
 	// Begin command buffer
@@ -177,7 +181,7 @@ pub fn dispatch_sync(pl &ComputePipeline, global_x u32, global_y u32, global_z u
 	}
 
 	// Submit to queue and wait for completion
-	return submit_and_wait(pl.device, cmd)
+	return submit_and_wait(dev, cmd)
 }
 
 // alloc_cmd_buffer allocates a single-use command buffer.
@@ -227,32 +231,11 @@ fn submit_and_wait(d &Device, cmd VkCommandBuffer) ! {
 	}
 }
 
-// current_device returns the most recently created Device.
-fn current_device() !&Device {
-	d := unsafe { g_last_dev }
-	if isnil(d) {
-		return error('vulkan: no current device — call vulkan.new_device() first')
-	}
-	return d
-}
-
-// ComputePipeline type enum for the cache.
-enum PipelineType {
-	vector_add
-	scale
-	gemv
-	reduce_sum
-	relu
-	sigmoid
-	gemm
-}
-
-// pipeline_get lazily creates and caches a compute pipeline.
-fn pipeline_get(t PipelineType) !&ComputePipeline {
-	if p := pipeline_cache[t] {
+// pipeline_get lazily creates and caches a compute pipeline on the given device.
+fn pipeline_get(d &Device, t PipelineType) !&ComputePipeline {
+	if p := d.pipeline_cache[t] {
 		return p
 	}
-	d := current_device()!
 	mut pl := &ComputePipeline(unsafe { nil })
 	match t {
 		.vector_add { pl = d.create_pipeline(vector_add_spv, 'main')! }
@@ -264,8 +247,7 @@ fn pipeline_get(t PipelineType) !&ComputePipeline {
 		.gemm { pl = d.create_pipeline(gemm_spv, 'main')! }
 	}
 	unsafe {
-		g_last_dev = d
-		pipeline_cache[t] = pl
+		d.pipeline_cache[t] = pl
 	}
 	return pl
 }

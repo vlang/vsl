@@ -4,29 +4,12 @@ module compute
 
 import vsl.vulkan
 
-// __global device is lazily initialized and shared across compute calls.
-__global g_dev = &vulkan.Device(unsafe { nil })
-
-// device returns the shared Vulkan device, creating it if needed.
-fn device() !&vulkan.Device {
-	d := unsafe { g_dev }
-	if isnil(d) {
-		mut new_d := vulkan.new_device()!
-		unsafe {
-			g_dev = new_d
-		}
-		return new_d
-	}
-	return d
-}
-
 // gemm_gpu computes C = A * B on GPU using Vulkan compute.
-// All matrices are f64, row-major (same layout as VSL Matrix).
-//   a_data: A matrix data, [a_m x a_n] row-major
-//   b_data: B matrix data, [b_m x b_n] row-major
-// Returns C matrix data as []f64, [a_m x b_n] row-major.
-// Returns error if dimensions don't match or Vulkan dispatch fails.
-pub fn gemm_gpu(a_data []f64, a_m int, a_n int, b_data []f64, b_m int, b_n int) ![]f64 {
+// ctx must be a vulkan ComputeContext created via new_vulkan_context().
+pub fn gemm_gpu(ctx &ComputeContext, a_data []f64, a_m int, a_n int, b_data []f64, b_m int, b_n int) ![]f64 {
+	if ctx.backend != .vulkan {
+		return error('compute.gemm_gpu: only vulkan backend implemented')
+	}
 	if a_n != b_m {
 		return error('compute.gemm_gpu: dimension mismatch: A(${a_m}x${a_n}) * B(${b_m}x${b_n})')
 	}
@@ -35,18 +18,18 @@ pub fn gemm_gpu(a_data []f64, a_m int, a_n int, b_data []f64, b_m int, b_n int) 
 	n := u32(b_n)
 	k := u32(a_n)
 
-	d := device()!
+	dev := ctx.vulkan_device
 
 	// Allocate GPU buffers for A, B, C (f32)
 	a_size := usize(m * k * 4)
 	b_size := usize(k * n * 4)
 	c_size := usize(m * n * 4)
 
-	mut a_buf := d.buffer(vulkan.DeviceSize(a_size))!
+	mut a_buf := dev.buffer(vulkan.DeviceSize(a_size))!
 	defer { a_buf.release() }
-	mut b_buf := d.buffer(vulkan.DeviceSize(b_size))!
+	mut b_buf := dev.buffer(vulkan.DeviceSize(b_size))!
 	defer { b_buf.release() }
-	mut c_buf := d.buffer(vulkan.DeviceSize(c_size))!
+	mut c_buf := dev.buffer(vulkan.DeviceSize(c_size))!
 	defer { c_buf.release() }
 
 	// Convert f64 → f32 and upload A
@@ -71,8 +54,8 @@ pub fn gemm_gpu(a_data []f64, a_m int, a_n int, b_data []f64, b_m int, b_n int) 
 		b_buf.load(b_bytes)!
 	}
 
-	// Execute GEMM on GPU
-	vulkan.gemm(c_buf, a_buf, b_buf, m, n, k)!
+	// Execute GEMM on GPU (f32, row-major)
+	vulkan.gemm(dev, c_buf, a_buf, b_buf, m, n, k)!
 
 	// Read back C from GPU
 	mut c_bytes := []u8{len: int(c_size)}

@@ -174,7 +174,7 @@ fn test_vector_add_op() {
 	a_buf.load(a_bytes) or { assert false, 'upload A failed: ${err}'; return }
 	b_buf.load(b_bytes) or { assert false, 'upload B failed: ${err}'; return }
 
-	vector_add(c_buf, a_buf, b_buf) or {
+	vector_add(dev, c_buf, a_buf, b_buf) or {
 		assert false, 'vector_add failed: ${err}'
 		return
 	}
@@ -217,7 +217,7 @@ fn test_scale_op() {
 
 	src_buf.load(src_bytes) or { assert false, 'upload failed: ${err}'; return }
 
-	scale(dst_buf, src_buf, alpha) or {
+	scale(dev, dst_buf, src_buf, alpha) or {
 		assert false, 'scale failed: ${err}'
 		return
 	}
@@ -256,7 +256,7 @@ fn test_sum_op() {
 	defer { buf.release() }
 	buf.load(bytes) or { assert false, 'upload failed: ${err}'; return }
 
-	total := sum(buf) or {
+	total := sum(dev, buf) or {
 		assert false, 'sum failed: ${err}'
 		return
 	}
@@ -295,7 +295,7 @@ fn test_relu_op() {
 
 	src_buf.load(src_bytes) or { assert false, 'upload failed: ${err}'; return }
 
-	relu(dst_buf, src_buf) or {
+	relu(dev, dst_buf, src_buf) or {
 		assert false, 'relu failed: ${err}'
 		return
 	}
@@ -330,7 +330,9 @@ fn test_sigmoid_op() {
 	}
 
 	n := 64
-	src_data := []f32{len: n, init: f32(index) * 0.5 - 5.0}
+	// Keep inputs in [-8, 8] so f32 sigmoid stays strictly in (0, 1).
+	// sigmoid(x) saturates to exactly 0.0 or 1.0 in f32 beyond ~±16.
+	src_data := []f32{len: n, init: f32(index) * 0.25 - 8.0}
 	src_bytes := bytes_from_f32(src_data)
 
 	mut src_buf := dev.buffer(DeviceSize(src_bytes.len)) or { assert false, 'buf src failed'; return }
@@ -340,7 +342,7 @@ fn test_sigmoid_op() {
 
 	src_buf.load(src_bytes) or { assert false, 'upload failed: ${err}'; return }
 
-	sigmoid(dst_buf, src_buf) or {
+	sigmoid(dev, dst_buf, src_buf) or {
 		assert false, 'sigmoid failed: ${err}'
 		return
 	}

@@ -3,7 +3,7 @@ module main
 // Example: Vulkan Compute — vector add on GPU
 //
 // Run with:
-//   v -enable-globals run --path ~/.vmodules/vsl ~/.vmodules/vsl/vulkan/examples/add.v
+//   v run --path ~/.vmodules/vsl ~/.vmodules/vsl/vulkan/examples/add.v
 //
 // Requirements: Vulkan SDK installed (libvulkan.so / libvulkan.1.dylib)
 //
@@ -91,7 +91,7 @@ fn main() {
 	}
 
 	// Dispatch: 1024 work items, 256 per workgroup (set in SPIR-V) → 4 groups
-	vulkan.dispatch_sync(pl, u32(1024), 1, 1) or {
+	vulkan.dispatch_sync(dev, pl, u32(1024), 1, 1) or {
 		eprintln('Dispatch failed: ${err}')
 		return
 	}
