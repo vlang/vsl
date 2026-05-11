@@ -211,49 +211,106 @@
 </section>
 
 		<section id="gemm_gpu" class="doc-node">
-			<div class="title"><h2>fn gemm_gpu <a href="#gemm_gpu">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/compute/gemm.v#L29"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn gemm_gpu <a href="#gemm_gpu">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/compute/gemm.v#L9"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token function">gemm_gpu</span><span class="token punctuation">(</span>a_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> a_m <span class="token builtin">int</span><span class="token punctuation">,</span> a_n <span class="token builtin">int</span><span class="token punctuation">,</span> b_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> b_m <span class="token builtin">int</span><span class="token punctuation">,</span> b_n <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
-<p>gemm_gpu computes C = A * B on GPU using Vulkan compute. All matrices are f64, row-major (same layout as VSL Matrix). a_data: A matrix data, [a_m x a_n] row-major b_data: B matrix data, [b_m x b_n] row-major Returns C matrix data as []f64, [a_m x b_n] row-major. Returns error if dimensions don't match or Vulkan dispatch fails.</p>
+<code><span class="token keyword">fn</span> <span class="token function">gemm_gpu</span><span class="token punctuation">(</span>ctx <span class="token operator">&amp;</span>ComputeContext<span class="token punctuation">,</span> a_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> a_m <span class="token builtin">int</span><span class="token punctuation">,</span> a_n <span class="token builtin">int</span><span class="token punctuation">,</span> b_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> b_m <span class="token builtin">int</span><span class="token punctuation">,</span> b_n <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>gemm_gpu computes C = A * B on GPU using Vulkan compute. ctx must be a vulkan ComputeContext created via new_vulkan_context().</p>
+
+</section>
+
+		<section id="gemv_gpu" class="doc-node">
+			<div class="title"><h2>fn gemv_gpu <a href="#gemv_gpu">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/compute/elementwise.v#L107"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">gemv_gpu</span><span class="token punctuation">(</span>ctx <span class="token operator">&amp;</span>ComputeContext<span class="token punctuation">,</span> a_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> x_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>gemv_gpu computes y = A * x (row-major) on GPU, with f64 data via f32 Vulkan ops. A is [m x n] row-major, x is [n], result is [m].</p>
+
+</section>
+
+		<section id="new_vulkan_context" class="doc-node">
+			<div class="title"><h2>fn new_vulkan_context <a href="#new_vulkan_context">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/compute/context.v#L24"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">new_vulkan_context</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>vulkan<span class="token punctuation">.</span>Device<span class="token punctuation">)</span> <span class="token operator">&amp;</span>ComputeContext</code></pre>
+<p>new_vulkan_context creates a compute context from an existing vulkan.Device.</p>
 
 </section>
 
 		<section id="relu_gpu" class="doc-node">
 			<div class="title"><h2>fn relu_gpu <a href="#relu_gpu">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/compute/elementwise.v#L9"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token function">relu_gpu</span><span class="token punctuation">(</span>dst <span class="token operator">&amp;</span>vulkan<span class="token punctuation">.</span>GpuBuffer<span class="token punctuation">,</span> src <span class="token operator">&amp;</span>vulkan<span class="token punctuation">.</span>GpuBuffer<span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
-<p>relu_gpu computes ReLU in-place on GPU: dst[i] = max(0, src[i]) src and dst are f32 GpuBuffers (must have same size).</p>
+<code><span class="token keyword">fn</span> <span class="token function">relu_gpu</span><span class="token punctuation">(</span>ctx <span class="token operator">&amp;</span>ComputeContext<span class="token punctuation">,</span> dst <span class="token operator">&amp;</span>vulkan<span class="token punctuation">.</span>GpuBuffer<span class="token punctuation">,</span> src <span class="token operator">&amp;</span>vulkan<span class="token punctuation">.</span>GpuBuffer<span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
+<p>relu_gpu computes dst[i] = max(0, src[i]) on GPU. ctx must be a vulkan ComputeContext created via new_vulkan_context().</p>
 
 </section>
 
 		<section id="relu_matrix" class="doc-node">
-			<div class="title"><h2>fn relu_matrix <a href="#relu_matrix">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/compute/elementwise.v#L21"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn relu_matrix <a href="#relu_matrix">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/compute/elementwise.v#L27"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token function">relu_matrix</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
-<p>relu_matrix computes ReLU on a flat f64 array using GPU. Returns a new []f64 with relu applied element-wise.</p>
+<code><span class="token keyword">fn</span> <span class="token function">relu_matrix</span><span class="token punctuation">(</span>ctx <span class="token operator">&amp;</span>ComputeContext<span class="token punctuation">,</span> data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>relu_matrix computes relu on a flat []f64 slice via GPU (f32 internally). ctx must be a vulkan ComputeContext created via new_vulkan_context().</p>
 
 </section>
 
 		<section id="sigmoid_gpu" class="doc-node">
-			<div class="title"><h2>fn sigmoid_gpu <a href="#sigmoid_gpu">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/compute/elementwise.v#L15"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn sigmoid_gpu <a href="#sigmoid_gpu">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/compute/elementwise.v#L18"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token function">sigmoid_gpu</span><span class="token punctuation">(</span>dst <span class="token operator">&amp;</span>vulkan<span class="token punctuation">.</span>GpuBuffer<span class="token punctuation">,</span> src <span class="token operator">&amp;</span>vulkan<span class="token punctuation">.</span>GpuBuffer<span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
-<p>sigmoid_gpu computes sigmoid in-place on GPU: dst[i] = 1/(1+exp(-src[i])) src and dst are f32 GpuBuffers (must have same size).</p>
+<code><span class="token keyword">fn</span> <span class="token function">sigmoid_gpu</span><span class="token punctuation">(</span>ctx <span class="token operator">&amp;</span>ComputeContext<span class="token punctuation">,</span> dst <span class="token operator">&amp;</span>vulkan<span class="token punctuation">.</span>GpuBuffer<span class="token punctuation">,</span> src <span class="token operator">&amp;</span>vulkan<span class="token punctuation">.</span>GpuBuffer<span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
+<p>sigmoid_gpu computes dst[i] = 1/(1+exp(-src[i])) on GPU. ctx must be a vulkan ComputeContext created via new_vulkan_context().</p>
 
 </section>
 
 		<section id="sigmoid_matrix" class="doc-node">
-			<div class="title"><h2>fn sigmoid_matrix <a href="#sigmoid_matrix">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/compute/elementwise.v#L61"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn sigmoid_matrix <a href="#sigmoid_matrix">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/compute/elementwise.v#L67"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token function">sigmoid_matrix</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
-<p>sigmoid_matrix computes sigmoid on a flat f64 array using GPU. Returns a new []f64 with sigmoid applied element-wise.</p>
+<code><span class="token keyword">fn</span> <span class="token function">sigmoid_matrix</span><span class="token punctuation">(</span>ctx <span class="token operator">&amp;</span>ComputeContext<span class="token punctuation">,</span> data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>sigmoid_matrix computes sigmoid on a flat []f64 slice via GPU (f32 internally). ctx must be a vulkan ComputeContext created via new_vulkan_context().</p>
+
+</section>
+
+		<section id="Backend.from" class="doc-node">
+			<div class="title"><h2>fn Backend.from <a href="#Backend.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/compute/context.v#L3"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> Backend<span class="token punctuation">.</span>from<span class="token punctuation">[</span><span class="token builtin">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token builtin">W</span><span class="token punctuation">)</span> <span class="token operator">!</span>Backend</code></pre>
+
+
+</section>
+
+		<section id="Backend" class="doc-node">
+			<div class="title"><h2>enum Backend <a href="#Backend">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/compute/context.v#L6"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> <span class="token symbol">Backend</span> <span class="token punctuation">{</span>
+	vulkan
+	vcl
+	cpu
+<span class="token punctuation">}</span></code></pre>
+<p>Backend selects which compute backend to use.</p>
+
+</section>
+
+		<section id="ComputeContext" class="doc-node">
+			<div class="title"><h2>struct ComputeContext <a href="#ComputeContext">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/compute/context.v#L15"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<div class="attributes"><div class="attribute">@[heap]</div></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">ComputeContext</span> <span class="token punctuation">{</span>
+<span class="token keyword">mut</span><span class="token punctuation">:</span>
+	backend       Backend
+	vulkan_device <span class="token operator">&amp;</span>vulkan<span class="token punctuation">.</span>Device
+	<span class="token comment">// future: vcl_device &amp;vcl.Device</span>
+	<span class="token comment">// future: cpu_backend  CPUBackend</span>
+<span class="token punctuation">}</span></code></pre>
+<p>ComputeContext holds a backend-specific device and associated state. Use new_vulkan_context() to construct.</p>
 
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 11 May 2026 05:17:16</div>
+						<div class="footer">Powered by vdoc. Generated on: 11 May 2026 06:40:35</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#gemm_gpu">fn gemm_gpu</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#gemv_gpu">fn gemv_gpu</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#new_vulkan_context">fn new_vulkan_context</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#relu_gpu">fn relu_gpu</a>        <ul>
@@ -266,6 +323,15 @@
 </ul>
 </li>
 <li class="open"><a href="#sigmoid_matrix">fn sigmoid_matrix</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#Backend.from">fn Backend.from</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#Backend">enum Backend</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#ComputeContext">struct ComputeContext</a>        <ul>
 </ul>
 </li>
 </ul></div>
