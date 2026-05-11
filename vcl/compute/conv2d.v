@@ -91,10 +91,7 @@ pub fn conv2d_vcl(mut dev vcl.Device, x_data []f64, w_data []f64, n int, c_in in
 
 	// Read col result for GEMM
 	mut col_data := []f64{len: k_total * out_total}
-	err_col := <-col_vec.data(mut col_data)
-	if err_col !is none {
-		return err_col
-	}
+	col_data = col_vec.data()!
 
 	// Reshape w: [C_out x (C_in*KH*KW)] — already row-major; for col-major GEMM we need
 	// w_col_major: column index = k_total index, row = c_out index

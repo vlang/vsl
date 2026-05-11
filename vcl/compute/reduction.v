@@ -122,10 +122,7 @@ fn reduction_run(mut dev vcl.Device, kernel_name string, x_data []f64, rows int,
 		return err_k
 	}
 	mut out := []f64{len: out_len}
-	err_out := <-y_vec.data(mut out)
-	if err_out !is none {
-		return err_out
-	}
+	out = y_vec.data()!
 	return out
 }
 

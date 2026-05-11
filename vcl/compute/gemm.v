@@ -74,10 +74,7 @@ pub fn gemm_vcl(mut dev vcl.Device, a_data []f64, b_data []f64, m int, n int, k 
 	}
 
 	mut out := []f64{len: m * n}
-	err_out := <-c_vec.data(mut out)
-	if err_out !is none {
-		return err_out
-	}
+	out = c_vec.data()!
 	return out
 }
 
@@ -105,9 +102,6 @@ pub fn gemm_vcl_f32(mut dev vcl.Device, a_data []f32, b_data []f32, m int, n int
 	}
 
 	mut out := []f32{len: m * n}
-	err_out := <-c_vec.data(mut out)
-	if err_out !is none {
-		return err_out
-	}
+	out = c_vec.data()!
 	return out
 }

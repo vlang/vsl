@@ -74,9 +74,6 @@ pub fn layernorm_vcl(mut dev vcl.Device, x_data []f64, gamma_data []f64, beta_da
 	}
 
 	mut out := []f64{len: rows * cols}
-	err_out := <-y_vec.data(mut out)
-	if err_out !is none {
-		return err_out
-	}
+	out = y_vec.data()!
 	return out
 }
