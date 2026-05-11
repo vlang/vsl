@@ -14,6 +14,7 @@
 ##         --use-autofree                    Execute tests using atofree
 ##         --use-gc=STRATEGY                 Execute tests using garbage collector
 ##         --skip-examples                   Skip examples compilation
+##         --use-vulkan                     Execute tests using Vulkan compute
 ##
 
 ROOT=$(realpath "$(dirname "$0")")
@@ -35,6 +36,11 @@ fi
 if [[ -n "${use_lapacke}" ]]; then
     echo "Running tests using LAPACKE"
     flags="${flags} -d vsl_lapack_lapacke"
+fi
+
+if [[ -n "${use_vulkan}" ]]; then
+    echo "Running tests using Vulkan compute"
+    flags="${flags} -enable-globals -d vulkan"
 fi
 
 if [[ -n "${use_autofree}" ]]; then
