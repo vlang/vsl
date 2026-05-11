@@ -39,7 +39,8 @@ jobs:
             libopenmpi-dev \
             libhdf5-dev \
             hdf5-tools \
-            opencl-headers
+            opencl-headers \
+            libvulkan-dev
       - name: Setup VSL as V module
         run: mv vsl ~/.vmodules/
       - name: Validate Docs
