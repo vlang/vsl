@@ -8764,7 +8764,7 @@
 	<span class="token builtin">u32</span><span class="token punctuation">(</span><span class="token number">0x00000043</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
 	<span class="token builtin">u32</span><span class="token punctuation">(</span><span class="token number">0x000100fd</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
 	<span class="token builtin">u32</span><span class="token punctuation">(</span><span class="token number">0x00010038</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-<span class="token punctuation">]</span><span class="token operator">!</span></code></pre>
+<span class="token punctuation">]</span></code></pre>
 
 
 </section>
@@ -10078,7 +10078,7 @@
 	<span class="token builtin">u32</span><span class="token punctuation">(</span><span class="token number">0x000000cd</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
 	<span class="token builtin">u32</span><span class="token punctuation">(</span><span class="token number">0x000100fd</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
 	<span class="token builtin">u32</span><span class="token punctuation">(</span><span class="token number">0x00010038</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-<span class="token punctuation">]</span><span class="token operator">!</span></code></pre>
+<span class="token punctuation">]</span></code></pre>
 
 
 </section>
@@ -11395,7 +11395,7 @@
 	<span class="token builtin">u32</span><span class="token punctuation">(</span><span class="token number">0x000000bd</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
 	<span class="token builtin">u32</span><span class="token punctuation">(</span><span class="token number">0x000100fd</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
 	<span class="token builtin">u32</span><span class="token punctuation">(</span><span class="token number">0x00010038</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-<span class="token punctuation">]</span><span class="token operator">!</span></code></pre>
+<span class="token punctuation">]</span></code></pre>
 
 
 </section>
@@ -12409,7 +12409,7 @@
 </section>
 
 		<section id="avgpool2d" class="doc-node">
-			<div class="title"><h2>fn avgpool2d <a href="#avgpool2d">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L282"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn avgpool2d <a href="#avgpool2d">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L292"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">avgpool2d</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>Device<span class="token punctuation">,</span> dst <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> src <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> batch <span class="token builtin">u32</span><span class="token punctuation">,</span> in_ch <span class="token builtin">u32</span><span class="token punctuation">,</span> in_h <span class="token builtin">u32</span><span class="token punctuation">,</span> in_w <span class="token builtin">u32</span><span class="token punctuation">,</span> k_h <span class="token builtin">u32</span><span class="token punctuation">,</span> k_w <span class="token builtin">u32</span><span class="token punctuation">,</span> out_h <span class="token builtin">u32</span><span class="token punctuation">,</span> out_w <span class="token builtin">u32</span><span class="token punctuation">,</span> pad_h <span class="token builtin">u32</span><span class="token punctuation">,</span> pad_w <span class="token builtin">u32</span><span class="token punctuation">,</span> stride_h <span class="token builtin">u32</span><span class="token punctuation">,</span> stride_w <span class="token builtin">u32</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
 <p>avgpool2d performs 2D average pooling on GPU. input: [batch, in_ch, in_h, in_w] output: [batch, in_ch, out_h, out_w] Params: [batch, in_ch, in_h, in_w, k_h, k_w, out_h, out_w, pad_h, pad_w, stride_h, stride_w]</p>
@@ -12417,10 +12417,18 @@
 </section>
 
 		<section id="batchnorm1d" class="doc-node">
-			<div class="title"><h2>fn batchnorm1d <a href="#batchnorm1d">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L536"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn batchnorm1d <a href="#batchnorm1d">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L556"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">batchnorm1d</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>Device<span class="token punctuation">,</span> dst <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> src <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> n <span class="token builtin">u32</span><span class="token punctuation">,</span> c <span class="token builtin">u32</span><span class="token punctuation">,</span> eps <span class="token builtin">f32</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
 <p>batchnorm1d normalises input[N, C] along the batch (N) dimension per feature. params SSBO: [n, c, eps_bits] where eps_bits = uintBitsToFloat(eps). Output is normalised only — caller applies gamma/beta on CPU.</p>
+
+</section>
+
+		<section id="broadcast_grad" class="doc-node">
+			<div class="title"><h2>fn broadcast_grad <a href="#broadcast_grad">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L706"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">broadcast_grad</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>Device<span class="token punctuation">,</span> grad_in <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> grad_out <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> n <span class="token builtin">u32</span><span class="token punctuation">,</span> scale <span class="token builtin">f32</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
+<p>broadcast_grad broadcasts a reduced gradient back to full shape. grad_out[0..n-1] is the reduced gradient; grad_in[0..total-1] is the output. scale: multiplier applied to each element (1.0 for sum backward, 1/k for mean backward).</p>
 
 </section>
 
@@ -12432,8 +12440,72 @@
 
 </section>
 
+		<section id="d_gelu" class="doc-node">
+			<div class="title"><h2>fn d_gelu <a href="#d_gelu">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L613"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">d_gelu</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>Device<span class="token punctuation">,</span> grad_in <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> grad_out <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> input_val <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
+<p>d_gelu computes the GELU backward pass. grad_in[i] = grad_out[i] * gelu'(input_val[i])</p>
+
+</section>
+
+		<section id="d_gemm_da" class="doc-node">
+			<div class="title"><h2>fn d_gemm_da <a href="#d_gemm_da">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L624"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">d_gemm_da</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>Device<span class="token punctuation">,</span> da <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> grad_out <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> b_mat <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> m <span class="token builtin">u32</span><span class="token punctuation">,</span> n <span class="token builtin">u32</span><span class="token punctuation">,</span> k <span class="token builtin">u32</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
+<p>d_gemm_da computes the gradient of A in C = A @ B. dA [M x K] = grad_out [M x N] @ B^T [N x K] dims_buf holds [M, N, K] as three u32 values.</p>
+
+</section>
+
+		<section id="d_gemm_db" class="doc-node">
+			<div class="title"><h2>fn d_gemm_db <a href="#d_gemm_db">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L644"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">d_gemm_db</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>Device<span class="token punctuation">,</span> db <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> grad_out <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> a_mat <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> m <span class="token builtin">u32</span><span class="token punctuation">,</span> n <span class="token builtin">u32</span><span class="token punctuation">,</span> k <span class="token builtin">u32</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
+<p>d_gemm_db computes the gradient of B in C = A @ B. dB [K x N] = A^T [K x M] @ grad_out [M x N]</p>
+
+</section>
+
+		<section id="d_layernorm" class="doc-node">
+			<div class="title"><h2>fn d_layernorm <a href="#d_layernorm">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L685"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">d_layernorm</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>Device<span class="token punctuation">,</span> grad_in <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> grad_out <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> input_val <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> rows <span class="token builtin">u32</span><span class="token punctuation">,</span> n <span class="token builtin">u32</span><span class="token punctuation">,</span> eps <span class="token builtin">f32</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
+<p>d_layernorm computes the layer normalization backward pass (no affine). rows: number of independent layer-norm rows, n: row length, eps: small epsilon</p>
+
+</section>
+
+		<section id="d_relu" class="doc-node">
+			<div class="title"><h2>fn d_relu <a href="#d_relu">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L583"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">d_relu</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>Device<span class="token punctuation">,</span> grad_in <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> grad_out <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> input_val <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
+<p>d_relu computes the ReLU backward pass. grad_out: upstream gradient [n], input_val: forward input [n] grad_in: output gradient [n] grad_in[i] = grad_out[i] if input_val[i] &gt; 0 else 0</p>
+
+</section>
+
+		<section id="d_sigmoid" class="doc-node">
+			<div class="title"><h2>fn d_sigmoid <a href="#d_sigmoid">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L593"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">d_sigmoid</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>Device<span class="token punctuation">,</span> grad_in <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> grad_out <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> sigmoid_out <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
+<p>d_sigmoid computes the sigmoid backward pass. grad_in[i] = grad_out[i] * sigmoid_out[i] * (1 - sigmoid_out[i])</p>
+
+</section>
+
+		<section id="d_softmax" class="doc-node">
+			<div class="title"><h2>fn d_softmax <a href="#d_softmax">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L665"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">d_softmax</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>Device<span class="token punctuation">,</span> grad_in <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> grad_out <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> softmax_out <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> rows <span class="token builtin">u32</span><span class="token punctuation">,</span> n <span class="token builtin">u32</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
+<p>d_softmax computes the softmax backward pass (Jacobian-vector product). grad_in[i] = softmax_out[i] * (grad_out[i] - dot(grad_out_row, softmax_out_row)) rows: number of independent softmax rows, n: row length</p>
+
+</section>
+
+		<section id="d_tanh" class="doc-node">
+			<div class="title"><h2>fn d_tanh <a href="#d_tanh">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L603"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">d_tanh</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>Device<span class="token punctuation">,</span> grad_in <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> grad_out <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> tanh_out <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
+<p>d_tanh computes the tanh backward pass. grad_in[i] = grad_out[i] * (1 - tanh_out[i]^2)</p>
+
+</section>
+
 		<section id="dispatch_sync" class="doc-node">
-			<div class="title"><h2>fn dispatch_sync <a href="#dispatch_sync">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L345"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn dispatch_sync <a href="#dispatch_sync">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L355"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">dispatch_sync</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>Device<span class="token punctuation">,</span> pl <span class="token operator">&amp;</span>ComputePipeline<span class="token punctuation">,</span> global_x <span class="token builtin">u32</span><span class="token punctuation">,</span> global_y <span class="token builtin">u32</span><span class="token punctuation">,</span> global_z <span class="token builtin">u32</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
 <p>dispatch_sync submits a 3D compute dispatch and waits for completion. global_x, global_y, global_z = total work items (not workgroups). The function divides by WORKGROUP_SIZE_X to compute workgroup counts.</p>
@@ -12441,7 +12513,7 @@
 </section>
 
 		<section id="embedding_gather" class="doc-node">
-			<div class="title"><h2>fn embedding_gather <a href="#embedding_gather">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L476"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn embedding_gather <a href="#embedding_gather">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L496"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">embedding_gather</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>Device<span class="token punctuation">,</span> dst <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> indices_buf <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> embedding_table_buf <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> num_indices <span class="token builtin">u32</span><span class="token punctuation">,</span> vocab_size <span class="token builtin">u32</span><span class="token punctuation">,</span> embed_dim <span class="token builtin">u32</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
 <p>embedding_gather performs embedding table lookups by index. indices: [num_indices] (u32) embedding_table: [vocab_size, embed_dim] row-major (f32) output: [num_indices, embed_dim] (f32) Params: [num_indices, vocab_size, embed_dim]</p>
@@ -12449,7 +12521,7 @@
 </section>
 
 		<section id="gelu" class="doc-node">
-			<div class="title"><h2>fn gelu <a href="#gelu">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L500"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn gelu <a href="#gelu">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L520"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">gelu</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>Device<span class="token punctuation">,</span> dst <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> src <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> n <span class="token builtin">u32</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
 <p>gelu computes the GELU activation: dst[i] = 0.5 * x * (1 + tanh(sqrt(2/pi) * (x + 0.044715*x^3)))</p>
@@ -12457,7 +12529,7 @@
 </section>
 
 		<section id="gemm" class="doc-node">
-			<div class="title"><h2>fn gemm <a href="#gemm">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L129"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn gemm <a href="#gemm">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L139"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">gemm</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>Device<span class="token punctuation">,</span> dst <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> a <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> b <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> m <span class="token builtin">u32</span><span class="token punctuation">,</span> n <span class="token builtin">u32</span><span class="token punctuation">,</span> k <span class="token builtin">u32</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
 <p>gemm computes C = A * B (row-major, f32) on GPU. A: [M x K] row-major, B: [K x N] row-major, C: [M x N] row-major. All buffers must be f32 GpuBuffers.</p>
@@ -12465,7 +12537,7 @@
 </section>
 
 		<section id="gemv" class="doc-node">
-			<div class="title"><h2>fn gemv <a href="#gemv">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L73"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn gemv <a href="#gemv">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L83"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">gemv</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>Device<span class="token punctuation">,</span> y <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> a <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> x <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
 <p>gemv computes y = A * x (row-major: A[i*n + j])</p>
@@ -12473,7 +12545,7 @@
 </section>
 
 		<section id="global_avgpool2d" class="doc-node">
-			<div class="title"><h2>fn global_avgpool2d <a href="#global_avgpool2d">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L318"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn global_avgpool2d <a href="#global_avgpool2d">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L328"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">global_avgpool2d</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>Device<span class="token punctuation">,</span> dst <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> src <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> batch <span class="token builtin">u32</span><span class="token punctuation">,</span> channels <span class="token builtin">u32</span><span class="token punctuation">,</span> height <span class="token builtin">u32</span><span class="token punctuation">,</span> width <span class="token builtin">u32</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
 <p>global_avgpool2d performs global average pooling (reduces H×W spatial dims to 1×1 per channel). input: [batch, channels, height, width] output: [batch, channels, 1, 1] Params: [batch, channels, height, width] Dispatch: one workgroup per (batch, channel) pair.</p>
@@ -12481,7 +12553,7 @@
 </section>
 
 		<section id="im2col" class="doc-node">
-			<div class="title"><h2>fn im2col <a href="#im2col">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L246"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn im2col <a href="#im2col">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L256"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">im2col</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>Device<span class="token punctuation">,</span> dst <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> src <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> n <span class="token builtin">u32</span><span class="token punctuation">,</span> c <span class="token builtin">u32</span><span class="token punctuation">,</span> h <span class="token builtin">u32</span><span class="token punctuation">,</span> w <span class="token builtin">u32</span><span class="token punctuation">,</span> k_h <span class="token builtin">u32</span><span class="token punctuation">,</span> k_w <span class="token builtin">u32</span><span class="token punctuation">,</span> out_h <span class="token builtin">u32</span><span class="token punctuation">,</span> out_w <span class="token builtin">u32</span><span class="token punctuation">,</span> pad_h <span class="token builtin">u32</span><span class="token punctuation">,</span> pad_w <span class="token builtin">u32</span><span class="token punctuation">,</span> stride_h <span class="token builtin">u32</span><span class="token punctuation">,</span> stride_w <span class="token builtin">u32</span><span class="token punctuation">,</span> dil_h <span class="token builtin">u32</span><span class="token punctuation">,</span> dil_w <span class="token builtin">u32</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
 <p>im2col performs im2col transformation for GEMM-based convolution. Input: [N, C, H, W] (NCHW layout) Output: [N<em>out_h</em>out_w, C<em>k_h</em>k_w] (im2col matrix) Params: N, C, H, W, k_h, k_w, out_h, out_w, pad_h, pad_w, stride_h, stride_w, dil_h, dil_w</p>
@@ -12489,7 +12561,7 @@
 </section>
 
 		<section id="layernorm" class="doc-node">
-			<div class="title"><h2>fn layernorm <a href="#layernorm">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L183"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn layernorm <a href="#layernorm">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L193"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">layernorm</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>Device<span class="token punctuation">,</span> dst <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> src <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> n <span class="token builtin">u32</span><span class="token punctuation">,</span> eps <span class="token builtin">f32</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
 <p>layernorm computes layer normalisation: out[i] = (x[i] - mean) * inv_std. Gamma/beta affine transform must be applied by the caller on CPU. Binding layout (v2 shader): 0: in_data (f32[n])  1: out_data (f32[n])  2: params_data (u32[2] = [n, eps_bits])  3: scratch_data (f32[2])</p>
@@ -12497,7 +12569,7 @@
 </section>
 
 		<section id="maxpool2d" class="doc-node">
-			<div class="title"><h2>fn maxpool2d <a href="#maxpool2d">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L515"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn maxpool2d <a href="#maxpool2d">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L535"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">maxpool2d</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>Device<span class="token punctuation">,</span> dst <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> src <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> batch <span class="token builtin">u32</span><span class="token punctuation">,</span> in_ch <span class="token builtin">u32</span><span class="token punctuation">,</span> in_h <span class="token builtin">u32</span><span class="token punctuation">,</span> in_w <span class="token builtin">u32</span><span class="token punctuation">,</span> k_h <span class="token builtin">u32</span><span class="token punctuation">,</span> k_w <span class="token builtin">u32</span><span class="token punctuation">,</span> out_h <span class="token builtin">u32</span><span class="token punctuation">,</span> out_w <span class="token builtin">u32</span><span class="token punctuation">,</span> pad_h <span class="token builtin">u32</span><span class="token punctuation">,</span> pad_w <span class="token builtin">u32</span><span class="token punctuation">,</span> stride_h <span class="token builtin">u32</span><span class="token punctuation">,</span> stride_w <span class="token builtin">u32</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
 <p>maxpool2d performs 2D max pooling on NCHW input.</p>
@@ -12513,7 +12585,7 @@
 </section>
 
 		<section id="reduce" class="doc-node">
-			<div class="title"><h2>fn reduce <a href="#reduce">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L217"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn reduce <a href="#reduce">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L227"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">reduce</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>Device<span class="token punctuation">,</span> dst <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> src <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> n <span class="token builtin">u32</span><span class="token punctuation">,</span> op ReductionOp<span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
 <p>reduce computes a per-workgroup reduction (sum or max) into out_data[num_groups]. Binding layout (v2 shader): 0: in_data (f32[n])  1: out_data (f32[num_groups])  2: params_data (u32[2] = [n, op])  3: scratch_data (f32[num_groups])</p>
@@ -12521,7 +12593,7 @@
 </section>
 
 		<section id="relu" class="doc-node">
-			<div class="title"><h2>fn relu <a href="#relu">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L111"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn relu <a href="#relu">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L121"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">relu</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>Device<span class="token punctuation">,</span> dst <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> src <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
 <p>relu computes dst[i] = max(0, src[i])</p>
@@ -12529,7 +12601,7 @@
 </section>
 
 		<section id="scale" class="doc-node">
-			<div class="title"><h2>fn scale <a href="#scale">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L53"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn scale <a href="#scale">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L63"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">scale</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>Device<span class="token punctuation">,</span> dst <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> src <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> alpha <span class="token builtin">f32</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
 <p>scale computes dst = alpha * src</p>
@@ -12537,7 +12609,7 @@
 </section>
 
 		<section id="sigmoid" class="doc-node">
-			<div class="title"><h2>fn sigmoid <a href="#sigmoid">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L119"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn sigmoid <a href="#sigmoid">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L129"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">sigmoid</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>Device<span class="token punctuation">,</span> dst <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> src <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
 <p>sigmoid computes dst[i] = 1/(1+exp(-src[i]))</p>
@@ -12545,7 +12617,7 @@
 </section>
 
 		<section id="softmax" class="doc-node">
-			<div class="title"><h2>fn softmax <a href="#softmax">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L152"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn softmax <a href="#softmax">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L162"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">softmax</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>Device<span class="token punctuation">,</span> dst <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> src <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> n <span class="token builtin">u32</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
 <p>softmax computes per-row numerically stable softmax on a 1-D vector of length n. Binding layout (v2 shader, no push_constants): 0: in_data (f32[n])  1: out_data (f32[n])  2: params_data (u32[2] = [n, num_groups])  3: scratch_data (f32[2*num_groups])</p>
@@ -12553,7 +12625,7 @@
 </section>
 
 		<section id="sum" class="doc-node">
-			<div class="title"><h2>fn sum <a href="#sum">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L82"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn sum <a href="#sum">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L92"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">sum</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>Device<span class="token punctuation">,</span> buf <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">f32</span></code></pre>
 <p>sum computes the sum of all f32 elements in the buffer.</p>
@@ -12561,7 +12633,7 @@
 </section>
 
 		<section id="vector_add" class="doc-node">
-			<div class="title"><h2>fn vector_add <a href="#vector_add">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L44"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn vector_add <a href="#vector_add">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L54"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">vector_add</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>Device<span class="token punctuation">,</span> dst <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> a <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">,</span> b <span class="token operator">&amp;</span>GpuBuffer<span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
 <p>vector_add computes element-wise addition: dst = a + b</p>
@@ -12577,7 +12649,7 @@
 </section>
 
 		<section id="ReductionOp.from" class="doc-node">
-			<div class="title"><h2>fn ReductionOp.from <a href="#ReductionOp.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L53"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn ReductionOp.from <a href="#ReductionOp.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L71"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> ReductionOp<span class="token punctuation">.</span>from<span class="token punctuation">[</span><span class="token builtin">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token builtin">W</span><span class="token punctuation">)</span> <span class="token operator">!</span>ReductionOp</code></pre>
 
@@ -12793,7 +12865,7 @@
 </section>
 
 		<section id="ReductionOp" class="doc-node">
-			<div class="title"><h2>enum ReductionOp <a href="#ReductionOp">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L209"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>enum ReductionOp <a href="#ReductionOp">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/ops.v#L219"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">enum</span> <span class="token symbol">ReductionOp</span> <span class="token punctuation">{</span>
 	sum <span class="token operator">=</span> <span class="token number">0</span>
@@ -13528,7 +13600,7 @@
 </section>
 
 		<section id="Device.str" class="doc-node">
-			<div class="title"><h2>fn (Device) str <a href="#Device.str">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/device.v#L140"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (Device) str <a href="#Device.str">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/device.v#L133"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>d <span class="token operator">&amp;</span>Device<span class="token punctuation">)</span> <span class="token function">str</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">string</span></code></pre>
 <p>str returns a summary string for the device.</p>
@@ -13575,7 +13647,7 @@
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 11 May 2026 20:25:45</div>
+						<div class="footer">Powered by vdoc. Generated on: 11 May 2026 21:04:07</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_vulkan">README</a></li>
 <li class="open"><a href="#Constants">Constants</a></li>
@@ -13585,7 +13657,34 @@
 <li class="open"><a href="#batchnorm1d">fn batchnorm1d</a>        <ul>
 </ul>
 </li>
+<li class="open"><a href="#broadcast_grad">fn broadcast_grad</a>        <ul>
+</ul>
+</li>
 <li class="open"><a href="#compute_pipeline_binding_count">fn compute_pipeline_binding_count</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#d_gelu">fn d_gelu</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#d_gemm_da">fn d_gemm_da</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#d_gemm_db">fn d_gemm_db</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#d_layernorm">fn d_layernorm</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#d_relu">fn d_relu</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#d_sigmoid">fn d_sigmoid</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#d_softmax">fn d_softmax</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#d_tanh">fn d_tanh</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#dispatch_sync">fn dispatch_sync</a>        <ul>
