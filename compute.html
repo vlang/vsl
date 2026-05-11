@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="x-ua-compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>README | vdoc</title>
+		<title>compute | vdoc</title>
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
@@ -59,7 +59,7 @@
 				<nav class="search hidden"></nav>
 				<nav class="content hidden">
 					<ul>
-						<li class="open active">
+						<li class="open">
 <div class="menu-row"><a href="./index.html">README</a></div>
 </li>
 <li class="open">
@@ -77,7 +77,7 @@
 <li class="open">
 <div class="menu-row"><a href="./blas64.html">blas64</a></div>
 </li>
-<li class="open">
+<li class="open active">
 <div class="menu-row"><a href="./compute.html">compute</a></div>
 </li>
 <li class="open">
@@ -204,72 +204,71 @@
 			<div class="doc-scrollview" tabindex="-1" id="main-content">
 				<div class="doc-container">
 					<div class="doc-content">
-								<section id="readme_README" class="doc-node">
-			<div class="title"><h1> README <a href="#readme_README">#</a></h1></div>
-<div align="center"> <p>
-    <img
-        style="width: 200px"
-        width="200"
-        src="https://raw.githubusercontent.com/vlang/vsl/main/static/vsl-logo.png?sanitize=true"
-    >
-  </p> <h1>The V Scientific Library</h1>
+								<section id="compute" class="doc-node">
+			<div class="title"><h1> compute</h1></div>
 
-<p><a href="https://vlang.io">vlang.io</a> | <a href="https://vlang.github.io/vsl">Docs</a> | <a href="#">Changelog</a> | <a href="https://github.com/vlang/vsl/blob/main/CONTRIBUTING.md">Contributing</a></p></div>
 
-<p>VSL is a V library to develop Artificial Intelligence and High-Performance Scientific Computations.</p>
-<table>
-<thead>
-<tr>
-<th align="center"></th>
-<th align="center"></th>
-<th align="center"></th>
-<th align="center"></th></tr></thead>
-<tbody>
-<tr>
-<td align="center">![][sierpinski_triangle]</td>
-<td align="center">![][mandelbrot_blue_red_black]</td>
-<td align="center">![][julia]</td>
-<td align="center">![][mandelbrot_basic]</td></tr>
-<tr>
-<td align="center">![][mandelbrot_pseudo_random_colors]</td>
-<td align="center">![][sierpinski_triangle2]</td>
-<td align="center">![][julia_set]</td>
-<td align="center">![][julia_basic]</td></tr></tbody></table>
-<h2 id="-docs">📖 Docs</h2>
-<p>Visit <a href="https://vlang.github.io/vsl">vsl docs</a> to know more about the supported features.</p>
-<p>VSL is a Scientific Library with a great variety of different modules. Although most modules offer pure-V definitions, VSL also provides modules that wrap known C libraries among other backends that allow high performance computing as an alternative.</p>
-<p>This library contains essential functions for linear algebra computations (operations between all combinations of vectors and matrices, eigenvalues and eigenvectors, linear solvers) and the development of numerical methods (e.g. numerical quadrature).</p>
-<p>Optionally, we link VSL with existent libraries written in C and Fortran, such as Open BLAS and LAPACK. These existing libraries have been fundamental for the development of high-performant simulations over many years. We believe that it is possible to rewrite these libraries in native V and at the same time achieve the same speed delivered by them, but at the same time, we want to allow to the users of VSL the possibility to choose when to use these libraries as a backend and when not. That is why each module documents the flags that allow this at the time of use.</p>
-<h2 id="-installation">🚀 Installation</h2>
-<p>It is possible to optimize certain modules using different backends. For this, there are some C dependencies that can be installed optionally. If you want to use these C dependencies and other libraries, the easiest way to work with VSL is via Docker. Having Docker and VS Code installed, you can start developing powerful numerical simulations using VSL in a matter of seconds. Furthermore, the best part of it is that it works on Windows, Linux, and macOS out of the box.</p>
-<h3 id="quick-containerized-recommended">Quick, containerized (recommended!)</h3>
-<ol>
-<li>Install Docker</li>
-<li>Clone <a href="https://github.com/ulises-jeremias/hello-vsl">https://github.com/ulises-jeremias/hello-vsl</a></li>
-<li>Follow the instructions in the README.md file of the repository :ok_hand:</li></ol>
-<p>Done. And your system will remain "clean".</p>
-<p>Our <a href="https://hub.docker.com/repository/docker/ulisesjeremias/vsl">Docker Image</a> also contains V and the V Tools for working with VS Code (or not).</p>
-<h2 id="install-vsl-locally">Install VSL locally</h2>
-<h3 id="via-vpm">Via vpm</h3>
-<pre><code class="language-sh">v install vsl</code></pre>
-<h3 id="via-">Via <a href="https://github.com/v-pkg/vpkg">vpkg</a></h3>
-<pre><code class="language-sh">vpkg get https<span class="token punctuation">:</span><span class="token comment">//github.com/vlang/vsl</span></code></pre>
-<p>Done. Installation completed.</p>
-<h2 id="-testing">🧪 Testing</h2>
-<p>To test the module, just type the following command:</p>
-<pre><code class="language-sh">v test <span class="token punctuation">.</span></code></pre>
-<h2 id="-contributors">👥 Contributors</h2>
-<p><a href="https://github.com/vlang/vsl/contributors"> <img src="https://contrib.rocks/image?repo=vlang/vsl"/> </a></p>
-<p>Made with <a href="https://contrib.rocks">contributors-img</a>.</p><!-- Images -->
+</section>
 
-<p>[sierpinski_triangle]: <a href="https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/sierpinski_triangle.png">https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/sierpinski_triangle.png</a> [mandelbrot_blue_red_black]: <a href="https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/mandelbrot_blue_red_black.png">https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/mandelbrot_blue_red_black.png</a> [julia]: <a href="https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/julia.png">https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/julia.png</a> [mandelbrot_basic]: <a href="https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/mandelbrot_basic.png">https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/mandelbrot_basic.png</a> [mandelbrot_pseudo_random_colors]: <a href="https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/mandelbrot_pseudo_random_colors.png">https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/mandelbrot_pseudo_random_colors.png</a> [sierpinski_triangle2]: <a href="https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/sierpinski_triangle2.png">https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/sierpinski_triangle2.png</a> [julia_set]: <a href="https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/julia_set.png">https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/julia_set.png</a> [julia_basic]: <a href="https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/julia_basic.png">https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/julia_basic.png</a></p>
+		<section id="gemm_gpu" class="doc-node">
+			<div class="title"><h2>fn gemm_gpu <a href="#gemm_gpu">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/compute/gemm.v#L29"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">gemm_gpu</span><span class="token punctuation">(</span>a_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> a_m <span class="token builtin">int</span><span class="token punctuation">,</span> a_n <span class="token builtin">int</span><span class="token punctuation">,</span> b_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> b_m <span class="token builtin">int</span><span class="token punctuation">,</span> b_n <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>gemm_gpu computes C = A * B on GPU using Vulkan compute. All matrices are f64, row-major (same layout as VSL Matrix). a_data: A matrix data, [a_m x a_n] row-major b_data: B matrix data, [b_m x b_n] row-major Returns C matrix data as []f64, [a_m x b_n] row-major. Returns error if dimensions don't match or Vulkan dispatch fails.</p>
+
+</section>
+
+		<section id="relu_gpu" class="doc-node">
+			<div class="title"><h2>fn relu_gpu <a href="#relu_gpu">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/compute/elementwise.v#L9"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">relu_gpu</span><span class="token punctuation">(</span>dst <span class="token operator">&amp;</span>vulkan<span class="token punctuation">.</span>GpuBuffer<span class="token punctuation">,</span> src <span class="token operator">&amp;</span>vulkan<span class="token punctuation">.</span>GpuBuffer<span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
+<p>relu_gpu computes ReLU in-place on GPU: dst[i] = max(0, src[i]) src and dst are f32 GpuBuffers (must have same size).</p>
+
+</section>
+
+		<section id="relu_matrix" class="doc-node">
+			<div class="title"><h2>fn relu_matrix <a href="#relu_matrix">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/compute/elementwise.v#L21"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">relu_matrix</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>relu_matrix computes ReLU on a flat f64 array using GPU. Returns a new []f64 with relu applied element-wise.</p>
+
+</section>
+
+		<section id="sigmoid_gpu" class="doc-node">
+			<div class="title"><h2>fn sigmoid_gpu <a href="#sigmoid_gpu">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/compute/elementwise.v#L15"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">sigmoid_gpu</span><span class="token punctuation">(</span>dst <span class="token operator">&amp;</span>vulkan<span class="token punctuation">.</span>GpuBuffer<span class="token punctuation">,</span> src <span class="token operator">&amp;</span>vulkan<span class="token punctuation">.</span>GpuBuffer<span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
+<p>sigmoid_gpu computes sigmoid in-place on GPU: dst[i] = 1/(1+exp(-src[i])) src and dst are f32 GpuBuffers (must have same size).</p>
+
+</section>
+
+		<section id="sigmoid_matrix" class="doc-node">
+			<div class="title"><h2>fn sigmoid_matrix <a href="#sigmoid_matrix">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/compute/elementwise.v#L61"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">sigmoid_matrix</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>sigmoid_matrix computes sigmoid on a flat f64 array using GPU. Returns a new []f64 with sigmoid applied element-wise.</p>
 
 </section>
 
 
 						<div class="footer">Powered by vdoc. Generated on: 11 May 2026 03:33:45</div>
 					</div>
-					
+					<div class="doc-toc"><ul><li class="open"><a href="#gemm_gpu">fn gemm_gpu</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#relu_gpu">fn relu_gpu</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#relu_matrix">fn relu_matrix</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#sigmoid_gpu">fn sigmoid_gpu</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#sigmoid_matrix">fn sigmoid_matrix</a>        <ul>
+</ul>
+</li>
+</ul></div>
 				</div>
 			</div>
 		</div>

@@ -78,6 +78,9 @@
 <div class="menu-row"><a href="./blas64.html">blas64</a></div>
 </li>
 <li class="open">
+<div class="menu-row"><a href="./compute.html">compute</a></div>
+</li>
+<li class="open">
 <div class="menu-row"><a href="./consts.html">consts</a></div>
 </li>
 <li class="open">
@@ -133,6 +136,7 @@
 <div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>internal</a></div>
 <ul>
 <li><a href="./internal.prec.html">prec</a></li>
+<li><a href="./internal.dl.html">dl</a></li>
 <li><a href="./internal.dl.html">dl</a></li>
 </ul>
 </li>
@@ -190,6 +194,9 @@
 <li class="open">
 <div class="menu-row"><a href="./vcl.html">vcl</a></div>
 </li>
+<li class="open">
+<div class="menu-row"><a href="./vulkan.html">vulkan</a></div>
+</li>
 
 					</ul>
 				</nav>
@@ -199,54 +206,18 @@
 					<div class="doc-content">
 								<section id="readme_main" class="doc-node">
 			<div class="title"><h1> main <a href="#readme_main">#</a></h1></div>
-<h1 id="vsl-performance-benchmarks">VSL Performance Benchmarks</h1>
-<p>This directory contains comprehensive performance benchmarks for VSL's pure V BLAS and LAPACK implementations.</p>
-<h2 id="overview">Overview</h2>
-<p>The benchmark suite demonstrates the performance characteristics of VSL's pure V implementations compared to C backends (OpenBLAS/LAPACKE). All benchmarks use V's built-in <code>benchmark</code> module for accurate timing measurements.</p>
-<h2 id="running-benchmarks">Running Benchmarks</h2>
-<h3 id="run-all-benchmarks">Run All Benchmarks</h3>
-<pre><code class="language-sh">##v run benchmarks<span class="token operator">/</span>blas_bench<span class="token punctuation">.</span>v
+<p>Run with: v -enable-globals run --path ~/.vmodules/vsl ~/.vmodules/vsl/vulkan/examples/add.v</p>
+<p>Requirements: Vulkan SDK installed (libvulkan.so / libvulkan.1.dylib)</p>
+<p>This example demonstrates:1. Device discovery (find GPU with compute support)2. Buffer creation and host→GPU data transfer3. GPU compute dispatch (vector add via SPIR-V)4. GPU→host readback of results</p>
 
-##v run benchmarks<span class="token operator">/</span>lapack_bench<span class="token punctuation">.</span>v
-
-##v run benchmarks<span class="token operator">/</span>compare_backends<span class="token punctuation">.</span>v</code></pre>
-<h3 id="run-specific-benchmarks">Run Specific Benchmarks</h3>
-<pre><code class="language-sh">##v run benchmarks<span class="token operator">/</span>blas_bench<span class="token punctuation">.</span>v <span class="token operator">--</span>sizes <span class="token number">100</span><span class="token punctuation">,</span><span class="token number">500</span><span class="token punctuation">,</span><span class="token number">1000</span>
-
-##v <span class="token operator">-</span>d vsl_blas_cblas run benchmarks<span class="token operator">/</span>blas_bench<span class="token punctuation">.</span>v</code></pre>
-<h2 id="benchmark-structure">Benchmark Structure</h2>
-<ul>
-<li><strong><code>blas_bench.v</code></strong>: Comprehensive BLAS Level 1, 2, and 3 benchmarks</li>
-<li><strong><code>lapack_bench.v</code></strong>: LAPACK operation benchmarks (linear systems, factorizations, etc.)</li>
-<li><strong><code>compare_backends.v</code></strong>: Direct comparison between pure V and C backends</li>
-<li><strong><code>benchmark_utils.v</code></strong>: Shared utilities for benchmark setup and reporting</li></ul>
-<h2 id="understanding-results">Understanding Results</h2>
-<p>Benchmark results show:</p>
-<ul>
-<li><strong>Operation</strong>: The BLAS/LAPACK function being benchmarked</li>
-<li><strong>Size</strong>: Problem size (vector length, matrix dimensions)</li>
-<li><strong>Time</strong>: Average execution time over multiple runs</li>
-<li><strong>Throughput</strong>: Operations per second (where applicable)</li>
-<li><strong>GFLOPS</strong>: Floating-point operations per second (for compute-intensive operations)</li></ul>
-<h2 id="performance-notes">Performance Notes</h2>
-<ul>
-<li>Benchmarks are run multiple times and averaged for accuracy</li>
-<li>Warm-up runs are performed before timing to account for cache effects</li>
-<li>Results may vary based on hardware, compiler optimizations, and system load</li>
-<li>Pure V backend performance is competitive with C backends for most operations</li></ul>
-<h2 id="contributing">Contributing</h2>
-<p>When adding new benchmarks:</p>
-<ol>
-<li>Follow the existing benchmark structure</li>
-<li>Use the <code>benchmark</code> module from V's standard library</li>
-<li>Include multiple problem sizes</li>
-<li>Document any special considerations</li>
-<li>Ensure benchmarks are reproducible</li></ol>
-
+<section class="doc-node examples"><h4>Example</h4>
+<pre>
+<code class="language-v">Vulkan Compute</code></pre>
+</section>
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 8 May 2026 06:08:17</div>
+						<div class="footer">Powered by vdoc. Generated on: 11 May 2026 03:33:45</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_main">README</a></li>
 </ul></div>

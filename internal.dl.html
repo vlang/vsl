@@ -78,6 +78,9 @@
 <div class="menu-row"><a href="./blas64.html">blas64</a></div>
 </li>
 <li class="open">
+<div class="menu-row"><a href="./compute.html">compute</a></div>
+</li>
+<li class="open">
 <div class="menu-row"><a href="./consts.html">consts</a></div>
 </li>
 <li class="open">
@@ -133,6 +136,7 @@
 <div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>internal</a></div>
 <ul>
 <li><a href="./internal.prec.html">prec</a></li>
+<li class="active"><a href="./internal.dl.html">dl</a></li>
 <li class="active"><a href="./internal.dl.html">dl</a></li>
 </ul>
 </li>
@@ -190,6 +194,9 @@
 <li class="open">
 <div class="menu-row"><a href="./vcl.html">vcl</a></div>
 </li>
+<li class="open">
+<div class="menu-row"><a href="./vulkan.html">vulkan</a></div>
+</li>
 
 					</ul>
 				</nav>
@@ -212,7 +219,8 @@
 		<section id="" class="doc-node const">
 <pre class="signature">
 <code><span class="token keyword">const</span> dl_no_path_issue_code <span class="token operator">=</span> loader<span class="token punctuation">.</span>dl_no_path_issue_code</code></pre>
-
+<p>Vulkan internal dynamic library loader. Follows the same pattern as vsl.vcl.internal.dl — uses V's standard dl.loader.DynamicLibLoader to resolve Vulkan functions at runtime.</p>
+<p>Environment variable VULKAN_LIB_PATH overrides the default library path. On Linux: libvulkan.so.1 On macOS: libvulkan.1.dylib On Windows: vulkan-1.dll</p>
 
 </section>
 
@@ -247,19 +255,18 @@
 		<section id="" class="doc-node const">
 <pre class="signature">
 <code><span class="token keyword">const</span> default_paths <span class="token operator">=</span> <span class="token punctuation">[</span>
-<span class="token string">&#39;libOpenCL</span><span class="token string_interp">$</span>{dl<span class="token punctuation">.</span>dl_ext}<span class="token string">&#39;</span><span class="token punctuation">,</span>
-<span class="token string">&#39;/usr/lib/libOpenCL</span><span class="token string_interp">$</span>{dl<span class="token punctuation">.</span>dl_ext}<span class="token string">&#39;</span><span class="token punctuation">,</span>
-<span class="token string">&#39;/usr/local/lib/libOpenCL</span><span class="token string_interp">$</span>{dl<span class="token punctuation">.</span>dl_ext}<span class="token string">&#39;</span><span class="token punctuation">,</span>
-<span class="token string">&#39;/usr/local/lib/libpocl</span><span class="token string_interp">$</span>{dl<span class="token punctuation">.</span>dl_ext}<span class="token string">&#39;</span><span class="token punctuation">,</span>
-<span class="token string">&#39;/usr/lib64/libOpenCL</span><span class="token string_interp">$</span>{dl<span class="token punctuation">.</span>dl_ext}<span class="token string">&#39;</span><span class="token punctuation">,</span>
-<span class="token string">&#39;/usr/lib32/libOpenCL</span><span class="token string_interp">$</span>{dl<span class="token punctuation">.</span>dl_ext}<span class="token string">&#39;</span><span class="token punctuation">,</span>
+<span class="token string">&#39;libvulkan</span><span class="token string_interp">$</span>{dl<span class="token punctuation">.</span>dl_ext}<span class="token string">.1&#39;</span><span class="token punctuation">,</span>
+<span class="token string">&#39;/usr/lib/x86_64-linux-gnu/libvulkan</span><span class="token string_interp">$</span>{dl<span class="token punctuation">.</span>dl_ext}<span class="token string">.1&#39;</span><span class="token punctuation">,</span>
+<span class="token string">&#39;/usr/lib/libvulkan</span><span class="token string_interp">$</span>{dl<span class="token punctuation">.</span>dl_ext}<span class="token string">.1&#39;</span><span class="token punctuation">,</span>
+<span class="token string">&#39;/usr/lib64/libvulkan</span><span class="token string_interp">$</span>{dl<span class="token punctuation">.</span>dl_ext}<span class="token string">.1&#39;</span><span class="token punctuation">,</span>
+<span class="token string">&#39;/usr/local/lib/libvulkan</span><span class="token string_interp">$</span>{dl<span class="token punctuation">.</span>dl_ext}<span class="token string">.1&#39;</span><span class="token punctuation">,</span>
 <span class="token punctuation">]</span></code></pre>
 
 
 </section>
 
 		<section id="get_sym" class="doc-node">
-			<div class="title"><h2>fn get_sym <a href="#get_sym">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/internal/dl/dl.c.v#L29"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn get_sym <a href="#get_sym">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/internal/dl/dl.c.v#L38"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">get_sym</span><span class="token punctuation">(</span>name <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">voidptr</span></code></pre>
 
@@ -267,7 +274,7 @@
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 8 May 2026 06:08:17</div>
+						<div class="footer">Powered by vdoc. Generated on: 11 May 2026 03:33:45</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#Constants">Constants</a></li>
 <li class="open"><a href="#get_sym">fn get_sym</a>        <ul>

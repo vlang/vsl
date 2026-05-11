@@ -78,6 +78,9 @@
 <div class="menu-row"><a href="./blas64.html">blas64</a></div>
 </li>
 <li class="open">
+<div class="menu-row"><a href="./compute.html">compute</a></div>
+</li>
+<li class="open">
 <div class="menu-row"><a href="./consts.html">consts</a></div>
 </li>
 <li class="open">
@@ -134,6 +137,7 @@
 <ul>
 <li><a href="./internal.prec.html">prec</a></li>
 <li><a href="./internal.dl.html">dl</a></li>
+<li><a href="./internal.dl.html">dl</a></li>
 </ul>
 </li>
 <li class="open">
@@ -189,6 +193,9 @@
 </li>
 <li class="open">
 <div class="menu-row"><a href="./vcl.html">vcl</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./vulkan.html">vulkan</a></div>
 </li>
 
 					</ul>
@@ -402,6 +409,22 @@ a<span class="token punctuation">.</span><span class="token function">set</span>
 <p>den_solve solves dense linear system using LAPACK</p>
 <p>Given:  a ⋅ x = b    find x   such that   x = a⁻¹ ⋅ b</p>
 
+</section>
+
+		<section id="gemm_vulkan" class="doc-node">
+			<div class="title"><h2>fn gemm_vulkan <a href="#gemm_vulkan">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/la/vulkan.v#L20"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">gemm_vulkan</span><span class="token punctuation">(</span>a <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> b <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span></code></pre>
+<p>gemm_vulkan computes C = A * B using Vulkan GPU compute. All matrices are f64, row-major (VSL Matrix format).</p>
+<p>Returns a new Matrix[f64] with the result. Falls back to error if Vulkan device initialization fails.</p>
+
+<section class="doc-node examples"><h4>Example</h4>
+<pre>
+<code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>la
+a <span class="token operator">:=</span> la<span class="token punctuation">.</span><span class="token function">matrix_raw</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">2.0</span><span class="token punctuation">,</span> <span class="token number">3.0</span><span class="token punctuation">,</span> <span class="token number">4.0</span><span class="token punctuation">,</span> <span class="token number">5.0</span><span class="token punctuation">,</span> <span class="token number">6.0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+b <span class="token operator">:=</span> la<span class="token punctuation">.</span><span class="token function">matrix_raw</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">7.0</span><span class="token punctuation">,</span> <span class="token number">8.0</span><span class="token punctuation">,</span> <span class="token number">9.0</span><span class="token punctuation">,</span> <span class="token number">10.0</span><span class="token punctuation">,</span> <span class="token number">11.0</span><span class="token punctuation">,</span> <span class="token number">12.0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+c <span class="token operator">:=</span> la<span class="token punctuation">.</span><span class="token function">gemm_vulkan</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">)</span><span class="token operator">!</span></code></pre>
+</section>
 </section>
 
 		<section id="jacobi" class="doc-node">
@@ -1289,7 +1312,7 @@ tr <span class="token operator">:=</span> la<span class="token punctuation">.</s
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 8 May 2026 06:08:17</div>
+						<div class="footer">Powered by vdoc. Generated on: 11 May 2026 03:33:45</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_la">README</a></li>
 <li class="open"><a href="#center_matrix">fn center_matrix</a>        <ul>
@@ -1320,6 +1343,9 @@ tr <span class="token operator">:=</span> la<span class="token punctuation">.</s
 </ul>
 </li>
 <li class="open"><a href="#den_solve">fn den_solve</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#gemm_vulkan">fn gemm_vulkan</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#jacobi">fn jacobi</a>        <ul>
