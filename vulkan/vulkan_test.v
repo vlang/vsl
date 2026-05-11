@@ -458,3 +458,91 @@ fn test_reduce_sum() {
 	}
 	assert total > f32(n) - 1.0 && total < f32(n) + 1.0, 'reduce sum=${total} expected ${n}'
 }
+
+fn test_gelu() {
+	dev := try_device() or {
+		eprintln('skip: no Vulkan device')
+		return
+	}
+	defer { dev.release() or {} }
+
+	n := u32(4)
+	// x = [0, 1, -1, 2]
+	src_data := [f32(0.0), 1.0, -1.0, 2.0]
+	src_bytes := bytes_from_f32(src_data)
+
+	mut src_buf := dev.buffer(DeviceSize(src_bytes.len)) or { assert false, 'buf src'; return }
+	defer { src_buf.release() }
+	mut dst_buf := dev.buffer(DeviceSize(u64(n) * 4)) or { assert false, 'buf dst'; return }
+	defer { dst_buf.release() }
+
+	src_buf.load(src_bytes) or { assert false, 'upload'; return }
+	gelu(dev, dst_buf, src_buf, n) or { assert false, 'gelu: ${err}'; return }
+
+	mut raw := []u8{len: int(n) * 4}
+	raw = dst_buf.store(mut raw) or { assert false, 'store'; return }
+	out := bytes_to_f32(raw)
+
+	// gelu(0) = 0
+	assert math.abs(out[0]) < 0.01, 'gelu(0) = ${out[0]}'
+	// gelu(1) ≈ 0.8413
+	assert math.abs(out[1] - 0.8413) < 0.01, 'gelu(1) = ${out[1]}'
+	// gelu(-1) ≈ -0.1587
+	assert math.abs(out[2] - (-0.1587)) < 0.01, 'gelu(-1) = ${out[2]}'
+	// gelu(2) ≈ 1.9545
+	assert math.abs(out[3] - 1.9545) < 0.01, 'gelu(2) = ${out[3]}'
+}
+
+fn test_maxpool2d() {
+	dev := try_device() or {
+		eprintln('skip: no Vulkan device')
+		return
+	}
+	defer { dev.release() or {} }
+
+	// Input: [1, 1, 4, 4], kernel=2x2, stride=2, no padding → output [1, 1, 2, 2]
+	// Input values:
+	// 1  2  3  4
+	// 5  6  7  8
+	// 9  10 11 12
+	// 13 14 15 16
+	src_data := [
+		f32(1), 2, 3, 4,
+		f32(5), 6, 7, 8,
+		f32(9), 10, 11, 12,
+		f32(13), 14, 15, 16,
+	]
+	src_bytes := bytes_from_f32(src_data)
+
+	batch := u32(1); in_ch := u32(1)
+	in_h := u32(4); in_w := u32(4)
+	k_h := u32(2); k_w := u32(2)
+	stride_h := u32(2); stride_w := u32(2)
+	pad_h := u32(0); pad_w := u32(0)
+	out_h := (in_h + 2 * pad_h - k_h) / stride_h + 1  // = 2
+	out_w := (in_w + 2 * pad_w - k_w) / stride_w + 1  // = 2
+	n_out := batch * in_ch * out_h * out_w
+
+	mut src_buf := dev.buffer(DeviceSize(src_bytes.len)) or { assert false; return }
+	defer { src_buf.release() }
+	mut dst_buf := dev.buffer(DeviceSize(u64(n_out) * 4)) or { assert false; return }
+	defer { dst_buf.release() }
+
+	src_buf.load(src_bytes) or { assert false; return }
+	maxpool2d(dev, dst_buf, src_buf, batch, in_ch, in_h, in_w, k_h, k_w, out_h, out_w, pad_h, pad_w, stride_h, stride_w) or {
+		assert false, 'maxpool2d: ${err}'
+		return
+	}
+
+	mut raw := []u8{len: int(n_out) * 4}
+	raw = dst_buf.store(mut raw) or { assert false; return }
+	out := bytes_to_f32(raw)
+
+	// Expected max values per 2x2 block:
+	// top-left: max(1,2,5,6)=6, top-right: max(3,4,7,8)=8
+	// bot-left: max(9,10,13,14)=14, bot-right: max(11,12,15,16)=16
+	assert math.abs(out[0] - 6.0) < 0.01, 'maxpool[0] = ${out[0]}'
+	assert math.abs(out[1] - 8.0) < 0.01, 'maxpool[1] = ${out[1]}'
+	assert math.abs(out[2] - 14.0) < 0.01, 'maxpool[2] = ${out[2]}'
+	assert math.abs(out[3] - 16.0) < 0.01, 'maxpool[3] = ${out[3]}'
+}
