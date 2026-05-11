@@ -48,9 +48,6 @@ pub fn gemv_vcl(mut dev vcl.Device, a_data []f64, x_data []f64, m int, k int) ![
 	}
 
 	mut out := []f64{len: m}
-	err_out := <-y_vec.data(mut out)
-	if err_out !is none {
-		return err_out
-	}
+	out = y_vec.data()!
 	return out
 }

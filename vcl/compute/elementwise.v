@@ -89,10 +89,7 @@ fn run_simple_elementwise(mut dev vcl.Device, kernel_name string, x_data []f64) 
 		return err_k
 	}
 	mut out := []f64{len: n}
-	err_out := <-y_vec.data(mut out)
-	if err_out !is none {
-		return err_out
-	}
+	out = y_vec.data()!
 	return out
 }
 
@@ -111,10 +108,7 @@ fn run_alpha_elementwise(mut dev vcl.Device, kernel_name string, x_data []f64, a
 		return err_k
 	}
 	mut out := []f64{len: n}
-	err_out := <-y_vec.data(mut out)
-	if err_out !is none {
-		return err_out
-	}
+	out = y_vec.data()!
 	return out
 }
 

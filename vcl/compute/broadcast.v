@@ -82,10 +82,7 @@ pub fn add_scalar_vcl(mut dev vcl.Device, x_data []f64, scalar f64) ![]f64 {
 		return err_k
 	}
 	mut out := []f64{len: n}
-	err_out := <-y_vec.data(mut out)
-	if err_out !is none {
-		return err_out
-	}
+	out = y_vec.data()!
 	return out
 }
 
@@ -105,10 +102,7 @@ pub fn mul_scalar_vcl(mut dev vcl.Device, x_data []f64, scalar f64) ![]f64 {
 		return err_k
 	}
 	mut out := []f64{len: n}
-	err_out := <-y_vec.data(mut out)
-	if err_out !is none {
-		return err_out
-	}
+	out = y_vec.data()!
 	return out
 }
 
@@ -133,10 +127,7 @@ pub fn add_vec_vcl(mut dev vcl.Device, a_data []f64, b_data []f64) ![]f64 {
 		return err_k
 	}
 	mut out := []f64{len: n}
-	err_out := <-c_vec.data(mut out)
-	if err_out !is none {
-		return err_out
-	}
+	out = c_vec.data()!
 	return out
 }
 
@@ -161,10 +152,7 @@ pub fn mul_vec_vcl(mut dev vcl.Device, a_data []f64, b_data []f64) ![]f64 {
 		return err_k
 	}
 	mut out := []f64{len: n}
-	err_out := <-c_vec.data(mut out)
-	if err_out !is none {
-		return err_out
-	}
+	out = c_vec.data()!
 	return out
 }
 
@@ -189,9 +177,6 @@ pub fn broadcast_bias_vcl(mut dev vcl.Device, mat_data []f64, bias_data []f64, r
 		return err_k
 	}
 	mut out := []f64{len: rows * cols}
-	err_out := <-out_vec.data(mut out)
-	if err_out !is none {
-		return err_out
-	}
+	out = out_vec.data()!
 	return out
 }
