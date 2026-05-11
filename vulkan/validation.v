@@ -59,7 +59,7 @@ fn create_instance_debug() !VkInstance {
 		sType:                   structure_type_instance_create_info
 		pApplicationInfo:        &app_info
 		enabledLayerCount:       1
-		ppEnabledLayerNames:     &layer_name
+		ppEnabledLayerNames:     layer_name
 		enabledExtensionCount:   0
 		ppEnabledExtensionNames: unsafe { nil }
 	}
