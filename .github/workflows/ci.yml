@@ -60,6 +60,7 @@ jobs:
             libhdf5-dev \
             hdf5-tools \
             opencl-headers \
+            ocl-icd-opencl-dev \
             vulkan-tools \
             mesa-vulkan-drivers \
             libvulkan-dev

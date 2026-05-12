@@ -565,7 +565,7 @@ fn test_reduce_sum() {
 }
 
 fn test_gelu() {
-	dev := try_device() or {
+	mut dev := try_device() or {
 		eprintln('skip: no Vulkan device')
 		return
 	}
@@ -614,7 +614,7 @@ fn test_gelu() {
 }
 
 fn test_maxpool2d() {
-	dev := try_device() or {
+	mut dev := try_device() or {
 		eprintln('skip: no Vulkan device')
 		return
 	}
