@@ -204,263 +204,101 @@
 			<div class="doc-scrollview" tabindex="-1" id="main-content">
 				<div class="doc-container">
 					<div class="doc-content">
-								<section id="readme_compute" class="doc-node">
-			<div class="title"><h1> compute <a href="#readme_compute">#</a></h1></div>
-<p>broadcast.v — GPU-accelerated broadcast operations via OpenCL. conv2d.v — GPU-accelerated Conv2D via im2col + GEMM on OpenCL.</p>
-<p>Input:   [N, C_in, H, W] — NCHW format, row-major flat Filters: [C_out, C_in, KH, KW] — row-major flat Output:  [N, C_out, OH, OW] — row-major flat</p>
-<p>Algorithm: im2col transforms input patches into a matrix, then GEMM. im2col output: [C_in<em>KH</em>KW, N<em>OH</em>OW] column-major for GEMM compatibility. elementwise.v — GPU-accelerated element-wise activation functions via OpenCL.</p>
-<p>All functions operate on flat f64 arrays and return flat f64 arrays. gemm.v — GPU-accelerated GEMM (General Matrix Multiply) via OpenCL.</p>
-<p>Computes C = A * B where all matrices are column-major. A: [m x k], B: [k x n], C: [m x n] Column-major layout: element (i,j) of matrix [rows x cols] is at index i + j*rows. gemv.v — GPU-accelerated GEMV (General Matrix-Vector Multiply) via OpenCL.</p>
-<p>Computes y = A * x where A is [m x k] column-major, x is [k], y is [m]. layernorm.v — GPU-accelerated Layer Normalization via OpenCL.</p>
-<p>Normalizes each row: y = (x - mean) / sqrt(var + eps) * gamma + beta Input: flat column-major matrix [rows x cols] (normalize across cols per row). reduction.v — GPU-accelerated reduction ops (sum, mean, max along axis) via OpenCL.</p>
-<p>Input: flat column-major matrix [rows x cols]. axis=0: reduce over rows -&gt; output shape [cols] axis=1: reduce over cols -&gt; output shape [rows] softmax.v — GPU-accelerated row-wise softmax via OpenCL.</p>
-<p>Input: flat column-major matrix [rows x cols]. Computes softmax across each row: exp(x - max) / sum(exp(x - max)).</p>
-
-</section>
-
-		<section id="Constants" class="doc-node const">
-			<div class="title"><h2>Constants <a href="#Constants">#</a></h2></div>
+								<section id="compute" class="doc-node">
+			<div class="title"><h1> compute</h1></div>
 
 
 </section>
 
-		<section id="" class="doc-node const">
+		<section id="gemm_vulkan" class="doc-node">
+			<div class="title"><h2>fn gemm_vulkan <a href="#gemm_vulkan">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/gemm.v#L55"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">const</span> local_size_1d <span class="token operator">=</span> <span class="token number">64</span></code></pre>
-<p>local_size_1d is the work-group size for 1D kernels (must evenly divide global size or use guard).</p>
+<code><span class="token keyword">fn</span> <span class="token function">gemm_vulkan</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>vulkan<span class="token punctuation">.</span>Device<span class="token punctuation">,</span> a_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> b_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> k <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>gemm_vulkan computes C = A * B with row-major inputs/outputs in f64 API. Internally uses f32 Vulkan kernels and converts back to f64.</p>
 
 </section>
 
-		<section id="" class="doc-node const">
+		<section id="gemm_vulkan_f32" class="doc-node">
+			<div class="title"><h2>fn gemm_vulkan_f32 <a href="#gemm_vulkan_f32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/gemm.v#L7"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">const</span> local_size_2d <span class="token operator">=</span> <span class="token number">16</span></code></pre>
-<p>local_size_2d is the work-group size per dimension for 2D kernels (16x16 = 256 threads).</p>
+<code><span class="token keyword">fn</span> <span class="token function">gemm_vulkan_f32</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>vulkan<span class="token punctuation">.</span>Device<span class="token punctuation">,</span> a_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span><span class="token punctuation">,</span> b_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span><span class="token punctuation">,</span> m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> k <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span></code></pre>
+<p>gemm_vulkan_f32 computes C = A * B with row-major inputs/outputs. A is [m x k], B is [k x n], result is [m x n].</p>
 
 </section>
 
-		<section id="add_scalar_vcl" class="doc-node">
-			<div class="title"><h2>fn add_scalar_vcl <a href="#add_scalar_vcl">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/compute/broadcast.v#L69"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+		<section id="gemv_vulkan" class="doc-node">
+			<div class="title"><h2>fn gemv_vulkan <a href="#gemv_vulkan">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/gemv.v#L46"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token function">add_scalar_vcl</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dev vcl<span class="token punctuation">.</span>Device<span class="token punctuation">,</span> x_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> scalar <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
-<p>add_scalar_vcl adds a scalar to every element.</p>
+<code><span class="token keyword">fn</span> <span class="token function">gemv_vulkan</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>vulkan<span class="token punctuation">.</span>Device<span class="token punctuation">,</span> a_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> x_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+
 
 </section>
 
-		<section id="add_vec_vcl" class="doc-node">
-			<div class="title"><h2>fn add_vec_vcl <a href="#add_vec_vcl">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/compute/broadcast.v#L109"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+		<section id="gemv_vulkan_f32" class="doc-node">
+			<div class="title"><h2>fn gemv_vulkan_f32 <a href="#gemv_vulkan_f32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/gemv.v#L5"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token function">add_vec_vcl</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dev vcl<span class="token punctuation">.</span>Device<span class="token punctuation">,</span> a_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> b_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
-<p>add_vec_vcl adds two vectors element-wise.</p>
+<code><span class="token keyword">fn</span> <span class="token function">gemv_vulkan_f32</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>vulkan<span class="token punctuation">.</span>Device<span class="token punctuation">,</span> a_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span><span class="token punctuation">,</span> x_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span><span class="token punctuation">,</span> m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span></code></pre>
+
 
 </section>
 
-		<section id="broadcast_bias_vcl" class="doc-node">
-			<div class="title"><h2>fn broadcast_bias_vcl <a href="#broadcast_bias_vcl">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/compute/broadcast.v#L159"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+		<section id="relu_vulkan" class="doc-node">
+			<div class="title"><h2>fn relu_vulkan <a href="#relu_vulkan">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/elementwise.v#L41"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token function">broadcast_bias_vcl</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dev vcl<span class="token punctuation">.</span>Device<span class="token punctuation">,</span> mat_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> bias_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> rows <span class="token builtin">int</span><span class="token punctuation">,</span> cols <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
-<p>broadcast_bias_vcl adds a bias vector (len=cols) to each row of a column-major matrix.</p>
+<code><span class="token keyword">fn</span> <span class="token function">relu_vulkan</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>vulkan<span class="token punctuation">.</span>Device<span class="token punctuation">,</span> x_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+
 
 </section>
 
-		<section id="conv2d_vcl" class="doc-node">
-			<div class="title"><h2>fn conv2d_vcl <a href="#conv2d_vcl">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/compute/conv2d.v#L68"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+		<section id="relu_vulkan_f32" class="doc-node">
+			<div class="title"><h2>fn relu_vulkan_f32 <a href="#relu_vulkan_f32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/elementwise.v#L33"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token function">conv2d_vcl</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dev vcl<span class="token punctuation">.</span>Device<span class="token punctuation">,</span> x_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> w_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> c_in <span class="token builtin">int</span><span class="token punctuation">,</span> h <span class="token builtin">int</span><span class="token punctuation">,</span> w <span class="token builtin">int</span><span class="token punctuation">,</span> c_out <span class="token builtin">int</span><span class="token punctuation">,</span> kh <span class="token builtin">int</span><span class="token punctuation">,</span> kw <span class="token builtin">int</span><span class="token punctuation">,</span> stride_h <span class="token builtin">int</span><span class="token punctuation">,</span> stride_w <span class="token builtin">int</span><span class="token punctuation">,</span> pad_h <span class="token builtin">int</span><span class="token punctuation">,</span> pad_w <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
-<p>conv2d_vcl computes 2D convolution via im2col + GEMM on the OpenCL device. x_data: NCHW flat row-major input. w_data: [C_out, C_in, KH, KW] flat row-major filters. Returns NCHW flat row-major output.</p>
+<code><span class="token keyword">fn</span> <span class="token function">relu_vulkan_f32</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>vulkan<span class="token punctuation">.</span>Device<span class="token punctuation">,</span> x_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span></code></pre>
+
 
 </section>
 
-		<section id="elu_vcl" class="doc-node">
-			<div class="title"><h2>fn elu_vcl <a href="#elu_vcl">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/compute/elementwise.v#L140"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+		<section id="sigmoid_vulkan" class="doc-node">
+			<div class="title"><h2>fn sigmoid_vulkan <a href="#sigmoid_vulkan">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/elementwise.v#L54"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token function">elu_vcl</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dev vcl<span class="token punctuation">.</span>Device<span class="token punctuation">,</span> x_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
-<p>elu_vcl applies ELU element-wise on the OpenCL device.</p>
+<code><span class="token keyword">fn</span> <span class="token function">sigmoid_vulkan</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>vulkan<span class="token punctuation">.</span>Device<span class="token punctuation">,</span> x_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+
 
 </section>
 
-		<section id="gelu_vcl" class="doc-node">
-			<div class="title"><h2>fn gelu_vcl <a href="#gelu_vcl">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/compute/elementwise.v#L130"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+		<section id="sigmoid_vulkan_f32" class="doc-node">
+			<div class="title"><h2>fn sigmoid_vulkan_f32 <a href="#sigmoid_vulkan_f32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/elementwise.v#L37"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token function">gelu_vcl</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dev vcl<span class="token punctuation">.</span>Device<span class="token punctuation">,</span> x_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
-<p>gelu_vcl applies GELU element-wise on the OpenCL device.</p>
+<code><span class="token keyword">fn</span> <span class="token function">sigmoid_vulkan_f32</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>vulkan<span class="token punctuation">.</span>Device<span class="token punctuation">,</span> x_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span></code></pre>
 
-</section>
-
-		<section id="gemm_vcl" class="doc-node">
-			<div class="title"><h2>fn gemm_vcl <a href="#gemm_vcl">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/compute/gemm.v#L53"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token function">gemm_vcl</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dev vcl<span class="token punctuation">.</span>Device<span class="token punctuation">,</span> a_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> b_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> k <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
-<p>gemm_vcl computes C = A * B on the OpenCL device (column-major, f64). a_data and b_data are flat column-major arrays; returns flat column-major result.</p>
-
-</section>
-
-		<section id="gemm_vcl_f32" class="doc-node">
-			<div class="title"><h2>fn gemm_vcl_f32 <a href="#gemm_vcl_f32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/compute/gemm.v#L81"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token function">gemm_vcl_f32</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dev vcl<span class="token punctuation">.</span>Device<span class="token punctuation">,</span> a_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span><span class="token punctuation">,</span> b_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span><span class="token punctuation">,</span> m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> k <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span></code></pre>
-<p>gemm_vcl_f32 computes C = A * B on the OpenCL device (column-major, f32).</p>
-
-</section>
-
-		<section id="gemv_vcl" class="doc-node">
-			<div class="title"><h2>fn gemv_vcl <a href="#gemv_vcl">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/compute/gemv.v#L28"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token function">gemv_vcl</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dev vcl<span class="token punctuation">.</span>Device<span class="token punctuation">,</span> a_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> x_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> m <span class="token builtin">int</span><span class="token punctuation">,</span> k <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
-<p>gemv_vcl computes y = A * x on the OpenCL device (column-major, f64).</p>
-
-</section>
-
-		<section id="layernorm_vcl" class="doc-node">
-			<div class="title"><h2>fn layernorm_vcl <a href="#layernorm_vcl">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/compute/layernorm.v#L48"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token function">layernorm_vcl</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dev vcl<span class="token punctuation">.</span>Device<span class="token punctuation">,</span> x_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> gamma_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> beta_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> rows <span class="token builtin">int</span><span class="token punctuation">,</span> cols <span class="token builtin">int</span><span class="token punctuation">,</span> eps <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
-<p>layernorm_vcl computes layer normalization row-wise on the OpenCL device. gamma and beta are per-column scale and bias (len = cols).</p>
-
-</section>
-
-		<section id="leaky_relu_vcl" class="doc-node">
-			<div class="title"><h2>fn leaky_relu_vcl <a href="#leaky_relu_vcl">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/compute/elementwise.v#L135"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token function">leaky_relu_vcl</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dev vcl<span class="token punctuation">.</span>Device<span class="token punctuation">,</span> x_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
-<p>leaky_relu_vcl applies LeakyReLU element-wise on the OpenCL device.</p>
-
-</section>
-
-		<section id="max_vcl" class="doc-node">
-			<div class="title"><h2>fn max_vcl <a href="#max_vcl">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/compute/reduction.v#L143"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token function">max_vcl</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dev vcl<span class="token punctuation">.</span>Device<span class="token punctuation">,</span> x_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> rows <span class="token builtin">int</span><span class="token punctuation">,</span> cols <span class="token builtin">int</span><span class="token punctuation">,</span> axis <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
-<p>max_vcl computes max along axis.</p>
-
-</section>
-
-		<section id="mean_vcl" class="doc-node">
-			<div class="title"><h2>fn mean_vcl <a href="#mean_vcl">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/compute/reduction.v#L136"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token function">mean_vcl</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dev vcl<span class="token punctuation">.</span>Device<span class="token punctuation">,</span> x_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> rows <span class="token builtin">int</span><span class="token punctuation">,</span> cols <span class="token builtin">int</span><span class="token punctuation">,</span> axis <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
-<p>mean_vcl computes mean along axis.</p>
-
-</section>
-
-		<section id="mul_scalar_vcl" class="doc-node">
-			<div class="title"><h2>fn mul_scalar_vcl <a href="#mul_scalar_vcl">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/compute/broadcast.v#L89"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token function">mul_scalar_vcl</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dev vcl<span class="token punctuation">.</span>Device<span class="token punctuation">,</span> x_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> scalar <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
-<p>mul_scalar_vcl multiplies every element by a scalar.</p>
-
-</section>
-
-		<section id="mul_vec_vcl" class="doc-node">
-			<div class="title"><h2>fn mul_vec_vcl <a href="#mul_vec_vcl">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/compute/broadcast.v#L134"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token function">mul_vec_vcl</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dev vcl<span class="token punctuation">.</span>Device<span class="token punctuation">,</span> a_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> b_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
-<p>mul_vec_vcl multiplies two vectors element-wise.</p>
-
-</section>
-
-		<section id="relu_vcl" class="doc-node">
-			<div class="title"><h2>fn relu_vcl <a href="#relu_vcl">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/compute/elementwise.v#L115"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token function">relu_vcl</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dev vcl<span class="token punctuation">.</span>Device<span class="token punctuation">,</span> x_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
-<p>relu_vcl applies ReLU element-wise on the OpenCL device.</p>
-
-</section>
-
-		<section id="sigmoid_vcl" class="doc-node">
-			<div class="title"><h2>fn sigmoid_vcl <a href="#sigmoid_vcl">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/compute/elementwise.v#L120"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token function">sigmoid_vcl</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dev vcl<span class="token punctuation">.</span>Device<span class="token punctuation">,</span> x_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
-<p>sigmoid_vcl applies Sigmoid element-wise on the OpenCL device.</p>
-
-</section>
-
-		<section id="softmax_vcl" class="doc-node">
-			<div class="title"><h2>fn softmax_vcl <a href="#softmax_vcl">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/compute/softmax.v#L43"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token function">softmax_vcl</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dev vcl<span class="token punctuation">.</span>Device<span class="token punctuation">,</span> x_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> rows <span class="token builtin">int</span><span class="token punctuation">,</span> cols <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
-<p>softmax_vcl computes row-wise softmax on the OpenCL device (column-major, f64). Input shape: [rows x cols] flat column-major. Returns same shape.</p>
-
-</section>
-
-		<section id="sum_vcl" class="doc-node">
-			<div class="title"><h2>fn sum_vcl <a href="#sum_vcl">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/compute/reduction.v#L129"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token function">sum_vcl</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dev vcl<span class="token punctuation">.</span>Device<span class="token punctuation">,</span> x_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> rows <span class="token builtin">int</span><span class="token punctuation">,</span> cols <span class="token builtin">int</span><span class="token punctuation">,</span> axis <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
-<p>sum_vcl computes sum along axis (0=cols result, 1=rows result).</p>
-
-</section>
-
-		<section id="tanh_vcl" class="doc-node">
-			<div class="title"><h2>fn tanh_vcl <a href="#tanh_vcl">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/compute/elementwise.v#L125"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token function">tanh_vcl</span><span class="token punctuation">(</span><span class="token keyword">mut</span> dev vcl<span class="token punctuation">.</span>Device<span class="token punctuation">,</span> x_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
-<p>tanh_vcl applies Tanh element-wise on the OpenCL device.</p>
 
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 11 May 2026 23:47:09</div>
+						<div class="footer">Powered by vdoc. Generated on: 12 May 2026 00:12:32</div>
 					</div>
-					<div class="doc-toc"><ul><li class="open"><a href="#readme_compute">README</a></li>
-<li class="open"><a href="#Constants">Constants</a></li>
-<li class="open"><a href="#add_scalar_vcl">fn add_scalar_vcl</a>        <ul>
+					<div class="doc-toc"><ul><li class="open"><a href="#gemm_vulkan">fn gemm_vulkan</a>        <ul>
 </ul>
 </li>
-<li class="open"><a href="#add_vec_vcl">fn add_vec_vcl</a>        <ul>
+<li class="open"><a href="#gemm_vulkan_f32">fn gemm_vulkan_f32</a>        <ul>
 </ul>
 </li>
-<li class="open"><a href="#broadcast_bias_vcl">fn broadcast_bias_vcl</a>        <ul>
+<li class="open"><a href="#gemv_vulkan">fn gemv_vulkan</a>        <ul>
 </ul>
 </li>
-<li class="open"><a href="#conv2d_vcl">fn conv2d_vcl</a>        <ul>
+<li class="open"><a href="#gemv_vulkan_f32">fn gemv_vulkan_f32</a>        <ul>
 </ul>
 </li>
-<li class="open"><a href="#elu_vcl">fn elu_vcl</a>        <ul>
+<li class="open"><a href="#relu_vulkan">fn relu_vulkan</a>        <ul>
 </ul>
 </li>
-<li class="open"><a href="#gelu_vcl">fn gelu_vcl</a>        <ul>
+<li class="open"><a href="#relu_vulkan_f32">fn relu_vulkan_f32</a>        <ul>
 </ul>
 </li>
-<li class="open"><a href="#gemm_vcl">fn gemm_vcl</a>        <ul>
+<li class="open"><a href="#sigmoid_vulkan">fn sigmoid_vulkan</a>        <ul>
 </ul>
 </li>
-<li class="open"><a href="#gemm_vcl_f32">fn gemm_vcl_f32</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#gemv_vcl">fn gemv_vcl</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#layernorm_vcl">fn layernorm_vcl</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#leaky_relu_vcl">fn leaky_relu_vcl</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#max_vcl">fn max_vcl</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#mean_vcl">fn mean_vcl</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#mul_scalar_vcl">fn mul_scalar_vcl</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#mul_vec_vcl">fn mul_vec_vcl</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#relu_vcl">fn relu_vcl</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#sigmoid_vcl">fn sigmoid_vcl</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#softmax_vcl">fn softmax_vcl</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#sum_vcl">fn sum_vcl</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#tanh_vcl">fn tanh_vcl</a>        <ul>
+<li class="open"><a href="#sigmoid_vulkan_f32">fn sigmoid_vulkan_f32</a>        <ul>
 </ul>
 </li>
 </ul></div>
