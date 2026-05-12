@@ -40,6 +40,7 @@ jobs:
             libhdf5-dev \
             hdf5-tools \
             opencl-headers \
+            ocl-icd-opencl-dev \
             libvulkan-dev
       - name: Setup VSL as V module
         run: mv vsl ~/.vmodules/

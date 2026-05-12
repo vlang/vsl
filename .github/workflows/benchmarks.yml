@@ -76,7 +76,8 @@ jobs:
             libopenmpi-dev \
             libhdf5-dev \
             hdf5-tools \
-            opencl-headers
+            opencl-headers \
+            ocl-icd-opencl-dev
 
       - name: Move VSL source code to V Modules
         run: mv ./vsl ~/.vmodules
@@ -216,4 +217,3 @@ jobs:
             ~/.vmodules/lapack_bench_${{ matrix.backend.id }}.log
             ~/.vmodules/compare_backends_${{ matrix.backend.id }}.log
           retention-days: 30
-
