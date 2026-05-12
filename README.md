@@ -114,6 +114,16 @@ Each module clearly documents compilation flags and backend requirements,
 allowing
 users to choose the optimal configuration for their specific use case.
 
+### Compute Standardization
+
+VSL compute backends are organized with a unified structure:
+
+- `vsl/compute` — backend-agnostic dispatch API
+- `vsl/vcl/compute` — OpenCL/VCL backend implementation
+- `vsl/vulkan/compute` — Vulkan backend implementation
+
+The recommended integration point for downstream libraries is `vsl.compute`.
+
 ## 🚀 Installation & Quick Start
 
 VSL supports multiple installation methods and deployment options to fit
