@@ -61,6 +61,16 @@ fi
 if [[ -n "${prod}" ]]; then
     echo "Running tests with prod"
     flags="${flags} -prod"
+    # Disable LTO to prevent ELF section overflow on GCC 14 (ubuntu-24.04)
+    # and LTO object corruption on GCC 11 (ubuntu-22.04) in CI environments.
+    flags="${flags} -cflags -fno-lto"
+fi
+
+# On macOS, force VCL to use dlopen so tcc does not need to handle
+# '-framework OpenCL', which it cannot process. The dlopen path loads
+# OpenCL at runtime and fails gracefully when no device is found.
+if [[ "$(uname -s)" == "Darwin" ]]; then
+    flags="${flags} -d vsl_vcl_dlopencl"
 fi
 
 echo "Executing tests with command: \"v ${flags} test .\""
