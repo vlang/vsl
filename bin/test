@@ -66,15 +66,10 @@ if [[ -n "${prod}" ]]; then
     flags="${flags} -cflags -fno-lto"
 fi
 
-# On macOS, force VCL to use dlopen so tcc does not need to handle
-# '-framework OpenCL', which it cannot process. The dlopen path loads
-# OpenCL at runtime and fails gracefully when no device is found.
-# Also force Vulkan to use dlopen since the Vulkan SDK (vulkan/vulkan.h)
-# is not installed on macOS CI runners. The dlopen path uses a bundled
-# vulkan.h from @VMODROOT instead.
-if [[ "$(uname -s)" == "Darwin" ]]; then
-    flags="${flags} -d vsl_vcl_dlopencl -d vsl_vulkan_dlopen"
-fi
+# Use dlopen for VCL and Vulkan on all platforms so the linker does not
+# need libOpenCL or libvulkan at compile time. Also use cc (gcc/clang)
+# instead of tcc to work around tcc struct-ordering bugs in V-generated C.
+flags="${flags} -d vsl_vcl_dlopencl -d vsl_vulkan_dlopen -cc gcc"
 
 echo "Executing tests with command: \"v ${flags} test .\""
 v ${flags} test "${vsl_dir_path}"
