@@ -106,6 +106,11 @@ if [[ -z "${skip_examples}" ]]; then
             echo "Skipping ${file}"
             continue
         fi
+        # Skip vulkan examples on macOS — no libvulkan runtime available
+        if [[ "$(uname -s)" == "Darwin" && "${file}" == *"/vulkan/"* ]]; then
+            echo "Skipping ${file} (no Vulkan on macOS)"
+            continue
+        fi
         echo "Compiling ${file}"
         v ${flags} -d vsl_vcl_dlopencl -o "${file}.bin" "${file}"
         echo "${file}.bin created"
