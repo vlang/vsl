@@ -1,8 +1,5 @@
 module compute
 
-import vsl.vcl
-import vsl.vulkan
-
 // Backend selects which compute backend to use.
 pub enum Backend {
 	auto
@@ -15,9 +12,9 @@ pub enum Backend {
 @[heap]
 pub struct ComputeContext {
 pub mut:
-	backend       Backend        = .auto
-	vulkan_device &vulkan.Device = unsafe { nil }
-	vcl_device    &vcl.Device    = unsafe { nil }
+	backend       Backend = .auto
+	vulkan_device voidptr = unsafe { nil }
+	vcl_device    voidptr = unsafe { nil }
 	strict        bool
 }
 
@@ -29,7 +26,7 @@ pub fn new_context(backend Backend) &ComputeContext {
 }
 
 // new_vulkan_context creates a compute context from an existing Vulkan device.
-pub fn new_vulkan_context(dev &vulkan.Device) &ComputeContext {
+pub fn new_vulkan_context(dev voidptr) &ComputeContext {
 	return &ComputeContext{
 		backend:       .vulkan
 		vulkan_device: dev
@@ -37,7 +34,7 @@ pub fn new_vulkan_context(dev &vulkan.Device) &ComputeContext {
 }
 
 // new_vcl_context creates a compute context from an existing VCL device.
-pub fn new_vcl_context(dev &vcl.Device) &ComputeContext {
+pub fn new_vcl_context(dev voidptr) &ComputeContext {
 	return &ComputeContext{
 		backend:    .vcl
 		vcl_device: dev
@@ -45,13 +42,13 @@ pub fn new_vcl_context(dev &vcl.Device) &ComputeContext {
 }
 
 // with_vulkan_device sets explicit Vulkan device handle.
-pub fn (mut ctx ComputeContext) with_vulkan_device(dev &vulkan.Device) &ComputeContext {
+pub fn (mut ctx ComputeContext) with_vulkan_device(dev voidptr) &ComputeContext {
 	ctx.vulkan_device = dev
 	return &ctx
 }
 
 // with_vcl_device sets explicit VCL device handle.
-pub fn (mut ctx ComputeContext) with_vcl_device(dev &vcl.Device) &ComputeContext {
+pub fn (mut ctx ComputeContext) with_vcl_device(dev voidptr) &ComputeContext {
 	ctx.vcl_device = dev
 	return &ctx
 }

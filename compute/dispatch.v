@@ -1,9 +1,14 @@
 module compute
 
-import vsl.vcl
-import vsl.vcl.compute as vcl_compute
-import vsl.vulkan
-import vsl.vulkan.compute as vk_compute
+$if vulkan ? {
+	import vsl.vulkan
+	import vsl.vulkan.compute as vk_compute
+}
+
+$if vcl ? {
+	import vsl.vcl
+	import vsl.vcl.compute as vcl_compute
+}
 
 // op_supported returns true when an operation is implemented for a backend.
 pub fn op_supported(backend Backend, op string) bool {
@@ -25,18 +30,22 @@ pub fn op_supported(backend Backend, op string) bool {
 	}
 }
 
-fn (ctx &ComputeContext) resolve_vulkan_device() !&vulkan.Device {
-	if !isnil(ctx.vulkan_device) {
-		return ctx.vulkan_device
+$if vulkan ? {
+	fn (ctx &ComputeContext) resolve_vulkan_device() !&vulkan.Device {
+		if !isnil(ctx.vulkan_device) {
+			return unsafe { &vulkan.Device(ctx.vulkan_device) }
+		}
+		return vulkan.new_device()
 	}
-	return vulkan.new_device()
 }
 
-fn (ctx &ComputeContext) resolve_vcl_device() !&vcl.Device {
-	if !isnil(ctx.vcl_device) {
-		return ctx.vcl_device
+$if vcl ? {
+	fn (ctx &ComputeContext) resolve_vcl_device() !&vcl.Device {
+		if !isnil(ctx.vcl_device) {
+			return unsafe { &vcl.Device(ctx.vcl_device) }
+		}
+		return vcl.get_default_device()
 	}
-	return vcl.get_default_device()
 }
 
 // gemm computes C = A * B with row-major input/output.
