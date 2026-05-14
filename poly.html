@@ -257,6 +257,19 @@
 <p>Divides two polynomials:</p>
 <pre><code class="language-console"><span class="token punctuation">(</span>a_n <span class="token operator">*</span> x<span class="token operator">^</span>n <span class="token operator">+</span> <span class="token punctuation">...</span> <span class="token operator">+</span> a_0<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token punctuation">(</span>b_m <span class="token operator">*</span> x<span class="token operator">^</span>m <span class="token operator">+</span> <span class="token punctuation">...</span> <span class="token operator">+</span> b_0<span class="token punctuation">)</span></code></pre>
 <p>Uses polynomial long division algorithm. Returns <code>(q, r)</code> where <code>q</code> is the quotient and <code>r</code> is the remainder such that <code>a(x) = b(x) * q(x) + r(x)</code> and <code>degree(r) &lt; degree(b)</code>.</p>
+<h2 id="polynomial-degree-and-coefficient-sums">Polynomial Degree and Coefficient Sums</h2>
+<pre><code class="language-v"><span class="token keyword">fn</span> <span class="token function">degree</span><span class="token punctuation">(</span>c <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>This function returns the degree of the given polynomial. The polynomial is represented by the array <code>c</code>:</p>
+<pre><code class="language-console"><span class="token function">P</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span> <span class="token operator">=</span> c<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">+</span> c<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> x <span class="token operator">+</span> c<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> x<span class="token operator">^</span><span class="token number">2</span> <span class="token operator">+</span> <span class="token punctuation">...</span> <span class="token operator">+</span> c<span class="token punctuation">[</span>n<span class="token punctuation">]</span> x<span class="token operator">^</span>n</code></pre>
+<p>The function returns the index of the highest non-zero term.</p>
+<pre><code class="language-v"><span class="token keyword">fn</span> <span class="token function">sum_odd_coeffs</span><span class="token punctuation">(</span>c <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>This function calculates the sum of the coefficients at odd indices in the given polynomial. The polynomial is represented by the array <code>c</code>:</p>
+<pre><code class="language-console"><span class="token function">P</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span> <span class="token operator">=</span> c<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">+</span> c<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> x <span class="token operator">+</span> c<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> x<span class="token operator">^</span><span class="token number">2</span> <span class="token operator">+</span> <span class="token punctuation">...</span> <span class="token operator">+</span> c<span class="token punctuation">[</span>n<span class="token punctuation">]</span> x<span class="token operator">^</span>n</code></pre>
+<p>The function returns the sum of coefficients <code>c[1]</code>, <code>c[3]</code>, <code>c[5]</code>, etc.</p>
+<pre><code class="language-v"><span class="token keyword">fn</span> <span class="token function">sum_even_coeffs</span><span class="token punctuation">(</span>c <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>This function calculates the sum of the coefficients at even indices in the given polynomial. The polynomial is represented by the array <code>c</code>:</p>
+<pre><code class="language-console"><span class="token function">P</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span> <span class="token operator">=</span> c<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">+</span> c<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> x <span class="token operator">+</span> c<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> x<span class="token operator">^</span><span class="token number">2</span> <span class="token operator">+</span> <span class="token punctuation">...</span> <span class="token operator">+</span> c<span class="token punctuation">[</span>n<span class="token punctuation">]</span> x<span class="token operator">^</span>n</code></pre>
+<p>The function returns the sum of coefficients <code>c[0]</code>, <code>c[2]</code>, <code>c[4]</code>, etc.</p>
 
 </section>
 
@@ -281,6 +294,14 @@
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">companion_matrix</span><span class="token punctuation">(</span>a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 <p>companion_matrix creates a companion matrix for the polynomial P(x) = a_n * x^n + a_{n-1} * x^{n-1} + ... + a_1 * x + a_0 The companion matrix C is defined as: [0 0 0 ... 0 -a_0/a_n] [1 0 0 ... 0 -a_1/a_n] [0 1 0 ... 0 -a_2/a_n] [. . . ... . ........] [0 0 0 ... 1 -a_{n-1}/a_n] Input: a = [a_0, a_1, ..., a_n] Output: Companion matrix C</p>
+
+</section>
+
+		<section id="degree" class="doc-node">
+			<div class="title"><h2>fn degree <a href="#degree">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/poly/poly.v#L317"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">degree</span><span class="token punctuation">(</span>c <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>degree returns the degree of the given polynomial Input: c = [a_0, a_1, ..., a_n] Output: Degree of the polynomial as an integer</p>
 
 </section>
 
@@ -340,8 +361,24 @@
 
 </section>
 
+		<section id="sum_even_coeffs" class="doc-node">
+			<div class="title"><h2>fn sum_even_coeffs <a href="#sum_even_coeffs">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/poly/poly.v#L335"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">sum_even_coeffs</span><span class="token punctuation">(</span>c <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>sum_even_coeffs calculates the sum of the coefficients at even indices Input: c = [a_0, a_1, ..., a_n] Output: Sum of the coefficients at even indices as a floating-point number</p>
 
-						<div class="footer">Powered by vdoc. Generated on: 13 May 2026 23:44:43</div>
+</section>
+
+		<section id="sum_odd_coeffs" class="doc-node">
+			<div class="title"><h2>fn sum_odd_coeffs <a href="#sum_odd_coeffs">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/poly/poly.v#L324"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">sum_odd_coeffs</span><span class="token punctuation">(</span>c <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>sum_odd_coeffs calculates the sum of the coefficients at odd indices Input: c = [a_0, a_1, ..., a_n] Output: Sum of the coefficients at odd indices as a floating-point number</p>
+
+</section>
+
+
+						<div class="footer">Powered by vdoc. Generated on: 14 May 2026 04:10:43</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_poly">README</a></li>
 <li class="open"><a href="#add">fn add</a>        <ul>
@@ -351,6 +388,9 @@
 </ul>
 </li>
 <li class="open"><a href="#companion_matrix">fn companion_matrix</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#degree">fn degree</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#divide">fn divide</a>        <ul>
@@ -372,6 +412,12 @@
 </ul>
 </li>
 <li class="open"><a href="#subtract">fn subtract</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#sum_even_coeffs">fn sum_even_coeffs</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#sum_odd_coeffs">fn sum_odd_coeffs</a>        <ul>
 </ul>
 </li>
 </ul></div>
