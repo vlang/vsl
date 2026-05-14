@@ -153,3 +153,44 @@ Divides two polynomials:
 
 Uses polynomial long division algorithm. Returns `(q, r)` where `q` is the quotient and `r`
 is the remainder such that `a(x) = b(x) * q(x) + r(x)` and `degree(r) < degree(b)`.
+
+## Polynomial Degree and Coefficient Sums
+
+```v ignore
+fn degree(c []f64) int
+```
+
+This function returns the degree of the given polynomial.
+The polynomial is represented by the array `c`:
+
+```console
+P(x) = c[0] + c[1] x + c[2] x^2 + ... + c[n] x^n
+```
+
+The function returns the index of the highest non-zero term.
+
+```v ignore
+fn sum_odd_coeffs(c []f64) f64
+```
+
+This function calculates the sum of the coefficients at odd indices
+in the given polynomial. The polynomial is represented by the array `c`:
+
+```console
+P(x) = c[0] + c[1] x + c[2] x^2 + ... + c[n] x^n
+```
+
+The function returns the sum of coefficients `c[1]`, `c[3]`, `c[5]`, etc.
+
+```v ignore
+fn sum_even_coeffs(c []f64) f64
+```
+
+This function calculates the sum of the coefficients at even indices
+in the given polynomial. The polynomial is represented by the array `c`:
+
+```console
+P(x) = c[0] + c[1] x + c[2] x^2 + ... + c[n] x^n
+```
+
+The function returns the sum of coefficients `c[0]`, `c[2]`, `c[4]`, etc.
