@@ -1,6 +1,7 @@
 module la
 
 import math
+import vsl.errors
 
 // vector_apply sets this []T with the scaled components of another []T
 // this := a * another   ⇒   this[i] := a * another[i]
@@ -79,4 +80,21 @@ pub fn vector_largest[T](o []T, den T) T {
 		}
 	}
 	return largest / den
+}
+
+// vector_cosine_similarity calculates the cosine similarity between two vectors
+pub fn vector_cosine_similarity(a []f64, b []f64) f64 {
+	if a.len != b.len {
+		errors.vsl_panic('Vectors must have the same length', .efailed)
+	}
+
+	dot_product := vector_dot(a, b)
+	norm_a := vector_norm(a)
+	norm_b := vector_norm(b)
+
+	if norm_a == 0 || norm_b == 0 {
+		return 0
+	}
+
+	return dot_product / (norm_a * norm_b)
 }
