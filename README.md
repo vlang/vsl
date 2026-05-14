@@ -18,6 +18,7 @@
 [![VSL Continuous Integration][workflowbadge]][workflowurl]
 [![Deploy Documentation][deploydocsbadge]][deploydocsurl]
 [![Performance Benchmarks][benchmarksbadge]][benchmarksurl]
+[![MegaLinter][megalinterbadge]][megalinterurl]
 [![License: MIT][licensebadge]][licenseurl]
 [![Modules][ModulesBadge]][ModulesUrl]
 
@@ -218,12 +219,14 @@ Made with [contributors-img](https://contrib.rocks).
 [workflowbadge]: https://github.com/vlang/vsl/actions/workflows/ci.yml/badge.svg
 [deploydocsbadge]: https://github.com/vlang/vsl/actions/workflows/deploy-docs.yml/badge.svg
 [benchmarksbadge]: https://github.com/vlang/vsl/actions/workflows/benchmarks.yml/badge.svg
+[megalinterbadge]: https://github.com/vlang/vsl/actions/workflows/mega-linter.yml/badge.svg
 [licensebadge]: https://img.shields.io/badge/License-MIT-blue.svg
 [ModulesBadge]: https://img.shields.io/badge/modules-reference-027d9c?logo=v&logoColor=white&logoWidth=10
 [awesomevurl]: https://github.com/vlang/awesome-v/blob/master/README.md#scientific-computing
 [workflowurl]: https://github.com/vlang/vsl/actions/workflows/ci.yml
 [deploydocsurl]: https://github.com/vlang/vsl/actions/workflows/deploy-docs.yml
 [benchmarksurl]: https://github.com/vlang/vsl/actions/workflows/benchmarks.yml
+[megalinterurl]: https://github.com/vlang/vsl/actions/workflows/mega-linter.yml
 [licenseurl]: https://github.com/vlang/vsl/blob/main/LICENSE
 [ModulesUrl]: https://vlang.github.io/vsl/
 
