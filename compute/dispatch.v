@@ -14,7 +14,7 @@ $if vcl ? {
 
 $if cuda ? {
 	import vsl.cuda
-	import vsl.cuda.compute as cuda_compute
+	import vsl.cuda.compute as _
 }
 
 // op_supported returns true when an operation is implemented for a backend.
@@ -69,7 +69,7 @@ fn (ctx &ComputeContext) resolve_backend() !ComputeBackend {
 	}
 	$if cuda ? {
 		if backend == .cuda {
-			return new_cuda_backend()
+			return cuda.new_cuda_backend()
 		}
 	}
 	return new_cpu_backend()

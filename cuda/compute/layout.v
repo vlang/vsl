@@ -5,7 +5,7 @@ module compute
 // row_to_col_major converts row-major flat array to column-major.
 // For matrix [rows x cols], element (r, c) in row-major flat at index r*cols+c
 // becomes element (r, c) in column-major flat at index r + c*rows.
-fn row_to_col_major(data []f64, rows int, cols int) []f64 {
+pub fn row_to_col_major(data []f64, rows int, cols int) []f64 {
 	mut out := []f64{len: data.len}
 	for r in 0 .. rows {
 		for c in 0 .. cols {
@@ -18,7 +18,7 @@ fn row_to_col_major(data []f64, rows int, cols int) []f64 {
 // col_to_row_major converts column-major flat array back to row-major.
 // For matrix [rows x cols], element (r, c) in column-major flat at index r + c*rows
 // becomes element (r, c) in row-major flat at index r*cols+c.
-fn col_to_row_major(data []f64, rows int, cols int) []f64 {
+pub fn col_to_row_major(data []f64, rows int, cols int) []f64 {
 	mut out := []f64{len: data.len}
 	for r in 0 .. rows {
 		for c in 0 .. cols {

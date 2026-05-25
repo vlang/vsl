@@ -2,7 +2,8 @@
 // SPDX-License-Identifier: MIT
 module cuda
 
-import vsl.cuda.compute as cuda_compute
+// CUDA compute functions
+import vsl.cuda.compute
 
 // Device represents a CUDA device handle (cuCtx* or CUdeviceptr).
 // Concrete type is defined in cuda.c.v with C bindings when CUDA is available.
@@ -46,60 +47,60 @@ pub fn (b &CUDABackend) supports(op string) bool {
 }
 
 pub fn (b &CUDABackend) gemm(a_data []f64, b_data []f64, m int, n int, k int) ![]f64 {
-	return cuda_compute.gemm_cuda(b.dev, a_data, b_data, m, n, k)
+	return compute.gemm_cuda(b.dev, a_data, b_data, m, n, k)
 }
 
 pub fn (b &CUDABackend) gemv(a_data []f64, x_data []f64, m int, n int) ![]f64 {
-	return cuda_compute.gemv_cuda(b.dev, a_data, x_data, m, n)
+	return compute.gemv_cuda(b.dev, a_data, x_data, m, n)
 }
 
 pub fn (b &CUDABackend) relu(x_data []f64) ![]f64 {
-	return cuda_compute.relu_cuda(b.dev, x_data)
+	return compute.relu_cuda(b.dev, x_data)
 }
 
 pub fn (b &CUDABackend) sigmoid(x_data []f64) ![]f64 {
-	return cuda_compute.sigmoid_cuda(b.dev, x_data)
+	return compute.sigmoid_cuda(b.dev, x_data)
 }
 
 pub fn (b &CUDABackend) tanh(x_data []f64) ![]f64 {
-	return cuda_compute.tanh_cuda(b.dev, x_data)
+	return compute.tanh_cuda(b.dev, x_data)
 }
 
 pub fn (b &CUDABackend) add_vec(a_data []f64, b_data []f64) ![]f64 {
-	return cuda_compute.add_vec_cuda(b.dev, a_data, b_data)
+	return compute.add_vec_cuda(b.dev, a_data, b_data)
 }
 
 pub fn (b &CUDABackend) mul_vec(a_data []f64, b_data []f64) ![]f64 {
-	return cuda_compute.mul_vec_cuda(b.dev, a_data, b_data)
+	return compute.mul_vec_cuda(b.dev, a_data, b_data)
 }
 
 pub fn (b &CUDABackend) add_scalar(x_data []f64, s f64) ![]f64 {
-	return cuda_compute.add_scalar_cuda(b.dev, x_data, s)
+	return compute.add_scalar_cuda(b.dev, x_data, s)
 }
 
 pub fn (b &CUDABackend) mul_scalar(x_data []f64, s f64) ![]f64 {
-	return cuda_compute.mul_scalar_cuda(b.dev, x_data, s)
+	return compute.mul_scalar_cuda(b.dev, x_data, s)
 }
 
 pub fn (b &CUDABackend) softmax(x_data []f64) ![]f64 {
-	return cuda_compute.softmax_cuda(b.dev, x_data)
+	return compute.softmax_cuda(b.dev, x_data)
 }
 
 pub fn (b &CUDABackend) layernorm(x_data []f64, gamma []f64, beta []f64) ![]f64 {
-	return cuda_compute.layernorm_cuda(b.dev, x_data, gamma, beta)
+	return compute.layernorm_cuda(b.dev, x_data, gamma, beta)
 }
 
 pub fn (b &CUDABackend) conv2d(input []f64, kernel []f64, batch int, in_h int, in_w int, in_ch int, out_ch int, k_h int, k_w int, stride_h int, stride_w int) ![]f64 {
-	return cuda_compute.conv2d_cuda(b.dev, input, kernel, batch, in_h, in_w, in_ch, out_ch, k_h,
+	return compute.conv2d_cuda(b.dev, input, kernel, batch, in_h, in_w, in_ch, out_ch, k_h,
 		k_w, stride_h, stride_w)
 }
 
 // to_internal: cuBLAS is column-major, same as VCL/Vulkan.
 pub fn (b &CUDABackend) to_internal(data []f64, rows int, cols int) ![]f64 {
-	return cuda_compute.row_to_col_major(data, rows, cols)
+	return compute.row_to_col_major(data, rows, cols)
 }
 
 // from_internal: convert column-major back to row-major.
 pub fn (b &CUDABackend) from_internal(data []f64, rows int, cols int) ![]f64 {
-	return cuda_compute.col_to_row_major(data, rows, cols)
+	return compute.col_to_row_major(data, rows, cols)
 }
