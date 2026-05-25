@@ -133,6 +133,18 @@ pub fn (mut p Plot) funnel(trace FunnelTrace) Plot {
 	return p.add_trace(trace)
 }
 
+// ohlc adds an OHLC trace to the plot
+@[inline]
+pub fn (mut p Plot) ohlc(trace OhlcTrace) Plot {
+	return p.add_trace(trace)
+}
+
+// table adds a table trace to the plot
+@[inline]
+pub fn (mut p Plot) table(trace TableTrace) Plot {
+	return p.add_trace(trace)
+}
+
 // scatterpolar adds a polar/radar trace to the plot
 @[inline]
 pub fn (mut p Plot) scatterpolar(trace ScatterPolarTrace) Plot {

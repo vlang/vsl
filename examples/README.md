@@ -95,7 +95,9 @@ v -cflags <flags> run main.v
 | ------------------------------------------------------ | --------------------------------------- |
 | [plot_waterfall_financial](./plot_waterfall_financial) | Waterfall chart for financial analysis. |
 | [plot_candlestick_stocks](./plot_candlestick_stocks)   | Candlestick chart for stock data.       |
+| [plot_ohlc_market_regime](./plot_ohlc_market_regime)   | OHLC chart for market regime analysis.  |
 | [plot_funnel_conversion](./plot_funnel_conversion)     | Funnel chart for conversion analysis.   |
+| [plot_table_executive_summary](./plot_table_executive_summary) | KPI summary table for executive dashboards. |
 
 ### Hierarchical & Network Charts
 

@@ -27,6 +27,7 @@ plots with minimal code while maintaining full customization control.
 
 - **Waterfall Charts**: Financial flow and variance analysis
 - **Candlestick Charts**: OHLC stock price visualization
+- **OHLC Charts**: Open-high-low-close time series bars
 - **Funnel Charts**: Conversion and process flow analysis
 
 ### Hierarchical & Network Charts
@@ -139,6 +140,49 @@ plt.candlestick(
 	close: close_prices
 )
 plt.layout(title: 'Stock Price OHLC')
+plt.show()!
+```
+
+### OHLC Chart (Financial)
+
+```v
+import vsl.plot
+
+dates := ['2026-03-01', '2026-03-02', '2026-03-03']
+open_prices := [100.0, 102.0, 101.0]
+high_prices := [104.0, 103.0, 102.0]
+low_prices := [99.0, 100.0, 97.0]
+close_prices := [103.0, 101.0, 98.0]
+
+mut plt := plot.Plot.new()
+plt.ohlc(
+	x:     dates
+	open:  open_prices
+	high:  high_prices
+	low:   low_prices
+	close: close_prices
+)
+plt.layout(title: 'OHLC Market Snapshot')
+plt.show()!
+```
+
+### Table (Reporting)
+
+```v
+import vsl.plot
+
+mut plt := plot.Plot.new()
+plt.table(
+	header: plot.TableHeader{
+		values: ['Metric', 'Value']
+		align:  'left'
+	}
+	cells:  plot.TableCells{
+		values: [['MRR', 'Churn'], ['$421k', '2.1%']]
+		align:  'left'
+	}
+)
+plt.layout(title: 'KPI Summary')
 plt.show()!
 ```
 
