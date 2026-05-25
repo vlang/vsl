@@ -38,10 +38,15 @@ print(g.str_dist_matrix())
 Vertex coordinates can be specified as well. Furthermore, weights can be assigned to vertices. These
 are useful when computing distances, for example.
 
-## Floyd-Warshall algorithm to compute shortest paths
+## Shortest path methods
 
-The `shortest_paths` method of `Graph` computes the shortest paths using the Floyd-Warshall
-algorithm. For example, the graph above has the following distances matrix:
+The `shortest_paths` method of `Graph` supports three methods:
+
+- `.fw` — Floyd-Warshall all-pairs shortest paths (weighted)
+- `.dijkstra` — all-pairs shortest paths by running Dijkstra from each source (weighted)
+- `.bfs` — all-pairs shortest paths by breadth-first search (unweighted hops)
+
+For weighted methods (`.fw` and `.dijkstra`), the graph below has the following distances matrix:
 
 ```console
        [10]
@@ -60,7 +65,7 @@ graph:  j= 0  1  2  3
            ∞  ∞  ∞  0 |  3
 ```
 
-After running the `shortest_paths` command,
+After running `shortest_paths`,
 paths from source (s) to destination (t) can be extracted
 with the `path` method.
 
@@ -88,7 +93,7 @@ weights_e := [5.0, 10.0, 3.0, 1.0]
 verts := [][]f64{}
 weights_v := []f64{}
 g := graph.Graph.new(edges, weights_e, verts, weights_v)
-// compute paths
+// compute paths (weighted)
 g.shortest_paths(.fw)
 // print shortest path from 0 to 2
 print(g.path(0, 2))
@@ -97,3 +102,14 @@ print(g.path(0, 3))
 // print distance matrix
 print(g.str_dist_matrix())
 ```
+
+### Example: Method comparison
+
+See the representative example:
+
+```sh
+v run examples/graph_shortest_paths_methods/main.v
+```
+
+It compares `.fw`, `.dijkstra`, and `.bfs` in practical scenarios and highlights
+when each method should be preferred.
