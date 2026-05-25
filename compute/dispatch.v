@@ -12,6 +12,11 @@ $if vcl ? {
 	import vsl.vcl.compute as vcl_compute
 }
 
+$if cuda ? {
+	import vsl.cuda
+	import vsl.cuda.compute as cuda_compute
+}
+
 // op_supported returns true when an operation is implemented for a backend.
 pub fn op_supported(backend Backend, op string) bool {
 	return match backend {

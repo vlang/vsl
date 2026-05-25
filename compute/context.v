@@ -62,6 +62,12 @@ pub fn (mut ctx ComputeContext) with_vcl_device(dev voidptr) &ComputeContext {
 	return &ctx
 }
 
+// with_cuda_device sets explicit CUDA device handle.
+pub fn (mut ctx ComputeContext) with_cuda_device(dev voidptr) &ComputeContext {
+	ctx.cuda_device = dev
+	return &ctx
+}
+
 // with_strict toggles strict backend behavior.
 // When true, operations fail if the selected backend is unavailable.
 pub fn (mut ctx ComputeContext) with_strict(strict bool) &ComputeContext {
@@ -78,6 +84,9 @@ pub fn available_backends() []Backend {
 	$if vcl ? {
 		out << .vcl
 	}
+	$if cuda ? {
+		out << .cuda
+	}
 	out << .cpu
 	return out
 }
@@ -92,6 +101,9 @@ fn (ctx &ComputeContext) select_backend() Backend {
 	}
 	$if vcl ? {
 		return .vcl
+	}
+	$if cuda ? {
+		return .cuda
 	}
 	return .cpu
 }
