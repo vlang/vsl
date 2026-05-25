@@ -43,8 +43,8 @@ VCL enables creation of stunning GPU-accelerated visualizations:
 
 |                                      |                                |                |                       |
 | :----------------------------------: | :----------------------------: | :------------: | :-------------------: |
-|       ![][sierpinski_triangle]       | ![][mandelbrot_blue_red_black] |   ![][julia]   | ![][mandelbrot_basic] |
-| ![][mandelbrot_pseudo_random_colors] |   ![][sierpinski_triangle2]    | ![][julia_set] |   ![][julia_basic]    |
+|       ![Sierpinski Triangle](./static/sierpinski_triangle.png)       | ![Mandelbrot Blue Red Black](./static/mandelbrot_blue_red_black.png) |   ![Julia](./static/julia.png)   | ![Mandelbrot Basic](./static/mandelbrot_basic.png) |
+| ![Mandelbrot Pseudo Random Colors](./static/mandelbrot_pseudo_random_colors.png) |   ![Sierpinski Triangle 2](./static/sierpinski_triangle2.png)    | ![Julia Set](./static/julia_set.png) |   ![Julia Basic](./static/julia_basic.png)    |
 
 ## 🔧 Installation & Configuration
 
