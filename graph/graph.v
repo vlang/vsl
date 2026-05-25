@@ -8,6 +8,8 @@ import vsl.util
 
 pub enum ShortestPaths {
 	fw // FW: Floyd-Warshall method
+	dijkstra // Dijkstra all-pairs (repeated single-source)
+	bfs // Breadth-first search all-pairs (unweighted shortest path in hops)
 }
 
 // Graph defines a graph structure
@@ -91,23 +93,18 @@ pub fn (g &Graph) get_edge(i int, j int) !int {
  *   method -- FW: Floyd-Warshall method
 */
 pub fn (g &Graph) shortest_paths(method ShortestPaths) Graph {
-	if method != .fw {
-		errors.vsl_panic('shortest_paths works with FW (Floyd-Warshall) method only for now',
-			.efailed)
-	}
 	g2 := g.calc_dist()
-	nv := g2.dist.len
 	mut dist := g2.dist.clone()
 	mut next := g2.next.clone()
-	for k := 0; k < nv; k++ {
-		for i := 0; i < nv; i++ {
-			for j := 0; j < nv; j++ {
-				sum := dist[i][k] + dist[k][j]
-				if dist[i][j] > sum {
-					dist[i][j] = sum
-					next[i][j] = next[i][k]
-				}
-			}
+	match method {
+		.fw {
+			dist, next = shortest_paths_fw(g2)
+		}
+		.dijkstra {
+			dist, next = shortest_paths_dijkstra(g2)
+		}
+		.bfs {
+			dist, next = shortest_paths_bfs(g2)
 		}
 	}
 	return Graph{
@@ -120,6 +117,154 @@ pub fn (g &Graph) shortest_paths(method ShortestPaths) Graph {
 		dist:      dist
 		next:      next
 	}
+}
+
+fn shortest_paths_fw(g Graph) ([][]f64, [][]int) {
+	nv := g.dist.len
+	mut dist := g.dist.clone()
+	mut next := g.next.clone()
+	for k := 0; k < nv; k++ {
+		for i := 0; i < nv; i++ {
+			for j := 0; j < nv; j++ {
+				sum := dist[i][k] + dist[k][j]
+				if dist[i][j] > sum {
+					dist[i][j] = sum
+					next[i][j] = next[i][k]
+				}
+			}
+		}
+	}
+	return dist, next
+}
+
+fn shortest_paths_dijkstra(g Graph) ([][]f64, [][]int) {
+	nv := g.dist.len
+	mut all_dist := [][]f64{len: nv, init: []f64{len: nv, init: math.max_f64}}
+	mut all_next := [][]int{len: nv, init: []int{len: nv, init: -1}}
+
+	for s := 0; s < nv; s++ {
+		mut visited := []bool{len: nv}
+		mut prev := []int{len: nv, init: -1}
+		mut dist := []f64{len: nv, init: math.max_f64}
+		dist[s] = 0.0
+
+		for _ in 0 .. nv {
+			u := argmin_unvisited(dist, visited)
+			if u < 0 || dist[u] == math.max_f64 {
+				break
+			}
+			visited[u] = true
+			neighbors := out_neighbors(g, u)
+			for v in neighbors {
+				w := g.dist[u][v]
+				if w == math.max_f64 {
+					continue
+				}
+				candidate := dist[u] + w
+				if candidate < dist[v] {
+					dist[v] = candidate
+					prev[v] = u
+				}
+			}
+		}
+
+		all_dist[s] = dist.clone()
+		for t := 0; t < nv; t++ {
+			all_next[s][t] = first_hop_from_prev(s, t, prev)
+		}
+	}
+
+	return all_dist, all_next
+}
+
+fn shortest_paths_bfs(g Graph) ([][]f64, [][]int) {
+	nv := g.dist.len
+	mut all_dist := [][]f64{len: nv, init: []f64{len: nv, init: math.max_f64}}
+	mut all_next := [][]int{len: nv, init: []int{len: nv, init: -1}}
+
+	for s := 0; s < nv; s++ {
+		mut prev := []int{len: nv, init: -1}
+		mut hops := []int{len: nv, init: -1}
+		mut queue := []int{cap: nv}
+		mut qhead := 0
+
+		hops[s] = 0
+		queue << s
+
+		for qhead < queue.len {
+			u := queue[qhead]
+			qhead++
+			neighbors := out_neighbors(g, u)
+			for v in neighbors {
+				if hops[v] != -1 {
+					continue
+				}
+				hops[v] = hops[u] + 1
+				prev[v] = u
+				queue << v
+			}
+		}
+
+		for t := 0; t < nv; t++ {
+			if hops[t] >= 0 {
+				all_dist[s][t] = f64(hops[t])
+			}
+			all_next[s][t] = first_hop_from_prev(s, t, prev)
+		}
+	}
+
+	return all_dist, all_next
+}
+
+fn argmin_unvisited(dist []f64, visited []bool) int {
+	mut best := -1
+	mut best_dist := math.max_f64
+	for i, d in dist {
+		if !visited[i] && d < best_dist {
+			best_dist = d
+			best = i
+		}
+	}
+	return best
+}
+
+fn out_neighbors(g Graph, u int) []int {
+	mut neighbors := []int{}
+	if u !in g.shares {
+		return neighbors
+	}
+	for eid in g.shares[u] {
+		edge := g.edges[eid]
+		if edge[0] == u {
+			neighbors << edge[1]
+		}
+	}
+	return neighbors
+}
+
+fn first_hop_from_prev(s int, t int, prev []int) int {
+	if s == t {
+		return -1
+	}
+	if t < 0 || t >= prev.len {
+		return -1
+	}
+	mut cur := t
+	mut parent := prev[cur]
+	if parent == -1 {
+		return -1
+	}
+	for parent != s {
+		cur = parent
+		if cur < 0 || cur >= prev.len {
+			return -1
+		}
+		parent = prev[cur]
+		if parent == -1 {
+			return -1
+		}
+	}
+	return cur
 }
 
 // path returns the path from source (s) to destination (t)

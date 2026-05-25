@@ -1,5 +1,7 @@
 module graph
 
+import math
+
 fn test_graph01() {
 	/*
 	*           [10]
@@ -95,4 +97,37 @@ fn test_graph02() {
 	for i, v in [1, 4, 5, 3] {
 		assert g2_path_1_3[i] == v
 	}
+}
+
+fn test_shortest_paths_dijkstra_matches_fw_on_weighted_graph() {
+	g := Graph.new([[0, 1], [0, 3], [1, 2], [2, 3]], [5.0, 10.0, 3.0, 1.0], [], [])
+	fw := g.shortest_paths(.fw)
+	dj := g.shortest_paths(.dijkstra)
+
+	for i := 0; i < g.nverts(); i++ {
+		for j := 0; j < g.nverts(); j++ {
+			if fw.dist[i][j] == math.max_f64 {
+				assert dj.dist[i][j] == math.max_f64
+				continue
+			}
+			assert math.abs(fw.dist[i][j] - dj.dist[i][j]) < 1e-12
+		}
+	}
+
+	assert dj.path(0, 3) == [0, 1, 2, 3]
+}
+
+fn test_shortest_paths_bfs_minimizes_hops() {
+	// Two competing routes from 0 to 3:
+	// - 0->1->3 has 2 hops but high weights (100 + 100)
+	// - 0->2->4->3 has 3 hops but low weights (1 + 1 + 1)
+	g := Graph.new([[0, 1], [1, 3], [0, 2], [2, 4], [4, 3]], [100.0, 100.0, 1.0, 1.0, 1.0], [], [])
+	fw := g.shortest_paths(.fw)
+	bfs := g.shortest_paths(.bfs)
+
+	assert fw.path(0, 3) == [0, 2, 4, 3]
+	assert math.abs(fw.dist[0][3] - 3.0) < 1e-12
+
+	assert bfs.path(0, 3) == [0, 1, 3]
+	assert math.abs(bfs.dist[0][3] - 2.0) < 1e-12
 }
