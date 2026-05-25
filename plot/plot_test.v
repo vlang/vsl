@@ -121,3 +121,38 @@ fn test_layout_title_with_font_styling() {
 	assert layout_json.contains('"plot_bgcolor":"#f8f9fa"')
 	assert layout_json.contains('"paper_bgcolor":"#ffffff"')
 }
+
+fn test_annotation_align_left() {
+	mut plt := Plot.new()
+	plt.scatter(x: [1.0, 2.0, 3.0], y: [1.0, 2.0, 3.0])
+	plt.annotation(
+		x:         2.0
+		y:         2.0
+		text:      'Left Aligned'
+		align:     'left'
+		xanchor:   'left'
+		showarrow: false
+	)
+
+	_, layout_json := plt.to_json()
+	assert layout_json.contains('"align":"left"')
+	assert layout_json.contains('"xanchor":"left"')
+	assert layout_json.contains('Left Aligned')
+}
+
+fn test_annotation_align_right() {
+	mut plt := Plot.new()
+	plt.scatter(x: [1.0, 2.0, 3.0], y: [1.0, 2.0, 3.0])
+	plt.annotation(
+		x:         2.0
+		y:         2.0
+		text:      'Right Aligned'
+		align:     'right'
+		xanchor:   'right'
+		showarrow: false
+	)
+
+	_, layout_json := plt.to_json()
+	assert layout_json.contains('"align":"right"')
+	assert layout_json.contains('"xanchor":"right"')
+}
