@@ -151,6 +151,18 @@ pub fn (mut p Plot) scatterpolar(trace ScatterPolarTrace) Plot {
 	return p.add_trace(trace)
 }
 
+// scattergeo adds a geographic scatter trace to the plot
+@[inline]
+pub fn (mut p Plot) scattergeo(trace ScatterGeoTrace) Plot {
+	return p.add_trace(trace)
+}
+
+// barpolar adds a polar bar trace to the plot
+@[inline]
+pub fn (mut p Plot) barpolar(trace BarPolarTrace) Plot {
+	return p.add_trace(trace)
+}
+
 // box adds a box trace to the plot
 @[inline]
 pub fn (mut p Plot) annotation(annotation Annotation) Plot {

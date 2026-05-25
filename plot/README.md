@@ -50,6 +50,12 @@ plots with minimal code while maintaining full customization control.
 - **Choropleth Maps**: Geographic data visualization
 - **Scatter Mapbox**: Location-based scatter plots
 - **Density Mapbox**: Geographic density visualization
+- **ScatterGeo**: Geographic scatter with custom projections
+
+### Advanced Analytics
+
+- **Radar/Polar Charts**: Multi-dimensional comparison
+- **BarPolar**: Polar bar charts (wind roses, compass analysis)
 
 ### Interactive Features
 
