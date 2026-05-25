@@ -168,6 +168,8 @@ v -cflags <flags> run main.v
 | [diff_example](./diff_example)                     | Differentiation example.                                          |
 | [poly_examples](./poly_examples)                   | Core polynomial operations and root solvers.                      |
 | [prime_examples](./prime_examples)                 | Prime module usage: primality checks and sieve.                   |
+| [easings_motion_profiles](./easings_motion_profiles) | Kinematic analysis of representative easing motion profiles.      |
+| [easings_signal_shaping](./easings_signal_shaping) | ADSR-like signal envelope shaping with easing functions.          |
 | [prime_factorization](./prime_factorization)       | Prime factorization example.                                      |
 | [roots_bisection_solver](./roots_bisection_solver) | Root finding using the bisection method.                          |
 | [deriv_example](./deriv_example)                   | Derivative calculation example.                                   |
