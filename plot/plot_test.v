@@ -99,3 +99,25 @@ fn test_barpolar_trace_type_in_json() {
 	assert traces.contains('"r"')
 	assert traces.contains('"theta"')
 }
+
+fn test_layout_title_multiline() {
+	mut plt := Plot.new()
+	plt.layout(title: 'Line 1<br>Line 2')
+
+	_, layout_json := plt.to_json()
+	assert layout_json.contains('"title":"Line 1<br>Line 2"')
+}
+
+fn test_layout_title_with_font_styling() {
+	mut plt := Plot.new()
+	plt.layout(
+		title:         'Main Title<br>Subtitle'
+		plot_bgcolor:  '#f8f9fa'
+		paper_bgcolor: '#ffffff'
+	)
+
+	_, layout_json := plt.to_json()
+	assert layout_json.contains('Main Title<br>Subtitle')
+	assert layout_json.contains('"plot_bgcolor":"#f8f9fa"')
+	assert layout_json.contains('"paper_bgcolor":"#ffffff"')
+}
