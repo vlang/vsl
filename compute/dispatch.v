@@ -14,7 +14,7 @@ $if vcl ? {
 
 $if cuda ? {
 	import vsl.cuda
-	import vsl.cuda.compute as _
+	import vsl.cuda.compute as cuda_compute
 }
 
 // op_supported returns true when an operation is implemented for a backend.
@@ -69,7 +69,12 @@ fn (ctx &ComputeContext) resolve_backend() !ComputeBackend {
 	}
 	$if cuda ? {
 		if backend == .cuda {
-			return cuda.new_cuda_backend()
+			dev := if !isnil(ctx.cuda_device) {
+				unsafe { &cuda.CudaDevice(ctx.cuda_device) }
+			} else {
+				cuda.get_default_device()!
+			}
+			return cuda_compute.new_cuda_backend_with_device(dev)
 		}
 	}
 	return new_cpu_backend()
