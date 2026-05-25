@@ -5,6 +5,7 @@ pub enum Backend {
 	auto
 	vulkan
 	vcl
+	cuda
 	cpu
 }
 
@@ -15,6 +16,7 @@ pub mut:
 	backend       Backend = .auto
 	vulkan_device voidptr = unsafe { nil }
 	vcl_device    voidptr = unsafe { nil }
+	cuda_device   voidptr = unsafe { nil }
 	strict        bool
 }
 
@@ -38,6 +40,13 @@ pub fn new_vcl_context(dev voidptr) &ComputeContext {
 	return &ComputeContext{
 		backend:    .vcl
 		vcl_device: dev
+	}
+}
+
+// new_cuda_context creates a compute context for CUDA backend.
+pub fn new_cuda_context() &ComputeContext {
+	return &ComputeContext{
+		backend: .cuda
 	}
 }
 

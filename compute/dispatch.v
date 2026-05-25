@@ -16,11 +16,16 @@ $if vcl ? {
 pub fn op_supported(backend Backend, op string) bool {
 	return match backend {
 		.vulkan {
-			op in ['gemm', 'gemv', 'relu', 'sigmoid']
+			op in ['gemm', 'gemv', 'relu', 'sigmoid', 'tanh', 'add_vec', 'add_scalar',
+				'mul_scalar', 'softmax', 'layernorm']
 		}
 		.vcl {
 			op in ['gemm', 'gemv', 'relu', 'sigmoid', 'tanh', 'add_vec', 'mul_vec', 'add_scalar',
 				'mul_scalar', 'softmax', 'layernorm', 'sum', 'mean', 'max', 'conv2d']
+		}
+		.cuda {
+			op in ['gemm', 'gemv', 'relu', 'sigmoid', 'tanh', 'add_vec', 'mul_vec', 'add_scalar',
+				'mul_scalar', 'softmax', 'layernorm']
 		}
 		.cpu {
 			op in ['gemm', 'gemv', 'relu', 'sigmoid', 'tanh', 'add_vec', 'mul_vec', 'add_scalar',
@@ -55,6 +60,11 @@ fn (ctx &ComputeContext) resolve_backend() !ComputeBackend {
 			}
 			mut d := dev
 			return new_vcl_backend(mut d)
+		}
+	}
+	$if cuda ? {
+		if backend == .cuda {
+			return new_cuda_backend()
 		}
 	}
 	return new_cpu_backend()
