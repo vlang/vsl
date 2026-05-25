@@ -5,9 +5,9 @@ module cuda
 // #flag directives for linking cuBLAS and cuDNN libraries.
 // These are activate when `-d cuda` is passed at compile time.
 
-// Link against CUDA runtime, cuBLAS and cuDNN shared libraries.
-#flag linux -L/opt/cuda/lib64 -lcudart -lcublas -lcudnn
-#flag darwin -L/usr/local/cuda/lib -lcudart -lcublas -lcudnn
+// Link against CUDA driver (cuInit), runtime, cuBLAS and cuDNN shared libraries.
+#flag linux -L/opt/cuda/lib64 -lcuda -lcudart -lcublas -lcudnn
+#flag darwin -L/usr/local/cuda/lib -lcuda -lcudart -lcublas -lcudnn
 
 // Include CUDA headers path.
 #flag linux -I/opt/cuda/include

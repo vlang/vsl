@@ -45,10 +45,10 @@ type CudnnHandle = voidptr
 pub type CudnnActivationMode = int
 
 // cudnnSoftmaxAlgorithm_t specifies the softmax algorithm.
-type CudnnSoftmaxAlgorithm = int
+pub type CudnnSoftmaxAlgorithm = int
 
 // cudnnSoftmaxMode_t specifies the softmax mode.
-type CudnnSoftmaxMode = int
+pub type CudnnSoftmaxMode = int
 
 // cudnnTensorDescriptor_t is a handle to a tensor descriptor.
 pub type CudnnTensorDescriptor = voidptr
@@ -57,10 +57,10 @@ pub type CudnnTensorDescriptor = voidptr
 pub type CudnnActivationDescriptor = voidptr
 
 // cudnnConvolutionDescriptor_t is a handle to a convolution descriptor.
-type CudnnConvolutionDescriptor = voidptr
+pub type CudnnConvolutionDescriptor = voidptr
 
 // cudnnFilterDescriptor_t is a handle to a filter descriptor.
-type CudnnFilterDescriptor = voidptr
+pub type CudnnFilterDescriptor = voidptr
 
 // cudnnTensorFormat_t specifies the memory layout of a tensor.
 pub type CudnnTensorFormat = int
@@ -69,21 +69,23 @@ pub type CudnnTensorFormat = int
 pub type CudnnDataType = int
 
 // cudnnConvolutionFwdAlgo_t specifies the convolution forward algorithm.
-type CudnnConvolutionFwdAlgo = int
+pub type CudnnConvolutionFwdAlgo = int
 
-// CudnnActivationMode values.
-pub const cudnn_activation_relu = 0
-pub const cudnn_activation_sigmoid = 3
-pub const cudnn_activation_tanh = 4
+// CudnnActivationMode values (cuDNN 9.x deprecated legacy API).
+// Matches cudnnActivationMode_t enum in cudnn_graph_v9.h:
+//   CUDNN_ACTIVATION_SIGMOID=0, RELU=1, TANH=2, CLIPPED_RELU=3, ELU=4, ...
+pub const cudnn_activation_relu = 1
+pub const cudnn_activation_sigmoid = 0
+pub const cudnn_activation_tanh = 2
 
 // CudnnSoftmaxAlgorithm values.
-const cudnn_softmax_fast = 0
+pub const cudnn_softmax_fast = 0
 const cudnn_softmax_accurate = 1
 const cudnn_softmax_log = 2
 
 // CudnnSoftmaxMode values.
-const cudnn_softmax_mode_instance = 0 // apply softmax per image (NCHW)
-const cudnn_softmax_mode_channel = 1 // apply softmax per spatial location (CHANNELS)
+pub const cudnn_softmax_mode_instance = 0 // apply softmax per image (NCHW)
+pub const cudnn_softmax_mode_channel = 1 // apply softmax per spatial location (CHANNELS)
 
 // CudnnTensorFormat values.
 pub const cudnn_tensor_nhwc = 0 // NCHW format (row-major in VSL)

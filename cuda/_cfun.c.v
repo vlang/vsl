@@ -68,6 +68,37 @@ const cuda_memcpy_host_to_device = 2
 const cuda_memcpy_device_to_host = 3
 
 // ============================================================================
+// CUDA Runtime device management
+// ============================================================================
+
+// cuInit initializes the CUDA driver API.
+fn C.cuInit(flags int) int
+
+// cuDeviceGetCount returns the number of CUDA-capable devices.
+fn C.cuDeviceGetCount(count &int) int
+
+// cuDeviceGet returns the device handle for the given index.
+fn C.cuDeviceGet(device &CudaDevice, ordinal int) int
+
+// cuDeviceGetName returns the device name as a null-terminated string.
+fn C.cuDeviceGetName(name &char, len int, device CudaDevice) int
+
+// cuDeviceGetAttribute returns attribute information about the device.
+fn C.cuDeviceGetAttribute(pi &int, attrib int, device CudaDevice) int
+
+// cuCtxCreate creates a CUDA context for the device.
+fn C.cuCtxCreate(ctx &CudaContext, flags int, device CudaDevice) int
+
+// cuCtxDestroy destroys a CUDA context.
+fn C.cuCtxDestroy(ctx CudaContext) int
+
+// cuCtxSetCurrent sets the current context for the calling thread.
+fn C.cuCtxSetCurrent(ctx CudaContext) int
+
+// cudaSetDevice sets the active CUDA device for the runtime API.
+fn C.cudaSetDevice(device int) int
+
+// ============================================================================
 // cuDNN function declarations (v9 API)
 // ============================================================================
 
@@ -172,3 +203,9 @@ type CudaStream = voidptr
 
 // CudnnConvolutionFwdAlgoPerf holds performance results for convolution algorithms.
 type CudnnConvolutionFwdAlgoPerf = voidptr
+
+// CudaContext is an opaque CUDA context (driver API handle).
+type CudaContext = voidptr
+
+// char is used for C strings in driver API.
+type CChar = u8
