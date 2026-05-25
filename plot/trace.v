@@ -18,6 +18,8 @@ pub enum TraceType {
 	treemap
 	candlestick
 	funnel
+	ohlc
+	table
 	scatterpolar
 	histogram2d
 	density
@@ -251,6 +253,55 @@ pub mut:
 	connector   Connector @[omitempty]
 }
 
+// OhlcTrace is a struct for OHLC financial trace type
+@[params]
+pub struct OhlcTrace {
+	CommonTrace
+pub mut:
+	open             []f64      @[omitempty]
+	high             []f64      @[omitempty]
+	low              []f64      @[omitempty]
+	close            []f64      @[omitempty]
+	increasing       Increasing @[omitempty]
+	decreasing       Decreasing @[omitempty]
+	xperiod          string     @[omitempty]
+	xperiodalignment string     @[omitempty]
+}
+
+// Fill is a generic fill configuration used by table traces
+pub struct Fill {
+pub mut:
+	color []string @[omitempty]
+}
+
+// TableHeader configures header cells in table traces
+pub struct TableHeader {
+pub mut:
+	values []string @[omitempty]
+	align  string   @[omitempty]
+	fill   Fill     @[omitempty]
+	font   Font     @[omitempty]
+}
+
+// TableCells configures body cells in table traces
+pub struct TableCells {
+pub mut:
+	values [][]string @[omitempty]
+	align  string     @[omitempty]
+	fill   Fill       @[omitempty]
+	font   Font       @[omitempty]
+}
+
+// TableTrace is a struct for tabular data trace type
+@[params]
+pub struct TableTrace {
+	CommonTrace
+pub mut:
+	header      TableHeader @[omitempty]
+	cells       TableCells  @[omitempty]
+	columnwidth []f64       @[omitempty]
+}
+
 // ScatterPolarTrace is a struct for Radar/Polar trace type
 @[params]
 pub struct ScatterPolarTrace {
@@ -353,12 +404,14 @@ pub type Trace = BarTrace
 	| HeatmapTrace
 	| HistogramTrace
 	| LineTrace
+	| OhlcTrace
 	| PieTrace
 	| Scatter3DTrace
 	| ScatterPolarTrace
 	| ScatterTrace
 	| SunburstTrace
 	| SurfaceTrace
+	| TableTrace
 	| TreemapTrace
 	| ViolinTrace
 	| WaterfallTrace
@@ -391,6 +444,8 @@ pub fn (t Trace) trace_type() string {
 		TreemapTrace { 'treemap' }
 		CandlestickTrace { 'candlestick' }
 		FunnelTrace { 'funnel' }
+		OhlcTrace { 'ohlc' }
+		TableTrace { 'table' }
 		ScatterPolarTrace { 'scatterpolar' }
 		Histogram2DTrace { 'histogram2d' }
 		DensityTrace { 'histogram2dcontour' } // Plotly uses this for density plots
