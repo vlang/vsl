@@ -204,9 +204,35 @@
 			<div class="doc-scrollview" tabindex="-1" id="main-content">
 				<div class="doc-container">
 					<div class="doc-content">
-								<section id="fit" class="doc-node">
-			<div class="title"><h1> fit</h1></div>
+								<section id="readme_fit" class="doc-node">
+			<div class="title"><h1> fit <a href="#readme_fit">#</a></h1></div>
+<h1 id="linear-fit">Linear Fit</h1>
+<p><code>vsl.fit</code> provides simple linear regression utilities for the model:</p>
+<p><code>y(x) = a + b*x</code></p>
+<p>Current API:</p>
+<ul>
+<li><code>linear(x, y) -&gt; (a, b)</code></li>
+<li><code>linear_sigma(x, y) -&gt; (a, b, sigma_a, sigma_b, chi_2)</code></li></ul>
+<h2 id="when-to-use-each-function">When to use each function</h2>
+<ul>
+<li>Use <code>linear</code> when you only need intercept and slope.</li>
+<li>Use <code>linear_sigma</code> when you also need uncertainty estimates and fit quality.</li></ul>
+<h2 id="quick-usage">Quick usage</h2>
+<pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>fit
 
+x <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">2.0</span><span class="token punctuation">,</span> <span class="token number">3.0</span><span class="token punctuation">,</span> <span class="token number">4.0</span><span class="token punctuation">]</span>
+y <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token number">2.1</span><span class="token punctuation">,</span> <span class="token number">4.0</span><span class="token punctuation">,</span> <span class="token number">6.2</span><span class="token punctuation">,</span> <span class="token number">8.1</span><span class="token punctuation">]</span>
+
+a<span class="token punctuation">,</span> b <span class="token operator">:=</span> fit<span class="token punctuation">.</span><span class="token function">linear</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span>
+<span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&#39;intercept=</span><span class="token string_interp">$</span>{a}<span class="token string">, slope=</span><span class="token string_interp">$</span>{b}<span class="token string">&#39;</span><span class="token punctuation">)</span>
+
+a2<span class="token punctuation">,</span> b2<span class="token punctuation">,</span> sigma_a<span class="token punctuation">,</span> sigma_b<span class="token punctuation">,</span> chi2 <span class="token operator">:=</span> fit<span class="token punctuation">.</span><span class="token function">linear_sigma</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span>
+<span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&#39;a=</span><span class="token string_interp">$</span>{a2}<span class="token string"> b=</span><span class="token string_interp">$</span>{b2}<span class="token string"> sigma_a=</span><span class="token string_interp">$</span>{sigma_a}<span class="token string"> sigma_b=</span><span class="token string_interp">$</span>{sigma_b}<span class="token string"> chi2=</span><span class="token string_interp">$</span>{chi2}<span class="token string">&#39;</span><span class="token punctuation">)</span></code></pre>
+<h2 id="examples">Examples</h2>
+<p>Representative examples live under <a href="https://github.com/vlang/vsl/blob/master/fit/examples"><code>fit/examples</code></a>:</p>
+<ul>
+<li><code>line_calibration</code>: calibrating a biased sensor against a reference.</li>
+<li><code>trend_quality</code>: fitting a trend and inspecting uncertainty / chi-square.</li></ul>
 
 </section>
 
@@ -231,9 +257,10 @@
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 14 May 2026 15:02:37</div>
+						<div class="footer">Powered by vdoc. Generated on: 25 May 2026 11:44:02</div>
 					</div>
-					<div class="doc-toc"><ul><li class="open"><a href="#linear">fn linear</a>        <ul>
+					<div class="doc-toc"><ul><li class="open"><a href="#readme_fit">README</a></li>
+<li class="open"><a href="#linear">fn linear</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#linear_sigma">fn linear_sigma</a>        <ul>
