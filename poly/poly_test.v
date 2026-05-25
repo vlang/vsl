@@ -1,5 +1,7 @@
 module poly
 
+import math
+
 fn test_eval() {
 	// ans = 2
 	// ans = 4.0 + 4 * 2 = 12
@@ -68,4 +70,45 @@ fn test_sum_even_coeffs() {
 	assert sum_even_coeffs([4.0, 5.0, 2.0]) == 6.0 // 4.0 and 2 are at even indices
 	assert sum_even_coeffs([7.0, 456.0, 21.0, 87.0]) == 28.0 // 7 and 21 are at even indices
 	assert sum_even_coeffs([]) == 0 // The sum should be 0 for an empty coefficient array
+}
+
+fn test_eval_derivs() {
+	// P(x) = 1 + 2x + 3x^2
+	coeffs := [1.0, 2.0, 3.0]
+	res := eval_derivs(coeffs, 2.0, 3)
+	// P(2) = 17, P'(2) = 14, P''(2) = 6
+	assert res.len == 3
+	assert math.abs(res[0] - 17.0) < 1e-12
+	assert math.abs(res[1] - 14.0) < 1e-12
+	assert math.abs(res[2] - 6.0) < 1e-12
+}
+
+fn test_solve_quadratic_roots() {
+	roots := solve_quadratic(1.0, -3.0, 2.0)
+	assert roots.len == 2
+	assert math.abs(roots[0] - 1.0) < 1e-12
+	assert math.abs(roots[1] - 2.0) < 1e-12
+}
+
+fn test_solve_cubic_roots() {
+	// x^3 - 6x^2 + 11x - 6 = 0 has roots 1,2,3
+	roots := solve_cubic(-6.0, 11.0, -6.0)
+	assert roots.len == 3
+	mut sorted := roots.clone()
+	sorted.sort()
+	assert math.abs(sorted[0] - 1.0) < 1e-12
+	assert math.abs(sorted[1] - 2.0) < 1e-12
+	assert math.abs(sorted[2] - 3.0) < 1e-12
+}
+
+fn test_companion_matrix() {
+	// P(x) = x^2 - 3x + 2 -> coefficients [2, -3, 1]
+	cm := companion_matrix([2.0, -3.0, 1.0])
+	assert cm.len == 2
+	assert cm[0].len == 2
+	assert cm[1].len == 2
+	assert math.abs(cm[0][0] - 0.0) < 1e-12
+	assert math.abs(cm[0][1] + 2.0) < 1e-12
+	assert math.abs(cm[1][0] - 1.0) < 1e-12
+	assert math.abs(cm[1][1] - 3.0) < 1e-12
 }
