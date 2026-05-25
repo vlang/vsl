@@ -166,6 +166,7 @@ v -cflags <flags> run main.v
 | -------------------------------------------------- | ----------------------------------------------------------------- |
 | [fft_plot_example](./fft_plot_example)             | Example demonstrating Fast Fourier Transform (FFT) with plotting. |
 | [diff_example](./diff_example)                     | Differentiation example.                                          |
+| [poly_examples](./poly_examples)                   | Core polynomial operations and root solvers.                      |
 | [prime_examples](./prime_examples)                 | Prime module usage: primality checks and sieve.                   |
 | [prime_factorization](./prime_factorization)       | Prime factorization example.                                      |
 | [roots_bisection_solver](./roots_bisection_solver) | Root finding using the bisection method.                          |
