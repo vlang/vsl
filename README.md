@@ -63,9 +63,9 @@ Fortran libraries.
 VSL provides flexible performance options:
 
 - **Pure V Implementation**: High-performance, dependency-free BLAS/LAPACK implementations
-- **Optimized Backends**: Optional integration with OpenBLAS, LAPACK, and MPI
-  for maximum performance
-- **GPU Acceleration**: OpenCL support for computationally intensive operations
+- **Optimized Backends**: Optional integration with OpenBLAS, LAPACK, MPI,
+  OpenCL (VCL), Vulkan Compute, and CUDA (cuBLAS/cuDNN) for maximum performance
+- **GPU Acceleration**: OpenCL and CUDA support for computationally intensive operations
 
 **Pure V BLAS/LAPACK** implementations deliver competitive performance while
 eliminating external dependencies. Benchmark results demonstrate excellent
@@ -82,6 +82,7 @@ VSL compute backends are organized with a unified structure:
 - `vsl/compute` — backend-agnostic dispatch API
 - `vsl/vcl/compute` — OpenCL/VCL backend implementation
 - `vsl/vulkan/compute` — Vulkan backend implementation
+- `vsl/cuda/compute` — CUDA/cuBLAS/cuDNN backend implementation (Phase B — CPU fallback)
 
 The recommended integration point for downstream libraries is `vsl.compute`.
 

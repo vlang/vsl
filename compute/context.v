@@ -5,6 +5,7 @@ pub enum Backend {
 	auto
 	vulkan
 	vcl
+	cuda
 	cpu
 }
 
@@ -15,6 +16,7 @@ pub mut:
 	backend       Backend = .auto
 	vulkan_device voidptr = unsafe { nil }
 	vcl_device    voidptr = unsafe { nil }
+	cuda_device   voidptr = unsafe { nil }
 	strict        bool
 }
 
@@ -41,6 +43,13 @@ pub fn new_vcl_context(dev voidptr) &ComputeContext {
 	}
 }
 
+// new_cuda_context creates a compute context for CUDA backend.
+pub fn new_cuda_context() &ComputeContext {
+	return &ComputeContext{
+		backend: .cuda
+	}
+}
+
 // with_vulkan_device sets explicit Vulkan device handle.
 pub fn (mut ctx ComputeContext) with_vulkan_device(dev voidptr) &ComputeContext {
 	ctx.vulkan_device = dev
@@ -50,6 +59,12 @@ pub fn (mut ctx ComputeContext) with_vulkan_device(dev voidptr) &ComputeContext 
 // with_vcl_device sets explicit VCL device handle.
 pub fn (mut ctx ComputeContext) with_vcl_device(dev voidptr) &ComputeContext {
 	ctx.vcl_device = dev
+	return &ctx
+}
+
+// with_cuda_device sets explicit CUDA device handle.
+pub fn (mut ctx ComputeContext) with_cuda_device(dev voidptr) &ComputeContext {
+	ctx.cuda_device = dev
 	return &ctx
 }
 
@@ -69,6 +84,9 @@ pub fn available_backends() []Backend {
 	$if vcl ? {
 		out << .vcl
 	}
+	$if cuda ? {
+		out << .cuda
+	}
 	out << .cpu
 	return out
 }
@@ -83,6 +101,9 @@ fn (ctx &ComputeContext) select_backend() Backend {
 	}
 	$if vcl ? {
 		return .vcl
+	}
+	$if cuda ? {
+		return .cuda
 	}
 	return .cpu
 }
