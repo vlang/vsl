@@ -43,6 +43,10 @@ Check out these examples that combine quaternions with plotting:
   Track orientations over time
 - **[quaternion_rotation_composition](../examples/quaternion_rotation_composition/)** -
   Compose multiple rotations
+- **[quaternion_camera_look](../examples/quaternion_camera_look/)** - Camera yaw/pitch
+  composition and lock-on blending
+- **[quaternion_turret_tracking](../examples/quaternion_turret_tracking/)** - Turret
+  interpolation with angular error monitoring
 
 ## Tutorials
 

@@ -197,6 +197,8 @@ v -cflags <flags> run main.v
 | [quaternion_julia_fractal](./quaternion_julia_fractal)       | Quaternion Julia set fractal visualization.          |
 | [quaternion_orientation_tracking](./quaternion_orientation_tracking) | Track object orientation over time with visualization. |
 | [quaternion_rotation_composition](./quaternion_rotation_composition) | Compose multiple rotations and visualize the path.    |
+| [quaternion_camera_look](./quaternion_camera_look)           | Camera yaw/pitch composition and lock-on blending.    |
+| [quaternion_turret_tracking](./quaternion_turret_tracking)   | Turret tracking with angular-error interpolation checks. |
 
 ## Library Integration Examples 🔗
 
