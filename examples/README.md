@@ -120,6 +120,8 @@ v -cflags <flags> run main.v
 | ---------------------------------------------------------- | ----------------------------------------- |
 | [plot_choropleth_population](./plot_choropleth_population) | Choropleth map for geographic data.       |
 | [plot_scattermapbox_cities](./plot_scattermapbox_cities)   | Scatter plot on mapbox for location data. |
+| [plot_scattergeo_trade_routes](./plot_scattergeo_trade_routes) | ScatterGeo with shipping route visualization. |
+| [plot_barpolar_wind_rose](./plot_barpolar_wind_rose)       | Polar bar chart for wind direction analysis. |
 
 ### Export & Automation
 

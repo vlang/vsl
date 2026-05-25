@@ -31,6 +31,8 @@ pub enum TraceType {
 	choropleth
 	scattermapbox
 	densitymapbox
+	scattergeo
+	barpolar
 }
 
 // XType is a type for x-axis data
@@ -397,16 +399,28 @@ pub mut:
 
 // Trace is a sum type for representing different trace types
 pub type Trace = BarTrace
+	| BarPolarTrace
 	| BoxTrace
 	| CandlestickTrace
+	| ChoroplethTrace
+	| ChordTrace
 	| ContourTrace
+	| DensityMapboxTrace
+	| DensityTrace
 	| FunnelTrace
 	| HeatmapTrace
+	| Histogram2DTrace
 	| HistogramTrace
 	| LineTrace
+	| NetworkTrace
 	| OhlcTrace
+	| ParallelCoordinatesTrace
 	| PieTrace
+	| RidgelineTrace
+	| SankeyTrace
 	| Scatter3DTrace
+	| ScatterGeoTrace
+	| ScatterMapboxTrace
 	| ScatterPolarTrace
 	| ScatterTrace
 	| SunburstTrace
@@ -415,16 +429,6 @@ pub type Trace = BarTrace
 	| TreemapTrace
 	| ViolinTrace
 	| WaterfallTrace
-	| Histogram2DTrace
-	| DensityTrace
-	| RidgelineTrace
-	| ParallelCoordinatesTrace
-	| SankeyTrace
-	| ChordTrace
-	| NetworkTrace
-	| ChoroplethTrace
-	| ScatterMapboxTrace
-	| DensityMapboxTrace
 
 pub fn (t Trace) trace_type() string {
 	return match t {
@@ -457,6 +461,8 @@ pub fn (t Trace) trace_type() string {
 		ChoroplethTrace { 'choropleth' }
 		ScatterMapboxTrace { 'scattermapbox' }
 		DensityMapboxTrace { 'densitymapbox' }
+		ScatterGeoTrace { 'scattergeo' }
+		BarPolarTrace { 'barpolar' }
 	}
 }
 
@@ -671,4 +677,66 @@ pub mut:
 	reversescale bool   @[omitempty]
 	showscale    bool   @[omitempty]
 	subplot      string @[omitempty]
+}
+
+// ScatterGeoTrace is a struct for ScatterGeo trace type (geographic scatter plots)
+@[params]
+pub struct ScatterGeoTrace {
+	CommonTrace
+pub mut:
+	lat              []f64   @[omitempty]
+	lon              []f64   @[omitempty]
+	locations        []string @[omitempty]
+	locationmode     string   @[omitempty] // 'ISO-3', 'USA-states', 'country names', 'geojson-id'
+	mode             string   @[omitempty] // 'markers', 'lines', 'lines+markers'
+	text             []string @[omitempty]
+	hovertemplate    string   @[omitempty]
+	geo              string   @[omitempty] // subplot id
+	subplot          string   @[omitempty]
+	projection       Projection @[omitempty]
+	cluster          ClusterGeo @[omitempty]
+	line             Line      @[omitempty]
+}
+
+// Projection is a struct for geo subplot projection configuration
+pub struct Projection {
+pub mut:
+	type_       string = 'equirectangular' @[omitempty] // 'equirectangular', 'mercator', 'orthographic', etc.
+	rotation    Rotation @[omitempty]
+	parallels   []f64   @[omitempty]
+	scale       f64     @[omitempty]
+}
+
+// Rotation is a struct for projection rotation (used in geo subplots)
+pub struct Rotation {
+pub mut:
+	lon f64 @[omitempty]
+	lat f64 @[omitempty]
+	roll f64 @[omitempty]
+}
+
+// ClusterGeo is a struct for geographic clustering
+pub struct ClusterGeo {
+pub mut:
+	enabled    bool     @[omitempty]
+	size       []f64    @[omitempty]
+	color      []string @[omitempty]
+	steps      int      @[omitempty]
+	maxzoom    int      @[omitempty]
+	stepsize   f64      @[omitempty]
+	domains    [][]f64  @[omitempty]
+}
+
+// BarPolarTrace is a struct for BarPolar trace type (polar bar charts)
+@[params]
+pub struct BarPolarTrace {
+	CommonTrace
+pub mut:
+	r           []f64  @[omitempty]
+	theta       []f64  @[omitempty]
+	thetaunit   string @[omitempty] // 'radians', 'degrees', 'gradians'
+	text        []string @[omitempty]
+	hovertemplate string @[omitempty]
+	marker      Marker @[omitempty]
+	subplot     string @[omitempty]
 }

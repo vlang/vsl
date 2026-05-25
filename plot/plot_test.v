@@ -65,3 +65,37 @@ fn test_table_trace_type_in_json() {
 	assert traces.contains('"cells"')
 	assert traces.contains('Latency p95')
 }
+
+fn test_scattergeo_trace_type_in_json() {
+	mut plt := Plot.new()
+	plt.scattergeo(
+		lat:   [40.71, 34.05, 37.77]
+		lon:   [-74.0, -118.24, -122.41]
+		mode:  'markers'
+		text:  ['New York', 'Los Angeles', 'San Francisco']
+		name:  'Cities'
+	)
+
+	traces, _ := plt.to_json()
+	assert traces.contains('"type":"scattergeo"')
+	assert traces.contains('"lat"')
+	assert traces.contains('"lon"')
+	assert traces.contains('"mode":"markers"')
+}
+
+fn test_barpolar_trace_type_in_json() {
+	mut plt := Plot.new()
+	plt.barpolar(
+		r:     [1.0, 3.0, 2.0, 4.0, 2.5]
+		theta: [0.0, 45.0, 90.0, 135.0, 180.0]
+		marker: Marker{
+			color: ['#636EFA', '#EF553B', '#00CC96', '#AB63FA', '#FFA15A']
+		}
+		name:  'Polar Bars'
+	)
+
+	traces, _ := plt.to_json()
+	assert traces.contains('"type":"barpolar"')
+	assert traces.contains('"r"')
+	assert traces.contains('"theta"')
+}
