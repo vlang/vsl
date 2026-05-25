@@ -3,7 +3,7 @@ module plot
 // Layout
 pub struct Layout {
 pub mut:
-	title         string
+	title         string   // Plot title; use <br> for multi-line (e.g. 'Line 1<br>Line 2')
 	title_x       f64
 	autosize      bool
 	width         int = 550
@@ -123,13 +123,4 @@ pub struct MapboxCenter {
 pub mut:
 	lat f64 @[omitempty]
 	lon f64 @[omitempty]
-}
-
-// Light for mapbox plots
-pub struct Light {
-pub mut:
-	azimuth   f64   @[omitempty]
-	elevation f64   @[omitempty]
-	intensity f64   @[omitempty]
-	color     []f64 @[omitempty]
 }
