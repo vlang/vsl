@@ -84,6 +84,12 @@
 <div class="menu-row"><a href="./consts.html">consts</a></div>
 </li>
 <li class="open">
+<div class="menu-row"><a href="./cuda.html">cuda</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./gpu.html">gpu</a></div>
+</li>
+<li class="open">
 <div class="menu-row"><a href="./deriv.html">deriv</a></div>
 </li>
 <li class="open">
@@ -210,6 +216,22 @@
 
 </section>
 
+		<section id="add_scalar_vulkan" class="doc-node">
+			<div class="title"><h2>fn add_scalar_vulkan <a href="#add_scalar_vulkan">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/elementwise.v#L175"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">add_scalar_vulkan</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>vulkan<span class="token punctuation">.</span>Device<span class="token punctuation">,</span> x_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> s <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>add_scalar_vulkan adds a scalar to each element via scale pipeline. Since scale is dst = alpha * src (not dst = src + scalar), we emulate by dst = src * 1.0 + scalar via two passes: first copy, then add scalar constant.</p>
+
+</section>
+
+		<section id="add_vec_vulkan" class="doc-node">
+			<div class="title"><h2>fn add_vec_vulkan <a href="#add_vec_vulkan">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/elementwise.v#L150"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">add_vec_vulkan</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>vulkan<span class="token punctuation">.</span>Device<span class="token punctuation">,</span> a_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> b_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>add_vec_vulkan computes element-wise addition via vector_add pipeline.</p>
+
+</section>
+
 		<section id="gemm_vulkan" class="doc-node">
 			<div class="title"><h2>fn gemm_vulkan <a href="#gemm_vulkan">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/gemm.v#L55"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
@@ -242,8 +264,40 @@
 
 </section>
 
+		<section id="layernorm_vulkan" class="doc-node">
+			<div class="title"><h2>fn layernorm_vulkan <a href="#layernorm_vulkan">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/elementwise.v#L258"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">layernorm_vulkan</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>vulkan<span class="token punctuation">.</span>Device<span class="token punctuation">,</span> x_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> gamma <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> beta <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>layernorm_vulkan applies row-wise layer normalization via the layernorm pipeline. Gamma/beta are applied on CPU since the Vulkan layernorm op does not include affine transform.</p>
+
+</section>
+
+		<section id="mul_scalar_vulkan" class="doc-node">
+			<div class="title"><h2>fn mul_scalar_vulkan <a href="#mul_scalar_vulkan">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/elementwise.v#L189"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">mul_scalar_vulkan</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>vulkan<span class="token punctuation">.</span>Device<span class="token punctuation">,</span> x_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> s <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>mul_scalar_vulkan multiplies each element by scalar via scale pipeline.</p>
+
+</section>
+
+		<section id="mul_vec_vulkan" class="doc-node">
+			<div class="title"><h2>fn mul_vec_vulkan <a href="#mul_vec_vulkan">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/elementwise.v#L168"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">mul_vec_vulkan</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>vulkan<span class="token punctuation">.</span>Device<span class="token punctuation">,</span> a_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> b_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>mul_vec_vulkan is not directly supported by Vulkan BLAS; use CPU fallback.</p>
+
+</section>
+
+		<section id="new_vulkan_backend" class="doc-node">
+			<div class="title"><h2>fn new_vulkan_backend <a href="#new_vulkan_backend">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/backend.v#L13"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">new_vulkan_backend</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>vulkan<span class="token punctuation">.</span>Device<span class="token punctuation">)</span> VulkanBackend</code></pre>
+
+
+</section>
+
 		<section id="relu_vulkan" class="doc-node">
-			<div class="title"><h2>fn relu_vulkan <a href="#relu_vulkan">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/elementwise.v#L41"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn relu_vulkan <a href="#relu_vulkan">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/elementwise.v#L73"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">relu_vulkan</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>vulkan<span class="token punctuation">.</span>Device<span class="token punctuation">,</span> x_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 
@@ -251,7 +305,7 @@
 </section>
 
 		<section id="relu_vulkan_f32" class="doc-node">
-			<div class="title"><h2>fn relu_vulkan_f32 <a href="#relu_vulkan_f32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/elementwise.v#L33"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn relu_vulkan_f32 <a href="#relu_vulkan_f32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/elementwise.v#L65"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">relu_vulkan_f32</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>vulkan<span class="token punctuation">.</span>Device<span class="token punctuation">,</span> x_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span></code></pre>
 
@@ -259,7 +313,7 @@
 </section>
 
 		<section id="sigmoid_vulkan" class="doc-node">
-			<div class="title"><h2>fn sigmoid_vulkan <a href="#sigmoid_vulkan">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/elementwise.v#L54"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn sigmoid_vulkan <a href="#sigmoid_vulkan">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/elementwise.v#L86"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">sigmoid_vulkan</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>vulkan<span class="token punctuation">.</span>Device<span class="token punctuation">,</span> x_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 
@@ -267,17 +321,178 @@
 </section>
 
 		<section id="sigmoid_vulkan_f32" class="doc-node">
-			<div class="title"><h2>fn sigmoid_vulkan_f32 <a href="#sigmoid_vulkan_f32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/elementwise.v#L37"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn sigmoid_vulkan_f32 <a href="#sigmoid_vulkan_f32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/elementwise.v#L69"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">sigmoid_vulkan_f32</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>vulkan<span class="token punctuation">.</span>Device<span class="token punctuation">,</span> x_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span></code></pre>
 
 
 </section>
 
+		<section id="softmax_vulkan" class="doc-node">
+			<div class="title"><h2>fn softmax_vulkan <a href="#softmax_vulkan">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/elementwise.v#L223"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">softmax_vulkan</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>vulkan<span class="token punctuation">.</span>Device<span class="token punctuation">,</span> x_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>softmax_vulkan applies row-wise softmax via the softmax pipeline.</p>
 
-						<div class="footer">Powered by vdoc. Generated on: 25 May 2026 11:44:02</div>
+</section>
+
+		<section id="tanh_vulkan" class="doc-node">
+			<div class="title"><h2>fn tanh_vulkan <a href="#tanh_vulkan">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/elementwise.v#L101"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">tanh_vulkan</span><span class="token punctuation">(</span>dev <span class="token operator">&amp;</span>vulkan<span class="token punctuation">.</span>Device<span class="token punctuation">,</span> x_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>tanh_vulkan applies tanh using GELU shader (contains tanh). WARNING: applies GELU activation, not pure tanh. For accurate tanh, use CPU fallback.</p>
+
+</section>
+
+		<section id="VulkanBackend" class="doc-node">
+			<div class="title"><h2>struct VulkanBackend <a href="#VulkanBackend">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/backend.v#L8"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token symbol">VulkanBackend</span> <span class="token punctuation">{</span>
+<span class="token keyword">mut</span><span class="token punctuation">:</span>
+	dev <span class="token operator">&amp;</span>vulkan<span class="token punctuation">.</span>Device
+<span class="token punctuation">}</span></code></pre>
+<p>VulkanBackend implements ComputeBackend using the Vulkan compute API.</p>
+
+</section>
+
+		<section id="VulkanBackend.name" class="doc-node">
+			<div class="title"><h2>fn (VulkanBackend) name <a href="#VulkanBackend.name">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/backend.v#L19"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>b <span class="token operator">&amp;</span>VulkanBackend<span class="token punctuation">)</span> <span class="token function">name</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">string</span></code></pre>
+
+
+</section>
+
+		<section id="VulkanBackend.supports" class="doc-node">
+			<div class="title"><h2>fn (VulkanBackend) supports <a href="#VulkanBackend.supports">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/backend.v#L23"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>b <span class="token operator">&amp;</span>VulkanBackend<span class="token punctuation">)</span> <span class="token function">supports</span><span class="token punctuation">(</span>op <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">bool</span></code></pre>
+
+
+</section>
+
+		<section id="VulkanBackend.gemm" class="doc-node">
+			<div class="title"><h2>fn (VulkanBackend) gemm <a href="#VulkanBackend.gemm">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/backend.v#L28"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>b <span class="token operator">&amp;</span>VulkanBackend<span class="token punctuation">)</span> <span class="token function">gemm</span><span class="token punctuation">(</span>a_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> b_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> k <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+
+
+</section>
+
+		<section id="VulkanBackend.gemv" class="doc-node">
+			<div class="title"><h2>fn (VulkanBackend) gemv <a href="#VulkanBackend.gemv">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/backend.v#L32"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>b <span class="token operator">&amp;</span>VulkanBackend<span class="token punctuation">)</span> <span class="token function">gemv</span><span class="token punctuation">(</span>a_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> x_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+
+
+</section>
+
+		<section id="VulkanBackend.relu" class="doc-node">
+			<div class="title"><h2>fn (VulkanBackend) relu <a href="#VulkanBackend.relu">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/backend.v#L36"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>b <span class="token operator">&amp;</span>VulkanBackend<span class="token punctuation">)</span> <span class="token function">relu</span><span class="token punctuation">(</span>x_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+
+
+</section>
+
+		<section id="VulkanBackend.sigmoid" class="doc-node">
+			<div class="title"><h2>fn (VulkanBackend) sigmoid <a href="#VulkanBackend.sigmoid">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/backend.v#L40"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>b <span class="token operator">&amp;</span>VulkanBackend<span class="token punctuation">)</span> <span class="token function">sigmoid</span><span class="token punctuation">(</span>x_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+
+
+</section>
+
+		<section id="VulkanBackend.tanh" class="doc-node">
+			<div class="title"><h2>fn (VulkanBackend) tanh <a href="#VulkanBackend.tanh">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/backend.v#L44"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>b <span class="token operator">&amp;</span>VulkanBackend<span class="token punctuation">)</span> <span class="token function">tanh</span><span class="token punctuation">(</span>x_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+
+
+</section>
+
+		<section id="VulkanBackend.add_vec" class="doc-node">
+			<div class="title"><h2>fn (VulkanBackend) add_vec <a href="#VulkanBackend.add_vec">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/backend.v#L48"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>b <span class="token operator">&amp;</span>VulkanBackend<span class="token punctuation">)</span> <span class="token function">add_vec</span><span class="token punctuation">(</span>a_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> b_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+
+
+</section>
+
+		<section id="VulkanBackend.mul_vec" class="doc-node">
+			<div class="title"><h2>fn (VulkanBackend) mul_vec <a href="#VulkanBackend.mul_vec">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/backend.v#L52"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>b <span class="token operator">&amp;</span>VulkanBackend<span class="token punctuation">)</span> <span class="token function">mul_vec</span><span class="token punctuation">(</span>a_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> b_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+
+
+</section>
+
+		<section id="VulkanBackend.add_scalar" class="doc-node">
+			<div class="title"><h2>fn (VulkanBackend) add_scalar <a href="#VulkanBackend.add_scalar">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/backend.v#L56"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>b <span class="token operator">&amp;</span>VulkanBackend<span class="token punctuation">)</span> <span class="token function">add_scalar</span><span class="token punctuation">(</span>x_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> s <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+
+
+</section>
+
+		<section id="VulkanBackend.mul_scalar" class="doc-node">
+			<div class="title"><h2>fn (VulkanBackend) mul_scalar <a href="#VulkanBackend.mul_scalar">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/backend.v#L60"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>b <span class="token operator">&amp;</span>VulkanBackend<span class="token punctuation">)</span> <span class="token function">mul_scalar</span><span class="token punctuation">(</span>x_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> s <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+
+
+</section>
+
+		<section id="VulkanBackend.softmax" class="doc-node">
+			<div class="title"><h2>fn (VulkanBackend) softmax <a href="#VulkanBackend.softmax">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/backend.v#L64"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>b <span class="token operator">&amp;</span>VulkanBackend<span class="token punctuation">)</span> <span class="token function">softmax</span><span class="token punctuation">(</span>x_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+
+
+</section>
+
+		<section id="VulkanBackend.layernorm" class="doc-node">
+			<div class="title"><h2>fn (VulkanBackend) layernorm <a href="#VulkanBackend.layernorm">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/backend.v#L68"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>b <span class="token operator">&amp;</span>VulkanBackend<span class="token punctuation">)</span> <span class="token function">layernorm</span><span class="token punctuation">(</span>x_data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> gamma <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> beta <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+
+
+</section>
+
+		<section id="VulkanBackend.conv2d" class="doc-node">
+			<div class="title"><h2>fn (VulkanBackend) conv2d <a href="#VulkanBackend.conv2d">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/backend.v#L72"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>b <span class="token operator">&amp;</span>VulkanBackend<span class="token punctuation">)</span> <span class="token function">conv2d</span><span class="token punctuation">(</span>input <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> kernel <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> batch <span class="token builtin">int</span><span class="token punctuation">,</span> in_h <span class="token builtin">int</span><span class="token punctuation">,</span> in_w <span class="token builtin">int</span><span class="token punctuation">,</span> in_ch <span class="token builtin">int</span><span class="token punctuation">,</span> out_ch <span class="token builtin">int</span><span class="token punctuation">,</span> k_h <span class="token builtin">int</span><span class="token punctuation">,</span> k_w <span class="token builtin">int</span><span class="token punctuation">,</span> stride_h <span class="token builtin">int</span><span class="token punctuation">,</span> stride_w <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+
+
+</section>
+
+		<section id="VulkanBackend.to_internal" class="doc-node">
+			<div class="title"><h2>fn (VulkanBackend) to_internal <a href="#VulkanBackend.to_internal">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/backend.v#L77"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>b <span class="token operator">&amp;</span>VulkanBackend<span class="token punctuation">)</span> <span class="token function">to_internal</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> rows <span class="token builtin">int</span><span class="token punctuation">,</span> cols <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>to_internal converts row-major to Vulkan's column-major layout.</p>
+
+</section>
+
+		<section id="VulkanBackend.from_internal" class="doc-node">
+			<div class="title"><h2>fn (VulkanBackend) from_internal <a href="#VulkanBackend.from_internal">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vulkan/compute/backend.v#L82"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>b <span class="token operator">&amp;</span>VulkanBackend<span class="token punctuation">)</span> <span class="token function">from_internal</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> rows <span class="token builtin">int</span><span class="token punctuation">,</span> cols <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>from_internal converts Vulkan's column-major layout back to row-major.</p>
+
+</section>
+
+
+						<div class="footer">Powered by vdoc. Generated on: 25 May 2026 22:48:19</div>
 					</div>
-					<div class="doc-toc"><ul><li class="open"><a href="#gemm_vulkan">fn gemm_vulkan</a>        <ul>
+					<div class="doc-toc"><ul><li class="open"><a href="#add_scalar_vulkan">fn add_scalar_vulkan</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#add_vec_vulkan">fn add_vec_vulkan</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#gemm_vulkan">fn gemm_vulkan</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#gemm_vulkan_f32">fn gemm_vulkan_f32</a>        <ul>
@@ -287,6 +502,18 @@
 </ul>
 </li>
 <li class="open"><a href="#gemv_vulkan_f32">fn gemv_vulkan_f32</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#layernorm_vulkan">fn layernorm_vulkan</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#mul_scalar_vulkan">fn mul_scalar_vulkan</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#mul_vec_vulkan">fn mul_vec_vulkan</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#new_vulkan_backend">fn new_vulkan_backend</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#relu_vulkan">fn relu_vulkan</a>        <ul>
@@ -299,6 +526,31 @@
 </ul>
 </li>
 <li class="open"><a href="#sigmoid_vulkan_f32">fn sigmoid_vulkan_f32</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#softmax_vulkan">fn softmax_vulkan</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#tanh_vulkan">fn tanh_vulkan</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#VulkanBackend">struct VulkanBackend</a>        <ul>
+<li><a href="#VulkanBackend.name">fn name</a></li>
+<li><a href="#VulkanBackend.supports">fn supports</a></li>
+<li><a href="#VulkanBackend.gemm">fn gemm</a></li>
+<li><a href="#VulkanBackend.gemv">fn gemv</a></li>
+<li><a href="#VulkanBackend.relu">fn relu</a></li>
+<li><a href="#VulkanBackend.sigmoid">fn sigmoid</a></li>
+<li><a href="#VulkanBackend.tanh">fn tanh</a></li>
+<li><a href="#VulkanBackend.add_vec">fn add_vec</a></li>
+<li><a href="#VulkanBackend.mul_vec">fn mul_vec</a></li>
+<li><a href="#VulkanBackend.add_scalar">fn add_scalar</a></li>
+<li><a href="#VulkanBackend.mul_scalar">fn mul_scalar</a></li>
+<li><a href="#VulkanBackend.softmax">fn softmax</a></li>
+<li><a href="#VulkanBackend.layernorm">fn layernorm</a></li>
+<li><a href="#VulkanBackend.conv2d">fn conv2d</a></li>
+<li><a href="#VulkanBackend.to_internal">fn to_internal</a></li>
+<li><a href="#VulkanBackend.from_internal">fn from_internal</a></li>
 </ul>
 </li>
 </ul></div>

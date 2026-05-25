@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="x-ua-compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>main | vdoc</title>
+		<title>gpu | vdoc</title>
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
@@ -62,7 +62,7 @@
 						<li class="open">
 <div class="menu-row"><a href="./index.html">README</a></div>
 </li>
-<li class="open active">
+<li class="open">
 <div class="menu-row"><a href="./main.html">main</a></div>
 </li>
 <li class="open">
@@ -86,7 +86,7 @@
 <li class="open">
 <div class="menu-row"><a href="./cuda.html">cuda</a></div>
 </li>
-<li class="open">
+<li class="open active">
 <div class="menu-row"><a href="./gpu.html">gpu</a></div>
 </li>
 <li class="open">
@@ -210,22 +210,80 @@
 			<div class="doc-scrollview" tabindex="-1" id="main-content">
 				<div class="doc-container">
 					<div class="doc-content">
-								<section id="readme_main" class="doc-node">
-			<div class="title"><h1> main <a href="#readme_main">#</a></h1></div>
-<p>Run with: v run --path ~/.vmodules/vsl ~/.vmodules/vsl/vulkan/examples/add.v</p>
-<p>Requirements: Vulkan SDK installed (libvulkan.so / libvulkan.1.dylib)</p>
-<p>This example demonstrates:1. Device discovery (find GPU with compute support)2. Buffer creation and host→GPU data transfer3. GPU compute dispatch (vector add via SPIR-V)4. GPU→host readback of results</p>
+								<section id="gpu" class="doc-node">
+			<div class="title"><h1> gpu</h1></div>
 
-<section class="doc-node examples"><h4>Example</h4>
-<pre>
-<code class="language-v">Vulkan Compute</code></pre>
+
 </section>
+
+		<section id="cuda_memory_new" class="doc-node">
+			<div class="title"><h2>fn cuda_memory_new <a href="#cuda_memory_new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/cuda/gpu/memory.v#L14"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> cuda_memory_new<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">(</span>count <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span>CudaMemory<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span></code></pre>
+<p>cuda_memory_new allocates GPU memory for type T with count elements.</p>
+
+</section>
+
+		<section id="CudaMemory[T].upload" class="doc-node">
+			<div class="title"><h2>fn (CudaMemory[T]) upload <a href="#CudaMemory[T].upload">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/cuda/gpu/memory.v#L28"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> m CudaMemory<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">upload</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">T</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
+<p>upload copies data from host to device.</p>
+
+</section>
+
+		<section id="CudaMemory[T].download" class="doc-node">
+			<div class="title"><h2>fn (CudaMemory[T]) download <a href="#CudaMemory[T].download">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/cuda/gpu/memory.v#L39"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> m CudaMemory<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">download</span><span class="token punctuation">(</span><span class="token keyword">mut</span> out <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">T</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
+<p>download copies data from device to host.</p>
+
+</section>
+
+		<section id="CudaMemory[T].free" class="doc-node">
+			<div class="title"><h2>fn (CudaMemory[T]) free <a href="#CudaMemory[T].free">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/cuda/gpu/memory.v#L50"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>m <span class="token operator">&amp;</span>CudaMemory<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">free</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
+<p>free releases the GPU memory.</p>
+
+</section>
+
+		<section id="CudaMemory[T].destroy" class="doc-node">
+			<div class="title"><h2>fn (CudaMemory[T]) destroy <a href="#CudaMemory[T].destroy">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/cuda/gpu/memory.v#L60"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>m <span class="token operator">&amp;</span>CudaMemory<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">destroy</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
+<p>destroy is an alias for free().</p>
+
+</section>
+
+		<section id="CudaMemory" class="doc-node">
+			<div class="title"><h2>struct CudaMemory <a href="#CudaMemory">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/cuda/gpu/memory.v#L7"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> CudaMemory<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span><span class="token punctuation">:</span>
+	ptr  <span class="token builtin">voidptr</span>
+	size <span class="token builtin">int</span>
+<span class="token punctuation">}</span></code></pre>
+<p>CudaMemory is a helper for managing GPU device memory. It wraps cudaMalloc/cudaFree and provides upload/download methods.</p>
+
 </section>
 
 
 						<div class="footer">Powered by vdoc. Generated on: 25 May 2026 22:48:19</div>
 					</div>
-					<div class="doc-toc"><ul><li class="open"><a href="#readme_main">README</a></li>
+					<div class="doc-toc"><ul><li class="open"><a href="#cuda_memory_new">fn cuda_memory_new</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#CudaMemory[T].upload">type CudaMemory[T]</a>        <ul>
+<li><a href="#CudaMemory[T].upload">fn upload</a></li>
+<li><a href="#CudaMemory[T].download">fn download</a></li>
+<li><a href="#CudaMemory[T].free">fn free</a></li>
+<li><a href="#CudaMemory[T].destroy">fn destroy</a></li>
+</ul>
+</li>
+<li class="open"><a href="#CudaMemory">struct CudaMemory</a>        <ul>
+</ul>
+</li>
 </ul></div>
 				</div>
 			</div>
