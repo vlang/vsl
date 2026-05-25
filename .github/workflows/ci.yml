@@ -83,6 +83,46 @@ jobs:
           v wipe-cache
           ~/.vmodules/vsl/bin/test ${{ matrix.flags }} --use-vulkan
 
+  run-tests-on-cuda:
+    # CUDA tests require a machine with NVIDIA GPU + CUDA Toolkit.
+    # Only runs on main branch pushes (not PRs from forks — no GPU access in CI).
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: linux-x64-16c
+
+    steps:
+      - name: Checkout VSL
+        uses: actions/checkout@v4
+        with:
+          path: vsl
+
+      - name: Setup V
+        uses: vlang/setup-v@v1.3
+        with:
+          check-latest: true
+
+      - name: V doctor
+        run: v doctor
+
+      - name: Install CUDA toolkit
+        run: |
+          sudo apt-get update && \
+          sudo apt-get install --quiet -y --no-install-recommends \
+            cuda-toolkit-12-2 \
+            libcudnn8 libcudnn8-dev
+
+      - name: Verify CUDA installation
+        run: |
+          nvcc --version
+          nvidia-smi || echo "nvidia-smi not available in container (expected on some runners)"
+
+      - name: Move VSL source code to V Modules
+        run: mv ./vsl ~/.vmodules
+
+      - name: Execute Tests using CUDA Backend
+        run: |
+          v wipe-cache
+          ~/.vmodules/vsl/bin/test --use-cuda
+
   run-tests-on-macos:
     runs-on: ${{ matrix.os }}
 

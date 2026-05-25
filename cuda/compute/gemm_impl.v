@@ -5,7 +5,8 @@ module compute
 // gemm_cuda_impl is the internal GEMM implementation for CUDA.
 // Uses cuBLAS dgemm when available, CPU fallback otherwise.
 // All data is column-major (cuBLAS convention).
-pub fn gemm_cuda_impl(mut dev cuda.Device, a_col []f64, b_col []f64, m int, n int, k int) ![]f64 {
+// The dev parameter is reserved for future CUDA context/device handle use.
+pub fn gemm_cuda_impl(dev voidptr, a_col []f64, b_col []f64, m int, n int, k int) ![]f64 {
 	// TODO(#238): use cuBLAS when CUDA is available
 	// cublasHandle_t handle;
 	// cublasCreate(&handle);
@@ -19,7 +20,7 @@ pub fn gemm_cuda_impl(mut dev cuda.Device, a_col []f64, b_col []f64, m int, n in
 // gemv_cuda_impl is the internal GEMV implementation for CUDA.
 // Uses cuBLAS dgvm when available, CPU fallback otherwise.
 // A is column-major [m x n], x is [n], y is [m].
-pub fn gemv_cuda_impl(mut dev cuda.Device, a_col []f64, x_data []f64, m int, n int) ![]f64 {
+pub fn gemv_cuda_impl(dev voidptr, a_col []f64, x_data []f64, m int, n int) ![]f64 {
 	// TODO(#238): use cuBLAS dgv when CUDA is available
 	return gemv_cpu_colmajor(a_col, x_data, m, n)
 }

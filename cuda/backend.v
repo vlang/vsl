@@ -4,8 +4,8 @@ module cuda
 
 import vsl.cuda.compute as cuda_compute
 
-// Device represents a CUDA device handle.
-// The actual type is defined in cuda.c.v with C bindings.
+// Device represents a CUDA device handle (cuCtx* or CUdeviceptr).
+// Concrete type is defined in cuda.c.v with C bindings when CUDA is available.
 pub type Device = voidptr
 
 // CUDABackend implements ComputeBackend using NVIDIA CUDA (cuBLAS/cuDNN).
@@ -15,19 +15,22 @@ pub type Device = voidptr
 //
 // Memory layout: cuBLAS is column-major (same as VCL/Vulkan), so row↔col
 // conversion is applied at the compute/dispatch boundary.
+@[heap]
 pub struct CUDABackend {
 mut:
-	dev &Device
+	dev Device
 }
 
+// new_cuda_backend creates a CUDABackend with no device handle.
+// Operations will use CPU fallbacks until a real CUDA device is set.
 pub fn new_cuda_backend() CUDABackend {
 	return CUDABackend{
-		dev: &Device(unsafe { nil })
+		dev: voidptr(0)
 	}
 }
 
 // new_cuda_backend_with_device creates a CUDABackend from an existing CUDA device.
-pub fn new_cuda_backend_with_device(dev &Device) CUDABackend {
+pub fn new_cuda_backend_with_device(dev Device) CUDABackend {
 	return CUDABackend{
 		dev: dev
 	}
@@ -93,32 +96,10 @@ pub fn (b &CUDABackend) conv2d(input []f64, kernel []f64, batch int, in_h int, i
 
 // to_internal: cuBLAS is column-major, same as VCL/Vulkan.
 pub fn (b &CUDABackend) to_internal(data []f64, rows int, cols int) ![]f64 {
-	return row_to_col_major(data, rows, cols)
+	return cuda_compute.row_to_col_major(data, rows, cols)
 }
 
 // from_internal: convert column-major back to row-major.
 pub fn (b &CUDABackend) from_internal(data []f64, rows int, cols int) ![]f64 {
-	return col_to_row_major(data, rows, cols)
-}
-
-// row_to_col_major converts row-major flat array to column-major.
-fn row_to_col_major(data []f64, rows int, cols int) []f64 {
-	mut out := []f64{len: data.len}
-	for r in 0 .. rows {
-		for c in 0 .. cols {
-			out[r + c * rows] = data[r * cols + c]
-		}
-	}
-	return out
-}
-
-// col_to_row_major converts column-major flat array back to row-major.
-fn col_to_row_major(data []f64, rows int, cols int) []f64 {
-	mut out := []f64{len: data.len}
-	for r in 0 .. rows {
-		for c in 0 .. cols {
-			out[r * cols + c] = data[r + c * rows]
-		}
-	}
-	return out
+	return cuda_compute.col_to_row_major(data, rows, cols)
 }

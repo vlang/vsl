@@ -14,7 +14,8 @@
 ##         --use-autofree                    Execute tests using atofree
 ##         --use-gc=STRATEGY                 Execute tests using garbage collector
 ##         --skip-examples                   Skip examples compilation
-##         --use-vulkan                     Execute tests using Vulkan compute
+##         --use-vulkan                      Execute tests using Vulkan compute
+##         --use-cuda                        Execute tests using CUDA backend
 ##
 
 ROOT=$(realpath "$(dirname "$0")")
@@ -41,6 +42,11 @@ fi
 if [[ -n "${use_vulkan}" ]]; then
     echo "Running tests using Vulkan compute"
     flags="${flags} -d vulkan"
+fi
+
+if [[ -n "${use_cuda}" ]]; then
+    echo "Running tests using CUDA backend"
+    flags="${flags} -d cuda"
 fi
 
 if [[ -n "${use_autofree}" ]]; then

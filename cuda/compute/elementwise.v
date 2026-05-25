@@ -6,26 +6,26 @@ import math
 
 // relu_cuda applies ReLU: y[i] = max(0, x[i]) using cuDNN.
 // Falls back to CPU when CUDA is unavailable.
-pub fn relu_cuda(dev &cuda.Device, x_data []f64) ![]f64 {
+pub fn relu_cuda(dev voidptr, x_data []f64) ![]f64 {
 	// TODO(#238): use cuDNNReluDescriptor and cuDNNAddTensor when CUDA is available
 	// For now, use CPU fallback
 	return relu_cpu_f64(x_data)
 }
 
 // sigmoid_cuda applies Sigmoid: y[i] = 1/(1+exp(-x[i])) using cuDNN.
-pub fn sigmoid_cuda(dev &cuda.Device, x_data []f64) ![]f64 {
+pub fn sigmoid_cuda(dev voidptr, x_data []f64) ![]f64 {
 	// TODO(#238): use cuDNNSigmoid when CUDA is available
 	return sigmoid_cpu_f64(x_data)
 }
 
 // tanh_cuda applies Tanh: y[i] = tanh(x[i]) using cuDNN.
-pub fn tanh_cuda(dev &cuda.Device, x_data []f64) ![]f64 {
+pub fn tanh_cuda(dev voidptr, x_data []f64) ![]f64 {
 	// TODO(#238): use cuDNNTanh when CUDA is available
 	return tanh_cpu_f64(x_data)
 }
 
 // add_vec_cuda computes y[i] = a[i] + b[i] element-wise using cuBLAS DAXPY or custom kernel.
-pub fn add_vec_cuda(dev &cuda.Device, a_data []f64, b_data []f64) ![]f64 {
+pub fn add_vec_cuda(dev voidptr, a_data []f64, b_data []f64) ![]f64 {
 	if a_data.len != b_data.len {
 		return error('add_vec_cuda: length mismatch ${a_data.len} vs ${b_data.len}')
 	}
@@ -38,7 +38,7 @@ pub fn add_vec_cuda(dev &cuda.Device, a_data []f64, b_data []f64) ![]f64 {
 }
 
 // mul_vec_cuda computes y[i] = a[i] * b[i] element-wise using custom CUDA kernel.
-pub fn mul_vec_cuda(dev &cuda.Device, a_data []f64, b_data []f64) ![]f64 {
+pub fn mul_vec_cuda(dev voidptr, a_data []f64, b_data []f64) ![]f64 {
 	if a_data.len != b_data.len {
 		return error('mul_vec_cuda: length mismatch ${a_data.len} vs ${b_data.len}')
 	}
@@ -51,7 +51,7 @@ pub fn mul_vec_cuda(dev &cuda.Device, a_data []f64, b_data []f64) ![]f64 {
 }
 
 // add_scalar_cuda computes y[i] = x[i] + scalar using custom kernel or cuBLAS.
-pub fn add_scalar_cuda(dev &cuda.Device, x_data []f64, s f64) ![]f64 {
+pub fn add_scalar_cuda(dev voidptr, x_data []f64, s f64) ![]f64 {
 	// TODO(#238): custom CUDA kernel for add_scalar when CUDA is available
 	mut out := []f64{len: x_data.len}
 	for i in 0 .. x_data.len {
@@ -61,7 +61,7 @@ pub fn add_scalar_cuda(dev &cuda.Device, x_data []f64, s f64) ![]f64 {
 }
 
 // mul_scalar_cuda computes y[i] = x[i] * scalar using cuBLAS DSCAL.
-pub fn mul_scalar_cuda(dev &cuda.Device, x_data []f64, s f64) ![]f64 {
+pub fn mul_scalar_cuda(dev voidptr, x_data []f64, s f64) ![]f64 {
 	// TODO(#238): use cuBLAS DSCAL when CUDA is available
 	mut out := []f64{len: x_data.len}
 	for i in 0 .. x_data.len {
@@ -71,14 +71,14 @@ pub fn mul_scalar_cuda(dev &cuda.Device, x_data []f64, s f64) ![]f64 {
 }
 
 // softmax_cuda applies row-wise numerically stable softmax via cuDNN.
-pub fn softmax_cuda(dev &cuda.Device, x_data []f64) ![]f64 {
+pub fn softmax_cuda(dev voidptr, x_data []f64) ![]f64 {
 	// TODO(#238): use cuDNNSoftmaxForward when CUDA is available
 	return softmax_cpu_f64(x_data)
 }
 
 // layernorm_cuda applies row-wise layer normalization via cuDNN.
 // Applies gamma/beta on CPU (cuDNN layernorm does not include affine by default).
-pub fn layernorm_cuda(dev &cuda.Device, x_data []f64, gamma []f64, beta []f64) ![]f64 {
+pub fn layernorm_cuda(dev voidptr, x_data []f64, gamma []f64, beta []f64) ![]f64 {
 	// TODO(#238): use cuDNNLayerNorm when CUDA is available
 	return layernorm_cpu_f64(x_data, gamma, beta)
 }
@@ -87,7 +87,7 @@ pub fn layernorm_cuda(dev &cuda.Device, x_data []f64, gamma []f64, beta []f64) !
 // Input: [batch x in_h x in_w x in_ch] row-major flat
 // Kernel: [out_ch x k_h x k_w x in_ch] row-major flat
 // Output: [batch x out_h x out_w x out_ch]
-pub fn conv2d_cuda(dev &cuda.Device, input []f64, kernel []f64, batch int, in_h int, in_w int, in_ch int, out_ch int, k_h int, k_w int, stride_h int, stride_w int) ![]f64 {
+pub fn conv2d_cuda(dev voidptr, input []f64, kernel []f64, batch int, in_h int, in_w int, in_ch int, out_ch int, k_h int, k_w int, stride_h int, stride_w int) ![]f64 {
 	// TODO(#238): use cuDNNConvolutionForward when CUDA is available
 	return error('conv2d_cuda: not implemented yet — see issue #238')
 }

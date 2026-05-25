@@ -100,3 +100,46 @@ which tests have failed and then fix them by making more changes. Just use
 `git push pullrequest` to publish your changes. The CI tests will
 run with your updated code. Use `hub ci-status --verbose` to monitor
 their status.
+
+## CUDA Backend Development
+
+VSL supports GPU acceleration via NVIDIA CUDA (cuBLAS + cuDNN). See
+[`cuda/README.md`](./cuda/README.md) for the full architecture and status.
+
+### Setup (Arch Linux)
+
+```sh
+# NVIDIA driver
+sudo pacman -S nvidia nvidia-utils
+
+# CUDA Toolkit (includes cuBLAS)
+sudo pacman -S cuda
+
+# cuDNN (must match CUDA version)
+sudo pacman -S cudnn
+
+# Verify
+nvcc --version
+nvidia-smi
+```
+
+### Building with CUDA support
+
+```sh
+# Compile with CUDA backend (activates $if cuda ? blocks)
+v -d cuda run your_app.v
+
+# Run CUDA tests
+./bin/test --use-cuda
+
+# Lint with CUDA
+v -d cuda vet .
+```
+
+### Phase status
+
+All CUDA operations are stubbed with CPU fallbacks. The cuBLAS/cuDNN
+bindings are tracked in [issue #238](https://github.com/vlang/vsl/issues/238).
+
+See [ADR-001](./docs/adr/ADR-001-multi-backend-gpu-compute-vsl.md) for the
+architecture decision record.
