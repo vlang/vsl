@@ -20,17 +20,20 @@ VSL already has a partial compute infrastructure:
 
 ### Constraints
 
-- VSL's compute API is row-major externally (C-style), but Vulkan and VCL are column-major internally.
+- VSL's compute API is row-major externally (C-style), but Vulkan and VCL
+  are column-major internally.
 - `vsl.vcl` already exists as a mature OpenCL transport wrapper; compute extends it.
 - `vsl.vulkan` is backed by `antono2/vulkan` raw bindings (~1.3 MB auto-generated from Khronos XML).
-- No CUDA bindings exist in the V ecosystem yet; need to evaluate `vlang/cuvm` or raw CUDA driver API.
+- No CUDA bindings exist in the V ecosystem yet; need to evaluate
+  `vlang/cuvm` or raw CUDA driver API.
 - VTL (VTL issue [#57](https://github.com/vlang/vtl/issues/57)) blocks on VSL having CUDA and Vulkan compute ready.
 
 ## Options Considered
 
 ### Option A: Extend VCL Compute Only (OpenCL as the universal backend)
 
-**What:** Skip Vulkan and CUDA entirely. Make VCL the single GPU backend (OpenCL runs on NVIDIA, AMD, Intel, ARM, and via POCL on CPU).
+**What:** Skip Vulkan and CUDA entirely. Make VCL the single GPU backend
+(OpenCL runs on NVIDIA, AMD, Intel, ARM, and via POCL on CPU).
 
 **Pros:**
 - Single code path for all GPUs.
@@ -43,13 +46,15 @@ VSL already has a partial compute infrastructure:
 - OpenCL runtime must be present on all target machines.
 - VCL examples failing on user machines ("OpenCL device not found" — issue #226).
 
-**Estimated effort:** Phase C (#239) already covers this. Low additional work if VCL is the only target.
+**Estimated effort:** Phase C (#239) already covers this. Low additional
+work if VCL is the only target.
 
 ---
 
 ### Option B: Vulkan + VCL (No CUDA)
 
-**What:** Implement the full Vulkan compute backend (Phase A, #237) alongside the existing VCL compute (Phase C, #239). Skip CUDA entirely.
+**What:** Implement the full Vulkan compute backend (Phase A, #237)
+alongside the existing VCL compute (Phase C, #239). Skip CUDA entirely.
 
 **Pros:**
 - Vulkan is the only truly open GPU API (royalty-free, cross-platform).
@@ -87,7 +92,9 @@ VSL already has a partial compute infrastructure:
 
 ### Option D: Abstraction-First — Define Compute Trait Before Backend Implementation
 
-**What:** Do NOT implement any new backend yet. First define a `ComputeBackend` trait/interface in VSL's `compute` module that all backends must satisfy. Then implement backends incrementally (Phase A → B → C).
+**What:** Do NOT implement any new backend yet. First define a
+`ComputeBackend` trait/interface in VSL's `compute` module that all
+backends must satisfy. Then implement backends incrementally (Phase A → B → C).
 
 **Pros:**
 - Forces clean API design before code accumulates.
@@ -106,10 +113,13 @@ VSL already has a partial compute infrastructure:
 **Adopt Option D (Abstraction-First).**
 
 Rationale:
-- The current `dispatch.v` has a hard-coded `match` on `Backend` enum. This is not extensible — adding CUDA requires changing every function in dispatch.v.
+- The current `dispatch.v` has a hard-coded `match` on `Backend` enum.
+  This is not extensible — adding CUDA requires changing every function in
+  `dispatch.v`.
 - A trait/interface lets the dispatch layer stay stable while backends vary.
 - VTL needs a stable API contract to build against; `ComputeBackend` trait gives that.
-- After the trait is defined, Phase A (Vulkan), Phase B (CUDA), Phase C (VCL Extended) are independent and can run in parallel or sequentially.
+- After the trait is defined, Phase A (Vulkan), Phase B (CUDA), and
+  Phase C (VCL Extended) are independent and can run in parallel or sequentially.
 
 The compute abstraction should be:
 
@@ -117,45 +127,45 @@ The compute abstraction should be:
 // In vsl/compute/backend.v
 
 pub interface ComputeBackend {
-    // Backend identifier
-    name() string
+	// Backend identifier
+	name() string
 
-    // Query which operations this backend supports
-    supports(op string) bool
+	// Query which operations this backend supports
+	supports(op string) bool
 
-    // Matrix multiply: C = A * B, row-major, returns row-major
-    gemm(a []f64, b []f64, m int, n int, k int) ![]f64
+	// Matrix multiply: C = A * B, row-major, returns row-major
+	gemm(a []f64, b []f64, m int, n int, k int) ![]f64
 
-    // Matrix-vector multiply: y = A * x, row-major A
-    gemv(a []f64, x []f64, m int, n int) ![]f64
+	// Matrix-vector multiply: y = A * x, row-major A
+	gemv(a []f64, x []f64, m int, n int) ![]f64
 
-    // Element-wise ops
-    relu(x []f64) ![]f64
-    sigmoid(x []f64) ![]f64
-    tanh(x []f64) ![]f64
+	// Element-wise ops
+	relu(x []f64) ![]f64
+	sigmoid(x []f64) ![]f64
+	tanh(x []f64) ![]f64
 
-    // Vector-vector ops
-    add_vec(a []f64, b []f64) ![]f64
-    mul_vec(a []f64, b []f64) ![]f64
+	// Vector-vector ops
+	add_vec(a []f64, b []f64) ![]f64
+	mul_vec(a []f64, b []f64) ![]f64
 
-    // Scalar ops
-    add_scalar(x []f64, s f64) ![]f64
-    mul_scalar(x []f64, s f64) ![]f64
+	// Scalar ops
+	add_scalar(x []f64, s f64) ![]f64
+	mul_scalar(x []f64, s f64) ![]f64
 
-    // Advanced ops
-    softmax(x []f64) ![]f64
-    layernorm(x []f64, gamma []f64, beta []f64) ![]f64
+	// Advanced ops
+	softmax(x []f64) ![]f64
+	layernorm(x []f64, gamma []f64, beta []f64) ![]f64
 
-    // Layout conversion (each backend owns its internal layout)
-    // Called automatically by dispatch to convert row→column-major
-    to_internal_layout(data []f64, rows int, cols int) ![]f64
-    from_internal_layout(data []f64, rows int, cols int) ![]f64
+	// Layout conversion (each backend owns its internal layout)
+	// Called automatically by dispatch to convert row→column-major
+	to_internal_layout(data []f64, rows int, cols int) ![]f64
+	from_internal_layout(data []f64, rows int, cols int) ![]f64
 }
 
 // ComputeContext holds a backend and dispatches to it.
 pub struct ComputeContext {
-    backend ComputeBackend
-    strict  bool
+	backend ComputeBackend
+	strict  bool
 }
 ```
 
@@ -174,7 +184,8 @@ pub struct ComputeContext {
 - Create placeholder `vsl/cuda/` module stub with error: "CUDA backend not yet implemented"
 
 ### Phase A — Vulkan Compute (Weeks 3–8)
-- Complete `vsl.vulkan/compute/` for all ops in trait (relu, sigmoid, tanh, add_vec, mul_vec, softmax, layernorm)
+- Complete `vsl.vulkan/compute/` for all ops in trait
+  (relu, sigmoid, tanh, add_vec, mul_vec, softmax, layernorm)
 - Implement `to_internal_layout` / `from_internal_layout` for Vulkan (row→column-major)
 - Add tests using `vulkan_test.v` as reference
 - VTL issue [#57](https://github.com/vlang/vtl/issues/57) unblocks

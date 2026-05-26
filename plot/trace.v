@@ -597,6 +597,7 @@ pub mut:
 	dimensions []Dimension  @[omitempty]
 	line       ParallelLine @[omitempty]
 	name       string       @[omitempty]
+	marker     Marker       @[omitempty]
 	labelangle f64          @[omitempty]
 	labelside  string       @[omitempty] // 'top', 'bottom'
 }
@@ -611,6 +612,7 @@ pub mut:
 	valueformat string     @[omitempty]
 	valuesuffix string     @[omitempty]
 	name        string     @[omitempty]
+	marker      Marker     @[omitempty]
 }
 
 // ChordTrace is a struct for Chord diagram trace type

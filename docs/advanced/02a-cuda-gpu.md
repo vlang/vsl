@@ -34,14 +34,14 @@ export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
 import vsl.compute
 
 fn main() {
-    mut ctx := compute.new_context(.cuda)
-    println('Backend: ${ctx.backend}')  // cuda
+	mut ctx := compute.new_context(.cuda)
+	println('Backend: ${ctx.backend}') // cuda
 
-    // Matrix multiplication: 2x3 @ 3x2 = 2x2
-    a := [f64(1), 2, 3, 4, 5, 6]
-    b := [f64(7), 8, 9, 10, 11, 12]
-    c := compute.gemm(mut ctx, a, b, 2, 2, 3)!
-    println('Result: ${c}')  // [58.0, 64.0, 139.0, 154.0]
+	// Matrix multiplication: 2x3 @ 3x2 = 2x2
+	a := [f64(1), 2, 3, 4, 5, 6]
+	b := [f64(7), 8, 9, 10, 11, 12]
+	c := compute.gemm(ctx, a, b, 2, 2, 3)!
+	println('Result: ${c}') // [58.0, 64.0, 139.0, 154.0]
 }
 ```
 
@@ -51,17 +51,17 @@ fn main() {
 import vsl.compute
 
 fn main() {
-    mut ctx := compute.new_context(.cuda)
+	mut ctx := compute.new_context(.cuda)
 
-    x := [f64(-1.0), 2.0, -3.0, 4.0]
+	x := [f64(-1.0), 2.0, -3.0, 4.0]
 
-    relu_out := compute.relu(mut ctx, x)!
-    sigmoid_out := compute.sigmoid(mut ctx, x)!
-    tanh_out := compute.tanh(mut ctx, x)!
+	relu_out := compute.relu(ctx, x)!
+	sigmoid_out := compute.sigmoid(ctx, x)!
+	tanh_out := compute.tanh(ctx, x)!
 
-    println('relu: ${relu_out}')    // [0.0, 2.0, 0.0, 4.0]
-    println('sigmoid: ${sigmoid_out}')
-    println('tanh: ${tanh_out}')
+	println('relu: ${relu_out}') // [0.0, 2.0, 0.0, 4.0]
+	println('sigmoid: ${sigmoid_out}')
+	println('tanh: ${tanh_out}')
 }
 ```
 
@@ -105,14 +105,19 @@ The `ComputeContext` caches the `CudaDevice` after the first operation to avoid
 repeated cuBLAS/cuDNN handle creation. This is required because creating multiple
 handles can fail with `CUBLAS_STATUS_ALLOC_FAILED`.
 
-**Important:** All compute functions require `mut ctx` (mutable context):
+**Important:** compute functions accept `ctx` (no `mut` at call site):
 
 ```v
-// ✅ Correct - mutable context
-result := compute.relu(mut ctx, x)!
+import vsl.compute
 
-// ❌ Wrong - context is immutable
-result := compute.relu(ctx, x)!
+fn main() {
+	ctx := compute.new_context(.cuda)
+	x := [f64(-1.0), 2.0, -3.0, 4.0]
+
+	// ✅ Correct
+	result_ok := compute.relu(ctx, x)!
+	println(result_ok)
+}
 ```
 
 ## Neural Network Example

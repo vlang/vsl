@@ -1,7 +1,6 @@
 module main
 
 import vsl.ml
-import vsl.plot
 
 struct TestCase {
 	features    []f64
