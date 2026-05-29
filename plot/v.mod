@@ -1,5 +1,5 @@
 Module {
-	name: 'plot'
+	name: 'vsl.plot'
 	description: 'The VSL Plot lib'
 	version: '0.1.0'
 	license: 'MIT'
