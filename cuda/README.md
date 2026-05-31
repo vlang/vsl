@@ -26,7 +26,8 @@
 | `layernorm` | CPU (cuDNN 9 symbol optional) | CPU | [#280](https://github.com/vlang/vsl/issues/280) |
 | `conv2d` | ✅ `cudnnConvolutionForward` | CPU | — |
 
-`mul_vec` uses `cublasDdgmm` (legacy API where `cublasDdgmm_v2` is absent). Layer norm stays on CPU until
+`mul_vec` uses legacy `cublasDdgmm` (`SIDE_RIGHT`, 1×n row layout; `cublasDdgmm_v2` absent on some distros).
+Layer norm stays on CPU until
 `cudnnLayerNormForward` is available on the target cuDNN build.
 Numerical parity tests: `cuda/compute/numerical_validation_test.v` ([#281](https://github.com/vlang/vsl/issues/281)).
 
