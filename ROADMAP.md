@@ -1,6 +1,7 @@
 # VSL Neural Network & Compute Backend Roadmap
 
-> **Goal**: Production-grade compute backend for VTL neural networks — CUDA/GPU acceleration, multi-backend dispatch, NumPy-comparable performance benchmarks.
+> **Goal**: Production-grade compute backend for VTL neural networks — CUDA/GPU acceleration,
+> multi-backend dispatch, NumPy-comparable performance benchmarks.
 
 **Repositories**: [vlang/vsl](https://github.com/vlang/vsl) (compute) · [vlang/vtl](https://github.com/vlang/vtl) (neural networks)
 
