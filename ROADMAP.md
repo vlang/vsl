@@ -49,24 +49,16 @@
 
 ## 🎯 Active Development
 
-### Phase F — cuBLAS/cuDNN Full Integration — [issue #280](https://github.com/vlang/vsl/issues/280)
-- [ ] Replace remaining CPU-fallback stubs (`layernorm`, `mul_vec`) with GPU kernels
-- [ ] GEMV: `cublasDgemv` for matrix-vector operations
-- [ ] Softmax: `cuDNNSoftmaxForward` for batch softmax
-- [ ] LayerNorm: `cuDNNLayerNorm` for layer normalization
-- [ ] Conv2D: `cuDNNConvolutionForward` for 2D convolution
-- [ ] Bias addition, gradient operations
+### Phase F — cuBLAS/cuDNN Full Integration — closed [#280](https://github.com/vlang/vsl/issues/280)
+- [x] `mul_vec` via `cublasDdgmm`; GEMM/GEMV/activations/softmax/conv2d on GPU
+- [x] LayerNorm GPU optional (`-d cudnn_layernorm`, PR #291)
+- [ ] Bias addition kernels, gradient ops (future)
 
-### Phase G — NumPy Performance Benchmarks — [issue #282](https://github.com/vlang/vsl/issues/282)
-- [x] `benchmarks/vs_numpy/` matmul, gemv, conv2d scripts + CI job
-- [ ] `benchmarks/vs_numpy/` directory with VTL vs NumPy comparison:
-  - `benchmarks/vs_numpy/matmul.v` — Matrix multiplication (CPU + CUDA)
-  - `benchmarks/vs_numpy/conv2d.v` — 2D Convolution (CPU + CUDA)
-  - `benchmarks/vs_numpy/autograd.v` — MLP backprop (VTL vs PyTorch)
-  - `benchmarks/vs_numpy/training.v` — End-to-end training step
-- [ ] CI integration: GH Actions workflow runs on every PR
-- [ ] Post results as PR comment with: VTL time, NumPy time, speedup ratio
-- [ ] Threshold: fail PR if VTL is >3x slower than NumPy (with justification for known gaps)
+### Phase G — NumPy Performance Benchmarks — closed [#282](https://github.com/vlang/vsl/issues/282)
+- [x] `benchmarks/vs_numpy/` matmul, gemv, conv2d + `numpy_baseline.py`
+- [x] CI job `vs-numpy-benchmarks` (weekly + PR path)
+- [x] PR comment with NumPy ratio (`benchmark-pr-comment.yml`, PR #292)
+- [ ] CUDA variants of bench scripts (optional)
 
 ### Phase H — Multi-GPU Support
 - [ ] Device discovery: enumerate all CUDA devices
@@ -80,12 +72,9 @@
 - [ ] `to_internal()` / `from_internal()` elimination for pinned memory
 - [ ] Unified memory space with explicit `to_device()` / `to_host()` calls
 
-### Phase J — Numerical Validation Test Suite — [issue #281](https://github.com/vlang/vsl/issues/281)
-- [ ] `cuda/tests/numerical_validation.v` — compare GPU output to CPU reference
-- [ ] Tolerance: `|gpu_result - cpu_result| < 1e-10` for BLAS operations
-- [ ] Random test vectors, stress tests with extreme sizes
-- [ ] cuDNN persistent RNN fusion validation
-- [ ] Cross-backend validation: Vulkan vs CUDA results must match
+### Phase J — Numerical Validation Test Suite — closed [#281](https://github.com/vlang/vsl/issues/281)
+- [x] `cuda/compute/numerical_validation_test.v` (GEMM, relu, mul_vec, layernorm, conv2d)
+- [ ] Extended stress sizes; Vulkan vs CUDA cross-check
 
 ---
 
@@ -101,9 +90,9 @@
 | [#239](https://github.com/vlang/vsl/issues/239) | Phase C: OpenCL Backend | 🟢 Done | VCL integrated |
 | [#238](https://github.com/vlang/vsl/issues/238) | Phase B: CUDA Backend | 🟢 Done | Infrastructure |
 | [#237](https://github.com/vlang/vsl/issues/237) | Phase A: Vulkan Compute | 🟢 Done | |
-| [#280](https://github.com/vlang/vsl/issues/280) | CUDA stubs + docs (LayerNorm, mul_vec) | 🔴 P0 | |
-| [#281](https://github.com/vlang/vsl/issues/281) | GPU numerical validation | 🔴 P0 | |
-| [#282](https://github.com/vlang/vsl/issues/282) | vs NumPy benchmarks | 🔴 High | |
+| [#280](https://github.com/vlang/vsl/issues/280) | CUDA kernels + docs | 🟢 Done | #289, #291 |
+| [#281](https://github.com/vlang/vsl/issues/281) | GPU numerical validation | 🟢 Done | #288 |
+| [#282](https://github.com/vlang/vsl/issues/282) | vs NumPy benchmarks | 🟢 Done | #290 |
 | [#283](https://github.com/vlang/vsl/issues/283) | Fix vulkan_test.v crash | 🔴 P0 | Gate B |
 | [#284](https://github.com/vlang/vsl/issues/284) | Vulkan conv2d | 🟡 Medium | |
 | [#285](https://github.com/vlang/vsl/issues/285) | ComputeContext unit tests | 🟡 Medium | |
