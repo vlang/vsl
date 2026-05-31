@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: MIT
 // Test all CUDA GPU operations
 // Run with: v -d cuda -cc gcc run cuda/examples/cuda_ops_test.v
-
 import vsl.compute
 
 fn main() {

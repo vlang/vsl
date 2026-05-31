@@ -6,7 +6,6 @@ module compute
 //
 // All functions operate on flat f64 arrays and return flat f64 arrays.
 // Where cuDNN provides a native kernel the GPU path is used; otherwise CPU fallback.
-
 import math
 import vsl.cuda
 
@@ -37,8 +36,8 @@ fn activation_forward_cuda(dev &cuda.CudaDevice, mode cuda.CudnnActivationMode, 
 		return error('activation_forward_cuda: cudnnCreateTensorDescriptor: ${cuda.cudnn_error(s2)}')
 	}
 	// cudnnSetTensor4dDescriptor(desc, format=NCHW, dataType=DOUBLE, n=1, c=1, h=1, w=n)
-	s3 := C.cudnnSetTensor4dDescriptor(tensor_desc, cuda.cudnn_tensor_nchw, cuda.cudnn_data_type_double,
-		1, 1, 1, n)
+	s3 := C.cudnnSetTensor4dDescriptor(tensor_desc, cuda.cudnn_tensor_nchw,
+		cuda.cudnn_data_type_double, 1, 1, 1, n)
 	if s3 != cuda.cudnn_status_success {
 		C.cudnnDestroyTensorDescriptor(tensor_desc)
 		return error('activation_forward_cuda: cudnnSetTensor4dDescriptor: ${cuda.cudnn_error(s3)}')
@@ -54,8 +53,8 @@ fn activation_forward_cuda(dev &cuda.CudaDevice, mode cuda.CudnnActivationMode, 
 
 	alpha := f64(1.0)
 	beta := f64(0.0)
-	s4 := C.cudnnActivationForward(dev.cudnn, act_desc, &alpha, tensor_desc, &f64(d_x.ptr),
-		&beta, tensor_desc, &f64(d_y.ptr))
+	s4 := C.cudnnActivationForward(dev.cudnn, act_desc, &alpha, tensor_desc, &f64(d_x.ptr), &beta,
+		tensor_desc, &f64(d_y.ptr))
 	if s4 != cuda.cudnn_status_success {
 		return error('activation_forward_cuda: cudnnActivationForward: ${cuda.cudnn_error(s4)}')
 	}
@@ -177,15 +176,15 @@ pub fn softmax_cuda(dev &cuda.CudaDevice, x_data []f64) ![]f64 {
 	}
 	n := x_data.len
 
-// Create tensor descriptor: NCHW [1, 1, 1, n], double
+	// Create tensor descriptor: NCHW [1, 1, 1, n], double
 	mut tensor_desc := cuda.CudnnTensorDescriptor(unsafe { nil })
 	s2 := C.cudnnCreateTensorDescriptor(&tensor_desc)
 	if s2 != cuda.cudnn_status_success {
 		return error('softmax_cuda: cudnnCreateTensorDescriptor: ${cuda.cudnn_error(s2)}')
 	}
 	// cudnnSetTensor4dDescriptor(desc, format=NCHW, dataType=DOUBLE, n=1, c=1, h=1, w=n)
-	s3 := C.cudnnSetTensor4dDescriptor(tensor_desc, cuda.cudnn_tensor_nchw, cuda.cudnn_data_type_double,
-		1, 1, 1, n)
+	s3 := C.cudnnSetTensor4dDescriptor(tensor_desc, cuda.cudnn_tensor_nchw,
+		cuda.cudnn_data_type_double, 1, 1, 1, n)
 	if s3 != cuda.cudnn_status_success {
 		C.cudnnDestroyTensorDescriptor(tensor_desc)
 		return error('softmax_cuda: cudnnSetTensor4dDescriptor: ${cuda.cudnn_error(s3)}')
@@ -201,8 +200,9 @@ pub fn softmax_cuda(dev &cuda.CudaDevice, x_data []f64) ![]f64 {
 
 	alpha := f64(1.0)
 	beta := f64(0.0)
-	s4 := C.cudnnSoftmaxForward(dev.cudnn, cuda.cudnn_softmax_fast, cuda.cudnn_softmax_mode_instance,
-		&alpha, tensor_desc, &f64(d_x.ptr), &beta, tensor_desc, &f64(d_y.ptr))
+	s4 := C.cudnnSoftmaxForward(dev.cudnn, cuda.cudnn_softmax_fast,
+		cuda.cudnn_softmax_mode_instance, &alpha, tensor_desc, &f64(d_x.ptr), &beta, tensor_desc,
+		&f64(d_y.ptr))
 	if s4 != cuda.cudnn_status_success {
 		return error('softmax_cuda: cudnnSoftmaxForward: ${cuda.cudnn_error(s4)}')
 	}
@@ -228,8 +228,8 @@ pub fn layernorm_cuda(dev &cuda.CudaDevice, x_data []f64, gamma []f64, beta []f6
 // Returns: flat f64 array [batch * out_ch * out_h * out_w] (row-major NCHW)
 pub fn conv2d_cuda(dev &cuda.CudaDevice, input []f64, kernel []f64, batch int, in_h int, in_w int, in_ch int, out_ch int, k_h int, k_w int, stride_h int, stride_w int) ![]f64 {
 	if isnil(dev.cudnn) {
-		return conv2d_cpu_f64(input, kernel, batch, in_h, in_w, in_ch, out_ch, k_h, k_w,
-			stride_h, stride_w)
+		return conv2d_cpu_f64(input, kernel, batch, in_h, in_w, in_ch, out_ch, k_h, k_w, stride_h,
+			stride_w)
 	}
 
 	// Create input tensor descriptor: NCHW [batch, in_ch, in_h, in_w]
@@ -282,8 +282,8 @@ pub fn conv2d_cuda(dev &cuda.CudaDevice, input []f64, kernel []f64, batch int, i
 	mut out_c := 0
 	mut out_h_res := 0
 	mut out_w_res := 0
-	s3 := C.cudnnGetConvolution2dForwardOutputDim(conv_desc, in_tensor_desc, filter_desc,
-		&out_n, &out_c, &out_h_res, &out_w_res)
+	s3 := C.cudnnGetConvolution2dForwardOutputDim(conv_desc, in_tensor_desc, filter_desc, &out_n,
+		&out_c, &out_h_res, &out_w_res)
 	if s3 != cuda.cudnn_status_success {
 		return error('conv2d_cuda: cudnnGetConvolution2dForwardOutputDim: ${cuda.cudnn_error(s3)}')
 	}
@@ -334,9 +334,9 @@ pub fn conv2d_cuda(dev &cuda.CudaDevice, input []f64, kernel []f64, batch int, i
 
 	alpha := f64(1.0)
 	beta := f64(0.0)
-	s6 := C.cudnnConvolutionForward(dev.cudnn, &alpha, in_tensor_desc, &f64(d_in.ptr),
-		filter_desc, &f64(d_kernel.ptr), conv_desc, algo, d_ws.ptr, int(ws_bytes),
-		&beta, out_tensor_desc, &f64(d_out.ptr))
+	s6 := C.cudnnConvolutionForward(dev.cudnn, &alpha, in_tensor_desc, &f64(d_in.ptr), filter_desc,
+		&f64(d_kernel.ptr), conv_desc, algo, d_ws.ptr, int(ws_bytes), &beta, out_tensor_desc,
+		&f64(d_out.ptr))
 	if s6 != cuda.cudnn_status_success {
 		return error('conv2d_cuda: cudnnConvolutionForward: ${cuda.cudnn_error(s6)}')
 	}
