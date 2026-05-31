@@ -216,63 +216,62 @@
 <p><code>vsl.cuda</code> is a high-performance GPU compute backend for VSL backed by <a href="https://developer.nvidia.com/cuda-toolkit">NVIDIA CUDA</a> (cuBLAS + cuDNN).</p>
 <h2 id="-status">🚀 Status</h2>
 <blockquote>
-<p>⚠️ <strong>Phase B — Infrastructure ready; cuBLAS/cuDNN bindings are pending.</strong><br />All operations currently fall back to CPU. Once CUDA Toolkit is available on<br />the build machine, the <code>TODO(#238)</code> markers can be replaced with actual GPU<br />kernels.</p></blockquote>
+<p><strong>Phase B/C — cuBLAS/cuDNN bindings active</strong> when CUDA Toolkit + cuDNN are<br />available at build time (<code>-d cuda</code>). Operations use GPU kernels where<br />implemented; CPU fallback when CUDA/cuDNN is unavailable.</p>
+<p><strong>VTL integration</strong> (training loop on GPU) is tracked separately:<br /><a href="https://github.com/vlang/vtl/issues/89">vlang/vtl#89</a>,<br /><a href="https://github.com/vlang/vtl/issues/90">#90</a>,<br /><a href="https://github.com/vlang/vtl/issues/91">#91</a>.</p></blockquote>
 <table>
 <thead>
 <tr>
 <th>Operation</th>
-<th>Status</th>
-<th>cuBLAS/cuDNN</th></tr></thead>
+<th>GPU (CUDA+cuDNN)</th>
+<th>Fallback</th>
+<th>Tracker</th></tr></thead>
 <tbody>
 <tr>
 <td><code>gemm</code></td>
-<td>✅ Stub (CPU fallback)</td>
-<td><code>cublasDgemm</code></td></tr>
+<td>✅ <code>cublasDgemm</code></td>
+<td>CPU col-major</td>
+<td>—</td></tr>
 <tr>
 <td><code>gemv</code></td>
-<td>✅ Stub (CPU fallback)</td>
-<td><code>cublasDgvm</code></td></tr>
+<td>✅ <code>cublasDgemv</code></td>
+<td>CPU</td>
+<td>—</td></tr>
 <tr>
-<td><code>relu</code></td>
-<td>✅ Stub (CPU fallback)</td>
-<td><code>cuDNNReLU</code></td></tr>
-<tr>
-<td><code>sigmoid</code></td>
-<td>✅ Stub (CPU fallback)</td>
-<td><code>cuDNNSigmoid</code></td></tr>
-<tr>
-<td><code>tanh</code></td>
-<td>✅ Stub (CPU fallback)</td>
-<td><code>cuDNNTanh</code></td></tr>
+<td><code>relu</code> / <code>sigmoid</code> / <code>tanh</code></td>
+<td>✅ cuDNN activation</td>
+<td>CPU</td>
+<td>—</td></tr>
 <tr>
 <td><code>add_vec</code></td>
-<td>✅ Stub (CPU fallback)</td>
-<td>custom kernel</td></tr>
+<td>✅ <code>cublasDaxpy</code></td>
+<td>CPU</td>
+<td>—</td></tr>
 <tr>
 <td><code>mul_vec</code></td>
-<td>✅ Stub (CPU fallback)</td>
-<td>custom kernel</td></tr>
+<td>❌ CPU only</td>
+<td>CPU</td>
+<td><a href="https://github.com/vlang/vsl/issues/280">#280</a></td></tr>
 <tr>
-<td><code>add_scalar</code></td>
-<td>✅ Stub (CPU fallback)</td>
-<td>custom kernel</td></tr>
-<tr>
-<td><code>mul_scalar</code></td>
-<td>✅ Stub (CPU fallback)</td>
-<td><code>cublasDscal</code></td></tr>
+<td><code>add_scalar</code> / <code>mul_scalar</code></td>
+<td>✅ cuBLAS/cuDNN path</td>
+<td>CPU</td>
+<td>—</td></tr>
 <tr>
 <td><code>softmax</code></td>
-<td>✅ Stub (CPU fallback)</td>
-<td><code>cuDNNSoftmaxForward</code></td></tr>
+<td>✅ <code>cudnnSoftmaxForward</code></td>
+<td>CPU</td>
+<td>—</td></tr>
 <tr>
 <td><code>layernorm</code></td>
-<td>✅ Stub (CPU fallback)</td>
-<td><code>cuDNNLayerNorm</code></td></tr>
+<td>❌ CPU only</td>
+<td>CPU</td>
+<td><a href="https://github.com/vlang/vsl/issues/280">#280</a></td></tr>
 <tr>
 <td><code>conv2d</code></td>
-<td>✅ Stub (CPU fallback)</td>
-<td><code>cuDNNConvolutionForward</code></td></tr></tbody></table>
-<p>See <a href="https://github.com/vlang/vsl/issues/238">issue #238</a> for the cuBLAS/cuDNN implementation tracker.</p>
+<td>✅ <code>cudnnConvolutionForward</code></td>
+<td>CPU</td>
+<td>—</td></tr></tbody></table>
+<p>See <a href="https://github.com/vlang/vsl/issues/280">issue #280</a> for remaining CUDA stubs, docs, and CI. Numerical parity: <a href="https://github.com/vlang/vsl/issues/281">#281</a>.</p>
 <h2 id="-architecture">📁 Architecture</h2>
 <pre><code>vsl.cuda
 ├── backend.v           # CUDABackend (ComputeBackend interface impl)
@@ -682,7 +681,7 @@ sudo apt<span class="token operator">-</span>get install cuda<span class="token 
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 29 May 2026 01:56:52</div>
+						<div class="footer">Powered by vdoc. Generated on: 31 May 2026 03:57:41</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_cuda">README</a></li>
 <li class="open"><a href="#Constants">Constants</a></li>
