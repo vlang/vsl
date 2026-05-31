@@ -225,8 +225,6 @@ pub fn conv2d_cuda(dev &cuda.CudaDevice, input []f64, kernel []f64, batch int, i
 		return conv2d_cpu_f64(input, kernel, batch, in_h, in_w, in_ch, out_ch, k_h, k_w,
 			stride_h, stride_w)
 	}
-	out_h := (in_h - k_h) / stride_h + 1
-	out_w := (in_w - k_w) / stride_w + 1
 
 	// Create input tensor descriptor: NCHW [batch, in_ch, in_h, in_w]
 	mut in_tensor_desc := cuda.CudnnTensorDescriptor(unsafe { nil })
