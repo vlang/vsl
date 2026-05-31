@@ -48,15 +48,15 @@
 
 ## 🎯 Active Development
 
-### Phase F — cuBLAS/cuDNN Full Integration
-- [ ] Replace all remaining CPU-fallback stubs with actual GPU kernels
+### Phase F — cuBLAS/cuDNN Full Integration — [issue #280](https://github.com/vlang/vsl/issues/280)
+- [ ] Replace remaining CPU-fallback stubs (`layernorm`, `mul_vec`) with GPU kernels
 - [ ] GEMV: `cublasDgemv` for matrix-vector operations
 - [ ] Softmax: `cuDNNSoftmaxForward` for batch softmax
 - [ ] LayerNorm: `cuDNNLayerNorm` for layer normalization
 - [ ] Conv2D: `cuDNNConvolutionForward` for 2D convolution
 - [ ] Bias addition, gradient operations
 
-### Phase G — NumPy Performance Benchmarks
+### Phase G — NumPy Performance Benchmarks — [issue #282](https://github.com/vlang/vsl/issues/282)
 - [ ] `benchmarks/vs_numpy/` directory with VTL vs NumPy comparison:
   - `benchmarks/vs_numpy/matmul.v` — Matrix multiplication (CPU + CUDA)
   - `benchmarks/vs_numpy/conv2d.v` — 2D Convolution (CPU + CUDA)
@@ -78,7 +78,7 @@
 - [ ] `to_internal()` / `from_internal()` elimination for pinned memory
 - [ ] Unified memory space with explicit `to_device()` / `to_host()` calls
 
-### Phase J — Numerical Validation Test Suite
+### Phase J — Numerical Validation Test Suite — [issue #281](https://github.com/vlang/vsl/issues/281)
 - [ ] `cuda/tests/numerical_validation.v` — compare GPU output to CPU reference
 - [ ] Tolerance: `|gpu_result - cpu_result| < 1e-10` for BLAS operations
 - [ ] Random test vectors, stress tests with extreme sizes
@@ -99,7 +99,12 @@
 | [#239](https://github.com/vlang/vsl/issues/239) | Phase C: OpenCL Backend | 🟢 Done | VCL integrated |
 | [#238](https://github.com/vlang/vsl/issues/238) | Phase B: CUDA Backend | 🟢 Done | Infrastructure |
 | [#237](https://github.com/vlang/vsl/issues/237) | Phase A: Vulkan Compute | 🟢 Done | |
-| [#236](https://github.com/vlang/vsl/issues/236) | GPU Architecture: Multi-Backend | 🟢 Done | |
+| [#280](https://github.com/vlang/vsl/issues/280) | CUDA stubs + docs (LayerNorm, mul_vec) | 🔴 P0 | |
+| [#281](https://github.com/vlang/vsl/issues/281) | GPU numerical validation | 🔴 P0 | |
+| [#282](https://github.com/vlang/vsl/issues/282) | vs NumPy benchmarks | 🔴 High | |
+| [#283](https://github.com/vlang/vsl/issues/283) | Fix vulkan_test.v crash | 🔴 P0 | Gate B |
+| [#284](https://github.com/vlang/vsl/issues/284) | Vulkan conv2d | 🟡 Medium | |
+| [#285](https://github.com/vlang/vsl/issues/285) | ComputeContext unit tests | 🟡 Medium | |
 | [#231](https://github.com/vlang/vsl/issues/231) | implicit declaration `cblas_idamax` | 🟡 Medium | |
 | [#226](https://github.com/vlang/vsl/issues/226) | vcl: examples not working | 🟡 Medium | |
 | [#225](https://github.com/vlang/vsl/issues/225) | vsl Error on Windows | 🟡 Medium | |
