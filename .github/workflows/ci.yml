@@ -122,6 +122,8 @@ jobs:
         run: |
           v wipe-cache
           ~/.vmodules/vsl/bin/test --use-cuda
+          # Optional: GPU layernorm when cuDNN 9.1+ symbols are present
+          VSL_TEST_CUDA=1 v -d cuda -d cudnn_layernorm test ~/.vmodules/vsl/cuda/compute/numerical_validation_test.v || true
 
   run-tests-on-macos:
     runs-on: ${{ matrix.os }}

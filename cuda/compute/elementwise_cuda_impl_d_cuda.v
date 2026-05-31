@@ -17,7 +17,6 @@ pub fn mul_vec_cuda_impl(dev &cuda.CudaDevice, a_data []f64, b_data []f64) ![]f6
 	d_a.upload[f64](a_data)!
 	d_b.upload[f64](b_data)!
 
-	// CUBLAS_SIDE_RIGHT: C = A * diag(B); treat contiguous host data as 1×n row (lda=ldc=1).
 	status :=
 		C.cublasDdgmm(dev.cublas, 1, 1, n, &f64(d_a.ptr), 1, &f64(d_b.ptr), 1, &f64(d_c.ptr), 1)
 	if status != cuda.cublas_status_success {
@@ -29,8 +28,8 @@ pub fn mul_vec_cuda_impl(dev &cuda.CudaDevice, a_data []f64, b_data []f64) ![]f6
 	return out
 }
 
-// layernorm_cuda_impl: cudnnLayerNormForward not linked on all cuDNN builds.
+// layernorm_cuda_impl: GPU via elementwise_layernorm_cuda_impl_d_cudnn_layernorm_cuda.v
 pub fn layernorm_cuda_impl(dev &cuda.CudaDevice, x_data []f64, gamma []f64, beta []f64) ![]f64 {
 	_ := dev
-	return error('layernorm_cuda_impl: cudnnLayerNormForward unavailable')
+	return error('layernorm_cuda_impl: build with -d cudnn_layernorm when cuDNN exports cudnnLayerNormForward')
 }
