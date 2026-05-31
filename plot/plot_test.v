@@ -69,11 +69,11 @@ fn test_table_trace_type_in_json() {
 fn test_scattergeo_trace_type_in_json() {
 	mut plt := Plot.new()
 	plt.scattergeo(
-		lat:   [40.71, 34.05, 37.77]
-		lon:   [-74.0, -118.24, -122.41]
-		mode:  'markers'
-		text:  ['New York', 'Los Angeles', 'San Francisco']
-		name:  'Cities'
+		lat:  [40.71, 34.05, 37.77]
+		lon:  [-74.0, -118.24, -122.41]
+		mode: 'markers'
+		text: ['New York', 'Los Angeles', 'San Francisco']
+		name: 'Cities'
 	)
 
 	traces, _ := plt.to_json()
@@ -86,12 +86,12 @@ fn test_scattergeo_trace_type_in_json() {
 fn test_barpolar_trace_type_in_json() {
 	mut plt := Plot.new()
 	plt.barpolar(
-		r:     [1.0, 3.0, 2.0, 4.0, 2.5]
-		theta: [0.0, 45.0, 90.0, 135.0, 180.0]
+		r:      [1.0, 3.0, 2.0, 4.0, 2.5]
+		theta:  [0.0, 45.0, 90.0, 135.0, 180.0]
 		marker: Marker{
 			color: ['#636EFA', '#EF553B', '#00CC96', '#AB63FA', '#FFA15A']
 		}
-		name:  'Polar Bars'
+		name:   'Polar Bars'
 	)
 
 	traces, _ := plt.to_json()

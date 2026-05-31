@@ -21,8 +21,8 @@ pub fn (b &VCLBackend) name() string {
 }
 
 pub fn (b &VCLBackend) supports(op string) bool {
-	return op in ['gemm', 'gemv', 'relu', 'sigmoid', 'tanh', 'add_vec', 'mul_vec',
-		'add_scalar', 'mul_scalar', 'softmax', 'layernorm', 'conv2d']
+	return op in ['gemm', 'gemv', 'relu', 'sigmoid', 'tanh', 'add_vec', 'mul_vec', 'add_scalar',
+		'mul_scalar', 'softmax', 'layernorm', 'conv2d']
 }
 
 pub fn (b &VCLBackend) gemm(a_data []f64, b_data []f64, m int, n int, k int) ![]f64 {
@@ -88,8 +88,8 @@ pub fn (b &VCLBackend) layernorm(x_data []f64, gamma []f64, beta []f64) ![]f64 {
 
 pub fn (b &VCLBackend) conv2d(input []f64, kernel []f64, batch int, in_h int, in_w int, in_ch int, out_ch int, k_h int, k_w int, stride_h int, stride_w int) ![]f64 {
 	mut d := b.dev
-	return vcl_compute.conv2d_vcl(mut d, input, kernel, batch, in_h, in_w, in_ch, out_ch, k_h,
-		k_w, stride_h, stride_w)
+	return vcl_compute.conv2d_vcl(mut d, input, kernel, batch, in_h, in_w, in_ch, out_ch, k_h, k_w,
+		stride_h, stride_w)
 }
 
 // to_internal: VCL uses column-major, same as Vulkan.

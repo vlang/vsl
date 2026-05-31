@@ -686,47 +686,47 @@ pub mut:
 pub struct ScatterGeoTrace {
 	CommonTrace
 pub mut:
-	lat              []f64   @[omitempty]
-	lon              []f64   @[omitempty]
-	locations        []string @[omitempty]
-	locationmode     string   @[omitempty] // 'ISO-3', 'USA-states', 'country names', 'geojson-id'
-	mode             string   @[omitempty] // 'markers', 'lines', 'lines+markers'
-	text             []string @[omitempty]
-	hovertemplate    string   @[omitempty]
-	geo              string   @[omitempty] // subplot id
-	subplot          string   @[omitempty]
-	projection       Projection @[omitempty]
-	cluster          ClusterGeo @[omitempty]
-	line             Line      @[omitempty]
+	lat           []f64      @[omitempty]
+	lon           []f64      @[omitempty]
+	locations     []string   @[omitempty]
+	locationmode  string     @[omitempty] // 'ISO-3', 'USA-states', 'country names', 'geojson-id'
+	mode          string     @[omitempty] // 'markers', 'lines', 'lines+markers'
+	text          []string   @[omitempty]
+	hovertemplate string     @[omitempty]
+	geo           string     @[omitempty] // subplot id
+	subplot       string     @[omitempty]
+	projection    Projection @[omitempty]
+	cluster       ClusterGeo @[omitempty]
+	line          Line       @[omitempty]
 }
 
 // Projection is a struct for geo subplot projection configuration
 pub struct Projection {
 pub mut:
-	type_       string = 'equirectangular' @[omitempty] // 'equirectangular', 'mercator', 'orthographic', etc.
-	rotation    Rotation @[omitempty]
-	parallels   []f64   @[omitempty]
-	scale       f64     @[omitempty]
+	type_     string = 'equirectangular'   @[omitempty] // 'equirectangular', 'mercator', 'orthographic', etc.
+	rotation  Rotation @[omitempty]
+	parallels []f64    @[omitempty]
+	scale     f64      @[omitempty]
 }
 
 // Rotation is a struct for projection rotation (used in geo subplots)
 pub struct Rotation {
 pub mut:
-	lon f64 @[omitempty]
-	lat f64 @[omitempty]
+	lon  f64 @[omitempty]
+	lat  f64 @[omitempty]
 	roll f64 @[omitempty]
 }
 
 // ClusterGeo is a struct for geographic clustering
 pub struct ClusterGeo {
 pub mut:
-	enabled    bool     @[omitempty]
-	size       []f64    @[omitempty]
-	color      []string @[omitempty]
-	steps      int      @[omitempty]
-	maxzoom    int      @[omitempty]
-	stepsize   f64      @[omitempty]
-	domains    [][]f64  @[omitempty]
+	enabled  bool     @[omitempty]
+	size     []f64    @[omitempty]
+	color    []string @[omitempty]
+	steps    int      @[omitempty]
+	maxzoom  int      @[omitempty]
+	stepsize f64      @[omitempty]
+	domains  [][]f64  @[omitempty]
 }
 
 // BarPolarTrace is a struct for BarPolar trace type (polar bar charts)
@@ -734,11 +734,11 @@ pub mut:
 pub struct BarPolarTrace {
 	CommonTrace
 pub mut:
-	r           []f64  @[omitempty]
-	theta       []f64  @[omitempty]
-	thetaunit   string @[omitempty] // 'radians', 'degrees', 'gradians'
-	text        []string @[omitempty]
-	hovertemplate string @[omitempty]
-	marker      Marker @[omitempty]
-	subplot     string @[omitempty]
+	r             []f64    @[omitempty]
+	theta         []f64    @[omitempty]
+	thetaunit     string   @[omitempty] // 'radians', 'degrees', 'gradians'
+	text          []string @[omitempty]
+	hovertemplate string   @[omitempty]
+	marker        Marker   @[omitempty]
+	subplot       string   @[omitempty]
 }

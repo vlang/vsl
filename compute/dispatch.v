@@ -21,8 +21,8 @@ $if cuda ? {
 pub fn op_supported(backend Backend, op string) bool {
 	return match backend {
 		.vulkan {
-			op in ['gemm', 'gemv', 'relu', 'sigmoid', 'tanh', 'add_vec', 'add_scalar',
-				'mul_scalar', 'softmax', 'layernorm']
+			op in ['gemm', 'gemv', 'relu', 'sigmoid', 'tanh', 'add_vec', 'add_scalar', 'mul_scalar',
+				'softmax', 'layernorm']
 		}
 		.vcl {
 			op in ['gemm', 'gemv', 'relu', 'sigmoid', 'tanh', 'add_vec', 'mul_vec', 'add_scalar',

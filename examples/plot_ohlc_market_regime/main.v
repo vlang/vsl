@@ -31,10 +31,14 @@ fn main() {
 	plt.layout(
 		title:         'OHLC Market Regime Snapshot'
 		xaxis:         plot.Axis{
-			title: plot.AxisTitle{text: 'Date'}
+			title: plot.AxisTitle{
+				text: 'Date'
+			}
 		}
 		yaxis:         plot.Axis{
-			title: plot.AxisTitle{text: 'Price'}
+			title: plot.AxisTitle{
+				text: 'Price'
+			}
 		}
 		plot_bgcolor:  '#f8f9fa'
 		paper_bgcolor: '#ffffff'

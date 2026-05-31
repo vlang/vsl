@@ -5,8 +5,8 @@ pub struct Annotation {
 pub mut:
 	x          f64    @[omitempty]
 	y          f64    @[omitempty]
-	xanchor     string @[omitempty] // 'left', 'center', 'right' - horizontal text alignment
-	yanchor     string @[omitempty] // 'top', 'middle', 'bottom' - vertical text alignment
+	xanchor    string @[omitempty] // 'left', 'center', 'right' - horizontal text alignment
+	yanchor    string @[omitempty] // 'top', 'middle', 'bottom' - vertical text alignment
 	text       string @[required]
 	showarrow  bool
 	arrowhead  int    @[omitempty]
