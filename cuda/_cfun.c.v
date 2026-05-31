@@ -69,6 +69,7 @@ fn C.cudaMemcpy(dst voidptr, src voidptr, size int, kind int) int
 
 const cuda_memcpy_host_to_device = 2
 const cuda_memcpy_device_to_host = 3
+const cuda_memcpy_device_to_device = 4
 
 // ============================================================================
 // CUDA Runtime device management
