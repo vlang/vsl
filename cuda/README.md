@@ -9,10 +9,8 @@
 > available at build time (`-d cuda`). Operations use GPU kernels where
 > implemented; CPU fallback when CUDA/cuDNN is unavailable.
 >
-> **VTL integration** (training loop on GPU) is tracked separately:
-> [vlang/vtl#89](https://github.com/vlang/vtl/issues/89),
-> [#90](https://github.com/vlang/vtl/issues/90),
-> [#91](https://github.com/vlang/vtl/issues/91).
+> **VTL integration** (opt-in CUDA Linear/Conv2D): merged in
+> [vlang/vtl#93](https://github.com/vlang/vtl/pull/93) (issues #89–#91 closed).
 
 | Operation | GPU (CUDA+cuDNN) | Fallback | Tracker |
 |-----------|------------------|----------|---------|
@@ -23,7 +21,7 @@
 | `mul_vec` | ✅ `cublasDdgmm` | CPU | — |
 | `add_scalar` / `mul_scalar` | ✅ cuBLAS/cuDNN path | CPU | — |
 | `softmax` | ✅ `cudnnSoftmaxForward` | CPU | — |
-| `layernorm` | CPU (cuDNN 9 symbol optional) | CPU | [#280](https://github.com/vlang/vsl/issues/280) |
+| `layernorm` | optional `-d cudnn_layernorm` | CPU | — |
 | `conv2d` | ✅ `cudnnConvolutionForward` | CPU | — |
 
 `mul_vec` uses legacy `cublasDdgmm` (`SIDE_RIGHT`, 1×n row layout;

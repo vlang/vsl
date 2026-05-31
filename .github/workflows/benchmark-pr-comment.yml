@@ -1,0 +1,50 @@
+name: vs NumPy PR comment
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'benchmarks/vs_numpy/**'
+      - 'benchmarks/util/**'
+      - '.github/workflows/benchmark-pr-comment.yml'
+
+permissions:
+  pull-requests: write
+
+jobs:
+  comment:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: vlang/setup-v@v1.3
+        with:
+          check-latest: true
+
+      - name: Install deps
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -qq -y libopenblas-dev liblapacke-dev gfortran python3 python3-numpy
+
+      - name: Install module
+        run: mv . ~/.vmodules/vsl
+
+      - name: Run vs NumPy harness
+        run: |
+          cd ~/.vmodules
+          {
+            echo '## VSL vs NumPy (OpenBLAS backend)'
+            v -d vsl_blas_cblas run vsl/benchmarks/vs_numpy/matmul_bench.v
+            v -d vsl_blas_cblas run vsl/benchmarks/vs_numpy/gemv_bench.v
+            v run vsl/benchmarks/vs_numpy/conv2d_bench.v
+            echo ''
+            echo '### NumPy baseline'
+            python3 vsl/benchmarks/vs_numpy/numpy_baseline.py matmul
+            python3 vsl/benchmarks/vs_numpy/numpy_baseline.py gemv
+          } 2>&1 | tee vs_numpy_pr.md
+
+      - name: Post sticky PR comment
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: vsl-vs-numpy
+          path: ~/.vmodules/vs_numpy_pr.md
