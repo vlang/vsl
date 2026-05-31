@@ -78,29 +78,30 @@
 
 ---
 
-## 🧩 Existing Open Issues (VSL)
+## 🔜 Next priorities
+
+| Priority | Work item |
+|----------|-----------|
+| P1 | [#225](https://github.com/vlang/vsl/issues/225) Windows |
+| P1 | Phase H multi-GPU |
+| P1 | Phase I GPU memory pool / zero-copy |
+| P2 | CUDA benchmark variants in CI |
+| P2 | Vulkan stress + cross-backend validation |
+
+**Project board:** [vlang org project #8](https://github.com/orgs/vlang/projects/8)
+
+---
+
+## 🧩 Open issues (VSL)
 
 | # | Title | Priority | Notes |
 |---|-------|----------|-------|
-| [#244](https://github.com/vlang/vsl/issues/244) | Vulkan: comprehensive unit tests | 🔴 High | GPU compute validation |
-| [#243](https://github.com/vlang/vsl/issues/243) | Vulkan: replace panics with error propagation | 🔴 High | Robustness |
-| [#242](https://github.com/vlang/vsl/issues/242) | Vulkan: enable validation layers in debug | 🟡 Medium | DX/validation |
-| [#241](https://github.com/vlang/vsl/issues/241) | Vulkan: prefer discrete GPUs | 🟡 Medium | Laptop hybrid GPU |
-| [#240](https://github.com/vlang/vsl/issues/240) | Vulkan: constant audit against spec | 🟡 Medium | Correctness |
-| [#239](https://github.com/vlang/vsl/issues/239) | Phase C: OpenCL Backend | 🟢 Done | VCL integrated |
-| [#238](https://github.com/vlang/vsl/issues/238) | Phase B: CUDA Backend | 🟢 Done | Infrastructure |
-| [#237](https://github.com/vlang/vsl/issues/237) | Phase A: Vulkan Compute | 🟢 Done | |
-| [#280](https://github.com/vlang/vsl/issues/280) | CUDA kernels + docs | 🟢 Done | #289, #291 |
-| [#281](https://github.com/vlang/vsl/issues/281) | GPU numerical validation | 🟢 Done | #288 |
-| [#282](https://github.com/vlang/vsl/issues/282) | vs NumPy benchmarks | 🟢 Done | #290 |
-| [#283](https://github.com/vlang/vsl/issues/283) | Vulkan test gating | 🟢 Done | manual_test + bin/test |
-| [#284](https://github.com/vlang/vsl/issues/284) | Vulkan conv2d im2col+GEMM | 🟢 Done | CPU fallback |
-| [#285](https://github.com/vlang/vsl/issues/285) | ComputeContext unit tests | 🟢 Done | compute/context_test.v |
-| [#231](https://github.com/vlang/vsl/issues/231) | implicit declaration `cblas_idamax` | 🟡 Medium | |
-| [#226](https://github.com/vlang/vsl/issues/226) | vcl: examples not working | 🟡 Medium | |
-| [#225](https://github.com/vlang/vsl/issues/225) | vsl Error on Windows | 🟡 Medium | |
-| [#206](https://github.com/vlang/vsl/issues/206) | noise: add simplex noise | 🟡 Medium | |
-| [#204](https://github.com/vlang/vsl/issues/204) | vcl macOS broken | 🟡 Medium | |
+| [#225](https://github.com/vlang/vsl/issues/225) | vsl Error on Windows | 🔴 P1 | |
+| [#226](https://github.com/vlang/vsl/issues/226) | vcl: examples not working | 🟡 P2 | |
+| [#91](https://github.com/vlang/vsl/issues/91) | vsl.blas not working on MacOS | 🟡 P2 | |
+| [#231](https://github.com/vlang/vsl/issues/231) | `cblas_idamax` implicit decl | 🟡 Medium | |
+
+**Closed ML epics:** #236–#239, #240–#244, #280–#285 — see [ML_ROADMAP.md](docs/ML_ROADMAP.md).
 
 ---
 
@@ -108,12 +109,12 @@
 
 | VTL Component | VSL Backend | Status |
 |--------------|-------------|--------|
-| `vtl.la.matmul` | `vsl.la.matmul` | ✅ Done |
-| `vtl.la.conv2d` | `vsl.cuda/ Vulkan` | 🟡 Stub, needs cuDNN |
-| `vtl.autograd` gates | `vsl.compute` dispatch | ✅ Done |
-| `vtl.nn.layers.LSTM` | `vsl.cuda/gemv` | ✅ Done |
-| `vtl.nn.optimizers` | CPU-backed | ✅ Done |
-| `vtl.datasets` I/O | Host-side | ✅ Done |
+| `vtl.la.matmul` | `vsl.la` / CUDA GEMM | ✅ Done |
+| `vtl.nn` Conv2D forward | `vsl.cuda` cuDNN | ✅ Done (#90) |
+| `vtl.nn` Linear forward | CUDA + `DeviceSession` | ✅ Done (#89, #91 P1) |
+| `vtl.autograd` | CPU backward (GPU fwd) | 🟡 Phase 2–4 in VTL |
+| `vtl.nn.optimizers` | CPU | ✅ Done |
+| Vulkan smoke | `vsl.vulkan` gemm/conv2d | 🟡 Example only |
 
 ---
 
@@ -204,14 +205,12 @@ def benchmark_backprop(batch, in_dim, hidden, out_dim, iterations=50):
 ## 🗺️ Compute Backend Roadmap (Detailed)
 
 ```
-Phase A (Vulkan)     ✅ Done  — backend.v, gemm, gemv, elementwise
-Phase B (CUDA stub)  ✅ Done  — CUDABackend, compute/, stubs with CPU fallback
-Phase C (cuBLAS/cuDNN) ✅ Done — dgemm, relu, sigmoid, tanh, add_scalar, mul_scalar,
-                              softmax, conv2d, layernorm all using real kernels
-Phase D (Multi-GPU)  🔴 TODO  — device enumeration, data parallelism
-Phase E (Memory)     🔴 TODO  — zero-copy, memory pool, pinned memory
-Phase F (Validation) 🔴 TODO  — numerical tests, cross-backend verification
-Phase G (Benchmarks)  🔴 TODO  — vs NumPy CI integration
+Phase A (Vulkan)       ✅ Done  — gemm, gemv, elementwise, conv2d (#284)
+Phase B–C (CUDA)       ✅ Done  — cuBLAS/cuDNN (#280)
+Phase D (Multi-GPU)    🔴 TODO  — Phase H in this doc
+Phase E (Memory)       🔴 TODO  — Phase I in this doc
+Phase F (Validation)   ✅ Core   — numerical_validation_test (#281); extend sizes
+Phase G (Benchmarks)   ✅ Done  — vs_numpy + CI + PR comments (#282)
 ```
 
 ---
@@ -239,14 +238,15 @@ vsl/
 │       ├── backend.v    # VulkanBackend
 │       ├── elementwise.v # ReLU, Sigmoid, Tanh
 │       ├── gemm.v        # Matrix multiply
-│       └── gemv.v        # Matrix-vector multiply
+│       ├── gemv.v        # Matrix-vector multiply
+│       └── conv2d.v      # im2col + GEMM
 ├── vcl/
 │   └── compute/          # OpenCL backend
 └── benchmarks/
     ├── blas_bench.v      # Pure V BLAS benchmarks
     ├── lapack_bench.v    # LAPACK benchmarks
-    ├── compare_backends.v # Pure V vs C backends
-    └── vs_numpy/         # (TODO) VTL vs NumPy comparison
+    ├── compare_backends.v
+    └── vs_numpy/         # matmul, gemv, conv2d + numpy_baseline.py
 ```
 
 ### VTL Neural Networks
@@ -270,5 +270,6 @@ vtl/
 
 ---
 
-*Last updated: 2026-05-26*
+*Last updated: 2026-05-31* · Board: [project #8](https://github.com/orgs/vlang/projects/8)
+
 *See also: [VTL ROADMAP.md](https://github.com/vlang/vtl/blob/main/ROADMAP.md)*
