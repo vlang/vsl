@@ -22,55 +22,60 @@ pub fn (b &VulkanBackend) name() string {
 
 pub fn (b &VulkanBackend) supports(op string) bool {
 	return op in ['gemm', 'gemv', 'relu', 'sigmoid', 'tanh', 'add_vec', 'mul_vec', 'add_scalar',
-		'mul_scalar', 'softmax', 'layernorm']
+		'mul_scalar', 'softmax', 'layernorm', 'conv2d']
 }
 
 pub fn (b &VulkanBackend) gemm(a_data []f64, b_data []f64, m int, n int, k int) ![]f64 {
-	return vk_compute.gemm_vulkan(b.dev, a_data, b_data, m, n, k)
+	return gemm_vulkan(b.dev, a_data, b_data, m, n, k)
 }
 
 pub fn (b &VulkanBackend) gemv(a_data []f64, x_data []f64, m int, n int) ![]f64 {
-	return vk_compute.gemv_vulkan(b.dev, a_data, x_data, m, n)
+	return gemv_vulkan(b.dev, a_data, x_data, m, n)
 }
 
 pub fn (b &VulkanBackend) relu(x_data []f64) ![]f64 {
-	return vk_compute.relu_vulkan(b.dev, x_data)
+	return relu_vulkan(b.dev, x_data)
 }
 
 pub fn (b &VulkanBackend) sigmoid(x_data []f64) ![]f64 {
-	return vk_compute.sigmoid_vulkan(b.dev, x_data)
+	return sigmoid_vulkan(b.dev, x_data)
 }
 
 pub fn (b &VulkanBackend) tanh(x_data []f64) ![]f64 {
-	return vk_compute.tanh_vulkan(b.dev, x_data)
+	return tanh_vulkan(b.dev, x_data)
 }
 
 pub fn (b &VulkanBackend) add_vec(a_data []f64, b_data []f64) ![]f64 {
-	return vk_compute.add_vec_vulkan(b.dev, a_data, b_data)
+	return add_vec_vulkan(b.dev, a_data, b_data)
 }
 
 pub fn (b &VulkanBackend) mul_vec(a_data []f64, b_data []f64) ![]f64 {
-	return vk_compute.mul_vec_vulkan(b.dev, a_data, b_data)
+	return mul_vec_vulkan(b.dev, a_data, b_data)
 }
 
 pub fn (b &VulkanBackend) add_scalar(x_data []f64, s f64) ![]f64 {
-	return vk_compute.add_scalar_vulkan(b.dev, x_data, s)
+	return add_scalar_vulkan(b.dev, x_data, s)
 }
 
 pub fn (b &VulkanBackend) mul_scalar(x_data []f64, s f64) ![]f64 {
-	return vk_compute.mul_scalar_vulkan(b.dev, x_data, s)
+	return mul_scalar_vulkan(b.dev, x_data, s)
 }
 
 pub fn (b &VulkanBackend) softmax(x_data []f64) ![]f64 {
-	return vk_compute.softmax_vulkan(b.dev, x_data)
+	return softmax_vulkan(b.dev, x_data)
 }
 
 pub fn (b &VulkanBackend) layernorm(x_data []f64, gamma []f64, beta []f64) ![]f64 {
-	return vk_compute.layernorm_vulkan(b.dev, x_data, gamma, beta)
+	return layernorm_vulkan(b.dev, x_data, gamma, beta)
 }
 
 pub fn (b &VulkanBackend) conv2d(input []f64, kernel []f64, batch int, in_h int, in_w int, in_ch int, out_ch int, k_h int, k_w int, stride_h int, stride_w int) ![]f64 {
-	return error('VulkanBackend.conv2d: not implemented yet')
+	// Prefer GPU im2col+GEMM; fall back to CPU reference if dispatch fails.
+	return conv2d_vulkan(b.dev, input, kernel, batch, in_h, in_w, in_ch, out_ch, k_h, k_w, stride_h,
+		stride_w) or {
+		return conv2d_cpu_nchw(input, kernel, batch, in_h, in_w, in_ch, out_ch, k_h, k_w, stride_h,
+			stride_w)
+	}
 }
 
 // to_internal converts row-major to Vulkan's column-major layout.

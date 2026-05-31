@@ -22,7 +22,7 @@ pub fn op_supported(backend Backend, op string) bool {
 	return match backend {
 		.vulkan {
 			op in ['gemm', 'gemv', 'relu', 'sigmoid', 'tanh', 'add_vec', 'add_scalar', 'mul_scalar',
-				'softmax', 'layernorm']
+				'softmax', 'layernorm', 'conv2d']
 		}
 		.vcl {
 			op in ['gemm', 'gemv', 'relu', 'sigmoid', 'tanh', 'add_vec', 'mul_vec', 'add_scalar',
