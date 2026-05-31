@@ -58,6 +58,7 @@
 - [ ] Bias addition, gradient operations
 
 ### Phase G — NumPy Performance Benchmarks — [issue #282](https://github.com/vlang/vsl/issues/282)
+- [x] `benchmarks/vs_numpy/` matmul, gemv, conv2d scripts + CI job
 - [ ] `benchmarks/vs_numpy/` directory with VTL vs NumPy comparison:
   - `benchmarks/vs_numpy/matmul.v` — Matrix multiplication (CPU + CUDA)
   - `benchmarks/vs_numpy/conv2d.v` — 2D Convolution (CPU + CUDA)

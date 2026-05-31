@@ -121,3 +121,42 @@ pub fn print_table_header() {
 	println('${'Operation':-30} | ${'Size':-15} | ${'Time':-15} | ${'Extra Info':-20}')
 	println('${'-'.repeat(30)}-+-${'-'.repeat(15)}-+-${'-'.repeat(15)}-+-${'-'.repeat(20)}')
 }
+
+// vs_numpy compact table (milliseconds + GFLOPS)
+pub fn print_vs_numpy_table_header() {
+	println('Benchmark                | Size         | Avg (ms)     | GFLOPS')
+	println('-------------------------+--------------+--------------+----------')
+}
+
+pub fn gflops_gemm_ms(m int, n int, k int, time_ms f64) f64 {
+	if time_ms <= 0.0 {
+		return 0.0
+	}
+	ops := 2.0 * f64(m) * f64(n) * f64(k)
+	sec := time_ms / 1000.0
+	return ops / sec / 1_000_000_000.0
+}
+
+pub fn gflops_gemv_ms(m int, n int, time_ms f64) f64 {
+	if time_ms <= 0.0 {
+		return 0.0
+	}
+	ops := 2.0 * f64(m) * f64(n)
+	sec := time_ms / 1000.0
+	return ops / sec / 1_000_000_000.0
+}
+
+pub fn print_vs_numpy_row(name string, size string, time_ms f64, extra string) {
+	println('${name} | ${size} | ${time_ms} | ${extra}')
+}
+
+pub fn mean_time_ms(mut samples []f64) f64 {
+	if samples.len == 0 {
+		return 0.0
+	}
+	mut sum := 0.0
+	for t in samples {
+		sum += t
+	}
+	return sum / f64(samples.len)
+}
