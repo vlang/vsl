@@ -13,7 +13,7 @@
 [ML Roadmap](./docs/ML_ROADMAP.md) |
 [Examples](./examples/) |
 [Changelog](#) |
-[Contributing](https://github.com/vlang/vsl/blob/main/CONTRIBUTING.md)
+[Contributing](CONTRIBUTING.md)
 
 [![Mentioned in Awesome V][awesomevbadge]][awesomevurl]
 [![VSL Continuous Integration][workflowbadge]][workflowurl]
@@ -25,7 +25,17 @@
 
 </div>
 
-VSL is a V library to develop Artificial Intelligence and High-Performance Scientific Computations.
+```v ignore
+import vsl.la as la
+
+mut a := la.Matrix.new[f64](2, 2)
+a.set(0, 0, 1.0)
+a.set(1, 1, 2.0)
+println(a.get(1, 1))
+// 2.0
+```
+
+VSL is a V library for AI and high-performance scientific computing.
 
 > [!IMPORTANT]
 > The pure-V QR path (`geqrf/orgqr`) is still being aligned; the related test is
@@ -183,7 +193,7 @@ Made with [contributors-img](https://contrib.rocks).
 [benchmarksbadge]: https://github.com/vlang/vsl/actions/workflows/benchmarks.yml/badge.svg
 [megalinterbadge]: https://github.com/vlang/vsl/actions/workflows/mega-linter.yml/badge.svg
 [licensebadge]: https://img.shields.io/badge/License-MIT-blue.svg
-[ModulesBadge]: https://img.shields.io/badge/modules-reference-027d9c?logo=v&logoColor=white&logoWidth=10
+[ModulesBadge]: https://img.shields.io/badge/modules-reference-027d9c?logo=v
 [awesomevurl]: https://github.com/vlang/awesome-v/blob/master/README.md#scientific-computing
 [workflowurl]: https://github.com/vlang/vsl/actions/workflows/ci.yml
 [deploydocsurl]: https://github.com/vlang/vsl/actions/workflows/deploy-docs.yml
@@ -194,11 +204,11 @@ Made with [contributors-img](https://contrib.rocks).
 
 <!-- Images -->
 
-[sierpinski_triangle]: https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/sierpinski_triangle.png
-[mandelbrot_blue_red_black]: https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/mandelbrot_blue_red_black.png
-[julia]: https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/julia.png
-[mandelbrot_basic]: https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/mandelbrot_basic.png
-[mandelbrot_pseudo_random_colors]: https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/mandelbrot_pseudo_random_colors.png
-[sierpinski_triangle2]: https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/sierpinski_triangle2.png
-[julia_set]: https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/julia_set.png
-[julia_basic]: https://raw.githubusercontent.com/vlang/vsl/main/vcl/static/julia_basic.png
+[sierpinski_triangle]: vcl/static/sierpinski_triangle.png
+[mandelbrot_blue_red_black]: vcl/static/mandelbrot_blue_red_black.png
+[julia]: vcl/static/julia.png
+[mandelbrot_basic]: vcl/static/mandelbrot_basic.png
+[mandelbrot_pseudo_random_colors]: vcl/static/mandelbrot_pseudo_random_colors.png
+[sierpinski_triangle2]: vcl/static/sierpinski_triangle2.png
+[julia_set]: vcl/static/julia_set.png
+[julia_basic]: vcl/static/julia_basic.png
