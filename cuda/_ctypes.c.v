@@ -71,6 +71,10 @@ pub type CudnnDataType = int
 // cudnnConvolutionFwdAlgo_t specifies the convolution forward algorithm.
 pub type CudnnConvolutionFwdAlgo = int
 
+// cudnnConvolutionBwdDataAlgo_t / BwdFilterAlgo_t — backward convolution algorithms.
+pub type CudnnConvolutionBwdDataAlgo = int
+pub type CudnnConvolutionBwdFilterAlgo = int
+
 // CudnnActivationMode values (cuDNN 9.x deprecated legacy API).
 // Matches cudnnActivationMode_t enum in cudnn_graph_v9.h:
 //   CUDNN_ACTIVATION_SIGMOID=0, RELU=1, TANH=2, CLIPPED_RELU=3, ELU=4, ...
