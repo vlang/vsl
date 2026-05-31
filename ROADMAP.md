@@ -93,9 +93,9 @@
 | [#280](https://github.com/vlang/vsl/issues/280) | CUDA kernels + docs | 🟢 Done | #289, #291 |
 | [#281](https://github.com/vlang/vsl/issues/281) | GPU numerical validation | 🟢 Done | #288 |
 | [#282](https://github.com/vlang/vsl/issues/282) | vs NumPy benchmarks | 🟢 Done | #290 |
-| [#283](https://github.com/vlang/vsl/issues/283) | Fix vulkan_test.v crash | 🔴 P0 | Gate B |
-| [#284](https://github.com/vlang/vsl/issues/284) | Vulkan conv2d | 🟡 Medium | |
-| [#285](https://github.com/vlang/vsl/issues/285) | ComputeContext unit tests | 🟡 Medium | |
+| [#283](https://github.com/vlang/vsl/issues/283) | Vulkan test gating | 🟢 Done | manual_test + bin/test |
+| [#284](https://github.com/vlang/vsl/issues/284) | Vulkan conv2d im2col+GEMM | 🟢 Done | CPU fallback |
+| [#285](https://github.com/vlang/vsl/issues/285) | ComputeContext unit tests | 🟢 Done | compute/context_test.v |
 | [#231](https://github.com/vlang/vsl/issues/231) | implicit declaration `cblas_idamax` | 🟡 Medium | |
 | [#226](https://github.com/vlang/vsl/issues/226) | vcl: examples not working | 🟡 Medium | |
 | [#225](https://github.com/vlang/vsl/issues/225) | vsl Error on Windows | 🟡 Medium | |

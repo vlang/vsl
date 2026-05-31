@@ -105,6 +105,12 @@ for f in "${hidden_tests[@]}"; do
     mv "${f}.skip" "$f"
 done
 
+# Vulkan: manual integration (not in default `v test` — avoids v_stable_sort crash).
+if [[ -n "${use_vulkan}" && "$(uname -s)" != "Darwin" ]]; then
+    echo "Running Vulkan manual integration test"
+    v ${flags} test "${vsl_dir_path}/vulkan/vulkan_manual_test.v" || test_exit=1
+fi
+
 if [[ ${test_exit} -ne 0 ]]; then
     exit ${test_exit}
 fi
