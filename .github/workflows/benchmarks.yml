@@ -217,3 +217,42 @@ jobs:
             ~/.vmodules/lapack_bench_${{ matrix.backend.id }}.log
             ~/.vmodules/compare_backends_${{ matrix.backend.id }}.log
           retention-days: 30
+
+  vs-numpy-benchmarks:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout VSL
+        uses: actions/checkout@v4
+        with:
+          path: vsl
+
+      - name: Setup V
+        uses: vlang/setup-v@v1.3
+        with:
+          check-latest: true
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update && \
+          sudo apt-get install --quiet -y --no-install-recommends \
+            libopenblas-dev liblapacke-dev gfortran python3 python3-numpy
+
+      - name: Move VSL to modules
+        run: mv ./vsl ~/.vmodules
+
+      - name: Run vs NumPy harness (#282)
+        run: |
+          cd ~/.vmodules
+          v -d vsl_blas_cblas run vsl/benchmarks/vs_numpy/matmul_bench.v | tee vs_numpy_matmul.log
+          v -d vsl_blas_cblas run vsl/benchmarks/vs_numpy/gemv_bench.v | tee vs_numpy_gemv.log
+          v run vsl/benchmarks/vs_numpy/conv2d_bench.v | tee vs_numpy_conv2d.log
+          python3 vsl/benchmarks/vs_numpy/numpy_baseline.py matmul | tee -a vs_numpy_matmul.log
+          python3 vsl/benchmarks/vs_numpy/numpy_baseline.py gemv | tee -a vs_numpy_gemv.log
+
+      - name: Upload vs_numpy logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vs-numpy-benchmark-logs
+          path: ~/.vmodules/vs_numpy_*.log
+          retention-days: 14

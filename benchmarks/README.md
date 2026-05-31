@@ -11,6 +11,16 @@ built-in `benchmark` module for accurate timing measurements.
 
 ## Running Benchmarks
 
+### vs NumPy (ML ops)
+
+```sh
+v run benchmarks/vs_numpy/matmul_bench.v
+v run benchmarks/vs_numpy/gemv_bench.v
+v run benchmarks/vs_numpy/conv2d_bench.v
+```
+
+See [vs_numpy/README.md](vs_numpy/README.md). Tracked in [#282](https://github.com/vlang/vsl/issues/282).
+
 ### Run All Benchmarks
 
 ```sh
