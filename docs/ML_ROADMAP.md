@@ -15,7 +15,7 @@ Repo roadmap: [ROADMAP.md](../ROADMAP.md) · CUDA: [cuda/README.md](../cuda/READ
 | [#282](https://github.com/vlang/vsl/issues/282) | vs NumPy benchmarks + PR comments |
 | [#283](https://github.com/vlang/vsl/issues/283)–[#285](https://github.com/vlang/vsl/issues/285) | Vulkan gating, conv2d, `ComputeContext` tests |
 
-**VTL (downstream):** [#89](https://github.com/vlang/vtl/issues/89)–[#91](https://github.com/vlang/vtl/issues/91).
+**VTL (downstream):** [#89](https://github.com/vlang/vtl/issues/89)–[#91](https://github.com/vlang/vtl/issues/91), GPU Phases 1–3 ([#104](https://github.com/vlang/vtl/pull/104), [#105](https://github.com/vlang/vtl/pull/105)); open [#106](https://github.com/vlang/vtl/issues/106) (optimizer on device).
 
 ## Critical path (open)
 
