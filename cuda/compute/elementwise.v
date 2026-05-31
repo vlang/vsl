@@ -298,9 +298,14 @@ pub fn conv2d_cuda(dev &cuda.CudaDevice, input []f64, kernel []f64, batch int, i
 	}
 	defer { C.cudnnDestroyTensorDescriptor(out_tensor_desc) }
 
-	// Use CUDNN_CONVOLUTION_FWD_ALGO_IMPLICIT_GEMM = 0 (no workspace needed)
-	// This is the default and works well for most cases.
 	algo := cuda.CudnnConvolutionFwdAlgo(0)
+
+	mut ws_bytes := usize(0)
+	sw := C.cudnnGetConvolutionForwardWorkspaceSize(dev.cudnn, in_tensor_desc, filter_desc,
+		conv_desc, out_tensor_desc, algo, &ws_bytes)
+	if sw != cuda.cudnn_status_success {
+		return error('conv2d_cuda: cudnnGetConvolutionForwardWorkspaceSize: ${cuda.cudnn_error(sw)}')
+	}
 
 	// Allocate GPU buffers
 	in_size := batch * in_ch * in_h * in_w
@@ -314,13 +319,19 @@ pub fn conv2d_cuda(dev &cuda.CudaDevice, input []f64, kernel []f64, batch int, i
 	mut d_out := gpu_buf_new[f64](out_size)!
 	defer { d_out.release() }
 
+	mut d_ws := GpuBuf{}
+	if ws_bytes > 0 {
+		d_ws = gpu_buf_new[u8](int(ws_bytes))!
+		defer { d_ws.release() }
+	}
+
 	d_in.upload[f64](input)!
 	d_kernel.upload[f64](kernel)!
 
 	alpha := f64(1.0)
 	beta := f64(0.0)
 	s6 := C.cudnnConvolutionForward(dev.cudnn, &alpha, in_tensor_desc, &f64(d_in.ptr),
-		filter_desc, &f64(d_kernel.ptr), conv_desc, algo, voidptr(0), 0,
+		filter_desc, &f64(d_kernel.ptr), conv_desc, algo, d_ws.ptr, int(ws_bytes),
 		&beta, out_tensor_desc, &f64(d_out.ptr))
 	if s6 != cuda.cudnn_status_success {
 		return error('conv2d_cuda: cudnnConvolutionForward: ${cuda.cudnn_error(s6)}')
