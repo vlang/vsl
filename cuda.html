@@ -248,9 +248,9 @@
 <td>—</td></tr>
 <tr>
 <td><code>mul_vec</code></td>
-<td>❌ CPU only</td>
+<td>✅ <code>cublasDdgmm</code></td>
 <td>CPU</td>
-<td><a href="https://github.com/vlang/vsl/issues/280">#280</a></td></tr>
+<td>—</td></tr>
 <tr>
 <td><code>add_scalar</code> / <code>mul_scalar</code></td>
 <td>✅ cuBLAS/cuDNN path</td>
@@ -263,7 +263,7 @@
 <td>—</td></tr>
 <tr>
 <td><code>layernorm</code></td>
-<td>❌ CPU only</td>
+<td>CPU (cuDNN 9 symbol optional)</td>
 <td>CPU</td>
 <td><a href="https://github.com/vlang/vsl/issues/280">#280</a></td></tr>
 <tr>
@@ -271,7 +271,7 @@
 <td>✅ <code>cudnnConvolutionForward</code></td>
 <td>CPU</td>
 <td>—</td></tr></tbody></table>
-<p>See <a href="https://github.com/vlang/vsl/issues/280">issue #280</a> for remaining CUDA stubs, docs, and CI. Numerical parity: <a href="https://github.com/vlang/vsl/issues/281">#281</a>.</p>
+<p><code>mul_vec</code> uses legacy <code>cublasDdgmm</code> (<code>SIDE_RIGHT</code>, 1×n row layout; <code>cublasDdgmm_v2</code> absent on some distros). Layer norm GPU: build with <code>-d cudnn_layernorm</code> when libcudnn exports <code>cudnnLayerNormForward</code> (9.1+). Numerical parity tests: <code>cuda/compute/numerical_validation_test.v</code> (<a href="https://github.com/vlang/vsl/issues/281">#281</a>).</p>
 <h2 id="-architecture">📁 Architecture</h2>
 <pre><code>vsl.cuda
 ├── backend.v           # CUDABackend (ComputeBackend interface impl)
@@ -681,7 +681,7 @@ sudo apt<span class="token operator">-</span>get install cuda<span class="token 
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 31 May 2026 03:57:41</div>
+						<div class="footer">Powered by vdoc. Generated on: 31 May 2026 06:25:36</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_cuda">README</a></li>
 <li class="open"><a href="#Constants">Constants</a></li>
