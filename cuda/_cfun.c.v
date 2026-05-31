@@ -189,6 +189,14 @@ fn C.cudnnGetConvolutionForwardWorkspaceSize(handle CudnnHandle, xDesc CudnnTens
 // y = alpha * conv(x, filter) + beta * y
 fn C.cudnnConvolutionForward(handle CudnnHandle, alpha &f64, xDesc CudnnTensorDescriptor, x &f64, wDesc CudnnFilterDescriptor, w &f64, convDesc CudnnConvolutionDescriptor, algo CudnnConvolutionFwdAlgo, workSpace voidptr, workSpaceSizeInBytes int, beta &f64, yDesc CudnnTensorDescriptor, y &f64) CudnnStatus
 
+fn C.cudnnGetConvolutionBackwardDataWorkspaceSize(handle CudnnHandle, wDesc CudnnFilterDescriptor, dyDesc CudnnTensorDescriptor, convDesc CudnnConvolutionDescriptor, dxDesc CudnnTensorDescriptor, algo CudnnConvolutionBwdDataAlgo, sizeInBytes &usize) CudnnStatus
+
+fn C.cudnnConvolutionBackwardData(handle CudnnHandle, alpha &f64, wDesc CudnnFilterDescriptor, w &f64, dyDesc CudnnTensorDescriptor, dy &f64, convDesc CudnnConvolutionDescriptor, algo CudnnConvolutionBwdDataAlgo, workSpace voidptr, workSpaceSizeInBytes int, beta &f64, dxDesc CudnnTensorDescriptor, dx &f64) CudnnStatus
+
+fn C.cudnnGetConvolutionBackwardFilterWorkspaceSize(handle CudnnHandle, xDesc CudnnTensorDescriptor, dyDesc CudnnTensorDescriptor, convDesc CudnnConvolutionDescriptor, dwDesc CudnnFilterDescriptor, algo CudnnConvolutionBwdFilterAlgo, sizeInBytes &usize) CudnnStatus
+
+fn C.cudnnConvolutionBackwardFilter(handle CudnnHandle, alpha &f64, xDesc CudnnTensorDescriptor, x &f64, dyDesc CudnnTensorDescriptor, dy &f64, convDesc CudnnConvolutionDescriptor, algo CudnnConvolutionBwdFilterAlgo, workSpace voidptr, workSpaceSizeInBytes int, beta &f64, dwDesc CudnnFilterDescriptor, dw &f64) CudnnStatus
+
 // cudnnCreateTensorDescriptorFromDescriptor is a helper to get descriptor from plan.
 fn C.cudnnCreateTensorDescriptorFromDescriptor(descriptor CudnnTensorDescriptor, data []f64) CudnnStatus
 

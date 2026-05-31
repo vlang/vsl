@@ -23,6 +23,7 @@
 | `softmax` | ✅ `cudnnSoftmaxForward` | CPU | — |
 | `layernorm` | optional `-d cudnn_layernorm` | CPU | — |
 | `conv2d` | ✅ `cudnnConvolutionForward` | CPU | — |
+| `conv2d_backward` | ✅ `cudnnConvolutionBackward*` | CPU | — |
 
 `mul_vec` uses legacy `cublasDdgmm` (`SIDE_RIGHT`, 1×n row layout;
 `cublasDdgmm_v2` absent on some distros). Layer norm GPU: build with
