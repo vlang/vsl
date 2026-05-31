@@ -217,7 +217,7 @@
 <h2 id="-status">🚀 Status</h2>
 <blockquote>
 <p><strong>Phase B/C — cuBLAS/cuDNN bindings active</strong> when CUDA Toolkit + cuDNN are<br />available at build time (<code>-d cuda</code>). Operations use GPU kernels where<br />implemented; CPU fallback when CUDA/cuDNN is unavailable.</p>
-<p><strong>VTL integration</strong> (training loop on GPU) is tracked separately:<br /><a href="https://github.com/vlang/vtl/issues/89">vlang/vtl#89</a>,<br /><a href="https://github.com/vlang/vtl/issues/90">#90</a>,<br /><a href="https://github.com/vlang/vtl/issues/91">#91</a>.</p></blockquote>
+<p><strong>VTL integration</strong> (opt-in CUDA Linear/Conv2D): merged in<br /><a href="https://github.com/vlang/vtl/pull/93">vlang/vtl#93</a> (issues #89–#91 closed).</p></blockquote>
 <table>
 <thead>
 <tr>
@@ -263,9 +263,9 @@
 <td>—</td></tr>
 <tr>
 <td><code>layernorm</code></td>
-<td>CPU (cuDNN 9 symbol optional)</td>
+<td>optional <code>-d cudnn_layernorm</code></td>
 <td>CPU</td>
-<td><a href="https://github.com/vlang/vsl/issues/280">#280</a></td></tr>
+<td>—</td></tr>
 <tr>
 <td><code>conv2d</code></td>
 <td>✅ <code>cudnnConvolutionForward</code></td>
@@ -681,7 +681,7 @@ sudo apt<span class="token operator">-</span>get install cuda<span class="token 
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 31 May 2026 06:25:36</div>
+						<div class="footer">Powered by vdoc. Generated on: 31 May 2026 07:10:33</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_cuda">README</a></li>
 <li class="open"><a href="#Constants">Constants</a></li>
