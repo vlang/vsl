@@ -1,35 +1,48 @@
 # VSL — ML Roadmap & Launch Tracking
 
-Central planning: **https://github.com/orgs/vlang/projects/8**
+Central planning: **https://github.com/orgs/vlang/projects/8** (Vlang ML Roadmap — VSL + VTL)
 
-Repo roadmap: [ROADMAP.md](../ROADMAP.md) · CUDA status: [cuda/README.md](../cuda/README.md)
+Repo roadmap: [ROADMAP.md](../ROADMAP.md) · CUDA: [cuda/README.md](../cuda/README.md)
 
-## Critical path (open issues)
+## Done (2026-05-31)
+
+| Issue | Topic |
+|-------|--------|
+| [#236](https://github.com/vlang/vsl/issues/236) | Multi-backend GPU architecture |
+| [#237](https://github.com/vlang/vsl/issues/237)–[#239](https://github.com/vlang/vsl/issues/239) | Vulkan / CUDA / OpenCL foundations |
+| [#280](https://github.com/vlang/vsl/issues/280) | cuBLAS/cuDNN kernels |
+| [#281](https://github.com/vlang/vsl/issues/281) | GPU numerical validation tests |
+| [#282](https://github.com/vlang/vsl/issues/282) | vs NumPy benchmarks + PR comments |
+| [#283](https://github.com/vlang/vsl/issues/283)–[#285](https://github.com/vlang/vsl/issues/285) | Vulkan gating, conv2d, `ComputeContext` tests |
+
+**VTL (downstream):** [#89](https://github.com/vlang/vtl/issues/89)–[#91](https://github.com/vlang/vtl/issues/91).
+
+## Critical path (open)
 
 | Priority | Issue | Topic |
 |----------|-------|--------|
-| P0 | [#280](https://github.com/vlang/vsl/issues/280) | Finish CUDA stubs (LayerNorm, mul_vec) + docs |
-| P0 | [#281](https://github.com/vlang/vsl/issues/281) | GPU vs CPU numerical validation |
-| P0 | [#283](https://github.com/vlang/vsl/issues/283) | Fix `vulkan_test.v` crash |
-| P1 | [#282](https://github.com/vlang/vsl/issues/282) | vs NumPy benchmark suite |
 | P1 | [#225](https://github.com/vlang/vsl/issues/225) | Windows build |
-| P1 | [#91](https://github.com/vlang/vsl/issues/91) | BLAS on macOS |
-| P1 | [#194](https://github.com/vlang/vsl/issues/194) | Optional MPI in `vsl.la` |
-
-VTL integration (downstream): [vlang/vtl#89](https://github.com/vlang/vtl/issues/89),
-[#90](https://github.com/vlang/vtl/issues/90), [#91](https://github.com/vlang/vtl/issues/91).
+| P1 | Phase H | Multi-GPU (`device_id`, data parallelism) |
+| P1 | Phase I | GPU memory pool / zero-copy |
+| P2 | [#226](https://github.com/vlang/vsl/issues/226) | VCL examples |
+| P2 | [#91](https://github.com/vlang/vsl/issues/91) | BLAS on macOS |
+| P2 | — | CUDA variants of `benchmarks/vs_numpy/` in CI |
+| P2 | — | Extended Vulkan↔CUDA numerical cross-check |
 
 ## Local development
 
 ```bash
 v up
 cd ~/.vmodules
-# Smoke — do not require full v test vsl locally (Vulkan test can fail/OOM)
-v test vsl/blas vsl/la vsl/ml
-# CUDA smoke (GPU machine)
+v test vsl/blas vsl/la vsl/compute
+# CUDA smoke
 v -d cuda test vsl/cuda/examples/cuda_ops_test.v
+# Vulkan (opt-in; avoid full `v test vsl/vulkan` on low-RAM hosts)
+cd vsl && ./bin/test --use-vulkan
 ```
 
-## Closed epics (2026-05-30)
+## Project board sync
 
-#236 and #238 closed — infrastructure merged; follow-ups are #280–282 and VTL #89–91.
+```bash
+./.github/scripts/sync-ml-project-8.sh
+```
