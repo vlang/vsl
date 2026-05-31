@@ -212,9 +212,19 @@
 					<div class="doc-content">
 								<section id="readme_vulkan" class="doc-node">
 			<div class="title"><h1> vulkan <a href="#readme_vulkan">#</a></h1></div>
-<h1 id="device-is-the-main-vulkan-compute-device-handle-mirrors-vslvcldevice--owns-all-vulkan-handles-and-resources">Device is the main Vulkan compute device handle. Mirrors vsl.vcl.Device — owns all Vulkan handles and resources.</h1>
-<p>Struct re-exports</p>
-<p>All Vulkan struct types are defined in internal/loader.c.v as @[typedef] C.VkXxx structs. Use them directly in all public code.</p>
+<h1 id="vsl-vulkan-compute">VSL Vulkan compute</h1>
+<p>GPU compute via Vulkan shaders (GEMM, elementwise, im2col, pooling).</p>
+<h2 id="running-tests-safely">Running tests safely</h2>
+<p>Integration tests live in <code>vulkan_manual_test.v</code> (not <code>*_test.v</code>) so default <code>v test vsl</code> does not hit a <code>v_stable_sort</code> crash in the V test runner.</p>
+<pre><code class="language-bash">##<span class="token punctuation">.</span><span class="token operator">/</span>bin<span class="token operator">/</span>test <span class="token operator">--</span>use<span class="token operator">-</span>vulkan
+
+##v <span class="token operator">-</span>d vulkan test vsl<span class="token operator">/</span>vulkan<span class="token operator">/</span>vulkan_manual_test<span class="token punctuation">.</span>v
+VSL_TEST_VULKAN<span class="token operator">=</span><span class="token number">1</span> v <span class="token operator">-</span>d vulkan test vsl<span class="token operator">/</span>vulkan<span class="token operator">/</span>compute</code></pre>
+<p>On macOS, <code>bin/test</code> always skips Vulkan tests (no libvulkan runtime).</p>
+<h2 id="conv2d">Conv2d</h2>
+<p><code>VulkanBackend.conv2d</code> uses <strong>im2col + GEMM</strong> (no padding). Compare with CPU in <code>vulkan/compute/conv2d_test.v</code>.</p>
+<h2 id="vtl">VTL</h2>
+<p>Opt-in Vulkan linear forward: <code>v -d vulkan</code> and <code>examples/nn_cifar10_vulkan</code> in vlang/vtl.</p>
 
 </section>
 
@@ -13754,7 +13764,7 @@
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 31 May 2026 07:10:33</div>
+						<div class="footer">Powered by vdoc. Generated on: 31 May 2026 08:32:44</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_vulkan">README</a></li>
 <li class="open"><a href="#Constants">Constants</a></li>
