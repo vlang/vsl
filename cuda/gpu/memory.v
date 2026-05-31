@@ -12,14 +12,14 @@ pub:
 
 // cuda_memory_new allocates GPU memory for type T with count elements.
 pub fn cuda_memory_new[T](count int) !CudaMemory[T] {
-	mut ptr := voidptr(0)
+	mut ptr := unsafe { nil }
 	size := int(sizeof(T)) * count
 	status := C.cudaMalloc(&ptr, size)
 	if status != 0 {
 		return error('cuda_memory_new: cudaMalloc failed with status ${status}')
 	}
 	return CudaMemory[T]{
-		ptr: ptr
+		ptr:  ptr
 		size: size
 	}
 }
@@ -29,7 +29,8 @@ pub fn (mut m CudaMemory[T]) upload(data []T) ! {
 	if data.len * int(sizeof(T)) > m.size {
 		return error('CudaMemory.upload: data too large for allocated memory')
 	}
-	status := C.cudaMemcpy(m.ptr, data.data, int(sizeof(T)) * data.len, C.cuda_memcpy_host_to_device)
+	status := C.cudaMemcpy(m.ptr, data.data, int(sizeof(T)) * data.len,
+		C.cuda_memcpy_host_to_device)
 	if status != 0 {
 		return error('CudaMemory.upload: cudaMemcpy host-to-device failed with status ${status}')
 	}

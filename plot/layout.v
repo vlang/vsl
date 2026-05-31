@@ -3,7 +3,7 @@ module plot
 // Layout
 pub struct Layout {
 pub mut:
-	title         string   // Plot title; use <br> for multi-line (e.g. 'Line 1<br>Line 2')
+	title         string // Plot title; use <br> for multi-line (e.g. 'Line 1<br>Line 2')
 	title_x       f64
 	autosize      bool
 	width         int = 550

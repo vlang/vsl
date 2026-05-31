@@ -4,7 +4,6 @@
 // Currently uses CPU fallback since cuBLAS/cuDNN bindings are pending (issue #238).
 //
 // Run with: v -d cuda run cuda/examples/relu_example.v
-
 import vsl.compute
 
 fn main() {

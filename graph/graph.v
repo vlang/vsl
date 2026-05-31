@@ -7,9 +7,9 @@ import vsl.errors
 import vsl.util
 
 pub enum ShortestPaths {
-	fw // FW: Floyd-Warshall method
+	fw       // FW: Floyd-Warshall method
 	dijkstra // Dijkstra all-pairs (repeated single-source)
-	bfs // Breadth-first search all-pairs (unweighted shortest path in hops)
+	bfs      // Breadth-first search all-pairs (unweighted shortest path in hops)
 }
 
 // Graph defines a graph structure
@@ -107,6 +107,7 @@ pub fn (g &Graph) shortest_paths(method ShortestPaths) Graph {
 			dist, next = shortest_paths_bfs(g2)
 		}
 	}
+
 	return Graph{
 		edges:     g2.edges
 		weights_e: g2.weights_e

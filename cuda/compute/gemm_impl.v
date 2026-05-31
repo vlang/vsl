@@ -14,7 +14,7 @@ mut:
 
 // gpu_buf_new allocates count * sizeof(T) bytes on the GPU.
 fn gpu_buf_new[T](count int) !GpuBuf {
-	mut ptr := voidptr(0)
+	mut ptr := unsafe { nil }
 	sz := int(sizeof(T)) * count
 	status := C.cudaMalloc(&ptr, sz)
 	if status != 0 {
@@ -37,8 +37,7 @@ fn (mut b GpuBuf) upload[T](data []T) ! {
 
 // download copies GPU buffer → host slice.
 fn (b &GpuBuf) download[T](mut out []T) ! {
-	status := C.cudaMemcpy(out.data, b.ptr, int(sizeof(T)) * out.len,
-		C.cuda_memcpy_device_to_host)
+	status := C.cudaMemcpy(out.data, b.ptr, int(sizeof(T)) * out.len, C.cuda_memcpy_device_to_host)
 	if status != 0 {
 		return error('GpuBuf.download: cudaMemcpy D→H failed (status ${status})')
 	}
@@ -69,7 +68,8 @@ pub fn gemm_cuda_impl(dev &cuda.CudaDevice, a_col []f64, b_col []f64, m int, n i
 
 	// cuBLAS dgemm: C = alpha*A*B + beta*C  (column-major)
 	// cublasOperation_t: 0=non-transpose, 1=transpose, 2=conjugate-transpose
-	status := C.cublasDgemm_v2(dev.cublas, 0, 0, m, n, k, &alpha, &f64(d_a.ptr), m, &f64(d_b.ptr), k, &beta, &f64(d_c.ptr), m)
+	status := C.cublasDgemm_v2(dev.cublas, 0, 0, m, n, k, &alpha, &f64(d_a.ptr), m, &f64(d_b.ptr),
+		k, &beta, &f64(d_c.ptr), m)
 	if status != cuda.cublas_status_success {
 		return error('gemm_cuda_impl: cublasDgemm_v2 failed: ${cuda.cublas_error(status)}')
 	}
@@ -94,8 +94,8 @@ pub fn gemv_cuda_impl(dev &cuda.CudaDevice, a_col []f64, x_data []f64, m int, n 
 	d_a.upload[f64](a_col)!
 	d_x.upload[f64](x_data)!
 
-	status := C.cublasDgemv_v2(dev.cublas, 0, m, n, &alpha, &f64(d_a.ptr),
-		m, &f64(d_x.ptr), 1, &beta, &f64(d_y.ptr), 1)
+	status := C.cublasDgemv_v2(dev.cublas, 0, m, n, &alpha, &f64(d_a.ptr), m, &f64(d_x.ptr), 1,
+		&beta, &f64(d_y.ptr), 1)
 	if status != cuda.cublas_status_success {
 		return error('gemv_cuda_impl: cublasDgemv_v2 failed: ${cuda.cublas_error(status)}')
 	}

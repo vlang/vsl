@@ -93,7 +93,7 @@ pub const cudnn_tensor_nchw = 1 // NCHW format
 
 // CudnnDataType values.
 pub const cudnn_data_type_double = 1 // f64
-pub const cudnn_data_type_float = 0  // f32
+pub const cudnn_data_type_float = 0 // f32
 
 // ============================================================================
 // Error helper

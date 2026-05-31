@@ -21,8 +21,8 @@ pub fn (b &VulkanBackend) name() string {
 }
 
 pub fn (b &VulkanBackend) supports(op string) bool {
-	return op in ['gemm', 'gemv', 'relu', 'sigmoid', 'tanh', 'add_vec', 'mul_vec',
-		'add_scalar', 'mul_scalar', 'softmax', 'layernorm']
+	return op in ['gemm', 'gemv', 'relu', 'sigmoid', 'tanh', 'add_vec', 'mul_vec', 'add_scalar',
+		'mul_scalar', 'softmax', 'layernorm']
 }
 
 pub fn (b &VulkanBackend) gemm(a_data []f64, b_data []f64, m int, n int, k int) ![]f64 {

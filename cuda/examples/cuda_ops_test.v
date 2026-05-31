@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: MIT
 // Test all CUDA GPU operations
 // Run with: v -d cuda -cc gcc run cuda/examples/cuda_ops_test.v
-
 import vsl.compute
 
 fn main() {
@@ -67,6 +66,14 @@ fn test_elementwise() {
 	println('mul_scalar ${x} * 2 -> ${mul}')
 	assert mul[0] == -2.0 && mul[1] == 4.0 && mul[2] == -6.0 && mul[3] == 8.0, 'mul_scalar failed'
 	println('mul_scalar: OK')
+
+	// Test mul_vec
+	a := [1.0, 2.0, 3.0, 4.0]
+	b := [2.0, 3.0, 4.0, 5.0]
+	mv := compute.mul_vec(ctx, a, b)!
+	println('mul_vec ${a} * ${b} -> ${mv}')
+	assert mv[0] == 2.0 && mv[1] == 6.0 && mv[2] == 12.0 && mv[3] == 20.0, 'mul_vec failed'
+	println('mul_vec: OK')
 }
 
 fn test_softmax() {

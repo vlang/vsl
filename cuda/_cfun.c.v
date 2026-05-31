@@ -42,6 +42,9 @@ fn C.cublasDscal_v2(handle CublasHandle, n int, alpha &f64, x &f64, incx int) Cu
 // cublasDaxpy adds scaled vector to another: y = alpha * x + y
 fn C.cublasDaxpy_v2(handle CublasHandle, n int, alpha &f64, x &f64, incx int, y &f64, incy int) CublasStatus
 
+// cublasDdgmm: C = diag(A) * B (no alpha/beta; legacy API on some distros).
+fn C.cublasDdgmm(handle CublasHandle, side int, m int, n int, A &f64, lda int, B &f64, ldb int, C &f64, ldc int) CublasStatus
+
 // ============================================================================
 // CUDA Runtime functions (memory management)
 // ============================================================================

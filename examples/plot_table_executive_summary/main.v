@@ -10,8 +10,13 @@ fn main() {
 		header:      plot.TableHeader{
 			values: ['Metric', 'Current', 'Target', 'Status']
 			align:  'left'
-			fill:   plot.Fill{color: ['#1f2937']}
-			font:   plot.Font{color: '#ffffff', size: 13}
+			fill:   plot.Fill{
+				color: ['#1f2937']
+			}
+			font:   plot.Font{
+				color: '#ffffff'
+				size:  13
+			}
 		}
 		cells:       plot.TableCells{
 			values: [
@@ -21,8 +26,13 @@ fn main() {
 				['✅', '✅', '✅', '✅'],
 			]
 			align:  'left'
-			fill:   plot.Fill{color: ['#f9fafb']}
-			font:   plot.Font{color: '#111827', size: 12}
+			fill:   plot.Fill{
+				color: ['#f9fafb']
+			}
+			font:   plot.Font{
+				color: '#111827'
+				size:  12
+			}
 		}
 		name:        'Executive KPI Summary'
 		columnwidth: [220.0, 140.0, 140.0, 100.0]
