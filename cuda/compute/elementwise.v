@@ -122,13 +122,15 @@ pub fn add_vec_cuda(dev &cuda.CudaDevice, a_data []f64, b_data []f64) ![]f64 {
 	return out
 }
 
-// mul_vec_cuda computes y[i] = a[i] * b[i] element-wise (CPU fallback; no native cuBLAS op).
-// TODO(#238): implement via custom CUDA kernel.
+// mul_vec_cuda computes y[i] = a[i] * b[i] via cuBLAS ddgmm (diag(a) * b as n×1 columns).
 pub fn mul_vec_cuda(dev &cuda.CudaDevice, a_data []f64, b_data []f64) ![]f64 {
 	if a_data.len != b_data.len {
 		return error('mul_vec_cuda: length mismatch ${a_data.len} vs ${b_data.len}')
 	}
-	return mul_vec_cpu_f64(a_data, b_data)
+	if isnil(dev.cublas) {
+		return mul_vec_cpu_f64(a_data, b_data)
+	}
+	return mul_vec_cuda_impl(dev, a_data, b_data)
 }
 
 // add_scalar_cuda computes y[i] = x[i] + s using cuBLAS axpy with in-place broadcast.
@@ -210,10 +212,14 @@ pub fn softmax_cuda(dev &cuda.CudaDevice, x_data []f64) ![]f64 {
 	return out
 }
 
-// layernorm_cuda applies layer normalisation (CPU fallback).
-// TODO(#238): replace with cuDNN layer norm.
+// layernorm_cuda applies layer normalisation (cuDNN 9+ when available, else CPU).
 pub fn layernorm_cuda(dev &cuda.CudaDevice, x_data []f64, gamma []f64, beta []f64) ![]f64 {
-	return layernorm_cpu_f64(x_data, gamma, beta)
+	if isnil(dev.cudnn) {
+		return layernorm_cpu_f64(x_data, gamma, beta)
+	}
+	return layernorm_cuda_impl(dev, x_data, gamma, beta) or {
+		return layernorm_cpu_f64(x_data, gamma, beta)
+	}
 }
 
 // conv2d_cuda applies 2-D convolution using cuDNN convolution forward.

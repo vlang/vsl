@@ -43,6 +43,41 @@ fn test_relu_cuda_matches_cpu_reference() ! {
 	}
 }
 
+fn test_mul_vec_cuda_matches_cpu_reference() ! {
+	if os.getenv('VSL_TEST_CUDA') != '1' {
+		return
+	}
+	dev := cuda.get_default_device()!
+	if isnil(dev.cublas) {
+		return
+	}
+	a := [f64(1), 2, 3, 4]
+	b := [f64(5), 6, 7, 8]
+	cpu := mul_vec_cpu_f64(a, b)
+	gpu := mul_vec_cuda(dev, a, b)!
+	for i in 0 .. cpu.len {
+		assert math.abs(gpu[i] - cpu[i]) < f64_tol
+	}
+}
+
+fn test_layernorm_cuda_matches_cpu_reference() ! {
+	if os.getenv('VSL_TEST_CUDA') != '1' {
+		return
+	}
+	dev := cuda.get_default_device()!
+	if isnil(dev.cudnn) {
+		return
+	}
+	x := [1.0, 2.0, 3.0, 4.0]
+	gamma := [1.0, 1.0, 1.0, 1.0]
+	beta := [0.0, 0.0, 0.0, 0.0]
+	cpu := layernorm_cpu_f64(x, gamma, beta)!
+	gpu := layernorm_cuda(dev, x, gamma, beta)!
+	for i in 0 .. cpu.len {
+		assert math.abs(gpu[i] - cpu[i]) < 1e-5, 'layernorm mismatch at ${i}'
+	}
+}
+
 fn test_conv2d_cuda_matches_cpu_same_pad() ! {
 	if os.getenv('VSL_TEST_CUDA') != '1' {
 		return

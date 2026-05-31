@@ -20,14 +20,15 @@
 | `gemv` | ✅ `cublasDgemv` | CPU | — |
 | `relu` / `sigmoid` / `tanh` | ✅ cuDNN activation | CPU | — |
 | `add_vec` | ✅ `cublasDaxpy` | CPU | — |
-| `mul_vec` | ❌ CPU only | CPU | [#280](https://github.com/vlang/vsl/issues/280) |
+| `mul_vec` | ✅ `cublasDdgmm` | CPU | — |
 | `add_scalar` / `mul_scalar` | ✅ cuBLAS/cuDNN path | CPU | — |
 | `softmax` | ✅ `cudnnSoftmaxForward` | CPU | — |
-| `layernorm` | ❌ CPU only | CPU | [#280](https://github.com/vlang/vsl/issues/280) |
+| `layernorm` | CPU (cuDNN 9 symbol optional) | CPU | [#280](https://github.com/vlang/vsl/issues/280) |
 | `conv2d` | ✅ `cudnnConvolutionForward` | CPU | — |
 
-See [issue #280](https://github.com/vlang/vsl/issues/280) for remaining CUDA
-stubs, docs, and CI. Numerical parity: [#281](https://github.com/vlang/vsl/issues/281).
+`mul_vec` uses `cublasDdgmm` (legacy API where `cublasDdgmm_v2` is absent). Layer norm stays on CPU until
+`cudnnLayerNormForward` is available on the target cuDNN build.
+Numerical parity tests: `cuda/compute/numerical_validation_test.v` ([#281](https://github.com/vlang/vsl/issues/281)).
 
 ## 📁 Architecture
 
