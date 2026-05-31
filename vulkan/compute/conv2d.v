@@ -37,8 +37,8 @@ pub fn conv2d_vulkan(dev &vulkan.Device, input []f64, kernel []f64, batch int, i
 	defer { col_buf.release() }
 
 	src_buf.load(in_bytes)!
-	vulkan.im2col(dev, col_buf, src_buf, n, c, h, w, kh, kw, out_h, out_w, u32(pad_h),
-		u32(pad_w), u32(stride_h), u32(stride_w), 1, 1)!
+	vulkan.im2col(dev, col_buf, src_buf, n, c, h, w, kh, kw, out_h, out_w, u32(pad_h), u32(pad_w),
+		u32(stride_h), u32(stride_w), 1, 1)!
 
 	mut col_raw := []u8{len: col_elems * 4}
 	col_raw = col_buf.store(mut col_raw)!
