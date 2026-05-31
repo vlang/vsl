@@ -10,6 +10,7 @@
 
 [vlang.io](https://vlang.io) |
 [Docs](https://vlang.github.io/vsl) |
+[ML Roadmap](./docs/ML_ROADMAP.md) |
 [Examples](./examples/) |
 [Changelog](#) |
 [Contributing](https://github.com/vlang/vsl/blob/main/CONTRIBUTING.md)
@@ -82,7 +83,7 @@ VSL compute backends are organized with a unified structure:
 - `vsl/compute` — backend-agnostic dispatch API
 - `vsl/vcl/compute` — OpenCL/VCL backend implementation
 - `vsl/vulkan/compute` — Vulkan backend implementation
-- `vsl/cuda/compute` — CUDA/cuBLAS/cuDNN backend implementation (Phase B — CPU fallback)
+- `vsl/cuda/compute` — CUDA/cuBLAS/cuDNN backend (`-d cuda`; see [cuda/README](cuda/README.md))
 
 The recommended integration point for downstream libraries is `vsl.compute`.
 

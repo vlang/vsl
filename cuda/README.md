@@ -5,28 +5,29 @@
 
 ## 🚀 Status
 
-> ⚠️ **Phase B — Infrastructure ready; cuBLAS/cuDNN bindings are pending.**
-> All operations currently fall back to CPU. Once CUDA Toolkit is available on
-> the build machine, the `TODO(#238)` markers can be replaced with actual GPU
-> kernels.
+> **Phase B/C — cuBLAS/cuDNN bindings active** when CUDA Toolkit + cuDNN are
+> available at build time (`-d cuda`). Operations use GPU kernels where
+> implemented; CPU fallback when CUDA/cuDNN is unavailable.
+>
+> **VTL integration** (training loop on GPU) is tracked separately:
+> [vlang/vtl#89](https://github.com/vlang/vtl/issues/89),
+> [#90](https://github.com/vlang/vtl/issues/90),
+> [#91](https://github.com/vlang/vtl/issues/91).
 
-| Operation | Status | cuBLAS/cuDNN |
-|-----------|--------|-------------|
-| `gemm` | ✅ Stub (CPU fallback) | `cublasDgemm` |
-| `gemv` | ✅ Stub (CPU fallback) | `cublasDgvm` |
-| `relu` | ✅ Stub (CPU fallback) | `cuDNNReLU` |
-| `sigmoid` | ✅ Stub (CPU fallback) | `cuDNNSigmoid` |
-| `tanh` | ✅ Stub (CPU fallback) | `cuDNNTanh` |
-| `add_vec` | ✅ Stub (CPU fallback) | custom kernel |
-| `mul_vec` | ✅ Stub (CPU fallback) | custom kernel |
-| `add_scalar` | ✅ Stub (CPU fallback) | custom kernel |
-| `mul_scalar` | ✅ Stub (CPU fallback) | `cublasDscal` |
-| `softmax` | ✅ Stub (CPU fallback) | `cuDNNSoftmaxForward` |
-| `layernorm` | ✅ Stub (CPU fallback) | `cuDNNLayerNorm` |
-| `conv2d` | ✅ Stub (CPU fallback) | `cuDNNConvolutionForward` |
+| Operation | GPU (CUDA+cuDNN) | Fallback | Tracker |
+|-----------|------------------|----------|---------|
+| `gemm` | ✅ `cublasDgemm` | CPU col-major | — |
+| `gemv` | ✅ `cublasDgemv` | CPU | — |
+| `relu` / `sigmoid` / `tanh` | ✅ cuDNN activation | CPU | — |
+| `add_vec` | ✅ `cublasDaxpy` | CPU | — |
+| `mul_vec` | ❌ CPU only | CPU | [#280](https://github.com/vlang/vsl/issues/280) |
+| `add_scalar` / `mul_scalar` | ✅ cuBLAS/cuDNN path | CPU | — |
+| `softmax` | ✅ `cudnnSoftmaxForward` | CPU | — |
+| `layernorm` | ❌ CPU only | CPU | [#280](https://github.com/vlang/vsl/issues/280) |
+| `conv2d` | ✅ `cudnnConvolutionForward` | CPU | — |
 
-See [issue #238](https://github.com/vlang/vsl/issues/238) for the cuBLAS/cuDNN
-implementation tracker.
+See [issue #280](https://github.com/vlang/vsl/issues/280) for remaining CUDA
+stubs, docs, and CI. Numerical parity: [#281](https://github.com/vlang/vsl/issues/281).
 
 ## 📁 Architecture
 
