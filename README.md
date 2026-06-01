@@ -18,10 +18,14 @@
 [![Mentioned in Awesome V][awesomevbadge]][awesomevurl]
 [![VSL Continuous Integration][workflowbadge]][workflowurl]
 [![Deploy Documentation][deploydocsbadge]][deploydocsurl]
-[![Performance Benchmarks][benchmarksbadge]][benchmarksurl]
 [![MegaLinter][megalinterbadge]][megalinterurl]
 [![License: MIT][licensebadge]][licenseurl]
 [![Modules][ModulesBadge]][ModulesUrl]
+![Scientific Computing][ScientificComputingBadge]
+![CUDA Optional][CudaOptionalBadge]
+![Vulkan Optional][VulkanOptionalBadge]
+[![VTL Powered][VtlPoweredBadge]][VtlPoweredUrl]
+[![Performance Benchmarks][benchmarksbadge]][benchmarksurl]
 
 </div>
 
@@ -243,6 +247,10 @@ Made with [contributors-img](https://contrib.rocks).
 [megalinterbadge]: https://github.com/vlang/vsl/actions/workflows/mega-linter.yml/badge.svg
 [licensebadge]: https://img.shields.io/badge/License-MIT-blue.svg
 [ModulesBadge]: https://img.shields.io/badge/modules-reference-027d9c?logo=v
+[ScientificComputingBadge]: https://img.shields.io/badge/scientific-computing-027d9c
+[CudaOptionalBadge]: https://img.shields.io/badge/CUDA-optional-76b900?logo=nvidia
+[VulkanOptionalBadge]: https://img.shields.io/badge/Vulkan-optional-ac162c?logo=vulkan
+[VtlPoweredBadge]: https://img.shields.io/badge/VTL-powered-027d9c?logo=v
 [awesomevurl]: https://github.com/vlang/awesome-v/blob/master/README.md#scientific-computing
 [workflowurl]: https://github.com/vlang/vsl/actions/workflows/ci.yml
 [deploydocsurl]: https://github.com/vlang/vsl/actions/workflows/deploy-docs.yml
@@ -250,6 +258,7 @@ Made with [contributors-img](https://contrib.rocks).
 [megalinterurl]: https://github.com/vlang/vsl/actions/workflows/mega-linter.yml
 [licenseurl]: https://github.com/vlang/vsl/blob/main/LICENSE
 [ModulesUrl]: https://vlang.github.io/vsl/
+[VtlPoweredUrl]: https://github.com/vlang/vtl
 
 <!-- Images -->
 

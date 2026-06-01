@@ -8,10 +8,18 @@ on:
   push:
     branches:
       - main
+    paths:
+      - '**.md'
+      - '**.v'
+      - '.github/workflows/v-lint.yml'
 
   pull_request:
     branches:
       - main
+    paths:
+      - '**.md'
+      - '**.v'
+      - '.github/workflows/v-lint.yml'
 
 permissions:
   contents: read
