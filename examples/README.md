@@ -16,10 +16,11 @@ both beginners and advanced users.
 ### Running Examples
 
 ```sh
-# Navigate to any example directory
-cd examples/plot_scatter
+# From ~/.vmodules or the repository parent
+v run vsl/examples/plot_scatter/main.v
 
-# Run the example
+# Or from inside an example directory
+cd vsl/examples/plot_scatter
 v run main.v
 
 # For examples with custom dependencies
@@ -35,9 +36,10 @@ v -cflags <flags> run main.v
 → `ml_linreg_plot` → `fft_plot_example`
 
 **Advanced Plotting**: Try → `plot_sunburst_hierarchy` →
-`plot_choropleth_population` → `plot_sankey_energy` → `plot_export_png`
+`plot_choropleth_population` → `plot_sankey_energy` → `plot_json_export`
 
-**Machine Learning**: Progress → `ml_kmeans` → `ml_linreg_plot` → `ml_sentiment_analysis`
+**Machine Learning**: Progress → `ml_kmeans` → `ml_linreg_plot` →
+`ml_complete_pipeline` → `ml_sentiment_analysis`
 
 **Scientific Computing**: Dive into → `fft_plot_example` → `deriv_example` →
 `mpi_basic_example`
@@ -57,6 +59,7 @@ v -cflags <flags> run main.v
 | [ml_svm](./ml_svm)                                | Support Vector Machine with kernel functions.           |
 | [ml_decision_tree](./ml_decision_tree)           | Decision tree for classification and regression.       |
 | [ml_random_forest](./ml_random_forest)          | Random Forest ensemble learning.                        |
+| [ml_complete_pipeline](./ml_complete_pipeline)   | End-to-end preprocessing, model selection, and metrics. |
 
 ## Plotting Examples 📊
 
@@ -120,8 +123,6 @@ v -cflags <flags> run main.v
 | ---------------------------------------------------------- | ----------------------------------------- |
 | [plot_choropleth_population](./plot_choropleth_population) | Choropleth map for geographic data.       |
 | [plot_scattermapbox_cities](./plot_scattermapbox_cities)   | Scatter plot on mapbox for location data. |
-| [plot_scattergeo_trade_routes](./plot_scattergeo_trade_routes) | ScatterGeo with shipping route visualization. |
-| [plot_barpolar_wind_rose](./plot_barpolar_wind_rose)       | Polar bar chart for wind direction analysis. |
 
 ### Export & Automation
 
@@ -213,6 +214,19 @@ v -cflags <flags> run main.v
 | [geometry_ml_clustering](./geometry_ml_clustering)     | Combine geometry module with ML clustering.          |
 | [lapack_plot_eigenvalues](./lapack_plot_eigenvalues)  | Visualize eigenvalue problems solved with LAPACK.     |
 | [noise_quaternion_fractal](./noise_quaternion_fractal) | Combine quaternions and noise for textured fractals.  |
+
+## GPU / Accelerator Examples ⚡
+
+| Example | Description |
+|---------|-------------|
+| [vcl_opencl_basic](./vcl_opencl_basic) | Basic OpenCL/VCL device and kernel usage. |
+| [vcl_opencl_kernel_params](./vcl_opencl_kernel_params) | OpenCL kernel parameter handling. |
+| [vcl_opencl_image_example](./vcl_opencl_image_example) | OpenCL image processing example. |
+| [vcl_opencl_fractals_one_argument](./vcl_opencl_fractals_one_argument) | Fractal compute workload with OpenCL. |
+
+CUDA and Vulkan backend smoke tests live under [`cuda/`](../cuda/) and
+[`vulkan/`](../vulkan/), because they are backend-level validation rather than
+end-user examples.
 
 ## Noise & Signal Processing Examples 🌊
 

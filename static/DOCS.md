@@ -10,7 +10,7 @@
 
 [vlang.io](https://vlang.io) |
 [Docs](https://vlang.github.io/vsl) |
-[Changelog](#) |
+[Releases](https://github.com/vlang/vsl/releases) |
 [Contributing](https://github.com/vlang/vsl/blob/main/CONTRIBUTING.md)
 
 </div>

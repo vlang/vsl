@@ -138,8 +138,10 @@ v -d cuda vet .
 
 ### Phase status
 
-All CUDA operations are stubbed with CPU fallbacks. The cuBLAS/cuDNN
-bindings are tracked in [issue #238](https://github.com/vlang/vsl/issues/238).
+CUDA now has active cuBLAS/cuDNN kernels for the core ML path (GEMM/GEMV,
+activations, softmax, Conv2D, and optional LayerNorm). New CUDA contributions
+should keep CPU fallback behavior and add scoped numerical validation where
+possible.
 
 See [ADR-001](./docs/adr/ADR-001-multi-backend-gpu-compute-vsl.md) for the
 architecture decision record.

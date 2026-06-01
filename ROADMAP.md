@@ -88,7 +88,7 @@
 | P2 | CUDA benchmark variants in CI |
 | P2 | Vulkan stress + cross-backend validation |
 
-**Project board:** [vlang org project #8](https://github.com/orgs/vlang/projects/8)
+**Maintainer project board:** [vlang org project #8](https://github.com/orgs/vlang/projects/8) (may require access)
 
 ---
 
@@ -101,7 +101,8 @@
 | [#91](https://github.com/vlang/vsl/issues/91) | vsl.blas not working on MacOS | 🟡 P2 | |
 | [#231](https://github.com/vlang/vsl/issues/231) | `cblas_idamax` implicit decl | 🟡 Medium | |
 
-**Closed ML epics:** #236–#239, #240–#244, #280–#285 — see [ML_ROADMAP.md](docs/ML_ROADMAP.md).
+**Closed ML epics:** #236–#239, #240–#244, #280–#285 — see
+[ML_ROADMAP.md](docs/ML_ROADMAP.md).
 
 ---
 
@@ -112,9 +113,9 @@
 | `vtl.la.matmul` | `vsl.la` / CUDA GEMM | ✅ Done |
 | `vtl.nn` Conv2D forward | `vsl.cuda` cuDNN | ✅ Done (#90) |
 | `vtl.nn` Linear forward | CUDA + `DeviceSession` | ✅ Done (#89, #91 P1) |
-| `vtl.autograd` | CPU backward (GPU fwd) | 🟡 Phase 2–4 in VTL |
-| `vtl.nn.optimizers` | CPU | ✅ Done |
-| Vulkan smoke | `vsl.vulkan` gemm/conv2d | 🟡 Example only |
+| `vtl.autograd` | CUDA/Vulkan GEMM paths where eligible | ✅ Done for release smokes |
+| `vtl.nn.optimizers` | CUDA persistent slots; Vulkan fused Adam f32 | ✅ Done |
+| Vulkan smoke | `vsl.vulkan` GEMM/Conv2D/ReLU/Sigmoid/Adam | ✅ Done (`nn_cifar10_vulkan`) |
 
 ---
 
@@ -270,6 +271,6 @@ vtl/
 
 ---
 
-*Last updated: 2026-05-31* · Board: [project #8](https://github.com/orgs/vlang/projects/8)
+*Last updated: 2026-05-31* · Maintainer board: [project #8](https://github.com/orgs/vlang/projects/8)
 
 *See also: [VTL ROADMAP.md](https://github.com/vlang/vtl/blob/main/ROADMAP.md)*

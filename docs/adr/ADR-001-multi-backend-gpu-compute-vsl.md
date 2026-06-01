@@ -1,6 +1,12 @@
 # ADR-001: Multi-Backend GPU Compute Architecture for VSL
 
-**Status:** Draft
+**Status:** Accepted (historical architecture record; implementation has advanced)
+
+> Current release status: CUDA, Vulkan, and VCL compute backends exist. CUDA has
+> cuBLAS/cuDNN kernels for the core ML path, and Vulkan has GEMM, Conv2D
+> im2col, elementwise ops, and a fused f32 Adam shader used by VTL. See
+> [ML_ROADMAP.md](../ML_ROADMAP.md), [cuda/README.md](../../cuda/README.md),
+> and [vulkan/README.md](../../vulkan/README.md) for current operational docs.
 
 ## Context
 
@@ -14,9 +20,9 @@ VSL already has a partial compute infrastructure:
 |-----------|--------|
 | `vsl/compute/context.v` — `Backend` enum + `ComputeContext` | ✅ Done (PR #260 merged) |
 | `vsl/compute/dispatch.v` — unified dispatch API | ✅ Done (PR #260 merged) |
-| `vsl/vulkan/compute/` — Vulkan GEMM/GEMV/elementwise | ⚠️ Partial (gemm, gemv, relu, sigmoid only) |
+| `vsl/vulkan/compute/` — Vulkan GEMM/GEMV/elementwise/Conv2D/Adam | ✅ Active |
 | `vsl/vcl/compute/` — OpenCL kernels | ⚠️ Partial (full ops: gemm, gemv, relu, sigmoid, tanh, softmax, layernorm, conv2d…) |
-| `vsl/cuda/` | ❌ Does not exist |
+| `vsl/cuda/` | ✅ Active cuBLAS/cuDNN backend |
 
 ### Constraints
 
@@ -24,8 +30,8 @@ VSL already has a partial compute infrastructure:
   are column-major internally.
 - `vsl.vcl` already exists as a mature OpenCL transport wrapper; compute extends it.
 - `vsl.vulkan` is backed by `antono2/vulkan` raw bindings (~1.3 MB auto-generated from Khronos XML).
-- No CUDA bindings exist in the V ecosystem yet; need to evaluate
-  `vlang/cuvm` or raw CUDA driver API.
+- CUDA bindings now exist in `vsl/cuda`; this ADR keeps the original decision
+  context, while current implementation details live in backend READMEs.
 - VTL (VTL issue [#57](https://github.com/vlang/vtl/issues/57)) blocks on VSL having CUDA and Vulkan compute ready.
 
 ## Options Considered

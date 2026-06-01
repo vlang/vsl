@@ -1,7 +1,22 @@
-# VSL Tutorials
+# VSL Documentation
 
-Welcome to the VSL (V Scientific Library) tutorials! This comprehensive guide
-will help you master scientific computing with V.
+Welcome to VSL, the scientific computing foundation for V and the low-level
+compute layer used by [VTL](https://github.com/vlang/vtl) for ML workloads.
+
+Use this page as the stable navigation hub for tutorials, examples, GPU backend
+docs, benchmarks, and release status.
+
+## Start Here
+
+| Goal | Read |
+|------|------|
+| Install VSL and run the first example | [Installation and Setup](getting-started/01-installation.md) |
+| Learn the core scientific APIs | [Basic Linear Algebra](getting-started/03-basic-linear-algebra.md), [BLAS Basics](linear-algebra/01-blas-basics.md) |
+| Build ML pipelines with VSL algorithms | [Data Preparation](machine-learning/01-data-preparation.md), [Clustering](machine-learning/02-clustering.md), [Regression](machine-learning/03-regression.md), [Classification](machine-learning/04-classification.md) |
+| Train tensor/autograd neural networks | [VTL](https://github.com/vlang/vtl) |
+| Use GPU backends | [OpenCL](advanced/02-opencl-gpu.md), [CUDA](advanced/02a-cuda-gpu.md), [Vulkan](../vulkan/README.md) |
+| Compare performance | [Benchmarks](../benchmarks/README.md), [vs NumPy](../benchmarks/vs_numpy/README.md) |
+| Track the ML release | [ML Roadmap](ML_ROADMAP.md) |
 
 ## Learning Paths
 
@@ -27,6 +42,8 @@ Master advanced techniques and integrations:
 
 - [MPI Parallel Computing](advanced/01-mpi-parallel.md)
 - [OpenCL GPU Acceleration](advanced/02-opencl-gpu.md)
+- [CUDA GPU Acceleration](advanced/02a-cuda-gpu.md)
+- [Vulkan Compute Backend](../vulkan/README.md)
 - [HDF5 I/O](advanced/03-hdf5-io.md)
 - [Library Integration](advanced/04-library-integration.md)
 
@@ -66,6 +83,10 @@ ML algorithms and data processing:
 - [Clustering](machine-learning/02-clustering.md)
 - [Regression](machine-learning/03-regression.md)
 - [Classification](machine-learning/04-classification.md)
+- [Logistic Regression](machine-learning/05-logistic-regression.md)
+- [Support Vector Machines](machine-learning/06-svm.md)
+- [Decision Trees](machine-learning/07-decision-trees.md)
+- [Random Forest](machine-learning/08-random-forest.md)
 
 ### Scientific Computing
 Numerical methods and signal processing:
@@ -78,8 +99,24 @@ Numerical methods and signal processing:
 High-performance and specialized topics:
 - [MPI Parallel Computing](advanced/01-mpi-parallel.md)
 - [OpenCL GPU Acceleration](advanced/02-opencl-gpu.md)
+- [CUDA GPU Acceleration](advanced/02a-cuda-gpu.md)
+- [Vulkan Compute Backend](../vulkan/README.md)
 - [HDF5 I/O](advanced/03-hdf5-io.md)
 - [Library Integration](advanced/04-library-integration.md)
+
+## GPU Backend Quick Reference
+
+| Backend | Build flag | Current role | Docs |
+|---------|------------|--------------|------|
+| Pure V | none | Portable scientific computing | [README](../README.md) |
+| C BLAS/LAPACK | `-d vsl_blas_cblas`, `-d vsl_lapack_lapacke` | Optimized CPU linear algebra | [Linear algebra](linear-algebra/01-blas-basics.md) |
+| OpenCL/VCL | module-specific | Cross-vendor GPU kernels and examples | [OpenCL GPU](advanced/02-opencl-gpu.md) |
+| CUDA | `-d cuda` | cuBLAS/cuDNN kernels for NVIDIA GPUs | [CUDA README](../cuda/README.md) |
+| Vulkan | `-d vulkan` | GEMM, Conv2D im2col, elementwise ops, fused Adam | [Vulkan README](../vulkan/README.md) |
+
+VSL owns compute kernels and backend dispatch. For tensors, autograd, datasets,
+layers, losses, optimizers, and training examples, use
+[VTL](https://github.com/vlang/vtl).
 
 ## Quick Reference
 
@@ -117,6 +154,8 @@ directory. Each example includes:
 - Expected output descriptions
 - Troubleshooting tips
 
+For a curated catalog, see [examples/README.md](../examples/README.md).
+
 ## Contributing
 
 Found an error or want to improve a tutorial? See our [Contributing Guide](../CONTRIBUTING.md).
@@ -125,4 +164,6 @@ Found an error or want to improve a tutorial? See our [Contributing Guide](../CO
 
 - [VSL API Documentation](https://vlang.github.io/vsl)
 - [Examples Directory](../examples/)
+- [Benchmarks](../benchmarks/README.md)
+- [VTL Tensor Library](https://github.com/vlang/vtl)
 - [V Language Documentation](https://vlang.io/docs)
