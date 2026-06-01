@@ -34,18 +34,18 @@ pub fn layernorm_cuda_impl(dev &cuda.CudaDevice, x_data []f64, gamma []f64, beta
 	}
 	defer { C.cudnnDestroyTensorDescriptor(y_desc) }
 
-	stn := C.cudnnSetTensor4dDescriptor(norm_desc, cuda.cudnn_tensor_nchw, cuda.cudnn_data_type_double,
-		1, 1, 1, n)
+	stn := C.cudnnSetTensor4dDescriptor(norm_desc, cuda.cudnn_tensor_nchw,
+		cuda.cudnn_data_type_double, 1, 1, 1, n)
 	if stn != cuda.cudnn_status_success {
 		return error('layernorm_cuda_impl: cudnnSetTensor4dDescriptor(norm): ${cuda.cudnn_error(stn)}')
 	}
-	stx := C.cudnnSetTensor4dDescriptor(x_desc, cuda.cudnn_tensor_nchw, cuda.cudnn_data_type_double, 1,
-		1, 1, n)
+	stx := C.cudnnSetTensor4dDescriptor(x_desc, cuda.cudnn_tensor_nchw,
+		cuda.cudnn_data_type_double, 1, 1, 1, n)
 	if stx != cuda.cudnn_status_success {
 		return error('layernorm_cuda_impl: cudnnSetTensor4dDescriptor(x): ${cuda.cudnn_error(stx)}')
 	}
-	sty := C.cudnnSetTensor4dDescriptor(y_desc, cuda.cudnn_tensor_nchw, cuda.cudnn_data_type_double, 1,
-		1, 1, n)
+	sty := C.cudnnSetTensor4dDescriptor(y_desc, cuda.cudnn_tensor_nchw,
+		cuda.cudnn_data_type_double, 1, 1, 1, n)
 	if sty != cuda.cudnn_status_success {
 		return error('layernorm_cuda_impl: cudnnSetTensor4dDescriptor(y): ${cuda.cudnn_error(sty)}')
 	}

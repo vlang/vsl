@@ -61,8 +61,8 @@ pub fn conv2d_backward_vulkan(dev &vulkan.Device, grad_out []f64, input []f64, k
 			for ohi in 0 .. oh {
 				for owi in 0 .. ow {
 					spatial := b * oh * ow + ohi * ow + owi
-					grad_row[oc * out_total + spatial] = grad_out[((b * out_ch + oc) * oh + ohi) * ow +
-						owi]
+					grad_row[oc * out_total + spatial] = grad_out[((b * out_ch + oc) * oh +
+						ohi) * ow + owi]
 				}
 			}
 		}

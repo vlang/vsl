@@ -13,8 +13,8 @@ pub fn conv2d_vulkan(dev &vulkan.Device, input []f64, kernel []f64, batch int, i
 	k_total := in_ch * k_h * k_w
 	out_total := batch * oh * ow
 
-	col := im2col_f32(dev, input, batch, in_ch, in_h, in_w, k_h, k_w, oh, ow, pad_h, pad_w, stride_h,
-		stride_w)!
+	col := im2col_f32(dev, input, batch, in_ch, in_h, in_w, k_h, k_w, oh, ow, pad_h, pad_w,
+		stride_h, stride_w)!
 
 	// Weight matrix [out_ch x k_total] row-major for GEMM
 	mut w_row := []f64{len: out_ch * k_total}
