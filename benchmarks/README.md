@@ -11,6 +11,9 @@ built-in `benchmark` module for accurate timing measurements.
 
 ## Running Benchmarks
 
+Run benchmarks from the VSL repository root. Benchmark commands are intentionally
+not part of the default test suite; they can be CPU/GPU and hardware sensitive.
+
 ### vs NumPy (ML ops)
 
 ```sh
@@ -20,6 +23,18 @@ v run benchmarks/vs_numpy/conv2d_bench.v
 ```
 
 See [vs_numpy/README.md](vs_numpy/README.md). Tracked in [#282](https://github.com/vlang/vsl/issues/282).
+
+### GPU smoke benchmarks
+
+CUDA and Vulkan benchmark coverage is evolving. For release evidence, prefer
+small scoped GPU smokes before running any heavy benchmark:
+
+```sh
+VSL_TEST_VULKAN=1 VJOBS=1 v -prod -d vulkan test vsl/vulkan/compute/adam_step_vulkan_test.v
+v -d cuda test vsl/cuda/examples/cuda_ops_test.v
+```
+
+If you run from `~/.vmodules`, prefix benchmark paths with `vsl/`.
 
 ### Run All Benchmarks
 
@@ -59,6 +74,16 @@ Benchmark results show:
 - **Time**: Average execution time over multiple runs
 - **Throughput**: Operations per second (where applicable)
 - **GFLOPS**: Floating-point operations per second (for compute-intensive operations)
+
+Example report shape:
+
+| Operation | Size | Backend | Time | GFLOPS / ratio |
+|-----------|------|---------|------|----------------|
+| GEMM | 512 | pure V / C BLAS / NumPy | ms | backend-specific |
+| Conv2D | `1x1x32x32`, `3x3` | VSL / NumPy reference | ms | ratio |
+
+Do not compare numbers across machines without recording CPU/GPU model,
+compiler flags, and backend flags.
 
 ## Performance Notes
 

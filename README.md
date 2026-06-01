@@ -12,7 +12,7 @@
 [Docs](https://vlang.github.io/vsl) |
 [ML Roadmap](./docs/ML_ROADMAP.md) |
 [Examples](./examples/) |
-[Changelog](#) |
+[Releases](https://github.com/vlang/vsl/releases) |
 [Contributing](CONTRIBUTING.md)
 
 [![Mentioned in Awesome V][awesomevbadge]][awesomevurl]
@@ -37,6 +37,22 @@ println(a.get(1, 1))
 
 VSL is a V library for AI and high-performance scientific computing.
 
+<div align="center">
+
+### Building machine learning in V?
+
+**Use [VTL](https://github.com/vlang/vtl) on top of VSL** for tensors, autograd,
+neural networks, datasets, optimizers, and GPU-backed training.
+
+VSL provides the scientific and GPU compute foundation. VTL turns it into a
+developer-friendly ML toolkit for V.
+
+[Get started with VTL](https://github.com/vlang/vtl) ·
+[VTL tutorials](https://github.com/vlang/vtl/tree/main/docs) ·
+[ML roadmap](./docs/ML_ROADMAP.md)
+
+</div>
+
 > [!IMPORTANT]
 > The pure-V QR path (`geqrf/orgqr`) is still being aligned; the related test is
 > temporarily skipped. Other BLAS/LAPACK routines pass, and C backends
@@ -51,6 +67,18 @@ VSL is a V library for AI and high-performance scientific computing.
 ## 📖 Documentation
 
 Visit [VSL Documentation](https://vlang.github.io/vsl) to explore all supported features and APIs.
+
+### Start Here
+
+| Need | Go to |
+|------|-------|
+| Scientific computing overview | [Docs index](docs/README.md) |
+| Working examples | [Examples catalog](examples/README.md) |
+| ML/GPU release status | [ML roadmap](docs/ML_ROADMAP.md) |
+| CUDA backend | [cuda/README.md](cuda/README.md) |
+| Vulkan backend | [vulkan/README.md](vulkan/README.md) |
+| Benchmarks | [benchmarks/README.md](benchmarks/README.md) |
+| Tensor/autograd/NN layer | [VTL](https://github.com/vlang/vtl) |
 
 VSL is a comprehensive Scientific Computing Library offering a rich ecosystem of
 mathematical and computational modules. The library provides both pure-V
@@ -76,7 +104,8 @@ VSL provides flexible performance options:
 - **Pure V Implementation**: High-performance, dependency-free BLAS/LAPACK implementations
 - **Optimized Backends**: Optional integration with OpenBLAS, LAPACK, MPI,
   OpenCL (VCL), Vulkan Compute, and CUDA (cuBLAS/cuDNN) for maximum performance
-- **GPU Acceleration**: OpenCL and CUDA support for computationally intensive operations
+- **GPU Acceleration**: OpenCL/VCL, Vulkan Compute, and CUDA support for
+  computationally intensive operations
 
 **Pure V BLAS/LAPACK** implementations deliver competitive performance while
 eliminating external dependencies. Benchmark results demonstrate excellent
@@ -97,6 +126,20 @@ VSL compute backends are organized with a unified structure:
 
 The recommended integration point for downstream libraries is `vsl.compute`.
 
+### Backend Status
+
+| Backend | Build flag | Highlights | Downstream use |
+|---------|------------|------------|----------------|
+| Pure V | none | Portable BLAS/LAPACK-style routines and scientific modules | Default path |
+| C BLAS/LAPACK | `-d vsl_blas_cblas`, `-d vsl_lapack_lapacke` | Optimized CPU kernels | Heavy linear algebra |
+| OpenCL/VCL | module-specific | Cross-vendor GPU kernels and examples | Experimental GPU path |
+| CUDA | `-d cuda` | cuBLAS/cuDNN GEMM, activations, softmax, Conv2D, LayerNorm | VTL CUDA training |
+| Vulkan | `-d vulkan` | GEMM, Conv2D im2col, elementwise ops, fused Adam shader | VTL f32 Vulkan training |
+
+For neural networks, use [VTL](https://github.com/vlang/vtl): VSL owns the
+compute primitives, and VTL owns tensors, autograd, layers, losses, optimizers,
+datasets, and training loops.
+
 ## 🚀 Installation & Quick Start
 
 VSL supports multiple installation methods and deployment options to fit
@@ -116,9 +159,10 @@ v install vsl
 vpkg get https://github.com/vlang/vsl
 ```
 
-### 🐳 Docker Development Environment (Recommended)
+### 🐳 Docker Development Environment
 
-For the best development experience with all optional dependencies pre-configured:
+For a pre-configured development environment with optional scientific
+dependencies:
 
 1. **Install Docker** on your system
 2. **Clone the starter template:**
@@ -150,11 +194,16 @@ Refer to individual module documentation for specific compilation flags.
 
 ## 🧪 Testing
 
-To test the module, just type the following command:
+Use scoped tests during development to avoid compiling the whole scientific
+stack at once:
 
 ```sh
-v test .
+v test vsl/blas vsl/la vsl/compute
+VSL_TEST_VULKAN=1 VJOBS=1 v -prod -d vulkan test vsl/vulkan/compute/adam_step_vulkan_test.v
 ```
+
+For the repository test harness and optional GPU paths, see
+[docs/ML_ROADMAP.md](docs/ML_ROADMAP.md) and [vulkan/README.md](vulkan/README.md).
 
 ## 📊 Performance Benchmarks
 

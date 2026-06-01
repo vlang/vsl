@@ -24,6 +24,22 @@ python3 vsl/benchmarks/vs_numpy/numpy_baseline.py conv2d
 
 Compare GFLOPS / ms from the V scripts with the Python output for the same sizes.
 
+## Output and reporting
+
+Use the same host, flags, and matrix sizes for both VSL and NumPy. A useful
+release note includes:
+
+| Field | Example |
+|-------|---------|
+| CPU/GPU | `Ryzen 9`, `RTX 4060 Laptop` |
+| V flags | `-d vsl_blas_cblas`, `-d cuda`, `-d vulkan` |
+| Operation | `matmul`, `gemv`, `conv2d` |
+| Size | `512`, `1024`, or Conv2D shape |
+| Result | `ms`, `GFLOPS`, ratio vs baseline |
+
+CUDA/Vulkan benchmark variants should be treated as opt-in until dedicated CI
+coverage is added. Prefer scoped smoke tests for PR validation.
+
 ## Priority sizes
 
 | Op | Shape |

@@ -23,7 +23,7 @@ v run cuda/examples/gemm_example.v
 
 ## Status
 
-All examples currently exercise the CPU fallbacks. Once Phase C is complete
-(cuBLAS/cuDNN bindings), these will run on the NVIDIA GPU.
+With `-d cuda` and CUDA/cuDNN available, these examples exercise GPU kernels.
+Without CUDA, they fall back to CPU where the wrapper supports a fallback.
 
-See [issue #238](https://github.com/vlang/vsl/issues/238) for progress.
+See [cuda/README.md](../README.md) for backend status and requirements.

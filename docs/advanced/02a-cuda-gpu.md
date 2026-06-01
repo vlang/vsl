@@ -122,11 +122,14 @@ fn main() {
 
 ## Neural Network Example
 
-See [XOR Training Example](../../examples/ml_nn_xor/) for a complete MLP training
-on GPU with Dense layers, ReLU activations, Sigmoid output, and manual backpropagation.
+For tensor/autograd neural networks, use
+[VTL](https://github.com/vlang/vtl). The VTL CUDA smoke
+[`nn_cifar10_cuda`](https://github.com/vlang/vtl/tree/main/examples/nn_cifar10_cuda)
+uses VSL CUDA kernels for the ML training path.
 
 ## Next Steps
 
 - [CUDA Backend Docs](../../cuda/README.md) — Full CUDA reference
-- [XOR Training Example](../../examples/ml_nn_xor/) — MLP on GPU
+- [VTL CUDA example](https://github.com/vlang/vtl/tree/main/examples/nn_cifar10_cuda) — Neural network training on top of VSL CUDA
 - [OpenCL GPU Docs](./02-opencl-gpu.md) — Alternative GPU backend
+- [Vulkan Compute Docs](../../vulkan/README.md) — Vulkan backend used by VTL f32 training

@@ -5,7 +5,7 @@
 
 ## 🚀 Status
 
-> **Phase B/C — cuBLAS/cuDNN bindings active** when CUDA Toolkit + cuDNN are
+> **CUDA backend — cuBLAS/cuDNN bindings active** when CUDA Toolkit + cuDNN are
 > available at build time (`-d cuda`). Operations use GPU kernels where
 > implemented; CPU fallback when CUDA/cuDNN is unavailable.
 >
@@ -38,7 +38,7 @@ vsl.cuda
 ├── compute/
 │   ├── elementwise.v   # Activation functions (relu, sigmoid, tanh, ...)
 │   ├── gemm.v          # Public GEMM wrapper (row↔col conversion)
-│   └── gemm_impl.v     # Internal GEMM/GEMV stubs + CPU fallbacks
+│   └── gemm_impl.v     # Internal GEMM/GEMV implementation + CPU fallbacks
 └── v.mod
 ```
 
@@ -172,11 +172,11 @@ v -d cuda run cuda/examples/relu_example.v
 
 | Phase | Description |
 |-------|-------------|
-| ✅ **Phase B** | Infrastructure ready; stub implementations with CPU fallbacks |
-| 🎯 **Phase C** | Replace stubs with actual cuBLAS/cuDNN kernels (issue #238) |
+| ✅ **Phase B** | Infrastructure ready; CPU fallback path |
+| ✅ **Phase C** | cuBLAS/cuDNN kernels for GEMM/GEMV, activations, softmax, Conv2D, LayerNorm |
 | 🏗️ **Phase D** | Device discovery, multi-GPU support |
 | 🧠 **Phase E** | GPU memory management (avoid CPU↔GPU copies) |
-| 🧪 **Phase F** | Test suite, numerical validation vs reference |
+| ✅ **Phase F** | Numerical validation vs reference for key kernels |
 
 ## 🔗 Resources
 
@@ -184,7 +184,8 @@ v -d cuda run cuda/examples/relu_example.v
 - [cuBLAS Documentation](https://docs.nvidia.com/cublas/)
 - [cuDNN Documentation](https://docs.nvidia.com/cudnn/)
 - [CUDA Toolkit Download](https://developer.nvidia.com/cuda-downloads)
-- [VSL ADR-001: Multi-backend GPU compute](./docs/adr/ADR-001-multi-backend-gpu-compute-vsl.md)
+- [VSL ADR-001: Multi-backend GPU compute](../docs/adr/ADR-001-multi-backend-gpu-compute-vsl.md)
+- [VTL CUDA example](https://github.com/vlang/vtl/tree/main/examples/nn_cifar10_cuda)
 
 ---
 
