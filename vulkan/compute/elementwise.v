@@ -164,9 +164,22 @@ pub fn add_vec_vulkan(dev &vulkan.Device, a_data []f64, b_data []f64) ![]f64 {
 	return out
 }
 
-// mul_vec_vulkan is not directly supported by Vulkan BLAS; use CPU fallback.
+// mul_vec_vulkan computes element-wise a * b via vector_mul pipeline.
 pub fn mul_vec_vulkan(dev &vulkan.Device, a_data []f64, b_data []f64) ![]f64 {
-	return error('VulkanBackend.mul_vec: not available via vulkan ops — use CPU fallback')
+	mut a_f32 := []f32{len: a_data.len}
+	for i, v in a_data {
+		a_f32[i] = f32(v)
+	}
+	mut b_f32 := []f32{len: b_data.len}
+	for i, v in b_data {
+		b_f32[i] = f32(v)
+	}
+	y_f32 := run_binary_f32(dev, a_f32, b_f32, vulkan.vector_mul)!
+	mut out := []f64{len: y_f32.len}
+	for i, v in y_f32 {
+		out[i] = f64(v)
+	}
+	return out
 }
 
 // add_scalar_vulkan adds a scalar to each element via scale pipeline.
