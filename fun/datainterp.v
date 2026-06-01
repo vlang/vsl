@@ -7,6 +7,10 @@ import vsl.errors
 pub type InterpFn = fn (mut o DataInterp, j int, x f64) f64
 
 // DataInterp implements numeric interpolators to be used with discrete data
+
+// DataInterp defines a public data structure for this module.
+
+// DataInterp defines a public data structure for this module.
 @[heap]
 pub struct DataInterp {
 mut:

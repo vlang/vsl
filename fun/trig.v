@@ -81,6 +81,7 @@ const p1 = 7.85398125648498535156e-1
 const p2 = 3.77489470793079817668e-8
 const p3 = 2.69515142907905952645e-15
 
+// sin_e exposes this operation as part of the public API.
 pub fn sin_e(x f64) (f64, f64) {
 	sgn_x := if x < 0 { -1 } else { 1 }
 	abs_x := math.abs(x)
@@ -126,6 +127,7 @@ pub fn sin_e(x f64) (f64, f64) {
 	}
 }
 
+// cos_e exposes this operation as part of the public API.
 pub fn cos_e(x f64) (f64, f64) {
 	abs_x := math.abs(x)
 	if abs_x < prec.root4_f64_epsilon {
@@ -173,6 +175,7 @@ pub fn cos_e(x f64) (f64, f64) {
 	}
 }
 
+// sin exposes this operation as part of the public API.
 pub fn sin(x f64) f64 {
 	sgn_x := if x < 0 { -1 } else { 1 }
 	abs_x := math.abs(x)
@@ -208,6 +211,7 @@ pub fn sin(x f64) f64 {
 	}
 }
 
+// cos exposes this operation as part of the public API.
 pub fn cos(x f64) f64 {
 	abs_x := math.abs(x)
 	if abs_x < prec.root4_f64_epsilon {

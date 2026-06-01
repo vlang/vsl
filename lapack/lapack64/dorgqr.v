@@ -2,6 +2,7 @@ module lapack64
 
 import math
 
+// dorgqr exposes this operation as part of the public API.
 pub fn dorgqr(m int, n int, k int, mut a []f64, lda int, tau []f64, mut work []f64, lwork int) {
 	if m < 0 {
 		panic(m_lt0)

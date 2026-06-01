@@ -11,6 +11,10 @@ pub mut:
 }
 
 // KFold generates train/test indices for k-fold cross-validation
+
+// KFold defines a public data structure for this module.
+
+// KFold defines a public data structure for this module.
 @[heap]
 pub struct KFold {
 pub:
@@ -76,6 +80,10 @@ pub fn (kf &KFold) split(n_samples int) ![]Fold {
 }
 
 // StratifiedKFold generates stratified train/test indices
+
+// StratifiedKFold defines a public data structure for this module.
+
+// StratifiedKFold defines a public data structure for this module.
 @[heap]
 pub struct StratifiedKFold {
 pub:
@@ -160,6 +168,10 @@ pub fn (skf &StratifiedKFold) split(y []f64) ![]Fold {
 }
 
 // LeaveOneOut implements leave-one-out cross-validation
+
+// LeaveOneOut defines a public data structure for this module.
+
+// LeaveOneOut defines a public data structure for this module.
 @[heap]
 pub struct LeaveOneOut {
 }
@@ -191,6 +203,10 @@ pub fn (loo &LeaveOneOut) split(n_samples int) []Fold {
 }
 
 // ShuffleSplit generates random permutation cross-validator
+
+// ShuffleSplit defines a public data structure for this module.
+
+// ShuffleSplit defines a public data structure for this module.
 @[heap]
 pub struct ShuffleSplit {
 pub:

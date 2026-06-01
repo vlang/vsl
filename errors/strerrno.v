@@ -1,5 +1,6 @@
 module errors
 
+// str exposes this operation as part of the public API.
 pub fn (error_code ErrorCode) str() string {
 	return match error_code {
 		.success { 'success' }

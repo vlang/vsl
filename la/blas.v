@@ -16,6 +16,7 @@ import math
  *
  *   scale[i] = a + m*|s[i]|
 */
+// vector_rms_error exposes this operation as part of the public API.
 pub fn vector_rms_error[T](u []T, v []T, a T, m T, s []T) T {
 	mut rms := T{}
 	for i in 0 .. u.len {

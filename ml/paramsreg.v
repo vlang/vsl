@@ -3,6 +3,9 @@ module ml
 import vsl.la
 import vsl.util
 
+// ParamsReg defines a public data structure for this module.
+
+// ParamsReg defines a public data structure for this module.
 @[heap]
 pub struct ParamsReg[T] {
 pub mut:

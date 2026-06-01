@@ -19,6 +19,10 @@ import vsl.errors
  *   NOTE: remember to call data.notify_update() after changing x or y components
  *
 */
+
+// Data defines a public data structure for this module.
+
+// Data defines a public data structure for this module.
 @[heap]
 pub struct Data[T] {
 pub mut:
@@ -72,6 +76,7 @@ pub fn (mut o Data[T]) set(x &la.Matrix[T], y []T) ! {
 	o.observable.notify_update()
 }
 
+// set_y exposes this operation as part of the public API.
 pub fn (mut o Data[T]) set_y(y []T) ! {
 	if y.len < o.nb_samples {
 		return errors.error('y vector must have same length as number of samples', .efailed)
@@ -80,6 +85,7 @@ pub fn (mut o Data[T]) set_y(y []T) ! {
 	o.observable.notify_update()
 }
 
+// set_x exposes this operation as part of the public API.
 pub fn (mut o Data[T]) set_x(x &la.Matrix[T]) ! {
 	if x.n < o.nb_samples || x.m < o.nb_features {
 		return errors.error('x matrix must have same dimensions as number of samples and features',

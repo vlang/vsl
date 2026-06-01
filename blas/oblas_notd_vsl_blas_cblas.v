@@ -4,58 +4,98 @@ import math
 import vsl.blas.blas64
 
 // set_num_threads sets the number of threads in BLAS
+
+// set_num_threads exposes this operation as part of the public API.
+
+// set_num_threads exposes this operation as part of the public API.
 @[inline]
 pub fn set_num_threads(n int) {}
 
 // ddot computes the dot product of two vectors.
+
+// ddot exposes this operation as part of the public API.
+
+// ddot exposes this operation as part of the public API.
 @[inline]
 pub fn ddot(n int, x []f64, incx int, y []f64, incy int) f64 {
 	return blas64.ddot(n, x, incx, y, incy)
 }
 
 // dasum computes the sum of the absolute values of elements in a vector.
+
+// dasum exposes this operation as part of the public API.
+
+// dasum exposes this operation as part of the public API.
 @[inline]
 pub fn dasum(n int, x []f64, incx int) f64 {
 	return blas64.dasum(n, x, incx)
 }
 
 // dnrm2 computes the Euclidean norm of a vector.
+
+// dnrm2 exposes this operation as part of the public API.
+
+// dnrm2 exposes this operation as part of the public API.
 @[inline]
 pub fn dnrm2(n int, x []f64, incx int) f64 {
 	return blas64.dnrm2(n, x, incx)
 }
 
 // daxpy computes y := alpha * x + y.
+
+// daxpy exposes this operation as part of the public API.
+
+// daxpy exposes this operation as part of the public API.
 @[inline]
 pub fn daxpy(n int, alpha f64, x []f64, incx int, mut y []f64, incy int) {
 	blas64.daxpy(n, alpha, x, incx, mut y, incy)
 }
 
 // dcopy copies a vector x to a vector y.
+
+// dcopy exposes this operation as part of the public API.
+
+// dcopy exposes this operation as part of the public API.
 @[inline]
 pub fn dcopy(n int, x []f64, incx int, mut y []f64, incy int) {
 	blas64.dcopy(n, x, incx, mut y, incy)
 }
 
 // dswap swaps the elements of two vectors.
+
+// dswap exposes this operation as part of the public API.
+
+// dswap exposes this operation as part of the public API.
 @[inline]
 pub fn dswap(n int, mut x []f64, incx int, mut y []f64, incy int) {
 	blas64.dswap(n, mut x, incx, mut y, incy)
 }
 
 // drot applies a plane rotation to points in the plane.
+
+// drot exposes this operation as part of the public API.
+
+// drot exposes this operation as part of the public API.
 @[inline]
 pub fn drot(n int, mut x []f64, incx int, mut y []f64, incy int, c f64, s f64) {
 	blas64.drot(n, mut x, incx, mut y, incy, c, s)
 }
 
 // dscal scales a vector by a constant.
+
+// dscal exposes this operation as part of the public API.
+
+// dscal exposes this operation as part of the public API.
 @[inline]
 pub fn dscal(n int, alpha f64, mut x []f64, incx int) {
 	blas64.dscal(n, alpha, mut x, incx)
 }
 
 // idamax finds the index of the element with the maximum absolute value.
+
+// idamax exposes this operation as part of the public API.
+
+// idamax exposes this operation as part of the public API.
 @[inline]
 pub fn idamax(n int, x []f64, incx int) int {
 	return blas64.idamax(n, x, incx)
@@ -64,6 +104,10 @@ pub fn idamax(n int, x []f64, incx int) int {
 // dgemv performs matrix-vector multiplication.
 // Input matrices are expected in row-major format (as used by la/ module and tests).
 // The Pure V backend (blas64) also expects row-major format, so no conversion is needed.
+
+// dgemv exposes this operation as part of the public API.
+
+// dgemv exposes this operation as part of the public API.
 @[inline]
 pub fn dgemv(trans Transpose, m int, n int, alpha f64, a []f64, lda int, x []f64, incx int, beta f64, mut y []f64, incy int) {
 	blas64.dgemv(to_blas64_transpose(trans), m, n, alpha, a, lda, x, incx, beta, mut y, incy)
@@ -72,12 +116,20 @@ pub fn dgemv(trans Transpose, m int, n int, alpha f64, a []f64, lda int, x []f64
 // dger performs the rank-1 update of a matrix.
 // Input matrix is expected in row-major format (as used by la/ module and tests).
 // The Pure V backend (blas64) also expects row-major format, so no conversion is needed.
+
+// dger exposes this operation as part of the public API.
+
+// dger exposes this operation as part of the public API.
 @[inline]
 pub fn dger(m int, n int, alpha f64, x []f64, incx int, y []f64, incy int, mut a []f64, lda int) {
 	blas64.dger(m, n, alpha, x, incx, y, incy, mut a, lda)
 }
 
 // dtrsv solves a system of linear equations with a triangular matrix.
+
+// dtrsv exposes this operation as part of the public API.
+
+// dtrsv exposes this operation as part of the public API.
 @[inline]
 pub fn dtrsv(uplo Uplo, trans_a Transpose, diag Diagonal, n int, a []f64, lda int, mut x []f64, incx int) {
 	blas64.dtrsv(to_blas64_uplo(uplo), to_blas64_transpose(trans_a), to_blas64_diagonal(diag), n,
@@ -85,6 +137,10 @@ pub fn dtrsv(uplo Uplo, trans_a Transpose, diag Diagonal, n int, a []f64, lda in
 }
 
 // dtrmv performs matrix-vector operations using a triangular matrix.
+
+// dtrmv exposes this operation as part of the public API.
+
+// dtrmv exposes this operation as part of the public API.
 @[inline]
 pub fn dtrmv(uplo Uplo, trans_a Transpose, diag Diagonal, n int, a []f64, lda int, mut x []f64, incx int) {
 	blas64.dtrmv(to_blas64_uplo(uplo), to_blas64_transpose(trans_a), to_blas64_diagonal(diag), n,
@@ -92,12 +148,20 @@ pub fn dtrmv(uplo Uplo, trans_a Transpose, diag Diagonal, n int, a []f64, lda in
 }
 
 // dsyr performs a symmetric rank-1 update of a matrix.
+
+// dsyr exposes this operation as part of the public API.
+
+// dsyr exposes this operation as part of the public API.
 @[inline]
 pub fn dsyr(uplo Uplo, n int, alpha f64, x []f64, incx int, mut a []f64, lda int) {
 	blas64.dsyr(to_blas64_uplo(uplo), n, alpha, x, incx, mut a, lda)
 }
 
 // dsyr2 performs a symmetric rank-2 update of a matrix.
+
+// dsyr2 exposes this operation as part of the public API.
+
+// dsyr2 exposes this operation as part of the public API.
 @[inline]
 pub fn dsyr2(uplo Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, mut a []f64, lda int) {
 	blas64.dsyr2(to_blas64_uplo(uplo), n, alpha, x, incx, y, incy, mut a, lda)
@@ -106,6 +170,10 @@ pub fn dsyr2(uplo Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, 
 // dgemm performs matrix-matrix multiplication.
 // Input matrices are expected in row-major format (as used by la/ module and tests).
 // The Pure V backend (blas64) also expects row-major format, so no conversion is needed.
+
+// dgemm exposes this operation as part of the public API.
+
+// dgemm exposes this operation as part of the public API.
 @[inline]
 pub fn dgemm(trans_a Transpose, trans_b Transpose, m int, n int, k int, alpha f64, a []f64, lda int, b []f64, ldb int, beta f64, mut cc []f64, ldc int) {
 	blas64.dgemm(to_blas64_transpose(trans_a), to_blas64_transpose(trans_b), m, n, k, alpha, a,
@@ -113,6 +181,10 @@ pub fn dgemm(trans_a Transpose, trans_b Transpose, m int, n int, k int, alpha f6
 }
 
 // dgbmv performs a matrix-vector multiplication with a band matrix.
+
+// dgbmv exposes this operation as part of the public API.
+
+// dgbmv exposes this operation as part of the public API.
 @[inline]
 pub fn dgbmv(trans_a Transpose, m int, n int, kl int, ku int, alpha f64, a []f64, lda int, x []f64, incx int, beta f64, mut y []f64, incy int) {
 	blas64.dgbmv(to_blas64_transpose(trans_a), m, n, kl, ku, alpha, a, lda, x, incx, beta, mut y,
@@ -120,18 +192,30 @@ pub fn dgbmv(trans_a Transpose, m int, n int, kl int, ku int, alpha f64, a []f64
 }
 
 // dsymv performs a matrix-vector multiplication for a symmetric matrix.
+
+// dsymv exposes this operation as part of the public API.
+
+// dsymv exposes this operation as part of the public API.
 @[inline]
 pub fn dsymv(uplo Uplo, n int, alpha f64, a []f64, lda int, x []f64, incx int, beta f64, mut y []f64, incy int) {
 	blas64.dsymv(to_blas64_uplo(uplo), n, alpha, a, lda, x, incx, beta, mut y, incy)
 }
 
 // dsbmv performs a matrix-vector multiplication with a symmetric band matrix.
+
+// dsbmv exposes this operation as part of the public API.
+
+// dsbmv exposes this operation as part of the public API.
 @[inline]
 pub fn dsbmv(uplo Uplo, n int, k int, alpha f64, a []f64, lda int, x []f64, incx int, beta f64, mut y []f64, incy int) {
 	blas64.dsbmv(to_blas64_uplo(uplo), n, k, alpha, a, lda, x, incx, beta, mut y, incy)
 }
 
 // dtbmv performs a matrix-vector multiplication with a triangular band matrix.
+
+// dtbmv exposes this operation as part of the public API.
+
+// dtbmv exposes this operation as part of the public API.
 @[inline]
 pub fn dtbmv(uplo Uplo, trans_a Transpose, diag Diagonal, n int, k int, a []f64, lda int, mut x []f64, incx int) {
 	blas64.dtbmv(to_blas64_uplo(uplo), to_blas64_transpose(trans_a), to_blas64_diagonal(diag), n,
@@ -139,6 +223,10 @@ pub fn dtbmv(uplo Uplo, trans_a Transpose, diag Diagonal, n int, k int, a []f64,
 }
 
 // dtbsv solves a system of linear equations with a triangular band matrix.
+
+// dtbsv exposes this operation as part of the public API.
+
+// dtbsv exposes this operation as part of the public API.
 @[inline]
 pub fn dtbsv(uplo Uplo, trans_a Transpose, diag Diagonal, n int, k int, a []f64, lda int, mut x []f64, incx int) {
 	blas64.dtbsv(to_blas64_uplo(uplo), to_blas64_transpose(trans_a), to_blas64_diagonal(diag), n,
@@ -146,6 +234,10 @@ pub fn dtbsv(uplo Uplo, trans_a Transpose, diag Diagonal, n int, k int, a []f64,
 }
 
 // dtpmv performs a matrix-vector multiplication with a triangular packed matrix.
+
+// dtpmv exposes this operation as part of the public API.
+
+// dtpmv exposes this operation as part of the public API.
 @[inline]
 pub fn dtpmv(uplo Uplo, trans_a Transpose, diag Diagonal, n int, ap []f64, mut x []f64, incx int) {
 	blas64.dtpmv(to_blas64_uplo(uplo), to_blas64_transpose(trans_a), to_blas64_diagonal(diag), n,
@@ -153,6 +245,10 @@ pub fn dtpmv(uplo Uplo, trans_a Transpose, diag Diagonal, n int, ap []f64, mut x
 }
 
 // dtpsv solves a system of linear equations with a triangular packed matrix.
+
+// dtpsv exposes this operation as part of the public API.
+
+// dtpsv exposes this operation as part of the public API.
 @[inline]
 pub fn dtpsv(uplo Uplo, trans_a Transpose, diag Diagonal, n int, ap []f64, mut x []f64, incx int) {
 	blas64.dtpsv(to_blas64_uplo(uplo), to_blas64_transpose(trans_a), to_blas64_diagonal(diag), n,
@@ -160,24 +256,40 @@ pub fn dtpsv(uplo Uplo, trans_a Transpose, diag Diagonal, n int, ap []f64, mut x
 }
 
 // dspmv performs a matrix-vector multiplication with a symmetric packed matrix.
+
+// dspmv exposes this operation as part of the public API.
+
+// dspmv exposes this operation as part of the public API.
 @[inline]
 pub fn dspmv(uplo Uplo, n int, alpha f64, ap []f64, x []f64, incx int, beta f64, mut y []f64, incy int) {
 	blas64.dspmv(to_blas64_uplo(uplo), n, alpha, ap, x, incx, beta, mut y, incy)
 }
 
 // dspr performs a symmetric rank-1 update for a packed matrix.
+
+// dspr exposes this operation as part of the public API.
+
+// dspr exposes this operation as part of the public API.
 @[inline]
 pub fn dspr(uplo Uplo, n int, alpha f64, x []f64, incx int, mut ap []f64) {
 	blas64.dspr(to_blas64_uplo(uplo), n, alpha, x, incx, mut ap)
 }
 
 // dspr2 performs a symmetric rank-2 update for a packed matrix.
+
+// dspr2 exposes this operation as part of the public API.
+
+// dspr2 exposes this operation as part of the public API.
 @[inline]
 pub fn dspr2(uplo Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, mut ap []f64) {
 	blas64.dspr2(to_blas64_uplo(uplo), n, alpha, x, incx, y, incy, mut ap)
 }
 
 // dsyrk performs a symmetric rank-k update.
+
+// dsyrk exposes this operation as part of the public API.
+
+// dsyrk exposes this operation as part of the public API.
 @[inline]
 pub fn dsyrk(uplo Uplo, trans_a Transpose, n int, k int, alpha f64, a []f64, lda int, beta f64, mut c []f64, ldc int) {
 	blas64.dsyrk(to_blas64_uplo(uplo), to_blas64_transpose(trans_a), n, k, alpha, a, lda, beta, mut
@@ -185,6 +297,10 @@ pub fn dsyrk(uplo Uplo, trans_a Transpose, n int, k int, alpha f64, a []f64, lda
 }
 
 // dsyr2k performs a symmetric rank-2k update.
+
+// dsyr2k exposes this operation as part of the public API.
+
+// dsyr2k exposes this operation as part of the public API.
 @[inline]
 pub fn dsyr2k(uplo Uplo, trans_a Transpose, n int, k int, alpha f64, a []f64, lda int, b []f64, ldb int, beta f64, mut c []f64, ldc int) {
 	blas64.dsyr2k(to_blas64_uplo(uplo), to_blas64_transpose(trans_a), n, k, alpha, a, lda, b, ldb,
@@ -233,6 +349,10 @@ pub fn dtrmm(side Side, uplo Uplo, trans Transpose, diag Diagonal, m int, n int,
 }
 
 // dtrsm solves triangular system of equations with multiple right-hand sides.
+
+// dtrsm exposes this operation as part of the public API.
+
+// dtrsm exposes this operation as part of the public API.
 @[inline]
 pub fn dtrsm(side Side, uplo Uplo, trans Transpose, diag Diagonal, m int, n int, alpha f64, a []f64, lda int, mut b []f64, ldb int) {
 	k := if side == .left { m } else { n }

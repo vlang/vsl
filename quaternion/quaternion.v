@@ -2,6 +2,7 @@ module quaternion
 
 import math
 
+// Quaternion defines a public data structure for this module.
 pub struct Quaternion {
 pub:
 	w f64
@@ -10,6 +11,9 @@ pub:
 	z f64
 }
 
+// quaternion exposes this operation as part of the public API.
+
+// quaternion exposes this operation as part of the public API.
 @[inline]
 pub fn quaternion(w f64, x f64, y f64, z f64) Quaternion {
 	return Quaternion{
@@ -32,6 +36,10 @@ pub fn quaternion(w f64, x f64, y f64, z f64) Quaternion {
  * the term pass.
  *
 */
+
+// id exposes this operation as part of the public API.
+
+// id exposes this operation as part of the public API.
 @[inline]
 pub fn id() Quaternion {
 	return quaternion(1.0, 0.0, 0.0, 0.0)
@@ -45,6 +53,7 @@ pub fn id() Quaternion {
  * q = cos(angle/2) + i ( x * sin(angle/2)) + j (y * sin(angle/2)) + k ( z * sin(angle/2))
  *
 */
+// from_axis_anglef3 exposes this operation as part of the public API.
 pub fn from_axis_anglef3(angle f64, x f64, y f64, z f64) Quaternion {
 	half_angle := angle / 2.0
 	s := math.sin(half_angle)
@@ -54,6 +63,7 @@ pub fn from_axis_anglef3(angle f64, x f64, y f64, z f64) Quaternion {
 	return q.normalized()
 }
 
+// from_spherical_coords exposes this operation as part of the public API.
 pub fn from_spherical_coords(theta f64, phi f64) Quaternion {
 	half_theta := theta / 2.0
 	half_phi := phi / 2.0
@@ -64,6 +74,7 @@ pub fn from_spherical_coords(theta f64, phi f64) Quaternion {
 	return quaternion(cp * ct, -sp * st, st * cp, sp * ct)
 }
 
+// from_euler_angles exposes this operation as part of the public API.
 pub fn from_euler_angles(alpha f64, beta f64, gamma f64) Quaternion {
 	half_alpha := alpha / 2.0
 	half_beta := beta / 2.0
@@ -78,6 +89,9 @@ pub fn from_euler_angles(alpha f64, beta f64, gamma f64) Quaternion {
 		sa * sb * sc, sa * cb * cc + ca * cb * sc)
 }
 
+// copy exposes this operation as part of the public API.
+
+// copy exposes this operation as part of the public API.
 @[inline]
 pub fn (q Quaternion) copy() Quaternion {
 	return quaternion(q.w, q.x, q.y, q.z)

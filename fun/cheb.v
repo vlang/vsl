@@ -12,6 +12,7 @@ pub:
 	b     f64   // upper interval point
 }
 
+// eval_e exposes this operation as part of the public API.
 pub fn (cs ChebSeries) eval_e(x f64) (f64, f64) {
 	mut d := 0.0
 	mut dd := 0.0

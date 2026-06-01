@@ -1,5 +1,6 @@
 module errors
 
+// ErrorCode lists the supported public values for this module.
 pub enum ErrorCode {
 	// success
 	success = 0

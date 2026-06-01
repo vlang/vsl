@@ -13,6 +13,9 @@ pub:
 	len i64
 }
 
+// IntIterParams defines a public data structure for this module.
+
+// IntIterParams defines a public data structure for this module.
 @[params]
 pub struct IntIterParams {
 pub:
@@ -70,6 +73,9 @@ pub:
 	len i64
 }
 
+// FloatIterParams defines a public data structure for this module.
+
+// FloatIterParams defines a public data structure for this module.
 @[params]
 pub struct FloatIterParams {
 pub:
@@ -126,6 +132,9 @@ pub:
 	step f64
 }
 
+// LinearIterParams defines a public data structure for this module.
+
+// LinearIterParams defines a public data structure for this module.
 @[params]
 pub struct LinearIterParams {
 pub:
@@ -190,6 +199,9 @@ mut:
 	linear_iter LinearIter
 }
 
+// LogIterParams defines a public data structure for this module.
+
+// LogIterParams defines a public data structure for this module.
 @[params]
 pub struct LogIterParams {
 	start    f64 @[required]

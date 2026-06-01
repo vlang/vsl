@@ -5,6 +5,10 @@ import vsl.plot
 import vsl.util
 
 // LinReg implements a linear regression model
+
+// LinReg defines a public data structure for this module.
+
+// LinReg defines a public data structure for this module.
 @[heap]
 pub struct LinReg {
 mut:

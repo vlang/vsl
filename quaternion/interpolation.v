@@ -2,6 +2,7 @@ module quaternion
 
 import math
 
+// lerp exposes this operation as part of the public API.
 pub fn (start Quaternion) lerp(end Quaternion, tau f64) Quaternion {
 	// if tau is 0, return start
 	if tau == 0.0 {
@@ -18,10 +19,12 @@ pub fn (start Quaternion) lerp(end Quaternion, tau f64) Quaternion {
 		f2 * end.y, f1 * start.z + f2 * end.z)
 }
 
+// nlerp exposes this operation as part of the public API.
 pub fn (start Quaternion) nlerp(end Quaternion, tau f64) Quaternion {
 	return start.lerp(end, tau).normalized()
 }
 
+// slerp exposes this operation as part of the public API.
 pub fn (start Quaternion) slerp(end Quaternion, tau f64) Quaternion {
 	return if start.rotor_chordal_distance(end) <= math.sqrt2 {
 		end.divide(start).scalar_pow(tau).multiply(start)
@@ -30,6 +33,7 @@ pub fn (start Quaternion) slerp(end Quaternion, tau f64) Quaternion {
 	}
 }
 
+// squad exposes this operation as part of the public API.
 pub fn (qi Quaternion) squad(taui f64, ai Quaternion, bip1 Quaternion, qip1 Quaternion) Quaternion {
 	return qi.slerp(qip1, taui).slerp(ai.slerp(bip1, taui), 2.0 * taui * (1.0 - taui))
 }

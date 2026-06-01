@@ -13,6 +13,10 @@ pub enum CriterionType {
 }
 
 // TreeNode represents a node in the decision tree
+
+// TreeNode defines a public data structure for this module.
+
+// TreeNode defines a public data structure for this module.
 @[heap]
 pub struct TreeNode {
 mut:
@@ -26,6 +30,10 @@ mut:
 }
 
 // DecisionTree implements a decision tree classifier/regressor (Observer of Data)
+
+// DecisionTree defines a public data structure for this module.
+
+// DecisionTree defines a public data structure for this module.
 @[heap]
 pub struct DecisionTree {
 mut:

@@ -3,6 +3,7 @@ module lapack64
 import math
 import vsl.blas
 
+// dlarfg exposes this operation as part of the public API.
 pub fn dlarfg(n int, alpha f64, mut x []f64, incx int) (f64, f64) {
 	if n < 0 {
 		panic(n_lt0)

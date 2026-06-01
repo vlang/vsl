@@ -3,9 +3,14 @@ module gm
 import math
 import vsl.errors
 
+// xdelzero is a public constant used by this module.
 pub const xdelzero = 1e-10 // minimum distance between coordinates; i.e. xmax[i]-xmin[i] mininum
 
 // BinEntry holds data of an entry to bin
+
+// BinEntry defines a public data structure for this module.
+
+// BinEntry defines a public data structure for this module.
 @[heap]
 pub struct BinEntry {
 pub mut:
@@ -15,6 +20,10 @@ pub mut:
 }
 
 // Bin defines one bin in Bins (holds entries for search)
+
+// Bin defines a public data structure for this module.
+
+// Bin defines a public data structure for this module.
 @[heap]
 pub struct Bin {
 pub mut:
@@ -23,6 +32,10 @@ pub mut:
 }
 
 // Bins implements a set of bins holding entries and is used to fast search entries by given coordinates.
+
+// Bins defines a public data structure for this module.
+
+// Bins defines a public data structure for this module.
 @[heap]
 pub struct Bins {
 mut:
@@ -168,6 +181,7 @@ pub fn (mut o Bins) find_closest(x []f64) (int, f64) {
 	return id_closest, sq_dist_min
 }
 
+// PointsDiffFn defines a public type used by this module.
 pub type PointsDiffFn = fn (is_old int, x_new []f64) bool
 
 // find_closest_and_append finds closest point and, if not found, append to bins with a new Id

@@ -128,6 +128,7 @@ pub fn print_vs_numpy_table_header() {
 	println('-------------------------+--------------+--------------+----------')
 }
 
+// gflops_gemm_ms exposes this operation as part of the public API.
 pub fn gflops_gemm_ms(m int, n int, k int, time_ms f64) f64 {
 	if time_ms <= 0.0 {
 		return 0.0
@@ -137,6 +138,7 @@ pub fn gflops_gemm_ms(m int, n int, k int, time_ms f64) f64 {
 	return ops / sec / 1_000_000_000.0
 }
 
+// gflops_gemv_ms exposes this operation as part of the public API.
 pub fn gflops_gemv_ms(m int, n int, time_ms f64) f64 {
 	if time_ms <= 0.0 {
 		return 0.0
@@ -146,10 +148,12 @@ pub fn gflops_gemv_ms(m int, n int, time_ms f64) f64 {
 	return ops / sec / 1_000_000_000.0
 }
 
+// print_vs_numpy_row exposes this operation as part of the public API.
 pub fn print_vs_numpy_row(name string, size string, time_ms f64, extra string) {
 	println('${name} | ${size} | ${time_ms} | ${extra}')
 }
 
+// mean_time_ms exposes this operation as part of the public API.
 pub fn mean_time_ms(mut samples []f64) f64 {
 	if samples.len == 0 {
 		return 0.0

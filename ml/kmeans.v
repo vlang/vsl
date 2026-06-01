@@ -6,6 +6,10 @@ import vsl.la
 import vsl.plot
 
 // Kmeans implements the K-means model (Observer of Data)
+
+// Kmeans defines a public data structure for this module.
+
+// Kmeans defines a public data structure for this module.
 @[heap]
 pub struct Kmeans {
 mut:
@@ -120,6 +124,7 @@ pub fn (mut o Kmeans) compute_centroids() {
 	}
 }
 
+// TrainConfig defines a public data structure for this module.
 pub struct TrainConfig {
 pub:
 	epochs          int

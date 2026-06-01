@@ -3,6 +3,7 @@ module prime
 import math
 // is_prime returns if an int is prime (deterministically)
 
+// is_prime exposes this operation as part of the public API.
 pub fn is_prime(p int) bool {
 	if p < 2 || p % 2 == 0 {
 		return p == 2

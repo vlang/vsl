@@ -2,14 +2,17 @@ module quaternion
 
 import math
 
+// rotor_intrinsic_distance exposes this operation as part of the public API.
 pub fn (q1 Quaternion) rotor_intrinsic_distance(q2 Quaternion) f64 {
 	return 2.0 * q1.divide(q2).log().abs()
 }
 
+// rotor_chordal_distance exposes this operation as part of the public API.
 pub fn (q1 Quaternion) rotor_chordal_distance(q2 Quaternion) f64 {
 	return q1.subtract(q2).abs()
 }
 
+// rotation_intrinsic_distance exposes this operation as part of the public API.
 pub fn (q1 Quaternion) rotation_intrinsic_distance(q2 Quaternion) f64 {
 	return if q1.rotor_chordal_distance(q2) <= math.sqrt2 {
 		2.0 * q1.divide(q2).log().abs()
@@ -18,6 +21,7 @@ pub fn (q1 Quaternion) rotation_intrinsic_distance(q2 Quaternion) f64 {
 	}
 }
 
+// rotation_chordal_distance exposes this operation as part of the public API.
 pub fn (q1 Quaternion) rotation_chordal_distance(q2 Quaternion) f64 {
 	return if q1.rotor_chordal_distance(q2) <= math.sqrt2 {
 		q1.subtract(q2).abs()

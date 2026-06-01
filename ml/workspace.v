@@ -8,6 +8,10 @@ import vsl.la
 //
 // NOTE: Stat is an Observer of Data; thus, data.notify_update() will recompute stat
 //
+
+// Stat defines a public data structure for this module.
+
+// Stat defines a public data structure for this module.
 @[heap]
 pub struct Stat[T] {
 pub mut:

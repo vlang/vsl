@@ -16,6 +16,7 @@ import vsl.errors
 
 // All credits go to the respective authors of NLTK's LancasterStemmer implementation.
 
+// LancasterStemmer defines a public data structure for this module.
 pub struct LancasterStemmer {
 mut:
 	rule_map map[string][]string

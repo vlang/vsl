@@ -3,6 +3,7 @@ module lapack64
 import math
 import vsl.blas
 
+// dpotrf exposes this operation as part of the public API.
 pub fn dpotrf(ul blas.Uplo, n int, mut a []f64, lda int) bool {
 	if ul != .upper && ul != .lower {
 		panic(bad_uplo)

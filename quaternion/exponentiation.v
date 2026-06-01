@@ -2,6 +2,7 @@ module quaternion
 
 import math
 
+// scalar_pow exposes this operation as part of the public API.
 pub fn (q Quaternion) scalar_pow(s f64) Quaternion { // Unlike the quaternion^quaternion power, this is unambiguous.
 	if s != 0 { // math.log(s)=-inf
 		return if q.is_zero() {
@@ -16,6 +17,7 @@ pub fn (q Quaternion) scalar_pow(s f64) Quaternion { // Unlike the quaternion^qu
 	return q.scalar_multiply(math.log(s)).exp()
 }
 
+// pow exposes this operation as part of the public API.
 pub fn (q Quaternion) pow(p Quaternion) Quaternion { // Note that the following is just my chosen definition of the power. // Other definitions may disagree due to non-commutativity.
 	if q.is_zero() { // log(q)=-inf
 		return if p.is_zero() {
@@ -27,6 +29,7 @@ pub fn (q Quaternion) pow(p Quaternion) Quaternion { // Note that the following 
 	return q.log().multiply(p).exp()
 }
 
+// exp exposes this operation as part of the public API.
 pub fn (q Quaternion) exp() Quaternion {
 	vnorm := math.sqrt(q.x * q.x + q.y * q.y + q.z * q.z)
 	if vnorm > q_epsilon {
@@ -38,6 +41,7 @@ pub fn (q Quaternion) exp() Quaternion {
 	}
 }
 
+// log exposes this operation as part of the public API.
 pub fn (q Quaternion) log() Quaternion {
 	b := math.sqrt(q.x * q.x + q.y * q.y + q.z * q.z)
 	if math.abs(b) <= q_epsilon * math.abs(q.w) {
@@ -58,6 +62,7 @@ pub fn (q Quaternion) log() Quaternion {
 	}
 }
 
+// sqrt exposes this operation as part of the public API.
 pub fn (q Quaternion) sqrt() Quaternion {
 	qabs := q.abs()
 	if math.abs(1.0 + q.w / qabs) < q_epsilon * qabs {

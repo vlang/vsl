@@ -3,6 +3,10 @@ module preprocessing
 import vsl.errors
 
 // LabelEncoder encodes categorical labels with values between 0 and n_classes-1.
+
+// LabelEncoder defines a public data structure for this module.
+
+// LabelEncoder defines a public data structure for this module.
 @[heap]
 pub struct LabelEncoder {
 mut:
@@ -75,6 +79,10 @@ pub fn (e &LabelEncoder) inverse_transform(y []int) ![]string {
 }
 
 // OneHotEncoder encodes categorical features as a one-hot (or dummy) numeric array.
+
+// OneHotEncoder defines a public data structure for this module.
+
+// OneHotEncoder defines a public data structure for this module.
 @[heap]
 pub struct OneHotEncoder {
 mut:
@@ -177,6 +185,10 @@ pub fn (e &OneHotEncoder) get_feature_names(input_names []string) ![]string {
 }
 
 // OrdinalEncoder encodes categorical features as ordinal integers.
+
+// OrdinalEncoder defines a public data structure for this module.
+
+// OrdinalEncoder defines a public data structure for this module.
 @[heap]
 pub struct OrdinalEncoder {
 mut:

@@ -34,6 +34,7 @@ fn central_deriv(f func.Fn, x f64, h f64) (f64, f64, f64) {
 	return result, abserr_trunc, abserr_round
 }
 
+// central exposes this operation as part of the public API.
 pub fn central(f func.Fn, x f64, h f64) (f64, f64) {
 	r_0, round, trunc := central_deriv(f, x, h)
 	mut error := round + trunc
@@ -86,6 +87,7 @@ fn forward_deriv(f func.Fn, x f64, h f64) (f64, f64, f64) {
 	return result, abserr_trunc, abserr_round
 }
 
+// forward exposes this operation as part of the public API.
 pub fn forward(f func.Fn, x f64, h f64) (f64, f64) {
 	r_0, round, trunc := forward_deriv(f, x, h)
 	mut error := round + trunc
@@ -111,6 +113,7 @@ pub fn forward(f func.Fn, x f64, h f64) (f64, f64) {
 	return result, error
 }
 
+// backward exposes this operation as part of the public API.
 pub fn backward(f func.Fn, x f64, h f64) (f64, f64) {
 	return forward(f, x, -h)
 }
@@ -125,6 +128,7 @@ pub fn backward(f func.Fn, x f64, h f64) (f64, f64) {
 *
 * @return        A tuple containing the value of the partial derivative and the estimated error.
 */
+// partial exposes this operation as part of the public API.
 pub fn partial(f fn ([]f64) f64, x []f64, variable int, h f64) (f64, f64) {
 	if variable < 0 || variable >= x.len {
 		errors.vsl_panic('Invalid variable index', .efailed)

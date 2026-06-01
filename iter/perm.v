@@ -3,6 +3,7 @@ module iter
 import vsl.util
 import math
 
+// PermutationsIter defines a public data structure for this module.
 pub struct PermutationsIter {
 mut:
 	pos    u64

@@ -6,6 +6,7 @@ import math
 import vsl.errors
 import vsl.util
 
+// ShortestPaths lists the supported public values for this module.
 pub enum ShortestPaths {
 	fw       // FW: Floyd-Warshall method
 	dijkstra // Dijkstra all-pairs (repeated single-source)
@@ -13,6 +14,10 @@ pub enum ShortestPaths {
 }
 
 // Graph defines a graph structure
+
+// Graph defines a public data structure for this module.
+
+// Graph defines a public data structure for this module.
 @[heap]
 pub struct Graph {
 pub:
@@ -92,6 +97,7 @@ pub fn (g &Graph) get_edge(i int, j int) !int {
  *  Input:
  *   method -- FW: Floyd-Warshall method
 */
+// shortest_paths exposes this operation as part of the public API.
 pub fn (g &Graph) shortest_paths(method ShortestPaths) Graph {
 	g2 := g.calc_dist()
 	mut dist := g2.dist.clone()

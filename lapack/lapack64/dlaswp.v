@@ -3,6 +3,7 @@ module lapack64
 import math
 import vsl.blas
 
+// dlaswp exposes this operation as part of the public API.
 pub fn dlaswp(n int, mut a []f64, lda int, k1 int, k2 int, mut ipiv []int, incx int) {
 	if n < 0 {
 		panic(n_lt0)

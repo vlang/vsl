@@ -10,6 +10,7 @@ pub fn relu_gpu(ctx &ComputeContext, dst &vulkan.GpuBuffer, src &vulkan.GpuBuffe
 	return error(@FN + ': compile with -d vulkan')
 }
 
+// sigmoid_gpu exposes this operation as part of the public API.
 pub fn sigmoid_gpu(ctx &ComputeContext, dst &vulkan.GpuBuffer, src &vulkan.GpuBuffer) ! {
 	_ = ctx
 	_ = dst

@@ -12,6 +12,7 @@ pub:
 	d_weight []f64
 }
 
+// conv2d_backward_cuda exposes this operation as part of the public API.
 pub fn conv2d_backward_cuda(dev &cuda.CudaDevice, grad_out []f64, input []f64, kernel []f64, batch int, in_h int, in_w int, in_ch int, out_ch int, k_h int, k_w int, stride_h int, stride_w int) !Conv2DBwdFlat {
 	if isnil(dev.cudnn) {
 		return error('conv2d_backward_cuda: cuDNN handle not available')

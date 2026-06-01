@@ -189,6 +189,10 @@ fn C.LAPACKE_zlange(matrix_layout int, norm u8, m int, n int, a voidptr, lda int
 // ========================================
 
 // dgesv - Direct wrapper for LAPACKE_dgesv (flat array interface)
+
+// dgesv exposes this operation as part of the public API.
+
+// dgesv exposes this operation as part of the public API.
 @[inline]
 pub fn dgesv(n int, nrhs int, mut a []f64, lda int, mut ipiv []int, mut b []f64, ldb int) int {
 	unsafe {
@@ -198,6 +202,10 @@ pub fn dgesv(n int, nrhs int, mut a []f64, lda int, mut ipiv []int, mut b []f64,
 }
 
 // dgesvd - Direct wrapper for LAPACKE_dgesvd (flat array interface)
+
+// dgesvd exposes this operation as part of the public API.
+
+// dgesvd exposes this operation as part of the public API.
 @[inline]
 pub fn dgesvd(jobu SVDJob, jobvt SVDJob, m int, n int, mut a []f64, lda int, s []f64, mut u []f64, ldu int, mut vt []f64, ldvt int, superb []f64) int {
 	unsafe {
@@ -207,6 +215,10 @@ pub fn dgesvd(jobu SVDJob, jobvt SVDJob, m int, n int, mut a []f64, lda int, s [
 }
 
 // dpotrf - Direct wrapper for LAPACKE_dpotrf (flat array interface)
+
+// dpotrf exposes this operation as part of the public API.
+
+// dpotrf exposes this operation as part of the public API.
 @[inline]
 pub fn dpotrf(uplo blas.Uplo, n int, mut a []f64, lda int) int {
 	uplo_char := match uplo {
@@ -221,6 +233,10 @@ pub fn dpotrf(uplo blas.Uplo, n int, mut a []f64, lda int) int {
 }
 
 // dgeev - Direct wrapper for LAPACKE_dgeev (flat array interface)
+
+// dgeev exposes this operation as part of the public API.
+
+// dgeev exposes this operation as part of the public API.
 @[inline]
 pub fn dgeev(jobvl LeftEigenVectorsJob, jobvr RightEigenVectorsJob, n int, mut a []f64, lda int, mut wr []f64, mut wi []f64, mut vl []f64, ldvl int, mut vr []f64, ldvr int) int {
 	unsafe {
@@ -230,6 +246,10 @@ pub fn dgeev(jobvl LeftEigenVectorsJob, jobvr RightEigenVectorsJob, n int, mut a
 }
 
 // dsyev - Direct wrapper for LAPACKE_dsyev (flat array interface)
+
+// dsyev exposes this operation as part of the public API.
+
+// dsyev exposes this operation as part of the public API.
 @[inline]
 pub fn dsyev(jobz EigenVectorsJob, uplo blas.Uplo, n int, mut a []f64, lda int, mut w []f64) int {
 	jobz_char := match jobz {
@@ -250,6 +270,10 @@ pub fn dsyev(jobz EigenVectorsJob, uplo blas.Uplo, n int, mut a []f64, lda int, 
 }
 
 // dgeqrf - Direct wrapper for LAPACKE_dgeqrf (flat array interface)
+
+// dgeqrf exposes this operation as part of the public API.
+
+// dgeqrf exposes this operation as part of the public API.
 @[inline]
 pub fn dgeqrf(m int, n int, mut a []f64, lda int, mut tau []f64) int {
 	unsafe {
@@ -258,6 +282,10 @@ pub fn dgeqrf(m int, n int, mut a []f64, lda int, mut tau []f64) int {
 }
 
 // dorgqr - Direct wrapper for LAPACKE_dorgqr (flat array interface)
+
+// dorgqr exposes this operation as part of the public API.
+
+// dorgqr exposes this operation as part of the public API.
 @[inline]
 pub fn dorgqr(m int, n int, k int, mut a []f64, lda int, tau []f64) int {
 	unsafe {
@@ -266,6 +294,10 @@ pub fn dorgqr(m int, n int, k int, mut a []f64, lda int, tau []f64) int {
 }
 
 // dgetrf - Direct wrapper for LAPACKE_dgetrf (flat array interface)
+
+// dgetrf exposes this operation as part of the public API.
+
+// dgetrf exposes this operation as part of the public API.
 @[inline]
 pub fn dgetrf(m int, n int, mut a []f64, lda int, mut ipiv []int) int {
 	unsafe {
@@ -274,6 +306,10 @@ pub fn dgetrf(m int, n int, mut a []f64, lda int, mut ipiv []int) int {
 }
 
 // dgetri - Direct wrapper for LAPACKE_dgetri (flat array interface)
+
+// dgetri exposes this operation as part of the public API.
+
+// dgetri exposes this operation as part of the public API.
 @[inline]
 pub fn dgetri(n int, mut a []f64, lda int, mut ipiv []int) int {
 	unsafe {

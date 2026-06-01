@@ -50,6 +50,7 @@ pub fn same(a f64, b f64) bool {
 	return a == b || (math.is_nan(a) && math.is_nan(b))
 }
 
+// tolerance exposes this operation as part of the public API.
 pub fn tolerance(a f64, b f64, tol f64) bool {
 	mut e_ := tol
 	// Multiplying by e_ here can underflow denormal values to zero.
@@ -73,6 +74,7 @@ pub fn tolerance(a f64, b f64, tol f64) bool {
 	return d < e_
 }
 
+// arrays_tolerance exposes this operation as part of the public API.
 pub fn arrays_tolerance(data1 []f64, data2 []f64, tol f64) bool {
 	if data1.len != data2.len {
 		return false
@@ -85,18 +87,22 @@ pub fn arrays_tolerance(data1 []f64, data2 []f64, tol f64) bool {
 	return true
 }
 
+// close exposes this operation as part of the public API.
 pub fn close(a f64, b f64) bool {
 	return tolerance(a, b, 1e-14)
 }
 
+// veryclose exposes this operation as part of the public API.
 pub fn veryclose(a f64, b f64) bool {
 	return tolerance(a, b, 4e-16)
 }
 
+// soclose exposes this operation as part of the public API.
 pub fn soclose(a f64, b f64, e_ f64) bool {
 	return tolerance(a, b, e_)
 }
 
+// alike exposes this operation as part of the public API.
 pub fn alike(a f64, b f64) bool {
 	if math.is_nan(a) && math.is_nan(b) {
 		return true
@@ -225,6 +231,7 @@ pub fn is_valid_inc_guard(vec []f64, gd_val f64, inc int, gd_ln int) bool {
 	return true
 }
 
+// random_slice exposes this operation as part of the public API.
 pub fn random_slice(n int, inc int) []f64 {
 	inc_ := if inc < 0 { -inc } else { inc }
 	mut x := []f64{len: (n - 1) * inc_ + 1}

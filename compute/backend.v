@@ -64,14 +64,17 @@ mut:
 	strict bool
 }
 
+// name exposes this operation as part of the public API.
 pub fn (c &CPUBackend) name() string {
 	return 'cpu'
 }
 
+// supports exposes this operation as part of the public API.
 pub fn (c &CPUBackend) supports(op string) bool {
 	return op in supported_ops
 }
 
+// gemm exposes this operation as part of the public API.
 pub fn (c &CPUBackend) gemm(a_data []f64, b_data []f64, m int, n int, k int) ![]f64 {
 	if a_data.len != m * k {
 		return error('CPUBackend.gemm: expected a len=${m * k}, got ${a_data.len}')
@@ -82,6 +85,7 @@ pub fn (c &CPUBackend) gemm(a_data []f64, b_data []f64, m int, n int, k int) ![]
 	return gemm_cpu_f64(a_data, b_data, m, n, k)
 }
 
+// gemv exposes this operation as part of the public API.
 pub fn (c &CPUBackend) gemv(a []f64, x []f64, m int, n int) ![]f64 {
 	if a.len != m * n {
 		return error('CPUBackend.gemv: expected a len=${m * n}, got ${a.len}')
@@ -92,50 +96,62 @@ pub fn (c &CPUBackend) gemv(a []f64, x []f64, m int, n int) ![]f64 {
 	return gemv_cpu_f64(a, x, m, n)
 }
 
+// relu exposes this operation as part of the public API.
 pub fn (c &CPUBackend) relu(x []f64) ![]f64 {
 	return relu_cpu_f64(x)
 }
 
+// sigmoid exposes this operation as part of the public API.
 pub fn (c &CPUBackend) sigmoid(x []f64) ![]f64 {
 	return sigmoid_cpu_f64(x)
 }
 
+// tanh exposes this operation as part of the public API.
 pub fn (c &CPUBackend) tanh(x []f64) ![]f64 {
 	return tanh_cpu_f64(x)
 }
 
+// add_vec exposes this operation as part of the public API.
 pub fn (c &CPUBackend) add_vec(a_data []f64, b_data []f64) ![]f64 {
 	return add_vec_cpu_f64(a_data, b_data)
 }
 
+// mul_vec exposes this operation as part of the public API.
 pub fn (c &CPUBackend) mul_vec(a_data []f64, b_data []f64) ![]f64 {
 	return mul_vec_cpu_f64(a_data, b_data)
 }
 
+// add_scalar exposes this operation as part of the public API.
 pub fn (c &CPUBackend) add_scalar(x []f64, s f64) ![]f64 {
 	return add_scalar_cpu_f64(x, s)
 }
 
+// mul_scalar exposes this operation as part of the public API.
 pub fn (c &CPUBackend) mul_scalar(x []f64, s f64) ![]f64 {
 	return mul_scalar_cpu_f64(x, s)
 }
 
+// softmax exposes this operation as part of the public API.
 pub fn (c &CPUBackend) softmax(x []f64) ![]f64 {
 	return softmax_cpu_f64(x)
 }
 
+// layernorm exposes this operation as part of the public API.
 pub fn (c &CPUBackend) layernorm(x []f64, gamma []f64, beta []f64) ![]f64 {
 	return layernorm_cpu_f64(x, gamma, beta)
 }
 
+// conv2d exposes this operation as part of the public API.
 pub fn (c &CPUBackend) conv2d(input []f64, kernel []f64, batch int, in_h int, in_w int, in_ch int, out_ch int, k_h int, k_w int, stride_h int, stride_w int) ![]f64 {
 	return error('CPUBackend.conv2d: not implemented')
 }
 
+// to_internal exposes this operation as part of the public API.
 pub fn (c &CPUBackend) to_internal(data []f64, rows int, cols int) ![]f64 {
 	return data // row-major = identity for CPU
 }
 
+// from_internal exposes this operation as part of the public API.
 pub fn (c &CPUBackend) from_internal(data []f64, rows int, cols int) ![]f64 {
 	return data // row-major = identity for CPU
 }
