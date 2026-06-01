@@ -93,6 +93,45 @@ jobs:
           v wipe-cache
           ~/.vmodules/vsl/bin/test ${{ matrix.flags }} --use-vulkan
 
+  run-windows-smoke:
+    name: Windows compute smoke
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout VSL
+        uses: actions/checkout@v4
+        with:
+          path: vsl
+
+      - name: Setup V
+        uses: vlang/setup-v@v1.3
+        with:
+          check-latest: true
+
+      - name: V doctor
+        run: v doctor
+
+      - name: Move VSL source code to V Modules
+        shell: bash
+        run: |
+          mkdir -p ~/.vmodules
+          mv ./vsl ~/.vmodules/vsl
+
+      - name: Run Windows compute smoke
+        shell: bash
+        env:
+          VJOBS: '1'
+        run: |
+          cat > "$RUNNER_TEMP/vsl_windows_smoke.v" <<'EOF'
+          import vsl.compute
+
+          fn main() {
+            assert compute.op_supported(.cpu, 'gemm')
+          }
+          EOF
+          v run "$RUNNER_TEMP/vsl_windows_smoke.v"
+          v test ~/.vmodules/vsl/compute/context_test.v
+
   run-tests-on-cuda:
     # CUDA tests require a machine with NVIDIA GPU + CUDA Toolkit.
     # Only runs on main branch pushes (not PRs from forks — no GPU access in CI).

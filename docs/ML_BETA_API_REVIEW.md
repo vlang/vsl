@@ -71,8 +71,9 @@ For the V language ML beta, the important VSL public surface is:
 - `op_supported`, `ComputeBackend.supports`, and README/backend status tables
   should be kept in sync. Some backend support lists differ in detail.
 - `CPUBackend.conv2d` is declared through the interface but currently returns a
-  not-implemented error. User docs should not imply that CPU `compute.conv2d` is
-  available through this path.
+  not-implemented error. The beta support tables should keep CPU `conv2d`
+  marked unsupported while CUDA/Vulkan/VCL advertise their backend-specific
+  implementations.
 - Vulkan operations should consistently state expected element type (`f32`),
   buffer sizes, row-major layout, and synchronous dispatch behavior.
 - CUDA operations should distinguish cuBLAS/cuDNN-backed paths from plain CUDA
@@ -104,4 +105,8 @@ as:
    kernels and fused optimizer paths.
 3. Internal or low-level: generated bindings, backend pipeline plumbing, and
    public symbols that exist for interop or conditional compilation.
+
+Windows, macOS BLAS, VCL runtime availability, multi-GPU, memory pooling, and
+zero-copy improvements are validation or post-beta tracks unless the release
+announcement explicitly narrows platform support.
 

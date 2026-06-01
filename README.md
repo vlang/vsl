@@ -132,11 +132,16 @@ The recommended integration point for downstream libraries is `vsl.compute`.
 
 ### Backend Status
 
+For the V ML beta, the stable integration contract is the portable scientific
+and `vsl.compute` surface used by downstream libraries. CUDA, Vulkan, and VCL
+remain opt-in acceleration backends; they are valuable for early adopters, but
+are not required for the default CPU beta path.
+
 | Backend | Build flag | Highlights | Downstream use |
 |---------|------------|------------|----------------|
-| Pure V | none | Portable BLAS/LAPACK-style routines and scientific modules | Default path |
+| Pure V | none | Portable BLAS/LAPACK-style routines, `gemm`/`gemv`, elementwise ops, softmax, LayerNorm | Default path |
 | C BLAS/LAPACK | `-d vsl_blas_cblas`, `-d vsl_lapack_lapacke` | Optimized CPU kernels | Heavy linear algebra |
-| OpenCL/VCL | module-specific | Cross-vendor GPU kernels and examples | Experimental GPU path |
+| OpenCL/VCL | module-specific | Cross-vendor GPU kernels and examples; not a beta gate | Experimental GPU path |
 | CUDA | `-d cuda` | cuBLAS/cuDNN GEMM, activations, softmax, Conv2D, LayerNorm | VTL CUDA training |
 | Vulkan | `-d vulkan` | GEMM, Conv2D im2col, elementwise ops, fused Adam shader | VTL f32 Vulkan training |
 

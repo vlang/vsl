@@ -20,18 +20,27 @@ Repo roadmap: [ROADMAP.md](../ROADMAP.md) · CUDA: [cuda/README.md](../cuda/READ
 **VTL (downstream):** CUDA Phases 1–4, f32 autograd/training, Vulkan Linear,
 Conv2D, ReLU/Sigmoid, and Adam are wired into the `nn_cifar10_vulkan` smoke.
 
-## Critical path (open)
+## Beta gate (open)
 
 | Priority | Issue | Topic |
 |----------|-------|--------|
 | P1 | [#225](https://github.com/vlang/vsl/issues/225) | Windows build |
+| P2 | [#91](https://github.com/vlang/vsl/issues/91) | BLAS on macOS validation |
+
+## Post-beta tracking
+
+| Priority | Issue | Topic |
+|----------|-------|--------|
 | P1 | Phase H | Multi-GPU (`device_id`, data parallelism) |
 | P1 | Phase I | GPU memory pool / zero-copy |
 | P2 | [#226](https://github.com/vlang/vsl/issues/226) | VCL examples |
-| P2 | [#91](https://github.com/vlang/vsl/issues/91) | BLAS on macOS |
 | P2 | — | CUDA variants of `benchmarks/vs_numpy/` in CI |
 | P2 | — | Extended Vulkan↔CUDA numerical cross-check |
 | P2 | — | Vulkan persistent memory / reduced host sync for VTL training |
+
+The ML beta uses VSL as a scientific and compute foundation. The stable beta
+contract is the portable CPU/scientific surface plus `vsl.compute`; CUDA,
+Vulkan, and VCL are opt-in experimental accelerators.
 
 ## Local development
 

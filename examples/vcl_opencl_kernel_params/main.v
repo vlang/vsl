@@ -21,12 +21,18 @@ __kernel void param_sizes(__global int* data, char size0, uchar size1, short siz
 
 fn main() {
 	// get all devices if you want
-	devices := vcl.get_devices(vcl.DeviceType.cpu)!
+	devices := vcl.get_devices(vcl.DeviceType.cpu) or {
+		eprintln('VCL example skipped: ${err}')
+		return
+	}
 	println('Devices: ${devices}')
 
 	// do not create platforms/devices/contexts/queues/...
 	// just get the device
-	mut device := vcl.get_default_device()!
+	mut device := vcl.get_default_device() or {
+		eprintln('VCL example skipped: ${err}')
+		return
+	}
 	defer {
 		device.release() or { panic(err) }
 	}

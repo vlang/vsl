@@ -29,7 +29,7 @@ fn run_kernel(kernel_name string) ! {
 		return err
 	}
 
-	mut device := vcl.get_default_device()!
+	mut device := vcl.get_default_device() or { return error('VCL example skipped: ${err}') }
 	defer {
 		device.release() or { panic(err) }
 	}
@@ -64,6 +64,9 @@ fn main() {
 	os.mkdir_all(output_dir)!
 
 	for kernel in kernels {
-		run_kernel(kernel)!
+		run_kernel(kernel) or {
+			eprintln(err)
+			return
+		}
 	}
 }

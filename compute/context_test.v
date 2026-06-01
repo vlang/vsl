@@ -5,7 +5,22 @@ import math
 fn test_op_supported_cpu() {
 	assert op_supported(.cpu, 'gemm')
 	assert op_supported(.cpu, 'relu')
+	assert op_supported(.cpu, 'softmax')
+	assert op_supported(.cpu, 'layernorm')
+	assert !op_supported(.cpu, 'conv2d')
 	assert !op_supported(.auto, 'gemm')
+}
+
+fn test_op_supported_backend_tables_match_beta_contract() {
+	assert op_supported(.cuda, 'conv2d')
+	assert op_supported(.vulkan, 'mul_vec')
+}
+
+fn test_cpu_backend_support_table() {
+	cpu := new_cpu_backend()
+	assert cpu.supports('gemm')
+	assert cpu.supports('layernorm')
+	assert !cpu.supports('conv2d')
 }
 
 fn test_cpu_gemm_dispatch() {

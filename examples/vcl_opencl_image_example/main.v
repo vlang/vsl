@@ -14,7 +14,10 @@ fn main() {
 
 	// do not create platforms/devices/contexts/queues/...
 	// just get the device
-	mut device := vcl.get_default_device()!
+	mut device := vcl.get_default_device() or {
+		eprintln('VCL example skipped: ${err}')
+		return
+	}
 	defer {
 		device.release() or { panic(err) }
 	}

@@ -236,6 +236,9 @@ export VCL_LIBOPENCL_PATH=/usr/lib/libOpenCL.so:/opt/intel/opencl/lib64/libOpenC
 - Install GPU drivers and OpenCL runtime
 - Check `clinfo` output for available platforms
 - Verify OpenCL library is in system path
+- VCL examples now print a skip message when no platform/device is available.
+  Missing OpenCL runtime is not a V ML beta blocker; VCL remains an opt-in
+  experimental accelerator path.
 
 **Kernel compilation errors**
 - Check OpenCL C syntax (different from standard C)
