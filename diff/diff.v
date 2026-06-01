@@ -4,6 +4,7 @@ import vsl.func
 import vsl.internal.prec
 import math
 
+// backward exposes this operation as part of the public API.
 pub fn backward(f func.Fn, x f64) (f64, f64) {
 	/*
 	Construct a divided difference table with a fairly large step
@@ -43,6 +44,7 @@ pub fn backward(f func.Fn, x f64) (f64, f64) {
 	return (f.eval(x) - f.eval(x - h)) / h, math.abs(10.0 * a2 * h)
 }
 
+// forward exposes this operation as part of the public API.
 pub fn forward(f func.Fn, x f64) (f64, f64) {
 	/*
 	Construct a divided difference table with a fairly large step
@@ -82,6 +84,7 @@ pub fn forward(f func.Fn, x f64) (f64, f64) {
 	return (f.eval(x + h) - f.eval(x)) / h, math.abs(10.0 * a2 * h)
 }
 
+// central exposes this operation as part of the public API.
 pub fn central(f func.Fn, x f64) (f64, f64) {
 	/*
 	Construct a divided difference table with a fairly large step

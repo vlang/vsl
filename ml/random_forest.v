@@ -6,6 +6,10 @@ import vsl.plot
 import vsl.errors
 
 // RandomForest implements a Random Forest classifier/regressor (Observer of Data)
+
+// RandomForest defines a public data structure for this module.
+
+// RandomForest defines a public data structure for this module.
 @[heap]
 pub struct RandomForest {
 mut:

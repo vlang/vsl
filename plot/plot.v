@@ -14,6 +14,7 @@ pub mut:
 	layout Layout
 }
 
+// Plot.new exposes this operation as part of the public API.
 pub fn Plot.new() &Plot {
 	return &Plot{}
 }
@@ -26,24 +27,40 @@ fn (mut p Plot) add_trace[T](trace T) Plot {
 }
 
 // scatter adds a scatter trace to the plot
+
+// scatter exposes this operation as part of the public API.
+
+// scatter exposes this operation as part of the public API.
 @[inline]
 pub fn (mut p Plot) scatter(trace ScatterTrace) Plot {
 	return p.add_trace(trace)
 }
 
 // pie adds a pie trace to the plot
+
+// pie exposes this operation as part of the public API.
+
+// pie exposes this operation as part of the public API.
 @[inline]
 pub fn (mut p Plot) pie(trace PieTrace) Plot {
 	return p.add_trace(trace)
 }
 
 // heatmap adds a heatmap trace to the plot
+
+// heatmap exposes this operation as part of the public API.
+
+// heatmap exposes this operation as part of the public API.
 @[inline]
 pub fn (mut p Plot) heatmap(trace HeatmapTrace) Plot {
 	return p.add_trace(trace)
 }
 
 // surface adds a surface trace to the plot
+
+// surface exposes this operation as part of the public API.
+
+// surface exposes this operation as part of the public API.
 @[inline]
 pub fn (mut p Plot) surface(trace SurfaceTrace) Plot {
 	return p.add_trace(trace)
@@ -52,6 +69,10 @@ pub fn (mut p Plot) surface(trace SurfaceTrace) Plot {
 // scatter3d adds a scatter3d trace to the plot.
 // If the z value is a 2D array, it is flattened
 // to a 1D array
+
+// scatter3d exposes this operation as part of the public API.
+
+// scatter3d exposes this operation as part of the public API.
 @[inline]
 pub fn (mut p Plot) scatter3d(trace Scatter3DTrace) Plot {
 	mut next_trace := trace
@@ -63,18 +84,30 @@ pub fn (mut p Plot) scatter3d(trace Scatter3DTrace) Plot {
 }
 
 // bar adds a bar trace to the plot
+
+// bar exposes this operation as part of the public API.
+
+// bar exposes this operation as part of the public API.
 @[inline]
 pub fn (mut p Plot) bar(trace BarTrace) Plot {
 	return p.add_trace(trace)
 }
 
 // histogram adds a histogram trace to the plot
+
+// histogram exposes this operation as part of the public API.
+
+// histogram exposes this operation as part of the public API.
 @[inline]
 pub fn (mut p Plot) histogram(trace HistogramTrace) Plot {
 	return p.add_trace(trace)
 }
 
 // line adds a line trace to the plot
+
+// line exposes this operation as part of the public API.
+
+// line exposes this operation as part of the public API.
 @[inline]
 pub fn (mut p Plot) line(trace LineTrace) Plot {
 	mut line_trace := trace
@@ -86,84 +119,140 @@ pub fn (mut p Plot) line(trace LineTrace) Plot {
 }
 
 // box adds a box trace to the plot
+
+// box exposes this operation as part of the public API.
+
+// box exposes this operation as part of the public API.
 @[inline]
 pub fn (mut p Plot) box(trace BoxTrace) Plot {
 	return p.add_trace(trace)
 }
 
 // violin adds a violin trace to the plot
+
+// violin exposes this operation as part of the public API.
+
+// violin exposes this operation as part of the public API.
 @[inline]
 pub fn (mut p Plot) violin(trace ViolinTrace) Plot {
 	return p.add_trace(trace)
 }
 
 // contour adds a contour trace to the plot
+
+// contour exposes this operation as part of the public API.
+
+// contour exposes this operation as part of the public API.
 @[inline]
 pub fn (mut p Plot) contour(trace ContourTrace) Plot {
 	return p.add_trace(trace)
 }
 
 // waterfall adds a waterfall trace to the plot
+
+// waterfall exposes this operation as part of the public API.
+
+// waterfall exposes this operation as part of the public API.
 @[inline]
 pub fn (mut p Plot) waterfall(trace WaterfallTrace) Plot {
 	return p.add_trace(trace)
 }
 
 // sunburst adds a sunburst trace to the plot
+
+// sunburst exposes this operation as part of the public API.
+
+// sunburst exposes this operation as part of the public API.
 @[inline]
 pub fn (mut p Plot) sunburst(trace SunburstTrace) Plot {
 	return p.add_trace(trace)
 }
 
 // treemap adds a treemap trace to the plot
+
+// treemap exposes this operation as part of the public API.
+
+// treemap exposes this operation as part of the public API.
 @[inline]
 pub fn (mut p Plot) treemap(trace TreemapTrace) Plot {
 	return p.add_trace(trace)
 }
 
 // candlestick adds a candlestick trace to the plot
+
+// candlestick exposes this operation as part of the public API.
+
+// candlestick exposes this operation as part of the public API.
 @[inline]
 pub fn (mut p Plot) candlestick(trace CandlestickTrace) Plot {
 	return p.add_trace(trace)
 }
 
 // funnel adds a funnel trace to the plot
+
+// funnel exposes this operation as part of the public API.
+
+// funnel exposes this operation as part of the public API.
 @[inline]
 pub fn (mut p Plot) funnel(trace FunnelTrace) Plot {
 	return p.add_trace(trace)
 }
 
 // ohlc adds an OHLC trace to the plot
+
+// ohlc exposes this operation as part of the public API.
+
+// ohlc exposes this operation as part of the public API.
 @[inline]
 pub fn (mut p Plot) ohlc(trace OhlcTrace) Plot {
 	return p.add_trace(trace)
 }
 
 // table adds a table trace to the plot
+
+// table exposes this operation as part of the public API.
+
+// table exposes this operation as part of the public API.
 @[inline]
 pub fn (mut p Plot) table(trace TableTrace) Plot {
 	return p.add_trace(trace)
 }
 
 // scatterpolar adds a polar/radar trace to the plot
+
+// scatterpolar exposes this operation as part of the public API.
+
+// scatterpolar exposes this operation as part of the public API.
 @[inline]
 pub fn (mut p Plot) scatterpolar(trace ScatterPolarTrace) Plot {
 	return p.add_trace(trace)
 }
 
 // scattergeo adds a geographic scatter trace to the plot
+
+// scattergeo exposes this operation as part of the public API.
+
+// scattergeo exposes this operation as part of the public API.
 @[inline]
 pub fn (mut p Plot) scattergeo(trace ScatterGeoTrace) Plot {
 	return p.add_trace(trace)
 }
 
 // barpolar adds a polar bar trace to the plot
+
+// barpolar exposes this operation as part of the public API.
+
+// barpolar exposes this operation as part of the public API.
 @[inline]
 pub fn (mut p Plot) barpolar(trace BarPolarTrace) Plot {
 	return p.add_trace(trace)
 }
 
 // box adds a box trace to the plot
+
+// annotation exposes this operation as part of the public API.
+
+// annotation exposes this operation as part of the public API.
 @[inline]
 pub fn (mut p Plot) annotation(annotation Annotation) Plot {
 	p.layout.annotations << annotation
@@ -171,6 +260,10 @@ pub fn (mut p Plot) annotation(annotation Annotation) Plot {
 }
 
 // layout sets the layout of the plot
+
+// layout exposes this operation as part of the public API.
+
+// layout exposes this operation as part of the public API.
 @[inline]
 pub fn (mut p Plot) layout(layout Layout) Plot {
 	mut next_layout := layout
@@ -228,60 +321,100 @@ pub fn (p Plot) debug_json() {
 }
 
 // histogram2d adds a 2D histogram trace to the plot
+
+// histogram2d exposes this operation as part of the public API.
+
+// histogram2d exposes this operation as part of the public API.
 @[inline]
 pub fn (mut p Plot) histogram2d(trace Histogram2DTrace) Plot {
 	return p.add_trace(trace)
 }
 
 // density adds a density plot trace to the plot
+
+// density exposes this operation as part of the public API.
+
+// density exposes this operation as part of the public API.
 @[inline]
 pub fn (mut p Plot) density(trace DensityTrace) Plot {
 	return p.add_trace(trace)
 }
 
 // ridgeline adds a ridgeline plot trace to the plot
+
+// ridgeline exposes this operation as part of the public API.
+
+// ridgeline exposes this operation as part of the public API.
 @[inline]
 pub fn (mut p Plot) ridgeline(trace RidgelineTrace) Plot {
 	return p.add_trace(trace)
 }
 
 // parcoords adds a parallel coordinates trace to the plot
+
+// parcoords exposes this operation as part of the public API.
+
+// parcoords exposes this operation as part of the public API.
 @[inline]
 pub fn (mut p Plot) parcoords(trace ParallelCoordinatesTrace) Plot {
 	return p.add_trace(trace)
 }
 
 // sankey adds a Sankey diagram trace to the plot
+
+// sankey exposes this operation as part of the public API.
+
+// sankey exposes this operation as part of the public API.
 @[inline]
 pub fn (mut p Plot) sankey(trace SankeyTrace) Plot {
 	return p.add_trace(trace)
 }
 
 // chord adds a chord diagram trace to the plot
+
+// chord exposes this operation as part of the public API.
+
+// chord exposes this operation as part of the public API.
 @[inline]
 pub fn (mut p Plot) chord(trace ChordTrace) Plot {
 	return p.add_trace(trace)
 }
 
 // network adds a network/graph trace to the plot
+
+// network exposes this operation as part of the public API.
+
+// network exposes this operation as part of the public API.
 @[inline]
 pub fn (mut p Plot) network(trace NetworkTrace) Plot {
 	return p.add_trace(trace)
 }
 
 // choropleth adds a choropleth map trace to the plot
+
+// choropleth exposes this operation as part of the public API.
+
+// choropleth exposes this operation as part of the public API.
 @[inline]
 pub fn (mut p Plot) choropleth(trace ChoroplethTrace) Plot {
 	return p.add_trace(trace)
 }
 
 // scattermapbox adds a scatter on mapbox trace to the plot
+
+// scattermapbox exposes this operation as part of the public API.
+
+// scattermapbox exposes this operation as part of the public API.
 @[inline]
 pub fn (mut p Plot) scattermapbox(trace ScatterMapboxTrace) Plot {
 	return p.add_trace(trace)
 }
 
 // densitymapbox adds a density on mapbox trace to the plot
+
+// densitymapbox exposes this operation as part of the public API.
+
+// densitymapbox exposes this operation as part of the public API.
 @[inline]
 pub fn (mut p Plot) densitymapbox(trace DensityMapboxTrace) Plot {
 	return p.add_trace(trace)

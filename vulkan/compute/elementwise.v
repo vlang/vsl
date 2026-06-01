@@ -62,14 +62,17 @@ fn tanh_vulkan_f32_raw(dev &vulkan.Device, x_data []f32) ![]f32 {
 	return out
 }
 
+// relu_vulkan_f32 exposes this operation as part of the public API.
 pub fn relu_vulkan_f32(dev &vulkan.Device, x_data []f32) ![]f32 {
 	return run_unary_f32(dev, x_data, vulkan.relu)
 }
 
+// sigmoid_vulkan_f32 exposes this operation as part of the public API.
 pub fn sigmoid_vulkan_f32(dev &vulkan.Device, x_data []f32) ![]f32 {
 	return run_unary_f32(dev, x_data, vulkan.sigmoid)
 }
 
+// relu_vulkan exposes this operation as part of the public API.
 pub fn relu_vulkan(dev &vulkan.Device, x_data []f64) ![]f64 {
 	mut x_f32 := []f32{len: x_data.len}
 	for i, v in x_data {
@@ -83,6 +86,7 @@ pub fn relu_vulkan(dev &vulkan.Device, x_data []f64) ![]f64 {
 	return out
 }
 
+// sigmoid_vulkan exposes this operation as part of the public API.
 pub fn sigmoid_vulkan(dev &vulkan.Device, x_data []f64) ![]f64 {
 	mut x_f32 := []f32{len: x_data.len}
 	for i, v in x_data {

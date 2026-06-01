@@ -5,6 +5,10 @@ import vsl.errors
 
 // StandardScaler standardizes features by removing the mean and scaling to unit variance.
 // Formula: z = (x - mean) / std
+
+// StandardScaler defines a public data structure for this module.
+
+// StandardScaler defines a public data structure for this module.
 @[heap]
 pub struct StandardScaler {
 mut:
@@ -99,6 +103,10 @@ pub fn (s &StandardScaler) inverse_transform(x [][]f64) ![][]f64 {
 
 // MinMaxScaler transforms features by scaling each feature to a given range.
 // Formula: x_scaled = (x - min) / (max - min) * (feature_max - feature_min) + feature_min
+
+// MinMaxScaler defines a public data structure for this module.
+
+// MinMaxScaler defines a public data structure for this module.
 @[heap]
 pub struct MinMaxScaler {
 mut:
@@ -198,6 +206,10 @@ pub fn (s &MinMaxScaler) inverse_transform(x [][]f64) ![][]f64 {
 
 // RobustScaler scales features using statistics that are robust to outliers.
 // Uses median and interquartile range (IQR) instead of mean and std.
+
+// RobustScaler defines a public data structure for this module.
+
+// RobustScaler defines a public data structure for this module.
 @[heap]
 pub struct RobustScaler {
 mut:

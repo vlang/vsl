@@ -4,6 +4,7 @@ import math
 import vsl.errors
 import vsl.internal.prec
 
+// hypot exposes this operation as part of the public API.
 pub fn hypot(x f64, y f64) f64 {
 	if math.is_inf(x, 0) || math.is_inf(y, 0) {
 		return math.inf(1)
@@ -27,6 +28,7 @@ pub fn hypot(x f64, y f64) f64 {
 	return result
 }
 
+// hypot_e exposes this operation as part of the public API.
 pub fn hypot_e(x f64, y f64) (f64, f64) {
 	if math.is_inf(x, 0) || math.is_inf(y, 0) {
 		return math.inf(1), 0.0

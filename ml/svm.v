@@ -13,6 +13,10 @@ pub enum KernelType {
 }
 
 // SVM implements a Support Vector Machine classifier (Observer of Data)
+
+// SVM defines a public data structure for this module.
+
+// SVM defines a public data structure for this module.
 @[heap]
 pub struct SVM {
 mut:

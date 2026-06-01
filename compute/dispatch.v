@@ -104,51 +104,61 @@ pub fn gemv(ctx &ComputeContext, a_data []f64, x_data []f64, m int, n int) ![]f6
 	return be.gemv(a_data, x_data, m, n)
 }
 
+// relu exposes this operation as part of the public API.
 pub fn relu(ctx &ComputeContext, x_data []f64) ![]f64 {
 	be := ctx.resolve_backend()!
 	return be.relu(x_data)
 }
 
+// sigmoid exposes this operation as part of the public API.
 pub fn sigmoid(ctx &ComputeContext, x_data []f64) ![]f64 {
 	be := ctx.resolve_backend()!
 	return be.sigmoid(x_data)
 }
 
+// tanh exposes this operation as part of the public API.
 pub fn tanh(ctx &ComputeContext, x_data []f64) ![]f64 {
 	be := ctx.resolve_backend()!
 	return be.tanh(x_data)
 }
 
+// add_vec exposes this operation as part of the public API.
 pub fn add_vec(ctx &ComputeContext, a_data []f64, b_data []f64) ![]f64 {
 	be := ctx.resolve_backend()!
 	return be.add_vec(a_data, b_data)
 }
 
+// mul_vec exposes this operation as part of the public API.
 pub fn mul_vec(ctx &ComputeContext, a_data []f64, b_data []f64) ![]f64 {
 	be := ctx.resolve_backend()!
 	return be.mul_vec(a_data, b_data)
 }
 
+// add_scalar exposes this operation as part of the public API.
 pub fn add_scalar(ctx &ComputeContext, x_data []f64, s f64) ![]f64 {
 	be := ctx.resolve_backend()!
 	return be.add_scalar(x_data, s)
 }
 
+// mul_scalar exposes this operation as part of the public API.
 pub fn mul_scalar(ctx &ComputeContext, x_data []f64, s f64) ![]f64 {
 	be := ctx.resolve_backend()!
 	return be.mul_scalar(x_data, s)
 }
 
+// softmax exposes this operation as part of the public API.
 pub fn softmax(ctx &ComputeContext, x_data []f64) ![]f64 {
 	be := ctx.resolve_backend()!
 	return be.softmax(x_data)
 }
 
+// layernorm exposes this operation as part of the public API.
 pub fn layernorm(ctx &ComputeContext, x_data []f64, gamma []f64, beta []f64) ![]f64 {
 	be := ctx.resolve_backend()!
 	return be.layernorm(x_data, gamma, beta)
 }
 
+// conv2d exposes this operation as part of the public API.
 pub fn conv2d(ctx &ComputeContext, input []f64, kernel []f64, batch int, in_h int, in_w int, in_ch int, out_ch int, k_h int, k_w int, stride_h int, stride_w int) ![]f64 {
 	be := ctx.resolve_backend()!
 	return be.conv2d(input, kernel, batch, in_h, in_w, in_ch, out_ch, k_h, k_w, stride_h, stride_w)

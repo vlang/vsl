@@ -116,6 +116,10 @@ fn find_bin(value f64, edges []f64) int {
 }
 
 // Binner provides a fitted binning transformer
+
+// Binner defines a public data structure for this module.
+
+// Binner defines a public data structure for this module.
 @[heap]
 pub struct Binner {
 mut:

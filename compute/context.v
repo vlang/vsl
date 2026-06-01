@@ -10,6 +10,10 @@ pub enum Backend {
 }
 
 // ComputeContext carries backend preference and optional device handles.
+
+// ComputeContext defines a public data structure for this module.
+
+// ComputeContext defines a public data structure for this module.
 @[heap]
 pub struct ComputeContext {
 pub mut:

@@ -5,6 +5,10 @@ import vsl.errors
 import vsl.plot
 
 // KNN is the struct defining a K-Nearest Neighbors classifier.
+
+// KNN defines a public data structure for this module.
+
+// KNN defines a public data structure for this module.
 @[heap]
 pub struct KNN {
 mut:

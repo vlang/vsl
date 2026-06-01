@@ -26,6 +26,10 @@ import vsl.lapack.lapack64
 // system of equations A * X = B.
 //
 // NOTE: matrix 'a' will be modified
+
+// dgesv exposes this operation as part of the public API.
+
+// dgesv exposes this operation as part of the public API.
 @[inline]
 pub fn dgesv(n int, nrhs int, mut a []f64, lda int, mut ipiv []int, mut b []f64, ldb int) int {
 	// Validate input assuming row-major format (as used by wrapper functions and la module)
@@ -344,6 +348,10 @@ pub fn dgeev(calc_vl LeftEigenVectorsJob, calc_vr RightEigenVectorsJob, n int, m
 // These provide a consistent interface for both V and C backends
 
 // dpotrf_standardized - Standardized dpotrf wrapper
+
+// dpotrf_standardized exposes this operation as part of the public API.
+
+// dpotrf_standardized exposes this operation as part of the public API.
 @[inline]
 pub fn dpotrf_standardized(uplo blas.Uplo, n int, mut a []f64, lda int) int {
 	info := lapack64.dpotrf(uplo, n, mut a, lda)
@@ -351,6 +359,10 @@ pub fn dpotrf_standardized(uplo blas.Uplo, n int, mut a []f64, lda int) int {
 }
 
 // dsyev_standardized - Standardized dsyev wrapper
+
+// dsyev_standardized exposes this operation as part of the public API.
+
+// dsyev_standardized exposes this operation as part of the public API.
 @[inline]
 pub fn dsyev_standardized(jobz EigenVectorsJob, uplo blas.Uplo, n int, mut a []f64, lda int, mut w []f64) int {
 	mut work := []f64{len: math.max(1, 3 * n - 1)}
@@ -360,6 +372,10 @@ pub fn dsyev_standardized(jobz EigenVectorsJob, uplo blas.Uplo, n int, mut a []f
 }
 
 // dgeev_standardized - Standardized dgeev wrapper
+
+// dgeev_standardized exposes this operation as part of the public API.
+
+// dgeev_standardized exposes this operation as part of the public API.
 @[inline]
 pub fn dgeev_standardized(jobvl LeftEigenVectorsJob, jobvr RightEigenVectorsJob, n int, mut a []f64, lda int, mut wr []f64, mut wi []f64, mut vl []f64, ldvl int, mut vr []f64, ldvr int) int {
 	info := lapack64.dgeev(to_lapack64_left_eigen_vectors_job(jobvl),
@@ -369,6 +385,10 @@ pub fn dgeev_standardized(jobvl LeftEigenVectorsJob, jobvr RightEigenVectorsJob,
 }
 
 // dgeqrf_standardized - Standardized dgeqrf wrapper (placeholder until implemented)
+
+// dgeqrf_standardized exposes this operation as part of the public API.
+
+// dgeqrf_standardized exposes this operation as part of the public API.
 @[inline]
 pub fn dgeqrf_standardized(m int, n int, mut a []f64, lda int, mut tau []f64) int {
 	// Placeholder - not implemented in lapack64 yet
@@ -376,6 +396,10 @@ pub fn dgeqrf_standardized(m int, n int, mut a []f64, lda int, mut tau []f64) in
 }
 
 // dorgqr_standardized - Standardized dorgqr wrapper
+
+// dorgqr_standardized exposes this operation as part of the public API.
+
+// dorgqr_standardized exposes this operation as part of the public API.
 @[inline]
 pub fn dorgqr_standardized(m int, n int, k int, mut a []f64, lda int, tau []f64) int {
 	mut work := []f64{len: math.max(1, n)}
@@ -384,6 +408,10 @@ pub fn dorgqr_standardized(m int, n int, k int, mut a []f64, lda int, tau []f64)
 }
 
 // dsyev - Direct wrapper for dsyev with standardized interface
+
+// dsyev exposes this operation as part of the public API.
+
+// dsyev exposes this operation as part of the public API.
 @[inline]
 pub fn dsyev(jobz EigenVectorsJob, uplo blas.Uplo, n int, mut a []f64, lda int, mut w []f64) int {
 	// Call lapack64 with work array
@@ -394,6 +422,10 @@ pub fn dsyev(jobz EigenVectorsJob, uplo blas.Uplo, n int, mut a []f64, lda int, 
 }
 
 // dgeqrf - Direct wrapper for dgeqrf with standardized interface
+
+// dgeqrf exposes this operation as part of the public API.
+
+// dgeqrf exposes this operation as part of the public API.
 @[inline]
 pub fn dgeqrf(m int, n int, mut a []f64, lda int, mut tau []f64) int {
 	// Convert from row-major (wrapper/C LAPACKE format) to column-major (BLAS/LAPACK format)
@@ -420,6 +452,10 @@ pub fn dgeqrf(m int, n int, mut a []f64, lda int, mut tau []f64) int {
 }
 
 // dorgqr - Direct wrapper for dorgqr with standardized interface
+
+// dorgqr exposes this operation as part of the public API.
+
+// dorgqr exposes this operation as part of the public API.
 @[inline]
 pub fn dorgqr(m int, n int, k int, mut a []f64, lda int, tau []f64) int {
 	// Call lapack64 function with work array

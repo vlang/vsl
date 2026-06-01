@@ -73,6 +73,7 @@ fn tolerance(a f32, b f32, tol f32) bool {
 	return d < e_
 }
 
+// arrays_tolerance exposes this operation as part of the public API.
 pub fn arrays_tolerance(data1 []f32, data2 []f32, tol f32) bool {
 	if data1.len != data2.len {
 		return false

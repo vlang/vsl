@@ -3,6 +3,7 @@ module lapack64
 import math
 import vsl.blas
 
+// dlatrd exposes this operation as part of the public API.
 pub fn dlatrd(uplo blas.Uplo, n int, nb int, mut a []f64, lda int, mut e []f64, mut tau []f64, mut w []f64, ldw int) {
 	if uplo != .upper && uplo != .lower {
 		panic(bad_uplo)

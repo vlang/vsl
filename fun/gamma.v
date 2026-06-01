@@ -142,6 +142,7 @@ pub fn log_gamma(x f64) f64 {
 	return y
 }
 
+// log_gamma_sign exposes this operation as part of the public API.
 pub fn log_gamma_sign(x_ f64) (f64, int) {
 	mut x := x_
 	ymin := 1.461632144968362245

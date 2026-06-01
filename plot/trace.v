@@ -45,6 +45,10 @@ pub type YType = []f64 | []int | []string
 pub type ZType = [][]f64 | [][]int | []f64 | []int
 
 // CommonTrace is a struct for common trace properties
+
+// CommonTrace defines a public data structure for this module.
+
+// CommonTrace defines a public data structure for this module.
 @[params]
 pub struct CommonTrace {
 pub mut:
@@ -69,6 +73,10 @@ pub mut:
 }
 
 // ScatterTrace is a struct for Scatter trace type
+
+// ScatterTrace defines a public data structure for this module.
+
+// ScatterTrace defines a public data structure for this module.
 @[params]
 pub struct ScatterTrace {
 	CommonTrace
@@ -77,6 +85,10 @@ pub mut:
 }
 
 // PieTrace is a struct for Pie trace type
+
+// PieTrace defines a public data structure for this module.
+
+// PieTrace defines a public data structure for this module.
 @[params]
 pub struct PieTrace {
 	CommonTrace
@@ -86,6 +98,10 @@ pub mut:
 }
 
 // HeatmapTrace is a struct for Heatmap trace type
+
+// HeatmapTrace defines a public data structure for this module.
+
+// HeatmapTrace defines a public data structure for this module.
 @[params]
 pub struct HeatmapTrace {
 	CommonTrace
@@ -95,6 +111,10 @@ pub mut:
 }
 
 // SurfaceTrace is a struct for Surface trace type
+
+// SurfaceTrace defines a public data structure for this module.
+
+// SurfaceTrace defines a public data structure for this module.
 @[params]
 pub struct SurfaceTrace {
 	CommonTrace
@@ -103,18 +123,30 @@ pub mut:
 }
 
 // Scatter3DTrace is a struct for Scatter3D trace type
+
+// Scatter3DTrace defines a public data structure for this module.
+
+// Scatter3DTrace defines a public data structure for this module.
 @[params]
 pub struct Scatter3DTrace {
 	CommonTrace
 }
 
 // BarTrace is a struct for Bar trace type
+
+// BarTrace defines a public data structure for this module.
+
+// BarTrace defines a public data structure for this module.
 @[params]
 pub struct BarTrace {
 	CommonTrace
 }
 
 // HistogramTrace is a struct for Histogram trace type
+
+// HistogramTrace defines a public data structure for this module.
+
+// HistogramTrace defines a public data structure for this module.
 @[params]
 pub struct HistogramTrace {
 	CommonTrace
@@ -127,6 +159,10 @@ pub mut:
 }
 
 // LineTrace is a struct for Line trace type
+
+// LineTrace defines a public data structure for this module.
+
+// LineTrace defines a public data structure for this module.
 @[params]
 pub struct LineTrace {
 	CommonTrace
@@ -135,6 +171,10 @@ pub mut:
 }
 
 // BoxTrace is a struct for Box trace type
+
+// BoxTrace defines a public data structure for this module.
+
+// BoxTrace defines a public data structure for this module.
 @[params]
 pub struct BoxTrace {
 	CommonTrace
@@ -151,6 +191,10 @@ pub mut:
 }
 
 // ViolinTrace is a struct for Violin trace type
+
+// ViolinTrace defines a public data structure for this module.
+
+// ViolinTrace defines a public data structure for this module.
 @[params]
 pub struct ViolinTrace {
 pub mut:
@@ -175,6 +219,10 @@ pub mut:
 }
 
 // ContourTrace is a struct for Contour trace type
+
+// ContourTrace defines a public data structure for this module.
+
+// ContourTrace defines a public data structure for this module.
 @[params]
 pub struct ContourTrace {
 	CommonTrace
@@ -186,6 +234,10 @@ pub mut:
 }
 
 // WaterfallTrace is a struct for Waterfall trace type
+
+// WaterfallTrace defines a public data structure for this module.
+
+// WaterfallTrace defines a public data structure for this module.
 @[params]
 pub struct WaterfallTrace {
 	CommonTrace
@@ -200,6 +252,10 @@ pub mut:
 }
 
 // SunburstTrace is a struct for Sunburst trace type
+
+// SunburstTrace defines a public data structure for this module.
+
+// SunburstTrace defines a public data structure for this module.
 @[params]
 pub struct SunburstTrace {
 	CommonTrace
@@ -215,6 +271,10 @@ pub mut:
 }
 
 // TreemapTrace is a struct for Treemap trace type
+
+// TreemapTrace defines a public data structure for this module.
+
+// TreemapTrace defines a public data structure for this module.
 @[params]
 pub struct TreemapTrace {
 	CommonTrace
@@ -231,6 +291,10 @@ pub mut:
 }
 
 // CandlestickTrace is a struct for Candlestick trace type
+
+// CandlestickTrace defines a public data structure for this module.
+
+// CandlestickTrace defines a public data structure for this module.
 @[params]
 pub struct CandlestickTrace {
 	CommonTrace
@@ -246,6 +310,10 @@ pub mut:
 }
 
 // FunnelTrace is a struct for Funnel trace type
+
+// FunnelTrace defines a public data structure for this module.
+
+// FunnelTrace defines a public data structure for this module.
 @[params]
 pub struct FunnelTrace {
 	CommonTrace
@@ -256,6 +324,10 @@ pub mut:
 }
 
 // OhlcTrace is a struct for OHLC financial trace type
+
+// OhlcTrace defines a public data structure for this module.
+
+// OhlcTrace defines a public data structure for this module.
 @[params]
 pub struct OhlcTrace {
 	CommonTrace
@@ -295,6 +367,10 @@ pub mut:
 }
 
 // TableTrace is a struct for tabular data trace type
+
+// TableTrace defines a public data structure for this module.
+
+// TableTrace defines a public data structure for this module.
 @[params]
 pub struct TableTrace {
 	CommonTrace
@@ -305,6 +381,10 @@ pub mut:
 }
 
 // ScatterPolarTrace is a struct for Radar/Polar trace type
+
+// ScatterPolarTrace defines a public data structure for this module.
+
+// ScatterPolarTrace defines a public data structure for this module.
 @[params]
 pub struct ScatterPolarTrace {
 	CommonTrace
@@ -430,6 +510,7 @@ pub type Trace = BarTrace
 	| ViolinTrace
 	| WaterfallTrace
 
+// trace_type exposes this operation as part of the public API.
 pub fn (t Trace) trace_type() string {
 	return match t {
 		BarTrace { 'bar' }
@@ -552,6 +633,10 @@ pub mut:
 }
 
 // Histogram2DTrace is a struct for 2D Histogram trace type
+
+// Histogram2DTrace defines a public data structure for this module.
+
+// Histogram2DTrace defines a public data structure for this module.
 @[params]
 pub struct Histogram2DTrace {
 	CommonTrace
@@ -569,6 +654,10 @@ pub mut:
 }
 
 // DensityTrace is a struct for Density plot trace type
+
+// DensityTrace defines a public data structure for this module.
+
+// DensityTrace defines a public data structure for this module.
 @[params]
 pub struct DensityTrace {
 	CommonTrace
@@ -580,6 +669,10 @@ pub mut:
 }
 
 // RidgelineTrace is a struct for Ridgeline plot trace type
+
+// RidgelineTrace defines a public data structure for this module.
+
+// RidgelineTrace defines a public data structure for this module.
 @[params]
 pub struct RidgelineTrace {
 	CommonTrace
@@ -591,6 +684,10 @@ pub mut:
 }
 
 // ParallelCoordinatesTrace is a struct for Parallel Coordinates trace type
+
+// ParallelCoordinatesTrace defines a public data structure for this module.
+
+// ParallelCoordinatesTrace defines a public data structure for this module.
 @[params]
 pub struct ParallelCoordinatesTrace {
 pub mut:
@@ -603,6 +700,10 @@ pub mut:
 }
 
 // SankeyTrace is a struct for Sankey diagram trace type
+
+// SankeyTrace defines a public data structure for this module.
+
+// SankeyTrace defines a public data structure for this module.
 @[params]
 pub struct SankeyTrace {
 pub mut:
@@ -616,6 +717,10 @@ pub mut:
 }
 
 // ChordTrace is a struct for Chord diagram trace type
+
+// ChordTrace defines a public data structure for this module.
+
+// ChordTrace defines a public data structure for this module.
 @[params]
 pub struct ChordTrace {
 	CommonTrace
@@ -628,6 +733,10 @@ pub mut:
 }
 
 // NetworkTrace is a struct for Network/Graph trace type
+
+// NetworkTrace defines a public data structure for this module.
+
+// NetworkTrace defines a public data structure for this module.
 @[params]
 pub struct NetworkTrace {
 	CommonTrace
@@ -641,6 +750,10 @@ pub mut:
 }
 
 // ChoroplethTrace is a struct for Choropleth map trace type
+
+// ChoroplethTrace defines a public data structure for this module.
+
+// ChoroplethTrace defines a public data structure for this module.
 @[params]
 pub struct ChoroplethTrace {
 	CommonTrace
@@ -655,6 +768,10 @@ pub mut:
 }
 
 // ScatterMapboxTrace is a struct for Scatter on mapbox trace type
+
+// ScatterMapboxTrace defines a public data structure for this module.
+
+// ScatterMapboxTrace defines a public data structure for this module.
 @[params]
 pub struct ScatterMapboxTrace {
 	CommonTrace
@@ -668,6 +785,10 @@ pub mut:
 }
 
 // DensityMapboxTrace is a struct for Density on mapbox trace type
+
+// DensityMapboxTrace defines a public data structure for this module.
+
+// DensityMapboxTrace defines a public data structure for this module.
 @[params]
 pub struct DensityMapboxTrace {
 	CommonTrace
@@ -682,6 +803,10 @@ pub mut:
 }
 
 // ScatterGeoTrace is a struct for ScatterGeo trace type (geographic scatter plots)
+
+// ScatterGeoTrace defines a public data structure for this module.
+
+// ScatterGeoTrace defines a public data structure for this module.
 @[params]
 pub struct ScatterGeoTrace {
 	CommonTrace
@@ -730,6 +855,10 @@ pub mut:
 }
 
 // BarPolarTrace is a struct for BarPolar trace type (polar bar charts)
+
+// BarPolarTrace defines a public data structure for this module.
+
+// BarPolarTrace defines a public data structure for this module.
 @[params]
 pub struct BarPolarTrace {
 	CommonTrace

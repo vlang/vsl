@@ -4,6 +4,9 @@ import math
 import strconv
 import vsl.errors
 
+// Matrix defines a public data structure for this module.
+
+// Matrix defines a public data structure for this module.
 @[heap]
 pub struct Matrix[T] {
 pub mut:
@@ -135,6 +138,7 @@ pub fn (mut o Matrix[T]) fill(val T) {
  * A =           |  5 6 7 8  |  ⇒  clear([1,2], [], 1.0)  ⇒  A = |  0 1 0 0  |
  *               |_ 4 3 2 1 _|                                   |_ 0 0 1 0 _|
 */
+// clear_rc exposes this operation as part of the public API.
 pub fn (mut o Matrix[T]) clear_rc(rows []int, cols []int, diag T) {
 	for r in rows {
 		for j in 0 .. o.n {
@@ -163,6 +167,7 @@ pub fn (mut o Matrix[T]) clear_rc(rows []int, cols []int, diag T) {
  * A =           |  4 5 6  |  ⇒  clear(1.0)  ⇒  A = |  0 5 0  |
  *               |_ 7 8 9 _|                        |_ 0 0 1 _|
 */
+// clear_bry exposes this operation as part of the public API.
 pub fn (mut o Matrix[T]) clear_bry(diag T) {
 	o.clear_rc([0, o.m - 1], [0, o.n - 1], diag)
 }
@@ -195,6 +200,10 @@ pub fn (o &Matrix[T]) largest(den T) T {
 // col access column j of this matrix. No copies are made since the internal data are in
 // row-major format already.
 // NOTE: this method can be used to modify the columns; e.g. with o.col(0)[0] = 123
+
+// col exposes this operation as part of the public API.
+
+// col exposes this operation as part of the public API.
 @[inline]
 pub fn (o &Matrix[T]) col(j int) []T {
 	return o.get_col(j)
@@ -349,6 +358,7 @@ pub fn (o &Matrix[T]) equals(another &Matrix[T]) bool {
 	return true
 }
 
+// str exposes this operation as part of the public API.
 pub fn (o &Matrix[T]) str() string {
 	return o.print('')
 }
@@ -413,6 +423,9 @@ pub fn (o &Matrix[T]) print_py(nfmt_ string) string {
 	return l
 }
 
+// safe_print exposes this operation as part of the public API.
+
+// safe_print exposes this operation as part of the public API.
 @[inline]
 pub fn safe_print[T](format string, message T) string {
 	return unsafe { strconv.v_sprintf(format, message) }

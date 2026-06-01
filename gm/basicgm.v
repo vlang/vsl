@@ -3,6 +3,10 @@ module gm
 import math
 
 // Point holds the Cartesian coordinates of a point in 3D space
+
+// Point defines a public data structure for this module.
+
+// Point defines a public data structure for this module.
 @[heap]
 pub struct Point {
 pub mut:
@@ -12,6 +16,10 @@ pub mut:
 }
 
 // Segment represents a directed segment from a to b
+
+// Segment defines a public data structure for this module.
+
+// Segment defines a public data structure for this module.
 @[heap]
 pub struct Segment {
 pub:

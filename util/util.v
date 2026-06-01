@@ -9,6 +9,9 @@ pub fn arange(n int) []int {
 	return result
 }
 
+// RangeStep defines a public data structure for this module.
+
+// RangeStep defines a public data structure for this module.
 @[params]
 pub struct RangeStep {
 pub:

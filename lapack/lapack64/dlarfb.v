@@ -3,6 +3,7 @@ module lapack64
 import math
 import vsl.blas
 
+// dlarfb exposes this operation as part of the public API.
 pub fn dlarfb(side blas.Side, trans blas.Transpose, direct Direct, store StoreV, m int, n int, k int, v []f64, ldv int, t []f64, ldt int, mut c []f64, ldc int, mut work []f64, ldwork int) {
 	if side != .left && side != .right {
 		panic(bad_side)

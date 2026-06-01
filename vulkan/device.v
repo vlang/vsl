@@ -11,6 +11,10 @@ module vulkan
 
 // Device is the main Vulkan compute device handle.
 // Mirrors vsl.vcl.Device — owns all Vulkan handles and resources.
+
+// Device defines a public data structure for this module.
+
+// Device defines a public data structure for this module.
 @[heap]
 pub struct Device {
 pub:

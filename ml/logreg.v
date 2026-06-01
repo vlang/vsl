@@ -8,6 +8,10 @@ import vsl.util
 import vsl.errors
 
 // LogReg implements a logistic regression model (Observer of Data)
+
+// LogReg defines a public data structure for this module.
+
+// LogReg defines a public data structure for this module.
 @[heap]
 pub struct LogReg {
 mut:

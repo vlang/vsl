@@ -16,6 +16,10 @@ pub enum RegularizationType {
 
 // Lasso implements a linear regression model with L1 regularization
 // Uses coordinate descent algorithm for optimization
+
+// Lasso defines a public data structure for this module.
+
+// Lasso defines a public data structure for this module.
 @[heap]
 pub struct Lasso {
 mut:
@@ -183,6 +187,10 @@ pub fn (o &Lasso) get_plotter() &plot.Plot {
 }
 
 // ElasticNet implements linear regression with combined L1 and L2 regularization
+
+// ElasticNet defines a public data structure for this module.
+
+// ElasticNet defines a public data structure for this module.
 @[heap]
 pub struct ElasticNet {
 mut:
@@ -348,6 +356,10 @@ pub fn (o &ElasticNet) get_plotter() &plot.Plot {
 
 // Ridge implements linear regression with L2 regularization only
 // This is a convenience wrapper using the existing LinReg with lambda
+
+// Ridge defines a public data structure for this module.
+
+// Ridge defines a public data structure for this module.
 @[heap]
 pub struct Ridge {
 mut:

@@ -193,31 +193,49 @@ pub fn set_num_threads(n int) {
 	C.openblas_set_num_threads(n)
 }
 
+// sdsdot exposes this operation as part of the public API.
+
+// sdsdot exposes this operation as part of the public API.
 @[inline]
 pub fn sdsdot(n int, alpha f32, x []f32, incx int, y []f32, incy int) f32 {
 	return C.cblas_sdsdot(n, alpha, unsafe { &x[0] }, incx, unsafe { &y[0] }, incy)
 }
 
+// dsdot exposes this operation as part of the public API.
+
+// dsdot exposes this operation as part of the public API.
 @[inline]
 pub fn dsdot(n int, x []f32, incx int, y []f32, incy int) f64 {
 	return C.cblas_dsdot(n, unsafe { &x[0] }, incx, unsafe { &y[0] }, incy)
 }
 
+// sdot exposes this operation as part of the public API.
+
+// sdot exposes this operation as part of the public API.
 @[inline]
 pub fn sdot(n int, x []f32, incx int, y []f32, incy int) f32 {
 	return C.cblas_sdot(n, unsafe { &x[0] }, incx, unsafe { &y[0] }, incy)
 }
 
+// ddot exposes this operation as part of the public API.
+
+// ddot exposes this operation as part of the public API.
 @[inline]
 pub fn ddot(n int, x []f64, incx int, y []f64, incy int) f64 {
 	return blas64.ddot(n, x, incx, y, incy)
 }
 
+// sasum exposes this operation as part of the public API.
+
+// sasum exposes this operation as part of the public API.
 @[inline]
 pub fn sasum(n int, x []f32, incx int) f32 {
 	return C.cblas_sasum(n, unsafe { &x[0] }, incx)
 }
 
+// dasum exposes this operation as part of the public API.
+
+// dasum exposes this operation as part of the public API.
 @[inline]
 pub fn dasum(n int, x []f64, incx int) f64 {
 	if n <= 0 || x.len == 0 {
@@ -226,31 +244,49 @@ pub fn dasum(n int, x []f64, incx int) f64 {
 	return blas64.dasum(n, x, incx)
 }
 
+// scasum exposes this operation as part of the public API.
+
+// scasum exposes this operation as part of the public API.
 @[inline]
 pub fn scasum(n int, x voidptr, incx int) f32 {
 	return C.cblas_scasum(n, x, incx)
 }
 
+// dzasum exposes this operation as part of the public API.
+
+// dzasum exposes this operation as part of the public API.
 @[inline]
 pub fn dzasum(n int, x voidptr, incx int) f64 {
 	return C.cblas_dzasum(n, x, incx)
 }
 
+// ssum exposes this operation as part of the public API.
+
+// ssum exposes this operation as part of the public API.
 @[inline]
 pub fn ssum(n int, x []f32, incx int) f32 {
 	return C.cblas_ssum(n, unsafe { &x[0] }, incx)
 }
 
+// dsum exposes this operation as part of the public API.
+
+// dsum exposes this operation as part of the public API.
 @[inline]
 pub fn dsum(n int, x []f64, incx int) f64 {
 	return C.cblas_dsum(n, unsafe { &x[0] }, incx)
 }
 
+// snrm2 exposes this operation as part of the public API.
+
+// snrm2 exposes this operation as part of the public API.
 @[inline]
 pub fn snrm2(n int, x []f32, incx int) f32 {
 	return C.cblas_snrm2(n, unsafe { &x[0] }, incx)
 }
 
+// dnrm2 exposes this operation as part of the public API.
+
+// dnrm2 exposes this operation as part of the public API.
 @[inline]
 pub fn dnrm2(n int, x []f64, incx int) f64 {
 	if n <= 0 || x.len == 0 {
@@ -259,814 +295,1261 @@ pub fn dnrm2(n int, x []f64, incx int) f64 {
 	return blas64.dnrm2(n, x, incx)
 }
 
+// scnrm2 exposes this operation as part of the public API.
+
+// scnrm2 exposes this operation as part of the public API.
 @[inline]
 pub fn scnrm2(n int, x voidptr, incx int) f32 {
 	return C.cblas_scnrm2(n, x, incx)
 }
 
+// dznrm2 exposes this operation as part of the public API.
+
+// dznrm2 exposes this operation as part of the public API.
 @[inline]
 pub fn dznrm2(n int, x voidptr, incx int) f64 {
 	return C.cblas_dznrm2(n, x, incx)
 }
 
+// isamax exposes this operation as part of the public API.
+
+// isamax exposes this operation as part of the public API.
 @[inline]
 pub fn isamax(n int, x []f32, incx int) int {
 	return C.cblas_isamax(n, unsafe { &x[0] }, incx)
 }
 
+// idamax exposes this operation as part of the public API.
+
+// idamax exposes this operation as part of the public API.
 @[inline]
 pub fn idamax(n int, x []f64, incx int) int {
 	return C.cblas_idamax(n, unsafe { &x[0] }, incx)
 }
 
+// icamax exposes this operation as part of the public API.
+
+// icamax exposes this operation as part of the public API.
 @[inline]
 pub fn icamax(n int, x voidptr, incx int) int {
 	return C.cblas_icamax(n, x, incx)
 }
 
+// izamax exposes this operation as part of the public API.
+
+// izamax exposes this operation as part of the public API.
 @[inline]
 pub fn izamax(n int, x voidptr, incx int) int {
 	return C.cblas_izamax(n, x, incx)
 }
 
+// isamin exposes this operation as part of the public API.
+
+// isamin exposes this operation as part of the public API.
 @[inline]
 pub fn isamin(n int, x []f32, incx int) int {
 	return C.cblas_isamin(n, unsafe { &x[0] }, incx)
 }
 
+// idamin exposes this operation as part of the public API.
+
+// idamin exposes this operation as part of the public API.
 @[inline]
 pub fn idamin(n int, x []f64, incx int) int {
 	return C.cblas_idamin(n, unsafe { &x[0] }, incx)
 }
 
+// icamin exposes this operation as part of the public API.
+
+// icamin exposes this operation as part of the public API.
 @[inline]
 pub fn icamin(n int, x voidptr, incx int) int {
 	return C.cblas_icamin(n, x, incx)
 }
 
+// izamin exposes this operation as part of the public API.
+
+// izamin exposes this operation as part of the public API.
 @[inline]
 pub fn izamin(n int, x voidptr, incx int) int {
 	return C.cblas_izamin(n, x, incx)
 }
 
+// ismax exposes this operation as part of the public API.
+
+// ismax exposes this operation as part of the public API.
 @[inline]
 pub fn ismax(n int, x []f32, incx int) int {
 	return C.cblas_ismax(n, unsafe { &x[0] }, incx)
 }
 
+// idmax exposes this operation as part of the public API.
+
+// idmax exposes this operation as part of the public API.
 @[inline]
 pub fn idmax(n int, x []f64, incx int) int {
 	return C.cblas_idmax(n, unsafe { &x[0] }, incx)
 }
 
+// icmax exposes this operation as part of the public API.
+
+// icmax exposes this operation as part of the public API.
 @[inline]
 pub fn icmax(n int, x voidptr, incx int) int {
 	return C.cblas_icmax(n, x, incx)
 }
 
+// izmax exposes this operation as part of the public API.
+
+// izmax exposes this operation as part of the public API.
 @[inline]
 pub fn izmax(n int, x voidptr, incx int) int {
 	return C.cblas_izmax(n, x, incx)
 }
 
+// ismin exposes this operation as part of the public API.
+
+// ismin exposes this operation as part of the public API.
 @[inline]
 pub fn ismin(n int, x []f32, incx int) int {
 	return C.cblas_ismin(n, unsafe { &x[0] }, incx)
 }
 
+// idmin exposes this operation as part of the public API.
+
+// idmin exposes this operation as part of the public API.
 @[inline]
 pub fn idmin(n int, x []f64, incx int) int {
 	return C.cblas_idmin(n, unsafe { &x[0] }, incx)
 }
 
+// icmin exposes this operation as part of the public API.
+
+// icmin exposes this operation as part of the public API.
 @[inline]
 pub fn icmin(n int, x voidptr, incx int) int {
 	return C.cblas_icmin(n, x, incx)
 }
 
+// izmin exposes this operation as part of the public API.
+
+// izmin exposes this operation as part of the public API.
 @[inline]
 pub fn izmin(n int, x voidptr, incx int) int {
 	return C.cblas_izmin(n, x, incx)
 }
 
+// saxpy exposes this operation as part of the public API.
+
+// saxpy exposes this operation as part of the public API.
 @[inline]
 pub fn saxpy(n int, alpha f32, x []f32, incx int, mut y []f32, incy int) {
 	C.cblas_saxpy(n, alpha, unsafe { &x[0] }, incx, unsafe { &y[0] }, incy)
 }
 
+// daxpy exposes this operation as part of the public API.
+
+// daxpy exposes this operation as part of the public API.
 @[inline]
 pub fn daxpy(n int, alpha f64, x []f64, incx int, mut y []f64, incy int) {
 	C.cblas_daxpy(n, alpha, unsafe { &x[0] }, incx, unsafe { &y[0] }, incy)
 }
 
+// caxpy exposes this operation as part of the public API.
+
+// caxpy exposes this operation as part of the public API.
 @[inline]
 pub fn caxpy(n int, alpha voidptr, x voidptr, incx int, mut y voidptr, incy int) {
 	C.cblas_caxpy(n, alpha, x, incx, y, incy)
 }
 
+// zaxpy exposes this operation as part of the public API.
+
+// zaxpy exposes this operation as part of the public API.
 @[inline]
 pub fn zaxpy(n int, alpha voidptr, x voidptr, incx int, mut y voidptr, incy int) {
 	C.cblas_zaxpy(n, alpha, x, incx, y, incy)
 }
 
+// scopy exposes this operation as part of the public API.
+
+// scopy exposes this operation as part of the public API.
 @[inline]
 pub fn scopy(n int, x []f32, incx int, mut y []f32, incy int) {
 	C.cblas_scopy(n, unsafe { &x[0] }, incx, unsafe { &y[0] }, incy)
 }
 
+// dcopy exposes this operation as part of the public API.
+
+// dcopy exposes this operation as part of the public API.
 @[inline]
 pub fn dcopy(n int, x []f64, incx int, mut y []f64, incy int) {
 	C.cblas_dcopy(n, unsafe { &x[0] }, incx, unsafe { &y[0] }, incy)
 }
 
+// ccopy exposes this operation as part of the public API.
+
+// ccopy exposes this operation as part of the public API.
 @[inline]
 pub fn ccopy(n int, x voidptr, incx int, mut y voidptr, incy int) {
 	C.cblas_ccopy(n, x, incx, y, incy)
 }
 
+// zcopy exposes this operation as part of the public API.
+
+// zcopy exposes this operation as part of the public API.
 @[inline]
 pub fn zcopy(n int, x voidptr, incx int, mut y voidptr, incy int) {
 	C.cblas_zcopy(n, x, incx, y, incy)
 }
 
+// sswap exposes this operation as part of the public API.
+
+// sswap exposes this operation as part of the public API.
 @[inline]
 pub fn sswap(n int, mut x []f32, incx int, mut y []f32, incy int) {
 	C.cblas_sswap(n, unsafe { &x[0] }, incx, unsafe { &y[0] }, incy)
 }
 
+// dswap exposes this operation as part of the public API.
+
+// dswap exposes this operation as part of the public API.
 @[inline]
 pub fn dswap(n int, mut x []f64, incx int, mut y []f64, incy int) {
 	C.cblas_dswap(n, unsafe { &x[0] }, incx, unsafe { &y[0] }, incy)
 }
 
+// cswap exposes this operation as part of the public API.
+
+// cswap exposes this operation as part of the public API.
 @[inline]
 pub fn cswap(n int, x voidptr, incx int, y voidptr, incy int) {
 	C.cblas_cswap(n, x, incx, y, incy)
 }
 
+// zswap exposes this operation as part of the public API.
+
+// zswap exposes this operation as part of the public API.
 @[inline]
 pub fn zswap(n int, x voidptr, incx int, y voidptr, incy int) {
 	C.cblas_zswap(n, x, incx, y, incy)
 }
 
+// srot exposes this operation as part of the public API.
+
+// srot exposes this operation as part of the public API.
 @[inline]
 pub fn srot(n int, mut x []f32, incx int, mut y []f32, incy int, c f32, s f32) {
 	C.cblas_srot(n, unsafe { &x[0] }, incx, unsafe { &y[0] }, incy, c, s)
 }
 
+// drot exposes this operation as part of the public API.
+
+// drot exposes this operation as part of the public API.
 @[inline]
 pub fn drot(n int, mut x []f64, incx int, mut y []f64, incy int, c f64, s f64) {
 	C.cblas_drot(n, unsafe { &x[0] }, incx, unsafe { &y[0] }, incy, c, s)
 }
 
+// srotg exposes this operation as part of the public API.
+
+// srotg exposes this operation as part of the public API.
 @[inline]
 pub fn srotg(a f32, b f32, c f32, s f32) {
 	C.cblas_srotg(&a, &b, &c, &s)
 }
 
+// drotg exposes this operation as part of the public API.
+
+// drotg exposes this operation as part of the public API.
 @[inline]
 pub fn drotg(a f64, b f64, c f64, s f64) {
 	C.cblas_drotg(&a, &b, &c, &s)
 }
 
+// srotm exposes this operation as part of the public API.
+
+// srotm exposes this operation as part of the public API.
 @[inline]
 pub fn srotm(n int, mut x []f32, incx int, mut y []f32, incy int, p []f32) {
 	C.cblas_srotm(n, unsafe { &x[0] }, incx, unsafe { &y[0] }, incy, unsafe { &p[0] })
 }
 
+// drotm exposes this operation as part of the public API.
+
+// drotm exposes this operation as part of the public API.
 @[inline]
 pub fn drotm(n int, mut x []f64, incx int, mut y []f64, incy int, p []f64) {
 	C.cblas_drotm(n, unsafe { &x[0] }, incx, unsafe { &y[0] }, incy, unsafe { &p[0] })
 }
 
+// srotmg exposes this operation as part of the public API.
+
+// srotmg exposes this operation as part of the public API.
 @[inline]
 pub fn srotmg(d1 f32, d2 f32, b1 f32, b2 f32, mut p []f32) {
 	C.cblas_srotmg(&d1, &d2, &b1, b2, unsafe { &p[0] })
 }
 
+// drotmg exposes this operation as part of the public API.
+
+// drotmg exposes this operation as part of the public API.
 @[inline]
 pub fn drotmg(d1 f64, d2 f64, b1 f64, b2 f32, mut p []f64) {
 	C.cblas_drotmg(&d1, &d2, &b1, b2, unsafe { &p[0] })
 }
 
+// sscal exposes this operation as part of the public API.
+
+// sscal exposes this operation as part of the public API.
 @[inline]
 pub fn sscal(n int, alpha f32, mut x []f32, incx int) {
 	C.cblas_sscal(n, alpha, unsafe { &x[0] }, incx)
 }
 
+// dscal exposes this operation as part of the public API.
+
+// dscal exposes this operation as part of the public API.
 @[inline]
 pub fn dscal(n int, alpha f64, mut x []f64, incx int) {
 	C.cblas_dscal(n, alpha, unsafe { &x[0] }, incx)
 }
 
+// cscal exposes this operation as part of the public API.
+
+// cscal exposes this operation as part of the public API.
 @[inline]
 pub fn cscal(n int, alpha voidptr, mut x voidptr, incx int) {
 	C.cblas_cscal(n, alpha, x, incx)
 }
 
+// zscal exposes this operation as part of the public API.
+
+// zscal exposes this operation as part of the public API.
 @[inline]
 pub fn zscal(n int, alpha voidptr, mut x voidptr, incx int) {
 	C.cblas_zscal(n, alpha, x, incx)
 }
 
+// csscal exposes this operation as part of the public API.
+
+// csscal exposes this operation as part of the public API.
 @[inline]
 pub fn csscal(n int, alpha f32, mut x voidptr, incx int) {
 	C.cblas_csscal(n, alpha, x, incx)
 }
 
+// zdscal exposes this operation as part of the public API.
+
+// zdscal exposes this operation as part of the public API.
 @[inline]
 pub fn zdscal(n int, alpha f64, mut x voidptr, incx int) {
 	C.cblas_zdscal(n, alpha, x, incx)
 }
 
+// sgemv exposes this operation as part of the public API.
+
+// sgemv exposes this operation as part of the public API.
 @[inline]
 pub fn sgemv(trans Transpose, m int, n int, alpha f32, a []f32, lda int, x []f32, incx int, beta f32, mut y []f32, incy int) {
 	C.cblas_sgemv(int(MemoryLayout.row_major), int(trans), m, n, alpha, unsafe { &a[0] }, lda,
 		unsafe { &x[0] }, incx, beta, unsafe { &y[0] }, incy)
 }
 
+// dgemv exposes this operation as part of the public API.
+
+// dgemv exposes this operation as part of the public API.
 @[inline]
 pub fn dgemv(trans Transpose, m int, n int, alpha f64, a []f64, lda int, x []f64, incx int, beta f64, mut y []f64, incy int) {
 	C.cblas_dgemv(int(MemoryLayout.row_major), int(trans), m, n, alpha, unsafe { &a[0] }, lda,
 		unsafe { &x[0] }, incx, beta, unsafe { &y[0] }, incy)
 }
 
+// cgemv exposes this operation as part of the public API.
+
+// cgemv exposes this operation as part of the public API.
 @[inline]
 pub fn cgemv(trans Transpose, m int, n int, alpha voidptr, a voidptr, lda int, x voidptr, incx int, beta voidptr, mut y voidptr, incy int) {
 	C.cblas_cgemv(int(MemoryLayout.row_major), int(trans), m, n, alpha, a, lda, x, incx, beta, y,
 		incy)
 }
 
+// zgemv exposes this operation as part of the public API.
+
+// zgemv exposes this operation as part of the public API.
 @[inline]
 pub fn zgemv(trans Transpose, m int, n int, alpha voidptr, a voidptr, lda int, x voidptr, incx int, beta voidptr, mut y voidptr, incy int) {
 	C.cblas_zgemv(int(MemoryLayout.row_major), int(trans), m, n, alpha, a, lda, x, incx, beta, y,
 		incy)
 }
 
+// sger exposes this operation as part of the public API.
+
+// sger exposes this operation as part of the public API.
 @[inline]
 pub fn sger(m int, n int, alpha f32, x []f32, incx int, y []f32, incy int, mut a []f32, lda int) {
 	C.cblas_sger(int(MemoryLayout.row_major), m, n, alpha, unsafe { &x[0] }, incx,
 		unsafe { &y[0] }, incy, unsafe { &a[0] }, lda)
 }
 
+// dger exposes this operation as part of the public API.
+
+// dger exposes this operation as part of the public API.
 @[inline]
 pub fn dger(m int, n int, alpha f64, x []f64, incx int, y []f64, incy int, mut a []f64, lda int) {
 	C.cblas_dger(int(MemoryLayout.row_major), m, n, alpha, unsafe { &x[0] }, incx,
 		unsafe { &y[0] }, incy, unsafe { &a[0] }, lda)
 }
 
+// cgeru exposes this operation as part of the public API.
+
+// cgeru exposes this operation as part of the public API.
 @[inline]
 pub fn cgeru(m int, n int, alpha voidptr, x voidptr, incx int, y voidptr, incy int, mut a voidptr, lda int) {
 	C.cblas_cgeru(int(MemoryLayout.row_major), m, n, alpha, x, incx, y, incy, a, lda)
 }
 
+// cgerc exposes this operation as part of the public API.
+
+// cgerc exposes this operation as part of the public API.
 @[inline]
 pub fn cgerc(m int, n int, alpha voidptr, x voidptr, incx int, y voidptr, incy int, mut a voidptr, lda int) {
 	C.cblas_cgerc(int(MemoryLayout.row_major), m, n, alpha, x, incx, y, incy, a, lda)
 }
 
+// zgeru exposes this operation as part of the public API.
+
+// zgeru exposes this operation as part of the public API.
 @[inline]
 pub fn zgeru(m int, n int, alpha voidptr, x voidptr, incx int, y voidptr, incy int, mut a voidptr, lda int) {
 	C.cblas_zgeru(int(MemoryLayout.row_major), m, n, alpha, x, incx, y, incy, a, lda)
 }
 
+// zgerc exposes this operation as part of the public API.
+
+// zgerc exposes this operation as part of the public API.
 @[inline]
 pub fn zgerc(m int, n int, alpha voidptr, x voidptr, incx int, y voidptr, incy int, mut a voidptr, lda int) {
 	C.cblas_zgerc(int(MemoryLayout.row_major), m, n, alpha, x, incx, y, incy, a, lda)
 }
 
+// strsv exposes this operation as part of the public API.
+
+// strsv exposes this operation as part of the public API.
 @[inline]
 pub fn strsv(uplo Uplo, trans Transpose, diag Diagonal, n int, a []f32, lda int, mut x []f32, incx int) {
 	C.cblas_strsv(int(MemoryLayout.row_major), int(uplo), int(trans), int(diag), n,
 		unsafe { &a[0] }, lda, unsafe { &x[0] }, incx)
 }
 
+// dtrsv exposes this operation as part of the public API.
+
+// dtrsv exposes this operation as part of the public API.
 @[inline]
 pub fn dtrsv(uplo Uplo, trans Transpose, diag Diagonal, n int, a []f64, lda int, mut x []f64, incx int) {
 	C.cblas_dtrsv(int(MemoryLayout.row_major), int(uplo), int(trans), int(diag), n,
 		unsafe { &a[0] }, lda, unsafe { &x[0] }, incx)
 }
 
+// ctrsv exposes this operation as part of the public API.
+
+// ctrsv exposes this operation as part of the public API.
 @[inline]
 pub fn ctrsv(uplo Uplo, trans Transpose, diag Diagonal, n int, a voidptr, lda int, mut x voidptr, incx int) {
 	C.cblas_ctrsv(int(MemoryLayout.row_major), int(uplo), int(trans), int(diag), n, a, lda, x, incx)
 }
 
+// ztrsv exposes this operation as part of the public API.
+
+// ztrsv exposes this operation as part of the public API.
 @[inline]
 pub fn ztrsv(uplo Uplo, trans Transpose, diag Diagonal, n int, a voidptr, lda int, mut x voidptr, incx int) {
 	C.cblas_ztrsv(int(MemoryLayout.row_major), int(uplo), int(trans), int(diag), n, a, lda, x, incx)
 }
 
+// strmv exposes this operation as part of the public API.
+
+// strmv exposes this operation as part of the public API.
 @[inline]
 pub fn strmv(uplo Uplo, trans Transpose, diag Diagonal, n int, a []f32, lda int, mut x []f32, incx int) {
 	C.cblas_strmv(int(MemoryLayout.row_major), int(uplo), int(trans), int(diag), n,
 		unsafe { &a[0] }, lda, unsafe { &x[0] }, incx)
 }
 
+// dtrmv exposes this operation as part of the public API.
+
+// dtrmv exposes this operation as part of the public API.
 @[inline]
 pub fn dtrmv(uplo Uplo, trans Transpose, diag Diagonal, n int, a []f64, lda int, mut x []f64, incx int) {
 	C.cblas_dtrmv(int(MemoryLayout.row_major), int(uplo), int(trans), int(diag), n,
 		unsafe { &a[0] }, lda, unsafe { &x[0] }, incx)
 }
 
+// ctrmv exposes this operation as part of the public API.
+
+// ctrmv exposes this operation as part of the public API.
 @[inline]
 pub fn ctrmv(uplo Uplo, trans Transpose, diag Diagonal, n int, a voidptr, lda int, mut x voidptr, incx int) {
 	C.cblas_ctrmv(int(MemoryLayout.row_major), int(uplo), int(trans), int(diag), n, a, lda, x, incx)
 }
 
+// ztrmv exposes this operation as part of the public API.
+
+// ztrmv exposes this operation as part of the public API.
 @[inline]
 pub fn ztrmv(uplo Uplo, trans Transpose, diag Diagonal, n int, a voidptr, lda int, mut x voidptr, incx int) {
 	C.cblas_ztrmv(int(MemoryLayout.row_major), int(uplo), int(trans), int(diag), n, a, lda, x, incx)
 }
 
+// ssyr exposes this operation as part of the public API.
+
+// ssyr exposes this operation as part of the public API.
 @[inline]
 pub fn ssyr(uplo Uplo, n int, alpha f32, x []f32, incx int, mut a []f32, lda int) {
 	C.cblas_ssyr(int(MemoryLayout.row_major), int(uplo), n, alpha, unsafe { &x[0] }, incx,
 		unsafe { &a[0] }, lda)
 }
 
+// dsyr exposes this operation as part of the public API.
+
+// dsyr exposes this operation as part of the public API.
 @[inline]
 pub fn dsyr(uplo Uplo, n int, alpha f64, x []f64, incx int, mut a []f64, lda int) {
 	C.cblas_dsyr(int(MemoryLayout.row_major), int(uplo), n, alpha, unsafe { &x[0] }, incx,
 		unsafe { &a[0] }, lda)
 }
 
+// cher exposes this operation as part of the public API.
+
+// cher exposes this operation as part of the public API.
 @[inline]
 pub fn cher(uplo Uplo, n int, alpha f32, x voidptr, incx int, mut a voidptr, lda int) {
 	C.cblas_cher(int(MemoryLayout.row_major), int(uplo), n, alpha, x, incx, a, lda)
 }
 
+// zher exposes this operation as part of the public API.
+
+// zher exposes this operation as part of the public API.
 @[inline]
 pub fn zher(uplo Uplo, n int, alpha f64, x voidptr, incx int, mut a voidptr, lda int) {
 	C.cblas_zher(int(MemoryLayout.row_major), int(uplo), n, alpha, x, incx, a, lda)
 }
 
+// ssyr2 exposes this operation as part of the public API.
+
+// ssyr2 exposes this operation as part of the public API.
 @[inline]
 pub fn ssyr2(uplo Uplo, n int, alpha f32, x []f32, incx int, y []f32, incy int, mut a []f32, lda int) {
 	C.cblas_ssyr2(int(MemoryLayout.row_major), int(uplo), n, alpha, unsafe { &x[0] }, incx,
 		unsafe { &y[0] }, incy, unsafe { &a[0] }, lda)
 }
 
+// dsyr2 exposes this operation as part of the public API.
+
+// dsyr2 exposes this operation as part of the public API.
 @[inline]
 pub fn dsyr2(uplo Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, mut a []f64, lda int) {
 	C.cblas_dsyr2(int(MemoryLayout.row_major), int(uplo), n, alpha, unsafe { &x[0] }, incx,
 		unsafe { &y[0] }, incy, unsafe { &a[0] }, lda)
 }
 
+// cher2 exposes this operation as part of the public API.
+
+// cher2 exposes this operation as part of the public API.
 @[inline]
 pub fn cher2(uplo Uplo, n int, alpha voidptr, x voidptr, incx int, y voidptr, incy int, mut a voidptr, lda int) {
 	C.cblas_cher2(int(MemoryLayout.row_major), int(uplo), n, alpha, x, incx, y, incy, a, lda)
 }
 
+// zher2 exposes this operation as part of the public API.
+
+// zher2 exposes this operation as part of the public API.
 @[inline]
 pub fn zher2(uplo Uplo, n int, alpha voidptr, x voidptr, incx int, y voidptr, incy int, mut a voidptr, lda int) {
 	C.cblas_zher2(int(MemoryLayout.row_major), int(uplo), n, alpha, x, incx, y, incy, a, lda)
 }
 
+// sgbmv exposes this operation as part of the public API.
+
+// sgbmv exposes this operation as part of the public API.
 @[inline]
 pub fn sgbmv(trans Transpose, m int, n int, kl int, ku int, alpha f32, a []f32, lda int, x []f32, incx int, beta f32, mut y []f32, incy int) {
 	C.cblas_sgbmv(int(MemoryLayout.row_major), int(trans), m, n, kl, ku, alpha, unsafe { &a[0] },
 		lda, unsafe { &x[0] }, incx, beta, unsafe { &y[0] }, incy)
 }
 
+// dgbmv exposes this operation as part of the public API.
+
+// dgbmv exposes this operation as part of the public API.
 @[inline]
 pub fn dgbmv(trans Transpose, m int, n int, kl int, ku int, alpha f64, a []f64, lda int, x []f64, incx int, beta f64, mut y []f64, incy int) {
 	C.cblas_dgbmv(int(MemoryLayout.row_major), int(trans), m, n, kl, ku, alpha, unsafe { &a[0] },
 		lda, unsafe { &x[0] }, incx, beta, unsafe { &y[0] }, incy)
 }
 
+// cgbmv exposes this operation as part of the public API.
+
+// cgbmv exposes this operation as part of the public API.
 @[inline]
 pub fn cgbmv(trans Transpose, m int, n int, kl int, ku int, alpha voidptr, a voidptr, lda int, x voidptr, incx int, beta voidptr, mut y voidptr, incy int) {
 	C.cblas_cgbmv(int(MemoryLayout.row_major), int(trans), m, n, kl, ku, alpha, a, lda, x, incx,
 		beta, y, incy)
 }
 
+// zgbmv exposes this operation as part of the public API.
+
+// zgbmv exposes this operation as part of the public API.
 @[inline]
 pub fn zgbmv(trans Transpose, m int, n int, kl int, ku int, alpha voidptr, a voidptr, lda int, x voidptr, incx int, beta voidptr, mut y voidptr, incy int) {
 	C.cblas_zgbmv(int(MemoryLayout.row_major), int(trans), m, n, kl, ku, alpha, a, lda, x, incx,
 		beta, y, incy)
 }
 
+// ssbmv exposes this operation as part of the public API.
+
+// ssbmv exposes this operation as part of the public API.
 @[inline]
 pub fn ssbmv(uplo Uplo, n int, k int, alpha f32, a []f32, lda int, x []f32, incx int, beta f32, mut y []f32, incy int) {
 	C.cblas_ssbmv(int(MemoryLayout.row_major), int(uplo), n, k, alpha, unsafe { &a[0] }, lda,
 		unsafe { &x[0] }, incx, beta, unsafe { &y[0] }, incy)
 }
 
+// dsbmv exposes this operation as part of the public API.
+
+// dsbmv exposes this operation as part of the public API.
 @[inline]
 pub fn dsbmv(uplo Uplo, n int, k int, alpha f64, a []f64, lda int, x []f64, incx int, beta f64, mut y []f64, incy int) {
 	C.cblas_dsbmv(int(MemoryLayout.row_major), int(uplo), n, k, alpha, unsafe { &a[0] }, lda,
 		unsafe { &x[0] }, incx, beta, unsafe { &y[0] }, incy)
 }
 
+// stbmv exposes this operation as part of the public API.
+
+// stbmv exposes this operation as part of the public API.
 @[inline]
 pub fn stbmv(uplo Uplo, trans Transpose, diag Diagonal, n int, k int, a []f32, lda int, mut x []f32, incx int) {
 	C.cblas_stbmv(int(MemoryLayout.row_major), int(uplo), int(trans), int(diag), n, k,
 		unsafe { &a[0] }, lda, unsafe { &x[0] }, incx)
 }
 
+// dtbmv exposes this operation as part of the public API.
+
+// dtbmv exposes this operation as part of the public API.
 @[inline]
 pub fn dtbmv(uplo Uplo, trans Transpose, diag Diagonal, n int, k int, a []f64, lda int, mut x []f64, incx int) {
 	C.cblas_dtbmv(int(MemoryLayout.row_major), int(uplo), int(trans), int(diag), n, k,
 		unsafe { &a[0] }, lda, unsafe { &x[0] }, incx)
 }
 
+// ctbmv exposes this operation as part of the public API.
+
+// ctbmv exposes this operation as part of the public API.
 @[inline]
 pub fn ctbmv(uplo Uplo, trans Transpose, diag Diagonal, n int, k int, a voidptr, lda int, mut x voidptr, incx int) {
 	C.cblas_ctbmv(int(MemoryLayout.row_major), int(uplo), int(trans), int(diag), n, k, a, lda, x,
 		incx)
 }
 
+// ztbmv exposes this operation as part of the public API.
+
+// ztbmv exposes this operation as part of the public API.
 @[inline]
 pub fn ztbmv(uplo Uplo, trans Transpose, diag Diagonal, n int, k int, a voidptr, lda int, mut x voidptr, incx int) {
 	C.cblas_ztbmv(int(MemoryLayout.row_major), int(uplo), int(trans), int(diag), n, k, a, lda, x,
 		incx)
 }
 
+// stbsv exposes this operation as part of the public API.
+
+// stbsv exposes this operation as part of the public API.
 @[inline]
 pub fn stbsv(uplo Uplo, trans Transpose, diag Diagonal, n int, k int, a []f32, lda int, mut x []f32, incx int) {
 	C.cblas_stbsv(int(MemoryLayout.row_major), int(uplo), int(trans), int(diag), n, k,
 		unsafe { &a[0] }, lda, unsafe { &x[0] }, incx)
 }
 
+// dtbsv exposes this operation as part of the public API.
+
+// dtbsv exposes this operation as part of the public API.
 @[inline]
 pub fn dtbsv(uplo Uplo, trans Transpose, diag Diagonal, n int, k int, a []f64, lda int, mut x []f64, incx int) {
 	C.cblas_dtbsv(int(MemoryLayout.row_major), int(uplo), int(trans), int(diag), n, k,
 		unsafe { &a[0] }, lda, unsafe { &x[0] }, incx)
 }
 
+// ctbsv exposes this operation as part of the public API.
+
+// ctbsv exposes this operation as part of the public API.
 @[inline]
 pub fn ctbsv(uplo Uplo, trans Transpose, diag Diagonal, n int, k int, a voidptr, lda int, mut x voidptr, incx int) {
 	C.cblas_ctbsv(int(MemoryLayout.row_major), int(uplo), int(trans), int(diag), n, k, a, lda, x,
 		incx)
 }
 
+// ztbsv exposes this operation as part of the public API.
+
+// ztbsv exposes this operation as part of the public API.
 @[inline]
 pub fn ztbsv(uplo Uplo, trans Transpose, diag Diagonal, n int, k int, a voidptr, lda int, mut x voidptr, incx int) {
 	C.cblas_ztbsv(int(MemoryLayout.row_major), int(uplo), int(trans), int(diag), n, k, a, lda, x,
 		incx)
 }
 
+// stpmv exposes this operation as part of the public API.
+
+// stpmv exposes this operation as part of the public API.
 @[inline]
 pub fn stpmv(uplo Uplo, trans Transpose, diag Diagonal, n int, ap []f32, mut x []f32, incx int) {
 	C.cblas_stpmv(int(MemoryLayout.row_major), int(uplo), int(trans), int(diag), n,
 		unsafe { &ap[0] }, unsafe { &x[0] }, incx)
 }
 
+// dtpmv exposes this operation as part of the public API.
+
+// dtpmv exposes this operation as part of the public API.
 @[inline]
 pub fn dtpmv(uplo Uplo, trans Transpose, diag Diagonal, n int, ap []f64, mut x []f64, incx int) {
 	C.cblas_dtpmv(int(MemoryLayout.row_major), int(uplo), int(trans), int(diag), n,
 		unsafe { &ap[0] }, unsafe { &x[0] }, incx)
 }
 
+// ctpmv exposes this operation as part of the public API.
+
+// ctpmv exposes this operation as part of the public API.
 @[inline]
 pub fn ctpmv(uplo Uplo, trans Transpose, diag Diagonal, n int, ap voidptr, mut x voidptr, incx int) {
 	C.cblas_ctpmv(int(MemoryLayout.row_major), int(uplo), int(trans), int(diag), n, ap, x, incx)
 }
 
+// ztpmv exposes this operation as part of the public API.
+
+// ztpmv exposes this operation as part of the public API.
 @[inline]
 pub fn ztpmv(uplo Uplo, trans Transpose, diag Diagonal, n int, ap voidptr, mut x voidptr, incx int) {
 	C.cblas_ztpmv(int(MemoryLayout.row_major), int(uplo), int(trans), int(diag), n, ap, x, incx)
 }
 
+// stpsv exposes this operation as part of the public API.
+
+// stpsv exposes this operation as part of the public API.
 @[inline]
 pub fn stpsv(uplo Uplo, trans Transpose, diag Diagonal, n int, ap []f32, mut x []f32, incx int) {
 	C.cblas_stpsv(int(MemoryLayout.row_major), int(uplo), int(trans), int(diag), n,
 		unsafe { &ap[0] }, unsafe { &x[0] }, incx)
 }
 
+// dtpsv exposes this operation as part of the public API.
+
+// dtpsv exposes this operation as part of the public API.
 @[inline]
 pub fn dtpsv(uplo Uplo, trans Transpose, diag Diagonal, n int, ap []f64, mut x []f64, incx int) {
 	C.cblas_dtpsv(int(MemoryLayout.row_major), int(uplo), int(trans), int(diag), n,
 		unsafe { &ap[0] }, unsafe { &x[0] }, incx)
 }
 
+// ctpsv exposes this operation as part of the public API.
+
+// ctpsv exposes this operation as part of the public API.
 @[inline]
 pub fn ctpsv(uplo Uplo, trans Transpose, diag Diagonal, n int, ap voidptr, mut x voidptr, incx int) {
 	C.cblas_ctpsv(int(MemoryLayout.row_major), int(uplo), int(trans), int(diag), n, ap, x, incx)
 }
 
+// ztpsv exposes this operation as part of the public API.
+
+// ztpsv exposes this operation as part of the public API.
 @[inline]
 pub fn ztpsv(uplo Uplo, trans Transpose, diag Diagonal, n int, ap voidptr, mut x voidptr, incx int) {
 	C.cblas_ztpsv(int(MemoryLayout.row_major), int(uplo), int(trans), int(diag), n, ap, x, incx)
 }
 
+// ssymv exposes this operation as part of the public API.
+
+// ssymv exposes this operation as part of the public API.
 @[inline]
 pub fn ssymv(uplo Uplo, n int, alpha f32, a []f32, lda int, x []f32, incx int, beta f32, mut y []f32, incy int) {
 	C.cblas_ssymv(int(MemoryLayout.row_major), int(uplo), n, alpha, unsafe { &a[0] }, lda,
 		unsafe { &x[0] }, incx, beta, unsafe { &y[0] }, incy)
 }
 
+// dsymv exposes this operation as part of the public API.
+
+// dsymv exposes this operation as part of the public API.
 @[inline]
 pub fn dsymv(uplo Uplo, n int, alpha f64, a []f64, lda int, x []f64, incx int, beta f64, mut y []f64, incy int) {
 	C.cblas_dsymv(int(MemoryLayout.row_major), int(uplo), n, alpha, unsafe { &a[0] }, lda,
 		unsafe { &x[0] }, incx, beta, unsafe { &y[0] }, incy)
 }
 
+// chemv exposes this operation as part of the public API.
+
+// chemv exposes this operation as part of the public API.
 @[inline]
 pub fn chemv(uplo Uplo, n int, alpha voidptr, a voidptr, lda int, x voidptr, incx int, beta voidptr, mut y voidptr, incy int) {
 	C.cblas_chemv(int(MemoryLayout.row_major), int(uplo), n, alpha, a, lda, x, incx, beta, y, incy)
 }
 
+// zhemv exposes this operation as part of the public API.
+
+// zhemv exposes this operation as part of the public API.
 @[inline]
 pub fn zhemv(uplo Uplo, n int, alpha voidptr, a voidptr, lda int, x voidptr, incx int, beta voidptr, mut y voidptr, incy int) {
 	C.cblas_zhemv(int(MemoryLayout.row_major), int(uplo), n, alpha, a, lda, x, incx, beta, y, incy)
 }
 
+// sspmv exposes this operation as part of the public API.
+
+// sspmv exposes this operation as part of the public API.
 @[inline]
 pub fn sspmv(uplo Uplo, n int, alpha f32, ap []f32, x []f32, incx int, beta f32, mut y []f32, incy int) {
 	C.cblas_sspmv(int(MemoryLayout.row_major), int(uplo), n, alpha, unsafe { &ap[0] },
 		unsafe { &x[0] }, incx, beta, unsafe { &y[0] }, incy)
 }
 
+// dspmv exposes this operation as part of the public API.
+
+// dspmv exposes this operation as part of the public API.
 @[inline]
 pub fn dspmv(uplo Uplo, n int, alpha f64, ap []f64, x []f64, incx int, beta f64, mut y []f64, incy int) {
 	C.cblas_dspmv(int(MemoryLayout.row_major), int(uplo), n, alpha, unsafe { &ap[0] },
 		unsafe { &x[0] }, incx, beta, unsafe { &y[0] }, incy)
 }
 
+// sspr exposes this operation as part of the public API.
+
+// sspr exposes this operation as part of the public API.
 @[inline]
 pub fn sspr(uplo Uplo, n int, alpha f32, x []f32, incx int, mut ap []f32) {
 	C.cblas_sspr(int(MemoryLayout.row_major), int(uplo), n, alpha, unsafe { &x[0] }, incx,
 		unsafe { &ap[0] })
 }
 
+// dspr exposes this operation as part of the public API.
+
+// dspr exposes this operation as part of the public API.
 @[inline]
 pub fn dspr(uplo Uplo, n int, alpha f64, x []f64, incx int, mut ap []f64) {
 	C.cblas_dspr(int(MemoryLayout.row_major), int(uplo), n, alpha, unsafe { &x[0] }, incx,
 		unsafe { &ap[0] })
 }
 
+// chpr exposes this operation as part of the public API.
+
+// chpr exposes this operation as part of the public API.
 @[inline]
 pub fn chpr(uplo Uplo, n int, alpha f32, x voidptr, incx int, mut a voidptr) {
 	C.cblas_chpr(int(MemoryLayout.row_major), int(uplo), n, alpha, x, incx, a)
 }
 
+// zhpr exposes this operation as part of the public API.
+
+// zhpr exposes this operation as part of the public API.
 @[inline]
 pub fn zhpr(uplo Uplo, n int, alpha f64, x voidptr, incx int, mut a voidptr) {
 	C.cblas_zhpr(int(MemoryLayout.row_major), int(uplo), n, alpha, x, incx, a)
 }
 
+// sspr2 exposes this operation as part of the public API.
+
+// sspr2 exposes this operation as part of the public API.
 @[inline]
 pub fn sspr2(uplo Uplo, n int, alpha f32, x []f32, incx int, y []f32, incy int, mut a []f32) {
 	C.cblas_sspr2(int(MemoryLayout.row_major), int(uplo), n, alpha, unsafe { &x[0] }, incx,
 		unsafe { &y[0] }, incy, unsafe { &a[0] })
 }
 
+// dspr2 exposes this operation as part of the public API.
+
+// dspr2 exposes this operation as part of the public API.
 @[inline]
 pub fn dspr2(uplo Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, mut a []f64) {
 	C.cblas_dspr2(int(MemoryLayout.row_major), int(uplo), n, alpha, unsafe { &x[0] }, incx,
 		unsafe { &y[0] }, incy, unsafe { &a[0] })
 }
 
+// chpr2 exposes this operation as part of the public API.
+
+// chpr2 exposes this operation as part of the public API.
 @[inline]
 pub fn chpr2(uplo Uplo, n int, alpha voidptr, x voidptr, incx int, y voidptr, incy int, mut ap voidptr) {
 	C.cblas_chpr2(int(MemoryLayout.row_major), int(uplo), n, alpha, x, incx, y, incy, ap)
 }
 
+// zhpr2 exposes this operation as part of the public API.
+
+// zhpr2 exposes this operation as part of the public API.
 @[inline]
 pub fn zhpr2(uplo Uplo, n int, alpha voidptr, x voidptr, incx int, y voidptr, incy int, mut ap voidptr) {
 	C.cblas_zhpr2(int(MemoryLayout.row_major), int(uplo), n, alpha, x, incx, y, incy, ap)
 }
 
+// chbmv exposes this operation as part of the public API.
+
+// chbmv exposes this operation as part of the public API.
 @[inline]
 pub fn chbmv(uplo Uplo, n int, k int, alpha voidptr, a voidptr, lda int, x voidptr, incx int, beta voidptr, mut y voidptr, incy int) {
 	C.cblas_chbmv(int(MemoryLayout.row_major), int(uplo), n, k, alpha, a, lda, x, incx, beta, y,
 		incy)
 }
 
+// zhbmv exposes this operation as part of the public API.
+
+// zhbmv exposes this operation as part of the public API.
 @[inline]
 pub fn zhbmv(uplo Uplo, n int, k int, alpha voidptr, a voidptr, lda int, x voidptr, incx int, beta voidptr, mut y voidptr, incy int) {
 	C.cblas_zhbmv(int(MemoryLayout.row_major), int(uplo), n, k, alpha, a, lda, x, incx, beta, y,
 		incy)
 }
 
+// chpmv exposes this operation as part of the public API.
+
+// chpmv exposes this operation as part of the public API.
 @[inline]
 pub fn chpmv(uplo Uplo, n int, alpha voidptr, ap voidptr, x voidptr, incx int, beta voidptr, mut y voidptr, incy int) {
 	C.cblas_chpmv(int(MemoryLayout.row_major), int(uplo), n, alpha, ap, x, incx, beta, y, incy)
 }
 
+// zhpmv exposes this operation as part of the public API.
+
+// zhpmv exposes this operation as part of the public API.
 @[inline]
 pub fn zhpmv(uplo Uplo, n int, alpha voidptr, ap voidptr, x voidptr, incx int, beta voidptr, mut y voidptr, incy int) {
 	C.cblas_zhpmv(int(MemoryLayout.row_major), int(uplo), n, alpha, ap, x, incx, beta, y, incy)
 }
 
+// ssyrk exposes this operation as part of the public API.
+
+// ssyrk exposes this operation as part of the public API.
 @[inline]
 pub fn ssyrk(uplo Uplo, trans Transpose, n int, k int, alpha f32, a []f32, lda int, beta f32, mut c []f32, ldc int) {
 	C.cblas_ssyrk(int(MemoryLayout.row_major), int(uplo), int(trans), n, k, alpha,
 		unsafe { &a[0] }, lda, beta, unsafe { &c[0] }, ldc)
 }
 
+// dsyrk exposes this operation as part of the public API.
+
+// dsyrk exposes this operation as part of the public API.
 @[inline]
 pub fn dsyrk(uplo Uplo, trans Transpose, n int, k int, alpha f64, a []f64, lda int, beta f64, mut c []f64, ldc int) {
 	C.cblas_dsyrk(int(MemoryLayout.row_major), int(uplo), int(trans), n, k, alpha,
 		unsafe { &a[0] }, lda, beta, unsafe { &c[0] }, ldc)
 }
 
+// csyrk exposes this operation as part of the public API.
+
+// csyrk exposes this operation as part of the public API.
 @[inline]
 pub fn csyrk(uplo Uplo, trans Transpose, n int, k int, alpha voidptr, a voidptr, lda int, beta voidptr, mut c voidptr, ldc int) {
 	C.cblas_csyrk(int(MemoryLayout.row_major), int(uplo), int(trans), n, k, alpha, a, lda, beta, c,
 		ldc)
 }
 
+// zsyrk exposes this operation as part of the public API.
+
+// zsyrk exposes this operation as part of the public API.
 @[inline]
 pub fn zsyrk(uplo Uplo, trans Transpose, n int, k int, alpha voidptr, a voidptr, lda int, beta voidptr, mut c voidptr, ldc int) {
 	C.cblas_zsyrk(int(MemoryLayout.row_major), int(uplo), int(trans), n, k, alpha, a, lda, beta, c,
 		ldc)
 }
 
+// ssyr2k exposes this operation as part of the public API.
+
+// ssyr2k exposes this operation as part of the public API.
 @[inline]
 pub fn ssyr2k(uplo Uplo, trans Transpose, n int, k int, alpha f32, a []f32, lda int, b []f32, ldb int, beta f32, mut c []f32, ldc int) {
 	C.cblas_ssyr2k(int(MemoryLayout.row_major), int(uplo), int(trans), n, k, alpha,
 		unsafe { &a[0] }, lda, unsafe { &b[0] }, ldb, beta, unsafe { &c[0] }, ldc)
 }
 
+// dsyr2k exposes this operation as part of the public API.
+
+// dsyr2k exposes this operation as part of the public API.
 @[inline]
 pub fn dsyr2k(uplo Uplo, trans Transpose, n int, k int, alpha f64, a []f64, lda int, b []f64, ldb int, beta f64, mut c []f64, ldc int) {
 	C.cblas_dsyr2k(int(MemoryLayout.row_major), int(uplo), int(trans), n, k, alpha,
 		unsafe { &a[0] }, lda, unsafe { &b[0] }, ldb, beta, unsafe { &c[0] }, ldc)
 }
 
+// csyr2k exposes this operation as part of the public API.
+
+// csyr2k exposes this operation as part of the public API.
 @[inline]
 pub fn csyr2k(uplo Uplo, trans Transpose, n int, k int, alpha voidptr, a voidptr, lda int, b voidptr, ldb int, beta voidptr, mut c voidptr, ldc int) {
 	C.cblas_csyr2k(int(MemoryLayout.row_major), int(uplo), int(trans), n, k, alpha, a, lda, b, ldb,
 		beta, c, ldc)
 }
 
+// zsyr2k exposes this operation as part of the public API.
+
+// zsyr2k exposes this operation as part of the public API.
 @[inline]
 pub fn zsyr2k(uplo Uplo, trans Transpose, n int, k int, alpha voidptr, a voidptr, lda int, b voidptr, ldb int, beta voidptr, mut c voidptr, ldc int) {
 	C.cblas_zsyr2k(int(MemoryLayout.row_major), int(uplo), int(trans), n, k, alpha, a, lda, b, ldb,
 		beta, c, ldc)
 }
 
+// strmm exposes this operation as part of the public API.
+
+// strmm exposes this operation as part of the public API.
 @[inline]
 pub fn strmm(side Side, uplo Uplo, trans Transpose, diag Diagonal, m int, n int, alpha f32, a []f32, lda int, mut b []f32, ldb int) {
 	C.cblas_strmm(int(MemoryLayout.row_major), int(side), int(uplo), int(trans), int(diag), m, n,
 		alpha, unsafe { &a[0] }, lda, unsafe { &b[0] }, ldb)
 }
 
+// dtrmm exposes this operation as part of the public API.
+
+// dtrmm exposes this operation as part of the public API.
 @[inline]
 pub fn dtrmm(side Side, uplo Uplo, trans Transpose, diag Diagonal, m int, n int, alpha f64, a []f64, lda int, mut b []f64, ldb int) {
 	C.cblas_dtrmm(int(MemoryLayout.row_major), int(side), int(uplo), int(trans), int(diag), m, n,
 		alpha, unsafe { &a[0] }, lda, unsafe { &b[0] }, ldb)
 }
 
+// ctrmm exposes this operation as part of the public API.
+
+// ctrmm exposes this operation as part of the public API.
 @[inline]
 pub fn ctrmm(side Side, uplo Uplo, trans Transpose, diag Diagonal, m int, n int, alpha voidptr, a voidptr, lda int, mut b voidptr, ldb int) {
 	C.cblas_ctrmm(int(MemoryLayout.row_major), int(side), int(uplo), int(trans), int(diag), m, n,
 		alpha, a, lda, b, ldb)
 }
 
+// ztrmm exposes this operation as part of the public API.
+
+// ztrmm exposes this operation as part of the public API.
 @[inline]
 pub fn ztrmm(side Side, uplo Uplo, trans Transpose, diag Diagonal, m int, n int, alpha voidptr, a voidptr, lda int, mut b voidptr, ldb int) {
 	C.cblas_ztrmm(int(MemoryLayout.row_major), int(side), int(uplo), int(trans), int(diag), m, n,
 		alpha, a, lda, b, ldb)
 }
 
+// strsm exposes this operation as part of the public API.
+
+// strsm exposes this operation as part of the public API.
 @[inline]
 pub fn strsm(side Side, uplo Uplo, trans Transpose, diag Diagonal, m int, n int, alpha f32, a []f32, lda int, mut b []f32, ldb int) {
 	C.cblas_strsm(int(MemoryLayout.row_major), int(side), int(uplo), int(trans), int(diag), m, n,
 		alpha, unsafe { &a[0] }, lda, unsafe { &b[0] }, ldb)
 }
 
+// dtrsm exposes this operation as part of the public API.
+
+// dtrsm exposes this operation as part of the public API.
 @[inline]
 pub fn dtrsm(side Side, uplo Uplo, trans Transpose, diag Diagonal, m int, n int, alpha f64, a []f64, lda int, mut b []f64, ldb int) {
 	C.cblas_dtrsm(int(MemoryLayout.row_major), int(side), int(uplo), int(trans), int(diag), m, n,
 		alpha, unsafe { &a[0] }, lda, unsafe { &b[0] }, ldb)
 }
 
+// ctrsm exposes this operation as part of the public API.
+
+// ctrsm exposes this operation as part of the public API.
 @[inline]
 pub fn ctrsm(side Side, uplo Uplo, trans Transpose, diag Diagonal, m int, n int, alpha voidptr, a voidptr, lda int, mut b voidptr, ldb int) {
 	C.cblas_ctrsm(int(MemoryLayout.row_major), int(side), int(uplo), int(trans), int(diag), m, n,
 		alpha, a, lda, b, ldb)
 }
 
+// ztrsm exposes this operation as part of the public API.
+
+// ztrsm exposes this operation as part of the public API.
 @[inline]
 pub fn ztrsm(side Side, uplo Uplo, trans Transpose, diag Diagonal, m int, n int, alpha voidptr, a voidptr, lda int, mut b voidptr, ldb int) {
 	C.cblas_ztrsm(int(MemoryLayout.row_major), int(side), int(uplo), int(trans), int(diag), m, n,
 		alpha, a, lda, b, ldb)
 }
 
+// chemm exposes this operation as part of the public API.
+
+// chemm exposes this operation as part of the public API.
 @[inline]
 pub fn chemm(side Side, uplo Uplo, m int, n int, alpha voidptr, a voidptr, lda int, b voidptr, ldb int, beta voidptr, mut c voidptr, ldc int) {
 	C.cblas_chemm(int(MemoryLayout.row_major), int(side), int(uplo), m, n, alpha, a, lda, b, ldb,
 		beta, c, ldc)
 }
 
+// zhemm exposes this operation as part of the public API.
+
+// zhemm exposes this operation as part of the public API.
 @[inline]
 pub fn zhemm(side Side, uplo Uplo, m int, n int, alpha voidptr, a voidptr, lda int, b voidptr, ldb int, beta voidptr, mut c voidptr, ldc int) {
 	C.cblas_zhemm(int(MemoryLayout.row_major), int(side), int(uplo), m, n, alpha, a, lda, b, ldb,
 		beta, c, ldc)
 }
 
+// cherk exposes this operation as part of the public API.
+
+// cherk exposes this operation as part of the public API.
 @[inline]
 pub fn cherk(uplo Uplo, trans Transpose, n int, k int, alpha f32, a voidptr, lda int, beta f32, mut c voidptr, ldc int) {
 	C.cblas_cherk(int(MemoryLayout.row_major), int(uplo), int(trans), n, k, alpha, a, lda, beta, c,
 		ldc)
 }
 
+// zherk exposes this operation as part of the public API.
+
+// zherk exposes this operation as part of the public API.
 @[inline]
 pub fn zherk(uplo Uplo, trans Transpose, n int, k int, alpha f64, a voidptr, lda int, beta f64, mut c voidptr, ldc int) {
 	C.cblas_zherk(int(MemoryLayout.row_major), int(uplo), int(trans), n, k, alpha, a, lda, beta, c,
 		ldc)
 }
 
+// cher2k exposes this operation as part of the public API.
+
+// cher2k exposes this operation as part of the public API.
 @[inline]
 pub fn cher2k(uplo Uplo, trans Transpose, n int, k int, alpha voidptr, a voidptr, lda int, b voidptr, ldb int, beta f32, mut c voidptr, ldc int) {
 	C.cblas_cher2k(int(MemoryLayout.row_major), int(uplo), int(trans), n, k, alpha, a, lda, b, ldb,
 		beta, c, ldc)
 }
 
+// zher2k exposes this operation as part of the public API.
+
+// zher2k exposes this operation as part of the public API.
 @[inline]
 pub fn zher2k(uplo Uplo, trans Transpose, n int, k int, alpha voidptr, a voidptr, lda int, b voidptr, ldb int, beta f64, mut c voidptr, ldc int) {
 	C.cblas_zher2k(int(MemoryLayout.row_major), int(uplo), int(trans), n, k, alpha, a, lda, b, ldb,
 		beta, c, ldc)
 }
 
+// saxpby exposes this operation as part of the public API.
+
+// saxpby exposes this operation as part of the public API.
 @[inline]
 pub fn saxpby(n int, alpha f32, x []f32, incx int, beta f32, mut y []f32, incy int) {
 	C.cblas_saxpby(n, alpha, unsafe { &x[0] }, incx, beta, unsafe { &y[0] }, incy)
 }
 
+// daxpby exposes this operation as part of the public API.
+
+// daxpby exposes this operation as part of the public API.
 @[inline]
 pub fn daxpby(n int, alpha f64, x []f64, incx int, beta f64, mut y []f64, incy int) {
 	C.cblas_daxpby(n, alpha, unsafe { &x[0] }, incx, beta, unsafe { &y[0] }, incy)
 }
 
+// caxpby exposes this operation as part of the public API.
+
+// caxpby exposes this operation as part of the public API.
 @[inline]
 pub fn caxpby(n int, alpha voidptr, x voidptr, incx int, beta voidptr, mut y voidptr, incy int) {
 	C.cblas_caxpby(n, alpha, x, incx, beta, y, incy)
 }
 
+// zaxpby exposes this operation as part of the public API.
+
+// zaxpby exposes this operation as part of the public API.
 @[inline]
 pub fn zaxpby(n int, alpha voidptr, x voidptr, incx int, beta voidptr, mut y voidptr, incy int) {
 	C.cblas_zaxpby(n, alpha, x, incx, beta, y, incy)
 }
 
+// somatcopy exposes this operation as part of the public API.
+
+// somatcopy exposes this operation as part of the public API.
 @[inline]
 pub fn somatcopy(order MemoryLayout, trans Transpose, rows int, cols int, alpha f32, a []f32, lda int, mut b []f32, ldb int) {
 	C.cblas_somatcopy(int(order), int(trans), rows, cols, alpha, unsafe { &a[0] }, lda,
 		unsafe { &b[0] }, ldb)
 }
 
+// domatcopy exposes this operation as part of the public API.
+
+// domatcopy exposes this operation as part of the public API.
 @[inline]
 pub fn domatcopy(order MemoryLayout, trans Transpose, rows int, cols int, alpha f64, a []f64, lda int, mut b []f64, ldb int) {
 	C.cblas_domatcopy(int(order), int(trans), rows, cols, alpha, unsafe { &a[0] }, lda,
 		unsafe { &b[0] }, ldb)
 }
 
+// comatcopy exposes this operation as part of the public API.
+
+// comatcopy exposes this operation as part of the public API.
 @[inline]
 pub fn comatcopy(order MemoryLayout, trans Transpose, rows int, cols int, alpha &f32, a &f32, lda int, mut b &f32, ldb int) {
 	C.cblas_comatcopy(int(order), int(trans), rows, cols, alpha, a, lda, b, ldb)
 }
 
+// zomatcopy exposes this operation as part of the public API.
+
+// zomatcopy exposes this operation as part of the public API.
 @[inline]
 pub fn zomatcopy(order MemoryLayout, trans Transpose, rows int, cols int, alpha &f64, a &f64, lda int, mut b &f64, ldb int) {
 	C.cblas_zomatcopy(int(order), int(trans), rows, cols, alpha, a, lda, b, ldb)
 }
 
+// simatcopy exposes this operation as part of the public API.
+
+// simatcopy exposes this operation as part of the public API.
 @[inline]
 pub fn simatcopy(order MemoryLayout, trans Transpose, rows int, cols int, alpha f32, mut a []f32, lda int, ldb int) {
 	C.cblas_simatcopy(int(order), int(trans), rows, cols, alpha, unsafe { &a[0] }, lda, ldb)
 }
 
+// dimatcopy exposes this operation as part of the public API.
+
+// dimatcopy exposes this operation as part of the public API.
 @[inline]
 pub fn dimatcopy(order MemoryLayout, trans Transpose, rows int, cols int, alpha f64, mut a []f64, lda int, ldb int) {
 	C.cblas_dimatcopy(int(order), int(trans), rows, cols, alpha, unsafe { &a[0] }, lda, ldb)
 }
 
+// cimatcopy exposes this operation as part of the public API.
+
+// cimatcopy exposes this operation as part of the public API.
 @[inline]
 pub fn cimatcopy(order MemoryLayout, trans Transpose, rows int, cols int, alpha &f32, mut a &f32, lda int, ldb int) {
 	C.cblas_cimatcopy(int(order), int(trans), rows, cols, alpha, a, lda, ldb)
 }
 
+// zimatcopy exposes this operation as part of the public API.
+
+// zimatcopy exposes this operation as part of the public API.
 @[inline]
 pub fn zimatcopy(order MemoryLayout, trans Transpose, rows int, cols int, alpha &f64, mut a &f64, lda int, ldb int) {
 	C.cblas_zimatcopy(int(order), int(trans), rows, cols, alpha, a, lda, ldb)
 }
 
+// sgeadd exposes this operation as part of the public API.
+
+// sgeadd exposes this operation as part of the public API.
 @[inline]
 pub fn sgeadd(order MemoryLayout, rows int, cols int, alpha f32, a []f32, lda int, beta f32, mut c []f32, ldc int) {
 	C.cblas_sgeadd(int(order), rows, cols, alpha, unsafe { &a[0] }, lda, beta, unsafe { &c[0] },
 		ldc)
 }
 
+// dgeadd exposes this operation as part of the public API.
+
+// dgeadd exposes this operation as part of the public API.
 @[inline]
 pub fn dgeadd(order MemoryLayout, rows int, cols int, alpha f64, a []f64, lda int, beta f64, mut c []f64, ldc int) {
 	C.cblas_dgeadd(int(order), rows, cols, alpha, unsafe { &a[0] }, lda, beta, unsafe { &c[0] },
 		ldc)
 }
 
+// cgeadd exposes this operation as part of the public API.
+
+// cgeadd exposes this operation as part of the public API.
 @[inline]
 pub fn cgeadd(order MemoryLayout, rows int, cols int, alpha &f32, a &f32, lda int, beta &f32, mut c &f32, ldc int) {
 	C.cblas_cgeadd(int(order), rows, cols, alpha, a, lda, beta, c, ldc)
 }
 
+// zgeadd exposes this operation as part of the public API.
+
+// zgeadd exposes this operation as part of the public API.
 @[inline]
 pub fn zgeadd(order MemoryLayout, rows int, cols int, alpha &f64, a &f64, lda int, beta &f64, mut c &f64, ldc int) {
 	C.cblas_zgeadd(int(order), rows, cols, alpha, a, lda, beta, c, ldc)
 }
 
+// dgemm exposes this operation as part of the public API.
+
+// dgemm exposes this operation as part of the public API.
 @[inline]
 pub fn dgemm(trans_a Transpose, trans_b Transpose, m int, n int, k int, alpha f64, a []f64, lda int, b []f64, ldb int, beta f64, mut cc []f64, ldc int) {
 	C.cblas_dgemm(int(MemoryLayout.row_major), int(trans_a), int(trans_b), m, n, k, alpha,

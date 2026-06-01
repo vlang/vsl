@@ -9,6 +9,10 @@ import time
 
 // PlotConfig is a configuration for the Plotly plot.
 // It includes the configuration for the web server that serves the plot.
+
+// PlotConfig defines a public data structure for this module.
+
+// PlotConfig defines a public data structure for this module.
 @[params]
 pub struct PlotConfig {
 	net.ListenOptions
@@ -48,6 +52,10 @@ pub fn (p Plot) show(config PlotConfig) ! {
 type TracesWithTypeValue = Trace | string
 
 // PlotlyScriptConfig is a configuration for the Plotly plot script.
+
+// PlotlyScriptConfig defines a public data structure for this module.
+
+// PlotlyScriptConfig defines a public data structure for this module.
 @[params]
 pub struct PlotlyScriptConfig {
 	PlotConfig

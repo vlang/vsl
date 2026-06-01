@@ -2,6 +2,7 @@ module blas64
 
 // Column-major minimal BLAS subset used by lapack64
 
+// cm_ddot exposes this operation as part of the public API.
 pub fn cm_ddot(n int, x []f64, incx int, y []f64, incy int) f64 {
 	if n <= 0 {
 		return 0
@@ -17,6 +18,7 @@ pub fn cm_ddot(n int, x []f64, incx int, y []f64, incy int) f64 {
 	return sum
 }
 
+// cm_dscal exposes this operation as part of the public API.
 pub fn cm_dscal(n int, alpha f64, mut x []f64, incx int) {
 	if n <= 0 {
 		return
@@ -28,6 +30,7 @@ pub fn cm_dscal(n int, alpha f64, mut x []f64, incx int) {
 	}
 }
 
+// cm_daxpy exposes this operation as part of the public API.
 pub fn cm_daxpy(n int, alpha f64, x []f64, incx int, mut y []f64, incy int) {
 	if n <= 0 || alpha == 0 {
 		return
@@ -41,6 +44,7 @@ pub fn cm_daxpy(n int, alpha f64, x []f64, incx int, mut y []f64, incy int) {
 	}
 }
 
+// cm_dgemv exposes this operation as part of the public API.
 pub fn cm_dgemv(trans Transpose, m int, n int, alpha f64, a []f64, lda int, x []f64, incx int, beta f64, mut y []f64, incy int) {
 	if m == 0 || n == 0 {
 		return
@@ -74,6 +78,7 @@ pub fn cm_dgemv(trans Transpose, m int, n int, alpha f64, a []f64, lda int, x []
 	}
 }
 
+// cm_dgemm exposes this operation as part of the public API.
 pub fn cm_dgemm(trans_a Transpose, trans_b Transpose, m int, n int, k int, alpha f64, a []f64, lda int, b []f64, ldb int, beta f64, mut c []f64, ldc int) {
 	if m == 0 || n == 0 || ((alpha == 0 || k == 0) && beta == 1) {
 		return
@@ -108,6 +113,7 @@ pub fn cm_dgemm(trans_a Transpose, trans_b Transpose, m int, n int, k int, alpha
 	}
 }
 
+// cm_dsyrk exposes this operation as part of the public API.
 pub fn cm_dsyrk(uplo Uplo, trans Transpose, n int, k int, alpha f64, a []f64, lda int, beta f64, mut c []f64, ldc int) {
 	if n == 0 {
 		return
@@ -178,6 +184,7 @@ pub fn cm_dsyrk(uplo Uplo, trans Transpose, n int, k int, alpha f64, a []f64, ld
 	}
 }
 
+// cm_dtrsm exposes this operation as part of the public API.
 pub fn cm_dtrsm(side Side, uplo Uplo, trans_a Transpose, diag Diagonal, m int, n int, alpha f64, a []f64, lda int, mut b []f64, ldb int) {
 	if m == 0 || n == 0 {
 		return

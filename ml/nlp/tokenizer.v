@@ -4,6 +4,7 @@ import vsl.errors
 
 const punctuation = ',.[]()[]-=_*;:+><\\"`´~^!?@#$%¨&/|'.split('')
 
+// ngram_sep is a public constant used by this module.
 pub const ngram_sep = 'NGRAMSEP'
 
 // remove_punctuation will remove the following characters from the string:

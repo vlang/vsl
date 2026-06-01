@@ -2,6 +2,7 @@ module compute
 
 import vsl.vulkan
 
+// gemv_vulkan_f32 exposes this operation as part of the public API.
 pub fn gemv_vulkan_f32(dev &vulkan.Device, a_data []f32, x_data []f32, m int, n int) ![]f32 {
 	if a_data.len != m * n {
 		return error('gemv_vulkan_f32: expected a_data len=${m * n}, got ${a_data.len}')
@@ -43,6 +44,7 @@ pub fn gemv_vulkan_f32(dev &vulkan.Device, a_data []f32, x_data []f32, m int, n 
 	return out
 }
 
+// gemv_vulkan exposes this operation as part of the public API.
 pub fn gemv_vulkan(dev &vulkan.Device, a_data []f64, x_data []f64, m int, n int) ![]f64 {
 	mut a_f32 := []f32{len: a_data.len}
 	for i, v in a_data {

@@ -2,6 +2,7 @@ module lapack64
 
 import math
 
+// dlaev2 exposes this operation as part of the public API.
 pub fn dlaev2(a f64, b f64, c f64) (f64, f64, f64, f64) {
 	sm := a + c
 	df := a - c

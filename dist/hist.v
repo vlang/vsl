@@ -66,6 +66,7 @@ pub fn build_text_hist(xmin f64, xmax f64, nstations int, values []f64, numfmt s
  *     s[0]      s[1]      s[2]      s[3]      s[4]      s[5]
  *
 */
+// Histogram defines a public data structure for this module.
 pub struct Histogram {
 pub mut:
 	stations []f64 // stations

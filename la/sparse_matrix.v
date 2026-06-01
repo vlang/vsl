@@ -77,6 +77,7 @@ pub fn (mut o Triplet[T]) put(i int, j int, x T) ! {
  *      [a10 a11 a12 ... ... ...] 4      [.  .  .]
  *      [... ... ... ... ... ...] 5
 */
+// put_matrix_and_matrix_t exposes this operation as part of the public API.
 pub fn (mut o Triplet[T]) put_matrix_and_matrix_t(a &Triplet[T]) ! {
 	if a.n + a.m > o.m || a.n + a.m > o.n {
 		return errors.error('cannot put larger matrix into sparse matrix.\nb := [[.. at] [a ..]] with len(a)=(${a.m},${a.n}) and len(b)=(${o.m},${o.n})',
@@ -98,6 +99,7 @@ pub fn (mut o Triplet[T]) put_matrix_and_matrix_t(a &Triplet[T]) ! {
  *      [a10 a11 a12 ... ... ...] 4      [.  .  .]
  *      [... ... ... ... ... ...] 5
 */
+// put_cc_matrix_and_matrix_t exposes this operation as part of the public API.
 pub fn (mut o Triplet[T]) put_cc_matrix_and_matrix_t(a &CCMatrix[T]) ! {
 	if a.n + a.m > o.m || a.n + a.m > o.n {
 		return errors.error('cannot put larger matrix into sparse matrix.\nb := [[.. at] [a ..]] with len(a)=(${a.m},${a.n}) and len(b)=(${o.m},${o.n})',

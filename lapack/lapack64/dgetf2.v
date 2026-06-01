@@ -3,6 +3,7 @@ module lapack64
 import math
 import vsl.blas
 
+// dgetf2 exposes this operation as part of the public API.
 pub fn dgetf2(m int, n int, mut a []f64, lda int, mut ipiv []int) bool {
 	mn := math.min(m, n)
 	if m < 0 {

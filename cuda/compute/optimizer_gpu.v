@@ -13,6 +13,7 @@ mut:
 	bytes int
 }
 
+// gpu_buf_f64_new exposes this operation as part of the public API.
 pub fn gpu_buf_f64_new(count int) !GpuBufF64 {
 	mut ptr := unsafe { nil }
 	sz := int(sizeof(f64)) * count
@@ -26,6 +27,7 @@ pub fn gpu_buf_f64_new(count int) !GpuBufF64 {
 	}
 }
 
+// ensure exposes this operation as part of the public API.
 pub fn (mut b GpuBufF64) ensure(count int) ! {
 	sz := int(sizeof(f64)) * count
 	if !isnil(b.ptr) && b.bytes >= sz {
@@ -41,6 +43,7 @@ pub fn (mut b GpuBufF64) ensure(count int) ! {
 	b.bytes = sz
 }
 
+// upload exposes this operation as part of the public API.
 pub fn (mut b GpuBufF64) upload(data []f64) ! {
 	status := C.cudaMemcpy(b.ptr, data.data, int(sizeof(f64)) * data.len,
 		C.cuda_memcpy_host_to_device)
@@ -49,6 +52,7 @@ pub fn (mut b GpuBufF64) upload(data []f64) ! {
 	}
 }
 
+// download exposes this operation as part of the public API.
 pub fn (b &GpuBufF64) download(mut out []f64) ! {
 	status := C.cudaMemcpy(out.data, b.ptr, int(sizeof(f64)) * out.len,
 		C.cuda_memcpy_device_to_host)
@@ -57,12 +61,14 @@ pub fn (b &GpuBufF64) download(mut out []f64) ! {
 	}
 }
 
+// release exposes this operation as part of the public API.
 pub fn (b &GpuBufF64) release() {
 	if !isnil(b.ptr) {
 		C.cudaFree(b.ptr)
 	}
 }
 
+// gpu_buf_f64_dscal exposes this operation as part of the public API.
 pub fn gpu_buf_f64_dscal(dev &cuda.CudaDevice, mut b GpuBufF64, count int, alpha f64) ! {
 	if isnil(dev.cublas) {
 		return error('gpu_buf_f64_dscal: cublas unavailable')
@@ -73,6 +79,7 @@ pub fn gpu_buf_f64_dscal(dev &cuda.CudaDevice, mut b GpuBufF64, count int, alpha
 	}
 }
 
+// gpu_buf_f64_axpy exposes this operation as part of the public API.
 pub fn gpu_buf_f64_axpy(dev &cuda.CudaDevice, alpha f64, x &GpuBufF64, mut y GpuBufF64, count int) ! {
 	if isnil(dev.cublas) {
 		return error('gpu_buf_f64_axpy: cublas unavailable')
@@ -83,6 +90,7 @@ pub fn gpu_buf_f64_axpy(dev &cuda.CudaDevice, alpha f64, x &GpuBufF64, mut y Gpu
 	}
 }
 
+// gpu_buf_f64_mul_vec exposes this operation as part of the public API.
 pub fn gpu_buf_f64_mul_vec(dev &cuda.CudaDevice, a &GpuBufF64, b &GpuBufF64, mut out GpuBufF64,
 	count int) ! {
 	if isnil(dev.cublas) {
@@ -114,6 +122,7 @@ pub fn gpu_buf_f64_copy(mut dst GpuBufF64, src &GpuBufF64, count int) ! {
 	}
 }
 
+// gpu_buf_f64_add_scalar_inplace exposes this operation as part of the public API.
 pub fn gpu_buf_f64_add_scalar_inplace(mut b GpuBufF64, count int, s f64) ! {
 	mut host := []f64{len: count}
 	b.download(mut host)!

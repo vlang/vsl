@@ -15,6 +15,7 @@ pub fn combinations(data []f64, r int) [][]f64 {
 	return result
 }
 
+// CombinationsIter defines a public data structure for this module.
 pub struct CombinationsIter {
 mut:
 	pos  u64
@@ -92,6 +93,7 @@ pub fn combinations_with_replacement(data []f64, r int) [][]f64 {
 	return result
 }
 
+// CombinationsWithReplacementIter defines a public data structure for this module.
 pub struct CombinationsWithReplacementIter {
 mut:
 	pos  u64

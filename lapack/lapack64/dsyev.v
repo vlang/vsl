@@ -3,6 +3,7 @@ module lapack64
 import math
 import vsl.blas
 
+// dsyev exposes this operation as part of the public API.
 pub fn dsyev(jobz EigenVectorsJob, uplo blas.Uplo, n int, mut a []f64, lda int, mut w []f64, mut work []f64, lwork int) {
 	if jobz != .ev_none && jobz != .ev_compute {
 		panic(bad_ev_job)

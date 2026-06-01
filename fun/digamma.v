@@ -3,11 +3,15 @@ module fun
 import math
 import vsl.poly
 
+// digamma exposes this operation as part of the public API.
+
+// digamma exposes this operation as part of the public API.
 @[inline]
 pub fn digamma(x f64) f64 {
 	return psi(x)
 }
 
+// psi exposes this operation as part of the public API.
 pub fn psi(x_ f64) f64 {
 	mut x := x_
 	mut negative := false

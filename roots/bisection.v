@@ -19,6 +19,10 @@ pub mut:
 }
 
 // BisectionParams contains the parameters for the bisection method
+
+// BisectionParams defines a public data structure for this module.
+
+// BisectionParams defines a public data structure for this module.
 @[params]
 pub struct BisectionParams {
 pub:
@@ -41,6 +45,7 @@ pub fn Bisection.new(f func.Fn, params BisectionParams) &Bisection {
 	}
 }
 
+// BisectionIteration defines a public data structure for this module.
 pub struct BisectionIteration {
 pub mut:
 	x         f64

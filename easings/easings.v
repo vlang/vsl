@@ -2,27 +2,44 @@ module easings
 
 import math
 
+// EasingFn defines a public type used by this module.
 pub type EasingFn = fn (x f64) f64
 
 // linear_interpolation is a method of curve fitting using linear polynomials to construct new data points within the range of a discrete set of known data points
+
+// linear_interpolation exposes this operation as part of the public API.
+
+// linear_interpolation exposes this operation as part of the public API.
 @[inline]
 pub fn linear_interpolation(p f64) f64 {
 	return p
 }
 
 // quadratic_ease_in eases in with a power of 2
+
+// quadratic_ease_in exposes this operation as part of the public API.
+
+// quadratic_ease_in exposes this operation as part of the public API.
 @[inline]
 pub fn quadratic_ease_in(p f64) f64 {
 	return p * p
 }
 
 // quadratic_easing_eases out with a power of 2
+
+// quadratic_ease_out exposes this operation as part of the public API.
+
+// quadratic_ease_out exposes this operation as part of the public API.
 @[inline]
 pub fn quadratic_ease_out(p f64) f64 {
 	return -(p * (p - 2))
 }
 
 // quadratic_easing_in_out speeds up function's growth in a power of 2, then slows down after a half at the same rate
+
+// quadratic_ease_in_out exposes this operation as part of the public API.
+
+// quadratic_ease_in_out exposes this operation as part of the public API.
 @[inline]
 pub fn quadratic_ease_in_out(p f64) f64 {
 	if p < 0.5 {
@@ -33,12 +50,20 @@ pub fn quadratic_ease_in_out(p f64) f64 {
 }
 
 // cubic_ease_in eases in with a power of 3
+
+// cubic_ease_in exposes this operation as part of the public API.
+
+// cubic_ease_in exposes this operation as part of the public API.
 @[inline]
 pub fn cubic_ease_in(p f64) f64 {
 	return p * p * p
 }
 
 // cubic_ease_out eases out with a power of 3
+
+// cubic_ease_out exposes this operation as part of the public API.
+
+// cubic_ease_out exposes this operation as part of the public API.
 @[inline]
 pub fn cubic_ease_out(p f64) f64 {
 	f := p - 1.0
@@ -46,6 +71,10 @@ pub fn cubic_ease_out(p f64) f64 {
 }
 
 // cubic_ease_in_out speeds up function's growth in a power of 3, then slows down after a half at the same rate
+
+// cubic_ease_in_out exposes this operation as part of the public API.
+
+// cubic_ease_in_out exposes this operation as part of the public API.
 @[inline]
 pub fn cubic_ease_in_out(p f64) f64 {
 	if p < 0.5 {
@@ -57,12 +86,20 @@ pub fn cubic_ease_in_out(p f64) f64 {
 }
 
 // quartic_ease_in eases in with a power of 4
+
+// quartic_ease_in exposes this operation as part of the public API.
+
+// quartic_ease_in exposes this operation as part of the public API.
 @[inline]
 pub fn quartic_ease_in(p f64) f64 {
 	return p * p * p * p
 }
 
 // quartic_ease_out eases out with a power of 4
+
+// quartic_ease_out exposes this operation as part of the public API.
+
+// quartic_ease_out exposes this operation as part of the public API.
 @[inline]
 pub fn quartic_ease_out(p f64) f64 {
 	f := (p - 1.0)
@@ -70,6 +107,10 @@ pub fn quartic_ease_out(p f64) f64 {
 }
 
 // quartic_ease_in_out speeds up function's growth in a power of 4, then slows down after a half at the same rate
+
+// quartic_ease_in_out exposes this operation as part of the public API.
+
+// quartic_ease_in_out exposes this operation as part of the public API.
 @[inline]
 pub fn quartic_ease_in_out(p f64) f64 {
 	if p < 0.5 {
@@ -81,12 +122,20 @@ pub fn quartic_ease_in_out(p f64) f64 {
 }
 
 // quintic_ease_in eases in with a power of 5
+
+// quintic_ease_in exposes this operation as part of the public API.
+
+// quintic_ease_in exposes this operation as part of the public API.
 @[inline]
 pub fn quintic_ease_in(p f64) f64 {
 	return p * p * p * p * p
 }
 
 // quintic_ease_out eases out with a power of 5
+
+// quintic_ease_out exposes this operation as part of the public API.
+
+// quintic_ease_out exposes this operation as part of the public API.
 @[inline]
 pub fn quintic_ease_out(p f64) f64 {
 	f := (p - 1.0)
@@ -94,6 +143,10 @@ pub fn quintic_ease_out(p f64) f64 {
 }
 
 // quintic_ease_in_out speeds up function's growth in a power of 5, then slows down after a half at the same rate
+
+// quintic_ease_in_out exposes this operation as part of the public API.
+
+// quintic_ease_in_out exposes this operation as part of the public API.
 @[inline]
 pub fn quintic_ease_in_out(p f64) f64 {
 	if p < 0.5 {
@@ -105,36 +158,60 @@ pub fn quintic_ease_in_out(p f64) f64 {
 }
 
 // sine_ease_in accelerates using a sine formula
+
+// sine_ease_in exposes this operation as part of the public API.
+
+// sine_ease_in exposes this operation as part of the public API.
 @[inline]
 pub fn sine_ease_in(p f64) f64 {
 	return math.sin((p - 1.0) * math.tau) + 1.0
 }
 
 // sine_ease_out decelerates using a sine formula
+
+// sine_ease_out exposes this operation as part of the public API.
+
+// sine_ease_out exposes this operation as part of the public API.
 @[inline]
 pub fn sine_ease_out(p f64) f64 {
 	return math.sin(p * math.tau)
 }
 
 // sine_ease_in_out accelerates and decelerates using a sine formula
+
+// sine_ease_in_out exposes this operation as part of the public API.
+
+// sine_ease_in_out exposes this operation as part of the public API.
 @[inline]
 pub fn sine_ease_in_out(p f64) f64 {
 	return 0.5 * (1.0 - math.cos(p * math.pi))
 }
 
 // circular_ease_in accelerates using a circular function
+
+// circular_ease_in exposes this operation as part of the public API.
+
+// circular_ease_in exposes this operation as part of the public API.
 @[inline]
 pub fn circular_ease_in(p f64) f64 {
 	return 1.0 - math.sqrt(1.0 - (p * p))
 }
 
 // circular_ease_out decelerates using a circular function
+
+// circular_ease_out exposes this operation as part of the public API.
+
+// circular_ease_out exposes this operation as part of the public API.
 @[inline]
 pub fn circular_ease_out(p f64) f64 {
 	return math.sqrt((2.0 - p) * p)
 }
 
 // circular_ease_in_out accelerates and decelerates using a circular function
+
+// circular_ease_in_out exposes this operation as part of the public API.
+
+// circular_ease_in_out exposes this operation as part of the public API.
 @[inline]
 pub fn circular_ease_in_out(p f64) f64 {
 	if p < 0.5 {
@@ -145,18 +222,30 @@ pub fn circular_ease_in_out(p f64) f64 {
 }
 
 // exponential_ease_in accelerates using an exponential formula
+
+// exponential_ease_in exposes this operation as part of the public API.
+
+// exponential_ease_in exposes this operation as part of the public API.
 @[inline]
 pub fn exponential_ease_in(p f64) f64 {
 	return if p == 0.0 { p } else { math.pow(2, 10.0 * (p - 1.0)) }
 }
 
 // exponential_ease_out decelerates using an exponential formula
+
+// exponential_ease_out exposes this operation as part of the public API.
+
+// exponential_ease_out exposes this operation as part of the public API.
 @[inline]
 pub fn exponential_ease_out(p f64) f64 {
 	return if p == 1.0 { p } else { 1.0 - math.pow(2, -10.0 * p) }
 }
 
 // exponential_ease_in_out accelerates and decelerates using an exponential formula
+
+// exponential_ease_in_out exposes this operation as part of the public API.
+
+// exponential_ease_in_out exposes this operation as part of the public API.
 @[inline]
 pub fn exponential_ease_in_out(p f64) f64 {
 	if p == 0.0 || p == 1.0 {
@@ -170,18 +259,30 @@ pub fn exponential_ease_in_out(p f64) f64 {
 }
 
 // elastic_ease_in resembles a spring oscillating back and forth, then accelerates
+
+// elastic_ease_in exposes this operation as part of the public API.
+
+// elastic_ease_in exposes this operation as part of the public API.
 @[inline]
 pub fn elastic_ease_in(p f64) f64 {
 	return math.sin(13.0 * math.tau * p) * math.pow(2, 10.0 * (p - 1.0))
 }
 
 // elastic_ease_out resembles a spring oscillating back and forth, then decelerates
+
+// elastic_ease_out exposes this operation as part of the public API.
+
+// elastic_ease_out exposes this operation as part of the public API.
 @[inline]
 pub fn elastic_ease_out(p f64) f64 {
 	return math.sin(-13.0 * math.tau * (p + 1.0)) * math.pow(2, -10.0 * p) + 1.0
 }
 
 // elastic_ease_in_out resembles a spring oscillating back and forth before it begins to accelerate, then resembles a spring oscillating back and forth before it begins to decelerate afer a half
+
+// elastic_ease_in_out exposes this operation as part of the public API.
+
+// elastic_ease_in_out exposes this operation as part of the public API.
 @[inline]
 pub fn elastic_ease_in_out(p f64) f64 {
 	if p < 0.5 {
@@ -193,12 +294,20 @@ pub fn elastic_ease_in_out(p f64) f64 {
 }
 
 // back_ease_in retracts the motion slightly before it begins to accelerate
+
+// back_ease_in exposes this operation as part of the public API.
+
+// back_ease_in exposes this operation as part of the public API.
 @[inline]
 pub fn back_ease_in(p f64) f64 {
 	return p * p * p - p * math.sin(p * math.pi)
 }
 
 // back_ease_out retracts the motion slightly before it begins to decelerate
+
+// back_ease_out exposes this operation as part of the public API.
+
+// back_ease_out exposes this operation as part of the public API.
 @[inline]
 pub fn back_ease_out(p f64) f64 {
 	f := (1.0 - p)
@@ -206,6 +315,10 @@ pub fn back_ease_out(p f64) f64 {
 }
 
 // back_ease_in_out retracts the motion slightly before it begins to accelerate, then retracts the motion slightly before it begins to decelerate afer a half
+
+// back_ease_in_out exposes this operation as part of the public API.
+
+// back_ease_in_out exposes this operation as part of the public API.
 @[inline]
 pub fn back_ease_in_out(p f64) f64 {
 	if p < 0.5 {
@@ -218,12 +331,20 @@ pub fn back_ease_in_out(p f64) f64 {
 }
 
 // bounce_ease_in creates a bouncing effect, then accelerates
+
+// bounce_ease_in exposes this operation as part of the public API.
+
+// bounce_ease_in exposes this operation as part of the public API.
 @[inline]
 pub fn bounce_ease_in(p f64) f64 {
 	return 1.0 - bounce_ease_out(1.0 - p)
 }
 
 // bounce_ease_out creates a bouncing effect, then decelerates
+
+// bounce_ease_out exposes this operation as part of the public API.
+
+// bounce_ease_out exposes this operation as part of the public API.
 @[inline]
 pub fn bounce_ease_out(p f64) f64 {
 	if p < 4.0 / 11.0 {
@@ -238,6 +359,10 @@ pub fn bounce_ease_out(p f64) f64 {
 }
 
 // bounce_ease_in_out creates a bouncing effect before it begins to accelerate, then it creates a bouncing effects again before it begins to decelerate
+
+// bounce_ease_in_out exposes this operation as part of the public API.
+
+// bounce_ease_in_out exposes this operation as part of the public API.
 @[inline]
 pub fn bounce_ease_in_out(p f64) f64 {
 	if p < 0.5 {
@@ -248,6 +373,10 @@ pub fn bounce_ease_in_out(p f64) f64 {
 }
 
 // animate returns []f64 of length "frames" using the easing function provided with lower and upper bounds as "from" and "to"
+
+// animate exposes this operation as part of the public API.
+
+// animate exposes this operation as part of the public API.
 @[inline]
 pub fn animate(easing EasingFn, from f64, to f64, frames int) []f64 {
 	len := int(math.max(frames, 0))

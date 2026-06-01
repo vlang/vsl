@@ -2,6 +2,7 @@ module iter
 
 import arrays
 
+// ProductIterator defines a public data structure for this module.
 pub struct ProductIterator {
 	repeat_lengths []u64
 	size           u64
@@ -12,6 +13,7 @@ pub:
 	data [][]f64
 }
 
+// ProductIterator.new exposes this operation as part of the public API.
 pub fn ProductIterator.new(data [][]f64) ProductIterator {
 	return ProductIterator{
 		repeat_lengths:  calc_repeat_lengths(data.map(it.len)).map(u64(it))
@@ -21,6 +23,7 @@ pub fn ProductIterator.new(data [][]f64) ProductIterator {
 	}
 }
 
+// next exposes this operation as part of the public API.
 pub fn (mut o ProductIterator) next() ?[]f64 {
 	if o.idx == o.size {
 		return none
