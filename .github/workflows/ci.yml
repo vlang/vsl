@@ -212,6 +212,17 @@ jobs:
           brew install opencl-headers
           brew install vulkan-headers
 
+      - name: Export Homebrew BLAS/LAPACK paths
+        run: |
+          OPENBLAS_PREFIX="$(brew --prefix openblas)"
+          LAPACK_PREFIX="$(brew --prefix lapack)"
+          {
+            echo "CPPFLAGS=-I${OPENBLAS_PREFIX}/include -I${LAPACK_PREFIX}/include ${CPPFLAGS:-}"
+            echo "CFLAGS=-I${OPENBLAS_PREFIX}/include -I${LAPACK_PREFIX}/include ${CFLAGS:-}"
+            echo "LDFLAGS=-L${OPENBLAS_PREFIX}/lib -L${LAPACK_PREFIX}/lib ${LDFLAGS:-}"
+            echo "PKG_CONFIG_PATH=${OPENBLAS_PREFIX}/lib/pkgconfig:${LAPACK_PREFIX}/lib/pkgconfig:${PKG_CONFIG_PATH:-}"
+          } >> "$GITHUB_ENV"
+
       - name: Move VSL source code to V Modules
         run: mv ./vsl ~/.vmodules
 
