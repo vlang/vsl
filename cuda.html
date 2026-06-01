@@ -270,6 +270,11 @@
 <td><code>conv2d</code></td>
 <td>✅ <code>cudnnConvolutionForward</code></td>
 <td>CPU</td>
+<td>—</td></tr>
+<tr>
+<td><code>conv2d_backward</code></td>
+<td>✅ <code>cudnnConvolutionBackward*</code></td>
+<td>CPU</td>
 <td>—</td></tr></tbody></table>
 <p><code>mul_vec</code> uses legacy <code>cublasDdgmm</code> (<code>SIDE_RIGHT</code>, 1×n row layout; <code>cublasDdgmm_v2</code> absent on some distros). Layer norm GPU: build with <code>-d cudnn_layernorm</code> when libcudnn exports <code>cudnnLayerNormForward</code> (9.1+). Numerical parity tests: <code>cuda/compute/numerical_validation_test.v</code> (<a href="https://github.com/vlang/vsl/issues/281">#281</a>).</p>
 <h2 id="-architecture">📁 Architecture</h2>
@@ -504,7 +509,7 @@ sudo apt<span class="token operator">-</span>get install cuda<span class="token 
 </section>
 
 		<section id="cublas_error" class="doc-node">
-			<div class="title"><h2>fn cublas_error <a href="#cublas_error">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/cuda/_ctypes.c.v#L103"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn cublas_error <a href="#cublas_error">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/cuda/_ctypes.c.v#L107"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">cublas_error</span><span class="token punctuation">(</span>status CublasStatus<span class="token punctuation">)</span> <span class="token builtin">string</span></code></pre>
 <p>cublas_error returns a string description of a cuBLAS status code.</p>
@@ -512,7 +517,7 @@ sudo apt<span class="token operator">-</span>get install cuda<span class="token 
 </section>
 
 		<section id="cudnn_error" class="doc-node">
-			<div class="title"><h2>fn cudnn_error <a href="#cudnn_error">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/cuda/_ctypes.c.v#L118"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn cudnn_error <a href="#cudnn_error">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/cuda/_ctypes.c.v#L122"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">cudnn_error</span><span class="token punctuation">(</span>status CudnnStatus<span class="token punctuation">)</span> <span class="token builtin">string</span></code></pre>
 <p>cudnn_error returns a string description of a cuDNN status code.</p>
@@ -564,6 +569,22 @@ sudo apt<span class="token operator">-</span>get install cuda<span class="token 
 <pre class="signature">
 <code><span class="token keyword">type</span> CudnnActivationMode <span class="token operator">=</span> <span class="token builtin">int</span></code></pre>
 <p>cudnnActivationMode_t specifies the activation mode.</p>
+
+</section>
+
+		<section id="CudnnConvolutionBwdDataAlgo" class="doc-node">
+			<div class="title"><h2>type CudnnConvolutionBwdDataAlgo <a href="#CudnnConvolutionBwdDataAlgo">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/cuda/_ctypes.c.v#L75"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">type</span> CudnnConvolutionBwdDataAlgo <span class="token operator">=</span> <span class="token builtin">int</span></code></pre>
+<p>cudnnConvolutionBwdDataAlgo_t / BwdFilterAlgo_t — backward convolution algorithms.</p>
+
+</section>
+
+		<section id="CudnnConvolutionBwdFilterAlgo" class="doc-node">
+			<div class="title"><h2>type CudnnConvolutionBwdFilterAlgo <a href="#CudnnConvolutionBwdFilterAlgo">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/cuda/_ctypes.c.v#L76"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">type</span> CudnnConvolutionBwdFilterAlgo <span class="token operator">=</span> <span class="token builtin">int</span></code></pre>
+
 
 </section>
 
@@ -681,7 +702,7 @@ sudo apt<span class="token operator">-</span>get install cuda<span class="token 
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 31 May 2026 23:09:30</div>
+						<div class="footer">Powered by vdoc. Generated on: 1 Jun 2026 02:39:45</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_cuda">README</a></li>
 <li class="open"><a href="#Constants">Constants</a></li>
@@ -710,6 +731,12 @@ sudo apt<span class="token operator">-</span>get install cuda<span class="token 
 </ul>
 </li>
 <li class="open"><a href="#CudnnActivationMode">type CudnnActivationMode</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#CudnnConvolutionBwdDataAlgo">type CudnnConvolutionBwdDataAlgo</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#CudnnConvolutionBwdFilterAlgo">type CudnnConvolutionBwdFilterAlgo</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#CudnnConvolutionDescriptor">type CudnnConvolutionDescriptor</a>        <ul>
