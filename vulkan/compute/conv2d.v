@@ -2,11 +2,9 @@ module compute
 
 import vsl.vulkan
 
-// conv2d_vulkan: NCHW forward via im2col + GEMM (no padding; stride >= 1).
+// conv2d_vulkan: NCHW forward via im2col + GEMM (stride >= 1, dilation=1).
 // input: [batch, in_ch, in_h, in_w], kernel: [out_ch, in_ch, k_h, k_w] row-major flat.
-pub fn conv2d_vulkan(dev &vulkan.Device, input []f64, kernel []f64, batch int, in_h int, in_w int, in_ch int, out_ch int, k_h int, k_w int, stride_h int, stride_w int) ![]f64 {
-	pad_h := 0
-	pad_w := 0
+pub fn conv2d_vulkan(dev &vulkan.Device, input []f64, kernel []f64, batch int, in_h int, in_w int, in_ch int, out_ch int, k_h int, k_w int, stride_h int, stride_w int, pad_h int, pad_w int) ![]f64 {
 	oh := (in_h + 2 * pad_h - k_h) / stride_h + 1
 	ow := (in_w + 2 * pad_w - k_w) / stride_w + 1
 	if oh < 1 || ow < 1 {
@@ -15,35 +13,8 @@ pub fn conv2d_vulkan(dev &vulkan.Device, input []f64, kernel []f64, batch int, i
 	k_total := in_ch * k_h * k_w
 	out_total := batch * oh * ow
 
-	mut in_f32 := []f32{len: input.len}
-	for i, v in input {
-		in_f32[i] = f32(v)
-	}
-	in_bytes := f32_bytes(in_f32)
-
-	n := u32(batch)
-	c := u32(in_ch)
-	h := u32(in_h)
-	w := u32(in_w)
-	kh := u32(k_h)
-	kw := u32(k_w)
-	out_h := u32(oh)
-	out_w := u32(ow)
-
-	col_elems := k_total * out_total
-	mut src_buf := dev.buffer(vulkan.DeviceSize(in_bytes.len))!
-	defer { src_buf.release() }
-	mut col_buf := dev.buffer(vulkan.DeviceSize(u64(col_elems) * 4))!
-	defer { col_buf.release() }
-
-	src_buf.load(in_bytes)!
-	vulkan.im2col(dev, col_buf, src_buf, n, c, h, w, kh, kw, out_h, out_w, u32(pad_h), u32(pad_w),
-		u32(stride_h), u32(stride_w), 1, 1)!
-
-	mut col_raw := []u8{len: col_elems * 4}
-	col_raw = col_buf.store(mut col_raw)!
-	mut col := []f32{len: col_elems}
-	unsafe { C.memcpy(col.data, col_raw.data, col_elems * 4) }
+	col := im2col_f32(dev, input, batch, in_ch, in_h, in_w, k_h, k_w, oh, ow, pad_h, pad_w, stride_h,
+		stride_w)!
 
 	// Weight matrix [out_ch x k_total] row-major for GEMM
 	mut w_row := []f64{len: out_ch * k_total}
@@ -108,10 +79,4 @@ pub fn conv2d_cpu_nchw(input []f64, kernel []f64, batch int, in_h int, in_w int,
 		}
 	}
 	return out
-}
-
-fn f32_bytes(data []f32) []u8 {
-	mut bytes := []u8{len: data.len * 4}
-	unsafe { C.memcpy(bytes.data, data.data, data.len * 4) }
-	return bytes
 }

@@ -72,7 +72,7 @@ pub fn (b &VulkanBackend) layernorm(x_data []f64, gamma []f64, beta []f64) ![]f6
 pub fn (b &VulkanBackend) conv2d(input []f64, kernel []f64, batch int, in_h int, in_w int, in_ch int, out_ch int, k_h int, k_w int, stride_h int, stride_w int) ![]f64 {
 	// Prefer GPU im2col+GEMM; fall back to CPU reference if dispatch fails.
 	return conv2d_vulkan(b.dev, input, kernel, batch, in_h, in_w, in_ch, out_ch, k_h, k_w,
-		stride_h, stride_w) or {
+		stride_h, stride_w, 0, 0) or {
 		return conv2d_cpu_nchw(input, kernel, batch, in_h, in_w, in_ch, out_ch, k_h, k_w, stride_h,
 			stride_w)
 	}

@@ -19,7 +19,7 @@ fn main() {
 
 	input := [f64(1), 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
 	kernel := [f64(1), 0, 0, 0, 0, 1, 0, 0, 0]
-	gpu := vk_compute.conv2d_vulkan(dev, input, kernel, 1, 4, 4, 1, 1, 3, 3, 1, 1) or {
+	gpu := vk_compute.conv2d_vulkan(dev, input, kernel, 1, 4, 4, 1, 1, 3, 3, 1, 1, 0, 0) or {
 		panic(err)
 	}
 	cpu := conv2d_cpu_ref(input, kernel, 1, 4, 4, 1, 1, 3, 3, 1, 1)!
