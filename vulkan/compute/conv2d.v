@@ -54,10 +54,12 @@ pub fn conv2d_vulkan(dev &vulkan.Device, input []f64, kernel []f64, batch int, i
 		w_row[i] = v
 	}
 
-	// col as [k_total x out_total] row-major: col_row[t * out_total + j]
+	// im2col buffer is [out_total x k_total] row-major (see vulkan.im2col); GEMM needs [k_total x out_total].
 	mut col_row := []f64{len: col.len}
-	for i, v in col {
-		col_row[i] = f64(v)
+	for spatial in 0 .. out_total {
+		for t in 0 .. k_total {
+			col_row[t * out_total + spatial] = f64(col[spatial * k_total + t])
+		}
 	}
 
 	gemm_out := gemm_vulkan(dev, w_row, col_row, out_ch, out_total, k_total)!
