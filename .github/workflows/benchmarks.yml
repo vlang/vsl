@@ -17,11 +17,17 @@ on:
     branches:
       - main
       - 'release/**'
+    paths:
+      - 'benchmarks/**'
+      - '.github/workflows/benchmarks.yml'
 
   # Run on pull requests
   pull_request:
     branches:
       - main
+    paths:
+      - 'benchmarks/**'
+      - '.github/workflows/benchmarks.yml'
 
 jobs:
   run-benchmarks-linux:
