@@ -216,7 +216,7 @@
 <p><code>vsl.cuda</code> is a high-performance GPU compute backend for VSL backed by <a href="https://developer.nvidia.com/cuda-toolkit">NVIDIA CUDA</a> (cuBLAS + cuDNN).</p>
 <h2 id="-status">🚀 Status</h2>
 <blockquote>
-<p><strong>Phase B/C — cuBLAS/cuDNN bindings active</strong> when CUDA Toolkit + cuDNN are<br />available at build time (<code>-d cuda</code>). Operations use GPU kernels where<br />implemented; CPU fallback when CUDA/cuDNN is unavailable.</p>
+<p><strong>CUDA backend — cuBLAS/cuDNN bindings active</strong> when CUDA Toolkit + cuDNN are<br />available at build time (<code>-d cuda</code>). Operations use GPU kernels where<br />implemented; CPU fallback when CUDA/cuDNN is unavailable.</p>
 <p><strong>VTL integration</strong> (opt-in CUDA Linear/Conv2D): merged in<br /><a href="https://github.com/vlang/vtl/pull/93">vlang/vtl#93</a> (issues #89–#91 closed).</p></blockquote>
 <table>
 <thead>
@@ -283,7 +283,7 @@
 ├── compute/
 │   ├── elementwise.v   # Activation functions (relu, sigmoid, tanh, ...)
 │   ├── gemm.v          # Public GEMM wrapper (row↔col conversion)
-│   └── gemm_impl.v     # Internal GEMM/GEMV stubs + CPU fallbacks
+│   └── gemm_impl.v     # Internal GEMM/GEMV implementation + CPU fallbacks
 └── v.mod
 </code></pre>
 <p><strong>Memory layout:</strong> cuBLAS is column-major (same as VCL/Vulkan). The <code>CUDABackend.to_internal()</code> / <code>from_internal()</code> methods handle row↔column-major conversion at the dispatch boundary.</p>
@@ -364,10 +364,10 @@ sudo apt<span class="token operator">-</span>get install cuda<span class="token 
 <tbody>
 <tr>
 <td>✅ <strong>Phase B</strong></td>
-<td>Infrastructure ready; stub implementations with CPU fallbacks</td></tr>
+<td>Infrastructure ready; CPU fallback path</td></tr>
 <tr>
-<td>🎯 <strong>Phase C</strong></td>
-<td>Replace stubs with actual cuBLAS/cuDNN kernels (issue #238)</td></tr>
+<td>✅ <strong>Phase C</strong></td>
+<td>cuBLAS/cuDNN kernels for GEMM/GEMV, activations, softmax, Conv2D, LayerNorm</td></tr>
 <tr>
 <td>🏗️ <strong>Phase D</strong></td>
 <td>Device discovery, multi-GPU support</td></tr>
@@ -375,15 +375,16 @@ sudo apt<span class="token operator">-</span>get install cuda<span class="token 
 <td>🧠 <strong>Phase E</strong></td>
 <td>GPU memory management (avoid CPU↔GPU copies)</td></tr>
 <tr>
-<td>🧪 <strong>Phase F</strong></td>
-<td>Test suite, numerical validation vs reference</td></tr></tbody></table>
+<td>✅ <strong>Phase F</strong></td>
+<td>Numerical validation vs reference for key kernels</td></tr></tbody></table>
 <h2 id="-resources">🔗 Resources</h2>
 <ul>
 <li><a href="https://vlang.github.io/vsl">VSL Documentation</a></li>
 <li><a href="https://docs.nvidia.com/cublas/">cuBLAS Documentation</a></li>
 <li><a href="https://docs.nvidia.com/cudnn/">cuDNN Documentation</a></li>
 <li><a href="https://developer.nvidia.com/cuda-downloads">CUDA Toolkit Download</a></li>
-<li><a href="https://github.com/vlang/vsl/blob/master/cuda/docs/adr/ADR-001-multi-backend-gpu-compute-vsl.md">VSL ADR-001: Multi-backend GPU compute</a></li></ul>
+<li><a href="https://github.com/vlang/vsl/blob/master/docs/adr/ADR-001-multi-backend-gpu-compute-vsl.md">VSL ADR-001: Multi-backend GPU compute</a></li>
+<li><a href="https://github.com/vlang/vtl/tree/main/examples/nn_cifar10_cuda">VTL CUDA example</a></li></ul>
 <hr />
 <p>Accelerate your scientific computing with NVIDIA GPUs! 🚀</p>
 
@@ -723,7 +724,7 @@ sudo apt<span class="token operator">-</span>get install cuda<span class="token 
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 1 Jun 2026 07:39:05</div>
+						<div class="footer">Powered by vdoc. Generated on: 1 Jun 2026 19:30:26</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_cuda">README</a></li>
 <li class="open"><a href="#Constants">Constants</a></li>
