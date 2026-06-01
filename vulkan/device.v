@@ -67,6 +67,7 @@ pub fn new_device() !&Device {
 		queue:              queue
 		queue_family_index: qfi
 		cmd_pool:           cmd_pool
+		pipeline_cache:     map[PipelineType]&ComputePipeline{}
 	}
 	return dev_obj
 	// NOTE: Instance is NOT destroyed here — Device.release() handles all

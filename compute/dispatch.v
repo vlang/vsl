@@ -53,7 +53,7 @@ fn (ctx &ComputeContext) resolve_backend() !ComputeBackend {
 			} else {
 				vulkan.new_device()!
 			}
-			return new_vulkan_backend(dev)
+			return vk_compute.new_vulkan_backend(dev)
 		}
 	}
 	$if vcl ? {

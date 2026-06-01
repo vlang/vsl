@@ -483,7 +483,8 @@ fn pipeline_get(d &Device, t PipelineType) !&ComputePipeline {
 	}
 
 	unsafe {
-		d.pipeline_cache[t] = pl
+		mut dd := d
+		dd.pipeline_cache[t] = pl
 	}
 	return pl
 }
