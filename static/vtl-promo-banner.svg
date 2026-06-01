@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="260" viewBox="0 0 1100 260" role="img" aria-labelledby="title desc">
+  <title id="title">Build machine learning in V with VTL</title>
+  <desc id="desc">Promotional banner linking VSL as the compute foundation for VTL tensors, autograd, datasets, CUDA, and Vulkan training.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#18223d"/>
+      <stop offset="0.48" stop-color="#273f76"/>
+      <stop offset="1" stop-color="#58467f"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#5fccb9"/>
+      <stop offset="0.55" stop-color="#87db90"/>
+      <stop offset="1" stop-color="#3772bf"/>
+    </linearGradient>
+    <filter id="soft-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#081226" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <rect width="1100" height="260" rx="28" fill="url(#bg)"/>
+  <path d="M36 210C146 116 238 94 338 140s175 61 277 15 224-82 449 15" fill="none" stroke="#5fccb9" stroke-width="2" stroke-opacity="0.28"/>
+  <path d="M48 63c130 82 223 91 333 28s197-58 306 0 205 74 365-11" fill="none" stroke="#87db90" stroke-width="2" stroke-opacity="0.18"/>
+
+  <g opacity="0.72">
+    <circle cx="832" cy="67" r="6" fill="#5fccb9"/>
+    <circle cx="912" cy="110" r="6" fill="#87db90"/>
+    <circle cx="814" cy="170" r="6" fill="#3772bf"/>
+    <circle cx="1000" cy="176" r="6" fill="#5fccb9"/>
+    <line x1="832" y1="67" x2="912" y2="110" stroke="#d8fff6" stroke-opacity="0.28"/>
+    <line x1="912" y1="110" x2="814" y2="170" stroke="#d8fff6" stroke-opacity="0.28"/>
+    <line x1="912" y1="110" x2="1000" y2="176" stroke="#d8fff6" stroke-opacity="0.28"/>
+    <line x1="814" y1="170" x2="1000" y2="176" stroke="#d8fff6" stroke-opacity="0.28"/>
+  </g>
+
+  <g transform="translate(54 48)" filter="url(#soft-shadow)">
+    <rect width="150" height="150" rx="34" fill="#ffffff" fill-opacity="0.1" stroke="#ffffff" stroke-opacity="0.16"/>
+    <path d="M42 45h28l17 49 17-49h28l-31 76H73L42 45z" fill="url(#accent)"/>
+    <circle cx="108" cy="48" r="9" fill="#87db90"/>
+    <circle cx="44" cy="114" r="7" fill="#5fccb9"/>
+  </g>
+
+  <g transform="translate(238 54)">
+    <text x="0" y="25" fill="#9df3df" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="20" font-weight="700" letter-spacing="1.8">VSL + VTL</text>
+    <text x="0" y="76" fill="#ffffff" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="42" font-weight="800">Build machine learning in V</text>
+    <text x="0" y="116" fill="#d9e7ff" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="21">VSL powers the compute. VTL adds tensors, autograd, datasets,</text>
+    <text x="0" y="145" fill="#d9e7ff" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="21">optimizers, and GPU-backed training loops.</text>
+  </g>
+
+  <g transform="translate(238 185)" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="700">
+    <rect x="0" y="0" width="92" height="32" rx="16" fill="#5fccb9" fill-opacity="0.18" stroke="#5fccb9" stroke-opacity="0.45"/>
+    <text x="18" y="21" fill="#dffff7">Tensors</text>
+    <rect x="106" y="0" width="104" height="32" rx="16" fill="#87db90" fill-opacity="0.16" stroke="#87db90" stroke-opacity="0.45"/>
+    <text x="124" y="21" fill="#edffee">Autograd</text>
+    <rect x="224" y="0" width="78" height="32" rx="16" fill="#76b900" fill-opacity="0.17" stroke="#87db90" stroke-opacity="0.45"/>
+    <text x="246" y="21" fill="#f0ffe8">CUDA</text>
+    <rect x="316" y="0" width="86" height="32" rx="16" fill="#3772bf" fill-opacity="0.2" stroke="#8bbcff" stroke-opacity="0.48"/>
+    <text x="335" y="21" fill="#e4f0ff">Vulkan</text>
+  </g>
+</svg>

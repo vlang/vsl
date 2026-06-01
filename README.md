@@ -43,13 +43,13 @@ VSL is a V library for AI and high-performance scientific computing.
 
 <div align="center">
 
-### Building machine learning in V?
-
-**Use [VTL](https://github.com/vlang/vtl) on top of VSL** for tensors, autograd,
-neural networks, datasets, optimizers, and GPU-backed training.
-
-VSL provides the scientific and GPU compute foundation. VTL turns it into a
-developer-friendly ML toolkit for V.
+<a href="https://github.com/vlang/vtl">
+  <img
+    src="https://raw.githubusercontent.com/vlang/vsl/main/static/vtl-promo-banner.svg"
+    alt="Build machine learning in V with VTL"
+    width="100%"
+  >
+</a>
 
 [Get started with VTL](https://github.com/vlang/vtl) ·
 [VTL tutorials](https://github.com/vlang/vtl/tree/main/docs) ·
