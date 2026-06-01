@@ -68,14 +68,12 @@ pub fn conv2d_backward_vulkan(dev &vulkan.Device, grad_out []f64, input []f64, k
 		}
 	}
 
-	mut col_row := []f64{len: col.len}
-	for spatial in 0 .. out_total {
-		for t in 0 .. k_total {
-			col_row[t * out_total + spatial] = f64(col[spatial * k_total + t])
-		}
+	mut col_f64 := []f64{len: col.len}
+	for i, v in col {
+		col_f64[i] = f64(v)
 	}
-
-	d_weight_row := gemm_vulkan(dev, grad_row, col_row, out_ch, k_total, out_total)!
+	// d_weight = grad_row [out_ch x out_total] * col [out_total x k_total]
+	d_weight_row := gemm_vulkan(dev, grad_row, col_f64, out_ch, k_total, out_total)!
 
 	cpu := conv2d_backward_cpu_nchw(grad_out, input, kernel, batch, in_h, in_w, in_ch, out_ch, k_h,
 		k_w, stride_h, stride_w, pad_h, pad_w)!
@@ -83,6 +81,34 @@ pub fn conv2d_backward_vulkan(dev &vulkan.Device, grad_out []f64, input []f64, k
 		d_input:  cpu.d_input
 		d_weight: d_weight_row
 	}
+}
+
+// im2col_cpu_nchw returns [out_total x k_total] row-major f32 (spatial major, t = ic*kh*kw+kh*kw+kw).
+pub fn im2col_cpu_nchw(input []f64, batch int, in_ch int, in_h int, in_w int, k_h int, k_w int, oh int, ow int, pad_h int, pad_w int, stride_h int, stride_w int) []f32 {
+	k_total := in_ch * k_h * k_w
+	out_total := batch * oh * ow
+	mut col := []f32{len: k_total * out_total}
+	for spatial in 0 .. out_total {
+		b := spatial / (oh * ow)
+		rem := spatial % (oh * ow)
+		ohi := rem / ow
+		owi := rem % ow
+		for t in 0 .. k_total {
+			ic := t / (k_h * k_w)
+			kr := t % (k_h * k_w)
+			kh := kr / k_w
+			kw := kr % k_w
+			ih := ohi * stride_h - pad_h + kh
+			iw := owi * stride_w - pad_w + kw
+			mut val := f32(0)
+			if ih >= 0 && ih < in_h && iw >= 0 && iw < in_w {
+				in_idx := ((b * in_ch + ic) * in_h + ih) * in_w + iw
+				val = f32(input[in_idx])
+			}
+			col[spatial * k_total + t] = val
+		}
+	}
+	return col
 }
 
 // im2col_f32 returns host column matrix [out_total x k_total] row-major f32 values.
