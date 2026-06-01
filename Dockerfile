@@ -14,6 +14,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 # use bash
 SHELL ["/bin/bash", "-c"]
 
+# trivy:ignore:AVD-DS-0017 apt-get update and install run in the same heredoc.
 RUN <<EOF
 apt-get update -y
 apt-get install -y --no-install-recommends \
@@ -67,6 +68,7 @@ ENV EDITOR code
 
 # Install needed packages and setup non-root user. Use a separate RUN statement to add your own dependencies.
 COPY docker/common-debian.sh /tmp/library-scripts/
+# trivy:ignore:AVD-DS-0017 common-debian.sh performs package installation after update.
 RUN <<EOF
 apt-get update
 /bin/bash /tmp/library-scripts/common-debian.sh "${INSTALL_ZSH}" "${USERNAME}" "${USER_UID}" "${USER_GID}" "${UPGRADE_PACKAGES}"
