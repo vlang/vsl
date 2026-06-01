@@ -48,9 +48,25 @@ pub interface ComputeBackend {
 	from_internal(data []f64, rows int, cols int) ![]f64
 }
 
-// Supported operations by any backend.
-pub const supported_ops = ['gemm', 'gemv', 'relu', 'sigmoid', 'tanh', 'add_vec', 'mul_vec',
+// cpu_supported_ops lists operations implemented by the portable CPU backend.
+pub const cpu_supported_ops = ['gemm', 'gemv', 'relu', 'sigmoid', 'tanh', 'add_vec', 'mul_vec',
+	'add_scalar', 'mul_scalar', 'softmax', 'layernorm']
+
+// cuda_supported_ops lists operations implemented by the CUDA backend.
+pub const cuda_supported_ops = ['gemm', 'gemv', 'relu', 'sigmoid', 'tanh', 'add_vec', 'mul_vec',
 	'add_scalar', 'mul_scalar', 'softmax', 'layernorm', 'conv2d']
+
+// vulkan_supported_ops lists operations implemented by the Vulkan backend.
+pub const vulkan_supported_ops = ['gemm', 'gemv', 'relu', 'sigmoid', 'tanh', 'add_vec', 'mul_vec',
+	'add_scalar', 'mul_scalar', 'softmax', 'layernorm', 'conv2d']
+
+// vcl_supported_ops lists operations implemented by the VCL/OpenCL backend.
+pub const vcl_supported_ops = ['gemm', 'gemv', 'relu', 'sigmoid', 'tanh', 'add_vec', 'mul_vec',
+	'add_scalar', 'mul_scalar', 'softmax', 'layernorm', 'conv2d']
+
+// supported_ops lists the portable CPU operations. Backend-specific accelerators
+// expose their exact support through `op_supported` and `ComputeBackend.supports`.
+pub const supported_ops = cpu_supported_ops
 
 // new_cpu_backend creates a new CPU backend instance.
 pub fn new_cpu_backend() CPUBackend {
@@ -71,7 +87,7 @@ pub fn (c &CPUBackend) name() string {
 
 // supports exposes this operation as part of the public API.
 pub fn (c &CPUBackend) supports(op string) bool {
-	return op in supported_ops
+	return op in cpu_supported_ops
 }
 
 // gemm exposes this operation as part of the public API.

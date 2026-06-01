@@ -21,20 +21,16 @@ $if cuda ? {
 pub fn op_supported(backend Backend, op string) bool {
 	return match backend {
 		.vulkan {
-			op in ['gemm', 'gemv', 'relu', 'sigmoid', 'tanh', 'add_vec', 'add_scalar', 'mul_scalar',
-				'softmax', 'layernorm', 'conv2d']
+			op in vulkan_supported_ops
 		}
 		.vcl {
-			op in ['gemm', 'gemv', 'relu', 'sigmoid', 'tanh', 'add_vec', 'mul_vec', 'add_scalar',
-				'mul_scalar', 'softmax', 'layernorm', 'sum', 'mean', 'max', 'conv2d']
+			op in vcl_supported_ops
 		}
 		.cuda {
-			op in ['gemm', 'gemv', 'relu', 'sigmoid', 'tanh', 'add_vec', 'mul_vec', 'add_scalar',
-				'mul_scalar', 'softmax', 'layernorm']
+			op in cuda_supported_ops
 		}
 		.cpu {
-			op in ['gemm', 'gemv', 'relu', 'sigmoid', 'tanh', 'add_vec', 'mul_vec', 'add_scalar',
-				'mul_scalar']
+			op in cpu_supported_ops
 		}
 		.auto {
 			false

@@ -8,6 +8,9 @@ pub fn get_devices(device_type DeviceType) ![]&Device {
 	for p in platform_ids {
 		mut n := u32(0)
 		mut ret := cl_get_device_i_ds(p, ClDeviceType(device_type), 0, unsafe { nil }, &n)
+		if ret == device_not_found || n == 0 {
+			continue
+		}
 		if ret != success {
 			return error_from_code(ret)
 		}
@@ -28,18 +31,36 @@ pub fn get_devices(device_type DeviceType) ![]&Device {
 
 // get_default_device ...
 pub fn get_default_device() !&Device {
-	mut id := ClDeviceId(0)
 	platform_ids := get_platforms()!
-	ret := cl_get_device_i_ds(platform_ids[0], ClDeviceType(DeviceType.cpu), 1, &id, unsafe { nil })
-	if ret != success {
-		return error_from_code(ret)
+	if platform_ids.len == 0 {
+		return error('vcl.get_default_device: no OpenCL platforms found')
 	}
-	return Device.new(id)
+	preferred_types := [DeviceType.default, DeviceType.gpu, DeviceType.cpu, DeviceType.all]
+	for device_type in preferred_types {
+		for platform_id in platform_ids {
+			mut id := ClDeviceId(0)
+			ret := cl_get_device_i_ds(platform_id, ClDeviceType(device_type), 1, &id,
+				unsafe { nil })
+			if ret == success {
+				return Device.new(id)
+			}
+			if ret != device_not_found {
+				return error_from_code(ret)
+			}
+		}
+	}
+	return error('vcl.get_default_device: no OpenCL device found on available platforms')
 }
 
 fn get_platforms() ![]ClPlatformId {
 	mut n := u32(0)
 	mut ret := cl_get_platform_i_ds(0, unsafe { nil }, &n)
+	if ret == platform_not_found {
+		return []ClPlatformId{}
+	}
+	if ret == success && n == 0 {
+		return []ClPlatformId{}
+	}
 	if ret != success {
 		return error_from_code(ret)
 	}

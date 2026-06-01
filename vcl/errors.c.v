@@ -13,6 +13,7 @@ pub fn (e ErrVCL) err() IError {
 
 	err := match e {
 		device_not_found { err_device_not_found }
+		platform_not_found { err_platform_not_found }
 		device_not_available { err_device_not_available }
 		compiler_not_available { err_compiler_not_available }
 		mem_object_allocation_failure { err_mem_object_allocation_failure }
@@ -122,6 +123,7 @@ pub fn panic_on_error(code int) {
 
 // Common OpenCl errors
 const err_device_not_found = 'vcl_cl: Device Not Found'
+const err_platform_not_found = 'vcl_cl: Platform Not Found'
 const err_device_not_available = 'vcl_cl: Device Not Available'
 const err_compiler_not_available = 'vcl_cl: Compiler Not Available'
 const err_mem_object_allocation_failure = 'vcl_cl: Mem Object Allocation Failure'
@@ -191,6 +193,7 @@ const err_dl_open_issue = 'vcl_cl_dl: Not Found Dl Symbol'
 // err codes
 const success = 0
 const device_not_found = -1
+const platform_not_found = -1001
 const device_not_available = -2
 const compiler_not_available = -3
 const mem_object_allocation_failure = -4
