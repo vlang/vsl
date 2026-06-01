@@ -117,16 +117,16 @@ static inline int vk_create_compute_pipeline_simple(
     VkResult res = vkCreateShaderModule(device, &sm, NULL, out_shader_mod);
     if (res != VK_SUCCESS) return (int)res;
 
-    // 2. Descriptor set layout (4 storage buffer bindings)
-    VkDescriptorSetLayoutBinding bindings[4] = {
-        {0, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 1, VK_SHADER_STAGE_COMPUTE_BIT, NULL},
-        {1, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 1, VK_SHADER_STAGE_COMPUTE_BIT, NULL},
-        {2, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 1, VK_SHADER_STAGE_COMPUTE_BIT, NULL},
-        {3, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 1, VK_SHADER_STAGE_COMPUTE_BIT, NULL},
-    };
+    // 2. Descriptor set layout (up to 8 storage buffer bindings; unused slots are ignored)
+    enum { vsl_vk_max_storage_bindings = 8 };
+    VkDescriptorSetLayoutBinding bindings[vsl_vk_max_storage_bindings];
+    for (uint32_t i = 0; i < vsl_vk_max_storage_bindings; i++) {
+        bindings[i] = (VkDescriptorSetLayoutBinding){
+            i, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 1, VK_SHADER_STAGE_COMPUTE_BIT, NULL};
+    }
     VkDescriptorSetLayoutCreateInfo dsl = {
         .sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO,
-        .bindingCount = 4,
+        .bindingCount = vsl_vk_max_storage_bindings,
         .pBindings = bindings,
     };
     res = vkCreateDescriptorSetLayout(device, &dsl, NULL, out_dsl);
@@ -169,7 +169,7 @@ static inline int vk_create_compute_pipeline_simple(
     }
 
     // 5. Descriptor pool
-    VkDescriptorPoolSize pool_size = {VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 4};
+    VkDescriptorPoolSize pool_size = {VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, vsl_vk_max_storage_bindings};
     VkDescriptorPoolCreateInfo dp = {
         .sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO,
         .flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT,

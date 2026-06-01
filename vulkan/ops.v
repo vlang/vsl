@@ -9,6 +9,9 @@ module vulkan
 //
 // Operations:
 //   vector_add(dst, a, b)           dst[i] = a[i] + b[i]
+//   vector_mul(dst, a, b)           dst[i] = a[i] * b[i]
+//   vector_sqrt(dst, src)           dst[i] = sqrt(src[i])
+//   adam_step(grad, theta, m, v, params)  fused Adam update (f32 flat buffers)
 //   scale(dst, src, alpha)         dst[i] = alpha * src[i]
 //   gemv(y, A, x, m, n)            y[m] = A[m,n] * x[n] (row-major)
 //   sum(buf)                       returns sum of all f32 elements
@@ -22,6 +25,9 @@ module vulkan
 // ComputePipeline type enum for the cache.
 enum PipelineType {
 	vector_add
+	vector_mul
+	vector_sqrt
+	adam_step
 	scale
 	gemv
 	reduce_sum
@@ -57,6 +63,58 @@ pub fn vector_add(dev &Device, dst &GpuBuffer, a &GpuBuffer, b &GpuBuffer) ! {
 	pl.update_buffer(1, b)!
 	pl.update_buffer(2, dst)!
 	dispatch_sync(dev, pl, u32(dst.size / 4), 1, 1)!
+}
+
+// vector_mul computes element-wise multiplication: dst = a * b
+pub fn vector_mul(dev &Device, dst &GpuBuffer, a &GpuBuffer, b &GpuBuffer) ! {
+	pl := pipeline_get(dev, .vector_mul)!
+	pl.update_buffer(0, a)!
+	pl.update_buffer(1, b)!
+	pl.update_buffer(2, dst)!
+	dispatch_sync(dev, pl, u32(dst.size / 4), 1, 1)!
+}
+
+// vector_sqrt computes dst[i] = sqrt(src[i])
+pub fn vector_sqrt(dev &Device, dst &GpuBuffer, src &GpuBuffer) ! {
+	pl := pipeline_get(dev, .vector_sqrt)!
+	pl.update_buffer(0, src)!
+	pl.update_buffer(1, dst)!
+	dispatch_sync(dev, pl, u32(dst.size / 4), 1, 1)!
+}
+
+// AdamParams holds scalar Adam coefficients for adam_step (f32): beta1, beta2, lr_t, epsilon.
+pub struct AdamParams {
+pub:
+	beta1   f32
+	beta2   f32
+	lr_t    f32
+	epsilon f32
+}
+
+// adam_step runs fused Adam on flat f32 buffers (same layout as VTL adam_step_f32_cpu).
+// grad readonly; theta/m/v read-write; all buffers same byte length.
+pub fn adam_step(dev &Device, grad &GpuBuffer, theta &GpuBuffer, m &GpuBuffer, v &GpuBuffer, p AdamParams) ! {
+	n := grad.size
+	if theta.size != n || m.size != n || v.size != n {
+		return error('adam_step: buffer size mismatch')
+	}
+	mut params_buf := dev.buffer(DeviceSize(16))!
+	defer { params_buf.release() }
+	mut pb := []u8{len: 16}
+	unsafe {
+		*(&f32(&pb[0])) = p.beta1
+		*(&f32(&pb[4])) = p.beta2
+		*(&f32(&pb[8])) = p.lr_t
+		*(&f32(&pb[12])) = p.epsilon
+	}
+	params_buf.load(pb)!
+	pl := pipeline_get(dev, .adam_step)!
+	pl.update_buffer(0, grad)!
+	pl.update_buffer(1, theta)!
+	pl.update_buffer(2, m)!
+	pl.update_buffer(3, v)!
+	pl.update_buffer(4, params_buf)!
+	dispatch_sync(dev, pl, u32(n / 4), 1, 1)!
 }
 
 // scale computes dst = alpha * src
@@ -458,6 +516,9 @@ fn pipeline_get(d &Device, t PipelineType) !&ComputePipeline {
 	mut pl := &ComputePipeline(unsafe { nil })
 	match t {
 		.vector_add { pl = d.create_pipeline(vector_add_spv, 'main')! }
+		.vector_mul { pl = d.create_pipeline(vector_mul_spv, 'main')! }
+		.vector_sqrt { pl = d.create_pipeline(vector_sqrt_spv, 'main')! }
+		.adam_step { pl = d.create_pipeline(adam_step_spv, 'main')! }
 		.scale { pl = d.create_pipeline(scale_spv, 'main')! }
 		.gemv { pl = d.create_pipeline(gemv_spv, 'main')! }
 		.reduce_sum { pl = d.create_pipeline(reduce_sum_spv, 'main')! }

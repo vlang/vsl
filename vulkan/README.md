@@ -1,6 +1,9 @@
 # VSL Vulkan compute
 
-GPU compute via Vulkan shaders (GEMM, elementwise, im2col, pooling).
+GPU compute via Vulkan shaders (GEMM, elementwise, im2col, pooling, fused Adam).
+
+Elementwise: `vector_add`, `vector_mul`, `vector_sqrt`, fused `adam_step` (see `shaders/`).
+Descriptor layouts support up to **8** storage-buffer bindings (`vulkan.h`).
 
 ## Running tests safely
 
