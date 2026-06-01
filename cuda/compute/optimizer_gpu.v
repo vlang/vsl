@@ -50,7 +50,8 @@ pub fn (mut b GpuBufF64) upload(data []f64) ! {
 }
 
 pub fn (b &GpuBufF64) download(mut out []f64) ! {
-	status := C.cudaMemcpy(out.data, b.ptr, int(sizeof(f64)) * out.len, C.cuda_memcpy_device_to_host)
+	status := C.cudaMemcpy(out.data, b.ptr, int(sizeof(f64)) * out.len,
+		C.cuda_memcpy_device_to_host)
 	if status != 0 {
 		return error('gpu_buf_f64.download: cudaMemcpy D→H ${status}')
 	}
@@ -87,7 +88,8 @@ pub fn gpu_buf_f64_mul_vec(dev &cuda.CudaDevice, a &GpuBufF64, b &GpuBufF64, mut
 	if isnil(dev.cublas) {
 		return error('gpu_buf_f64_mul_vec: cublas unavailable')
 	}
-	status := C.cublasDdgmm(dev.cublas, 1, 1, count, &f64(a.ptr), 1, &f64(b.ptr), 1, &f64(out.ptr), 1)
+	status :=
+		C.cublasDdgmm(dev.cublas, 1, 1, count, &f64(a.ptr), 1, &f64(b.ptr), 1, &f64(out.ptr), 1)
 	if status != cuda.cublas_status_success {
 		return error('gpu_buf_f64_mul_vec: ${cuda.cublas_error(status)}')
 	}
@@ -106,7 +108,7 @@ pub fn gpu_buf_f64_sqrt_inplace(mut b GpuBufF64, count int) ! {
 // gpu_buf_f64_add_scalar_inplace adds s to each element (host round-trip).
 pub fn gpu_buf_f64_copy(mut dst GpuBufF64, src &GpuBufF64, count int) ! {
 	sz := int(sizeof(f64)) * count
-	status := C.cudaMemcpy(dst.ptr, src.ptr, sz, C.cuda_memcpy_device_to_device)
+	status := C.cudaMemcpy(dst.ptr, src.ptr, sz, cuda.cuda_memcpy_device_to_device)
 	if status != 0 {
 		return error('gpu_buf_f64_copy: cudaMemcpy D→D ${status}')
 	}

@@ -51,10 +51,10 @@ fn C.cublasDdgmm(handle CublasHandle, side int, m int, n int, A &f64, lda int, B
 
 // Define CUDA memcpy kind constants — needed because the CUDA headers
 // are not available at preprocessor check time when using TCC.
-#flag linux -Dcuda_memcpy_host_to_device=2 -Dcuda_memcpy_device_to_host=3
+#flag linux -Dcuda_memcpy_host_to_device=2 -Dcuda_memcpy_device_to_host=3 -Dcuda_memcpy_device_to_device=4
 #flag linux -I/opt/cuda/include
 #flag linux -Wl,-rpath,/opt/cuda/lib64
-#flag darwin -Dcuda_memcpy_host_to_device=2 -Dcuda_memcpy_device_to_host=3
+#flag darwin -Dcuda_memcpy_host_to_device=2 -Dcuda_memcpy_device_to_host=3 -Dcuda_memcpy_device_to_device=4
 #flag darwin -I/usr/local/cuda/include
 
 // cudaMalloc allocates memory on the device.
@@ -67,9 +67,9 @@ fn C.cudaFree(ptr voidptr) int
 // kind: 1=host-to-host, 2=host-to-device, 3=device-to-host, 4=device-to-device
 fn C.cudaMemcpy(dst voidptr, src voidptr, size int, kind int) int
 
-const cuda_memcpy_host_to_device = 2
-const cuda_memcpy_device_to_host = 3
-const cuda_memcpy_device_to_device = 4
+pub const cuda_memcpy_host_to_device = 2
+pub const cuda_memcpy_device_to_host = 3
+pub const cuda_memcpy_device_to_device = 4
 
 // ============================================================================
 // CUDA Runtime device management
