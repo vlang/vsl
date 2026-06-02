@@ -20,7 +20,7 @@ jobs:
           path: vsl
 
       - name: Setup V
-        uses: vlang/setup-v@v1
+        uses: vlang/setup-v@v1.5
         with:
           check-latest: true
 
