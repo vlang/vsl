@@ -33,7 +33,7 @@ jobs:
         with:
           path: vsl
       - name: Setup V
-        uses: vlang/setup-v@v1.3
+        uses: vlang/setup-v@v1.5
         with:
           check-latest: true
       - name: Install dependencies
@@ -67,7 +67,7 @@ jobs:
         with:
           path: vsl
       - name: Setup V
-        uses: vlang/setup-v@v1.3
+        uses: vlang/setup-v@v1.5
         with:
           check-latest: true
       - name: Setup VSL as V module
