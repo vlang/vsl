@@ -47,7 +47,7 @@ jobs:
           path: vsl
 
       - name: Setup V
-        uses: vlang/setup-v@v1.5
+        uses: vlang/setup-v@v1.6
         with:
           check-latest: true
 
@@ -104,10 +104,9 @@ jobs:
           path: vsl
 
       - name: Setup V
-        uses: vlang/setup-v@v1.5
+        uses: vlang/setup-v@v1.6
         with:
           check-latest: true
-          stable: true
 
       - name: V doctor
         run: v doctor
@@ -146,7 +145,7 @@ jobs:
           path: vsl
 
       - name: Setup V
-        uses: vlang/setup-v@v1.5
+        uses: vlang/setup-v@v1.6
         with:
           check-latest: true
 
@@ -194,7 +193,7 @@ jobs:
           path: vsl
 
       - name: Setup V
-        uses: vlang/setup-v@v1.5
+        uses: vlang/setup-v@v1.6
         with:
           check-latest: true
 
