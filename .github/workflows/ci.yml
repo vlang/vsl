@@ -7,6 +7,11 @@ concurrency:
 on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+    inputs:
+      run_cuda:
+        description: 'Run CUDA tests (requires org GPU runner; not configured today)'
+        type: boolean
+        default: false
 
   push:
     branches:
@@ -143,10 +148,11 @@ jobs:
           v test ~/.vmodules/vsl/compute/context_test.v
 
   run-tests-on-cuda:
-    # CUDA tests require a machine with NVIDIA GPU + CUDA Toolkit.
-    # Only runs on main branch pushes (not PRs from forks — no GPU access in CI).
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    runs-on: linux-x64-16c
+    # CUDA needs an org larger/GPU runner (label was linux-x64-16c). Standard GitHub
+    # hosted runners have no NVIDIA GPU. Do not run on main push — it queues forever
+    # when no matching runner exists. Local: ./bin/test --use-cuda
+    if: github.event_name == 'workflow_dispatch' && inputs.run_cuda == true
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout VSL
