@@ -1,9 +1,7 @@
 module compute
 
-import vsl.vulkan
-
 // Stubs when not built with `-d vulkan`.
-pub fn relu_gpu(ctx &ComputeContext, dst &vulkan.GpuBuffer, src &vulkan.GpuBuffer) ! {
+pub fn relu_gpu(ctx &ComputeContext, dst voidptr, src voidptr) ! {
 	_ = ctx
 	_ = dst
 	_ = src
@@ -11,7 +9,7 @@ pub fn relu_gpu(ctx &ComputeContext, dst &vulkan.GpuBuffer, src &vulkan.GpuBuffe
 }
 
 // sigmoid_gpu exposes this operation as part of the public API.
-pub fn sigmoid_gpu(ctx &ComputeContext, dst &vulkan.GpuBuffer, src &vulkan.GpuBuffer) ! {
+pub fn sigmoid_gpu(ctx &ComputeContext, dst voidptr, src voidptr) ! {
 	_ = ctx
 	_ = dst
 	_ = src
