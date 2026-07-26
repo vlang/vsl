@@ -10,8 +10,6 @@ const testfile = os.join_path(testfolder, 'roundtrip.h5')
 fn testsuite_begin() {
 	os.rmdir_all(testfolder) or {}
 	os.mkdir_all(testfolder) or {}
-
-	assert os.exists_in_system_path(h5dump)
 }
 
 fn testsuite_end() {
@@ -19,15 +17,28 @@ fn testsuite_end() {
 }
 
 fn test_dataset_round_trip() ! {
+	if !os.exists_in_system_path(h5dump) {
+		eprintln('HDF5 round-trip test skipped: h5dump not available')
+		return
+	}
+
 	expected := [f64(1.25), -2.5, 3.75]
-	file := Hdf5File.new(testfile)!
-	assert file.write_dataset1d('values', expected)! >= 0
-	file.close()
+
+	writer := Hdf5File.new(testfile)!
+	mut writer_closed := false
+	defer {
+		if !writer_closed {
+			writer.close()
+		}
+	}
+	assert writer.write_dataset1d('values', expected)! >= 0
+	writer.close()
+	writer_closed = true
 
 	mut actual := []f64{len: 1}
-	read_file := open_file(testfile)!
-	read_file.read_dataset1d('values', mut actual)
-	read_file.close()
+	reader := open_file(testfile)!
+	defer { reader.close() }
+	reader.read_dataset1d('values', mut actual)
 
 	assert actual == expected
 }
