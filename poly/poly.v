@@ -15,9 +15,11 @@ pub fn eval(c []f64, x f64) f64 {
 		errors.vsl_panic('coeficients can not be empty', .efailed)
 	}
 	len := c.len
-	mut ans := c[len - 1]
-	for e in c[..len - 1] {
-		ans = e + x * ans
+	mut ans := 0.0
+	mut i := len - 1
+	for i >= 0 {
+		ans = c[i] + x * ans
+		i--
 	}
 	return ans
 }
@@ -144,13 +146,13 @@ fn sorted_3_(x_ f64, y_ f64, z_ f64) (f64, f64, f64) {
 	mut y := y_
 	mut z := z_
 	if x > y {
-		y, x = swap_(x, y)
+		x, y = swap_(x, y)
+	}
+	if x > z {
+		x, z = swap_(x, z)
 	}
 	if y > z {
-		z, y = swap_(y, z)
-	}
-	if x > y {
-		y, x = swap_(x, y)
+		y, z = swap_(y, z)
 	}
 	return x, y, z
 }
@@ -288,26 +290,47 @@ pub fn multiply(a []f64, b []f64) []f64 {
 // Output: (q, r) where q is the quotient and r is the remainder
 // such that a(x) = b(x) * q(x) + r(x) and degree(r) < degree(b)
 pub fn divide(a []f64, b []f64) ([]f64, []f64) {
-	mut quotient := []f64{}
+	if b.len == 0 {
+		panic('divisor cannot be an empty polynomial')
+	}
+	mut divisor := b.clone()
+	for divisor.len > 0 && divisor[divisor.len - 1] == 0.0 {
+		divisor = divisor[..divisor.len - 1].clone()
+	}
+	if divisor.len == 0 {
+		panic('cannot divide by the zero polynomial')
+	}
+	if a.len == 0 {
+		return []f64{}, []f64{}
+	}
 	mut remainder := a.clone()
-	b_lead_coef := b[0]
-
-	for remainder.len >= b.len {
-		lead_coef := remainder[0] / b_lead_coef
-		quotient << lead_coef
-		for i in 0 .. b.len {
-			remainder[i] -= lead_coef * b[i]
-		}
-		remainder = unsafe { remainder[1..] }
-		for remainder.len > 0 && math.abs(remainder[0]) < 1e-10 {
-			remainder = unsafe { remainder[1..] }
-		}
+	for remainder.len > 0 && remainder[remainder.len - 1] == 0.0 {
+		remainder = remainder[..remainder.len - 1].clone()
+	}
+	if remainder.len < divisor.len {
+		return []f64{}, remainder
 	}
 
-	if remainder.len == 0 {
-		remainder = []f64{}
-	}
+	mut quotient := []f64{len: remainder.len - divisor.len + 1, init: 0.0}
+	b_degree := divisor.len - 1
+	b_lead_coeff := divisor[b_degree]
 
+	for remainder.len >= divisor.len {
+		remainder_degree := remainder.len - 1
+		quotient_idx := remainder_degree - b_degree
+		quotient_term := remainder[remainder_degree] / b_lead_coeff
+		quotient[quotient_idx] = quotient_term
+
+		for i in 0 .. divisor.len {
+			remainder[quotient_idx + i] -= quotient_term * divisor[i]
+		}
+		// The leading term is mathematically canceled; discard floating-point
+		// roundoff there so the degree decreases on every iteration.
+		remainder[remainder_degree] = 0.0
+		for remainder.len > 0 && remainder[remainder.len - 1] == 0.0 {
+			remainder = remainder[0..remainder.len - 1].clone()
+		}
+	}
 	return quotient, remainder
 }
 
