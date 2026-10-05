@@ -27,6 +27,8 @@ permissions:
 jobs:
   docs:
     runs-on: ubuntu-latest
+    env:
+      VJOBS: '2'
     steps:
       - name: Checkout VSL
         uses: actions/checkout@v4
@@ -61,6 +63,8 @@ jobs:
 
   fmt:
     runs-on: ubuntu-latest
+    env:
+      VJOBS: '2'
     steps:
       - name: Checkout VSL
         uses: actions/checkout@v4

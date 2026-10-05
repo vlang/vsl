@@ -102,6 +102,8 @@ jobs:
   run-windows-smoke:
     name: Windows compute smoke
     runs-on: windows-latest
+    env:
+      VJOBS: '2'
 
     steps:
       - name: Checkout VSL
@@ -132,8 +134,6 @@ jobs:
 
       - name: Run Windows compute smoke
         shell: bash
-        env:
-          VJOBS: '2'
         run: |
           vulkan_root="${VULKAN_SDK//\\//}"
           export CFLAGS="-I${vulkan_root}/Include"
