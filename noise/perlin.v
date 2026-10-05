@@ -83,6 +83,11 @@ pub fn (gen Generator) perlin_2d(x f64, y f64) f64 {
 	return (lerp(x1, x2, v) + 1) / 2
 }
 
+// perlin2d is kept as a compatibility alias for perlin_2d.
+pub fn (gen Generator) perlin2d(x f64, y f64) f64 {
+	return gen.perlin_2d(x, y)
+}
+
 // perlin_3d is a function that return a single value of perlin gen for a given 3d position
 pub fn (gen Generator) perlin_3d(x f64, y f64, z f64) f64 {
 	xi := int(x) & 0xFF
@@ -123,4 +128,9 @@ pub fn (gen Generator) perlin_3d(x f64, y f64, z f64) f64 {
 	y2 := lerp(x1, x2, v)
 
 	return (lerp(y1, y2, w) + 1) / 2
+}
+
+// perlin3d is kept as a compatibility alias for perlin_3d.
+pub fn (gen Generator) perlin3d(x f64, y f64, z f64) f64 {
+	return gen.perlin_3d(x, y, z)
 }
