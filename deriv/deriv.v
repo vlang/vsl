@@ -36,7 +36,7 @@ fn central_deriv(f func.Fn, x f64, h f64) (f64, f64, f64) {
 
 // central exposes this operation as part of the public API.
 pub fn central(f func.Fn, x f64, h f64) (f64, f64) {
-	r_0, round, trunc := central_deriv(f, x, h)
+	r_0, trunc, round := central_deriv(f, x, h)
 	mut error := round + trunc
 	mut result := r_0
 	if round < trunc && (round > 0.0 && trunc > 0.0) {
@@ -46,7 +46,7 @@ pub fn central(f func.Fn, x f64, h f64) (f64, f64) {
 		* rounding error (O(1/h)).
 		*/
 		h_opt := h * math.pow(round / (2.0 * trunc), 1.0 / 3.0)
-		r_opt, round_opt, trunc_opt := central_deriv(f, x, h_opt)
+		r_opt, trunc_opt, round_opt := central_deriv(f, x, h_opt)
 		error_opt := round_opt + trunc_opt
 		/*
 		Check that the new error is smaller, and that the new derivative
@@ -89,7 +89,7 @@ fn forward_deriv(f func.Fn, x f64, h f64) (f64, f64, f64) {
 
 // forward exposes this operation as part of the public API.
 pub fn forward(f func.Fn, x f64, h f64) (f64, f64) {
-	r_0, round, trunc := forward_deriv(f, x, h)
+	r_0, trunc, round := forward_deriv(f, x, h)
 	mut error := round + trunc
 	mut result := r_0
 	if round < trunc && (round > 0.0 && trunc > 0.0) {
@@ -99,7 +99,7 @@ pub fn forward(f func.Fn, x f64, h f64) (f64, f64) {
 		* rounding error (O(1/h)).
 		*/
 		h_opt := h * math.pow(round / trunc, 1.0 / 2.0)
-		r_opt, round_opt, trunc_opt := forward_deriv(f, x, h_opt)
+		r_opt, trunc_opt, round_opt := forward_deriv(f, x, h_opt)
 		error_opt := round_opt + trunc_opt
 		/*
 		Check that the new error is smaller, and that the new derivative
