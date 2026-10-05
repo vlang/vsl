@@ -428,26 +428,11 @@ pub fn dsyev(jobz EigenVectorsJob, uplo blas.Uplo, n int, mut a []f64, lda int, 
 // dgeqrf exposes this operation as part of the public API.
 @[inline]
 pub fn dgeqrf(m int, n int, mut a []f64, lda int, mut tau []f64) int {
-	// Convert from row-major (wrapper/C LAPACKE format) to column-major (BLAS/LAPACK format)
-	mut a_col := []f64{len: m * n}
-	for i in 0 .. m {
-		for j in 0 .. n {
-			a_col[i + j * m] = a[i * lda + j] // row-major -> column-major
-		}
-	}
-	// Query optimal workspace size
 	mut work_query := []f64{len: 1}
-	lapack64.dgeqrf(m, n, mut a_col, m, mut tau, mut work_query, -1)
+	lapack64.dgeqrf(m, n, mut a, lda, mut tau, mut work_query, -1)
 	lwork := int(work_query[0])
-	// Allocate workspace and call dgeqrf
 	mut work := []f64{len: math.max(1, lwork)}
-	lapack64.dgeqrf(m, n, mut a_col, m, mut tau, mut work, lwork)
-	// Convert back to row-major
-	for i in 0 .. m {
-		for j in 0 .. n {
-			a[i * lda + j] = a_col[i + j * m] // column-major -> row-major
-		}
-	}
+	lapack64.dgeqrf(m, n, mut a, lda, mut tau, mut work, lwork)
 	return 0 // lapack64 functions don't return error codes
 }
 

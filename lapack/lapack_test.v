@@ -16,17 +16,14 @@ const ortho_tolerance = 1e-15
 
 // nearly_equal_matrix checks if two matrices are nearly equal within tolerance
 fn nearly_equal_matrix(a [][]f64, b [][]f64, tol f64) bool {
-	dump('nearly_equal_matrix: a.len=${a.len}, b.len=${b.len}')
 	if a.len != b.len {
 		return false
 	}
 	for i in 0 .. a.len {
-		dump('nearly_equal_matrix loop i=${i}: a[i].len=${a[i].len}, b[i].len=${b[i].len}')
 		if a[i].len != b[i].len {
 			return false
 		}
 		for j in 0 .. a[i].len {
-			dump('nearly_equal_matrix: i=${i}, j=${j}, a[i].len=${a[i].len}')
 			if !float64.tolerance(a[i][j], b[i][j], tol) {
 				return false
 			}
@@ -454,56 +451,52 @@ fn test_syev_basic() {
 // ============================================================================
 
 fn test_geqrf_orgqr() {
-	// TODO: fix this test
+	// Test QR factorization on square, tall, and wide matrices.
+	test_cases := [
+		[3, 3], // Square matrix
+		[5, 3], // Tall matrix
+		[3, 5], // Wide matrix
+	]
 
-	$if false {
-		// Test QR factorization on various matrix sizes
-		test_cases := [
-			[3, 3], // Square matrix
-			[5, 3], // Tall matrix
-			[3, 5], // Wide matrix
-		]
+	for case in test_cases {
+		m := case[0]
+		n := case[1]
 
-		for case in test_cases {
-			m := case[0]
-			n := case[1]
+		// Create test matrix
+		a_original := create_random_matrix(m, n, 456 + m + n)
+		mut a := a_original.clone()
 
-			// Create test matrix
-			a_original := create_random_matrix(m, n, 456 + m + n)
-			mut a := a_original.clone()
+		// Compute QR factorization
+		tau := geqrf(mut a) or {
+			assert false, 'geqrf failed for ${m}x${n} matrix'
+			return
+		}
 
-			// Compute QR factorization
-			tau := geqrf(mut a) or {
-				assert false, 'geqrf failed for ${m}x${n} matrix'
-				return
-			}
-
-			// Extract R (upper triangular part)
-			mut r := [][]f64{len: m, init: []f64{len: n, init: 0.0}}
-			for i in 0 .. m {
-				for j in i .. n {
-					if j < n {
-						r[i][j] = a[i][j]
-					}
+		// Extract R (upper triangular part)
+		mut r := [][]f64{len: m, init: []f64{len: n, init: 0.0}}
+		for i in 0 .. m {
+			for j in i .. n {
+				if j < n {
+					r[i][j] = a[i][j]
 				}
 			}
-
-			// Generate Q using orgqr
-			orgqr(mut a, tau) or { assert false, 'orgqr failed for ${m}x${n} matrix' }
-
-			// Check that Q has orthonormal columns
-			if m >= n {
-				// For tall matrices, Q should have orthonormal columns
-				qt := matrix_transpose(a)
-				qtq := matrix_multiply(qt, a)
-				identity_n := create_identity(n)
-				assert nearly_equal_matrix(qtq, identity_n, ortho_tolerance), 'QR: Q not orthonormal for ${m}x${n}'
-			}
-
-			// Check QR = A_original (Q*R should reconstruct original matrix)
-			qr_product := matrix_multiply(a, r)
-			assert nearly_equal_matrix(qr_product, a_original, test_tolerance), 'QR: Q*R != A for ${m}x${n}'
 		}
+
+		// Generate Q using orgqr
+		orgqr(mut a, tau) or { assert false, 'orgqr failed for ${m}x${n} matrix' }
+
+		// Check that Q has orthonormal columns
+		if m >= n {
+			// For tall matrices, Q should have orthonormal columns
+			qt := matrix_transpose(a)
+			qtq := matrix_multiply(qt, a)
+			identity_n := create_identity(n)
+			assert nearly_equal_matrix(qtq, identity_n, ortho_tolerance), 'QR: Q not orthonormal for ${m}x${n}'
+		}
+
+		// Check QR = A_original (Q*R should reconstruct original matrix)
+		qr_product := matrix_multiply(a, r)
+		assert nearly_equal_matrix(qr_product, a_original, test_tolerance), 'QR: Q*R != A for ${m}x${n}'
 	}
 }
 
