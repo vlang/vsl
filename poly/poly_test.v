@@ -3,12 +3,11 @@ module poly
 import math
 
 fn test_eval() {
-	// ans = 2
-	// ans = 5 + 4 * 2 = 13
-	// ans = 4 + 4 * 13 = 56
-	x := 4
+	// P(x) = 4 + 5*x + 2*x^2
+	x := 4.0
 	cof := [4.0, 5, 2]
-	assert eval(cof, 4) == 56
+	assert eval(cof, x) == 56
+	assert eval(cof, 0) == 4
 }
 
 fn test_swap() {
