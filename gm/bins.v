@@ -279,7 +279,7 @@ pub fn (mut o Bins) find_along_segment(xi_ []f64, xf_ []f64, tol f64) []int {
 			y := entry.x[1]
 			mut z := 0.0
 			if o.ndim == 3 {
-				z = entry.x[0]
+				z = entry.x[2]
 			}
 			p := &Point{x, y, z}
 			d := dist_point_line(p, pi, pf, tol)
@@ -318,7 +318,7 @@ fn point_from_vector(v []f64, dim int) &Point {
 	y := v[1]
 	mut z := 0.0
 	if dim == 3 {
-		z = v[3]
+		z = v[2]
 	}
 	return Point.new(x, y, z)
 }
