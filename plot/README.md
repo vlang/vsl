@@ -98,6 +98,35 @@ plt.layout(title: 'Stock Price Trend')
 plt.show()!
 ```
 
+### Multi-line Titles and Annotation Alignment
+
+Use Plotly's `<br>` line break in a title to display a subtitle on a second
+line. Annotation `align` controls how multiple lines of text are aligned inside
+the annotation box. To place the box at a different location in the plot, set
+its data coordinates with `x` and `y`, and choose which side of the box is
+anchored to that point with `xanchor` (`left`, `center`, or `right`).
+
+```v
+import vsl.plot
+
+mut plt := plot.Plot.new()
+plt.scatter(x: [1.0, 2.0, 3.0], y: [1.0, 3.0, 2.0], mode: 'lines+markers')
+plt.annotation(
+	x:         2.0
+	y:         3.0
+	text:      'Peak value<br>second line'
+	align:     'left'
+	xanchor:   'right'
+	showarrow: false
+)
+plt.layout(title: 'Measurements<br>Peak annotation example')
+plt.show()!
+```
+
+`align: 'left'` affects the two text lines inside the box. `xanchor: 'right'`
+places the box to the left of the point at `(2, 3)`. See
+[`plot_test.v`](./plot_test.v) for title and annotation serialization tests.
+
 ### Box Plot (Statistical Analysis)
 
 ```v
