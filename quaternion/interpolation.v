@@ -26,11 +26,12 @@ pub fn (start Quaternion) nlerp(end Quaternion, tau f64) Quaternion {
 
 // slerp exposes this operation as part of the public API.
 pub fn (start Quaternion) slerp(end Quaternion, tau f64) Quaternion {
-	return if start.rotor_chordal_distance(end) <= math.sqrt2 {
-		end.divide(start).scalar_pow(tau).multiply(start)
+	relative := if start.rotor_chordal_distance(end) <= math.sqrt2 {
+		end.divide(start)
 	} else {
-		end.opposite().divide(start).scalar_pow(tau).multiply(start)
+		end.opposite().divide(start)
 	}
+	return relative.log().scalar_multiply(tau).exp().multiply(start)
 }
 
 // squad exposes this operation as part of the public API.

@@ -4,7 +4,7 @@ import math
 
 // scalar_pow exposes this operation as part of the public API.
 pub fn (q Quaternion) scalar_pow(s f64) Quaternion { // Unlike the quaternion^quaternion power, this is unambiguous.
-	if s != 0 { // math.log(s)=-inf
+	if s == 0.0 { // math.log(s)=-inf
 		return if q.is_zero() {
 			quaternion(1.0, 0.0, 0.0, 0.0)
 		} else {
