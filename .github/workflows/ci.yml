@@ -245,8 +245,10 @@ jobs:
       - name: Move VSL source code to V Modules
         run: mv ./vsl ~/.vmodules
 
-      # - name: Execute Tests using Pure V Backend
-      #   run: ~/.vmodules/vsl/bin/test
+      - name: Execute Tests using Pure V Backend
+        run: |
+          v wipe-cache
+          ~/.vmodules/vsl/bin/test
 
       - name: Execute Tests using Pure V Backend with Pure C Backend
         run: |
