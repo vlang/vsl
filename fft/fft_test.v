@@ -1,105 +1,40 @@
+import math
 import vsl.fft
 
-fn test_destroy_real_fft_plan() {
-	values := [f32(1), 0, 0, 0]
-	plan := fft.create_plan(values)?
-	fft.destroy_plan(plan)
+fn check_real_fft[T](input []T, expected []f64, tolerance f64) ! {
+	mut values := input.clone()
+	plan := fft.create_plan(values)!
+	defer {
+		fft.destroy_plan(plan)
+	}
+
+	assert fft.forward_fft(plan, mut values) == 0
+	if expected.len > 0 {
+		assert values.len == expected.len
+		for i, want in expected {
+			assert math.abs(f64(values[i]) - want) < tolerance
+		}
+	}
+
+	assert fft.backward_fft(plan, mut values) == 0
+	for i, want in input {
+		assert math.abs(f64(values[i]) - f64(want) * f64(input.len)) < tolerance * f64(input.len)
+	}
 }
 
-fn test_destroy_double_fft_plan() {
-	values := [f64(1), 0, 0, 0]
-	plan := fft.create_plan(values)?
-	fft.destroy_plan(plan)
+fn test_real_fft_f32_and_f64_match_reference() ! {
+	input32 := [f32(0.5), 0.5, 1.0, 2.0]
+	input64 := [f64(0.5), 0.5, 1.0, 2.0]
+	expected := [4.0, -0.5, 1.5, -1.0]
+	check_real_fft(input32, expected, 1e-6)!
+	check_real_fft(input64, expected, 1e-12)!
 }
 
-fn test_fft() {
-	// a simple FFT
-	mut aline := []f32{len: 0, cap: 9}
-
-	// two element FT
-
-	aline = [f32(1.0), 0]
-	println('orig   ${aline}')
-
-	mut p := fft.create_plan(aline)?
-	mut x := fft.forward_fft(p, mut aline)
-	println('forw ${x} ${aline}')
-	assert aline[0] == f32(1.0)
-	assert aline[1] == f32(1.0)
-
-	x = fft.backward_fft(p, mut aline)
-	println('back ${x} ${aline}')
-	assert aline[0] == f32(2.0)
-	assert aline[1] == f32(0.0)
-	println('')
-
-	// four element FT
-
-	aline = [f32(0.0), 1, 0, 0]
-	println('orig   ${aline}')
-
-	p = fft.create_plan(aline)?
-	mut y := fft.forward_fft(p, mut aline)
-	println('forw ${y} ${aline}')
-	assert aline[0] == f32(1.0)
-	assert aline[1] == f32(0.0)
-	assert aline[2] == f32(-1.0)
-	assert aline[3] == f32(-1.0)
-
-	x = fft.backward_fft(p, mut aline)
-	println('back ${x} ${aline}')
-	assert aline[0] == f32(0.0)
-	assert aline[1] == f32(4.0)
-	assert aline[2] == f32(0.0)
-	assert aline[3] == f32(0.0)
-	println('')
-
-	// a signal
-
-	// wolfram says:
-	// 2 Fourier[{0.5, 0.5, 1, 2}]
-	// is
-	// {4 + 0 i, -0.5 - 1.5 i, -1 + 0 i, -0.5 + 1.5 i}
-
-	aline = [f32(0.5), 0.5, 1, 2]
-	println('sgnl ${y} ${aline}')
-	y = fft.forward_fft(p, mut aline)
-	println('forw ${y} ${aline}')
-	assert aline[0] == f32(4.0)
-	assert aline[1] == f32(-0.5)
-	assert aline[2] == f32(1.5)
-	assert aline[3] == f32(-1.0)
-	println('wolf 0 {4, -0.5 - 1.5 i, -1, -0.5 + 1.5 i}')
-	println('')
-
-	// wolfram says:
-	// 2 Fourier[{-0.5, -0.5, 0, 1}]
-	// is
-	// {0 i, -0.5 - 1.5 i, -1 + 0 i, -0.5 + 1.5 i}
-
-	// same as above without a dc offset
-	aline = [f32(0.5), 0.5, 1, 2].map(it - f32(1.0))
-	println('sgnl ${y} ${aline}')
-	y = fft.forward_fft(p, mut aline)
-	println('forw ${y} ${aline}')
-	assert aline[0] == f32(0.0)
-	assert aline[1] == f32(-0.5)
-	assert aline[2] == f32(1.5)
-	assert aline[3] == f32(-1.0)
-	println('wolf 0 {0, -0.5 - 1.5 i, -1, -0.5 + 1.5 i}')
-	println('')
-
-	// bigger signal
-
-	aline = [f32(0.5), 0.5, 1, 2, 2, 2, 2, 3]
-	println('sgnl ${y} ${aline}')
-	p = fft.create_plan(aline)?
-	y = fft.forward_fft(p, mut aline)
-	println('forw ${y} ${aline}')
-	assert aline[0] == 13.0
-	assert aline[3] == -0.5
-	assert aline[4] == 2.5
-	assert aline[7] == -2.0
-	println('wolf 0 { 12.998 + 0. i, -1.85327 - 2.76735 i, -0.499924 - 2.49962 i, -1.14627 - 0.767651 i, -1.9997 + 0. i, -1.14627 + 0.767651 i, -0.499924 + 2.49962 i, -1.85327 + 2.76735 i}')
-	println('')
+fn test_real_fft_multiple_lengths_for_both_precisions() ! {
+	check_real_fft([f32(1.0), 0.0], [1.0, 1.0], 1e-6)!
+	check_real_fft([f64(1.0), 0.0], [1.0, 1.0], 1e-12)!
+	check_real_fft([f32(0.0), 1.0, 0.0, 0.0], [1.0, 0.0, -1.0, -1.0], 1e-6)!
+	check_real_fft([f64(0.0), 1.0, 0.0, 0.0], [1.0, 0.0, -1.0, -1.0], 1e-12)!
+	check_real_fft([f32(0.5), 0.5, 1.0, 2.0, 2.0, 2.0, 2.0, 3.0], [], 1e-5)!
+	check_real_fft([f64(0.5), 0.5, 1.0, 2.0, 2.0, 2.0, 2.0, 3.0], [], 1e-12)!
 }
