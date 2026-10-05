@@ -19,6 +19,30 @@ P(x) = c[0] + c[1] x + c[2] x^2 + . . . + c[len-1] x^(len-1)
 
 using Horner's method for stability.
 
+## B-Splines
+
+`BSplineCurve` evaluates non-rational B-spline curves from a degree, a
+non-decreasing knot vector, and control points. Its parameter domain is
+`[knots[degree], knots[control_points.len]]`. The knot vector length must equal
+`control_points.len + degree + 1`, and every control point must have the same
+dimension.
+
+```v
+import vsl.poly
+
+curve := poly.new_bspline_curve(2,
+	[0.0, 0.0, 0.0, 1.0, 1.0, 1.0],
+	[[0.0, 0.0], [1.0, 2.0], [2.0, 0.0]])!
+point := curve.evaluate(0.5)!
+basis := poly.bspline_basis(2, [0.0, 0.0, 0.0, 1.0, 1.0, 1.0], 1, 0.5)!
+refined := curve.insert_knot(0.5)!
+println('point=${point}, middle basis=${basis}, refined knots=${refined.knots}')
+```
+
+`insert_knot` returns a refined curve with the same shape. Basis values outside
+the parameter domain are zero. Curve evaluation outside the domain returns an
+error. See [`bspline_test.v`](./bspline_test.v) for reference values.
+
 ```v ignore
 fn eval_derivs(c []f64, x f64, lenres u64) []f64
 ```
