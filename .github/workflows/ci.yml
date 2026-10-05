@@ -83,6 +83,12 @@ jobs:
       - name: Move VSL source code to V Modules
         run: mv ./vsl ~/.vmodules
 
+      - name: Test opt-in MPI API
+        if: matrix.os == 'ubuntu-24.04' && matrix.flags == ''
+        env:
+          VJOBS: 2
+        run: v -d vsl_mpi -cc gcc test ~/.vmodules/vsl/mpi
+
       - name: Execute Tests using Pure V Backend
         run: |
           v wipe-cache
