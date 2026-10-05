@@ -92,7 +92,13 @@ fn test_run() {
 	assert 11 == output.count('DATATYPE')
 	assert 11 == output.count('DATASPACE  SIMPLE { ( 2 ) / ( 2 ) }')
 	assert 11 == output.count('(0): 0, 0') // uninitialized
-	assert 2 == output.count('H5T_STD_I32LE') // i32 and int
+	$if new_int ?&& x64 {
+		assert 1 == output.count('H5T_STD_I32LE') // i32
+		assert 2 == output.count('H5T_STD_I64LE') // i64 and int
+	} $else {
+		assert 2 == output.count('H5T_STD_I32LE') // i32 and int
+		assert 1 == output.count('H5T_STD_I64LE') // i64
+	}
 
 	readback()!
 	readback()! // worth doing twice

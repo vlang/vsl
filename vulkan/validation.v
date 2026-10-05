@@ -47,7 +47,7 @@ fn create_instance_debug() !VkInstance {
 	}
 
 	layer_name := khronos_validation_layer_name.str
-	app_info := C.VkApplicationInfo{
+	mut app_info := C.VkApplicationInfo{
 		sType:              structure_type_application_info
 		pApplicationName:   c'vsl'
 		applicationVersion: 1

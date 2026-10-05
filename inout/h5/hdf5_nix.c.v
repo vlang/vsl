@@ -66,10 +66,14 @@ fn hdftype[T](x T) Hdf5HidT {
 		return C.H5T_IEEE_F32LE
 	} $else $if T is i64 {
 		return C.H5T_STD_I64LE
-	} $else $if T is i32 { // note i32 is an alias for int
+	} $else $if T is i32 {
 		return C.H5T_STD_I32LE
 	} $else $if T is int {
-		return C.H5T_STD_I32LE
+		$if new_int ?&& x64 {
+			return C.H5T_STD_I64LE
+		} $else {
+			return C.H5T_STD_I32LE
+		}
 	} $else $if T is i16 {
 		return C.H5T_STD_I16LE
 	} $else $if T is i8 {

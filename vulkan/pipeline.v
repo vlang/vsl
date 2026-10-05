@@ -65,7 +65,7 @@ pub fn (mut p ComputePipeline) release() {
 
 // update_buffer updates descriptor set binding to point to a GPU buffer.
 pub fn (p &ComputePipeline) update_buffer(binding u32, buf &GpuBuffer) ! {
-	buffer_info := C.VkDescriptorBufferInfo{
+	mut buffer_info := C.VkDescriptorBufferInfo{
 		buffer: buf.buf
 		offset: DeviceSize(0)
 		range:  buf.size

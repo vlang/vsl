@@ -2,7 +2,7 @@ module float32
 
 import math
 
-const ge_tests = [// m x n ( kernels executed )
+const ge_tests = [ // m x n ( kernels executed )
 	GeTest{ // 1 x 1 (1x1)
 		x:    [f32(2.0)]
 		y:    [f32(4.4)]
@@ -87,4 +87,15 @@ fn test_ger() {
 			}
 		}
 	}
+}
+
+fn test_gemv_negative_increments() {
+	a := [f32(1), 2, 3, 4]
+	x := [f32(5), 6]
+	mut y_n := [f32(0), 0]
+	mut y_t := [f32(0), 0]
+	gemv_n(2, 2, 1, a, 2, x, -1, 0, mut y_n, -1)
+	gemv_t(2, 2, 1, a, 2, x, -1, 0, mut y_t, -1)
+	assert y_n == [f32(38), 16]
+	assert y_t == [f32(32), 21]
 }
