@@ -26,7 +26,7 @@ fn C.MPI_Bcast(buffer voidptr, count int, datatype MPI_Datatype, root int, comm 
 fn C.MPI_Reduce(sendbuf voidptr, recvbuf voidptr, count int, datatype MPI_Datatype, op MPI_Op, root int, comm MPI_Comm) int
 fn C.MPI_Allreduce(sendbuf voidptr, recvbuf voidptr, count int, datatype MPI_Datatype, op MPI_Op, comm MPI_Comm) int
 fn C.MPI_Send(buf voidptr, count int, datatype MPI_Datatype, dest int, tag int, comm MPI_Comm) int
-fn C.MPI_Recv(buf voidptr, count int, datatype MPI_Datatype, source int, tag int, comm MPI_Comm, status &MPI_Status) int
+fn C.MPI_Recv(buf voidptr, count int, datatype MPI_Datatype, source int, tag int, comm MPI_Comm, status voidptr) int
 
 // is_on tells whether MPI is on or not
 //  note: this returns true even after finish
@@ -132,62 +132,98 @@ pub fn (o &Communicator) barrier() {
 
 // send_i32 sends values to processor to_rank
 pub fn (o &Communicator) send_i32(vals []i32, to_rank int) {
-	C.MPI_Send(unsafe { voidptr(&vals[0]) }, 1, unsafe { MPI_Datatype(C.MPI_INT) }, to_rank, 0, o.comm)
+	if vals.len == 0 {
+		return
+	}
+	C.MPI_Send(unsafe { voidptr(&vals[0]) }, vals.len, unsafe { MPI_Datatype(C.MPI_INT) }, to_rank, 0, o.comm)
 }
 
 // recv_i32 receives values from processor from_rank
 pub fn (o &Communicator) recv_i32(vals []i32, from_rank int) {
-	C.MPI_Send(unsafe { voidptr(&vals[0]) }, 1, unsafe { MPI_Datatype(C.MPI_INT) }, from_rank, 0, o.comm)
+	if vals.len == 0 {
+		return
+	}
+	C.MPI_Recv(unsafe { voidptr(&vals[0]) }, vals.len, unsafe { MPI_Datatype(C.MPI_INT) }, from_rank, 0, o.comm, C.MPI_STATUS_IGNORE)
 }
 
 // send_u32 sends values to processor to_rank
 pub fn (o &Communicator) send_u32(vals []u32, to_rank int) {
-	C.MPI_Send(unsafe { voidptr(&vals[0]) }, 1, unsafe { MPI_Datatype(C.MPI_UNSIGNED) }, to_rank, 0, o.comm)
+	if vals.len == 0 {
+		return
+	}
+	C.MPI_Send(unsafe { voidptr(&vals[0]) }, vals.len, unsafe { MPI_Datatype(C.MPI_UNSIGNED) }, to_rank, 0, o.comm)
 }
 
 // recv_u32 receives values from processor from_rank
 pub fn (o &Communicator) recv_u32(vals []u32, from_rank int) {
-	C.MPI_Send(unsafe { voidptr(&vals[0]) }, 1, unsafe { MPI_Datatype(C.MPI_UNSIGNED) }, from_rank, 0, o.comm)
+	if vals.len == 0 {
+		return
+	}
+	C.MPI_Recv(unsafe { voidptr(&vals[0]) }, vals.len, unsafe { MPI_Datatype(C.MPI_UNSIGNED) }, from_rank, 0, o.comm, C.MPI_STATUS_IGNORE)
 }
 
 // send_i64 sends values to processor to_rank
 pub fn (o &Communicator) send_i64(vals []i64, to_rank int) {
-	C.MPI_Send(unsafe { voidptr(&vals[0]) }, 1, unsafe { MPI_Datatype(C.MPI_LONG) }, to_rank, 0, o.comm)
+	if vals.len == 0 {
+		return
+	}
+	C.MPI_Send(unsafe { voidptr(&vals[0]) }, vals.len, unsafe { MPI_Datatype(C.MPI_LONG) }, to_rank, 0, o.comm)
 }
 
 // recv_i64 receives values from processor from_rank
 pub fn (o &Communicator) recv_i64(vals []i64, from_rank int) {
-	C.MPI_Send(unsafe { voidptr(&vals[0]) }, 1, unsafe { MPI_Datatype(C.MPI_LONG) }, from_rank, 0, o.comm)
+	if vals.len == 0 {
+		return
+	}
+	C.MPI_Recv(unsafe { voidptr(&vals[0]) }, vals.len, unsafe { MPI_Datatype(C.MPI_LONG) }, from_rank, 0, o.comm, C.MPI_STATUS_IGNORE)
 }
 
 // send_u64 sends values to processor to_rank
 pub fn (o &Communicator) send_u64(vals []u64, to_rank int) {
-	C.MPI_Send(unsafe { voidptr(&vals[0]) }, 1, unsafe { MPI_Datatype(C.MPI_UNSIGNED_LONG) }, to_rank, 0, o.comm)
+	if vals.len == 0 {
+		return
+	}
+	C.MPI_Send(unsafe { voidptr(&vals[0]) }, vals.len, unsafe { MPI_Datatype(C.MPI_UNSIGNED_LONG) }, to_rank, 0, o.comm)
 }
 
 // recv_u64 receives values from processor from_rank
 pub fn (o &Communicator) recv_u64(vals []u64, from_rank int) {
-	C.MPI_Send(unsafe { voidptr(&vals[0]) }, 1, unsafe { MPI_Datatype(C.MPI_UNSIGNED_LONG) }, from_rank, 0, o.comm)
+	if vals.len == 0 {
+		return
+	}
+	C.MPI_Recv(unsafe { voidptr(&vals[0]) }, vals.len, unsafe { MPI_Datatype(C.MPI_UNSIGNED_LONG) }, from_rank, 0, o.comm, C.MPI_STATUS_IGNORE)
 }
 
 // send_f32 sends values to processor to_rank
 pub fn (o &Communicator) send_f32(vals []f32, to_rank int) {
-	C.MPI_Send(unsafe { voidptr(&vals[0]) }, 1, unsafe { MPI_Datatype(C.MPI_FLOAT) }, to_rank, 0, o.comm)
+	if vals.len == 0 {
+		return
+	}
+	C.MPI_Send(unsafe { voidptr(&vals[0]) }, vals.len, unsafe { MPI_Datatype(C.MPI_FLOAT) }, to_rank, 0, o.comm)
 }
 
 // recv_f32 receives values from processor from_rank
 pub fn (o &Communicator) recv_f32(vals []f32, from_rank int) {
-	C.MPI_Send(unsafe { voidptr(&vals[0]) }, 1, unsafe { MPI_Datatype(C.MPI_FLOAT) }, from_rank, 0, o.comm)
+	if vals.len == 0 {
+		return
+	}
+	C.MPI_Recv(unsafe { voidptr(&vals[0]) }, vals.len, unsafe { MPI_Datatype(C.MPI_FLOAT) }, from_rank, 0, o.comm, C.MPI_STATUS_IGNORE)
 }
 
 // send_f64 sends values to processor to_rank
 pub fn (o &Communicator) send_f64(vals []f64, to_rank int) {
-	C.MPI_Send(unsafe { voidptr(&vals[0]) }, 1, unsafe { MPI_Datatype(C.MPI_DOUBLE) }, to_rank, 0, o.comm)
+	if vals.len == 0 {
+		return
+	}
+	C.MPI_Send(unsafe { voidptr(&vals[0]) }, vals.len, unsafe { MPI_Datatype(C.MPI_DOUBLE) }, to_rank, 0, o.comm)
 }
 
 // recv_f64 receives values from processor from_rank
 pub fn (o &Communicator) recv_f64(vals []f64, from_rank int) {
-	C.MPI_Send(unsafe { voidptr(&vals[0]) }, 1, unsafe { MPI_Datatype(C.MPI_DOUBLE) }, from_rank, 0, o.comm)
+	if vals.len == 0 {
+		return
+	}
+	C.MPI_Recv(unsafe { voidptr(&vals[0]) }, vals.len, unsafe { MPI_Datatype(C.MPI_DOUBLE) }, from_rank, 0, o.comm, C.MPI_STATUS_IGNORE)
 }
 
 // send_one_i32 sends one value to processor to_rank
@@ -199,7 +235,7 @@ pub fn (o &Communicator) send_one_i32(val i32, to_rank int) {
 // recv_one_i32 receives one value from processor from_rank
 pub fn (o &Communicator) recv_one_i32(from_rank int) i32 {
 	vals := [i32(0)]
-	C.MPI_Send(unsafe { voidptr(&vals[0]) }, 1, unsafe { MPI_Datatype(C.MPI_INT) }, from_rank, 0, o.comm)
+	C.MPI_Recv(unsafe { voidptr(&vals[0]) }, 1, unsafe { MPI_Datatype(C.MPI_INT) }, from_rank, 0, o.comm, C.MPI_STATUS_IGNORE)
 	return vals[0]
 }
 
@@ -212,7 +248,7 @@ pub fn (o &Communicator) send_one_u32(val u32, to_rank int) {
 // recv_one_u32 receives one value from processor from_rank
 pub fn (o &Communicator) recv_one_u32(from_rank int) u32 {
 	vals := [u32(0)]
-	C.MPI_Send(unsafe { voidptr(&vals[0]) }, 1, unsafe { MPI_Datatype(C.MPI_UNSIGNED) }, from_rank, 0, o.comm)
+	C.MPI_Recv(unsafe { voidptr(&vals[0]) }, 1, unsafe { MPI_Datatype(C.MPI_UNSIGNED) }, from_rank, 0, o.comm, C.MPI_STATUS_IGNORE)
 	return vals[0]
 }
 
@@ -225,7 +261,7 @@ pub fn (o &Communicator) send_one_i64(val i64, to_rank int) {
 // recv_one_i64 receives one value from processor from_rank
 pub fn (o &Communicator) recv_one_i64(from_rank int) i64 {
 	vals := [i64(0)]
-	C.MPI_Send(unsafe { voidptr(&vals[0]) }, 1, unsafe { MPI_Datatype(C.MPI_LONG) }, from_rank, 0, o.comm)
+	C.MPI_Recv(unsafe { voidptr(&vals[0]) }, 1, unsafe { MPI_Datatype(C.MPI_LONG) }, from_rank, 0, o.comm, C.MPI_STATUS_IGNORE)
 	return vals[0]
 }
 
@@ -238,7 +274,7 @@ pub fn (o &Communicator) send_one_u64(val u64, to_rank int) {
 // recv_one_u64 receives one value from processor from_rank
 pub fn (o &Communicator) recv_one_u64(from_rank int) u64 {
 	vals := [u64(0)]
-	C.MPI_Send(unsafe { voidptr(&vals[0]) }, 1, unsafe { MPI_Datatype(C.MPI_UNSIGNED_LONG) }, from_rank, 0, o.comm)
+	C.MPI_Recv(unsafe { voidptr(&vals[0]) }, 1, unsafe { MPI_Datatype(C.MPI_UNSIGNED_LONG) }, from_rank, 0, o.comm, C.MPI_STATUS_IGNORE)
 	return vals[0]
 }
 
@@ -251,7 +287,7 @@ pub fn (o &Communicator) send_one_f32(val f32, to_rank int) {
 // recv_one_f32 receives one value from processor from_rank
 pub fn (o &Communicator) recv_one_f32(from_rank int) f32 {
 	vals := [f32(0)]
-	C.MPI_Send(unsafe { voidptr(&vals[0]) }, 1, unsafe { MPI_Datatype(C.MPI_FLOAT) }, from_rank, 0, o.comm)
+	C.MPI_Recv(unsafe { voidptr(&vals[0]) }, 1, unsafe { MPI_Datatype(C.MPI_FLOAT) }, from_rank, 0, o.comm, C.MPI_STATUS_IGNORE)
 	return vals[0]
 }
 
@@ -264,7 +300,7 @@ pub fn (o &Communicator) send_one_f64(val f64, to_rank int) {
 // recv_one_f64 receives one value from processor from_rank
 pub fn (o &Communicator) recv_one_f64(from_rank int) f64 {
 	vals := [f64(0)]
-	C.MPI_Send(unsafe { voidptr(&vals[0]) }, 1, unsafe { MPI_Datatype(C.MPI_DOUBLE) }, from_rank, 0, o.comm)
+	C.MPI_Recv(unsafe { voidptr(&vals[0]) }, 1, unsafe { MPI_Datatype(C.MPI_DOUBLE) }, from_rank, 0, o.comm, C.MPI_STATUS_IGNORE)
 	return vals[0]
 }
 
