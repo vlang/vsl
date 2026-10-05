@@ -2,6 +2,10 @@ module vcl
 
 pub interface ArgumentType {}
 
+interface KernelBufferArgument {
+	buffer() &Buffer
+}
+
 // kernel returns a kernel
 // if retrieving the kernel didn't complete the function will return an error
 pub fn (d &Device) kernel(name string) !&Kernel {
@@ -142,37 +146,10 @@ fn (k &Kernel) set_arg(index int, arg ArgumentType) ! {
 		Buffer {
 			return k.set_arg_buffer(index, arg)
 		}
+		KernelBufferArgument {
+			return k.set_arg_buffer(index, arg.buffer())
+		}
 		Bytes {
-			return k.set_arg_buffer(index, arg.buf)
-		}
-		Vector[u8] {
-			return k.set_arg_buffer(index, arg.buf)
-		}
-		Vector[f32] {
-			return k.set_arg_buffer(index, arg.buf)
-		}
-		Vector[f64] {
-			return k.set_arg_buffer(index, arg.buf)
-		}
-		Vector[i16] {
-			return k.set_arg_buffer(index, arg.buf)
-		}
-		Vector[i64] {
-			return k.set_arg_buffer(index, arg.buf)
-		}
-		Vector[i8] {
-			return k.set_arg_buffer(index, arg.buf)
-		}
-		Vector[int] {
-			return k.set_arg_buffer(index, arg.buf)
-		}
-		Vector[u16] {
-			return k.set_arg_buffer(index, arg.buf)
-		}
-		Vector[u32] {
-			return k.set_arg_buffer(index, arg.buf)
-		}
-		Vector[u64] {
 			return k.set_arg_buffer(index, arg.buf)
 		}
 		Image {
