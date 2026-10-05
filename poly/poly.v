@@ -293,45 +293,47 @@ pub fn divide(a []f64, b []f64) ([]f64, []f64) {
 	if b.len == 0 {
 		panic('divisor cannot be an empty polynomial')
 	}
-	mut divisor := b.clone()
-	for divisor.len > 0 && divisor[divisor.len - 1] == 0.0 {
-		divisor = divisor[..divisor.len - 1].clone()
+	divisor := b.clone()
+	mut divisor_len := divisor.len
+	for divisor_len > 0 && divisor[divisor_len - 1] == 0.0 {
+		divisor_len--
 	}
-	if divisor.len == 0 {
+	if divisor_len == 0 {
 		panic('cannot divide by the zero polynomial')
 	}
 	if a.len == 0 {
 		return []f64{}, []f64{}
 	}
 	mut remainder := a.clone()
-	for remainder.len > 0 && remainder[remainder.len - 1] == 0.0 {
-		remainder = remainder[..remainder.len - 1].clone()
+	mut remainder_len := remainder.len
+	for remainder_len > 0 && remainder[remainder_len - 1] == 0.0 {
+		remainder_len--
 	}
-	if remainder.len < divisor.len {
-		return []f64{}, remainder
+	if remainder_len < divisor_len {
+		return []f64{}, remainder[..remainder_len].clone()
 	}
 
-	mut quotient := []f64{len: remainder.len - divisor.len + 1, init: 0.0}
-	b_degree := divisor.len - 1
+	mut quotient := []f64{len: remainder_len - divisor_len + 1, init: 0.0}
+	b_degree := divisor_len - 1
 	b_lead_coeff := divisor[b_degree]
 
-	for remainder.len >= divisor.len {
-		remainder_degree := remainder.len - 1
+	for remainder_len >= divisor_len {
+		remainder_degree := remainder_len - 1
 		quotient_idx := remainder_degree - b_degree
 		quotient_term := remainder[remainder_degree] / b_lead_coeff
 		quotient[quotient_idx] = quotient_term
 
-		for i in 0 .. divisor.len {
+		for i in 0 .. divisor_len {
 			remainder[quotient_idx + i] -= quotient_term * divisor[i]
 		}
 		// The leading term is mathematically canceled; discard floating-point
 		// roundoff there so the degree decreases on every iteration.
 		remainder[remainder_degree] = 0.0
-		for remainder.len > 0 && remainder[remainder.len - 1] == 0.0 {
-			remainder = remainder[0..remainder.len - 1].clone()
+		for remainder_len > 0 && remainder[remainder_len - 1] == 0.0 {
+			remainder_len--
 		}
 	}
-	return quotient, remainder
+	return quotient, remainder[..remainder_len].clone()
 }
 
 // degree returns the degree of the given polynomial
