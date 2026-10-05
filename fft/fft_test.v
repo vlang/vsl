@@ -1,5 +1,17 @@
 import vsl.fft
 
+fn test_destroy_real_fft_plan() {
+	values := [f32(1), 0, 0, 0]
+	plan := fft.create_plan(values)?
+	fft.destroy_plan(plan)
+}
+
+fn test_destroy_double_fft_plan() {
+	values := [f64(1), 0, 0, 0]
+	plan := fft.create_plan(values)?
+	fft.destroy_plan(plan)
+}
+
 fn test_fft() {
 	// a simple FFT
 	mut aline := []f32{len: 0, cap: 9}
