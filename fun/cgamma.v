@@ -80,6 +80,6 @@ pub fn cgamma(z cmplx.Complex) cmplx.Complex {
 
 // log_gamma computes the log-gamma function value
 pub fn clog_gamma(z cmplx.Complex) cmplx.Complex {
-	re, im := sp_cgamma_(z.re, z.im, true)
+	re, im := sp_cgamma_(z.re, z.im, false)
 	return cmplx.complex(re, im)
 }
