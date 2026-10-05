@@ -42,10 +42,63 @@ pub fn dlarfb(side blas.Side, trans blas.Transpose, direct Direct, store StoreV,
 		panic(bad_ld_work)
 	}
 
-	if m == 0 || n == 0 {
+	if m == 0 || n == 0 || k == 0 {
 		return
 	}
-
+	// Forward, column-wise reflectors applied from the left are used by QR.
+	// Expand the implicit unit-lower V from the packed row-major QR output and
+	// keep the temporary matrix in the row-major n×k layout used by dgemm.
+	if side == .left && direct == .forward && store == .column_wise {
+		if v.len < (m - 1) * ldv + k {
+			panic(short_v)
+		}
+		if t.len < (k - 1) * ldt + k {
+			panic(short_t)
+		}
+		if c.len < (m - 1) * ldc + n {
+			panic(short_c)
+		}
+		if work.len < (n - 1) * ldwork + k {
+			panic(short_work)
+		}
+		mut v_explicit := []f64{len: m * k}
+		for i in 0 .. m {
+			for j in 0 .. k {
+				v_explicit[i * k + j] = if i < j {
+					0.0
+				} else if i == j {
+					1.0
+				} else {
+					v[i * ldv + j]
+				}
+			}
+		}
+		// WORK stores the row-major n×k matrix (VᵀC)ᵀ.
+		blas.dgemm(.trans, .no_trans, n, k, m, 1.0, c, ldc, v_explicit, k, 0.0, mut
+			work, ldwork)
+		for j in 0 .. n {
+			if trans == .no_trans {
+				for i in 0 .. k {
+					mut sum := 0.0
+					for q in i .. k {
+						sum += t[i * ldt + q] * work[j * ldwork + q]
+					}
+					work[j * ldwork + i] = sum
+				}
+			} else {
+				for i := k - 1; i >= 0; i-- {
+					mut sum := 0.0
+					for q in 0 .. i + 1 {
+						sum += t[q * ldt + i] * work[j * ldwork + q]
+					}
+					work[j * ldwork + i] = sum
+				}
+			}
+		}
+		blas.dgemm(.no_trans, .trans, m, n, k, -1.0, v_explicit, k, work, ldwork, 1.0, mut c,
+			ldc)
+		return
+	}
 	mut nv := m
 	if side == .right {
 		nv = n
@@ -62,7 +115,11 @@ pub fn dlarfb(side blas.Side, trans blas.Transpose, direct Direct, store StoreV,
 	if c.len < (m - 1) * ldc + n {
 		panic(short_c)
 	}
-	if work.len < (nv - 1) * ldwork + k {
+	mut nw := n
+	if side == .right {
+		nw = m
+	}
+	if work.len < (nw - 1) * ldwork + k {
 		panic(short_work)
 	}
 

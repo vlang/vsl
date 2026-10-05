@@ -456,6 +456,7 @@ fn test_geqrf_orgqr() {
 		[3, 3], // Square matrix
 		[5, 3], // Tall matrix
 		[3, 5], // Wide matrix
+		[140, 135], // Exercises blocked QR factorization and Q generation
 	]
 
 	for case in test_cases {
@@ -464,6 +465,15 @@ fn test_geqrf_orgqr() {
 
 		// Create test matrix
 		a_original := create_random_matrix(m, n, 456 + m + n)
+		mut standardized_a := []f64{len: m * n}
+		for i in 0 .. m {
+			for j in 0 .. n {
+				standardized_a[i * n + j] = a_original[i][j]
+			}
+		}
+		mut standardized_tau := []f64{len: if m < n { m } else { n }}
+		info := dgeqrf(m, n, mut standardized_a, n, mut standardized_tau)
+		assert info == 0, 'standardized dgeqrf failed for ${m}x${n} with info=${info}'
 		mut a := a_original.clone()
 
 		// Compute QR factorization
@@ -471,6 +481,20 @@ fn test_geqrf_orgqr() {
 			assert false, 'geqrf failed for ${m}x${n} matrix'
 			return
 		}
+		mut factorization_residual := 0.0
+		for i in 0 .. m {
+			for j in 0 .. n {
+				factorization_residual = math.max(factorization_residual, math.abs(a[i][j] - standardized_a[i * n + j]))
+			}
+		}
+		assert factorization_residual <= test_tolerance * matrix_norm(a_original, 'fro'), 'standardized and high-level geqrf differ for ${m}x${n}'
+		for i in 0 .. tau.len {
+			assert math.abs(tau[i] - standardized_tau[i]) <= test_tolerance, 'standardized and high-level geqrf tau differ for ${m}x${n}'
+		}
+		n_q := if m < n { m } else { n }
+		mut standardized_q := standardized_a.clone()
+		orgqr_info := dorgqr(m, n_q, n_q, mut standardized_q, n, standardized_tau)
+		assert orgqr_info == 0, 'standardized dorgqr failed for ${m}x${n} with info=${orgqr_info}'
 
 		// Extract R (upper triangular part)
 		mut r := [][]f64{len: m, init: []f64{len: n, init: 0.0}}
@@ -484,6 +508,13 @@ fn test_geqrf_orgqr() {
 
 		// Generate Q using orgqr
 		orgqr(mut a, tau) or { assert false, 'orgqr failed for ${m}x${n} matrix' }
+		mut generator_residual := 0.0
+		for i in 0 .. m {
+			for j in 0 .. n_q {
+				generator_residual = math.max(generator_residual, math.abs(a[i][j] - standardized_q[i * n + j]))
+			}
+		}
+		assert generator_residual <= test_tolerance, 'standardized and high-level orgqr differ for ${m}x${n}'
 
 		// Check that Q has orthonormal columns
 		if m >= n {
@@ -491,12 +522,22 @@ fn test_geqrf_orgqr() {
 			qt := matrix_transpose(a)
 			qtq := matrix_multiply(qt, a)
 			identity_n := create_identity(n)
-			assert nearly_equal_matrix(qtq, identity_n, ortho_tolerance), 'QR: Q not orthonormal for ${m}x${n}'
+			assert nearly_equal_matrix(qtq, identity_n, if m * n > 1000 {
+				test_tolerance
+			} else {
+				ortho_tolerance
+			}), 'QR: Q not orthonormal for ${m}x${n}'
 		}
 
 		// Check QR = A_original (Q*R should reconstruct original matrix)
 		qr_product := matrix_multiply(a, r)
-		assert nearly_equal_matrix(qr_product, a_original, test_tolerance), 'QR: Q*R != A for ${m}x${n}'
+		mut residual := a_original.clone()
+		for i in 0 .. m {
+			for j in 0 .. n {
+				residual[i][j] -= qr_product[i][j]
+			}
+		}
+		assert matrix_norm(residual, 'fro') <= test_tolerance * matrix_norm(a_original, 'fro'), 'QR: Q*R != A for ${m}x${n}'
 	}
 }
 
