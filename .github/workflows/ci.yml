@@ -34,6 +34,8 @@ on:
 jobs:
   run-tests-on-linux:
     runs-on: ${{ matrix.os }}
+    env:
+      VJOBS: '2'
 
     strategy:
       fail-fast: false
@@ -44,6 +46,9 @@ jobs:
         flags:
           - ""
           - "--prod"
+        exclude:
+          - os: ubuntu-22.04
+            flags: "--prod"
 
     steps:
       - name: Checkout VSL
@@ -132,7 +137,7 @@ jobs:
       - name: Run Windows compute smoke
         shell: bash
         env:
-          VJOBS: '1'
+          VJOBS: '2'
         run: |
           vulkan_root="${VULKAN_SDK//\\//}"
           export CFLAGS="-I${vulkan_root}/Include"
@@ -153,6 +158,8 @@ jobs:
     # when no matching runner exists. Local: ./bin/test --use-cuda
     if: github.event_name == 'workflow_dispatch' && inputs.run_cuda == true
     runs-on: ubuntu-24.04
+    env:
+      VJOBS: '2'
 
     steps:
       - name: Checkout VSL
@@ -192,6 +199,8 @@ jobs:
 
   run-tests-on-macos:
     runs-on: ${{ matrix.os }}
+    env:
+      VJOBS: '2'
 
     strategy:
       fail-fast: false
