@@ -28,12 +28,32 @@ import vsl.errors
 //         by a significant constant factor, than the QR method.
 //
 pub fn jacobi(mut q Matrix[f64], mut v []f64, mut a Matrix[f64]) ! {
-	tol := 1e-15
-	max_iterations := 20
-
 	n := a.m
-	mut b := []f64{len: n}
-	mut z := []f64{len: n} // z is the vector of the off-diagonal elements of A
+	if n == 0 || a.n != n {
+		return errors.error('Jacobi method requires a non-empty square matrix', .einval)
+	}
+	if q.m != n || q.n != n || v.len != n {
+		return errors.error('Jacobi output dimensions must match the input matrix', .einval)
+	}
+
+	mut scale := 1.0
+	for i in 0 .. n {
+		for j in 0 .. n {
+			scale = math.max(scale, math.abs(a.get(i, j)))
+		}
+	}
+	tol := 1e-14 * scale
+	max_sweeps := 50
+
+	// Jacobi rotations require a symmetric input. Reject matrices whose
+	// asymmetry is larger than the convergence tolerance.
+	for i in 0 .. n {
+		for j in i + 1 .. n {
+			if math.abs(a.get(i, j) - a.get(j, i)) > tol {
+				return errors.error('Jacobi method requires a symmetric matrix', .einval)
+			}
+		}
+	}
 
 	// Initialize Q to the identity matrix
 	for i in 0 .. n {
@@ -43,25 +63,22 @@ pub fn jacobi(mut q Matrix[f64], mut v []f64, mut a Matrix[f64]) ! {
 		q.set(i, i, 1.0)
 	}
 
-	// Initialize b and v to the diagonal of A
+	// Initialize v to the diagonal of A.
 	for i in 0 .. n {
-		b[i] = a.get(i, i)
 		v[i] = a.get(i, i)
-		z[i] = 0.0
 	}
 
-	// Perform iterations
-	for _ in 0 .. max_iterations {
-		// Sum off-diagonal elements
-		mut sum := 0.0
+	// Perform cyclic sweeps. Each sweep visits every off-diagonal pair once.
+	mut converged := false
+	for _ in 0 .. max_sweeps {
+		mut max_off_diagonal := 0.0
 		for i in 0 .. n - 1 {
 			for j in i + 1 .. n {
-				sum += math.abs(a.get(i, j))
+				max_off_diagonal = math.max(max_off_diagonal, math.abs(a.get(i, j)))
 			}
 		}
-
-		// Check for convergence
-		if sum < tol {
+		if max_off_diagonal <= tol {
+			converged = true
 			break
 		}
 
@@ -69,7 +86,7 @@ pub fn jacobi(mut q Matrix[f64], mut v []f64, mut a Matrix[f64]) ! {
 		for i in 0 .. n - 1 {
 			for j in i + 1 .. n {
 				h := v[j] - v[i]
-				if math.abs(a.get(i, j)) < tol {
+				if math.abs(a.get(i, j)) <= tol {
 					continue
 				}
 
@@ -108,6 +125,8 @@ pub fn jacobi(mut q Matrix[f64], mut v []f64, mut a Matrix[f64]) ! {
 						a.set(k, j, a.get(j, k))
 					}
 				}
+				v[i] = a.get(i, i)
+				v[j] = a.get(j, j)
 
 				for k in 0 .. n {
 					qik := q.get(k, i)
@@ -118,23 +137,26 @@ pub fn jacobi(mut q Matrix[f64], mut v []f64, mut a Matrix[f64]) ! {
 			}
 		}
 	}
+	if !converged {
+		mut max_off_diagonal := 0.0
+		for i in 0 .. n - 1 {
+			for j in i + 1 .. n {
+				max_off_diagonal = math.max(max_off_diagonal, math.abs(a.get(i, j)))
+			}
+		}
+		if max_off_diagonal > tol {
+			return errors.error('Jacobi method did not converge: max off-diagonal element ${max_off_diagonal} exceeds tolerance ${tol}',
+				.efailed)
+		}
+	}
 
 	for i in 0 .. n {
+		v[i] = a.get(i, i)
 		a.set(i, i, v[i])
 		for j in 0 .. n {
 			if i != j {
 				a.set(i, j, 0.0)
 			}
 		}
-	}
-
-	mut sum := 0.0
-	for i in 0 .. n - 1 {
-		for j in i + 1 .. n {
-			sum += math.abs(a.get(i, j))
-		}
-	}
-	if sum >= tol {
-		return errors.error('Jacobi method did not converge', .efailed)
 	}
 }
