@@ -59,8 +59,15 @@ jobs:
         with:
           check-latest: true
 
+      - name: Move VSL source code to V Modules
+        run: |
+          mkdir -p ~/.vmodules
+          mv ./vsl ~/.vmodules/vsl
+
       - name: V doctor
-        run: v doctor
+        run: |
+          cd ~/.vmodules
+          v doctor
 
       - name: Install dependencies
         run: |
@@ -83,8 +90,17 @@ jobs:
             mesa-vulkan-drivers \
             libvulkan-dev
 
-      - name: Move VSL source code to V Modules
-        run: mv ./vsl ~/.vmodules
+      - name: Install PoCL OpenCL CPU runtime
+        if: matrix.os == 'ubuntu-24.04' && matrix.flags == ''
+        run: sudo apt-get install --quiet -y --no-install-recommends pocl-opencl-icd
+
+      - name: Test OpenCL compute backend
+        if: matrix.os == 'ubuntu-24.04' && matrix.flags == ''
+        env:
+          VJOBS: '2'
+        run: |
+          cd ~/.vmodules
+          v -d vcl test vsl/vcl/compute
 
       - name: Test opt-in MPI API
         if: matrix.os == 'ubuntu-24.04' && matrix.flags == ''
@@ -97,18 +113,21 @@ jobs:
 
       - name: Execute Tests using Pure V Backend
         run: |
+          cd ~/.vmodules
           v wipe-cache
-          ~/.vmodules/vsl/bin/test ${{ matrix.flags }} --use-cblas
+          vsl/bin/test ${{ matrix.flags }} --use-cblas
 
       - name: Execute Tests using Pure V Backend with Pure C Backend
         run: |
+          cd ~/.vmodules
           v wipe-cache
-          ~/.vmodules/vsl/bin/test ${{ matrix.flags }} --use-cblas --use-lapacke
+          vsl/bin/test ${{ matrix.flags }} --use-cblas --use-lapacke
 
       - name: Execute Tests using Vulkan Compute Backend
         run: |
+          cd ~/.vmodules
           v wipe-cache
-          ~/.vmodules/vsl/bin/test ${{ matrix.flags }} --use-vulkan
+          vsl/bin/test ${{ matrix.flags }} --use-vulkan
 
   run-windows-smoke:
     name: Windows compute smoke
@@ -127,14 +146,17 @@ jobs:
         with:
           check-latest: true
 
-      - name: V doctor
-        run: v doctor
-
       - name: Move VSL source code to V Modules
         shell: bash
         run: |
           mkdir -p ~/.vmodules
           mv ./vsl ~/.vmodules/vsl
+
+      - name: V doctor
+        shell: bash
+        run: |
+          cd ~/.vmodules
+          v doctor
 
       - name: Install Vulkan headers (Windows)
         uses: humbletim/setup-vulkan-sdk@v1.2.1
@@ -146,6 +168,7 @@ jobs:
       - name: Run Windows compute smoke
         shell: bash
         run: |
+          cd ~/.vmodules
           vulkan_root="${VULKAN_SDK//\\//}"
           export CFLAGS="-I${vulkan_root}/Include"
           export LIB="${vulkan_root}/Lib"
@@ -157,7 +180,7 @@ jobs:
           }
           EOF
           v run "$RUNNER_TEMP/vsl_windows_smoke.v"
-          v test ~/.vmodules/vsl/compute/context_test.v
+          v test vsl/compute/context_test.v
 
   run-tests-on-cuda:
     # CUDA needs an org larger/GPU runner (label was linux-x64-16c). Standard GitHub
@@ -179,8 +202,15 @@ jobs:
         with:
           check-latest: true
 
+      - name: Move VSL source code to V Modules
+        run: |
+          mkdir -p ~/.vmodules
+          mv ./vsl ~/.vmodules/vsl
+
       - name: V doctor
-        run: v doctor
+        run: |
+          cd ~/.vmodules
+          v doctor
 
       - name: Install CUDA toolkit
         run: |
@@ -194,15 +224,13 @@ jobs:
           nvcc --version
           nvidia-smi || echo "nvidia-smi not available in container (expected on some runners)"
 
-      - name: Move VSL source code to V Modules
-        run: mv ./vsl ~/.vmodules
-
       - name: Execute Tests using CUDA Backend
         run: |
+          cd ~/.vmodules
           v wipe-cache
-          ~/.vmodules/vsl/bin/test --use-cuda
+          vsl/bin/test --use-cuda
           # Optional: GPU layernorm when cuDNN 9.1+ symbols are present
-          VSL_TEST_CUDA=1 v -d cuda -d cudnn_layernorm test ~/.vmodules/vsl/cuda/compute/numerical_validation_test.v || true
+          VSL_TEST_CUDA=1 v -d cuda -d cudnn_layernorm test vsl/cuda/compute/numerical_validation_test.v || true
 
   run-tests-on-macos:
     runs-on: ${{ matrix.os }}
@@ -229,8 +257,15 @@ jobs:
         with:
           check-latest: true
 
+      - name: Move VSL source code to V Modules
+        run: |
+          mkdir -p ~/.vmodules
+          mv ./vsl ~/.vmodules/vsl
+
       - name: V doctor
-        run: v doctor
+        run: |
+          cd ~/.vmodules
+          v doctor
 
       - name: Install dependencies
         run: |
@@ -265,5 +300,6 @@ jobs:
 
       - name: Execute Tests using Pure V Backend with Pure C Backend
         run: |
+          cd ~/.vmodules
           v wipe-cache
-          ~/.vmodules/vsl/bin/test --use-cblas --use-lapacke
+          vsl/bin/test --use-cblas --use-lapacke
