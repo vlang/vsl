@@ -34,16 +34,19 @@ on:
 jobs:
   run-tests-on-linux:
     runs-on: ${{ matrix.os }}
+    env:
+      VJOBS: '2'
 
     strategy:
       fail-fast: false
       matrix:
-        os:
-          - ubuntu-24.04
-          - ubuntu-22.04
-        flags:
-          - ""
-          - "--prod"
+        include:
+          - os: ubuntu-22.04
+            flags: ""
+          - os: ubuntu-24.04
+            flags: ""
+          - os: ubuntu-24.04
+            flags: "--prod"
 
     steps:
       - name: Checkout VSL
@@ -101,6 +104,8 @@ jobs:
   run-windows-smoke:
     name: Windows compute smoke
     runs-on: windows-latest
+    env:
+      VJOBS: '2'
 
     steps:
       - name: Checkout VSL
@@ -131,8 +136,6 @@ jobs:
 
       - name: Run Windows compute smoke
         shell: bash
-        env:
-          VJOBS: '1'
         run: |
           vulkan_root="${VULKAN_SDK//\\//}"
           export CFLAGS="-I${vulkan_root}/Include"
@@ -153,6 +156,8 @@ jobs:
     # when no matching runner exists. Local: ./bin/test --use-cuda
     if: github.event_name == 'workflow_dispatch' && inputs.run_cuda == true
     runs-on: ubuntu-24.04
+    env:
+      VJOBS: '2'
 
     steps:
       - name: Checkout VSL
@@ -192,15 +197,17 @@ jobs:
 
   run-tests-on-macos:
     runs-on: ${{ matrix.os }}
+    env:
+      VJOBS: '2'
 
     strategy:
       fail-fast: false
       matrix:
-        os:
-          - macos-latest
-        flags:
-          - ""
-          - "--prod"
+        include:
+          - os: macos-latest
+            flags: ""
+          - os: macos-latest
+            flags: "--prod"
 
     steps:
       - name: Checkout VSL
@@ -242,8 +249,10 @@ jobs:
       - name: Move VSL source code to V Modules
         run: mv ./vsl ~/.vmodules
 
-      # - name: Execute Tests using Pure V Backend
-      #   run: ~/.vmodules/vsl/bin/test
+      - name: Execute Tests using Pure V Backend
+        run: |
+          v wipe-cache
+          ~/.vmodules/vsl/bin/test
 
       - name: Execute Tests using Pure V Backend with Pure C Backend
         run: |
