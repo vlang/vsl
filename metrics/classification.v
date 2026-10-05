@@ -3,6 +3,141 @@ module metrics
 import math
 import vsl.errors
 
+// MulticlassConfusionMatrix stores sorted class labels and counts, where rows
+// are true labels and columns are predicted labels.
+pub struct MulticlassConfusionMatrix {
+pub:
+	labels []int
+	values [][]int
+}
+
+// ClassificationAverage chooses an aggregation for multiclass metrics.
+pub enum ClassificationAverage {
+	macro_avg
+	micro_avg
+	weighted_avg
+}
+
+// multiclass_confusion_matrix builds a confusion matrix for arbitrary integer
+// class labels. Labels are the sorted union of true and predicted classes.
+pub fn multiclass_confusion_matrix(y_true []int, y_pred []int) !MulticlassConfusionMatrix {
+	if y_true.len != y_pred.len {
+		return errors.error('y_true and y_pred must have the same length', .einval)
+	}
+	if y_true.len == 0 {
+		return errors.error('empty input arrays', .einval)
+	}
+	mut labels := y_true.clone()
+	labels << y_pred
+	labels.sort()
+	mut unique_labels := []int{cap: labels.len}
+	for label in labels {
+		if unique_labels.len == 0 || unique_labels[unique_labels.len - 1] != label {
+			unique_labels << label
+		}
+	}
+	mut values := [][]int{cap: unique_labels.len}
+	for _ in unique_labels {
+		values << []int{len: unique_labels.len, init: 0}
+	}
+	for i, actual in y_true {
+		actual_index := unique_labels.index(actual)
+		predicted_index := unique_labels.index(y_pred[i])
+		values[actual_index][predicted_index]++
+	}
+	return MulticlassConfusionMatrix{
+		labels: unique_labels
+		values: values
+	}
+}
+
+// precision_score_multiclass computes multiclass precision with macro, micro,
+// or support-weighted averaging.
+pub fn precision_score_multiclass(y_true []int, y_pred []int, average ClassificationAverage) !f64 {
+	return multiclass_score(y_true, y_pred, average, .precision)
+}
+
+// recall_score_multiclass computes multiclass recall with macro, micro, or
+// support-weighted averaging.
+pub fn recall_score_multiclass(y_true []int, y_pred []int, average ClassificationAverage) !f64 {
+	return multiclass_score(y_true, y_pred, average, .recall)
+}
+
+// f1_score_multiclass computes multiclass F1 with macro, micro, or
+// support-weighted averaging.
+pub fn f1_score_multiclass(y_true []int, y_pred []int, average ClassificationAverage) !f64 {
+	return multiclass_score(y_true, y_pred, average, .f1)
+}
+
+enum MulticlassMetric {
+	precision
+	recall
+	f1
+}
+
+fn multiclass_score(y_true []int, y_pred []int, average ClassificationAverage, metric MulticlassMetric) !f64 {
+	cm := multiclass_confusion_matrix(y_true, y_pred)!
+	mut total_true_positive := 0
+	mut total_false_positive := 0
+	mut total_false_negative := 0
+	mut total_support := 0
+	mut score_sum := 0.0
+	for class_index in 0 .. cm.labels.len {
+		true_positive := cm.values[class_index][class_index]
+		mut support := 0
+		mut predicted_count := 0
+		for i in 0 .. cm.labels.len {
+			support += cm.values[class_index][i]
+			predicted_count += cm.values[i][class_index]
+		}
+		false_positive := predicted_count - true_positive
+		false_negative := support - true_positive
+		class_score := metric_value(true_positive, false_positive, false_negative, metric)
+		total_true_positive += true_positive
+		total_false_positive += false_positive
+		total_false_negative += false_negative
+		total_support += support
+		score_sum += match average {
+			.macro_avg { class_score }
+			.weighted_avg { class_score * f64(support) }
+			.micro_avg { 0.0 }
+		}
+	}
+	if average == .micro_avg {
+		return metric_value(total_true_positive, total_false_positive, total_false_negative, metric)
+	}
+	if average == .weighted_avg {
+		return score_sum / f64(total_support)
+	}
+	return score_sum / f64(cm.labels.len)
+}
+
+fn metric_value(true_positive int, false_positive int, false_negative int, metric MulticlassMetric) f64 {
+	precision_denominator := true_positive + false_positive
+	recall_denominator := true_positive + false_negative
+	precision := if precision_denominator == 0 {
+		0.0
+	} else {
+		f64(true_positive) / f64(precision_denominator)
+	}
+	recall := if recall_denominator == 0 {
+		0.0
+	} else {
+		f64(true_positive) / f64(recall_denominator)
+	}
+	return match metric {
+		.precision { precision }
+		.recall { recall }
+		.f1 {
+			if precision + recall == 0 {
+				0.0
+			} else {
+				2.0 * precision * recall / (precision + recall)
+			}
+		}
+	}
+}
+
 // confusion_matrix computes the confusion matrix for binary classification.
 // Returns a 2x2 matrix: [[TN, FP], [FN, TP]]
 pub fn confusion_matrix(y_true []f64, y_pred []f64) ![][]int {
