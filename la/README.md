@@ -4,6 +4,11 @@ The `vsl.la` module provides comprehensive linear algebra operations for
 scientific computing, including matrix operations, vector manipulations, and
 numerical linear algebra algorithms.
 
+MPI is not required for the standard `vsl.la` API. Communicator support on
+`SparseConfig` is opt-in at compile time with `-d vsl_mpi`; enabling it requires
+an MPI implementation and exposes `SparseConfig.with_comm`. Without the flag,
+`SparseConfig.new` and non-MPI solvers do not import MPI headers or libraries.
+
 ## 🚀 Features
 
 ### Matrix Operations
