@@ -33,10 +33,10 @@ backend reports GEMM/GEMV, activations, vector/scalar arithmetic, softmax, and
 layer normalization; accelerator operation lists are in `backend.v`.
 
 The `auto` preference selects a backend compiled into the build, in the order
-Vulkan, VCL, CUDA, then CPU. It does not benchmark devices. `ComputeContext`
-contains a `strict` option, but current dispatch does not enforce it; callers
-should rely on explicit backend selection, `available_backends`, and errors
-until strict fallback behavior is implemented.
+Vulkan, VCL, CUDA, then CPU. It does not benchmark devices. For an explicitly
+selected backend that is not compiled in, a non-strict context falls back to
+CPU while a strict context returns an error. Device initialization failures
+still propagate to the caller.
 
 Backend guides: [Vulkan](../vulkan/README.md), [VCL/OpenCL](../vcl/README.md),
 and [CUDA](../cuda/README.md). For the older low-level helpers, see
