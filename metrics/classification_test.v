@@ -2,6 +2,43 @@ module metrics
 
 import math
 
+fn test_multiclass_confusion_matrix_uses_sorted_label_union() {
+	y_true := [0, 0, 0, 1, 2, 2, 2, 2]
+	y_pred := [0, 1, 0, 1, 2, 2, 1, 2]
+	cm := multiclass_confusion_matrix(y_true, y_pred)!
+	assert cm.labels == [0, 1, 2]
+	assert cm.values == [[2, 1, 0], [0, 1, 0], [0, 1, 3]]
+}
+
+fn test_multiclass_precision_recall_and_f1_averages() {
+	y_true := [0, 0, 0, 1, 2, 2, 2, 2]
+	y_pred := [0, 1, 0, 1, 2, 2, 1, 2]
+	assert math.abs(precision_score_multiclass(y_true, y_pred, .macro_avg)! - 7.0 / 9.0) < 1e-12
+	assert math.abs(precision_score_multiclass(y_true, y_pred, .weighted_avg)! - 11.0 / 12.0) < 1e-12
+	assert math.abs(recall_score_multiclass(y_true, y_pred, .macro_avg)! - (2.0 / 3.0 + 1.0 + 0.75) / 3.0) < 1e-12
+	assert math.abs(recall_score_multiclass(y_true, y_pred, .weighted_avg)! - 0.75) < 1e-12
+	assert math.abs(precision_score_multiclass(y_true, y_pred, .micro_avg)! - 0.75) < 1e-12
+	assert math.abs(recall_score_multiclass(y_true, y_pred, .micro_avg)! - 0.75) < 1e-12
+	assert math.abs(f1_score_multiclass(y_true, y_pred, .micro_avg)! - 0.75) < 1e-12
+	assert math.abs(f1_score_multiclass(y_true, y_pred, .macro_avg)! - (0.8 + 0.5 + 6.0 / 7.0) / 3.0) < 1e-12
+}
+
+fn test_multiclass_metrics_reject_invalid_inputs() {
+	if _ := multiclass_confusion_matrix([0, 1], [0]) {
+		assert false, 'different lengths must return an error'
+	}
+	if _ := f1_score_multiclass([]int{}, []int{}, .macro_avg) {
+		assert false, 'empty inputs must return an error'
+	}
+}
+
+fn test_multiclass_confusion_matrix_includes_predicted_only_labels() {
+	cm := multiclass_confusion_matrix([4, 4], [9, 9])!
+	assert cm.labels == [4, 9]
+	assert cm.values == [[0, 2], [0, 0]]
+	assert precision_score_multiclass([4, 4], [9, 9], .macro_avg)! == 0.0
+}
+
 fn test_confusion_matrix_basic() {
 	y_true := [1.0, 1.0, 0.0, 0.0, 1.0, 0.0]
 	y_pred := [1.0, 0.0, 0.0, 0.0, 1.0, 1.0]

@@ -11,6 +11,9 @@ models, including classification and regression metrics.
 - **recall_score**: Recall (sensitivity, true positive rate)
 - **f1_score**: F1 score (harmonic mean of precision and recall)
 - **confusion_matrix**: Confusion matrix for binary classification
+- **multiclass_confusion_matrix**: Class-label-aware multiclass confusion matrix
+- **precision_score_multiclass**, **recall_score_multiclass**,
+  **f1_score_multiclass**: Macro, micro, and support-weighted scores
 - **roc_curve**: Receiver Operating Characteristic curve
 - **roc_auc_score**: Area Under the ROC Curve
 - **precision_recall_curve**: Precision-Recall curve
@@ -71,8 +74,8 @@ println('FPR: ${roc.fpr}')
 println('TPR: ${roc.tpr}')
 
 // Compute AUC
-auc := metrics.roc_auc_score(y_true, y_score)!
-println('AUC: ${auc}')
+auc_score := metrics.roc_auc_score(y_true, y_score)!
+println('AUC: ${auc_score}')
 ```
 
 ### Precision-Recall Curve
@@ -106,6 +109,23 @@ ks := metrics.ks_statistic(y_true, y_score)!
 println('KS Statistic: ${ks}')
 ```
 
+### Multiclass classification
+
+Multiclass labels are integers. Confusion-matrix rows are true labels and
+columns are predicted labels; the result includes the sorted label list.
+
+```v
+import vsl.metrics
+
+y_true := [0, 0, 0, 1, 2, 2, 2, 2]
+y_pred := [0, 1, 0, 1, 2, 2, 1, 2]
+cm := metrics.multiclass_confusion_matrix(y_true, y_pred)!
+macro_f1 := metrics.f1_score_multiclass(y_true, y_pred, .macro_avg)!
+weighted_f1 := metrics.f1_score_multiclass(y_true, y_pred, .weighted_avg)!
+println('labels: ${cm.labels}, rows: ${cm.values}')
+println('macro F1: ${macro_f1}; weighted F1: ${weighted_f1}')
+```
+
 ### Regression Metrics
 
 ```v
@@ -132,10 +152,14 @@ println('R²: ${r2}')
 | Function | Description |
 |----------|-------------|
 | `confusion_matrix(y_true, y_pred)` | Returns [[TN, FP], [FN, TP]] |
+| `multiclass_confusion_matrix(y_true, y_pred)` | Sorted integer labels and a true-row/predicted-column matrix |
 | `accuracy_score(y_true, y_pred)` | (TP + TN) / total |
 | `precision_score(y_true, y_pred)` | TP / (TP + FP) |
 | `recall_score(y_true, y_pred)` | TP / (TP + FN) |
 | `f1_score(y_true, y_pred)` | 2 * P * R / (P + R) |
+| `precision_score_multiclass(y_true, y_pred, average)` | Macro, micro, or support-weighted precision |
+| `recall_score_multiclass(y_true, y_pred, average)` | Macro, micro, or support-weighted recall |
+| `f1_score_multiclass(y_true, y_pred, average)` | Macro, micro, or support-weighted F1 |
 | `roc_curve(y_true, y_score)` | Returns FPR, TPR, thresholds |
 | `roc_auc_score(y_true, y_score)` | Area under ROC curve |
 | `precision_recall_curve(y_true, y_score)` | Returns precision, recall, thresholds |
@@ -178,10 +202,10 @@ for i in 0 .. test_data.nb_samples {
 
 // Evaluate
 accuracy := metrics.accuracy_score(test_data.y, predictions)!
-auc := metrics.roc_auc_score(test_data.y, predictions)!
+auc_score := metrics.roc_auc_score(test_data.y, predictions)!
 
 println('Test Accuracy: ${accuracy}')
-println('Test AUC: ${auc}')
+println('Test AUC: ${auc_score}')
 ```
 
 ## Visualization with Metrics
