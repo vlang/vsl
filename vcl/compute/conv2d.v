@@ -82,8 +82,9 @@ pub fn conv2d_vcl(mut dev vcl.Device, x_data []f64, w_data []f64, n int, c_in in
 	mut col_vec := dev.vector[f64](k_total * out_total)!
 
 	im2col_k := dev.kernel('im2col')!
-	err_im := <-im2col_k.global(k_total, out_total).local(local_size_2d, local_size_2d).run(x_vec,
-		col_vec, n, c_in, h, w, kh, kw, oh, ow, stride_h, stride_w, pad_h, pad_w)
+	err_im := <-im2col_k.global(k_total, out_total).local(local_size_2d, local_size_2d).run(x_vec.buffer(),
+		col_vec.buffer(), i32(n), i32(c_in), i32(h), i32(w), i32(kh), i32(kw), i32(oh), i32(ow),
+		i32(stride_h), i32(stride_w), i32(pad_h), i32(pad_w))
 	if err_im !is none {
 		return err_im
 	}

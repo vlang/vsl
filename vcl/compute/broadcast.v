@@ -76,7 +76,7 @@ pub fn add_scalar_vcl(mut dev vcl.Device, x_data []f64, scalar f64) ![]f64 {
 	}
 	mut y_vec := dev.vector[f64](n)!
 	kernel := dev.kernel('add_scalar')!
-	err_k := <-kernel.global(n).local(local_size_1d).run(x_vec, y_vec, scalar, n)
+	err_k := <-kernel.global(n).local(local_size_1d).run(x_vec.buffer(), y_vec.buffer(), scalar, i32(n))
 	if err_k !is none {
 		return err_k
 	}
@@ -96,7 +96,7 @@ pub fn mul_scalar_vcl(mut dev vcl.Device, x_data []f64, scalar f64) ![]f64 {
 	}
 	mut y_vec := dev.vector[f64](n)!
 	kernel := dev.kernel('mul_scalar')!
-	err_k := <-kernel.global(n).local(local_size_1d).run(x_vec, y_vec, scalar, n)
+	err_k := <-kernel.global(n).local(local_size_1d).run(x_vec.buffer(), y_vec.buffer(), scalar, i32(n))
 	if err_k !is none {
 		return err_k
 	}
@@ -121,7 +121,7 @@ pub fn add_vec_vcl(mut dev vcl.Device, a_data []f64, b_data []f64) ![]f64 {
 	}
 	mut c_vec := dev.vector[f64](n)!
 	kernel := dev.kernel('add_vec')!
-	err_k := <-kernel.global(n).local(local_size_1d).run(a_vec, b_vec, c_vec, n)
+	err_k := <-kernel.global(n).local(local_size_1d).run(a_vec.buffer(), b_vec.buffer(), c_vec.buffer(), i32(n))
 	if err_k !is none {
 		return err_k
 	}
@@ -146,7 +146,7 @@ pub fn mul_vec_vcl(mut dev vcl.Device, a_data []f64, b_data []f64) ![]f64 {
 	}
 	mut c_vec := dev.vector[f64](n)!
 	kernel := dev.kernel('mul_vec')!
-	err_k := <-kernel.global(n).local(local_size_1d).run(a_vec, b_vec, c_vec, n)
+	err_k := <-kernel.global(n).local(local_size_1d).run(a_vec.buffer(), b_vec.buffer(), c_vec.buffer(), i32(n))
 	if err_k !is none {
 		return err_k
 	}
@@ -170,8 +170,8 @@ pub fn broadcast_bias_vcl(mut dev vcl.Device, mat_data []f64, bias_data []f64, r
 	}
 	mut out_vec := dev.vector[f64](rows * cols)!
 	kernel := dev.kernel('broadcast_bias')!
-	err_k := <-kernel.global(rows, cols).local(local_size_2d, local_size_2d).run(mat_vec, bias_vec,
-		out_vec, rows, cols)
+	err_k := <-kernel.global(rows, cols).local(local_size_2d, local_size_2d).run(mat_vec.buffer(), bias_vec.buffer(),
+		out_vec.buffer(), i32(rows), i32(cols))
 	if err_k !is none {
 		return err_k
 	}

@@ -64,9 +64,9 @@ fn (d &Device) create_image(image_type ImageChannelOrder, bounds Rect, row_pitch
 	desc := create_image_desc(C.CL_MEM_OBJECT_IMAGE2D, usize(bounds.width), usize(bounds.height),
 		0, 0, usize(row_pitch), 0, 0, 0, unsafe { nil })
 
-	mut flags := mem_read_write
+	mut flags := ClMemFlags(mem_read_write)
 	if !isnil(data) {
-		flags = mem_read_write | mem_copy_host_ptr
+		flags = ClMemFlags(mem_read_write | mem_copy_host_ptr)
 	}
 
 	mut ret := 0

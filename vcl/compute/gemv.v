@@ -41,7 +41,7 @@ pub fn gemv_vcl(mut dev vcl.Device, a_data []f64, x_data []f64, m int, k int) ![
 	mut y_vec := dev.vector[f64](m)!
 
 	kernel := dev.kernel('gemv')!
-	err_k := <-kernel.global(m).local(local_size_1d).run(a_vec, x_vec, y_vec, m, k)
+	err_k := <-kernel.global(m).local(local_size_1d).run(a_vec.buffer(), x_vec.buffer(), y_vec.buffer(), i32(m), i32(k))
 	if err_k !is none {
 		return err_k
 	}

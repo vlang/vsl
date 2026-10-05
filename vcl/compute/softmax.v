@@ -51,7 +51,7 @@ pub fn softmax_vcl(mut dev vcl.Device, x_data []f64, rows int, cols int) ![]f64 
 	mut y_vec := dev.vector[f64](rows * cols)!
 
 	kernel := dev.kernel('softmax')!
-	err_k := <-kernel.global(rows).local(local_size_1d).run(x_vec, y_vec, rows, cols)
+	err_k := <-kernel.global(rows).local(local_size_1d).run(x_vec.buffer(), y_vec.buffer(), i32(rows), i32(cols))
 	if err_k !is none {
 		return err_k
 	}

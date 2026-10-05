@@ -3,6 +3,7 @@ module main
 import vsl.easings
 import vsl.plot
 import vsl.util
+import time as timeutil
 
 fn main() {
 	// Define the time range
@@ -30,7 +31,9 @@ fn main() {
 	)
 
 	plt.layout(title: '3D Scatter Plot with Easing')
-	plt.show()!
+	// Pass the listener defaults explicitly to avoid a V3 compiler panic
+	// while expanding the default arguments for Plot.show.
+	plt.show(timeout: 1 * timeutil.second, use_cdn: true, dualstack: true, backlog: 128)!
 }
 
 // int_to_hex_color converts an integer to a hexadecimal color code

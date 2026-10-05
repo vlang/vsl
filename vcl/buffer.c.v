@@ -43,12 +43,12 @@ fn (b &Buffer) load(size int, ptr voidptr) chan IError {
 		ch <- error_from_code(ret)
 		return ch
 	}
-	go fn (event &ClEvent, ch chan IError) {
+	go fn (event ClEvent, ch chan IError) {
 		defer {
 			cl_release_event(event)
 		}
-		ch <- error_from_code(cl_wait_for_events(1, event))
-	}(&event, ch)
+		ch <- error_from_code(cl_wait_for_events(1, unsafe { &event }))
+	}(event, ch)
 
 	return ch
 }

@@ -116,7 +116,7 @@ fn reduction_run(mut dev vcl.Device, kernel_name string, x_data []f64, rows int,
 	}
 	mut y_vec := dev.vector[f64](out_len)!
 	kernel := dev.kernel(kernel_name)!
-	err_k := <-kernel.global(out_len).local(local_size_1d).run(x_vec, y_vec, rows, cols)
+	err_k := <-kernel.global(out_len).local(local_size_1d).run(x_vec.buffer(), y_vec.buffer(), i32(rows), i32(cols))
 	if err_k !is none {
 		return err_k
 	}

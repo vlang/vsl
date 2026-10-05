@@ -46,7 +46,7 @@ pub fn (v &Vector[T]) data() ![]T {
 
 // map applies an map kernel on all elements of the vector
 pub fn (v &Vector[T]) map(k &Kernel) chan IError {
-	return k.global(v.length()).local(1).run(v)
+	return k.global(v.length()).local(1).run(v.buffer())
 }
 
 // buffer returns the underlying buffer

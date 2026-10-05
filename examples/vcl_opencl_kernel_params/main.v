@@ -37,14 +37,14 @@ fn main() {
 		device.release() or { panic(err) }
 	}
 
-	// allocate buffer on the device (6 elems of u32).
-	mut v := device.vector[int](10)!
+	// Allocate ten 32-bit values because the kernel writes OpenCL `int` elements.
+	mut v := device.vector[i32](10)!
 	defer {
 		v.release() or { panic(err) }
 	}
 
 	// load data to the vector (it's async)
-	data := [int(0), 0, 0, 0, 0, 0, 0, 0, 0, 0]
+	data := [i32(0), 0, 0, 0, 0, 0, 0, 0, 0, 0]
 	err := <-v.load(data)
 	if err !is none {
 		panic(err)
@@ -57,7 +57,7 @@ fn main() {
 	device.add_program(kernel_source)!
 	k := device.kernel('param_sizes')!
 	// run kernel (global work size 16 and local work size 1)
-	kernel_err := <-k.global(1).local(1).run(v, i8(1), u8(1), i16(1), u16(1), i32(1), u32(1),
+	kernel_err := <-k.global(1).local(1).run(v.buffer(), i8(1), u8(1), i16(1), u16(1), i32(1), u32(1),
 		i64(1), u64(1), f32(1.0), f64(1.0))
 	if kernel_err !is none {
 		panic(kernel_err)
