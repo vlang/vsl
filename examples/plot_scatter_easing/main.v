@@ -2,12 +2,15 @@ module main
 
 import vsl.easings
 import vsl.plot
-import vsl.util
+import time as timeutil
 
 fn main() {
 	// Define the time range
 	frames := 100
-	time := util.arange(frames).map(int_to_hex_color)
+	mut time := []string{len: frames}
+	for frame in 0 .. frames {
+		time[frame] = int_to_hex_color(frame)
+	}
 
 	// Apply easing to x, y, and z data
 	x_values := easings.animate(easings.quadratic_ease_in_out, 0.0, 1.0, frames)
@@ -29,7 +32,9 @@ fn main() {
 	)
 
 	plt.layout(title: 'Scatter Plot with Easing')
-	plt.show()!
+	// Pass the listener defaults explicitly: this avoids a V3 compiler panic
+	// while expanding the default arguments for Plot.show.
+	plt.show(timeout: 1 * timeutil.second, use_cdn: true, dualstack: true, backlog: 128)!
 }
 
 // int_to_hex_color converts an integer to a hexadecimal color code

@@ -69,7 +69,7 @@ pub struct KernelWithGlobal {
 	global_work_sizes []int
 }
 
-// local ets the local work sizes and returns an KernelCall which takes kernel arguments and runs the kernel
+// local sets the maximum local work sizes and returns a KernelCall.
 pub fn (kg KernelWithGlobal) local(local_work_sizes ...int) KernelCall {
 	return KernelCall{
 		kernel:            kg.kernel
@@ -111,37 +111,48 @@ fn (k &Kernel) set_args(args ...ArgumentType) ! {
 fn (k &Kernel) set_arg(index int, arg ArgumentType) ! {
 	match arg {
 		u8 {
-			return k.set_arg_unsafe(index, int(sizeof(arg)), &arg)
+			value := u8(arg)
+			return k.set_arg_unsafe(index, int(sizeof(value)), &value)
 		}
 		i8 {
-			return k.set_arg_unsafe(index, int(sizeof(arg)), &arg)
+			value := i8(arg)
+			return k.set_arg_unsafe(index, int(sizeof(value)), &value)
 		}
 		u16 {
-			return k.set_arg_unsafe(index, int(sizeof(arg)), &arg)
+			value := u16(arg)
+			return k.set_arg_unsafe(index, int(sizeof(value)), &value)
 		}
 		i16 {
-			return k.set_arg_unsafe(index, int(sizeof(arg)), &arg)
+			value := i16(arg)
+			return k.set_arg_unsafe(index, int(sizeof(value)), &value)
 		}
 		int {
-			return k.set_arg_unsafe(index, int(sizeof(arg)), &arg)
+			value := int(arg)
+			return k.set_arg_unsafe(index, int(sizeof(value)), &value)
 		}
 		u32 {
-			return k.set_arg_unsafe(index, int(sizeof(arg)), &arg)
+			value := u32(arg)
+			return k.set_arg_unsafe(index, int(sizeof(value)), &value)
 		}
 		i32 {
-			return k.set_arg_unsafe(index, int(sizeof(arg)), &arg)
+			value := i32(arg)
+			return k.set_arg_unsafe(index, int(sizeof(value)), &value)
 		}
 		u64 {
-			return k.set_arg_unsafe(index, int(sizeof(arg)), &arg)
+			value := u64(arg)
+			return k.set_arg_unsafe(index, int(sizeof(value)), &value)
 		}
 		i64 {
-			return k.set_arg_unsafe(index, int(sizeof(arg)), &arg)
+			value := i64(arg)
+			return k.set_arg_unsafe(index, int(sizeof(value)), &value)
 		}
 		f32 {
-			return k.set_arg_unsafe(index, int(sizeof(arg)), &arg)
+			value := f32(arg)
+			return k.set_arg_unsafe(index, int(sizeof(value)), &value)
 		}
 		f64 {
-			return k.set_arg_unsafe(index, int(sizeof(arg)), &arg)
+			value := f64(arg)
+			return k.set_arg_unsafe(index, int(sizeof(value)), &value)
 		}
 		Buffer {
 			return k.set_arg_buffer(index, arg)
@@ -186,12 +197,22 @@ fn (k &Kernel) call(work_sizes []int, lokal_sizes []int) chan IError {
 	}
 	mut global_work_offset_ptr := []usize{len: work_dim}
 	mut global_work_size_ptr := []usize{len: work_dim}
-	for i in 0 .. work_dim {
-		global_work_size_ptr[i] = usize(work_sizes[i])
-	}
 	mut local_work_size_ptr := []usize{len: work_dim}
 	for i in 0 .. work_dim {
-		local_work_size_ptr[i] = usize(lokal_sizes[i])
+		if work_sizes[i] <= 0 || lokal_sizes[i] <= 0 {
+			ch <- error('global and local work sizes must be positive')
+			return ch
+		}
+		global_work_size_ptr[i] = usize(work_sizes[i])
+		mut local_size := if lokal_sizes[i] < work_sizes[i] {
+			lokal_sizes[i]
+		} else {
+			work_sizes[i]
+		}
+		for local_size > 1 && work_sizes[i] % local_size != 0 {
+			local_size--
+		}
+		local_work_size_ptr[i] = usize(local_size)
 	}
 	mut event := ClEvent(0)
 	res := cl_enqueue_nd_range_kernel(k.d.queue, k.k, u32(work_dim),

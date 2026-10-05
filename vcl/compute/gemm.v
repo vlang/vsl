@@ -66,8 +66,8 @@ pub fn gemm_vcl(mut dev vcl.Device, a_data []f64, b_data []f64, m int, n int, k 
 	mut c_vec := dev.vector[f64](m * n)!
 
 	kernel := dev.kernel('gemm')!
-	err_k := <-kernel.global(m, n).local(local_size_2d, local_size_2d).run(a_vec, b_vec, c_vec, m,
-		n, k)
+	err_k := <-kernel.global(m, n).local(local_size_2d, local_size_2d).run(a_vec.buffer(), b_vec.buffer(), c_vec.buffer(), i32(m),
+		i32(n), i32(k))
 	if err_k !is none {
 		return err_k
 	}
@@ -94,8 +94,8 @@ pub fn gemm_vcl_f32(mut dev vcl.Device, a_data []f32, b_data []f32, m int, n int
 	mut c_vec := dev.vector[f32](m * n)!
 
 	kernel := dev.kernel('gemm_f32')!
-	err_k := <-kernel.global(m, n).local(local_size_2d, local_size_2d).run(a_vec, b_vec, c_vec, m,
-		n, k)
+	err_k := <-kernel.global(m, n).local(local_size_2d, local_size_2d).run(a_vec.buffer(), b_vec.buffer(), c_vec.buffer(), i32(m),
+		i32(n), i32(k))
 	if err_k !is none {
 		return err_k
 	}

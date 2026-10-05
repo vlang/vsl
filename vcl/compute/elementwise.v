@@ -83,7 +83,7 @@ fn run_simple_elementwise(mut dev vcl.Device, kernel_name string, x_data []f64) 
 	}
 	mut y_vec := dev.vector[f64](n)!
 	kernel := dev.kernel(kernel_name)!
-	err_k := <-kernel.global(n).local(local_size_1d).run(x_vec, y_vec, n)
+	err_k := <-kernel.global(n).local(local_size_1d).run(x_vec.buffer(), y_vec.buffer(), i32(n))
 	if err_k !is none {
 		return err_k
 	}
@@ -102,7 +102,7 @@ fn run_alpha_elementwise(mut dev vcl.Device, kernel_name string, x_data []f64, a
 	}
 	mut y_vec := dev.vector[f64](n)!
 	kernel := dev.kernel(kernel_name)!
-	err_k := <-kernel.global(n).local(local_size_1d).run(x_vec, y_vec, alpha, n)
+	err_k := <-kernel.global(n).local(local_size_1d).run(x_vec.buffer(), y_vec.buffer(), alpha, i32(n))
 	if err_k !is none {
 		return err_k
 	}

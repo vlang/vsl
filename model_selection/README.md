@@ -41,8 +41,7 @@ println('Test size: ${result.x_test.len}')
 ```v
 import vsl.model_selection
 
-x := [[1.0], [2.0], [3.0], [4.0], [5.0], [6.0], [7.0], [8.0],
-	[9.0], [10.0]]
+x := [[1.0], [2.0], [3.0], [4.0], [5.0], [6.0], [7.0], [8.0], [9.0], [10.0]]
 y := [0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0]
 
 result := model_selection.train_test_split(x, y, model_selection.TrainTestSplitConfig{

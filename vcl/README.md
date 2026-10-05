@@ -37,6 +37,14 @@ device.add_program(kernel_source)!
 // (See examples directory for complete implementations)
 ```
 
+### Kernel arguments and work sizes
+
+Pass a vector's device buffer with `vector.buffer()`. Scalar argument widths must
+match the OpenCL kernel declaration: use `i32` for OpenCL `int`, `f32` for
+`float`, and `f64` for `double`. VCL treats each requested local work size as a
+maximum and selects a divisor of the corresponding global work size, so sizes
+such as 3 elements can run with a requested local size of 64.
+
 ## 📊 Visual Gallery
 
 VCL enables creation of stunning GPU-accelerated visualizations:
@@ -56,6 +64,13 @@ VCL enables creation of stunning GPU-accelerated visualizations:
    - **Intel**: Intel OpenCL Runtime or integrated graphics drivers
 
 2. **OpenCL Headers**: Development headers for compilation
+
+For CPU-only OpenCL development on Arch Linux, install the headers, ICD loader,
+and PoCL runtime:
+
+```sh
+sudo pacman -S --needed opencl-headers ocl-icd pocl
+```
 
 ### Platform-Specific Installation
 

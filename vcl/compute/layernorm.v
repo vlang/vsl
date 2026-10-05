@@ -66,7 +66,7 @@ pub fn layernorm_vcl(mut dev vcl.Device, x_data []f64, gamma_data []f64, beta_da
 	mut y_vec := dev.vector[f64](rows * cols)!
 
 	kernel := dev.kernel('layernorm')!
-	err_k := <-kernel.global(rows).local(local_size_1d).run(x_vec, g_vec, b_vec, y_vec, rows, cols, eps)
+	err_k := <-kernel.global(rows).local(local_size_1d).run(x_vec.buffer(), g_vec.buffer(), b_vec.buffer(), y_vec.buffer(), i32(rows), i32(cols), eps)
 	if err_k !is none {
 		return err_k
 	}
