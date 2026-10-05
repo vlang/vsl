@@ -63,6 +63,36 @@ fn test_jacobi_3x3_symmetric() {
 	assert float64.arrays_tolerance(a.data, expected_a.data, 1e-14)
 }
 
+fn test_jacobi_uses_pairwise_tolerance_for_small_blocks() {
+	mut a := Matrix.deep2([
+		[1e16, 0.0, 0.0],
+		[0.0, 2.0, 0.25],
+		[0.0, 0.25, 3.0],
+	])
+	mut q := Matrix.new[f64](3, 3)
+	mut v := []f64{len: 3}
+
+	jacobi(mut q, mut v, mut a)!
+
+	assert math.abs(v[0] - 1e16) < 1.0
+	assert math.abs(v[1] - 1.9409830056250525) < 1e-14
+	assert math.abs(v[2] - 3.0590169943749475) < 1e-14
+}
+
+fn test_jacobi_checks_symmetry_pairwise() {
+	mut a := Matrix.deep2([
+		[1e16, 0.1, 0.0],
+		[0.101, 1.0, 0.0],
+		[0.0, 0.0, 2.0],
+	])
+	mut q := Matrix.new[f64](3, 3)
+	mut v := []f64{len: 3}
+
+	mut failed := false
+	jacobi(mut q, mut v, mut a) or { failed = true }
+	assert failed
+}
+
 fn test_jacobi_harmonic_oscillator_reconstructs_original_matrix() {
 	n := 20
 	dx := 12.0 / f64(n - 1)

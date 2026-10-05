@@ -36,20 +36,16 @@ pub fn jacobi(mut q Matrix[f64], mut v []f64, mut a Matrix[f64]) ! {
 		return errors.error('Jacobi output dimensions must match the input matrix', .einval)
 	}
 
-	mut scale := 1.0
-	for i in 0 .. n {
-		for j in 0 .. n {
-			scale = math.max(scale, math.abs(a.get(i, j)))
-		}
-	}
-	tol := 1e-14 * scale
 	max_sweeps := 50
 
 	// Jacobi rotations require a symmetric input. Reject matrices whose
 	// asymmetry is larger than the convergence tolerance.
 	for i in 0 .. n {
 		for j in i + 1 .. n {
-			if math.abs(a.get(i, j) - a.get(j, i)) > tol {
+			aij := a.get(i, j)
+			aji := a.get(j, i)
+			symmetry_tol := 1e-14 * math.max(1.0, math.max(math.abs(aij), math.abs(aji)))
+			if math.abs(aij - aji) > symmetry_tol {
 				return errors.error('Jacobi method requires a symmetric matrix', .einval)
 			}
 		}
@@ -71,13 +67,17 @@ pub fn jacobi(mut q Matrix[f64], mut v []f64, mut a Matrix[f64]) ! {
 	// Perform cyclic sweeps. Each sweep visits every off-diagonal pair once.
 	mut converged := false
 	for _ in 0 .. max_sweeps {
-		mut max_off_diagonal := 0.0
+		mut all_pairs_converged := true
 		for i in 0 .. n - 1 {
 			for j in i + 1 .. n {
-				max_off_diagonal = math.max(max_off_diagonal, math.abs(a.get(i, j)))
+				aij := math.abs(a.get(i, j))
+				pair_tol := jacobi_pair_tolerance(a.get(i, i), a.get(j, j), aij)
+				if aij > pair_tol {
+					all_pairs_converged = false
+				}
 			}
 		}
-		if max_off_diagonal <= tol {
+		if all_pairs_converged {
 			converged = true
 			break
 		}
@@ -85,20 +85,18 @@ pub fn jacobi(mut q Matrix[f64], mut v []f64, mut a Matrix[f64]) ! {
 		// Rotations
 		for i in 0 .. n - 1 {
 			for j in i + 1 .. n {
+				aij := a.get(i, j)
 				h := v[j] - v[i]
-				if math.abs(a.get(i, j)) <= tol {
+				pair_tol := jacobi_pair_tolerance(a.get(i, i), a.get(j, j), math.abs(aij))
+				if math.abs(aij) <= pair_tol {
 					continue
 				}
 
 				mut t := 0.0
-				if math.abs(h) < tol && math.abs(a.get(i, j)) < tol {
-					t = 1.0
-				} else {
-					theta := 0.5 * h / a.get(i, j)
-					t = 1.0 / (math.abs(theta) + math.sqrt(1.0 + theta * theta))
-					if theta < 0.0 {
-						t = -t
-					}
+				theta := 0.5 * h / aij
+				t = 1.0 / (math.abs(theta) + math.sqrt(1.0 + theta * theta))
+				if theta < 0.0 {
+					t = -t
 				}
 
 				c := 1.0 / math.sqrt(1.0 + t * t)
@@ -106,7 +104,6 @@ pub fn jacobi(mut q Matrix[f64], mut v []f64, mut a Matrix[f64]) ! {
 
 				aii := a.get(i, i)
 				ajj := a.get(j, j)
-				aij := a.get(i, j)
 				a.set(i, i, aii - t * aij)
 				a.set(j, j, ajj + t * aij)
 				v[i] = a.get(i, i)
@@ -138,14 +135,18 @@ pub fn jacobi(mut q Matrix[f64], mut v []f64, mut a Matrix[f64]) ! {
 		}
 	}
 	if !converged {
-		mut max_off_diagonal := 0.0
+		mut all_pairs_converged := true
 		for i in 0 .. n - 1 {
 			for j in i + 1 .. n {
-				max_off_diagonal = math.max(max_off_diagonal, math.abs(a.get(i, j)))
+				aij := math.abs(a.get(i, j))
+				pair_tol := jacobi_pair_tolerance(a.get(i, i), a.get(j, j), aij)
+				if aij > pair_tol {
+					all_pairs_converged = false
+				}
 			}
 		}
-		if max_off_diagonal > tol {
-			return errors.error('Jacobi method did not converge: max off-diagonal element ${max_off_diagonal} exceeds tolerance ${tol}',
+		if !all_pairs_converged {
+			return errors.error('Jacobi method did not converge: off-diagonal elements exceed pairwise tolerances',
 				.efailed)
 		}
 	}
@@ -159,4 +160,8 @@ pub fn jacobi(mut q Matrix[f64], mut v []f64, mut a Matrix[f64]) ! {
 			}
 		}
 	}
+}
+
+fn jacobi_pair_tolerance(aii f64, ajj f64, aij f64) f64 {
+	return 1e-14 * math.max(1.0, math.max(math.abs(aii), math.max(math.abs(ajj), math.abs(aij))))
 }
