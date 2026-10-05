@@ -201,8 +201,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        flags:
-          - ""
+        include:
+          - os: macos-latest
+            flags: ""
 
     steps:
       - name: Checkout VSL
