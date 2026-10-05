@@ -208,25 +208,26 @@ pub fn geqrf(mut a [][]f64) ![]f64 {
 	n := a[0].len
 	min_mn := int_min(m, n)
 
-	// Convert to column-major and call lapack64
-	mut a_col := []f64{len: m * n}
+	// lapack64's pure-V QR kernels use row-major storage, matching the
+	// public LAPACKE row-major convention.
+	mut a_flat := []f64{len: m * n}
 	for i in 0 .. m {
 		for j in 0 .. n {
-			a_col[i + j * m] = a[i][j]
+			a_flat[i * n + j] = a[i][j]
 		}
 	}
 	mut tau := []f64{len: min_mn}
 	mut work := []f64{len: 1}
-	lapack64.dgeqrf(m, n, mut a_col, m, mut tau, mut work, -1)
+	lapack64.dgeqrf(m, n, mut a_flat, n, mut tau, mut work, -1)
 	lwork := int(work[0])
 	if lwork < 1 {
 		return error('geqrf failed: bad lwork')
 	}
 	work = []f64{len: lwork}
-	lapack64.dgeqrf(m, n, mut a_col, m, mut tau, mut work, lwork)
+	lapack64.dgeqrf(m, n, mut a_flat, n, mut tau, mut work, lwork)
 	for i in 0 .. m {
 		for j in 0 .. n {
-			a[i][j] = a_col[i + j * m]
+			a[i][j] = a_flat[i * n + j]
 		}
 	}
 	return tau
@@ -244,21 +245,21 @@ pub fn orgqr(mut a [][]f64, tau []f64) ! {
 	k := tau.len
 	n_q := int_min(m, n)
 
-	// column-major buffer
-	mut a_col := []f64{len: m * n_q}
+	// Row-major buffer containing the first n_q reflector columns.
+	mut a_flat := []f64{len: m * n_q}
 	for i in 0 .. m {
 		for j in 0 .. n_q {
-			a_col[i + j * m] = a[i][j]
+			a_flat[i * n_q + j] = a[i][j]
 		}
 	}
 	mut work := []f64{len: 1}
-	lapack64.dorgqr(m, n_q, k, mut a_col, m, tau, mut work, -1)
+	lapack64.dorgqr(m, n_q, k, mut a_flat, n_q, tau, mut work, -1)
 	lwork := int(work[0])
 	if lwork < 1 {
 		return error('orgqr failed: bad lwork')
 	}
 	work = []f64{len: lwork}
-	lapack64.dorgqr(m, n_q, k, mut a_col, m, tau, mut work, lwork)
+	lapack64.dorgqr(m, n_q, k, mut a_flat, n_q, tau, mut work, lwork)
 
 	if m < n {
 		for i in 0 .. m {
@@ -267,7 +268,7 @@ pub fn orgqr(mut a [][]f64, tau []f64) ! {
 	}
 	for i in 0 .. m {
 		for j in 0 .. n_q {
-			a[i][j] = a_col[i + j * m]
+			a[i][j] = a_flat[i * n_q + j]
 		}
 	}
 }
