@@ -290,13 +290,11 @@ jobs:
             echo "PKG_CONFIG_PATH=${OPENBLAS_PREFIX}/lib/pkgconfig:${LAPACK_PREFIX}/lib/pkgconfig:${PKG_CONFIG_PATH:-}"
           } >> "$GITHUB_ENV"
 
-      - name: Move VSL source code to V Modules
-        run: mv ./vsl ~/.vmodules
-
       - name: Execute Tests using Pure V Backend
         run: |
+          cd ~/.vmodules
           v wipe-cache
-          ~/.vmodules/vsl/bin/test
+          vsl/bin/test
 
       - name: Execute Tests using Pure V Backend with Pure C Backend
         run: |
