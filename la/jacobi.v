@@ -28,12 +28,28 @@ import vsl.errors
 //         by a significant constant factor, than the QR method.
 //
 pub fn jacobi(mut q Matrix[f64], mut v []f64, mut a Matrix[f64]) ! {
-	tol := 1e-15
-	max_iterations := 20
-
 	n := a.m
-	mut b := []f64{len: n}
-	mut z := []f64{len: n} // z is the vector of the off-diagonal elements of A
+	if n == 0 || a.n != n {
+		return errors.error('Jacobi method requires a non-empty square matrix', .einval)
+	}
+	if q.m != n || q.n != n || v.len != n {
+		return errors.error('Jacobi output dimensions must match the input matrix', .einval)
+	}
+
+	max_sweeps := 50
+
+	// Jacobi rotations require a symmetric input. Reject matrices whose
+	// asymmetry is larger than the convergence tolerance.
+	for i in 0 .. n {
+		for j in i + 1 .. n {
+			aij := a.get(i, j)
+			aji := a.get(j, i)
+			symmetry_tol := 1e-14 * math.max(1.0, math.max(math.abs(aij), math.abs(aji)))
+			if math.abs(aij - aji) > symmetry_tol {
+				return errors.error('Jacobi method requires a symmetric matrix', .einval)
+			}
+		}
+	}
 
 	// Initialize Q to the identity matrix
 	for i in 0 .. n {
@@ -43,45 +59,44 @@ pub fn jacobi(mut q Matrix[f64], mut v []f64, mut a Matrix[f64]) ! {
 		q.set(i, i, 1.0)
 	}
 
-	// Initialize b and v to the diagonal of A
+	// Initialize v to the diagonal of A.
 	for i in 0 .. n {
-		b[i] = a.get(i, i)
 		v[i] = a.get(i, i)
-		z[i] = 0.0
 	}
 
-	// Perform iterations
-	for _ in 0 .. max_iterations {
-		// Sum off-diagonal elements
-		mut sum := 0.0
+	// Perform cyclic sweeps. Each sweep visits every off-diagonal pair once.
+	mut converged := false
+	for _ in 0 .. max_sweeps {
+		mut all_pairs_converged := true
 		for i in 0 .. n - 1 {
 			for j in i + 1 .. n {
-				sum += math.abs(a.get(i, j))
+				aij := math.abs(a.get(i, j))
+				pair_tol := jacobi_pair_tolerance(a.get(i, i), a.get(j, j), aij)
+				if aij > pair_tol {
+					all_pairs_converged = false
+				}
 			}
 		}
-
-		// Check for convergence
-		if sum < tol {
+		if all_pairs_converged {
+			converged = true
 			break
 		}
 
 		// Rotations
 		for i in 0 .. n - 1 {
 			for j in i + 1 .. n {
+				aij := a.get(i, j)
 				h := v[j] - v[i]
-				if math.abs(a.get(i, j)) < tol {
+				pair_tol := jacobi_pair_tolerance(a.get(i, i), a.get(j, j), math.abs(aij))
+				if math.abs(aij) <= pair_tol {
 					continue
 				}
 
 				mut t := 0.0
-				if math.abs(h) < tol && math.abs(a.get(i, j)) < tol {
-					t = 1.0
-				} else {
-					theta := 0.5 * h / a.get(i, j)
-					t = 1.0 / (math.abs(theta) + math.sqrt(1.0 + theta * theta))
-					if theta < 0.0 {
-						t = -t
-					}
+				theta := 0.5 * h / aij
+				t = 1.0 / (math.abs(theta) + math.sqrt(1.0 + theta * theta))
+				if theta < 0.0 {
+					t = -t
 				}
 
 				c := 1.0 / math.sqrt(1.0 + t * t)
@@ -89,7 +104,6 @@ pub fn jacobi(mut q Matrix[f64], mut v []f64, mut a Matrix[f64]) ! {
 
 				aii := a.get(i, i)
 				ajj := a.get(j, j)
-				aij := a.get(i, j)
 				a.set(i, i, aii - t * aij)
 				a.set(j, j, ajj + t * aij)
 				v[i] = a.get(i, i)
@@ -108,6 +122,8 @@ pub fn jacobi(mut q Matrix[f64], mut v []f64, mut a Matrix[f64]) ! {
 						a.set(k, j, a.get(j, k))
 					}
 				}
+				v[i] = a.get(i, i)
+				v[j] = a.get(j, j)
 
 				for k in 0 .. n {
 					qik := q.get(k, i)
@@ -118,8 +134,25 @@ pub fn jacobi(mut q Matrix[f64], mut v []f64, mut a Matrix[f64]) ! {
 			}
 		}
 	}
+	if !converged {
+		mut all_pairs_converged := true
+		for i in 0 .. n - 1 {
+			for j in i + 1 .. n {
+				aij := math.abs(a.get(i, j))
+				pair_tol := jacobi_pair_tolerance(a.get(i, i), a.get(j, j), aij)
+				if aij > pair_tol {
+					all_pairs_converged = false
+				}
+			}
+		}
+		if !all_pairs_converged {
+			return errors.error('Jacobi method did not converge: off-diagonal elements exceed pairwise tolerances',
+				.efailed)
+		}
+	}
 
 	for i in 0 .. n {
+		v[i] = a.get(i, i)
 		a.set(i, i, v[i])
 		for j in 0 .. n {
 			if i != j {
@@ -127,14 +160,8 @@ pub fn jacobi(mut q Matrix[f64], mut v []f64, mut a Matrix[f64]) ! {
 			}
 		}
 	}
+}
 
-	mut sum := 0.0
-	for i in 0 .. n - 1 {
-		for j in i + 1 .. n {
-			sum += math.abs(a.get(i, j))
-		}
-	}
-	if sum >= tol {
-		return errors.error('Jacobi method did not converge', .efailed)
-	}
+fn jacobi_pair_tolerance(aii f64, ajj f64, aij f64) f64 {
+	return 1e-14 * math.max(1.0, math.max(math.abs(aii), math.max(math.abs(ajj), math.abs(aij))))
 }
