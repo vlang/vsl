@@ -44,6 +44,8 @@ jobs:
           - os: ubuntu-22.04
             flags: ""
           - os: ubuntu-24.04
+            flags: ""
+          - os: ubuntu-24.04
             flags: "--prod"
 
     steps:
@@ -204,6 +206,8 @@ jobs:
         include:
           - os: macos-latest
             flags: ""
+          - os: macos-latest
+            flags: "--prod"
 
     steps:
       - name: Checkout VSL
