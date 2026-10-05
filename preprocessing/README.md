@@ -21,6 +21,9 @@ commonly used in machine learning pipelines.
 - **qcut**: Bins values using quantile-based (equal-frequency) binning
 - **Binner**: Fitted binning transformer for consistent bin assignment
 
+### Polynomial Features
+- **PolynomialFeatures**: Generates polynomial powers and feature interactions
+
 ## Quick Start
 
 ### Standard Scaling (Z-Score Normalization)
@@ -124,6 +127,23 @@ binner.fit(values)!
 binned := binner.transform(values)!
 ```
 
+### Polynomial Features
+
+```v
+import vsl.preprocessing
+
+data := [[2.0, 3.0], [4.0, 5.0]]
+features := preprocessing.PolynomialFeatures{
+	degree: 2
+}
+expanded := features.transform(data)!
+// Columns: [bias, x1, x2, x1^2, x1*x2, x2^2]
+// First row: [1, 2, 3, 4, 6, 9]
+```
+
+Set `interaction_only: true` to exclude repeated input features in a term, or
+`include_bias: false` to omit the leading column of ones.
+
 ## API Reference
 
 ### StandardScaler
@@ -192,6 +212,15 @@ binned := binner.transform(values)!
 **BinningStrategy:**
 - `.uniform`: Equal-width bins
 - `.quantile`: Equal-frequency bins
+
+### PolynomialFeatures
+
+| Field | Description |
+|-------|-------------|
+| `degree` | Maximum polynomial degree (default 2) |
+| `interaction_only` | Use each input feature at most once in each term |
+| `include_bias` | Add a leading column of ones (default true) |
+| `transform(data)` | Expands a rectangular matrix into polynomial features |
 
 ## Integration with ML Pipeline
 
