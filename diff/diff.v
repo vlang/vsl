@@ -8,8 +8,8 @@ import math
 pub fn backward(f func.Fn, x f64) (f64, f64) {
 	/*
 	Construct a divided difference table with a fairly large step
-         * size to get a very rough estimate of f''. Use this to estimate
-         * the step size which will minimize the error in calculating f'.
+	* size to get a very rough estimate of f''. Use this to estimate
+	* the step size which will minimize the error in calculating f'.
 	*/
 	mut h := prec.sqrt_f64_epsilon
 	mut a := []f64{}
@@ -18,7 +18,7 @@ pub fn backward(f func.Fn, x f64) (f64, f64) {
 	mut i := 0
 	/*
 	Algorithm based on description on pg. 204 of Conte and de Boor
-         * (CdB) - coefficients of Newton form of polynomial of degree 2.
+	* (CdB) - coefficients of Newton form of polynomial of degree 2.
 	*/
 	for i = 0; i < 3; i++ {
 		a << x + (f64(i) - 2.0) * h
@@ -31,7 +31,7 @@ pub fn backward(f func.Fn, x f64) (f64, f64) {
 	}
 	/*
 	Adapt procedure described on pg. 282 of CdB to find best value of
-         * step size.
+	* step size.
 	*/
 	mut a2 := math.abs(d[0] + d[1] + d[2])
 	if a2 < 100.0 * prec.sqrt_f64_epsilon {
@@ -48,8 +48,8 @@ pub fn backward(f func.Fn, x f64) (f64, f64) {
 pub fn forward(f func.Fn, x f64) (f64, f64) {
 	/*
 	Construct a divided difference table with a fairly large step
-         * size to get a very rough estimate of f''. Use this to estimate
-         * the step size which will minimize the error in calculating f'.
+	* size to get a very rough estimate of f''. Use this to estimate
+	* the step size which will minimize the error in calculating f'.
 	*/
 	mut h := prec.sqrt_f64_epsilon
 	mut a := []f64{}
@@ -58,7 +58,7 @@ pub fn forward(f func.Fn, x f64) (f64, f64) {
 	mut i := 0
 	/*
 	Algorithm based on description on pg. 204 of Conte and de Boor
-         * (CdB) - coefficients of Newton form of polynomial of degree 2.
+	* (CdB) - coefficients of Newton form of polynomial of degree 2.
 	*/
 	for i = 0; i < 3; i++ {
 		a << x + f64(i) * h
@@ -71,7 +71,7 @@ pub fn forward(f func.Fn, x f64) (f64, f64) {
 	}
 	/*
 	Adapt procedure described on pg. 282 of CdB to find best value of
-         * step size.
+	* step size.
 	*/
 	mut a2 := math.abs(d[0] + d[1] + d[2])
 	if a2 < 100.0 * prec.sqrt_f64_epsilon {
@@ -88,8 +88,8 @@ pub fn forward(f func.Fn, x f64) (f64, f64) {
 pub fn central(f func.Fn, x f64) (f64, f64) {
 	/*
 	Construct a divided difference table with a fairly large step
-         * size to get a very rough estimate of f'''. Use this to estimate
-         * the step size which will minimize the error in calculating f'.
+	* size to get a very rough estimate of f'''. Use this to estimate
+	* the step size which will minimize the error in calculating f'.
 	*/
 	mut h := prec.sqrt_f64_epsilon
 	mut a := []f64{}
@@ -98,7 +98,7 @@ pub fn central(f func.Fn, x f64) (f64, f64) {
 	mut i := 0
 	/*
 	Algorithm based on description on pg. 204 of Conte and de Boor
-         * (CdB) - coefficients of Newton form of polynomial of degree 3.
+	* (CdB) - coefficients of Newton form of polynomial of degree 3.
 	*/
 	for i = 0; i < 4; i++ {
 		a << x + (f64(i) - 2.0) * h
@@ -111,7 +111,7 @@ pub fn central(f func.Fn, x f64) (f64, f64) {
 	}
 	/*
 	Adapt procedure described on pg. 282 of CdB to find best value of
-         * step size.
+	* step size.
 	*/
 	mut a3 := math.abs(d[0] + d[1] + d[2] + d[3])
 	if a3 < 100.0 * prec.sqrt_f64_epsilon {
