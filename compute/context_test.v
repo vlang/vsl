@@ -54,3 +54,23 @@ fn test_new_context_cpu_backend() {
 	assert ctx.backend == .cpu
 	assert ctx.strict == false
 }
+
+fn test_unavailable_backend_falls_back_unless_strict() {
+	for backend in [Backend.cuda, .vcl, .vulkan] {
+		if backend in available_backends() {
+			continue
+		}
+		ctx := new_context(backend)
+		fallback := ctx.resolve_backend() or { panic(err) }
+		assert fallback.name() == 'cpu'
+
+		mut strict_ctx := new_context(backend)
+		strict_ctx.with_strict(true)
+		mut rejected := false
+		_ := strict_ctx.resolve_backend() or {
+			rejected = err.msg().contains('not available in this build')
+			new_cpu_backend()
+		}
+		assert rejected
+	}
+}

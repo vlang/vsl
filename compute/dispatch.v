@@ -42,6 +42,12 @@ pub fn op_supported(backend Backend, op string) bool {
 // This is the bridge between the old Backend enum + device handles and the new interface.
 fn (ctx &ComputeContext) resolve_backend() !ComputeBackend {
 	backend := ctx.select_backend()
+	if backend !in available_backends() {
+		if ctx.strict {
+			return error('compute backend `${backend}` is not available in this build')
+		}
+		return new_cpu_backend()
+	}
 	$if vulkan ? {
 		if backend == .vulkan {
 			dev := if !isnil(ctx.vulkan_device) {
