@@ -1,7 +1,7 @@
 module plot
 
 import arrays
-import json
+import json2
 
 // Type alias for plot data encoding (similar to show.v)
 type PlotValue = Trace | string
@@ -433,7 +433,7 @@ fn plot_encode[T](obj T) string {
 		',"[]string"',
 		'"[]string"',
 	]
-	mut obj_json := json.encode(obj)
+	mut obj_json := json2.encode(obj, escape_unicode: true, time_as_unix: true)
 	for string_to_replace in strings_to_replace {
 		obj_json = obj_json.replace(string_to_replace, '')
 	}

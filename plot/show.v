@@ -1,6 +1,6 @@
 module plot
 
-import json
+import json2
 import net
 import net.html
 import net.http
@@ -158,7 +158,7 @@ fn encode[T](obj T) string {
 		',"[]string"',
 		'"[]string"',
 	]
-	mut obj_json := json.encode(obj)
+	mut obj_json := json2.encode(obj, escape_unicode: true, time_as_unix: true)
 	for string_to_replace in strings_to_replace {
 		obj_json = obj_json.replace(string_to_replace, '')
 	}
