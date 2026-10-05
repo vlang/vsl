@@ -120,6 +120,25 @@ pub fn create_plan[T](x T) ?Fftplan {
 	return none
 }
 
+// destroy_plan releases the native memory owned by a plan returned from
+// create_plan. Each plan must be destroyed exactly once after its last use.
+pub fn destroy_plan(plan Fftplan) {
+	match plan {
+		Fft32 {
+			C.destroy_rfft_plan_f32(plan.plan)
+		}
+		Fft64 {
+			C.destroy_rfft_plan_f64(plan.plan)
+		}
+		Cfft32 {
+			C.destroy_cfft_plan_f32(plan.plan)
+		}
+		Cfft64 {
+			C.destroy_cfft_plan_f64(plan.plan)
+		}
+	}
+}
+
 // forward_fft computes a Fourier transform defined by the plan p.
 // The input is []f32 or []f64.
 // The output result (r) is returned in-place, and is complex
