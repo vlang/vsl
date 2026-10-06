@@ -182,6 +182,43 @@ jobs:
           v run "$RUNNER_TEMP/vsl_windows_smoke.v"
           v test vsl/compute/context_test.v
 
+      - name: Run portable Windows test suites
+        shell: bash
+        run: |
+          cd ~/.vmodules
+          v test \
+            ./vsl/blas \
+            ./vsl/blas/blas64 \
+            ./vsl/compute \
+            ./vsl/deriv \
+            ./vsl/diff \
+            ./vsl/dist \
+            ./vsl/easings \
+            ./vsl/errors \
+            ./vsl/fft \
+            ./vsl/fit \
+            ./vsl/float/float32 \
+            ./vsl/float/float64 \
+            ./vsl/fun \
+            ./vsl/func \
+            ./vsl/gm \
+            ./vsl/graph \
+            ./vsl/inout/csv \
+            ./vsl/iter \
+            ./vsl/la \
+            ./vsl/lapack \
+            ./vsl/lapack/lapack64 \
+            ./vsl/metrics \
+            ./vsl/ml \
+            ./vsl/model_selection \
+            ./vsl/noise \
+            ./vsl/poly \
+            ./vsl/preprocessing \
+            ./vsl/prime \
+            ./vsl/quaternion \
+            ./vsl/roots \
+            ./vsl/util
+
   run-tests-on-cuda:
     # CUDA needs an org larger/GPU runner (label was linux-x64-16c). Standard GitHub
     # hosted runners have no NVIDIA GPU. Do not run on main push — it queues forever
