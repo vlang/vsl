@@ -1,10 +1,15 @@
 module float32
 
 // dot_unitary
+// Length validation allows direct indexed access in the hot loop.
+@[direct_array_access]
 pub fn dot_unitary(x []f32, y []f32) f32 {
+	if y.len < x.len {
+		panic('dot_unitary: second vector is shorter than first')
+	}
 	mut sum := f32(0)
-	for i, v in x {
-		sum += y[i] * v
+	for i in 0 .. x.len {
+		sum += y[i] * x[i]
 	}
 	return sum
 }
