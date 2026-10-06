@@ -217,6 +217,11 @@ pub fn matrix_vector_mul_add(alpha f64, a &Matrix[f64], u []f64) []f64 {
 //
 //  c := alpha⋅a⋅b    ⇒    cij := alpha * aik * bkj
 //
+// matrix_matrix_mul_f32 performs a row-major single-precision matrix product.
+pub fn matrix_matrix_mul_f32(mut c []f32, m int, n int, k int, alpha f32, a []f32, b []f32) {
+	blas.sgemm(.no_trans, .no_trans, m, n, k, alpha, a, k, b, n, 0, mut c, n)
+}
+
 pub fn matrix_matrix_mul(mut c Matrix[f64], alpha f64, a &Matrix[f64], b &Matrix[f64]) {
 	if c.m < 6 && c.n < 6 && a.n < 30 {
 		for i in 0 .. c.m {
