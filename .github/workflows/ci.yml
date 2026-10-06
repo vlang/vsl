@@ -160,6 +160,13 @@ jobs:
           cd ~/.vmodules
           v doctor
 
+      - name: Validate portable test runner
+        shell: bash
+        run: |
+          cd ~/.vmodules
+          bash -n vsl/bin/test
+          vsl/bin/test --help
+
       - name: Install Vulkan headers (Windows)
         uses: humbletim/setup-vulkan-sdk@v1.2.1
         with:
