@@ -43,6 +43,11 @@ println('point=${point}, middle basis=${basis}, refined knots=${refined.knots}')
 the parameter domain are zero. Curve evaluation outside the domain returns an
 error. See [`bspline_test.v`](./bspline_test.v) for reference values.
 
+## Examples
+
+- [`polynomial_roots`](./examples/polynomial_roots/) solves quadratic and cubic equations.
+- [`bspline_curve`](./examples/bspline_curve/) samples and refines a B-spline curve.
+
 ```v ignore
 fn eval_derivs(c []f64, x f64, lenres u64) []f64
 ```
