@@ -13,12 +13,13 @@ an MPI implementation and exposes `SparseConfig.with_comm`. Without the flag,
 
 ### Matrix Operations
 
-- **Basic Operations**: Addition, subtraction, multiplication, transposition
+- **Basic Operations**: Element-wise addition, subtraction, division, integer
+  remainder, matrix multiplication, and transposition
 - **Advanced Operations**: Decompositions (LU, QR, SVD), eigenvalue analysis
 - **Sparse Matrices**: Efficient storage and operations for sparse data
 - **BLAS Integration**: Optional high-performance BLAS backend
 
-### Vector Operations
+### Vector Example
 
 - **Basic Arithmetic**: Element-wise operations, dot products, norms
 - **Advanced Functions**: Cross products, projections, rotations
@@ -52,6 +53,25 @@ la.matrix_matrix_mul(mut c, 1.0, a, b)
 
 // Print result
 println(c)
+```
+
+`Matrix` also supports `+`, `-`, `/`, and integer-only `%` element-wise
+operators. `*` performs conventional matrix multiplication. Element-wise
+operators require equal shapes; matrix multiplication requires matching inner
+dimensions. Since constructors return heap references and V uses `-` for
+pointer subtraction, dereference both operands when using matrix subtraction.
+
+```v
+import vsl.la
+
+a := la.Matrix.deep2([[f64(1), 2], [3, 4]])
+b := la.Matrix.deep2([[f64(5), 6], [7, 8]])
+sum := a + b
+product := a * b
+subtracted := (*b) - (*a)
+println(sum) // [[6, 8], [10, 12]]
+println(product) // [[19, 22], [43, 50]]
+println(subtracted) // [[4, 4], [4, 4]]
 ```
 
 ### Vector Operations
