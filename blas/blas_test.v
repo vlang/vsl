@@ -482,6 +482,23 @@ fn test_sgemm_simd_rows_columns_alpha_and_beta() {
 	assert c == expected
 }
 
+fn test_sgemm_parallel_workers_cover_all_rows() {
+	size := 256
+	mut a := []f32{len: size * size}
+	mut b := []f32{len: size * size}
+	for i in 0 .. size {
+		a[i * size + i] = 1
+		for j in 0 .. size {
+			b[i * size + j] = f32((i * 17 + j * 13) % 101)
+		}
+	}
+	mut c := []f32{len: size * size}
+
+	sgemm(.no_trans, .no_trans, size, size, size, 1, a, size, b, size, 0, mut c, size)
+
+	assert c == b
+}
+
 fn test_sgemm_transposed_inputs() {
 	a_transposed := [f32(1), 3, 2, 4]
 	b := [f32(5), 6, 7, 8]
