@@ -84,3 +84,32 @@ fn test_kmeans_checked_centroids_reject_invalid_shapes() ! {
 		assert false, 'K-means must reject centroids with the wrong feature count'
 	}
 }
+
+fn test_kmeans_plus_plus_is_reproducible_and_selects_data_points() ! {
+	values := [
+		[0.0, 0],
+		[0, 1],
+		[10, 10],
+		[11, 10],
+	]
+	mut data_a := Data.from_raw_x(values)!
+	mut data_b := Data.from_raw_x(values)!
+	mut model_a := Kmeans.new_checked(mut data_a, 2, 'seeded_a')!
+	mut model_b := Kmeans.new_checked(mut data_b, 2, 'seeded_b')!
+	model_a.initialize_kmeans_plus_plus(42)!
+	model_b.initialize_kmeans_plus_plus(42)!
+	assert model_a.centroids == model_b.centroids
+	for centroid in model_a.centroids {
+		assert centroid in values
+	}
+	model_a.train(epochs: 20, tol_norm_change: 1e-8)
+	assert model_a.inertia() <= 1.0
+}
+
+fn test_kmeans_plus_plus_rejects_more_clusters_than_samples() ! {
+	mut data := Data.from_raw_x([[0.0, 1], [2, 3]])!
+	mut model := Kmeans.new(mut data, 3, 'too_many')
+	if _ := model.initialize_kmeans_plus_plus(1) {
+		assert false, 'K-means++ must reject more clusters than observations'
+	}
+}
