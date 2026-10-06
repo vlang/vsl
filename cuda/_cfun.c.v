@@ -82,16 +82,16 @@ fn C.cuInit(flags int) int
 fn C.cuDeviceGetCount(count &int) int
 
 // cuDeviceGet returns the device handle for the given index.
-fn C.cuDeviceGet(device &CudaDevice, ordinal int) int
+fn C.cuDeviceGet(device &int, ordinal int) int
 
 // cuDeviceGetName returns the device name as a null-terminated string.
-fn C.cuDeviceGetName(name &char, len int, device CudaDevice) int
+fn C.cuDeviceGetName(name &char, len int, device int) int
 
 // cuDeviceGetAttribute returns attribute information about the device.
-fn C.cuDeviceGetAttribute(pi &int, attrib int, device CudaDevice) int
+fn C.cuDeviceGetAttribute(pi &int, attrib int, device int) int
 
 // cuCtxCreate creates a CUDA context for the device.
-fn C.cuCtxCreate(ctx &CudaContext, flags int, device CudaDevice) int
+fn C.cuCtxCreate(ctx &CudaContext, flags int, device int) int
 
 // cuCtxDestroy destroys a CUDA context.
 fn C.cuCtxDestroy(ctx CudaContext) int
