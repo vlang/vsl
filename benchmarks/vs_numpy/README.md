@@ -45,6 +45,26 @@ systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySw
 
 Compare GFLOPS / ms from the V scripts with the Python output for the same sizes.
 
+## Pure-V f32 SGEMM
+
+The dedicated SGEMM pair uses identical deterministic `f32` matrices, three
+warmups, seven timed calls, and preallocated output buffers. Run from
+`~/.vmodules`:
+
+```bash
+systemd-run --user --scope --quiet -p MemoryMax=768M -p MemorySwapMax=0 -- env VJOBS=2 \
+	v -prod run ./vsl/benchmarks/sgemm_f32_bench.v
+systemd-run --user --scope --quiet -p MemoryMax=768M -p MemorySwapMax=0 -- env VJOBS=2 OPENBLAS_NUM_THREADS=2 \
+	uv run --with numpy python ./vsl/benchmarks/vs_numpy/numpy_sgemm_f32_baseline.py
+```
+
+On a local run with V 0.5.2 and NumPy 2.5.3, the pure-V path measured 9.94 ms
+versus NumPy at 0.975 ms for 512×512 `f32` SGEMM. The checksum matched. This
+is about 10.2× slower than NumPy, so the pure-V path remains an optimization
+target. Before the row-major fast path and direct array access, the same V
+kernel measured about 231 ms; this change improved that case by about 23×.
+These are local measurements, not a general performance claim.
+
 ## Ryzen 9 5900X local sample
 
 The VSL and NumPy scripts use the same deterministic matrices, two warmups, and

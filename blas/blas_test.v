@@ -6,6 +6,26 @@ import vsl.float.float64
 // Test tolerance for floating point comparisons
 const test_tol = 1e-14
 
+struct CapturedSgemmPanic {
+mut:
+	message string
+}
+
+fn capture_sgemm_panic(f fn (), mut result CapturedSgemmPanic) {
+	defer {
+		if message := recover() {
+			result.message = message
+		}
+	}
+	f()
+}
+
+fn sgemm_panic_message(f fn ()) string {
+	mut result := CapturedSgemmPanic{}
+	capture_sgemm_panic(f, mut result)
+	return result.message
+}
+
 // Test data structures for Level 1 BLAS operations
 struct Level1TestCase {
 	name            string
@@ -405,6 +425,52 @@ fn test_sgemm_zero_inner_scales_output_without_reading_inputs() {
 	mut c := [f32(2), 4, 6, 8]
 	sgemm(.no_trans, .no_trans, 2, 2, 0, 1, []f32{}, 0, []f32{}, 2, 0.5, mut c, 2)
 	assert c == [f32(1), 2, 3, 4]
+}
+
+fn test_sgemm_rectangular_row_major_with_beta() {
+	a := [f32(1), 2, 3, 4, 5, 6]
+	b := [f32(7), 8, 9, 10, 11, 12]
+	mut c := [f32(2), 4, 6, 8]
+
+	sgemm(.no_trans, .no_trans, 2, 2, 3, 1, a, 3, b, 2, 0.5, mut c, 2)
+
+	assert c == [f32(59), 66, 142, 158]
+}
+
+fn test_sgemm_row_major_non_multiple_width() {
+	a := [f32(1), 2, 3, 4]
+	b := [f32(5), 6, 7, 8, 9, 10]
+	mut c := []f32{len: 6}
+
+	sgemm(.no_trans, .no_trans, 2, 3, 2, 1, a, 2, b, 3, 0, mut c, 3)
+
+	assert c == [f32(21), 24, 27, 47, 54, 61]
+}
+
+fn test_sgemm_transposed_inputs() {
+	a_transposed := [f32(1), 3, 2, 4]
+	b := [f32(5), 6, 7, 8]
+	b_transposed := [f32(5), 7, 6, 8]
+	expected := [f32(19), 22, 43, 50]
+
+	mut c_a_transposed := []f32{len: 4}
+	sgemm(.trans, .no_trans, 2, 2, 2, 1, a_transposed, 2, b, 2, 0, mut c_a_transposed,
+		2)
+	assert c_a_transposed == expected
+
+	mut c_b_transposed := []f32{len: 4}
+	sgemm(.no_trans, .trans, 2, 2, 2, 1, [f32(1), 2, 3, 4], 2, b_transposed, 2, 0,
+		mut c_b_transposed, 2)
+	assert c_b_transposed == expected
+}
+
+fn test_sgemm_rejects_overflowing_matrix_dimensions() {
+	message := sgemm_panic_message(fn () {
+		mut c := []f32{}
+		sgemm(.no_trans, .no_trans, max_int, 1, 1, 1, []f32{}, 1, [f32(1)], 1, 0, mut c,
+			max_int)
+	})
+	assert message.contains('dimensions overflow')
 }
 
 fn test_dgemm() {
