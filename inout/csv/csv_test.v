@@ -133,7 +133,7 @@ fn test_csv_to_matrix() {
 }
 
 fn test_write_and_read_csv() {
-	test_file := '/tmp/vsl_test_csv.csv'
+	test_file := os.join_path(os.temp_dir(), 'vsl_test_csv_${os.getpid()}.csv')
 	defer {
 		os.rm(test_file) or {}
 	}
