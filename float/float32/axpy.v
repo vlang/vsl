@@ -1,16 +1,26 @@
 module float32
 
 // axpy_unitary
+// Length validation allows direct indexed access in the hot loop.
+@[direct_array_access]
 pub fn axpy_unitary(alpha f32, x []f32, mut y []f32) {
-	for i, v in x {
-		y[i] += alpha * v
+	if y.len < x.len {
+		panic('axpy_unitary: destination is shorter than source')
+	}
+	for i in 0 .. x.len {
+		y[i] += alpha * x[i]
 	}
 }
 
 // axpy_unitary_to
+// Length validation allows direct indexed access in the hot loop.
+@[direct_array_access]
 pub fn axpy_unitary_to(mut dst []f32, alpha f32, x []f32, y []f32) {
-	for i, v in x {
-		dst[i] = alpha * v + y[i]
+	if dst.len < x.len || y.len < x.len {
+		panic('axpy_unitary_to: destination or addend is shorter than source')
+	}
+	for i in 0 .. x.len {
+		dst[i] = alpha * x[i] + y[i]
 	}
 }
 
