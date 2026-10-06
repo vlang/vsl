@@ -59,6 +59,12 @@ fn C.destroy_rfft_plan_f32(plan C.rfft_plan_f32)
 fn C.cfft_forward_f64(plan C.cfft_plan_f64, c []f64, fct f64) int
 fn C.cfft_backward_f64(plan C.cfft_plan_f64, c []f64, fct f64) int
 
+@[c: 'cfft_forward_f64']
+fn C.cfft_forward_f64_ptr(plan C.cfft_plan_f64, c &f64, fct f64) int
+
+@[c: 'cfft_backward_f64']
+fn C.cfft_backward_f64_ptr(plan C.cfft_plan_f64, c &f64, fct f64) int
+
 fn C.make_cfft_plan_f64(length int) C.cfft_plan_f64
 fn C.destroy_cfft_plan_f64(plan C.cfft_plan_f64)
 
@@ -80,12 +86,14 @@ mut:
 
 struct Cfft32 {
 mut:
-	plan C.cfft_plan_f32
+	plan   C.cfft_plan_f32
+	length int
 }
 
 struct Cfft64 {
 mut:
-	plan C.cfft_plan_f64
+	plan   C.cfft_plan_f64
+	length int
 }
 
 type Fftplan = Cfft32 | Cfft64 | Fft32 | Fft64
@@ -106,14 +114,18 @@ pub mut:
 // A plan is reusable for any array of exactly this size and type.
 // The array may be []f32, []f64, or []complx_f32 or []complex_f64.
 pub fn create_plan[T](x T) ?Fftplan {
+	if x.len == 0 {
+		eprintln('fftplan requires a non-empty input')
+		return none
+	}
 	$if T is []f32 {
 		return Fftplan(Fft32{C.make_rfft_plan_f32(x.len)})
 	} $else $if T is []f64 {
 		return Fftplan(Fft64{C.make_rfft_plan_f64(x.len)})
 	} $else $if T is []cmplx_f32 {
-		return Fftplan(Cfft32{C.make_cfft_plan_f32(x.len)})
+		return Fftplan(Cfft32{C.make_cfft_plan_f32(x.len), x.len})
 	} $else $if T is []cmplx_f64 {
-		return Fftplan(Cfft64{C.make_cfft_plan_f64(x.len)})
+		return Fftplan(Cfft64{C.make_cfft_plan_f64(x.len), x.len})
 	} $else {
 		eprintln('fftplan unsupported type: ${typeof(x).name}')
 	}
@@ -135,6 +147,55 @@ pub fn destroy_plan(plan Fftplan) {
 		}
 		Cfft64 {
 			C.destroy_cfft_plan_f64(plan.plan)
+		}
+	}
+}
+
+// create_complex_plan_f64 creates a reusable double-precision plan for
+// interleaved complex data stored as [real0, imag0, real1, imag1, ...].
+pub fn create_complex_plan_f64(length int) !Fftplan {
+	if length <= 0 {
+		return error('complex FFT plan length must be positive')
+	}
+	return Fftplan(Cfft64{C.make_cfft_plan_f64(length), length})
+}
+
+// forward_complex_f64 transforms interleaved complex f64 values in place.
+// The data slice must contain exactly `2 * plan_length` values.
+pub fn forward_complex_f64(plan Fftplan, mut data []f64) int {
+	if data.len == 0 || data.len % 2 != 0 {
+		return -1
+	}
+	match plan {
+		Cfft64 {
+			if data.len != plan.length * 2 {
+				return -1
+			}
+			return C.cfft_forward_f64_ptr(plan.plan, unsafe { &f64(data.data) }, f64(1.0))
+		}
+		else {
+			return -1
+		}
+	}
+}
+
+// backward_complex_f64 applies the unnormalized inverse transform to
+// interleaved complex f64 values in place. The data slice must contain exactly
+// `2 * plan_length` values. Divide every result by the transform length to
+// obtain the normalized inverse.
+pub fn backward_complex_f64(plan Fftplan, mut data []f64) int {
+	if data.len == 0 || data.len % 2 != 0 {
+		return -1
+	}
+	match plan {
+		Cfft64 {
+			if data.len != plan.length * 2 {
+				return -1
+			}
+			return C.cfft_backward_f64_ptr(plan.plan, unsafe { &f64(data.data) }, f64(1.0))
+		}
+		else {
+			return -1
 		}
 	}
 }
