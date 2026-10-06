@@ -37,20 +37,30 @@ pub fn (a &Matrix[T]) * (b &Matrix[T]) &Matrix[T] {
 	if a.n != b.m {
 		panic('Matrix multiplication requires matching inner dimensions, got ${a.m}x${a.n} and ${b.m}x${b.n}')
 	}
-	mut data := []T{len: a.m * b.n}
-	for row in 0 .. a.m {
-		for column in 0 .. b.n {
-			mut value := T(0)
-			for inner in 0 .. a.n {
-				value += a.data[row * a.n + inner] * b.data[inner * b.n + column]
+	$if T is f64 {
+		mut result := Matrix.new[f64](a.m, b.n)
+		matrix_matrix_mul(mut result, 1.0, a, b)
+		return result
+	} $else $if T is f32 {
+		mut result := Matrix.new[f32](a.m, b.n)
+		matrix_matrix_mul_f32(mut result.data, a.m, b.n, a.n, 1.0, a.data, b.data)
+		return result
+	} $else {
+		mut data := []T{len: a.m * b.n}
+		for row in 0 .. a.m {
+			for column in 0 .. b.n {
+				mut value := T(0)
+				for inner in 0 .. a.n {
+					value += a.data[row * a.n + inner] * b.data[inner * b.n + column]
+				}
+				data[row * b.n + column] = value
 			}
-			data[row * b.n + column] = value
 		}
-	}
-	return &Matrix[T]{
-		m:    a.m
-		n:    b.n
-		data: data
+		return &Matrix[T]{
+			m:    a.m
+			n:    b.n
+			data: data
+		}
 	}
 }
 
