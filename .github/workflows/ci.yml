@@ -221,6 +221,12 @@ jobs:
             ./vsl/roots \
             ./vsl/util
 
+      - name: Test ML plot serialization on Windows
+        shell: bash
+        run: |
+          cd ~/.vmodules
+          v test ./vsl/plot/ml_plots_test.v
+
   run-tests-on-cuda:
     # CUDA needs an org larger/GPU runner (label was linux-x64-16c). Standard GitHub
     # hosted runners have no NVIDIA GPU. Do not run on main push — it queues forever
