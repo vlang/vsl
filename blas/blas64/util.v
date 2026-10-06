@@ -5,7 +5,7 @@ const test_tol = 1e-14
 
 // [SD]gemm behavior constants. These are kept here to keep them out of the
 // way during single precision code genration.
-const block_size = 64 // b x b matrix
+const block_size = 128 // b x b matrix
 
 const min_par_block = 4 // minimum number of blocks needed to go parallel
 
