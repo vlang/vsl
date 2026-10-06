@@ -72,6 +72,21 @@ pub fn sigmoid_vulkan_f32(dev &vulkan.Device, x_data []f32) ![]f32 {
 	return run_unary_f32(dev, x_data, vulkan.sigmoid)
 }
 
+// softplus_vulkan_f32 applies stable Softplus element-wise on the GPU.
+pub fn softplus_vulkan_f32(dev &vulkan.Device, x_data []f32) ![]f32 {
+	return run_unary_f32(dev, x_data, vulkan.softplus)
+}
+
+// selu_vulkan_f32 applies SELU element-wise on the GPU.
+pub fn selu_vulkan_f32(dev &vulkan.Device, x_data []f32) ![]f32 {
+	return run_unary_f32(dev, x_data, vulkan.selu)
+}
+
+// hardswish_vulkan_f32 applies HardSwish element-wise on the GPU.
+pub fn hardswish_vulkan_f32(dev &vulkan.Device, x_data []f32) ![]f32 {
+	return run_unary_f32(dev, x_data, vulkan.hardswish)
+}
+
 // relu_vulkan exposes this operation as part of the public API.
 pub fn relu_vulkan(dev &vulkan.Device, x_data []f64) ![]f64 {
 	mut x_f32 := []f32{len: x_data.len}
