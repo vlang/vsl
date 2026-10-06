@@ -22,16 +22,16 @@ fn main() {
 
 	// Initialize K-means model configuration
 	nb_classes := 2 // We expect 2 clusters in our data
-	mut model := ml.Kmeans.new(mut data, nb_classes, 'kmeans')
+	mut model := ml.Kmeans.new_checked(mut data, nb_classes, 'kmeans')!
 
 	// Set initial centroid positions manually for this example
 	// In practice, these could be randomly initialized or use K-means++
-	model.set_centroids([
+	model.set_centroids_checked([
 		// Centroid for class 0 (positioned near first cluster)
 		[0.4, 0.6], // Between points in lower-left region
 		// Centroid for class 1 (positioned near second cluster)
 		[0.6, 0.4], // Between points in upper-right region
-	])
+	])!
 
 	// Step 1: Assign each data point to the nearest centroid
 	// This creates initial cluster assignments based on Euclidean distance
@@ -44,7 +44,7 @@ fn main() {
 	// Run the iterative training process
 	// The algorithm alternates between assigning points and updating centroids
 	// until convergence or maximum epochs reached
-	model.train(epochs: 6)
+	model.train(epochs: 100, tol_norm_change: 1e-8)
 
 	// Verify the clustering results against expected classifications
 	// We expect points 0-3 to be in class 0, and points 4-7 to be in class 1
@@ -67,6 +67,7 @@ fn main() {
 		assert c == expected_classes[i]
 		println('Point ${i}: Cluster ${c}')
 	}
+	println('Within-cluster sum of squares: ${model.inertia()}')
 
 	println('\nClustering completed successfully! ✅')
 }

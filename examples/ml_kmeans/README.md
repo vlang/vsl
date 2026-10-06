@@ -20,11 +20,7 @@ Learn how to group data points into meaningful clusters automatically.
 ## 🚀 Running the Example
 
 ```sh
-# Navigate to this directory
-cd examples/ml_kmeans
-
-# Run the example
-v run main.v
+v run vsl/examples/ml_kmeans/main.v
 ```
 
 ## 📊 Expected Output
