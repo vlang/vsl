@@ -15,9 +15,12 @@ of BLAS Level 1, 2, and 3. It is the portable fallback; its dense matrix
 multiplication is not expected to match tuned OpenBLAS or other optimized C
 BLAS libraries. Use the CBLAS backend for performance-sensitive GEMM workloads.
 
-For pure V GEMM, the number of concurrent workers follows `runtime.nr_jobs()`;
-the `VJOBS` environment variable can cap it for constrained systems. Each
-worker reuses its goroutine for multiple output tiles.
+For pure V GEMM, concurrency follows `runtime.nr_jobs()`; `VJOBS` caps the
+worker count on constrained systems. f64 GEMM distributes output tiles among
+workers. The row-major, no-transpose f32 SGEMM path uses V SIMD vectors and
+distributes larger row blocks among workers; small products stay serial to
+avoid worker startup overhead. Other f32 transpose layouts use the portable
+scalar path.
 
 Run the scoped benchmarks to measure the backend on your machine:
 

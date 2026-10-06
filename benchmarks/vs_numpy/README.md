@@ -58,12 +58,13 @@ systemd-run --user --scope --quiet -p MemoryMax=768M -p MemorySwapMax=0 -- env V
 	uv run --with numpy python ./vsl/benchmarks/vs_numpy/numpy_sgemm_f32_baseline.py
 ```
 
-On a local run with V 0.5.2 and NumPy 2.5.3, the pure-V path measured 9.94 ms
-versus NumPy at 0.975 ms for 512×512 `f32` SGEMM. The checksum matched. This
-is about 10.2× slower than NumPy, so the pure-V path remains an optimization
-target. Before the row-major fast path and direct array access, the same V
-kernel measured about 231 ms; this change improved that case by about 23×.
-These are local measurements, not a general performance claim.
+On the Ryzen 9 5900X, V 0.5.2 and NumPy 2.5.3, the pure-V path measured
+4.800 ms versus NumPy at 1.012 ms for 512×512 `f32` SGEMM with `VJOBS=2` and
+`OPENBLAS_NUM_THREADS=2`. The checksums matched. This pure-V case is about
+4.7× slower than NumPy and remains an optimization target. Before the SIMD and
+parallel row kernels, the same V benchmark measured 9.94 ms; the current path
+is about 2.1× faster. These are local measurements, not a general performance
+claim.
 
 ## Ryzen 9 5900X local sample
 
