@@ -12,9 +12,9 @@ built-in `benchmark` module for accurate timing measurements.
 ## Running Benchmarks
 
 Run V commands from `~/.vmodules`, outside the VSL checkout. Each example uses
-`VJOBS=2` and a 2 GiB `MemoryMax`; adjust the cap only when benchmarking larger
-inputs. Benchmarks are intentionally not part of the default test suite because
-their timings depend on hardware and system load.
+`VJOBS=2` and a 768 MiB `MemoryMax`. Benchmarks are intentionally not part of
+the default test suite because their timings depend on hardware and system
+load.
 
 ### vs NumPy (ML ops)
 
