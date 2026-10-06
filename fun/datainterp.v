@@ -204,10 +204,9 @@ pub fn lin_interp(mut o DataInterp, j int, x f64) f64 {
 pub fn poly_interp(mut o DataInterp, jl int, x f64) f64 {
 	mut y := 0.0
 
-	// allocate variables
-	xa := o.xx[jl..]
-	ya := o.yy[jl..]
-	mut dif := math.abs(x - xa[0])
+	// Work directly on the stored arrays: slicing here cloned both tails on
+	// every interpolation call, even though only the first m values are used.
+	mut dif := math.abs(x - o.xx[jl])
 	mut c := []f64{len: o.m}
 	mut d := []f64{len: o.m}
 
@@ -215,17 +214,17 @@ pub fn poly_interp(mut o DataInterp, jl int, x f64) f64 {
 	mut ns := 0
 	mut dift := 0.0
 	for i in 0 .. o.m {
-		dift = math.abs(x - xa[i])
+		dift = math.abs(x - o.xx[jl + i])
 		if dift < dif {
 			ns = i
 			dif = dift
 		}
-		c[i] = ya[i] // initialize the tableau of c's and d's.
-		d[i] = ya[i]
+		c[i] = o.yy[jl + i] // initialize the tableau of c's and d's.
+		d[i] = o.yy[jl + i]
 	}
 
 	// initial approximation to y.
-	y = ya[ns]
+	y = o.yy[jl + ns]
 	ns--
 
 	// perform interpolation
@@ -235,8 +234,8 @@ pub fn poly_interp(mut o DataInterp, jl int, x f64) f64 {
 	mut den := 0.0
 	for m in 1 .. o.m { // for each column of the tableau,
 		for i in 0 .. o.m - m { // loop over the current c's and d's and update them.
-			ho = xa[i] - x
-			hp = xa[i + m] - x
+			ho = o.xx[jl + i] - x
+			hp = o.xx[jl + i + m] - x
 			w = c[i + 1] - d[i]
 			den = ho - hp
 			if den == 0.0 {
