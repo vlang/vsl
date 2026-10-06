@@ -4,7 +4,7 @@ Maintainer planning: **https://github.com/orgs/vlang/projects/8** (Vlang ML Road
 
 Repo roadmap: [ROADMAP.md](../ROADMAP.md) · CUDA: [cuda/README.md](../cuda/README.md)
 
-## Done (2026-06-01)
+## Done
 
 | Issue | Topic |
 |-------|--------|
@@ -16,6 +16,7 @@ Repo roadmap: [ROADMAP.md](../ROADMAP.md) · CUDA: [cuda/README.md](../cuda/READ
 | [#283](https://github.com/vlang/vsl/issues/283)–[#285](https://github.com/vlang/vsl/issues/285) | Vulkan gating, conv2d, `ComputeContext` tests |
 | [#304](https://github.com/vlang/vsl/pull/304) | Vulkan Conv2D backward `d_weight` GEMM layout fix |
 | [#305](https://github.com/vlang/vsl/pull/305) | Vulkan `vector_mul`, `vector_sqrt`, fused f32 `adam_step` shader |
+| [#328](https://github.com/vlang/vsl/issues/328) | Expanded Windows test coverage and portable test-runner cleanup (#394) |
 
 **VTL (downstream):** CUDA Phases 1–4, f32 autograd/training, Vulkan Linear,
 Conv2D, ReLU/Sigmoid, and Adam are wired into the `nn_cifar10_vulkan` smoke.
@@ -24,8 +25,7 @@ Conv2D, ReLU/Sigmoid, and Adam are wired into the `nn_cifar10_vulkan` smoke.
 
 | Priority | Issue | Topic |
 |----------|-------|--------|
-| P1 | [#225](https://github.com/vlang/vsl/issues/225) | Windows build |
-| P2 | [#91](https://github.com/vlang/vsl/issues/91) | BLAS on macOS validation |
+| P2 | [#91](https://github.com/vlang/vsl/issues/91), [#330](https://github.com/vlang/vsl/issues/330) | OpenBLAS/BLAS backend on macOS validation |
 
 ## Post-beta tracking
 
@@ -34,6 +34,7 @@ Conv2D, ReLU/Sigmoid, and Adam are wired into the `nn_cifar10_vulkan` smoke.
 | P1 | Phase H | Multi-GPU (`device_id`, data parallelism) |
 | P1 | Phase I | GPU memory pool / zero-copy |
 | P2 | [#226](https://github.com/vlang/vsl/issues/226) | VCL examples |
+| P2 | [#21](https://github.com/vlang/vsl/issues/21) | Pure-V compute performance and SIMD optimization |
 | P2 | — | CUDA variants of `benchmarks/vs_numpy/` in CI |
 | P2 | — | Extended Vulkan↔CUDA numerical cross-check |
 | P2 | — | Vulkan persistent memory / reduced host sync for VTL training |
