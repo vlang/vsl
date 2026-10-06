@@ -16,3 +16,28 @@ until _rx + i0_ (where _x_ is _n/2_) is the last. (Note the minus signs.)
 The positive frequencies are the same as the negative frequencies in reverse
 order. See the reference
 for [FFTW](https://www.fftw.org/fftw3.pdf) for further examples of embeddings.
+
+## Interleaved complex f64 transforms
+
+`create_complex_plan_f64(length)` creates a plan for an interleaved buffer
+`[real0, imag0, real1, imag1, ...]`. Use `forward_complex_f64` and
+`backward_complex_f64` to transform the buffer in place. Both return `0` on
+success and `-1` when the plan or buffer length does not match. The inverse is
+unnormalized; divide each component by the original transform length for the
+normalized result. Destroy each plan exactly once with `destroy_plan`.
+
+The helpers require exactly twice the plan length in `f64` values and validate
+that size before calling the native backend.
+
+```v
+import vsl.fft
+
+mut samples := [f64(1), 0, 0, 0] // two complex values
+plan := fft.create_complex_plan_f64(2)!
+defer {
+	fft.destroy_plan(plan)
+}
+fft.forward_complex_f64(plan, mut samples)
+// Divide inverse results by 2 to normalize them.
+fft.backward_complex_f64(plan, mut samples)
+```
