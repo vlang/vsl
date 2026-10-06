@@ -132,7 +132,7 @@ jobs:
           vsl/bin/test ${{ matrix.flags }} --use-vulkan
 
   run-windows-smoke:
-    name: Windows compute smoke
+    name: Windows portable test suites
     runs-on: windows-latest
     env:
       VJOBS: '2'
@@ -214,18 +214,13 @@ jobs:
             ./vsl/ml \
             ./vsl/model_selection \
             ./vsl/noise \
+            ./vsl/plot \
             ./vsl/poly \
             ./vsl/preprocessing \
             ./vsl/prime \
             ./vsl/quaternion \
             ./vsl/roots \
             ./vsl/util
-
-      - name: Test ML plot serialization on Windows
-        shell: bash
-        run: |
-          cd ~/.vmodules
-          v test ./vsl/plot/ml_plots_test.v
 
       - name: Test Vulkan compute on Windows
         shell: bash

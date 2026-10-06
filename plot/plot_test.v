@@ -1,6 +1,6 @@
 module plot
 
-fn test_bar() {
+fn test_bar_serializes_without_opening_browser() {
 	mut plt := Plot.new()
 
 	plt.bar(
@@ -10,7 +10,10 @@ fn test_bar() {
 	plt.layout(
 		title: 'Countries by population'
 	)
-	plt.show()!
+	assert plt.traces.len == 1
+	assert plt.layout.title == 'Countries by population'
+	traces, _ := plt.to_json()
+	assert traces.contains('"type":"bar"')
 }
 
 fn test_scatter_hovertemplate_in_json() {
