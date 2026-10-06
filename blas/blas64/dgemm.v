@@ -217,7 +217,109 @@ fn dgemm_serial(a_trans Transpose, b_trans Transpose, m int, n int, k int, a []f
 // dgemm_serial where neither a nor b are transposed
 @[direct_array_access]
 fn dgemm_serial_not_not(m int, n int, k int, a []f64, lda int, b []f64, ldb int, mut c []f64, ldc int, alpha f64) {
-	for i in 0 .. m {
+	mut i := 0
+	for ; i + 4 <= m; i += 4 {
+		a0 := i * lda
+		a1 := a0 + lda
+		a2 := a1 + lda
+		a3 := a2 + lda
+		c_base := i * ldc
+		c1 := c_base + ldc
+		c2 := c1 + ldc
+		c3 := c2 + ldc
+		mut j := 0
+		for ; j + 4 <= n; j += 4 {
+			mut s00 := 0.0
+			mut s01 := 0.0
+			mut s02 := 0.0
+			mut s03 := 0.0
+			mut s10 := 0.0
+			mut s11 := 0.0
+			mut s12 := 0.0
+			mut s13 := 0.0
+			mut s20 := 0.0
+			mut s21 := 0.0
+			mut s22 := 0.0
+			mut s23 := 0.0
+			mut s30 := 0.0
+			mut s31 := 0.0
+			mut s32 := 0.0
+			mut s33 := 0.0
+			for l := 0; l < k; l++ {
+				v0 := alpha * a[a0 + l]
+				v1 := alpha * a[a1 + l]
+				v2 := alpha * a[a2 + l]
+				v3 := alpha * a[a3 + l]
+				b_base := l * ldb + j
+				b0 := b[b_base]
+				b1 := b[b_base + 1]
+				b2 := b[b_base + 2]
+				b3 := b[b_base + 3]
+				if v0 != 0 {
+					s00 += v0 * b0
+					s01 += v0 * b1
+					s02 += v0 * b2
+					s03 += v0 * b3
+				}
+				if v1 != 0 {
+					s10 += v1 * b0
+					s11 += v1 * b1
+					s12 += v1 * b2
+					s13 += v1 * b3
+				}
+				if v2 != 0 {
+					s20 += v2 * b0
+					s21 += v2 * b1
+					s22 += v2 * b2
+					s23 += v2 * b3
+				}
+				if v3 != 0 {
+					s30 += v3 * b0
+					s31 += v3 * b1
+					s32 += v3 * b2
+					s33 += v3 * b3
+				}
+			}
+			c[c_base + j] += s00
+			c[c_base + j + 1] += s01
+			c[c_base + j + 2] += s02
+			c[c_base + j + 3] += s03
+			c[c1 + j] += s10
+			c[c1 + j + 1] += s11
+			c[c1 + j + 2] += s12
+			c[c1 + j + 3] += s13
+			c[c2 + j] += s20
+			c[c2 + j + 1] += s21
+			c[c2 + j + 2] += s22
+			c[c2 + j + 3] += s23
+			c[c3 + j] += s30
+			c[c3 + j + 1] += s31
+			c[c3 + j + 2] += s32
+			c[c3 + j + 3] += s33
+		}
+		for ; j < n; j++ {
+			for l := 0; l < k; l++ {
+				b_value := b[l * ldb + j]
+				v0 := alpha * a[a0 + l]
+				v1 := alpha * a[a1 + l]
+				v2 := alpha * a[a2 + l]
+				v3 := alpha * a[a3 + l]
+				if v0 != 0 {
+					c[c_base + j] += v0 * b_value
+				}
+				if v1 != 0 {
+					c[c1 + j] += v1 * b_value
+				}
+				if v2 != 0 {
+					c[c2 + j] += v2 * b_value
+				}
+				if v3 != 0 {
+					c[c3 + j] += v3 * b_value
+				}
+			}
+		}
+	}
+	for ; i < m; i++ {
 		c_base := i * ldc
 		a_base := i * lda
 		for l := 0; l < k; l++ {
