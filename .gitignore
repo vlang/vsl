@@ -11,6 +11,7 @@ fns.txt
 /docs/build
 vsl
 *.bak
+*~
 
 /vls.log
 
