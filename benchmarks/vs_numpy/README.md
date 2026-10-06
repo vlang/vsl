@@ -53,13 +53,14 @@ five timed calls. One local run with `VJOBS=2` measured:
 | Backend | 512×512 | 1024×1024 |
 |---|---:|---:|
 | VSL pure V | 22.25 ms | 164.69 ms |
-| VSL + OpenBLAS 0.3.34 | 2.12 ms | 6.81 ms |
-| NumPy 2.5.3, 2 OpenBLAS threads | 2.65 ms | 19.14 ms |
+| VSL + OpenBLAS 0.3.34 | 1.43 ms | 8.47 ms |
+| NumPy 2.5.3, 2 OpenBLAS threads | 2.11 ms | 17.38 ms |
 
 The OpenBLAS builds differ: VSL linked to the official Arch OpenBLAS 0.3.34
 package, while NumPy used its wheel-provided BLAS. These results show that the
 optimized VSL backend was faster on this host and setup, not that the pure-V
-backend or every VSL workload is faster than NumPy. Rerun both commands on the
+backend or every VSL workload is faster than NumPy. The paired sample is about
+1.5× faster at 512×512 and 2.1× at 1024×1024. Rerun both commands on the
 target host before drawing a general performance conclusion. The OpenBLAS
 package used for this local VSL run was signature verified and extracted
 temporarily rather than installed system-wide.
