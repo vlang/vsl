@@ -107,6 +107,68 @@ pub fn (mut o Kmeans) set_centroids_checked(xc [][]f64) ! {
 	o.set_centroids(xc)
 }
 
+// initialize_kmeans_plus_plus selects initial centroids with the K-means++
+// distance-weighted strategy. The explicit seed keeps the operation
+// reproducible without changing V's process-global random generator.
+pub fn (mut o Kmeans) initialize_kmeans_plus_plus(seed u64) ! {
+	if o.data.nb_samples == 0 || o.data.nb_features == 0 {
+		return error('K-means++ requires non-empty samples and features')
+	}
+	if o.nb_classes <= 0 || o.nb_classes > o.data.nb_samples {
+		return error('K-means++ class count must be between 1 and the sample count')
+	}
+	mut state := if seed == 0 { u64(1) } else { seed }
+	next_state, first_random := kmeans_next_random(state)
+	state = next_state
+	mut centroids := [][]f64{cap: o.nb_classes}
+	centroids << o.data.x.get_row(int(first_random % u64(o.data.nb_samples)))
+	mut min_distances := []f64{len: o.data.nb_samples, init: math.max_f64}
+	for _ in 1 .. o.nb_classes {
+		last_centroid := centroids[centroids.len - 1]
+		mut distance_sum := 0.0
+		for sample in 0 .. o.data.nb_samples {
+			mut distance := 0.0
+			for feature in 0 .. o.data.nb_features {
+				delta := o.data.x.get(sample, feature) - last_centroid[feature]
+				distance += delta * delta
+			}
+			if distance < min_distances[sample] {
+				min_distances[sample] = distance
+			}
+			distance_sum += min_distances[sample]
+		}
+		mut selected := 0
+		if distance_sum == 0 {
+			zero_next_state, random := kmeans_next_random(state)
+			state = zero_next_state
+			selected = int(random % u64(o.data.nb_samples))
+		} else {
+			weighted_next_state, random := kmeans_next_random(state)
+			state = weighted_next_state
+			threshold := f64(random & u64(0x1fffffffffffff)) / 9007199254740992.0 * distance_sum
+			mut cumulative := 0.0
+			selected = o.data.nb_samples - 1
+			for sample, distance in min_distances {
+				cumulative += distance
+				if cumulative > threshold {
+					selected = sample
+					break
+				}
+			}
+		}
+		centroids << o.data.x.get_row(selected)
+	}
+	o.set_centroids(centroids)
+}
+
+fn kmeans_next_random(state u64) (u64, u64) {
+	mut next := state
+	next = next ^ (next << 13)
+	next = next ^ (next >> 7)
+	next = next ^ (next << 17)
+	return next, next
+}
+
 // find_closest_centroids finds closest centroids to each sample
 pub fn (mut o Kmeans) find_closest_centroids() {
 	if o.nb_classes == 0 || o.data.nb_features == 0 {

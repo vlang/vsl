@@ -24,47 +24,24 @@ fn main() {
 	nb_classes := 2 // We expect 2 clusters in our data
 	mut model := ml.Kmeans.new_checked(mut data, nb_classes, 'kmeans')!
 
-	// Set initial centroid positions manually for this example
-	// In practice, these could be randomly initialized or use K-means++
-	model.set_centroids_checked([
-		// Centroid for class 0 (positioned near first cluster)
-		[0.4, 0.6], // Between points in lower-left region
-		// Centroid for class 1 (positioned near second cluster)
-		[0.6, 0.4], // Between points in upper-right region
-	])!
-
-	// Step 1: Assign each data point to the nearest centroid
-	// This creates initial cluster assignments based on Euclidean distance
-	model.find_closest_centroids()
-
-	// Step 2: Recalculate centroid positions based on current assignments
-	// Each centroid moves to the mean position of its assigned points
-	model.compute_centroids()
+	// Seeded K-means++ chooses data-backed starting centers reproducibly.
+	model.initialize_kmeans_plus_plus(42)!
 
 	// Run the iterative training process
 	// The algorithm alternates between assigning points and updating centroids
 	// until convergence or maximum epochs reached
 	model.train(epochs: 100, tol_norm_change: 1e-8)
 
-	// Verify the clustering results against expected classifications
-	// We expect points 0-3 to be in class 0, and points 4-7 to be in class 1
-	expected_classes := [
-		0,
-		0,
-		0,
-		0, // First 4 points should be classified as cluster 0
-		1,
-		1,
-		1,
-		1, // Last 4 points should be classified as cluster 1
-	]
+	// Verify each group is consistent without relying on arbitrary label order.
+	first_group := model.classes[0]
+	second_group := model.classes[4]
+	assert first_group != second_group
 
 	// Display the final cluster assignments
 	println('K-means clustering results:')
 	println('Point -> Cluster Assignment')
 	for i, c in model.classes {
-		// Verify our expectation matches the algorithm's result
-		assert c == expected_classes[i]
+		assert c == if i < 4 { first_group } else { second_group }
 		println('Point ${i}: Cluster ${c}')
 	}
 	println('Within-cluster sum of squares: ${model.inertia()}')

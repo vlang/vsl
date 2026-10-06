@@ -8,7 +8,7 @@ Learn how to group data points into meaningful clusters automatically.
 - K-means clustering fundamentals
 - Data preparation for machine learning
 - Working with VSL's ML observer pattern
-- Centroid initialization and optimization
+- Reproducible K-means++ centroid initialization
 - Model training and validation
 
 ## 📋 Prerequisites
@@ -50,14 +50,14 @@ The example uses 8 2D data points representing two distinct clusters:
 ### 2. Model Configuration
 
 - **Number of clusters**: 2
-- **Initial centroids**: Manually set to separate the clusters
-- **Training epochs**: 6 iterations
+- **Initial centroids**: K-means++ with seed `42`
+- **Training**: Up to 100 iterations, stopping at centroid movement `1e-8`
 
 ### 3. Training Process
 
-1. **Find closest centroids**: Assign each point to nearest cluster center
-2. **Compute centroids**: Recalculate cluster centers based on assignments
-3. **Iterate**: Repeat until convergence
+1. **Initialize**: Select data points using seeded K-means++
+2. **Assign**: Choose the closest center for each point
+3. **Update**: Recalculate each center and stop when movement is below tolerance
 
 ## 🎨 Experiment Ideas
 
@@ -65,7 +65,8 @@ Try modifying the example:
 
 - **Add more data points** to see clustering behavior
 - **Change the number of clusters** (k parameter)
-- **Use random centroid initialization** instead of manual
+- **Change the seed** and compare the reproducible initialization
+- **Add a third feature** to use K-means beyond 2D data
 - **Visualize the clustering process** (see `ml_kmeans_plot` example)
 
 ## 📚 Related Examples
@@ -76,14 +77,16 @@ Try modifying the example:
 
 ## 🔬 Technical Details
 
-The example uses VSL's **observer pattern**: the model automatically updates when data changes,
-making it suitable for dynamic datasets.
+The example uses VSL's **observer pattern**: the model resets sample assignments when the data
+changes. K-means++ uses its own seeded generator and leaves the process-global RNG untouched.
 
 **Key VSL Components:**
 
 - `ml.Data.from_raw_x()` - Data container creation
-- `ml.Kmeans.new()` - Model initialization
+- `ml.Kmeans.new_checked()` - Validated model initialization
+- `model.initialize_kmeans_plus_plus(seed)` - Reproducible center selection
 - `model.train()` - Training execution
+- `model.inertia()` - Within-cluster sum of squared errors
 
 ## 🐛 Troubleshooting
 
