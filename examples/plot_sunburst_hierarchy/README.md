@@ -5,7 +5,7 @@ This example demonstrates `plot_sunburst_hierarchy` visualization/analysis workf
 ## Run
 
 ```sh
-v run examples/plot_sunburst_hierarchy/main.v
+v run ./vsl/examples/plot_sunburst_hierarchy/main.v
 ```
 
 ## Notes

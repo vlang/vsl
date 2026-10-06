@@ -15,7 +15,7 @@ scenario across **121 frames**, then reports practical kinematic indicators.
 ## Run
 
 ```sh
-v run examples/easings_motion_profiles/main.v
+v run ./vsl/examples/easings_motion_profiles/main.v
 ```
 
 ## Why this is representative

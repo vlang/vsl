@@ -20,10 +20,9 @@ NLERP, LERP) and visualizes their differences in 3D space.
 
 ```sh
 # Navigate to this directory
-cd examples/quaternion_interpolation_animation
 
 # Run the example
-v run main.v
+v run vsl/examples/quaternion_interpolation_animation/main.v
 ```
 
 ## Expected Output

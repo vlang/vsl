@@ -22,10 +22,9 @@ Learn how combining multiple decision trees improves prediction accuracy and red
 
 ```sh
 # Navigate to this directory
-cd examples/ml_random_forest
 
 # Run the example
-v run main.v
+v run vsl/examples/ml_random_forest/main.v
 ```
 
 ## 📊 Expected Output

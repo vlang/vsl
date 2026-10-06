@@ -12,7 +12,7 @@ following the [installation guide](https://github.com/vlang/vsl?tab=readme-ov-fi
 4. Run the example using the following command:
 
 ```sh
-v run main.v
+v run vsl/examples/plot_script_mode_three_phase_signal/main.v
 ```
 
 Enjoy exploring the capabilities of the V Scientific Library! 😊

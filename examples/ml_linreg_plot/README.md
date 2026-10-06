@@ -20,10 +20,9 @@ combined with visualization.
 
 ```sh
 # Navigate to this directory
-cd examples/ml_linreg_plot
 
 # Run the example
-v run main.v
+v run vsl/examples/ml_linreg_plot/main.v
 ```
 
 ## Expected Output

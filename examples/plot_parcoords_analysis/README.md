@@ -5,7 +5,7 @@ This example demonstrates `plot_parcoords_analysis` visualization/analysis workf
 ## Run
 
 ```sh
-v run examples/plot_parcoords_analysis/main.v
+v run ./vsl/examples/plot_parcoords_analysis/main.v
 ```
 
 ## Notes

@@ -43,7 +43,6 @@ Install GPU vendor's SDK (NVIDIA CUDA, AMD APP, Intel OpenCL)
 
 ```sh
 # Navigate to this directory
-cd examples/vcl_opencl_basic
 
 # Compile with OpenCL support
 v -cflags -lOpenCL run main.v

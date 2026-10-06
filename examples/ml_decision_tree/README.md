@@ -21,10 +21,9 @@ Learn how decision trees make predictions by recursively splitting data based on
 
 ```sh
 # Navigate to this directory
-cd examples/ml_decision_tree
 
 # Run the example
-v run main.v
+v run vsl/examples/ml_decision_tree/main.v
 ```
 
 ## 📊 Expected Output

@@ -33,7 +33,6 @@ For development or to use the latest version:
 
 ```sh
 git clone https://github.com/vlang/vsl.git
-cd vsl
 ```
 
 ### Method 3: Docker (Recommended for Development)

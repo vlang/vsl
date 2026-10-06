@@ -12,7 +12,7 @@ V's built-in `benchmark` module.
 
 ```sh
 # Pure V backend (default)
-v run main.v
+v run vsl/examples/blas_performance_comparison/main.v
 
 # Compare with C backend
 v -d vsl_blas_cblas run main.v
@@ -34,7 +34,7 @@ To compare pure V backend with C backend:
 
 1. Run with pure V backend:
    ```sh
-   v run main.v
+   v run vsl/examples/blas_performance_comparison/main.v
    ```
 
 2. Run with C backend:

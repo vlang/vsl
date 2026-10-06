@@ -11,7 +11,7 @@ for plotting the sine and cosine surface.
 4. Run the example using the following command:
 
 ```sh
-v run main.v
+v run vsl/examples/plot_sin_cos_surface/main.v
 ```
 
 Enjoy exploring the capabilities of the V Scientific Library! 😊

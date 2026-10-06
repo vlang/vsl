@@ -5,7 +5,7 @@ This example demonstrates `plot_scatter_colorscale` visualization/analysis workf
 ## Run
 
 ```sh
-v run examples/plot_scatter_colorscale/main.v
+v run ./vsl/examples/plot_scatter_colorscale/main.v
 ```
 
 ## Notes

@@ -11,7 +11,7 @@ for plotting an AC signal in script mode.
 4. Run the example using the following command:
 
 ```sh
-v run main.v
+v run vsl/examples/plot_script_mode_ac_signal/main.v
 ```
 
 Enjoy exploring the capabilities of the V Scientific Library! 😊

@@ -26,7 +26,7 @@ C backends.
 Run benchmarks to see performance characteristics:
 
 ```sh
-v run benchmarks/lapack_bench.v
+v run ./vsl/benchmarks/lapack_bench.v
 ```
 
 ### Available Functions

@@ -20,10 +20,9 @@ for 3D spatial clustering and visualization.
 
 ```sh
 # Navigate to this directory
-cd examples/geometry_ml_clustering
 
 # Run the example
-v run main.v
+v run vsl/examples/geometry_ml_clustering/main.v
 ```
 
 ## Expected Output

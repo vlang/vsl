@@ -6,7 +6,7 @@ through the VCL module.
 ## Run
 
 ```sh
-v run examples/vcl_opencl_kernel_params/main.v
+v run ./vsl/examples/vcl_opencl_kernel_params/main.v
 ```
 
 ## Notes

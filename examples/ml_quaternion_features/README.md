@@ -20,10 +20,9 @@ combining the quaternion and ML modules.
 
 ```sh
 # Navigate to this directory
-cd examples/ml_quaternion_features
 
 # Run the example
-v run main.v
+v run vsl/examples/ml_quaternion_features/main.v
 ```
 
 ## Expected Output

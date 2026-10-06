@@ -11,5 +11,5 @@ Representative OHLC plotting example for market-regime inspection.
 ## Run
 
 ```sh
-v run examples/plot_ohlc_market_regime/main.v
+v run ./vsl/examples/plot_ohlc_market_regime/main.v
 ```

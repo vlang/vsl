@@ -5,7 +5,7 @@ This example demonstrates `plot_sankey_energy` visualization/analysis workflow i
 ## Run
 
 ```sh
-v run examples/plot_sankey_energy/main.v
+v run ./vsl/examples/plot_sankey_energy/main.v
 ```
 
 ## Notes

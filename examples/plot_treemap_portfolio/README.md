@@ -5,7 +5,7 @@ This example demonstrates `plot_treemap_portfolio` visualization/analysis workfl
 ## Run
 
 ```sh
-v run examples/plot_treemap_portfolio/main.v
+v run ./vsl/examples/plot_treemap_portfolio/main.v
 ```
 
 ## Notes

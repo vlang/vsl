@@ -20,10 +20,9 @@ visualizing the results with plotting.
 
 ```sh
 # Navigate to this directory
-cd examples/lapack_plot_eigenvalues
 
 # Run with pure V (demonstration)
-v run main.v
+v run vsl/examples/lapack_plot_eigenvalues/main.v
 
 # Run with LAPACK backend (if available)
 v -d vsl_lapack_lapacke run main.v

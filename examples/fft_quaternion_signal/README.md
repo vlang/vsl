@@ -20,10 +20,9 @@ them, combining quaternion and plotting modules.
 
 ```sh
 # Navigate to this directory
-cd examples/fft_quaternion_signal
 
 # Run the example
-v run main.v
+v run vsl/examples/fft_quaternion_signal/main.v
 ```
 
 ## Expected Output

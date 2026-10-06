@@ -45,7 +45,7 @@ This comprehensive example demonstrates various geometric operations and visuali
 ## Usage
 
 ```bash
-v run main.v
+v run vsl/examples/gm_geometry_playground/main.v
 ```
 
 ## Educational Value

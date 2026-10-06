@@ -39,7 +39,6 @@ Download from [Microsoft MPI](https://docs.microsoft.com/en-us/message-passing-i
 
 ```sh
 # Navigate to this directory
-cd examples/mpi_basic_example
 
 # Compile with MPI support
 v -cflags -lmpi run main.v

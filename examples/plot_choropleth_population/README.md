@@ -5,7 +5,7 @@ This example demonstrates `plot_choropleth_population` visualization/analysis wo
 ## Run
 
 ```sh
-v run examples/plot_choropleth_population/main.v
+v run ./vsl/examples/plot_choropleth_population/main.v
 ```
 
 ## Notes

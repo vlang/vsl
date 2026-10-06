@@ -5,7 +5,7 @@ This example demonstrates `plot_box_statistics` visualization/analysis workflow 
 ## Run
 
 ```sh
-v run examples/plot_box_statistics/main.v
+v run ./vsl/examples/plot_box_statistics/main.v
 ```
 
 ## Notes

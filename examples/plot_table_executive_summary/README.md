@@ -11,5 +11,5 @@ Representative table plotting example for KPI reporting.
 ## Run
 
 ```sh
-v run examples/plot_table_executive_summary/main.v
+v run ./vsl/examples/plot_table_executive_summary/main.v
 ```

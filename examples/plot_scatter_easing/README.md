@@ -5,7 +5,7 @@ This example demonstrates `plot_scatter_easing` visualization/analysis workflow 
 ## Run
 
 ```sh
-v run examples/plot_scatter_easing/main.v
+v run ./vsl/examples/plot_scatter_easing/main.v
 ```
 
 ## Notes

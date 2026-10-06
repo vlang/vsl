@@ -5,16 +5,16 @@ limit memory and keep V's parallel job count at two:
 
 ```bash
 cd ~/.vmodules
-systemd-run --user --scope --quiet --property=MemoryMax=2G -- env VJOBS=2 v run ./vsl/benchmarks/vs_numpy/matmul_bench.v
-systemd-run --user --scope --quiet --property=MemoryMax=2G -- env VJOBS=2 v run ./vsl/benchmarks/vs_numpy/gemv_bench.v
-systemd-run --user --scope --quiet --property=MemoryMax=2G -- env VJOBS=2 v run ./vsl/benchmarks/vs_numpy/conv2d_bench.v
+systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 -- env VJOBS=2 v run ./vsl/benchmarks/vs_numpy/matmul_bench.v
+systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 -- env VJOBS=2 v run ./vsl/benchmarks/vs_numpy/gemv_bench.v
+systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 -- env VJOBS=2 v run ./vsl/benchmarks/vs_numpy/conv2d_bench.v
 ```
 
 With OpenBLAS (recommended):
 
 ```bash
 cd ~/.vmodules
-systemd-run --user --scope --quiet --property=MemoryMax=2G \
+systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
 	-- env VJOBS=2 v -d vsl_blas_cblas run \
 	./vsl/benchmarks/vs_numpy/matmul_bench.v
 ```
@@ -25,7 +25,7 @@ remain pure V:
 
 ```bash
 cd ~/.vmodules
-systemd-run --user --scope --quiet --property=MemoryMax=2G \
+systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
 	-- env VJOBS=2 v -d vsl_blas_generic_cblas run \
 	./vsl/benchmarks/vs_numpy/matmul_bench.v
 ```
@@ -34,11 +34,11 @@ systemd-run --user --scope --quiet --property=MemoryMax=2G \
 
 ```bash
 cd ~/.vmodules
-systemd-run --user --scope --quiet --property=MemoryMax=1G \
+systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
 	-- env VJOBS=2 python3 ./vsl/benchmarks/vs_numpy/numpy_baseline.py matmul
-systemd-run --user --scope --quiet --property=MemoryMax=1G \
+systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
 	-- env VJOBS=2 python3 ./vsl/benchmarks/vs_numpy/numpy_baseline.py gemv
-systemd-run --user --scope --quiet --property=MemoryMax=1G \
+systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
 	-- env VJOBS=2 python3 ./vsl/benchmarks/vs_numpy/numpy_baseline.py conv2d
 ```
 

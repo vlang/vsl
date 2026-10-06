@@ -5,7 +5,7 @@ This example demonstrates `plot_surface` visualization/analysis workflow in VSL.
 ## Run
 
 ```sh
-v run examples/plot_surface/main.v
+v run ./vsl/examples/plot_surface/main.v
 ```
 
 ## Notes

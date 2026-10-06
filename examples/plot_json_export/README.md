@@ -43,8 +43,7 @@ layout_json := plt.layout_json()
 ## 🚀 Running the Example
 
 ```sh
-cd examples/plot_json_export
-v run main.v
+v run vsl/examples/plot_json_export/main.v
 ```
 
 ## 📊 Expected Output

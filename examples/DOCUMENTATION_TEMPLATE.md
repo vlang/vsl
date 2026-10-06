@@ -35,10 +35,9 @@ Each example should contain:
 
 ```sh
 # Navigate to this directory
-cd examples/[example_name]
 
 # Run the example
-v run main.v
+v run ./vsl/examples/<example_name>/main.v
 
 # Alternative with flags (if needed)
 v -cflags [flags] run main.v

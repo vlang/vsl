@@ -11,7 +11,7 @@ for performing sentiment analysis using machine learning.
 4. Run the example using the following command:
 
 ```sh
-v run main.v
+v run vsl/examples/ml_sentiment_analysis/main.v
 ```
 
 Enjoy exploring the capabilities of the V Scientific Library! 😊

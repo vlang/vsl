@@ -22,10 +22,9 @@ using the sigmoid function.
 
 ```sh
 # Navigate to this directory
-cd examples/ml_logreg
 
 # Run the example
-v run main.v
+v run vsl/examples/ml_logreg/main.v
 ```
 
 ## 📊 Expected Output

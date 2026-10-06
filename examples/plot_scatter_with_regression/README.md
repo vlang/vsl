@@ -11,7 +11,7 @@ for creating a scatter plot with regression line.
 4. Run the example using the following command:
 
 ```sh
-v run main.v
+v run vsl/examples/plot_scatter_with_regression/main.v
 ```
 
 Enjoy exploring the capabilities of the V Scientific Library! 😊
