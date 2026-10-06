@@ -33,6 +33,9 @@ enum PipelineType {
 	reduce_sum
 	relu
 	sigmoid
+	softplus
+	selu
+	hardswish
 	gemm
 	softmax
 	layernorm
@@ -186,6 +189,30 @@ pub fn relu(dev &Device, dst &GpuBuffer, src &GpuBuffer) ! {
 // sigmoid computes dst[i] = 1/(1+exp(-src[i]))
 pub fn sigmoid(dev &Device, dst &GpuBuffer, src &GpuBuffer) ! {
 	pl := pipeline_get(dev, .sigmoid)!
+	pl.update_buffer(0, src)!
+	pl.update_buffer(1, dst)!
+	dispatch_sync(dev, pl, u32(src.size / 4), 1, 1)!
+}
+
+// softplus computes dst[i] = log(1 + exp(src[i])) with a stable formulation.
+pub fn softplus(dev &Device, dst &GpuBuffer, src &GpuBuffer) ! {
+	pl := pipeline_get(dev, .softplus)!
+	pl.update_buffer(0, src)!
+	pl.update_buffer(1, dst)!
+	dispatch_sync(dev, pl, u32(src.size / 4), 1, 1)!
+}
+
+// selu computes the scaled exponential linear unit element-wise.
+pub fn selu(dev &Device, dst &GpuBuffer, src &GpuBuffer) ! {
+	pl := pipeline_get(dev, .selu)!
+	pl.update_buffer(0, src)!
+	pl.update_buffer(1, dst)!
+	dispatch_sync(dev, pl, u32(src.size / 4), 1, 1)!
+}
+
+// hardswish computes dst[i] = src[i] * clamp(src[i] + 3, 0, 6) / 6.
+pub fn hardswish(dev &Device, dst &GpuBuffer, src &GpuBuffer) ! {
+	pl := pipeline_get(dev, .hardswish)!
 	pl.update_buffer(0, src)!
 	pl.update_buffer(1, dst)!
 	dispatch_sync(dev, pl, u32(src.size / 4), 1, 1)!
@@ -524,6 +551,9 @@ fn pipeline_get(d &Device, t PipelineType) !&ComputePipeline {
 		.reduce_sum { pl = d.create_pipeline(reduce_sum_spv, 'main')! }
 		.relu { pl = d.create_pipeline(relu_spv, 'main')! }
 		.sigmoid { pl = d.create_pipeline(sigmoid_spv, 'main')! }
+		.softplus { pl = d.create_pipeline(softplus_spv, 'main')! }
+		.selu { pl = d.create_pipeline(selu_spv, 'main')! }
+		.hardswish { pl = d.create_pipeline(hardswish_spv, 'main')! }
 		.gemm { pl = d.create_pipeline(gemm_spv, 'main')! }
 		.softmax { pl = d.create_pipeline(softmax_spv, 'main')! }
 		.layernorm { pl = d.create_pipeline(layernorm_spv, 'main')! }

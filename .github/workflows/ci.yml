@@ -124,6 +124,8 @@ jobs:
           vsl/bin/test ${{ matrix.flags }} --use-cblas --use-lapacke
 
       - name: Execute Tests using Vulkan Compute Backend
+        env:
+          VSL_TEST_VULKAN: '1'
         run: |
           cd ~/.vmodules
           v wipe-cache

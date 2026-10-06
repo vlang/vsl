@@ -10,14 +10,14 @@ Vulkan is opt-in (`-d vulkan`) and most integration tests are gated with
 | Area | Supported |
 |------|-----------|
 | Linear algebra | GEMM/GEMV f32 kernels behind f64 host APIs |
-| Elementwise | `vector_add`, `vector_mul`, `vector_sqrt`, ReLU, Sigmoid, GELU |
+| Elementwise | `vector_add`, `vector_mul`, `vector_sqrt`, ReLU, Sigmoid, Softplus, SELU, HardSwish, GELU |
 | Convolution | `im2col` + GEMM Conv2D forward; backward `d_weight` GEMM |
 | Pooling | AvgPool2D, GlobalAvgPool2D, MaxPool2D |
 | Optimizers | Fused f32 `adam_step` shader |
 | Descriptor layout | Up to **8** storage-buffer bindings (`vulkan.h`) |
 
 Shader sources live in [`shaders/`](./shaders/); generated SPIR-V arrays are
-embedded in `spv.v` and `spv_adam.v`.
+embedded in `spv.v`, `spv_adam.v`, and `spv_activations.v`.
 
 ## Running tests safely
 
@@ -25,12 +25,15 @@ Integration tests live in `vulkan_manual_test.v` (not `*_test.v`) so default
 `v test vsl` does not hit a `v_stable_sort` crash in the V test runner.
 
 ```bash
-# From repo root
-./bin/test --use-vulkan
+# From ~/.vmodules
+systemd-run --user --scope --quiet --property=MemoryMax=4G \
+	--setenv=VSL_TEST_VULKAN=1 -- env VJOBS=2 VSL_TEST_VULKAN=1 \
+	./vsl/bin/test --use-vulkan --skip-examples
 
 # Or scoped (use -prod on machines where debug Vulkan instance creation crashes)
-VSL_TEST_VULKAN=1 VJOBS=1 v -prod -d vulkan test vulkan/compute/adam_step_vulkan_test.v
-VSL_TEST_VULKAN=1 VJOBS=1 v -prod -d vulkan test vulkan/compute
+systemd-run --user --scope --quiet --property=MemoryMax=4G \
+	--setenv=VSL_TEST_VULKAN=1 -- env VJOBS=2 VSL_TEST_VULKAN=1 \
+	v -prod -d vulkan test ./vsl/vulkan/compute
 ```
 
 On macOS, `bin/test` always skips Vulkan tests (no libvulkan runtime).
