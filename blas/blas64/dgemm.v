@@ -4,6 +4,7 @@ import sync
 import vsl.float.float64
 import math
 import runtime
+import simd
 
 // dgemm performs one of the matrix-matrix operations
 //  C = alpha * A * B + beta * C
@@ -97,6 +98,9 @@ pub fn dgemm(trans_a Transpose, trans_b Transpose, m int, n int, k int, alpha f6
 				}
 			}
 		}
+	}
+	if alpha == 0 || k == 0 {
+		return
 	}
 
 	dgemm_parallel(if a_trans { .trans } else { .no_trans },
@@ -228,74 +232,52 @@ fn dgemm_serial_not_not(m int, n int, k int, a []f64, lda int, b []f64, ldb int,
 		c2 := c1 + ldc
 		c3 := c2 + ldc
 		mut j := 0
-		for ; j + 4 <= n; j += 4 {
-			mut s00 := 0.0
-			mut s01 := 0.0
-			mut s02 := 0.0
-			mut s03 := 0.0
-			mut s10 := 0.0
-			mut s11 := 0.0
-			mut s12 := 0.0
-			mut s13 := 0.0
-			mut s20 := 0.0
-			mut s21 := 0.0
-			mut s22 := 0.0
-			mut s23 := 0.0
-			mut s30 := 0.0
-			mut s31 := 0.0
-			mut s32 := 0.0
-			mut s33 := 0.0
+		for ; j + 8 <= n; j += 8 {
+			mut s00 := simd.splat_f64x4(0.0)
+			mut s01 := simd.splat_f64x4(0.0)
+			mut s10 := simd.splat_f64x4(0.0)
+			mut s11 := simd.splat_f64x4(0.0)
+			mut s20 := simd.splat_f64x4(0.0)
+			mut s21 := simd.splat_f64x4(0.0)
+			mut s30 := simd.splat_f64x4(0.0)
+			mut s31 := simd.splat_f64x4(0.0)
 			for l := 0; l < k; l++ {
 				v0 := alpha * a[a0 + l]
 				v1 := alpha * a[a1 + l]
 				v2 := alpha * a[a2 + l]
 				v3 := alpha * a[a3 + l]
 				b_base := l * ldb + j
-				b0 := b[b_base]
-				b1 := b[b_base + 1]
-				b2 := b[b_base + 2]
-				b3 := b[b_base + 3]
-				if v0 != 0 {
-					s00 += v0 * b0
-					s01 += v0 * b1
-					s02 += v0 * b2
-					s03 += v0 * b3
-				}
-				if v1 != 0 {
-					s10 += v1 * b0
-					s11 += v1 * b1
-					s12 += v1 * b2
-					s13 += v1 * b3
-				}
-				if v2 != 0 {
-					s20 += v2 * b0
-					s21 += v2 * b1
-					s22 += v2 * b2
-					s23 += v2 * b3
-				}
-				if v3 != 0 {
-					s30 += v3 * b0
-					s31 += v3 * b1
-					s32 += v3 * b2
-					s33 += v3 * b3
-				}
+				b_values0 := simd.load_f64x4_at(b, b_base)
+				b_values1 := simd.load_f64x4_at(b, b_base + 4)
+				broadcast0 := simd.splat_f64x4(v0)
+				broadcast1 := simd.splat_f64x4(v1)
+				broadcast2 := simd.splat_f64x4(v2)
+				broadcast3 := simd.splat_f64x4(v3)
+				s00 = broadcast0.mul_add(b_values0, s00)
+				s01 = broadcast0.mul_add(b_values1, s01)
+				s10 = broadcast1.mul_add(b_values0, s10)
+				s11 = broadcast1.mul_add(b_values1, s11)
+				s20 = broadcast2.mul_add(b_values0, s20)
+				s21 = broadcast2.mul_add(b_values1, s21)
+				s30 = broadcast3.mul_add(b_values0, s30)
+				s31 = broadcast3.mul_add(b_values1, s31)
 			}
-			c[c_base + j] += s00
-			c[c_base + j + 1] += s01
-			c[c_base + j + 2] += s02
-			c[c_base + j + 3] += s03
-			c[c1 + j] += s10
-			c[c1 + j + 1] += s11
-			c[c1 + j + 2] += s12
-			c[c1 + j + 3] += s13
-			c[c2 + j] += s20
-			c[c2 + j + 1] += s21
-			c[c2 + j + 2] += s22
-			c[c2 + j + 3] += s23
-			c[c3 + j] += s30
-			c[c3 + j + 1] += s31
-			c[c3 + j + 2] += s32
-			c[c3 + j + 3] += s33
+			simd.load_f64x4_at(c, c_base + j)
+				.add(s00).store_at(mut c, c_base + j)
+			simd.load_f64x4_at(c, c_base + j + 4)
+				.add(s01).store_at(mut c, c_base + j + 4)
+			simd.load_f64x4_at(c, c1 + j)
+				.add(s10).store_at(mut c, c1 + j)
+			simd.load_f64x4_at(c, c1 + j + 4)
+				.add(s11).store_at(mut c, c1 + j + 4)
+			simd.load_f64x4_at(c, c2 + j)
+				.add(s20).store_at(mut c, c2 + j)
+			simd.load_f64x4_at(c, c2 + j + 4)
+				.add(s21).store_at(mut c, c2 + j + 4)
+			simd.load_f64x4_at(c, c3 + j)
+				.add(s30).store_at(mut c, c3 + j)
+			simd.load_f64x4_at(c, c3 + j + 4)
+				.add(s31).store_at(mut c, c3 + j + 4)
 		}
 		for ; j < n; j++ {
 			for l := 0; l < k; l++ {
@@ -304,18 +286,10 @@ fn dgemm_serial_not_not(m int, n int, k int, a []f64, lda int, b []f64, ldb int,
 				v1 := alpha * a[a1 + l]
 				v2 := alpha * a[a2 + l]
 				v3 := alpha * a[a3 + l]
-				if v0 != 0 {
-					c[c_base + j] += v0 * b_value
-				}
-				if v1 != 0 {
-					c[c1 + j] += v1 * b_value
-				}
-				if v2 != 0 {
-					c[c2 + j] += v2 * b_value
-				}
-				if v3 != 0 {
-					c[c3 + j] += v3 * b_value
-				}
+				c[c_base + j] += v0 * b_value
+				c[c1 + j] += v1 * b_value
+				c[c2 + j] += v2 * b_value
+				c[c3 + j] += v3 * b_value
 			}
 		}
 	}
@@ -324,9 +298,6 @@ fn dgemm_serial_not_not(m int, n int, k int, a []f64, lda int, b []f64, ldb int,
 		a_base := i * lda
 		for l := 0; l < k; l++ {
 			tmp := alpha * a[a_base + l]
-			if tmp == 0 {
-				continue
-			}
 			b_base := l * ldb
 			for j := 0; j < n; j++ {
 				c[c_base + j] += tmp * b[b_base + j]
@@ -343,10 +314,8 @@ fn dgemm_serial_trans_not(m int, n int, k int, a []f64, lda int, b []f64, ldb in
 		btmp := b[l * ldb..l * ldb + n]
 		for i, v in a[l * lda..l * lda + m] {
 			tmp := alpha * v
-			if tmp != 0 {
-				mut ctmp := unsafe { c[i * ldc..i * ldc + n] }
-				float64.axpy_unitary(tmp, btmp, mut ctmp)
-			}
+			mut ctmp := unsafe { c[i * ldc..i * ldc + n] }
+			float64.axpy_unitary(tmp, btmp, mut ctmp)
 		}
 	}
 }
@@ -371,10 +340,8 @@ fn dgemm_serial_trans_trans(m int, n int, k int, a []f64, lda int, b []f64, ldb 
 	for l := 0; l < k; l++ {
 		for i, v in a[l * lda..l * lda + m] {
 			tmp := alpha * v
-			if tmp != 0 {
-				mut ctmp := unsafe { c[i * ldc..i * ldc + n] }
-				float64.axpy_inc(tmp, b[l..], mut ctmp, u32(n), u32(ldb), 1, 0, 0)
-			}
+			mut ctmp := unsafe { c[i * ldc..i * ldc + n] }
+			float64.axpy_inc(tmp, b[l..], mut ctmp, u32(n), u32(ldb), 1, 0, 0)
 		}
 	}
 }

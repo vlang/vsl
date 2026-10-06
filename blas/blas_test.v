@@ -482,6 +482,32 @@ fn test_sgemm_simd_rows_columns_alpha_and_beta() {
 	assert c == expected
 }
 
+fn test_sgemm_eight_row_kernel_handles_column_tail() {
+	rows := 8
+	inner := 2
+	columns := 10
+	mut a := []f32{len: rows * inner}
+	mut b := []f32{len: inner * columns}
+	mut c := []f32{len: rows * columns, init: 2}
+	for row in 0 .. rows {
+		a[row * inner] = f32(row + 1)
+		a[row * inner + 1] = f32((row + 1) * 2)
+	}
+	for p in 0 .. inner {
+		for column in 0 .. columns {
+			b[p * columns + column] = f32(p + column + 1)
+		}
+	}
+	sgemm(.no_trans, .no_trans, rows, columns, inner, 1.5, a, inner, b, columns, 0.5, mut c,
+		columns)
+	for row in 0 .. rows {
+		for column in 0 .. columns {
+			product := a[row * inner] * b[column] + a[row * inner + 1] * b[columns + column]
+			assert c[row * columns + column] == 1.5 * product + 1
+		}
+	}
+}
+
 fn test_sgemm_parallel_workers_cover_all_rows() {
 	size := 256
 	mut a := []f32{len: size * size}

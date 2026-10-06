@@ -40,6 +40,22 @@ fn test_dgemm() {
 	assert float64.arrays_tolerance(c3, expected3, test_tol), 'DGEMM alpha/beta test failed: expected ${expected3}, got ${c3}'
 }
 
+fn test_dgemm_matches_numpy_nonfinite_and_zero_alpha_semantics() {
+	for transpose_a in [Transpose.no_trans, .trans] {
+		for transpose_b in [Transpose.no_trans, .trans] {
+			mut nan_product := [0.0]
+			dgemm(transpose_a, transpose_b, 1, 1, 1, 1.0, [0.0], 1, [math.inf(1)], 1, 0.0,
+				mut nan_product, 1)
+			assert math.is_nan(nan_product[0])
+		}
+	}
+
+	mut scaled_output := [2.0]
+	dgemm(.no_trans, .no_trans, 1, 1, 1, 0.0, [math.inf(1)], 1, [math.inf(1)], 1, 3.0,
+		mut scaled_output, 1)
+	assert scaled_output[0] == 6.0
+}
+
 fn test_dgemm_parallel_workers_cover_edge_tiles_and_transpose() {
 	// Non-multiple dimensions exercise the final partial M/N/K tiles. With
 	// VJOBS=2 this also verifies that the bounded worker path handles every

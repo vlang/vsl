@@ -10,6 +10,16 @@ systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySw
 systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 -- env VJOBS=2 v run ./vsl/benchmarks/vs_numpy/conv2d_bench.v
 ```
 
+For a local build that targets the current CPU's instruction set, add
+`-cflags "-march=native"` to the V command. The resulting executable is tied
+to that CPU family; omit this flag for portable binaries. For example:
+
+```bash
+cd ~/.vmodules
+systemd-run --user --scope --quiet -p MemoryMax=768M -p MemorySwapMax=0 -- env VJOBS=2 \
+	v -prod -cflags "-march=native" run ./vsl/benchmarks/vs_numpy/matmul_bench.v
+```
+
 With OpenBLAS (recommended):
 
 ```bash
@@ -59,12 +69,12 @@ systemd-run --user --scope --quiet -p MemoryMax=768M -p MemorySwapMax=0 -- env V
 ```
 
 On the Ryzen 9 5900X, V 0.5.2 and NumPy 2.5.3, the pure-V path measured
-4.800 ms versus NumPy at 1.012 ms for 512×512 `f32` SGEMM with `VJOBS=2` and
-`OPENBLAS_NUM_THREADS=2`. The checksums matched. This pure-V case is about
-4.7× slower than NumPy and remains an optimization target. Before the SIMD and
-parallel row kernels, the same V benchmark measured 9.94 ms; the current path
-is about 2.1× faster. These are local measurements, not a general performance
-claim.
+4.371 ms versus NumPy at 1.071 ms for 512×512 `f32` SGEMM with the portable
+compiler target, `VJOBS=2`, and `OPENBLAS_NUM_THREADS=2`. With
+`-cflags "-march=native"`, V measured 3.743 ms and NumPy measured 1.248 ms;
+the checksums matched in both comparisons. The native V build was about 3.0×
+slower, and the portable build about 4.1× slower, on this host. These are local
+measurements, not a general performance claim.
 
 ## Ryzen 9 5900X local sample
 
@@ -73,19 +83,18 @@ five timed calls. One local run with `VJOBS=2` measured:
 
 | Backend | 512×512 | 1024×1024 |
 |---|---:|---:|
-| VSL pure V | 16.51 ms | 119.59 ms |
+| VSL pure V, portable target | 12.00 ms | 81.46 ms |
+| VSL pure V, `-march=native` | 9.16 ms | 67.73 ms |
 | VSL + OpenBLAS 0.3.34 | 1.43 ms | 8.47 ms |
-| NumPy 2.5.3, 2 OpenBLAS threads | 2.11 ms | 16.92 ms |
+| NumPy 2.5.3, 2 OpenBLAS threads | 2.12 ms | 17.50 ms |
 
-The OpenBLAS builds differ: VSL linked to the official Arch OpenBLAS 0.3.34
-package, while NumPy used its wheel-provided BLAS. The updated pure-V kernel is
-about 1.35× faster than its previous sample at 512×512 and 1.38× at
-1024×1024; it remains about 7.8× and 7.1× slower than NumPy at those sizes.
-The optimized VSL backend was faster on this host and setup, not every VSL
-workload. Rerun both commands on the target host before drawing a general
-performance conclusion. The OpenBLAS package used for this local VSL run was
+The `-march=native` pure-V build was about 4.3× slower than NumPy at 512×512
+and 3.9× slower at 1024×1024 in this run. The OpenBLAS builds differ: VSL
+linked to the official Arch OpenBLAS 0.3.34 package, while NumPy used its
+wheel-provided BLAS. The OpenBLAS package used for this local VSL run was
 signature verified and extracted temporarily rather than installed
-system-wide.
+system-wide. Rerun these commands on the target host before drawing a general
+performance conclusion.
 
 ## Output and reporting
 
