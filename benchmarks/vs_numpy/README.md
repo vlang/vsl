@@ -19,6 +19,17 @@ systemd-run --user --scope --quiet --property=MemoryMax=2G \
 	./vsl/benchmarks/vs_numpy/matmul_bench.v
 ```
 
+On Linux systems that provide `libcblas` but not OpenBLAS, the dense f64 GEMM
+benchmark can use the system CBLAS entry point while the other BLAS routines
+remain pure V:
+
+```bash
+cd ~/.vmodules
+systemd-run --user --scope --quiet --property=MemoryMax=2G \
+	-- env VJOBS=2 v -d vsl_blas_generic_cblas run \
+	./vsl/benchmarks/vs_numpy/matmul_bench.v
+```
+
 ## NumPy reference (`numpy_baseline.py`)
 
 ```bash
