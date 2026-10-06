@@ -215,15 +215,19 @@ fn dgemm_serial(a_trans Transpose, b_trans Transpose, m int, n int, k int, a []f
 }
 
 // dgemm_serial where neither a nor b are transposed
+@[direct_array_access]
 fn dgemm_serial_not_not(m int, n int, k int, a []f64, lda int, b []f64, ldb int, mut c []f64, ldc int, alpha f64) {
-	// This style is used instead of the literal [i*stride +j]) is used because
-	// approximately 5 times faster.
 	for i in 0 .. m {
-		mut ctmp := unsafe { c[i * ldc..i * ldc + n] }
-		for l, v in a[i * lda..i * lda + k] {
-			tmp := alpha * v
-			if tmp != 0 {
-				float64.axpy_unitary(tmp, b[l * ldb..l * ldb + n], mut ctmp)
+		c_base := i * ldc
+		a_base := i * lda
+		for l := 0; l < k; l++ {
+			tmp := alpha * a[a_base + l]
+			if tmp == 0 {
+				continue
+			}
+			b_base := l * ldb
+			for j := 0; j < n; j++ {
+				c[c_base + j] += tmp * b[b_base + j]
 			}
 		}
 	}
