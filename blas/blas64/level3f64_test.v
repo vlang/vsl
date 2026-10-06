@@ -1,6 +1,7 @@
 module blas64
 
 import vsl.float.float64
+import math
 
 // ====================
 // LEVEL 3 BLAS TESTS
@@ -37,6 +38,45 @@ fn test_dgemm() {
 	dgemm(.no_trans, .no_trans, 2, 2, 2, 2.0, a3, 2, b3, 2, 3.0, mut c3, 2)
 	expected3 := [7.0, 7.0, 7.0, 7.0] // 2*[[2,2],[2,2]] + 3*[[1,1],[1,1]] = [[4,4],[4,4]] + [[3,3],[3,3]] = [[7,7],[7,7]]
 	assert float64.arrays_tolerance(c3, expected3, test_tol), 'DGEMM alpha/beta test failed: expected ${expected3}, got ${c3}'
+}
+
+fn test_dgemm_parallel_workers_cover_edge_tiles_and_transpose() {
+	// Non-multiple dimensions exercise the final partial M/N/K tiles. With
+	// VJOBS=2 this also verifies that the bounded worker path handles every
+	// output tile once for both normal and transposed A layouts.
+	m := 130
+	n := 129
+	k := 67
+	mut a := []f64{len: m * k}
+	mut a_transposed := []f64{len: k * m}
+	mut b := []f64{len: k * n}
+	for i in 0 .. m {
+		for inner in 0 .. k {
+			value := f64((i * 3 + inner * 5) % 17 - 8)
+			a[i * k + inner] = value
+			a_transposed[inner * m + i] = value
+		}
+	}
+	for inner in 0 .. k {
+		for j in 0 .. n {
+			b[inner * n + j] = f64((inner * 7 + j * 2) % 19 - 9)
+		}
+	}
+	for transpose_a in [Transpose.no_trans, .trans] {
+		input_a := if transpose_a == .trans { a_transposed } else { a }
+		lda := if transpose_a == .trans { m } else { k }
+		mut c := []f64{len: m * n}
+		dgemm(transpose_a, .no_trans, m, n, k, 1.0, input_a, lda, b, n, 0.0, mut c, n)
+		for i in 0 .. m {
+			for j in 0 .. n {
+				mut expected := 0.0
+				for inner in 0 .. k {
+					expected += a[i * k + inner] * b[inner * n + j]
+				}
+				assert math.abs(c[i * n + j] - expected) < 1e-10
+			}
+		}
+	}
 }
 
 fn test_dsyrk() {
