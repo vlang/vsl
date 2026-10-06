@@ -1,4 +1,4 @@
-// VSL Conv2D CPU reference benchmark (NCHW). Run: v run vsl/benchmarks/vs_numpy/conv2d_bench.v
+// VSL Conv2D CPU reference benchmark (NCHW). Run from ~/.vmodules under a memory scope.
 module main
 
 import time

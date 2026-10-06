@@ -1,4 +1,4 @@
-// VSL GEMV benchmark (vsl.blas dgemv). Run: v run vsl/benchmarks/vs_numpy/gemv_bench.v
+// VSL GEMV benchmark (vsl.blas dgemv). Run from ~/.vmodules under a memory scope.
 module main
 
 import time

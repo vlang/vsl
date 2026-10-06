@@ -11,18 +11,51 @@ built-in `benchmark` module for accurate timing measurements.
 
 ## Running Benchmarks
 
-Run benchmarks from the VSL repository root. Benchmark commands are intentionally
-not part of the default test suite; they can be CPU/GPU and hardware sensitive.
+Run V commands from `~/.vmodules`, outside the VSL checkout. Each example uses
+`VJOBS=2` and a 2 GiB `MemoryMax`; adjust the cap only when benchmarking larger
+inputs. Benchmarks are intentionally not part of the default test suite because
+their timings depend on hardware and system load.
 
 ### vs NumPy (ML ops)
 
 ```sh
-v run benchmarks/vs_numpy/matmul_bench.v
-v run benchmarks/vs_numpy/gemv_bench.v
-v run benchmarks/vs_numpy/conv2d_bench.v
+cd ~/.vmodules
+systemd-run --user --scope --quiet --property=MemoryMax=2G -- env VJOBS=2 v run ./vsl/benchmarks/vs_numpy/matmul_bench.v
+systemd-run --user --scope --quiet --property=MemoryMax=2G -- env VJOBS=2 v run ./vsl/benchmarks/vs_numpy/gemv_bench.v
+systemd-run --user --scope --quiet --property=MemoryMax=2G -- env VJOBS=2 v run ./vsl/benchmarks/vs_numpy/conv2d_bench.v
 ```
 
 See [vs_numpy/README.md](vs_numpy/README.md). Tracked in [#282](https://github.com/vlang/vsl/issues/282).
+
+### FFT vs NumPy
+
+The V and Python programs use the same real-valued f64 input, lengths,
+warm-ups, and iteration counts. V reuses its PocketFFT plan and times only the
+forward transform; input copying and plan creation are outside the timed region.
+Install NumPy in the Python environment before running the baseline.
+
+```sh
+cd ~/.vmodules
+systemd-run --user --scope --quiet --property=MemoryMax=1G -- env VJOBS=2 v run ./vsl/benchmarks/fft_bench.v
+systemd-run --user --scope --quiet --property=MemoryMax=1G -- env VJOBS=2 python3 ./vsl/benchmarks/fft_numpy_baseline.py
+```
+
+The two CSV tables report mean microseconds per call. Compare them on the same
+machine; the implementations have different output layouts, so these numbers
+compare execution time, not storage behavior.
+
+### MPI communication latency
+
+The MPI benchmark measures two-rank send/receive round trips, broadcasts, and
+root reductions for one and 1024 i64 values. Build once and launch two ranks:
+
+```sh
+cd ~/.vmodules
+systemd-run --user --scope --quiet --property=MemoryMax=1G \
+	-- env VJOBS=2 v -d vsl_mpi -cc gcc -o /tmp/vsl-mpi-bench \
+	./vsl/benchmarks/mpi_bench.v
+systemd-run --user --scope --quiet --property=MemoryMax=1G -- mpirun --oversubscribe -n 2 /tmp/vsl-mpi-bench
+```
 
 ### GPU smoke benchmarks
 
@@ -30,8 +63,12 @@ CUDA and Vulkan benchmark coverage is evolving. For release evidence, prefer
 small scoped GPU smokes before running any heavy benchmark:
 
 ```sh
-VSL_TEST_VULKAN=1 VJOBS=1 v -prod -d vulkan test vsl/vulkan/compute/adam_step_vulkan_test.v
-v -d cuda test vsl/cuda/examples/cuda_ops_test.v
+cd ~/.vmodules
+systemd-run --user --scope --quiet --property=MemoryMax=2G \
+	-- env VJOBS=2 VSL_TEST_VULKAN=1 v -prod -d vulkan test \
+	./vsl/vulkan/compute/adam_step_vulkan_test.v
+systemd-run --user --scope --quiet --property=MemoryMax=2G \
+	-- env VJOBS=2 v -d cuda test ./vsl/cuda/examples/cuda_ops_test.v
 ```
 
 If you run from `~/.vmodules`, prefix benchmark paths with `vsl/`.
@@ -39,24 +76,23 @@ If you run from `~/.vmodules`, prefix benchmark paths with `vsl/`.
 ### Run All Benchmarks
 
 ```sh
-# Run BLAS benchmarks
-v run benchmarks/blas_bench.v
-
-# Run LAPACK benchmarks
-v run benchmarks/lapack_bench.v
-
-# Compare backends
-v run benchmarks/compare_backends.v
+cd ~/.vmodules
+systemd-run --user --scope --quiet --property=MemoryMax=2G -- env VJOBS=2 v run ./vsl/benchmarks/blas_bench.v
+systemd-run --user --scope --quiet --property=MemoryMax=2G -- env VJOBS=2 v run ./vsl/benchmarks/lapack_bench.v
+systemd-run --user --scope --quiet --property=MemoryMax=2G -- env VJOBS=2 v run ./vsl/benchmarks/compare_backends.v
 ```
 
-### Run Specific Benchmarks
+### Run a C backend benchmark
+
+The BLAS and LAPACK benchmark sizes are configured in their source files.
+Edit the benchmark's size list when you need a different set. To select a C
+backend, pass its compile-time define:
 
 ```sh
-# Run with specific problem sizes
-v run benchmarks/blas_bench.v --sizes 100,500,1000
-
-# Run with C backend enabled
-v -d vsl_blas_cblas run benchmarks/blas_bench.v
+cd ~/.vmodules
+systemd-run --user --scope --quiet --property=MemoryMax=2G \
+	-- env VJOBS=2 v -d vsl_blas_cblas run \
+	./vsl/benchmarks/blas_bench.v
 ```
 
 ## Benchmark Structure
@@ -64,6 +100,8 @@ v -d vsl_blas_cblas run benchmarks/blas_bench.v
 - **`blas_bench.v`**: Comprehensive BLAS Level 1, 2, and 3 benchmarks
 - **`lapack_bench.v`**: LAPACK operation benchmarks (linear systems, factorizations, etc.)
 - **`compare_backends.v`**: Direct comparison between pure V and C backends
+- **`fft_bench.v` and `fft_numpy_baseline.py`**: Real f64 forward FFT timing for VSL and NumPy
+- **`mpi_bench.v`**: Two-rank MPI send/receive, broadcast, and reduction latency
 - **`benchmark_utils.v`**: Shared utilities for benchmark setup and reporting
 
 ## Understanding Results
@@ -101,4 +139,3 @@ When adding new benchmarks:
 3. Include multiple problem sizes
 4. Document any special considerations
 5. Ensure benchmarks are reproducible
-
