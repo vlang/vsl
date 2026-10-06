@@ -161,7 +161,11 @@ pub fn create_complex_plan_f64(length int) !Fftplan {
 	if length <= 0 {
 		return error('complex FFT plan length must be positive')
 	}
-	return Fftplan(Cfft64{C.make_cfft_plan_f64(length), length})
+	plan := C.make_cfft_plan_f64(length)
+	if isnil(plan) {
+		return error('could not allocate complex f64 FFT plan')
+	}
+	return Fftplan(Cfft64{plan, length})
 }
 
 // create_complex_plan_f32 creates a reusable single-precision plan for
@@ -170,7 +174,11 @@ pub fn create_complex_plan_f32(length int) !Fftplan {
 	if length <= 0 {
 		return error('complex FFT plan length must be positive')
 	}
-	return Fftplan(Cfft32{C.make_cfft_plan_f32(length), length})
+	plan := C.make_cfft_plan_f32(length)
+	if isnil(plan) {
+		return error('could not allocate complex f32 FFT plan')
+	}
+	return Fftplan(Cfft32{plan, length})
 }
 
 // forward_complex_f32 transforms interleaved complex f32 values in place.
