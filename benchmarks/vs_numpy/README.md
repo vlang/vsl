@@ -35,7 +35,8 @@ systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySw
 ```bash
 cd ~/.vmodules
 systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
-	-- env VJOBS=2 python3 ./vsl/benchmarks/vs_numpy/numpy_baseline.py matmul
+	-- env VJOBS=2 OPENBLAS_NUM_THREADS=2 uv run --with numpy python \
+	./vsl/benchmarks/vs_numpy/numpy_baseline.py matmul
 systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
 	-- env VJOBS=2 python3 ./vsl/benchmarks/vs_numpy/numpy_baseline.py gemv
 systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
@@ -46,14 +47,22 @@ Compare GFLOPS / ms from the V scripts with the Python output for the same sizes
 
 ## Ryzen 9 5900X local sample
 
-One local run with `VJOBS=2` measured the pure-V backend at 22.31 ms for 512²
-and 170.31 ms for 1024². With `-d vsl_blas_cblas`, VSL linked to OpenBLAS
-0.3.34 and measured 2.12 ms and 6.81 ms respectively. NumPy 2.5.3, using its
-wheel-provided BLAS with `OPENBLAS_NUM_THREADS=2`, measured 2.48 ms and 17.98
-ms. The OpenBLAS builds differ, so these figures describe this host and setup;
-rerun both commands on the target host before drawing a general performance
-conclusion. The OpenBLAS package used for this local VSL run was signature
-verified and extracted temporarily rather than installed system-wide.
+The VSL and NumPy scripts use the same deterministic matrices, two warmups, and
+five timed calls. One local run with `VJOBS=2` measured:
+
+| Backend | 512×512 | 1024×1024 |
+|---|---:|---:|
+| VSL pure V | 22.25 ms | 164.69 ms |
+| VSL + OpenBLAS 0.3.34 | 2.12 ms | 6.81 ms |
+| NumPy 2.5.3, 2 OpenBLAS threads | 2.65 ms | 19.14 ms |
+
+The OpenBLAS builds differ: VSL linked to the official Arch OpenBLAS 0.3.34
+package, while NumPy used its wheel-provided BLAS. These results show that the
+optimized VSL backend was faster on this host and setup, not that the pure-V
+backend or every VSL workload is faster than NumPy. Rerun both commands on the
+target host before drawing a general performance conclusion. The OpenBLAS
+package used for this local VSL run was signature verified and extracted
+temporarily rather than installed system-wide.
 
 ## Output and reporting
 

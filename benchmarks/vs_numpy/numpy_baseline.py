@@ -2,6 +2,7 @@
 """NumPy timing baselines for VSL vs_numpy benchmarks."""
 
 import sys
+import time
 import timeit
 
 import numpy as np
@@ -9,11 +10,21 @@ import numpy as np
 
 def bench_matmul():
     for n in (128, 256, 512, 1024):
-        a = np.random.rand(n, n)
-        b = np.random.rand(n, n)
-        sec = timeit.timeit(lambda: a @ b, number=5) / 5.0
-        gflops = 2 * n * n * n / sec / 1e9
-        print(f"numpy gemm {n}x{n} | {sec * 1000:.2f} ms | {gflops:.3f} GFLOPS")
+        i, j = np.indices((n, n), dtype=np.int64)
+        a = ((i + j) % 7).astype(np.float64) * 0.01
+        b = ((i * j) % 5).astype(np.float64) * 0.02
+        def run():
+            return a @ b
+        for _ in range(2):
+            result = run()
+        samples_ms = []
+        for _ in range(5):
+            started = time.perf_counter_ns()
+            result = run()
+            samples_ms.append((time.perf_counter_ns() - started) / 1_000_000.0)
+        average_ms = sum(samples_ms) / len(samples_ms)
+        gflops = 2 * n**3 / (average_ms * 1_000_000.0)
+        print(f"numpy gemm {n}x{n} | {average_ms:.2f} ms | {gflops:.3f} GFLOPS")
 
 
 def bench_gemv():
