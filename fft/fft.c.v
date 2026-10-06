@@ -43,8 +43,12 @@ struct C.rfft_plan_i_f64 {
 }
 
 // F32
-fn C.cfft_forward_f32(plan C.cfft_plan_f32, c []f32, fct f32) int
-fn C.cfft_backward_f32(plan C.cfft_plan_f32, c []f32, fct f32) int
+
+@[c: 'cfft_forward_f32']
+fn C.cfft_forward_f32_ptr(plan C.cfft_plan_f32, c &f32, fct f32) int
+
+@[c: 'cfft_backward_f32']
+fn C.cfft_backward_f32_ptr(plan C.cfft_plan_f32, c &f32, fct f32) int
 
 fn C.make_cfft_plan_f32(length int) C.cfft_plan_f32
 fn C.destroy_cfft_plan_f32(plan C.cfft_plan_f32)
@@ -158,6 +162,54 @@ pub fn create_complex_plan_f64(length int) !Fftplan {
 		return error('complex FFT plan length must be positive')
 	}
 	return Fftplan(Cfft64{C.make_cfft_plan_f64(length), length})
+}
+
+// create_complex_plan_f32 creates a reusable single-precision plan for
+// interleaved complex data stored as [real0, imag0, real1, imag1, ...].
+pub fn create_complex_plan_f32(length int) !Fftplan {
+	if length <= 0 {
+		return error('complex FFT plan length must be positive')
+	}
+	return Fftplan(Cfft32{C.make_cfft_plan_f32(length), length})
+}
+
+// forward_complex_f32 transforms interleaved complex f32 values in place.
+// The data slice must contain exactly `2 * plan_length` values.
+pub fn forward_complex_f32(plan Fftplan, mut data []f32) int {
+	if data.len == 0 || data.len % 2 != 0 {
+		return -1
+	}
+	match plan {
+		Cfft32 {
+			if data.len != plan.length * 2 {
+				return -1
+			}
+			return C.cfft_forward_f32_ptr(plan.plan, unsafe { &f32(data.data) }, f32(1.0))
+		}
+		else {
+			return -1
+		}
+	}
+}
+
+// backward_complex_f32 applies the unnormalized inverse transform to
+// interleaved complex f32 values in place. Divide every result by the
+// transform length to obtain the normalized inverse.
+pub fn backward_complex_f32(plan Fftplan, mut data []f32) int {
+	if data.len == 0 || data.len % 2 != 0 {
+		return -1
+	}
+	match plan {
+		Cfft32 {
+			if data.len != plan.length * 2 {
+				return -1
+			}
+			return C.cfft_backward_f32_ptr(plan.plan, unsafe { &f32(data.data) }, f32(1.0))
+		}
+		else {
+			return -1
+		}
+	}
 }
 
 // forward_complex_f64 transforms interleaved complex f64 values in place.
