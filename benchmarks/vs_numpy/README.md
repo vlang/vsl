@@ -1,25 +1,34 @@
 # VSL vs NumPy baselines
 
-Run from `~/.vmodules`:
+Run V commands from `~/.vmodules`, outside the VSL checkout. These examples
+limit memory and keep V's parallel job count at two:
 
 ```bash
-v run vsl/benchmarks/vs_numpy/matmul_bench.v
-v run vsl/benchmarks/vs_numpy/gemv_bench.v
-v run vsl/benchmarks/vs_numpy/conv2d_bench.v
+cd ~/.vmodules
+systemd-run --user --scope --quiet --property=MemoryMax=2G -- env VJOBS=2 v run ./vsl/benchmarks/vs_numpy/matmul_bench.v
+systemd-run --user --scope --quiet --property=MemoryMax=2G -- env VJOBS=2 v run ./vsl/benchmarks/vs_numpy/gemv_bench.v
+systemd-run --user --scope --quiet --property=MemoryMax=2G -- env VJOBS=2 v run ./vsl/benchmarks/vs_numpy/conv2d_bench.v
 ```
 
 With OpenBLAS (recommended):
 
 ```bash
-v -d vsl_blas_cblas run vsl/benchmarks/vs_numpy/matmul_bench.v
+cd ~/.vmodules
+systemd-run --user --scope --quiet --property=MemoryMax=2G \
+	-- env VJOBS=2 v -d vsl_blas_cblas run \
+	./vsl/benchmarks/vs_numpy/matmul_bench.v
 ```
 
 ## NumPy reference (`numpy_baseline.py`)
 
 ```bash
-python3 vsl/benchmarks/vs_numpy/numpy_baseline.py matmul
-python3 vsl/benchmarks/vs_numpy/numpy_baseline.py gemv
-python3 vsl/benchmarks/vs_numpy/numpy_baseline.py conv2d
+cd ~/.vmodules
+systemd-run --user --scope --quiet --property=MemoryMax=1G \
+	-- env VJOBS=2 python3 ./vsl/benchmarks/vs_numpy/numpy_baseline.py matmul
+systemd-run --user --scope --quiet --property=MemoryMax=1G \
+	-- env VJOBS=2 python3 ./vsl/benchmarks/vs_numpy/numpy_baseline.py gemv
+systemd-run --user --scope --quiet --property=MemoryMax=1G \
+	-- env VJOBS=2 python3 ./vsl/benchmarks/vs_numpy/numpy_baseline.py conv2d
 ```
 
 Compare GFLOPS / ms from the V scripts with the Python output for the same sizes.

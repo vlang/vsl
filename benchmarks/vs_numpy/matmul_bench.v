@@ -1,4 +1,4 @@
-// VSL GEMM benchmark (vsl.la). Run: v run vsl/benchmarks/vs_numpy/matmul_bench.v
+// VSL GEMM benchmark (vsl.la). Run from ~/.vmodules under a memory scope.
 module main
 
 import time

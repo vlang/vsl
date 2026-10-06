@@ -1,5 +1,8 @@
 name: VSL Performance Benchmarks
 
+env:
+  VJOBS: 2
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -65,7 +68,7 @@ jobs:
           check-latest: true
 
       - name: V doctor
-        run: v doctor
+        run: sudo systemd-run --scope --wait --property=MemoryMax=512M --setenv=HOME=$HOME --setenv=PATH=$PATH -- env HOME=$HOME VJOBS=2 v doctor
 
       - name: Install dependencies
         run: |
@@ -90,6 +93,7 @@ jobs:
 
       - name: Run BLAS Benchmarks (${{ matrix.backend.name }})
         run: |
+          set -o pipefail
           echo "=========================================="
           echo "Running BLAS benchmarks"
           echo "Backend: ${{ matrix.backend.name }}"
@@ -97,10 +101,11 @@ jobs:
           echo "OS: ${{ matrix.os }}"
           echo "=========================================="
           cd ~/.vmodules && \
-          v ${{ matrix.backend.flags }} run vsl/benchmarks/blas_bench.v 2>&1 | tee blas_bench_${{ matrix.backend.id }}.log
+          sudo systemd-run --scope --wait --property=MemoryMax=2G --setenv=HOME=$HOME --setenv=PATH=$PATH -- env HOME=$HOME VJOBS=2 v ${{ matrix.backend.flags }} run vsl/benchmarks/blas_bench.v 2>&1 | tee blas_bench_${{ matrix.backend.id }}.log
 
       - name: Run LAPACK Benchmarks (${{ matrix.backend.name }})
         run: |
+          set -o pipefail
           echo "=========================================="
           echo "Running LAPACK benchmarks"
           echo "Backend: ${{ matrix.backend.name }}"
@@ -108,10 +113,11 @@ jobs:
           echo "OS: ${{ matrix.os }}"
           echo "=========================================="
           cd ~/.vmodules && \
-          v ${{ matrix.backend.flags }} run vsl/benchmarks/lapack_bench.v 2>&1 | tee lapack_bench_${{ matrix.backend.id }}.log
+          sudo systemd-run --scope --wait --property=MemoryMax=2G --setenv=HOME=$HOME --setenv=PATH=$PATH -- env HOME=$HOME VJOBS=2 v ${{ matrix.backend.flags }} run vsl/benchmarks/lapack_bench.v 2>&1 | tee lapack_bench_${{ matrix.backend.id }}.log
 
       - name: Run Backend Comparison (${{ matrix.backend.name }})
         run: |
+          set -o pipefail
           echo "=========================================="
           echo "Running backend comparison"
           echo "Backend: ${{ matrix.backend.name }}"
@@ -119,7 +125,7 @@ jobs:
           echo "OS: ${{ matrix.os }}"
           echo "=========================================="
           cd ~/.vmodules && \
-          v ${{ matrix.backend.flags }} run vsl/benchmarks/compare_backends.v 2>&1 | tee compare_backends_${{ matrix.backend.id }}.log
+          sudo systemd-run --scope --wait --property=MemoryMax=2G --setenv=HOME=$HOME --setenv=PATH=$PATH -- env HOME=$HOME VJOBS=2 v ${{ matrix.backend.flags }} run vsl/benchmarks/compare_backends.v 2>&1 | tee compare_backends_${{ matrix.backend.id }}.log
 
       - name: Upload benchmark results
         if: always()
@@ -164,7 +170,7 @@ jobs:
           check-latest: true
 
       - name: V doctor
-        run: v doctor
+        run: env VJOBS=2 v doctor
 
       - name: Install dependencies
         run: |
@@ -182,6 +188,7 @@ jobs:
 
       - name: Run BLAS Benchmarks (${{ matrix.backend.name }})
         run: |
+          set -o pipefail
           echo "=========================================="
           echo "Running BLAS benchmarks"
           echo "Backend: ${{ matrix.backend.name }}"
@@ -189,10 +196,11 @@ jobs:
           echo "OS: macOS"
           echo "=========================================="
           cd ~/.vmodules && \
-          v ${{ matrix.backend.flags }} run vsl/benchmarks/blas_bench.v 2>&1 | tee blas_bench_${{ matrix.backend.id }}.log
+          env VJOBS=2 v ${{ matrix.backend.flags }} run vsl/benchmarks/blas_bench.v 2>&1 | tee blas_bench_${{ matrix.backend.id }}.log
 
       - name: Run LAPACK Benchmarks (${{ matrix.backend.name }})
         run: |
+          set -o pipefail
           echo "=========================================="
           echo "Running LAPACK benchmarks"
           echo "Backend: ${{ matrix.backend.name }}"
@@ -200,10 +208,11 @@ jobs:
           echo "OS: macOS"
           echo "=========================================="
           cd ~/.vmodules && \
-          v ${{ matrix.backend.flags }} run vsl/benchmarks/lapack_bench.v 2>&1 | tee lapack_bench_${{ matrix.backend.id }}.log
+          env VJOBS=2 v ${{ matrix.backend.flags }} run vsl/benchmarks/lapack_bench.v 2>&1 | tee lapack_bench_${{ matrix.backend.id }}.log
 
       - name: Run Backend Comparison (${{ matrix.backend.name }})
         run: |
+          set -o pipefail
           echo "=========================================="
           echo "Running backend comparison"
           echo "Backend: ${{ matrix.backend.name }}"
@@ -211,7 +220,7 @@ jobs:
           echo "OS: macOS"
           echo "=========================================="
           cd ~/.vmodules && \
-          v ${{ matrix.backend.flags }} run vsl/benchmarks/compare_backends.v 2>&1 | tee compare_backends_${{ matrix.backend.id }}.log
+          env VJOBS=2 v ${{ matrix.backend.flags }} run vsl/benchmarks/compare_backends.v 2>&1 | tee compare_backends_${{ matrix.backend.id }}.log
 
       - name: Upload benchmark results
         if: always()
@@ -249,11 +258,12 @@ jobs:
       - name: Run vs NumPy harness (#282)
         run: |
           cd ~/.vmodules
-          v -d vsl_blas_cblas run vsl/benchmarks/vs_numpy/matmul_bench.v | tee vs_numpy_matmul.log
-          v -d vsl_blas_cblas run vsl/benchmarks/vs_numpy/gemv_bench.v | tee vs_numpy_gemv.log
-          v run vsl/benchmarks/vs_numpy/conv2d_bench.v | tee vs_numpy_conv2d.log
-          python3 vsl/benchmarks/vs_numpy/numpy_baseline.py matmul | tee -a vs_numpy_matmul.log
-          python3 vsl/benchmarks/vs_numpy/numpy_baseline.py gemv | tee -a vs_numpy_gemv.log
+          set -o pipefail
+          sudo systemd-run --scope --wait --property=MemoryMax=2G --setenv=HOME=$HOME --setenv=PATH=$PATH -- env HOME=$HOME VJOBS=2 v -d vsl_blas_cblas run vsl/benchmarks/vs_numpy/matmul_bench.v | tee vs_numpy_matmul.log
+          sudo systemd-run --scope --wait --property=MemoryMax=2G --setenv=HOME=$HOME --setenv=PATH=$PATH -- env HOME=$HOME VJOBS=2 v -d vsl_blas_cblas run vsl/benchmarks/vs_numpy/gemv_bench.v | tee vs_numpy_gemv.log
+          sudo systemd-run --scope --wait --property=MemoryMax=2G --setenv=HOME=$HOME --setenv=PATH=$PATH -- env HOME=$HOME VJOBS=2 v run vsl/benchmarks/vs_numpy/conv2d_bench.v | tee vs_numpy_conv2d.log
+          sudo systemd-run --scope --wait --property=MemoryMax=1G --setenv=HOME=$HOME --setenv=PATH=$PATH -- env HOME=$HOME VJOBS=2 python3 vsl/benchmarks/vs_numpy/numpy_baseline.py matmul | tee -a vs_numpy_matmul.log
+          sudo systemd-run --scope --wait --property=MemoryMax=1G --setenv=HOME=$HOME --setenv=PATH=$PATH -- env HOME=$HOME VJOBS=2 python3 vsl/benchmarks/vs_numpy/numpy_baseline.py gemv | tee -a vs_numpy_gemv.log
 
       - name: Upload vs_numpy logs
         if: always()
@@ -261,4 +271,67 @@ jobs:
         with:
           name: vs-numpy-benchmark-logs
           path: ~/.vmodules/vs_numpy_*.log
+          retention-days: 14
+
+  fft-mpi-benchmarks:
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        benchmark: [fft, mpi]
+    steps:
+      - name: Checkout VSL
+        uses: actions/checkout@v4
+        with:
+          path: vsl
+
+      - name: Setup V
+        uses: vlang/setup-v@v1.6
+        with:
+          check-latest: true
+
+      - name: Install FFT comparison dependencies
+        if: matrix.benchmark == 'fft'
+        run: |
+          sudo apt-get update
+          sudo apt-get install --quiet -y --no-install-recommends python3 python3-numpy
+
+      - name: Install MPI dependencies
+        if: matrix.benchmark == 'mpi'
+        run: |
+          sudo apt-get update
+          sudo apt-get install --quiet -y --no-install-recommends libopenmpi-dev openmpi-bin
+
+      - name: Move VSL to modules
+        run: mv ./vsl ~/.vmodules
+
+      - name: Run FFT vs NumPy benchmark
+        if: matrix.benchmark == 'fft'
+        run: |
+          cd ~/.vmodules
+          set -o pipefail
+          sudo systemd-run --scope --wait --property=MemoryMax=1G --setenv=HOME=$HOME --setenv=PATH=$PATH -- env HOME=$HOME VJOBS=2 v run vsl/benchmarks/fft_bench.v | tee fft_bench.log
+          sudo systemd-run --scope --wait --property=MemoryMax=1G --setenv=HOME=$HOME --setenv=PATH=$PATH -- env HOME=$HOME VJOBS=2 python3 vsl/benchmarks/fft_numpy_baseline.py | tee -a fft_bench.log
+
+      - name: Run MPI latency benchmark
+        if: matrix.benchmark == 'mpi'
+        run: |
+          cd ~/.vmodules
+          sudo systemd-run --scope --wait --property=MemoryMax=1G --setenv=HOME=$HOME --setenv=PATH=$PATH -- env HOME=$HOME VJOBS=2 v -d vsl_mpi -cc gcc -o /tmp/vsl-mpi-bench vsl/benchmarks/mpi_bench.v
+          sudo systemd-run --scope --wait --property=MemoryMax=1G --setenv=HOME=$HOME --setenv=PATH=$PATH -- env HOME=$HOME VJOBS=2 mpirun --oversubscribe -n 2 /tmp/vsl-mpi-bench | tee mpi_bench.log
+
+      - name: Upload FFT benchmark results
+        if: always() && matrix.benchmark == 'fft'
+        uses: actions/upload-artifact@v4
+        with:
+          name: fft-benchmark-logs
+          path: ~/.vmodules/fft_bench.log
+          retention-days: 14
+
+      - name: Upload MPI benchmark results
+        if: always() && matrix.benchmark == 'mpi'
+        uses: actions/upload-artifact@v4
+        with:
+          name: mpi-benchmark-logs
+          path: ~/.vmodules/mpi_bench.log
           retention-days: 14
