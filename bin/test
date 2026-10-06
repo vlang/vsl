@@ -69,12 +69,19 @@ if [[ -n "${prod}" ]]; then
     flags="${flags} -prod"
     # Disable LTO to prevent ELF section overflow on GCC 14 (ubuntu-24.04)
     # and LTO object corruption on GCC 11 (ubuntu-22.04) in CI environments.
-    flags="${flags} -cflags -fno-lto"
+    if [[ "$(uname -s)" == "Linux" ]]; then
+        flags="${flags} -cflags -fno-lto"
+    fi
 fi
 
 # Use dlopen for VCL on all platforms so the linker does not need
 # libOpenCL. Use gcc instead of tcc to avoid tcc struct-ordering bugs.
-flags="${flags} -d vsl_vcl_dlopencl -cc gcc"
+flags="${flags} -d vsl_vcl_dlopencl"
+if [[ "$(uname -s)" == "Darwin" ]]; then
+    flags="${flags} -cc clang"
+else
+    flags="${flags} -cc gcc"
+fi
 
 # On macOS, also use Vulkan dlopen since libvulkan is not installed
 # (only headers via brew). On Linux, libvulkan-dev provides both headers
@@ -105,10 +112,11 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
         hidden_tests+=("$f")
     done < <(find "${vsl_dir_path}/vulkan" -name '*_test.v' -print0 2>/dev/null)
 fi
+read -r -a flags_array <<< "${flags}"
 
-echo "Executing tests with command: \"v ${flags} test .\""
+echo "Executing tests with command: \"v ${flags_array[*]} test .\""
 set +e
-v ${flags} test "${vsl_dir_path}"
+v "${flags_array[@]}" test "${vsl_dir_path}"
 test_exit=$?
 set -e
 
@@ -118,7 +126,7 @@ trap - EXIT
 # Vulkan: manual integration (not in default `v test` — avoids v_stable_sort crash).
 if [[ -n "${use_vulkan}" && "$(uname -s)" != "Darwin" ]]; then
     echo "Running Vulkan manual integration test"
-    v ${flags} test "${vsl_dir_path}/vulkan/vulkan_manual_test.v" || test_exit=1
+    v "${flags_array[@]}" test "${vsl_dir_path}/vulkan/vulkan_manual_test.v" || test_exit=1
 fi
 
 if [[ ${test_exit} -ne 0 ]]; then
@@ -130,7 +138,7 @@ find "${vsl_dir_path}" -name '*_test' -exec rm -f {} +
 if [[ -z "${skip_examples}" ]]; then
     echo "Compiling examples"
     echo "Compiling Examples with flags ${flags}"
-    for file in $(find "${vsl_dir_path}" -wholename '*/examples/*.v'); do
+    while IFS= read -r -d '' file; do
         if [[ "${file}" == *"not_ci"* ]]; then
             echo "Skipping ${file}"
             continue
@@ -141,11 +149,11 @@ if [[ -z "${skip_examples}" ]]; then
             continue
         fi
         echo "Compiling ${file}"
-        v ${flags} -d vsl_vcl_dlopencl -o "${file}.bin" "${file}"
+        v "${flags_array[@]}" -o "${file}.bin" "${file}"
         echo "${file}.bin created"
         echo "Removing ${file}.bin"
         rm -f "${file}.bin"
-    done
+    done < <(find "${vsl_dir_path}" -type f -path '*/examples/*.v' -print0)
 else
     echo "Skipping examples compilation"
 fi
