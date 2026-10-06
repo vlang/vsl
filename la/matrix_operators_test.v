@@ -25,6 +25,44 @@ fn test_matrix_multiplication_operator() {
 	assert product.get(1, 1) == 50
 }
 
+fn test_f64_matrix_multiplication_operator_dispatches_large_products() {
+	mut a := Matrix.new[f64](8, 8)
+	mut b := Matrix.new[f64](8, 8)
+	for row in 0 .. 8 {
+		for column in 0 .. 8 {
+			a.set(row, column, f64(row * 8 + column + 1))
+		}
+		b.set(row, row, 2)
+	}
+
+	product := a * b
+	assert product.m == 8
+	assert product.n == 8
+	assert product.get(0, 0) == 2
+	assert product.get(0, 7) == 16
+	assert product.get(7, 0) == 114
+	assert product.get(7, 7) == 128
+}
+
+fn test_f32_matrix_multiplication_operator_dispatches_large_products() {
+	mut a := Matrix.new[f32](8, 8)
+	mut b := Matrix.new[f32](8, 8)
+	for row in 0 .. 8 {
+		for column in 0 .. 8 {
+			a.set(row, column, f32(row * 8 + column + 1))
+		}
+		b.set(row, row, 2)
+	}
+
+	product := a * b
+	assert product.m == 8
+	assert product.n == 8
+	assert product.get(0, 0) == 2
+	assert product.get(0, 7) == 16
+	assert product.get(7, 0) == 114
+	assert product.get(7, 7) == 128
+}
+
 fn test_matrix_division_operator() {
 	a := Matrix.deep2([[f64(2), 4], [6, 8]])
 	b := Matrix.deep2([[f64(2), 2], [3, 4]])

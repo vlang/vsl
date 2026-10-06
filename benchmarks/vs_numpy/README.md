@@ -55,6 +55,16 @@ systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySw
 
 Compare GFLOPS / ms from the V scripts with the Python output for the same sizes.
 
+The current `matmul_bench.v` measures the public `Matrix * Matrix` operator,
+including allocation of its result matrix, matching NumPy's allocating `a @ b`
+call. On an AMD Ryzen 9 5900X with V 0.5.2, the pure-V optimized build
+(`VJOBS=2`, `-prod -cflags "-O3 -march=native"`) measured 9.53 ms at 512×512
+and 72.85 ms at 1024×1024. The matching NumPy 2.5.3 run with two OpenBLAS
+threads measured 2.10 ms and 17.34 ms. On this host, the pure-V operator is
+about 4.5× and 4.2× slower respectively. The optional OpenBLAS backend is
+required for a faster CPU path; backend and host differences make these local
+measurements unsuitable as a universal ranking.
+
 ## Pure-V f32 SGEMM
 
 The dedicated SGEMM pair uses identical deterministic `f32` matrices, three
