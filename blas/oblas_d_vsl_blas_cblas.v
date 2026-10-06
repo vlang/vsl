@@ -1547,6 +1547,19 @@ pub fn zgeadd(order MemoryLayout, rows int, cols int, alpha &f64, a &f64, lda in
 	C.cblas_zgeadd(int(order), rows, cols, alpha, a, lda, beta, c, ldc)
 }
 
+// sgemm exposes this operation as part of the public API.
+
+// sgemm exposes this operation as part of the public API.
+@[inline]
+pub fn sgemm(trans_a Transpose, trans_b Transpose, m int, n int, k int, alpha f32, a []f32, lda int, b []f32, ldb int, beta f32, mut cc []f32, ldc int) {
+	if m <= 0 || n <= 0 || k <= 0 || alpha == 0 {
+		sgemm_pure(trans_a, trans_b, m, n, k, alpha, a, lda, b, ldb, beta, mut cc, ldc)
+		return
+	}
+	C.cblas_sgemm(int(MemoryLayout.row_major), int(trans_a), int(trans_b), m, n, k, alpha,
+		unsafe { &a[0] }, lda, unsafe { &b[0] }, ldb, beta, unsafe { &cc[0] }, ldc)
+}
+
 // dgemm exposes this operation as part of the public API.
 
 // dgemm exposes this operation as part of the public API.

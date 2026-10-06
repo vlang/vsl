@@ -1,5 +1,13 @@
 module la
 
+fn test_matrix_matrix_mul_f32() {
+	a := [f32(1), 2, 3, 4]
+	b := [f32(5), 6, 7, 8]
+	mut c := []f32{len: 4}
+	matrix_matrix_mul_f32(mut c, 2, 2, 2, 1, a, b)
+	assert c == [f32(19), 22, 43, 50]
+}
+
 fn test_mat_vec_mul() {
 	expected := [8.0, 45, -3, 3, 19]
 	a := Matrix.deep2([

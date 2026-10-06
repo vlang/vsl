@@ -4,6 +4,7 @@ import math
 import vsl.blas.blas64
 
 $if vsl_blas_generic_cblas ? {
+	fn C.cblas_sgemm(order int, trans_a int, trans_b int, m int, n int, k int, alpha f32, const_a &f32, lda int, const_b &f32, ldb int, beta f32, c &f32, ldc int)
 	fn C.cblas_dgemm(order int, trans_a int, trans_b int, m int, n int, k int, alpha f64, const_a &f64, lda int, const_b &f64, ldb int, beta f64, c &f64, ldc int)
 }
 
@@ -174,6 +175,27 @@ pub fn dsyr2(uplo Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, 
 // dgemm performs matrix-matrix multiplication.
 // Input matrices are expected in row-major format (as used by la/ module and tests).
 // The Pure V backend (blas64) also expects row-major format, so no conversion is needed.
+
+// sgemm computes a row-major single-precision matrix multiplication.
+pub fn sgemm(trans_a Transpose, trans_b Transpose, m int, n int, k int, alpha f32, a []f32, lda int, b []f32, ldb int, beta f32, mut c []f32, ldc int) {
+	$if vsl_blas_generic_cblas ? {
+		a_trans := trans_a == .trans || trans_a == .conj_trans
+		b_trans := trans_b == .trans || trans_b == .conj_trans
+		a_required := if a_trans { (k - 1) * lda + m } else { (m - 1) * lda + k }
+		b_required := if b_trans { (n - 1) * ldb + k } else { (k - 1) * ldb + n }
+		c_required := (m - 1) * ldc + n
+		if m <= 0 || n <= 0 || k <= 0 || lda < if a_trans { m } else { k }
+			|| ldb < if b_trans { k } else { n } || ldc < n || a.len < a_required || b.len < b_required
+			|| c.len < c_required || alpha == 0 || beta != 0 {
+			sgemm_pure(trans_a, trans_b, m, n, k, alpha, a, lda, b, ldb, beta, mut c, ldc)
+			return
+		}
+		C.cblas_sgemm(101, int(trans_a), int(trans_b), m, n, k, alpha, unsafe { &a[0] }, lda,
+			unsafe { &b[0] }, ldb, beta, unsafe { &c[0] }, ldc)
+	} $else {
+		sgemm_pure(trans_a, trans_b, m, n, k, alpha, a, lda, b, ldb, beta, mut c, ldc)
+	}
+}
 
 // dgemm exposes this operation as part of the public API.
 

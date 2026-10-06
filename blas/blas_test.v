@@ -389,6 +389,24 @@ fn test_dger() {
 // LEVEL 3 BLAS TESTS
 // ====================
 
+fn test_sgemm() {
+	a := [f32(1), 2, 3, 4]
+	b := [f32(5), 6, 7, 8]
+	mut c := []f32{len: 4}
+
+	sgemm(.no_trans, .no_trans, 2, 2, 2, 1, a, 2, b, 2, 0, mut c, 2)
+	assert c == [f32(19), 22, 43, 50]
+
+	sgemm(.no_trans, .no_trans, 2, 2, 2, 1, a, 2, b, 2, 0.5, mut c, 2)
+	assert c == [f32(28.5), 33, 64.5, 75]
+}
+
+fn test_sgemm_zero_inner_scales_output_without_reading_inputs() {
+	mut c := [f32(2), 4, 6, 8]
+	sgemm(.no_trans, .no_trans, 2, 2, 0, 1, []f32{}, 0, []f32{}, 2, 0.5, mut c, 2)
+	assert c == [f32(1), 2, 3, 4]
+}
+
 fn test_dgemm() {
 	for case in gemm_test_cases {
 		// Convert matrices to flat arrays in row-major format (as expected by API, like gonum)
