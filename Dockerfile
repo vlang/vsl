@@ -1,4 +1,5 @@
-ARG VLANG_TAG=buster
+# Pin the x86_64 Buster image by digest; Dependabot tracks Dockerfile updates.
+ARG VLANG_TAG=buster@sha256:c2a2c81f9b9e4fef7951f6dad53a4c0b888aea365e8982a9126ae812551de8a4
 
 FROM thevlang/vlang:${VLANG_TAG} AS vsl
 # VLANG_TAG is specified again because the FROM directive resets ARGs
@@ -82,4 +83,3 @@ COPY --from=gloursdocker/docker / /
 
 USER ${USERNAME}
 HEALTHCHECK CMD true
-
