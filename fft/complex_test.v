@@ -52,6 +52,22 @@ fn test_complex_f32_fft_rejects_data_length_mismatch() ! {
 	assert backward_complex_f32(plan, mut data) == -1
 }
 
+fn test_complex_fft_rejects_plan_of_other_precision() ! {
+	mut data32 := [f32(1), 0]
+	plan64 := create_complex_plan_f64(1)!
+	defer {
+		destroy_plan(plan64)
+	}
+	assert forward_complex_f32(plan64, mut data32) == -1
+
+	mut data64 := [f64(1), 0]
+	plan32 := create_complex_plan_f32(1)!
+	defer {
+		destroy_plan(plan32)
+	}
+	assert forward_complex_f64(plan32, mut data64) == -1
+}
+
 fn test_complex_f64_fft_roundtrip() ! {
 	mut data := [f64(1), 0, 0, 0]
 	plan := create_complex_plan_f64(2)!
