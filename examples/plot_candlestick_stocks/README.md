@@ -5,7 +5,7 @@ This example demonstrates `plot_candlestick_stocks` visualization/analysis workf
 ## Run
 
 ```sh
-v run examples/plot_candlestick_stocks/main.v
+v run ./vsl/examples/plot_candlestick_stocks/main.v
 ```
 
 ## Notes

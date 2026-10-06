@@ -20,10 +20,9 @@ quaternions and visualize the results.
 
 ```sh
 # Navigate to this directory
-cd examples/quaternion_orientation_tracking
 
 # Run the example
-v run main.v
+v run vsl/examples/quaternion_orientation_tracking/main.v
 ```
 
 ## Expected Output

@@ -5,7 +5,7 @@ This example demonstrates `plot_waterfall_financial` visualization/analysis work
 ## Run
 
 ```sh
-v run examples/plot_waterfall_financial/main.v
+v run ./vsl/examples/plot_waterfall_financial/main.v
 ```
 
 ## Notes

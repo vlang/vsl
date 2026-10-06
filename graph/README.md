@@ -108,7 +108,7 @@ print(g.str_dist_matrix())
 See the representative example:
 
 ```sh
-v run examples/graph_shortest_paths_methods/main.v
+v run ./vsl/examples/graph_shortest_paths_methods/main.v
 ```
 
 It compares `.fw`, `.dijkstra`, and `.bfs` in practical scenarios and highlights

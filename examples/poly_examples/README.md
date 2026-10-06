@@ -10,7 +10,7 @@ Demonstrates core `vsl.poly` features:
 ## Run
 
 ```sh
-v run examples/poly_examples/main.v
+v run ./vsl/examples/poly_examples/main.v
 ```
 
 ## Notes

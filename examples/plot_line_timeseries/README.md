@@ -5,7 +5,7 @@ This example demonstrates `plot_line_timeseries` visualization/analysis workflow
 ## Run
 
 ```sh
-v run examples/plot_line_timeseries/main.v
+v run ./vsl/examples/plot_line_timeseries/main.v
 ```
 
 ## Notes

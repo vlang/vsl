@@ -19,10 +19,9 @@ This example demonstrates how to create interactive 3D scatter plots using VSL's
 
 ```sh
 # Navigate to this directory
-cd examples/plot_scatter3d_1
 
 # Run the example
-v run main.v
+v run vsl/examples/plot_scatter3d_1/main.v
 ```
 
 ## Expected Output

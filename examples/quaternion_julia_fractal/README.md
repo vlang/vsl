@@ -20,10 +20,9 @@ demonstrating the combination of quaternion mathematics with visualization.
 
 ```sh
 # Navigate to this directory
-cd examples/quaternion_julia_fractal
 
 # Run the example
-v run main.v
+v run vsl/examples/quaternion_julia_fractal/main.v
 ```
 
 ## Expected Output

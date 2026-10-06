@@ -26,7 +26,7 @@ optimized C backends while maintaining zero-dependency operation.
 Run benchmarks to see performance characteristics:
 
 ```sh
-v run benchmarks/blas_bench.v
+v run ./vsl/benchmarks/blas_bench.v
 ```
 
 ### Available Functions

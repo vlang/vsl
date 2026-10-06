@@ -5,7 +5,7 @@ This example demonstrates `plot_contour_topography` visualization/analysis workf
 ## Run
 
 ```sh
-v run examples/plot_contour_topography/main.v
+v run ./vsl/examples/plot_contour_topography/main.v
 ```
 
 ## Notes

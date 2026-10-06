@@ -11,7 +11,7 @@ for demonstrating HDF5 I/O for relaxation data.
 4. Run the example using the following command:
 
 ```sh
-v run main.v
+v run vsl/examples/io_h5_relax/main.v
 ```
 
 Enjoy exploring the capabilities of the V Scientific Library! 😊

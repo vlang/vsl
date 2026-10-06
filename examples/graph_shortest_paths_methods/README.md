@@ -14,7 +14,7 @@ travel cost (weights) or traversal depth (hops).
 ## Run
 
 ```sh
-v run examples/graph_shortest_paths_methods/main.v
+v run ./vsl/examples/graph_shortest_paths_methods/main.v
 ```
 
 ## Typical output interpretation

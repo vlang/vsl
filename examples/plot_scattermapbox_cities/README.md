@@ -5,7 +5,7 @@ This example demonstrates `plot_scattermapbox_cities` visualization/analysis wor
 ## Run
 
 ```sh
-v run examples/plot_scattermapbox_cities/main.v
+v run ./vsl/examples/plot_scattermapbox_cities/main.v
 ```
 
 ## Notes

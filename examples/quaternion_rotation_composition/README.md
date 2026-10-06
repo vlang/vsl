@@ -20,10 +20,9 @@ visualize the intermediate steps.
 
 ```sh
 # Navigate to this directory
-cd examples/quaternion_rotation_composition
 
 # Run the example
-v run main.v
+v run vsl/examples/quaternion_rotation_composition/main.v
 ```
 
 ## Expected Output

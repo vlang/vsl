@@ -45,7 +45,7 @@ This example showcases various distance calculation methods and geometric analys
 ## Usage
 
 ```bash
-v run main.v
+v run vsl/examples/gm_distance_analysis/main.v
 ```
 
 ## Mathematical Concepts

@@ -10,7 +10,7 @@ This example demonstrates the usage of the V Scientific Library for performing b
 4. Run the example using the following command:
 
 ```sh
-v run main.v
+v run vsl/examples/data_analysis_example/main.v
 ```
 
 Enjoy exploring the capabilities of the V Scientific Library! 😊

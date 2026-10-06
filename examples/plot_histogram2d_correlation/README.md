@@ -5,7 +5,7 @@ This example demonstrates `plot_histogram2d_correlation` visualization/analysis 
 ## Run
 
 ```sh
-v run examples/plot_histogram2d_correlation/main.v
+v run ./vsl/examples/plot_histogram2d_correlation/main.v
 ```
 
 ## Notes

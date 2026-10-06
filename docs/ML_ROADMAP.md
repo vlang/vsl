@@ -47,12 +47,12 @@ Vulkan, and VCL are opt-in experimental accelerators.
 ```bash
 v up
 cd ~/.vmodules
-v test vsl/blas vsl/la vsl/compute
+v test ./vsl/blas ./vsl/la ./vsl/compute
 # CUDA smoke
-v -d cuda test vsl/cuda/examples/cuda_ops_test.v
-# Vulkan (opt-in; avoid full `v test vsl/vulkan` on low-RAM hosts)
-cd vsl && ./bin/test --use-vulkan
-VSL_TEST_VULKAN=1 VJOBS=1 v -prod -d vulkan test vulkan/compute/adam_step_vulkan_test.v
+v -d cuda test ./vsl/cuda/examples/cuda_ops_test.v
+# Vulkan (opt-in; avoid full `v test ./vsl/vulkan` on low-RAM hosts)
+./vsl/bin/test --use-vulkan
+VSL_TEST_VULKAN=1 VJOBS=1 v -prod -d vulkan test ./vsl/vulkan/compute/adam_step_vulkan_test.v
 ```
 
 ## Project board sync

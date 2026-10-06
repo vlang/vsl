@@ -5,7 +5,7 @@ This example demonstrates `plot_violin_distributions` visualization/analysis wor
 ## Run
 
 ```sh
-v run examples/plot_violin_distributions/main.v
+v run ./vsl/examples/plot_violin_distributions/main.v
 ```
 
 ## Notes

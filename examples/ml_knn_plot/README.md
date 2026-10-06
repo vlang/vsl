@@ -11,7 +11,7 @@ for performing K-Nearest Neighbors algorithm with plotting.
 4. Run the example using the following command:
 
 ```sh
-v run main.v
+v run vsl/examples/ml_knn_plot/main.v
 ```
 
 Enjoy exploring the capabilities of the V Scientific Library! 😊

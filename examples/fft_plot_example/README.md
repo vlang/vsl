@@ -26,10 +26,9 @@ visualization. Learn how to analyze frequency components of signals and visualiz
 
 ```sh
 # Navigate to this directory
-cd examples/fft_plot_example
 
 # Run with basic FFT
-v run main.v
+v run vsl/examples/fft_plot_example/main.v
 
 # Run with FFTW3 backend (if available)
 v -cflags -lfftw3 run main.v

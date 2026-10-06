@@ -11,7 +11,7 @@ for plotting a surface with easing functions.
 4. Run the example using the following command:
 
 ```sh
-v run main.v
+v run vsl/examples/plot_surface_easing/main.v
 ```
 
 Enjoy exploring the capabilities of the V Scientific Library! 😊

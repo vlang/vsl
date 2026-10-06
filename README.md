@@ -202,8 +202,8 @@ stack at once:
 
 ```sh
 cd ~/.vmodules
-systemd-run --user --scope --quiet --property=MemoryMax=2G -- env VJOBS=2 v test ./vsl/blas ./vsl/la ./vsl/compute
-systemd-run --user --scope --quiet --property=MemoryMax=2G \
+systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 -- env VJOBS=2 v test ./vsl/blas ./vsl/la ./vsl/compute
+systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
 	-- env VJOBS=2 VSL_TEST_VULKAN=1 v -prod -d vulkan test \
 	./vsl/vulkan/compute/adam_step_vulkan_test.v
 ```
@@ -217,9 +217,9 @@ VSL includes comprehensive performance benchmarks using V's built-in `benchmark`
 
 ```sh
 cd ~/.vmodules
-systemd-run --user --scope --quiet --property=MemoryMax=2G -- env VJOBS=2 v run ./vsl/benchmarks/blas_bench.v
-systemd-run --user --scope --quiet --property=MemoryMax=2G -- env VJOBS=2 v run ./vsl/benchmarks/lapack_bench.v
-systemd-run --user --scope --quiet --property=MemoryMax=2G \
+systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 -- env VJOBS=2 v run ./vsl/benchmarks/blas_bench.v
+systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 -- env VJOBS=2 v run ./vsl/benchmarks/lapack_bench.v
+systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
 	-- env VJOBS=2 v -d vsl_blas_cblas run \
 	./vsl/benchmarks/compare_backends.v
 ```

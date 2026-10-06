@@ -11,7 +11,7 @@ value of x.
 4. Run the example using the following command:
 
 ```sh
-v run main.v
+v run vsl/examples/poly_eval/main.v
 ```
 
 Enjoy exploring the capabilities of the V Scientific Library! 😊

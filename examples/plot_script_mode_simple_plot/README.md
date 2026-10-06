@@ -11,7 +11,7 @@ for creating a simple plot in script mode.
 4. Run the example using the following command:
 
 ```sh
-v run main.v
+v run vsl/examples/plot_script_mode_simple_plot/main.v
 ```
 
 Enjoy exploring the capabilities of the V Scientific Library! 😊

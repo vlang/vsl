@@ -19,12 +19,8 @@ both beginners and advanced users.
 # From ~/.vmodules or the repository parent
 v run vsl/examples/plot_scatter/main.v
 
-# Or from inside an example directory
-cd vsl/examples/plot_scatter
-v run main.v
-
 # For examples with custom dependencies
-v -cflags <flags> run main.v
+v -cflags <flags> run vsl/examples/<example>/main.v
 ```
 
 ### 📖 Learning Path
@@ -287,7 +283,7 @@ end-user examples.
 Most examples work with standard compilation:
 
 ```sh
-v run main.v
+v run ./vsl/examples/<example>/main.v
 ```
 
 For performance-critical examples with optional backends:

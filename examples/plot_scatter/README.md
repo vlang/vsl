@@ -20,10 +20,9 @@ with both line and marker elements. Perfect for beginners learning data visualiz
 
 ```sh
 # Navigate to this directory
-cd examples/plot_scatter
 
 # Run the example
-v run main.v
+v run vsl/examples/plot_scatter/main.v
 ```
 
 ## 📊 Expected Output

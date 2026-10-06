@@ -44,7 +44,7 @@ This example showcases dynamic geometric analysis through:
 ## Usage
 
 ```bash
-v run main.v
+v run vsl/examples/gm_trajectory_simulation/main.v
 ```
 
 ## Mathematical Concepts

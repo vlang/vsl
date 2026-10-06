@@ -19,10 +19,9 @@ This example combines quaternions and noise functions to create textured fractal
 
 ```sh
 # Navigate to this directory
-cd examples/noise_quaternion_fractal
 
 # Run the example
-v run main.v
+v run vsl/examples/noise_quaternion_fractal/main.v
 ```
 
 ## Expected Output

@@ -44,7 +44,7 @@ This example showcases spatial data organization and efficient spatial queries u
 ## Usage
 
 ```bash
-v run main.v
+v run vsl/examples/gm_spatial_binning/main.v
 ```
 
 ## Mathematical Concepts

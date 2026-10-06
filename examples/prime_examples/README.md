@@ -8,7 +8,7 @@ Demonstrates the `vsl.prime` module:
 ## Run
 
 ```sh
-v run examples/prime_examples/main.v
+v run ./vsl/examples/prime_examples/main.v
 ```
 
 ## Expected behavior

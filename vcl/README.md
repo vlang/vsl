@@ -102,8 +102,7 @@ Test your OpenCL installation:
 clinfo  # If available on your system
 
 # Or run a VCL example
-cd examples/vcl_opencl_basic
-v run main.v
+v run ./vsl/examples/vcl_opencl_basic/main.v
 ```
 
 By default VCL uses the OpenCL headers from the system path and all the known

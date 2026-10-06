@@ -46,7 +46,7 @@ The example showcases:
 ## Usage
 
 ```bash
-v run main.v
+v run vsl/examples/gm_basic_geometry/main.v
 ```
 
 ## Expected Output

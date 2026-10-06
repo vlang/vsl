@@ -14,7 +14,7 @@ This example demonstrates basic BLAS operations at all three levels:
 4. Run the example using the following command:
 
 ```sh
-v run main.v
+v run vsl/examples/blas_basic_operations/main.v
 ```
 
 ## What This Example Shows

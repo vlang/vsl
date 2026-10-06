@@ -31,10 +31,9 @@ solution involves:
 
 ```sh
 # Navigate to this directory
-cd examples/plot_scatter_annotations_fixed
 
 # Run the example
-v run main.v
+v run vsl/examples/plot_scatter_annotations_fixed/main.v
 ```
 
 ## 📊 Expected Output

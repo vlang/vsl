@@ -14,7 +14,7 @@ This example demonstrates solving linear systems using LAPACK routines:
 4. Run the example using the following command:
 
 ```sh
-v run main.v
+v run vsl/examples/lapack_linear_systems/main.v
 ```
 
 ## What This Example Shows

@@ -61,7 +61,7 @@ modules for data science.
 
 ```bash
 cd ~/.vmodules/vsl/examples/ml_complete_pipeline
-v run main.v
+v run vsl/examples/ml_complete_pipeline/main.v
 ```
 
 ## Expected Output

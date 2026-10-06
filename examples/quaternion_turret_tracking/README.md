@@ -10,7 +10,7 @@ We interpolate with quaternions and inspect angular error reduction.
 ## Run
 
 ```sh
-v run examples/quaternion_turret_tracking/main.v
+v run ./vsl/examples/quaternion_turret_tracking/main.v
 ```
 
 ## What this demonstrates

@@ -22,10 +22,9 @@ separable data using kernel functions.
 
 ```sh
 # Navigate to this directory
-cd examples/ml_svm
 
 # Run the example
-v run main.v
+v run vsl/examples/ml_svm/main.v
 ```
 
 ## 📊 Expected Output

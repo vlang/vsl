@@ -11,7 +11,7 @@ for creating a 3D scatter plot (example 2).
 4. Run the example using the following command:
 
 ```sh
-v run main.v
+v run vsl/examples/plot_scatter3d_2/main.v
 ```
 
 Enjoy exploring the capabilities of the V Scientific Library! 😊

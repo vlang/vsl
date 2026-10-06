@@ -11,7 +11,7 @@ for performing a basic linear regression.
 4. Run the example using the following command:
 
 ```sh
-v run main.v
+v run vsl/examples/ml_linreg01/main.v
 ```
 
 Enjoy exploring the capabilities of the V Scientific Library! 😊

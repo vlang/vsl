@@ -5,7 +5,7 @@ This example demonstrates `plot_funnel_conversion` visualization/analysis workfl
 ## Run
 
 ```sh
-v run examples/plot_funnel_conversion/main.v
+v run ./vsl/examples/plot_funnel_conversion/main.v
 ```
 
 ## Notes

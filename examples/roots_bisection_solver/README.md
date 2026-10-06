@@ -11,7 +11,7 @@ for finding roots using the bisection method.
 4. Run the example using the following command:
 
 ```sh
-v run main.v
+v run vsl/examples/roots_bisection_solver/main.v
 ```
 
 Enjoy exploring the capabilities of the V Scientific Library! 😊

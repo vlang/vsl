@@ -15,7 +15,7 @@ signal-quality metrics.
 ## Run
 
 ```sh
-v run examples/easings_signal_shaping/main.v
+v run ./vsl/examples/easings_signal_shaping/main.v
 ```
 
 ## Why this is representative

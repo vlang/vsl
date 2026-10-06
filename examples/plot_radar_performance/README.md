@@ -5,7 +5,7 @@ This example demonstrates `plot_radar_performance` visualization/analysis workfl
 ## Run
 
 ```sh
-v run examples/plot_radar_performance/main.v
+v run ./vsl/examples/plot_radar_performance/main.v
 ```
 
 ## Notes

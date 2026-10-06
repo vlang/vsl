@@ -52,7 +52,7 @@ This example showcases sophisticated geometric operations including:
 ## Usage
 
 ```bash
-v run main.v
+v run vsl/examples/gm_advanced_analysis/main.v
 ```
 
 ## Mathematical Concepts

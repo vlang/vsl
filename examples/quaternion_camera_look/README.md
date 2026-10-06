@@ -14,7 +14,7 @@ This example models a common game-camera workflow:
 ## Run
 
 ```sh
-v run examples/quaternion_camera_look/main.v
+v run ./vsl/examples/quaternion_camera_look/main.v
 ```
 
 ## Why this is representative

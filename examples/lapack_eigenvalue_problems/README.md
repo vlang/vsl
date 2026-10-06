@@ -12,7 +12,7 @@ This example demonstrates eigenvalue decomposition using LAPACK:
 4. Run the example using the following command:
 
 ```sh
-v run main.v
+v run vsl/examples/lapack_eigenvalue_problems/main.v
 ```
 
 ## What This Example Shows

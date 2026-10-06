@@ -20,9 +20,9 @@ their timings depend on hardware and system load.
 
 ```sh
 cd ~/.vmodules
-systemd-run --user --scope --quiet --property=MemoryMax=2G -- env VJOBS=2 v run ./vsl/benchmarks/vs_numpy/matmul_bench.v
-systemd-run --user --scope --quiet --property=MemoryMax=2G -- env VJOBS=2 v run ./vsl/benchmarks/vs_numpy/gemv_bench.v
-systemd-run --user --scope --quiet --property=MemoryMax=2G -- env VJOBS=2 v run ./vsl/benchmarks/vs_numpy/conv2d_bench.v
+systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 -- env VJOBS=2 v run ./vsl/benchmarks/vs_numpy/matmul_bench.v
+systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 -- env VJOBS=2 v run ./vsl/benchmarks/vs_numpy/gemv_bench.v
+systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 -- env VJOBS=2 v run ./vsl/benchmarks/vs_numpy/conv2d_bench.v
 ```
 
 See [vs_numpy/README.md](vs_numpy/README.md). Tracked in [#282](https://github.com/vlang/vsl/issues/282).
@@ -36,8 +36,8 @@ Install NumPy in the Python environment before running the baseline.
 
 ```sh
 cd ~/.vmodules
-systemd-run --user --scope --quiet --property=MemoryMax=1G -- env VJOBS=2 v run ./vsl/benchmarks/fft_bench.v
-systemd-run --user --scope --quiet --property=MemoryMax=1G -- env VJOBS=2 python3 ./vsl/benchmarks/fft_numpy_baseline.py
+systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 -- env VJOBS=2 v run ./vsl/benchmarks/fft_bench.v
+systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 -- env VJOBS=2 python3 ./vsl/benchmarks/fft_numpy_baseline.py
 ```
 
 The two CSV tables report mean microseconds per call. Compare them on the same
@@ -51,10 +51,10 @@ root reductions for one and 1024 i64 values. Build once and launch two ranks:
 
 ```sh
 cd ~/.vmodules
-systemd-run --user --scope --quiet --property=MemoryMax=1G \
+systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
 	-- env VJOBS=2 v -d vsl_mpi -cc gcc -o /tmp/vsl-mpi-bench \
 	./vsl/benchmarks/mpi_bench.v
-systemd-run --user --scope --quiet --property=MemoryMax=1G -- mpirun --oversubscribe -n 2 /tmp/vsl-mpi-bench
+systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 -- mpirun --oversubscribe -n 2 /tmp/vsl-mpi-bench
 ```
 
 ### GPU smoke benchmarks
@@ -64,10 +64,10 @@ small scoped GPU smokes before running any heavy benchmark:
 
 ```sh
 cd ~/.vmodules
-systemd-run --user --scope --quiet --property=MemoryMax=2G \
+systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
 	-- env VJOBS=2 VSL_TEST_VULKAN=1 v -prod -d vulkan test \
 	./vsl/vulkan/compute/adam_step_vulkan_test.v
-systemd-run --user --scope --quiet --property=MemoryMax=2G \
+systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
 	-- env VJOBS=2 v -d cuda test ./vsl/cuda/examples/cuda_ops_test.v
 ```
 
@@ -77,9 +77,9 @@ If you run from `~/.vmodules`, prefix benchmark paths with `vsl/`.
 
 ```sh
 cd ~/.vmodules
-systemd-run --user --scope --quiet --property=MemoryMax=2G -- env VJOBS=2 v run ./vsl/benchmarks/blas_bench.v
-systemd-run --user --scope --quiet --property=MemoryMax=2G -- env VJOBS=2 v run ./vsl/benchmarks/lapack_bench.v
-systemd-run --user --scope --quiet --property=MemoryMax=2G -- env VJOBS=2 v run ./vsl/benchmarks/compare_backends.v
+systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 -- env VJOBS=2 v run ./vsl/benchmarks/blas_bench.v
+systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 -- env VJOBS=2 v run ./vsl/benchmarks/lapack_bench.v
+systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 -- env VJOBS=2 v run ./vsl/benchmarks/compare_backends.v
 ```
 
 ### Run a C backend benchmark
@@ -90,7 +90,7 @@ backend, pass its compile-time define:
 
 ```sh
 cd ~/.vmodules
-systemd-run --user --scope --quiet --property=MemoryMax=2G \
+systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
 	-- env VJOBS=2 v -d vsl_blas_cblas run \
 	./vsl/benchmarks/blas_bench.v
 ```

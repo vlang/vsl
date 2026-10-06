@@ -86,7 +86,7 @@ Done. Installation completed.
 To test the module, just type the following command:
 
 ```sh
-v test .
+v test ./vsl/static
 ```
 
 ## 👥 Contributors
