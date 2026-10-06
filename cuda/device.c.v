@@ -21,7 +21,7 @@ pub mut:
 	// name is the human-readable device name (e.g. "NVIDIA GeForce RTX 4060").
 	name string
 	// handle is the CUDA device handle (CUdevice for driver API).
-	handle voidptr
+	handle int
 	// ctx is the CUDA context for this device (driver API), if created.
 	ctx CudaContext
 	// cublas is the cuBLAS context handle.
