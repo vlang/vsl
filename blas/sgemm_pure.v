@@ -139,14 +139,25 @@ fn sgemm_pure_no_trans_rows(row_start int, row_end int, n int, k int, alpha f32,
 			mut sum7 := simd.splat_f32x8(0)
 			for p in 0 .. k {
 				b_values := simd.load_f32x8_at(b, p * ldb + j)
-				sum0 = sum0 + simd.splat_f32x8(alpha * a[a0 + p]) * b_values
-				sum1 = sum1 + simd.splat_f32x8(alpha * a[a1 + p]) * b_values
-				sum2 = sum2 + simd.splat_f32x8(alpha * a[a2 + p]) * b_values
-				sum3 = sum3 + simd.splat_f32x8(alpha * a[a3 + p]) * b_values
-				sum4 = sum4 + simd.splat_f32x8(alpha * a[a4 + p]) * b_values
-				sum5 = sum5 + simd.splat_f32x8(alpha * a[a5 + p]) * b_values
-				sum6 = sum6 + simd.splat_f32x8(alpha * a[a6 + p]) * b_values
-				sum7 = sum7 + simd.splat_f32x8(alpha * a[a7 + p]) * b_values
+				sum0 = sum0 + simd.splat_f32x8(a[a0 + p]) * b_values
+				sum1 = sum1 + simd.splat_f32x8(a[a1 + p]) * b_values
+				sum2 = sum2 + simd.splat_f32x8(a[a2 + p]) * b_values
+				sum3 = sum3 + simd.splat_f32x8(a[a3 + p]) * b_values
+				sum4 = sum4 + simd.splat_f32x8(a[a4 + p]) * b_values
+				sum5 = sum5 + simd.splat_f32x8(a[a5 + p]) * b_values
+				sum6 = sum6 + simd.splat_f32x8(a[a6 + p]) * b_values
+				sum7 = sum7 + simd.splat_f32x8(a[a7 + p]) * b_values
+			}
+			if alpha != 1 {
+				alpha_vec := simd.splat_f32x8(alpha)
+				sum0 = sum0 * alpha_vec
+				sum1 = sum1 * alpha_vec
+				sum2 = sum2 * alpha_vec
+				sum3 = sum3 * alpha_vec
+				sum4 = sum4 * alpha_vec
+				sum5 = sum5 * alpha_vec
+				sum6 = sum6 * alpha_vec
+				sum7 = sum7 * alpha_vec
 			}
 			if beta != 0 {
 				beta_vec := simd.splat_f32x8(beta)
@@ -179,14 +190,24 @@ fn sgemm_pure_no_trans_rows(row_start int, row_end int, n int, k int, alpha f32,
 			mut sum7 := f32(0)
 			for p in 0 .. k {
 				b_value := b[p * ldb + j]
-				sum0 += alpha * a[a0 + p] * b_value
-				sum1 += alpha * a[a1 + p] * b_value
-				sum2 += alpha * a[a2 + p] * b_value
-				sum3 += alpha * a[a3 + p] * b_value
-				sum4 += alpha * a[a4 + p] * b_value
-				sum5 += alpha * a[a5 + p] * b_value
-				sum6 += alpha * a[a6 + p] * b_value
-				sum7 += alpha * a[a7 + p] * b_value
+				sum0 += a[a0 + p] * b_value
+				sum1 += a[a1 + p] * b_value
+				sum2 += a[a2 + p] * b_value
+				sum3 += a[a3 + p] * b_value
+				sum4 += a[a4 + p] * b_value
+				sum5 += a[a5 + p] * b_value
+				sum6 += a[a6 + p] * b_value
+				sum7 += a[a7 + p] * b_value
+			}
+			if alpha != 1 {
+				sum0 *= alpha
+				sum1 *= alpha
+				sum2 *= alpha
+				sum3 *= alpha
+				sum4 *= alpha
+				sum5 *= alpha
+				sum6 *= alpha
+				sum7 *= alpha
 			}
 			if beta != 0 {
 				sum0 += beta * c[c0 + j]
@@ -214,7 +235,10 @@ fn sgemm_pure_no_trans_rows(row_start int, row_end int, n int, k int, alpha f32,
 		for j in 0 .. n {
 			mut sum := f32(0)
 			for p in 0 .. k {
-				sum += alpha * a[a_base + p] * b[p * ldb + j]
+				sum += a[a_base + p] * b[p * ldb + j]
+			}
+			if alpha != 1 {
+				sum *= alpha
 			}
 			c_index := c_base + j
 			if beta != 0 {
