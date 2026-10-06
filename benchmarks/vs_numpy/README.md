@@ -58,12 +58,20 @@ Compare GFLOPS / ms from the V scripts with the Python output for the same sizes
 The current `matmul_bench.v` measures the public `Matrix * Matrix` operator,
 including allocation of its result matrix, matching NumPy's allocating `a @ b`
 call. On an AMD Ryzen 9 5900X with V 0.5.2, the pure-V optimized build
-(`VJOBS=2`, `-prod -cflags "-O3 -march=native"`) measured 9.53 ms at 512×512
-and 72.85 ms at 1024×1024. The matching NumPy 2.5.3 run with two OpenBLAS
-threads measured 2.10 ms and 17.34 ms. On this host, the pure-V operator is
-about 4.5× and 4.2× slower respectively. The optional OpenBLAS backend is
-required for a faster CPU path; backend and host differences make these local
-measurements unsuitable as a universal ranking.
+(`VJOBS=2`, `-prod -cflags "-O3 -march=native"`) measured 8.75 ms at 512×512
+and 61.19 ms at 1024×1024 in the latest run. The NumPy 2.5.3 reference with
+two OpenBLAS threads measured 2.10 ms and 17.34 ms. On this host, the pure-V
+operator remains about 4.2× and 3.5× slower respectively. The optional
+OpenBLAS backend is required for a faster CPU path; backend and host differences
+make these local measurements unsuitable as a universal ranking.
+
+The pure-V row-major f64 GEMM default tile was increased from 64 to 128 after
+repeated local runs on the same host. With the native production build above,
+two 128-tile runs measured 61.80 ms and 61.19 ms at 1024×1024; the 64-tile
+reference runs measured 66.86 ms and 69.78 ms. The two-run averages were 61.50
+ms and 68.32 ms respectively (about 10% faster). This tuning does not close
+the remaining gap to NumPy or replace a tuned BLAS backend; confirm it on
+other CPUs before treating it as generally faster.
 
 ## Pure-V f32 SGEMM
 
