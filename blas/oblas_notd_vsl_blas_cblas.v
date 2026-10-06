@@ -3,7 +3,7 @@ module blas
 import math
 import vsl.blas.blas64
 
-$if vsl_blas_generic_cblas {
+$if vsl_blas_generic_cblas ? {
 	fn C.cblas_dgemm(order int, trans_a int, trans_b int, m int, n int, k int, alpha f64, const_a &f64, lda int, const_b &f64, ldb int, beta f64, c &f64, ldc int)
 }
 
@@ -180,7 +180,7 @@ pub fn dsyr2(uplo Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, 
 // dgemm exposes this operation as part of the public API.
 @[inline]
 pub fn dgemm(trans_a Transpose, trans_b Transpose, m int, n int, k int, alpha f64, a []f64, lda int, b []f64, ldb int, beta f64, mut cc []f64, ldc int) {
-	$if vsl_blas_generic_cblas {
+	$if vsl_blas_generic_cblas ? {
 		// Keep the pure V validation and edge-case behavior. Valid dense matrix
 		// multiplication uses the system CBLAS implementation.
 		a_trans := trans_a == .trans || trans_a == .conj_trans
