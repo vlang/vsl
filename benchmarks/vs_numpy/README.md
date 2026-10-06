@@ -86,13 +86,13 @@ systemd-run --user --scope --quiet -p MemoryMax=768M -p MemorySwapMax=0 -- env V
 	uv run --with numpy python ./vsl/benchmarks/vs_numpy/numpy_sgemm_f32_baseline.py
 ```
 
-On the Ryzen 9 5900X, V 0.5.2 and NumPy 2.5.3, the pure-V path measured
-4.371 ms versus NumPy at 1.071 ms for 512×512 `f32` SGEMM with the portable
-compiler target, `VJOBS=2`, and `OPENBLAS_NUM_THREADS=2`. With
-`-cflags "-march=native"`, V measured 3.743 ms and NumPy measured 1.248 ms;
-the checksums matched in both comparisons. The native V build was about 3.0×
-slower, and the portable build about 4.1× slower, on this host. These are local
-measurements, not a general performance claim.
+On the Ryzen 9 5900X with V 0.5.2 and NumPy 2.5.3, the updated pure-V kernel
+measured 3.671 ms at 512×512 with the portable production build and 3.462 ms
+with `-cflags "-O3 -march=native"`. The previous kernel measured 4.327 ms and
+3.928 ms respectively on the same host. NumPy with two OpenBLAS threads
+measured 0.976 ms. The optimized V path is still about 3.8× slower with the
+portable build and 3.5× slower with the native build; the output checksums
+matched to f32 precision. These are local measurements, not a general ranking.
 
 ## Ryzen 9 5900X local sample
 
