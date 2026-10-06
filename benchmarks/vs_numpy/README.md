@@ -44,6 +44,17 @@ systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySw
 
 Compare GFLOPS / ms from the V scripts with the Python output for the same sizes.
 
+## Ryzen 9 5900X local sample
+
+One local run with `VJOBS=2` measured the pure-V backend at 22.31 ms for 512²
+and 170.31 ms for 1024². With `-d vsl_blas_cblas`, VSL linked to OpenBLAS
+0.3.34 and measured 2.12 ms and 6.81 ms respectively. NumPy 2.5.3, using its
+wheel-provided BLAS with `OPENBLAS_NUM_THREADS=2`, measured 2.48 ms and 17.98
+ms. The OpenBLAS builds differ, so these figures describe this host and setup;
+rerun both commands on the target host before drawing a general performance
+conclusion. The OpenBLAS package used for this local VSL run was signature
+verified and extracted temporarily rather than installed system-wide.
+
 ## Output and reporting
 
 Use the same host, flags, and matrix sizes for both VSL and NumPy. A useful
