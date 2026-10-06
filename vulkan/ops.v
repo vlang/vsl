@@ -238,8 +238,8 @@ pub fn gemm(dev &Device, dst &GpuBuffer, a &GpuBuffer, b &GpuBuffer, m u32, n u3
 	pl.update_buffer(1, b)!
 	pl.update_buffer(2, dst)!
 	pl.update_buffer(3, params_buf)!
-	// GEMM shader uses local_size 16×16; dispatch_sync divides global_x by workgroup_size_x (256).
-	gemm_ls := u32(16)
+	// Each 16×16 workgroup computes a 32×32 output tile; each thread owns 2×2 outputs.
+	gemm_ls := u32(32)
 	cols_wg := (n + gemm_ls - 1) / gemm_ls
 	rows_wg := (m + gemm_ls - 1) / gemm_ls
 	dispatch_sync(dev, pl, cols_wg * workgroup_size_x, rows_wg, 1)!
