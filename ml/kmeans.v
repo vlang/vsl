@@ -1,8 +1,6 @@
 module ml
 
 import math
-import vsl.gm
-import vsl.la
 import vsl.plot
 
 // Kmeans implements the K-means model (Observer of Data)
@@ -15,9 +13,7 @@ pub struct Kmeans {
 mut:
 	name       string // name of this "observer"
 	data       &Data[f64] = unsafe { nil } // x data
-	stat       &Stat[f64] = unsafe { nil } // statistics about x (data)
 	nb_classes int // expected number of classes
-	bins       &gm.Bins = unsafe { nil } // "bins" to speed up searching for data points given their coordinates (2D or 3D only at the moment)
 	nb_iter    int // number of iterations
 pub mut:
 	classes    []int   // [nb_samples] indices of classes of each sample
@@ -29,30 +25,34 @@ pub mut:
 pub fn Kmeans.new(mut data Data[f64], nb_classes int, name string) &Kmeans {
 	// classes
 	classes := []int{len: data.nb_samples}
-	centroids := [][]f64{len: nb_classes}
 	nb_members := []int{len: nb_classes}
 
-	// stat
-	mut stat := Stat.from_data(mut data, 'stat_${name}')
-	stat.update()
-
-	// bins
-	ndiv := [10, 10] // TODO: make this a parameter
-	mut bins :=
-		gm.Bins.new(stat.min_x, stat.max_x, ndiv) // TODO: make sure minx and maxx are 2D or 3D; i.e. nb_features ≤ 2
+	mut centroids := [][]f64{len: nb_classes}
+	for i in 0 .. nb_classes {
+		centroids[i] = []f64{len: data.nb_features}
+	}
 	mut o := Kmeans{
 		name:       name
 		data:       data
-		stat:       stat
 		nb_classes: nb_classes
 		classes:    classes
 		centroids:  centroids
 		nb_members: nb_members
-		bins:       bins
 	}
-	data.add_observer(o) // need to recompute bins upon data changes
-	o.update() // compute first bins
+	data.add_observer(o)
+	o.update()
 	return &o
+}
+
+// new_checked validates dimensions and class count before creating a model.
+pub fn Kmeans.new_checked(mut data Data[f64], nb_classes int, name string) !&Kmeans {
+	if data.nb_features == 0 || data.nb_samples == 0 {
+		return error('K-means requires non-empty samples and features')
+	}
+	if nb_classes <= 0 || nb_classes > data.nb_samples {
+		return error('K-means class count must be between 1 and the sample count')
+	}
+	return Kmeans.new(mut data, nb_classes, name)
 }
 
 // name returns the name of this Kmeans object (thus defining the Observer interface)
@@ -60,10 +60,24 @@ pub fn (o &Kmeans) name() string {
 	return o.name
 }
 
-// update perform updates after data has been changed (as an Observer)
+// update resets assignments after the observed data changes.
 pub fn (mut o Kmeans) update() {
-	for i in 0 .. o.data.nb_samples {
-		o.bins.append([o.data.x.get(i, 0), o.data.x.get(i, 1)], i, unsafe { nil })
+	o.classes = []int{len: o.data.nb_samples}
+	o.nb_members = []int{len: o.nb_classes}
+	mut dimensions_match := o.centroids.len == o.nb_classes
+	if dimensions_match {
+		for centroid in o.centroids {
+			if centroid.len != o.data.nb_features {
+				dimensions_match = false
+				break
+			}
+		}
+	}
+	if !dimensions_match {
+		o.centroids = [][]f64{len: o.nb_classes}
+		for i in 0 .. o.nb_classes {
+			o.centroids[i] = []f64{len: o.data.nb_features}
+		}
 	}
 }
 
@@ -80,43 +94,67 @@ pub fn (mut o Kmeans) set_centroids(xc [][]f64) {
 	}
 }
 
+// set_centroids_checked validates centroid count and feature dimensions.
+pub fn (mut o Kmeans) set_centroids_checked(xc [][]f64) ! {
+	if xc.len != o.nb_classes {
+		return error('centroid count must equal the configured class count')
+	}
+	for centroid in xc {
+		if centroid.len != o.data.nb_features {
+			return error('each centroid must match the dataset feature count')
+		}
+	}
+	o.set_centroids(xc)
+}
+
 // find_closest_centroids finds closest centroids to each sample
 pub fn (mut o Kmeans) find_closest_centroids() {
-	// loop over all samples
-	mut del := []f64{len: o.data.nb_features}
+	if o.nb_classes == 0 || o.data.nb_features == 0 {
+		return
+	}
 	for i := 0; i < o.data.nb_samples; i++ {
-		// set min distance to max value possible
 		mut dist_min := math.max_f64
-		xi := o.data.x.get_row(i)
-		// for each class
+		mut closest := 0
 		for j := 0; j < o.nb_classes; j++ {
-			xc := o.centroids[j]
-			del = la.vector_add(1.0, xi, -1.0, xc) // del := xi - xc
-			dist := la.vector_norm(del)
+			mut dist := 0.0
+			for feature in 0 .. o.data.nb_features {
+				delta := o.data.x.get(i, feature) - o.centroids[j][feature]
+				dist += delta * delta
+			}
 			if dist < dist_min {
 				dist_min = dist
-				o.classes[i] = j
+				closest = j
 			}
 		}
+		o.classes[i] = closest
 	}
 }
 
 // compute_centroids update centroids based on new classes information (from find_closest_centroids)
 pub fn (mut o Kmeans) compute_centroids() {
-	// clear centroids and number of nb_members
+	previous_centroids := o.centroids.map(it.clone())
+	// Clear sums and member counts before accumulating the new assignment.
 	for k := 0; k < o.nb_classes; k++ {
 		o.centroids[k] = []f64{len: o.centroids[k].len}
 		o.nb_members[k] = 0
 	}
 	// add contributions to centroids and nb_members
 	for i := 0; i < o.data.nb_samples; i++ {
-		xi := o.data.x.get_row(i)
 		k := o.classes[i]
-		o.centroids[k] = la.vector_add(1.0, o.centroids[k], 1.0, xi)
+		if k < 0 || k >= o.nb_classes {
+			continue
+		}
+		for feature in 0 .. o.data.nb_features {
+			o.centroids[k][feature] += o.data.x.get(i, feature)
+		}
 		o.nb_members[k]++
 	}
-	// scale centroids based on number of members
+	// Keep the previous centroid for empty clusters instead of producing NaNs.
 	for k := 0; k < o.nb_classes; k++ {
+		if o.nb_members[k] == 0 {
+			o.centroids[k] = previous_centroids[k]
+			continue
+		}
 		den := f64(o.nb_members[k])
 		for j := 0; j < o.data.nb_features; j++ {
 			o.centroids[k][j] /= den
@@ -131,15 +169,45 @@ pub:
 	tol_norm_change f64
 }
 
-// train trains model
+// train runs at most epochs iterations. A positive tol_norm_change stops when
+// the Euclidean norm of the centroid update is small enough.
 pub fn (mut o Kmeans) train(config TrainConfig) {
 	mut nb_iter := 0
 	for nb_iter < config.epochs {
+		previous_centroids := o.centroids.map(it.clone())
 		o.find_closest_centroids()
 		o.compute_centroids()
 		nb_iter++
+		if config.tol_norm_change > 0 {
+			mut squared_change := 0.0
+			for cluster, centroid in o.centroids {
+				for feature, value in centroid {
+					delta := value - previous_centroids[cluster][feature]
+					squared_change += delta * delta
+				}
+			}
+			if math.sqrt(squared_change) <= config.tol_norm_change {
+				break
+			}
+		}
 	}
 	o.nb_iter = o.nb_iter + nb_iter
+}
+
+// inertia returns the sum of squared distances from samples to their assigned
+// centroids. Call find_closest_centroids after changing centroids or data.
+pub fn (o &Kmeans) inertia() f64 {
+	mut total := 0.0
+	for sample, cluster in o.classes {
+		if cluster < 0 || cluster >= o.centroids.len {
+			continue
+		}
+		for feature in 0 .. o.data.nb_features {
+			delta := o.data.x.get(sample, feature) - o.centroids[cluster][feature]
+			total += delta * delta
+		}
+	}
+	return total
 }
 
 // str is a custom str function for observers to avoid printing data
@@ -148,7 +216,6 @@ pub fn (o &Kmeans) str() string {
 	res << 'vsl.ml.Kmeans{'
 	res << '	name: ${o.name}'
 	res << '    nb_classes: ${o.nb_classes}'
-	res << '    bins: ${o.bins}'
 	res << '    classes: ${o.classes}'
 	res << '    centroids: ${o.centroids}'
 	res << '    nb_members: ${o.nb_members}'

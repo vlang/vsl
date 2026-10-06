@@ -16,12 +16,12 @@ fn test_kmeans_01() {
 	// model
 	nb_classes := 2
 	mut model := Kmeans.new(mut data, nb_classes, 'kmeans')
-	model.set_centroids([
+	model.set_centroids_checked([
 		// class 0
 		[0.4, 0.6],
 		// class 1
 		[0.6, 0.4],
-	])
+	])!
 
 	// train
 	model.find_closest_centroids()
@@ -37,5 +37,50 @@ fn test_kmeans_01() {
 	]
 	for i, c in model.classes {
 		assert c == expected_classes[i]
+	}
+}
+
+fn test_kmeans_supports_arbitrary_feature_counts_and_inertia() {
+	mut data := Data.from_raw_x([
+		[0.0, 0, 0],
+		[0, 2, 2],
+		[10, 10, 10],
+		[12, 10, 10],
+	])!
+	mut model := Kmeans.new_checked(mut data, 2, 'three_features')!
+	model.set_centroids_checked([
+		[0.0, 1, 1],
+		[11, 10, 10],
+	])!
+	model.find_closest_centroids()
+	assert model.classes == [0, 0, 1, 1]
+	assert model.inertia() == 6
+	model.compute_centroids()
+	assert model.centroids == [[0.0, 1, 1], [11, 10, 10]]
+}
+
+fn test_kmeans_preserves_empty_cluster_centroid_and_converges() {
+	mut data := Data.from_raw_x([[0.0, 0], [0, 2], [10, 10], [12, 10]])!
+	mut model := Kmeans.new(mut data, 3, 'empty_cluster')
+	model.set_centroids_checked([[0.0, 1], [11, 10], [100, 100]])!
+	model.train(epochs: 50, tol_norm_change: 1e-9)
+	assert model.centroids[0] == [0.0, 1]
+	assert model.centroids[1] == [11, 10]
+	assert model.centroids[2] == [100, 100]
+	assert model.inertia() == 4
+}
+
+fn test_kmeans_checked_constructor_rejects_invalid_cluster_count() {
+	mut data := Data.from_raw_x([[0.0, 0], [1, 1]])!
+	if _ := Kmeans.new_checked(mut data, 3, 'invalid') {
+		assert false, 'K-means must reject more clusters than observations'
+	}
+}
+
+fn test_kmeans_checked_centroids_reject_invalid_shapes() ! {
+	mut data := Data.from_raw_x([[0.0, 1], [2, 3]])!
+	mut model := Kmeans.new_checked(mut data, 2, 'bad_centroids')!
+	if _ := model.set_centroids_checked([[0.0], [2.0]]) {
+		assert false, 'K-means must reject centroids with the wrong feature count'
 	}
 }
