@@ -17,17 +17,20 @@ The positive frequencies are the same as the negative frequencies in reverse
 order. See the reference
 for [FFTW](https://www.fftw.org/fftw3.pdf) for further examples of embeddings.
 
-## Interleaved complex f64 transforms
+## Interleaved complex transforms
 
-`create_complex_plan_f64(length)` creates a plan for an interleaved buffer
-`[real0, imag0, real1, imag1, ...]`. Use `forward_complex_f64` and
-`backward_complex_f64` to transform the buffer in place. Both return `0` on
-success and `-1` when the plan or buffer length does not match. The inverse is
-unnormalized; divide each component by the original transform length for the
-normalized result. Destroy each plan exactly once with `destroy_plan`.
+The complex FFT API supports both `f32` and `f64` interleaved buffers in the
+form `[real0, imag0, real1, imag1, ...]`. Create a plan with
+`create_complex_plan_f32(length)` or `create_complex_plan_f64(length)`, then
+call the matching `forward_complex_f32`/`backward_complex_f32` or
+`forward_complex_f64`/`backward_complex_f64` functions. They transform in
+place, return `0` on success, and return `-1` when the plan or buffer length
+does not match. The inverse is unnormalized; divide each component by the
+original transform length for the normalized result. Destroy each plan
+exactly once with `destroy_plan`.
 
-The helpers require exactly twice the plan length in `f64` values and validate
-that size before calling the native backend.
+The helpers require exactly twice the plan length in values of the matching
+precision and validate that size before calling the native backend.
 
 ```v
 import vsl.fft
@@ -40,4 +43,18 @@ defer {
 fft.forward_complex_f64(plan, mut samples)
 // Divide inverse results by 2 to normalize them.
 fft.backward_complex_f64(plan, mut samples)
+```
+
+The single-precision API has the same plan and buffer contract:
+
+```v
+import vsl.fft
+
+mut samples := [f32(1), 0, 0, 0]
+plan := fft.create_complex_plan_f32(2)!
+defer {
+	fft.destroy_plan(plan)
+}
+fft.forward_complex_f32(plan, mut samples)
+fft.backward_complex_f32(plan, mut samples)
 ```
