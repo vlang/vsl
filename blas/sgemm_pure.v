@@ -1,6 +1,9 @@
 module blas
 
+import math
+import runtime
 import simd
+import sync
 
 fn sgemm_pure(trans_a Transpose, trans_b Transpose, m int, n int, k int, alpha f32, a []f32, lda int, b []f32, ldb int, beta f32, mut c []f32, ldc int) {
 	a_trans := trans_a == .trans || trans_a == .conj_trans
@@ -82,8 +85,32 @@ fn sgemm_pure(trans_a Transpose, trans_b Transpose, m int, n int, k int, alpha f
 
 @[direct_array_access]
 fn sgemm_pure_no_trans(m int, n int, k int, alpha f32, a []f32, lda int, b []f32, ldb int, beta f32, mut c []f32, ldc int) {
-	mut i := 0
-	for ; i + 4 <= m; i += 4 {
+	row_blocks := (m + 3) / 4
+	worker_count := math.min(runtime.nr_jobs(), row_blocks)
+	if worker_count <= 1 || m * n * k < 8_000_000 {
+		sgemm_pure_no_trans_rows(0, m, n, k, alpha, a, lda, b, ldb, beta, mut c, ldc)
+		return
+	}
+	mut wg := sync.new_waitgroup()
+	wg.add(worker_count)
+	for worker_index in 0 .. worker_count {
+		start_row := (worker_index * row_blocks / worker_count) * 4
+		end_row := math.min(m, ((worker_index + 1) * row_blocks / worker_count) * 4)
+		go fn (start_row int, end_row int, n int, k int, alpha f32, a []f32, lda int, b []f32, ldb int, beta f32, mut c []f32, ldc int, mut wg sync.WaitGroup) {
+			defer {
+				wg.done()
+			}
+			sgemm_pure_no_trans_rows(start_row, end_row, n, k, alpha, a, lda, b, ldb, beta,
+				mut c, ldc)
+		}(start_row, end_row, n, k, alpha, a, lda, b, ldb, beta, mut c, ldc, mut wg)
+	}
+	wg.wait()
+}
+
+@[direct_array_access]
+fn sgemm_pure_no_trans_rows(row_start int, row_end int, n int, k int, alpha f32, a []f32, lda int, b []f32, ldb int, beta f32, mut c []f32, ldc int) {
+	mut i := row_start
+	for ; i + 4 <= row_end; i += 4 {
 		a0 := i * lda
 		a1 := a0 + lda
 		a2 := a1 + lda
@@ -141,7 +168,7 @@ fn sgemm_pure_no_trans(m int, n int, k int, alpha f32, a []f32, lda int, b []f32
 			c[c3 + j] = sum3
 		}
 	}
-	for ; i < m; i++ {
+	for ; i < row_end; i++ {
 		a_base := i * lda
 		c_base := i * ldc
 		for j in 0 .. n {
