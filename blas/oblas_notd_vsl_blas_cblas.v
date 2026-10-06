@@ -3,6 +3,10 @@ module blas
 import math
 import vsl.blas.blas64
 
+$if vsl_blas_generic_cblas {
+	fn C.cblas_dgemm(order int, trans_a int, trans_b int, m int, n int, k int, alpha f64, const_a &f64, lda int, const_b &f64, ldb int, beta f64, c &f64, ldc int)
+}
+
 // set_num_threads sets the number of threads in BLAS
 
 // set_num_threads exposes this operation as part of the public API.
@@ -176,8 +180,27 @@ pub fn dsyr2(uplo Uplo, n int, alpha f64, x []f64, incx int, y []f64, incy int, 
 // dgemm exposes this operation as part of the public API.
 @[inline]
 pub fn dgemm(trans_a Transpose, trans_b Transpose, m int, n int, k int, alpha f64, a []f64, lda int, b []f64, ldb int, beta f64, mut cc []f64, ldc int) {
-	blas64.dgemm(to_blas64_transpose(trans_a), to_blas64_transpose(trans_b), m, n, k, alpha, a,
-		lda, b, ldb, beta, mut cc, ldc)
+	$if vsl_blas_generic_cblas {
+		// Keep the pure V validation and edge-case behavior. Valid dense matrix
+		// multiplication uses the system CBLAS implementation.
+		a_trans := trans_a == .trans || trans_a == .conj_trans
+		b_trans := trans_b == .trans || trans_b == .conj_trans
+		a_required := if a_trans { (k - 1) * lda + m } else { (m - 1) * lda + k }
+		b_required := if b_trans { (n - 1) * ldb + k } else { (k - 1) * ldb + n }
+		c_required := (m - 1) * ldc + n
+		if m <= 0 || n <= 0 || k <= 0 || lda < if a_trans { m } else { k }
+			|| ldb < if b_trans { k } else { n } || ldc < n || a.len < a_required || b.len < b_required
+			|| cc.len < c_required || alpha == 0 || beta != 0 {
+			blas64.dgemm(to_blas64_transpose(trans_a), to_blas64_transpose(trans_b), m, n, k,
+				alpha, a, lda, b, ldb, beta, mut cc, ldc)
+			return
+		}
+		C.cblas_dgemm(101, int(trans_a), int(trans_b), m, n, k, alpha, unsafe { &a[0] }, lda,
+			unsafe { &b[0] }, ldb, beta, unsafe { &cc[0] }, ldc)
+	} $else {
+		blas64.dgemm(to_blas64_transpose(trans_a), to_blas64_transpose(trans_b), m, n, k,
+			alpha, a, lda, b, ldb, beta, mut cc, ldc)
+	}
 }
 
 // dgbmv performs a matrix-vector multiplication with a band matrix.
