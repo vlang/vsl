@@ -447,6 +447,41 @@ fn test_sgemm_row_major_non_multiple_width() {
 	assert c == [f32(21), 24, 27, 47, 54, 61]
 }
 
+fn test_sgemm_simd_rows_columns_alpha_and_beta() {
+	rows := 5
+	inner := 8
+	columns := 10
+	mut a := []f32{len: rows * inner}
+	mut b := []f32{len: inner * columns}
+	mut c := []f32{len: rows * columns, init: 2}
+	for i in 0 .. rows {
+		for p in 0 .. inner {
+			a[i * inner + p] = f32(i * 10 + p + 1)
+		}
+	}
+	for p in 0 .. inner {
+		b[p * columns + p] = 1
+		b[p * columns + 8] = 1
+		b[p * columns + 9] = -1
+	}
+
+	sgemm(.no_trans, .no_trans, rows, columns, inner, 1.5, a, inner, b, columns, 0.5,
+		mut c, columns)
+
+	mut expected := []f32{len: rows * columns}
+	for i in 0 .. rows {
+		mut row_sum := f32(0)
+		for p in 0 .. inner {
+			value := f32(i * 10 + p + 1)
+			expected[i * columns + p] = 1.5 * value + 1
+			row_sum += value
+		}
+		expected[i * columns + 8] = 1.5 * row_sum + 1
+		expected[i * columns + 9] = -1.5 * row_sum + 1
+	}
+	assert c == expected
+}
+
 fn test_sgemm_transposed_inputs() {
 	a_transposed := [f32(1), 3, 2, 4]
 	b := [f32(5), 6, 7, 8]

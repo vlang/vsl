@@ -1,5 +1,7 @@
 module blas
 
+import simd
+
 fn sgemm_pure(trans_a Transpose, trans_b Transpose, m int, n int, k int, alpha f32, a []f32, lda int, b []f32, ldb int, beta f32, mut c []f32, ldc int) {
 	a_trans := trans_a == .trans || trans_a == .conj_trans
 	b_trans := trans_b == .trans || trans_b == .conj_trans
@@ -80,26 +82,78 @@ fn sgemm_pure(trans_a Transpose, trans_b Transpose, m int, n int, k int, alpha f
 
 @[direct_array_access]
 fn sgemm_pure_no_trans(m int, n int, k int, alpha f32, a []f32, lda int, b []f32, ldb int, beta f32, mut c []f32, ldc int) {
-	for i in 0 .. m {
-		c_base := i * ldc
-		for j in 0 .. n {
-			c_index := c_base + j
-			if beta == 0 {
-				c[c_index] = 0
-			} else if beta != 1 {
-				c[c_index] *= beta
+	mut i := 0
+	for ; i + 4 <= m; i += 4 {
+		a0 := i * lda
+		a1 := a0 + lda
+		a2 := a1 + lda
+		a3 := a2 + lda
+		c0 := i * ldc
+		c1 := c0 + ldc
+		c2 := c1 + ldc
+		c3 := c2 + ldc
+		mut j := 0
+		for ; j + 8 <= n; j += 8 {
+			mut sum0 := simd.splat_f32x8(0)
+			mut sum1 := simd.splat_f32x8(0)
+			mut sum2 := simd.splat_f32x8(0)
+			mut sum3 := simd.splat_f32x8(0)
+			for p in 0 .. k {
+				b_values := simd.load_f32x8_at(b, p * ldb + j)
+				sum0 = sum0 + simd.splat_f32x8(alpha * a[a0 + p]) * b_values
+				sum1 = sum1 + simd.splat_f32x8(alpha * a[a1 + p]) * b_values
+				sum2 = sum2 + simd.splat_f32x8(alpha * a[a2 + p]) * b_values
+				sum3 = sum3 + simd.splat_f32x8(alpha * a[a3 + p]) * b_values
 			}
+			if beta != 0 {
+				beta_vec := simd.splat_f32x8(beta)
+				sum0 = sum0 + beta_vec * simd.load_f32x8_at(c, c0 + j)
+				sum1 = sum1 + beta_vec * simd.load_f32x8_at(c, c1 + j)
+				sum2 = sum2 + beta_vec * simd.load_f32x8_at(c, c2 + j)
+				sum3 = sum3 + beta_vec * simd.load_f32x8_at(c, c3 + j)
+			}
+			sum0.store_at(mut c, c0 + j)
+			sum1.store_at(mut c, c1 + j)
+			sum2.store_at(mut c, c2 + j)
+			sum3.store_at(mut c, c3 + j)
+		}
+		for ; j < n; j++ {
+			mut sum0 := f32(0)
+			mut sum1 := f32(0)
+			mut sum2 := f32(0)
+			mut sum3 := f32(0)
+			for p in 0 .. k {
+				b_value := b[p * ldb + j]
+				sum0 += alpha * a[a0 + p] * b_value
+				sum1 += alpha * a[a1 + p] * b_value
+				sum2 += alpha * a[a2 + p] * b_value
+				sum3 += alpha * a[a3 + p] * b_value
+			}
+			if beta != 0 {
+				sum0 += beta * c[c0 + j]
+				sum1 += beta * c[c1 + j]
+				sum2 += beta * c[c2 + j]
+				sum3 += beta * c[c3 + j]
+			}
+			c[c0 + j] = sum0
+			c[c1 + j] = sum1
+			c[c2 + j] = sum2
+			c[c3 + j] = sum3
 		}
 	}
-	for i in 0 .. m {
+	for ; i < m; i++ {
 		a_base := i * lda
 		c_base := i * ldc
-		for p in 0 .. k {
-			a_value := alpha * a[a_base + p]
-			b_base := p * ldb
-			for j in 0 .. n {
-				c[c_base + j] += a_value * b[b_base + j]
+		for j in 0 .. n {
+			mut sum := f32(0)
+			for p in 0 .. k {
+				sum += alpha * a[a_base + p] * b[p * ldb + j]
 			}
+			c_index := c_base + j
+			if beta != 0 {
+				sum += beta * c[c_index]
+			}
+			c[c_index] = sum
 		}
 	}
 }
