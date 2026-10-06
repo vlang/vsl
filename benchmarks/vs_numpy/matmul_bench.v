@@ -36,9 +36,9 @@ fn bench_matmul(n int, config bu.BenchmarkConfig) {
 
 	mut samples := []f64{len: config.iterations}
 	for i in 0 .. config.iterations {
-		t0 := time.ticks()
+		t0 := time.sys_mono_now()
 		vsl_la.matrix_matrix_mul(mut c, 1.0, a, b)
-		samples[i] = f64(time.ticks() - t0)
+		samples[i] = f64(time.sys_mono_now() - t0) / 1_000_000.0
 	}
 	avg := bu.mean_time_ms(mut samples)
 	gflops := bu.gflops_gemm_ms(n, n, n, avg)

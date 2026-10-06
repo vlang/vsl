@@ -1,9 +1,9 @@
 module blas64
 
-// import runtime
 import sync
 import vsl.float.float64
 import math
+import runtime
 
 // dgemm performs one of the matrix-matrix operations
 //  C = alpha * A * B + beta * C
@@ -142,43 +142,36 @@ fn dgemm_parallel(a_trans Transpose, b_trans Transpose, m int, n int, k int, a [
 		return
 	}
 
-	// worker_limit acts a number of maximum concurrent workers,
-	// with the limit set to the number of procs available.
-	// worker_limit := chan int{cap: runtime.nr_jobs()}
-
-	// wg is used to wait for all
+	// Run one goroutine per configured job, reusing each worker for many tiles.
+	// This respects VJOBS and avoids allocating a goroutine for every output tile.
+	worker_count := math.min(runtime.nr_jobs(), par_blocks)
+	if worker_count <= 1 {
+		dgemm_serial(a_trans, b_trans, m, n, k, a, lda, b, ldb, mut c, ldc, alpha)
+		return
+	}
 	mut wg := sync.new_waitgroup()
-	wg.add(par_blocks)
+	wg.add(worker_count)
 	defer {
 		wg.wait()
 	}
-
-	for i := 0; i < m; i += block_size {
-		for j := 0; j < n; j += block_size {
-			// worker_limit <- 0
-			go fn (a_trans Transpose, b_trans Transpose, m int, n int, max_k_len int, a []f64, lda int, b []f64, ldb int, mut c []f64, ldc int, alpha f64, i int, j int, mut wg sync.WaitGroup) {
-				defer {
-					wg.done()
-					// <-worker_limit
-				}
-
-				mut leni := block_size
-				if i + leni > m {
-					leni = m - i
-				}
-				mut lenj := block_size
-				if j + lenj > n {
-					lenj = n - j
-				}
-
+	n_block_columns := blocks(n, block_size)
+	for worker_index in 0 .. worker_count {
+		go fn (a_trans Transpose, b_trans Transpose, m int, n int, max_k_len int, a []f64, lda int, b []f64, ldb int, mut c []f64, ldc int, alpha f64, worker_index int, worker_count int, n_block_columns int, mut wg sync.WaitGroup) {
+			defer {
+				wg.done()
+			}
+			tile_count := blocks(m, block_size) * n_block_columns
+			for tile_index := worker_index; tile_index < tile_count; tile_index += worker_count {
+				block_row := tile_index / n_block_columns
+				block_column := tile_index % n_block_columns
+				i := block_row * block_size
+				j := block_column * block_size
+				leni := math.min(block_size, m - i)
+				lenj := math.min(block_size, n - j)
 				mut c_sub := slice_view_f64(*c, ldc, i, j, leni, lenj)
-
-				// Compute A_ik B_kj for all k
+				// Compute A_ik B_kj for all k.
 				for k := 0; k < max_k_len; k += block_size {
-					mut lenk := block_size
-					if k + lenk > max_k_len {
-						lenk = max_k_len - k
-					}
+					lenk := math.min(block_size, max_k_len - k)
 					mut a_sub := []f64{}
 					mut b_sub := []f64{}
 					if a_trans == .trans {
@@ -194,8 +187,9 @@ fn dgemm_parallel(a_trans Transpose, b_trans Transpose, m int, n int, k int, a [
 					dgemm_serial(a_trans, b_trans, leni, lenj, lenk, a_sub, lda, b_sub, ldb, mut
 						c_sub, ldc, alpha)
 				}
-			}(a_trans, b_trans, m, n, max_k_len, a, lda, b, ldb, mut c, ldc, alpha, i, j, mut wg)
-		}
+			}
+		}(a_trans, b_trans, m, n, max_k_len, a, lda, b, ldb, mut c, ldc, alpha,
+			worker_index, worker_count, n_block_columns, mut wg)
 	}
 }
 
