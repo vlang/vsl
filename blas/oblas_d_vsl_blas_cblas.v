@@ -1559,6 +1559,47 @@ pub fn sgemm(trans_a Transpose, trans_b Transpose, m int, n int, k int, alpha f3
 		sgemm_pure(trans_a, trans_b, m, n, k, alpha, a, lda, b, ldb, beta, mut cc, ldc)
 		return
 	}
+	if ldc < n || m > 1 && m - 1 > (max_int - n) / ldc {
+		sgemm_pure(trans_a, trans_b, m, n, k, alpha, a, lda, b, ldb, beta, mut cc, ldc)
+		return
+	}
+	c_required := (m - 1) * ldc + n
+	if cc.len < c_required {
+		sgemm_pure(trans_a, trans_b, m, n, k, alpha, a, lda, b, ldb, beta, mut cc, ldc)
+		return
+	}
+	a_trans := trans_a == .trans || trans_a == .conj_trans
+	b_trans := trans_b == .trans || trans_b == .conj_trans
+	min_lda := if a_trans { m } else { k }
+	min_ldb := if b_trans { k } else { n }
+	if lda < min_lda || ldb < min_ldb {
+		sgemm_pure(trans_a, trans_b, m, n, k, alpha, a, lda, b, ldb, beta, mut cc, ldc)
+		return
+	}
+	if a_trans {
+		if k > 1 && lda > (max_int - m) / (k - 1) {
+			sgemm_pure(trans_a, trans_b, m, n, k, alpha, a, lda, b, ldb, beta, mut cc, ldc)
+			return
+		}
+	} else if m > 1 && lda > (max_int - k) / (m - 1) {
+		sgemm_pure(trans_a, trans_b, m, n, k, alpha, a, lda, b, ldb, beta, mut cc, ldc)
+		return
+	}
+	if b_trans {
+		if n > 1 && ldb > (max_int - k) / (n - 1) {
+			sgemm_pure(trans_a, trans_b, m, n, k, alpha, a, lda, b, ldb, beta, mut cc, ldc)
+			return
+		}
+	} else if k > 1 && ldb > (max_int - n) / (k - 1) {
+		sgemm_pure(trans_a, trans_b, m, n, k, alpha, a, lda, b, ldb, beta, mut cc, ldc)
+		return
+	}
+	a_required := if a_trans { (k - 1) * lda + m } else { (m - 1) * lda + k }
+	b_required := if b_trans { (n - 1) * ldb + k } else { (k - 1) * ldb + n }
+	if a.len < a_required || b.len < b_required {
+		sgemm_pure(trans_a, trans_b, m, n, k, alpha, a, lda, b, ldb, beta, mut cc, ldc)
+		return
+	}
 	C.cblas_sgemm(int(MemoryLayout.row_major), int(trans_a), int(trans_b), m, n, k, alpha,
 		unsafe { &a[0] }, lda, unsafe { &b[0] }, ldb, beta, unsafe { &cc[0] }, ldc)
 }
