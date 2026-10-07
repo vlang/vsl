@@ -88,6 +88,14 @@ VSL is a V library for AI and high-performance scientific computing.
 
 Visit [VSL Documentation](https://vlang.github.io/vsl) to explore all supported features and APIs.
 
+<details>
+  <summary>VSL architecture</summary>
+
+  ![VSL modules, compute dispatch, and optional CPU and accelerator backends](docs/assets/vsl-architecture.png)
+
+  [View SVG source](docs/assets/vsl-architecture.svg) · [PNG](docs/assets/vsl-architecture.png)
+</details>
+
 ### Start Here
 
 | Need | Go to |
