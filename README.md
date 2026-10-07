@@ -1,9 +1,9 @@
 <div align="center">
   <p>
     <img
-        style="width: 200px"
         width="200"
-        src="https://raw.githubusercontent.com/vlang/vsl/main/static/vsl-logo.png?sanitize=true"
+        src="static/vsl-logo.svg"
+        alt="VSL scientific computing logo"
     >
   </p>
   <h1>The V Scientific Library</h1>
@@ -45,7 +45,7 @@ VSL is a V library for AI and high-performance scientific computing.
 
 <a href="https://github.com/vlang/vtl">
   <img
-    src="https://raw.githubusercontent.com/vlang/vsl/main/static/vtl-promo-banner.svg"
+    src="static/vtl-promo-banner.svg"
     alt="Build machine learning in V with VTL"
     width="100%"
   >
@@ -57,10 +57,32 @@ VSL is a V library for AI and high-performance scientific computing.
 
 </div>
 
-|                                      |                                |                |                       |
-| :----------------------------------: | :----------------------------: | :------------: | :-------------------: |
-|       ![][sierpinski_triangle]       | ![][mandelbrot_blue_red_black] |   ![][julia]   | ![][mandelbrot_basic] |
-| ![][mandelbrot_pseudo_random_colors] |   ![][sierpinski_triangle2]    | ![][julia_set] |   ![][julia_basic]    |
+<table>
+  <tr>
+    <td><img
+      src="vcl/static/sierpinski_triangle.png" alt="Sierpinski triangle" width="160"
+    ></td>
+    <td><img
+      src="vcl/static/mandelbrot_blue_red_black.png" alt="Mandelbrot fractal" width="160"
+    ></td>
+    <td><img src="vcl/static/julia.png" alt="Julia fractal" width="160"></td>
+    <td><img
+      src="vcl/static/mandelbrot_basic.png" alt="Basic Mandelbrot set" width="160"
+    ></td>
+  </tr>
+  <tr>
+    <td><img
+      src="vcl/static/mandelbrot_pseudo_random_colors.png" alt="Colorful Mandelbrot set"
+      width="160"
+    ></td>
+    <td><img
+      src="vcl/static/sierpinski_triangle2.png" alt="Second Sierpinski triangle"
+      width="160"
+    ></td>
+    <td><img src="vcl/static/julia_set.png" alt="Julia set" width="160"></td>
+    <td><img src="vcl/static/julia_basic.png" alt="Basic Julia fractal" width="160"></td>
+  </tr>
+</table>
 
 ## 📖 Documentation
 
@@ -202,7 +224,9 @@ stack at once:
 
 ```sh
 cd ~/.vmodules
-systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 -- env VJOBS=2 v test ./vsl/blas ./vsl/la ./vsl/compute
+systemd-run --user --scope --quiet \
+	--property=MemoryMax=768M --property=MemorySwapMax=0 -- \
+	env VJOBS=2 v test ./vsl/blas ./vsl/la ./vsl/compute
 systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
 	-- env VJOBS=2 VSL_TEST_VULKAN=1 v -prod -d vulkan test \
 	./vsl/vulkan/compute/adam_step_vulkan_test.v
@@ -217,8 +241,12 @@ VSL includes comprehensive performance benchmarks using V's built-in `benchmark`
 
 ```sh
 cd ~/.vmodules
-systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 -- env VJOBS=2 v run ./vsl/benchmarks/blas_bench.v
-systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 -- env VJOBS=2 v run ./vsl/benchmarks/lapack_bench.v
+systemd-run --user --scope --quiet \
+	--property=MemoryMax=768M --property=MemorySwapMax=0 -- \
+	env VJOBS=2 v run ./vsl/benchmarks/blas_bench.v
+systemd-run --user --scope --quiet \
+	--property=MemoryMax=768M --property=MemorySwapMax=0 -- \
+	env VJOBS=2 v run ./vsl/benchmarks/lapack_bench.v
 systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
 	-- env VJOBS=2 v -d vsl_blas_cblas run \
 	./vsl/benchmarks/compare_backends.v
@@ -235,7 +263,7 @@ See [benchmarks/README.md](./benchmarks/README.md) for detailed benchmark docume
 ## 👥 Contributors
 
 <a href="https://github.com/vlang/vsl/contributors">
-  <img src="https://contrib.rocks/image?repo=vlang/vsl"/>
+  <img src="https://contrib.rocks/image?repo=vlang/vsl" alt="VSL contributors"/>
 </a>
 
 Made with [contributors-img](https://contrib.rocks).
@@ -259,14 +287,3 @@ Made with [contributors-img](https://contrib.rocks).
 [licenseurl]: https://github.com/vlang/vsl/blob/main/LICENSE
 [ModulesUrl]: https://vlang.github.io/vsl/
 [VtlPoweredUrl]: https://github.com/vlang/vtl
-
-<!-- Images -->
-
-[sierpinski_triangle]: vcl/static/sierpinski_triangle.png
-[mandelbrot_blue_red_black]: vcl/static/mandelbrot_blue_red_black.png
-[julia]: vcl/static/julia.png
-[mandelbrot_basic]: vcl/static/mandelbrot_basic.png
-[mandelbrot_pseudo_random_colors]: vcl/static/mandelbrot_pseudo_random_colors.png
-[sierpinski_triangle2]: vcl/static/sierpinski_triangle2.png
-[julia_set]: vcl/static/julia_set.png
-[julia_basic]: vcl/static/julia_basic.png
