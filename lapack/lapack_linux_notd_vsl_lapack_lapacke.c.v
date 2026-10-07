@@ -1,14 +1,18 @@
 module lapack
 
 $if !macos {
-	import vsl.blas
+	import vsl.lapack.lapack64
 
-	fn C.LAPACKE_dlange(matrix_layout int, norm &char, m int, n int, a &f64, lda int, work &f64) f64
-
+	// dlange uses the pure-V implementation when the LAPACKE build tag is off.
 	pub fn dlange(norm rune, m int, n int, a []f64, lda int, work []f64) f64 {
-		return unsafe {
-			C.LAPACKE_dlange(int(blas.MemoryLayout.row_major), &char(norm.str().str), m, n, &a[0],
-				lda, &work[0])
+		selected_norm := match norm {
+			`M` { lapack64.MatrixNorm.max_abs }
+			`1`, `O` { lapack64.MatrixNorm.max_column_sum }
+			`I` { lapack64.MatrixNorm.max_row_sum }
+			`F`, `E` { lapack64.MatrixNorm.frobenius }
+			else { panic('dlange: invalid norm') }
 		}
+		mut workspace := work.clone()
+		return lapack64.dlange(selected_norm, m, n, a, lda, mut workspace)
 	}
 }
