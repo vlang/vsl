@@ -2,7 +2,9 @@ name: VSL Continuous Integration
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+  # Main pushes are serialized to the newest revision, so rapid merges do not
+  # leave stale workflows occupying the Actions queue.
+  cancel-in-progress: true
 
 on:
   # Allows you to run this workflow manually from the Actions tab
