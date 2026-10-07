@@ -82,7 +82,10 @@
 
 | Priority | Work item |
 |----------|-----------|
-| P1 | [#225](https://github.com/vlang/vsl/issues/225) Windows |
+| P2 | [#330](https://github.com/vlang/vsl/issues/330) / [#91](https://github.com/vlang/vsl/issues/91): validate OpenBLAS linkage and BLAS tests on macOS |
+| P2 | [#21](https://github.com/vlang/vsl/issues/21): evaluate Enoki-inspired SIMD and data-layout improvements with benchmarks |
+| P2 | [#65](https://github.com/vlang/vsl/issues/65): investigate correctly rounded binary32 math function by function |
+| Design | [#34](https://github.com/vlang/vsl/issues/34): review missing operator overloads for VSL structs |
 | P1 | Phase H multi-GPU |
 | P1 | Phase I GPU memory pool / zero-copy |
 | P2 | CUDA benchmark variants in CI |
@@ -96,10 +99,11 @@
 
 | # | Title | Priority | Notes |
 |---|-------|----------|-------|
-| [#225](https://github.com/vlang/vsl/issues/225) | vsl Error on Windows | 🔴 P1 | |
-| [#226](https://github.com/vlang/vsl/issues/226) | vcl: examples not working | 🟡 P2 | |
-| [#91](https://github.com/vlang/vsl/issues/91) | vsl.blas not working on MacOS | 🟡 P2 | |
-| [#231](https://github.com/vlang/vsl/issues/231) | `cblas_idamax` implicit decl | 🟡 Medium | |
+| [#330](https://github.com/vlang/vsl/issues/330) | macOS OpenBLAS linkage | 🟡 P2 | New tracking issue for older [#91](https://github.com/vlang/vsl/issues/91); macOS CI still needs a completed run |
+| [#91](https://github.com/vlang/vsl/issues/91) | `vsl.blas` not working on macOS | 🟡 P2 | Related legacy report; keep open until macOS CBLAS CI passes |
+| [#65](https://github.com/vlang/vsl/issues/65) | Increase binary floating-point precision | 🟡 P2 | Research request; evaluate correctly rounded references per function |
+| [#34](https://github.com/vlang/vsl/issues/34) | Override operators for all struct types | Design | Broad API request; specify types and valid operators before implementation |
+| [#21](https://github.com/vlang/vsl/issues/21) | Enoki inspiration for performance | Research | Benchmark SIMD and data-layout opportunities; do not assume aliasing without proof |
 
 **Closed ML epics:** #236–#239, #240–#244, #280–#285 — see
 [ML_ROADMAP.md](docs/ML_ROADMAP.md).
@@ -271,6 +275,6 @@ vtl/
 
 ---
 
-*Last updated: 2026-05-31* · Maintainer board: [project #8](https://github.com/orgs/vlang/projects/8)
+*Last updated: 2026-10-07* · Maintainer board: [project #8](https://github.com/orgs/vlang/projects/8)
 
 *See also: [VTL ROADMAP.md](https://github.com/vlang/vtl/blob/main/ROADMAP.md)*

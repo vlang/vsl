@@ -33,11 +33,21 @@ Conv2D, ReLU/Sigmoid, and Adam are wired into the `nn_cifar10_vulkan` smoke.
 |----------|-------|--------|
 | P1 | Phase H | Multi-GPU (`device_id`, data parallelism) |
 | P1 | Phase I | GPU memory pool / zero-copy |
-| P2 | [#226](https://github.com/vlang/vsl/issues/226) | VCL examples |
 | P2 | [#21](https://github.com/vlang/vsl/issues/21) | Pure-V compute performance and SIMD optimization |
+| P2 | [#65](https://github.com/vlang/vsl/issues/65) | Correctly rounded binary32 math research |
+| Design | [#34](https://github.com/vlang/vsl/issues/34) | Operator coverage for VSL structs |
 | P2 | — | CUDA variants of `benchmarks/vs_numpy/` in CI |
 | P2 | — | Extended Vulkan↔CUDA numerical cross-check |
 | P2 | — | Vulkan persistent memory / reduced host sync for VTL training |
+
+**Current open issue inventory:** [#21](https://github.com/vlang/vsl/issues/21),
+[#34](https://github.com/vlang/vsl/issues/34),
+[#65](https://github.com/vlang/vsl/issues/65),
+[#91](https://github.com/vlang/vsl/issues/91), and
+[#330](https://github.com/vlang/vsl/issues/330). Issues #91 and #330 track the
+same macOS OpenBLAS concern; the newer issue is the active CI follow-up. The
+GitHub Project #8 lists #91 but not #330 or the other current open issues, so
+the board and repository inventory need reconciliation.
 
 The ML beta uses VSL as a scientific and compute foundation. The stable beta
 contract is the portable CPU/scientific surface plus `vsl.compute`; CUDA,
