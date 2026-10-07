@@ -37,6 +37,7 @@ enum PipelineType {
 	selu
 	hardswish
 	gemm
+	gemm_k32
 	softmax
 	layernorm
 	reduction
@@ -233,7 +234,9 @@ pub fn gemm(dev &Device, dst &GpuBuffer, a &GpuBuffer, b &GpuBuffer, m u32, n u3
 	}
 	params_buf.load(params_bytes)!
 
-	pl := pipeline_get(dev, .gemm)!
+	use_k32 := m >= 512 && m <= 1024 && n >= 512 && n <= 1024 && k >= 512 && k <= 1024
+	gemm_pipeline := if use_k32 { PipelineType.gemm_k32 } else { PipelineType.gemm }
+	pl := pipeline_get(dev, gemm_pipeline)!
 	pl.update_buffer(0, a)!
 	pl.update_buffer(1, b)!
 	pl.update_buffer(2, dst)!
@@ -555,6 +558,7 @@ fn pipeline_get(d &Device, t PipelineType) !&ComputePipeline {
 		.selu { pl = d.create_pipeline(selu_spv, 'main')! }
 		.hardswish { pl = d.create_pipeline(hardswish_spv, 'main')! }
 		.gemm { pl = d.create_pipeline(gemm_spv, 'main')! }
+		.gemm_k32 { pl = d.create_pipeline(gemm_k32_spv, 'main')! }
 		.softmax { pl = d.create_pipeline(softmax_spv, 'main')! }
 		.layernorm { pl = d.create_pipeline(layernorm_spv, 'main')! }
 		.reduction { pl = d.create_pipeline(reduction_spv, 'main')! }

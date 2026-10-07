@@ -26,3 +26,17 @@ fn test_gemm_vulkan_matches_reference_with_partial_dimensions() {
 		}
 	}
 }
+
+fn test_gemm_vulkan_k32_matches_identity_512() {
+	mut dev := vulkan.new_device() or { return }
+	defer {
+		dev.release() or {}
+	}
+	n := 512
+	mut identity := []f32{len: n * n}
+	for i in 0 .. n {
+		identity[i * n + i] = 1
+	}
+	actual := gemm_vulkan_f32(dev, identity, identity, n, n, n) or { panic(err) }
+	assert actual == identity
+}

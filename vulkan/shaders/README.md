@@ -12,7 +12,8 @@ Shaders:
 
 | File | Op |
 |------|-----|
-| `gemm.glsl` | Tiled row-major f32 GEMM using shared workgroup memory |
+| `gemm.glsl` | Tiled row-major f32 GEMM using 16-wide K blocks |
+| `gemm_k32.glsl` | GEMM variant using 32-wide K blocks, selected for medium matrices |
 | `vector_mul.glsl` | `dst = a * b` |
 | `vector_sqrt.glsl` | `dst = sqrt(src)` |
 | `softplus.glsl` | Stable Softplus activation |
@@ -30,17 +31,23 @@ VJOBS=2 v fmt -w ./vsl/vulkan/spv_activations.v
 
 The existing elementwise and optimizer SPIR-V is embedded in `../spv_adam.v`.
 
-To rebuild GEMM SPIR-V from `~/.vmodules`:
+To rebuild both GEMM SPIR-V kernels from `~/.vmodules`:
 
 ```sh
 glslc -fshader-stage=compute --target-env=vulkan1.0 -O \
 	./vsl/vulkan/shaders/gemm.glsl -o /tmp/gemm.spv
 spirv-val --target-env vulkan1.0 /tmp/gemm.spv
-python3 ./vsl/vulkan/shaders/embed_spv.py /tmp/gemm.spv
+glslc -fshader-stage=compute --target-env=vulkan1.0 -O \
+	./vsl/vulkan/shaders/gemm_k32.glsl -o /tmp/gemm_k32.spv
+spirv-val --target-env vulkan1.0 /tmp/gemm_k32.spv
 ```
 
-Replace `gemm_spv` in `./vsl/vulkan/spv.v` with the generated array. Rebuild
-the tracked shared module so imports use the updated kernel:
+Embed each validated binary as `gemm_spv` and `gemm_k32_spv` in
+`./vsl/vulkan/spv.v`. `gemm` chooses the 32-wide K kernel only when all three
+dimensions are between 512 and 1024 inclusive; other sizes use the 16-wide
+kernel. The cutoff is hardware-dependent and should be supported by benchmark
+evidence before changing. Build the tracked shared module so imports use the
+updated kernels:
 
 ```sh
 systemd-run --user --scope --wait \

@@ -1,5 +1,11 @@
 module vulkan
 
+const vk_physical_device_type_other = u32(0)
+const vk_physical_device_type_integrated_gpu = u32(1)
+const vk_physical_device_type_discrete_gpu = u32(2)
+const vk_physical_device_type_virtual_gpu = u32(3)
+const vk_physical_device_type_cpu = u32(4)
+
 // ============================================================================
 // Device — Vulkan compute device abstraction
 //
@@ -154,11 +160,11 @@ fn create_instance() !VkInstance {
 // device_type_name returns a human-readable string for a VkPhysicalDeviceType integer.
 fn device_type_name(dtype u32) string {
 	return match dtype {
-		1 { 'Other' }
-		2 { 'Integrated GPU' }
-		3 { 'Discrete GPU' }
-		4 { 'Virtual GPU' }
-		5 { 'CPU' }
+		vk_physical_device_type_other { 'Other' }
+		vk_physical_device_type_integrated_gpu { 'Integrated GPU' }
+		vk_physical_device_type_discrete_gpu { 'Discrete GPU' }
+		vk_physical_device_type_virtual_gpu { 'Virtual GPU' }
+		vk_physical_device_type_cpu { 'CPU' }
 		else { 'Unknown' }
 	}
 }
@@ -167,11 +173,11 @@ fn device_type_name(dtype u32) string {
 // Discrete GPU → 0, Integrated GPU → 1, Virtual GPU → 2, Other → 3, CPU → 4.
 fn device_type_priority(dtype u32) int {
 	return match dtype {
-		3 { 0 } // VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU
-		2 { 1 } // VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU
-		4 { 2 } // VK_PHYSICAL_DEVICE_TYPE_VIRTUAL_GPU
-		1 { 3 } // VK_PHYSICAL_DEVICE_TYPE_OTHER
-		5 { 4 } // VK_PHYSICAL_DEVICE_TYPE_CPU
+		vk_physical_device_type_discrete_gpu { 0 }
+		vk_physical_device_type_integrated_gpu { 1 }
+		vk_physical_device_type_virtual_gpu { 2 }
+		vk_physical_device_type_other { 3 }
+		vk_physical_device_type_cpu { 4 }
 		else { 5 }
 	}
 }
