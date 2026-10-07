@@ -1,30 +1,37 @@
 module float64
 
 import math
+import simd
 
 // l2_norm_unitary returns the L2-norm of x.
 pub fn l2_norm_unitary(x []f64) f64 {
 	mut scale := 0.0
-	mut sum_squares := 1.0
 	for v in x {
-		if v == 0 {
-			continue
-		}
 		absxi := math.abs(v)
 		if math.is_nan(absxi) {
 			return math.nan()
 		}
-		if scale < absxi {
-			s := scale / absxi
-			sum_squares = 1 + sum_squares * s * s
+		if absxi > scale {
 			scale = absxi
-		} else {
-			s := absxi / scale
-			sum_squares += s * s
 		}
+	}
+	if scale == 0 {
+		return 0
 	}
 	if math.is_inf(scale, 1) {
 		return math.inf(1)
+	}
+	scale_vector := simd.splat_f64x4(scale)
+	mut squared_sums := simd.splat_f64x4(0)
+	mut offset := 0
+	for ; offset + 4 <= x.len; offset += 4 {
+		normalized := simd.load_f64x4_at(x, offset) / scale_vector
+		squared_sums += normalized * normalized
+	}
+	mut sum_squares := squared_sums.sum()
+	for value in x[offset..] {
+		normalized := value / scale
+		sum_squares += normalized * normalized
 	}
 	return scale * math.sqrt(sum_squares)
 }
