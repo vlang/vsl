@@ -292,7 +292,10 @@ pub fn dnrm2(n int, x []f64, incx int) f64 {
 	if n <= 0 || x.len == 0 {
 		return 0.0
 	}
-	return blas64.dnrm2(n, x, incx)
+	if incx < 1 || x.len <= (n - 1) * incx {
+		return blas64.dnrm2(n, x, incx)
+	}
+	return C.cblas_dnrm2(n, unsafe { &x[0] }, incx)
 }
 
 // scnrm2 exposes this operation as part of the public API.

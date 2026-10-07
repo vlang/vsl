@@ -295,6 +295,15 @@ fn test_dnrm2() {
 	}
 }
 
+fn test_dnrm2_handles_stride_and_extreme_magnitudes() {
+	strided := dnrm2(2, [3.0, 99.0, 4.0], 2)
+	assert float64.tolerance(strided, 5.0, test_tol)
+	large := dnrm2(2, [1e308, 1e308], 1)
+	assert float64.tolerance(large / 1e308, math.sqrt(2.0), test_tol)
+	small := dnrm2(2, [1e-308, 1e-308], 1)
+	assert float64.tolerance(small / 1e-308, math.sqrt(2.0), test_tol)
+}
+
 fn test_idamax() {
 	for case in level1_test_cases {
 		result := idamax(case.n, case.x, case.incx)
