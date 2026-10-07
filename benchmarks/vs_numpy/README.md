@@ -96,17 +96,20 @@ measured 0.976 ms. The optimized V path is still about 3.8× slower with the
 portable build and 3.5× slower with the native build; the output checksums
 matched to f32 precision. These are local measurements, not a general ranking.
 
-### Current local host (2026-10-06)
+### Current local host (2026-10-07)
 
-On an AMD Ryzen 9 5900X with V 0.5.2, the median of five runs of the native
-`-O3 -march=native` pure-V SIMD build was 3.591 ms for 512×512 SGEMM. NumPy
-2.5.3 with `OPENBLAS_NUM_THREADS=2` measured a 1.011 ms median using the same
-deterministic inputs and a preallocated output; both checksums were
-`125.0545`. The pure-V kernel was 3.55× slower on this host. The installed
-generic system CBLAS had a 35.007 ms median in the same V microbenchmark, so it
-is not a useful acceleration backend here. Each run includes three warmups and
-seven timed calls; runs used two V jobs and a 768 MiB memory limit. These
-measurements describe this host only.
+On an AMD Ryzen 9 5900X with V 0.5.2, the native `-O3 -march=native` pure-V
+SIMD build measured 3.791 ms before the SGEMM FMA change. After using SIMD
+fused multiply-add for the eight vector accumulators, three process runs
+measured 2.604, 2.568, and 3.070 ms; the median was 2.604 ms (31% below the
+single pre-change run). NumPy 2.5.3 with `OPENBLAS_NUM_THREADS=2` measured
+0.971 ms using the same deterministic inputs and a preallocated output. The
+V and NumPy checksums were `125.054512` and `125.054504`; the small difference
+is expected from f32 rounding. The optimized pure-V kernel was still 2.68×
+slower than NumPy on this host, so the change narrows but does not close the
+performance gap. Each V benchmark run includes three warmups and seven timed
+calls; runs used two V jobs and a 768 MiB memory limit. These measurements
+describe this host only.
 
 ## Ryzen 9 5900X local sample
 

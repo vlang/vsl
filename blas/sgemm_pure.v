@@ -139,14 +139,14 @@ fn sgemm_pure_no_trans_rows(row_start int, row_end int, n int, k int, alpha f32,
 			mut sum7 := simd.splat_f32x8(0)
 			for p in 0 .. k {
 				b_values := simd.load_f32x8_at(b, p * ldb + j)
-				sum0 = sum0 + simd.splat_f32x8(a[a0 + p]) * b_values
-				sum1 = sum1 + simd.splat_f32x8(a[a1 + p]) * b_values
-				sum2 = sum2 + simd.splat_f32x8(a[a2 + p]) * b_values
-				sum3 = sum3 + simd.splat_f32x8(a[a3 + p]) * b_values
-				sum4 = sum4 + simd.splat_f32x8(a[a4 + p]) * b_values
-				sum5 = sum5 + simd.splat_f32x8(a[a5 + p]) * b_values
-				sum6 = sum6 + simd.splat_f32x8(a[a6 + p]) * b_values
-				sum7 = sum7 + simd.splat_f32x8(a[a7 + p]) * b_values
+				sum0 = simd.splat_f32x8(a[a0 + p]).mul_add(b_values, sum0)
+				sum1 = simd.splat_f32x8(a[a1 + p]).mul_add(b_values, sum1)
+				sum2 = simd.splat_f32x8(a[a2 + p]).mul_add(b_values, sum2)
+				sum3 = simd.splat_f32x8(a[a3 + p]).mul_add(b_values, sum3)
+				sum4 = simd.splat_f32x8(a[a4 + p]).mul_add(b_values, sum4)
+				sum5 = simd.splat_f32x8(a[a5 + p]).mul_add(b_values, sum5)
+				sum6 = simd.splat_f32x8(a[a6 + p]).mul_add(b_values, sum6)
+				sum7 = simd.splat_f32x8(a[a7 + p]).mul_add(b_values, sum7)
 			}
 			if alpha != 1 {
 				alpha_vec := simd.splat_f32x8(alpha)
