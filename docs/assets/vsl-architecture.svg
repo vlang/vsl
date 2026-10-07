@@ -1,0 +1,159 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 960" role="img" aria-labelledby="title desc">
+  <title id="title">VSL scientific library architecture</title>
+  <desc id="desc">V applications and VTL use VSL modules for linear algebra, scientific computing, machine learning, visualization, I/O, and parallel computing. Compute-heavy modules can use the vsl.compute dispatch API and module-specific pure V, CBLAS/LAPACK, CUDA, Vulkan, or OpenCL/VCL backends.</desc>
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#17243a" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="hero" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#10253d"/>
+      <stop offset="1" stop-color="#111b31"/>
+    </linearGradient>
+    <linearGradient id="module" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#123747"/>
+      <stop offset="1" stop-color="#102734"/>
+    </linearGradient>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#38bdf8"/></marker>
+    <marker id="arrow-violet" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#a78bfa"/></marker>
+    <marker id="arrow-amber" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#fbbf24"/></marker>
+    <style>
+      text { font-family: 'JetBrains Mono', 'DejaVu Sans Mono', monospace; }
+      .eyebrow { fill:#7dd3fc; font-size:13px; font-weight:700; letter-spacing:2.4px; }
+      .title { fill:#f8fafc; font-size:34px; font-weight:700; letter-spacing:-.8px; }
+      .subtitle { fill:#a8b6ca; font-size:15px; }
+      .section { fill:#e2e8f0; font-size:19px; font-weight:700; }
+      .label { fill:#f8fafc; font-size:15px; font-weight:700; }
+      .body { fill:#c3cfdf; font-size:12.5px; }
+      .tiny { fill:#91a2b9; font-size:11px; }
+      .chip { fill:#e2e8f0; font-size:11.5px; font-weight:600; }
+      .muted { fill:#71829a; font-size:11px; }
+      .arrow { fill:none; stroke:#38bdf8; stroke-width:2.5; marker-end:url(#arrow-blue); }
+      .compute { fill:none; stroke:#a78bfa; stroke-width:2.4; marker-end:url(#arrow-violet); }
+      .dispatch { fill:none; stroke:#fbbf24; stroke-width:2.3; marker-end:url(#arrow-amber); }
+      .divider { stroke:#334155; stroke-width:1; }
+    </style>
+  </defs>
+
+  <rect width="1440" height="960" rx="22" fill="#050b16"/>
+  <rect width="1440" height="960" rx="22" fill="url(#grid)" opacity=".58"/>
+  <rect x="1" y="1" width="1438" height="958" rx="21" fill="none" stroke="#26364c" stroke-width="2"/>
+
+  <text x="64" y="56" class="eyebrow">SCIENTIFIC COMPUTING · V LIBRARY</text>
+  <text x="64" y="103" class="title">Inside VSL</text>
+  <text x="64" y="132" class="subtitle">Composable scientific modules with portable defaults and optional, module-specific acceleration.</text>
+  <rect x="1193" y="47" width="183" height="38" rx="19" fill="#0d1d2c" stroke="#155e75"/>
+  <circle cx="1214" cy="66" r="5" fill="#34d399"/>
+  <text x="1229" y="70" class="chip">V NATIVE</text>
+
+  <!-- Connectors sit behind module cards. -->
+  <path d="M304 436H346V434H375" class="arrow"/>
+  <path d="M1049 434H1092V436H1132" class="arrow"/>
+  <path d="M705 620V662" class="compute"/>
+  <path d="M705 770V812" class="dispatch"/>
+  <path d="M1049 708H1090V550H1132" class="compute"/>
+
+  <!-- Consumers and data -->
+  <g>
+    <rect x="64" y="210" width="240" height="464" rx="14" fill="#0b1424" stroke="#64748b" stroke-width="1.5"/>
+    <rect x="64" y="210" width="240" height="54" rx="14" fill="#101b2c"/>
+    <path d="M64 250V264H304V250" fill="#101b2c"/>
+    <circle cx="88" cy="237" r="6" fill="#94a3b8"/>
+    <text x="106" y="243" class="section">Consumers</text>
+    <text x="84" y="296" class="tiny">VSL IS USED BY</text>
+    <rect x="82" y="316" width="204" height="82" rx="9" fill="#111d2e" stroke="#475569"/>
+    <text x="101" y="344" class="label">V applications</text>
+    <text x="101" y="370" class="body">science · math · ML</text>
+    <rect x="82" y="414" width="204" height="82" rx="9" fill="#111d2e" stroke="#475569"/>
+    <text x="101" y="442" class="label">VTL</text>
+    <text x="101" y="468" class="body">tensors · autograd · NN</text>
+    <rect x="82" y="512" width="204" height="112" rx="9" fill="#111d2e" stroke="#475569"/>
+    <text x="101" y="541" class="label">Scientific inputs</text>
+    <text x="101" y="566" class="body">matrices · signals · samples</text>
+    <text x="101" y="590" class="body">files · device buffers</text>
+    <text x="84" y="649" class="muted">vlang/vsl</text>
+  </g>
+
+  <!-- VSL public module surface -->
+  <g>
+    <rect x="375" y="210" width="674" height="410" rx="16" fill="url(#hero)" stroke="#22d3ee" stroke-width="1.8"/>
+    <text x="401" y="243" class="eyebrow">VSL · SCIENTIFIC MODULES</text>
+    <text x="401" y="273" class="section">Pick the module for the problem</text>
+
+    <rect x="401" y="294" width="300" height="136" rx="10" fill="#0e2532" stroke="#0e7490"/>
+    <text x="421" y="323" class="label">Linear algebra</text>
+    <text x="421" y="349" class="body">vsl.la · BLAS · LAPACK · sparse</text>
+    <text x="421" y="372" class="body">matrices · vectors · solvers</text>
+    <text x="421" y="405" class="tiny">PURE V OR OPTIONAL C LIBRARIES</text>
+
+    <rect x="718" y="294" width="305" height="136" rx="10" fill="#0e2532" stroke="#0e7490"/>
+    <text x="738" y="323" class="label">Scientific methods</text>
+    <text x="738" y="349" class="body">FFT · statistics · probability</text>
+    <text x="738" y="372" class="body">calculus · numerical methods</text>
+    <text x="738" y="405" class="tiny">SIGNALS · DISTRIBUTIONS · SOLVERS</text>
+
+    <rect x="401" y="448" width="300" height="142" rx="10" fill="#0e2532" stroke="#0e7490"/>
+    <text x="421" y="477" class="label">Machine learning</text>
+    <text x="421" y="503" class="body">K-means · KNN · regression</text>
+    <text x="421" y="526" class="body">classification · NLP utilities</text>
+    <text x="421" y="565" class="tiny">ALGORITHMS AND DATA WORKFLOWS</text>
+
+    <rect x="718" y="448" width="305" height="142" rx="10" fill="#0e2532" stroke="#0e7490"/>
+    <text x="738" y="477" class="label">Systems &amp; presentation</text>
+    <text x="738" y="503" class="body">plotting · HDF5 · MPI</text>
+    <text x="738" y="526" class="body">OpenCL/VCL · Vulkan · CUDA</text>
+    <text x="738" y="565" class="tiny">OPTIONAL MODULES AND TOOLCHAINS</text>
+  </g>
+
+  <!-- Dispatch API -->
+  <g>
+    <rect x="375" y="662" width="674" height="108" rx="14" fill="#17122b" stroke="#a78bfa" stroke-width="1.8"/>
+    <text x="401" y="694" class="eyebrow" style="fill:#c4b5fd">COMPUTE DISPATCH · WHERE SUPPORTED</text>
+    <text x="401" y="725" class="section">vsl.compute</text>
+    <text x="552" y="725" class="body">Backend-agnostic integration point for compute kernels.</text>
+    <text x="401" y="750" class="tiny">BACKEND AVAILABILITY AND BUILD FLAGS ARE MODULE-SPECIFIC</text>
+  </g>
+
+  <!-- Backends -->
+  <g>
+    <rect x="375" y="812" width="674" height="88" rx="14" fill="#241a0d" stroke="#fbbf24" stroke-width="1.6"/>
+    <text x="399" y="840" class="eyebrow" style="fill:#fcd34d">EXECUTION OPTIONS</text>
+    <rect x="399" y="852" width="115" height="31" rx="15.5" fill="#33240f" stroke="#a16207"/>
+    <text x="456" y="873" class="chip" text-anchor="middle">Pure V · CPU</text>
+    <rect x="523" y="852" width="134" height="31" rx="15.5" fill="#33240f" stroke="#a16207"/>
+    <text x="590" y="873" class="chip" text-anchor="middle">CBLAS · LAPACKE</text>
+    <rect x="666" y="852" width="94" height="31" rx="15.5" fill="#33240f" stroke="#a16207"/>
+    <text x="713" y="873" class="chip" text-anchor="middle">CUDA</text>
+    <rect x="769" y="852" width="105" height="31" rx="15.5" fill="#33240f" stroke="#a16207"/>
+    <text x="821" y="873" class="chip" text-anchor="middle">Vulkan</text>
+    <rect x="883" y="852" width="142" height="31" rx="15.5" fill="#33240f" stroke="#a16207"/>
+    <text x="954" y="873" class="chip" text-anchor="middle">OpenCL · VCL</text>
+  </g>
+
+  <!-- Results -->
+  <g>
+    <rect x="1132" y="210" width="244" height="464" rx="14" fill="#0b1424" stroke="#64748b" stroke-width="1.5"/>
+    <rect x="1132" y="210" width="244" height="54" rx="14" fill="#101b2c"/>
+    <path d="M1132 250V264H1376V250" fill="#101b2c"/>
+    <circle cx="1156" cy="237" r="6" fill="#94a3b8"/>
+    <text x="1174" y="243" class="section">Results</text>
+    <text x="1152" y="296" class="tiny">RETURNED TO THE CALLER</text>
+    <rect x="1150" y="316" width="208" height="82" rx="9" fill="#111d2e" stroke="#475569"/>
+    <text x="1169" y="344" class="label">Numerics</text>
+    <text x="1169" y="370" class="body">solutions · decompositions</text>
+    <rect x="1150" y="414" width="208" height="82" rx="9" fill="#111d2e" stroke="#475569"/>
+    <text x="1169" y="442" class="label">Analysis</text>
+    <text x="1169" y="468" class="body">models · stats · plots</text>
+    <rect x="1150" y="512" width="208" height="112" rx="9" fill="#111d2e" stroke="#475569"/>
+    <text x="1169" y="541" class="label">Acceleration</text>
+    <text x="1169" y="566" class="body">CPU · GPU · distributed</text>
+    <text x="1169" y="590" class="body">per module support</text>
+    <text x="1152" y="649" class="muted">compose · dispatch · compute</text>
+  </g>
+
+  <g transform="translate(64 930)">
+    <circle cx="5" cy="0" r="5" fill="#38bdf8"/><text x="18" y="4" class="tiny">module APIs</text>
+    <circle cx="136" cy="0" r="5" fill="#a78bfa"/><text x="149" y="4" class="tiny">compute dispatch</text>
+    <circle cx="297" cy="0" r="5" fill="#fbbf24"/><text x="310" y="4" class="tiny">optional backends</text>
+    <text x="1000" y="4" class="muted">VSL · scientific computing for V</text>
+  </g>
+</svg>
