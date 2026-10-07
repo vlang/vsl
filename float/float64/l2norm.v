@@ -21,6 +21,25 @@ pub fn l2_norm_unitary(x []f64) f64 {
 	if math.is_inf(scale, 1) {
 		return math.inf(1)
 	}
+	// For ordinary magnitudes, avoid dividing every lane by `scale` in the
+	// second pass. Keep the scaled algorithm below for tiny or very large
+	// values, where direct squaring could underflow or overflow.
+	max_safe_scale := math.sqrt(math.max_f64 / f64(x.len))
+	if scale >= 1e-150 && scale <= max_safe_scale {
+		mut squared_sums := simd.splat_f64x4(0)
+		mut offset := 0
+		for ; offset + 4 <= x.len; offset += 4 {
+			values := simd.load_f64x4_at(x, offset)
+			squared_sums += values * values
+		}
+		mut sum_squares := squared_sums.sum()
+		for value in x[offset..] {
+			sum_squares += value * value
+		}
+		if !math.is_inf(sum_squares, 1) {
+			return math.sqrt(sum_squares)
+		}
+	}
 	scale_vector := simd.splat_f64x4(scale)
 	mut squared_sums := simd.splat_f64x4(0)
 	mut offset := 0
