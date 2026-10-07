@@ -73,6 +73,20 @@ systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySw
 
 If you run from `~/.vmodules`, prefix benchmark paths with `vsl/`.
 
+The resident-buffer Vulkan GEMM benchmark compares kernel execution with
+buffers allocated once and reused; it excludes host-to-device input transfer
+and device-to-host output transfer. Run it from `~/.vmodules`:
+
+```sh
+cd ~/.vmodules
+systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
+	-- env VJOBS=2 v -prod -d vulkan run ./vsl/benchmarks/vulkan_gemm_f32_bench.v
+```
+
+It reports the active K tile (16 or 32) per size. These kernel-only timings
+must not be presented as end-to-end GPU performance or compared directly with
+CPU timings that include allocation or different thread counts.
+
 ### Run All Benchmarks
 
 ```sh
