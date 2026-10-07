@@ -66,6 +66,13 @@ fn test_l2_norm_unitary() {
 	}
 }
 
+fn test_l2_norm_unitary_scales_extreme_values() {
+	large := l2_norm_unitary([1e308, 1e308])
+	assert math.abs(large / 1e308 - math.sqrt(2.0)) < 1e-12
+	small := l2_norm_unitary([1e-308, 1e-308])
+	assert math.abs(small / 1e-308 - math.sqrt(2.0)) < 1e-12
+}
+
 fn test_l2_norm_inc() {
 	tol := 1e-15
 
