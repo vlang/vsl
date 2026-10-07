@@ -37,8 +37,9 @@ pub interface ComputeBackend {
 	softmax(x []f64) ![]f64
 	layernorm(x []f64, gamma []f64, beta []f64) ![]f64
 
-	// conv2d computes 2D convolution: input [batch x in_h x in_w x in_ch],
-	// kernel [out_ch x k_h x k_w x in_ch], output [batch x out_h x out_w x out_ch].
+	// conv2d computes unpadded 2D convolution with NCHW row-major storage:
+	// input [batch, in_ch, in_h, in_w], kernel [out_ch, in_ch, k_h, k_w],
+	// output [batch, out_ch, out_h, out_w].
 	conv2d(input []f64, kernel []f64, batch int, in_h int, in_w int, in_ch int, out_ch int, k_h int, k_w int, stride_h int, stride_w int) ![]f64
 
 	// to_internal converts row-major data to the backend's internal layout.
@@ -50,7 +51,7 @@ pub interface ComputeBackend {
 
 // cpu_supported_ops lists operations implemented by the portable CPU backend.
 pub const cpu_supported_ops = ['gemm', 'gemv', 'relu', 'sigmoid', 'tanh', 'add_vec', 'mul_vec',
-	'add_scalar', 'mul_scalar', 'softmax', 'layernorm']
+	'add_scalar', 'mul_scalar', 'softmax', 'layernorm', 'conv2d']
 
 // cuda_supported_ops lists operations implemented by the CUDA backend.
 pub const cuda_supported_ops = ['gemm', 'gemv', 'relu', 'sigmoid', 'tanh', 'add_vec', 'mul_vec',
@@ -159,7 +160,8 @@ pub fn (c &CPUBackend) layernorm(x []f64, gamma []f64, beta []f64) ![]f64 {
 
 // conv2d exposes this operation as part of the public API.
 pub fn (c &CPUBackend) conv2d(input []f64, kernel []f64, batch int, in_h int, in_w int, in_ch int, out_ch int, k_h int, k_w int, stride_h int, stride_w int) ![]f64 {
-	return error('CPUBackend.conv2d: not implemented')
+	return conv2d_cpu_f64(input, kernel, batch, in_h, in_w, in_ch, out_ch, k_h, k_w, stride_h,
+		stride_w)
 }
 
 // to_internal exposes this operation as part of the public API.
