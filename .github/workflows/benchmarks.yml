@@ -54,12 +54,12 @@ jobs:
 
     steps:
       - name: Checkout VSL
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           path: vsl
 
       - name: Setup V
-        uses: vlang/setup-v@v1.6
+        uses: vlang/setup-v@v1.7
         with:
           check-latest: true
 
@@ -125,7 +125,7 @@ jobs:
 
       - name: Upload benchmark results
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: benchmark-results-${{ matrix.os }}-${{ matrix.backend.id }}
           path: |
@@ -156,12 +156,12 @@ jobs:
 
     steps:
       - name: Checkout VSL
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           path: vsl
 
       - name: Setup V
-        uses: vlang/setup-v@v1.6
+        uses: vlang/setup-v@v1.7
         with:
           check-latest: true
 
@@ -220,7 +220,7 @@ jobs:
 
       - name: Upload benchmark results
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: benchmark-results-macos-${{ matrix.backend.id }}
           path: |
@@ -233,12 +233,12 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout VSL
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           path: vsl
 
       - name: Setup V
-        uses: vlang/setup-v@v1.6
+        uses: vlang/setup-v@v1.7
         with:
           check-latest: true
 
@@ -263,7 +263,7 @@ jobs:
 
       - name: Upload vs_numpy logs
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: vs-numpy-benchmark-logs
           path: ~/.vmodules/vs_numpy_*.log
@@ -277,12 +277,12 @@ jobs:
         benchmark: [fft, mpi]
     steps:
       - name: Checkout VSL
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           path: vsl
 
       - name: Setup V
-        uses: vlang/setup-v@v1.6
+        uses: vlang/setup-v@v1.7
         with:
           check-latest: true
 
@@ -318,7 +318,7 @@ jobs:
 
       - name: Upload FFT benchmark results
         if: always() && matrix.benchmark == 'fft'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: fft-benchmark-logs
           path: ~/.vmodules/fft_bench.log
@@ -326,7 +326,7 @@ jobs:
 
       - name: Upload MPI benchmark results
         if: always() && matrix.benchmark == 'mpi'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: mpi-benchmark-logs
           path: ~/.vmodules/mpi_bench.log

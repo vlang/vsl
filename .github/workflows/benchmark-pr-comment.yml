@@ -19,9 +19,9 @@ jobs:
   comment:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: vlang/setup-v@v1.6
+      - uses: vlang/setup-v@v1.7
         with:
           check-latest: true
 
@@ -48,7 +48,7 @@ jobs:
           } 2>&1 | tee vs_numpy_pr.md
 
       - name: Post sticky PR comment
-        uses: marocchino/sticky-pull-request-comment@v2
+        uses: marocchino/sticky-pull-request-comment@v3
         with:
           header: vsl-vs-numpy
           path: ~/.vmodules/vs_numpy_pr.md
