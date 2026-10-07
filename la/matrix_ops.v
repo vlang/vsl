@@ -90,7 +90,7 @@ pub fn matrix_svd(mut s []f64, mut u Matrix[f64], mut vt Matrix[f64], mut a Matr
 	if copy_a {
 		acpy = a.clone()
 	}
-	lapack.dgesvd(.svd_all, .svd_all, a.m, a.n, mut acpy.data, 1, s, mut u.data, a.m, mut vt.data,
+	lapack.dgesvd(.svd_all, .svd_all, a.m, a.n, mut acpy.data, a.n, s, mut u.data, a.m, mut vt.data,
 		a.n, superb)
 }
 
