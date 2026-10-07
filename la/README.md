@@ -106,6 +106,24 @@ a.set(0, 1, 1.0)
 // mut x := la.solve_linear_system(a, b)
 ```
 
+### Least Squares
+
+`lstsq` returns the minimum-norm solution, squared residual sums, effective
+rank, and descending singular values. Its default rank cutoff is
+`max(m, n) * f64_epsilon * largest_singular_value`. Residuals are present only
+for overdetermined, full-column-rank systems; underdetermined or rank-deficient
+systems return an empty residual slice. Use `lstsq_with_rcond` to choose an
+explicit non-negative relative cutoff, or a negative value for the default.
+
+```v
+import vsl.la
+
+a := la.Matrix.deep2([[1.0, 0], [0, 1], [1, 1]])
+b := la.Matrix.deep2([[1.0], [2], [4]])
+x, residuals, rank, singular_values := la.lstsq(a, b)
+// x ≈ [[1.3333], [2.3333]], residuals ≈ [0.3333], rank == 2
+```
+
 ## 🔧 Performance Options
 
 ### Pure V Implementation
