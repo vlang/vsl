@@ -31,11 +31,11 @@ jobs:
       VJOBS: '2'
     steps:
       - name: Checkout VSL
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           path: vsl
       - name: Setup V
-        uses: vlang/setup-v@v1.6
+        uses: vlang/setup-v@v1.7
         with:
           check-latest: true
       - name: Install dependencies
@@ -67,11 +67,11 @@ jobs:
       VJOBS: '2'
     steps:
       - name: Checkout VSL
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           path: vsl
       - name: Setup V
-        uses: vlang/setup-v@v1.6
+        uses: vlang/setup-v@v1.7
         with:
           check-latest: true
       - name: Setup VSL as V module
