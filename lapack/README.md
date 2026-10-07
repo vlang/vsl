@@ -63,13 +63,12 @@ Therefore, its routines are a little more _lower level_ than the ones in the pac
 
 ## LAPACKE Backend
 
-We provide a backend for the LAPACKE library. This backend is probably
-the fastest one for all platforms
-but it requires the installation of the LAPACKE library.
+The `-d vsl_lapack_lapacke` build tag selects LAPACKE for supported routines.
+This backend is probably the fastest one for all platforms, but it requires
+the LAPACKE library to be installed.
 
-Use the compilation flag `-d vsl_lapack_lapacke` to use the LAPACKE backend
-instead of the pure V implementation
-and make sure that the LAPACKE library is installed in your system.
+On Linux, the default build uses the pure-V `lapack64` implementation for
+`dlange`; it does not require LAPACKE.
 
 Check the section below for more information about installing the LAPACKE library.
 

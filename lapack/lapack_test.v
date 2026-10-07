@@ -12,6 +12,17 @@ import rand
 const test_tolerance = 1e-12
 const ortho_tolerance = 1e-15
 
+fn test_dlange_default_backend_computes_supported_norms() {
+	matrix := [f64(1), -2, 3, 4, 5, -6]
+	mut work := []f64{len: 3}
+	assert dlange(`M`, 2, 3, matrix, 3, work) == 6
+	assert dlange(`1`, 2, 3, matrix, 3, work) == 9
+	assert dlange(`O`, 2, 3, matrix, 3, work) == 9
+	assert dlange(`I`, 2, 3, matrix, 3, work) == 15
+	assert math.abs(dlange(`F`, 2, 3, matrix, 3, work) - math.sqrt(91.0)) < 1e-12
+	assert math.abs(dlange(`E`, 2, 3, matrix, 3, work) - math.sqrt(91.0)) < 1e-12
+}
+
 // Test utilities and helpers
 
 // nearly_equal_matrix checks if two matrices are nearly equal within tolerance
