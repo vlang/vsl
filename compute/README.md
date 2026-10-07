@@ -13,6 +13,10 @@ fn main() {
 	ctx := compute.new_context(.cpu)
 	c := compute.gemm(ctx, [1.0, 2, 3, 4], [5.0, 6, 7, 8], 2, 2, 2)!
 	assert c == [19.0, 22, 43, 50]
+	image := [f64(1), 2, 3, 4, 5, 6, 7, 8, 9]
+	filter := [f64(1), 0, 0, 1]
+	features := compute.conv2d(ctx, image, filter, 1, 3, 3, 1, 1, 2, 2, 1, 1)!
+	assert features == [6.0, 8, 12, 14]
 }
 ```
 
@@ -25,12 +29,15 @@ Public dispatch functions are:
 | Normalization and convolution | `softmax`, `layernorm`, `conv2d` |
 | Capability query | `available_backends()`, `op_supported(backend, operation)` |
 
-`gemm` expects row-major `A[m,k]` and `B[k,n]`; `conv2d` documents its NHWC
-input and filter shapes in [`backend.v`](backend.v). Implemented operations are
-backend-specific: check `available_backends()` for build availability and
-`op_supported` for the operation list, then handle returned errors. The CPU
-backend reports GEMM/GEMV, activations, vector/scalar arithmetic, softmax, and
-layer normalization; accelerator operation lists are in `backend.v`.
+`gemm` expects row-major `A[m,k]` and `B[k,n]`. `conv2d` performs unpadded
+NCHW convolution: input `[batch,in_ch,in_h,in_w]`, kernel
+`[out_ch,in_ch,k_h,k_w]`, and output `[batch,out_ch,out_h,out_w]`. It requires
+positive channels, spatial sizes, kernel sizes, and strides; batch may be zero.
+Implemented operations are backend-specific: check `available_backends()` for
+build availability and `op_supported` for the operation list, then handle
+returned errors. The portable CPU backend implements convolution alongside
+GEMM/GEMV, activations, vector/scalar arithmetic, softmax, and layer
+normalization.
 
 The `auto` preference selects a backend compiled into the build, in the order
 Vulkan, VCL, CUDA, then CPU. It does not benchmark devices. For an explicitly
