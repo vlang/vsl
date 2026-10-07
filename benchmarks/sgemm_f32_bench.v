@@ -26,5 +26,12 @@ fn main() {
 		checksum = c[n * n / 2]
 	}
 	mean_ms := f64(total_ns) / f64(iterations) / 1_000_000.0
-	println('pure-V f32 SGEMM 512x512 mean=${mean_ms:.3f} ms checksum=${checksum:.6f}')
+	backend := $if vsl_blas_cblas {
+		'CBLAS'
+	} $else $if vsl_blas_generic_cblas {
+		'generic CBLAS'
+	} $else {
+		'pure-V SIMD'
+	}
+	println('${backend} f32 SGEMM 512x512 mean=${mean_ms:.3f} ms checksum=${checksum:.6f}')
 }
