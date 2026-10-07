@@ -73,10 +73,12 @@ ms and 68.32 ms respectively (about 10% faster). This tuning does not close
 the remaining gap to NumPy or replace a tuned BLAS backend; confirm it on
 other CPUs before treating it as generally faster.
 
-## Pure-V f32 SGEMM
+## f32 SGEMM backend comparison
 
 The dedicated SGEMM pair uses identical deterministic `f32` matrices, three
-warmups, seven timed calls, and preallocated output buffers. Run from
+warmups, seven timed calls, and preallocated output buffers. The V benchmark
+prints the selected implementation (`pure-V SIMD`, `CBLAS`, or `generic
+CBLAS`) so the result cannot be mistaken for a different backend. Run from
 `~/.vmodules`:
 
 ```bash
@@ -93,6 +95,18 @@ with `-cflags "-O3 -march=native"`. The previous kernel measured 4.327 ms and
 measured 0.976 ms. The optimized V path is still about 3.8× slower with the
 portable build and 3.5× slower with the native build; the output checksums
 matched to f32 precision. These are local measurements, not a general ranking.
+
+### Current local host (2026-10-06)
+
+On an AMD Ryzen 9 5900X with V 0.5.2, the median of five runs of the native
+`-O3 -march=native` pure-V SIMD build was 3.591 ms for 512×512 SGEMM. NumPy
+2.5.3 with `OPENBLAS_NUM_THREADS=2` measured a 1.011 ms median using the same
+deterministic inputs and a preallocated output; both checksums were
+`125.0545`. The pure-V kernel was 3.55× slower on this host. The installed
+generic system CBLAS had a 35.007 ms median in the same V microbenchmark, so it
+is not a useful acceleration backend here. Each run includes three warmups and
+seven timed calls; runs used two V jobs and a 768 MiB memory limit. These
+measurements describe this host only.
 
 ## Ryzen 9 5900X local sample
 
