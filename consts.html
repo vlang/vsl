@@ -66,10 +66,7 @@
 <div class="menu-row"><a href="./main.html">main</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>benchmarks</a></div>
-<ul>
-<li><a href="./benchmarks.util.html">util</a></li>
-</ul>
+<div class="menu-row"><a href="./util.html">util</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./blas.html">blas</a></div>
@@ -111,11 +108,10 @@
 <div class="menu-row"><a href="./fit.html">fit</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>float</a></div>
-<ul>
-<li><a href="./float.float32.html">float32</a></li>
-<li><a href="./float.float64.html">float64</a></li>
-</ul>
+<div class="menu-row"><a href="./float32.html">float32</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./float64.html">float64</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./fun.html">fun</a></div>
@@ -130,21 +126,13 @@
 <div class="menu-row"><a href="./graph.html">graph</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>inout</a></div>
-<ul>
-<li><a href="./inout.csv.html">csv</a></li>
-</ul>
+<div class="menu-row"><a href="./csv.html">csv</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./h5.html">h5</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>internal</a></div>
-<ul>
-<li><a href="./internal.prec.html">prec</a></li>
-<li><a href="./internal.dl.html">dl</a></li>
-<li><a href="./internal.dl.html">dl</a></li>
-</ul>
+<div class="menu-row"><a href="./prec.html">prec</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./iter.html">iter</a></div>
@@ -162,10 +150,10 @@
 <div class="menu-row"><a href="./metrics.html">metrics</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="./ml.html">ml</a></div>
-<ul>
-<li><a href="./ml.nlp.html">nlp</a></li>
-</ul>
+<div class="menu-row"><a href="./ml.html">ml</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./nlp.html">nlp</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./model_selection.html">model_selection</a></div>
@@ -195,10 +183,10 @@
 <div class="menu-row"><a href="./roots.html">roots</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><a href="./util.html">util</a></div>
+<div class="menu-row"><a href="./vcl.html">vcl</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><a href="./vcl.html">vcl</a></div>
+<div class="menu-row"><a href="./dl.html">dl</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./vulkan.html">vulkan</a></div>
@@ -485,8 +473,8 @@ t_max <span class="token operator">:=</span> <span class="token punctuation">(</
 min <span class="token operator">:=</span> t_min <span class="token operator">/</span> minutes
 max <span class="token operator">:=</span> t_max <span class="token operator">/</span> minutes
 <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'light travel time from Earth to Mars:'</span><span class="token punctuation">)</span>
-<span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&#39;minimum = </span><span class="token string_interp">$</span>{min}<span class="token string"> minutes&#39;</span><span class="token punctuation">)</span>
-<span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&#39;maximum = </span><span class="token string_interp">$</span>{max}<span class="token string"> minutes&#39;</span><span class="token punctuation">)</span></code></pre>
+<span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'minimum = </span><span class="token string_interp">$</span><span class="token string_interp">{</span>min<span class="token string_interp">}</span><span class="token string"> minutes'</span><span class="token punctuation">)</span>
+<span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'maximum = </span><span class="token string_interp">$</span><span class="token string_interp">{</span>max<span class="token string_interp">}</span><span class="token string"> minutes'</span><span class="token punctuation">)</span></code></pre>
 <p>will print</p>
 <pre><code class="language-console">light travel time from Earth to Mars<span class="token punctuation">:</span>
 minimum <span class="token operator">=</span> <span class="token number">4.3</span> minutes
@@ -3389,7 +3377,7 @@ maximum <span class="token operator">=</span> <span class="token number">21.0</s
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 26 Jul 2026 07:55:45</div>
+						<div class="footer">Powered by vdoc. Generated on: 8 Oct 2026 14:41:58</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_consts">README</a></li>
 <li class="open"><a href="#Constants">Constants</a></li>

@@ -66,10 +66,7 @@
 <div class="menu-row"><a href="./main.html">main</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>benchmarks</a></div>
-<ul>
-<li><a href="./benchmarks.util.html">util</a></li>
-</ul>
+<div class="menu-row"><a href="./util.html">util</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./blas.html">blas</a></div>
@@ -111,11 +108,10 @@
 <div class="menu-row"><a href="./fit.html">fit</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>float</a></div>
-<ul>
-<li><a href="./float.float32.html">float32</a></li>
-<li><a href="./float.float64.html">float64</a></li>
-</ul>
+<div class="menu-row"><a href="./float32.html">float32</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./float64.html">float64</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./fun.html">fun</a></div>
@@ -130,21 +126,13 @@
 <div class="menu-row"><a href="./graph.html">graph</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>inout</a></div>
-<ul>
-<li><a href="./inout.csv.html">csv</a></li>
-</ul>
+<div class="menu-row"><a href="./csv.html">csv</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./h5.html">h5</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>internal</a></div>
-<ul>
-<li><a href="./internal.prec.html">prec</a></li>
-<li><a href="./internal.dl.html">dl</a></li>
-<li><a href="./internal.dl.html">dl</a></li>
-</ul>
+<div class="menu-row"><a href="./prec.html">prec</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./iter.html">iter</a></div>
@@ -162,10 +150,10 @@
 <div class="menu-row"><a href="./metrics.html">metrics</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="./ml.html">ml</a></div>
-<ul>
-<li><a href="./ml.nlp.html">nlp</a></li>
-</ul>
+<div class="menu-row"><a href="./ml.html">ml</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./nlp.html">nlp</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./model_selection.html">model_selection</a></div>
@@ -195,10 +183,10 @@
 <div class="menu-row"><a href="./roots.html">roots</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><a href="./util.html">util</a></div>
+<div class="menu-row"><a href="./vcl.html">vcl</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><a href="./vcl.html">vcl</a></div>
+<div class="menu-row"><a href="./dl.html">dl</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./vulkan.html">vulkan</a></div>
@@ -247,7 +235,7 @@
 <h3 id="performance">Performance</h3>
 <p>The pure V implementation delivers excellent performance while maintaining numerical stability. Benchmark results demonstrate competitive performance with C backends.</p>
 <p>Run benchmarks to see performance characteristics:</p>
-<pre><code class="language-sh">v run benchmarks<span class="token operator">/</span>lapack_bench<span class="token punctuation">.</span>v</code></pre>
+<pre><code class="language-sh">v run <span class="token punctuation">.</span><span class="token operator">/</span>vsl<span class="token operator">/</span>benchmarks<span class="token operator">/</span>lapack_bench<span class="token punctuation">.</span>v</code></pre>
 <h3 id="available-functions">Available Functions</h3>
 <p><strong>Linear System Solvers</strong>:</p>
 <ul>
@@ -279,14 +267,17 @@
 <li><code>dlacpy</code> - Matrix copy</li></ul>
 <p>Therefore, its routines are a little more <em>lower level</em> than the ones in the package <code>vsl.la</code>.</p>
 <h2 id="lapacke-backend">LAPACKE Backend</h2>
-<p>We provide a backend for the LAPACKE library. This backend is probably the fastest one for all platforms but it requires the installation of the LAPACKE library.</p>
-<p>Use the compilation flag <code>-d vsl_lapack_lapacke</code> to use the LAPACKE backend instead of the pure V implementation and make sure that the LAPACKE library is installed in your system.</p>
+<p>The <code>-d vsl_lapack_lapacke</code> build tag selects LAPACKE for supported routines. This backend is probably the fastest one for all platforms, but it requires the LAPACKE library to be installed.</p>
+<p>On Linux, the default build uses the pure-V <code>lapack64</code> implementation for <code>dlange</code>; it does not require LAPACKE.</p>
 <p>Check the section below for more information about installing the LAPACKE library.</p><details> <summary>Install dependencies</summary>
 
 <h3 id="homebrew-macos">Homebrew (macOS)</h3>
 <pre><code class="language-sh">brew install lapack</code></pre>
 <h3 id="debianubuntu-gnu-linux">Debian/Ubuntu GNU Linux</h3>
-<pre><code class="language-sh">sudo apt<span class="token operator">-</span>get install <span class="token operator">-</span>y <span class="token operator">--</span>no<span class="token operator">-</span>install<span class="token operator">-</span>recommends</code></pre>
+<pre><code class="language-sh">sudo apt<span class="token operator">-</span>get install <span class="token operator">-</span>y <span class="token operator">--</span>no<span class="token operator">-</span>install<span class="token operator">-</span>recommends <span class="token punctuation">\</span>
+    gcc <span class="token punctuation">\</span>
+    gfortran <span class="token punctuation">\</span>
+    liblapacke<span class="token operator">-</span>dev</code></pre>
 <h3 id="arch-linuxmanjaro-gnu-linux">Arch Linux/Manjaro GNU Linux</h3>
 <p>The best way of installing OpenBLAS is using <a href="https://archlinux.org/packages/extra/x86_64/blas-openblas/">blas-openblas</a>.</p>
 <pre><code class="language-sh">sudo pacman <span class="token operator">-</span>S blas<span class="token operator">-</span>openblas</code></pre></details>
@@ -294,7 +285,7 @@
 </section>
 
 		<section id="dgeev" class="doc-node">
-			<div class="title"><h2>fn dgeev <a href="#dgeev">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack_notd_vsl_lapack_lapacke.v#L341"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn dgeev <a href="#dgeev">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/lapack_notd_vsl_lapack_lapacke.v#L341"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">dgeev</span><span class="token punctuation">(</span>calc_vl LeftEigenVectorsJob<span class="token punctuation">,</span> calc_vr RightEigenVectorsJob<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> wr <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> wi <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> vl <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> ldvl <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> vr <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> ldvr <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>dgeev computes for an N-by-N real nonsymmetric matrix A, the eigenvalues and, optionally, the left and/or right eigenvectors.</p>
@@ -312,7 +303,8 @@
 </section>
 
 		<section id="dgeev_standardized" class="doc-node">
-			<div class="title"><h2>fn dgeev_standardized <a href="#dgeev_standardized">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack_notd_vsl_lapack_lapacke.v#L380"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn dgeev_standardized <a href="#dgeev_standardized">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/lapack_notd_vsl_lapack_lapacke.v#L380"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<div class="attributes"><div class="attribute">@[inline]</div></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">dgeev_standardized</span><span class="token punctuation">(</span>jobvl LeftEigenVectorsJob<span class="token punctuation">,</span> jobvr RightEigenVectorsJob<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> wr <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> wi <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> vl <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> ldvl <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> vr <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> ldvr <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>dgeev_standardized exposes this operation as part of the public API.</p>
@@ -320,7 +312,8 @@
 </section>
 
 		<section id="dgeqrf" class="doc-node">
-			<div class="title"><h2>fn dgeqrf <a href="#dgeqrf">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack_notd_vsl_lapack_lapacke.v#L430"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn dgeqrf <a href="#dgeqrf">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/lapack_notd_vsl_lapack_lapacke.v#L430"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<div class="attributes"><div class="attribute">@[inline]</div></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">dgeqrf</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> tau <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>dgeqrf exposes this operation as part of the public API.</p>
@@ -328,7 +321,8 @@
 </section>
 
 		<section id="dgeqrf_standardized" class="doc-node">
-			<div class="title"><h2>fn dgeqrf_standardized <a href="#dgeqrf_standardized">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack_notd_vsl_lapack_lapacke.v#L393"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn dgeqrf_standardized <a href="#dgeqrf_standardized">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/lapack_notd_vsl_lapack_lapacke.v#L393"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<div class="attributes"><div class="attribute">@[inline]</div></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">dgeqrf_standardized</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> tau <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>dgeqrf_standardized exposes this operation as part of the public API.</p>
@@ -336,7 +330,8 @@
 </section>
 
 		<section id="dgesv" class="doc-node">
-			<div class="title"><h2>fn dgesv <a href="#dgesv">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack_notd_vsl_lapack_lapacke.v#L34"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn dgesv <a href="#dgesv">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/lapack_notd_vsl_lapack_lapacke.v#L34"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<div class="attributes"><div class="attribute">@[inline]</div></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">dgesv</span><span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">,</span> nrhs <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> ipiv <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> b <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> ldb <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>dgesv exposes this operation as part of the public API.</p>
@@ -344,7 +339,7 @@
 </section>
 
 		<section id="dgesvd" class="doc-node">
-			<div class="title"><h2>fn dgesvd <a href="#dgesvd">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack_notd_vsl_lapack_lapacke.v#L147"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn dgesvd <a href="#dgesvd">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/lapack_notd_vsl_lapack_lapacke.v#L147"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">dgesvd</span><span class="token punctuation">(</span>jobu SVDJob<span class="token punctuation">,</span> jobvt SVDJob<span class="token punctuation">,</span> m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> s <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> u <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> ldu <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> vt <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> ldvt <span class="token builtin">int</span><span class="token punctuation">,</span> superb <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>dgesvd computes the singular value decomposition (SingularValueDecomposition) of a real M-by-N matrix A, optionally computing the left and/or right singular vectors.</p>
@@ -359,7 +354,7 @@
 </section>
 
 		<section id="dgetrf" class="doc-node">
-			<div class="title"><h2>fn dgetrf <a href="#dgetrf">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack_notd_vsl_lapack_lapacke.v#L226"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn dgetrf <a href="#dgetrf">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/lapack_notd_vsl_lapack_lapacke.v#L226"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">dgetrf</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> ipiv <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>dgetrf computes an LU factorization of a general M-by-N matrix A using partial pivoting with row interchanges.</p>
@@ -372,7 +367,7 @@
 </section>
 
 		<section id="dgetri" class="doc-node">
-			<div class="title"><h2>fn dgetri <a href="#dgetri">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack_notd_vsl_lapack_lapacke.v#L256"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn dgetri <a href="#dgetri">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/lapack_notd_vsl_lapack_lapacke.v#L256"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">dgetri</span><span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> ipiv <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>dgetri computes the inverse of a matrix using the LU factorization computed by DGETRF.</p>
@@ -383,7 +378,8 @@
 </section>
 
 		<section id="dorgqr" class="doc-node">
-			<div class="title"><h2>fn dorgqr <a href="#dorgqr">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack_notd_vsl_lapack_lapacke.v#L460"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn dorgqr <a href="#dorgqr">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/lapack_notd_vsl_lapack_lapacke.v#L445"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<div class="attributes"><div class="attribute">@[inline]</div></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">dorgqr</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> k <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> tau <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>dorgqr exposes this operation as part of the public API.</p>
@@ -391,7 +387,8 @@
 </section>
 
 		<section id="dorgqr_standardized" class="doc-node">
-			<div class="title"><h2>fn dorgqr_standardized <a href="#dorgqr_standardized">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack_notd_vsl_lapack_lapacke.v#L404"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn dorgqr_standardized <a href="#dorgqr_standardized">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/lapack_notd_vsl_lapack_lapacke.v#L404"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<div class="attributes"><div class="attribute">@[inline]</div></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">dorgqr_standardized</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> k <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> tau <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>dorgqr_standardized exposes this operation as part of the public API.</p>
@@ -399,7 +396,7 @@
 </section>
 
 		<section id="dpotrf" class="doc-node">
-			<div class="title"><h2>fn dpotrf <a href="#dpotrf">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack_notd_vsl_lapack_lapacke.v#L300"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn dpotrf <a href="#dpotrf">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/lapack_notd_vsl_lapack_lapacke.v#L300"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">dpotrf</span><span class="token punctuation">(</span>uplo blas<span class="token punctuation">.</span>Uplo<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>dpotrf computes the Cholesky factorization of a real symmetric positive definite matrix A.</p>
@@ -415,7 +412,8 @@
 </section>
 
 		<section id="dpotrf_standardized" class="doc-node">
-			<div class="title"><h2>fn dpotrf_standardized <a href="#dpotrf_standardized">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack_notd_vsl_lapack_lapacke.v#L356"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn dpotrf_standardized <a href="#dpotrf_standardized">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/lapack_notd_vsl_lapack_lapacke.v#L356"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<div class="attributes"><div class="attribute">@[inline]</div></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">dpotrf_standardized</span><span class="token punctuation">(</span>uplo blas<span class="token punctuation">.</span>Uplo<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>dpotrf_standardized exposes this operation as part of the public API.</p>
@@ -423,7 +421,8 @@
 </section>
 
 		<section id="dsyev" class="doc-node">
-			<div class="title"><h2>fn dsyev <a href="#dsyev">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack_notd_vsl_lapack_lapacke.v#L416"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn dsyev <a href="#dsyev">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/lapack_notd_vsl_lapack_lapacke.v#L416"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<div class="attributes"><div class="attribute">@[inline]</div></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">dsyev</span><span class="token punctuation">(</span>jobz EigenVectorsJob<span class="token punctuation">,</span> uplo blas<span class="token punctuation">.</span>Uplo<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> w <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>dsyev exposes this operation as part of the public API.</p>
@@ -431,7 +430,8 @@
 </section>
 
 		<section id="dsyev_standardized" class="doc-node">
-			<div class="title"><h2>fn dsyev_standardized <a href="#dsyev_standardized">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack_notd_vsl_lapack_lapacke.v#L367"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn dsyev_standardized <a href="#dsyev_standardized">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/lapack_notd_vsl_lapack_lapacke.v#L367"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<div class="attributes"><div class="attribute">@[inline]</div></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">dsyev_standardized</span><span class="token punctuation">(</span>jobz EigenVectorsJob<span class="token punctuation">,</span> uplo blas<span class="token punctuation">.</span>Uplo<span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> w <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>dsyev_standardized exposes this operation as part of the public API.</p>
@@ -439,7 +439,7 @@
 </section>
 
 		<section id="from_lapack64_apply_ortho" class="doc-node">
-			<div class="title"><h2>fn from_lapack64_apply_ortho <a href="#from_lapack64_apply_ortho">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L329"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn from_lapack64_apply_ortho <a href="#from_lapack64_apply_ortho">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L329"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">from_lapack64_apply_ortho</span><span class="token punctuation">(</span>apply lapack64<span class="token punctuation">.</span>ApplyOrtho<span class="token punctuation">)</span> ApplyOrtho</code></pre>
 <p>Convert lapack64.ApplyOrtho to VSL ApplyOrtho</p>
@@ -447,7 +447,7 @@
 </section>
 
 		<section id="from_lapack64_balance_job" class="doc-node">
-			<div class="title"><h2>fn from_lapack64_balance_job <a href="#from_lapack64_balance_job">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L471"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn from_lapack64_balance_job <a href="#from_lapack64_balance_job">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L471"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">from_lapack64_balance_job</span><span class="token punctuation">(</span>job lapack64<span class="token punctuation">.</span>BalanceJob<span class="token punctuation">)</span> BalanceJob</code></pre>
 <p>Convert lapack64.BalanceJob to VSL BalanceJob</p>
@@ -455,7 +455,7 @@
 </section>
 
 		<section id="from_lapack64_direct" class="doc-node">
-			<div class="title"><h2>fn from_lapack64_direct <a href="#from_lapack64_direct">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L225"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn from_lapack64_direct <a href="#from_lapack64_direct">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L225"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">from_lapack64_direct</span><span class="token punctuation">(</span>direct lapack64<span class="token punctuation">.</span>Direct<span class="token punctuation">)</span> Direct</code></pre>
 <p>Convert lapack64.Direct to VSL Direct</p>
@@ -463,7 +463,7 @@
 </section>
 
 		<section id="from_lapack64_eigen_vectors_comp" class="doc-node">
-			<div class="title"><h2>fn from_lapack64_eigen_vectors_comp <a href="#from_lapack64_eigen_vectors_comp">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L404"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn from_lapack64_eigen_vectors_comp <a href="#from_lapack64_eigen_vectors_comp">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L404"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">from_lapack64_eigen_vectors_comp</span><span class="token punctuation">(</span>comp lapack64<span class="token punctuation">.</span>EigenVectorsComp<span class="token punctuation">)</span> EigenVectorsComp</code></pre>
 <p>Convert lapack64.EigenVectorsComp to VSL EigenVectorsComp</p>
@@ -471,7 +471,7 @@
 </section>
 
 		<section id="from_lapack64_eigen_vectors_how_many" class="doc-node">
-			<div class="title"><h2>fn from_lapack64_eigen_vectors_how_many <a href="#from_lapack64_eigen_vectors_how_many">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L558"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn from_lapack64_eigen_vectors_how_many <a href="#from_lapack64_eigen_vectors_how_many">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L558"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">from_lapack64_eigen_vectors_how_many</span><span class="token punctuation">(</span>how_many lapack64<span class="token punctuation">.</span>EigenVectorsHowMany<span class="token punctuation">)</span> EigenVectorsHowMany</code></pre>
 <p>Convert lapack64.EigenVectorsHowMany to VSL EigenVectorsHowMany</p>
@@ -479,7 +479,7 @@
 </section>
 
 		<section id="from_lapack64_eigen_vectors_job" class="doc-node">
-			<div class="title"><h2>fn from_lapack64_eigen_vectors_job <a href="#from_lapack64_eigen_vectors_job">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L421"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn from_lapack64_eigen_vectors_job <a href="#from_lapack64_eigen_vectors_job">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L421"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">from_lapack64_eigen_vectors_job</span><span class="token punctuation">(</span>job lapack64<span class="token punctuation">.</span>EigenVectorsJob<span class="token punctuation">)</span> EigenVectorsJob</code></pre>
 <p>Convert lapack64.EigenVectorsJob to VSL EigenVectorsJob</p>
@@ -487,7 +487,7 @@
 </section>
 
 		<section id="from_lapack64_eigen_vectors_side" class="doc-node">
-			<div class="title"><h2>fn from_lapack64_eigen_vectors_side <a href="#from_lapack64_eigen_vectors_side">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L540"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn from_lapack64_eigen_vectors_side <a href="#from_lapack64_eigen_vectors_side">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L540"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">from_lapack64_eigen_vectors_side</span><span class="token punctuation">(</span>side lapack64<span class="token punctuation">.</span>EigenVectorsSide<span class="token punctuation">)</span> EigenVectorsSide</code></pre>
 <p>Convert lapack64.EigenVectorsSide to VSL EigenVectorsSide</p>
@@ -495,7 +495,7 @@
 </section>
 
 		<section id="from_lapack64_gen_ortho" class="doc-node">
-			<div class="title"><h2>fn from_lapack64_gen_ortho <a href="#from_lapack64_gen_ortho">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L345"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn from_lapack64_gen_ortho <a href="#from_lapack64_gen_ortho">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L345"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">from_lapack64_gen_ortho</span><span class="token punctuation">(</span>gen lapack64<span class="token punctuation">.</span>GenOrtho<span class="token punctuation">)</span> GenOrtho</code></pre>
 <p>Convert lapack64.GenOrtho to VSL GenOrtho</p>
@@ -503,7 +503,7 @@
 </section>
 
 		<section id="from_lapack64_gsvd_job" class="doc-node">
-			<div class="title"><h2>fn from_lapack64_gsvd_job <a href="#from_lapack64_gsvd_job">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L384"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn from_lapack64_gsvd_job <a href="#from_lapack64_gsvd_job">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L384"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">from_lapack64_gsvd_job</span><span class="token punctuation">(</span>job lapack64<span class="token punctuation">.</span>GSVDJob<span class="token punctuation">)</span> GSVDJob</code></pre>
 <p>Convert lapack64.GSVDJob to VSL GSVDJob</p>
@@ -511,7 +511,7 @@
 </section>
 
 		<section id="from_lapack64_left_eigen_vectors_job" class="doc-node">
-			<div class="title"><h2>fn from_lapack64_left_eigen_vectors_job <a href="#from_lapack64_left_eigen_vectors_job">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L437"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn from_lapack64_left_eigen_vectors_job <a href="#from_lapack64_left_eigen_vectors_job">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L437"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">from_lapack64_left_eigen_vectors_job</span><span class="token punctuation">(</span>job lapack64<span class="token punctuation">.</span>LeftEigenVectorsJob<span class="token punctuation">)</span> LeftEigenVectorsJob</code></pre>
 <p>Convert lapack64.LeftEigenVectorsJob to VSL LeftEigenVectorsJob</p>
@@ -519,7 +519,7 @@
 </section>
 
 		<section id="from_lapack64_matrix_norm" class="doc-node">
-			<div class="title"><h2>fn from_lapack64_matrix_norm <a href="#from_lapack64_matrix_norm">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L275"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn from_lapack64_matrix_norm <a href="#from_lapack64_matrix_norm">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L275"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">from_lapack64_matrix_norm</span><span class="token punctuation">(</span>norm lapack64<span class="token punctuation">.</span>MatrixNorm<span class="token punctuation">)</span> MatrixNorm</code></pre>
 <p>Convert lapack64.MatrixNorm to VSL MatrixNorm</p>
@@ -527,7 +527,7 @@
 </section>
 
 		<section id="from_lapack64_matrix_type" class="doc-node">
-			<div class="title"><h2>fn from_lapack64_matrix_type <a href="#from_lapack64_matrix_type">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L294"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn from_lapack64_matrix_type <a href="#from_lapack64_matrix_type">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L294"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">from_lapack64_matrix_type</span><span class="token punctuation">(</span>mtype lapack64<span class="token punctuation">.</span>MatrixType<span class="token punctuation">)</span> MatrixType</code></pre>
 <p>Convert lapack64.MatrixType to VSL MatrixType</p>
@@ -535,7 +535,7 @@
 </section>
 
 		<section id="from_lapack64_maximize_norm_x_job" class="doc-node">
-			<div class="title"><h2>fn from_lapack64_maximize_norm_x_job <a href="#from_lapack64_maximize_norm_x_job">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L575"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn from_lapack64_maximize_norm_x_job <a href="#from_lapack64_maximize_norm_x_job">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L575"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">from_lapack64_maximize_norm_x_job</span><span class="token punctuation">(</span>job lapack64<span class="token punctuation">.</span>MaximizeNormXJob<span class="token punctuation">)</span> MaximizeNormXJob</code></pre>
 <p>Convert lapack64.MaximizeNormXJob to VSL MaximizeNormXJob</p>
@@ -543,7 +543,7 @@
 </section>
 
 		<section id="from_lapack64_ortho_comp" class="doc-node">
-			<div class="title"><h2>fn from_lapack64_ortho_comp <a href="#from_lapack64_ortho_comp">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L592"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn from_lapack64_ortho_comp <a href="#from_lapack64_ortho_comp">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L592"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">from_lapack64_ortho_comp</span><span class="token punctuation">(</span>comp lapack64<span class="token punctuation">.</span>OrthoComp<span class="token punctuation">)</span> OrthoComp</code></pre>
 <p>Convert lapack64.OrthoComp to VSL OrthoComp</p>
@@ -551,7 +551,7 @@
 </section>
 
 		<section id="from_lapack64_pivot" class="doc-node">
-			<div class="title"><h2>fn from_lapack64_pivot <a href="#from_lapack64_pivot">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L312"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn from_lapack64_pivot <a href="#from_lapack64_pivot">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L312"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">from_lapack64_pivot</span><span class="token punctuation">(</span>pivot lapack64<span class="token punctuation">.</span>Pivot<span class="token punctuation">)</span> Pivot</code></pre>
 <p>Convert lapack64.Pivot to VSL Pivot</p>
@@ -559,7 +559,7 @@
 </section>
 
 		<section id="from_lapack64_right_eigen_vectors_job" class="doc-node">
-			<div class="title"><h2>fn from_lapack64_right_eigen_vectors_job <a href="#from_lapack64_right_eigen_vectors_job">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L453"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn from_lapack64_right_eigen_vectors_job <a href="#from_lapack64_right_eigen_vectors_job">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L453"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">from_lapack64_right_eigen_vectors_job</span><span class="token punctuation">(</span>job lapack64<span class="token punctuation">.</span>RightEigenVectorsJob<span class="token punctuation">)</span> RightEigenVectorsJob</code></pre>
 <p>Convert lapack64.RightEigenVectorsJob to VSL RightEigenVectorsJob</p>
@@ -567,7 +567,7 @@
 </section>
 
 		<section id="from_lapack64_schur_comp" class="doc-node">
-			<div class="title"><h2>fn from_lapack64_schur_comp <a href="#from_lapack64_schur_comp">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L506"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn from_lapack64_schur_comp <a href="#from_lapack64_schur_comp">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L506"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">from_lapack64_schur_comp</span><span class="token punctuation">(</span>comp lapack64<span class="token punctuation">.</span>SchurComp<span class="token punctuation">)</span> SchurComp</code></pre>
 <p>Convert lapack64.SchurComp to VSL SchurComp</p>
@@ -575,7 +575,7 @@
 </section>
 
 		<section id="from_lapack64_schur_job" class="doc-node">
-			<div class="title"><h2>fn from_lapack64_schur_job <a href="#from_lapack64_schur_job">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L489"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn from_lapack64_schur_job <a href="#from_lapack64_schur_job">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L489"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">from_lapack64_schur_job</span><span class="token punctuation">(</span>job lapack64<span class="token punctuation">.</span>SchurJob<span class="token punctuation">)</span> SchurJob</code></pre>
 <p>Convert lapack64.SchurJob to VSL SchurJob</p>
@@ -583,7 +583,7 @@
 </section>
 
 		<section id="from_lapack64_sort" class="doc-node">
-			<div class="title"><h2>fn from_lapack64_sort <a href="#from_lapack64_sort">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L241"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn from_lapack64_sort <a href="#from_lapack64_sort">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L241"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">from_lapack64_sort</span><span class="token punctuation">(</span>sort lapack64<span class="token punctuation">.</span>Sort<span class="token punctuation">)</span> Sort</code></pre>
 <p>Convert lapack64.Sort to VSL Sort</p>
@@ -591,7 +591,7 @@
 </section>
 
 		<section id="from_lapack64_storev" class="doc-node">
-			<div class="title"><h2>fn from_lapack64_storev <a href="#from_lapack64_storev">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L257"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn from_lapack64_storev <a href="#from_lapack64_storev">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L257"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">from_lapack64_storev</span><span class="token punctuation">(</span>storev lapack64<span class="token punctuation">.</span>StoreV<span class="token punctuation">)</span> StoreV</code></pre>
 <p>Convert lapack64.StoreV to VSL StoreV</p>
@@ -599,7 +599,7 @@
 </section>
 
 		<section id="from_lapack64_svd_job" class="doc-node">
-			<div class="title"><h2>fn from_lapack64_svd_job <a href="#from_lapack64_svd_job">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L363"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn from_lapack64_svd_job <a href="#from_lapack64_svd_job">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L363"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">from_lapack64_svd_job</span><span class="token punctuation">(</span>job lapack64<span class="token punctuation">.</span>SVDJob<span class="token punctuation">)</span> SVDJob</code></pre>
 <p>Convert lapack64.SVDJob to VSL SVDJob</p>
@@ -607,7 +607,7 @@
 </section>
 
 		<section id="from_lapack64_update_schur_comp" class="doc-node">
-			<div class="title"><h2>fn from_lapack64_update_schur_comp <a href="#from_lapack64_update_schur_comp">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L523"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn from_lapack64_update_schur_comp <a href="#from_lapack64_update_schur_comp">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L523"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">from_lapack64_update_schur_comp</span><span class="token punctuation">(</span>comp lapack64<span class="token punctuation">.</span>UpdateSchurComp<span class="token punctuation">)</span> UpdateSchurComp</code></pre>
 <p>Convert lapack64.UpdateSchurComp to VSL UpdateSchurComp</p>
@@ -615,7 +615,7 @@
 </section>
 
 		<section id="geev" class="doc-node">
-			<div class="title"><h2>fn geev <a href="#geev">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack_wrappers.v#L277"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn geev <a href="#geev">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/lapack_wrappers.v#L278"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">geev</span><span class="token punctuation">(</span>a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> jobvl LeftEigenVectorsJob<span class="token punctuation">,</span> jobvr RightEigenVectorsJob<span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
 <p>geev computes the eigenvalues and, optionally, the left and/or right eigenvectors for a real nonsymmetric matrix A.</p>
@@ -623,7 +623,7 @@
 </section>
 
 		<section id="geqrf" class="doc-node">
-			<div class="title"><h2>fn geqrf <a href="#geqrf">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack_wrappers.v#L202"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn geqrf <a href="#geqrf">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/lapack_wrappers.v#L202"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">geqrf</span><span class="token punctuation">(</span><span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 <p>geqrf computes a QR factorization of a real m×n matrix A.</p>
@@ -631,7 +631,7 @@
 </section>
 
 		<section id="gesv" class="doc-node">
-			<div class="title"><h2>fn gesv <a href="#gesv">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack_wrappers.v#L16"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn gesv <a href="#gesv">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/lapack_wrappers.v#L16"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">gesv</span><span class="token punctuation">(</span><span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> b <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
 <p>gesv solves the linear system A*X = B using LU factorization with partial pivoting. A is an n×n matrix and B is an n×nrhs matrix. On return, A is overwritten with the LU factorization and B contains the solution X.</p>
@@ -639,7 +639,7 @@
 </section>
 
 		<section id="gesvd" class="doc-node">
-			<div class="title"><h2>fn gesvd <a href="#gesvd">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack_wrappers.v#L474"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn gesvd <a href="#gesvd">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/lapack_wrappers.v#L475"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">gesvd</span><span class="token punctuation">(</span>a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> jobu SVDJob<span class="token punctuation">,</span> jobvt SVDJob<span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
 <p>gesvd computes the singular value decomposition (SVD) of a real m×n matrix A.</p>
@@ -647,7 +647,7 @@
 </section>
 
 		<section id="getrf" class="doc-node">
-			<div class="title"><h2>fn getrf <a href="#getrf">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack_wrappers.v#L78"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn getrf <a href="#getrf">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/lapack_wrappers.v#L78"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">getrf</span><span class="token punctuation">(</span><span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span></code></pre>
 <p>getrf computes the LU factorization of a general m×n matrix A using partial pivoting. On return, A contains the LU factorization and the function returns the pivot indices.</p>
@@ -655,7 +655,7 @@
 </section>
 
 		<section id="getri" class="doc-node">
-			<div class="title"><h2>fn getri <a href="#getri">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack_wrappers.v#L120"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn getri <a href="#getri">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/lapack_wrappers.v#L120"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">getri</span><span class="token punctuation">(</span><span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> ipiv <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
 <p>getri computes the inverse of a matrix using the LU factorization computed by getrf. A should contain the LU factorization from getrf, and ipiv should be the pivot indices.</p>
@@ -663,7 +663,7 @@
 </section>
 
 		<section id="orgqr" class="doc-node">
-			<div class="title"><h2>fn orgqr <a href="#orgqr">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack_wrappers.v#L237"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn orgqr <a href="#orgqr">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/lapack_wrappers.v#L238"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">orgqr</span><span class="token punctuation">(</span><span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> tau <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
 <p>orgqr generates the m×n matrix Q with orthonormal columns defined as the first n columns of a product of k elementary reflectors of order m.</p>
@@ -671,7 +671,7 @@
 </section>
 
 		<section id="potrf" class="doc-node">
-			<div class="title"><h2>fn potrf <a href="#potrf">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack_wrappers.v#L164"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn potrf <a href="#potrf">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/lapack_wrappers.v#L164"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">potrf</span><span class="token punctuation">(</span><span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> uplo blas<span class="token punctuation">.</span>Uplo<span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
 <p>potrf computes the Cholesky factorization of a symmetric positive definite matrix. uplo specifies whether the upper or lower triangle of A is stored.</p>
@@ -679,7 +679,7 @@
 </section>
 
 		<section id="syev" class="doc-node">
-			<div class="title"><h2>fn syev <a href="#syev">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/lapack_wrappers.v#L339"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn syev <a href="#syev">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/lapack_wrappers.v#L340"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">syev</span><span class="token punctuation">(</span><span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> jobz EigenVectorsJob<span class="token punctuation">,</span> uplo blas<span class="token punctuation">.</span>Uplo<span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 <p>syev computes all eigenvalues and, optionally, eigenvectors of a real symmetric matrix A.</p>
@@ -687,7 +687,7 @@
 </section>
 
 		<section id="to_lapack64_apply_ortho" class="doc-node">
-			<div class="title"><h2>fn to_lapack64_apply_ortho <a href="#to_lapack64_apply_ortho">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L321"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn to_lapack64_apply_ortho <a href="#to_lapack64_apply_ortho">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L321"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">to_lapack64_apply_ortho</span><span class="token punctuation">(</span>apply ApplyOrtho<span class="token punctuation">)</span> lapack64<span class="token punctuation">.</span>ApplyOrtho</code></pre>
 <p>Convert VSL ApplyOrtho to lapack64.ApplyOrtho</p>
@@ -695,7 +695,7 @@
 </section>
 
 		<section id="to_lapack64_balance_job" class="doc-node">
-			<div class="title"><h2>fn to_lapack64_balance_job <a href="#to_lapack64_balance_job">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L461"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn to_lapack64_balance_job <a href="#to_lapack64_balance_job">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L461"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">to_lapack64_balance_job</span><span class="token punctuation">(</span>job BalanceJob<span class="token punctuation">)</span> lapack64<span class="token punctuation">.</span>BalanceJob</code></pre>
 <p>Convert VSL BalanceJob to lapack64.BalanceJob</p>
@@ -703,7 +703,7 @@
 </section>
 
 		<section id="to_lapack64_direct" class="doc-node">
-			<div class="title"><h2>fn to_lapack64_direct <a href="#to_lapack64_direct">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L217"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn to_lapack64_direct <a href="#to_lapack64_direct">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L217"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">to_lapack64_direct</span><span class="token punctuation">(</span>direct Direct<span class="token punctuation">)</span> lapack64<span class="token punctuation">.</span>Direct</code></pre>
 <p>Convert VSL Direct to lapack64.Direct</p>
@@ -711,7 +711,7 @@
 </section>
 
 		<section id="to_lapack64_eigen_vectors_comp" class="doc-node">
-			<div class="title"><h2>fn to_lapack64_eigen_vectors_comp <a href="#to_lapack64_eigen_vectors_comp">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L395"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn to_lapack64_eigen_vectors_comp <a href="#to_lapack64_eigen_vectors_comp">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L395"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">to_lapack64_eigen_vectors_comp</span><span class="token punctuation">(</span>comp EigenVectorsComp<span class="token punctuation">)</span> lapack64<span class="token punctuation">.</span>EigenVectorsComp</code></pre>
 <p>Convert VSL EigenVectorsComp to lapack64.EigenVectorsComp</p>
@@ -719,7 +719,7 @@
 </section>
 
 		<section id="to_lapack64_eigen_vectors_how_many" class="doc-node">
-			<div class="title"><h2>fn to_lapack64_eigen_vectors_how_many <a href="#to_lapack64_eigen_vectors_how_many">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L549"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn to_lapack64_eigen_vectors_how_many <a href="#to_lapack64_eigen_vectors_how_many">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L549"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">to_lapack64_eigen_vectors_how_many</span><span class="token punctuation">(</span>how_many EigenVectorsHowMany<span class="token punctuation">)</span> lapack64<span class="token punctuation">.</span>EigenVectorsHowMany</code></pre>
 <p>Convert VSL EigenVectorsHowMany to lapack64.EigenVectorsHowMany</p>
@@ -727,7 +727,7 @@
 </section>
 
 		<section id="to_lapack64_eigen_vectors_job" class="doc-node">
-			<div class="title"><h2>fn to_lapack64_eigen_vectors_job <a href="#to_lapack64_eigen_vectors_job">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L413"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn to_lapack64_eigen_vectors_job <a href="#to_lapack64_eigen_vectors_job">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L413"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">to_lapack64_eigen_vectors_job</span><span class="token punctuation">(</span>job EigenVectorsJob<span class="token punctuation">)</span> lapack64<span class="token punctuation">.</span>EigenVectorsJob</code></pre>
 <p>Convert VSL EigenVectorsJob to lapack64.EigenVectorsJob</p>
@@ -735,7 +735,7 @@
 </section>
 
 		<section id="to_lapack64_eigen_vectors_side" class="doc-node">
-			<div class="title"><h2>fn to_lapack64_eigen_vectors_side <a href="#to_lapack64_eigen_vectors_side">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L531"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn to_lapack64_eigen_vectors_side <a href="#to_lapack64_eigen_vectors_side">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L531"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">to_lapack64_eigen_vectors_side</span><span class="token punctuation">(</span>side EigenVectorsSide<span class="token punctuation">)</span> lapack64<span class="token punctuation">.</span>EigenVectorsSide</code></pre>
 <p>Convert VSL EigenVectorsSide to lapack64.EigenVectorsSide</p>
@@ -743,7 +743,7 @@
 </section>
 
 		<section id="to_lapack64_gen_ortho" class="doc-node">
-			<div class="title"><h2>fn to_lapack64_gen_ortho <a href="#to_lapack64_gen_ortho">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L337"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn to_lapack64_gen_ortho <a href="#to_lapack64_gen_ortho">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L337"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">to_lapack64_gen_ortho</span><span class="token punctuation">(</span>gen GenOrtho<span class="token punctuation">)</span> lapack64<span class="token punctuation">.</span>GenOrtho</code></pre>
 <p>Convert VSL GenOrtho to lapack64.GenOrtho</p>
@@ -751,7 +751,7 @@
 </section>
 
 		<section id="to_lapack64_gsvd_job" class="doc-node">
-			<div class="title"><h2>fn to_lapack64_gsvd_job <a href="#to_lapack64_gsvd_job">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L373"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn to_lapack64_gsvd_job <a href="#to_lapack64_gsvd_job">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L373"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">to_lapack64_gsvd_job</span><span class="token punctuation">(</span>job GSVDJob<span class="token punctuation">)</span> lapack64<span class="token punctuation">.</span>GSVDJob</code></pre>
 <p>Convert VSL GSVDJob to lapack64.GSVDJob</p>
@@ -759,7 +759,7 @@
 </section>
 
 		<section id="to_lapack64_left_eigen_vectors_job" class="doc-node">
-			<div class="title"><h2>fn to_lapack64_left_eigen_vectors_job <a href="#to_lapack64_left_eigen_vectors_job">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L429"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn to_lapack64_left_eigen_vectors_job <a href="#to_lapack64_left_eigen_vectors_job">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L429"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">to_lapack64_left_eigen_vectors_job</span><span class="token punctuation">(</span>job LeftEigenVectorsJob<span class="token punctuation">)</span> lapack64<span class="token punctuation">.</span>LeftEigenVectorsJob</code></pre>
 <p>Convert VSL LeftEigenVectorsJob to lapack64.LeftEigenVectorsJob</p>
@@ -767,7 +767,7 @@
 </section>
 
 		<section id="to_lapack64_matrix_norm" class="doc-node">
-			<div class="title"><h2>fn to_lapack64_matrix_norm <a href="#to_lapack64_matrix_norm">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L265"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn to_lapack64_matrix_norm <a href="#to_lapack64_matrix_norm">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L265"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">to_lapack64_matrix_norm</span><span class="token punctuation">(</span>norm MatrixNorm<span class="token punctuation">)</span> lapack64<span class="token punctuation">.</span>MatrixNorm</code></pre>
 <p>Convert VSL MatrixNorm to lapack64.MatrixNorm</p>
@@ -775,7 +775,7 @@
 </section>
 
 		<section id="to_lapack64_matrix_type" class="doc-node">
-			<div class="title"><h2>fn to_lapack64_matrix_type <a href="#to_lapack64_matrix_type">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L285"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn to_lapack64_matrix_type <a href="#to_lapack64_matrix_type">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L285"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">to_lapack64_matrix_type</span><span class="token punctuation">(</span>mtype MatrixType<span class="token punctuation">)</span> lapack64<span class="token punctuation">.</span>MatrixType</code></pre>
 <p>Convert VSL MatrixType to lapack64.MatrixType</p>
@@ -783,7 +783,7 @@
 </section>
 
 		<section id="to_lapack64_maximize_norm_x_job" class="doc-node">
-			<div class="title"><h2>fn to_lapack64_maximize_norm_x_job <a href="#to_lapack64_maximize_norm_x_job">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L567"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn to_lapack64_maximize_norm_x_job <a href="#to_lapack64_maximize_norm_x_job">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L567"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">to_lapack64_maximize_norm_x_job</span><span class="token punctuation">(</span>job MaximizeNormXJob<span class="token punctuation">)</span> lapack64<span class="token punctuation">.</span>MaximizeNormXJob</code></pre>
 <p>Convert VSL MaximizeNormXJob to lapack64.MaximizeNormXJob</p>
@@ -791,7 +791,7 @@
 </section>
 
 		<section id="to_lapack64_ortho_comp" class="doc-node">
-			<div class="title"><h2>fn to_lapack64_ortho_comp <a href="#to_lapack64_ortho_comp">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L583"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn to_lapack64_ortho_comp <a href="#to_lapack64_ortho_comp">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L583"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">to_lapack64_ortho_comp</span><span class="token punctuation">(</span>comp OrthoComp<span class="token punctuation">)</span> lapack64<span class="token punctuation">.</span>OrthoComp</code></pre>
 <p>Convert VSL OrthoComp to lapack64.OrthoComp</p>
@@ -799,7 +799,7 @@
 </section>
 
 		<section id="to_lapack64_pivot" class="doc-node">
-			<div class="title"><h2>fn to_lapack64_pivot <a href="#to_lapack64_pivot">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L303"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn to_lapack64_pivot <a href="#to_lapack64_pivot">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L303"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">to_lapack64_pivot</span><span class="token punctuation">(</span>pivot Pivot<span class="token punctuation">)</span> lapack64<span class="token punctuation">.</span>Pivot</code></pre>
 <p>Convert VSL Pivot to lapack64.Pivot</p>
@@ -807,7 +807,7 @@
 </section>
 
 		<section id="to_lapack64_right_eigen_vectors_job" class="doc-node">
-			<div class="title"><h2>fn to_lapack64_right_eigen_vectors_job <a href="#to_lapack64_right_eigen_vectors_job">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L445"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn to_lapack64_right_eigen_vectors_job <a href="#to_lapack64_right_eigen_vectors_job">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L445"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">to_lapack64_right_eigen_vectors_job</span><span class="token punctuation">(</span>job RightEigenVectorsJob<span class="token punctuation">)</span> lapack64<span class="token punctuation">.</span>RightEigenVectorsJob</code></pre>
 <p>Convert VSL RightEigenVectorsJob to lapack64.RightEigenVectorsJob</p>
@@ -815,7 +815,7 @@
 </section>
 
 		<section id="to_lapack64_schur_comp" class="doc-node">
-			<div class="title"><h2>fn to_lapack64_schur_comp <a href="#to_lapack64_schur_comp">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L497"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn to_lapack64_schur_comp <a href="#to_lapack64_schur_comp">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L497"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">to_lapack64_schur_comp</span><span class="token punctuation">(</span>comp SchurComp<span class="token punctuation">)</span> lapack64<span class="token punctuation">.</span>SchurComp</code></pre>
 <p>Convert VSL SchurComp to lapack64.SchurComp</p>
@@ -823,7 +823,7 @@
 </section>
 
 		<section id="to_lapack64_schur_job" class="doc-node">
-			<div class="title"><h2>fn to_lapack64_schur_job <a href="#to_lapack64_schur_job">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L481"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn to_lapack64_schur_job <a href="#to_lapack64_schur_job">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L481"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">to_lapack64_schur_job</span><span class="token punctuation">(</span>job SchurJob<span class="token punctuation">)</span> lapack64<span class="token punctuation">.</span>SchurJob</code></pre>
 <p>Convert VSL SchurJob to lapack64.SchurJob</p>
@@ -831,7 +831,7 @@
 </section>
 
 		<section id="to_lapack64_sort" class="doc-node">
-			<div class="title"><h2>fn to_lapack64_sort <a href="#to_lapack64_sort">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L233"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn to_lapack64_sort <a href="#to_lapack64_sort">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L233"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">to_lapack64_sort</span><span class="token punctuation">(</span>sort Sort<span class="token punctuation">)</span> lapack64<span class="token punctuation">.</span>Sort</code></pre>
 <p>Convert VSL Sort to lapack64.Sort</p>
@@ -839,7 +839,7 @@
 </section>
 
 		<section id="to_lapack64_storev" class="doc-node">
-			<div class="title"><h2>fn to_lapack64_storev <a href="#to_lapack64_storev">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L249"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn to_lapack64_storev <a href="#to_lapack64_storev">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L249"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">to_lapack64_storev</span><span class="token punctuation">(</span>storev StoreV<span class="token punctuation">)</span> lapack64<span class="token punctuation">.</span>StoreV</code></pre>
 <p>Convert VSL StoreV to lapack64.StoreV</p>
@@ -847,7 +847,7 @@
 </section>
 
 		<section id="to_lapack64_svd_job" class="doc-node">
-			<div class="title"><h2>fn to_lapack64_svd_job <a href="#to_lapack64_svd_job">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L353"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn to_lapack64_svd_job <a href="#to_lapack64_svd_job">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L353"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">to_lapack64_svd_job</span><span class="token punctuation">(</span>job SVDJob<span class="token punctuation">)</span> lapack64<span class="token punctuation">.</span>SVDJob</code></pre>
 <p>Convert VSL SVDJob to lapack64.SVDJob</p>
@@ -855,191 +855,15 @@
 </section>
 
 		<section id="to_lapack64_update_schur_comp" class="doc-node">
-			<div class="title"><h2>fn to_lapack64_update_schur_comp <a href="#to_lapack64_update_schur_comp">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L515"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn to_lapack64_update_schur_comp <a href="#to_lapack64_update_schur_comp">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L515"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">to_lapack64_update_schur_comp</span><span class="token punctuation">(</span>comp UpdateSchurComp<span class="token punctuation">)</span> lapack64<span class="token punctuation">.</span>UpdateSchurComp</code></pre>
 <p>Convert VSL UpdateSchurComp to lapack64.UpdateSchurComp</p>
 
 </section>
 
-		<section id="ApplyOrtho.from" class="doc-node">
-			<div class="title"><h2>fn ApplyOrtho.from <a href="#ApplyOrtho.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L131"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> ApplyOrtho<span class="token punctuation">.</span>from<span class="token punctuation">[</span><span class="token builtin">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token builtin">W</span><span class="token punctuation">)</span> <span class="token operator">!</span>ApplyOrtho</code></pre>
-
-
-</section>
-
-		<section id="BalanceJob.from" class="doc-node">
-			<div class="title"><h2>fn BalanceJob.from <a href="#BalanceJob.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L303"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> BalanceJob<span class="token punctuation">.</span>from<span class="token punctuation">[</span><span class="token builtin">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token builtin">W</span><span class="token punctuation">)</span> <span class="token operator">!</span>BalanceJob</code></pre>
-
-
-</section>
-
-		<section id="Direct.from" class="doc-node">
-			<div class="title"><h2>fn Direct.from <a href="#Direct.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L3"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> Direct<span class="token punctuation">.</span>from<span class="token punctuation">[</span><span class="token builtin">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token builtin">W</span><span class="token punctuation">)</span> <span class="token operator">!</span>Direct</code></pre>
-
-
-</section>
-
-		<section id="EigenVectorsComp.from" class="doc-node">
-			<div class="title"><h2>fn EigenVectorsComp.from <a href="#EigenVectorsComp.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L221"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> EigenVectorsComp<span class="token punctuation">.</span>from<span class="token punctuation">[</span><span class="token builtin">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token builtin">W</span><span class="token punctuation">)</span> <span class="token operator">!</span>EigenVectorsComp</code></pre>
-
-
-</section>
-
-		<section id="EigenVectorsHowMany.from" class="doc-node">
-			<div class="title"><h2>fn EigenVectorsHowMany.from <a href="#EigenVectorsHowMany.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L411"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> EigenVectorsHowMany<span class="token punctuation">.</span>from<span class="token punctuation">[</span><span class="token builtin">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token builtin">W</span><span class="token punctuation">)</span> <span class="token operator">!</span>EigenVectorsHowMany</code></pre>
-
-
-</section>
-
-		<section id="EigenVectorsJob.from" class="doc-node">
-			<div class="title"><h2>fn EigenVectorsJob.from <a href="#EigenVectorsJob.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L243"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> EigenVectorsJob<span class="token punctuation">.</span>from<span class="token punctuation">[</span><span class="token builtin">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token builtin">W</span><span class="token punctuation">)</span> <span class="token operator">!</span>EigenVectorsJob</code></pre>
-
-
-</section>
-
-		<section id="EigenVectorsSide.from" class="doc-node">
-			<div class="title"><h2>fn EigenVectorsSide.from <a href="#EigenVectorsSide.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L389"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> EigenVectorsSide<span class="token punctuation">.</span>from<span class="token punctuation">[</span><span class="token builtin">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token builtin">W</span><span class="token punctuation">)</span> <span class="token operator">!</span>EigenVectorsSide</code></pre>
-
-
-</section>
-
-		<section id="GSVDJob.from" class="doc-node">
-			<div class="title"><h2>fn GSVDJob.from <a href="#GSVDJob.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L195"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> GSVDJob<span class="token punctuation">.</span>from<span class="token punctuation">[</span><span class="token builtin">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token builtin">W</span><span class="token punctuation">)</span> <span class="token operator">!</span>GSVDJob</code></pre>
-
-
-</section>
-
-		<section id="GenOrtho.from" class="doc-node">
-			<div class="title"><h2>fn GenOrtho.from <a href="#GenOrtho.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L151"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> GenOrtho<span class="token punctuation">.</span>from<span class="token punctuation">[</span><span class="token builtin">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token builtin">W</span><span class="token punctuation">)</span> <span class="token operator">!</span>GenOrtho</code></pre>
-
-
-</section>
-
-		<section id="LeftEigenVectorsJob.from" class="doc-node">
-			<div class="title"><h2>fn LeftEigenVectorsJob.from <a href="#LeftEigenVectorsJob.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L263"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> LeftEigenVectorsJob<span class="token punctuation">.</span>from<span class="token punctuation">[</span><span class="token builtin">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token builtin">W</span><span class="token punctuation">)</span> <span class="token operator">!</span>LeftEigenVectorsJob</code></pre>
-
-
-</section>
-
-		<section id="MatrixNorm.from" class="doc-node">
-			<div class="title"><h2>fn MatrixNorm.from <a href="#MatrixNorm.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L63"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> MatrixNorm<span class="token punctuation">.</span>from<span class="token punctuation">[</span><span class="token builtin">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token builtin">W</span><span class="token punctuation">)</span> <span class="token operator">!</span>MatrixNorm</code></pre>
-
-
-</section>
-
-		<section id="MatrixType.from" class="doc-node">
-			<div class="title"><h2>fn MatrixType.from <a href="#MatrixType.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L87"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> MatrixType<span class="token punctuation">.</span>from<span class="token punctuation">[</span><span class="token builtin">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token builtin">W</span><span class="token punctuation">)</span> <span class="token operator">!</span>MatrixType</code></pre>
-
-
-</section>
-
-		<section id="MaximizeNormXJob.from" class="doc-node">
-			<div class="title"><h2>fn MaximizeNormXJob.from <a href="#MaximizeNormXJob.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L433"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> MaximizeNormXJob<span class="token punctuation">.</span>from<span class="token punctuation">[</span><span class="token builtin">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token builtin">W</span><span class="token punctuation">)</span> <span class="token operator">!</span>MaximizeNormXJob</code></pre>
-
-
-</section>
-
-		<section id="OrthoComp.from" class="doc-node">
-			<div class="title"><h2>fn OrthoComp.from <a href="#OrthoComp.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L453"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> OrthoComp<span class="token punctuation">.</span>from<span class="token punctuation">[</span><span class="token builtin">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token builtin">W</span><span class="token punctuation">)</span> <span class="token operator">!</span>OrthoComp</code></pre>
-
-
-</section>
-
-		<section id="Pivot.from" class="doc-node">
-			<div class="title"><h2>fn Pivot.from <a href="#Pivot.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L109"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> Pivot<span class="token punctuation">.</span>from<span class="token punctuation">[</span><span class="token builtin">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token builtin">W</span><span class="token punctuation">)</span> <span class="token operator">!</span>Pivot</code></pre>
-
-
-</section>
-
-		<section id="RightEigenVectorsJob.from" class="doc-node">
-			<div class="title"><h2>fn RightEigenVectorsJob.from <a href="#RightEigenVectorsJob.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L283"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> RightEigenVectorsJob<span class="token punctuation">.</span>from<span class="token punctuation">[</span><span class="token builtin">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token builtin">W</span><span class="token punctuation">)</span> <span class="token operator">!</span>RightEigenVectorsJob</code></pre>
-
-
-</section>
-
-		<section id="SVDJob.from" class="doc-node">
-			<div class="title"><h2>fn SVDJob.from <a href="#SVDJob.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L171"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> SVDJob<span class="token punctuation">.</span>from<span class="token punctuation">[</span><span class="token builtin">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token builtin">W</span><span class="token punctuation">)</span> <span class="token operator">!</span>SVDJob</code></pre>
-
-
-</section>
-
-		<section id="SchurComp.from" class="doc-node">
-			<div class="title"><h2>fn SchurComp.from <a href="#SchurComp.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L347"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> SchurComp<span class="token punctuation">.</span>from<span class="token punctuation">[</span><span class="token builtin">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token builtin">W</span><span class="token punctuation">)</span> <span class="token operator">!</span>SchurComp</code></pre>
-
-
-</section>
-
-		<section id="SchurJob.from" class="doc-node">
-			<div class="title"><h2>fn SchurJob.from <a href="#SchurJob.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L327"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> SchurJob<span class="token punctuation">.</span>from<span class="token punctuation">[</span><span class="token builtin">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token builtin">W</span><span class="token punctuation">)</span> <span class="token operator">!</span>SchurJob</code></pre>
-
-
-</section>
-
-		<section id="Sort.from" class="doc-node">
-			<div class="title"><h2>fn Sort.from <a href="#Sort.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L23"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> Sort<span class="token punctuation">.</span>from<span class="token punctuation">[</span><span class="token builtin">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token builtin">W</span><span class="token punctuation">)</span> <span class="token operator">!</span>Sort</code></pre>
-
-
-</section>
-
-		<section id="StoreV.from" class="doc-node">
-			<div class="title"><h2>fn StoreV.from <a href="#StoreV.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L43"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> StoreV<span class="token punctuation">.</span>from<span class="token punctuation">[</span><span class="token builtin">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token builtin">W</span><span class="token punctuation">)</span> <span class="token operator">!</span>StoreV</code></pre>
-
-
-</section>
-
-		<section id="UpdateSchurComp.from" class="doc-node">
-			<div class="title"><h2>fn UpdateSchurComp.from <a href="#UpdateSchurComp.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L369"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> UpdateSchurComp<span class="token punctuation">.</span>from<span class="token punctuation">[</span><span class="token builtin">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token builtin">W</span><span class="token punctuation">)</span> <span class="token operator">!</span>UpdateSchurComp</code></pre>
-
-
-</section>
-
 		<section id="ApplyOrtho" class="doc-node">
-			<div class="title"><h2>enum ApplyOrtho <a href="#ApplyOrtho">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L63"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>enum ApplyOrtho <a href="#ApplyOrtho">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L63"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">enum</span> ApplyOrtho <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
 	<span class="token comment">// Apply P or Pᵀ.</span>
@@ -1052,7 +876,7 @@
 </section>
 
 		<section id="BalanceJob" class="doc-node">
-			<div class="title"><h2>enum BalanceJob <a href="#BalanceJob">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L139"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>enum BalanceJob <a href="#BalanceJob">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L139"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">enum</span> BalanceJob <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
 	permute       <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`P`</span><span class="token punctuation">)</span>
@@ -1065,7 +889,7 @@
 </section>
 
 		<section id="Direct" class="doc-node">
-			<div class="title"><h2>enum Direct <a href="#Direct">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L12"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>enum Direct <a href="#Direct">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L12"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">enum</span> Direct <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
 	<span class="token comment">// Reflectors are right-multiplied, H_0 * H_1 * ... * H_{k-1}.</span>
@@ -1078,7 +902,7 @@
 </section>
 
 		<section id="EigenVectorsComp" class="doc-node">
-			<div class="title"><h2>enum EigenVectorsComp <a href="#EigenVectorsComp">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L105"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>enum EigenVectorsComp <a href="#EigenVectorsComp">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L105"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">enum</span> EigenVectorsComp <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
 	<span class="token comment">// Compute eigenvectors of the original symmetric matrix.</span>
@@ -1093,7 +917,7 @@
 </section>
 
 		<section id="EigenVectorsHowMany" class="doc-node">
-			<div class="title"><h2>enum EigenVectorsHowMany <a href="#EigenVectorsHowMany">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L181"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>enum EigenVectorsHowMany <a href="#EigenVectorsHowMany">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L181"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">enum</span> EigenVectorsHowMany <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
 	<span class="token comment">// Compute all right and/or left eigenvectors.</span>
@@ -1108,7 +932,7 @@
 </section>
 
 		<section id="EigenVectorsJob" class="doc-node">
-			<div class="title"><h2>enum EigenVectorsJob <a href="#EigenVectorsJob">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L115"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>enum EigenVectorsJob <a href="#EigenVectorsJob">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L115"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">enum</span> EigenVectorsJob <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
 	<span class="token comment">// Compute eigenvectors.</span>
@@ -1121,7 +945,7 @@
 </section>
 
 		<section id="EigenVectorsSide" class="doc-node">
-			<div class="title"><h2>enum EigenVectorsSide <a href="#EigenVectorsSide">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L171"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>enum EigenVectorsSide <a href="#EigenVectorsSide">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L171"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">enum</span> EigenVectorsSide <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
 	<span class="token comment">// Compute only right eigenvectors.</span>
@@ -1136,7 +960,7 @@
 </section>
 
 		<section id="GSVDJob" class="doc-node">
-			<div class="title"><h2>enum GSVDJob <a href="#GSVDJob">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L91"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>enum GSVDJob <a href="#GSVDJob">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L91"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">enum</span> GSVDJob <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
 	<span class="token comment">// Compute orthogonal matrix U.</span>
@@ -1155,7 +979,7 @@
 </section>
 
 		<section id="GenOrtho" class="doc-node">
-			<div class="title"><h2>enum GenOrtho <a href="#GenOrtho">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L71"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>enum GenOrtho <a href="#GenOrtho">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L71"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">enum</span> GenOrtho <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
 	<span class="token comment">// Generate Pᵀ.</span>
@@ -1168,7 +992,7 @@
 </section>
 
 		<section id="LeftEigenVectorsJob" class="doc-node">
-			<div class="title"><h2>enum LeftEigenVectorsJob <a href="#LeftEigenVectorsJob">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L123"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>enum LeftEigenVectorsJob <a href="#LeftEigenVectorsJob">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L123"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">enum</span> LeftEigenVectorsJob <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
 	<span class="token comment">// Compute left eigenvectors.</span>
@@ -1181,7 +1005,7 @@
 </section>
 
 		<section id="MatrixNorm" class="doc-node">
-			<div class="title"><h2>enum MatrixNorm <a href="#MatrixNorm">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L34"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>enum MatrixNorm <a href="#MatrixNorm">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L34"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">enum</span> MatrixNorm <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
 	<span class="token comment">// max(abs(A(i,j)))</span>
@@ -1198,7 +1022,7 @@
 </section>
 
 		<section id="MatrixType" class="doc-node">
-			<div class="title"><h2>enum MatrixType <a href="#MatrixType">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L46"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>enum MatrixType <a href="#MatrixType">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L46"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">enum</span> MatrixType <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
 	<span class="token comment">// A general dense matrix.</span>
@@ -1213,7 +1037,7 @@
 </section>
 
 		<section id="MaximizeNormXJob" class="doc-node">
-			<div class="title"><h2>enum MaximizeNormXJob <a href="#MaximizeNormXJob">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L192"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>enum MaximizeNormXJob <a href="#MaximizeNormXJob">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L192"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">enum</span> MaximizeNormXJob <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
 	<span class="token comment">// Solve Z*x=h-f where h is a vector of ±1.</span>
@@ -1226,7 +1050,7 @@
 </section>
 
 		<section id="OrthoComp" class="doc-node">
-			<div class="title"><h2>enum OrthoComp <a href="#OrthoComp">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L200"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>enum OrthoComp <a href="#OrthoComp">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L200"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">enum</span> OrthoComp <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
 	<span class="token comment">// Do not compute the orthogonal matrix.</span>
@@ -1241,7 +1065,7 @@
 </section>
 
 		<section id="Pivot" class="doc-node">
-			<div class="title"><h2>enum Pivot <a href="#Pivot">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L56"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>enum Pivot <a href="#Pivot">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L56"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">enum</span> Pivot <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
 	variable <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`V`</span><span class="token punctuation">)</span>
@@ -1253,7 +1077,7 @@
 </section>
 
 		<section id="RightEigenVectorsJob" class="doc-node">
-			<div class="title"><h2>enum RightEigenVectorsJob <a href="#RightEigenVectorsJob">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L131"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>enum RightEigenVectorsJob <a href="#RightEigenVectorsJob">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L131"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">enum</span> RightEigenVectorsJob <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
 	<span class="token comment">// Compute right eigenvectors.</span>
@@ -1266,7 +1090,7 @@
 </section>
 
 		<section id="SVDJob" class="doc-node">
-			<div class="title"><h2>enum SVDJob <a href="#SVDJob">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L79"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>enum SVDJob <a href="#SVDJob">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L79"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">enum</span> SVDJob <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
 	<span class="token comment">// Compute all columns of the orthogonal matrix U or V.</span>
@@ -1283,7 +1107,7 @@
 </section>
 
 		<section id="SchurComp" class="doc-node">
-			<div class="title"><h2>enum SchurComp <a href="#SchurComp">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L153"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>enum SchurComp <a href="#SchurComp">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L153"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">enum</span> SchurComp <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
 	<span class="token comment">// Compute Schur vectors of the original matrix.</span>
@@ -1298,7 +1122,7 @@
 </section>
 
 		<section id="SchurJob" class="doc-node">
-			<div class="title"><h2>enum SchurJob <a href="#SchurJob">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L147"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>enum SchurJob <a href="#SchurJob">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L147"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">enum</span> SchurJob <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
 	eigenvalues_only      <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`E`</span><span class="token punctuation">)</span>
@@ -1309,7 +1133,7 @@
 </section>
 
 		<section id="Sort" class="doc-node">
-			<div class="title"><h2>enum Sort <a href="#Sort">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L20"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>enum Sort <a href="#Sort">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L20"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">enum</span> Sort <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
 	sort_increasing <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`I`</span><span class="token punctuation">)</span>
@@ -1320,7 +1144,7 @@
 </section>
 
 		<section id="StoreV" class="doc-node">
-			<div class="title"><h2>enum StoreV <a href="#StoreV">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L26"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>enum StoreV <a href="#StoreV">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L26"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">enum</span> StoreV <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
 	<span class="token comment">// Reflector stored in a column of the matrix.</span>
@@ -1333,7 +1157,7 @@
 </section>
 
 		<section id="UpdateSchurComp" class="doc-node">
-			<div class="title"><h2>enum UpdateSchurComp <a href="#UpdateSchurComp">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/lapack/conversions.v#L163"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>enum UpdateSchurComp <a href="#UpdateSchurComp">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/lapack/conversions.v#L163"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">enum</span> UpdateSchurComp <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
 	<span class="token comment">// Update the matrix of Schur vectors.</span>
@@ -1346,7 +1170,7 @@
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 26 Jul 2026 07:55:45</div>
+						<div class="footer">Powered by vdoc. Generated on: 8 Oct 2026 14:41:58</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_lapack">README</a></li>
 <li class="open"><a href="#dgeev">fn dgeev</a>        <ul>
@@ -1548,72 +1372,6 @@
 </ul>
 </li>
 <li class="open"><a href="#to_lapack64_update_schur_comp">fn to_lapack64_update_schur_comp</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#ApplyOrtho.from">fn ApplyOrtho.from</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#BalanceJob.from">fn BalanceJob.from</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#Direct.from">fn Direct.from</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#EigenVectorsComp.from">fn EigenVectorsComp.from</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#EigenVectorsHowMany.from">fn EigenVectorsHowMany.from</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#EigenVectorsJob.from">fn EigenVectorsJob.from</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#EigenVectorsSide.from">fn EigenVectorsSide.from</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#GSVDJob.from">fn GSVDJob.from</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#GenOrtho.from">fn GenOrtho.from</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#LeftEigenVectorsJob.from">fn LeftEigenVectorsJob.from</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#MatrixNorm.from">fn MatrixNorm.from</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#MatrixType.from">fn MatrixType.from</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#MaximizeNormXJob.from">fn MaximizeNormXJob.from</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#OrthoComp.from">fn OrthoComp.from</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#Pivot.from">fn Pivot.from</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#RightEigenVectorsJob.from">fn RightEigenVectorsJob.from</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#SVDJob.from">fn SVDJob.from</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#SchurComp.from">fn SchurComp.from</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#SchurJob.from">fn SchurJob.from</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#Sort.from">fn Sort.from</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#StoreV.from">fn StoreV.from</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#UpdateSchurComp.from">fn UpdateSchurComp.from</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#ApplyOrtho">enum ApplyOrtho</a>        <ul>

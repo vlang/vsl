@@ -66,10 +66,7 @@
 <div class="menu-row"><a href="./main.html">main</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>benchmarks</a></div>
-<ul>
-<li><a href="./benchmarks.util.html">util</a></li>
-</ul>
+<div class="menu-row"><a href="./util.html">util</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./blas.html">blas</a></div>
@@ -111,11 +108,10 @@
 <div class="menu-row"><a href="./fit.html">fit</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>float</a></div>
-<ul>
-<li><a href="./float.float32.html">float32</a></li>
-<li><a href="./float.float64.html">float64</a></li>
-</ul>
+<div class="menu-row"><a href="./float32.html">float32</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./float64.html">float64</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./fun.html">fun</a></div>
@@ -130,21 +126,13 @@
 <div class="menu-row"><a href="./graph.html">graph</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>inout</a></div>
-<ul>
-<li><a href="./inout.csv.html">csv</a></li>
-</ul>
+<div class="menu-row"><a href="./csv.html">csv</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./h5.html">h5</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>internal</a></div>
-<ul>
-<li><a href="./internal.prec.html">prec</a></li>
-<li><a href="./internal.dl.html">dl</a></li>
-<li><a href="./internal.dl.html">dl</a></li>
-</ul>
+<div class="menu-row"><a href="./prec.html">prec</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./iter.html">iter</a></div>
@@ -162,10 +150,10 @@
 <div class="menu-row"><a href="./metrics.html">metrics</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="./ml.html">ml</a></div>
-<ul>
-<li><a href="./ml.nlp.html">nlp</a></li>
-</ul>
+<div class="menu-row"><a href="./ml.html">ml</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./nlp.html">nlp</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./model_selection.html">model_selection</a></div>
@@ -194,11 +182,11 @@
 <li class="open">
 <div class="menu-row"><a href="./roots.html">roots</a></div>
 </li>
-<li class="open">
-<div class="menu-row"><a href="./util.html">util</a></div>
-</li>
 <li class="open active">
 <div class="menu-row"><a href="./vcl.html">vcl</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./dl.html">dl</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./vulkan.html">vulkan</a></div>
@@ -241,6 +229,8 @@ device<span class="token punctuation">.</span><span class="token function">add_p
 
 <span class="token comment">// Create and use buffers for computation</span>
 <span class="token comment">// (See examples directory for complete implementations)</span></code></pre>
+<h3 id="kernel-arguments-and-work-sizes">Kernel arguments and work sizes</h3>
+<p>Pass a vector's device buffer with <code>vector.buffer()</code>. Scalar argument widths must match the OpenCL kernel declaration: use <code>i32</code> for OpenCL <code>int</code>, <code>f32</code> for <code>float</code>, and <code>f64</code> for <code>double</code>. VCL treats each requested local work size as a maximum and selects a divisor of the corresponding global work size, so sizes such as 3 elements can run with a requested local size of 64.</p>
 <h2 id="-visual-gallery">📊 Visual Gallery</h2>
 <p>VCL enables creation of stunning GPU-accelerated visualizations:</p>
 <table>
@@ -272,34 +262,45 @@ device<span class="token punctuation">.</span><span class="token function">add_p
 <li><strong>Intel</strong>: Intel OpenCL Runtime or integrated graphics drivers</li></ul></li>
 <li>
 <p><strong>OpenCL Headers</strong>: Development headers for compilation</p></li></ol>
+<p>For CPU-only OpenCL development on Arch Linux, install the headers, ICD loader, and PoCL runtime:</p>
+<pre><code class="language-sh">sudo pacman <span class="token operator">-</span>S <span class="token operator">--</span>needed opencl<span class="token operator">-</span>headers ocl<span class="token operator">-</span>icd pocl</code></pre>
 <h3 id="platform-specific-installation">Platform-Specific Installation</h3>
 <p><strong>Ubuntu/Debian:</strong></p>
-<pre><code class="language-sh">##sudo apt<span class="token operator">-</span>get install nvidia<span class="token operator">-</span>opencl<span class="token operator">-</span>dev
+<pre><code class="language-sh"><span class="token punctuation"># NVIDIA GPUs</span>
+sudo apt<span class="token operator">-</span>get install nvidia<span class="token operator">-</span>opencl<span class="token operator">-</span>dev
 
-##sudo apt<span class="token operator">-</span>get install amd<span class="token operator">-</span>opencl<span class="token operator">-</span>dev
+<span class="token punctuation"># AMD GPUs</span>
+sudo apt<span class="token operator">-</span>get install amd<span class="token operator">-</span>opencl<span class="token operator">-</span>dev
 
-##sudo apt<span class="token operator">-</span>get install intel<span class="token operator">-</span>opencl<span class="token operator">-</span>icd</code></pre>
+<span class="token punctuation"># Intel integrated graphics</span>
+sudo apt<span class="token operator">-</span>get install intel<span class="token operator">-</span>opencl<span class="token operator">-</span>icd</code></pre>
 <p><strong>macOS:</strong> OpenCL is built into the system (no additional installation required)</p>
 <p><strong>Windows:</strong> Install your GPU vendor's SDK (NVIDIA CUDA, AMD APP, Intel OpenCL)</p>
 <h3 id="verification">Verification</h3>
 <p>Test your OpenCL installation:</p>
-<pre><code class="language-sh">##clinfo  ##
-##cd examples<span class="token operator">/</span>vcl_opencl_basic
-v run main<span class="token punctuation">.</span>v</code></pre>
+<pre><code class="language-sh"><span class="token punctuation"># Check available platforms and devices</span>
+clinfo  <span class="token punctuation"># If available on your system</span>
+
+<span class="token punctuation"># Or run a VCL example</span>
+v run <span class="token punctuation">.</span><span class="token operator">/</span>vsl<span class="token operator">/</span>examples<span class="token operator">/</span>vcl_opencl_basic<span class="token operator">/</span>main<span class="token punctuation">.</span>v</code></pre>
 <p>By default VCL uses the OpenCL headers from the system path and all the known locations for OpenCL headers (like <code>/usr/include</code> and <code>/usr/local/include</code>) and load the first header it finds. If you want to use a specific OpenCL header, you can add the <code>-I</code> flag into your V program with the path to the headers directory.</p>
-<pre><code class="language-v">#</code></pre>
+<pre><code class="language-v"><span class="token punctuation">#flag -I/custom/path/to/opencl/headers</span></code></pre>
 <p>or at compile time:</p>
 <pre><code class="language-sh">v <span class="token operator">-</span>I<span class="token operator">/</span>custom<span class="token operator">/</span>path<span class="token operator">/</span>to<span class="token operator">/</span>opencl<span class="token operator">/</span>headers my_program<span class="token punctuation">.</span>v</code></pre>
 <p>You can also link or move the headers directory into VCL's source directory. For example:</p>
-<pre><code class="language-sh">##ln <span class="token operator">-</span>s <span class="token operator">/</span>custom<span class="token operator">/</span>path<span class="token operator">/</span>to<span class="token operator">/</span>opencl<span class="token operator">/</span>headers <span class="token operator">~</span><span class="token operator">/</span><span class="token punctuation">.</span>vmodules<span class="token operator">/</span>vcl<span class="token operator">/</span>OpenCL
+<pre><code class="language-sh"><span class="token punctuation"># for darwin systems</span>
+ln <span class="token operator">-</span>s <span class="token operator">/</span>custom<span class="token operator">/</span>path<span class="token operator">/</span>to<span class="token operator">/</span>opencl<span class="token operator">/</span>headers <span class="token operator">~</span><span class="token operator">/</span><span class="token punctuation">.</span>vmodules<span class="token operator">/</span>vcl<span class="token operator">/</span>OpenCL
 
-##ln <span class="token operator">-</span>s <span class="token operator">/</span>custom<span class="token operator">/</span>path<span class="token operator">/</span>to<span class="token operator">/</span>opencl<span class="token operator">/</span>headers <span class="token operator">~</span><span class="token operator">/</span><span class="token punctuation">.</span>vmodules<span class="token operator">/</span>vcl<span class="token operator">/</span>CL</code></pre>
+<span class="token punctuation"># or for any other system you can do</span>
+ln <span class="token operator">-</span>s <span class="token operator">/</span>custom<span class="token operator">/</span>path<span class="token operator">/</span>to<span class="token operator">/</span>opencl<span class="token operator">/</span>headers <span class="token operator">~</span><span class="token operator">/</span><span class="token punctuation">.</span>vmodules<span class="token operator">/</span>vcl<span class="token operator">/</span>CL</code></pre>
 <p>or, you can copy the headers directory into VCL's source directory. For example you can clone the OpenCL-Headers repository and copy the headers as follows:</p>
 <pre><code class="language-sh">git clone https<span class="token punctuation">:</span><span class="token comment">//github.com/KhronosGroup/OpenCL-Headers /tmp/OpenCL-Headers</span>
 
-##cp <span class="token operator">-</span>r <span class="token operator">/</span>tmp<span class="token operator">/</span>OpenCL<span class="token operator">-</span>Headers<span class="token operator">/</span>CL <span class="token operator">~</span><span class="token operator">/</span><span class="token punctuation">.</span>vmodules<span class="token operator">/</span>vcl<span class="token operator">/</span>OpenCL
+<span class="token punctuation"># for darwin systems</span>
+cp <span class="token operator">-</span>r <span class="token operator">/</span>tmp<span class="token operator">/</span>OpenCL<span class="token operator">-</span>Headers<span class="token operator">/</span>CL <span class="token operator">~</span><span class="token operator">/</span><span class="token punctuation">.</span>vmodules<span class="token operator">/</span>vcl<span class="token operator">/</span>OpenCL
 
-##cp <span class="token operator">-</span>r <span class="token operator">/</span>tmp<span class="token operator">/</span>OpenCL<span class="token operator">-</span>Headers<span class="token operator">/</span>CL <span class="token operator">~</span><span class="token operator">/</span><span class="token punctuation">.</span>vmodules<span class="token operator">/</span>vcl<span class="token operator">/</span>CL</code></pre>
+<span class="token punctuation"># or for any other system you can do</span>
+cp <span class="token operator">-</span>r <span class="token operator">/</span>tmp<span class="token operator">/</span>OpenCL<span class="token operator">-</span>Headers<span class="token operator">/</span>CL <span class="token operator">~</span><span class="token operator">/</span><span class="token punctuation">.</span>vmodules<span class="token operator">/</span>vcl<span class="token operator">/</span>CL</code></pre>
 <h2 id="loading-opencl-dynamically">Loading OpenCL dynamically</h2>
 <p>By default VCL uses OpenCL loading the library statically. If you want to use OpenCL dynamically, you can use the <code>-d vsl_vcl_dlopencl</code> flag.</p>
 <p>By default it will look for the OpenCL library in the system path and all the known locations for OpenCL libraries (like <code>/usr/lib</code> and <code>/usr/local/lib</code>) and load the first library it finds. If you want to use a specific OpenCL library, you can declare the environment variable <code>VCL_LIBOPENCL_PATH</code> with the path to the library. Multiple paths can be separated by <code>:</code>.</p>
@@ -326,27 +327,36 @@ v run main<span class="token punctuation">.</span>v</code></pre>
 <p><strong>IMPORTANT</strong>: Header version compatibility is crucial. Mismatched OpenCL<br />headers can cause runtime failures.</p></blockquote>
 <p>By default, VCL uses system OpenCL headers. For custom installations:</p>
 <h3 id="method-1-compiler-flags">Method 1: Compiler Flags</h3>
-<pre><code class="language-v">#</code></pre>
+<pre><code class="language-v"><span class="token punctuation">#flag -I/custom/path/to/opencl/headers</span></code></pre>
 <p>Or at compile time:</p>
 <pre><code class="language-sh">v <span class="token operator">-</span>I<span class="token operator">/</span>custom<span class="token operator">/</span>path<span class="token operator">/</span>to<span class="token operator">/</span>opencl<span class="token operator">/</span>headers my_program<span class="token punctuation">.</span>v</code></pre>
 <h3 id="method-2-symbolic-links">Method 2: Symbolic Links</h3>
-<pre><code class="language-sh">##ln <span class="token operator">-</span>s <span class="token operator">/</span>custom<span class="token operator">/</span>path<span class="token operator">/</span>to<span class="token operator">/</span>opencl<span class="token operator">/</span>headers <span class="token operator">~</span><span class="token operator">/</span><span class="token punctuation">.</span>vmodules<span class="token operator">/</span>vcl<span class="token operator">/</span>OpenCL
+<pre><code class="language-sh"><span class="token punctuation"># macOS systems (Darwin)</span>
+ln <span class="token operator">-</span>s <span class="token operator">/</span>custom<span class="token operator">/</span>path<span class="token operator">/</span>to<span class="token operator">/</span>opencl<span class="token operator">/</span>headers <span class="token operator">~</span><span class="token operator">/</span><span class="token punctuation">.</span>vmodules<span class="token operator">/</span>vcl<span class="token operator">/</span>OpenCL
 
-# L#ln <span class="token operator">-</span>s <span class="token operator">/</span>custom<span class="token operator">/</span>path<span class="token operator">/</span>to<span class="token operator">/</span>opencl<span class="token operator">/</span>headers <span class="token operator">~</span><span class="token operator">/</span><span class="token punctuation">.</span>vmodules<span class="token operator">/</span>vcl<span class="token operator">/</span>CL</code></pre>
+<span class="token punctuation"># Linux/Windows systems  </span>
+ln <span class="token operator">-</span>s <span class="token operator">/</span>custom<span class="token operator">/</span>path<span class="token operator">/</span>to<span class="token operator">/</span>opencl<span class="token operator">/</span>headers <span class="token operator">~</span><span class="token operator">/</span><span class="token punctuation">.</span>vmodules<span class="token operator">/</span>vcl<span class="token operator">/</span>CL</code></pre>
 <h3 id="method-3-direct-copy">Method 3: Direct Copy</h3>
-<pre><code class="language-sh">##git clone https<span class="token punctuation">:</span><span class="token comment">//github.com/KhronosGroup/OpenCL-Headers /tmp/OpenCL-Headers</span>
+<pre><code class="language-sh"><span class="token punctuation"># Clone official headers</span>
+git clone https<span class="token punctuation">:</span><span class="token comment">//github.com/KhronosGroup/OpenCL-Headers /tmp/OpenCL-Headers</span>
 
-####cp <span class="token operator">-</span>r <span class="token operator">/</span>tmp<span class="token operator">/</span>OpenCL<span class="token operator">-</span>Headers<span class="token operator">/</span>CL <span class="token operator">~</span><span class="token operator">/</span><span class="token punctuation">.</span>vmodules<span class="token operator">/</span>vcl<span class="token operator">/</span>OpenCL
+<span class="token punctuation"># Copy to VCL directory</span>
+<span class="token punctuation"># For macOS:</span>
+cp <span class="token operator">-</span>r <span class="token operator">/</span>tmp<span class="token operator">/</span>OpenCL<span class="token operator">-</span>Headers<span class="token operator">/</span>CL <span class="token operator">~</span><span class="token operator">/</span><span class="token punctuation">.</span>vmodules<span class="token operator">/</span>vcl<span class="token operator">/</span>OpenCL
 
-##cp <span class="token operator">-</span>r <span class="token operator">/</span>tmp<span class="token operator">/</span>OpenCL<span class="token operator">-</span>Headers<span class="token operator">/</span>CL <span class="token operator">~</span><span class="token operator">/</span><span class="token punctuation">.</span>vmodules<span class="token operator">/</span>vcl<span class="token operator">/</span>CL</code></pre>
+<span class="token punctuation"># For Linux/Windows:</span>
+cp <span class="token operator">-</span>r <span class="token operator">/</span>tmp<span class="token operator">/</span>OpenCL<span class="token operator">-</span>Headers<span class="token operator">/</span>CL <span class="token operator">~</span><span class="token operator">/</span><span class="token punctuation">.</span>vmodules<span class="token operator">/</span>vcl<span class="token operator">/</span>CL</code></pre>
 <h2 id="-dynamic-opencl-loading">⚡ Dynamic OpenCL Loading</h2>
 <p>For runtime flexibility, use dynamic loading:</p>
-<pre><code class="language-sh">##v <span class="token operator">-</span>d vsl_vcl_dlopencl my_program<span class="token punctuation">.</span>v</code></pre>
+<pre><code class="language-sh"><span class="token punctuation"># Enable dynamic loading</span>
+v <span class="token operator">-</span>d vsl_vcl_dlopencl my_program<span class="token punctuation">.</span>v</code></pre>
 <h3 id="custom-library-paths">Custom Library Paths</h3>
 <p>Set environment variable for specific OpenCL libraries:</p>
-<pre><code class="language-sh">##export VCL_LIBOPENCL_PATH<span class="token operator">=</span><span class="token operator">/</span>usr<span class="token operator">/</span>local<span class="token operator">/</span>cuda<span class="token operator">/</span>lib64<span class="token operator">/</span>libOpenCL<span class="token punctuation">.</span>so
+<pre><code class="language-sh"><span class="token punctuation"># Single path</span>
+export VCL_LIBOPENCL_PATH<span class="token operator">=</span><span class="token operator">/</span>usr<span class="token operator">/</span>local<span class="token operator">/</span>cuda<span class="token operator">/</span>lib64<span class="token operator">/</span>libOpenCL<span class="token punctuation">.</span>so
 
-##export VCL_LIBOPENCL_PATH<span class="token operator">=</span><span class="token operator">/</span>usr<span class="token operator">/</span>lib<span class="token operator">/</span>libOpenCL<span class="token punctuation">.</span>so<span class="token punctuation">:</span><span class="token operator">/</span>opt<span class="token operator">/</span>intel<span class="token operator">/</span>opencl<span class="token operator">/</span>lib64<span class="token operator">/</span>libOpenCL<span class="token punctuation">.</span>so</code></pre>
+<span class="token punctuation"># Multiple paths (colon-separated)</span>
+export VCL_LIBOPENCL_PATH<span class="token operator">=</span><span class="token operator">/</span>usr<span class="token operator">/</span>lib<span class="token operator">/</span>libOpenCL<span class="token punctuation">.</span>so<span class="token punctuation">:</span><span class="token operator">/</span>opt<span class="token operator">/</span>intel<span class="token operator">/</span>opencl<span class="token operator">/</span>lib64<span class="token operator">/</span>libOpenCL<span class="token punctuation">.</span>so</code></pre>
 <h2 id="-troubleshooting">🐛 Troubleshooting</h2>
 <h3 id="common-issues">Common Issues</h3>
 <p><strong>No OpenCL platforms found</strong></p>
@@ -405,23 +415,23 @@ v run main<span class="token punctuation">.</span>v</code></pre>
 </section>
 
 		<section id="error_from_code" class="doc-node">
-			<div class="title"><h2>fn error_from_code <a href="#error_from_code">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/errors.c.v#L86"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn error_from_code <a href="#error_from_code">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/errors.c.v#L86"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token function">error_from_code</span><span class="token punctuation">(</span>code <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">IError</span></code></pre>
+<code><span class="token keyword">fn</span> <span class="token function">error_from_code</span><span class="token punctuation">(</span>code <span class="token builtin">int</span><span class="token punctuation">)</span> IError</code></pre>
 
 
 </section>
 
 		<section id="error_or_default" class="doc-node">
-			<div class="title"><h2>fn error_or_default <a href="#error_or_default">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/errors.c.v#L90"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn error_or_default <a href="#error_or_default">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/errors.c.v#L90"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> error_or_default<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">(</span>code <span class="token builtin">int</span><span class="token punctuation">,</span> default <span class="token builtin">T</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">T</span></code></pre>
+<code><span class="token keyword">fn</span> error_or_default<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span>code <span class="token builtin">int</span><span class="token punctuation">,</span> default T<span class="token punctuation">)</span> <span class="token operator">!</span>T</code></pre>
 
 
 </section>
 
 		<section id="get_default_device" class="doc-node">
-			<div class="title"><h2>fn get_default_device <a href="#get_default_device">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/vcl.c.v#L33"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn get_default_device <a href="#get_default_device">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/vcl.c.v#L33"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">get_default_device</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token operator">&amp;</span>Device</code></pre>
 <p>get_default_device ...</p>
@@ -429,7 +439,7 @@ v run main<span class="token punctuation">.</span>v</code></pre>
 </section>
 
 		<section id="get_devices" class="doc-node">
-			<div class="title"><h2>fn get_devices <a href="#get_devices">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/vcl.c.v#L4"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn get_devices <a href="#get_devices">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/vcl.c.v#L4"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">get_devices</span><span class="token punctuation">(</span>device_type DeviceType<span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">&amp;</span>Device</code></pre>
 <p>get_devices returns all devices of all platforms with specified type</p>
@@ -437,7 +447,7 @@ v run main<span class="token punctuation">.</span>v</code></pre>
 </section>
 
 		<section id="panic_on_error" class="doc-node">
-			<div class="title"><h2>fn panic_on_error <a href="#panic_on_error">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/errors.c.v#L114"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn panic_on_error <a href="#panic_on_error">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/errors.c.v#L114"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">panic_on_error</span><span class="token punctuation">(</span>code <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
 
@@ -445,57 +455,33 @@ v run main<span class="token punctuation">.</span>v</code></pre>
 </section>
 
 		<section id="typed_error" class="doc-node">
-			<div class="title"><h2>fn typed_error <a href="#typed_error">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/errors.c.v#L97"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn typed_error <a href="#typed_error">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/errors.c.v#L97"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> typed_error<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">(</span>code <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">T</span></code></pre>
+<code><span class="token keyword">fn</span> typed_error<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span>code <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span>T</code></pre>
 
 
 </section>
 
 		<section id="vcl_error" class="doc-node">
-			<div class="title"><h2>fn vcl_error <a href="#vcl_error">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/errors.c.v#L104"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn vcl_error <a href="#vcl_error">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/errors.c.v#L104"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">vcl_error</span><span class="token punctuation">(</span>code <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
 
 
 </section>
 
-		<section id="DeviceType.from" class="doc-node">
-			<div class="title"><h2>fn DeviceType.from <a href="#DeviceType.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/device.c.v#L3"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> DeviceType<span class="token punctuation">.</span>from<span class="token punctuation">[</span><span class="token builtin">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token builtin">W</span><span class="token punctuation">)</span> <span class="token operator">!</span>DeviceType</code></pre>
-
-
-</section>
-
-		<section id="ImageChannelDataType.from" class="doc-node">
-			<div class="title"><h2>fn ImageChannelDataType.from <a href="#ImageChannelDataType.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/_ctypes.c.v#L23"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> ImageChannelDataType<span class="token punctuation">.</span>from<span class="token punctuation">[</span><span class="token builtin">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token builtin">W</span><span class="token punctuation">)</span> <span class="token operator">!</span>ImageChannelDataType</code></pre>
-
-
-</section>
-
-		<section id="ImageChannelOrder.from" class="doc-node">
-			<div class="title"><h2>fn ImageChannelOrder.from <a href="#ImageChannelOrder.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/_ctypes.c.v#L3"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> ImageChannelOrder<span class="token punctuation">.</span>from<span class="token punctuation">[</span><span class="token builtin">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token builtin">W</span><span class="token punctuation">)</span> <span class="token operator">!</span>ImageChannelOrder</code></pre>
-
-
-</section>
-
 		<section id="ArgumentType" class="doc-node">
-			<div class="title"><h2>interface ArgumentType <a href="#ArgumentType">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/kernel.c.v#L3"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>interface ArgumentType <a href="#ArgumentType">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/kernel.c.v#L3"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">interface</span> <span class="token symbol">ArgumentType</span> <span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>
+<code><span class="token keyword">interface</span> ArgumentType <span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>
 
 
 </section>
 
 		<section id="IImage" class="doc-node">
-			<div class="title"><h2>interface IImage <a href="#IImage">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/image.c.v#L17"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>interface IImage <a href="#IImage">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/image.c.v#L17"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">interface</span> <span class="token symbol">IImage</span> <span class="token punctuation">{</span>
+<code><span class="token keyword">interface</span> IImage <span class="token punctuation">{</span>
 	width       <span class="token builtin">int</span>
 	height      <span class="token builtin">int</span>
 	nr_channels <span class="token builtin">int</span>
@@ -506,7 +492,7 @@ v run main<span class="token punctuation">.</span>v</code></pre>
 </section>
 
 		<section id="ErrVCL" class="doc-node">
-			<div class="title"><h2>type ErrVCL <a href="#ErrVCL">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/errors.c.v#L7"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>type ErrVCL <a href="#ErrVCL">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/errors.c.v#L7"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">type</span> ErrVCL <span class="token operator">=</span> <span class="token builtin">int</span></code></pre>
 <p>ErrVCL converts that OpenCL error code to an V error</p>
@@ -514,63 +500,63 @@ v run main<span class="token punctuation">.</span>v</code></pre>
 </section>
 
 		<section id="ErrVCL.err" class="doc-node">
-			<div class="title"><h2>fn (ErrVCL) err <a href="#ErrVCL.err">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/errors.c.v#L9"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (ErrVCL) err <a href="#ErrVCL.err">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/errors.c.v#L9"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>e ErrVCL<span class="token punctuation">)</span> <span class="token function">err</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">IError</span></code></pre>
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>e ErrVCL<span class="token punctuation">)</span> <span class="token function">err</span><span class="token punctuation">(</span><span class="token punctuation">)</span> IError</code></pre>
 
 
 </section>
 
 		<section id="Vector[T].length" class="doc-node">
-			<div class="title"><h2>fn (Vector[T]) length <a href="#Vector[T].length">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/vector.c.v#L19"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (Vector[T]) length <a href="#Vector[T].length">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/vector.c.v#L19"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>v <span class="token operator">&amp;</span>Vector<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>v <span class="token operator">&amp;</span>Vector<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>Length the length of the vector</p>
 
 </section>
 
 		<section id="Vector[T].release" class="doc-node">
-			<div class="title"><h2>fn (Vector[T]) release <a href="#Vector[T].release">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/vector.c.v#L24"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (Vector[T]) release <a href="#Vector[T].release">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/vector.c.v#L24"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>v <span class="token operator">&amp;</span>Vector<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">release</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>v <span class="token operator">&amp;</span>Vector<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">release</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
 <p>Release releases the buffer on the device</p>
 
 </section>
 
 		<section id="Vector[T].load" class="doc-node">
-			<div class="title"><h2>fn (Vector[T]) load <a href="#Vector[T].load">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/vector.c.v#L30"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (Vector[T]) load <a href="#Vector[T].load">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/vector.c.v#L30"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> v Vector<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">load</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">T</span><span class="token punctuation">)</span> <span class="token builtin">chan</span> <span class="token builtin">IError</span></code></pre>
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> v Vector<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">load</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span>T<span class="token punctuation">)</span> <span class="token builtin">chan</span> IError</code></pre>
 <p>load copies the T data from host data to device buffer it's a non-blocking call, channel will return an error or nil if the data transfer is complete</p>
 
 </section>
 
 		<section id="Vector[T].data" class="doc-node">
-			<div class="title"><h2>fn (Vector[T]) data <a href="#Vector[T].data">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/vector.c.v#L40"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (Vector[T]) data <a href="#Vector[T].data">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/vector.c.v#L40"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>v <span class="token operator">&amp;</span>Vector<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">data</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">T</span></code></pre>
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>v <span class="token operator">&amp;</span>Vector<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">data</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span>T</code></pre>
 <p>data gets T data from device, it's a blocking call</p>
 
 </section>
 
 		<section id="Vector[T].map" class="doc-node">
-			<div class="title"><h2>fn (Vector[T]) map <a href="#Vector[T].map">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/vector.c.v#L48"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (Vector[T]) map <a href="#Vector[T].map">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/vector.c.v#L48"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>v <span class="token operator">&amp;</span>Vector<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token builtin">map</span><span class="token punctuation">(</span>k <span class="token operator">&amp;</span>Kernel<span class="token punctuation">)</span> <span class="token builtin">chan</span> <span class="token builtin">IError</span></code></pre>
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>v <span class="token operator">&amp;</span>Vector<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">map</span><span class="token punctuation">(</span>k <span class="token operator">&amp;</span>Kernel<span class="token punctuation">)</span> <span class="token builtin">chan</span> IError</code></pre>
 <p>map applies an map kernel on all elements of the vector</p>
 
 </section>
 
 		<section id="Vector[T].buffer" class="doc-node">
-			<div class="title"><h2>fn (Vector[T]) buffer <a href="#Vector[T].buffer">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/vector.c.v#L53"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (Vector[T]) buffer <a href="#Vector[T].buffer">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/vector.c.v#L53"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>v <span class="token operator">&amp;</span>Vector<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">buffer</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>Buffer</code></pre>
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>v <span class="token operator">&amp;</span>Vector<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">buffer</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>Buffer</code></pre>
 <p>buffer returns the underlying buffer</p>
 
 </section>
 
 		<section id="DeviceType" class="doc-node">
-			<div class="title"><h2>enum DeviceType <a href="#DeviceType">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/device.c.v#L3"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>enum DeviceType <a href="#DeviceType">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/device.c.v#L3"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">enum</span> DeviceType <span class="token keyword">as</span> <span class="token builtin">i64</span> <span class="token punctuation">{</span>
 	<span class="token comment">// device types - bitfield</span>
@@ -586,9 +572,9 @@ v run main<span class="token punctuation">.</span>v</code></pre>
 </section>
 
 		<section id="ImageChannelDataType" class="doc-node">
-			<div class="title"><h2>enum ImageChannelDataType <a href="#ImageChannelDataType">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/_ctypes.c.v#L28"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>enum ImageChannelDataType <a href="#ImageChannelDataType">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/_ctypes.c.v#L28"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">enum</span> <span class="token symbol">ImageChannelDataType</span> <span class="token punctuation">{</span>
+<code><span class="token keyword">enum</span> ImageChannelDataType <span class="token punctuation">{</span>
 	unorm_int8 <span class="token operator">=</span> C<span class="token punctuation">.</span>CL_UNORM_INT8
 <span class="token punctuation">}</span></code></pre>
 <p>ImageChannelDataType describes the size of the channel data type</p>
@@ -596,9 +582,9 @@ v run main<span class="token punctuation">.</span>v</code></pre>
 </section>
 
 		<section id="ImageChannelOrder" class="doc-node">
-			<div class="title"><h2>enum ImageChannelOrder <a href="#ImageChannelOrder">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/_ctypes.c.v#L22"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>enum ImageChannelOrder <a href="#ImageChannelOrder">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/_ctypes.c.v#L22"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">enum</span> <span class="token symbol">ImageChannelOrder</span> <span class="token punctuation">{</span>
+<code><span class="token keyword">enum</span> ImageChannelOrder <span class="token punctuation">{</span>
 	intensity <span class="token operator">=</span> C<span class="token punctuation">.</span>CL_INTENSITY
 	rgba      <span class="token operator">=</span> C<span class="token punctuation">.</span>CL_RGBA
 <span class="token punctuation">}</span></code></pre>
@@ -607,9 +593,9 @@ v run main<span class="token punctuation">.</span>v</code></pre>
 </section>
 
 		<section id="Bytes" class="doc-node">
-			<div class="title"><h2>struct Bytes <a href="#Bytes">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/bytes.c.v#L4"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>struct Bytes <a href="#Bytes">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/bytes.c.v#L4"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">struct</span> <span class="token symbol">Bytes</span> <span class="token punctuation">{</span>
+<code><span class="token keyword">struct</span> Bytes <span class="token punctuation">{</span>
 	buf <span class="token operator">&amp;</span>Buffer <span class="token operator">=</span> <span class="token keyword">unsafe</span> <span class="token punctuation">{</span> <span class="token keyword">nil</span> <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
 <p>Bytes is a memory buffer on the device that holds []byte</p>
@@ -617,7 +603,7 @@ v run main<span class="token punctuation">.</span>v</code></pre>
 </section>
 
 		<section id="Bytes.size" class="doc-node">
-			<div class="title"><h2>fn (Bytes) size <a href="#Bytes.size">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/bytes.c.v#L17"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (Bytes) size <a href="#Bytes.size">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/bytes.c.v#L17"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>b <span class="token operator">&amp;</span>Bytes<span class="token punctuation">)</span> <span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>size the size of the bytes buffer</p>
@@ -625,7 +611,7 @@ v run main<span class="token punctuation">.</span>v</code></pre>
 </section>
 
 		<section id="Bytes.release" class="doc-node">
-			<div class="title"><h2>fn (Bytes) release <a href="#Bytes.release">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/bytes.c.v#L22"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (Bytes) release <a href="#Bytes.release">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/bytes.c.v#L22"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>b <span class="token operator">&amp;</span>Bytes<span class="token punctuation">)</span> <span class="token function">release</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
 <p>release releases the buffer on the device</p>
@@ -633,15 +619,15 @@ v run main<span class="token punctuation">.</span>v</code></pre>
 </section>
 
 		<section id="Bytes.load" class="doc-node">
-			<div class="title"><h2>fn (Bytes) load <a href="#Bytes.load">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/bytes.c.v#L28"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (Bytes) load <a href="#Bytes.load">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/bytes.c.v#L28"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>b <span class="token operator">&amp;</span>Bytes<span class="token punctuation">)</span> <span class="token function">load</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u8</span><span class="token punctuation">)</span> <span class="token builtin">chan</span> <span class="token builtin">IError</span></code></pre>
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>b <span class="token operator">&amp;</span>Bytes<span class="token punctuation">)</span> <span class="token function">load</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u8</span><span class="token punctuation">)</span> <span class="token builtin">chan</span> IError</code></pre>
 <p>load copies the data from host data to device buffer it's a non-blocking call, channel will return an error or nil if the data transfer is complete</p>
 
 </section>
 
 		<section id="Bytes.data" class="doc-node">
-			<div class="title"><h2>fn (Bytes) data <a href="#Bytes.data">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/bytes.c.v#L33"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (Bytes) data <a href="#Bytes.data">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/bytes.c.v#L33"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>b <span class="token operator">&amp;</span>Bytes<span class="token punctuation">)</span> <span class="token function">data</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">u8</span></code></pre>
 <p>data gets data from device, it's a blocking call</p>
@@ -649,15 +635,15 @@ v run main<span class="token punctuation">.</span>v</code></pre>
 </section>
 
 		<section id="Bytes.map" class="doc-node">
-			<div class="title"><h2>fn (Bytes) map <a href="#Bytes.map">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/bytes.c.v#L44"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (Bytes) map <a href="#Bytes.map">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/bytes.c.v#L44"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>b <span class="token operator">&amp;</span>Bytes<span class="token punctuation">)</span> <span class="token builtin">map</span><span class="token punctuation">(</span><span class="token keyword">mut</span> k Kernel<span class="token punctuation">)</span> <span class="token builtin">chan</span> <span class="token builtin">IError</span></code></pre>
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>b <span class="token operator">&amp;</span>Bytes<span class="token punctuation">)</span> <span class="token function">map</span><span class="token punctuation">(</span><span class="token keyword">mut</span> k Kernel<span class="token punctuation">)</span> <span class="token builtin">chan</span> IError</code></pre>
 <p>map applies an map kernel on all elements of the buffer</p>
 
 </section>
 
 		<section id="Bytes.buffer" class="doc-node">
-			<div class="title"><h2>fn (Bytes) buffer <a href="#Bytes.buffer">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/bytes.c.v#L49"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (Bytes) buffer <a href="#Bytes.buffer">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/bytes.c.v#L49"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>b <span class="token operator">&amp;</span>Bytes<span class="token punctuation">)</span> <span class="token function">buffer</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>Buffer</code></pre>
 <p>buffer returns the underlying buffer</p>
@@ -665,10 +651,10 @@ v run main<span class="token punctuation">.</span>v</code></pre>
 </section>
 
 		<section id="Device" class="doc-node">
-			<div class="title"><h2>struct Device <a href="#Device">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/device.c.v#L42"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>struct Device <a href="#Device">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/device.c.v#L42"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <div class="attributes"><div class="attribute">@[heap]</div></div>
 <pre class="signature">
-<code><span class="token keyword">struct</span> <span class="token symbol">Device</span> <span class="token punctuation">{</span>
+<code><span class="token keyword">struct</span> Device <span class="token punctuation">{</span>
 <span class="token keyword">mut</span><span class="token punctuation">:</span>
 	id       ClDeviceId
 	ctx      ClContext
@@ -679,8 +665,88 @@ v run main<span class="token punctuation">.</span>v</code></pre>
 
 </section>
 
+		<section id="Device.bytes" class="doc-node">
+			<div class="title"><h2>fn (Device) bytes <a href="#Device.bytes">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/bytes.c.v#L9"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>d <span class="token operator">&amp;</span>Device<span class="token punctuation">)</span> <span class="token function">bytes</span><span class="token punctuation">(</span>size <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token operator">&amp;</span>Bytes</code></pre>
+<p>bytes allocates new memory buffer with specified size on device</p>
+
+</section>
+
+		<section id="Device.release" class="doc-node">
+			<div class="title"><h2>fn (Device) release <a href="#Device.release">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/device.c.v#L51"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> d Device<span class="token punctuation">)</span> <span class="token function">release</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
+<p>release releases the device</p>
+
+</section>
+
+		<section id="Device.str" class="doc-node">
+			<div class="title"><h2>fn (Device) str <a href="#Device.str">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/device.c.v#L84"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>d <span class="token operator">&amp;</span>Device<span class="token punctuation">)</span> <span class="token function">str</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">string</span></code></pre>
+
+
+</section>
+
+		<section id="Device.name" class="doc-node">
+			<div class="title"><h2>fn (Device) name <a href="#Device.name">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/device.c.v#L91"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>d <span class="token operator">&amp;</span>Device<span class="token punctuation">)</span> <span class="token function">name</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">string</span></code></pre>
+<p>name device info - name</p>
+
+</section>
+
+		<section id="Device.vendor" class="doc-node">
+			<div class="title"><h2>fn (Device) vendor <a href="#Device.vendor">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/device.c.v#L96"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>d <span class="token operator">&amp;</span>Device<span class="token punctuation">)</span> <span class="token function">vendor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">string</span></code></pre>
+<p>vendor device info - vendor</p>
+
+</section>
+
+		<section id="Device.extensions" class="doc-node">
+			<div class="title"><h2>fn (Device) extensions <a href="#Device.extensions">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/device.c.v#L101"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>d <span class="token operator">&amp;</span>Device<span class="token punctuation">)</span> <span class="token function">extensions</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">string</span></code></pre>
+<p>extensions device info - extensions</p>
+
+</section>
+
+		<section id="Device.open_clc_version" class="doc-node">
+			<div class="title"><h2>fn (Device) open_clc_version <a href="#Device.open_clc_version">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/device.c.v#L106"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>d <span class="token operator">&amp;</span>Device<span class="token punctuation">)</span> <span class="token function">open_clc_version</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">string</span></code></pre>
+<p>open_clc_version device info - OpenCL C version</p>
+
+</section>
+
+		<section id="Device.profile" class="doc-node">
+			<div class="title"><h2>fn (Device) profile <a href="#Device.profile">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/device.c.v#L111"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>d <span class="token operator">&amp;</span>Device<span class="token punctuation">)</span> <span class="token function">profile</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">string</span></code></pre>
+<p>profile device info - profile</p>
+
+</section>
+
+		<section id="Device.version" class="doc-node">
+			<div class="title"><h2>fn (Device) version <a href="#Device.version">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/device.c.v#L116"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>d <span class="token operator">&amp;</span>Device<span class="token punctuation">)</span> <span class="token function">version</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">string</span></code></pre>
+<p>version device info - version</p>
+
+</section>
+
+		<section id="Device.driver_version" class="doc-node">
+			<div class="title"><h2>fn (Device) driver_version <a href="#Device.driver_version">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/device.c.v#L121"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>d <span class="token operator">&amp;</span>Device<span class="token punctuation">)</span> <span class="token function">driver_version</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">string</span></code></pre>
+<p>driver_version device info - driver version</p>
+
+</section>
+
 		<section id="Device.add_program" class="doc-node">
-			<div class="title"><h2>fn (Device) add_program <a href="#Device.add_program">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/device.c.v#L145"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (Device) add_program <a href="#Device.add_program">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/device.c.v#L145"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> d Device<span class="token punctuation">)</span> <span class="token function">add_program</span><span class="token punctuation">(</span>source <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
 <p>add_program compiles program source from OpenCL C code This method takes OpenCL C source code, compiles it, and stores the resulting program for later kernel creation and execution.</p>
@@ -689,122 +755,42 @@ v run main<span class="token punctuation">.</span>v</code></pre>
 
 </section>
 
-		<section id="Device.bytes" class="doc-node">
-			<div class="title"><h2>fn (Device) bytes <a href="#Device.bytes">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/bytes.c.v#L9"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>d <span class="token operator">&amp;</span>Device<span class="token punctuation">)</span> <span class="token function">bytes</span><span class="token punctuation">(</span>size <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token operator">&amp;</span>Bytes</code></pre>
-<p>bytes allocates new memory buffer with specified size on device</p>
-
-</section>
-
-		<section id="Device.driver_version" class="doc-node">
-			<div class="title"><h2>fn (Device) driver_version <a href="#Device.driver_version">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/device.c.v#L121"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>d <span class="token operator">&amp;</span>Device<span class="token punctuation">)</span> <span class="token function">driver_version</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">string</span></code></pre>
-<p>driver_version device info - driver version</p>
-
-</section>
-
-		<section id="Device.extensions" class="doc-node">
-			<div class="title"><h2>fn (Device) extensions <a href="#Device.extensions">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/device.c.v#L101"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>d <span class="token operator">&amp;</span>Device<span class="token punctuation">)</span> <span class="token function">extensions</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">string</span></code></pre>
-<p>extensions device info - extensions</p>
-
-</section>
-
-		<section id="Device.from_image" class="doc-node">
-			<div class="title"><h2>fn (Device) from_image <a href="#Device.from_image">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/image.c.v#L47"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>d <span class="token operator">&amp;</span>Device<span class="token punctuation">)</span> <span class="token function">from_image</span><span class="token punctuation">(</span>img IImage<span class="token punctuation">)</span> <span class="token operator">!</span><span class="token operator">&amp;</span>Image</code></pre>
-<p>from_image creates new Image and copies data from Image</p>
-
-</section>
-
 		<section id="Device.image" class="doc-node">
-			<div class="title"><h2>fn (Device) image <a href="#Device.image">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/image.c.v#L42"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (Device) image <a href="#Device.image">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/image.c.v#L42"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>d <span class="token operator">&amp;</span>Device<span class="token punctuation">)</span> <span class="token function">image</span><span class="token punctuation">(</span>@type ImageChannelOrder<span class="token punctuation">,</span> bounds Rect<span class="token punctuation">)</span> <span class="token operator">!</span><span class="token operator">&amp;</span>Image</code></pre>
 <p>image allocates an image buffer</p>
 
 </section>
 
+		<section id="Device.from_image" class="doc-node">
+			<div class="title"><h2>fn (Device) from_image <a href="#Device.from_image">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/image.c.v#L47"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>d <span class="token operator">&amp;</span>Device<span class="token punctuation">)</span> <span class="token function">from_image</span><span class="token punctuation">(</span>img IImage<span class="token punctuation">)</span> <span class="token operator">!</span><span class="token operator">&amp;</span>Image</code></pre>
+<p>from_image creates new Image and copies data from Image</p>
+
+</section>
+
 		<section id="Device.kernel" class="doc-node">
-			<div class="title"><h2>fn (Device) kernel <a href="#Device.kernel">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/kernel.c.v#L7"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (Device) kernel <a href="#Device.kernel">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/kernel.c.v#L11"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>d <span class="token operator">&amp;</span>Device<span class="token punctuation">)</span> <span class="token function">kernel</span><span class="token punctuation">(</span>name <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token operator">&amp;</span>Kernel</code></pre>
 <p>kernel returns a kernel if retrieving the kernel didn't complete the function will return an error</p>
 
 </section>
 
-		<section id="Device.name" class="doc-node">
-			<div class="title"><h2>fn (Device) name <a href="#Device.name">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/device.c.v#L91"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>d <span class="token operator">&amp;</span>Device<span class="token punctuation">)</span> <span class="token function">name</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">string</span></code></pre>
-<p>name device info - name</p>
-
-</section>
-
-		<section id="Device.open_clc_version" class="doc-node">
-			<div class="title"><h2>fn (Device) open_clc_version <a href="#Device.open_clc_version">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/device.c.v#L106"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>d <span class="token operator">&amp;</span>Device<span class="token punctuation">)</span> <span class="token function">open_clc_version</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">string</span></code></pre>
-<p>open_clc_version device info - OpenCL C version</p>
-
-</section>
-
-		<section id="Device.profile" class="doc-node">
-			<div class="title"><h2>fn (Device) profile <a href="#Device.profile">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/device.c.v#L111"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>d <span class="token operator">&amp;</span>Device<span class="token punctuation">)</span> <span class="token function">profile</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">string</span></code></pre>
-<p>profile device info - profile</p>
-
-</section>
-
-		<section id="Device.release" class="doc-node">
-			<div class="title"><h2>fn (Device) release <a href="#Device.release">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/device.c.v#L51"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> d Device<span class="token punctuation">)</span> <span class="token function">release</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
-<p>release releases the device</p>
-
-</section>
-
-		<section id="Device.str" class="doc-node">
-			<div class="title"><h2>fn (Device) str <a href="#Device.str">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/device.c.v#L84"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>d <span class="token operator">&amp;</span>Device<span class="token punctuation">)</span> <span class="token function">str</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">string</span></code></pre>
-
-
-</section>
-
 		<section id="Device.vector" class="doc-node">
-			<div class="title"><h2>fn (Device) vector <a href="#Device.vector">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/vector.c.v#L10"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (Device) vector <a href="#Device.vector">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/vector.c.v#L10"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>d <span class="token operator">&amp;</span>Device<span class="token punctuation">)</span> vector<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">(</span>length <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token operator">&amp;</span>Vector<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span></code></pre>
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>d <span class="token operator">&amp;</span>Device<span class="token punctuation">)</span> vector<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span>length <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token operator">&amp;</span>Vector<span class="token punctuation">[</span>T<span class="token punctuation">]</span></code></pre>
 <p>vector allocates new vector buffer with specified length</p>
 
 </section>
 
-		<section id="Device.vendor" class="doc-node">
-			<div class="title"><h2>fn (Device) vendor <a href="#Device.vendor">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/device.c.v#L96"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>d <span class="token operator">&amp;</span>Device<span class="token punctuation">)</span> <span class="token function">vendor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">string</span></code></pre>
-<p>vendor device info - vendor</p>
-
-</section>
-
-		<section id="Device.version" class="doc-node">
-			<div class="title"><h2>fn (Device) version <a href="#Device.version">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/device.c.v#L116"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>d <span class="token operator">&amp;</span>Device<span class="token punctuation">)</span> <span class="token function">version</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">string</span></code></pre>
-<p>version device info - version</p>
-
-</section>
-
 		<section id="Image" class="doc-node">
-			<div class="title"><h2>struct Image <a href="#Image">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/image.c.v#L25"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>struct Image <a href="#Image">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/image.c.v#L25"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">struct</span> <span class="token symbol">Image</span> <span class="token punctuation">{</span>
+<code><span class="token keyword">struct</span> Image <span class="token punctuation">{</span>
 	format   ClImageFormat
 	desc     <span class="token operator">&amp;</span>ClImageDesc <span class="token operator">=</span> <span class="token keyword">unsafe</span> <span class="token punctuation">{</span> <span class="token keyword">nil</span> <span class="token punctuation">}</span>
 	img_data <span class="token builtin">voidptr</span>
@@ -819,7 +805,7 @@ v run main<span class="token punctuation">.</span>v</code></pre>
 </section>
 
 		<section id="Image.release" class="doc-node">
-			<div class="title"><h2>fn (Image) release <a href="#Image.release">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/image.c.v#L37"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (Image) release <a href="#Image.release">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/image.c.v#L37"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> img Image<span class="token punctuation">)</span> <span class="token function">release</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
 <p>release releases the buffer on the device</p>
@@ -827,7 +813,7 @@ v run main<span class="token punctuation">.</span>v</code></pre>
 </section>
 
 		<section id="Image.data" class="doc-node">
-			<div class="title"><h2>fn (Image) data <a href="#Image.data">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/image.c.v#L109"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (Image) data <a href="#Image.data">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/image.c.v#L109"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>image <span class="token operator">&amp;</span>Image<span class="token punctuation">)</span> <span class="token function">data</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span>IImage</code></pre>
 
@@ -835,9 +821,9 @@ v run main<span class="token punctuation">.</span>v</code></pre>
 </section>
 
 		<section id="Kernel" class="doc-node">
-			<div class="title"><h2>struct Kernel <a href="#Kernel">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/kernel.c.v#L48"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>struct Kernel <a href="#Kernel">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/kernel.c.v#L52"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">struct</span> <span class="token symbol">Kernel</span> <span class="token punctuation">{</span>
+<code><span class="token keyword">struct</span> Kernel <span class="token punctuation">{</span>
 	d <span class="token operator">&amp;</span>Device <span class="token operator">=</span> <span class="token keyword">unsafe</span> <span class="token punctuation">{</span> <span class="token keyword">nil</span> <span class="token punctuation">}</span>
 	k ClKernel
 <span class="token punctuation">}</span></code></pre>
@@ -846,7 +832,7 @@ v run main<span class="token punctuation">.</span>v</code></pre>
 </section>
 
 		<section id="Kernel.global" class="doc-node">
-			<div class="title"><h2>fn (Kernel) global <a href="#Kernel.global">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/kernel.c.v#L54"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (Kernel) global <a href="#Kernel.global">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/kernel.c.v#L58"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>k <span class="token operator">&amp;</span>Kernel<span class="token punctuation">)</span> <span class="token function">global</span><span class="token punctuation">(</span>global_work_sizes <span class="token punctuation">...</span><span class="token builtin">int</span><span class="token punctuation">)</span> KernelWithGlobal</code></pre>
 <p>global returns an kernel with global size set</p>
@@ -854,9 +840,9 @@ v run main<span class="token punctuation">.</span>v</code></pre>
 </section>
 
 		<section id="KernelCall" class="doc-node">
-			<div class="title"><h2>struct KernelCall <a href="#KernelCall">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/kernel.c.v#L79"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>struct KernelCall <a href="#KernelCall">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/kernel.c.v#L83"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">struct</span> <span class="token symbol">KernelCall</span> <span class="token punctuation">{</span>
+<code><span class="token keyword">struct</span> KernelCall <span class="token punctuation">{</span>
 	kernel            <span class="token operator">&amp;</span>Kernel <span class="token operator">=</span> <span class="token keyword">unsafe</span> <span class="token punctuation">{</span> <span class="token keyword">nil</span> <span class="token punctuation">}</span>
 	global_work_sizes <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>
 	local_work_sizes  <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>
@@ -866,17 +852,17 @@ v run main<span class="token punctuation">.</span>v</code></pre>
 </section>
 
 		<section id="KernelCall.run" class="doc-node">
-			<div class="title"><h2>fn (KernelCall) run <a href="#KernelCall.run">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/kernel.c.v#L88"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (KernelCall) run <a href="#KernelCall.run">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/kernel.c.v#L92"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>kc KernelCall<span class="token punctuation">)</span> <span class="token function">run</span><span class="token punctuation">(</span>args <span class="token punctuation">...</span>ArgumentType<span class="token punctuation">)</span> <span class="token builtin">chan</span> <span class="token builtin">IError</span></code></pre>
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>kc KernelCall<span class="token punctuation">)</span> <span class="token function">run</span><span class="token punctuation">(</span>args <span class="token punctuation">...</span>ArgumentType<span class="token punctuation">)</span> <span class="token builtin">chan</span> IError</code></pre>
 <p>run calls the kernel on its device with specified global and local work sizes and arguments it's a non-blocking call, so it returns a channel that will send an error value when the kernel is done or nil if the call was successful</p>
 
 </section>
 
 		<section id="KernelWithGlobal" class="doc-node">
-			<div class="title"><h2>struct KernelWithGlobal <a href="#KernelWithGlobal">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/kernel.c.v#L63"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>struct KernelWithGlobal <a href="#KernelWithGlobal">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/kernel.c.v#L67"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">struct</span> <span class="token symbol">KernelWithGlobal</span> <span class="token punctuation">{</span>
+<code><span class="token keyword">struct</span> KernelWithGlobal <span class="token punctuation">{</span>
 	kernel            <span class="token operator">&amp;</span>Kernel <span class="token operator">=</span> <span class="token keyword">unsafe</span> <span class="token punctuation">{</span> <span class="token keyword">nil</span> <span class="token punctuation">}</span>
 	global_work_sizes <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>
 <span class="token punctuation">}</span></code></pre>
@@ -885,18 +871,18 @@ v run main<span class="token punctuation">.</span>v</code></pre>
 </section>
 
 		<section id="KernelWithGlobal.local" class="doc-node">
-			<div class="title"><h2>fn (KernelWithGlobal) local <a href="#KernelWithGlobal.local">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/kernel.c.v#L69"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (KernelWithGlobal) local <a href="#KernelWithGlobal.local">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/kernel.c.v#L73"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>kg KernelWithGlobal<span class="token punctuation">)</span> <span class="token function">local</span><span class="token punctuation">(</span>local_work_sizes <span class="token punctuation">...</span><span class="token builtin">int</span><span class="token punctuation">)</span> KernelCall</code></pre>
-<p>local ets the local work sizes and returns an KernelCall which takes kernel arguments and runs the kernel</p>
+<p>local sets the maximum local work sizes and returns a KernelCall.</p>
 
 </section>
 
 		<section id="Rect" class="doc-node">
-			<div class="title"><h2>struct Rect <a href="#Rect">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/image.c.v#L7"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>struct Rect <a href="#Rect">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/image.c.v#L7"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <div class="attributes"><div class="attribute">@[params]</div></div>
 <pre class="signature">
-<code><span class="token keyword">struct</span> <span class="token symbol">Rect</span> <span class="token punctuation">{</span>
+<code><span class="token keyword">struct</span> Rect <span class="token punctuation">{</span>
 <span class="token keyword">pub</span><span class="token punctuation">:</span>
 	<span class="token comment">// pixel need integers</span>
 	x      <span class="token builtin">f32</span>
@@ -909,9 +895,9 @@ v run main<span class="token punctuation">.</span>v</code></pre>
 </section>
 
 		<section id="UnsupportedArgumentTypeError" class="doc-node">
-			<div class="title"><h2>struct UnsupportedArgumentTypeError <a href="#UnsupportedArgumentTypeError">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/kernel.c.v#L29"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>struct UnsupportedArgumentTypeError <a href="#UnsupportedArgumentTypeError">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/kernel.c.v#L33"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">struct</span> <span class="token symbol">UnsupportedArgumentTypeError</span> <span class="token punctuation">{</span>
+<code><span class="token keyword">struct</span> UnsupportedArgumentTypeError <span class="token punctuation">{</span>
 	Error
 <span class="token keyword">pub</span><span class="token punctuation">:</span>
 	index <span class="token builtin">int</span>
@@ -922,7 +908,7 @@ v run main<span class="token punctuation">.</span>v</code></pre>
 </section>
 
 		<section id="UnsupportedArgumentTypeError.msg" class="doc-node">
-			<div class="title"><h2>fn (UnsupportedArgumentTypeError) msg <a href="#UnsupportedArgumentTypeError.msg">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/kernel.c.v#L36"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (UnsupportedArgumentTypeError) msg <a href="#UnsupportedArgumentTypeError.msg">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/kernel.c.v#L40"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>err UnsupportedArgumentTypeError<span class="token punctuation">)</span> <span class="token function">msg</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">string</span></code></pre>
 
@@ -930,9 +916,9 @@ v run main<span class="token punctuation">.</span>v</code></pre>
 </section>
 
 		<section id="Vector" class="doc-node">
-			<div class="title"><h2>struct Vector <a href="#Vector">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/vcl/vector.c.v#L4"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>struct Vector <a href="#Vector">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/vector.c.v#L4"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">struct</span> Vector<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span> <span class="token punctuation">{</span>
+<code><span class="token keyword">struct</span> Vector<span class="token punctuation">[</span>T<span class="token punctuation">]</span> <span class="token punctuation">{</span>
 <span class="token keyword">mut</span><span class="token punctuation">:</span>
 	buf <span class="token operator">&amp;</span>Buffer <span class="token operator">=</span> <span class="token keyword">unsafe</span> <span class="token punctuation">{</span> <span class="token keyword">nil</span> <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
@@ -941,7 +927,7 @@ v run main<span class="token punctuation">.</span>v</code></pre>
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 26 Jul 2026 07:55:45</div>
+						<div class="footer">Powered by vdoc. Generated on: 8 Oct 2026 14:41:58</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_vcl">README</a></li>
 <li class="open"><a href="#error_from_code">fn error_from_code</a>        <ul>
@@ -963,15 +949,6 @@ v run main<span class="token punctuation">.</span>v</code></pre>
 </ul>
 </li>
 <li class="open"><a href="#vcl_error">fn vcl_error</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#DeviceType.from">fn DeviceType.from</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#ImageChannelDataType.from">fn ImageChannelDataType.from</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#ImageChannelOrder.from">fn ImageChannelOrder.from</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#ArgumentType">interface ArgumentType</a>        <ul>
@@ -1012,21 +989,21 @@ v run main<span class="token punctuation">.</span>v</code></pre>
 </ul>
 </li>
 <li class="open"><a href="#Device">struct Device</a>        <ul>
-<li><a href="#Device.add_program">fn add_program</a></li>
 <li><a href="#Device.bytes">fn bytes</a></li>
-<li><a href="#Device.driver_version">fn driver_version</a></li>
-<li><a href="#Device.extensions">fn extensions</a></li>
-<li><a href="#Device.from_image">fn from_image</a></li>
-<li><a href="#Device.image">fn image</a></li>
-<li><a href="#Device.kernel">fn kernel</a></li>
-<li><a href="#Device.name">fn name</a></li>
-<li><a href="#Device.open_clc_version">fn open_clc_version</a></li>
-<li><a href="#Device.profile">fn profile</a></li>
 <li><a href="#Device.release">fn release</a></li>
 <li><a href="#Device.str">fn str</a></li>
-<li><a href="#Device.vector">fn vector</a></li>
+<li><a href="#Device.name">fn name</a></li>
 <li><a href="#Device.vendor">fn vendor</a></li>
+<li><a href="#Device.extensions">fn extensions</a></li>
+<li><a href="#Device.open_clc_version">fn open_clc_version</a></li>
+<li><a href="#Device.profile">fn profile</a></li>
 <li><a href="#Device.version">fn version</a></li>
+<li><a href="#Device.driver_version">fn driver_version</a></li>
+<li><a href="#Device.add_program">fn add_program</a></li>
+<li><a href="#Device.image">fn image</a></li>
+<li><a href="#Device.from_image">fn from_image</a></li>
+<li><a href="#Device.kernel">fn kernel</a></li>
+<li><a href="#Device.vector">fn vector</a></li>
 </ul>
 </li>
 <li class="open"><a href="#Image">struct Image</a>        <ul>

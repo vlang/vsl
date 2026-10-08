@@ -66,10 +66,7 @@
 <div class="menu-row"><a href="./main.html">main</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>benchmarks</a></div>
-<ul>
-<li><a href="./benchmarks.util.html">util</a></li>
-</ul>
+<div class="menu-row"><a href="./util.html">util</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./blas.html">blas</a></div>
@@ -111,11 +108,10 @@
 <div class="menu-row"><a href="./fit.html">fit</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>float</a></div>
-<ul>
-<li><a href="./float.float32.html">float32</a></li>
-<li><a href="./float.float64.html">float64</a></li>
-</ul>
+<div class="menu-row"><a href="./float32.html">float32</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./float64.html">float64</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./fun.html">fun</a></div>
@@ -130,21 +126,13 @@
 <div class="menu-row"><a href="./graph.html">graph</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>inout</a></div>
-<ul>
-<li><a href="./inout.csv.html">csv</a></li>
-</ul>
+<div class="menu-row"><a href="./csv.html">csv</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./h5.html">h5</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>internal</a></div>
-<ul>
-<li><a href="./internal.prec.html">prec</a></li>
-<li><a href="./internal.dl.html">dl</a></li>
-<li><a href="./internal.dl.html">dl</a></li>
-</ul>
+<div class="menu-row"><a href="./prec.html">prec</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./iter.html">iter</a></div>
@@ -162,10 +150,10 @@
 <div class="menu-row"><a href="./metrics.html">metrics</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="./ml.html">ml</a></div>
-<ul>
-<li><a href="./ml.nlp.html">nlp</a></li>
-</ul>
+<div class="menu-row"><a href="./ml.html">ml</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./nlp.html">nlp</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./model_selection.html">model_selection</a></div>
@@ -195,10 +183,10 @@
 <div class="menu-row"><a href="./roots.html">roots</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><a href="./util.html">util</a></div>
+<div class="menu-row"><a href="./vcl.html">vcl</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><a href="./vcl.html">vcl</a></div>
+<div class="menu-row"><a href="./dl.html">dl</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./vulkan.html">vulkan</a></div>
@@ -217,7 +205,13 @@
 <h2 id="graph-representation">Graph representation</h2>
 <p>In <code>graph</code>, directed graphs are mainly defined by edges. A weight can be assigned to each edge as well. For example, the graph below:</p>
 <pre><code class="language-console">          <span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span>
-     <span class="token number">0</span></code></pre>
+     <span class="token number">0</span> <span class="token punctuation">–</span><span class="token punctuation">–</span><span class="token punctuation">–</span><span class="token punctuation">–</span><span class="token punctuation">–</span><span class="token punctuation">–</span><span class="token punctuation">–</span><span class="token punctuation">–</span><span class="token punctuation">→</span> <span class="token number">3</span>      numbers <span class="token keyword">in</span> parentheses
+     <span class="token operator">|</span>    <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>    <span class="token punctuation">↑</span>      indicate edge ids
+  <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>        <span class="token operator">|</span>
+     <span class="token operator">|</span>        <span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token operator">|</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
+     <span class="token punctuation">↓</span>    <span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>    <span class="token operator">|</span>      numbers <span class="token keyword">in</span> brackets
+     <span class="token number">1</span> <span class="token punctuation">–</span><span class="token punctuation">–</span><span class="token punctuation">–</span><span class="token punctuation">–</span><span class="token punctuation">–</span><span class="token punctuation">–</span><span class="token punctuation">–</span><span class="token punctuation">–</span><span class="token punctuation">→</span> <span class="token number">2</span>      indicate weights
+          <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span></code></pre>
 <p>is defined with the following code:</p>
 <pre><code class="language-v"><span class="token keyword">module</span> main
 
@@ -239,11 +233,29 @@ g <span class="token operator">:=</span> graph<span class="token punctuation">.<
 <li><code>.bfs</code> — all-pairs shortest paths by breadth-first search (unweighted hops)</li></ul>
 <p>For weighted methods (<code>.fw</code> and <code>.dijkstra</code>), the graph below has the following distances matrix:</p>
 <pre><code class="language-console">       <span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span>
-    <span class="token number">0</span></code></pre>
+    <span class="token number">0</span> <span class="token punctuation">–</span><span class="token punctuation">–</span><span class="token punctuation">–</span><span class="token punctuation">–</span><span class="token punctuation">–</span><span class="token punctuation">–</span><span class="token punctuation">→</span> <span class="token number">3</span>            numbers <span class="token keyword">in</span> brackets
+    <span class="token operator">|</span>         <span class="token punctuation">↑</span>            indicate weights
+<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span> <span class="token operator">|</span>         <span class="token operator">|</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
+    <span class="token punctuation">↓</span>         <span class="token operator">|</span>
+    <span class="token number">1</span> <span class="token punctuation">–</span><span class="token punctuation">–</span><span class="token punctuation">–</span><span class="token punctuation">–</span><span class="token punctuation">–</span><span class="token punctuation">–</span><span class="token punctuation">→</span> <span class="token number">2</span>
+        <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span>                <span class="token punctuation">∞</span> means that there are no
+                           connections from i to j
+graph<span class="token punctuation">:</span>  j<span class="token operator">=</span> <span class="token number">0</span>  <span class="token number">1</span>  <span class="token number">2</span>  <span class="token number">3</span>
+           <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>  i<span class="token operator">=</span>
+           <span class="token number">0</span>  <span class="token number">5</span>  <span class="token punctuation">∞</span> <span class="token number">10</span> <span class="token operator">|</span>  <span class="token number">0</span>  <span class="token punctuation">⇒</span>  <span class="token function">w</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">→</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token function">w</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">→</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token number">10</span>
+           <span class="token punctuation">∞</span>  <span class="token number">0</span>  <span class="token number">3</span>  <span class="token punctuation">∞</span> <span class="token operator">|</span>  <span class="token number">1</span>  <span class="token punctuation">⇒</span>  <span class="token function">w</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">→</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token number">3</span>
+           <span class="token punctuation">∞</span>  <span class="token punctuation">∞</span>  <span class="token number">0</span>  <span class="token number">1</span> <span class="token operator">|</span>  <span class="token number">2</span>  <span class="token punctuation">⇒</span>  <span class="token function">w</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">→</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token number">1</span>
+           <span class="token punctuation">∞</span>  <span class="token punctuation">∞</span>  <span class="token punctuation">∞</span>  <span class="token number">0</span> <span class="token operator">|</span>  <span class="token number">3</span></code></pre>
 <p>After running <code>shortest_paths</code>, paths from source (s) to destination (t) can be extracted with the <code>path</code> method.</p>
 <h3 id="example-small-graph">Example: Small graph</h3>
 <pre><code class="language-console">         <span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span>
-    <span class="token number">0</span></code></pre>
+    <span class="token number">0</span> <span class="token punctuation">–</span><span class="token punctuation">–</span><span class="token punctuation">–</span><span class="token punctuation">–</span><span class="token punctuation">–</span><span class="token punctuation">–</span><span class="token punctuation">–</span><span class="token punctuation">–</span><span class="token punctuation">→</span> <span class="token number">3</span>      numbers <span class="token keyword">in</span> parentheses
+    <span class="token operator">|</span>    <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>    <span class="token punctuation">↑</span>      indicate edge ids
+ <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token operator">|</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>        <span class="token operator">|</span>
+    <span class="token operator">|</span>        <span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token operator">|</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
+    <span class="token punctuation">↓</span>    <span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>    <span class="token operator">|</span>      numbers <span class="token keyword">in</span> brackets
+    <span class="token number">1</span> <span class="token punctuation">–</span><span class="token punctuation">–</span><span class="token punctuation">–</span><span class="token punctuation">–</span><span class="token punctuation">–</span><span class="token punctuation">–</span><span class="token punctuation">–</span><span class="token punctuation">–</span><span class="token punctuation">→</span> <span class="token number">2</span>      indicate weights
+         <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span></code></pre>
 <pre><code class="language-v"><span class="token keyword">module</span> main
 
 <span class="token keyword">import</span> vsl<span class="token punctuation">.</span>graph
@@ -264,31 +276,23 @@ g<span class="token punctuation">.</span><span class="token function">shortest_p
 <span class="token function">print</span><span class="token punctuation">(</span>g<span class="token punctuation">.</span><span class="token function">str_dist_matrix</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
 <h3 id="example-method-comparison">Example: Method comparison</h3>
 <p>See the representative example:</p>
-<pre><code class="language-sh">v run examples<span class="token operator">/</span>graph_shortest_paths_methods<span class="token operator">/</span>main<span class="token punctuation">.</span>v</code></pre>
+<pre><code class="language-sh">v run <span class="token punctuation">.</span><span class="token operator">/</span>vsl<span class="token operator">/</span>examples<span class="token operator">/</span>graph_shortest_paths_methods<span class="token operator">/</span>main<span class="token punctuation">.</span>v</code></pre>
 <p>It compares <code>.fw</code>, <code>.dijkstra</code>, and <code>.bfs</code> in practical scenarios and highlights when each method should be preferred.</p>
 
 </section>
 
 		<section id="Graph.new" class="doc-node">
-			<div class="title"><h2>fn Graph.new <a href="#Graph.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/graph/graph.v#L41"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn Graph.new <a href="#Graph.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/graph/graph.v#L41"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> Graph<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>edges <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> weights_e <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> verts <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> weights_v <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>Graph</code></pre>
 <p>Graph.new initialises graph edges    -- [nedges][2] edges (connectivity) weights_e -- [nedges] weights of edges verts    -- [nverts][ndim] vertices weights_v -- [nverts] weights of vertices</p>
 
 </section>
 
-		<section id="ShortestPaths.from" class="doc-node">
-			<div class="title"><h2>fn ShortestPaths.from <a href="#ShortestPaths.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/graph/graph.v#L3"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> ShortestPaths<span class="token punctuation">.</span>from<span class="token punctuation">[</span><span class="token builtin">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token builtin">W</span><span class="token punctuation">)</span> <span class="token operator">!</span>ShortestPaths</code></pre>
-
-
-</section>
-
 		<section id="ShortestPaths" class="doc-node">
-			<div class="title"><h2>enum ShortestPaths <a href="#ShortestPaths">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/graph/graph.v#L10"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>enum ShortestPaths <a href="#ShortestPaths">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/graph/graph.v#L10"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">enum</span> <span class="token symbol">ShortestPaths</span> <span class="token punctuation">{</span>
+<code><span class="token keyword">enum</span> ShortestPaths <span class="token punctuation">{</span>
 	fw       <span class="token comment">// FW: Floyd-Warshall method</span>
 	dijkstra <span class="token comment">// Dijkstra all-pairs (repeated single-source)</span>
 	bfs      <span class="token comment">// Breadth-first search all-pairs (unweighted shortest path in hops)</span>
@@ -298,10 +302,10 @@ g<span class="token punctuation">.</span><span class="token function">shortest_p
 </section>
 
 		<section id="Graph" class="doc-node">
-			<div class="title"><h2>struct Graph <a href="#Graph">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/graph/graph.v#L22"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>struct Graph <a href="#Graph">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/graph/graph.v#L22"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <div class="attributes"><div class="attribute">@[heap]</div></div>
 <pre class="signature">
-<code><span class="token keyword">struct</span> <span class="token symbol">Graph</span> <span class="token punctuation">{</span>
+<code><span class="token keyword">struct</span> Graph <span class="token punctuation">{</span>
 <span class="token keyword">pub</span><span class="token punctuation">:</span>
 	<span class="token comment">// input</span>
 	edges     <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span> <span class="token comment">// [nedges][2] edges (connectivity)</span>
@@ -309,8 +313,8 @@ g<span class="token punctuation">.</span><span class="token function">shortest_p
 	verts     <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span> <span class="token comment">// [nverts][ndim] vertices</span>
 	weights_v <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>   <span class="token comment">// [nverts] weights of vertices</span>
 	<span class="token comment">// auxiliary</span>
-	shares   <span class="token builtin">map</span><span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span> <span class="token comment">// [nverts] edges sharing a vertex</span>
-	key2edge <span class="token builtin">map</span><span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token builtin">int</span>   <span class="token comment">// maps (i,j) vertex to edge index</span>
+	shares   map<span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span> <span class="token comment">// [nverts] edges sharing a vertex</span>
+	key2edge map<span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token builtin">int</span>   <span class="token comment">// maps (i,j) vertex to edge index</span>
 	dist     <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>       <span class="token comment">// [nverts][nverts] distances</span>
 	next     <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>       <span class="token comment">// [nverts][nverts] next tree connection. -1 means no connection</span>
 <span class="token punctuation">}</span></code></pre>
@@ -319,7 +323,7 @@ g<span class="token punctuation">.</span><span class="token function">shortest_p
 </section>
 
 		<section id="Graph.nverts" class="doc-node">
-			<div class="title"><h2>fn (Graph) nverts <a href="#Graph.nverts">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/graph/graph.v#L67"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (Graph) nverts <a href="#Graph.nverts">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/graph/graph.v#L67"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>g <span class="token operator">&amp;</span>Graph<span class="token punctuation">)</span> <span class="token function">nverts</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>nverts returns the number of vertices</p>
@@ -327,7 +331,7 @@ g<span class="token punctuation">.</span><span class="token function">shortest_p
 </section>
 
 		<section id="Graph.get_edge" class="doc-node">
-			<div class="title"><h2>fn (Graph) get_edge <a href="#Graph.get_edge">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/graph/graph.v#L72"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (Graph) get_edge <a href="#Graph.get_edge">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/graph/graph.v#L72"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>g <span class="token operator">&amp;</span>Graph<span class="token punctuation">)</span> <span class="token function">get_edge</span><span class="token punctuation">(</span>i <span class="token builtin">int</span><span class="token punctuation">,</span> j <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">int</span></code></pre>
 <p>get_edge performs a lookup on key2edge map and returs id of edge for given nodes ides</p>
@@ -335,7 +339,7 @@ g<span class="token punctuation">.</span><span class="token function">shortest_p
 </section>
 
 		<section id="Graph.shortest_paths" class="doc-node">
-			<div class="title"><h2>fn (Graph) shortest_paths <a href="#Graph.shortest_paths">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/graph/graph.v#L101"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (Graph) shortest_paths <a href="#Graph.shortest_paths">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/graph/graph.v#L101"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>g <span class="token operator">&amp;</span>Graph<span class="token punctuation">)</span> <span class="token function">shortest_paths</span><span class="token punctuation">(</span>method ShortestPaths<span class="token punctuation">)</span> Graph</code></pre>
 <p>shortest_paths exposes this operation as part of the public API.</p>
@@ -343,7 +347,7 @@ g<span class="token punctuation">.</span><span class="token function">shortest_p
 </section>
 
 		<section id="Graph.path" class="doc-node">
-			<div class="title"><h2>fn (Graph) path <a href="#Graph.path">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/graph/graph.v#L279"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (Graph) path <a href="#Graph.path">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/graph/graph.v#L279"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>g <span class="token operator">&amp;</span>Graph<span class="token punctuation">)</span> <span class="token function">path</span><span class="token punctuation">(</span>s <span class="token builtin">int</span><span class="token punctuation">,</span> t <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span></code></pre>
 <p>path returns the path from source (s) to destination (t)</p>
@@ -352,7 +356,7 @@ g<span class="token punctuation">.</span><span class="token function">shortest_p
 </section>
 
 		<section id="Graph.calc_dist" class="doc-node">
-			<div class="title"><h2>fn (Graph) calc_dist <a href="#Graph.calc_dist">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/graph/graph.v#L296"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (Graph) calc_dist <a href="#Graph.calc_dist">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/graph/graph.v#L296"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>g <span class="token operator">&amp;</span>Graph<span class="token punctuation">)</span> <span class="token function">calc_dist</span><span class="token punctuation">(</span><span class="token punctuation">)</span> Graph</code></pre>
 <p>calc_dist computes distances beetween all vertices and initialises 'next' matrix</p>
@@ -360,7 +364,7 @@ g<span class="token punctuation">.</span><span class="token function">shortest_p
 </section>
 
 		<section id="Graph.str_dist_matrix" class="doc-node">
-			<div class="title"><h2>fn (Graph) str_dist_matrix <a href="#Graph.str_dist_matrix">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/graph/graph.v#L355"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (Graph) str_dist_matrix <a href="#Graph.str_dist_matrix">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/graph/graph.v#L355"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>g <span class="token operator">&amp;</span>Graph<span class="token punctuation">)</span> <span class="token function">str_dist_matrix</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">string</span></code></pre>
 <p>str_dist_matrix returns a string representation of dist matrix</p>
@@ -368,7 +372,7 @@ g<span class="token punctuation">.</span><span class="token function">shortest_p
 </section>
 
 		<section id="Graph.get_adj" class="doc-node">
-			<div class="title"><h2>fn (Graph) get_adj <a href="#Graph.get_adj">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/graph/graph.v#L386"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (Graph) get_adj <a href="#Graph.get_adj">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/graph/graph.v#L386"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>g <span class="token operator">&amp;</span>Graph<span class="token punctuation">)</span> <span class="token function">get_adj</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
 <p>get_adj returns adjacency list as a compressed storage format for METIS</p>
@@ -376,13 +380,10 @@ g<span class="token punctuation">.</span><span class="token function">shortest_p
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 26 Jul 2026 07:55:45</div>
+						<div class="footer">Powered by vdoc. Generated on: 8 Oct 2026 14:41:58</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_graph">README</a></li>
 <li class="open"><a href="#Graph.new">fn Graph.new</a>        <ul>
-</ul>
-</li>
-<li class="open"><a href="#ShortestPaths.from">fn ShortestPaths.from</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#ShortestPaths">enum ShortestPaths</a>        <ul>

@@ -66,10 +66,7 @@
 <div class="menu-row"><a href="./main.html">main</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>benchmarks</a></div>
-<ul>
-<li><a href="./benchmarks.util.html">util</a></li>
-</ul>
+<div class="menu-row"><a href="./util.html">util</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./blas.html">blas</a></div>
@@ -111,11 +108,10 @@
 <div class="menu-row"><a href="./fit.html">fit</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>float</a></div>
-<ul>
-<li><a href="./float.float32.html">float32</a></li>
-<li><a href="./float.float64.html">float64</a></li>
-</ul>
+<div class="menu-row"><a href="./float32.html">float32</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./float64.html">float64</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./fun.html">fun</a></div>
@@ -130,21 +126,13 @@
 <div class="menu-row"><a href="./graph.html">graph</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>inout</a></div>
-<ul>
-<li><a href="./inout.csv.html">csv</a></li>
-</ul>
+<div class="menu-row"><a href="./csv.html">csv</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./h5.html">h5</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>internal</a></div>
-<ul>
-<li><a href="./internal.prec.html">prec</a></li>
-<li><a href="./internal.dl.html">dl</a></li>
-<li><a href="./internal.dl.html">dl</a></li>
-</ul>
+<div class="menu-row"><a href="./prec.html">prec</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./iter.html">iter</a></div>
@@ -162,10 +150,10 @@
 <div class="menu-row"><a href="./metrics.html">metrics</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="./ml.html">ml</a></div>
-<ul>
-<li><a href="./ml.nlp.html">nlp</a></li>
-</ul>
+<div class="menu-row"><a href="./ml.html">ml</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./nlp.html">nlp</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./model_selection.html">model_selection</a></div>
@@ -195,10 +183,10 @@
 <div class="menu-row"><a href="./roots.html">roots</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><a href="./util.html">util</a></div>
+<div class="menu-row"><a href="./vcl.html">vcl</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><a href="./vcl.html">vcl</a></div>
+<div class="menu-row"><a href="./dl.html">dl</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./vulkan.html">vulkan</a></div>
@@ -219,6 +207,22 @@
 <p>The functions described here evaluate the polynomial</p>
 <pre><code class="language-console"><span class="token function">P</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span> <span class="token operator">=</span> c<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">+</span> c<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> x <span class="token operator">+</span> c<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> x<span class="token operator">^</span><span class="token number">2</span> <span class="token operator">+</span> <span class="token punctuation">.</span> <span class="token punctuation">.</span> <span class="token punctuation">.</span> <span class="token operator">+</span> c<span class="token punctuation">[</span>len<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span> x<span class="token operator">^</span><span class="token punctuation">(</span>len<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span></code></pre>
 <p>using Horner's method for stability.</p>
+<h2 id="b-splines">B-Splines</h2>
+<p><code>BSplineCurve</code> evaluates non-rational B-spline curves from a degree, a non-decreasing knot vector, and control points. Its parameter domain is <code>[knots[degree], knots[control_points.len]]</code>. The knot vector length must equal <code>control_points.len + degree + 1</code>, and every control point must have the same dimension.</p>
+<pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>poly
+
+curve <span class="token operator">:=</span> poly<span class="token punctuation">.</span><span class="token function">new_bspline_curve</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span>
+    <span class="token punctuation">[</span><span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">2.0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">2.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">!</span>
+point <span class="token operator">:=</span> curve<span class="token punctuation">.</span><span class="token function">evaluate</span><span class="token punctuation">(</span><span class="token number">0.5</span><span class="token punctuation">)</span><span class="token operator">!</span>
+basis <span class="token operator">:=</span> poly<span class="token punctuation">.</span><span class="token function">bspline_basis</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0.5</span><span class="token punctuation">)</span><span class="token operator">!</span>
+refined <span class="token operator">:=</span> curve<span class="token punctuation">.</span><span class="token function">insert_knot</span><span class="token punctuation">(</span><span class="token number">0.5</span><span class="token punctuation">)</span><span class="token operator">!</span>
+<span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'point=</span><span class="token string_interp">$</span><span class="token string_interp">{</span>point<span class="token string_interp">}</span><span class="token string">, middle basis=</span><span class="token string_interp">$</span><span class="token string_interp">{</span>basis<span class="token string_interp">}</span><span class="token string">, refined knots=</span><span class="token string_interp">$</span><span class="token string_interp">{</span>refined<span class="token punctuation">.</span>knots<span class="token string_interp">}</span><span class="token string">'</span><span class="token punctuation">)</span></code></pre>
+<p><code>insert_knot</code> returns a refined curve with the same shape. Basis values outside the parameter domain are zero. Curve evaluation outside the domain returns an error. See <a href="https://github.com/vlang/vsl/blob/master/poly/bspline_test.v"><code>bspline_test.v</code></a> for reference values.</p>
+<h2 id="examples">Examples</h2>
+<ul>
+<li><a href="https://github.com/vlang/vsl/blob/master/poly/examples/polynomial_roots"><code>polynomial_roots</code></a> solves quadratic and cubic equations.</li>
+<li><a href="https://github.com/vlang/vsl/blob/master/poly/examples/bspline_curve"><code>bspline_curve</code></a> samples and refines a B-spline curve.</li></ul>
 <pre><code class="language-v"><span class="token keyword">fn</span> <span class="token function">eval_derivs</span><span class="token punctuation">(</span>c <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> x <span class="token builtin">f64</span><span class="token punctuation">,</span> lenres <span class="token builtin">u64</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 <p>This function evaluates a polynomial and its derivatives, storing the results in the array <code>res</code> of size <code>lenres</code>. The output array contains the values of <code>d^k P(x)/d x^k</code> for the specified value of <code>x</code>, starting with <code>k = 0</code>.</p>
 <h2 id="quadratic-equations">Quadratic Equations</h2>
@@ -235,7 +239,7 @@
 <h2 id="companion-matrix">Companion Matrix</h2>
 <pre><code class="language-v"><span class="token keyword">fn</span> <span class="token function">companion_matrix</span><span class="token punctuation">(</span>a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 <p>Creates a companion matrix for the polynomial</p>
-<pre><code class="language-console"><span class="token function">P</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span> <span class="token operator">=</span> a_n <span class="token operator">*</span> x<span class="token operator">^</span>n <span class="token operator">+</span> <span class="token symbol">a_</span><span class="token punctuation">{</span>n<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">}</span> <span class="token operator">*</span> x<span class="token operator">^</span><span class="token punctuation">{</span>n<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">}</span> <span class="token operator">+</span> <span class="token punctuation">...</span> <span class="token operator">+</span> a_1 <span class="token operator">*</span> x <span class="token operator">+</span> a_0</code></pre>
+<pre><code class="language-console"><span class="token function">P</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span> <span class="token operator">=</span> a_n <span class="token operator">*</span> x<span class="token operator">^</span>n <span class="token operator">+</span> a_<span class="token punctuation">{</span>n<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">}</span> <span class="token operator">*</span> x<span class="token operator">^</span><span class="token punctuation">{</span>n<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">}</span> <span class="token operator">+</span> <span class="token punctuation">...</span> <span class="token operator">+</span> a_1 <span class="token operator">*</span> x <span class="token operator">+</span> a_0</code></pre>
 <p>The companion matrix <code>C</code> is defined as:</p>
 <pre><code>[0 0 0 ... 0 -a_0/a_n]
 [1 0 0 ... 0 -a_1/a_n]
@@ -280,7 +284,7 @@
 </section>
 
 		<section id="add" class="doc-node">
-			<div class="title"><h2>fn add <a href="#add">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/poly/poly.v#L253"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn add <a href="#add">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/poly/poly.v#L264"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">add</span><span class="token punctuation">(</span>a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> b <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 <p>add adds two polynomials: (a_n * x^n + ... + a_0) + (b_m * x^m + ... + b_0) Input: a = [a_0, ..., a_n], b = [b_0, ..., b_m] Output: [a_0 + b_0, a_1 + b_1, ..., max(a_k, b_k), ...]</p>
@@ -288,15 +292,23 @@
 </section>
 
 		<section id="balance_companion_matrix" class="doc-node">
-			<div class="title"><h2>fn balance_companion_matrix <a href="#balance_companion_matrix">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/poly/poly.v#L189"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn balance_companion_matrix <a href="#balance_companion_matrix">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/poly/poly.v#L200"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">balance_companion_matrix</span><span class="token punctuation">(</span>cm <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 <p>balance_companion_matrix balances a companion matrix C to improve numerical stability Uses an iterative scaling process to make the row and column norms as close to each other as possible Input: Companion matrix C Output: Balanced matrix B such that D^(-1)CD = B, where D is a diagonal matrix</p>
 
 </section>
 
+		<section id="bspline_basis" class="doc-node">
+			<div class="title"><h2>fn bspline_basis <a href="#bspline_basis">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/poly/bspline.v#L41"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">bspline_basis</span><span class="token punctuation">(</span>degree <span class="token builtin">int</span><span class="token punctuation">,</span> knots <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> index <span class="token builtin">int</span><span class="token punctuation">,</span> x <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">f64</span></code></pre>
+<p>bspline_basis evaluates basis function N_{index, degree} at x using Cox-de Boor recursion.</p>
+
+</section>
+
 		<section id="companion_matrix" class="doc-node">
-			<div class="title"><h2>fn companion_matrix <a href="#companion_matrix">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/poly/poly.v#L167"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn companion_matrix <a href="#companion_matrix">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/poly/poly.v#L178"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">companion_matrix</span><span class="token punctuation">(</span>a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 <p>companion_matrix creates a companion matrix for the polynomial P(x) = a_n * x^n + a_{n-1} * x^{n-1} + ... + a_1 * x + a_0 The companion matrix C is defined as: [0 0 0 ... 0 -a_0/a_n] [1 0 0 ... 0 -a_1/a_n] [0 1 0 ... 0 -a_2/a_n] [. . . ... . ........] [0 0 0 ... 1 -a_{n-1}/a_n] Input: a = [a_0, a_1, ..., a_n] Output: Companion matrix C</p>
@@ -304,7 +316,7 @@
 </section>
 
 		<section id="degree" class="doc-node">
-			<div class="title"><h2>fn degree <a href="#degree">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/poly/poly.v#L317"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn degree <a href="#degree">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/poly/poly.v#L351"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">degree</span><span class="token punctuation">(</span>c <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>degree returns the degree of the given polynomial Input: c = [a_0, a_1, ..., a_n] Output: Degree of the polynomial as an integer</p>
@@ -312,7 +324,7 @@
 </section>
 
 		<section id="divide" class="doc-node">
-			<div class="title"><h2>fn divide <a href="#divide">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/poly/poly.v#L290"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn divide <a href="#divide">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/poly/poly.v#L301"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">divide</span><span class="token punctuation">(</span>a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> b <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
 <p>divide divides two polynomials: (a_n * x^n + ... + a_0) / (b_m * x^m + ... + b_0) Uses polynomial long division algorithm Input: a = [a_0, ..., a_n], b = [b_0, ..., b_m] Output: (q, r) where q is the quotient and r is the remainder such that a(x) = b(x) * q(x) + r(x) and degree(r) &lt; degree(b)</p>
@@ -320,7 +332,7 @@
 </section>
 
 		<section id="eval" class="doc-node">
-			<div class="title"><h2>fn eval <a href="#eval">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/poly/poly.v#L13"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn eval <a href="#eval">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/poly/poly.v#L13"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">eval</span><span class="token punctuation">(</span>c <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> x <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
 <p>eval is a function that evaluates a polynomial P(x) = a_n * x^n + a_{n-1} * x^{n-1} + ... + a_1 * x + a_0 using Horner's method: P(x) = (...((a_n * x + a_{n-1}) * x + a_{n-2}) * x + ... + a_1) * x + a_0 Input: c = [a_0, a_1, ..., a_n], x Output: P(x)</p>
@@ -328,7 +340,7 @@
 </section>
 
 		<section id="eval_derivs" class="doc-node">
-			<div class="title"><h2>fn eval_derivs <a href="#eval_derivs">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/poly/poly.v#L28"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn eval_derivs <a href="#eval_derivs">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/poly/poly.v#L30"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">eval_derivs</span><span class="token punctuation">(</span>c <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> x <span class="token builtin">f64</span><span class="token punctuation">,</span> lenres <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 <p>eval_derivs evaluates a polynomial P(x) and its derivatives P'(x), P''(x), ..., P^(k)(x) Input: c = [a_0, a_1, ..., a_n] representing P(x), x, and lenres (k+1) Output: [P(x), P'(x), P''(x), ..., P^(k)(x)]</p>
@@ -336,15 +348,23 @@
 </section>
 
 		<section id="multiply" class="doc-node">
-			<div class="title"><h2>fn multiply <a href="#multiply">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/poly/poly.v#L275"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn multiply <a href="#multiply">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/poly/poly.v#L286"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">multiply</span><span class="token punctuation">(</span>a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> b <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 <p>multiply multiplies two polynomials: (a_n * x^n + ... + a_0) * (b_m * x^m + ... + b_0) Input: a = [a_0, ..., a_n], b = [b_0, ..., b_m] Output: [c_0, c_1, ..., c_{n+m}] where c_k = ∑_{i+j=k} a_i * b_j</p>
 
 </section>
 
+		<section id="new_bspline_curve" class="doc-node">
+			<div class="title"><h2>fn new_bspline_curve <a href="#new_bspline_curve">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/poly/bspline.v#L13"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">new_bspline_curve</span><span class="token punctuation">(</span>degree <span class="token builtin">int</span><span class="token punctuation">,</span> knots <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> control_points <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span>BSplineCurve</code></pre>
+<p>new_bspline_curve validates and copies the degree, knot vector, and control points.</p>
+
+</section>
+
 		<section id="solve_cubic" class="doc-node">
-			<div class="title"><h2>fn solve_cubic <a href="#solve_cubic">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/poly/poly.v#L94"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn solve_cubic <a href="#solve_cubic">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/poly/poly.v#L96"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">solve_cubic</span><span class="token punctuation">(</span>a <span class="token builtin">f64</span><span class="token punctuation">,</span> b <span class="token builtin">f64</span><span class="token punctuation">,</span> c <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 <p>solve_cubic solves the cubic equation x^3 + ax^2 + bx + c = 0 using Cardano's formula and trigonometric solution Input: a, b, c Output: Array of real roots</p>
@@ -352,7 +372,7 @@
 </section>
 
 		<section id="solve_quadratic" class="doc-node">
-			<div class="title"><h2>fn solve_quadratic <a href="#solve_quadratic">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/poly/poly.v#L63"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn solve_quadratic <a href="#solve_quadratic">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/poly/poly.v#L65"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">solve_quadratic</span><span class="token punctuation">(</span>a <span class="token builtin">f64</span><span class="token punctuation">,</span> b <span class="token builtin">f64</span><span class="token punctuation">,</span> c <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 <p>solve_quadratic solves the quadratic equation ax^2 + bx + c = 0 using the quadratic formula: x = (-b ± √(b^2 - 4ac)) / (2a) Input: a, b, c Output: Array of real roots (if any)</p>
@@ -360,7 +380,7 @@
 </section>
 
 		<section id="subtract" class="doc-node">
-			<div class="title"><h2>fn subtract <a href="#subtract">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/poly/poly.v#L264"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn subtract <a href="#subtract">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/poly/poly.v#L275"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">subtract</span><span class="token punctuation">(</span>a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> b <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 <p>subtract subtracts two polynomials: (a_n * x^n + ... + a_0) - (b_m * x^m + ... + b_0) Input: a = [a_0, ..., a_n], b = [b_0, ..., b_m] Output: [a_0 - b_0, a_1 - b_1, ..., a_k - b_k, ...]</p>
@@ -368,7 +388,7 @@
 </section>
 
 		<section id="sum_even_coeffs" class="doc-node">
-			<div class="title"><h2>fn sum_even_coeffs <a href="#sum_even_coeffs">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/poly/poly.v#L335"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn sum_even_coeffs <a href="#sum_even_coeffs">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/poly/poly.v#L369"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">sum_even_coeffs</span><span class="token punctuation">(</span>c <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
 <p>sum_even_coeffs calculates the sum of the coefficients at even indices Input: c = [a_0, a_1, ..., a_n] Output: Sum of the coefficients at even indices as a floating-point number</p>
@@ -376,21 +396,53 @@
 </section>
 
 		<section id="sum_odd_coeffs" class="doc-node">
-			<div class="title"><h2>fn sum_odd_coeffs <a href="#sum_odd_coeffs">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/poly/poly.v#L324"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn sum_odd_coeffs <a href="#sum_odd_coeffs">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/poly/poly.v#L358"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">sum_odd_coeffs</span><span class="token punctuation">(</span>c <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
 <p>sum_odd_coeffs calculates the sum of the coefficients at odd indices Input: c = [a_0, a_1, ..., a_n] Output: Sum of the coefficients at odd indices as a floating-point number</p>
 
 </section>
 
+		<section id="BSplineCurve" class="doc-node">
+			<div class="title"><h2>struct BSplineCurve <a href="#BSplineCurve">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/poly/bspline.v#L5"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> BSplineCurve <span class="token punctuation">{</span>
+<span class="token keyword">pub</span><span class="token punctuation">:</span>
+	degree         <span class="token builtin">int</span>
+	knots          <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
+	control_points <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
+<span class="token punctuation">}</span></code></pre>
+<p>BSplineCurve stores a non-rational B-spline in de Boor form. control_points[i] is the i-th point and knots is the non-decreasing knot vector.</p>
 
-						<div class="footer">Powered by vdoc. Generated on: 26 Jul 2026 07:55:45</div>
+</section>
+
+		<section id="BSplineCurve.evaluate" class="doc-node">
+			<div class="title"><h2>fn (BSplineCurve) evaluate <a href="#BSplineCurve.evaluate">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/poly/bspline.v#L88"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>curve BSplineCurve<span class="token punctuation">)</span> <span class="token function">evaluate</span><span class="token punctuation">(</span>u <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>evaluate computes a curve point at parameter u with de Boor's algorithm.</p>
+
+</section>
+
+		<section id="BSplineCurve.insert_knot" class="doc-node">
+			<div class="title"><h2>fn (BSplineCurve) insert_knot <a href="#BSplineCurve.insert_knot">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/poly/bspline.v#L120"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>curve BSplineCurve<span class="token punctuation">)</span> <span class="token function">insert_knot</span><span class="token punctuation">(</span>u <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span>BSplineCurve</code></pre>
+<p>insert_knot returns a new curve with one copy of u inserted while preserving its shape.</p>
+
+</section>
+
+
+						<div class="footer">Powered by vdoc. Generated on: 8 Oct 2026 14:41:58</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_poly">README</a></li>
 <li class="open"><a href="#add">fn add</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#balance_companion_matrix">fn balance_companion_matrix</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#bspline_basis">fn bspline_basis</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#companion_matrix">fn companion_matrix</a>        <ul>
@@ -411,6 +463,9 @@
 <li class="open"><a href="#multiply">fn multiply</a>        <ul>
 </ul>
 </li>
+<li class="open"><a href="#new_bspline_curve">fn new_bspline_curve</a>        <ul>
+</ul>
+</li>
 <li class="open"><a href="#solve_cubic">fn solve_cubic</a>        <ul>
 </ul>
 </li>
@@ -424,6 +479,11 @@
 </ul>
 </li>
 <li class="open"><a href="#sum_odd_coeffs">fn sum_odd_coeffs</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#BSplineCurve">struct BSplineCurve</a>        <ul>
+<li><a href="#BSplineCurve.evaluate">fn evaluate</a></li>
+<li><a href="#BSplineCurve.insert_knot">fn insert_knot</a></li>
 </ul>
 </li>
 </ul></div>

@@ -66,10 +66,7 @@
 <div class="menu-row"><a href="./main.html">main</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>benchmarks</a></div>
-<ul>
-<li><a href="./benchmarks.util.html">util</a></li>
-</ul>
+<div class="menu-row"><a href="./util.html">util</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./blas.html">blas</a></div>
@@ -111,11 +108,10 @@
 <div class="menu-row"><a href="./fit.html">fit</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>float</a></div>
-<ul>
-<li><a href="./float.float32.html">float32</a></li>
-<li><a href="./float.float64.html">float64</a></li>
-</ul>
+<div class="menu-row"><a href="./float32.html">float32</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./float64.html">float64</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./fun.html">fun</a></div>
@@ -130,21 +126,13 @@
 <div class="menu-row"><a href="./graph.html">graph</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>inout</a></div>
-<ul>
-<li><a href="./inout.csv.html">csv</a></li>
-</ul>
+<div class="menu-row"><a href="./csv.html">csv</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./h5.html">h5</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>internal</a></div>
-<ul>
-<li><a href="./internal.prec.html">prec</a></li>
-<li><a href="./internal.dl.html">dl</a></li>
-<li><a href="./internal.dl.html">dl</a></li>
-</ul>
+<div class="menu-row"><a href="./prec.html">prec</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./iter.html">iter</a></div>
@@ -162,10 +150,10 @@
 <div class="menu-row"><a href="./metrics.html">metrics</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="./ml.html">ml</a></div>
-<ul>
-<li><a href="./ml.nlp.html">nlp</a></li>
-</ul>
+<div class="menu-row"><a href="./ml.html">ml</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./nlp.html">nlp</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./model_selection.html">model_selection</a></div>
@@ -195,10 +183,10 @@
 <div class="menu-row"><a href="./roots.html">roots</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><a href="./util.html">util</a></div>
+<div class="menu-row"><a href="./vcl.html">vcl</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><a href="./vcl.html">vcl</a></div>
+<div class="menu-row"><a href="./dl.html">dl</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./vulkan.html">vulkan</a></div>
@@ -212,14 +200,35 @@
 					<div class="doc-content">
 								<section id="readme_noise" class="doc-node">
 			<div class="title"><h1> noise <a href="#readme_noise">#</a></h1></div>
-<h1 id="noise">noise</h1>
-<p>This module aims to to implement noise algorithms.</p>
-<p>It uses the <code>rand</code> module in vlib to generate random numbers, so you may seed the generator as you see fit.</p>
+<h1 id=""><code>vsl.noise</code></h1>
+<p><code>vsl.noise.Generator</code> holds a permutation table for Perlin and simplex noise. Create a generator, seed V's <code>rand</code> module first when repeatable output is needed, then call <code>randomize()</code> to shuffle its table.</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Dimensions</th></tr></thead>
+<tbody>
+<tr>
+<td><code>perlin2d(x, y)</code>, <code>perlin3d(x, y, z)</code></td>
+<td>Classic gradient Perlin noise in 2D and 3D.</td></tr>
+<tr>
+<td><code>simplex_1d(x)</code> through <code>simplex_4d(x, ...)</code></td>
+<td>Simplex noise in one through four dimensions.</td></tr></tbody></table>
+<p>Values are scalar <code>f64</code>s. Scale coordinates to control frequency; combine several frequencies in an application when building fractal noise.</p>
+<pre><code class="language-v"><span class="token keyword">import</span> rand
+<span class="token keyword">import</span> vsl<span class="token punctuation">.</span>noise
+
+rand<span class="token punctuation">.</span><span class="token function">seed</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token builtin">u32</span><span class="token punctuation">(</span><span class="token number">3155200429</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token builtin">u32</span><span class="token punctuation">(</span><span class="token number">3208395956</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token keyword">mut</span> generator <span class="token operator">:=</span> noise<span class="token punctuation">.</span>Generator<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+generator<span class="token punctuation">.</span><span class="token function">randomize</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+sample <span class="token operator">:=</span> generator<span class="token punctuation">.</span><span class="token function">simplex_2d</span><span class="token punctuation">(</span><span class="token number">0.03</span><span class="token punctuation">,</span> <span class="token number">0.06</span><span class="token punctuation">)</span>
+<span class="token function">println</span><span class="token punctuation">(</span>sample<span class="token punctuation">)</span></code></pre>
+<p>Examples: <a href="https://github.com/vlang/vsl/blob/master/examples/noise_simplex_2d/README.md">2D simplex heatmap</a>, <a href="https://github.com/vlang/vsl/blob/master/examples/noise_fractal_2d/README.md">fractal noise</a>, and <a href="https://github.com/vlang/vsl/blob/master/examples/noise_quaternion_fractal/README.md">quaternion noise</a>. See <a href="https://github.com/vlang/vsl/blob/master/noise/noise.v"><code>noise.v</code></a> and <a href="https://github.com/vlang/vsl/blob/master/noise/simplex.v"><code>simplex.v</code></a> for the exported methods.</p>
 
 </section>
 
 		<section id="Generator.new" class="doc-node">
-			<div class="title"><h2>fn Generator.new <a href="#Generator.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/noise/noise.v#L12"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn Generator.new <a href="#Generator.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/noise/noise.v#L12"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> Generator<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span> Generator</code></pre>
 <p>new is a function that return a new Generator struct</p>
@@ -227,9 +236,9 @@
 </section>
 
 		<section id="Generator" class="doc-node">
-			<div class="title"><h2>struct Generator <a href="#Generator">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/noise/noise.v#L6"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>struct Generator <a href="#Generator">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/noise/noise.v#L6"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">struct</span> <span class="token symbol">Generator</span> <span class="token punctuation">{</span>
+<code><span class="token keyword">struct</span> Generator <span class="token punctuation">{</span>
 <span class="token keyword">mut</span><span class="token punctuation">:</span>
 	perm <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span> <span class="token operator">=</span> rand<span class="token punctuation">.</span><span class="token function">shuffle_clone</span><span class="token punctuation">(</span>permutations<span class="token punctuation">)</span> <span class="token keyword">or</span> <span class="token punctuation">{</span> <span class="token function">panic</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
@@ -237,73 +246,91 @@
 
 </section>
 
-		<section id="Generator.perlin2d" class="doc-node">
-			<div class="title"><h2>fn (Generator) perlin2d <a href="#Generator.perlin2d">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/noise/perlin2d.v#L4"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+		<section id="Generator.randomize" class="doc-node">
+			<div class="title"><h2>fn (Generator) randomize <a href="#Generator.randomize">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/noise/noise.v#L17"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>generator Generator<span class="token punctuation">)</span> <span class="token function">perlin2d</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">,</span> y <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
-<p>perlin2d is a function that return a single value of perlin noise for a given 2d position</p>
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> gen Generator<span class="token punctuation">)</span> <span class="token function">randomize</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<p>randomize is a function that shuffle the permutation set inside the Generator struct</p>
+
+</section>
+
+		<section id="Generator.perlin_2d" class="doc-node">
+			<div class="title"><h2>fn (Generator) perlin_2d <a href="#Generator.perlin_2d">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/noise/perlin.v#L62"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>gen Generator<span class="token punctuation">)</span> <span class="token function">perlin_2d</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">,</span> y <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>perlin_2d is a function that return a single value of perlin gen for a given 2d position</p>
+
+</section>
+
+		<section id="Generator.perlin2d" class="doc-node">
+			<div class="title"><h2>fn (Generator) perlin2d <a href="#Generator.perlin2d">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/noise/perlin.v#L87"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>gen Generator<span class="token punctuation">)</span> <span class="token function">perlin2d</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">,</span> y <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>perlin2d is kept as a compatibility alias for perlin_2d.</p>
+
+</section>
+
+		<section id="Generator.perlin_3d" class="doc-node">
+			<div class="title"><h2>fn (Generator) perlin_3d <a href="#Generator.perlin_3d">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/noise/perlin.v#L92"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>gen Generator<span class="token punctuation">)</span> <span class="token function">perlin_3d</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">,</span> y <span class="token builtin">f64</span><span class="token punctuation">,</span> z <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>perlin_3d is a function that return a single value of perlin gen for a given 3d position</p>
 
 </section>
 
 		<section id="Generator.perlin3d" class="doc-node">
-			<div class="title"><h2>fn (Generator) perlin3d <a href="#Generator.perlin3d">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/noise/perlin3d.v#L4"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (Generator) perlin3d <a href="#Generator.perlin3d">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/noise/perlin.v#L134"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>generator Generator<span class="token punctuation">)</span> <span class="token function">perlin3d</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">,</span> y <span class="token builtin">f64</span><span class="token punctuation">,</span> z <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
-<p>perlin3d is a function that return a single value of perlin noise for a given 3d position</p>
-
-</section>
-
-		<section id="Generator.randomize" class="doc-node">
-			<div class="title"><h2>fn (Generator) randomize <a href="#Generator.randomize">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/noise/noise.v#L18"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
-<pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> generator Generator<span class="token punctuation">)</span> <span class="token function">randomize</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
-<p>randomize is a function that shuffle the permutation set inside the Generator struct will not shuffle if rand.seed is not changed</p>
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>gen Generator<span class="token punctuation">)</span> <span class="token function">perlin3d</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">,</span> y <span class="token builtin">f64</span><span class="token punctuation">,</span> z <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>perlin3d is kept as a compatibility alias for perlin_3d.</p>
 
 </section>
 
 		<section id="Generator.simplex_1d" class="doc-node">
-			<div class="title"><h2>fn (Generator) simplex_1d <a href="#Generator.simplex_1d">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/noise/simplex.v#L94"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (Generator) simplex_1d <a href="#Generator.simplex_1d">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/noise/simplex.v#L94"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>generator Generator<span class="token punctuation">)</span> <span class="token function">simplex_1d</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>gen Generator<span class="token punctuation">)</span> <span class="token function">simplex_1d</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
 <p>simplex_1d returns a simplex noise value for a given x position</p>
 
 </section>
 
 		<section id="Generator.simplex_2d" class="doc-node">
-			<div class="title"><h2>fn (Generator) simplex_2d <a href="#Generator.simplex_2d">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/noise/simplex.v#L112"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (Generator) simplex_2d <a href="#Generator.simplex_2d">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/noise/simplex.v#L112"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>generator Generator<span class="token punctuation">)</span> <span class="token function">simplex_2d</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">,</span> y <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>gen Generator<span class="token punctuation">)</span> <span class="token function">simplex_2d</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">,</span> y <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
 <p>simplex_2d returns a simplex noise value for a given x, y position</p>
 
 </section>
 
 		<section id="Generator.simplex_3d" class="doc-node">
-			<div class="title"><h2>fn (Generator) simplex_3d <a href="#Generator.simplex_3d">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/noise/simplex.v#L166"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (Generator) simplex_3d <a href="#Generator.simplex_3d">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/noise/simplex.v#L166"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>generator Generator<span class="token punctuation">)</span> <span class="token function">simplex_3d</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">,</span> y <span class="token builtin">f64</span><span class="token punctuation">,</span> z <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>gen Generator<span class="token punctuation">)</span> <span class="token function">simplex_3d</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">,</span> y <span class="token builtin">f64</span><span class="token punctuation">,</span> z <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
 <p>simplex_3d returns a simplex noise value for a given x, y, z position</p>
 
 </section>
 
 		<section id="Generator.simplex_4d" class="doc-node">
-			<div class="title"><h2>fn (Generator) simplex_4d <a href="#Generator.simplex_4d">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/noise/simplex.v#L275"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (Generator) simplex_4d <a href="#Generator.simplex_4d">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/noise/simplex.v#L275"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>generator Generator<span class="token punctuation">)</span> <span class="token function">simplex_4d</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">,</span> y <span class="token builtin">f64</span><span class="token punctuation">,</span> z <span class="token builtin">f64</span><span class="token punctuation">,</span> w <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>gen Generator<span class="token punctuation">)</span> <span class="token function">simplex_4d</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">,</span> y <span class="token builtin">f64</span><span class="token punctuation">,</span> z <span class="token builtin">f64</span><span class="token punctuation">,</span> w <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
 <p>simplex_4d returns a simplex noise value for a given x, y, z, w position</p>
 
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 26 Jul 2026 07:55:45</div>
+						<div class="footer">Powered by vdoc. Generated on: 8 Oct 2026 14:41:58</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_noise">README</a></li>
 <li class="open"><a href="#Generator.new">fn Generator.new</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#Generator">struct Generator</a>        <ul>
-<li><a href="#Generator.perlin2d">fn perlin2d</a></li>
-<li><a href="#Generator.perlin3d">fn perlin3d</a></li>
 <li><a href="#Generator.randomize">fn randomize</a></li>
+<li><a href="#Generator.perlin_2d">fn perlin_2d</a></li>
+<li><a href="#Generator.perlin2d">fn perlin2d</a></li>
+<li><a href="#Generator.perlin_3d">fn perlin_3d</a></li>
+<li><a href="#Generator.perlin3d">fn perlin3d</a></li>
 <li><a href="#Generator.simplex_1d">fn simplex_1d</a></li>
 <li><a href="#Generator.simplex_2d">fn simplex_2d</a></li>
 <li><a href="#Generator.simplex_3d">fn simplex_3d</a></li>

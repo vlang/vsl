@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="x-ua-compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>inout.csv | vdoc</title>
+		<title>csv | vdoc</title>
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
@@ -66,10 +66,7 @@
 <div class="menu-row"><a href="./main.html">main</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>benchmarks</a></div>
-<ul>
-<li><a href="./benchmarks.util.html">util</a></li>
-</ul>
+<div class="menu-row"><a href="./util.html">util</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./blas.html">blas</a></div>
@@ -111,11 +108,10 @@
 <div class="menu-row"><a href="./fit.html">fit</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>float</a></div>
-<ul>
-<li><a href="./float.float32.html">float32</a></li>
-<li><a href="./float.float64.html">float64</a></li>
-</ul>
+<div class="menu-row"><a href="./float32.html">float32</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./float64.html">float64</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./fun.html">fun</a></div>
@@ -130,21 +126,13 @@
 <div class="menu-row"><a href="./graph.html">graph</a></div>
 </li>
 <li class="open active">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>inout</a></div>
-<ul>
-<li class="active"><a href="./inout.csv.html">csv</a></li>
-</ul>
+<div class="menu-row"><a href="./csv.html">csv</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./h5.html">h5</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>internal</a></div>
-<ul>
-<li><a href="./internal.prec.html">prec</a></li>
-<li><a href="./internal.dl.html">dl</a></li>
-<li><a href="./internal.dl.html">dl</a></li>
-</ul>
+<div class="menu-row"><a href="./prec.html">prec</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./iter.html">iter</a></div>
@@ -162,10 +150,10 @@
 <div class="menu-row"><a href="./metrics.html">metrics</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="./ml.html">ml</a></div>
-<ul>
-<li><a href="./ml.nlp.html">nlp</a></li>
-</ul>
+<div class="menu-row"><a href="./ml.html">ml</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./nlp.html">nlp</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./model_selection.html">model_selection</a></div>
@@ -195,10 +183,10 @@
 <div class="menu-row"><a href="./roots.html">roots</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><a href="./util.html">util</a></div>
+<div class="menu-row"><a href="./vcl.html">vcl</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><a href="./vcl.html">vcl</a></div>
+<div class="menu-row"><a href="./dl.html">dl</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./vulkan.html">vulkan</a></div>
@@ -210,8 +198,8 @@
 			<div class="doc-scrollview" tabindex="-1" id="main-content">
 				<div class="doc-container">
 					<div class="doc-content">
-								<section id="readme_inout.csv" class="doc-node">
-			<div class="title"><h1> inout.csv <a href="#readme_inout.csv">#</a></h1></div>
+								<section id="readme_csv" class="doc-node">
+			<div class="title"><h1> csv <a href="#readme_csv">#</a></h1></div>
 <h1 id="vsl-csv-module">VSL CSV Module</h1>
 <p>The <code>vsl.inout.csv</code> module provides utilities for reading and writing CSV files commonly used in scientific computing and machine learning workflows.</p>
 <h2 id="features">Features</h2>
@@ -225,21 +213,21 @@
 <pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>inout<span class="token punctuation">.</span>csv
 
 <span class="token comment">// Basic CSV reading</span>
-csv_data <span class="token operator">:=</span> csv<span class="token punctuation">.</span><span class="token function">read_csv</span><span class="token punctuation">(</span><span class="token string">'data.csv'</span><span class="token punctuation">,</span> csv<span class="token punctuation">.</span><span class="token symbol">CsvReadConfig</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token operator">!</span>
-<span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&#39;Rows: </span><span class="token string_interp">$</span>{csv_data<span class="token punctuation">.</span>n_rows}<span class="token string">, Cols: </span><span class="token string_interp">$</span>{csv_data<span class="token punctuation">.</span>n_cols}<span class="token string">&#39;</span><span class="token punctuation">)</span>
+csv_data <span class="token operator">:=</span> csv<span class="token punctuation">.</span><span class="token function">read_csv</span><span class="token punctuation">(</span><span class="token string">'data.csv'</span><span class="token punctuation">,</span> csv<span class="token punctuation">.</span>CsvReadConfig<span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token operator">!</span>
+<span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'Rows: </span><span class="token string_interp">$</span><span class="token string_interp">{</span>csv_data<span class="token punctuation">.</span>n_rows<span class="token string_interp">}</span><span class="token string">, Cols: </span><span class="token string_interp">$</span><span class="token string_interp">{</span>csv_data<span class="token punctuation">.</span>n_cols<span class="token string_interp">}</span><span class="token string">'</span><span class="token punctuation">)</span>
 
 <span class="token comment">// Access the data</span>
-<span class="token keyword">for</span> row <span class="token keyword">in</span> csv_data<span class="token punctuation">.</span><span class="token symbol">data</span> <span class="token punctuation">{</span>
+<span class="token keyword">for</span> row <span class="token keyword">in</span> csv_data<span class="token punctuation">.</span>data <span class="token punctuation">{</span>
     <span class="token function">println</span><span class="token punctuation">(</span>row<span class="token punctuation">)</span>
 <span class="token punctuation">}</span></code></pre>
 <h3 id="reading-with-header">Reading with Header</h3>
 <pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>inout<span class="token punctuation">.</span>csv
 
-csv_data <span class="token operator">:=</span> csv<span class="token punctuation">.</span><span class="token function">read_csv</span><span class="token punctuation">(</span><span class="token string">'data.csv'</span><span class="token punctuation">,</span> csv<span class="token punctuation">.</span><span class="token symbol">CsvReadConfig</span><span class="token punctuation">{</span>
+csv_data <span class="token operator">:=</span> csv<span class="token punctuation">.</span><span class="token function">read_csv</span><span class="token punctuation">(</span><span class="token string">'data.csv'</span><span class="token punctuation">,</span> csv<span class="token punctuation">.</span>CsvReadConfig<span class="token punctuation">{</span>
     skip_header<span class="token punctuation">:</span> <span class="token boolean">true</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token operator">!</span>
 
-<span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&#39;Columns: </span><span class="token string_interp">$</span>{csv_data<span class="token punctuation">.</span>header}<span class="token string">&#39;</span><span class="token punctuation">)</span>
+<span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'Columns: </span><span class="token string_interp">$</span><span class="token string_interp">{</span>csv_data<span class="token punctuation">.</span>header<span class="token string_interp">}</span><span class="token string">'</span><span class="token punctuation">)</span>
 
 <span class="token comment">// Get column by name</span>
 ages <span class="token operator">:=</span> csv_data<span class="token punctuation">.</span><span class="token function">get_column_by_name</span><span class="token punctuation">(</span><span class="token string">'age'</span><span class="token punctuation">)</span><span class="token operator">!</span></code></pre>
@@ -247,24 +235,24 @@ ages <span class="token operator">:=</span> csv_data<span class="token punctuati
 <pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>inout<span class="token punctuation">.</span>csv
 
 <span class="token comment">// Only read columns 0, 2, and 4</span>
-csv_data <span class="token operator">:=</span> csv<span class="token punctuation">.</span><span class="token function">read_csv</span><span class="token punctuation">(</span><span class="token string">'data.csv'</span><span class="token punctuation">,</span> csv<span class="token punctuation">.</span><span class="token symbol">CsvReadConfig</span><span class="token punctuation">{</span>
+csv_data <span class="token operator">:=</span> csv<span class="token punctuation">.</span><span class="token function">read_csv</span><span class="token punctuation">(</span><span class="token string">'data.csv'</span><span class="token punctuation">,</span> csv<span class="token punctuation">.</span>CsvReadConfig<span class="token punctuation">{</span>
     use_cols<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">]</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token operator">!</span></code></pre>
 <h3 id="converting-to-matrix">Converting to Matrix</h3>
 <pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>inout<span class="token punctuation">.</span>csv
 
 <span class="token comment">// Read directly as a Matrix</span>
-matrix <span class="token operator">:=</span> csv<span class="token punctuation">.</span><span class="token function">read_csv_to_matrix</span><span class="token punctuation">(</span><span class="token string">'data.csv'</span><span class="token punctuation">,</span> csv<span class="token punctuation">.</span><span class="token symbol">CsvReadConfig</span><span class="token punctuation">{</span>
+matrix <span class="token operator">:=</span> csv<span class="token punctuation">.</span><span class="token function">read_csv_to_matrix</span><span class="token punctuation">(</span><span class="token string">'data.csv'</span><span class="token punctuation">,</span> csv<span class="token punctuation">.</span>CsvReadConfig<span class="token punctuation">{</span>
     skip_header<span class="token punctuation">:</span> <span class="token boolean">true</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token operator">!</span>
 
-<span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&#39;Matrix dimensions: </span><span class="token string_interp">$</span>{matrix<span class="token punctuation">.</span>m}<span class="token string"> x </span><span class="token string_interp">$</span>{matrix<span class="token punctuation">.</span>n}<span class="token string">&#39;</span><span class="token punctuation">)</span></code></pre>
+<span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'Matrix dimensions: </span><span class="token string_interp">$</span><span class="token string_interp">{</span>matrix<span class="token punctuation">.</span>m<span class="token string_interp">}</span><span class="token string"> x </span><span class="token string_interp">$</span><span class="token string_interp">{</span>matrix<span class="token punctuation">.</span>n<span class="token string_interp">}</span><span class="token string">'</span><span class="token punctuation">)</span></code></pre>
 <h3 id="writing-csv-files">Writing CSV Files</h3>
 <pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>inout<span class="token punctuation">.</span>csv
 
 data <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">2.0</span><span class="token punctuation">,</span> <span class="token number">3.0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">4.0</span><span class="token punctuation">,</span> <span class="token number">5.0</span><span class="token punctuation">,</span> <span class="token number">6.0</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
 
-csv<span class="token punctuation">.</span><span class="token function">write_csv</span><span class="token punctuation">(</span><span class="token string">'output.csv'</span><span class="token punctuation">,</span> data<span class="token punctuation">,</span> csv<span class="token punctuation">.</span><span class="token symbol">CsvWriteConfig</span><span class="token punctuation">{</span>
+csv<span class="token punctuation">.</span><span class="token function">write_csv</span><span class="token punctuation">(</span><span class="token string">'output.csv'</span><span class="token punctuation">,</span> data<span class="token punctuation">,</span> csv<span class="token punctuation">.</span>CsvWriteConfig<span class="token punctuation">{</span>
     header<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'x'</span><span class="token punctuation">,</span> <span class="token string">'y'</span><span class="token punctuation">,</span> <span class="token string">'z'</span><span class="token punctuation">]</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token operator">!</span></code></pre>
 <h2 id="configuration-options">Configuration Options</h2>
@@ -341,12 +329,12 @@ csv<span class="token punctuation">.</span><span class="token function">write_cs
 <pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>inout<span class="token punctuation">.</span>csv
 
 <span class="token comment">// Tab-separated values</span>
-csv_data <span class="token operator">:=</span> csv<span class="token punctuation">.</span><span class="token function">read_csv</span><span class="token punctuation">(</span><span class="token string">'data.tsv'</span><span class="token punctuation">,</span> csv<span class="token punctuation">.</span><span class="token symbol">CsvReadConfig</span><span class="token punctuation">{</span>
+csv_data <span class="token operator">:=</span> csv<span class="token punctuation">.</span><span class="token function">read_csv</span><span class="token punctuation">(</span><span class="token string">'data.tsv'</span><span class="token punctuation">,</span> csv<span class="token punctuation">.</span>CsvReadConfig<span class="token punctuation">{</span>
     delimiter<span class="token punctuation">:</span> <span class="token char">`\t`</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token operator">!</span>
 
 <span class="token comment">// Semicolon-separated</span>
-csv_data2 <span class="token operator">:=</span> csv<span class="token punctuation">.</span><span class="token function">read_csv</span><span class="token punctuation">(</span><span class="token string">'data.csv'</span><span class="token punctuation">,</span> csv<span class="token punctuation">.</span><span class="token symbol">CsvReadConfig</span><span class="token punctuation">{</span>
+csv_data2 <span class="token operator">:=</span> csv<span class="token punctuation">.</span><span class="token function">read_csv</span><span class="token punctuation">(</span><span class="token string">'data.csv'</span><span class="token punctuation">,</span> csv<span class="token punctuation">.</span>CsvReadConfig<span class="token punctuation">{</span>
     delimiter<span class="token punctuation">:</span> <span class="token char">`;`</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token operator">!</span></code></pre>
 <h3 id="parsing-csv-string">Parsing CSV String</h3>
@@ -357,7 +345,7 @@ content <span class="token operator">:=</span> <span class="token string">'x,y
 3,4
 5,6'</span>
 
-csv_data <span class="token operator">:=</span> csv<span class="token punctuation">.</span><span class="token function">parse_csv</span><span class="token punctuation">(</span>content<span class="token punctuation">,</span> csv<span class="token punctuation">.</span><span class="token symbol">CsvReadConfig</span><span class="token punctuation">{</span>
+csv_data <span class="token operator">:=</span> csv<span class="token punctuation">.</span><span class="token function">parse_csv</span><span class="token punctuation">(</span>content<span class="token punctuation">,</span> csv<span class="token punctuation">.</span>CsvReadConfig<span class="token punctuation">{</span>
     skip_header<span class="token punctuation">:</span> <span class="token boolean">true</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token operator">!</span></code></pre>
 <h2 id="integration-with-ml-module">Integration with ML Module</h2>
@@ -365,7 +353,7 @@ csv_data <span class="token operator">:=</span> csv<span class="token punctuatio
 <span class="token keyword">import</span> vsl<span class="token punctuation">.</span>ml
 
 <span class="token comment">// Read data for machine learning</span>
-csv_data <span class="token operator">:=</span> csv<span class="token punctuation">.</span><span class="token function">read_csv</span><span class="token punctuation">(</span><span class="token string">'dataset.csv'</span><span class="token punctuation">,</span> csv<span class="token punctuation">.</span><span class="token symbol">CsvReadConfig</span><span class="token punctuation">{</span>
+csv_data <span class="token operator">:=</span> csv<span class="token punctuation">.</span><span class="token function">read_csv</span><span class="token punctuation">(</span><span class="token string">'dataset.csv'</span><span class="token punctuation">,</span> csv<span class="token punctuation">.</span>CsvReadConfig<span class="token punctuation">{</span>
     skip_header<span class="token punctuation">:</span> <span class="token boolean">true</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token operator">!</span>
 
@@ -385,7 +373,7 @@ train_data<span class="token punctuation">,</span> test_data <span class="token 
 </section>
 
 		<section id="parse_csv" class="doc-node">
-			<div class="title"><h2>fn parse_csv <a href="#parse_csv">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/inout/csv/csv.v#L51"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn parse_csv <a href="#parse_csv">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/inout/csv/csv.v#L51"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">parse_csv</span><span class="token punctuation">(</span>content <span class="token builtin">string</span><span class="token punctuation">,</span> config CsvReadConfig<span class="token punctuation">)</span> <span class="token operator">!</span>CsvData</code></pre>
 <p>parse_csv parses CSV content from a string</p>
@@ -393,7 +381,7 @@ train_data<span class="token punctuation">,</span> test_data <span class="token 
 </section>
 
 		<section id="read_csv" class="doc-node">
-			<div class="title"><h2>fn read_csv <a href="#read_csv">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/inout/csv/csv.v#L38"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn read_csv <a href="#read_csv">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/inout/csv/csv.v#L38"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">read_csv</span><span class="token punctuation">(</span>path <span class="token builtin">string</span><span class="token punctuation">,</span> config CsvReadConfig<span class="token punctuation">)</span> <span class="token operator">!</span>CsvData</code></pre>
 <p>read_csv reads a CSV file and returns numeric data as a 2D array Non-numeric values are converted to NaN</p>
@@ -401,7 +389,7 @@ train_data<span class="token punctuation">,</span> test_data <span class="token 
 </section>
 
 		<section id="read_csv_to_matrix" class="doc-node">
-			<div class="title"><h2>fn read_csv_to_matrix <a href="#read_csv_to_matrix">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/inout/csv/csv.v#L134"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn read_csv_to_matrix <a href="#read_csv_to_matrix">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/inout/csv/csv.v#L134"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">read_csv_to_matrix</span><span class="token punctuation">(</span>path <span class="token builtin">string</span><span class="token punctuation">,</span> config CsvReadConfig<span class="token punctuation">)</span> <span class="token operator">!</span><span class="token operator">&amp;</span>la<span class="token punctuation">.</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span></code></pre>
 <p>read_csv_to_matrix reads a CSV file and returns the data as a Matrix</p>
@@ -409,7 +397,7 @@ train_data<span class="token punctuation">,</span> test_data <span class="token 
 </section>
 
 		<section id="write_csv" class="doc-node">
-			<div class="title"><h2>fn write_csv <a href="#write_csv">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/inout/csv/csv.v#L152"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn write_csv <a href="#write_csv">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/inout/csv/csv.v#L152"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">write_csv</span><span class="token punctuation">(</span>path <span class="token builtin">string</span><span class="token punctuation">,</span> data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> config CsvWriteConfig<span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
 <p>write_csv writes a 2D array to a CSV file</p>
@@ -417,7 +405,7 @@ train_data<span class="token punctuation">,</span> test_data <span class="token 
 </section>
 
 		<section id="write_matrix_csv" class="doc-node">
-			<div class="title"><h2>fn write_matrix_csv <a href="#write_matrix_csv">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/inout/csv/csv.v#L176"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn write_matrix_csv <a href="#write_matrix_csv">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/inout/csv/csv.v#L176"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">write_matrix_csv</span><span class="token punctuation">(</span>path <span class="token builtin">string</span><span class="token punctuation">,</span> matrix <span class="token operator">&amp;</span>la<span class="token punctuation">.</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> config CsvWriteConfig<span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
 <p>write_matrix_csv writes a Matrix to a CSV file</p>
@@ -425,9 +413,9 @@ train_data<span class="token punctuation">,</span> test_data <span class="token 
 </section>
 
 		<section id="CsvData" class="doc-node">
-			<div class="title"><h2>struct CsvData <a href="#CsvData">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/inout/csv/csv.v#L27"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>struct CsvData <a href="#CsvData">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/inout/csv/csv.v#L27"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">struct</span> <span class="token symbol">CsvData</span> <span class="token punctuation">{</span>
+<code><span class="token keyword">struct</span> CsvData <span class="token punctuation">{</span>
 <span class="token keyword">pub</span><span class="token punctuation">:</span>
 	data        <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token comment">// the numeric data</span>
 	header      <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span>   <span class="token comment">// header row (if present)</span>
@@ -440,7 +428,7 @@ train_data<span class="token punctuation">,</span> test_data <span class="token 
 </section>
 
 		<section id="CsvData.to_matrix" class="doc-node">
-			<div class="title"><h2>fn (CsvData) to_matrix <a href="#CsvData.to_matrix">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/inout/csv/csv.v#L194"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (CsvData) to_matrix <a href="#CsvData.to_matrix">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/inout/csv/csv.v#L194"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>c <span class="token operator">&amp;</span>CsvData<span class="token punctuation">)</span> <span class="token function">to_matrix</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token operator">&amp;</span>la<span class="token punctuation">.</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span></code></pre>
 <p>to_matrix converts CsvData to a Matrix</p>
@@ -448,7 +436,7 @@ train_data<span class="token punctuation">,</span> test_data <span class="token 
 </section>
 
 		<section id="CsvData.get_column" class="doc-node">
-			<div class="title"><h2>fn (CsvData) get_column <a href="#CsvData.get_column">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/inout/csv/csv.v#L210"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (CsvData) get_column <a href="#CsvData.get_column">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/inout/csv/csv.v#L210"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>c <span class="token operator">&amp;</span>CsvData<span class="token punctuation">)</span> <span class="token function">get_column</span><span class="token punctuation">(</span>idx <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 <p>get_column returns a specific column as an array</p>
@@ -456,7 +444,7 @@ train_data<span class="token punctuation">,</span> test_data <span class="token 
 </section>
 
 		<section id="CsvData.get_column_by_name" class="doc-node">
-			<div class="title"><h2>fn (CsvData) get_column_by_name <a href="#CsvData.get_column_by_name">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/inout/csv/csv.v#L223"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (CsvData) get_column_by_name <a href="#CsvData.get_column_by_name">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/inout/csv/csv.v#L223"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>c <span class="token operator">&amp;</span>CsvData<span class="token punctuation">)</span> <span class="token function">get_column_by_name</span><span class="token punctuation">(</span>name <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 <p>get_column_by_name returns a column by its header name</p>
@@ -464,9 +452,9 @@ train_data<span class="token punctuation">,</span> test_data <span class="token 
 </section>
 
 		<section id="CsvReadConfig" class="doc-node">
-			<div class="title"><h2>struct CsvReadConfig <a href="#CsvReadConfig">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/inout/csv/csv.v#L8"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>struct CsvReadConfig <a href="#CsvReadConfig">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/inout/csv/csv.v#L8"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">struct</span> <span class="token symbol">CsvReadConfig</span> <span class="token punctuation">{</span>
+<code><span class="token keyword">struct</span> CsvReadConfig <span class="token punctuation">{</span>
 <span class="token keyword">pub</span><span class="token punctuation">:</span>
 	delimiter   <span class="token builtin">u8</span> <span class="token operator">=</span> <span class="token char">`,`</span> <span class="token comment">// field delimiter</span>
 	skip_header <span class="token builtin">bool</span>  <span class="token comment">// skip the first row</span>
@@ -480,9 +468,9 @@ train_data<span class="token punctuation">,</span> test_data <span class="token 
 </section>
 
 		<section id="CsvWriteConfig" class="doc-node">
-			<div class="title"><h2>struct CsvWriteConfig <a href="#CsvWriteConfig">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/inout/csv/csv.v#L19"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>struct CsvWriteConfig <a href="#CsvWriteConfig">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/inout/csv/csv.v#L19"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">struct</span> <span class="token symbol">CsvWriteConfig</span> <span class="token punctuation">{</span>
+<code><span class="token keyword">struct</span> CsvWriteConfig <span class="token punctuation">{</span>
 <span class="token keyword">pub</span><span class="token punctuation">:</span>
 	delimiter    <span class="token builtin">u8</span> <span class="token operator">=</span> <span class="token char">`,`</span> <span class="token comment">// field delimiter</span>
 	header       <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token comment">// optional header row</span>
@@ -493,9 +481,9 @@ train_data<span class="token punctuation">,</span> test_data <span class="token 
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 26 Jul 2026 07:55:45</div>
+						<div class="footer">Powered by vdoc. Generated on: 8 Oct 2026 14:41:58</div>
 					</div>
-					<div class="doc-toc"><ul><li class="open"><a href="#readme_inout.csv">README</a></li>
+					<div class="doc-toc"><ul><li class="open"><a href="#readme_csv">README</a></li>
 <li class="open"><a href="#parse_csv">fn parse_csv</a>        <ul>
 </ul>
 </li>

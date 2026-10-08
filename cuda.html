@@ -66,10 +66,7 @@
 <div class="menu-row"><a href="./main.html">main</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>benchmarks</a></div>
-<ul>
-<li><a href="./benchmarks.util.html">util</a></li>
-</ul>
+<div class="menu-row"><a href="./util.html">util</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./blas.html">blas</a></div>
@@ -111,11 +108,10 @@
 <div class="menu-row"><a href="./fit.html">fit</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>float</a></div>
-<ul>
-<li><a href="./float.float32.html">float32</a></li>
-<li><a href="./float.float64.html">float64</a></li>
-</ul>
+<div class="menu-row"><a href="./float32.html">float32</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./float64.html">float64</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./fun.html">fun</a></div>
@@ -130,21 +126,13 @@
 <div class="menu-row"><a href="./graph.html">graph</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>inout</a></div>
-<ul>
-<li><a href="./inout.csv.html">csv</a></li>
-</ul>
+<div class="menu-row"><a href="./csv.html">csv</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./h5.html">h5</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>internal</a></div>
-<ul>
-<li><a href="./internal.prec.html">prec</a></li>
-<li><a href="./internal.dl.html">dl</a></li>
-<li><a href="./internal.dl.html">dl</a></li>
-</ul>
+<div class="menu-row"><a href="./prec.html">prec</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./iter.html">iter</a></div>
@@ -162,10 +150,10 @@
 <div class="menu-row"><a href="./metrics.html">metrics</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="./ml.html">ml</a></div>
-<ul>
-<li><a href="./ml.nlp.html">nlp</a></li>
-</ul>
+<div class="menu-row"><a href="./ml.html">ml</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./nlp.html">nlp</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./model_selection.html">model_selection</a></div>
@@ -195,10 +183,10 @@
 <div class="menu-row"><a href="./roots.html">roots</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><a href="./util.html">util</a></div>
+<div class="menu-row"><a href="./vcl.html">vcl</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><a href="./vcl.html">vcl</a></div>
+<div class="menu-row"><a href="./dl.html">dl</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./vulkan.html">vulkan</a></div>
@@ -320,31 +308,42 @@ result <span class="token operator">:=</span> backend<span class="token punctuat
 <li>cuDNN headers</li></ul>
 <h2 id="-installation">📦 Installation</h2>
 <h3 id="arch-linux">Arch Linux</h3>
-<pre><code class="language-sh">##sudo pacman <span class="token operator">-</span>S nvidia nvidia<span class="token operator">-</span>utils
+<pre><code class="language-sh"><span class="token punctuation"># NVIDIA driver (verify with nvidia-smi)</span>
+sudo pacman <span class="token operator">-</span>S nvidia nvidia<span class="token operator">-</span>utils
 
-##sudo pacman <span class="token operator">-</span>S cuda
+<span class="token punctuation"># CUDA Toolkit (includes cuBLAS)</span>
+sudo pacman <span class="token operator">-</span>S cuda
 
-##sudo pacman <span class="token operator">-</span>S cudnn
+<span class="token punctuation"># cuDNN (must match CUDA version)</span>
+sudo pacman <span class="token operator">-</span>S cudnn
 
-##nvcc <span class="token operator">--</span>version        ##nvidia<span class="token operator">-</span>smi            ##</code></pre>
+<span class="token punctuation"># Verify</span>
+nvcc <span class="token operator">--</span>version        <span class="token punctuation"># should show 12.x or 13.x</span>
+nvidia<span class="token operator">-</span>smi            <span class="token punctuation"># should show your GPU</span></code></pre>
 <h3 id="ubuntu--debian">Ubuntu / Debian</h3>
-<pre><code class="language-sh">##sudo apt<span class="token operator">-</span>get install nvidia<span class="token operator">-</span>driver<span class="token operator">-</span><span class="token number">535</span>
+<pre><code class="language-sh"><span class="token punctuation"># NVIDIA driver</span>
+sudo apt<span class="token operator">-</span>get install nvidia<span class="token operator">-</span>driver<span class="token operator">-</span><span class="token number">535</span>
 
-##wget https<span class="token punctuation">:</span><span class="token comment">//developer.downloads.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb</span>
-sudo dpkg <span class="token operator">-</span>i cuda<span class="token operator">-</span>keyring_1<span class="token number">.1</span><span class="token operator">-</span>1<span class="token number">1all</span><span class="token punctuation">.</span>deb
+<span class="token punctuation"># CUDA Toolkit</span>
+wget https<span class="token punctuation">:</span><span class="token comment">//developer.downloads.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb</span>
+sudo dpkg <span class="token operator">-</span>i cuda<span class="token operator">-</span>keyring_1<span class="token number">.1</span><span class="token operator">-</span><span class="token number">1_all</span><span class="token punctuation">.</span>deb
 sudo apt<span class="token operator">-</span>get update
 sudo apt<span class="token operator">-</span>get install cuda<span class="token operator">-</span>toolkit<span class="token operator">-</span><span class="token number">12</span><span class="token operator">-</span><span class="token number">2</span>
 
-##sudo apt<span class="token operator">-</span>get install libcudnn8 libcudnn8<span class="token operator">-</span>dev</code></pre>
+<span class="token punctuation"># cuDNN</span>
+sudo apt<span class="token operator">-</span>get install libcudnn8 libcudnn8<span class="token operator">-</span>dev</code></pre>
 <h3 id="macos">macOS</h3>
 <p>CUDA Toolkit is no longer supported on macOS arm64 (Apple Silicon). For GPU acceleration on Apple Silicon, use the VCL/OpenCL backend instead.</p>
 <h2 id="-compiling-with-cuda">🏗️ Compiling with CUDA</h2>
 <p>VSL uses conditional compilation (<code>$if cuda ?</code>) to include CUDA code:</p>
-<pre><code class="language-sh">##v <span class="token operator">-</span>d cuda run your_app<span class="token punctuation">.</span>v
+<pre><code class="language-sh"><span class="token punctuation"># Compile with CUDA backend</span>
+v <span class="token operator">-</span>d cuda run your_app<span class="token punctuation">.</span>v
 
-##v <span class="token operator">-</span>d cuda test <span class="token punctuation">.</span>
+<span class="token punctuation"># Run tests with CUDA</span>
+v <span class="token operator">-</span>d cuda test <span class="token punctuation">.</span>
 
-##v <span class="token operator">-</span>d cuda vet <span class="token punctuation">.</span></code></pre>
+<span class="token punctuation"># Lint with CUDA</span>
+v <span class="token operator">-</span>d cuda vet <span class="token punctuation">.</span></code></pre>
 <p>Set <code>CUDNN_PATH</code> if cuDNN is not in a standard location:</p>
 <pre><code class="language-sh">CUDNN_PATH<span class="token operator">=</span><span class="token operator">/</span>opt<span class="token operator">/</span>cuda v <span class="token operator">-</span>d cuda run your_app<span class="token punctuation">.</span>v</code></pre>
 <h2 id="-performance-notes">⚡ Performance Notes</h2>
@@ -354,7 +353,8 @@ sudo apt<span class="token operator">-</span>get install cuda<span class="token 
 <li><strong>Memory layout</strong> — cuBLAS uses column-major; VSL uses row-major. The <code>to_internal()</code> / <code>from_internal()</code> conversion adds overhead for small tensors but is negligible for large matrices (≥ 256×256).</li></ul>
 <h2 id="-examples">🧪 Examples</h2>
 <p>See the <a href="https://github.com/vlang/vsl/blob/master/cuda/examples"><code>cuda/examples/</code></a> directory:</p>
-<pre><code class="language-sh">##v <span class="token operator">-</span>d cuda run cuda<span class="token operator">/</span>examples<span class="token operator">/</span>relu_example<span class="token punctuation">.</span>v</code></pre>
+<pre><code class="language-sh"><span class="token punctuation"># Run CUDA backend smoke test</span>
+v <span class="token operator">-</span>d cuda run cuda<span class="token operator">/</span>examples<span class="token operator">/</span>relu_example<span class="token punctuation">.</span>v</code></pre>
 <h2 id="-roadmap">🗺️ Roadmap</h2>
 <table>
 <thead>
@@ -434,14 +434,14 @@ sudo apt<span class="token operator">-</span>get install cuda<span class="token 
 		<section id="" class="doc-node const">
 <pre class="signature">
 <code><span class="token keyword">const</span> cublas_op_t <span class="token operator">=</span> <span class="token number">1</span> <span class="token comment">// Transpose</span></code></pre>
-
+<p>Non-transpose</p>
 
 </section>
 
 		<section id="" class="doc-node const">
 <pre class="signature">
 <code><span class="token keyword">const</span> cublas_op_c <span class="token operator">=</span> <span class="token number">2</span> <span class="token comment">// Conjugate transpose</span></code></pre>
-
+<p>Transpose</p>
 
 </section>
 
@@ -490,7 +490,7 @@ sudo apt<span class="token operator">-</span>get install cuda<span class="token 
 		<section id="" class="doc-node const">
 <pre class="signature">
 <code><span class="token keyword">const</span> cudnn_softmax_mode_channel <span class="token operator">=</span> <span class="token number">1</span> <span class="token comment">// apply softmax per spatial location (CHANNELS)</span></code></pre>
-
+<p>apply softmax per image (NCHW)</p>
 
 </section>
 
@@ -504,7 +504,7 @@ sudo apt<span class="token operator">-</span>get install cuda<span class="token 
 		<section id="" class="doc-node const">
 <pre class="signature">
 <code><span class="token keyword">const</span> cudnn_tensor_nchw <span class="token operator">=</span> <span class="token number">1</span> <span class="token comment">// NCHW format</span></code></pre>
-
+<p>NCHW format (row-major in VSL)</p>
 
 </section>
 
@@ -518,12 +518,12 @@ sudo apt<span class="token operator">-</span>get install cuda<span class="token 
 		<section id="" class="doc-node const">
 <pre class="signature">
 <code><span class="token keyword">const</span> cudnn_data_type_float <span class="token operator">=</span> <span class="token number">0</span> <span class="token comment">// f32</span></code></pre>
-
+<p>f64</p>
 
 </section>
 
 		<section id="col_to_row_major" class="doc-node">
-			<div class="title"><h2>fn col_to_row_major <a href="#col_to_row_major">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/cuda/layout.v#L21"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn col_to_row_major <a href="#col_to_row_major">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/layout.v#L21"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">col_to_row_major</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> rows <span class="token builtin">int</span><span class="token punctuation">,</span> cols <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 <p>col_to_row_major converts column-major flat array back to row-major. For matrix [rows x cols], element (r, c) in column-major flat at index r + c<em>rows becomes element (r, c) in row-major flat at index r</em>cols+c.</p>
@@ -531,7 +531,7 @@ sudo apt<span class="token operator">-</span>get install cuda<span class="token 
 </section>
 
 		<section id="cublas_error" class="doc-node">
-			<div class="title"><h2>fn cublas_error <a href="#cublas_error">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/cuda/_ctypes.c.v#L107"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn cublas_error <a href="#cublas_error">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L107"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">cublas_error</span><span class="token punctuation">(</span>status CublasStatus<span class="token punctuation">)</span> <span class="token builtin">string</span></code></pre>
 <p>cublas_error returns a string description of a cuBLAS status code.</p>
@@ -539,7 +539,7 @@ sudo apt<span class="token operator">-</span>get install cuda<span class="token 
 </section>
 
 		<section id="cudnn_error" class="doc-node">
-			<div class="title"><h2>fn cudnn_error <a href="#cudnn_error">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/cuda/_ctypes.c.v#L122"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn cudnn_error <a href="#cudnn_error">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L122"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">cudnn_error</span><span class="token punctuation">(</span>status CudnnStatus<span class="token punctuation">)</span> <span class="token builtin">string</span></code></pre>
 <p>cudnn_error returns a string description of a cuDNN status code.</p>
@@ -547,7 +547,7 @@ sudo apt<span class="token operator">-</span>get install cuda<span class="token 
 </section>
 
 		<section id="get_default_device" class="doc-node">
-			<div class="title"><h2>fn get_default_device <a href="#get_default_device">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/cuda/device.c.v#L132"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn get_default_device <a href="#get_default_device">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/device.c.v#L132"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">get_default_device</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token operator">&amp;</span>CudaDevice</code></pre>
 <p>get_default_device returns the first available CUDA device. Convenience wrapper; equivalent to get_device(0).</p>
@@ -555,7 +555,7 @@ sudo apt<span class="token operator">-</span>get install cuda<span class="token 
 </section>
 
 		<section id="get_device" class="doc-node">
-			<div class="title"><h2>fn get_device <a href="#get_device">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/cuda/device.c.v#L102"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn get_device <a href="#get_device">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/device.c.v#L102"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">get_device</span><span class="token punctuation">(</span>index <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token operator">&amp;</span>CudaDevice</code></pre>
 <p>get_device returns the CUDA device with the given index (0-based).</p>
@@ -563,7 +563,7 @@ sudo apt<span class="token operator">-</span>get install cuda<span class="token 
 </section>
 
 		<section id="get_device_count" class="doc-node">
-			<div class="title"><h2>fn get_device_count <a href="#get_device_count">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/cuda/device.c.v#L88"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn get_device_count <a href="#get_device_count">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/device.c.v#L88"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">get_device_count</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">int</span></code></pre>
 <p>get_device_count returns the number of available CUDA devices. Calls cuInit internally if not yet initialized.</p>
@@ -571,7 +571,7 @@ sudo apt<span class="token operator">-</span>get install cuda<span class="token 
 </section>
 
 		<section id="row_to_col_major" class="doc-node">
-			<div class="title"><h2>fn row_to_col_major <a href="#row_to_col_major">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/cuda/layout.v#L8"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn row_to_col_major <a href="#row_to_col_major">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/layout.v#L8"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">row_to_col_major</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> rows <span class="token builtin">int</span><span class="token punctuation">,</span> cols <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 <p>row_to_col_major converts row-major flat array to column-major. For matrix [rows x cols], element (r, c) in row-major flat at index r<em>cols+c becomes element (r, c) in column-major flat at index r + c</em>rows.</p>
@@ -579,7 +579,7 @@ sudo apt<span class="token operator">-</span>get install cuda<span class="token 
 </section>
 
 		<section id="CudnnActivationDescriptor" class="doc-node">
-			<div class="title"><h2>type CudnnActivationDescriptor <a href="#CudnnActivationDescriptor">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/cuda/_ctypes.c.v#L57"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>type CudnnActivationDescriptor <a href="#CudnnActivationDescriptor">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L57"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">type</span> CudnnActivationDescriptor <span class="token operator">=</span> <span class="token builtin">voidptr</span></code></pre>
 <p>cudnnActivationDescriptor_t is a handle to an activation descriptor.</p>
@@ -587,7 +587,7 @@ sudo apt<span class="token operator">-</span>get install cuda<span class="token 
 </section>
 
 		<section id="CudnnActivationMode" class="doc-node">
-			<div class="title"><h2>type CudnnActivationMode <a href="#CudnnActivationMode">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/cuda/_ctypes.c.v#L45"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>type CudnnActivationMode <a href="#CudnnActivationMode">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L45"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">type</span> CudnnActivationMode <span class="token operator">=</span> <span class="token builtin">int</span></code></pre>
 <p>cudnnActivationMode_t specifies the activation mode.</p>
@@ -595,7 +595,7 @@ sudo apt<span class="token operator">-</span>get install cuda<span class="token 
 </section>
 
 		<section id="CudnnConvolutionBwdDataAlgo" class="doc-node">
-			<div class="title"><h2>type CudnnConvolutionBwdDataAlgo <a href="#CudnnConvolutionBwdDataAlgo">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/cuda/_ctypes.c.v#L75"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>type CudnnConvolutionBwdDataAlgo <a href="#CudnnConvolutionBwdDataAlgo">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L75"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">type</span> CudnnConvolutionBwdDataAlgo <span class="token operator">=</span> <span class="token builtin">int</span></code></pre>
 <p>cudnnConvolutionBwdDataAlgo_t / BwdFilterAlgo_t — backward convolution algorithms.</p>
@@ -603,7 +603,7 @@ sudo apt<span class="token operator">-</span>get install cuda<span class="token 
 </section>
 
 		<section id="CudnnConvolutionBwdFilterAlgo" class="doc-node">
-			<div class="title"><h2>type CudnnConvolutionBwdFilterAlgo <a href="#CudnnConvolutionBwdFilterAlgo">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/cuda/_ctypes.c.v#L76"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>type CudnnConvolutionBwdFilterAlgo <a href="#CudnnConvolutionBwdFilterAlgo">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L76"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">type</span> CudnnConvolutionBwdFilterAlgo <span class="token operator">=</span> <span class="token builtin">int</span></code></pre>
 
@@ -611,7 +611,7 @@ sudo apt<span class="token operator">-</span>get install cuda<span class="token 
 </section>
 
 		<section id="CudnnConvolutionDescriptor" class="doc-node">
-			<div class="title"><h2>type CudnnConvolutionDescriptor <a href="#CudnnConvolutionDescriptor">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/cuda/_ctypes.c.v#L60"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>type CudnnConvolutionDescriptor <a href="#CudnnConvolutionDescriptor">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L60"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">type</span> CudnnConvolutionDescriptor <span class="token operator">=</span> <span class="token builtin">voidptr</span></code></pre>
 <p>cudnnConvolutionDescriptor_t is a handle to a convolution descriptor.</p>
@@ -619,7 +619,7 @@ sudo apt<span class="token operator">-</span>get install cuda<span class="token 
 </section>
 
 		<section id="CudnnConvolutionFwdAlgo" class="doc-node">
-			<div class="title"><h2>type CudnnConvolutionFwdAlgo <a href="#CudnnConvolutionFwdAlgo">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/cuda/_ctypes.c.v#L72"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>type CudnnConvolutionFwdAlgo <a href="#CudnnConvolutionFwdAlgo">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L72"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">type</span> CudnnConvolutionFwdAlgo <span class="token operator">=</span> <span class="token builtin">int</span></code></pre>
 <p>cudnnConvolutionFwdAlgo_t specifies the convolution forward algorithm.</p>
@@ -627,7 +627,7 @@ sudo apt<span class="token operator">-</span>get install cuda<span class="token 
 </section>
 
 		<section id="CudnnDataType" class="doc-node">
-			<div class="title"><h2>type CudnnDataType <a href="#CudnnDataType">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/cuda/_ctypes.c.v#L69"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>type CudnnDataType <a href="#CudnnDataType">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L69"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">type</span> CudnnDataType <span class="token operator">=</span> <span class="token builtin">int</span></code></pre>
 <p>cudnnDataType_t specifies the data type of a tensor.</p>
@@ -635,7 +635,7 @@ sudo apt<span class="token operator">-</span>get install cuda<span class="token 
 </section>
 
 		<section id="CudnnFilterDescriptor" class="doc-node">
-			<div class="title"><h2>type CudnnFilterDescriptor <a href="#CudnnFilterDescriptor">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/cuda/_ctypes.c.v#L63"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>type CudnnFilterDescriptor <a href="#CudnnFilterDescriptor">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L63"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">type</span> CudnnFilterDescriptor <span class="token operator">=</span> <span class="token builtin">voidptr</span></code></pre>
 <p>cudnnFilterDescriptor_t is a handle to a filter descriptor.</p>
@@ -643,7 +643,7 @@ sudo apt<span class="token operator">-</span>get install cuda<span class="token 
 </section>
 
 		<section id="CudnnSoftmaxAlgorithm" class="doc-node">
-			<div class="title"><h2>type CudnnSoftmaxAlgorithm <a href="#CudnnSoftmaxAlgorithm">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/cuda/_ctypes.c.v#L48"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>type CudnnSoftmaxAlgorithm <a href="#CudnnSoftmaxAlgorithm">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L48"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">type</span> CudnnSoftmaxAlgorithm <span class="token operator">=</span> <span class="token builtin">int</span></code></pre>
 <p>cudnnSoftmaxAlgorithm_t specifies the softmax algorithm.</p>
@@ -651,7 +651,7 @@ sudo apt<span class="token operator">-</span>get install cuda<span class="token 
 </section>
 
 		<section id="CudnnSoftmaxMode" class="doc-node">
-			<div class="title"><h2>type CudnnSoftmaxMode <a href="#CudnnSoftmaxMode">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/cuda/_ctypes.c.v#L51"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>type CudnnSoftmaxMode <a href="#CudnnSoftmaxMode">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L51"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">type</span> CudnnSoftmaxMode <span class="token operator">=</span> <span class="token builtin">int</span></code></pre>
 <p>cudnnSoftmaxMode_t specifies the softmax mode.</p>
@@ -659,7 +659,7 @@ sudo apt<span class="token operator">-</span>get install cuda<span class="token 
 </section>
 
 		<section id="CudnnTensorDescriptor" class="doc-node">
-			<div class="title"><h2>type CudnnTensorDescriptor <a href="#CudnnTensorDescriptor">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/cuda/_ctypes.c.v#L54"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>type CudnnTensorDescriptor <a href="#CudnnTensorDescriptor">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L54"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">type</span> CudnnTensorDescriptor <span class="token operator">=</span> <span class="token builtin">voidptr</span></code></pre>
 <p>cudnnTensorDescriptor_t is a handle to a tensor descriptor.</p>
@@ -667,7 +667,7 @@ sudo apt<span class="token operator">-</span>get install cuda<span class="token 
 </section>
 
 		<section id="CudnnTensorFormat" class="doc-node">
-			<div class="title"><h2>type CudnnTensorFormat <a href="#CudnnTensorFormat">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/cuda/_ctypes.c.v#L66"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>type CudnnTensorFormat <a href="#CudnnTensorFormat">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L66"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">type</span> CudnnTensorFormat <span class="token operator">=</span> <span class="token builtin">int</span></code></pre>
 <p>cudnnTensorFormat_t specifies the memory layout of a tensor.</p>
@@ -675,7 +675,7 @@ sudo apt<span class="token operator">-</span>get install cuda<span class="token 
 </section>
 
 		<section id="Device" class="doc-node">
-			<div class="title"><h2>type Device <a href="#Device">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/cuda/backend.v#L7"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>type Device <a href="#Device">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/backend.v#L7"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">type</span> Device <span class="token operator">=</span> CudaDevice</code></pre>
 <p>Device is an alias for CudaDevice exposed at the top-level module boundary. Users that only need the device type can import vsl.cuda and use cuda.Device.</p>
@@ -683,17 +683,17 @@ sudo apt<span class="token operator">-</span>get install cuda<span class="token 
 </section>
 
 		<section id="CudaDevice" class="doc-node">
-			<div class="title"><h2>struct CudaDevice <a href="#CudaDevice">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/cuda/device.c.v#L17"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>struct CudaDevice <a href="#CudaDevice">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/device.c.v#L17"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <div class="attributes"><div class="attribute">@[heap]</div></div>
 <pre class="signature">
-<code><span class="token keyword">struct</span> <span class="token symbol">CudaDevice</span> <span class="token punctuation">{</span>
+<code><span class="token keyword">struct</span> CudaDevice <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
 	<span class="token comment">// device_id is the CUDA device ordinal (0, 1, ...).</span>
 	device_id <span class="token builtin">int</span>
-	<span class="token comment">// name is the human-readable device name (e.g. &#34;NVIDIA GeForce RTX 4060&#34;).</span>
+	<span class="token comment">// name is the human-readable device name (e.g. "NVIDIA GeForce RTX 4060").</span>
 	name <span class="token builtin">string</span>
 	<span class="token comment">// handle is the CUDA device handle (CUdevice for driver API).</span>
-	handle <span class="token builtin">voidptr</span>
+	handle <span class="token builtin">int</span>
 	<span class="token comment">// ctx is the CUDA context for this device (driver API), if created.</span>
 	ctx CudaContext
 	<span class="token comment">// cublas is the cuBLAS context handle.</span>
@@ -708,7 +708,7 @@ sudo apt<span class="token operator">-</span>get install cuda<span class="token 
 </section>
 
 		<section id="CudaDevice.release" class="doc-node">
-			<div class="title"><h2>fn (CudaDevice) release <a href="#CudaDevice.release">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/cuda/device.c.v#L36"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (CudaDevice) release <a href="#CudaDevice.release">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/device.c.v#L36"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> d CudaDevice<span class="token punctuation">)</span> <span class="token function">release</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
 <p>release releases all CUDA resources (context, cuBLAS, cuDNN, stream).</p>
@@ -716,7 +716,7 @@ sudo apt<span class="token operator">-</span>get install cuda<span class="token 
 </section>
 
 		<section id="CudaDevice.init" class="doc-node">
-			<div class="title"><h2>fn (CudaDevice) init <a href="#CudaDevice.init">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/cuda/device.c.v#L58"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (CudaDevice) init <a href="#CudaDevice.init">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/device.c.v#L58"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> d CudaDevice<span class="token punctuation">)</span> <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
 <p>init initializes cuBLAS and cuDNN handles for this device.</p>
@@ -724,7 +724,7 @@ sudo apt<span class="token operator">-</span>get install cuda<span class="token 
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 26 Jul 2026 07:55:45</div>
+						<div class="footer">Powered by vdoc. Generated on: 8 Oct 2026 14:41:58</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_cuda">README</a></li>
 <li class="open"><a href="#Constants">Constants</a></li>

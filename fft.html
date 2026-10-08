@@ -66,10 +66,7 @@
 <div class="menu-row"><a href="./main.html">main</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>benchmarks</a></div>
-<ul>
-<li><a href="./benchmarks.util.html">util</a></li>
-</ul>
+<div class="menu-row"><a href="./util.html">util</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./blas.html">blas</a></div>
@@ -111,11 +108,10 @@
 <div class="menu-row"><a href="./fit.html">fit</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>float</a></div>
-<ul>
-<li><a href="./float.float32.html">float32</a></li>
-<li><a href="./float.float64.html">float64</a></li>
-</ul>
+<div class="menu-row"><a href="./float32.html">float32</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./float64.html">float64</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./fun.html">fun</a></div>
@@ -130,21 +126,13 @@
 <div class="menu-row"><a href="./graph.html">graph</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>inout</a></div>
-<ul>
-<li><a href="./inout.csv.html">csv</a></li>
-</ul>
+<div class="menu-row"><a href="./csv.html">csv</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./h5.html">h5</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a>internal</a></div>
-<ul>
-<li><a href="./internal.prec.html">prec</a></li>
-<li><a href="./internal.dl.html">dl</a></li>
-<li><a href="./internal.dl.html">dl</a></li>
-</ul>
+<div class="menu-row"><a href="./prec.html">prec</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./iter.html">iter</a></div>
@@ -162,10 +150,10 @@
 <div class="menu-row"><a href="./metrics.html">metrics</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><svg xmlns="http://www.w3.org/2000/svg" class="dropdown-arrow" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 10l5 5 5-5z"/></svg><a href="./ml.html">ml</a></div>
-<ul>
-<li><a href="./ml.nlp.html">nlp</a></li>
-</ul>
+<div class="menu-row"><a href="./ml.html">ml</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./nlp.html">nlp</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./model_selection.html">model_selection</a></div>
@@ -195,10 +183,10 @@
 <div class="menu-row"><a href="./roots.html">roots</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><a href="./util.html">util</a></div>
+<div class="menu-row"><a href="./vcl.html">vcl</a></div>
 </li>
 <li class="open">
-<div class="menu-row"><a href="./vcl.html">vcl</a></div>
+<div class="menu-row"><a href="./dl.html">dl</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./vulkan.html">vulkan</a></div>
@@ -218,29 +206,108 @@
 <p>The output is the two real values bracketing the complex pairs of conjugate negative frequencies: <em>r0 r1 i1 r2 i2 r3 i3 ... rx</em></p>
 <p>where <em>r0 + i0</em> is the first complex result, <em>r1 - i1</em> is the second, and so on until <em>rx + i0</em> (where <em>x</em> is <em>n/2</em>) is the last. (Note the minus signs.)</p>
 <p>The positive frequencies are the same as the negative frequencies in reverse order. See the reference for <a href="https://www.fftw.org/fftw3.pdf">FFTW</a> for further examples of embeddings.</p>
+<h2 id="interleaved-complex-transforms">Interleaved complex transforms</h2>
+<p>The complex FFT API supports both <code>f32</code> and <code>f64</code> interleaved buffers in the form <code>[real0, imag0, real1, imag1, ...]</code>. Create a plan with <code>create_complex_plan_f32(length)</code> or <code>create_complex_plan_f64(length)</code>, then call the matching <code>forward_complex_f32</code>/<code>backward_complex_f32</code> or <code>forward_complex_f64</code>/<code>backward_complex_f64</code> functions. They transform in place, return <code>0</code> on success, and return <code>-1</code> when the plan or buffer length does not match. The inverse is unnormalized; divide each component by the original transform length for the normalized result. Destroy each plan exactly once with <code>destroy_plan</code>.</p>
+<p>The helpers require exactly twice the plan length in values of the matching precision and validate that size before calling the native backend.</p>
+<pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>fft
+
+<span class="token keyword">mut</span> samples <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span> <span class="token comment">// two complex values</span>
+plan <span class="token operator">:=</span> fft<span class="token punctuation">.</span><span class="token function">create_complex_plan_f64</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">!</span>
+<span class="token keyword">defer</span> <span class="token punctuation">{</span>
+    fft<span class="token punctuation">.</span><span class="token function">destroy_plan</span><span class="token punctuation">(</span>plan<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+fft<span class="token punctuation">.</span><span class="token function">forward_complex_f64</span><span class="token punctuation">(</span>plan<span class="token punctuation">,</span> <span class="token keyword">mut</span> samples<span class="token punctuation">)</span>
+<span class="token comment">// Divide inverse results by 2 to normalize them.</span>
+fft<span class="token punctuation">.</span><span class="token function">backward_complex_f64</span><span class="token punctuation">(</span>plan<span class="token punctuation">,</span> <span class="token keyword">mut</span> samples<span class="token punctuation">)</span></code></pre>
+<p>The single-precision API has the same plan and buffer contract:</p>
+<pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>fft
+
+<span class="token keyword">mut</span> samples <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token builtin">f32</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span>
+plan <span class="token operator">:=</span> fft<span class="token punctuation">.</span><span class="token function">create_complex_plan_f32</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">!</span>
+<span class="token keyword">defer</span> <span class="token punctuation">{</span>
+    fft<span class="token punctuation">.</span><span class="token function">destroy_plan</span><span class="token punctuation">(</span>plan<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+fft<span class="token punctuation">.</span><span class="token function">forward_complex_f32</span><span class="token punctuation">(</span>plan<span class="token punctuation">,</span> <span class="token keyword">mut</span> samples<span class="token punctuation">)</span>
+fft<span class="token punctuation">.</span><span class="token function">backward_complex_f32</span><span class="token punctuation">(</span>plan<span class="token punctuation">,</span> <span class="token keyword">mut</span> samples<span class="token punctuation">)</span></code></pre>
+
+</section>
+
+		<section id="backward_complex_f32" class="doc-node">
+			<div class="title"><h2>fn backward_complex_f32 <a href="#backward_complex_f32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/fft/fft.c.v#L206"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">backward_complex_f32</span><span class="token punctuation">(</span>plan Fftplan<span class="token punctuation">,</span> <span class="token keyword">mut</span> data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>backward_complex_f32 applies the unnormalized inverse transform to interleaved complex f32 values in place. Divide every result by the transform length to obtain the normalized inverse.</p>
+
+</section>
+
+		<section id="backward_complex_f64" class="doc-node">
+			<div class="title"><h2>fn backward_complex_f64 <a href="#backward_complex_f64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/fft/fft.c.v#L246"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">backward_complex_f64</span><span class="token punctuation">(</span>plan Fftplan<span class="token punctuation">,</span> <span class="token keyword">mut</span> data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>backward_complex_f64 applies the unnormalized inverse transform to interleaved complex f64 values in place. The data slice must contain exactly <code>2 * plan_length</code> values. Divide every result by the transform length to obtain the normalized inverse.</p>
 
 </section>
 
 		<section id="backward_fft" class="doc-node">
-			<div class="title"><h2>fn backward_fft <a href="#backward_fft">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fft/fft.c.v#L164"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn backward_fft <a href="#backward_fft">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/fft/fft.c.v#L304"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> backward_fft<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">(</span>r Fftplan<span class="token punctuation">,</span> <span class="token keyword">mut</span> v <span class="token builtin">T</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<code><span class="token keyword">fn</span> backward_fft<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span>r Fftplan<span class="token punctuation">,</span> <span class="token keyword">mut</span> v T<span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>backward_fft computes the backwards Fourier transform defined by the plan r.</p>
 
 </section>
 
-		<section id="create_plan" class="doc-node">
-			<div class="title"><h2>fn create_plan <a href="#create_plan">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fft/fft.c.v#L108"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+		<section id="create_complex_plan_f32" class="doc-node">
+			<div class="title"><h2>fn create_complex_plan_f32 <a href="#create_complex_plan_f32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/fft/fft.c.v#L173"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> create_plan<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">(</span>x <span class="token builtin">T</span><span class="token punctuation">)</span> <span class="token operator">?</span>Fftplan</code></pre>
+<code><span class="token keyword">fn</span> <span class="token function">create_complex_plan_f32</span><span class="token punctuation">(</span>length <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span>Fftplan</code></pre>
+<p>create_complex_plan_f32 creates a reusable single-precision plan for interleaved complex data stored as [real0, imag0, real1, imag1, ...].</p>
+
+</section>
+
+		<section id="create_complex_plan_f64" class="doc-node">
+			<div class="title"><h2>fn create_complex_plan_f64 <a href="#create_complex_plan_f64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/fft/fft.c.v#L160"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">create_complex_plan_f64</span><span class="token punctuation">(</span>length <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span>Fftplan</code></pre>
+<p>create_complex_plan_f64 creates a reusable double-precision plan for interleaved complex data stored as [real0, imag0, real1, imag1, ...].</p>
+
+</section>
+
+		<section id="create_plan" class="doc-node">
+			<div class="title"><h2>fn create_plan <a href="#create_plan">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/fft/fft.c.v#L120"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> create_plan<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span>x T<span class="token punctuation">)</span> <span class="token operator">?</span>Fftplan</code></pre>
 <p>create_plan returns a plan to compute a Fourier transform of the given array. A plan is reusable for any array of exactly this size and type. The array may be []f32, []f64, or []complx_f32 or []complex_f64.</p>
 
 </section>
 
-		<section id="forward_fft" class="doc-node">
-			<div class="title"><h2>fn forward_fft <a href="#forward_fft">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vsl/fft/fft.c.v#L146"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+		<section id="destroy_plan" class="doc-node">
+			<div class="title"><h2>fn destroy_plan <a href="#destroy_plan">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/fft/fft.c.v#L141"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> forward_fft<span class="token punctuation">[</span><span class="token builtin">T</span><span class="token punctuation">]</span><span class="token punctuation">(</span>p Fftplan<span class="token punctuation">,</span> <span class="token keyword">mut</span> v <span class="token builtin">T</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<code><span class="token keyword">fn</span> <span class="token function">destroy_plan</span><span class="token punctuation">(</span>plan Fftplan<span class="token punctuation">)</span></code></pre>
+<p>destroy_plan releases the native memory owned by a plan returned from create_plan. Each plan must be destroyed exactly once after its last use.</p>
+
+</section>
+
+		<section id="forward_complex_f32" class="doc-node">
+			<div class="title"><h2>fn forward_complex_f32 <a href="#forward_complex_f32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/fft/fft.c.v#L186"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">forward_complex_f32</span><span class="token punctuation">(</span>plan Fftplan<span class="token punctuation">,</span> <span class="token keyword">mut</span> data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>forward_complex_f32 transforms interleaved complex f32 values in place. The data slice must contain exactly <code>2 * plan_length</code> values.</p>
+
+</section>
+
+		<section id="forward_complex_f64" class="doc-node">
+			<div class="title"><h2>fn forward_complex_f64 <a href="#forward_complex_f64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/fft/fft.c.v#L225"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">forward_complex_f64</span><span class="token punctuation">(</span>plan Fftplan<span class="token punctuation">,</span> <span class="token keyword">mut</span> data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>forward_complex_f64 transforms interleaved complex f64 values in place. The data slice must contain exactly <code>2 * plan_length</code> values.</p>
+
+</section>
+
+		<section id="forward_fft" class="doc-node">
+			<div class="title"><h2>fn forward_fft <a href="#forward_fft">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/fft/fft.c.v#L286"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> forward_fft<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span>p Fftplan<span class="token punctuation">,</span> <span class="token keyword">mut</span> v T<span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>forward_fft computes a Fourier transform defined by the plan p. The input is []f32 or []f64. The output result (r) is returned in-place, and is complex and real numbers mixed as follows: r[0] (im[0] is assumed and is 0) r[1] im[1] ... r[n/2] im[n/2]   conjugate negative frequences r[n] is the magnitude at zero frequency (im[n] is assumed and is 0) Positive frequencies are excluded as these are symmetric to the negative frequencies for real inputs.  (Consult any signal processing text for details.)</p>
 <p>To generate a complete result, copy the results to a larger complex array using r[0] and i<em>0 r[1] and i</em>-r[2] r[3] and i*-r[4] ... r[n] and i<em>0     at the zero frequency r[n-2] and i</em>r[n-1]   the complex conjugate negative frequencies r[n-4] and i<em>r[n-3]   in reverse order ... r[1] and i</em>r[2]</p>
 <p>Note: these codes allocate and free memory of the same size as the input.</p>
@@ -248,13 +315,34 @@
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 26 Jul 2026 07:55:45</div>
+						<div class="footer">Powered by vdoc. Generated on: 8 Oct 2026 14:41:58</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_fft">README</a></li>
+<li class="open"><a href="#backward_complex_f32">fn backward_complex_f32</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#backward_complex_f64">fn backward_complex_f64</a>        <ul>
+</ul>
+</li>
 <li class="open"><a href="#backward_fft">fn backward_fft</a>        <ul>
 </ul>
 </li>
+<li class="open"><a href="#create_complex_plan_f32">fn create_complex_plan_f32</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#create_complex_plan_f64">fn create_complex_plan_f64</a>        <ul>
+</ul>
+</li>
 <li class="open"><a href="#create_plan">fn create_plan</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#destroy_plan">fn destroy_plan</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#forward_complex_f32">fn forward_complex_f32</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#forward_complex_f64">fn forward_complex_f64</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#forward_fft">fn forward_fft</a>        <ul>
