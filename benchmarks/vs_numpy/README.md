@@ -131,6 +131,32 @@ signature verified and extracted temporarily rather than installed
 system-wide. Rerun these commands on the target host before drawing a general
 performance conclusion.
 
+### Updated local sample (2026-10-09)
+
+A fresh run on the same Ryzen 9 5900X host used V 0.5.2, the production build
+with `-O3 -march=native`, two warmups, and five timed calls. NumPy 2.5.3 used
+two OpenBLAS threads and the same deterministic input values:
+
+| Backend | 512×512 | 1024×1024 |
+|---|---:|---:|
+| VSL pure V, production + native CPU flags | 7.82 ms (34.34 GFLOPS) | 61.12 ms (35.14 GFLOPS) |
+| NumPy, 2 OpenBLAS threads | 2.74 ms (97.92 GFLOPS) | 18.96 ms (113.24 GFLOPS) |
+
+In this run, pure V was 2.85× slower at 512×512 and 3.22× slower at
+1024×1024. The V measurements ran with `VJOBS=2` under a 1536 MiB
+`MemoryMax`; NumPy ran with `VJOBS=2`, `OPENBLAS_NUM_THREADS=2`, and a 768 MiB
+`MemoryMax`. The system did not have OpenBLAS installed, so this run measures
+VSL's pure-V path and NumPy's wheel-provided OpenBLAS only; it says nothing
+about VSL's optional OpenBLAS backend. Results are host-specific. Reproduce
+the V run from `~/.vmodules` with:
+
+```bash
+systemd-run --user --scope --quiet -p MemoryMax=1536M -p MemorySwapMax=0 -- env VJOBS=2 \
+	v -prod -cflags "-O3 -march=native" run ./vsl/benchmarks/vs_numpy/matmul_bench.v
+systemd-run --user --scope --quiet -p MemoryMax=768M -p MemorySwapMax=0 -- env VJOBS=2 OPENBLAS_NUM_THREADS=2 \
+	uv run --with numpy python ./vsl/benchmarks/vs_numpy/numpy_baseline.py matmul
+```
+
 ## Output and reporting
 
 Use the same host, flags, and matrix sizes for both VSL and NumPy. A useful
