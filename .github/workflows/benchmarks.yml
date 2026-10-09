@@ -64,7 +64,7 @@ jobs:
           check-latest: true
 
       - name: V doctor
-        run: sudo systemd-run --scope --wait --property=MemoryMax=512M --setenv=HOME=$HOME --setenv=PATH=$PATH -- env HOME=$HOME VJOBS=2 v doctor
+        run: sudo systemd-run --scope --property=MemoryMax=512M --setenv=HOME=$HOME --setenv=PATH=$PATH -- env HOME=$HOME VJOBS=2 v doctor
 
       - name: Install dependencies
         run: |
@@ -97,7 +97,7 @@ jobs:
           echo "OS: ${{ matrix.os }}"
           echo "=========================================="
           cd ~/.vmodules && \
-          sudo systemd-run --scope --wait --property=MemoryMax=2G --setenv=HOME=$HOME --setenv=PATH=$PATH -- env HOME=$HOME VJOBS=2 v ${{ matrix.backend.flags }} run vsl/benchmarks/blas_bench.v 2>&1 | tee blas_bench_${{ matrix.backend.id }}.log
+          sudo systemd-run --scope --property=MemoryMax=2G --setenv=HOME=$HOME --setenv=PATH=$PATH -- env HOME=$HOME VJOBS=2 v ${{ matrix.backend.flags }} run vsl/benchmarks/blas_bench.v 2>&1 | tee blas_bench_${{ matrix.backend.id }}.log
 
       - name: Run LAPACK Benchmarks (${{ matrix.backend.name }})
         run: |
@@ -109,7 +109,7 @@ jobs:
           echo "OS: ${{ matrix.os }}"
           echo "=========================================="
           cd ~/.vmodules && \
-          sudo systemd-run --scope --wait --property=MemoryMax=2G --setenv=HOME=$HOME --setenv=PATH=$PATH -- env HOME=$HOME VJOBS=2 v ${{ matrix.backend.flags }} run vsl/benchmarks/lapack_bench.v 2>&1 | tee lapack_bench_${{ matrix.backend.id }}.log
+          sudo systemd-run --scope --property=MemoryMax=2G --setenv=HOME=$HOME --setenv=PATH=$PATH -- env HOME=$HOME VJOBS=2 v ${{ matrix.backend.flags }} run vsl/benchmarks/lapack_bench.v 2>&1 | tee lapack_bench_${{ matrix.backend.id }}.log
 
       - name: Run Backend Comparison (${{ matrix.backend.name }})
         run: |
@@ -121,7 +121,7 @@ jobs:
           echo "OS: ${{ matrix.os }}"
           echo "=========================================="
           cd ~/.vmodules && \
-          sudo systemd-run --scope --wait --property=MemoryMax=2G --setenv=HOME=$HOME --setenv=PATH=$PATH -- env HOME=$HOME VJOBS=2 v ${{ matrix.backend.flags }} run vsl/benchmarks/compare_backends.v 2>&1 | tee compare_backends_${{ matrix.backend.id }}.log
+          sudo systemd-run --scope --property=MemoryMax=2G --setenv=HOME=$HOME --setenv=PATH=$PATH -- env HOME=$HOME VJOBS=2 v ${{ matrix.backend.flags }} run vsl/benchmarks/compare_backends.v 2>&1 | tee compare_backends_${{ matrix.backend.id }}.log
 
       - name: Upload benchmark results
         if: always()
@@ -255,11 +255,11 @@ jobs:
         run: |
           cd ~/.vmodules
           set -o pipefail
-          sudo systemd-run --scope --wait --property=MemoryMax=2G --setenv=HOME=$HOME --setenv=PATH=$PATH -- env HOME=$HOME VJOBS=2 v -d vsl_blas_cblas run vsl/benchmarks/vs_numpy/matmul_bench.v | tee vs_numpy_matmul.log
-          sudo systemd-run --scope --wait --property=MemoryMax=2G --setenv=HOME=$HOME --setenv=PATH=$PATH -- env HOME=$HOME VJOBS=2 v -d vsl_blas_cblas run vsl/benchmarks/vs_numpy/gemv_bench.v | tee vs_numpy_gemv.log
-          sudo systemd-run --scope --wait --property=MemoryMax=2G --setenv=HOME=$HOME --setenv=PATH=$PATH -- env HOME=$HOME VJOBS=2 v run vsl/benchmarks/vs_numpy/conv2d_bench.v | tee vs_numpy_conv2d.log
-          sudo systemd-run --scope --wait --property=MemoryMax=1G --setenv=HOME=$HOME --setenv=PATH=$PATH -- env HOME=$HOME VJOBS=2 python3 vsl/benchmarks/vs_numpy/numpy_baseline.py matmul | tee -a vs_numpy_matmul.log
-          sudo systemd-run --scope --wait --property=MemoryMax=1G --setenv=HOME=$HOME --setenv=PATH=$PATH -- env HOME=$HOME VJOBS=2 python3 vsl/benchmarks/vs_numpy/numpy_baseline.py gemv | tee -a vs_numpy_gemv.log
+          sudo systemd-run --scope --property=MemoryMax=2G --setenv=HOME=$HOME --setenv=PATH=$PATH -- env HOME=$HOME VJOBS=2 v -d vsl_blas_cblas run vsl/benchmarks/vs_numpy/matmul_bench.v | tee vs_numpy_matmul.log
+          sudo systemd-run --scope --property=MemoryMax=2G --setenv=HOME=$HOME --setenv=PATH=$PATH -- env HOME=$HOME VJOBS=2 v -d vsl_blas_cblas run vsl/benchmarks/vs_numpy/gemv_bench.v | tee vs_numpy_gemv.log
+          sudo systemd-run --scope --property=MemoryMax=2G --setenv=HOME=$HOME --setenv=PATH=$PATH -- env HOME=$HOME VJOBS=2 v run vsl/benchmarks/vs_numpy/conv2d_bench.v | tee vs_numpy_conv2d.log
+          sudo systemd-run --scope --property=MemoryMax=1G --setenv=HOME=$HOME --setenv=PATH=$PATH -- env HOME=$HOME VJOBS=2 python3 vsl/benchmarks/vs_numpy/numpy_baseline.py matmul | tee -a vs_numpy_matmul.log
+          sudo systemd-run --scope --property=MemoryMax=1G --setenv=HOME=$HOME --setenv=PATH=$PATH -- env HOME=$HOME VJOBS=2 python3 vsl/benchmarks/vs_numpy/numpy_baseline.py gemv | tee -a vs_numpy_gemv.log
 
       - name: Upload vs_numpy logs
         if: always()
@@ -306,15 +306,15 @@ jobs:
         run: |
           cd ~/.vmodules
           set -o pipefail
-          sudo systemd-run --scope --wait --property=MemoryMax=1G --setenv=HOME=$HOME --setenv=PATH=$PATH -- env HOME=$HOME VJOBS=2 v run vsl/benchmarks/fft_bench.v | tee fft_bench.log
-          sudo systemd-run --scope --wait --property=MemoryMax=1G --setenv=HOME=$HOME --setenv=PATH=$PATH -- env HOME=$HOME VJOBS=2 python3 vsl/benchmarks/fft_numpy_baseline.py | tee -a fft_bench.log
+          sudo systemd-run --scope --property=MemoryMax=1G --setenv=HOME=$HOME --setenv=PATH=$PATH -- env HOME=$HOME VJOBS=2 v run vsl/benchmarks/fft_bench.v | tee fft_bench.log
+          sudo systemd-run --scope --property=MemoryMax=1G --setenv=HOME=$HOME --setenv=PATH=$PATH -- env HOME=$HOME VJOBS=2 python3 vsl/benchmarks/fft_numpy_baseline.py | tee -a fft_bench.log
 
       - name: Run MPI latency benchmark
         if: matrix.benchmark == 'mpi'
         run: |
           cd ~/.vmodules
-          sudo systemd-run --scope --wait --property=MemoryMax=1G --setenv=HOME=$HOME --setenv=PATH=$PATH -- env HOME=$HOME VJOBS=2 v -d vsl_mpi -cc gcc -o /tmp/vsl-mpi-bench vsl/benchmarks/mpi_bench.v
-          sudo systemd-run --scope --wait --property=MemoryMax=1G --setenv=HOME=$HOME --setenv=PATH=$PATH -- env HOME=$HOME VJOBS=2 mpirun --oversubscribe -n 2 /tmp/vsl-mpi-bench | tee mpi_bench.log
+          sudo systemd-run --scope --property=MemoryMax=1G --setenv=HOME=$HOME --setenv=PATH=$PATH -- env HOME=$HOME VJOBS=2 v -d vsl_mpi -cc gcc -o /tmp/vsl-mpi-bench vsl/benchmarks/mpi_bench.v
+          sudo systemd-run --scope --property=MemoryMax=1G --setenv=HOME=$HOME --setenv=PATH=$PATH -- env HOME=$HOME VJOBS=2 mpirun --oversubscribe -n 2 /tmp/vsl-mpi-bench | tee mpi_bench.log
 
       - name: Upload FFT benchmark results
         if: always() && matrix.benchmark == 'fft'

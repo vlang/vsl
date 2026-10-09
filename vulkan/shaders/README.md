@@ -50,7 +50,7 @@ evidence before changing. Build the tracked shared module so imports use the
 updated kernels:
 
 ```sh
-systemd-run --user --scope --wait \
+systemd-run --user --scope \
 	-p WorkingDirectory="$HOME/.vmodules" \
 	-p MemoryMax=768M -p MemorySwapMax=0 --setenv=VJOBS=2 -- \
 	v -shared -o ./vsl/vulkan/vulkan.so ./vsl/vulkan
