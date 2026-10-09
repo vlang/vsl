@@ -1,6 +1,7 @@
 # Wind rose with a polar bar chart
 
-Create a polar bar chart where direction sets each bar angle and wind speed sets its radial length. Colors encode speed ranges.
+Create a polar bar chart where direction sets each bar angle and wind speed sets its radial
+length. Colors encode speed ranges.
 
 ## Run
 
