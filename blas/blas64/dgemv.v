@@ -26,7 +26,7 @@ pub fn dgemv(trans_a Transpose, m int, n int, alpha f64, a []f64, lda int, x []f
 	// Set up indexes
 	mut len_x := m
 	mut len_y := n
-	if trans_a == .no_trans {
+	if trans_a == .no_trans || trans_a == .conj_no_trans {
 		len_x = n
 		len_y = m
 	}
@@ -62,7 +62,7 @@ pub fn dgemv(trans_a Transpose, m int, n int, alpha f64, a []f64, lda int, x []f
 	}
 
 	// Form y = alpha * A * x + y
-	if trans_a == .no_trans {
+	if trans_a == .no_trans || trans_a == .conj_no_trans {
 		float64.gemv_n(u32(m), u32(n), alpha, a, u32(lda), x, incx, beta, mut y, incy)
 		return
 	}

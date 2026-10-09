@@ -1,5 +1,8 @@
 name: VSL Continuous Integration
 
+env:
+  VJOBS: '2'
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   # Main pushes are serialized to the newest revision, so rapid merges do not
@@ -69,9 +72,7 @@ jobs:
       - name: V doctor
         run: |
           cd ~/.vmodules
-          sudo systemd-run --scope --property=MemoryMax=4G \
-            --property=MemorySwapMax=0 --setenv=HOME="$HOME" \
-            --setenv=PATH="$PATH" --setenv=VJOBS=2 -- v doctor
+          env HOME="$HOME" PATH="$PATH" VJOBS=2 v doctor
 
       - name: Install dependencies
         run: |
@@ -104,9 +105,7 @@ jobs:
           VJOBS: '2'
         run: |
           cd ~/.vmodules
-          sudo systemd-run --scope --property=MemoryMax=4G \
-            --property=MemorySwapMax=0 --setenv=HOME="$HOME" \
-            --setenv=PATH="$PATH" --setenv=VJOBS=2 -- \
+          env HOME="$HOME" PATH="$PATH" VJOBS=2 \
             v -d vcl test vsl/vcl/compute
 
       - name: Test opt-in MPI API
@@ -115,35 +114,23 @@ jobs:
         env:
           VJOBS: 2
         run: |
-          sudo systemd-run --scope --property=MemoryMax=4G \
-            --property=MemorySwapMax=0 --setenv=HOME="$HOME" \
-            --setenv=PATH="$PATH" --setenv=VJOBS=2 -- \
+          env HOME="$HOME" PATH="$PATH" VJOBS=2 \
             v -d vsl_mpi -cc gcc test ./vsl/mpi
-          sudo systemd-run --scope --property=MemoryMax=4G \
-            --property=MemorySwapMax=0 --setenv=HOME="$HOME" \
-            --setenv=PATH="$PATH" --setenv=VJOBS=2 -- \
+          env HOME="$HOME" PATH="$PATH" VJOBS=2 \
             mpirun --oversubscribe -n 2 v -d vsl_mpi -cc gcc run ./vsl/mpi/examples/roundtrip/main.v
 
       - name: Execute Tests using Pure V Backend
         run: |
           cd ~/.vmodules
-          sudo systemd-run --scope --property=MemoryMax=4G \
-            --property=MemorySwapMax=0 --setenv=HOME="$HOME" \
-            --setenv=PATH="$PATH" --setenv=VJOBS=2 -- v wipe-cache
-          sudo systemd-run --scope --property=MemoryMax=4G \
-            --property=MemorySwapMax=0 --setenv=HOME="$HOME" \
-            --setenv=PATH="$PATH" --setenv=VJOBS=2 --setenv=TERM="$TERM" -- \
+          env HOME="$HOME" PATH="$PATH" VJOBS=2 v wipe-cache
+          env HOME="$HOME" PATH="$PATH" VJOBS=2 TERM="$TERM" \
             "$HOME/.vmodules/vsl/bin/test" ${{ matrix.flags }} --use-cblas
 
       - name: Execute Tests using Pure V Backend with Pure C Backend
         run: |
           cd ~/.vmodules
-          sudo systemd-run --scope --property=MemoryMax=4G \
-            --property=MemorySwapMax=0 --setenv=HOME="$HOME" \
-            --setenv=PATH="$PATH" --setenv=VJOBS=2 -- v wipe-cache
-          sudo systemd-run --scope --property=MemoryMax=4G \
-            --property=MemorySwapMax=0 --setenv=HOME="$HOME" \
-            --setenv=PATH="$PATH" --setenv=VJOBS=2 --setenv=TERM="$TERM" -- \
+          env HOME="$HOME" PATH="$PATH" VJOBS=2 v wipe-cache
+          env HOME="$HOME" PATH="$PATH" VJOBS=2 TERM="$TERM" \
             "$HOME/.vmodules/vsl/bin/test" ${{ matrix.flags }} --use-cblas --use-lapacke
 
       - name: Execute Tests using Vulkan Compute Backend
@@ -151,14 +138,8 @@ jobs:
           VSL_TEST_VULKAN: '1'
         run: |
           cd ~/.vmodules
-          sudo systemd-run --scope --property=MemoryMax=4G \
-            --property=MemorySwapMax=0 --setenv=HOME="$HOME" \
-            --setenv=PATH="$PATH" --setenv=VJOBS=2 --setenv=TERM="$TERM" \
-            --setenv=VSL_TEST_VULKAN=1 -- v wipe-cache
-          sudo systemd-run --scope --property=MemoryMax=4G \
-            --property=MemorySwapMax=0 --setenv=HOME="$HOME" \
-            --setenv=PATH="$PATH" --setenv=VJOBS=2 --setenv=TERM="$TERM" \
-            --setenv=VSL_TEST_VULKAN=1 -- \
+          env HOME="$HOME" PATH="$PATH" VJOBS=2 TERM="$TERM" VSL_TEST_VULKAN=1 v wipe-cache
+          env HOME="$HOME" PATH="$PATH" VJOBS=2 TERM="$TERM" VSL_TEST_VULKAN=1 \
             "$HOME/.vmodules/vsl/bin/test" ${{ matrix.flags }} --use-vulkan
 
   run-windows-smoke:
@@ -296,9 +277,7 @@ jobs:
       - name: V doctor
         run: |
           cd ~/.vmodules
-          sudo systemd-run --scope --property=MemoryMax=4G \
-            --property=MemorySwapMax=0 --setenv=HOME="$HOME" \
-            --setenv=PATH="$PATH" --setenv=VJOBS=2 -- v doctor
+          env HOME="$HOME" PATH="$PATH" VJOBS=2 v doctor
 
       - name: Install CUDA toolkit
         run: |
@@ -315,17 +294,11 @@ jobs:
       - name: Execute Tests using CUDA Backend
         run: |
           cd ~/.vmodules
-          sudo systemd-run --scope --property=MemoryMax=4G \
-            --property=MemorySwapMax=0 --setenv=HOME="$HOME" \
-            --setenv=PATH="$PATH" --setenv=VJOBS=2 -- v wipe-cache
-          sudo systemd-run --scope --property=MemoryMax=4G \
-            --property=MemorySwapMax=0 --setenv=HOME="$HOME" \
-            --setenv=PATH="$PATH" --setenv=VJOBS=2 --setenv=TERM="$TERM" -- \
+          env HOME="$HOME" PATH="$PATH" VJOBS=2 v wipe-cache
+          env HOME="$HOME" PATH="$PATH" VJOBS=2 TERM="$TERM" \
             "$HOME/.vmodules/vsl/bin/test" --use-cuda
           # Optional: GPU layernorm when cuDNN 9.1+ symbols are present
-          sudo systemd-run --scope --property=MemoryMax=4G \
-            --property=MemorySwapMax=0 --setenv=HOME="$HOME" \
-            --setenv=PATH="$PATH" --setenv=VJOBS=2 -- \
+          env HOME="$HOME" PATH="$PATH" VJOBS=2 \
             env VSL_TEST_CUDA=1 v -d cuda -d cudnn_layernorm test vsl/cuda/compute/numerical_validation_test.v || true
 
   run-tests-on-macos:

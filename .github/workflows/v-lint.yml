@@ -1,5 +1,8 @@
 name: V Lint
 
+env:
+  VJOBS: '2'
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
@@ -101,9 +104,7 @@ jobs:
             markdown_files[$i]="./vsl/${markdown_files[$i]}"
           done
           cd ~/.vmodules
-          sudo systemd-run --scope --property=MemoryMax=4G \
-            --property=MemorySwapMax=0 --setenv=HOME="$HOME" \
-            --setenv=PATH="$PATH" --setenv=VJOBS=2 -- \
+          env HOME="$HOME" PATH="$PATH" VJOBS=2 \
             v check-md -hide-warnings "${markdown_files[@]}"
       - name: Skip Docs
         if: steps.markdown.outputs.files == ''
@@ -133,7 +134,5 @@ jobs:
             v_files[$i]="./vsl/${v_files[$i]}"
           done
           cd ~/.vmodules
-          sudo systemd-run --scope --property=MemoryMax=4G \
-            --property=MemorySwapMax=0 --setenv=HOME="$HOME" \
-            --setenv=PATH="$PATH" --setenv=VJOBS=2 -- \
+          env HOME="$HOME" PATH="$PATH" VJOBS=2 \
             v fmt -verify "${v_files[@]}"

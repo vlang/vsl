@@ -2,11 +2,11 @@
 
 This package implements Basic Linear Algebra System (BLAS) routines in V.
 
-| Backend  | Description                                                                                                                                                        | Status | Compilation Flags   |
-| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------ | ------------------- |
-| BLAS     | Pure V implementation - **portable, zero-dependency fallback**                                                                                                     | Stable | `NONE`              |
-| OpenBLAS | OpenBLAS is an optimized BLAS library based on <https://github.com/xianyi/OpenBLAS>. Check the section [OpenBLAS Backend](#openblas-backend) for more information. | Stable | `-d vsl_blas_cblas` |
-| System CBLAS GEMM | Uses the host's CBLAS implementation for dense f32/f64 matrix multiplication; other BLAS calls use pure V | Linux | `-d vsl_blas_generic_cblas` |
+| Backend | Description | Status | Compilation flag |
+| --- | --- | --- | --- |
+| BLAS | Pure V implementation; portable and dependency-free. | Stable | None |
+| OpenBLAS | Optimized BLAS library. See [OpenBLAS backend](#openblas-backend). | Stable | `-d vsl_blas_cblas` |
+| System CBLAS | Host CBLAS for dense f32/f64 GEMM and GEMV; other BLAS calls use pure V. | Linux | `-d vsl_blas_generic_cblas` |
 
 ## Pure V implementation
 
@@ -22,10 +22,16 @@ distributes larger row blocks among workers; small products stay serial to
 avoid worker startup overhead. Other f32 transpose layouts use the portable
 scalar path.
 
-Run the scoped benchmarks to measure the backend on your machine:
+Run the benchmark from `~/.vmodules`. Compile it first, then execute the
+binary in a separate memory-limited scope. `-march=native` is for measurements
+on this machine and creates a non-portable binary.
 
 ```sh
-v run ./vsl/benchmarks/blas_bench.v
+systemd-run --user --scope -p MemoryMax=4G -p MemorySwapMax=0 -- env VJOBS=2 \
+	v -no-parallel -cc gcc -prod -cflags "-march=native" -o /tmp/vsl-blas-bench \
+	./vsl/benchmarks/blas_bench.v
+systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 \
+	/tmp/vsl-blas-bench
 ```
 
 ### Available Functions
@@ -41,6 +47,7 @@ v run ./vsl/benchmarks/blas_bench.v
 - `idamax` - Index of maximum absolute value
 
 **Level 2 BLAS**:
+- `sgemv` - Single-precision general matrix-vector multiply
 - `dgemv` - General matrix-vector multiply
 - `dger` - Rank-1 update
 - `dsymv` - Symmetric matrix-vector multiply
@@ -56,6 +63,11 @@ v run ./vsl/benchmarks/blas_bench.v
 - `dsyr2k` - Symmetric rank-2k update
 - `dtrmm` - Triangular matrix-matrix multiply
 - `dtrsm` - Triangular solve with multiple RHS
+
+The `sgemv` and `dgemv` routines accept row-major matrices and support
+`.no_trans`, `.trans`, `.conj_trans`, and `.conj_no_trans`. The generic system
+CBLAS build uses CBLAS GEMM and GEMV for positive vector increments; unsupported
+cases use the pure V implementation.
 
 Therefore, its routines are a little more _lower level_ than the ones in the package `vsl.la`.
 
