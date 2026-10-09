@@ -67,7 +67,6 @@ v -d vsl_lapack_lapacke run main.v
 
 - [LAPACK Module Documentation](../../lapack/README.md)
 - [LAPACK Performance Benchmarks](../../benchmarks/README.md)
-- [Pure V BLAS/LAPACK Release Notes](../../RELEASE_NOTES_PURE_V.md)
 
 Enjoy exploring eigenvalue problems! 🔬
 

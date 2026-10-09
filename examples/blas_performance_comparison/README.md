@@ -65,7 +65,6 @@ Compare the results to see performance differences.
 
 - [BLAS Module Documentation](../../blas/README.md)
 - [Comprehensive Benchmarks](../../benchmarks/README.md)
-- [Pure V BLAS/LAPACK Release Notes](../../RELEASE_NOTES_PURE_V.md)
 
 Enjoy benchmarking! 📈
 
