@@ -55,6 +55,29 @@ fn test_l2_norm_unitary() {
 	}
 }
 
+fn test_l2_norm_unitary_simd_matches_f64_reference_and_keeps_extreme_fallback() {
+	mut values := []f32{len: 257}
+	mut reference_sum := 0.0
+	for i in 0 .. values.len {
+		values[i] = f32((i % 13) - 6) * 0.25
+		reference_sum += f64(values[i]) * f64(values[i])
+	}
+	assert tolerance(f32(math.sqrt(reference_sum)), l2_norm_unitary(values), f32(1e-6))
+
+	large_values := []f32{len: 64, init: f32(1e20)}
+	large_reference := math.sqrt(64 * f64(large_values[0]) * f64(large_values[0]))
+	assert tolerance(f32(large_reference), l2_norm_unitary(large_values), f32(1e-6))
+
+	tiny_values := []f32{len: 64, init: f32(1e-30)}
+	tiny_reference := math.sqrt(64 * f64(tiny_values[0]) * f64(tiny_values[0]))
+	assert tolerance(f32(tiny_reference), l2_norm_unitary(tiny_values), f32(1e-6))
+
+	mut non_finite := []f32{len: 64, init: 1}
+	non_finite[0] = f32(math.inf(1))
+	non_finite[63] = f32(math.nan())
+	assert math.is_nan(f64(l2_norm_unitary(non_finite)))
+}
+
 fn test_l2_norm_inc() {
 	tol := f32(1e-7)
 

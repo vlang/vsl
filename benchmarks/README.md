@@ -20,9 +20,12 @@ load.
 
 ```sh
 cd ~/.vmodules
-systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 -- env VJOBS=2 v run ./vsl/benchmarks/vs_numpy/matmul_bench.v
-systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 -- env VJOBS=2 v run ./vsl/benchmarks/vs_numpy/gemv_bench.v
-systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 -- env VJOBS=2 v run ./vsl/benchmarks/vs_numpy/conv2d_bench.v
+systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
+	-- env VJOBS=2 v run ./vsl/benchmarks/vs_numpy/matmul_bench.v
+systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
+	-- env VJOBS=2 v run ./vsl/benchmarks/vs_numpy/gemv_bench.v
+systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
+	-- env VJOBS=2 v run ./vsl/benchmarks/vs_numpy/conv2d_bench.v
 ```
 
 See [vs_numpy/README.md](vs_numpy/README.md). Tracked in [#282](https://github.com/vlang/vsl/issues/282).
@@ -36,8 +39,10 @@ Install NumPy in the Python environment before running the baseline.
 
 ```sh
 cd ~/.vmodules
-systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 -- env VJOBS=2 v run ./vsl/benchmarks/fft_bench.v
-systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 -- env VJOBS=2 python3 ./vsl/benchmarks/fft_numpy_baseline.py
+systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
+	-- env VJOBS=2 v run ./vsl/benchmarks/fft_bench.v
+systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
+	-- env VJOBS=2 python3 ./vsl/benchmarks/fft_numpy_baseline.py
 ```
 
 The two CSV tables report mean microseconds per call. Compare them on the same
@@ -64,6 +69,16 @@ systemd-run --user --scope --quiet --property=MemoryMax=2G --property=MemorySwap
 	-- env VJOBS=2 v -prod run ./vsl/benchmarks/float64_level1_bench.v
 ```
 
+The f32 L2 norm benchmark compares the SIMD fast path with its previous
+scaled scalar algorithm on the same large vector and reports error against an
+f64 accumulation:
+
+```sh
+cd ~/.vmodules
+systemd-run --user --scope --quiet --property=MemoryMax=2G --property=MemorySwapMax=0 \
+	-- env VJOBS=2 v -prod run ./vsl/benchmarks/float32_l2norm_bench.v
+```
+
 ### MPI communication latency
 
 The MPI benchmark measures two-rank send/receive round trips, broadcasts, and
@@ -74,7 +89,8 @@ cd ~/.vmodules
 systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
 	-- env VJOBS=2 v -d vsl_mpi -cc gcc -o /tmp/vsl-mpi-bench \
 	./vsl/benchmarks/mpi_bench.v
-systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 -- mpirun --oversubscribe -n 2 /tmp/vsl-mpi-bench
+systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
+	-- mpirun --oversubscribe -n 2 /tmp/vsl-mpi-bench
 ```
 
 ### GPU smoke benchmarks
@@ -111,9 +127,12 @@ CPU timings that include allocation or different thread counts.
 
 ```sh
 cd ~/.vmodules
-systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 -- env VJOBS=2 v run ./vsl/benchmarks/blas_bench.v
-systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 -- env VJOBS=2 v run ./vsl/benchmarks/lapack_bench.v
-systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 -- env VJOBS=2 v run ./vsl/benchmarks/compare_backends.v
+systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
+	-- env VJOBS=2 v run ./vsl/benchmarks/blas_bench.v
+systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
+	-- env VJOBS=2 v run ./vsl/benchmarks/lapack_bench.v
+systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
+	-- env VJOBS=2 v run ./vsl/benchmarks/compare_backends.v
 ```
 
 ### Run a C backend benchmark
