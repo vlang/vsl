@@ -146,7 +146,7 @@ if [[ -z "${skip_examples}" ]]; then
             continue
         fi
         # Skip vulkan examples on macOS — no libvulkan runtime available
-        if [[ "$(uname -s)" == "Darwin" && "${file}" == *"/vulkan/"* ]]; then
+        if [[ "$(uname -s)" == "Darwin" && ( "${file}" == *"/vulkan/"* || "${file}" == *"/examples/vulkan_"* ) ]]; then
             echo "Skipping ${file} (no Vulkan on macOS)"
             continue
         fi
