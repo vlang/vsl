@@ -55,7 +55,6 @@ v -d vsl_blas_cblas run main.v
 
 - [BLAS Module Documentation](../../blas/README.md)
 - [BLAS Performance Benchmarks](../../benchmarks/README.md)
-- [Pure V BLAS/LAPACK Release Notes](../../RELEASE_NOTES_PURE_V.md)
 
 Enjoy exploring the capabilities of VSL BLAS! 😊
 
