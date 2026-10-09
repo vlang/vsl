@@ -1,6 +1,7 @@
 module prime
 
 import math
+
 // is_prime returns if an int is prime (deterministically)
 
 // is_prime exposes this operation as part of the public API.

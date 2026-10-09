@@ -20,8 +20,7 @@ fn test_lasso_basic() {
 fn test_lasso_sparsity() {
 	// Create data where some features are irrelevant
 	// y = 2*x1 + 0*x2 + 0*x3
-	x_data := [[1.0, 0.5, 0.3], [2.0, 0.8, 0.1], [3.0, 0.2, 0.9],
-		[4.0, 0.6, 0.4], [5.0, 0.1, 0.7]]
+	x_data := [[1.0, 0.5, 0.3], [2.0, 0.8, 0.1], [3.0, 0.2, 0.9], [4.0, 0.6, 0.4], [5.0, 0.1, 0.7]]
 	y_data := [2.0, 4.0, 6.0, 8.0, 10.0]
 
 	mut data := Data.from_raw_xy_sep[f64](x_data, y_data)!
@@ -96,8 +95,7 @@ fn test_ridge_basic() {
 
 fn test_lasso_multivariate() {
 	// y = 1*x1 + 2*x2 + 3
-	x_data := [[1.0, 1.0], [2.0, 1.0], [1.0, 2.0], [2.0, 2.0],
-		[3.0, 1.0]]
+	x_data := [[1.0, 1.0], [2.0, 1.0], [1.0, 2.0], [2.0, 2.0], [3.0, 1.0]]
 	y_data := [6.0, 7.0, 8.0, 9.0, 8.0]
 
 	mut data := Data.from_raw_xy_sep[f64](x_data, y_data)!

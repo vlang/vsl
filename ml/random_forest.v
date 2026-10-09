@@ -15,7 +15,7 @@ pub struct RandomForest {
 mut:
 	name         string // name of this "observer"
 	data         &Data[f64] = unsafe { nil } // x-y data
-	max_features int        = -1             // features per split (-1 for sqrt(n_features))
+	max_features int        = -1           // features per split (-1 for sqrt(n_features))
 pub mut:
 	n_estimators  int  = 100  // number of trees
 	bootstrap     bool = true // bootstrap sampling

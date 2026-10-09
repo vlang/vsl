@@ -4,8 +4,7 @@ import vsl.plot
 
 fn main() {
 	// Define conversion funnel data for a website
-	stages := ['Website Visitors', 'Product Views', 'Add to Cart', 'Begin Checkout',
-		'Complete Purchase']
+	stages := ['Website Visitors', 'Product Views', 'Add to Cart', 'Begin Checkout', 'Complete Purchase']
 
 	counts := [10000.0, 5000, 1500, 800, 350]
 
@@ -28,8 +27,8 @@ fn main() {
 		marker:      plot.Marker{
 			color: ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FECA57']
 		}
-		text:        ['10,000 visitors', '5,000 views (50%)', '1,500 carts (30%)',
-			'800 checkouts (53%)', '350 purchases (44%)']
+		text:        ['10,000 visitors', '5,000 views (50%)', '1,500 carts (30%)', '800 checkouts (53%)',
+			'350 purchases (44%)']
 	)
 
 	// Configure the plot layout

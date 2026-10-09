@@ -89,7 +89,7 @@ fn main() {
 		lon:           longitudes
 		mode:          'markers'
 		marker:        plot.Marker{
-			size:       populations.map(it * 3) // Scale marker size by population
+			size:       populations.map(it * 3)   // Scale marker size by population
 			color:      populations.map(it.str()) // Color by population
 			colorscale: 'Viridis'
 			opacity:    0.8

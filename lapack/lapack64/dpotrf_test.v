@@ -1,6 +1,7 @@
 module lapack64
 
 import math
+
 // Note: lapack64 is pure V; no LAPACKE here.
 
 fn test_dpotrf_basic() {

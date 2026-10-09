@@ -127,8 +127,7 @@ pub fn dlarft(direct Direct, store StoreV, n int, k int, v []f64, ldv int, tau [
 					t[j * ldt + i] = -tau[i] * v[(n - k + i) * ldv + j]
 				}
 				j := math.max(lastv, prevlastv)
-				blas.dgemv(.trans, n - k + i - j, k - i - 1, -tau[i], v[j * ldv + i + 1..], ldv, v[
-					j * ldv + i..], ldv, 1.0, mut t[(i + 1) * ldt + i..], ldt)
+				blas.dgemv(.trans, n - k + i - j, k - i - 1, -tau[i], v[j * ldv + i + 1..], ldv, v[j * ldv + i..], ldv, 1.0, mut t[(i + 1) * ldt + i..], ldt)
 			} else {
 				for lastv = 0; lastv < i; lastv++ {
 					if v[i * ldv + lastv] != 0 {
@@ -142,8 +141,7 @@ pub fn dlarft(direct Direct, store StoreV, n int, k int, v []f64, ldv int, tau [
 				blas.dgemv(.no_trans, k - i - 1, n - k + i - j, -tau[i], v[(i + 1) * ldv + j..],
 					ldv, v[i * ldv + j..], 1, 1.0, mut t[(i + 1) * ldt + i..], ldt)
 			}
-			blas.dtrmv(.lower, .no_trans, .non_unit, k - i - 1, t[(i + 1) * ldt + i + 1..], ldt, mut t[
-				(i + 1) * ldt + i..], ldt)
+			blas.dtrmv(.lower, .no_trans, .non_unit, k - i - 1, t[(i + 1) * ldt + i + 1..], ldt, mut t[(i + 1) * ldt + i..], ldt)
 			if i > 0 {
 				prevlastv = math.min(prevlastv, lastv)
 			} else {

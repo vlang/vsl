@@ -322,8 +322,7 @@ pub fn dtrmv(ul Uplo, trans_a Transpose, d Diagonal, n int, a []f64, lda int, mu
 		for i := n - 1; i >= 0; i-- {
 			ilda := i * lda
 			xi := x[ix]
-			float64.axpy_inc(xi, a[ilda + i + 1..ilda + n], mut x, u32(n - i - 1), 1, u32(incx), 0, u32(
-				kx + (i + 1) * incx))
+			float64.axpy_inc(xi, a[ilda + i + 1..ilda + n], mut x, u32(n - i - 1), 1, u32(incx), 0, u32(kx + (i + 1) * incx))
 			if non_unit {
 				x[ix] *= a[ilda + i]
 			}

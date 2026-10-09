@@ -73,8 +73,8 @@ fn test_graph02() {
 	 *      1 ←–––– 0 ––––→ 2
 	 *          [6]    [8]
 	*/
-	g := Graph.new([[4, 5], [1, 4], [0, 1], [0, 2], [5, 2], [2, 3],
-		[5, 3]], [3.0, 11, 6, 8, 7, 9, 4], [], [])
+	g := Graph.new([[4, 5], [1, 4], [0, 1], [0, 2], [5, 2], [2, 3], [5, 3]], [3.0, 11, 6, 8, 7,
+		9, 4], [], [])
 	assert g.shares.keys().len == 6 // nverts
 	assert g.key2edge.keys().len == 7 // nedges
 	assert g.dist.len == 6 // nverts

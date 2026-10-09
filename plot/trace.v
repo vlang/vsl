@@ -67,7 +67,7 @@ pub mut:
 	fill       string     @[omitempty]
 	fillcolor  string     @[omitempty]
 	customdata [][]string @[omitempty]
-	colorscale string = 'Viridis'     @[omitempty]
+	colorscale string = 'Viridis'   @[omitempty]
 	textinfo   string     @[omitempty]
 	text       []string   @[omitempty]
 }
@@ -205,7 +205,7 @@ pub mut:
 	name       string   @[omitempty]
 	marker     Marker   @[omitempty]
 	line       Line     @[omitempty]
-	colorscale string = 'Viridis'   @[omitempty]
+	colorscale string = 'Viridis' @[omitempty]
 	fillcolor  string   @[omitempty] // Fill color for violin
 	opacity    f64      @[omitempty] // Opacity for violin
 
@@ -400,15 +400,15 @@ pub struct Marker {
 pub mut:
 	size       []f64    @[omitempty]
 	color      []string @[omitempty]
-	opacity    f64    = 0.8      @[omitempty]
-	colorscale string = 'Viridis'   @[omitempty]
+	opacity    f64    = 0.8     @[omitempty]
+	colorscale string = 'Viridis' @[omitempty]
 }
 
 // Line is a struct for line properties in a trace
 pub struct Line {
 pub mut:
 	color   string @[omitempty]
-	width   f64    = 2.0    @[omitempty]
+	width   f64    = 2.0   @[omitempty]
 	dash    string = 'solid' @[omitempty]
 	visible bool   @[omitempty]
 }
@@ -828,10 +828,10 @@ pub mut:
 // Projection is a struct for geo subplot projection configuration
 pub struct Projection {
 pub mut:
-	type_     string = 'equirectangular'   @[omitempty] // 'equirectangular', 'mercator', 'orthographic', etc.
-	rotation  Rotation @[omitempty]
-	parallels []f64    @[omitempty]
-	scale     f64      @[omitempty]
+	type_     string = 'equirectangular' @[omitempty] // 'equirectangular', 'mercator', 'orthographic', etc.
+	rotation  Rotation         @[omitempty]
+	parallels []f64            @[omitempty]
+	scale     f64              @[omitempty]
 }
 
 // Rotation is a struct for projection rotation (used in geo subplots)

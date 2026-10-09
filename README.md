@@ -91,7 +91,7 @@ Visit [VSL Documentation](https://vlang.github.io/vsl) to explore all supported 
 <details>
   <summary>VSL architecture</summary>
 
-  ![VSL modules, compute dispatch, and optional CPU and accelerator backends](docs/assets/vsl-architecture.png)
+  ![VSL modules and CPU and accelerator backends](docs/assets/vsl-architecture.png)
 
   [View SVG source](docs/assets/vsl-architecture.svg) · [PNG](docs/assets/vsl-architecture.png)
 </details>

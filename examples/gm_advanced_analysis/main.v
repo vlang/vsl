@@ -216,7 +216,8 @@ fn main() {
 
 	for point in field_points {
 		// Calculate vector from center to point
-		direction_vector := [point.x - center_point.x, point.y - center_point.y, point.z - center_point.z]
+		direction_vector := [point.x - center_point.x, point.y - center_point.y,
+			point.z - center_point.z]
 		magnitude := gm.vector_norm(direction_vector)
 
 		// Normalize the vector

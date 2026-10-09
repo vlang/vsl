@@ -1,6 +1,7 @@
 module vcl
 
 fn C.create_image_desc(image_type ClMemObjectType, image_width usize, image_height usize, image_depth usize, image_array_size usize, image_row_pitch usize, image_slice_pitch usize, num_mip_levels u32, num_samples u32, buffer ClMem) &ClImageDesc
+
 @[inline]
 fn create_image_desc(image_type ClMemObjectType, image_width usize, image_height usize, image_depth usize, image_array_size usize, image_row_pitch usize, image_slice_pitch usize, num_mip_levels u32, num_samples u32, buffer ClMem) &ClImageDesc {
 	return C.create_image_desc(image_type, image_width, image_height, image_depth,
@@ -8,6 +9,7 @@ fn create_image_desc(image_type ClMemObjectType, image_width usize, image_height
 }
 
 fn C.create_image_format(image_channel_order usize, image_channel_data_type usize) &ClImageFormat
+
 @[inline]
 fn create_image_format(image_channel_order usize, image_channel_data_type usize) &ClImageFormat {
 	return C.create_image_format(image_channel_order, image_channel_data_type)
