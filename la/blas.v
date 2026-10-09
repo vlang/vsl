@@ -49,6 +49,44 @@ pub fn vector_dot[T](u []T, v []T) T {
 	}
 }
 
+// vector_sum_accurate sums f64 values with Neumaier compensated accumulation.
+// Use it when numerical accuracy matters more than the throughput of vector_accum.
+pub fn vector_sum_accurate(u []f64) f64 {
+	mut sum := 0.0
+	mut correction := 0.0
+	for value in u {
+		next := sum + value
+		if math.abs(sum) >= math.abs(value) {
+			correction += (sum - next) + value
+		} else {
+			correction += (value - next) + sum
+		}
+		sum = next
+	}
+	return sum + correction
+}
+
+// vector_dot_accurate computes an f64 dot product with compensated accumulation.
+// The inputs must have the same length. This prioritizes accuracy over BLAS throughput.
+pub fn vector_dot_accurate(u []f64, v []f64) !f64 {
+	if u.len != v.len {
+		return error('vector_dot_accurate requires vectors with the same length')
+	}
+	mut sum := 0.0
+	mut correction := 0.0
+	for i, left in u {
+		value := left * v[i]
+		next := sum + value
+		if math.abs(sum) >= math.abs(value) {
+			correction += (sum - next) + value
+		} else {
+			correction += (value - next) + sum
+		}
+		sum = next
+	}
+	return sum + correction
+}
+
 // vector_add adds the scaled components of two vectors
 // res := alpha⋅u + beta⋅v   ⇒   result[i] := alpha⋅u[i] + beta⋅v[i]
 pub fn vector_add[T](alpha T, u []T, beta T, v []T) []T {
