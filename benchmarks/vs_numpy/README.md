@@ -155,6 +155,18 @@ VSL's pure-V and generic system CBLAS paths plus NumPy's wheel-provided
 OpenBLAS; it says nothing about VSL's optional OpenBLAS backend. Results are
 host-specific. Reproduce the V runs from `~/.vmodules` with:
 
+![Local GEMM benchmark results](gemm-comparison-2026-10-09.png)
+
+Vector version: [SVG](gemm-comparison-2026-10-09.svg). Regenerate both formats
+from `~/.vmodules` with:
+
+```bash
+systemd-run --user --scope --quiet -p MemoryMax=768M -p MemorySwapMax=0 -- env VJOBS=2 \
+	uv run --with matplotlib python ./vsl/benchmarks/vs_numpy/plot_gemm_comparison.py
+```
+
+The plot records this host-specific sample; do not generalize it to other CPUs.
+
 ```bash
 systemd-run --user --scope --quiet -p MemoryMax=1536M -p MemorySwapMax=0 -- env VJOBS=2 \
 	v -prod -cflags "-O3 -march=native" run ./vsl/benchmarks/vs_numpy/matmul_bench.v
