@@ -47,6 +47,21 @@ fn test_vector_accum() {
 	assert float64.close(vector_accum(a), s)
 }
 
+fn test_vector_sum_accurate_preserves_small_terms() {
+	values := [1e16, 1.0, -1e16]
+	assert vector_accum(values) == 0.0
+	assert vector_sum_accurate(values) == 1.0
+}
+
+fn test_vector_dot_accurate_preserves_small_terms_and_checks_shape() {
+	left := [1e16, 1.0, -1e16]
+	right := [1.0, 1.0, 1.0]
+	assert vector_dot_accurate(left, right)! == 1.0
+	if _ := vector_dot_accurate(left, right[..2]) {
+		assert false, 'mismatched vector lengths must return an error'
+	}
+}
+
 fn test_vector_norm() {
 	a := [3.0, 4]
 	n := 5.0

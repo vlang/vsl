@@ -209,3 +209,10 @@ mut a := la.Matrix.new[f64](4, 4)
 ---
 
 For more information, see the [VSL documentation](https://vlang.github.io/vsl) and [examples directory](../examples/).
+# Accurate vector accumulation
+
+The usual `vector_accum` and `vector_dot` favor throughput. For f64 workflows
+where cancellation can erase small terms, `vector_sum_accurate` and
+`vector_dot_accurate` use Neumaier compensated accumulation. The dot product
+returns an error when vector lengths differ. These helpers are opt-in because
+compensation adds work to each element.
