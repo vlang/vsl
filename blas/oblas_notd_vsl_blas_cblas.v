@@ -2,10 +2,13 @@ module blas
 
 import math
 import vsl.blas.blas64
+import vsl.float.float32
 
 $if vsl_blas_generic_cblas ? {
 	fn C.cblas_sgemm(order int, trans_a int, trans_b int, m int, n int, k int, alpha f32, const_a &f32, lda int, const_b &f32, ldb int, beta f32, c &f32, ldc int)
 	fn C.cblas_dgemm(order int, trans_a int, trans_b int, m int, n int, k int, alpha f64, const_a &f64, lda int, const_b &f64, ldb int, beta f64, c &f64, ldc int)
+	fn C.cblas_sgemv(order int, trans int, m int, n int, alpha f32, const_a &f32, lda int, const_x &f32, incx int, beta f32, y &f32, incy int)
+	fn C.cblas_dgemv(order int, trans int, m int, n int, alpha f64, const_a &f64, lda int, const_x &f64, incx int, beta f64, y &f64, incy int)
 }
 
 // set_num_threads sets the number of threads in BLAS
@@ -115,7 +118,87 @@ pub fn idamax(n int, x []f64, incx int) int {
 // dgemv exposes this operation as part of the public API.
 @[inline]
 pub fn dgemv(trans Transpose, m int, n int, alpha f64, a []f64, lda int, x []f64, incx int, beta f64, mut y []f64, incy int) {
+	validate_gemv_arguments(trans, m, n, lda, a.len, incx, x.len, incy, y.len)
+	if m == 0 || n == 0 || (alpha == 0 && beta == 1) {
+		return
+	}
+	$if vsl_blas_generic_cblas ? {
+		if incx > 0 && incy > 0 && alpha != 0 {
+			C.cblas_dgemv(int(MemoryLayout.row_major), cblas_gemv_transpose(trans), m, n, alpha,
+				unsafe { &a[0] }, lda, unsafe { &x[0] }, incx, beta, unsafe { &y[0] }, incy)
+			return
+		}
+	}
 	blas64.dgemv(to_blas64_transpose(trans), m, n, alpha, a, lda, x, incx, beta, mut y, incy)
+}
+
+// sgemv computes y = alpha * op(A) * x + beta * y for row-major f32 matrices.
+pub fn sgemv(trans Transpose, m int, n int, alpha f32, a []f32, lda int, x []f32, incx int, beta f32, mut y []f32, incy int) {
+	validate_gemv_arguments(trans, m, n, lda, a.len, incx, x.len, incy, y.len)
+	if m == 0 || n == 0 || (alpha == 0 && beta == 1) {
+		return
+	}
+	$if vsl_blas_generic_cblas ? {
+		if incx > 0 && incy > 0 && alpha != 0 {
+			C.cblas_sgemv(int(MemoryLayout.row_major), cblas_gemv_transpose(trans), m, n, alpha,
+				unsafe { &a[0] }, lda, unsafe { &x[0] }, incx, beta, unsafe { &y[0] }, incy)
+			return
+		}
+	}
+	len_y := if trans == .no_trans || trans == .conj_no_trans { m } else { n }
+	if alpha == 0 {
+		start_y := if incy < 0 { (len_y - 1) * -incy } else { 0 }
+		for i in 0 .. len_y {
+			index := start_y + i * incy
+			if beta == 0 {
+				y[index] = 0
+			} else {
+				y[index] *= beta
+			}
+		}
+		return
+	}
+	if trans == .no_trans || trans == .conj_no_trans {
+		float32.gemv_n(u32(m), u32(n), alpha, a, u32(lda), x, incx, beta, mut y, incy)
+	} else {
+		float32.gemv_t(u32(m), u32(n), alpha, a, u32(lda), x, incx, beta, mut y, incy)
+	}
+}
+
+fn validate_gemv_arguments(trans Transpose, m int, n int, lda int, a_len int, incx int, x_len int, incy int, y_len int) {
+	if m < 0 {
+		panic(blas64.mlt0)
+	}
+	if n < 0 {
+		panic(blas64.nlt0)
+	}
+	if lda < math.max(1, n) {
+		panic(blas64.bad_ld_a)
+	}
+	if incx == 0 {
+		panic(blas64.zero_incx)
+	}
+	if incy == 0 {
+		panic(blas64.zero_incy)
+	}
+	if m == 0 || n == 0 {
+		return
+	}
+	len_x := if trans == .no_trans || trans == .conj_no_trans { n } else { m }
+	len_y := if trans == .no_trans || trans == .conj_no_trans { m } else { n }
+	if (incx > 0 && (len_x - 1) * incx >= x_len) || (incx < 0 && (1 - len_x) * incx >= x_len) {
+		panic(blas64.short_x)
+	}
+	if (incy > 0 && (len_y - 1) * incy >= y_len) || (incy < 0 && (1 - len_y) * incy >= y_len) {
+		panic(blas64.short_y)
+	}
+	if a_len < lda * (m - 1) + n {
+		panic(blas64.short_a)
+	}
+}
+
+fn cblas_gemv_transpose(trans Transpose) int {
+	return if trans == .conj_no_trans { int(Transpose.no_trans) } else { int(trans) }
 }
 
 // dger performs the rank-1 update of a matrix.

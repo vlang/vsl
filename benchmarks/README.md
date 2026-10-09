@@ -14,12 +14,15 @@ built-in `benchmark` module for accurate timing measurements.
 Run V commands from `~/.vmodules`, outside the VSL checkout. Every command uses
 `VJOBS=2` and a memory-limited systemd scope; the cap depends on compilation or
 runtime needs. Benchmarks are intentionally not part of the default test suite
-because their timings depend on hardware and system load. Compile benchmarks
-with `-prod` and execute the output binary separately
-so compiler time is excluded. VSL should be compared per task with scientific
-libraries: BLAS/LAPACK/FFTW or GSL for numerical kernels, SciPy for scientific
-operations, and scikit-learn for like-for-like estimator tasks. NumPy can be an
-array-operation baseline, but does not represent VSL's full scope. Report the
+because their timings depend on hardware and system load. Compile with
+`-no-parallel -cc gcc -prod -cflags "-march=native"` on Linux, then execute the
+binary in a separate scope so compiler time is excluded. `-prod` supplies the
+production optimization flags (`-O3 -flto` for ordinary generated C units);
+`-march=native` is only for local, same-machine measurements. Do not use global
+fast-math or disable bounds checks for numerical comparisons. Compare VSL per task
+with scientific libraries: BLAS/LAPACK/FFTW or GSL for numerical kernels, SciPy
+for scientific operations, and scikit-learn for like-for-like estimator tasks.
+NumPy can be an array-operation baseline, but does not represent VSL's full scope. Report the
 active backend, compiler, thread count, and hardware for every result.
 
 ### Array-operation examples (NumPy baseline)

@@ -165,6 +165,7 @@ are not required for the default CPU beta path.
 |---------|------------|------------|----------------|
 | Pure V | none | Portable BLAS/LAPACK-style routines, `gemm`/`gemv`, elementwise ops, softmax, LayerNorm | Default path |
 | C BLAS/LAPACK | `-d vsl_blas_cblas`, `-d vsl_lapack_lapacke` | Optimized CPU kernels | Heavy linear algebra |
+| System CBLAS | `-d vsl_blas_generic_cblas` | Dense f32/f64 GEMM and GEMV; other BLAS routines use pure V | Linux fallback |
 | OpenCL/VCL | module-specific | Cross-vendor GPU kernels and examples; not a beta gate | Experimental GPU path |
 | CUDA | `-d cuda` | cuBLAS/cuDNN GEMM, activations, softmax, Conv2D, LayerNorm | VTL CUDA training |
 | Vulkan | `-d vulkan` | GEMM, Conv2D im2col, elementwise ops, fused Adam shader | VTL f32 Vulkan training |
@@ -245,19 +246,26 @@ For the repository test harness and optional GPU paths, see
 
 ## 📊 Performance Benchmarks
 
-VSL includes comprehensive performance benchmarks using V's built-in `benchmark` module:
+VSL includes comprehensive performance benchmarks using V's built-in `benchmark`
+module. Run them from `~/.vmodules`; compile first and execute each resulting
+binary separately.
 
 ```sh
-cd ~/.vmodules
-systemd-run --user --scope --quiet \
-	--property=MemoryMax=768M --property=MemorySwapMax=0 -- \
-	env VJOBS=2 v run ./vsl/benchmarks/blas_bench.v
-systemd-run --user --scope --quiet \
-	--property=MemoryMax=768M --property=MemorySwapMax=0 -- \
-	env VJOBS=2 v run ./vsl/benchmarks/lapack_bench.v
-systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
-	-- env VJOBS=2 v -d vsl_blas_cblas run \
-	./vsl/benchmarks/compare_backends.v
+systemd-run --user --scope -p MemoryMax=4G -p MemorySwapMax=0 -- env VJOBS=2 \
+	v -no-parallel -cc gcc -prod -cflags "-march=native" -o /tmp/vsl-blas-bench \
+	./vsl/benchmarks/blas_bench.v
+systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 \
+	/tmp/vsl-blas-bench
+systemd-run --user --scope -p MemoryMax=4G -p MemorySwapMax=0 -- env VJOBS=2 \
+	v -no-parallel -cc gcc -prod -cflags "-march=native" -o /tmp/vsl-lapack-bench \
+	./vsl/benchmarks/lapack_bench.v
+systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 \
+	/tmp/vsl-lapack-bench
+systemd-run --user --scope -p MemoryMax=4G -p MemorySwapMax=0 -- env VJOBS=2 \
+	v -no-parallel -cc gcc -prod -cflags "-march=native" -d vsl_blas_cblas \
+	-o /tmp/vsl-backend-bench ./vsl/benchmarks/compare_backends.v
+systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 \
+	/tmp/vsl-backend-bench
 ```
 
 Benchmark results show performance characteristics for:

@@ -1,5 +1,8 @@
 name: Deploy Documentation
 
+env:
+  VJOBS: '2'
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -34,9 +37,7 @@ jobs:
           VJOBS: '2'
         run: |
           cd ~/.vmodules
-          sudo systemd-run --scope --property=MemoryMax=4G \
-            --property=MemorySwapMax=0 --setenv=HOME="$HOME" \
-            --setenv=PATH="$PATH" --setenv=VJOBS=2 -- v doctor
+          env HOME="$HOME" PATH="$PATH" VJOBS=2 v doctor
 
       - name: Build docs
         run: |
@@ -45,9 +46,7 @@ jobs:
           rm -f README.md
           mv static/DOCS.md README.md
           cd ~/.vmodules
-          sudo systemd-run --scope --property=MemoryMax=4G \
-            --property=MemorySwapMax=0 --setenv=HOME="$HOME" \
-            --setenv=PATH="$PATH" --setenv=VJOBS=2 -- \
+          env HOME="$HOME" PATH="$PATH" VJOBS=2 \
             v doc -readme -m -f html ./vsl
 
       - name: Stage generated docs

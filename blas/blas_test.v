@@ -384,6 +384,31 @@ fn test_dgemv() {
 
 		assert float64.arrays_tolerance(y, case.expected, test_tol), 'DGEMV failed for case ${case.name}: expected ${case.expected}, got ${y}'
 	}
+	mut conj_no_trans_y := [0.0, 0.0]
+	dgemv(.conj_no_trans, 2, 3, 1, [1.0, 2, 3, 4, 5, 6], 3, [1.0, 2, 3], 1, 0,
+		mut conj_no_trans_y, 1)
+	assert conj_no_trans_y == [14.0, 32]
+}
+
+fn test_sgemv() {
+	a := [f32(1), 2, 3, 4, 5, 6]
+	mut y := [f32(1), 1, 1]
+	sgemv(.no_trans, 2, 3, 1, a, 3, [f32(1), 2, 3], 1, 2, mut y, 1)
+	assert y == [f32(16), 34, 1]
+
+	mut yt := [f32(0), 0, 0]
+	sgemv(.trans, 2, 3, 1, a, 3, [f32(1), 2], 1, 0, mut yt, 1)
+	assert yt == [f32(9), 12, 15]
+	mut y_conj_no_trans := [f32(0), 0]
+	sgemv(.conj_no_trans, 2, 3, 1, a, 3, [f32(1), 2, 3], 1, 0, mut y_conj_no_trans, 1)
+	assert y_conj_no_trans == [f32(14), 32]
+	mut negative_strides := [f32(0), 0]
+	sgemv(.no_trans, 2, 3, 1, a, 3, [f32(3), 2, 1], -1, 0, mut negative_strides, -1)
+	assert negative_strides == [f32(32), 14]
+
+	mut scaled := [f32(1), 99, 2, 99, 3]
+	sgemv(.trans, 2, 3, 0, a, 3, [f32(0), 0], 1, 3, mut scaled, 2)
+	assert scaled == [f32(3), 99, 6, 99, 9]
 }
 
 fn test_dger() {

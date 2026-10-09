@@ -2,11 +2,10 @@
 
 This package implements Linear Algebra routines in V.
 
-| Backend                                                                     | Description                                                                           | Status                  | Compilation Flags |
-| --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ----------------------- | ----------------- |
-| LAPACK                                                                      | Pure V implementation - **High performance, zero dependencies**                       | Stable                  | `NONE`            |
-| LAPACKE                                                                     | LAPACKE is a C interface to LAPACK. It is a standard part of the LAPACK distribution. |
-| Check the section [LAPACKE Backend](#lapacke-backend) for more information. | Stable                                                                                | `-d vsl_lapack_lapacke` |
+| Backend | Description | Status | Compilation flag |
+| --- | --- | --- | --- |
+| LAPACK | Pure V implementation; high performance and dependency-free. | Stable | None |
+| LAPACKE | C interface to the standard LAPACK distribution. See [LAPACKE backend](#lapacke-backend). | Stable | `-d vsl_lapack_lapacke` |
 
 ## 🎉 Pure V Implementation
 
@@ -23,10 +22,15 @@ The pure V implementation delivers excellent performance while maintaining
 numerical stability. Benchmark results demonstrate competitive performance with
 C backends.
 
-Run benchmarks to see performance characteristics:
+Run the benchmark from `~/.vmodules`, compile it first, then execute the binary
+in a separate memory-limited scope. `-march=native` is machine-specific.
 
 ```sh
-v run ./vsl/benchmarks/lapack_bench.v
+systemd-run --user --scope -p MemoryMax=4G -p MemorySwapMax=0 -- env VJOBS=2 \
+	v -no-parallel -cc gcc -prod -cflags "-march=native" -o /tmp/vsl-lapack-bench \
+	./vsl/benchmarks/lapack_bench.v
+systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 \
+	/tmp/vsl-lapack-bench
 ```
 
 ### Available Functions
