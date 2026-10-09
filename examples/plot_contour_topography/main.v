@@ -25,9 +25,9 @@ fn main() {
 
 			// Create interesting topography with multiple peaks and valleys
 			elevation := 3.0 * math.exp(-(x * x + y * y) / 10.0) + // Central peak
-			 2.0 * math.exp(-((x - 2) * (x - 2) + (y + 2) * (y + 2)) / 5.0) + // Secondary peak
-			 1.5 * math.exp(-((x + 3) * (x + 3) + (y - 1) * (y - 1)) / 3.0) + // Third peak
-			 0.5 * math.sin(x) * math.cos(y) // Add some texture
+			2.0 * math.exp(-((x - 2) * (x - 2) + (y + 2) * (y + 2)) / 5.0) + // Secondary peak
+			1.5 * math.exp(-((x + 3) * (x + 3) + (y - 1) * (y - 1)) / 3.0) + // Third peak
+			0.5 * math.sin(x) * math.cos(y) // Add some texture
 
 			row << elevation
 		}

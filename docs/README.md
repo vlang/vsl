@@ -6,7 +6,7 @@ compute layer used by [VTL](https://github.com/vlang/vtl) for ML workloads.
 Use this page as the stable navigation hub for tutorials, examples, GPU backend
 docs, benchmarks, and release status.
 
-![VSL architecture: scientific modules connect through optional compute dispatch to portable CPU and accelerator backends.](./assets/vsl-architecture.png)
+![VSL architecture](./assets/vsl-architecture.png)
 
 [Open the editable SVG source](./assets/vsl-architecture.svg).
 

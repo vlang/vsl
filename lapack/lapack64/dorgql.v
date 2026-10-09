@@ -119,8 +119,7 @@ pub fn dorgql(m int, n int, k int, mut a []f64, lda int, tau []f64, mut work []f
 					work, ldwork)
 
 				// Apply H to A[0:m-k+i+ib, 0:n-k+i] from the left.
-				dlarfb(.left, .no_trans, .backward, .column_wise, m - k + i + ib, n - k + i, ib, a[
-					n - k + i..], lda, work, ldwork, mut a, lda, mut work[ib * ldwork..], ldwork)
+				dlarfb(.left, .no_trans, .backward, .column_wise, m - k + i + ib, n - k + i, ib, a[n - k + i..], lda, work, ldwork, mut a, lda, mut work[ib * ldwork..], ldwork)
 			}
 
 			// Apply H to rows 0:m-k+i+ib of current block.

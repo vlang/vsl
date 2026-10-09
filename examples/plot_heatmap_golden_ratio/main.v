@@ -2,6 +2,7 @@ module main
 
 import math
 import vsl.plot
+
 // import vsl.util
 
 fn main() {
@@ -11,8 +12,7 @@ fn main() {
 	phi_pow_4 := math.pow(phi, 4.0)
 	xe := [0.0, 1.0, 1 + (1 / phi_pow_4), 1 + (1 / phi_pow_3), phi]
 	ye := [0.0, 1 / phi_pow_3, (1 / phi_pow_3) + (1 / phi_pow_4), 1 / phi_pow_2, 1]
-	z := [[13.0, 3, 3, 5], [13.0, 2, 1, 5], [13.0, 10, 11, 12],
-		[13.0, 8, 8, 8]]
+	z := [[13.0, 3, 3, 5], [13.0, 2, 1, 5], [13.0, 10, 11, 12], [13.0, 8, 8, 8]]
 
 	// TODO: Draw Spiral
 	// a := 1.120529

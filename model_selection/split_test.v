@@ -18,8 +18,7 @@ fn test_train_test_split_basic() {
 }
 
 fn test_train_test_split_shuffle() {
-	x := [[1.0], [2.0], [3.0], [4.0], [5.0], [6.0], [7.0], [8.0],
-		[9.0], [10.0]]
+	x := [[1.0], [2.0], [3.0], [4.0], [5.0], [6.0], [7.0], [8.0], [9.0], [10.0]]
 	y := [0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0]
 
 	result := train_test_split(x, y, TrainTestSplitConfig{
@@ -33,8 +32,7 @@ fn test_train_test_split_shuffle() {
 }
 
 fn test_train_test_split_stratified() {
-	x := [[1.0], [2.0], [3.0], [4.0], [5.0], [6.0], [7.0], [8.0],
-		[9.0], [10.0]]
+	x := [[1.0], [2.0], [3.0], [4.0], [5.0], [6.0], [7.0], [8.0], [9.0], [10.0]]
 	y := [0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0]
 
 	result := train_test_split(x, y, TrainTestSplitConfig{
@@ -123,8 +121,7 @@ fn test_split_error_length_mismatch() {
 }
 
 fn test_split_reproducibility() {
-	x := [[1.0], [2.0], [3.0], [4.0], [5.0], [6.0], [7.0], [8.0],
-		[9.0], [10.0]]
+	x := [[1.0], [2.0], [3.0], [4.0], [5.0], [6.0], [7.0], [8.0], [9.0], [10.0]]
 	y := [0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0]
 
 	result1 := train_test_split(x, y, TrainTestSplitConfig{

@@ -29,9 +29,9 @@ mut:
 pub mut:
 	coef_      []f64 // learned coefficients (theta)
 	intercept_ f64   // learned intercept (bias)
-	alpha      f64        = 1.0            // regularization strength
-	max_iter   int        = 1000           // maximum iterations
-	tol        f64        = 1e-4           // convergence tolerance
+	alpha      f64        = 1.0          // regularization strength
+	max_iter   int        = 1000         // maximum iterations
+	tol        f64        = 1e-4         // convergence tolerance
 	stat       &Stat[f64] = unsafe { nil } // statistics
 }
 

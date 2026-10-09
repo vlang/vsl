@@ -41,10 +41,10 @@ mut:
 	data              &Data[f64]    = unsafe { nil } // x-y data
 	stat              &Stat[f64]    = unsafe { nil } // statistics
 	root              &TreeNode     = unsafe { nil } // Root of the tree
-	max_depth         int           = -1             // Maximum depth (-1 for unlimited)
-	min_samples_split int           = 2              // Minimum samples to split
-	min_samples_leaf  int           = 1              // Minimum samples in leaf
-	criterion         CriterionType = .gini          // Splitting criterion
+	max_depth         int           = -1           // Maximum depth (-1 for unlimited)
+	min_samples_split int           = 2            // Minimum samples to split
+	min_samples_leaf  int           = 1            // Minimum samples in leaf
+	criterion         CriterionType = .gini        // Splitting criterion
 	trained           bool
 	is_regression     bool // Whether this is a regression task
 }
