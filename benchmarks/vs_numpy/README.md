@@ -140,19 +140,26 @@ two OpenBLAS threads and the same deterministic input values:
 | Backend | 512×512 | 1024×1024 |
 |---|---:|---:|
 | VSL pure V, production + native CPU flags | 7.82 ms (34.34 GFLOPS) | 61.12 ms (35.14 GFLOPS) |
+| VSL generic system CBLAS, production | 36.17 ms (7.42 GFLOPS) | 279.74 ms (7.68 GFLOPS) |
 | NumPy, 2 OpenBLAS threads | 2.74 ms (97.92 GFLOPS) | 18.96 ms (113.24 GFLOPS) |
 
 In this run, pure V was 2.85× slower at 512×512 and 3.22× slower at
-1024×1024. The V measurements ran with `VJOBS=2` under a 1536 MiB
+1024×1024. The generic system CBLAS build was 13.20× and 14.75× slower than
+NumPy respectively, and slower than the pure-V kernel at both sizes. This
+host's generic CBLAS is not an optimized BLAS backend; installing or linking
+an arbitrary CBLAS library does not guarantee a faster VSL path. The V
+measurements ran with `VJOBS=2` under a 1536 MiB
 `MemoryMax`; NumPy ran with `VJOBS=2`, `OPENBLAS_NUM_THREADS=2`, and a 768 MiB
 `MemoryMax`. The system did not have OpenBLAS installed, so this run measures
-VSL's pure-V path and NumPy's wheel-provided OpenBLAS only; it says nothing
-about VSL's optional OpenBLAS backend. Results are host-specific. Reproduce
-the V run from `~/.vmodules` with:
+VSL's pure-V and generic system CBLAS paths plus NumPy's wheel-provided
+OpenBLAS; it says nothing about VSL's optional OpenBLAS backend. Results are
+host-specific. Reproduce the V runs from `~/.vmodules` with:
 
 ```bash
 systemd-run --user --scope --quiet -p MemoryMax=1536M -p MemorySwapMax=0 -- env VJOBS=2 \
 	v -prod -cflags "-O3 -march=native" run ./vsl/benchmarks/vs_numpy/matmul_bench.v
+systemd-run --user --scope --quiet -p MemoryMax=1536M -p MemorySwapMax=0 -- env VJOBS=2 \
+	v -prod -d vsl_blas_generic_cblas run ./vsl/benchmarks/vs_numpy/matmul_bench.v
 systemd-run --user --scope --quiet -p MemoryMax=768M -p MemorySwapMax=0 -- env VJOBS=2 OPENBLAS_NUM_THREADS=2 \
 	uv run --with numpy python ./vsl/benchmarks/vs_numpy/numpy_baseline.py matmul
 ```
