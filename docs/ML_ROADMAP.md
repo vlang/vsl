@@ -21,11 +21,12 @@ Repo roadmap: [ROADMAP.md](../ROADMAP.md) · CUDA: [cuda/README.md](../cuda/READ
 **VTL (downstream):** CUDA Phases 1–4, f32 autograd/training, Vulkan Linear,
 Conv2D, ReLU/Sigmoid, and Adam are wired into the `nn_cifar10_vulkan` smoke.
 
-## Beta gate (open)
+## Beta gate (platform validation)
 
-| Priority | Issue | Topic |
-|----------|-------|--------|
-| P2 | [#91](https://github.com/vlang/vsl/issues/91), [#330](https://github.com/vlang/vsl/issues/330) | OpenBLAS/BLAS backend on macOS validation |
+The OpenBLAS and macOS issues [#91](https://github.com/vlang/vsl/issues/91) and
+[#330](https://github.com/vlang/vsl/issues/330) are closed after the build and
+test-runner fixes landed. The macOS checks for the latest `main` commit are
+still queued; confirm those runs before treating platform validation as green.
 
 ## Post-beta tracking
 
@@ -42,12 +43,8 @@ Conv2D, ReLU/Sigmoid, and Adam are wired into the `nn_cifar10_vulkan` smoke.
 
 **Current open issue inventory:** [#21](https://github.com/vlang/vsl/issues/21),
 [#34](https://github.com/vlang/vsl/issues/34),
-[#65](https://github.com/vlang/vsl/issues/65),
-[#91](https://github.com/vlang/vsl/issues/91), and
-[#330](https://github.com/vlang/vsl/issues/330). Issues #91 and #330 track the
-same macOS OpenBLAS concern; the newer issue is the active CI follow-up. The
-GitHub Project #8 lists #91 but not #330 or the other current open issues, so
-the board and repository inventory need reconciliation.
+[#65](https://github.com/vlang/vsl/issues/65). The repository issue list is the
+source for this inventory; check GitHub before relying on it as live status.
 
 The ML beta uses VSL as a scientific and compute foundation. The stable beta
 contract is the portable CPU/scientific surface plus `vsl.compute`; CUDA,
