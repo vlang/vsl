@@ -44,6 +44,18 @@ The two CSV tables report mean microseconds per call. Compare them on the same
 machine; the implementations have different output layouts, so these numbers
 compare execution time, not storage behavior.
 
+### Pure-V f32 Level 1 dot product
+
+Compare the unit-stride f32 dot kernel with a scalar loop over the same fixed
+input. The benchmark also reports each result's error against an f64
+accumulation of the f32 inputs. Timings are hardware- and compiler-dependent.
+
+```sh
+cd ~/.vmodules
+systemd-run --user --scope --quiet --property=MemoryMax=2G --property=MemorySwapMax=0 \
+	-- env VJOBS=2 v -prod run ./vsl/benchmarks/float32_level1_bench.v
+```
+
 ### MPI communication latency
 
 The MPI benchmark measures two-rank send/receive round trips, broadcasts, and
