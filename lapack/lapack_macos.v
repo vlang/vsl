@@ -1,18 +1,15 @@
 module lapack
 
-import vsl.blas
-
-// double LAPACKE_dlange( int matrix_order, char norm, lapack_int m,
-//                        lapack_int n, const double* a, lapack_int lda );
-
-// double LAPACKE_dlange_work( int matrix_order, char norm, lapack_int m,
-//                             lapack_int n, const double* a, lapack_int lda, double* work );
-
-fn C.LAPACKE_dlange_work(matrix_order int, norm char, m int, n int, const_a &f64, lda int, work &f64) f64
+import vsl.lapack.lapack64
 
 pub fn dlange(norm rune, m int, n int, a []f64, lda int, work []f64) f64 {
-	return unsafe {
-		C.LAPACKE_dlange_work(int(blas.MemoryLayout.row_major), char(norm), m, n, &a[0], lda,
-			&work[0])
+	selected_norm := match norm {
+		`M` { lapack64.MatrixNorm.max_abs }
+		`1`, `O` { lapack64.MatrixNorm.max_column_sum }
+		`I` { lapack64.MatrixNorm.max_row_sum }
+		`F`, `E` { lapack64.MatrixNorm.frobenius }
+		else { panic('dlange: invalid norm') }
 	}
+	mut workspace := work.clone()
+	return lapack64.dlange(selected_norm, m, n, a, lda, mut workspace)
 }
