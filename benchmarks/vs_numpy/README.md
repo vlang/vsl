@@ -1,13 +1,28 @@
 # VSL vs NumPy baselines
 
-Run V commands from `~/.vmodules`, outside the VSL checkout. These examples
-limit memory and keep V's parallel job count at two:
+Run V commands from `~/.vmodules`, outside the VSL checkout. Compile production
+benchmarks with `-prod`, then execute the resulting binary separately so
+compiler time is excluded; do not use `v run` for measurements. `-prod` enables
+V's production optimizations. Add `-cflags "-march=native"` only for local,
+CPU-specific results, and record the compiler and target flags.
+
+VSL is best compared per scientific task: BLAS/LAPACK/FFTW or GSL for
+numerical kernels, SciPy for scientific routines, and scikit-learn for
+like-for-like estimator tasks. NumPy is useful as an array-operation baseline,
+but is not a whole-library proxy for VSL. Match algorithms, inputs, precision,
+threading, and backend, and name the backend in every result.
 
 ```bash
 cd ~/.vmodules
-systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 -- env VJOBS=2 v run ./vsl/benchmarks/vs_numpy/matmul_bench.v
-systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 -- env VJOBS=2 v run ./vsl/benchmarks/vs_numpy/gemv_bench.v
-systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 -- env VJOBS=2 v run ./vsl/benchmarks/vs_numpy/conv2d_bench.v
+systemd-run --user --scope -p MemoryMax=4G -p MemorySwapMax=0 -- env VJOBS=2 \
+	v -prod -o /tmp/vsl-matmul-bench ./vsl/benchmarks/vs_numpy/matmul_bench.v
+systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tmp/vsl-matmul-bench
+systemd-run --user --scope -p MemoryMax=4G -p MemorySwapMax=0 -- env VJOBS=2 \
+	v -prod -o /tmp/vsl-gemv-bench ./vsl/benchmarks/vs_numpy/gemv_bench.v
+systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tmp/vsl-gemv-bench
+systemd-run --user --scope -p MemoryMax=4G -p MemorySwapMax=0 -- env VJOBS=2 \
+	v -prod -o /tmp/vsl-conv2d-bench ./vsl/benchmarks/vs_numpy/conv2d_bench.v
+systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tmp/vsl-conv2d-bench
 ```
 
 For a local build that targets the current CPU's instruction set, add
@@ -17,7 +32,8 @@ to that CPU family; omit this flag for portable binaries. For example:
 ```bash
 cd ~/.vmodules
 systemd-run --user --scope --quiet -p MemoryMax=768M -p MemorySwapMax=0 -- env VJOBS=2 \
-	v -prod -cflags "-march=native" run ./vsl/benchmarks/vs_numpy/matmul_bench.v
+	v -prod -cflags "-march=native" -o /tmp/vsl-matmul-native ./vsl/benchmarks/vs_numpy/matmul_bench.v
+systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tmp/vsl-matmul-native
 ```
 
 With OpenBLAS (recommended):
@@ -25,8 +41,9 @@ With OpenBLAS (recommended):
 ```bash
 cd ~/.vmodules
 systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
-	-- env VJOBS=2 v -d vsl_blas_cblas run \
+	-- env VJOBS=2 v -d vsl_blas_cblas -prod -o /tmp/vsl-matmul-openblas \
 	./vsl/benchmarks/vs_numpy/matmul_bench.v
+systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tmp/vsl-matmul-openblas
 ```
 
 On Linux systems that provide `libcblas` but not OpenBLAS, the dense f64 GEMM
@@ -36,8 +53,9 @@ remain pure V:
 ```bash
 cd ~/.vmodules
 systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
-	-- env VJOBS=2 v -d vsl_blas_generic_cblas run \
+	-- env VJOBS=2 v -d vsl_blas_generic_cblas -prod -o /tmp/vsl-matmul-cblas \
 	./vsl/benchmarks/vs_numpy/matmul_bench.v
+systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tmp/vsl-matmul-cblas
 ```
 
 ## NumPy reference (`numpy_baseline.py`)
@@ -83,7 +101,8 @@ CBLAS`) so the result cannot be mistaken for a different backend. Run from
 
 ```bash
 systemd-run --user --scope --quiet -p MemoryMax=768M -p MemorySwapMax=0 -- env VJOBS=2 \
-	v -prod run ./vsl/benchmarks/sgemm_f32_bench.v
+	v -prod -o /tmp/vsl-sgemm-f32 ./vsl/benchmarks/sgemm_f32_bench.v
+systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tmp/vsl-sgemm-f32
 systemd-run --user --scope --quiet -p MemoryMax=768M -p MemorySwapMax=0 -- env VJOBS=2 OPENBLAS_NUM_THREADS=2 \
 	uv run --with numpy python ./vsl/benchmarks/vs_numpy/numpy_sgemm_f32_baseline.py
 ```
@@ -169,9 +188,11 @@ The plot records this host-specific sample; do not generalize it to other CPUs.
 
 ```bash
 systemd-run --user --scope --quiet -p MemoryMax=1536M -p MemorySwapMax=0 -- env VJOBS=2 \
-	v -prod -cflags "-O3 -march=native" run ./vsl/benchmarks/vs_numpy/matmul_bench.v
+	v -prod -cflags "-march=native" -o /tmp/vsl-matmul-native ./vsl/benchmarks/vs_numpy/matmul_bench.v
+systemd-run --user --scope -p MemoryMax=1536M -p MemorySwapMax=0 -- env VJOBS=2 /tmp/vsl-matmul-native
 systemd-run --user --scope --quiet -p MemoryMax=1536M -p MemorySwapMax=0 -- env VJOBS=2 \
-	v -prod -d vsl_blas_generic_cblas run ./vsl/benchmarks/vs_numpy/matmul_bench.v
+	v -prod -d vsl_blas_generic_cblas -o /tmp/vsl-matmul-cblas ./vsl/benchmarks/vs_numpy/matmul_bench.v
+systemd-run --user --scope -p MemoryMax=1536M -p MemorySwapMax=0 -- env VJOBS=2 /tmp/vsl-matmul-cblas
 systemd-run --user --scope --quiet -p MemoryMax=768M -p MemorySwapMax=0 -- env VJOBS=2 OPENBLAS_NUM_THREADS=2 \
 	uv run --with numpy python ./vsl/benchmarks/vs_numpy/numpy_baseline.py matmul
 ```
