@@ -25,6 +25,9 @@ pub fn dot_unitary(x []f32, y []f32) f32 {
 
 // dot_inc
 pub fn dot_inc(x []f32, y []f32, n u32, incX u32, incY u32, ix u32, iy u32) f32 {
+	if n == 0 {
+		return 0
+	}
 	if incX == 1 && incY == 1 {
 		start_x, start_y, length := int(ix), int(iy), int(n)
 		return dot_unitary(x[start_x..start_x + length], y[start_y..start_y + length])
