@@ -133,12 +133,14 @@ pub fn (d &Device) driver_version() !string {
 //   Error if compilation fails, including detailed build log for debugging
 //
 // Example:
+// ```v
 //   kernel_source := '
 //   __kernel void vector_add(__global float* a, __global float* b, __global float* c) {
 //       int id = get_global_id(0);
 //       c[id] = a[id] + b[id];
 //   }'
-//   device.add_program(kernel_source)!
+// device.add_program(kernel_source)!
+// ```
 //
 // Note: If compilation fails, the error will include the complete build log
 // with line numbers and specific error messages from the OpenCL compiler.
