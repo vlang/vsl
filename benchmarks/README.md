@@ -11,21 +11,30 @@ built-in `benchmark` module for accurate timing measurements.
 
 ## Running Benchmarks
 
-Run V commands from `~/.vmodules`, outside the VSL checkout. Each example uses
-`VJOBS=2` and a 768 MiB `MemoryMax`. Benchmarks are intentionally not part of
-the default test suite because their timings depend on hardware and system
-load.
+Run V commands from `~/.vmodules`, outside the VSL checkout. Every command uses
+`VJOBS=2` and a memory-limited systemd scope; the cap depends on compilation or
+runtime needs. Benchmarks are intentionally not part of the default test suite
+because their timings depend on hardware and system load. Compile benchmarks
+with `-prod` and execute the output binary separately
+so compiler time is excluded. VSL should be compared per task with scientific
+libraries: BLAS/LAPACK/FFTW or GSL for numerical kernels, SciPy for scientific
+operations, and scikit-learn for like-for-like estimator tasks. NumPy can be an
+array-operation baseline, but does not represent VSL's full scope. Report the
+active backend, compiler, thread count, and hardware for every result.
 
-### vs NumPy (ML ops)
+### Array-operation examples (NumPy baseline)
 
 ```sh
 cd ~/.vmodules
-systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
-	-- env VJOBS=2 v run ./vsl/benchmarks/vs_numpy/matmul_bench.v
-systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
-	-- env VJOBS=2 v run ./vsl/benchmarks/vs_numpy/gemv_bench.v
-systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
-	-- env VJOBS=2 v run ./vsl/benchmarks/vs_numpy/conv2d_bench.v
+systemd-run --user --scope -p MemoryMax=4G -p MemorySwapMax=0 -- env VJOBS=2 \
+	v -prod -o /tmp/vsl-matmul ./vsl/benchmarks/vs_numpy/matmul_bench.v
+systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tmp/vsl-matmul
+systemd-run --user --scope -p MemoryMax=4G -p MemorySwapMax=0 -- env VJOBS=2 \
+	v -prod -o /tmp/vsl-gemv ./vsl/benchmarks/vs_numpy/gemv_bench.v
+systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tmp/vsl-gemv
+systemd-run --user --scope -p MemoryMax=4G -p MemorySwapMax=0 -- env VJOBS=2 \
+	v -prod -o /tmp/vsl-conv2d ./vsl/benchmarks/vs_numpy/conv2d_bench.v
+systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tmp/vsl-conv2d
 ```
 
 See [vs_numpy/README.md](vs_numpy/README.md). Tracked in [#282](https://github.com/vlang/vsl/issues/282).
@@ -39,8 +48,9 @@ Install NumPy in the Python environment before running the baseline.
 
 ```sh
 cd ~/.vmodules
-systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
-	-- env VJOBS=2 v run ./vsl/benchmarks/fft_bench.v
+systemd-run --user --scope -p MemoryMax=4G -p MemorySwapMax=0 -- env VJOBS=2 \
+	v -prod -o /tmp/vsl-fft ./vsl/benchmarks/fft_bench.v
+systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tmp/vsl-fft
 systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
 	-- env VJOBS=2 python3 ./vsl/benchmarks/fft_numpy_baseline.py
 ```
@@ -57,16 +67,18 @@ accumulation of the f32 inputs. Timings are hardware- and compiler-dependent.
 
 ```sh
 cd ~/.vmodules
-systemd-run --user --scope --quiet --property=MemoryMax=2G --property=MemorySwapMax=0 \
-	-- env VJOBS=2 v -prod run ./vsl/benchmarks/float32_level1_bench.v
+systemd-run --user --scope -p MemoryMax=4G -p MemorySwapMax=0 -- env VJOBS=2 \
+	v -prod -o /tmp/vsl-f32-level1 ./vsl/benchmarks/float32_level1_bench.v
+systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tmp/vsl-f32-level1
 ```
 
 The f64 unit-stride dot kernel has a matching benchmark:
 
 ```sh
 cd ~/.vmodules
-systemd-run --user --scope --quiet --property=MemoryMax=2G --property=MemorySwapMax=0 \
-	-- env VJOBS=2 v -prod run ./vsl/benchmarks/float64_level1_bench.v
+systemd-run --user --scope -p MemoryMax=4G -p MemorySwapMax=0 -- env VJOBS=2 \
+	v -prod -o /tmp/vsl-f64-level1 ./vsl/benchmarks/float64_level1_bench.v
+systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tmp/vsl-f64-level1
 ```
 
 The f32 L2 norm benchmark compares the SIMD fast path with its previous
@@ -75,8 +87,9 @@ f64 accumulation:
 
 ```sh
 cd ~/.vmodules
-systemd-run --user --scope --quiet --property=MemoryMax=2G --property=MemorySwapMax=0 \
-	-- env VJOBS=2 v -prod run ./vsl/benchmarks/float32_l2norm_bench.v
+systemd-run --user --scope -p MemoryMax=4G -p MemorySwapMax=0 -- env VJOBS=2 \
+	v -prod -o /tmp/vsl-f32-l2norm ./vsl/benchmarks/float32_l2norm_bench.v
+systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tmp/vsl-f32-l2norm
 ```
 
 ### MPI communication latency
@@ -115,8 +128,9 @@ and device-to-host output transfer. Run it from `~/.vmodules`:
 
 ```sh
 cd ~/.vmodules
-systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
-	-- env VJOBS=2 v -prod -d vulkan run ./vsl/benchmarks/vulkan_gemm_f32_bench.v
+systemd-run --user --scope -p MemoryMax=4G -p MemorySwapMax=0 -- env VJOBS=2 \
+	v -prod -d vulkan -o /tmp/vsl-vulkan-gemm ./vsl/benchmarks/vulkan_gemm_f32_bench.v
+systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tmp/vsl-vulkan-gemm
 ```
 
 It reports the active K tile (16 or 32) per size. These kernel-only timings
@@ -127,12 +141,15 @@ CPU timings that include allocation or different thread counts.
 
 ```sh
 cd ~/.vmodules
-systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
-	-- env VJOBS=2 v run ./vsl/benchmarks/blas_bench.v
-systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
-	-- env VJOBS=2 v run ./vsl/benchmarks/lapack_bench.v
-systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
-	-- env VJOBS=2 v run ./vsl/benchmarks/compare_backends.v
+systemd-run --user --scope -p MemoryMax=4G -p MemorySwapMax=0 -- env VJOBS=2 \
+	v -prod -o /tmp/vsl-blas-bench ./vsl/benchmarks/blas_bench.v
+systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tmp/vsl-blas-bench
+systemd-run --user --scope -p MemoryMax=4G -p MemorySwapMax=0 -- env VJOBS=2 \
+	v -prod -o /tmp/vsl-lapack-bench ./vsl/benchmarks/lapack_bench.v
+systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tmp/vsl-lapack-bench
+systemd-run --user --scope -p MemoryMax=4G -p MemorySwapMax=0 -- env VJOBS=2 \
+	v -prod -o /tmp/vsl-backend-bench ./vsl/benchmarks/compare_backends.v
+systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tmp/vsl-backend-bench
 ```
 
 ### Run a C backend benchmark
@@ -143,9 +160,9 @@ backend, pass its compile-time define:
 
 ```sh
 cd ~/.vmodules
-systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
-	-- env VJOBS=2 v -d vsl_blas_cblas run \
-	./vsl/benchmarks/blas_bench.v
+systemd-run --user --scope -p MemoryMax=4G -p MemorySwapMax=0 -- env VJOBS=2 \
+	v -d vsl_blas_cblas -prod -o /tmp/vsl-blas-cblas ./vsl/benchmarks/blas_bench.v
+systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tmp/vsl-blas-cblas
 ```
 
 ## Benchmark Structure
