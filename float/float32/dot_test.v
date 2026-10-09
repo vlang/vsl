@@ -109,6 +109,10 @@ fn test_dot_inc_unit_stride_offsets() {
 	assert math.abs(got - want) < 1e-4
 }
 
+fn test_dot_inc_empty_unit_stride() {
+	assert dot_inc([]f32{}, []f32{}, 0, 1, 1, 100, 200) == 0
+}
+
 fn test_dot_inc() {
 	for i, test in dot_tests {
 		for incx in [-7, -3, -2, -1, 1, 2, 3, 7] {

@@ -56,6 +56,14 @@ systemd-run --user --scope --quiet --property=MemoryMax=2G --property=MemorySwap
 	-- env VJOBS=2 v -prod run ./vsl/benchmarks/float32_level1_bench.v
 ```
 
+The f64 unit-stride dot kernel has a matching benchmark:
+
+```sh
+cd ~/.vmodules
+systemd-run --user --scope --quiet --property=MemoryMax=2G --property=MemorySwapMax=0 \
+	-- env VJOBS=2 v -prod run ./vsl/benchmarks/float64_level1_bench.v
+```
+
 ### MPI communication latency
 
 The MPI benchmark measures two-rank send/receive round trips, broadcasts, and

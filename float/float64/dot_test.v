@@ -81,6 +81,38 @@ fn test_dot_unitary() {
 	}
 }
 
+fn test_dot_unitary_simd_tails() {
+	for n in 1 .. 22 {
+		mut x := []f64{len: n}
+		mut y := []f64{len: n}
+		mut want := 0.0
+		for i in 0 .. n {
+			x[i] = f64((i % 11) - 5) * 0.125
+			y[i] = f64((i % 7) - 3) * 0.25
+			want += x[i] * y[i]
+		}
+		got := dot_unitary(x, y)
+		assert math.abs(got - want) < 1e-12
+	}
+}
+
+fn test_dot_inc_unit_stride_offsets() {
+	mut x := []f64{len: 27}
+	mut y := []f64{len: 31}
+	mut want := 0.0
+	for i in 0 .. 19 {
+		x[i + 3] = f64(i - 7) * 0.25
+		y[i + 5] = f64(9 - i) * 0.125
+		want += x[i + 3] * y[i + 5]
+	}
+	got := dot_inc(x, y, 19, 1, 1, 3, 5)
+	assert math.abs(got - want) < 1e-12
+}
+
+fn test_dot_inc_empty_unit_stride() {
+	assert dot_inc([]f64{}, []f64{}, 0, 1, 1, 100, 200) == 0
+}
+
 fn test_dot_inc() {
 	for i, test in dot_tests {
 		for incx in [-7, -3, -2, -1, 1, 2, 3, 7] {
