@@ -13,6 +13,21 @@ fn test_point_creation_clone_displacement_and_distance() {
 	assert a.clone().x == a.x
 }
 
+fn test_point_addition_and_subtraction_operators() {
+	a := Point.new(1.0, 2.0, 3.0)
+	b := Point.new(4.0, 6.0, 8.0)
+	sum := (*a) + (*b)
+	difference := (*b) - (*a)
+	assert sum.x == 5.0
+	assert sum.y == 8.0
+	assert sum.z == 11.0
+	assert difference.x == 3.0
+	assert difference.y == 4.0
+	assert difference.z == 5.0
+	assert a.x == 1.0
+	assert b.x == 4.0
+}
+
 fn test_segment_length_vector_and_point_line_distance() {
 	a := Point.new(0.0, 0.0, 0.0)
 	b := Point.new(2.0, 0.0, 0.0)

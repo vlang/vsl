@@ -3,6 +3,20 @@
 This package provides some functions to help with the solution of geometry problems.
 It also includes some routines loosely related with geometry.
 
+`Point` supports component-wise addition and subtraction. These operators
+return new points and leave both inputs unchanged:
+
+```v
+import vsl.gm
+
+a := gm.Point.new(1.0, 2.0, 3.0)
+b := gm.Point.new(4.0, 6.0, 8.0)
+sum := (*a) + (*b)
+displacement := (*b) - (*a)
+println(sum) // {5.0, 8.0, 11.0}
+println(displacement) // {3.0, 4.0, 5.0}
+```
+
 ## Examples
 
 You can find comprehensive examples demonstrating the geometry module features in the main
