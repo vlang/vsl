@@ -58,7 +58,8 @@ fn testsuite_end() {
 
 // verify all datatypes in 1 dimension
 fn test_run() {
-	res := os.execute('h5dump ${testfile}')
+	res := os.exec(['h5dump', testfile])
+	assert res.exit_code == 0
 	output := res.output.trim_space()
 	assert output.contains('i8array')
 	assert output.contains('u8array')

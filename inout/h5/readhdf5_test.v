@@ -26,7 +26,8 @@ fn testsuite_end() {
 
 // verify simple operation of one datatype (int)
 fn test_run() {
-	res := os.execute('h5dump ${testfile}')
+	res := os.exec(['h5dump', testfile])
+	assert res.exit_code == 0
 	output := res.output.trim_space()
 	assert output.contains('Shortarray')
 	assert output.contains('DATATYPE  H5T_STD_I32LE')
