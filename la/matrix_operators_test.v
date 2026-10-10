@@ -12,6 +12,52 @@ fn test_matrix_addition_and_subtraction_operators() {
 	assert subtracted.get(1, 1) == 4
 }
 
+fn test_matrix_scalar_arithmetic_methods() {
+	a := Matrix.deep2([[f64(1), 2], [3, 4]])
+
+	sum := a.add_scalar(2.0)
+	subtracted := a.sub_scalar(1.0)
+	scaled := a.scale(2.0)
+	quotient := a.div_scalar(2.0)
+
+	assert sum.get(0, 0) == 3
+	assert sum.get(1, 1) == 6
+	assert subtracted.get(0, 0) == 0
+	assert subtracted.get(1, 1) == 3
+	assert scaled.get(0, 0) == 2
+	assert scaled.get(1, 1) == 8
+	assert quotient.get(0, 0) == 0.5
+	assert quotient.get(1, 1) == 2
+	assert a.get(0, 0) == 1
+	assert a.get(1, 1) == 4
+}
+
+fn test_f32_matrix_scalar_arithmetic() {
+	mut a := Matrix.new[f32](1, 2)
+	a.set(0, 0, 2)
+	a.set(0, 1, 4)
+
+	scaled := a.scale(f32(0.5))
+	sum := a.add_scalar(f32(1))
+
+	assert scaled.m == 1
+	assert scaled.n == 2
+	assert scaled.get(0, 0) == 1
+	assert scaled.get(0, 1) == 2
+	assert sum.get(0, 0) == 3
+	assert sum.get(0, 1) == 5
+}
+
+fn test_integer_matrix_scalar_remainder_operator() {
+	a := Matrix.deep2([[11, 14], [17, 20]])
+	remainder := a.remainder_scalar(6)
+
+	assert remainder.get(0, 0) == 5
+	assert remainder.get(0, 1) == 2
+	assert remainder.get(1, 0) == 5
+	assert remainder.get(1, 1) == 2
+}
+
 fn test_matrix_multiplication_operator() {
 	a := Matrix.deep2([[f64(1), 2], [3, 4]])
 	b := Matrix.deep2([[f64(5), 6], [7, 8]])

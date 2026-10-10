@@ -99,3 +99,72 @@ pub fn (a &Matrix[T]) % (b &Matrix[T]) &Matrix[T] {
 		panic('Matrix remainder is only defined for integer element types')
 	}
 }
+
+// add_scalar returns a new matrix with the scalar added to every element.
+pub fn (a &Matrix[T]) add_scalar(scalar T) &Matrix[T] {
+	mut data := []T{len: a.m * a.n}
+	for i in 0 .. data.len {
+		data[i] = a.data[i] + scalar
+	}
+	return &Matrix[T]{
+		m:    a.m
+		n:    a.n
+		data: data
+	}
+}
+
+// sub_scalar returns a new matrix with the scalar subtracted from every element.
+pub fn (a &Matrix[T]) sub_scalar(scalar T) &Matrix[T] {
+	mut data := []T{len: a.m * a.n}
+	for i in 0 .. data.len {
+		data[i] = a.data[i] - scalar
+	}
+	return &Matrix[T]{
+		m:    a.m
+		n:    a.n
+		data: data
+	}
+}
+
+// scale returns a new matrix with every element multiplied by the scalar.
+pub fn (a &Matrix[T]) scale(scalar T) &Matrix[T] {
+	mut data := []T{len: a.m * a.n}
+	for i in 0 .. data.len {
+		data[i] = a.data[i] * scalar
+	}
+	return &Matrix[T]{
+		m:    a.m
+		n:    a.n
+		data: data
+	}
+}
+
+// div_scalar returns a new matrix with every element divided by the scalar.
+pub fn (a &Matrix[T]) div_scalar(scalar T) &Matrix[T] {
+	mut data := []T{len: a.m * a.n}
+	for i in 0 .. data.len {
+		data[i] = a.data[i] / scalar
+	}
+	return &Matrix[T]{
+		m:    a.m
+		n:    a.n
+		data: data
+	}
+}
+
+// remainder_scalar returns element-wise remainder for integer matrices.
+pub fn (a &Matrix[T]) remainder_scalar(scalar T) &Matrix[T] {
+	$if T is $int {
+		mut data := []T{len: a.m * a.n}
+		for i in 0 .. data.len {
+			data[i] = a.data[i] % scalar
+		}
+		return &Matrix[T]{
+			m:    a.m
+			n:    a.n
+			data: data
+		}
+	} $else {
+		panic('Matrix remainder is only defined for integer element types')
+	}
+}
