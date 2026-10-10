@@ -219,5 +219,6 @@ For more information, see the [VSL documentation](https://vlang.github.io/vsl) a
 The usual `vector_accum` and `vector_dot` favor throughput. For f64 workflows
 where cancellation can erase small terms, `vector_sum_accurate` and
 `vector_dot_accurate` use Neumaier compensated accumulation. The dot product
-returns an error when vector lengths differ. These helpers are opt-in because
+also uses fused multiply-add to recover each finite product's rounding error.
+It returns an error when vector lengths differ. These helpers are opt-in because
 compensation adds work to each element.

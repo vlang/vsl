@@ -62,6 +62,13 @@ fn test_vector_dot_accurate_preserves_small_terms_and_checks_shape() {
 	}
 }
 
+fn test_vector_dot_accurate_recovers_product_rounding_error() {
+	left := [1.0000000000000002, -1.0]
+	right := [1.0000000000000002, 1.0000000000000004]
+	assert vector_dot(left, right) == 0.0
+	assert vector_dot_accurate(left, right)! == 4.930380657631324e-32
+}
+
 fn test_vector_norm() {
 	a := [3.0, 4]
 	n := 5.0

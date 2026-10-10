@@ -3,6 +3,10 @@ module la
 import vsl.blas
 import math
 
+#include <math.h>
+
+fn C.fma(a f64, b f64, c f64) f64
+
 /*
 * vector_rms_error returns the scaled root-mean-square of the difference between two vectors
  * with components normalised by a scaling factor
@@ -75,14 +79,29 @@ pub fn vector_dot_accurate(u []f64, v []f64) !f64 {
 	mut sum := 0.0
 	mut correction := 0.0
 	for i, left in u {
-		value := left * v[i]
-		next := sum + value
-		if math.abs(sum) >= math.abs(value) {
-			correction += (sum - next) + value
+		right := v[i]
+		product := left * right
+		// FMA recovers the rounding error from finite products. Skip the
+		// residual calculation for non-finite products to avoid inf - inf.
+		product_error := if math.is_finite(product) {
+			C.fma(left, right, -product)
 		} else {
-			correction += (value - next) + sum
+			0.0
+		}
+		next := sum + product
+		if math.abs(sum) >= math.abs(product) {
+			correction += (sum - next) + product
+		} else {
+			correction += (product - next) + sum
 		}
 		sum = next
+		next_product_error := sum + product_error
+		if math.abs(sum) >= math.abs(product_error) {
+			correction += (sum - next_product_error) + product_error
+		} else {
+			correction += (product_error - next_product_error) + sum
+		}
+		sum = next_product_error
 	}
 	return sum + correction
 }
