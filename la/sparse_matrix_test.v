@@ -21,3 +21,12 @@ fn test_triplet() {
 
 	assert expected_matrix.equals(m)
 }
+
+fn test_triplet_to_dense_ignores_entries_after_start() {
+	mut triplet := Triplet.new[f64](2, 2, 4)
+	triplet.put(1, 1, 7.0)!
+	assert triplet.to_dense().get(1, 1) == 7.0
+
+	triplet.start()
+	assert triplet.to_dense().get(1, 1) == 0.0
+}

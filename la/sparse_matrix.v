@@ -136,7 +136,7 @@ pub fn (o Triplet[T]) size() (int, int) {
 // to_dense returns the dense matrix corresponding to this Triplet
 pub fn (o Triplet[T]) to_dense() &Matrix[T] {
 	mut a := Matrix.new[T](o.m, o.n)
-	for k := 0; k < o.max; k++ {
+	for k := 0; k < o.pos; k++ {
 		a.add(o.i[k], o.j[k], o.x[k])
 	}
 	return a
