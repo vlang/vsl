@@ -28,6 +28,22 @@ fn test_point_addition_and_subtraction_operators() {
 	assert b.x == 4.0
 }
 
+fn test_point_scalar_multiplication_and_division() {
+	a := Point.new(2.0, -4.0, 8.0)
+	scaled := a.scale(0.5)
+	divided := a.div_scalar(2.0)
+
+	assert scaled.x == 1.0
+	assert scaled.y == -2.0
+	assert scaled.z == 4.0
+	assert divided.x == 1.0
+	assert divided.y == -2.0
+	assert divided.z == 4.0
+	assert a.x == 2.0
+	assert a.y == -4.0
+	assert a.z == 8.0
+}
+
 fn test_segment_length_vector_and_point_line_distance() {
 	a := Point.new(0.0, 0.0, 0.0)
 	b := Point.new(2.0, 0.0, 0.0)

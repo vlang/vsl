@@ -42,6 +42,16 @@ pub fn (o &Point) disp(dx f64, dy f64, dz f64) &Point {
 	return &Point{o.x + dx, o.y + dy, o.z + dz}
 }
 
+// scale returns a new point with every Cartesian coordinate multiplied by scalar.
+pub fn (o &Point) scale(scalar f64) &Point {
+	return &Point{o.x * scalar, o.y * scalar, o.z * scalar}
+}
+
+// div_scalar returns a new point with every Cartesian coordinate divided by scalar.
+pub fn (o &Point) div_scalar(scalar f64) &Point {
+	return &Point{o.x / scalar, o.y / scalar, o.z / scalar}
+}
+
 // str outputs Point
 pub fn (o &Point) str() string {
 	return '{${o.x}, ${o.y}, ${o.z}}'
