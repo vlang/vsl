@@ -1,5 +1,6 @@
 module la
 
+import math
 import vsl.float.float64
 
 fn tolerance_equal(data1 []f64, data2 []f64) bool {
@@ -53,6 +54,12 @@ fn test_vector_sum_accurate_preserves_small_terms() {
 	assert vector_sum_accurate(values) == 1.0
 }
 
+fn test_vector_sum_accurate_preserves_non_finite_results() {
+	assert math.is_inf(vector_sum_accurate([math.inf(1), 1.0]), 1)
+	assert math.is_nan(vector_sum_accurate([math.inf(1), math.inf(-1)]))
+	assert math.is_inf(vector_sum_accurate([1e308, 1e308]), 1)
+}
+
 fn test_vector_dot_accurate_preserves_small_terms_and_checks_shape() {
 	left := [1e16, 1.0, -1e16]
 	right := [1.0, 1.0, 1.0]
@@ -67,6 +74,12 @@ fn test_vector_dot_accurate_recovers_product_rounding_error() {
 	right := [1.0000000000000002, 1.0000000000000004]
 	assert vector_dot(left, right) == 0.0
 	assert vector_dot_accurate(left, right)! == 4.930380657631324e-32
+}
+
+fn test_vector_dot_accurate_preserves_non_finite_results() {
+	assert math.is_inf(vector_dot_accurate([math.inf(1), 1.0], [1.0, 1.0])!, 1)
+	assert math.is_nan(vector_dot_accurate([math.inf(1), math.inf(1)], [1.0, -1.0])!)
+	assert math.is_inf(vector_dot_accurate([1e308, 1e308], [2.0, 2.0])!, 1)
 }
 
 fn test_vector_norm() {

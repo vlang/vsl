@@ -53,25 +53,52 @@ pub fn vector_dot[T](u []T, v []T) T {
 	}
 }
 
-// vector_sum_accurate sums f64 values with Neumaier compensated accumulation.
-// Use it when numerical accuracy matters more than the throughput of vector_accum.
+// vector_sum_accurate uses Neumaier compensation for finite reductions and
+// preserves ordinary IEEE results if an input or intermediate is non-finite.
+fn vector_sum_naive_f64(u []f64) f64 {
+	mut sum := 0.0
+	for value in u {
+		sum += value
+	}
+	return sum
+}
+
 pub fn vector_sum_accurate(u []f64) f64 {
 	mut sum := 0.0
 	mut correction := 0.0
 	for value in u {
+		if !math.is_finite(value) {
+			return vector_sum_naive_f64(u)
+		}
 		next := sum + value
+		if !math.is_finite(next) {
+			return vector_sum_naive_f64(u)
+		}
 		if math.abs(sum) >= math.abs(value) {
 			correction += (sum - next) + value
 		} else {
 			correction += (value - next) + sum
 		}
+		if !math.is_finite(correction) {
+			return vector_sum_naive_f64(u)
+		}
 		sum = next
 	}
-	return sum + correction
+	result := sum + correction
+	return if math.is_finite(result) { result } else { vector_sum_naive_f64(u) }
 }
 
 // vector_dot_accurate computes an f64 dot product with compensated accumulation.
-// The inputs must have the same length. This prioritizes accuracy over BLAS throughput.
+// The inputs must have the same length. This prioritizes accuracy over BLAS
+// throughput and preserves ordinary IEEE results for non-finite intermediates.
+fn vector_dot_naive_f64(u []f64, v []f64) f64 {
+	mut sum := 0.0
+	for i, left in u {
+		sum += left * v[i]
+	}
+	return sum
+}
+
 pub fn vector_dot_accurate(u []f64, v []f64) !f64 {
 	if u.len != v.len {
 		return error('vector_dot_accurate requires vectors with the same length')
@@ -81,29 +108,40 @@ pub fn vector_dot_accurate(u []f64, v []f64) !f64 {
 	for i, left in u {
 		right := v[i]
 		product := left * right
-		// FMA recovers the rounding error from finite products. Skip the
-		// residual calculation for non-finite products to avoid inf - inf.
-		product_error := if math.is_finite(product) {
-			C.fma(left, right, -product)
-		} else {
-			0.0
+		if !math.is_finite(product) {
+			return vector_dot_naive_f64(u, v)
 		}
+		// FMA recovers the rounding error from finite products.
+		product_error := C.fma(left, right, -product)
 		next := sum + product
+		if !math.is_finite(next) {
+			return vector_dot_naive_f64(u, v)
+		}
 		if math.abs(sum) >= math.abs(product) {
 			correction += (sum - next) + product
 		} else {
 			correction += (product - next) + sum
 		}
+		if !math.is_finite(correction) {
+			return vector_dot_naive_f64(u, v)
+		}
 		sum = next
 		next_product_error := sum + product_error
+		if !math.is_finite(next_product_error) {
+			return vector_dot_naive_f64(u, v)
+		}
 		if math.abs(sum) >= math.abs(product_error) {
 			correction += (sum - next_product_error) + product_error
 		} else {
 			correction += (product_error - next_product_error) + sum
 		}
+		if !math.is_finite(correction) {
+			return vector_dot_naive_f64(u, v)
+		}
 		sum = next_product_error
 	}
-	return sum + correction
+	result := sum + correction
+	return if math.is_finite(result) { result } else { vector_dot_naive_f64(u, v) }
 }
 
 // vector_add adds the scaled components of two vectors
