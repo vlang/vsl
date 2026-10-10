@@ -55,11 +55,14 @@ la.matrix_matrix_mul(mut c, 1.0, a, b)
 println(c)
 ```
 
-`Matrix` also supports `+`, `-`, `/`, and integer-only `%` element-wise
-operators. `*` performs conventional matrix multiplication. Element-wise
-operators require equal shapes; matrix multiplication requires matching inner
-dimensions. Since constructors return heap references and V uses `-` for
-pointer subtraction, dereference both operands when using matrix subtraction.
+`Matrix` supports element-wise `+`, `-`, `/`, and integer-only `%` between
+equal-shaped matrices. `*` performs conventional matrix multiplication and
+requires matching inner dimensions. Scalar arithmetic is available through
+`add_scalar`, `sub_scalar`, `scale`, and `div_scalar`; integer matrices also
+provide `remainder_scalar`. These methods return a new matrix and leave the
+input unchanged. Since constructors return heap references and V
+uses `-` for pointer subtraction, dereference both operands when using matrix
+subtraction.
 
 ```v
 import vsl.la
@@ -72,6 +75,8 @@ subtracted := (*b) - (*a)
 println(sum) // [[6, 8], [10, 12]]
 println(product) // [[19, 22], [43, 50]]
 println(subtracted) // [[4, 4], [4, 4]]
+println(a.scale(2.0)) // [[2, 4], [6, 8]]
+println(a.add_scalar(1.0)) // [[2, 3], [4, 5]]
 ```
 
 ### Vector Operations
