@@ -42,14 +42,22 @@ fn bench_conv2d(config bu.BenchmarkConfig) {
 	}
 
 	mut samples := []f64{len: config.iterations}
+	mut output := []f64{}
 	for i in 0 .. config.iterations {
-		t0 := time.ticks()
-		conv2d_cpu_nchw(input, kernel, batch, in_h, in_w, in_ch, out_ch, k_h, k_w, stride_h,
+		t0 := time.sys_mono_now()
+		output = conv2d_cpu_nchw(input, kernel, batch, in_h, in_w, in_ch, out_ch, k_h, k_w, stride_h,
 			stride_w) or { panic(err) }
-		samples[i] = f64(time.ticks() - t0)
+		samples[i] = f64(time.sys_mono_now() - t0) / 1_000_000.0
 	}
 	avg := bu.mean_time_ms(mut samples)
-	bu.print_vs_numpy_row('conv2d', '1x1x32x32', avg, '-')
+	operation_count := 2 * batch * out_ch * ((in_h - k_h) / stride_h + 1) * ((in_w - k_w) / stride_w + 1) * in_ch * k_h * k_w
+	gflops := f64(operation_count) / (avg * 1_000_000.0)
+	bu.print_vs_numpy_row('conv2d', '1x1x32x32', avg, '${gflops:.3f}')
+	mut checksum := 0.0
+	for value in output {
+		checksum += value
+	}
+	println('Checksum: ${checksum:.12f}')
 }
 
 fn conv2d_cpu_nchw(input []f64, kernel []f64, batch int, in_h int, in_w int, in_ch int, out_ch int, k_h int, k_w int, stride_h int, stride_w int) ![]f64 {

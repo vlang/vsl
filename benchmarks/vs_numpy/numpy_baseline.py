@@ -37,21 +37,25 @@ def bench_gemv():
 
 
 def bench_conv2d():
-    x = np.random.rand(1, 1, 32, 32)
-    w = np.random.rand(1, 1, 3, 3)
+    input_values = np.arange(32 * 32, dtype=np.int64)
+    x = ((input_values % 17).astype(np.float64) * 0.01).reshape(1, 1, 32, 32)
+    kernel_values = np.arange(3 * 3, dtype=np.int64)
+    weights = (((kernel_values % 5) + 1).astype(np.float64) * 0.1).reshape(1, 1, 3, 3)
 
     def run():
-        # correlation-style conv (matches VSL bench layout)
-        out_h = 32 - 3 + 1
-        out_w = 32 - 3 + 1
-        y = np.zeros((1, 1, out_h, out_w))
-        for oh in range(out_h):
-            for ow in range(out_w):
-                y[0, 0, oh, ow] = (x[0, 0, oh : oh + 3, ow : ow + 3] * w[0, 0]).sum()
-        return y
+        windows = np.lib.stride_tricks.sliding_window_view(x, (3, 3), axis=(2, 3))
+        return np.einsum("nchwkl,ockl->nohw", windows, weights, optimize=True)
 
-    sec = timeit.timeit(run, number=5) / 5.0
-    print(f"numpy conv2d 1x1x32x32 | {sec * 1000:.2f} ms | -")
+    for _ in range(2):
+        output = run()
+    samples_ms = []
+    for _ in range(5):
+        started = time.perf_counter_ns()
+        output = run()
+        samples_ms.append((time.perf_counter_ns() - started) / 1_000_000.0)
+    average_ms = sum(samples_ms) / len(samples_ms)
+    checksum = float(np.sum(output, dtype=np.float64))
+    print(f"numpy conv2d 1x1x32x32 | {average_ms:.6f} ms | checksum={checksum:.12f}")
 
 
 def main():
