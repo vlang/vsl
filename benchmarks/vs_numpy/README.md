@@ -71,7 +71,11 @@ systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySw
 	-- env VJOBS=2 python3 ./vsl/benchmarks/vs_numpy/numpy_baseline.py conv2d
 ```
 
-Compare GFLOPS / ms from the V scripts with the Python output for the same sizes.
+The Conv2D reference uses NumPy's `sliding_window_view` and optimized
+`einsum`, with deterministic inputs identical to the V benchmark, two warmups,
+five timed calls, and a checksum. Compare its result with the V output to check
+both timing and numerical agreement. Compare GFLOPS / ms from the GEMM and GEMV
+V scripts with the Python output for the same sizes.
 
 The current `matmul_bench.v` measures the public `Matrix * Matrix` operator,
 including allocation of its result matrix, matching NumPy's allocating `a @ b`

@@ -57,6 +57,7 @@ jobs:
             echo '### NumPy baseline'
             env HOME="$HOME" PATH="$PATH" VJOBS=2 OPENBLAS_NUM_THREADS=2 python3 vsl/benchmarks/vs_numpy/numpy_baseline.py matmul
             env HOME="$HOME" PATH="$PATH" VJOBS=2 OPENBLAS_NUM_THREADS=2 python3 vsl/benchmarks/vs_numpy/numpy_baseline.py gemv
+            env HOME="$HOME" PATH="$PATH" VJOBS=2 OPENBLAS_NUM_THREADS=2 python3 vsl/benchmarks/vs_numpy/numpy_baseline.py conv2d
           } 2>&1 | tee vs_numpy_pr.md
 
       - name: Post sticky PR comment
