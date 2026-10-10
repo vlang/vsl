@@ -81,17 +81,17 @@ pub fn gemm_vcl(mut dev vcl.Device, a_data []f64, b_data []f64, m int, n int, k 
 pub fn gemm_vcl_f32(mut dev vcl.Device, a_data []f32, b_data []f32, m int, n int, k int) ![]f32 {
 	dev.add_program(gemm_f32_kernel_source)!
 
-	mut a_vec := dev.vector[f32](a_data.len)!
+	mut a_vec := dev.vector_f32(a_data.len)!
 	err_a := <-a_vec.load(a_data)
 	if err_a !is none {
 		return err_a
 	}
-	mut b_vec := dev.vector[f32](b_data.len)!
+	mut b_vec := dev.vector_f32(b_data.len)!
 	err_b := <-b_vec.load(b_data)
 	if err_b !is none {
 		return err_b
 	}
-	mut c_vec := dev.vector[f32](m * n)!
+	mut c_vec := dev.vector_f32(m * n)!
 
 	kernel := dev.kernel('gemm_f32')!
 	err_k := <-kernel.global(m, n).local(local_size_2d, local_size_2d).run(a_vec.buffer(), b_vec.buffer(), c_vec.buffer(), i32(m),
