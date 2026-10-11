@@ -112,22 +112,28 @@ systemd-run --user --scope --quiet -p MemoryMax=768M -p MemorySwapMax=0 -- env V
 ```
 
 On an AMD Ryzen 9 5900X with V 0.5.2 (`a60fb58`), GCC 16.2.1, and NumPy 2.5.4
-using SciPy OpenBLAS 0.3.34.106.0, four interleaved process runs measured these
-medians:
+using SciPy OpenBLAS 0.3.34.106.0, three interleaved process runs measured the
+following median of per-process means. Each process used three warmups and
+seven timed calls with the same deterministic inputs and preallocated output.
+The V runs used `VJOBS=2`; NumPy used two OpenBLAS threads.
 
 | Backend | 512×512 mean |
 |---|---:|
-| VSL pure-V SIMD, `-prod -march=native`, `VJOBS=2` | 2.722 ms |
-| NumPy, 2 OpenBLAS threads | 1.010 ms |
+| VSL pure-V SIMD, `-prod -march=native` | 2.797 ms |
+| VSL generic system CBLAS (`blas`/`cblas` 3.12.1) | 34.511 ms |
+| NumPy 2.5.4, SciPy OpenBLAS 0.3.34.106.0 | 0.972 ms |
 
-Both implementations reuse a preallocated output buffer and use the same
-deterministic inputs, three warmups, and seven timed calls. NumPy was 2.70×
-faster on this case. Checksums were `125.054512` for VSL and `125.054504` for
-NumPy; the difference is consistent with `f32` accumulation rounding. These
-measurements describe this host and workload only. Earlier local timings in
-this section are superseded: the V benchmark then allocated its output inside
-the timed region while NumPy reused a preallocated output, so those numbers
-were not directly comparable.
+NumPy was 2.88× faster than VSL's pure-V SIMD path in this sample. The generic
+system CBLAS build was much slower than either path, while the separately
+measured OpenBLAS backend in the local sample below was faster than NumPy. This
+shows why results must identify the concrete BLAS provider; selecting a CBLAS
+API alone does not guarantee an optimized implementation. Checksums were
+`125.054512` for VSL pure-V and `125.054504` for NumPy and generic CBLAS; the
+small difference is consistent with `f32` accumulation rounding. These results
+describe this host, backend, and workload only. Earlier local timings in this
+section are superseded: the V benchmark then allocated its output inside the
+timed region while NumPy reused a preallocated output, so those numbers were
+not directly comparable.
 
 ## Ryzen 9 5900X local sample
 
