@@ -79,3 +79,50 @@ systemd-run --user --scope -p MemoryMax=2G -p MemorySwapMax=0 -- env VJOBS=2 \
 
 These timings cover one contiguous vector length and backend configuration;
 they are evidence for that BLAS operation only, not a library-wide ranking.
+
+## BLAS Level 3 SGEMM f32
+
+This comparison measures row-major 512×512 single-precision SGEMM in VSL and
+SciPy's low-level `scipy.linalg.blas.sgemm`. Both use the same deterministic
+f32 values, preallocated output buffers, three warmups, and 31 timed calls;
+the reported time is the median of calls, excluding input generation and
+output allocation. Both programs print a sum across the full output as a
+cross-implementation sanity check. SciPy verifies that its wrapper reuses the
+provided output buffer and reports its BLAS provider and thread setting.
+
+Build the V programs with production optimization, then execute each binary
+separately. Run every command from `~/.vmodules`:
+
+```bash
+cd ~/.vmodules
+systemd-run --user --scope -p MemoryMax=2G -p MemorySwapMax=0 -- env VJOBS=2 \
+	v -no-parallel -cc gcc -prod -cflags "-march=native" \
+	-o /tmp/vsl-scipy-sgemm-pure ./vsl/benchmarks/vs_scipy/sgemm_f32_bench.v
+systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 \
+	/tmp/vsl-scipy-sgemm-pure
+systemd-run --user --scope -p MemoryMax=2G -p MemorySwapMax=0 -- env VJOBS=2 \
+	v -no-parallel -cc gcc -d vsl_blas_cblas -prod -cflags "-march=native" \
+	-o /tmp/vsl-scipy-sgemm-openblas ./vsl/benchmarks/vs_scipy/sgemm_f32_bench.v
+systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 \
+	OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 /tmp/vsl-scipy-sgemm-openblas
+systemd-run --user --scope -p MemoryMax=2G -p MemorySwapMax=0 -- env VJOBS=2 \
+	OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 uv run --no-project --with scipy python \
+	./vsl/benchmarks/vs_scipy/scipy_sgemm_f32_baseline.py
+```
+
+The OpenBLAS build requires the OpenBLAS development library and headers;
+record the actual linked provider and version. SciPy wheels may bundle a
+different BLAS build, so report both providers, compiler flags, CPU, and thread
+counts with results. The pure-V result is a diagnostic when OpenBLAS is
+available, not VSL's best-backend comparison. These results cover only this
+SGEMM shape and dtype; they do not rank the full VSL, SciPy, or NumPy feature
+sets.
+
+On an AMD Ryzen 9 5900X workstation, three separate process runs with V 0.5.2,
+GCC 16.2.1, `-prod -cflags "-march=native"`, and two BLAS threads measured
+median-of-run medians of 1.010 ms for VSL linked to OpenBLAS 0.3.34 and
+0.975 ms for SciPy 1.18.1 using its bundled OpenBLAS 0.3.31.dev. The pure-V
+SIMD path's median across three process runs was 2.635 ms. The OpenBLAS full
+output sums were 32878720.600410 (VSL) and 32878720.601921 (SciPy). VSL's
+OpenBLAS build was about 3.6% slower in this sample; run-to-run variation and
+the different OpenBLAS versions prevent a broader performance claim.
