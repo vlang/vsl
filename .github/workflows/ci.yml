@@ -294,17 +294,16 @@ jobs:
       - name: Execute Tests using CUDA Backend
         run: |
           cd ~/.vmodules
+          if ! command -v nvidia-smi >/dev/null 2>&1 || ! nvidia-smi -L >/dev/null 2>&1; then
+            echo "::notice::Skipping CUDA tests: no NVIDIA GPU is visible to this runner."
+            exit 0
+          fi
           env HOME="$HOME" PATH="$PATH" VJOBS=2 v wipe-cache
           env HOME="$HOME" PATH="$PATH" VJOBS=2 TERM="$TERM" \
             "$HOME/.vmodules/vsl/bin/test" --use-cuda
-          # Run numerical checks only when this runner can see an NVIDIA GPU.
-          # Once started, compilation and test failures must fail the job.
-          if command -v nvidia-smi >/dev/null 2>&1 && nvidia-smi -L >/dev/null 2>&1; then
-            env HOME="$HOME" PATH="$PATH" VJOBS=2 \
-              env VSL_TEST_CUDA=1 v -d cuda -d cudnn_layernorm test vsl/cuda/compute/numerical_validation_test.v
-          else
-            echo "::notice::Skipping CUDA numerical validation: no NVIDIA GPU is visible to this runner."
-          fi
+          # Once a GPU is detected, compilation and numerical test failures fail the job.
+          env HOME="$HOME" PATH="$PATH" VJOBS=2 \
+            env VSL_TEST_CUDA=1 v -d cuda -d cudnn_layernorm test vsl/cuda/compute/numerical_validation_test.v
 
   run-tests-on-macos:
     runs-on: ${{ matrix.os }}
