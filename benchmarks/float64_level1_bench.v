@@ -32,15 +32,15 @@ fn main() {
 		scalar_checksum += scalar_dot(x, y)
 	}
 	scalar_ns := time.sys_mono_now() - started
-	mut simd_checksum := 0.0
+	mut dot_checksum := 0.0
 	started = time.sys_mono_now()
 	for _ in 0 .. iterations {
-		simd_checksum += float64.dot_unitary(x, y)
+		dot_checksum += float64.dot_unitary(x, y)
 	}
-	simd_ns := time.sys_mono_now() - started
+	dot_ns := time.sys_mono_now() - started
 	println('vector length: ${vector_size}, iterations: ${iterations}')
 	println('scalar dot: ${f64(scalar_ns) / iterations / 1e6:.3f} ms')
-	println('SIMD dot:   ${f64(simd_ns) / iterations / 1e6:.3f} ms')
-	println('speedup:    ${f64(scalar_ns) / f64(simd_ns):.2f}x')
-	println('checksums: scalar=${scalar_checksum:.6f}, SIMD=${simd_checksum:.6f}')
+	println('dot_unitary: ${f64(dot_ns) / iterations / 1e6:.3f} ms')
+	println('speedup:     ${f64(scalar_ns) / f64(dot_ns):.2f}x')
+	println('checksums: scalar=${scalar_checksum:.6f}, dot_unitary=${dot_checksum:.6f}')
 }
