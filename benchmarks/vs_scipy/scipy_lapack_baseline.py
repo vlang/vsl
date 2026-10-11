@@ -11,7 +11,7 @@ import scipy
 from scipy.linalg import lapack
 
 
-SIZES = (64, 128)
+SIZES = (64, 128, 256)
 WARMUPS = 2
 ITERATIONS = 5
 

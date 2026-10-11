@@ -1,6 +1,7 @@
 module lapack64
 
 import math
+import vsl.blas
 
 // Note: lapack64 is pure V; no LAPACKE here.
 
@@ -108,6 +109,38 @@ fn test_dpotrf_identity() {
 	expected := [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
 	for i in 0 .. 9 {
 		assert abs(a[i] - expected[i]) < 1e-10, 'identity Cholesky should be identity'
+	}
+}
+
+fn test_dpotrf_blocked_lower_and_upper_reconstruct_256() {
+	assert_dpotrf_blocked_reconstructs(.lower)
+	assert_dpotrf_blocked_reconstructs(.upper)
+}
+
+fn assert_dpotrf_blocked_reconstructs(uplo blas.Uplo) {
+	n := 256
+	mut original := []f64{len: n * n}
+	for col in 0 .. n {
+		for row in 0 .. n {
+			original[row + col * n] = if row == col { f64(n) + 2.0 } else { 0.25 / f64(n) }
+		}
+	}
+	mut factor := original.clone()
+
+	assert dpotrf(uplo, n, mut factor, n), 'blocked Cholesky should succeed for ${uplo}'
+
+	for col in 0 .. n {
+		for row in 0 .. n {
+			mut reconstructed := f64(0)
+			for k in 0 .. math.min(row, col) + 1 {
+				if uplo == .lower {
+					reconstructed += factor[row + k * n] * factor[col + k * n]
+				} else {
+					reconstructed += factor[k + row * n] * factor[k + col * n]
+				}
+			}
+			assert abs(reconstructed - original[row + col * n]) < 1e-8, '${uplo} blocked reconstruction mismatch at (${row}, ${col}): got ${reconstructed}, expected ${original[row + col * n]}'
+		}
 	}
 }
 

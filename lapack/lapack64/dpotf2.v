@@ -59,7 +59,7 @@ pub fn dpotf2(ul blas.Uplo, n int, mut a []f64, lda int) bool {
 	for j := 0; j < n; j++ {
 		mut ajj := a[j * lda + j]
 		for k in 0 .. j {
-			val := a[j * lda + k]
+			val := a[j + k * lda]
 			ajj -= val * val
 		}
 		if ajj <= 0 || math.is_nan(ajj) {
@@ -70,11 +70,11 @@ pub fn dpotf2(ul blas.Uplo, n int, mut a []f64, lda int) bool {
 		a[j * lda + j] = ajj
 		if j < n - 1 {
 			for k in j + 1 .. n {
-				mut val := a[k * lda + j]
+				mut val := a[k + j * lda]
 				for i in 0 .. j {
-					val -= a[k * lda + i] * a[j * lda + i]
+					val -= a[k + i * lda] * a[j + i * lda]
 				}
-				a[k * lda + j] = val / ajj
+				a[k + j * lda] = val / ajj
 			}
 		}
 	}

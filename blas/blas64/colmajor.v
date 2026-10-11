@@ -230,7 +230,7 @@ pub fn cm_dtrsm(side Side, uplo Uplo, trans_a Transpose, diag Diagonal, m int, n
 					for ii in 0 .. m {
 						mut tmp := b[ii + j * ldb]
 						for k in 0 .. ii {
-							tmp -= a[ii + k * lda] * b[k + j * ldb]
+							tmp -= a[k + ii * lda] * b[k + j * ldb]
 						}
 						if non_unit {
 							tmp /= a[ii + ii * lda]
