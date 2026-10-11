@@ -41,6 +41,12 @@ println(a.get(1, 1))
 
 VSL is a V library for AI and high-performance scientific computing.
 
+VSL's numerical differentiation module was inspired by the [GNU Scientific
+Library (GSL)](https://www.gnu.org/software/gsl/). See GSL's
+[`COPYING` file](https://github.com/ampl/gsl/blob/master/COPYING) for its
+license. VSL remains licensed under the MIT License in [its `LICENSE`
+file](./LICENSE).
+
 <div align="center">
 
 <a href="https://github.com/vlang/vtl">
