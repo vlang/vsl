@@ -6,7 +6,7 @@ This package implements Basic Linear Algebra System (BLAS) routines in V.
 | --- | --- | --- | --- |
 | BLAS | Pure V implementation; portable and dependency-free. | Stable | None |
 | OpenBLAS | Optimized BLAS library. See [OpenBLAS backend](#openblas-backend). | Stable | `-d vsl_blas_cblas` |
-| System CBLAS | Host CBLAS for f32/f64 GEMM and GEMV; performance depends on the provider. | Linux | `-d vsl_blas_generic_cblas` |
+| System CBLAS | Host CBLAS for f32/f64 GEMM and GEMV, plus f64 DNRM2; performance depends on the provider. | Linux | `-d vsl_blas_generic_cblas` |
 
 ## Pure V implementation
 

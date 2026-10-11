@@ -9,6 +9,7 @@ $if vsl_blas_generic_cblas ? {
 	fn C.cblas_dgemm(order int, trans_a int, trans_b int, m int, n int, k int, alpha f64, const_a &f64, lda int, const_b &f64, ldb int, beta f64, c &f64, ldc int)
 	fn C.cblas_sgemv(order int, trans int, m int, n int, alpha f32, const_a &f32, lda int, const_x &f32, incx int, beta f32, y &f32, incy int)
 	fn C.cblas_dgemv(order int, trans int, m int, n int, alpha f64, const_a &f64, lda int, const_x &f64, incx int, beta f64, y &f64, incy int)
+	fn C.cblas_dnrm2(n int, const_x &f64, incx int) f64
 }
 
 // set_num_threads sets the number of threads in BLAS
@@ -46,6 +47,11 @@ pub fn dasum(n int, x []f64, incx int) f64 {
 // dnrm2 exposes this operation as part of the public API.
 @[inline]
 pub fn dnrm2(n int, x []f64, incx int) f64 {
+	$if vsl_blas_generic_cblas ? {
+		if n > 0 && incx > 0 && x.len > (n - 1) * incx {
+			return C.cblas_dnrm2(n, unsafe { &x[0] }, incx)
+		}
+	}
 	return blas64.dnrm2(n, x, incx)
 }
 
