@@ -60,11 +60,16 @@
 - [x] PR comment with NumPy ratio (`benchmark-pr-comment.yml`, PR #292)
 - [ ] CUDA variants of bench scripts (optional)
 
-### Phase H — Multi-GPU Support
-- [ ] Device discovery: enumerate all CUDA devices
-- [ ] `ComputeContext.device_id()` — select target device
-- [ ] Data parallelism: batch split across GPUs
-- [ ] `DeviceArray[T]` abstraction for multi-device tensors
+### Phase H — Multi-GPU Support (TODO; follow-up to closed [#160](https://github.com/vlang/vsl/issues/160))
+- [x] CUDA device discovery and explicit selection via get_device_count() and get_device(index)
+- [ ] ComputeContext device selection
+- [ ] Automatic workload selection and data parallelism across GPUs
+- [ ] Multi-device tensor storage and transfers
+
+Closed issue #160 proposed automatic GPU selection and partial offloading. The
+current CUDA API exposes device enumeration and explicit selection, but does
+not choose devices automatically or split workloads across devices. Treat the
+issue closure as historical; Phase H remains incomplete.
 
 ### Phase I — GPU Memory Management
 - [ ] Zero-copy tensor representation (no CPU↔GPU sync unless needed)

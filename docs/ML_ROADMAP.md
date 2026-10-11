@@ -32,7 +32,7 @@ still queued; confirm those runs before treating platform validation as green.
 
 | Priority | Issue | Topic |
 |----------|-------|--------|
-| P1 | Phase H | Multi-GPU (`device_id`, data parallelism) |
+| P1 | [#160](https://github.com/vlang/vsl/issues/160) (closed) | Automatic GPU selection/partial offload; multi-GPU execution remains TODO. |
 | P1 | Phase I | GPU memory pool / zero-copy |
 | P2 | [#21](https://github.com/vlang/vsl/issues/21) | Pure-V compute performance and SIMD optimization |
 | P2 | [#65](https://github.com/vlang/vsl/issues/65) | Correctly rounded binary32 math research |
