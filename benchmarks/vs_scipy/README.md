@@ -1,0 +1,47 @@
+# VSL vs SciPy LAPACK
+
+This paired benchmark compares VSL's double-precision LAPACK routines with
+SciPy's wrappers for the same LAPACK operations: `dgesv`, `dgetrf`, `dpotrf`,
+and `dgeqrf`. Both programs use identical deterministic matrices and
+right-hand sides, perform two warmups and five timed calls, include the input
+copy in each timed call, and report the median and an output checksum.
+
+The current VSL pure-V `dpotrf` blocked path also panics for the 256×256 input,
+so the paired run is limited to 64×64 and 128×128 matrices until that defect is
+fixed. `dgeqrf` checksums can differ slightly because the implementations use
+different floating-point operation order; performance numbers alone do not
+establish numerical accuracy.
+
+VSL's pure-V `dsyev` implementation currently fails to converge on a dense
+64×64 symmetric input in both eigenvalue-only (`jobz='N'`, `Dsterf failed`)
+and eigenvector (`jobz='V'`, `Dsteqr failed`) modes. It is excluded from timing
+until this correctness issue is fixed; the benchmark does not imply coverage
+or parity for symmetric eigensolvers.
+
+Run every command from `~/.vmodules`. Build V once with production optimization,
+then run the resulting executable separately so compilation is outside the
+timed workload:
+
+```bash
+cd ~/.vmodules
+systemd-run --user --scope -p MemoryMax=2G -p MemorySwapMax=0 -- env VJOBS=2 \
+	v -no-parallel -cc gcc -prod -cflags "-march=native" \
+	-o /tmp/vsl-scipy-lapack ./vsl/benchmarks/vs_scipy/lapack_bench.v
+systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 \
+	/tmp/vsl-scipy-lapack
+systemd-run --user --scope -p MemoryMax=2G -p MemorySwapMax=0 -- env VJOBS=2 \
+	OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 uv run --no-project --with scipy python \
+	./vsl/benchmarks/vs_scipy/scipy_lapack_baseline.py
+```
+
+The V program selects the configured VSL backend at build time. The default is
+pure V. To compare an installed LAPACKE backend, build a second executable
+with `-d vsl_lapack_lapacke` and report its active linked library. The Python
+baseline uses SciPy's low-level LAPACK wrappers, with `overwrite_a` and
+Fortran-order arrays where required to avoid extra copies. Record
+`python -m scipy.show_config` output alongside results to identify the BLAS/LAPACK
+provider; use the same thread count for SciPy and any threaded VSL backend. See
+the [SciPy low-level LAPACK reference](https://docs.scipy.org/doc/scipy/reference/linalg.lapack.html).
+
+These results compare only the listed f64 LAPACK operations and matrix sizes.
+They do not compare VSL's full scientific or machine-learning feature set.
