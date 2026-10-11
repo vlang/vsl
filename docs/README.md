@@ -16,10 +16,10 @@ docs, benchmarks, and release status.
 |------|------|
 | Install VSL and run the first example | [Installation and Setup](getting-started/01-installation.md) |
 | Learn the core scientific APIs | [Basic Linear Algebra](getting-started/03-basic-linear-algebra.md), [BLAS Basics](linear-algebra/01-blas-basics.md) |
-| Build ML pipelines with VSL algorithms | [Data Preparation](machine-learning/01-data-preparation.md), [Clustering](machine-learning/02-clustering.md), [Regression](machine-learning/03-regression.md), [Classification](machine-learning/04-classification.md) |
+| Build ML pipelines | [Data prep](machine-learning/01-data-preparation.md), [Classification](machine-learning/04-classification.md) |
 | Train tensor/autograd neural networks | [VTL](https://github.com/vlang/vtl) |
 | Use GPU backends | [OpenCL](advanced/02-opencl-gpu.md), [CUDA](advanced/02a-cuda-gpu.md), [Vulkan](../vulkan/README.md) |
-| Compare performance | [Benchmarks](../benchmarks/README.md), [vs NumPy](../benchmarks/vs_numpy/README.md) |
+| Compare performance | [Overview](../benchmarks/README.md), [NumPy](../benchmarks/vs_numpy/README.md), [SciPy LAPACK](../benchmarks/vs_scipy/README.md) |
 | Track the ML release | [ML Roadmap](ML_ROADMAP.md) |
 
 ## Learning Paths

@@ -62,6 +62,14 @@ The two CSV tables report mean microseconds per call. Compare them on the same
 machine; the implementations have different output layouts, so these numbers
 compare execution time, not storage behavior.
 
+### LAPACK vs SciPy
+
+Use the matched [VSL vs SciPy LAPACK benchmark](./vs_scipy/README.md) for
+linear solves, LU and Cholesky factorizations, and QR factorization. It compares
+per-operation LAPACK backends rather than treating NumPy as a proxy for VSL's
+broader scientific-library scope; the benchmark README records current LAPACK
+correctness gaps that prevent wider comparisons.
+
 ### Pure-V f32 Level 1 dot product
 
 Compare the unit-stride f32 dot kernel with a scalar loop over the same fixed
