@@ -83,20 +83,26 @@ backend-matched comparison.
 
 On an AMD Ryzen 9 5900X with V 0.5.2 `a60fb58`, GCC 16.2.1, and NumPy 2.5.4,
 three interleaved process runs on 2026-10-11 produced these median
-per-process means:
+per-process means. The V binary used `-prod -cflags "-march=native"` and the
+pure-V GEMV path; the NumPy baseline used two OpenBLAS threads.
 
-| Shape | VSL pure V (ms) | NumPy, 2 OpenBLAS threads (ms) | NumPy speedup |
+| Shape | VSL pure V (ms) | NumPy, 2 OpenBLAS threads (ms) | Faster result |
 |---:|---:|---:|---:|
-| 128×128 | 0.00303 | 0.00219 | 1.38× |
-| 256×256 | 0.01190 | 0.00616 | 1.93× |
-| 512×512 | 0.05211 | 0.02833 | 1.84× |
-| 1024×1024 | 0.22020 | 0.08351 | 2.64× |
+| 128×128 | 0.003013 | 0.002244 | NumPy 1.34× |
+| 256×256 | 0.011343 | 0.006083 | NumPy 1.86× |
+| 512×512 | 0.039411 | 0.027869 | NumPy 1.41× |
+| 1024×1024 | 0.165433 | 0.108182 | NumPy 1.53× |
 
-The weighted checksums agree to floating-point rounding. NumPy's 1024×1024
-times ranged from 0.06265 to 0.10821 ms across the three runs, so the table is
-host- and load-specific. This corrected protocol replaces the earlier GEMV
-numbers, whose millisecond-resolution V timer and random NumPy inputs did not
-support a reliable comparison.
+The weighted checksums agree to floating-point rounding. The f64 unit-stride
+dot now uses four independent scalar accumulators; in the local Level 1
+benchmark it measured 0.176 ms versus 0.233 ms for the previous SIMD path
+(1.32× faster), with matching checksums. Against a sequential scalar loop it
+measured 0.176 ms versus 0.170 ms, so this result does not show a win over the
+simple scalar baseline. In GEMV, the VSL 1024×1024 median improved from
+0.22020 ms to 0.165433 ms (1.33×), while NumPy measured 0.108182 ms. The
+results remain host- and load-specific. This corrected protocol replaces the
+earlier GEMV numbers, whose millisecond-resolution V timer and random NumPy
+inputs did not support a reliable comparison.
 
 The Conv2D reference uses NumPy's `sliding_window_view` and optimized
 `einsum`, with deterministic inputs identical to the V benchmark, two warmups,

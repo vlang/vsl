@@ -81,7 +81,7 @@ fn test_dot_unitary() {
 	}
 }
 
-fn test_dot_unitary_simd_tails() {
+fn test_dot_unitary_unrolled_tails() {
 	for n in 1 .. 22 {
 		mut x := []f64{len: n}
 		mut y := []f64{len: n}

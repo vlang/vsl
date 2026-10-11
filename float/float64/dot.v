@@ -1,7 +1,5 @@
 module float64
 
-import simd
-
 // dot_unitary
 // Length validation allows direct indexed access in the hot loop.
 @[direct_array_access]
@@ -9,14 +7,18 @@ pub fn dot_unitary(x []f64, y []f64) f64 {
 	if y.len < x.len {
 		panic('dot_unitary: second vector is shorter than first')
 	}
+	mut sum0 := 0.0
+	mut sum1 := 0.0
+	mut sum2 := 0.0
+	mut sum3 := 0.0
 	mut i := 0
-	mut sums := simd.splat_f64x4(0)
 	for ; i + 4 <= x.len; i += 4 {
-		x_values := simd.load_f64x4_at(x, i)
-		y_values := simd.load_f64x4_at(y, i)
-		sums = sums + x_values * y_values
+		sum0 += x[i] * y[i]
+		sum1 += x[i + 1] * y[i + 1]
+		sum2 += x[i + 2] * y[i + 2]
+		sum3 += x[i + 3] * y[i + 3]
 	}
-	mut sum := sums.sum()
+	mut sum := (sum0 + sum1) + (sum2 + sum3)
 	for ; i < x.len; i++ {
 		sum += y[i] * x[i]
 	}
