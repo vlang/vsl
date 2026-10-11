@@ -89,6 +89,7 @@ fi
 # Also hide the vulkan module tests on macOS — the dlopen path still
 # generates linker references that can't be resolved without libvulkan.
 hidden_tests=()
+isolated_tests=()
 restore_hidden_tests() {
     for f in "${hidden_tests[@]}"; do
         if [[ -e "${f}.skip" && ! -e "$f" ]]; then
@@ -112,6 +113,17 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
         hidden_tests+=("$f")
     done < <(find "${vsl_dir_path}/vulkan" -name '*_test.v' -print0 2>/dev/null)
 fi
+
+# This test can generate unresolved anonymous thread-wrapper symbols when
+# compiled in parallel with the full test suite. Run it separately so the
+# other test files can keep using VJOBS concurrency.
+vector_test="${vsl_dir_path}/la/vector_test.v"
+if [[ -e "${vector_test}" ]]; then
+    mv "${vector_test}" "${vector_test}.skip"
+    hidden_tests+=("${vector_test}")
+    isolated_tests+=("${vector_test}")
+fi
+
 read -r -a flags_array <<< "${flags}"
 
 echo "Executing tests with command: \"v ${flags_array[*]} test .\""
@@ -122,6 +134,11 @@ set -e
 
 restore_hidden_tests
 trap - EXIT
+
+for isolated_test in "${isolated_tests[@]}"; do
+    echo "Running isolated test: ${isolated_test}"
+    v "${flags_array[@]}" test "${isolated_test}" || test_exit=1
+done
 
 # Vulkan: manual integration (not in default `v test` — avoids v_stable_sort crash).
 if [[ -n "${use_vulkan}" && "$(uname -s)" != "Darwin" ]]; then
@@ -151,7 +168,13 @@ if [[ -z "${skip_examples}" ]]; then
             continue
         fi
         echo "Compiling ${file}"
-        v "${flags_array[@]}" -o "${file}.bin" "${file}"
+        if ! v -no-parallel "${flags_array[@]}" -o "${file}.bin" "${file}"; then
+            # V can intermittently emit unresolved anonymous BLAS wrapper
+            # symbols while linking; a clean retry succeeds for valid examples.
+            rm -f "${file}.bin"
+            echo "Retrying ${file} once after the compile failure"
+            v -no-parallel "${flags_array[@]}" -o "${file}.bin" "${file}"
+        fi
         echo "${file}.bin created"
         echo "Removing ${file}.bin"
         rm -f "${file}.bin"
