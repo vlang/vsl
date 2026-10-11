@@ -2,20 +2,19 @@
 
 This paired benchmark compares VSL's double-precision LAPACK routines with
 SciPy's wrappers for the same LAPACK operations: `dgesv`, `dgetrf`, `dpotrf`,
-and `dgeqrf`. Both programs use identical deterministic matrices and
-right-hand sides, perform two warmups and five timed calls, include the input
-copy in each timed call, and report the median and an output checksum.
+`dgeqrf`, and eigenvalue-only `dsyev`. Both programs use identical deterministic
+matrices and right-hand sides, perform two warmups and five timed calls, include
+the input copy in each timed call, and report the median and an output checksum.
 
 The 256×256 Cholesky case also exercises VSL's blocked factorization path.
 `dgeqrf` checksums can differ slightly because the implementations use
 different floating-point operation order; performance numbers alone do not
 establish numerical accuracy.
 
-VSL's pure-V `dsyev` implementation currently fails to converge on a dense
-64×64 symmetric input in both eigenvalue-only (`jobz='N'`, `Dsterf failed`)
-and eigenvector (`jobz='V'`, `Dsteqr failed`) modes. It is excluded from timing
-until this correctness issue is fixed; the benchmark does not imply coverage
-or parity for symmetric eigensolvers.
+The `dsyev` comparison requests eigenvalues only (`jobz='N'`) on both sides.
+VSL's pure-V eigenvector path (`jobz='V'`) currently returns inaccurate vectors
+for the dense 64×64 input and is excluded until that defect is fixed; this
+benchmark does not imply eigenvector parity.
 
 Run every command from `~/.vmodules`. Build V once with production optimization,
 then run the resulting executable separately so compilation is outside the

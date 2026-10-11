@@ -22,6 +22,7 @@ fn main() {
 		benchmark_case('dgetrf', n, general_row_major, [])
 		benchmark_case('dpotrf', n, symmetric, [])
 		benchmark_case('dgeqrf', n, qr_input, [])
+		benchmark_case('dsyev-eigenvalues', n, symmetric, [])
 	}
 }
 
@@ -74,6 +75,14 @@ fn execute(operation string, n int, input []f64, rhs []f64) f64 {
 				panic('dgeqrf returned ${info}')
 			}
 			return diagonal_sum(a, n) + sum_values(tau)
+		}
+		'dsyev-eigenvalues' {
+			mut eigenvalues := []f64{len: n}
+			info := lapack.dsyev(.ev_none, .upper, n, mut a, n, mut eigenvalues)
+			if info != 0 {
+				panic('dsyev returned ${info}')
+			}
+			return sum_values(eigenvalues)
 		}
 		else {
 			panic('unsupported LAPACK operation ${operation}')

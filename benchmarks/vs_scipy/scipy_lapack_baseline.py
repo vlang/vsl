@@ -39,8 +39,8 @@ def rhs_vector(n: int) -> np.ndarray:
 
 
 def execute(operation: str, n: int, general: np.ndarray, symmetric: np.ndarray, rhs: np.ndarray) -> float:
-    source = symmetric if operation == "dpotrf" else general
-    order = "F" if operation == "dgeqrf" else "C"
+    source = symmetric if operation in {"dpotrf", "dsyev-eigenvalues"} else general
+    order = "F" if operation in {"dgeqrf", "dsyev-eigenvalues"} else "C"
     a = np.array(source, order=order, copy=True)
     if operation == "dgesv":
         b = rhs.copy(order="F")
@@ -63,6 +63,11 @@ def execute(operation: str, n: int, general: np.ndarray, symmetric: np.ndarray, 
         if info != 0:
             raise RuntimeError(f"dgeqrf returned {info}")
         return float(np.trace(factors) + np.sum(tau, dtype=np.float64))
+    if operation == "dsyev-eigenvalues":
+        eigenvalues, _, info = lapack.dsyev(a, compute_v=0, lower=0, overwrite_a=1)
+        if info != 0:
+            raise RuntimeError(f"dsyev returned {info}")
+        return float(np.sum(eigenvalues, dtype=np.float64))
     raise ValueError(f"unsupported LAPACK operation {operation}")
 
 
@@ -84,7 +89,7 @@ def benchmark(operation: str, n: int) -> None:
 def main() -> None:
     print(f"SciPy LAPACK comparison | SciPy {scipy.__version__} | f64 | median of {ITERATIONS}")
     for n in SIZES:
-        for operation in ("dgesv", "dgetrf", "dpotrf", "dgeqrf"):
+        for operation in ("dgesv", "dgetrf", "dpotrf", "dgeqrf", "dsyev-eigenvalues"):
             benchmark(operation, n)
 
 
