@@ -29,18 +29,26 @@ pub fn l2_norm_unitary(x []f32) f32 {
 		max_f32 := f64(f32(3.4028234663852886e38))
 		max_safe_scale := math.sqrt(max_f32 / f64(x.len))
 		if scale >= f32(1e-18) && f64(scale) <= max_safe_scale {
-			mut squared_sums := simd.splat_f32x8(0)
+			mut sum_squares := 0.0
+			mut block_sums := simd.splat_f32x8(0)
+			mut block_count := 0
 			mut offset := 0
 			for ; offset + 8 <= x.len; offset += 8 {
 				values := simd.load_f32x8_at(x, offset)
-				squared_sums += values * values
+				block_sums += values * values
+				block_count++
+				if block_count == 1024 {
+					sum_squares += f64(block_sums.sum())
+					block_sums = simd.splat_f32x8(0)
+					block_count = 0
+				}
 			}
-			mut sum_squares := squared_sums.sum()
+			sum_squares += f64(block_sums.sum())
 			for value in x[offset..] {
-				sum_squares += value * value
+				sum_squares += f64(value) * f64(value)
 			}
-			if !math.is_inf(f64(sum_squares), 1) {
-				return f32(math.sqrt(f64(sum_squares)))
+			if !math.is_inf(sum_squares, 1) {
+				return f32(math.sqrt(sum_squares))
 			}
 		}
 	}

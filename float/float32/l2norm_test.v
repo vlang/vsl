@@ -64,6 +64,14 @@ fn test_l2_norm_unitary_simd_matches_f64_reference_and_keeps_extreme_fallback() 
 	}
 	assert tolerance(f32(math.sqrt(reference_sum)), l2_norm_unitary(values), f32(1e-6))
 
+	mut long_values := []f32{len: 500_000}
+	mut long_reference_sum := 0.0
+	for i in 0 .. long_values.len {
+		long_values[i] = f32(i % 97) / f32(13) - f32(3)
+		long_reference_sum += f64(long_values[i]) * f64(long_values[i])
+	}
+	assert tolerance(f32(math.sqrt(long_reference_sum)), l2_norm_unitary(long_values), f32(1e-6))
+
 	large_values := []f32{len: 64, init: f32(1e20)}
 	large_reference := math.sqrt(64 * f64(large_values[0]) * f64(large_values[0]))
 	assert tolerance(f32(large_reference), l2_norm_unitary(large_values), f32(1e-6))
