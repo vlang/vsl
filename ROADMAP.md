@@ -103,6 +103,16 @@
 | [#34](https://github.com/vlang/vsl/issues/34) | Operator overrides for structs | Design | Define supported types and operators |
 | [#21](https://github.com/vlang/vsl/issues/21) | Enoki-inspired performance | Research | Benchmark SIMD and data layout |
 
+**Issue #34 operator coverage:** `la.Matrix[T]` supports `+`, `-`, `*`, and `/`;
+integer matrices also support `%`. `gm.Point` supports `+` and `-`, and
+`quaternion.Quaternion` supports `+`, `-`, `*`, and `/`. Matrix scalar arithmetic
+and Point/Quaternion scalar arithmetic use named methods because V requires
+both overloaded operands to have the same type. Other public structs are
+configuration, result, storage, iterator, or model types without an obvious
+arithmetic interpretation. Keep #34 open for specific missing operations with
+defined semantics; blanket operator coverage for every struct is not a useful
+contract.
+
 **Closed ML epics:** #236–#239, #240–#244, #280–#285 — see
 [ML_ROADMAP.md](docs/ML_ROADMAP.md).
 
