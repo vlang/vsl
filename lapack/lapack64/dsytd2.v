@@ -86,23 +86,23 @@ pub fn dsytd2(uplo blas.Uplo, n int, mut a []f64, lda int, mut d []f64, mut e []
 		for i := n - 2; i >= 0; i-- {
 			// Generate elementary reflector H_i = I - tau * v * vᵀ to
 			// annihilate A[i:i-1, i+1].
-			taui, _ := dlarfg(i + 1, a[i * lda + i + 1], mut a[0 + i + 1..], lda)
-			e[i] = a[i * lda + i + 1]
+			beta, taui := dlarfg(i + 1, a[i + (i + 1) * lda], mut a[(i + 1) * lda..], 1)
+			e[i] = beta
 			if taui != 0.0 {
 				// Apply H_i from both sides to A[0:i,0:i].
-				a[i * lda + i + 1] = 1.0
+				a[i + (i + 1) * lda] = 1.0
 
 				// Compute x := tau * A * v storing x in tau[0:i].
-				blas.dsymv(.upper, i + 1, taui, a, lda, a[i + 1..], lda, 0, mut tau, 1)
+				blas.dsymv(.lower, i + 1, taui, a, lda, a[(i + 1) * lda..], 1, 0, mut tau, 1)
 
 				// Compute w := x - 1/2 * tau * (xᵀ * v) * v.
-				alpha := -0.5 * taui * blas.ddot(i + 1, tau, 1, a[i + 1..], lda)
-				blas.daxpy(i + 1, alpha, a[i + 1..], lda, mut tau, 1)
+				alpha := -0.5 * taui * blas.ddot(i + 1, tau, 1, a[(i + 1) * lda..], 1)
+				blas.daxpy(i + 1, alpha, a[(i + 1) * lda..], 1, mut tau, 1)
 
 				// Apply the transformation as a rank-2 update
 				// A = A - v * wᵀ - w * vᵀ.
-				blas.dsyr2(.upper, i + 1, -1.0, a[i + 1..], lda, tau, 1, mut a, lda)
-				a[i * lda + i + 1] = e[i]
+				blas.dsyr2(.lower, i + 1, -1.0, a[(i + 1) * lda..], 1, tau, 1, mut a, lda)
+				a[i + (i + 1) * lda] = e[i]
 			}
 			d[i + 1] = a[(i + 1) * lda + i + 1]
 			tau[i] = taui
@@ -113,24 +113,23 @@ pub fn dsytd2(uplo blas.Uplo, n int, mut a []f64, lda int, mut d []f64, mut e []
 		for i := 0; i < n - 1; i++ {
 			// Generate elementary reflector H_i = I - tau * v * vᵀ to
 			// annihilate A[i+2:n, i].
-			taui, _ := dlarfg(n - i - 1, a[(i + 1) * lda + i], mut a[math.min(i + 2, n - 1) * lda +
-				i..], lda)
-			e[i] = a[(i + 1) * lda + i]
+			beta, taui := dlarfg(n - i - 1, a[i * lda + i + 1], mut a[i * lda + math.min(i + 2, n - 1)..], 1)
+			e[i] = beta
 			if taui != 0.0 {
 				// Apply H_i from both sides to A[i+1:n, i+1:n].
-				a[(i + 1) * lda + i] = 1.0
+				a[i * lda + i + 1] = 1.0
 
 				// Compute x := tau * A * v, storing y in tau[i:n-1].
-				blas.dsymv(.lower, n - i - 1, taui, a[(i + 1) * lda + i + 1..], lda, a[(i + 1) * lda + i..], lda, 0, mut tau[i..], 1)
+				blas.dsymv(.upper, n - i - 1, taui, a[(i + 1) * lda + i + 1..], lda, a[i * lda + i + 1..], 1, 0, mut tau[i..], 1)
 
 				// Compute w := x - 1/2 * tau * (xᵀ * v) * v.
-				alpha := -0.5 * taui * blas.ddot(n - i - 1, tau[i..], 1, a[(i + 1) * lda + i..], lda)
-				blas.daxpy(n - i - 1, alpha, a[(i + 1) * lda + i..], lda, mut tau[i..], 1)
+				alpha := -0.5 * taui * blas.ddot(n - i - 1, tau[i..], 1, a[i * lda + i + 1..], 1)
+				blas.daxpy(n - i - 1, alpha, a[i * lda + i + 1..], 1, mut tau[i..], 1)
 
 				// Apply the transformation as a rank-2 update
 				// A = A - v * wᵀ - w * vᵀ.
-				blas.dsyr2(.lower, n - i - 1, -1.0, a[(i + 1) * lda + i..], lda, tau[i..], 1, mut a[(i + 1) * lda + i + 1..], lda)
-				a[(i + 1) * lda + i] = e[i]
+				blas.dsyr2(.upper, n - i - 1, -1.0, a[i * lda + i + 1..], 1, tau[i..], 1, mut a[(i + 1) * lda + i + 1..], lda)
+				a[i * lda + i + 1] = e[i]
 			}
 			d[i] = a[i * lda + i]
 			tau[i] = taui
