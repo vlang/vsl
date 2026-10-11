@@ -18,7 +18,8 @@ systemd-run --user --scope -p MemoryMax=4G -p MemorySwapMax=0 -- env VJOBS=2 \
 	v -prod -o /tmp/vsl-matmul-bench ./vsl/benchmarks/vs_numpy/matmul_bench.v
 systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tmp/vsl-matmul-bench
 systemd-run --user --scope -p MemoryMax=4G -p MemorySwapMax=0 -- env VJOBS=2 \
-	v -prod -o /tmp/vsl-gemv-bench ./vsl/benchmarks/vs_numpy/gemv_bench.v
+	v -no-parallel -cc gcc -prod -cflags "-march=native" \
+	-o /tmp/vsl-gemv-bench ./vsl/benchmarks/vs_numpy/gemv_bench.v
 systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tmp/vsl-gemv-bench
 systemd-run --user --scope -p MemoryMax=4G -p MemorySwapMax=0 -- env VJOBS=2 \
 	v -prod -o /tmp/vsl-conv2d-bench ./vsl/benchmarks/vs_numpy/conv2d_bench.v
@@ -65,11 +66,37 @@ cd ~/.vmodules
 systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
 	-- env VJOBS=2 OPENBLAS_NUM_THREADS=2 uv run --with numpy python \
 	./vsl/benchmarks/vs_numpy/numpy_baseline.py matmul
-systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
-	-- env VJOBS=2 python3 ./vsl/benchmarks/vs_numpy/numpy_baseline.py gemv
-systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
-	-- env VJOBS=2 python3 ./vsl/benchmarks/vs_numpy/numpy_baseline.py conv2d
+systemd-run --user --scope --quiet --property=MemoryMax=2G --property=MemorySwapMax=0 \
+	-- env VJOBS=2 OPENBLAS_NUM_THREADS=2 uv run --offline --no-project --with numpy python \
+	./vsl/benchmarks/vs_numpy/numpy_baseline.py gemv
+systemd-run --user --scope --quiet --property=MemoryMax=2G --property=MemorySwapMax=0 \
+	-- env VJOBS=2 uv run --offline --no-project --with numpy python \
+	./vsl/benchmarks/vs_numpy/numpy_baseline.py conv2d
 ```
+
+The GEMV pair uses identical deterministic `f64` matrices and vectors, two
+warmups, seven timed calls, and a preallocated output on both sides. It uses a
+monotonic nanosecond clock and reports an index-weighted output checksum. The
+V executable exercises VSL's pure-V GEMV; NumPy uses the installed NumPy BLAS
+with two OpenBLAS threads. These are default-backend measurements, not a
+backend-matched comparison.
+
+On an AMD Ryzen 9 5900X with V 0.5.2 `a60fb58`, GCC 16.2.1, and NumPy 2.5.4,
+three interleaved process runs on 2026-10-11 produced these median
+per-process means:
+
+| Shape | VSL pure V (ms) | NumPy, 2 OpenBLAS threads (ms) | NumPy speedup |
+|---:|---:|---:|---:|
+| 128×128 | 0.00303 | 0.00219 | 1.38× |
+| 256×256 | 0.01190 | 0.00616 | 1.93× |
+| 512×512 | 0.05211 | 0.02833 | 1.84× |
+| 1024×1024 | 0.22020 | 0.08351 | 2.64× |
+
+The weighted checksums agree to floating-point rounding. NumPy's 1024×1024
+times ranged from 0.06265 to 0.10821 ms across the three runs, so the table is
+host- and load-specific. This corrected protocol replaces the earlier GEMV
+numbers, whose millisecond-resolution V timer and random NumPy inputs did not
+support a reliable comparison.
 
 The Conv2D reference uses NumPy's `sliding_window_view` and optimized
 `einsum`, with deterministic inputs identical to the V benchmark, two warmups,

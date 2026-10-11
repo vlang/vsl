@@ -3,7 +3,6 @@
 
 import sys
 import time
-import timeit
 
 import numpy as np
 
@@ -29,11 +28,22 @@ def bench_matmul():
 
 def bench_gemv():
     for n in (128, 256, 512, 1024):
-        a = np.random.rand(n, n)
-        x = np.random.rand(n)
-        sec = timeit.timeit(lambda: a @ x, number=5) / 5.0
-        gflops = 2 * n * n / sec / 1e9
-        print(f"numpy gemv {n}x{n} | {sec * 1000:.2f} ms | {gflops:.3f} GFLOPS")
+        matrix_indices = np.arange(n * n, dtype=np.int64)
+        vector_indices = np.arange(n, dtype=np.int64)
+        a = (((matrix_indices % 11) + 1).astype(np.float64) * 0.01).reshape(n, n)
+        x = ((vector_indices % 7) + 1).astype(np.float64) * 0.02
+        y = np.zeros(n, dtype=np.float64)
+        for _ in range(2):
+            np.matmul(a, x, out=y)
+        samples_ms = []
+        for _ in range(7):
+            started = time.perf_counter_ns()
+            np.matmul(a, x, out=y)
+            samples_ms.append((time.perf_counter_ns() - started) / 1_000_000.0)
+        average_ms = sum(samples_ms) / len(samples_ms)
+        gflops = 2 * n * n / (average_ms * 1_000_000.0)
+        checksum = float(np.dot(y, np.arange(1, n + 1, dtype=np.float64)))
+        print(f"numpy gemv {n}x{n} | {average_ms:.6f} ms | {gflops:.3f} GFLOPS | weighted checksum={checksum:.12f}")
 
 
 def bench_conv2d():

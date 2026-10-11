@@ -9,7 +9,7 @@ fn main() {
 	bu.print_header('VSL GEMV benchmark (blas.dgemv, f64)')
 	config := bu.BenchmarkConfig{
 		sizes:       [128, 256, 512, 1024]
-		iterations:  5
+		iterations:  7
 		warmup_runs: 2
 	}
 	bu.print_vs_numpy_table_header()
@@ -34,18 +34,21 @@ fn bench_gemv(n int, config bu.BenchmarkConfig) {
 	beta := 0.0
 
 	for _ in 0 .. config.warmup_runs {
-		y = []f64{len: m}
 		blas.dgemv(.no_trans, m, n, alpha, a, n, x, 1, beta, mut y, 1)
 	}
 
 	mut samples := []f64{len: config.iterations}
 	for i in 0 .. config.iterations {
-		y = []f64{len: m}
-		t0 := time.ticks()
+		t0 := time.sys_mono_now()
 		blas.dgemv(.no_trans, m, n, alpha, a, n, x, 1, beta, mut y, 1)
-		samples[i] = f64(time.ticks() - t0)
+		samples[i] = f64(time.sys_mono_now() - t0) / 1_000_000.0
 	}
 	avg := bu.mean_time_ms(mut samples)
 	gflops := bu.gflops_gemv_ms(m, n, avg)
 	bu.print_vs_numpy_row('gemv', '${m}x${n}', avg, '${gflops}')
+	mut checksum := 0.0
+	for i, value in y {
+		checksum += f64(i + 1) * value
+	}
+	println('weighted checksum: ${checksum:.12f}')
 }
