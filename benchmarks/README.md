@@ -147,9 +147,10 @@ systemd-run --user --scope -p MemoryMax=4G -p MemorySwapMax=0 -- env VJOBS=2 \
 systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tmp/vsl-vulkan-gemm
 ```
 
-It reports the active K tile (16 or 32) per size. These kernel-only timings
-must not be presented as end-to-end GPU performance or compared directly with
-CPU timings that include allocation or different thread counts.
+It reports the active K tile (16 or 32) and output tile (32 or 64) per size.
+The 64×64 output tile reduces workgroups for larger matrices. These kernel-only
+timings must not be presented as end-to-end GPU performance or compared
+directly with CPU timings that include allocation or different thread counts.
 
 ### Run All Benchmarks
 

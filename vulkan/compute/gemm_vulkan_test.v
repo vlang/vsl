@@ -8,7 +8,7 @@ fn test_gemm_vulkan_matches_reference_with_partial_dimensions() {
 	defer {
 		dev.release() or {}
 	}
-	for dims in [[3, 5, 7], [17, 19, 23], [31, 16, 18]] {
+	for dims in [[3, 5, 7], [17, 19, 23], [31, 16, 18], [65, 67, 63]] {
 		m := dims[0]
 		n := dims[1]
 		k := dims[2]

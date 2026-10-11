@@ -14,6 +14,7 @@ Shaders:
 |------|-----|
 | `gemm.glsl` | Tiled row-major f32 GEMM using 16-wide K blocks |
 | `gemm_k32.glsl` | GEMM variant using 32-wide K blocks, selected for medium matrices |
+| `gemm_m64_k32.glsl` | 64×64 output-tile GEMM using 32-wide K blocks |
 | `vector_mul.glsl` | `dst = a * b` |
 | `vector_sqrt.glsl` | `dst = sqrt(src)` |
 | `softplus.glsl` | Stable Softplus activation |
@@ -40,14 +41,18 @@ spirv-val --target-env vulkan1.0 /tmp/gemm.spv
 glslc -fshader-stage=compute --target-env=vulkan1.0 -O \
 	./vsl/vulkan/shaders/gemm_k32.glsl -o /tmp/gemm_k32.spv
 spirv-val --target-env vulkan1.0 /tmp/gemm_k32.spv
+glslangValidator -V --target-env vulkan1.0 -S comp -Os \
+	./vsl/vulkan/shaders/gemm_m64_k32.glsl -o /tmp/gemm_m64_k32.spv
+spirv-val --target-env vulkan1.0 /tmp/gemm_m64_k32.spv
 ```
 
-Embed each validated binary as `gemm_spv` and `gemm_k32_spv` in
-`./vsl/vulkan/spv.v`. `gemm` chooses the 32-wide K kernel only when all three
-dimensions are between 512 and 1024 inclusive; other sizes use the 16-wide
-kernel. The cutoff is hardware-dependent and should be supported by benchmark
-evidence before changing. Build the tracked shared module so imports use the
-updated kernels:
+Embed each validated binary as `gemm_spv`, `gemm_k32_spv`, and
+`gemm_m64_k32_spv` in `./vsl/vulkan/spv.v`. `gemm` selects the 32-wide K,
+32×32-output kernel for dimensions from 512 through 1024, and the 64×64-output
+kernel for other dimensions where `M` and `N` are at least 64 and `K` at least
+32. Smaller shapes use the original 16-wide K kernel. These thresholds are
+hardware-dependent and should be changed only with benchmark evidence. Build
+the tracked shared module so imports use the updated kernels:
 
 ```sh
 systemd-run --user --scope \

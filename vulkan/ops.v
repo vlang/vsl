@@ -38,6 +38,7 @@ enum PipelineType {
 	hardswish
 	gemm
 	gemm_k32
+	gemm_m64_k32
 	softmax
 	layernorm
 	reduction
@@ -235,14 +236,21 @@ pub fn gemm(dev &Device, dst &GpuBuffer, a &GpuBuffer, b &GpuBuffer, m u32, n u3
 	params_buf.load(params_bytes)!
 
 	use_k32 := m >= 512 && m <= 1024 && n >= 512 && n <= 1024 && k >= 512 && k <= 1024
-	gemm_pipeline := if use_k32 { PipelineType.gemm_k32 } else { PipelineType.gemm }
+	use_m64_k32 := !use_k32 && m >= 64 && n >= 64 && k >= 32
+	gemm_pipeline := if use_m64_k32 {
+		PipelineType.gemm_m64_k32
+	} else if use_k32 {
+		PipelineType.gemm_k32
+	} else {
+		PipelineType.gemm
+	}
 	pl := pipeline_get(dev, gemm_pipeline)!
 	pl.update_buffer(0, a)!
 	pl.update_buffer(1, b)!
 	pl.update_buffer(2, dst)!
 	pl.update_buffer(3, params_buf)!
-	// Each 16×16 workgroup computes a 32×32 output tile; each thread owns 2×2 outputs.
-	gemm_ls := u32(32)
+	// Tiled kernels compute a 64×64 output tile; fallback computes 32×32.
+	gemm_ls := if use_m64_k32 { u32(64) } else { u32(32) }
 	cols_wg := (n + gemm_ls - 1) / gemm_ls
 	rows_wg := (m + gemm_ls - 1) / gemm_ls
 	dispatch_sync(dev, pl, cols_wg * workgroup_size_x, rows_wg, 1)!
@@ -559,6 +567,7 @@ fn pipeline_get(d &Device, t PipelineType) !&ComputePipeline {
 		.hardswish { pl = d.create_pipeline(hardswish_spv, 'main')! }
 		.gemm { pl = d.create_pipeline(gemm_spv, 'main')! }
 		.gemm_k32 { pl = d.create_pipeline(gemm_k32_spv, 'main')! }
+		.gemm_m64_k32 { pl = d.create_pipeline(gemm_m64_k32_spv, 'main')! }
 		.softmax { pl = d.create_pipeline(softmax_spv, 'main')! }
 		.layernorm { pl = d.create_pipeline(layernorm_spv, 'main')! }
 		.reduction { pl = d.create_pipeline(reduction_spv, 'main')! }
