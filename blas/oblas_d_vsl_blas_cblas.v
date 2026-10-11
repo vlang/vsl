@@ -1,6 +1,7 @@
 module blas
 
 import vsl.blas.blas64
+import math
 
 fn C.openblas_set_num_threads(n int)
 
@@ -281,6 +282,24 @@ pub fn dsum(n int, x []f64, incx int) f64 {
 // snrm2 exposes this operation as part of the public API.
 @[inline]
 pub fn snrm2(n int, x []f32, incx int) f32 {
+	if incx < 1 {
+		if incx == 0 {
+			panic(blas64.zero_incx)
+		}
+		return 0
+	}
+	if x.len <= (n - 1) * incx {
+		panic(blas64.short_x)
+	}
+	if n < 2 {
+		if n == 1 {
+			return math.abs(x[0])
+		}
+		if n == 0 {
+			return 0
+		}
+		panic(blas64.nlt0)
+	}
 	return C.cblas_snrm2(n, unsafe { &x[0] }, incx)
 }
 

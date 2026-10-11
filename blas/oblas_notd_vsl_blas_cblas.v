@@ -55,6 +55,33 @@ pub fn dnrm2(n int, x []f64, incx int) f64 {
 	return blas64.dnrm2(n, x, incx)
 }
 
+// snrm2 computes the Euclidean norm of a single-precision vector.
+@[inline]
+pub fn snrm2(n int, x []f32, incx int) f32 {
+	if incx < 1 {
+		if incx == 0 {
+			panic(blas64.zero_incx)
+		}
+		return 0
+	}
+	if x.len <= (n - 1) * incx {
+		panic(blas64.short_x)
+	}
+	if n < 2 {
+		if n == 1 {
+			return math.abs(x[0])
+		}
+		if n == 0 {
+			return 0
+		}
+		panic(blas64.nlt0)
+	}
+	if incx == 1 {
+		return float32.l2_norm_unitary(x[..n])
+	}
+	return float32.l2_norm_inc(x, u32(n), u32(incx))
+}
+
 // daxpy computes y := alpha * x + y.
 
 // daxpy exposes this operation as part of the public API.

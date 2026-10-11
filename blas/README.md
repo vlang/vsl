@@ -38,6 +38,7 @@ systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 \
 
 **Level 1 BLAS**:
 - `ddot` - Dot product
+- `snrm2` - Single-precision Euclidean norm
 - `dnrm2` - Euclidean norm
 - `dasum` - Sum of absolute values
 - `daxpy` - Vector addition (y = alpha*x + y)

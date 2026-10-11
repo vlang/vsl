@@ -308,6 +308,21 @@ fn test_dnrm2_empty_vector() {
 	assert dnrm2(0, []f64{}, 1) == 0.0
 }
 
+fn test_snrm2_uses_stable_norm_for_contiguous_and_strided_values() {
+	contiguous := snrm2(2, [3.0, 4.0], 1)
+	assert math.abs(f64(contiguous) - 5.0) < 1e-6
+	strided := snrm2(2, [3.0, 99.0, 4.0], 2)
+	assert math.abs(f64(strided) - 5.0) < 1e-6
+	large := snrm2(2, [1e30, 1e30], 1)
+	assert math.abs(f64(large / 1e30) - math.sqrt(2.0)) < 1e-6
+	small := snrm2(2, [1e-30, 1e-30], 1)
+	assert math.abs(f64(small / 1e-30) - math.sqrt(2.0)) < 1e-6
+}
+
+fn test_snrm2_empty_vector() {
+	assert snrm2(0, []f32{}, 1) == 0.0
+}
+
 fn test_idamax() {
 	for case in level1_test_cases {
 		result := idamax(case.n, case.x, case.incx)
