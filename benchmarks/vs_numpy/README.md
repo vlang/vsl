@@ -111,28 +111,23 @@ systemd-run --user --scope --quiet -p MemoryMax=768M -p MemorySwapMax=0 -- env V
 	uv run --with numpy python ./vsl/benchmarks/vs_numpy/numpy_sgemm_f32_baseline.py
 ```
 
-On the Ryzen 9 5900X with V 0.5.2 and NumPy 2.5.3, the updated pure-V kernel
-measured 3.671 ms at 512×512 with the portable production build and 3.462 ms
-with `-cflags "-O3 -march=native"`. The previous kernel measured 4.327 ms and
-3.928 ms respectively on the same host. NumPy with two OpenBLAS threads
-measured 0.976 ms. The optimized V path is still about 3.8× slower with the
-portable build and 3.5× slower with the native build; the output checksums
-matched to f32 precision. These are local measurements, not a general ranking.
+On an AMD Ryzen 9 5900X with V 0.5.2 (`a60fb58`), GCC 16.2.1, and NumPy 2.5.4
+using SciPy OpenBLAS 0.3.34.106.0, four interleaved process runs measured these
+medians:
 
-### Current local host (2026-10-07)
+| Backend | 512×512 mean |
+|---|---:|
+| VSL pure-V SIMD, `-prod -march=native`, `VJOBS=2` | 2.722 ms |
+| NumPy, 2 OpenBLAS threads | 1.010 ms |
 
-On an AMD Ryzen 9 5900X with V 0.5.2, the native `-O3 -march=native` pure-V
-SIMD build measured 3.791 ms before the SGEMM FMA change. After using SIMD
-fused multiply-add for the eight vector accumulators, three process runs
-measured 2.604, 2.568, and 3.070 ms; the median was 2.604 ms (31% below the
-single pre-change run). NumPy 2.5.3 with `OPENBLAS_NUM_THREADS=2` measured
-0.971 ms using the same deterministic inputs and a preallocated output. The
-V and NumPy checksums were `125.054512` and `125.054504`; the small difference
-is expected from f32 rounding. The optimized pure-V kernel was still 2.68×
-slower than NumPy on this host, so the change narrows but does not close the
-performance gap. Each V benchmark run includes three warmups and seven timed
-calls; runs used two V jobs and a 768 MiB memory limit. These measurements
-describe this host only.
+Both implementations reuse a preallocated output buffer and use the same
+deterministic inputs, three warmups, and seven timed calls. NumPy was 2.70×
+faster on this case. Checksums were `125.054512` for VSL and `125.054504` for
+NumPy; the difference is consistent with `f32` accumulation rounding. These
+measurements describe this host and workload only. Earlier local timings in
+this section are superseded: the V benchmark then allocated its output inside
+the timed region while NumPy reused a preallocated output, so those numbers
+were not directly comparable.
 
 ## Ryzen 9 5900X local sample
 
