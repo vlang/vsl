@@ -14,7 +14,7 @@ fn main() {
 		dev.release() or {}
 	}
 	println('VSL Vulkan GEMM f32 on ${dev.gpu_name()}')
-	println('size,k_tile,iterations,mean_ms,checksum')
+	println('size,k_tile,output_tile,iterations,mean_ms,checksum')
 	for n in [128, 256, 512, 1024, 2048] {
 		bench_gemm(dev, n) or {
 			eprintln('Vulkan GEMM ${n}x${n} failed: ${err}')
@@ -61,7 +61,9 @@ fn bench_gemm(dev &vulkan.Device, n int) ! {
 		vulkan.gemm(dev, c_buf, a_buf, b_buf, u32(n), u32(n), u32(n))!
 	}
 	mean_ms := f64(time.sys_mono_now() - started) / f64(iterations) / 1_000_000.0
-	k_tile := if n >= 512 && n <= 1024 { 32 } else { 16 }
+	use_k32_output32 := n >= 512 && n <= 1024
+	k_tile := if n >= 64 { 32 } else { 16 }
+	output_tile := if n >= 64 && !use_k32_output32 { 64 } else { 32 }
 	mut c_bytes := []u8{len: n * n * 4}
 	c_buf.store(mut c_bytes)!
 	mut c_values := []f32{len: n * n}
@@ -69,5 +71,5 @@ fn bench_gemm(dev &vulkan.Device, n int) ! {
 		C.memcpy(c_values.data, c_bytes.data, c_bytes.len)
 	}
 	checksum := c_values[n * n / 2 + n / 2]
-	println('${n},${k_tile},${iterations},${mean_ms:.3f},${checksum:.6f}')
+	println('${n},${k_tile},${output_tile},${iterations},${mean_ms:.3f},${checksum:.6f}')
 }
