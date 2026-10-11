@@ -70,6 +70,9 @@ per-operation LAPACK backends rather than treating NumPy as a proxy for VSL's
 broader scientific-library scope; the benchmark README records current LAPACK
 correctness gaps that prevent wider comparisons.
 
+For BLAS Level 1 AXPY, use the same [SciPy BLAS comparison](./vs_scipy/README.md)
+and report the selected BLAS provider and thread count.
+
 ### Pure-V f32 Level 1 dot product
 
 Compare the unit-stride f32 dot kernel with a scalar loop over the same fixed
