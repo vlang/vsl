@@ -13,7 +13,7 @@ fn main() {
 	} $else {
 		println('VSL LAPACK comparison | pure V | f64 | median of 5')
 	}
-	for n in [64, 128] {
+	for n in [64, 128, 256] {
 		general_row_major := make_general_matrix(n, false)
 		qr_input := make_qr_matrix(n)
 		symmetric := make_symmetric_matrix(n)

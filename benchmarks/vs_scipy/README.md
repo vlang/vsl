@@ -6,9 +6,8 @@ and `dgeqrf`. Both programs use identical deterministic matrices and
 right-hand sides, perform two warmups and five timed calls, include the input
 copy in each timed call, and report the median and an output checksum.
 
-The current VSL pure-V `dpotrf` blocked path also panics for the 256×256 input,
-so the paired run is limited to 64×64 and 128×128 matrices until that defect is
-fixed. `dgeqrf` checksums can differ slightly because the implementations use
+The 256×256 Cholesky case also exercises VSL's blocked factorization path.
+`dgeqrf` checksums can differ slightly because the implementations use
 different floating-point operation order; performance numbers alone do not
 establish numerical accuracy.
 
@@ -39,8 +38,9 @@ pure V. To compare an installed LAPACKE backend, build a second executable
 with `-d vsl_lapack_lapacke` and report its active linked library. The Python
 baseline uses SciPy's low-level LAPACK wrappers, with `overwrite_a` and
 Fortran-order arrays where required to avoid extra copies. Record
-`python -m scipy.show_config` output alongside results to identify the BLAS/LAPACK
-provider; use the same thread count for SciPy and any threaded VSL backend. See
+`python -c "import scipy; scipy.show_config()"` output alongside results to
+identify the BLAS/LAPACK provider; use the same thread count for SciPy and any
+threaded VSL backend. See
 the [SciPy low-level LAPACK reference](https://docs.scipy.org/doc/scipy/reference/linalg.lapack.html).
 
 These results compare only the listed f64 LAPACK operations and matrix sizes.
