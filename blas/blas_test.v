@@ -304,6 +304,10 @@ fn test_dnrm2_handles_stride_and_extreme_magnitudes() {
 	assert float64.tolerance(small / 1e-308, math.sqrt(2.0), test_tol)
 }
 
+fn test_dnrm2_empty_vector() {
+	assert dnrm2(0, []f64{}, 1) == 0.0
+}
+
 fn test_idamax() {
 	for case in level1_test_cases {
 		result := idamax(case.n, case.x, case.incx)
