@@ -305,6 +305,25 @@ pub fn dgetrf(m int, n int, mut a []f64, lda int, mut ipiv []int) int {
 	}
 }
 
+$if !macos {
+	// dlange keeps the public matrix-norm API available in LAPACKE builds.
+	pub fn dlange(norm rune, m int, n int, a []f64, lda int, work []f64) f64 {
+		if m < 0 || n < 0 {
+			panic('dlange: matrix dimensions cannot be negative')
+		}
+		if m == 0 || n == 0 {
+			return 0.0
+		}
+		if norm !in [`M`, `1`, `O`, `I`, `F`, `E`] {
+			panic('dlange: invalid norm')
+		}
+		if lda < n || a.len < (m - 1) * lda + n {
+			panic('dlange: invalid matrix dimensions or buffer length')
+		}
+		return C.LAPACKE_dlange(int(blas.MemoryLayout.row_major), u8(norm), m, n, &a[0], lda)
+	}
+}
+
 // dgetri - Direct wrapper for LAPACKE_dgetri (flat array interface)
 
 // dgetri exposes this operation as part of the public API.

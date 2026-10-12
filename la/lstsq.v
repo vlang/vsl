@@ -73,14 +73,21 @@ fn lstsq_lapack(a &Matrix[f64], b &Matrix[f64], rcond f64) ([][]f64, []f64, int,
 	}
 	mut x := [][]f64{len: n, init: []f64{len: nrhs}}
 	for j := 0; j < nrhs; j++ {
-		for i := 0; i < n; i++ {
-			mut sum := 0.0
-			for k := 0; k < int_min(m, n); k++ {
+		mut projected := []f64{len: int_min(m, n)}
+		for k in 0 .. int_min(m, n) {
+			if s[k] <= tol {
+				continue
+			}
+			for row in 0 .. m {
+				projected[k] += u_mat.get(row, k) * b.get(row, j)
+			}
+		}
+		for i in 0 .. n {
+			for k in 0 .. int_min(m, n) {
 				if s[k] > tol {
-					sum += vt_mat.get(k, i) * u_mat.get(j, k) / s[k]
+					x[i][j] += vt_mat.get(k, i) * projected[k] / s[k]
 				}
 			}
-			x[i][j] = sum
 		}
 	}
 
