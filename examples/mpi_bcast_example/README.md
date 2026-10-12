@@ -162,7 +162,7 @@ indicating successful MPI communication.
 
 Congratulations! You've completed the MPI with `vsl.mpi` tutorial. This introduction
 should help you get started with parallel programming in V using MPI. For more detailed
-information, refer to the [official documentation of vsl.mpi](https://vlang.github.io/vsl/mpi.html).
+information, refer to the [vsl.mpi module source](https://github.com/vlang/vsl/tree/main/mpi).
 
 Feel free to explore additional MPI functions and experiment with different
 parallel algorithms to harness the full power of MPI in your V programs.

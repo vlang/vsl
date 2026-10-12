@@ -130,7 +130,7 @@ After mastering this example, explore:
 
 - [MPI Tutorial](https://mpitutorial.com/)
 - [OpenMPI Documentation](https://www.open-mpi.org/doc/)
-- [VSL MPI Module Reference](https://vlang.github.io/vsl/mpi/)
+- [VSL MPI Module Reference](https://github.com/vlang/vsl/tree/main/mpi)
 
 ---
 

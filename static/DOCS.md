@@ -62,8 +62,7 @@ Windows, Linux, and macOS out of the box.
 
 Done. And your system will remain "clean".
 
-Our [Docker Image](https://hub.docker.com/repository/docker/ulisesjeremias/vsl)
-also contains V and the V Tools for working with VS Code (or not).
+Our [Docker image](https://hub.docker.com/r/ulisesjeremias/vsl) also contains V and the V Tools for working with VS Code (or not).
 
 ## Install VSL locally
 

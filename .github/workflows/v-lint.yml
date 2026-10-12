@@ -78,7 +78,7 @@ jobs:
             base="$PUSH_BASE_SHA"
           fi
 
-          if [[ -z "$base" || "$base" == "0000000000000000000000000000000000000000" ]]; then
+          if [[ -z "$base" || "$base" =~ ^0{40}$ ]]; then
             markdown_files="$(git -C vsl ls-files '*.md')"
           else
             changed_files="$(git -C vsl diff --name-only "$base" HEAD)"
