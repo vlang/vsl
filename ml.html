@@ -262,7 +262,7 @@
 		<section id="Data.from_raw_x" class="doc-node">
 			<div class="title"><h2>fn Data.from_raw_x <a href="#Data.from_raw_x">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/data.v#L103"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> Data<span class="token punctuation">.</span>from_raw_x<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span>xraw <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span>T<span class="token punctuation">)</span> <span class="token operator">!</span><span class="token operator">&amp;</span>Data<span class="token punctuation">[</span>T<span class="token punctuation">]</span></code></pre>
+<code><span class="token keyword">fn</span> Data<span class="token enum_value">.</span><span class="token enum_value">from_raw_x</span><span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span>xraw <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span>T<span class="token punctuation">)</span> <span class="token operator">!</span><span class="token operator">&amp;</span>Data<span class="token punctuation">[</span>T<span class="token punctuation">]</span></code></pre>
 <p>Data.from_raw_x returns a new object with data set from raw x values Input: xraw -- [nb_samples][nb_features] table with x values (NO y values) Output: new object</p>
 
 </section>
@@ -270,7 +270,7 @@
 		<section id="Data.from_raw_xy" class="doc-node">
 			<div class="title"><h2>fn Data.from_raw_xy <a href="#Data.from_raw_xy">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/data.v#L152"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> Data<span class="token punctuation">.</span>from_raw_xy<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span>xyraw <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span>T<span class="token punctuation">)</span> <span class="token operator">!</span><span class="token operator">&amp;</span>Data<span class="token punctuation">[</span>T<span class="token punctuation">]</span></code></pre>
+<code><span class="token keyword">fn</span> Data<span class="token enum_value">.</span><span class="token enum_value">from_raw_xy</span><span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span>xyraw <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span>T<span class="token punctuation">)</span> <span class="token operator">!</span><span class="token operator">&amp;</span>Data<span class="token punctuation">[</span>T<span class="token punctuation">]</span></code></pre>
 <p>Data.from_raw_xy returns a new object with data set from raw Xy values Input: Xyraw -- [nb_samples][nb_features+1] table with x and y raw values, where the last column contains y-values Output: new object</p>
 
 </section>
@@ -278,7 +278,7 @@
 		<section id="Data.from_raw_xy_sep" class="doc-node">
 			<div class="title"><h2>fn Data.from_raw_xy_sep <a href="#Data.from_raw_xy_sep">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/data.v#L125"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> Data<span class="token punctuation">.</span>from_raw_xy_sep<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span>xraw <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span>T<span class="token punctuation">,</span> yraw <span class="token punctuation">[</span><span class="token punctuation">]</span>T<span class="token punctuation">)</span> <span class="token operator">!</span><span class="token operator">&amp;</span>Data<span class="token punctuation">[</span>T<span class="token punctuation">]</span></code></pre>
+<code><span class="token keyword">fn</span> Data<span class="token enum_value">.</span><span class="token enum_value">from_raw_xy_sep</span><span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span>xraw <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span>T<span class="token punctuation">,</span> yraw <span class="token punctuation">[</span><span class="token punctuation">]</span>T<span class="token punctuation">)</span> <span class="token operator">!</span><span class="token operator">&amp;</span>Data<span class="token punctuation">[</span>T<span class="token punctuation">]</span></code></pre>
 <p>Data.from_raw_xy_sep accepts two parameters: xraw [][]T and yraw []T. It acts similarly to Data.from_raw_xy, but instead of using the last column of xraw as the y data, it uses yraw instead.</p>
 
 </section>
@@ -286,7 +286,7 @@
 		<section id="Data.new" class="doc-node">
 			<div class="title"><h2>fn Data.new <a href="#Data.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/data.v#L45"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> Data<span class="token punctuation">.</span>new<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span>nb_samples <span class="token builtin">int</span><span class="token punctuation">,</span> nb_features <span class="token builtin">int</span><span class="token punctuation">,</span> use_y <span class="token builtin">bool</span><span class="token punctuation">,</span> allocate <span class="token builtin">bool</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token operator">&amp;</span>Data<span class="token punctuation">[</span>T<span class="token punctuation">]</span></code></pre>
+<code><span class="token keyword">fn</span> Data<span class="token enum_value">.</span><span class="token enum_value">new</span><span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span>nb_samples <span class="token builtin">int</span><span class="token punctuation">,</span> nb_features <span class="token builtin">int</span><span class="token punctuation">,</span> use_y <span class="token builtin">bool</span><span class="token punctuation">,</span> allocate <span class="token builtin">bool</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token operator">&amp;</span>Data<span class="token punctuation">[</span>T<span class="token punctuation">]</span></code></pre>
 <p>Data.new returns a new object to hold ML data Input: nb_samples  -- number of data samples (rows in x) nb_features -- number of features (columns in x) use_y       -- use y data vector allocate    -- allocates x (and y); otherwise, x and y must be set using set() method Output: new object</p>
 
 </section>
@@ -358,7 +358,7 @@
 		<section id="ParamsReg.new" class="doc-node">
 			<div class="title"><h2>fn ParamsReg.new <a href="#ParamsReg.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/paramsreg.v#L26"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> ParamsReg<span class="token punctuation">.</span>new<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span>nb_features <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>ParamsReg<span class="token punctuation">[</span>T<span class="token punctuation">]</span></code></pre>
+<code><span class="token keyword">fn</span> ParamsReg<span class="token enum_value">.</span><span class="token enum_value">new</span><span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span>nb_features <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>ParamsReg<span class="token punctuation">[</span>T<span class="token punctuation">]</span></code></pre>
 <p>ParamsReg.new returns a new object to hold regression parameters</p>
 
 </section>
@@ -390,7 +390,7 @@
 		<section id="Stat.from_data" class="doc-node">
 			<div class="title"><h2>fn Stat.from_data <a href="#Stat.from_data">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/workspace.v#L35"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> Stat<span class="token punctuation">.</span>from_data<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token keyword">mut</span> data Data<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">,</span> name <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>Stat<span class="token punctuation">[</span>T<span class="token punctuation">]</span></code></pre>
+<code><span class="token keyword">fn</span> Stat<span class="token enum_value">.</span><span class="token enum_value">from_data</span><span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token keyword">mut</span> data Data<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">,</span> name <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>Stat<span class="token punctuation">[</span>T<span class="token punctuation">]</span></code></pre>
 <p>stat returns a new Stat object</p>
 
 </section>
@@ -722,10 +722,10 @@
 	data              <span class="token operator">&amp;</span>Data<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span>    <span class="token operator">=</span> <span class="token keyword">unsafe</span> <span class="token punctuation">{</span> <span class="token keyword">nil</span> <span class="token punctuation">}</span> <span class="token comment">// x-y data</span>
 	stat              <span class="token operator">&amp;</span>Stat<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span>    <span class="token operator">=</span> <span class="token keyword">unsafe</span> <span class="token punctuation">{</span> <span class="token keyword">nil</span> <span class="token punctuation">}</span> <span class="token comment">// statistics</span>
 	root              <span class="token operator">&amp;</span>TreeNode     <span class="token operator">=</span> <span class="token keyword">unsafe</span> <span class="token punctuation">{</span> <span class="token keyword">nil</span> <span class="token punctuation">}</span> <span class="token comment">// Root of the tree</span>
-	max_depth         <span class="token builtin">int</span>           <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span>             <span class="token comment">// Maximum depth (-1 for unlimited)</span>
-	min_samples_split <span class="token builtin">int</span>           <span class="token operator">=</span> <span class="token number">2</span>              <span class="token comment">// Minimum samples to split</span>
-	min_samples_leaf  <span class="token builtin">int</span>           <span class="token operator">=</span> <span class="token number">1</span>              <span class="token comment">// Minimum samples in leaf</span>
-	criterion         CriterionType <span class="token operator">=</span> <span class="token punctuation">.</span>gini          <span class="token comment">// Splitting criterion</span>
+	max_depth         <span class="token builtin">int</span>           <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span>           <span class="token comment">// Maximum depth (-1 for unlimited)</span>
+	min_samples_split <span class="token builtin">int</span>           <span class="token operator">=</span> <span class="token number">2</span>            <span class="token comment">// Minimum samples to split</span>
+	min_samples_leaf  <span class="token builtin">int</span>           <span class="token operator">=</span> <span class="token number">1</span>            <span class="token comment">// Minimum samples in leaf</span>
+	criterion         CriterionType <span class="token operator">=</span> <span class="token enum_value">.</span><span class="token enum_value">gini</span>        <span class="token comment">// Splitting criterion</span>
 	trained           <span class="token builtin">bool</span>
 	is_regression     <span class="token builtin">bool</span> <span class="token comment">// Whether this is a regression task</span>
 <span class="token punctuation">}</span></code></pre>
@@ -883,7 +883,7 @@
 <span class="token keyword">mut</span><span class="token punctuation">:</span>
 	name    <span class="token builtin">string</span> <span class="token comment">// name of this "observer"</span>
 	data    <span class="token operator">&amp;</span>Data<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">unsafe</span> <span class="token punctuation">{</span> <span class="token keyword">nil</span> <span class="token punctuation">}</span>
-	weights map<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token builtin">f64</span> <span class="token comment">// weights[class] = weight</span>
+	weights <span class="token builtin">map</span><span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token builtin">f64</span> <span class="token comment">// weights[class] = weight</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
 	neighbors <span class="token punctuation">[</span><span class="token punctuation">]</span>Neighbor
 	trained   <span class="token builtin">bool</span>
@@ -903,13 +903,13 @@
 		<section id="KNN.set_weights" class="doc-node">
 			<div class="title"><h2>fn (KNN) set_weights <a href="#KNN.set_weights">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/knn.v#L63"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> knn KNN<span class="token punctuation">)</span> <span class="token function">set_weights</span><span class="token punctuation">(</span>weights map<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> knn KNN<span class="token punctuation">)</span> <span class="token function">set_weights</span><span class="token punctuation">(</span>weights <span class="token builtin">map</span><span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
 <p>set_weights will set the weights for the KNN. They default to 1.0 for every class when this function is not called.</p>
 
 </section>
 
 		<section id="KNN.update" class="doc-node">
-			<div class="title"><h2>fn (KNN) update <a href="#KNN.update">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/knn.v#L87"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (KNN) update <a href="#KNN.update">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/knn.v#L85"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> knn KNN<span class="token punctuation">)</span> <span class="token function">update</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <p>update perform updates after data has been changed (as an Observer)</p>
@@ -917,7 +917,7 @@
 </section>
 
 		<section id="KNN.train" class="doc-node">
-			<div class="title"><h2>fn (KNN) train <a href="#KNN.train">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/knn.v#L92"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (KNN) train <a href="#KNN.train">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/knn.v#L90"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> knn KNN<span class="token punctuation">)</span> <span class="token function">train</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <p>train computes the neighbors and weights during training</p>
@@ -925,7 +925,7 @@
 </section>
 
 		<section id="KNN.predict" class="doc-node">
-			<div class="title"><h2>fn (KNN) predict <a href="#KNN.predict">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/knn.v#L131"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (KNN) predict <a href="#KNN.predict">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/knn.v#L129"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> knn KNN<span class="token punctuation">)</span> <span class="token function">predict</span><span class="token punctuation">(</span>config PredictConfig<span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">f64</span></code></pre>
 <p>predict will find the <code>k</code> points nearest to the specified <code>to_pred</code>. If the value of <code>k</code> results in a draw - that is, a tie when determining the most frequent class in those k nearest neighbors (example: class 1 has 10 occurrences, class 2 has 5 and class 3 has 10) -, <code>k</code> will be decreased until there are no more ties. The worst case scenario is <code>k</code> ending up as 1. Also, it makes sure that if we do have a tie when k = 1, we select the first closest neighbor.</p>
@@ -933,7 +933,7 @@
 </section>
 
 		<section id="KNN.str" class="doc-node">
-			<div class="title"><h2>fn (KNN) str <a href="#KNN.str">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/knn.v#L203"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (KNN) str <a href="#KNN.str">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/knn.v#L201"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&amp;</span>KNN<span class="token punctuation">)</span> <span class="token function">str</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">string</span></code></pre>
 <p>str is a custom str function for observers to avoid printing data</p>
@@ -941,7 +941,7 @@
 </section>
 
 		<section id="KNN.get_plotter" class="doc-node">
-			<div class="title"><h2>fn (KNN) get_plotter <a href="#KNN.get_plotter">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/knn.v#L215"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (KNN) get_plotter <a href="#KNN.get_plotter">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/knn.v#L213"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&amp;</span>KNN<span class="token punctuation">)</span> <span class="token function">get_plotter</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>plot<span class="token punctuation">.</span>Plot</code></pre>
 <p>get_plotter returns a plot.Plot struct with the data needed to plot the KNN model.</p>
@@ -1075,9 +1075,9 @@
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
 	coef_      <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span> <span class="token comment">// learned coefficients (theta)</span>
 	intercept_ <span class="token builtin">f64</span>   <span class="token comment">// learned intercept (bias)</span>
-	alpha      <span class="token builtin">f64</span>        <span class="token operator">=</span> <span class="token number">1.0</span>            <span class="token comment">// regularization strength</span>
-	max_iter   <span class="token builtin">int</span>        <span class="token operator">=</span> <span class="token number">1000</span>           <span class="token comment">// maximum iterations</span>
-	tol        <span class="token builtin">f64</span>        <span class="token operator">=</span> <span class="token number">1e-4</span>           <span class="token comment">// convergence tolerance</span>
+	alpha      <span class="token builtin">f64</span>        <span class="token operator">=</span> <span class="token number">1.0</span>          <span class="token comment">// regularization strength</span>
+	max_iter   <span class="token builtin">int</span>        <span class="token operator">=</span> <span class="token number">1000</span>         <span class="token comment">// maximum iterations</span>
+	tol        <span class="token builtin">f64</span>        <span class="token operator">=</span> <span class="token number">1e-4</span>         <span class="token comment">// convergence tolerance</span>
 	stat       <span class="token operator">&amp;</span>Stat<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">unsafe</span> <span class="token punctuation">{</span> <span class="token keyword">nil</span> <span class="token punctuation">}</span> <span class="token comment">// statistics</span>
 <span class="token punctuation">}</span></code></pre>
 <p>Lasso defines a public data structure for this module.</p>
@@ -1371,7 +1371,7 @@
 </section>
 
 		<section id="PredictConfig" class="doc-node">
-			<div class="title"><h2>struct PredictConfig <a href="#PredictConfig">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/knn.v#L117"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>struct PredictConfig <a href="#PredictConfig">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/knn.v#L115"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">struct</span> PredictConfig <span class="token punctuation">{</span>
 <span class="token keyword">pub</span><span class="token punctuation">:</span>
@@ -1391,7 +1391,7 @@
 <span class="token keyword">mut</span><span class="token punctuation">:</span>
 	name         <span class="token builtin">string</span> <span class="token comment">// name of this "observer"</span>
 	data         <span class="token operator">&amp;</span>Data<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">unsafe</span> <span class="token punctuation">{</span> <span class="token keyword">nil</span> <span class="token punctuation">}</span> <span class="token comment">// x-y data</span>
-	max_features <span class="token builtin">int</span>        <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span>             <span class="token comment">// features per split (-1 for sqrt(n_features))</span>
+	max_features <span class="token builtin">int</span>        <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span>           <span class="token comment">// features per split (-1 for sqrt(n_features))</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
 	n_estimators  <span class="token builtin">int</span>  <span class="token operator">=</span> <span class="token number">100</span>  <span class="token comment">// number of trees</span>
 	bootstrap     <span class="token builtin">bool</span> <span class="token operator">=</span> <span class="token boolean">true</span> <span class="token comment">// bootstrap sampling</span>
@@ -1556,7 +1556,7 @@
 	support_vector_labels <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span> <span class="token comment">// labels of support vectors</span>
 	alpha                 <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span> <span class="token comment">// Lagrange multipliers [nb_samples]</span>
 	bias                  <span class="token builtin">f64</span>   <span class="token comment">// bias term</span>
-	kernel_type           KernelType <span class="token operator">=</span> <span class="token punctuation">.</span>linear
+	kernel_type           KernelType <span class="token operator">=</span> <span class="token enum_value">.</span><span class="token enum_value">linear</span>
 	degree                <span class="token builtin">int</span>        <span class="token operator">=</span> <span class="token number">3</span> <span class="token comment">// polynomial kernel degree</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
 	trained         <span class="token builtin">bool</span>
@@ -1697,7 +1697,7 @@
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 8 Oct 2026 14:41:58</div>
+						<div class="footer">Powered by vdoc. Generated on: 12 Oct 2026 15:29:47</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_ml">README</a></li>
 <li class="open"><a href="#safe_log_1p_exp">fn safe_log_1p_exp</a>        <ul>

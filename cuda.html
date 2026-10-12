@@ -279,7 +279,7 @@
 <pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>compute
 
 <span class="token comment">// Use CUDA backend automatically when available</span>
-ctx <span class="token operator">:=</span> compute<span class="token punctuation">.</span><span class="token function">new_context</span><span class="token punctuation">(</span><span class="token punctuation">.</span>cuda<span class="token punctuation">)</span>
+ctx <span class="token operator">:=</span> compute<span class="token punctuation">.</span><span class="token function">new_context</span><span class="token punctuation">(</span><span class="token enum_value">.</span><span class="token enum_value">cuda</span><span class="token punctuation">)</span>
 
 <span class="token comment">// All compute operations dispatch to CUDA when the backend is set</span>
 a <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">{</span>len<span class="token punctuation">:</span> <span class="token number">6</span><span class="token punctuation">}</span>
@@ -326,7 +326,7 @@ sudo apt<span class="token operator">-</span>get install nvidia<span class="toke
 
 <span class="token punctuation"># CUDA Toolkit</span>
 wget https<span class="token punctuation">:</span><span class="token comment">//developer.downloads.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb</span>
-sudo dpkg <span class="token operator">-</span>i cuda<span class="token operator">-</span>keyring_1<span class="token number">.1</span><span class="token operator">-</span><span class="token number">1_all</span><span class="token punctuation">.</span>deb
+sudo dpkg <span class="token operator">-</span>i cuda<span class="token operator">-</span>keyring_1<span class="token number">.1</span><span class="token operator">-</span><span class="token number">1_all</span><span class="token enum_value">.</span><span class="token enum_value">deb</span>
 sudo apt<span class="token operator">-</span>get update
 sudo apt<span class="token operator">-</span>get install cuda<span class="token operator">-</span>toolkit<span class="token operator">-</span><span class="token number">12</span><span class="token operator">-</span><span class="token number">2</span>
 
@@ -724,7 +724,7 @@ v <span class="token operator">-</span>d cuda run cuda<span class="token operato
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 8 Oct 2026 14:41:58</div>
+						<div class="footer">Powered by vdoc. Generated on: 12 Oct 2026 15:29:47</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_cuda">README</a></li>
 <li class="open"><a href="#Constants">Constants</a></li>

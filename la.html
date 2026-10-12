@@ -225,8 +225,8 @@
 <pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>la
 
 <span class="token comment">// Create matrices</span>
-<span class="token keyword">mut</span> a <span class="token operator">:=</span> la<span class="token punctuation">.</span>Matrix<span class="token punctuation">.</span>new<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span>
-<span class="token keyword">mut</span> b <span class="token operator">:=</span> la<span class="token punctuation">.</span>Matrix<span class="token punctuation">.</span>new<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span>
+<span class="token keyword">mut</span> a <span class="token operator">:=</span> la<span class="token punctuation">.</span>Matrix<span class="token enum_value">.</span><span class="token enum_value">new</span><span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span>
+<span class="token keyword">mut</span> b <span class="token operator">:=</span> la<span class="token punctuation">.</span>Matrix<span class="token enum_value">.</span><span class="token enum_value">new</span><span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span>
 
 <span class="token comment">// Set values</span>
 a<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">)</span>
@@ -234,12 +234,12 @@ a<span class="token punctuation">.</span><span class="token function">set</span>
 <span class="token comment">// ... fill matrices</span>
 
 <span class="token comment">// Matrix multiplication - create result matrix</span>
-<span class="token keyword">mut</span> c <span class="token operator">:=</span> la<span class="token punctuation">.</span>Matrix<span class="token punctuation">.</span>new<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span>
+<span class="token keyword">mut</span> c <span class="token operator">:=</span> la<span class="token punctuation">.</span>Matrix<span class="token enum_value">.</span><span class="token enum_value">new</span><span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span>
 la<span class="token punctuation">.</span><span class="token function">matrix_matrix_mul</span><span class="token punctuation">(</span><span class="token keyword">mut</span> c<span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">,</span> a<span class="token punctuation">,</span> b<span class="token punctuation">)</span>
 
 <span class="token comment">// Print result</span>
 <span class="token function">println</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span></code></pre>
-<p><code>Matrix</code> also supports <code>+</code>, <code>-</code>, <code>/</code>, and integer-only <code>%</code> element-wise operators. <code>*</code> performs conventional matrix multiplication. Element-wise operators require equal shapes; matrix multiplication requires matching inner dimensions. Since constructors return heap references and V uses <code>-</code> for pointer subtraction, dereference both operands when using matrix subtraction.</p>
+<p><code>Matrix</code> supports element-wise <code>+</code>, <code>-</code>, <code>/</code>, and integer-only <code>%</code> between equal-shaped matrices. <code>*</code> performs conventional matrix multiplication and requires matching inner dimensions. Scalar arithmetic is available through <code>add_scalar</code>, <code>sub_scalar</code>, <code>scale</code>, and <code>div_scalar</code>; integer matrices also provide <code>remainder_scalar</code>. These methods return a new matrix and leave the input unchanged. Since constructors return heap references and V uses <code>-</code> for pointer subtraction, dereference both operands when using matrix subtraction.</p>
 <pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>la
 
 a <span class="token operator">:=</span> la<span class="token punctuation">.</span>Matrix<span class="token punctuation">.</span><span class="token function">deep2</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
@@ -249,7 +249,9 @@ product <span class="token operator">:=</span> a <span class="token operator">*<
 subtracted <span class="token operator">:=</span> <span class="token punctuation">(</span><span class="token operator">*</span>b<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token punctuation">(</span><span class="token operator">*</span>a<span class="token punctuation">)</span>
 <span class="token function">println</span><span class="token punctuation">(</span>sum<span class="token punctuation">)</span> <span class="token comment">// [[6, 8], [10, 12]]</span>
 <span class="token function">println</span><span class="token punctuation">(</span>product<span class="token punctuation">)</span> <span class="token comment">// [[19, 22], [43, 50]]</span>
-<span class="token function">println</span><span class="token punctuation">(</span>subtracted<span class="token punctuation">)</span> <span class="token comment">// [[4, 4], [4, 4]]</span></code></pre>
+<span class="token function">println</span><span class="token punctuation">(</span>subtracted<span class="token punctuation">)</span> <span class="token comment">// [[4, 4], [4, 4]]</span>
+<span class="token function">println</span><span class="token punctuation">(</span>a<span class="token punctuation">.</span><span class="token function">scale</span><span class="token punctuation">(</span><span class="token number">2.0</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">// [[2, 4], [6, 8]]</span>
+<span class="token function">println</span><span class="token punctuation">(</span>a<span class="token punctuation">.</span><span class="token function">add_scalar</span><span class="token punctuation">(</span><span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">// [[2, 3], [4, 5]]</span></code></pre>
 <h3 id="vector-operations">Vector Operations</h3>
 <pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>la
 
@@ -264,7 +266,7 @@ dot <span class="token operator">:=</span> la<span class="token punctuation">.</
 <pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>la
 
 <span class="token comment">// Solve Ax = b</span>
-<span class="token keyword">mut</span> a <span class="token operator">:=</span> la<span class="token punctuation">.</span>Matrix<span class="token punctuation">.</span>new<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span>
+<span class="token keyword">mut</span> a <span class="token operator">:=</span> la<span class="token punctuation">.</span>Matrix<span class="token enum_value">.</span><span class="token enum_value">new</span><span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span>
 <span class="token keyword">mut</span> b <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">2.0</span><span class="token punctuation">,</span> <span class="token number">3.0</span><span class="token punctuation">]</span>
 
 <span class="token comment">// Fill A with data</span>
@@ -311,7 +313,7 @@ x<span class="token punctuation">,</span> residuals<span class="token punctuatio
 <h3 id="eigenvalue-analysis">Eigenvalue Analysis</h3>
 <pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>la
 
-<span class="token keyword">mut</span> a <span class="token operator">:=</span> la<span class="token punctuation">.</span>Matrix<span class="token punctuation">.</span>new<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span>
+<span class="token keyword">mut</span> a <span class="token operator">:=</span> la<span class="token punctuation">.</span>Matrix<span class="token enum_value">.</span><span class="token enum_value">new</span><span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span>
 <span class="token comment">// Fill matrix...</span>
 
 <span class="token comment">// Compute eigenvalues and eigenvectors</span>
@@ -320,7 +322,7 @@ x<span class="token punctuation">,</span> residuals<span class="token punctuatio
 <pre><code class="language-v"><span class="token keyword">import</span> vsl<span class="token punctuation">.</span>la
 
 <span class="token comment">// Create matrix</span>
-<span class="token keyword">mut</span> a <span class="token operator">:=</span> la<span class="token punctuation">.</span>Matrix<span class="token punctuation">.</span>new<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span>
+<span class="token keyword">mut</span> a <span class="token operator">:=</span> la<span class="token punctuation">.</span>Matrix<span class="token enum_value">.</span><span class="token enum_value">new</span><span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span>
 <span class="token comment">// Fill matrix with data...</span>
 
 <span class="token comment">// LU decomposition</span>
@@ -335,6 +337,8 @@ x<span class="token punctuation">,</span> residuals<span class="token punctuatio
 <p><strong>Compilation errors with BLAS</strong>: Ensure OpenBLAS development packages are installed <strong>Memory issues</strong>: Use sparse matrices for large, sparse problems <strong>Numerical instability</strong>: Check matrix conditioning before solving systems</p>
 <hr />
 <p>For more information, see the <a href="https://vlang.github.io/vsl">VSL documentation</a> and <a href="https://github.com/vlang/vsl/blob/master/examples">examples directory</a>.</p>
+<h1 id="accurate-vector-accumulation">Accurate vector accumulation</h1>
+<p>The usual <code>vector_accum</code> and <code>vector_dot</code> favor throughput. For f64 workflows where cancellation can erase small terms, <code>vector_sum_accurate</code> and <code>vector_dot_accurate</code> use Neumaier compensated accumulation. The dot product also uses fused multiply-add to recover each finite product's rounding error. It returns an error when vector lengths differ. These helpers are opt-in because compensation adds work to each element.</p>
 
 </section>
 
@@ -495,7 +499,7 @@ l<span class="token punctuation">,</span> u<span class="token punctuation">,</sp
 </section>
 
 		<section id="matrix_add" class="doc-node">
-			<div class="title"><h2>fn matrix_add <a href="#matrix_add">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/blas.v#L315"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn matrix_add <a href="#matrix_add">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/blas.v#L410"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">matrix_add</span><span class="token punctuation">(</span><span class="token keyword">mut</span> res Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> a <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> beta <span class="token builtin">f64</span><span class="token punctuation">,</span> b <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>
 <p>matrix_add adds the scaled components of two matrices res := alpha⋅a + beta⋅b   ⇒   result[i][j] := alpha⋅a[i][j] + beta⋅b[i][j]</p>
@@ -537,7 +541,7 @@ l<span class="token punctuation">,</span> u<span class="token punctuation">,</sp
 </section>
 
 		<section id="matrix_matrix_mul" class="doc-node">
-			<div class="title"><h2>fn matrix_matrix_mul <a href="#matrix_matrix_mul">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/blas.v#L225"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn matrix_matrix_mul <a href="#matrix_matrix_mul">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/blas.v#L320"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">matrix_matrix_mul</span><span class="token punctuation">(</span><span class="token keyword">mut</span> c Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> a <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> b <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>
 
@@ -545,7 +549,7 @@ l<span class="token punctuation">,</span> u<span class="token punctuation">,</sp
 </section>
 
 		<section id="matrix_matrix_mul_f32" class="doc-node">
-			<div class="title"><h2>fn matrix_matrix_mul_f32 <a href="#matrix_matrix_mul_f32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/blas.v#L221"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn matrix_matrix_mul_f32 <a href="#matrix_matrix_mul_f32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/blas.v#L316"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">matrix_matrix_mul_f32</span><span class="token punctuation">(</span><span class="token keyword">mut</span> c <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span><span class="token punctuation">,</span> m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> k <span class="token builtin">int</span><span class="token punctuation">,</span> alpha <span class="token builtin">f32</span><span class="token punctuation">,</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span><span class="token punctuation">,</span> b <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span><span class="token punctuation">)</span></code></pre>
 <p>matrix_matrix_mul returns the matrix multiplication (scaled)</p>
@@ -555,7 +559,7 @@ l<span class="token punctuation">,</span> u<span class="token punctuation">,</sp
 </section>
 
 		<section id="matrix_matrix_muladd" class="doc-node">
-			<div class="title"><h2>fn matrix_matrix_muladd <a href="#matrix_matrix_muladd">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/blas.v#L282"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn matrix_matrix_muladd <a href="#matrix_matrix_muladd">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/blas.v#L377"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">matrix_matrix_muladd</span><span class="token punctuation">(</span><span class="token keyword">mut</span> c Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> a <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> b <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>
 <p>matrix_matrix_muladd returns the matrix multiplication (scaled)</p>
@@ -564,7 +568,7 @@ l<span class="token punctuation">,</span> u<span class="token punctuation">,</sp
 </section>
 
 		<section id="matrix_matrix_tr_mul" class="doc-node">
-			<div class="title"><h2>fn matrix_matrix_tr_mul <a href="#matrix_matrix_tr_mul">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/blas.v#L265"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn matrix_matrix_tr_mul <a href="#matrix_matrix_tr_mul">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/blas.v#L360"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">matrix_matrix_tr_mul</span><span class="token punctuation">(</span><span class="token keyword">mut</span> c Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> a <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> b <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>
 <p>matrix_matrix_tr_mul returns the matrix multiplication (scaled) with transposed(b)</p>
@@ -573,7 +577,7 @@ l<span class="token punctuation">,</span> u<span class="token punctuation">,</sp
 </section>
 
 		<section id="matrix_matrix_tr_muladd" class="doc-node">
-			<div class="title"><h2>fn matrix_matrix_tr_muladd <a href="#matrix_matrix_tr_muladd">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/blas.v#L300"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn matrix_matrix_tr_muladd <a href="#matrix_matrix_tr_muladd">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/blas.v#L395"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">matrix_matrix_tr_muladd</span><span class="token punctuation">(</span><span class="token keyword">mut</span> c Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> a <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> b <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>
 <p>matrix_matrix_tr_muladd returns the matrix multiplication (scaled) with transposed(b)</p>
@@ -590,7 +594,7 @@ l<span class="token punctuation">,</span> u<span class="token punctuation">,</sp
 </section>
 
 		<section id="matrix_tr_matrix_mul" class="doc-node">
-			<div class="title"><h2>fn matrix_tr_matrix_mul <a href="#matrix_tr_matrix_mul">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/blas.v#L245"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn matrix_tr_matrix_mul <a href="#matrix_tr_matrix_mul">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/blas.v#L340"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">matrix_tr_matrix_mul</span><span class="token punctuation">(</span><span class="token keyword">mut</span> c Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> a <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> b <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>
 <p>matrix_tr_matrix_mul returns the matrix multiplication (scaled) with transposed(a)</p>
@@ -599,7 +603,7 @@ l<span class="token punctuation">,</span> u<span class="token punctuation">,</sp
 </section>
 
 		<section id="matrix_tr_matrix_muladd" class="doc-node">
-			<div class="title"><h2>fn matrix_tr_matrix_muladd <a href="#matrix_tr_matrix_muladd">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/blas.v#L291"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn matrix_tr_matrix_muladd <a href="#matrix_tr_matrix_muladd">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/blas.v#L386"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">matrix_tr_matrix_muladd</span><span class="token punctuation">(</span><span class="token keyword">mut</span> c Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> a <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> b <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>
 <p>matrix_tr_matrix_muladd returns the matrix multiplication (scaled) with transposed(a)</p>
@@ -608,7 +612,7 @@ l<span class="token punctuation">,</span> u<span class="token punctuation">,</sp
 </section>
 
 		<section id="matrix_tr_matrix_tr_mul" class="doc-node">
-			<div class="title"><h2>fn matrix_tr_matrix_tr_mul <a href="#matrix_tr_matrix_tr_mul">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/blas.v#L274"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn matrix_tr_matrix_tr_mul <a href="#matrix_tr_matrix_tr_mul">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/blas.v#L369"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">matrix_tr_matrix_tr_mul</span><span class="token punctuation">(</span><span class="token keyword">mut</span> c Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> a <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> b <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>
 <p>matrix_tr_matrix_tr_mul returns the matrix multiplication (scaled) with transposed(a) and transposed(b)</p>
@@ -617,7 +621,7 @@ l<span class="token punctuation">,</span> u<span class="token punctuation">,</sp
 </section>
 
 		<section id="matrix_tr_matrix_tr_mul_add" class="doc-node">
-			<div class="title"><h2>fn matrix_tr_matrix_tr_mul_add <a href="#matrix_tr_matrix_tr_mul_add">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/blas.v#L309"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn matrix_tr_matrix_tr_mul_add <a href="#matrix_tr_matrix_tr_mul_add">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/blas.v#L404"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">matrix_tr_matrix_tr_mul_add</span><span class="token punctuation">(</span><span class="token keyword">mut</span> c Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> a <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> b <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>
 <p>matrix_tr_matrix_tr_mul_add returns the matrix multiplication (scaled) with transposed(a) and transposed(b)</p>
@@ -626,7 +630,7 @@ l<span class="token punctuation">,</span> u<span class="token punctuation">,</sp
 </section>
 
 		<section id="matrix_tr_vector_mul" class="doc-node">
-			<div class="title"><h2>fn matrix_tr_vector_mul <a href="#matrix_tr_vector_mul">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/blas.v#L149"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn matrix_tr_vector_mul <a href="#matrix_tr_vector_mul">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/blas.v#L244"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> matrix_tr_vector_mul<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span>alpha T<span class="token punctuation">,</span> a <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">,</span> u <span class="token punctuation">[</span><span class="token punctuation">]</span>T<span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>T</code></pre>
 <p>matrix_tr_vector_mul returns the transpose(matrix)-vector multiplication</p>
@@ -635,7 +639,7 @@ l<span class="token punctuation">,</span> u<span class="token punctuation">,</sp
 </section>
 
 		<section id="matrix_vector_mul" class="doc-node">
-			<div class="title"><h2>fn matrix_vector_mul <a href="#matrix_vector_mul">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/blas.v#L119"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn matrix_vector_mul <a href="#matrix_vector_mul">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/blas.v#L214"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> matrix_vector_mul<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span>alpha T<span class="token punctuation">,</span> a <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">,</span> u <span class="token punctuation">[</span><span class="token punctuation">]</span>T<span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>T</code></pre>
 <p>matrix_vector_mul returns the matrix-vector multiplication</p>
@@ -644,7 +648,7 @@ l<span class="token punctuation">,</span> u<span class="token punctuation">,</sp
 </section>
 
 		<section id="matrix_vector_mul_add" class="doc-node">
-			<div class="title"><h2>fn matrix_vector_mul_add <a href="#matrix_vector_mul_add">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/blas.v#L210"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn matrix_vector_mul_add <a href="#matrix_vector_mul_add">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/blas.v#L305"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">matrix_vector_mul_add</span><span class="token punctuation">(</span>alpha <span class="token builtin">f64</span><span class="token punctuation">,</span> a <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> u <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 <p>matrix_vector_mul_add returns the matrix-vector multiplication with addition</p>
@@ -760,7 +764,7 @@ tr <span class="token operator">:=</span> la<span class="token punctuation">.</s
 </section>
 
 		<section id="vector_add" class="doc-node">
-			<div class="title"><h2>fn vector_add <a href="#vector_add">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/blas.v#L54"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn vector_add <a href="#vector_add">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/blas.v#L149"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> vector_add<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span>alpha T<span class="token punctuation">,</span> u <span class="token punctuation">[</span><span class="token punctuation">]</span>T<span class="token punctuation">,</span> beta T<span class="token punctuation">,</span> v <span class="token punctuation">[</span><span class="token punctuation">]</span>T<span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>T</code></pre>
 <p>vector_add adds the scaled components of two vectors res := alpha⋅u + beta⋅v   ⇒   result[i] := alpha⋅u[i] + beta⋅v[i]</p>
@@ -793,10 +797,18 @@ tr <span class="token operator">:=</span> la<span class="token punctuation">.</s
 </section>
 
 		<section id="vector_dot" class="doc-node">
-			<div class="title"><h2>fn vector_dot <a href="#vector_dot">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/blas.v#L32"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn vector_dot <a href="#vector_dot">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/blas.v#L36"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> vector_dot<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span>u <span class="token punctuation">[</span><span class="token punctuation">]</span>T<span class="token punctuation">,</span> v <span class="token punctuation">[</span><span class="token punctuation">]</span>T<span class="token punctuation">)</span> T</code></pre>
 <p>vector_dot returns the dot product between two vectors: s := u・v</p>
+
+</section>
+
+		<section id="vector_dot_accurate" class="doc-node">
+			<div class="title"><h2>fn vector_dot_accurate <a href="#vector_dot_accurate">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/blas.v#L102"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">vector_dot_accurate</span><span class="token punctuation">(</span>u <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> v <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">f64</span></code></pre>
+
 
 </section>
 
@@ -809,7 +821,7 @@ tr <span class="token operator">:=</span> la<span class="token punctuation">.</s
 </section>
 
 		<section id="vector_max_diff" class="doc-node">
-			<div class="title"><h2>fn vector_max_diff <a href="#vector_max_diff">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/blas.v#L94"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn vector_max_diff <a href="#vector_max_diff">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/blas.v#L189"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> vector_max_diff<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span>u <span class="token punctuation">[</span><span class="token punctuation">]</span>T<span class="token punctuation">,</span> v <span class="token punctuation">[</span><span class="token punctuation">]</span>T<span class="token punctuation">)</span> T</code></pre>
 <p>vector_max_diff returns the maximum absolute difference between two vectors maxdiff = max(|u - v|)</p>
@@ -841,7 +853,7 @@ tr <span class="token operator">:=</span> la<span class="token punctuation">.</s
 </section>
 
 		<section id="vector_rms_error" class="doc-node">
-			<div class="title"><h2>fn vector_rms_error <a href="#vector_rms_error">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/blas.v#L20"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn vector_rms_error <a href="#vector_rms_error">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/blas.v#L24"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> vector_rms_error<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span>u <span class="token punctuation">[</span><span class="token punctuation">]</span>T<span class="token punctuation">,</span> v <span class="token punctuation">[</span><span class="token punctuation">]</span>T<span class="token punctuation">,</span> a T<span class="token punctuation">,</span> m T<span class="token punctuation">,</span> s <span class="token punctuation">[</span><span class="token punctuation">]</span>T<span class="token punctuation">)</span> T</code></pre>
 <p>vector_rms_error exposes this operation as part of the public API.</p>
@@ -849,10 +861,18 @@ tr <span class="token operator">:=</span> la<span class="token punctuation">.</s
 </section>
 
 		<section id="vector_scale_abs" class="doc-node">
-			<div class="title"><h2>fn vector_scale_abs <a href="#vector_scale_abs">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/blas.v#L107"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn vector_scale_abs <a href="#vector_scale_abs">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/blas.v#L202"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> vector_scale_abs<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span>a T<span class="token punctuation">,</span> m T<span class="token punctuation">,</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span>T<span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>T</code></pre>
 <p>vector_scale_abs creates a "scale" vector using the absolute value of another vector scale := a + m ⋅ |x|     ⇒      scale[i] := a + m ⋅ |x[i]|</p>
+
+</section>
+
+		<section id="vector_sum_accurate" class="doc-node">
+			<div class="title"><h2>fn vector_sum_accurate <a href="#vector_sum_accurate">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/blas.v#L66"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">vector_sum_accurate</span><span class="token punctuation">(</span>u <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+
 
 </section>
 
@@ -865,7 +885,7 @@ tr <span class="token operator">:=</span> la<span class="token punctuation">.</s
 </section>
 
 		<section id="vector_vector_tr_mul" class="doc-node">
-			<div class="title"><h2>fn vector_vector_tr_mul <a href="#vector_vector_tr_mul">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/blas.v#L180"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn vector_vector_tr_mul <a href="#vector_vector_tr_mul">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/blas.v#L275"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> vector_vector_tr_mul<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span>alpha T<span class="token punctuation">,</span> u <span class="token punctuation">[</span><span class="token punctuation">]</span>T<span class="token punctuation">,</span> v <span class="token punctuation">[</span><span class="token punctuation">]</span>T<span class="token punctuation">)</span> <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span>T<span class="token punctuation">]</span></code></pre>
 <p>vector_vector_tr_mul returns the matrix = vector-transpose(vector) multiplication (e.g. dyadic product)</p>
@@ -876,7 +896,7 @@ tr <span class="token operator">:=</span> la<span class="token punctuation">.</s
 		<section id="Matrix.deep2" class="doc-node">
 			<div class="title"><h2>fn Matrix.deep2 <a href="#Matrix.deep2">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/matrix.v#L30"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> Matrix<span class="token punctuation">.</span>deep2<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span>a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span>T<span class="token punctuation">)</span> <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span>T<span class="token punctuation">]</span></code></pre>
+<code><span class="token keyword">fn</span> Matrix<span class="token enum_value">.</span><span class="token enum_value">deep2</span><span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span>a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span>T<span class="token punctuation">)</span> <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span>T<span class="token punctuation">]</span></code></pre>
 <p>Matrix.deep2 allocates a new Matrix from given (Deep2) nested slice.</p>
 <p>Note: make sure to have at least 1x1 item</p>
 
@@ -885,7 +905,7 @@ tr <span class="token operator">:=</span> la<span class="token punctuation">.</s
 		<section id="Matrix.new" class="doc-node">
 			<div class="title"><h2>fn Matrix.new <a href="#Matrix.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/matrix.v#L19"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> Matrix<span class="token punctuation">.</span>new<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span>T<span class="token punctuation">]</span></code></pre>
+<code><span class="token keyword">fn</span> Matrix<span class="token enum_value">.</span><span class="token enum_value">new</span><span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span>T<span class="token punctuation">]</span></code></pre>
 <p>Matrix.new allocates a new (empty) Matrix with given (m,n) (row/col sizes)</p>
 
 </section>
@@ -893,7 +913,7 @@ tr <span class="token operator">:=</span> la<span class="token punctuation">.</s
 		<section id="Matrix.raw" class="doc-node">
 			<div class="title"><h2>fn Matrix.raw <a href="#Matrix.raw">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/matrix.v#L42"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> Matrix<span class="token punctuation">.</span>raw<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> rawdata <span class="token punctuation">[</span><span class="token punctuation">]</span>T<span class="token punctuation">)</span> <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span>T<span class="token punctuation">]</span></code></pre>
+<code><span class="token keyword">fn</span> Matrix<span class="token enum_value">.</span><span class="token enum_value">raw</span><span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> rawdata <span class="token punctuation">[</span><span class="token punctuation">]</span>T<span class="token punctuation">)</span> <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span>T<span class="token punctuation">]</span></code></pre>
 <p>Matrix.raw creates a new Matrix using given raw data Input: rawdata -- data organized as column-major; e.g. Fortran format</p>
 <p>Note: (1) rawdata is not copied! (2) the external slice rawdata should not be changed or deleted</p>
 
@@ -910,7 +930,7 @@ tr <span class="token operator">:=</span> la<span class="token punctuation">.</s
 		<section id="Triplet.new" class="doc-node">
 			<div class="title"><h2>fn Triplet.new <a href="#Triplet.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/sparse_matrix.v#L38"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> Triplet<span class="token punctuation">.</span>new<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> max <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>Triplet<span class="token punctuation">[</span>T<span class="token punctuation">]</span></code></pre>
+<code><span class="token keyword">fn</span> Triplet<span class="token enum_value">.</span><span class="token enum_value">new</span><span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> max <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>Triplet<span class="token punctuation">[</span>T<span class="token punctuation">]</span></code></pre>
 <p>Triplet.new returns a new Triplet. This is a wrapper to new(Triplet) followed by init()</p>
 
 </section>
@@ -1206,6 +1226,46 @@ tr <span class="token operator">:=</span> la<span class="token punctuation">.</s
 
 </section>
 
+		<section id="Matrix[T].add_scalar" class="doc-node">
+			<div class="title"><h2>fn (Matrix[T]) add_scalar <a href="#Matrix[T].add_scalar">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/matrix_operators.v#L104"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>a <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">add_scalar</span><span class="token punctuation">(</span>scalar T<span class="token punctuation">)</span> <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span>T<span class="token punctuation">]</span></code></pre>
+<p>add_scalar returns a new matrix with the scalar added to every element.</p>
+
+</section>
+
+		<section id="Matrix[T].sub_scalar" class="doc-node">
+			<div class="title"><h2>fn (Matrix[T]) sub_scalar <a href="#Matrix[T].sub_scalar">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/matrix_operators.v#L117"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>a <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">sub_scalar</span><span class="token punctuation">(</span>scalar T<span class="token punctuation">)</span> <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span>T<span class="token punctuation">]</span></code></pre>
+<p>sub_scalar returns a new matrix with the scalar subtracted from every element.</p>
+
+</section>
+
+		<section id="Matrix[T].scale" class="doc-node">
+			<div class="title"><h2>fn (Matrix[T]) scale <a href="#Matrix[T].scale">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/matrix_operators.v#L130"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>a <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">scale</span><span class="token punctuation">(</span>scalar T<span class="token punctuation">)</span> <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span>T<span class="token punctuation">]</span></code></pre>
+<p>scale returns a new matrix with every element multiplied by the scalar.</p>
+
+</section>
+
+		<section id="Matrix[T].div_scalar" class="doc-node">
+			<div class="title"><h2>fn (Matrix[T]) div_scalar <a href="#Matrix[T].div_scalar">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/matrix_operators.v#L143"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>a <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">div_scalar</span><span class="token punctuation">(</span>scalar T<span class="token punctuation">)</span> <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span>T<span class="token punctuation">]</span></code></pre>
+<p>div_scalar returns a new matrix with every element divided by the scalar.</p>
+
+</section>
+
+		<section id="Matrix[T].remainder_scalar" class="doc-node">
+			<div class="title"><h2>fn (Matrix[T]) remainder_scalar <a href="#Matrix[T].remainder_scalar">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/matrix_operators.v#L156"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>a <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">remainder_scalar</span><span class="token punctuation">(</span>scalar T<span class="token punctuation">)</span> <span class="token operator">&amp;</span>Matrix<span class="token punctuation">[</span>T<span class="token punctuation">]</span></code></pre>
+<p>remainder_scalar returns element-wise remainder for integer matrices.</p>
+
+</section>
+
 		<section id="Triplet[T].init" class="doc-node">
 			<div class="title"><h2>fn (Triplet[T]) init <a href="#Triplet[T].init">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/sparse_matrix.v#L45"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
@@ -1384,7 +1444,7 @@ tr <span class="token operator">:=</span> la<span class="token punctuation">.</s
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 8 Oct 2026 14:41:58</div>
+						<div class="footer">Powered by vdoc. Generated on: 12 Oct 2026 15:29:47</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_la">README</a></li>
 <li class="open"><a href="#center_matrix">fn center_matrix</a>        <ul>
@@ -1525,6 +1585,9 @@ tr <span class="token operator">:=</span> la<span class="token punctuation">.</s
 <li class="open"><a href="#vector_dot">fn vector_dot</a>        <ul>
 </ul>
 </li>
+<li class="open"><a href="#vector_dot_accurate">fn vector_dot_accurate</a>        <ul>
+</ul>
+</li>
 <li class="open"><a href="#vector_largest">fn vector_largest</a>        <ul>
 </ul>
 </li>
@@ -1544,6 +1607,9 @@ tr <span class="token operator">:=</span> la<span class="token punctuation">.</s
 </ul>
 </li>
 <li class="open"><a href="#vector_scale_abs">fn vector_scale_abs</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#vector_sum_accurate">fn vector_sum_accurate</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#vector_unit">fn vector_unit</a>        <ul>
@@ -1604,6 +1670,11 @@ tr <span class="token operator">:=</span> la<span class="token punctuation">.</s
 <li><a href="#Matrix[T].*">fn *</a></li>
 <li><a href="#Matrix[T]./">fn /</a></li>
 <li><a href="#Matrix[T].%">fn %</a></li>
+<li><a href="#Matrix[T].add_scalar">fn add_scalar</a></li>
+<li><a href="#Matrix[T].sub_scalar">fn sub_scalar</a></li>
+<li><a href="#Matrix[T].scale">fn scale</a></li>
+<li><a href="#Matrix[T].div_scalar">fn div_scalar</a></li>
+<li><a href="#Matrix[T].remainder_scalar">fn remainder_scalar</a></li>
 </ul>
 </li>
 <li class="open"><a href="#Triplet[T].init">type Triplet[T]</a>        <ul>

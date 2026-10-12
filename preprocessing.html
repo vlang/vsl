@@ -296,7 +296,7 @@ result <span class="token operator">:=</span> preprocessing<span class="token pu
 result2 <span class="token operator">:=</span> preprocessing<span class="token punctuation">.</span><span class="token function">qcut</span><span class="token punctuation">(</span>values<span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'Q1'</span><span class="token punctuation">,</span> <span class="token string">'Q2'</span><span class="token punctuation">,</span> <span class="token string">'Q3'</span><span class="token punctuation">,</span> <span class="token string">'Q4'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">!</span>
 
 <span class="token comment">// Using Binner for consistent transformation</span>
-<span class="token keyword">mut</span> binner <span class="token operator">:=</span> preprocessing<span class="token punctuation">.</span>Binner<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token punctuation">.</span>uniform<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'small'</span><span class="token punctuation">,</span> <span class="token string">'medium'</span><span class="token punctuation">,</span> <span class="token string">'large'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token keyword">mut</span> binner <span class="token operator">:=</span> preprocessing<span class="token punctuation">.</span>Binner<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token enum_value">.</span><span class="token enum_value">uniform</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'small'</span><span class="token punctuation">,</span> <span class="token string">'medium'</span><span class="token punctuation">,</span> <span class="token string">'large'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
 binner<span class="token punctuation">.</span><span class="token function">fit</span><span class="token punctuation">(</span>values<span class="token punctuation">)</span><span class="token operator">!</span>
 binned <span class="token operator">:=</span> binner<span class="token punctuation">.</span><span class="token function">transform</span><span class="token punctuation">(</span>values<span class="token punctuation">)</span><span class="token operator">!</span></code></pre>
 <h3 id="polynomial-features">Polynomial Features</h3>
@@ -647,7 +647,7 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 	fitted <span class="token builtin">bool</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
 	classes_     <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span>       <span class="token comment">// unique classes in order</span>
-	class_to_idx map<span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token builtin">int</span> <span class="token comment">// mapping from class to index</span>
+	class_to_idx <span class="token builtin">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token builtin">int</span> <span class="token comment">// mapping from class to index</span>
 <span class="token punctuation">}</span></code></pre>
 <p>LabelEncoder defines a public data structure for this module.</p>
 
@@ -934,7 +934,7 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 8 Oct 2026 14:41:58</div>
+						<div class="footer">Powered by vdoc. Generated on: 12 Oct 2026 15:29:48</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_preprocessing">README</a></li>
 <li class="open"><a href="#cut">fn cut</a>        <ul>

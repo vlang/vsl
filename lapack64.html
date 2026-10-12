@@ -1895,7 +1895,7 @@
 <pre class="signature">
 <code><span class="token keyword">enum</span> Direct <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
 	<span class="token comment">// Reflectors are right-multiplied, H_0 * H_1 * ... * H_{k-1}.</span>
-	forward <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`F`</span><span class="token punctuation">)</span>
+	forward  <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`F`</span><span class="token punctuation">)</span>
 	<span class="token comment">// Reflectors are left-multiplied, H_{k-1} * ... * H_1 * H_0.</span>
 	backward <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`B`</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span></code></pre>
@@ -1908,9 +1908,9 @@
 <pre class="signature">
 <code><span class="token keyword">enum</span> EigenVectorsComp <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
 	<span class="token comment">// Compute eigenvectors of the original symmetric matrix.</span>
-	ev_orig <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`V`</span><span class="token punctuation">)</span>
+	ev_orig      <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`V`</span><span class="token punctuation">)</span>
 	<span class="token comment">// Compute eigenvectors of the tridiagonal matrix.</span>
-	ev_tridiag <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`I`</span><span class="token punctuation">)</span>
+	ev_tridiag   <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`I`</span><span class="token punctuation">)</span>
 	<span class="token comment">// Do not compute eigenvectors.</span>
 	ev_comp_none <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`N`</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span></code></pre>
@@ -1923,11 +1923,11 @@
 <pre class="signature">
 <code><span class="token keyword">enum</span> EigenVectorsHowMany <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
 	<span class="token comment">// Compute all right and/or left eigenvectors.</span>
-	ev_all <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`A`</span><span class="token punctuation">)</span>
+	ev_all       <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`A`</span><span class="token punctuation">)</span>
 	<span class="token comment">// Compute all right and/or left eigenvectors multiplied by an input matrix.</span>
 	ev_all_mul_q <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`B`</span><span class="token punctuation">)</span>
 	<span class="token comment">// Compute selected right and/or left eigenvectors.</span>
-	ev_selected <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`S`</span><span class="token punctuation">)</span>
+	ev_selected  <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`S`</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span></code></pre>
 <p>EigenVectorsHowMany specifies which eigenvectors are computed in Dtrevc3 and how.</p>
 
@@ -1940,7 +1940,7 @@
 	<span class="token comment">// Compute eigenvectors.</span>
 	ev_compute <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`V`</span><span class="token punctuation">)</span>
 	<span class="token comment">// Do not compute eigenvectors.</span>
-	ev_none <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`N`</span><span class="token punctuation">)</span>
+	ev_none    <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`N`</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span></code></pre>
 <p>EigenVectorsJob specifies whether eigenvectors are computed in Dsyev.</p>
 
@@ -1953,9 +1953,9 @@
 	<span class="token comment">// Compute only right eigenvectors.</span>
 	ev_right <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`R`</span><span class="token punctuation">)</span>
 	<span class="token comment">// Compute only left eigenvectors.</span>
-	ev_left <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`L`</span><span class="token punctuation">)</span>
+	ev_left  <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`L`</span><span class="token punctuation">)</span>
 	<span class="token comment">// Compute both right and left eigenvectors.</span>
-	ev_both <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`B`</span><span class="token punctuation">)</span>
+	ev_both  <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`B`</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span></code></pre>
 <p>EigenVectorsSide specifies what eigenvectors are computed in Dtrevc3.</p>
 
@@ -1966,11 +1966,11 @@
 <pre class="signature">
 <code><span class="token keyword">enum</span> GSVDJob <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
 	<span class="token comment">// Compute orthogonal matrix U.</span>
-	gsvd_u <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`U`</span><span class="token punctuation">)</span>
+	gsvd_u    <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`U`</span><span class="token punctuation">)</span>
 	<span class="token comment">// Compute orthogonal matrix V.</span>
-	gsvd_v <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`V`</span><span class="token punctuation">)</span>
+	gsvd_v    <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`V`</span><span class="token punctuation">)</span>
 	<span class="token comment">// Compute orthogonal matrix Q.</span>
-	gsvd_q <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`Q`</span><span class="token punctuation">)</span>
+	gsvd_q    <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`Q`</span><span class="token punctuation">)</span>
 	<span class="token comment">// Use unit-initialized matrix.</span>
 	gsvd_unit <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`I`</span><span class="token punctuation">)</span>
 	<span class="token comment">// Do not compute orthogonal matrix.</span>
@@ -1987,7 +1987,7 @@
 	<span class="token comment">// Generate Pᵀ.</span>
 	generate_pt <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`P`</span><span class="token punctuation">)</span>
 	<span class="token comment">// Generate Q.</span>
-	generate_q <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`Q`</span><span class="token punctuation">)</span>
+	generate_q  <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`Q`</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span></code></pre>
 <p>GenOrtho specifies which orthogonal matrix is generated in Dorgbr.</p>
 
@@ -2000,7 +2000,7 @@
 	<span class="token comment">// Compute left eigenvectors.</span>
 	left_ev_compute <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`V`</span><span class="token punctuation">)</span>
 	<span class="token comment">// Do not compute left eigenvectors.</span>
-	left_ev_none <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`N`</span><span class="token punctuation">)</span>
+	left_ev_none    <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`N`</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span></code></pre>
 <p>LeftEigenVectorsJob specifies whether left eigenvectors are computed in Dgeev.</p>
 
@@ -2011,13 +2011,13 @@
 <pre class="signature">
 <code><span class="token keyword">enum</span> MatrixNorm <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
 	<span class="token comment">// max(abs(A(i,j)))</span>
-	max_abs <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`M`</span><span class="token punctuation">)</span>
+	max_abs        <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`M`</span><span class="token punctuation">)</span>
 	<span class="token comment">// Maximum absolute column sum (one norm)</span>
 	max_column_sum <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`O`</span><span class="token punctuation">)</span>
 	<span class="token comment">// Maximum absolute row sum (infinity norm)</span>
-	max_row_sum <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`I`</span><span class="token punctuation">)</span>
+	max_row_sum    <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`I`</span><span class="token punctuation">)</span>
 	<span class="token comment">// Frobenius norm (sqrt of sum of squares)</span>
-	frobenius <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`F`</span><span class="token punctuation">)</span>
+	frobenius      <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`F`</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span></code></pre>
 <p>MatrixNorm represents the kind of matrix norm to compute.</p>
 
@@ -2028,7 +2028,7 @@
 <pre class="signature">
 <code><span class="token keyword">enum</span> MatrixType <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
 	<span class="token comment">// A general dense matrix.</span>
-	general <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`G`</span><span class="token punctuation">)</span>
+	general   <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`G`</span><span class="token punctuation">)</span>
 	<span class="token comment">// An upper triangular matrix.</span>
 	upper_tri <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`U`</span><span class="token punctuation">)</span>
 	<span class="token comment">// A lower triangular matrix.</span>
@@ -2043,7 +2043,7 @@
 <pre class="signature">
 <code><span class="token keyword">enum</span> MaximizeNormXJob <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
 	<span class="token comment">// Solve Z*x=h-f where h is a vector of ±1.</span>
-	local_look_ahead <span class="token operator">=</span> <span class="token number">0</span>
+	local_look_ahead       <span class="token operator">=</span> <span class="token number">0</span>
 	<span class="token comment">// Compute an approximate null-vector e of Z, normalize e and solve Z*x=±e-f.</span>
 	normalized_null_vector <span class="token operator">=</span> <span class="token number">2</span>
 <span class="token punctuation">}</span></code></pre>
@@ -2056,11 +2056,11 @@
 <pre class="signature">
 <code><span class="token keyword">enum</span> OrthoComp <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
 	<span class="token comment">// Do not compute the orthogonal matrix.</span>
-	ortho_none <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`N`</span><span class="token punctuation">)</span>
+	ortho_none     <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`N`</span><span class="token punctuation">)</span>
 	<span class="token comment">// The orthogonal matrix is formed explicitly and returned in the argument.</span>
 	ortho_explicit <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`I`</span><span class="token punctuation">)</span>
 	<span class="token comment">// The orthogonal matrix is post-multiplied into the matrix stored in the argument on entry.</span>
-	ortho_postmul <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`V`</span><span class="token punctuation">)</span>
+	ortho_postmul  <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`V`</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span></code></pre>
 <p>OrthoComp specifies whether and how the orthogonal matrix is computed in Dgghrd.</p>
 
@@ -2085,7 +2085,7 @@
 	<span class="token comment">// Compute right eigenvectors.</span>
 	right_ev_compute <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`V`</span><span class="token punctuation">)</span>
 	<span class="token comment">// Do not compute right eigenvectors.</span>
-	right_ev_none <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`N`</span><span class="token punctuation">)</span>
+	right_ev_none    <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`N`</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span></code></pre>
 <p>RightEigenVectorsJob specifies whether right eigenvectors are computed in Dgeev.</p>
 
@@ -2096,13 +2096,13 @@
 <pre class="signature">
 <code><span class="token keyword">enum</span> SVDJob <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
 	<span class="token comment">// Compute all columns of the orthogonal matrix U or V.</span>
-	svd_all <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`A`</span><span class="token punctuation">)</span>
+	svd_all       <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`A`</span><span class="token punctuation">)</span>
 	<span class="token comment">// Compute the singular vectors and store them in the orthogonal matrix U or V.</span>
-	svd_store <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`S`</span><span class="token punctuation">)</span>
+	svd_store     <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`S`</span><span class="token punctuation">)</span>
 	<span class="token comment">// Compute the singular vectors and overwrite them on the input matrix A.</span>
 	svd_overwrite <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`O`</span><span class="token punctuation">)</span>
 	<span class="token comment">// Do not compute singular vectors.</span>
-	svd_none <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`N`</span><span class="token punctuation">)</span>
+	svd_none      <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`N`</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span></code></pre>
 <p>SVDJob specifies the singular vector computation type for SingularValueDecomposition.</p>
 
@@ -2152,7 +2152,7 @@
 	<span class="token comment">// Reflector stored in a column of the matrix.</span>
 	column_wise <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`C`</span><span class="token punctuation">)</span>
 	<span class="token comment">// Reflector stored in a row of the matrix.</span>
-	row_wise <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`R`</span><span class="token punctuation">)</span>
+	row_wise    <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`R`</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span></code></pre>
 <p>StoreV indicates the storage direction of elementary reflectors.</p>
 
@@ -2163,7 +2163,7 @@
 <pre class="signature">
 <code><span class="token keyword">enum</span> UpdateSchurComp <span class="token keyword">as</span> <span class="token builtin">u8</span> <span class="token punctuation">{</span>
 	<span class="token comment">// Update the matrix of Schur vectors.</span>
-	update_schur <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`V`</span><span class="token punctuation">)</span>
+	update_schur      <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`V`</span><span class="token punctuation">)</span>
 	<span class="token comment">// Do not update the matrix of Schur vectors.</span>
 	update_schur_none <span class="token operator">=</span> <span class="token builtin">u8</span><span class="token punctuation">(</span><span class="token char">`N`</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span></code></pre>
@@ -2172,7 +2172,7 @@
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 8 Oct 2026 14:41:58</div>
+						<div class="footer">Powered by vdoc. Generated on: 12 Oct 2026 15:29:47</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_lapack64">README</a></li>
 <li class="open"><a href="#Constants">Constants</a></li>

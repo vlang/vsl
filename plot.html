@@ -847,15 +847,15 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <pre class="signature">
 <code><span class="token keyword">struct</span> AngularAxis <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	visible   <span class="token builtin">bool</span>     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	tickvals  <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	ticktext  <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	direction <span class="token builtin">string</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// 'clockwise' or 'counterclockwise'</span>
-	period    <span class="token builtin">f64</span>      <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	rotation  <span class="token builtin">f64</span>      <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	showgrid  <span class="token builtin">bool</span>     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	gridcolor <span class="token builtin">string</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	linecolor <span class="token builtin">string</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	visible   <span class="token builtin">bool</span>     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	tickvals  <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	ticktext  <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	direction <span class="token builtin">string</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// 'clockwise' or 'counterclockwise'</span>
+	period    <span class="token builtin">f64</span>      <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	rotation  <span class="token builtin">f64</span>      <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	showgrid  <span class="token builtin">bool</span>     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	gridcolor <span class="token builtin">string</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	linecolor <span class="token builtin">string</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>AngularAxis for polar plots</p>
 
@@ -866,15 +866,15 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <pre class="signature">
 <code><span class="token keyword">struct</span> Annotation <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	x          <span class="token builtin">f64</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	y          <span class="token builtin">f64</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	xanchor    <span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// 'left', 'center', 'right' - horizontal text alignment</span>
-	yanchor    <span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// 'top', 'middle', 'bottom' - vertical text alignment</span>
-	text       <span class="token builtin">string</span> <span class="token punctuation">@[</span>required<span class="token punctuation">]</span>
+	x          <span class="token builtin">f64</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	y          <span class="token builtin">f64</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	xanchor    <span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// 'left', 'center', 'right' - horizontal text alignment</span>
+	yanchor    <span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// 'top', 'middle', 'bottom' - vertical text alignment</span>
+	text       <span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">required</span><span class="token attribute">]</span>
 	showarrow  <span class="token builtin">bool</span>
-	arrowhead  <span class="token builtin">int</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	arrowcolor <span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	align      <span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// 'left', 'center', 'right' - text align within the annotation box</span>
+	arrowhead  <span class="token builtin">int</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	arrowcolor <span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	align      <span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// 'left', 'center', 'right' - text align within the annotation box</span>
 	font       Font
 <span class="token punctuation">}</span></code></pre>
 <p>Annotation handles all the information needed to annotate plots</p>
@@ -888,15 +888,15 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
 	title       AxisTitle
 	tickmode    <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">'auto'</span>
-	tick0       <span class="token builtin">f64</span>         <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	dtick       <span class="token builtin">f64</span>         <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	tickvals    <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>       <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	ticktext    <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	range       <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>       <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	showgrid    <span class="token builtin">bool</span>        <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	tickangle   <span class="token builtin">f64</span>         <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	scaleanchor <span class="token builtin">string</span>      <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	rangeslider RangeSlider <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	tick0       <span class="token builtin">f64</span>         <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	dtick       <span class="token builtin">f64</span>         <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	tickvals    <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>       <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	ticktext    <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	range       <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>       <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	showgrid    <span class="token builtin">bool</span>        <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	tickangle   <span class="token builtin">f64</span>         <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	scaleanchor <span class="token builtin">string</span>      <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	rangeslider RangeSlider <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>Axis handles axis data</p>
 
@@ -920,13 +920,13 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <code><span class="token keyword">struct</span> BarPolarTrace <span class="token punctuation">{</span>
 	CommonTrace
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	r             <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	theta         <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	thetaunit     <span class="token builtin">string</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// 'radians', 'degrees', 'gradians'</span>
-	text          <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	hovertemplate <span class="token builtin">string</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	marker        Marker   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	subplot       <span class="token builtin">string</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	r             <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	theta         <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	thetaunit     <span class="token builtin">string</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// 'radians', 'degrees', 'gradians'</span>
+	text          <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	hovertemplate <span class="token builtin">string</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	marker        Marker   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	subplot       <span class="token builtin">string</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>BarPolarTrace defines a public data structure for this module.</p>
 
@@ -961,8 +961,8 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <pre class="signature">
 <code><span class="token keyword">struct</span> Box <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	visible <span class="token builtin">bool</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	width   <span class="token builtin">f64</span>  <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	visible <span class="token builtin">bool</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	width   <span class="token builtin">f64</span>  <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>Box is a struct for box configuration in violin plots</p>
 
@@ -975,15 +975,15 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <code><span class="token keyword">struct</span> BoxTrace <span class="token punctuation">{</span>
 	CommonTrace
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	boxpoints   <span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// 'all', 'outliers', 'suspectedoutliers', false</span>
-	boxmean     <span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// true, 'sd'</span>
-	notched     <span class="token builtin">bool</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	orientation <span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// 'v' or 'h'</span>
-	q1          <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>  <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	median      <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>  <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	q3          <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>  <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	lowerfence  <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>  <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	upperfence  <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>  <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	boxpoints   <span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// 'all', 'outliers', 'suspectedoutliers', false</span>
+	boxmean     <span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// true, 'sd'</span>
+	notched     <span class="token builtin">bool</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	orientation <span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// 'v' or 'h'</span>
+	q1          <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>  <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	median      <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>  <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	q3          <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>  <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	lowerfence  <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>  <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	upperfence  <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>  <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>BoxTrace defines a public data structure for this module.</p>
 
@@ -996,14 +996,14 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <code><span class="token keyword">struct</span> CandlestickTrace <span class="token punctuation">{</span>
 	CommonTrace
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	open             <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>      <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	high             <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>      <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	low              <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>      <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	close            <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>      <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	increasing       Increasing <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	decreasing       Decreasing <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	xperiod          <span class="token builtin">string</span>     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	xperiodalignment <span class="token builtin">string</span>     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	open             <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>      <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	high             <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>      <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	low              <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>      <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	close            <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>      <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	increasing       Increasing <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	decreasing       Decreasing <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	xperiod          <span class="token builtin">string</span>     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	xperiodalignment <span class="token builtin">string</span>     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>CandlestickTrace defines a public data structure for this module.</p>
 
@@ -1016,11 +1016,11 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <code><span class="token keyword">struct</span> ChordTrace <span class="token punctuation">{</span>
 	CommonTrace
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	matrix    <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>  <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	labels    <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	rotation  <span class="token builtin">f64</span>      <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	sort      <span class="token builtin">string</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// 'ascending', 'descending', 'none'</span>
-	thickness <span class="token builtin">f64</span>      <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	matrix    <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>  <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	labels    <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	rotation  <span class="token builtin">f64</span>      <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	sort      <span class="token builtin">string</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// 'ascending', 'descending', 'none'</span>
+	thickness <span class="token builtin">f64</span>      <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>ChordTrace defines a public data structure for this module.</p>
 
@@ -1033,13 +1033,13 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <code><span class="token keyword">struct</span> ChoroplethTrace <span class="token punctuation">{</span>
 	CommonTrace
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	locations     <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	geojson       <span class="token builtin">string</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	featureidkey  <span class="token builtin">string</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	locationmode  <span class="token builtin">string</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// 'ISO-3', 'USA-states', 'country names', 'geojson-id'</span>
-	reversescale  <span class="token builtin">bool</span>     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	showscale     <span class="token builtin">bool</span>     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	hovertemplate <span class="token builtin">string</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	locations     <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	geojson       <span class="token builtin">string</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	featureidkey  <span class="token builtin">string</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	locationmode  <span class="token builtin">string</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// 'ISO-3', 'USA-states', 'country names', 'geojson-id'</span>
+	reversescale  <span class="token builtin">bool</span>     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	showscale     <span class="token builtin">bool</span>     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	hovertemplate <span class="token builtin">string</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>ChoroplethTrace defines a public data structure for this module.</p>
 
@@ -1050,12 +1050,12 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <pre class="signature">
 <code><span class="token keyword">struct</span> Cluster <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	enabled <span class="token builtin">bool</span>     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	color   <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	size    <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	opacity <span class="token builtin">f64</span>      <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	step    <span class="token builtin">f64</span>      <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	maxzoom <span class="token builtin">int</span>      <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	enabled <span class="token builtin">bool</span>     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	color   <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	size    <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	opacity <span class="token builtin">f64</span>      <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	step    <span class="token builtin">f64</span>      <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	maxzoom <span class="token builtin">int</span>      <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>Cluster is a struct for mapbox clustering</p>
 
@@ -1066,13 +1066,13 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <pre class="signature">
 <code><span class="token keyword">struct</span> ClusterGeo <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	enabled  <span class="token builtin">bool</span>     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	size     <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	color    <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	steps    <span class="token builtin">int</span>      <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	maxzoom  <span class="token builtin">int</span>      <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	stepsize <span class="token builtin">f64</span>      <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	domains  <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>  <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	enabled  <span class="token builtin">bool</span>     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	size     <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	color    <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	steps    <span class="token builtin">int</span>      <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	maxzoom  <span class="token builtin">int</span>      <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	stepsize <span class="token builtin">f64</span>      <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	domains  <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>  <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>ClusterGeo is a struct for geographic clustering</p>
 
@@ -1085,23 +1085,23 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <code><span class="token keyword">struct</span> CommonTrace <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
 	x          XType
-	x0         <span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// Single x position for violin/box plots</span>
-	xbins      map<span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token builtin">f32</span>
-	y          YType      <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	y0         <span class="token builtin">string</span>     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// Single y position for horizontal plots</span>
-	z          ZType      <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	name       <span class="token builtin">string</span>     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	mode       <span class="token builtin">string</span>     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	marker     Marker     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	line       Line       <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	pull       <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>      <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	hole       <span class="token builtin">f64</span>        <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	fill       <span class="token builtin">string</span>     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	fillcolor  <span class="token builtin">string</span>     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	customdata <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	colorscale <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">'Viridis'</span>     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	textinfo   <span class="token builtin">string</span>     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	text       <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	x0         <span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// Single x position for violin/box plots</span>
+	xbins      <span class="token builtin">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span><span class="token builtin">f32</span>
+	y          YType      <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	y0         <span class="token builtin">string</span>     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// Single y position for horizontal plots</span>
+	z          ZType      <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	name       <span class="token builtin">string</span>     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	mode       <span class="token builtin">string</span>     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	marker     Marker     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	line       Line       <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	pull       <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>      <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	hole       <span class="token builtin">f64</span>        <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	fill       <span class="token builtin">string</span>     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	fillcolor  <span class="token builtin">string</span>     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	customdata <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	colorscale <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">'Viridis'</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	textinfo   <span class="token builtin">string</span>     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	text       <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>CommonTrace defines a public data structure for this module.</p>
 
@@ -1112,9 +1112,9 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <pre class="signature">
 <code><span class="token keyword">struct</span> Connector <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	visible <span class="token builtin">bool</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	line    Line   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	mode    <span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// 'spanning', 'between'</span>
+	visible <span class="token builtin">bool</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	line    Line   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	mode    <span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// 'spanning', 'between'</span>
 <span class="token punctuation">}</span></code></pre>
 <p>Connector is a struct for waterfall and funnel connectors</p>
 
@@ -1127,10 +1127,10 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <code><span class="token keyword">struct</span> ContourTrace <span class="token punctuation">{</span>
 	CommonTrace
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	contours      Contours <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	hovertemplate <span class="token builtin">string</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	autocontour   <span class="token builtin">bool</span>     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	ncontours     <span class="token builtin">int</span>      <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	contours      Contours <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	hovertemplate <span class="token builtin">string</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	autocontour   <span class="token builtin">bool</span>     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	ncontours     <span class="token builtin">int</span>      <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>ContourTrace defines a public data structure for this module.</p>
 
@@ -1141,12 +1141,12 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <pre class="signature">
 <code><span class="token keyword">struct</span> Contours <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	start      <span class="token builtin">f64</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	end        <span class="token builtin">f64</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	size       <span class="token builtin">f64</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	coloring   <span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// 'fill', 'heatmap', 'lines', 'none'</span>
-	showlines  <span class="token builtin">bool</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	showlabels <span class="token builtin">bool</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	start      <span class="token builtin">f64</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	end        <span class="token builtin">f64</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	size       <span class="token builtin">f64</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	coloring   <span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// 'fill', 'heatmap', 'lines', 'none'</span>
+	showlines  <span class="token builtin">bool</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	showlabels <span class="token builtin">bool</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>Contours is a struct for contour configuration</p>
 
@@ -1157,8 +1157,8 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <pre class="signature">
 <code><span class="token keyword">struct</span> Decreasing <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	marker Marker <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	line   Line   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	marker Marker <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	line   Line   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>Decreasing is a struct for decreasing values styling</p>
 
@@ -1171,13 +1171,13 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <code><span class="token keyword">struct</span> DensityMapboxTrace <span class="token punctuation">{</span>
 	CommonTrace
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	lat          <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>  <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	lon          <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>  <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	radius       <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>  <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	opacity      <span class="token builtin">f64</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	reversescale <span class="token builtin">bool</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	showscale    <span class="token builtin">bool</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	subplot      <span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	lat          <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>  <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	lon          <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>  <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	radius       <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>  <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	opacity      <span class="token builtin">f64</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	reversescale <span class="token builtin">bool</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	showscale    <span class="token builtin">bool</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	subplot      <span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>DensityMapboxTrace defines a public data structure for this module.</p>
 
@@ -1190,10 +1190,10 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <code><span class="token keyword">struct</span> DensityTrace <span class="token punctuation">{</span>
 	CommonTrace
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	bandwidth    <span class="token builtin">f64</span>      <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	showscale    <span class="token builtin">bool</span>     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	reversescale <span class="token builtin">bool</span>     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	contours     Contours <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	bandwidth    <span class="token builtin">f64</span>      <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	showscale    <span class="token builtin">bool</span>     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	reversescale <span class="token builtin">bool</span>     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	contours     Contours <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>DensityTrace defines a public data structure for this module.</p>
 
@@ -1204,14 +1204,14 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <pre class="signature">
 <code><span class="token keyword">struct</span> Dimension <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	label           <span class="token builtin">string</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	values          <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	range           <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	constraintrange <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>  <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	tickvals        <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	ticktext        <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	visible         <span class="token builtin">bool</span>     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	multiselect     <span class="token builtin">bool</span>     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	label           <span class="token builtin">string</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	values          <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	range           <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	constraintrange <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>  <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	tickvals        <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	ticktext        <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	visible         <span class="token builtin">bool</span>     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	multiselect     <span class="token builtin">bool</span>     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>Dimension is a struct for parallel coordinates dimensions</p>
 
@@ -1222,7 +1222,7 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <pre class="signature">
 <code><span class="token keyword">struct</span> Fill <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	color <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	color <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>Fill is a generic fill configuration used by table traces</p>
 
@@ -1248,9 +1248,9 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <code><span class="token keyword">struct</span> FunnelTrace <span class="token punctuation">{</span>
 	CommonTrace
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	values      <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	orientation <span class="token builtin">string</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// 'v' or 'h'</span>
-	connector   Connector <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	values      <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	orientation <span class="token builtin">string</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// 'v' or 'h'</span>
+	connector   Connector <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>FunnelTrace defines a public data structure for this module.</p>
 
@@ -1261,20 +1261,20 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <pre class="signature">
 <code><span class="token keyword">struct</span> Geo <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	scope         <span class="token builtin">string</span>        <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// 'world', 'usa', 'europe', 'asia', 'africa', 'north america', 'south america'</span>
-	projection    GeoProjection <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	showland      <span class="token builtin">bool</span>          <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	landcolor     <span class="token builtin">string</span>        <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	showocean     <span class="token builtin">bool</span>          <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	oceancolor    <span class="token builtin">string</span>        <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	showlakes     <span class="token builtin">bool</span>          <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	lakecolor     <span class="token builtin">string</span>        <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	showcountries <span class="token builtin">bool</span>          <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	countrycolor  <span class="token builtin">string</span>        <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	showsubunits  <span class="token builtin">bool</span>          <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	subunitcolor  <span class="token builtin">string</span>        <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	resolution    <span class="token builtin">string</span>        <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// '110', '50', '10'</span>
-	bgcolor       <span class="token builtin">string</span>        <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	scope         <span class="token builtin">string</span>        <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// 'world', 'usa', 'europe', 'asia', 'africa', 'north america', 'south america'</span>
+	projection    GeoProjection <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	showland      <span class="token builtin">bool</span>          <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	landcolor     <span class="token builtin">string</span>        <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	showocean     <span class="token builtin">bool</span>          <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	oceancolor    <span class="token builtin">string</span>        <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	showlakes     <span class="token builtin">bool</span>          <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	lakecolor     <span class="token builtin">string</span>        <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	showcountries <span class="token builtin">bool</span>          <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	countrycolor  <span class="token builtin">string</span>        <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	showsubunits  <span class="token builtin">bool</span>          <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	subunitcolor  <span class="token builtin">string</span>        <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	resolution    <span class="token builtin">string</span>        <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// '110', '50', '10'</span>
+	bgcolor       <span class="token builtin">string</span>        <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>Geo layout for geographic plots</p>
 
@@ -1285,8 +1285,8 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <pre class="signature">
 <code><span class="token keyword">struct</span> GeoCenter <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	lon <span class="token builtin">f64</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	lat <span class="token builtin">f64</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	lon <span class="token builtin">f64</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	lat <span class="token builtin">f64</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>GeoCenter for geographic center</p>
 
@@ -1297,10 +1297,10 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <pre class="signature">
 <code><span class="token keyword">struct</span> GeoProjection <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	typ      <span class="token builtin">string</span>      <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// 'albers usa', 'mercator', 'orthographic', 'natural earth', etc.</span>
-	rotation GeoRotation <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	scale    <span class="token builtin">f64</span>         <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	center   GeoCenter   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	typ      <span class="token builtin">string</span>      <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// 'albers usa', 'mercator', 'orthographic', 'natural earth', etc.</span>
+	rotation GeoRotation <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	scale    <span class="token builtin">f64</span>         <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	center   GeoCenter   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>GeoProjection for geographic projections</p>
 
@@ -1311,9 +1311,9 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <pre class="signature">
 <code><span class="token keyword">struct</span> GeoRotation <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	lon  <span class="token builtin">f64</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	lat  <span class="token builtin">f64</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	roll <span class="token builtin">f64</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	lon  <span class="token builtin">f64</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	lat  <span class="token builtin">f64</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	roll <span class="token builtin">f64</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>GeoRotation for geographic rotation</p>
 
@@ -1326,8 +1326,8 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <code><span class="token keyword">struct</span> HeatmapTrace <span class="token punctuation">{</span>
 	CommonTrace
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	hovertemplate <span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	zsmooth       <span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	hovertemplate <span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	zsmooth       <span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>HeatmapTrace defines a public data structure for this module.</p>
 
@@ -1340,16 +1340,16 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <code><span class="token keyword">struct</span> Histogram2DTrace <span class="token punctuation">{</span>
 	CommonTrace
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	nbinsx       <span class="token builtin">int</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	nbinsy       <span class="token builtin">int</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	autobinx     <span class="token builtin">bool</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	autobiny     <span class="token builtin">bool</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	xbins        Bins   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	ybins        Bins   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	histfunc     <span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// 'count', 'sum', 'avg', 'min', 'max'</span>
-	histnorm     <span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// '', 'percent', 'probability', 'density', 'probability density'</span>
-	showscale    <span class="token builtin">bool</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	reversescale <span class="token builtin">bool</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	nbinsx       <span class="token builtin">int</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	nbinsy       <span class="token builtin">int</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	autobinx     <span class="token builtin">bool</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	autobiny     <span class="token builtin">bool</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	xbins        Bins   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	ybins        Bins   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	histfunc     <span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// 'count', 'sum', 'avg', 'min', 'max'</span>
+	histnorm     <span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// '', 'percent', 'probability', 'density', 'probability density'</span>
+	showscale    <span class="token builtin">bool</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	reversescale <span class="token builtin">bool</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>Histogram2DTrace defines a public data structure for this module.</p>
 
@@ -1362,11 +1362,11 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <code><span class="token keyword">struct</span> HistogramTrace <span class="token punctuation">{</span>
 	CommonTrace
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	nbinsx   <span class="token builtin">int</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	nbinsy   <span class="token builtin">int</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	xbins    Bins   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	histfunc <span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	marker   Marker <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	nbinsx   <span class="token builtin">int</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	nbinsy   <span class="token builtin">int</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	xbins    Bins   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	histfunc <span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	marker   Marker <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>HistogramTrace defines a public data structure for this module.</p>
 
@@ -1377,8 +1377,8 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <pre class="signature">
 <code><span class="token keyword">struct</span> Increasing <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	marker Marker <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	line   Line   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	marker Marker <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	line   Line   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>Increasing is a struct for increasing values styling</p>
 
@@ -1397,12 +1397,12 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 	xaxis         Axis
 	yaxis         Axis
 	annotations   <span class="token punctuation">[</span><span class="token punctuation">]</span>Annotation
-	showlegend    <span class="token builtin">bool</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	plot_bgcolor  <span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	paper_bgcolor <span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	polar         Polar  <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	geo           Geo    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// For geographic plots</span>
-	mapbox        Mapbox <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// For mapbox plots</span>
+	showlegend    <span class="token builtin">bool</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	plot_bgcolor  <span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	paper_bgcolor <span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	polar         Polar  <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	geo           Geo    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// For geographic plots</span>
+	mapbox        Mapbox <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// For mapbox plots</span>
 <span class="token punctuation">}</span></code></pre>
 <p>Layout</p>
 
@@ -1413,10 +1413,10 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <pre class="signature">
 <code><span class="token keyword">struct</span> Line <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	color   <span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	width   <span class="token builtin">f64</span>    <span class="token operator">=</span> <span class="token number">2.0</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	dash    <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">'solid'</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	visible <span class="token builtin">bool</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	color   <span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	width   <span class="token builtin">f64</span>    <span class="token operator">=</span> <span class="token number">2.0</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	dash    <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">'solid'</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	visible <span class="token builtin">bool</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>Line is a struct for line properties in a trace</p>
 
@@ -1429,7 +1429,7 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <code><span class="token keyword">struct</span> LineTrace <span class="token punctuation">{</span>
 	CommonTrace
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	connectgaps <span class="token builtin">bool</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	connectgaps <span class="token builtin">bool</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>LineTrace defines a public data structure for this module.</p>
 
@@ -1440,12 +1440,12 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <pre class="signature">
 <code><span class="token keyword">struct</span> Mapbox <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	style       <span class="token builtin">string</span>       <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// 'open-street-map', 'carto-positron', 'carto-darkmatter', 'stamen-terrain', etc.</span>
-	center      MapboxCenter <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	zoom        <span class="token builtin">f64</span>          <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	bearing     <span class="token builtin">f64</span>          <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	pitch       <span class="token builtin">f64</span>          <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	accesstoken <span class="token builtin">string</span>       <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	style       <span class="token builtin">string</span>       <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// 'open-street-map', 'carto-positron', 'carto-darkmatter', 'stamen-terrain', etc.</span>
+	center      MapboxCenter <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	zoom        <span class="token builtin">f64</span>          <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	bearing     <span class="token builtin">f64</span>          <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	pitch       <span class="token builtin">f64</span>          <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	accesstoken <span class="token builtin">string</span>       <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>Mapbox layout for mapbox plots</p>
 
@@ -1456,8 +1456,8 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <pre class="signature">
 <code><span class="token keyword">struct</span> MapboxCenter <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	lat <span class="token builtin">f64</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	lon <span class="token builtin">f64</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	lat <span class="token builtin">f64</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	lon <span class="token builtin">f64</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>MapboxCenter for mapbox center</p>
 
@@ -1468,10 +1468,10 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <pre class="signature">
 <code><span class="token keyword">struct</span> Marker <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	size       <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	color      <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	opacity    <span class="token builtin">f64</span>    <span class="token operator">=</span> <span class="token number">0.8</span>      <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	colorscale <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">'Viridis'</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	size       <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	color      <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	opacity    <span class="token builtin">f64</span>    <span class="token operator">=</span> <span class="token number">0.8</span>     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	colorscale <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">'Viridis'</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>Marker is a struct for marker properties in a trace</p>
 
@@ -1482,11 +1482,11 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <pre class="signature">
 <code><span class="token keyword">struct</span> NetworkEdges <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	x         <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>  <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	y         <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>  <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	line      Line   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	hoverinfo <span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	mode      <span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	x         <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>  <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	y         <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>  <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	line      Line   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	hoverinfo <span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	mode      <span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>NetworkEdges is a struct for network graph edges</p>
 
@@ -1497,15 +1497,15 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <pre class="signature">
 <code><span class="token keyword">struct</span> NetworkNodes <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	x         <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	y         <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	text      <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	ids       <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	values    <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	labels    <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	marker    Marker   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	line      Line     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	hoverinfo <span class="token builtin">string</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	x         <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	y         <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	text      <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	ids       <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	values    <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	labels    <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	marker    Marker   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	line      Line     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	hoverinfo <span class="token builtin">string</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>NetworkNodes is a struct for network graph nodes</p>
 
@@ -1518,12 +1518,12 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <code><span class="token keyword">struct</span> NetworkTrace <span class="token punctuation">{</span>
 	CommonTrace
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	nodes      NetworkNodes <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	edges      NetworkEdges <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	layout     <span class="token builtin">string</span>       <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// 'force', 'circle', 'tree', 'random'</span>
-	iterations <span class="token builtin">int</span>          <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	node_trace <span class="token builtin">bool</span>         <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	edge_trace <span class="token builtin">bool</span>         <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	nodes      NetworkNodes <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	edges      NetworkEdges <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	layout     <span class="token builtin">string</span>       <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// 'force', 'circle', 'tree', 'random'</span>
+	iterations <span class="token builtin">int</span>          <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	node_trace <span class="token builtin">bool</span>         <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	edge_trace <span class="token builtin">bool</span>         <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>NetworkTrace defines a public data structure for this module.</p>
 
@@ -1536,14 +1536,14 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <code><span class="token keyword">struct</span> OhlcTrace <span class="token punctuation">{</span>
 	CommonTrace
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	open             <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>      <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	high             <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>      <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	low              <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>      <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	close            <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>      <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	increasing       Increasing <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	decreasing       Decreasing <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	xperiod          <span class="token builtin">string</span>     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	xperiodalignment <span class="token builtin">string</span>     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	open             <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>      <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	high             <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>      <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	low              <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>      <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	close            <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>      <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	increasing       Increasing <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	decreasing       Decreasing <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	xperiod          <span class="token builtin">string</span>     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	xperiodalignment <span class="token builtin">string</span>     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>OhlcTrace defines a public data structure for this module.</p>
 
@@ -1555,12 +1555,12 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <pre class="signature">
 <code><span class="token keyword">struct</span> ParallelCoordinatesTrace <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	dimensions <span class="token punctuation">[</span><span class="token punctuation">]</span>Dimension  <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	line       ParallelLine <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	name       <span class="token builtin">string</span>       <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	marker     Marker       <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	labelangle <span class="token builtin">f64</span>          <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	labelside  <span class="token builtin">string</span>       <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// 'top', 'bottom'</span>
+	dimensions <span class="token punctuation">[</span><span class="token punctuation">]</span>Dimension  <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	line       ParallelLine <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	name       <span class="token builtin">string</span>       <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	marker     Marker       <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	labelangle <span class="token builtin">f64</span>          <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	labelside  <span class="token builtin">string</span>       <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// 'top', 'bottom'</span>
 <span class="token punctuation">}</span></code></pre>
 <p>ParallelCoordinatesTrace defines a public data structure for this module.</p>
 
@@ -1571,13 +1571,13 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <pre class="signature">
 <code><span class="token keyword">struct</span> ParallelLine <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	color        <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>  <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	colorscale   <span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	showscale    <span class="token builtin">bool</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	reversescale <span class="token builtin">bool</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	cmin         <span class="token builtin">f64</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	cmax         <span class="token builtin">f64</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	cmid         <span class="token builtin">f64</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	color        <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>  <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	colorscale   <span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	showscale    <span class="token builtin">bool</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	reversescale <span class="token builtin">bool</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	cmin         <span class="token builtin">f64</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	cmax         <span class="token builtin">f64</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	cmid         <span class="token builtin">f64</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>ParallelLine is a struct for parallel coordinates line styling</p>
 
@@ -1588,10 +1588,10 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <pre class="signature">
 <code><span class="token keyword">struct</span> PathBar <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	visible   <span class="token builtin">bool</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	side      <span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// 'top', 'bottom'</span>
-	edgeshape <span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// 'rounded', 'sharp'</span>
-	thickness <span class="token builtin">int</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	visible   <span class="token builtin">bool</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	side      <span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// 'top', 'bottom'</span>
+	edgeshape <span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// 'rounded', 'sharp'</span>
+	thickness <span class="token builtin">int</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>PathBar is a struct for treemap pathbar configuration</p>
 
@@ -1604,8 +1604,8 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <code><span class="token keyword">struct</span> PieTrace <span class="token punctuation">{</span>
 	CommonTrace
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	values <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	labels <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	values <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	labels <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>PieTrace defines a public data structure for this module.</p>
 
@@ -1999,11 +1999,11 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <pre class="signature">
 <code><span class="token keyword">struct</span> Polar <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	radialaxis  RadialAxis  <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	angularaxis AngularAxis <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	sector      <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>       <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	hole        <span class="token builtin">f64</span>         <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	bgcolor     <span class="token builtin">string</span>      <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	radialaxis  RadialAxis  <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	angularaxis AngularAxis <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	sector      <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>       <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	hole        <span class="token builtin">f64</span>         <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	bgcolor     <span class="token builtin">string</span>      <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>Polar layout for radar/polar charts</p>
 
@@ -2014,10 +2014,10 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <pre class="signature">
 <code><span class="token keyword">struct</span> Projection <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	type_     <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">'equirectangular'</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// 'equirectangular', 'mercator', 'orthographic', etc.</span>
-	rotation  Rotation <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	parallels <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	scale     <span class="token builtin">f64</span>      <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	type_     <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">'equirectangular'</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// 'equirectangular', 'mercator', 'orthographic', etc.</span>
+	rotation  Rotation         <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	parallels <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>            <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	scale     <span class="token builtin">f64</span>              <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>Projection is a struct for geo subplot projection configuration</p>
 
@@ -2028,14 +2028,14 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <pre class="signature">
 <code><span class="token keyword">struct</span> RadialAxis <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	visible   <span class="token builtin">bool</span>     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	range     <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	tickvals  <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	ticktext  <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	tickangle <span class="token builtin">f64</span>      <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	showgrid  <span class="token builtin">bool</span>     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	gridcolor <span class="token builtin">string</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	linecolor <span class="token builtin">string</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	visible   <span class="token builtin">bool</span>     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	range     <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	tickvals  <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	ticktext  <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	tickangle <span class="token builtin">f64</span>      <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	showgrid  <span class="token builtin">bool</span>     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	gridcolor <span class="token builtin">string</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	linecolor <span class="token builtin">string</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>RadialAxis for polar plots</p>
 
@@ -2046,9 +2046,9 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <pre class="signature">
 <code><span class="token keyword">struct</span> RangeSlider <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	visible   <span class="token builtin">bool</span>  <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	range     <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	thickness <span class="token builtin">f64</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	visible   <span class="token builtin">bool</span>  <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	range     <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	thickness <span class="token builtin">f64</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>RangeSlider handles range slider configuration for axes</p>
 
@@ -2061,10 +2061,10 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <code><span class="token keyword">struct</span> RidgelineTrace <span class="token punctuation">{</span>
 	CommonTrace
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	orientation <span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// 'v' or 'h'</span>
-	bandwidth   <span class="token builtin">f64</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	scale       <span class="token builtin">f64</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// Scaling factor for ridge height</span>
-	overlap     <span class="token builtin">f64</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// Overlap between ridges</span>
+	orientation <span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// 'v' or 'h'</span>
+	bandwidth   <span class="token builtin">f64</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	scale       <span class="token builtin">f64</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// Scaling factor for ridge height</span>
+	overlap     <span class="token builtin">f64</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// Overlap between ridges</span>
 <span class="token punctuation">}</span></code></pre>
 <p>RidgelineTrace defines a public data structure for this module.</p>
 
@@ -2075,9 +2075,9 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <pre class="signature">
 <code><span class="token keyword">struct</span> Rotation <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	lon  <span class="token builtin">f64</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	lat  <span class="token builtin">f64</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	roll <span class="token builtin">f64</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	lon  <span class="token builtin">f64</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	lat  <span class="token builtin">f64</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	roll <span class="token builtin">f64</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>Rotation is a struct for projection rotation (used in geo subplots)</p>
 
@@ -2088,13 +2088,13 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <pre class="signature">
 <code><span class="token keyword">struct</span> SankeyLink <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	source        <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	target        <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	value         <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	label         <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	color         <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	line          Line     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	hovertemplate <span class="token builtin">string</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	source        <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	target        <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	value         <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	label         <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	color         <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	line          Line     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	hovertemplate <span class="token builtin">string</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>SankeyLink is a struct for Sankey diagram links</p>
 
@@ -2105,14 +2105,14 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <pre class="signature">
 <code><span class="token keyword">struct</span> SankeyNode <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	label     <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	color     <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	line      Line     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	thickness <span class="token builtin">f64</span>      <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	pad       <span class="token builtin">f64</span>      <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	x         <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	y         <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	groups    <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>  <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	label     <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	color     <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	line      Line     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	thickness <span class="token builtin">f64</span>      <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	pad       <span class="token builtin">f64</span>      <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	x         <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	y         <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	groups    <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>  <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>SankeyNode is a struct for Sankey diagram nodes</p>
 
@@ -2124,13 +2124,13 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <pre class="signature">
 <code><span class="token keyword">struct</span> SankeyTrace <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	node        SankeyNode <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	link        SankeyLink <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	orientation <span class="token builtin">string</span>     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// 'v' or 'h'</span>
-	valueformat <span class="token builtin">string</span>     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	valuesuffix <span class="token builtin">string</span>     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	name        <span class="token builtin">string</span>     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	marker      Marker     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	node        SankeyNode <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	link        SankeyLink <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	orientation <span class="token builtin">string</span>     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// 'v' or 'h'</span>
+	valueformat <span class="token builtin">string</span>     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	valuesuffix <span class="token builtin">string</span>     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	name        <span class="token builtin">string</span>     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	marker      Marker     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>SankeyTrace defines a public data structure for this module.</p>
 
@@ -2154,18 +2154,18 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <code><span class="token keyword">struct</span> ScatterGeoTrace <span class="token punctuation">{</span>
 	CommonTrace
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	lat           <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>      <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	lon           <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>      <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	locations     <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	locationmode  <span class="token builtin">string</span>     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// 'ISO-3', 'USA-states', 'country names', 'geojson-id'</span>
-	mode          <span class="token builtin">string</span>     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// 'markers', 'lines', 'lines+markers'</span>
-	text          <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	hovertemplate <span class="token builtin">string</span>     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	geo           <span class="token builtin">string</span>     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// subplot id</span>
-	subplot       <span class="token builtin">string</span>     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	projection    Projection <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	cluster       ClusterGeo <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	line          Line       <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	lat           <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>      <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	lon           <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>      <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	locations     <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	locationmode  <span class="token builtin">string</span>     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// 'ISO-3', 'USA-states', 'country names', 'geojson-id'</span>
+	mode          <span class="token builtin">string</span>     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// 'markers', 'lines', 'lines+markers'</span>
+	text          <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	hovertemplate <span class="token builtin">string</span>     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	geo           <span class="token builtin">string</span>     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// subplot id</span>
+	subplot       <span class="token builtin">string</span>     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	projection    Projection <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	cluster       ClusterGeo <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	line          Line       <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>ScatterGeoTrace defines a public data structure for this module.</p>
 
@@ -2178,12 +2178,12 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <code><span class="token keyword">struct</span> ScatterMapboxTrace <span class="token punctuation">{</span>
 	CommonTrace
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	lat           <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	lon           <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	mode          <span class="token builtin">string</span>  <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// 'markers', 'lines', 'lines+markers'</span>
-	cluster       Cluster <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	hovertemplate <span class="token builtin">string</span>  <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	subplot       <span class="token builtin">string</span>  <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	lat           <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	lon           <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	mode          <span class="token builtin">string</span>  <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// 'markers', 'lines', 'lines+markers'</span>
+	cluster       Cluster <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	hovertemplate <span class="token builtin">string</span>  <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	subplot       <span class="token builtin">string</span>  <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>ScatterMapboxTrace defines a public data structure for this module.</p>
 
@@ -2196,10 +2196,10 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <code><span class="token keyword">struct</span> ScatterPolarTrace <span class="token punctuation">{</span>
 	CommonTrace
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	r         <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>  <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	theta     <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>  <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	thetaunit <span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// 'radians', 'degrees'</span>
-	subplot   <span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	r         <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>  <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	theta     <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>  <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	thetaunit <span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// 'radians', 'degrees'</span>
+	subplot   <span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>ScatterPolarTrace defines a public data structure for this module.</p>
 
@@ -2212,7 +2212,7 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <code><span class="token keyword">struct</span> ScatterTrace <span class="token punctuation">{</span>
 	CommonTrace
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	hovertemplate <span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	hovertemplate <span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>ScatterTrace defines a public data structure for this module.</p>
 
@@ -2225,14 +2225,14 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <code><span class="token keyword">struct</span> SunburstTrace <span class="token punctuation">{</span>
 	CommonTrace
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	labels       <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	parents      <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	values       <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	branchvalues <span class="token builtin">string</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// 'total', 'remainder'</span>
-	count        <span class="token builtin">string</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	ids          <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	level        <span class="token builtin">string</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	maxdepth     <span class="token builtin">int</span>      <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	labels       <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	parents      <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	values       <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	branchvalues <span class="token builtin">string</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// 'total', 'remainder'</span>
+	count        <span class="token builtin">string</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	ids          <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	level        <span class="token builtin">string</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	maxdepth     <span class="token builtin">int</span>      <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>SunburstTrace defines a public data structure for this module.</p>
 
@@ -2245,7 +2245,7 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <code><span class="token keyword">struct</span> SurfaceTrace <span class="token punctuation">{</span>
 	CommonTrace
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	hovertemplate <span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	hovertemplate <span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>SurfaceTrace defines a public data structure for this module.</p>
 
@@ -2256,10 +2256,10 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <pre class="signature">
 <code><span class="token keyword">struct</span> TableCells <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	values <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	align  <span class="token builtin">string</span>     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	fill   Fill       <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	font   Font       <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	values <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	align  <span class="token builtin">string</span>     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	fill   Fill       <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	font   Font       <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>TableCells configures body cells in table traces</p>
 
@@ -2270,10 +2270,10 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <pre class="signature">
 <code><span class="token keyword">struct</span> TableHeader <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	values <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	align  <span class="token builtin">string</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	fill   Fill     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	font   Font     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	values <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	align  <span class="token builtin">string</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	fill   Fill     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	font   Font     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>TableHeader configures header cells in table traces</p>
 
@@ -2286,9 +2286,9 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <code><span class="token keyword">struct</span> TableTrace <span class="token punctuation">{</span>
 	CommonTrace
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	header      TableHeader <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	cells       TableCells  <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	columnwidth <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>       <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	header      TableHeader <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	cells       TableCells  <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	columnwidth <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>       <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>TableTrace defines a public data structure for this module.</p>
 
@@ -2299,8 +2299,8 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <pre class="signature">
 <code><span class="token keyword">struct</span> Totals <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	marker Marker <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	line   Line   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	marker Marker <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	line   Line   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>Totals is a struct for totals styling in waterfall charts</p>
 
@@ -2313,15 +2313,15 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <code><span class="token keyword">struct</span> TreemapTrace <span class="token punctuation">{</span>
 	CommonTrace
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	labels       <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	parents      <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	values       <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	branchvalues <span class="token builtin">string</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// 'total', 'remainder'</span>
-	count        <span class="token builtin">string</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	ids          <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	level        <span class="token builtin">string</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	maxdepth     <span class="token builtin">int</span>      <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	pathbar      PathBar  <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	labels       <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	parents      <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	values       <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	branchvalues <span class="token builtin">string</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// 'total', 'remainder'</span>
+	count        <span class="token builtin">string</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	ids          <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	level        <span class="token builtin">string</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	maxdepth     <span class="token builtin">int</span>      <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	pathbar      PathBar  <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>TreemapTrace defines a public data structure for this module.</p>
 
@@ -2334,23 +2334,23 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <code><span class="token keyword">struct</span> ViolinTrace <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
 	<span class="token comment">// Core violin fields</span>
-	x          <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// For grouped violin plots</span>
-	y          YType    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	x0         <span class="token builtin">string</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// Single x position for violin plots</span>
-	name       <span class="token builtin">string</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	marker     Marker   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	line       Line     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	colorscale <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">'Viridis'</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	fillcolor  <span class="token builtin">string</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// Fill color for violin</span>
-	opacity    <span class="token builtin">f64</span>      <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// Opacity for violin</span>
+	x          <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// For grouped violin plots</span>
+	y          YType    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	x0         <span class="token builtin">string</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// Single x position for violin plots</span>
+	name       <span class="token builtin">string</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	marker     Marker   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	line       Line     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	colorscale <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">'Viridis'</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	fillcolor  <span class="token builtin">string</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// Fill color for violin</span>
+	opacity    <span class="token builtin">f64</span>      <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// Opacity for violin</span>
 
 	<span class="token comment">// Violin-specific fields</span>
-	side        <span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// 'both', 'positive', 'negative'</span>
-	bandwidth   <span class="token builtin">f64</span>    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	orientation <span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// 'v' or 'h'</span>
-	points      <span class="token builtin">string</span> <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// 'all', 'outliers', 'suspectedoutliers', false</span>
-	box         Box    <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	meanline    Line   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	side        <span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// 'both', 'positive', 'negative'</span>
+	bandwidth   <span class="token builtin">f64</span>    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	orientation <span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// 'v' or 'h'</span>
+	points      <span class="token builtin">string</span> <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// 'all', 'outliers', 'suspectedoutliers', false</span>
+	box         Box    <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	meanline    Line   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>ViolinTrace defines a public data structure for this module.</p>
 
@@ -2363,20 +2363,20 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <code><span class="token keyword">struct</span> WaterfallTrace <span class="token punctuation">{</span>
 	CommonTrace
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	measure     <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span>   <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// 'relative', 'total', 'absolute'</span>
-	base        <span class="token builtin">f64</span>        <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	orientation <span class="token builtin">string</span>     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span> <span class="token comment">// 'v' or 'h'</span>
-	connector   Connector  <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	decreasing  Decreasing <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	increasing  Increasing <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
-	totals      Totals     <span class="token punctuation">@[</span>omitempty<span class="token punctuation">]</span>
+	measure     <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span>   <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// 'relative', 'total', 'absolute'</span>
+	base        <span class="token builtin">f64</span>        <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	orientation <span class="token builtin">string</span>     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span> <span class="token comment">// 'v' or 'h'</span>
+	connector   Connector  <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	decreasing  Decreasing <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	increasing  Increasing <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
+	totals      Totals     <span class="token attribute">@[</span><span class="token attribute">omitempty</span><span class="token attribute">]</span>
 <span class="token punctuation">}</span></code></pre>
 <p>WaterfallTrace defines a public data structure for this module.</p>
 
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 8 Oct 2026 14:41:58</div>
+						<div class="footer">Powered by vdoc. Generated on: 12 Oct 2026 15:29:48</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_plot">README</a></li>
 <li class="open"><a href="#plot_actual_vs_predicted">fn plot_actual_vs_predicted</a>        <ul>

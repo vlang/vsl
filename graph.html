@@ -267,7 +267,7 @@ verts <span class="token operator">:=</span> <span class="token punctuation">[</
 weights_v <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
 g <span class="token operator">:=</span> graph<span class="token punctuation">.</span>Graph<span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>edges<span class="token punctuation">,</span> weights_e<span class="token punctuation">,</span> verts<span class="token punctuation">,</span> weights_v<span class="token punctuation">)</span>
 <span class="token comment">// compute paths (weighted)</span>
-g<span class="token punctuation">.</span><span class="token function">shortest_paths</span><span class="token punctuation">(</span><span class="token punctuation">.</span>fw<span class="token punctuation">)</span>
+g<span class="token punctuation">.</span><span class="token function">shortest_paths</span><span class="token punctuation">(</span><span class="token enum_value">.</span><span class="token enum_value">fw</span><span class="token punctuation">)</span>
 <span class="token comment">// print shortest path from 0 to 2</span>
 <span class="token function">print</span><span class="token punctuation">(</span>g<span class="token punctuation">.</span><span class="token function">path</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
 <span class="token comment">// print shortest path from 0 to 3</span>
@@ -313,8 +313,8 @@ g<span class="token punctuation">.</span><span class="token function">shortest_p
 	verts     <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span> <span class="token comment">// [nverts][ndim] vertices</span>
 	weights_v <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>   <span class="token comment">// [nverts] weights of vertices</span>
 	<span class="token comment">// auxiliary</span>
-	shares   map<span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span> <span class="token comment">// [nverts] edges sharing a vertex</span>
-	key2edge map<span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token builtin">int</span>   <span class="token comment">// maps (i,j) vertex to edge index</span>
+	shares   <span class="token builtin">map</span><span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span> <span class="token comment">// [nverts] edges sharing a vertex</span>
+	key2edge <span class="token builtin">map</span><span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token builtin">int</span>   <span class="token comment">// maps (i,j) vertex to edge index</span>
 	dist     <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>       <span class="token comment">// [nverts][nverts] distances</span>
 	next     <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>       <span class="token comment">// [nverts][nverts] next tree connection. -1 means no connection</span>
 <span class="token punctuation">}</span></code></pre>
@@ -380,7 +380,7 @@ g<span class="token punctuation">.</span><span class="token function">shortest_p
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 8 Oct 2026 14:41:58</div>
+						<div class="footer">Powered by vdoc. Generated on: 12 Oct 2026 15:29:47</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_graph">README</a></li>
 <li class="open"><a href="#Graph.new">fn Graph.new</a>        <ul>

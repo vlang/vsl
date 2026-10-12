@@ -289,18 +289,18 @@ v run <span class="token punctuation">.</span><span class="token operator">/</sp
 <pre><code class="language-sh">v <span class="token operator">-</span>I<span class="token operator">/</span>custom<span class="token operator">/</span>path<span class="token operator">/</span>to<span class="token operator">/</span>opencl<span class="token operator">/</span>headers my_program<span class="token punctuation">.</span>v</code></pre>
 <p>You can also link or move the headers directory into VCL's source directory. For example:</p>
 <pre><code class="language-sh"><span class="token punctuation"># for darwin systems</span>
-ln <span class="token operator">-</span>s <span class="token operator">/</span>custom<span class="token operator">/</span>path<span class="token operator">/</span>to<span class="token operator">/</span>opencl<span class="token operator">/</span>headers <span class="token operator">~</span><span class="token operator">/</span><span class="token punctuation">.</span>vmodules<span class="token operator">/</span>vcl<span class="token operator">/</span>OpenCL
+ln <span class="token operator">-</span>s <span class="token operator">/</span>custom<span class="token operator">/</span>path<span class="token operator">/</span>to<span class="token operator">/</span>opencl<span class="token operator">/</span>headers <span class="token operator">~</span><span class="token operator">/</span><span class="token enum_value">.</span><span class="token enum_value">vmodules</span><span class="token operator">/</span>vcl<span class="token operator">/</span>OpenCL
 
 <span class="token punctuation"># or for any other system you can do</span>
-ln <span class="token operator">-</span>s <span class="token operator">/</span>custom<span class="token operator">/</span>path<span class="token operator">/</span>to<span class="token operator">/</span>opencl<span class="token operator">/</span>headers <span class="token operator">~</span><span class="token operator">/</span><span class="token punctuation">.</span>vmodules<span class="token operator">/</span>vcl<span class="token operator">/</span>CL</code></pre>
+ln <span class="token operator">-</span>s <span class="token operator">/</span>custom<span class="token operator">/</span>path<span class="token operator">/</span>to<span class="token operator">/</span>opencl<span class="token operator">/</span>headers <span class="token operator">~</span><span class="token operator">/</span><span class="token enum_value">.</span><span class="token enum_value">vmodules</span><span class="token operator">/</span>vcl<span class="token operator">/</span>CL</code></pre>
 <p>or, you can copy the headers directory into VCL's source directory. For example you can clone the OpenCL-Headers repository and copy the headers as follows:</p>
 <pre><code class="language-sh">git clone https<span class="token punctuation">:</span><span class="token comment">//github.com/KhronosGroup/OpenCL-Headers /tmp/OpenCL-Headers</span>
 
 <span class="token punctuation"># for darwin systems</span>
-cp <span class="token operator">-</span>r <span class="token operator">/</span>tmp<span class="token operator">/</span>OpenCL<span class="token operator">-</span>Headers<span class="token operator">/</span>CL <span class="token operator">~</span><span class="token operator">/</span><span class="token punctuation">.</span>vmodules<span class="token operator">/</span>vcl<span class="token operator">/</span>OpenCL
+cp <span class="token operator">-</span>r <span class="token operator">/</span>tmp<span class="token operator">/</span>OpenCL<span class="token operator">-</span>Headers<span class="token operator">/</span>CL <span class="token operator">~</span><span class="token operator">/</span><span class="token enum_value">.</span><span class="token enum_value">vmodules</span><span class="token operator">/</span>vcl<span class="token operator">/</span>OpenCL
 
 <span class="token punctuation"># or for any other system you can do</span>
-cp <span class="token operator">-</span>r <span class="token operator">/</span>tmp<span class="token operator">/</span>OpenCL<span class="token operator">-</span>Headers<span class="token operator">/</span>CL <span class="token operator">~</span><span class="token operator">/</span><span class="token punctuation">.</span>vmodules<span class="token operator">/</span>vcl<span class="token operator">/</span>CL</code></pre>
+cp <span class="token operator">-</span>r <span class="token operator">/</span>tmp<span class="token operator">/</span>OpenCL<span class="token operator">-</span>Headers<span class="token operator">/</span>CL <span class="token operator">~</span><span class="token operator">/</span><span class="token enum_value">.</span><span class="token enum_value">vmodules</span><span class="token operator">/</span>vcl<span class="token operator">/</span>CL</code></pre>
 <h2 id="loading-opencl-dynamically">Loading OpenCL dynamically</h2>
 <p>By default VCL uses OpenCL loading the library statically. If you want to use OpenCL dynamically, you can use the <code>-d vsl_vcl_dlopencl</code> flag.</p>
 <p>By default it will look for the OpenCL library in the system path and all the known locations for OpenCL libraries (like <code>/usr/lib</code> and <code>/usr/local/lib</code>) and load the first library it finds. If you want to use a specific OpenCL library, you can declare the environment variable <code>VCL_LIBOPENCL_PATH</code> with the path to the library. Multiple paths can be separated by <code>:</code>.</p>
@@ -332,20 +332,20 @@ cp <span class="token operator">-</span>r <span class="token operator">/</span>t
 <pre><code class="language-sh">v <span class="token operator">-</span>I<span class="token operator">/</span>custom<span class="token operator">/</span>path<span class="token operator">/</span>to<span class="token operator">/</span>opencl<span class="token operator">/</span>headers my_program<span class="token punctuation">.</span>v</code></pre>
 <h3 id="method-2-symbolic-links">Method 2: Symbolic Links</h3>
 <pre><code class="language-sh"><span class="token punctuation"># macOS systems (Darwin)</span>
-ln <span class="token operator">-</span>s <span class="token operator">/</span>custom<span class="token operator">/</span>path<span class="token operator">/</span>to<span class="token operator">/</span>opencl<span class="token operator">/</span>headers <span class="token operator">~</span><span class="token operator">/</span><span class="token punctuation">.</span>vmodules<span class="token operator">/</span>vcl<span class="token operator">/</span>OpenCL
+ln <span class="token operator">-</span>s <span class="token operator">/</span>custom<span class="token operator">/</span>path<span class="token operator">/</span>to<span class="token operator">/</span>opencl<span class="token operator">/</span>headers <span class="token operator">~</span><span class="token operator">/</span><span class="token enum_value">.</span><span class="token enum_value">vmodules</span><span class="token operator">/</span>vcl<span class="token operator">/</span>OpenCL
 
 <span class="token punctuation"># Linux/Windows systems  </span>
-ln <span class="token operator">-</span>s <span class="token operator">/</span>custom<span class="token operator">/</span>path<span class="token operator">/</span>to<span class="token operator">/</span>opencl<span class="token operator">/</span>headers <span class="token operator">~</span><span class="token operator">/</span><span class="token punctuation">.</span>vmodules<span class="token operator">/</span>vcl<span class="token operator">/</span>CL</code></pre>
+ln <span class="token operator">-</span>s <span class="token operator">/</span>custom<span class="token operator">/</span>path<span class="token operator">/</span>to<span class="token operator">/</span>opencl<span class="token operator">/</span>headers <span class="token operator">~</span><span class="token operator">/</span><span class="token enum_value">.</span><span class="token enum_value">vmodules</span><span class="token operator">/</span>vcl<span class="token operator">/</span>CL</code></pre>
 <h3 id="method-3-direct-copy">Method 3: Direct Copy</h3>
 <pre><code class="language-sh"><span class="token punctuation"># Clone official headers</span>
 git clone https<span class="token punctuation">:</span><span class="token comment">//github.com/KhronosGroup/OpenCL-Headers /tmp/OpenCL-Headers</span>
 
 <span class="token punctuation"># Copy to VCL directory</span>
 <span class="token punctuation"># For macOS:</span>
-cp <span class="token operator">-</span>r <span class="token operator">/</span>tmp<span class="token operator">/</span>OpenCL<span class="token operator">-</span>Headers<span class="token operator">/</span>CL <span class="token operator">~</span><span class="token operator">/</span><span class="token punctuation">.</span>vmodules<span class="token operator">/</span>vcl<span class="token operator">/</span>OpenCL
+cp <span class="token operator">-</span>r <span class="token operator">/</span>tmp<span class="token operator">/</span>OpenCL<span class="token operator">-</span>Headers<span class="token operator">/</span>CL <span class="token operator">~</span><span class="token operator">/</span><span class="token enum_value">.</span><span class="token enum_value">vmodules</span><span class="token operator">/</span>vcl<span class="token operator">/</span>OpenCL
 
 <span class="token punctuation"># For Linux/Windows:</span>
-cp <span class="token operator">-</span>r <span class="token operator">/</span>tmp<span class="token operator">/</span>OpenCL<span class="token operator">-</span>Headers<span class="token operator">/</span>CL <span class="token operator">~</span><span class="token operator">/</span><span class="token punctuation">.</span>vmodules<span class="token operator">/</span>vcl<span class="token operator">/</span>CL</code></pre>
+cp <span class="token operator">-</span>r <span class="token operator">/</span>tmp<span class="token operator">/</span>OpenCL<span class="token operator">-</span>Headers<span class="token operator">/</span>CL <span class="token operator">~</span><span class="token operator">/</span><span class="token enum_value">.</span><span class="token enum_value">vmodules</span><span class="token operator">/</span>vcl<span class="token operator">/</span>CL</code></pre>
 <h2 id="-dynamic-opencl-loading">⚡ Dynamic OpenCL Loading</h2>
 <p>For runtime flexibility, use dynamic loading:</p>
 <pre><code class="language-sh"><span class="token punctuation"># Enable dynamic loading</span>
@@ -746,13 +746,20 @@ export VCL_LIBOPENCL_PATH<span class="token operator">=</span><span class="token
 </section>
 
 		<section id="Device.add_program" class="doc-node">
-			<div class="title"><h2>fn (Device) add_program <a href="#Device.add_program">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/device.c.v#L145"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (Device) add_program <a href="#Device.add_program">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/device.c.v#L147"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> d Device<span class="token punctuation">)</span> <span class="token function">add_program</span><span class="token punctuation">(</span>source <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
-<p>add_program compiles program source from OpenCL C code This method takes OpenCL C source code, compiles it, and stores the resulting program for later kernel creation and execution.</p>
-<p>Parameters: source: OpenCL C source code as a string</p>
-<p>Returns: Error if compilation fails, including detailed build log for debugging</p>
+<p>Note: If compilation fails, the error will include the complete build logwith line numbers and specific error messages from the OpenCL compiler.</p>
 
+<section class="doc-node examples"><h4>Example</h4>
+<pre>
+<code class="language-v">  kernel_source <span class="token operator">:=</span> <span class="token string">'
+  __kernel void vector_add(__global float* a, __global float* b, __global float* c) {
+      int id = get_global_id(0);
+      c[id] = a[id] + b[id];
+  }'</span>
+device<span class="token punctuation">.</span><span class="token function">add_program</span><span class="token punctuation">(</span>kernel_source<span class="token punctuation">)</span><span class="token operator">!</span></code></pre>
+</section>
 </section>
 
 		<section id="Device.image" class="doc-node">
@@ -784,6 +791,14 @@ export VCL_LIBOPENCL_PATH<span class="token operator">=</span><span class="token
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>d <span class="token operator">&amp;</span>Device<span class="token punctuation">)</span> vector<span class="token punctuation">[</span>T<span class="token punctuation">]</span><span class="token punctuation">(</span>length <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token operator">&amp;</span>Vector<span class="token punctuation">[</span>T<span class="token punctuation">]</span></code></pre>
 <p>vector allocates new vector buffer with specified length</p>
+
+</section>
+
+		<section id="Device.vector_f32" class="doc-node">
+			<div class="title"><h2>fn (Device) vector_f32 <a href="#Device.vector_f32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/vector.c.v#L65"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>d <span class="token operator">&amp;</span>Device<span class="token punctuation">)</span> <span class="token function">vector_f32</span><span class="token punctuation">(</span>length <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token operator">&amp;</span>VectorF32</code></pre>
+<p>vector_f32 allocates a new f32 vector buffer with the specified length.</p>
 
 </section>
 
@@ -926,8 +941,59 @@ export VCL_LIBOPENCL_PATH<span class="token operator">=</span><span class="token
 
 </section>
 
+		<section id="VectorF32" class="doc-node">
+			<div class="title"><h2>struct VectorF32 <a href="#VectorF32">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/vector.c.v#L59"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> VectorF32 <span class="token punctuation">{</span>
+<span class="token keyword">mut</span><span class="token punctuation">:</span>
+	buf <span class="token operator">&amp;</span>Buffer <span class="token operator">=</span> <span class="token keyword">unsafe</span> <span class="token punctuation">{</span> <span class="token keyword">nil</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>VectorF32 is an OpenCL buffer for f32 data. It provides a concrete type for compiler versions that cannot instantiate the generic Vector[f32] in C code.</p>
 
-						<div class="footer">Powered by vdoc. Generated on: 8 Oct 2026 14:41:58</div>
+</section>
+
+		<section id="VectorF32.load" class="doc-node">
+			<div class="title"><h2>fn (VectorF32) load <a href="#VectorF32.load">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/vector.c.v#L76"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> v VectorF32<span class="token punctuation">)</span> <span class="token function">load</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span><span class="token punctuation">)</span> <span class="token builtin">chan</span> IError</code></pre>
+<p>load copies f32 values from host memory to the device buffer.</p>
+
+</section>
+
+		<section id="VectorF32.data" class="doc-node">
+			<div class="title"><h2>fn (VectorF32) data <a href="#VectorF32.data">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/vector.c.v#L91"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>v <span class="token operator">&amp;</span>VectorF32<span class="token punctuation">)</span> <span class="token function">data</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f32</span></code></pre>
+<p>data copies f32 values from the device buffer to host memory.</p>
+
+</section>
+
+		<section id="VectorF32.length" class="doc-node">
+			<div class="title"><h2>fn (VectorF32) length <a href="#VectorF32.length">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/vector.c.v#L102"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>v <span class="token operator">&amp;</span>VectorF32<span class="token punctuation">)</span> <span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>length returns the number of f32 values in the device buffer.</p>
+
+</section>
+
+		<section id="VectorF32.buffer" class="doc-node">
+			<div class="title"><h2>fn (VectorF32) buffer <a href="#VectorF32.buffer">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/vector.c.v#L107"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>v <span class="token operator">&amp;</span>VectorF32<span class="token punctuation">)</span> <span class="token function">buffer</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>Buffer</code></pre>
+<p>buffer returns the underlying device buffer.</p>
+
+</section>
+
+		<section id="VectorF32.release" class="doc-node">
+			<div class="title"><h2>fn (VectorF32) release <a href="#VectorF32.release">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/vector.c.v#L112"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>v <span class="token operator">&amp;</span>VectorF32<span class="token punctuation">)</span> <span class="token function">release</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
+<p>release releases the device buffer.</p>
+
+</section>
+
+
+						<div class="footer">Powered by vdoc. Generated on: 12 Oct 2026 15:29:48</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_vcl">README</a></li>
 <li class="open"><a href="#error_from_code">fn error_from_code</a>        <ul>
@@ -1004,6 +1070,7 @@ export VCL_LIBOPENCL_PATH<span class="token operator">=</span><span class="token
 <li><a href="#Device.from_image">fn from_image</a></li>
 <li><a href="#Device.kernel">fn kernel</a></li>
 <li><a href="#Device.vector">fn vector</a></li>
+<li><a href="#Device.vector_f32">fn vector_f32</a></li>
 </ul>
 </li>
 <li class="open"><a href="#Image">struct Image</a>        <ul>
@@ -1031,6 +1098,14 @@ export VCL_LIBOPENCL_PATH<span class="token operator">=</span><span class="token
 </ul>
 </li>
 <li class="open"><a href="#Vector">struct Vector</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#VectorF32">struct VectorF32</a>        <ul>
+<li><a href="#VectorF32.load">fn load</a></li>
+<li><a href="#VectorF32.data">fn data</a></li>
+<li><a href="#VectorF32.length">fn length</a></li>
+<li><a href="#VectorF32.buffer">fn buffer</a></li>
+<li><a href="#VectorF32.release">fn release</a></li>
 </ul>
 </li>
 </ul></div>
