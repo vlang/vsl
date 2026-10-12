@@ -25,7 +25,7 @@ cl_image_desc *create_image_desc(
     cl_uint num_samples,
     cl_mem buffer)
 {
-    cl_image_desc *desc = (cl_image_desc *)malloc(sizeof(cl_image_desc));
+    cl_image_desc *desc = (cl_image_desc *)malloc(sizeof(cl_image_desc)); // DevSkim: ignore DS161085 because this fixed-size allocation has no size arithmetic.
     desc->image_type = image_type;
     desc->image_width = image_width;
     desc->image_height = image_height;
@@ -41,7 +41,7 @@ cl_image_format *create_image_format(
     cl_channel_order image_channel_order,
     cl_channel_type image_channel_data_type
 ) {
-    cl_image_format *format = (cl_image_format *)malloc(sizeof(cl_image_format));
+    cl_image_format *format = (cl_image_format *)malloc(sizeof(cl_image_format)); // DevSkim: ignore DS161085 because this fixed-size allocation has no size arithmetic.
     format->image_channel_order = image_channel_order;
     format->image_channel_data_type = image_channel_data_type;
     return format;

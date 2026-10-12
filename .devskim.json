@@ -1,0 +1,12 @@
+{
+  "Globs": [
+    "**/.git/**",
+    "**/bin/**",
+    "**/examples/**",
+    "**/megalinter-reports/**",
+    "**/fft/pocket-fft/**",
+    "**/plot/static/plotly-2.26.2.min.js",
+    "**/.github/workflows/todo.yml",
+    "**/*megalinter_file_names_cspell.txt"
+  ]
+}
