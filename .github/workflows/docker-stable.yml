@@ -1,5 +1,7 @@
 name: Stable Docker Publish
 
+permissions: {}
+
 concurrency:
   group: docker-stable
   cancel-in-progress: true

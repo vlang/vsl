@@ -13,6 +13,7 @@ on:
       - '.github/workflows/benchmark-pr-comment.yml'
 
 permissions:
+  contents: read
   pull-requests: write
 
 env:
@@ -22,9 +23,11 @@ jobs:
   comment:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
 
-      - uses: vlang/setup-v@v1.7
+      - uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
           check-latest: true
 
@@ -61,7 +64,7 @@ jobs:
           } 2>&1 | tee vs_numpy_pr.md
 
       - name: Post sticky PR comment
-        uses: marocchino/sticky-pull-request-comment@v3
+        uses: marocchino/sticky-pull-request-comment@5770ad5eb8f42dd2c4f34da00c94c5381e49af88 # v3
         with:
           header: vsl-vs-numpy
           path: ~/.vmodules/vs_numpy_pr.md

@@ -1,5 +1,8 @@
 name: Deploy Documentation
 
+permissions:
+  contents: write
+
 env:
   VJOBS: '2'
 
@@ -18,12 +21,13 @@ jobs:
 
     steps:
       - name: Checkout VSL
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          persist-credentials: false
           path: vsl
 
       - name: Setup V
-        uses: vlang/setup-v@v1.7
+        uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
           check-latest: true
 
@@ -55,7 +59,7 @@ jobs:
           cp -a ~/.vmodules/vsl/_docs/. ./vsl/_docs/
 
       - name: Deploy to gh-pages
-        uses: peaceiris/actions-gh-pages@v4
+        uses: peaceiris/actions-gh-pages@84c30a85c19949d7eee79c4ff27748b70285e453 # v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./vsl/_docs/
