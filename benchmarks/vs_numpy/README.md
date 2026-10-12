@@ -168,6 +168,18 @@ section are superseded: the V benchmark then allocated its output inside the
 timed region while NumPy reused a preallocated output, so those numbers were
 not directly comparable.
 
+### Paired follow-up (2026-10-12)
+
+Three interleaved process pairs on the same Ryzen 9 5900X measured median means
+of 2.735 ms for VSL pure-V SIMD and 0.969 ms for NumPy 2.5.4 with two OpenBLAS
+threads at 512×512. NumPy was 2.82× faster in this sample. The checksums were
+`125.054512` and `125.054504`, respectively. V was built from `~/.vmodules`
+with V 0.5.2 (`02cf4bd`), GCC 16.2.1, `VJOBS=2`, `-no-parallel`, `-prod`, and
+`-cflags "-O3 -march=native"`; each build and process ran under a 2 GiB
+`MemoryMax` with swap disabled. NumPy used the same deterministic inputs,
+`OPENBLAS_NUM_THREADS=2`, and the same process-level memory cap. This confirms
+the earlier gap on this host; it does not establish a cross-machine ranking.
+
 ## Ryzen 9 5900X local sample
 
 The VSL and NumPy scripts use the same deterministic matrices, two warmups, and
