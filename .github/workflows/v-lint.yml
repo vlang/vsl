@@ -35,12 +35,13 @@ jobs:
       VJOBS: '2'
     steps:
       - name: Checkout VSL
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          persist-credentials: false
           path: vsl
           fetch-depth: 0
       - name: Setup V
-        uses: vlang/setup-v@v1.7
+        uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
           check-latest: true
       - name: Install dependencies
@@ -101,7 +102,7 @@ jobs:
         run: |
           mapfile -t markdown_files <<< "$MARKDOWN_FILES"
           for i in "${!markdown_files[@]}"; do
-            markdown_files[$i]="./vsl/${markdown_files[$i]}"
+            markdown_files[i]="./vsl/${markdown_files[i]}"
           done
           cd ~/.vmodules
           env HOME="$HOME" PATH="$PATH" VJOBS=2 \
@@ -116,11 +117,12 @@ jobs:
       VJOBS: '2'
     steps:
       - name: Checkout VSL
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          persist-credentials: false
           path: vsl
       - name: Setup V
-        uses: vlang/setup-v@v1.7
+        uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
           check-latest: true
       - name: Setup VSL as V module
@@ -131,7 +133,7 @@ jobs:
         run: |
           mapfile -t v_files < <(git -C ~/.vmodules/vsl ls-files '*.v' ':!:vulkan/spv.v')
           for i in "${!v_files[@]}"; do
-            v_files[$i]="./vsl/${v_files[$i]}"
+            v_files[i]="./vsl/${v_files[i]}"
           done
           cd ~/.vmodules
           env HOME="$HOME" PATH="$PATH" VJOBS=2 \

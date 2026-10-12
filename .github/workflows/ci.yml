@@ -1,5 +1,8 @@
 name: VSL Continuous Integration
 
+permissions:
+  contents: read
+
 env:
   VJOBS: '2'
 
@@ -55,12 +58,13 @@ jobs:
 
     steps:
       - name: Checkout VSL
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          persist-credentials: false
           path: vsl
 
       - name: Setup V
-        uses: vlang/setup-v@v1.7
+        uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
           check-latest: true
 
@@ -147,12 +151,13 @@ jobs:
 
     steps:
       - name: Checkout VSL
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          persist-credentials: false
           path: vsl
 
       - name: Setup V
-        uses: vlang/setup-v@v1.7
+        uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
           check-latest: true
 
@@ -176,7 +181,7 @@ jobs:
           vsl/bin/test --help
 
       - name: Install Vulkan headers (Windows)
-        uses: humbletim/setup-vulkan-sdk@v1.2.1
+        uses: humbletim/setup-vulkan-sdk@c25f41106918cde0bf347e6f201277392b3a9e9d # v1.2.1
         with:
           vulkan-query-version: 1.3.296.0
           vulkan-components: Vulkan-Headers, Vulkan-Loader
@@ -257,12 +262,13 @@ jobs:
 
     steps:
       - name: Checkout VSL
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          persist-credentials: false
           path: vsl
 
       - name: Setup V
-        uses: vlang/setup-v@v1.7
+        uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
           check-latest: true
 
@@ -318,12 +324,13 @@ jobs:
 
     steps:
       - name: Checkout VSL
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          persist-credentials: false
           path: vsl
 
       - name: Setup V
-        uses: vlang/setup-v@v1.7
+        uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
           check-latest: true
 

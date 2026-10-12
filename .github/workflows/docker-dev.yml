@@ -1,5 +1,7 @@
 name: Dev Docker Publish
 
+permissions: {}
+
 concurrency:
   group: docker-dev
   cancel-in-progress: true
