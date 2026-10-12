@@ -170,4 +170,4 @@ Found an error or want to improve a tutorial? See our [Contributing Guide](../CO
 - [Examples Directory](../examples/)
 - [Benchmarks](../benchmarks/README.md)
 - [VTL Tensor Library](https://github.com/vlang/vtl)
-- [V Language Documentation](https://vlang.io/docs)
+- [V Language Documentation](https://docs.vlang.io/introduction.html)

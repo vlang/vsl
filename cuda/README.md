@@ -181,7 +181,7 @@ v -d cuda run cuda/examples/relu_example.v
 ## 🔗 Resources
 
 - [VSL Documentation](https://vlang.github.io/vsl)
-- [cuBLAS Documentation](https://docs.nvidia.com/cublas/)
+- [cuBLAS Documentation](https://docs.nvidia.com/cuda/cublas/index.html)
 - [cuDNN Documentation](https://docs.nvidia.com/cudnn/)
 - [CUDA Toolkit Download](https://developer.nvidia.com/cuda-downloads)
 - [VSL ADR-001: Multi-backend GPU compute](../docs/adr/ADR-001-multi-backend-gpu-compute-vsl.md)

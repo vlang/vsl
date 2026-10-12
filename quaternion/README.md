@@ -67,4 +67,4 @@ Examples combining quaternions with other VSL modules:
 
 ## API Reference
 
-See the [VSL API Documentation](https://vlang.github.io/vsl/quaternion/) for complete API reference.
+See the [VSL quaternion module source](https://github.com/vlang/vsl/tree/main/quaternion) for the complete API reference.

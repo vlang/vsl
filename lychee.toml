@@ -1,0 +1,11 @@
+# Link checking for public documentation. Organization project pages require
+# GitHub access and are intentionally left out of unauthenticated link checks.
+exclude = [
+  '^https://github\.com/orgs/vlang/projects/8(?:/.*)?$',
+  '^https://hub\.docker\.com/r/ulisesjeremias/vsl$',
+]
+
+# Retry slow documentation hosts without accepting timeouts as success.
+timeout = 30
+max_retries = 2
+retry_wait_time = 2

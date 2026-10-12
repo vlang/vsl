@@ -109,7 +109,7 @@ Try modifying the example:
 
 - [FFT Algorithm Theory](https://en.wikipedia.org/wiki/Fast_Fourier_transform)
 - [FFTW3 Documentation](http://www.fftw.org/fftw3_doc/)
-- [VSL FFT Module Reference](https://vlang.github.io/vsl/fft/)
+- [VSL FFT Module Reference](https://github.com/vlang/vsl/tree/main/fft)
 ---
 
 Dive into signal processing with VSL! 🚀 Explore more examples in the

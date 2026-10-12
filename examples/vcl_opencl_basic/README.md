@@ -186,7 +186,7 @@ After mastering this example, explore:
 ## 📖 Additional Resources
 
 - [OpenCL Programming Guide](https://www.khronos.org/opencl/)
-- [VSL VCL Documentation](https://vlang.github.io/vsl/vcl/)
+- [VSL VCL Documentation](https://github.com/vlang/vsl/tree/main/vcl)
 - [GPU Architecture Guides](https://developer.nvidia.com/cuda-zone)
 
 ---

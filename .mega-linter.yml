@@ -32,6 +32,11 @@ ENABLE:
 
 SHOW_ELAPSED_TIME: true
 
+# zizmor uses GitHub's API to verify action references. Keep the token's
+# visibility limited to this one linter.
+ACTION_ZIZMOR_UNSECURED_ENV_VARIABLES:
+  - GITHUB_TOKEN
+
 # File filtering
 FILTER_REGEX_EXCLUDE: |
   (megalinter-reports/|\.git/|\.vscode/|node_modules/|examples/.*/.*\.png|examples/.*/.*\.jpg|examples/.*/.*\.jpeg|examples/.*/.*\.gif|\.svg$)
