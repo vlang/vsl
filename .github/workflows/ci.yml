@@ -91,13 +91,10 @@ jobs:
             hdf5-tools \
             opencl-headers \
             ocl-icd-opencl-dev \
+            pocl-opencl-icd \
             vulkan-tools \
             mesa-vulkan-drivers \
             libvulkan-dev
-
-      - name: Install PoCL OpenCL CPU runtime
-        if: matrix.os == 'ubuntu-24.04' && matrix.flags == ''
-        run: sudo apt-get install --quiet -y --no-install-recommends pocl-opencl-icd
 
       - name: Test OpenCL compute backend
         if: matrix.os == 'ubuntu-24.04' && matrix.flags == ''

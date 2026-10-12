@@ -1,6 +1,7 @@
 module la
 
 import math
+import vsl.lapack
 
 const matrix_tests_tol = 1e-12
 
@@ -21,6 +22,10 @@ fn test_det() {
 		[3.0, 8.0],
 		[4.0, 6.0],
 	])
+	mut lu := mat_a.data.clone()
+	mut pivots := []int{len: 2}
+	assert lapack.dgetrf(2, 2, mut lu, 2, mut pivots) == 0
+	assert pivots == [2, 2], 'row-major LAPACK pivots should be 1-based: ${pivots}'
 	assert matrix_det(mat_a) == -14
 	mat_b := Matrix.deep2([
 		[6.0, 1.0, 1.0],
