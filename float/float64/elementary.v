@@ -4,18 +4,18 @@ import math
 
 // Elementary functions in double-double arithmetic (~106 bits).
 //
-// exp_dd, log_dd, sin_dd and cos_dd evaluate in double-double arithmetic
+// The *_dd functions in this module evaluate in double-double arithmetic
 // built on the error-free transformations in dd.v, and return the result
 // as a (hi, lo) pair. The extra precision makes the f64 rounding of the
 // pair correctly rounded in practice: it could only differ from the true
 // correctly rounded value if the exact result lay within ~2^-100 of an
 // f64 midpoint. In randomized validation against 200-bit references
-// (508 exp inputs in [-700, 700], 504 log inputs in [1e-300, 1e300],
-// 600 sin/cos inputs in [-1e12, 1e12]), hi matched the correctly rounded
-// f64 result for every input, and the pair (hi + lo) agreed with the
-// exact value to ~5e-32 relative (log/sin/cos) and 1.1e-20 (exp, worst
-// case near the underflow boundary where lo itself becomes subnormal).
-// The bit-exact tables in elementary_dd_test.v pin this behavior.
+// (508 exp, 504 log, 600 sin, 600 cos, 500 exp2, 400 log2, 400 log10 and
+// 500 tan inputs), hi matched the correctly rounded f64 result for every
+// input, and the pair (hi + lo) agreed with the exact value to ~5e-32
+// relative (except exp-family cases near the underflow boundary, where
+// lo itself becomes subnormal). The bit-exact tables in
+// elementary_dd_test.v pin this behavior.
 //
 // This is the f64 analogue of the f32 baseline in float32/elementary.v
 // and progress toward vlang/vsl#65; a proof for all inputs remains open.
@@ -56,14 +56,18 @@ pub fn exp_dd(x f64) (f64, f64) {
 	if x == 0.0 {
 		return 1.0, 0.0
 	}
+	return exp_dd_core(x, 0.0)
+}
+
+// exp_dd_core evaluates e^x for a double-double argument (x_hi, x_lo)
+// of moderate magnitude, without the scalar overflow/underflow guards.
+fn exp_dd_core(x_hi f64, x_lo f64) (f64, f64) {
 	// Range reduction: x = k * ln(2) + r with |r| <= ln(2) / 2.
-	k := int(math.round(x / ln2_hi))
+	k := int(math.round(x_hi / ln2_hi))
 	mut kh, mut ke := two_prod(f64(k), ln2_hi)
 	ke += f64(k) * ln2_lo
 	kh, ke = quick_two_sum(kh, ke)
-	mut r_hi, mut r_lo := two_sum(x, -kh)
-	r_lo -= ke
-	r_hi, r_lo = quick_two_sum(r_hi, r_lo)
+	mut r_hi, mut r_lo := dd_sub(x_hi, x_lo, kh, ke)
 
 	// Taylor series for e^r in double-double arithmetic.
 	mut s_hi, mut s_lo := 1.0, 0.0
@@ -277,5 +281,92 @@ pub fn cos_dd(x f64) (f64, f64) {
 // practice this is the correctly rounded f64 value (see exp).
 pub fn cos(x f64) f64 {
 	hi, lo := cos_dd(x)
+	return hi + lo
+}
+
+// ln(10) split into hi + lo double-double parts.
+const ln10_hi = 2.302585092994046
+const ln10_lo = -2.1707562233822494e-16
+
+// exp2_dd returns 2^x as a double-double pair (hi, lo).
+pub fn exp2_dd(x f64) (f64, f64) {
+	if x != x {
+		return x, x
+	}
+	if x >= 1024.0 {
+		return math.inf(1), 0.0
+	}
+	if x <= -1075.0 {
+		return 0.0, 0.0
+	}
+	if x == 0.0 {
+		return 1.0, 0.0
+	}
+	k := int(math.round(x))
+	f_hi, f_lo := dd_sub(x, 0.0, f64(k), 0.0)
+	y_hi, y_lo := dd_mul(f_hi, f_lo, ln2_hi, ln2_lo)
+	e_hi, e_lo := exp_dd_core(y_hi, y_lo)
+	return math.ldexp(e_hi, k), math.ldexp(e_lo, k)
+}
+
+// exp2 returns 2^x rounded from the double-double evaluation.
+pub fn exp2(x f64) f64 {
+	hi, lo := exp2_dd(x)
+	return hi + lo
+}
+
+// log2_dd returns the base-2 logarithm of x as a double-double pair.
+pub fn log2_dd(x f64) (f64, f64) {
+	if x != x || x < 0.0 {
+		return math.nan(), 0.0
+	}
+	if x == 0.0 {
+		return math.inf(-1), 0.0
+	}
+	h, l := log_dd(x)
+	return dd_div(h, l, ln2_hi, ln2_lo)
+}
+
+// log2 returns log2(x) rounded from the double-double evaluation.
+pub fn log2(x f64) f64 {
+	hi, lo := log2_dd(x)
+	return hi + lo
+}
+
+// log10_dd returns the base-10 logarithm of x as a double-double pair.
+pub fn log10_dd(x f64) (f64, f64) {
+	if x != x || x < 0.0 {
+		return math.nan(), 0.0
+	}
+	if x == 0.0 {
+		return math.inf(-1), 0.0
+	}
+	h, l := log_dd(x)
+	return dd_div(h, l, ln10_hi, ln10_lo)
+}
+
+// log10 returns log10(x) rounded from the double-double evaluation.
+pub fn log10(x f64) f64 {
+	hi, lo := log10_dd(x)
+	return hi + lo
+}
+
+// tan_dd returns tan(x) as a double-double pair (hi, lo), computed as
+// sin_dd / cos_dd with the same reduction domain and fallback as sin_dd.
+pub fn tan_dd(x f64) (f64, f64) {
+	if x != x {
+		return x, x
+	}
+	if math.abs(x) > 1e15 {
+		return math.tan(x), 0.0
+	}
+	s_hi, s_lo := sin_dd(x)
+	c_hi, c_lo := cos_dd(x)
+	return dd_div(s_hi, s_lo, c_hi, c_lo)
+}
+
+// tan returns tan(x) rounded from the double-double evaluation.
+pub fn tan(x f64) f64 {
+	hi, lo := tan_dd(x)
 	return hi + lo
 }
