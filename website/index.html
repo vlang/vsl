@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VSL — The V Scientific Library</title>
+<meta name="description" content="VSL is the V Scientific Library: linear algebra, FFT, statistics, differentiation, machine-learning primitives and GPU backends for V — the numerical backend behind VTL.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="./">VSL <span class="tag">v0.2.0-beta.1</span></a>
+    <nav class="main">
+      <a href="getting-started.html">Getting started</a>
+      <a href="#modules">Modules</a>
+      <a href="#benchmarks">Benchmarks</a>
+      <a href="api/">API reference</a>
+      <a href="https://github.com/vlang/vsl">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <h1>The scientific engine <span class="hl">under V computing.</span></h1>
+      <p class="lede">VSL is the V Scientific Library — linear algebra, FFT, statistics, differentiation, optimization and machine-learning primitives, with SIMD kernels and optional OpenBLAS, LAPACKE, CUDA and Vulkan backends. It is the backend that powers <a href="https://vlang.github.io/vtl">VTL</a> tensors.</p>
+      <div class="btns">
+        <a class="btn primary" href="getting-started.html">Start computing</a>
+        <a class="btn" href="api/">Browse the API</a>
+      </div>
+    </div>
+    <figure class="plot" aria-label="Function plot">
+      <svg viewBox="0 0 420 240" width="100%" role="img" aria-label="Sine and cosine curves sampled by VSL">
+        <g stroke="#dbe4ec" stroke-width="1">
+          <path d="M40 20 V210 M100 20 V210 M160 20 V210 M220 20 V210 M280 20 V210 M340 20 V210 M400 20 V210"/>
+          <path d="M40 60 H400 M40 110 H400 M40 160 H400"/>
+        </g>
+        <g stroke="#43536a" stroke-width="1.5"><path d="M40 20 V210 H400" fill="none"/></g>
+        <path d="M45 110 C90 30, 140 30, 185 110 C230 190, 280 190, 325 110 C355 55, 380 45, 398 60" fill="none" stroke="#0f766e" stroke-width="3.5" stroke-linecap="round"/>
+        <path d="M45 35 C90 110, 140 190, 185 110 C230 30, 280 30, 325 110 C355 165, 380 180, 398 165" fill="none" stroke="#d9481f" stroke-width="2.5" stroke-dasharray="7 6" stroke-linecap="round"/>
+        <g font-family="IBM Plex Mono, monospace" font-size="10" fill="#43536a">
+          <text x="42" y="232">0</text><text x="352" y="232">2π</text>
+          <text x="330" y="42" fill="#0f766e">sin(x)</text><text x="330" y="176" fill="#d9481f">cos(x)</text>
+        </g>
+      </svg>
+      <figcaption><span>fig. 1 — elementary functions, f64</span><span>vsl.fun · vsl.fft</span></figcaption>
+    </figure>
+  </div>
+
+  <hr class="rule">
+  <section id="quickstart">
+    <h2>Linear algebra in a dozen lines</h2>
+    <p class="sub">Matrices, solvers and decompositions with a typed API — no C toolchain required for the pure-V path.</p>
+<pre><span class="cm"># install the module</span>
+v install vsl
+
+<span class="cm">// main.v — build and read a matrix</span>
+import vsl.la as la
+
+fn main() {
+    mut a := la.Matrix.new[f64](2, 2)
+    a.set(0, 0, 1.0)
+    a.set(1, 1, 2.0)
+    println(a.get(1, 1)) <span class="cm">// 2.0</span>
+}</pre>
+    <p><a href="getting-started.html">Follow the full getting-started guide →</a></p>
+  </section>
+
+  <hr class="rule">
+  <section id="modules">
+    <h2>One library, the whole scientific stack</h2>
+    <p class="sub">VSL is organized as focused modules that compose — the same kernels serve direct users and VTL's tensor operations.</p>
+    <div class="cols">
+      <article class="feature">
+        <h3>Linear algebra &amp; BLAS</h3>
+        <p><code>vsl.la</code>, <code>vsl.blas</code> and <code>vsl.lapack</code>: dense matrices, solvers, least squares, eigensolvers — SIMD-vectorized pure-V kernels with optional OpenBLAS/LAPACKE acceleration.</p>
+        <a class="more" href="https://github.com/vlang/vsl/tree/main/la">vsl.la →</a>
+      </article>
+      <article class="feature">
+        <h3>Transforms &amp; calculus</h3>
+        <p><code>vsl.fft</code> for spectral work, <code>vsl.deriv</code> and <code>vsl.diff</code> for numerical differentiation (GSL-inspired), plus integration and interpolation helpers.</p>
+        <a class="more" href="https://github.com/vlang/vsl/tree/main/fft">vsl.fft →</a>
+      </article>
+      <article class="feature">
+        <h3>Statistics &amp; ML primitives</h3>
+        <p><code>vsl.dist</code>, <code>vsl.metrics</code>, <code>vsl.ml</code> and <code>vsl.model_selection</code>: distributions, histograms, evaluation metrics and classic model building blocks.</p>
+        <a class="more" href="https://github.com/vlang/vsl/tree/main/ml">vsl.ml →</a>
+      </article>
+      <article class="feature">
+        <h3>Geometry &amp; quaternions</h3>
+        <p><code>vsl.gm</code> and quaternion support for 3D work, alongside graph algorithms in <code>vsl.graph</code> and data I/O in <code>vsl.inout</code>.</p>
+        <a class="more" href="https://github.com/vlang/vsl/tree/main/gm">vsl.gm →</a>
+      </article>
+      <article class="feature">
+        <h3>Accelerators</h3>
+        <p>Optional CUDA and Vulkan compute paths, MPI parallelism, and a multi-backend compute layer — enabled explicitly, never silently assumed.</p>
+        <a class="more" href="https://github.com/vlang/vsl/blob/main/docs/advanced/02a-cuda-gpu.md">GPU guide →</a>
+      </article>
+      <article class="feature">
+        <h3>The tensor frontend</h3>
+        <p>VTL builds N-dimensional tensors, autograd and neural networks on top of these kernels — NumPy/PyTorch-style computing with VSL underneath.</p>
+        <a class="more" href="https://vlang.github.io/vtl">VTL website →</a>
+      </article>
+    </div>
+  </section>
+
+  <hr class="rule">
+  <section id="benchmarks">
+    <h2>Performance, measured</h2>
+    <p class="sub">Paired GEMM measurement on a Ryzen 9 5900X, 2 threads: VSL with OpenBLAS 0.3.34 against the NumPy 2.5.3 wheel. Builds differ, so read this as a GEMM sample — the full benchmark suite is in the repository.</p>
+    <div class="bench">
+      <div class="stat"><div class="big">1.43 ms</div><div class="lbl">VSL + OpenBLAS — 512×512 GEMM (NumPy: 2.11 ms)</div></div>
+      <div class="stat"><div class="big">8.47 ms</div><div class="lbl">VSL + OpenBLAS — 1024×1024 GEMM (NumPy: 17.38 ms)</div></div>
+      <div class="stat"><div class="big">1.9×</div><div class="lbl">SIMD vs scalar f64 unit-stride dot, 1M elements, -prod build</div></div>
+    </div>
+    <p class="note">Method: compile with <code>-prod</code> first, then execute the binary — never <code>v run</code> for timings. Reproduce from the <a href="https://github.com/vlang/vsl/tree/main/benchmarks">benchmarks directory</a>.</p>
+  </section>
+
+  <hr class="rule">
+  <section id="roadmap">
+    <h2>Where VSL is heading</h2>
+    <p class="sub">The ML roadmap tracks the march toward a complete scientific backend for VTL: broader decompositions, correctly-rounded elementary functions, operator coverage for every public struct, and Enoki-style SIMD data layouts for hot kernels.</p>
+    <p><a href="https://github.com/vlang/vsl/blob/main/docs/ML_ROADMAP.md">Read the ML roadmap →</a> · <a href="https://github.com/vlang/vsl/issues">Open issues →</a></p>
+  </section>
+
+  <footer>
+    <div class="cols">
+      <div>
+        <h4>VSL</h4>
+        <ul>
+          <li><a href="getting-started.html">Getting started</a></li>
+          <li><a href="api/">API reference</a></li>
+          <li><a href="https://github.com/vlang/vsl/tree/main/examples">Examples</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Project</h4>
+        <ul>
+          <li><a href="https://github.com/vlang/vsl">GitHub repository</a></li>
+          <li><a href="https://github.com/vlang/vsl/issues">Issues</a></li>
+          <li><a href="https://github.com/vlang/vsl/blob/main/docs/ML_ROADMAP.md">ML roadmap</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Family</h4>
+        <ul>
+          <li><a href="https://vlang.github.io/vtl">VTL — V Tensor Library</a></li>
+          <li><a href="https://vlang.io">V language</a></li>
+          <li><a href="https://github.com/vlang/vsl/blob/main/LICENSE">MIT License</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+</div>
+</body>
+</html>

@@ -53,13 +53,15 @@ jobs:
           env HOME="$HOME" PATH="$PATH" VJOBS=2 \
             v doc -readme -m -f html ./vsl
 
-      - name: Stage generated docs
+      - name: Stage website and generated API docs
         run: |
-          mkdir -p ./vsl/_docs
-          cp -a ~/.vmodules/vsl/_docs/. ./vsl/_docs/
+          rm -rf ./vsl/_site
+          mkdir -p ./vsl/_site/api
+          cp -a ./vsl/website/. ./vsl/_site/
+          cp -a ~/.vmodules/vsl/_docs/. ./vsl/_site/api/
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@84c30a85c19949d7eee79c4ff27748b70285e453 # v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./vsl/_docs/
+          publish_dir: ./vsl/_site/
