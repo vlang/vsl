@@ -158,3 +158,18 @@ fn test_scal_inc_to() {
 		}
 	}
 }
+
+fn test_scal_unitary_tail_lengths_f32() {
+	for n in [1, 7, 8, 9, 15, 17, 100, 103] {
+		mut x := []f32{len: n}
+		mut dst := []f32{len: n}
+		for i in 0 .. n {
+			x[i] = f32(i % 7) - 3.0
+		}
+		scal_unitary_to(mut dst, -1.5, x)
+		scal_unitary(-1.5, mut x)
+		for i in 0 .. n {
+			assert dst[i] == x[i]
+		}
+	}
+}

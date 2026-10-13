@@ -235,3 +235,23 @@ fn test_axpy_inc_to() {
 		}
 	}
 }
+
+fn test_axpy_unitary_tail_lengths() {
+	for n in [1, 3, 4, 5, 9, 13, 100, 103] {
+		mut x := []f64{len: n}
+		mut y := []f64{len: n}
+		mut dst := []f64{len: n}
+		mut want := []f64{len: n}
+		for i in 0 .. n {
+			x[i] = f64(i % 7) - 3.0
+			y[i] = f64(i % 5) * 0.5
+			want[i] = 2.0 * x[i] + y[i]
+		}
+		axpy_unitary(2.0, x, mut y)
+		axpy_unitary_to(mut dst, 2.0, x, []f64{len: n})
+		for i in 0 .. n {
+			assert y[i] == want[i]
+			assert dst[i] == 2.0 * x[i]
+		}
+	}
+}

@@ -158,3 +158,18 @@ fn test_scal_inc_to() {
 		}
 	}
 }
+
+fn test_scal_unitary_tail_lengths() {
+	for n in [1, 3, 4, 5, 9, 13, 100, 103] {
+		mut x := []f64{len: n}
+		mut dst := []f64{len: n}
+		for i in 0 .. n {
+			x[i] = f64(i % 7) - 3.0
+		}
+		scal_unitary_to(mut dst, -1.5, x)
+		scal_unitary(-1.5, mut x)
+		for i in 0 .. n {
+			assert dst[i] == x[i]
+		}
+	}
+}
