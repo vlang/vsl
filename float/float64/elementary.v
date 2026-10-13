@@ -14,8 +14,10 @@ import math
 // 500 tan inputs), hi matched the correctly rounded f64 result for every
 // input, and the pair (hi + lo) agreed with the exact value to ~5e-32
 // relative (except exp-family cases near the underflow boundary, where
-// lo itself becomes subnormal). The bit-exact tables in
-// elementary_dd_test.v pin this behavior.
+// lo itself becomes subnormal, and atan at ~5e-20). The same holds for
+// the later additions (500 atan, 500 asin, 400 acos, 400 sinh, 300 cosh
+// and 400 tanh inputs). The bit-exact tables in elementary_dd_test.v
+// pin this behavior.
 //
 // This is the f64 analogue of the f32 baseline in float32/elementary.v
 // and progress toward vlang/vsl#65; a proof for all inputs remains open.
@@ -368,5 +370,223 @@ pub fn tan_dd(x f64) (f64, f64) {
 // tan returns tan(x) rounded from the double-double evaluation.
 pub fn tan(x f64) f64 {
 	hi, lo := tan_dd(x)
+	return hi + lo
+}
+
+// sqrt_dd returns the square root of a double-double value (a_hi, a_lo),
+// computed with two Newton refinements from the f64 approximation.
+fn sqrt_dd(a_hi f64, a_lo f64) (f64, f64) {
+	mut s_hi, mut s_lo := math.sqrt(a_hi), 0.0
+	for _ in 0 .. 2 {
+		s2_hi, s2_lo := dd_mul(s_hi, s_lo, s_hi, s_lo)
+		d_hi, d_lo := dd_sub(a_hi, a_lo, s2_hi, s2_lo)
+		q_hi, q_lo := dd_div(d_hi, d_lo, 2.0 * s_hi, 0.0)
+		s_hi, s_lo = dd_add(s_hi, s_lo, q_hi, q_lo)
+	}
+	return s_hi, s_lo
+}
+
+// atan_series_dd evaluates atan(t) for |t| <= ~0.08 in double-double.
+fn atan_series_dd(t_hi f64, t_lo f64) (f64, f64) {
+	s2_hi, s2_lo := dd_mul(t_hi, t_lo, t_hi, t_lo)
+	mut u_hi, mut u_lo := t_hi, t_lo
+	mut a_hi, mut a_lo := t_hi, t_lo
+	for j in 1 .. 61 {
+		u_hi, u_lo = dd_mul(u_hi, u_lo, s2_hi, s2_lo)
+		c_hi, c_lo := dd_div(u_hi, u_lo, f64(2 * j + 1), 0.0)
+		if j % 2 == 1 {
+			a_hi, a_lo = dd_sub(a_hi, a_lo, c_hi, c_lo)
+		} else {
+			a_hi, a_lo = dd_add(a_hi, a_lo, c_hi, c_lo)
+		}
+		if math.abs(c_hi) < 1e-38 * math.max(1.0, math.abs(a_hi)) {
+			break
+		}
+	}
+	return a_hi, a_lo
+}
+
+// atan_dd_pair evaluates atan of a double-double argument of any sign
+// and magnitude: reciprocal reduction for |arg| > 1 and two half-angle
+// steps before the Taylor series.
+fn atan_dd_pair(x_hi f64, x_lo f64) (f64, f64) {
+	if x_hi == 0.0 && x_lo == 0.0 {
+		return 0.0, 0.0
+	}
+	mut sign := 1.0
+	mut t_hi, mut t_lo := x_hi, x_lo
+	if t_hi < 0.0 {
+		sign = -1.0
+		t_hi, t_lo = -t_hi, -t_lo
+	}
+	mut flipped := false
+	if t_hi > 1.0 {
+		t_hi, t_lo = dd_div(1.0, 0.0, t_hi, t_lo)
+		flipped = true
+	}
+	for _ in 0 .. 2 {
+		s2_hi, s2_lo := dd_mul(t_hi, t_lo, t_hi, t_lo)
+		u_hi, u_lo := dd_add(s2_hi, s2_lo, 1.0, 0.0)
+		r_hi, r_lo := sqrt_dd(u_hi, u_lo)
+		d_hi, d_lo := dd_add(r_hi, r_lo, 1.0, 0.0)
+		t_hi, t_lo = dd_div(t_hi, t_lo, d_hi, d_lo)
+	}
+	mut a_hi, mut a_lo := atan_series_dd(t_hi, t_lo)
+	a_hi, a_lo = dd_mul(a_hi, a_lo, 4.0, 0.0)
+	if flipped {
+		a_hi, a_lo = dd_sub(pio2_hi, pio2_lo, a_hi, a_lo)
+	}
+	if sign < 0.0 {
+		return -a_hi, -a_lo
+	}
+	return a_hi, a_lo
+}
+
+// atan_dd returns atan(x) as a double-double pair (hi, lo).
+pub fn atan_dd(x f64) (f64, f64) {
+	if x != x {
+		return x, x
+	}
+	if x == 0.0 {
+		return x, 0.0
+	}
+	return atan_dd_pair(x, 0.0)
+}
+
+// atan returns atan(x) rounded from the double-double evaluation.
+pub fn atan(x f64) f64 {
+	hi, lo := atan_dd(x)
+	return hi + lo
+}
+
+// asin_dd returns asin(x) as a double-double pair (hi, lo), computed as
+// atan(x / sqrt(1 - x^2)). For |x| > 1 it returns NaN, like math.asin.
+pub fn asin_dd(x f64) (f64, f64) {
+	if x != x || x > 1.0 || x < -1.0 {
+		return math.nan(), 0.0
+	}
+	if x == 0.0 {
+		return x, 0.0
+	}
+	if x == 1.0 {
+		return pio2_hi, pio2_lo
+	}
+	if x == -1.0 {
+		return -pio2_hi, -pio2_lo
+	}
+	x2_hi, x2_lo := dd_mul(x, 0.0, x, 0.0)
+	d_hi, d_lo := dd_sub(1.0, 0.0, x2_hi, x2_lo)
+	s_hi, s_lo := sqrt_dd(d_hi, d_lo)
+	q_hi, q_lo := dd_div(x, 0.0, s_hi, s_lo)
+	return atan_dd_pair(q_hi, q_lo)
+}
+
+// asin returns asin(x) rounded from the double-double evaluation.
+pub fn asin(x f64) f64 {
+	hi, lo := asin_dd(x)
+	return hi + lo
+}
+
+// acos_dd returns acos(x) as a double-double pair (hi, lo), computed as
+// pi/2 - asin(x). For |x| > 1 it returns NaN, like math.acos.
+pub fn acos_dd(x f64) (f64, f64) {
+	if x != x || x > 1.0 || x < -1.0 {
+		return math.nan(), 0.0
+	}
+	a_hi, a_lo := asin_dd(x)
+	return dd_sub(pio2_hi, pio2_lo, a_hi, a_lo)
+}
+
+// acos returns acos(x) rounded from the double-double evaluation.
+pub fn acos(x f64) f64 {
+	hi, lo := acos_dd(x)
+	return hi + lo
+}
+
+// dd_reciprocal returns 1 / (e_hi, e_lo) for a double-double value. The
+// operand is scaled by 2^-512 first: Dekker's two_prod splitting
+// overflows for operands near 1e303, which exp_dd legitimately produces.
+fn dd_reciprocal(e_hi f64, e_lo f64) (f64, f64) {
+	s_hi := math.ldexp(e_hi, -512)
+	s_lo := math.ldexp(e_lo, -512)
+	q_hi, q_lo := dd_div(1.0, 0.0, s_hi, s_lo)
+	return math.ldexp(q_hi, -512), math.ldexp(q_lo, -512)
+}
+
+// sinh_dd returns sinh(x) as a double-double pair (hi, lo). For
+// |x| > 710 it falls back to the libm value with lo = 0.
+pub fn sinh_dd(x f64) (f64, f64) {
+	if x != x {
+		return x, x
+	}
+	if x == 0.0 {
+		return x, 0.0
+	}
+	if math.abs(x) > 710.0 {
+		return math.sinh(x), 0.0
+	}
+	e_hi, e_lo := exp_dd(math.abs(x))
+	i_hi, i_lo := dd_reciprocal(e_hi, e_lo)
+	d_hi, d_lo := dd_sub(e_hi, e_lo, i_hi, i_lo)
+	// Scale by 1/2 with ldexp: dd_mul would split the huge operand with
+	// Dekker's 2^27 splitter and overflow.
+	r_hi := math.ldexp(d_hi, -1)
+	r_lo := math.ldexp(d_lo, -1)
+	if x < 0.0 {
+		return -r_hi, -r_lo
+	}
+	return r_hi, r_lo
+}
+
+// sinh returns sinh(x) rounded from the double-double evaluation.
+pub fn sinh(x f64) f64 {
+	hi, lo := sinh_dd(x)
+	return hi + lo
+}
+
+// cosh_dd returns cosh(x) as a double-double pair (hi, lo). For
+// |x| > 710 it falls back to the libm value with lo = 0.
+pub fn cosh_dd(x f64) (f64, f64) {
+	if x != x {
+		return x, x
+	}
+	if math.abs(x) > 710.0 {
+		return math.cosh(x), 0.0
+	}
+	e_hi, e_lo := exp_dd(math.abs(x))
+	i_hi, i_lo := dd_reciprocal(e_hi, e_lo)
+	a_hi, a_lo := dd_add(e_hi, e_lo, i_hi, i_lo)
+	return math.ldexp(a_hi, -1), math.ldexp(a_lo, -1)
+}
+
+// cosh returns cosh(x) rounded from the double-double evaluation.
+pub fn cosh(x f64) f64 {
+	hi, lo := cosh_dd(x)
+	return hi + lo
+}
+
+// tanh_dd returns tanh(x) as a double-double pair (hi, lo), computed as
+// (1 - d) / (1 + d) with d = e^(-2|x|): no overflow at any magnitude,
+// and d underflows to 0 exactly when tanh rounds to +-1.
+pub fn tanh_dd(x f64) (f64, f64) {
+	if x != x {
+		return x, x
+	}
+	if x == 0.0 {
+		return x, 0.0
+	}
+	d_hi, d_lo := exp_dd(-2.0 * math.abs(x))
+	n_hi, n_lo := dd_sub(1.0, 0.0, d_hi, d_lo)
+	q_hi, q_lo := dd_add(1.0, 0.0, d_hi, d_lo)
+	r_hi, r_lo := dd_div(n_hi, n_lo, q_hi, q_lo)
+	if x < 0.0 {
+		return -r_hi, -r_lo
+	}
+	return r_hi, r_lo
+}
+
+// tanh returns tanh(x) rounded from the double-double evaluation.
+pub fn tanh(x f64) f64 {
+	hi, lo := tanh_dd(x)
 	return hi + lo
 }
