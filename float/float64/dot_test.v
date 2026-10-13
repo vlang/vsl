@@ -150,3 +150,18 @@ fn test_dot_inc() {
 		}
 	}
 }
+
+fn test_dot_unitary_simd_tail_lengths() {
+	for n in [1, 3, 4, 5, 7, 8, 9, 13, 100, 101] {
+		mut x := []f64{len: n}
+		mut y := []f64{len: n}
+		mut want := 0.0
+		for i in 0 .. n {
+			x[i] = f64(i % 7) - 3.0
+			y[i] = f64(i % 5) * 0.5
+			want += x[i] * y[i]
+		}
+		got := dot_unitary(x, y)
+		assert math.abs(got - want) < 1e-9
+	}
+}

@@ -235,3 +235,18 @@ fn test_axpy_inc_to() {
 		}
 	}
 }
+
+fn test_axpy_unitary_tail_lengths_f32() {
+	for n in [1, 7, 8, 9, 15, 17, 100, 103] {
+		mut x := []f32{len: n}
+		mut y := []f32{len: n}
+		for i in 0 .. n {
+			x[i] = f32(i % 7) - 3.0
+			y[i] = f32(i % 5) * 0.5
+		}
+		axpy_unitary(2.0, x, mut y)
+		for i in 0 .. n {
+			assert y[i] == 2.0 * (f32(i % 7) - 3.0) + f32(i % 5) * 0.5
+		}
+	}
+}
