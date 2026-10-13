@@ -15,9 +15,10 @@ import math
 // input, and the pair (hi + lo) agreed with the exact value to ~5e-32
 // relative (except exp-family cases near the underflow boundary, where
 // lo itself becomes subnormal, and atan at ~5e-20). The same holds for
-// the later additions (500 atan, 500 asin, 400 acos, 400 sinh, 300 cosh
-// and 400 tanh inputs). The bit-exact tables in elementary_dd_test.v
-// pin this behavior.
+// the later additions (500 atan, 500 asin, 400 acos, 400 sinh, 300 cosh,
+// 400 tanh, 453 expm1 and 454 log1p inputs; expm1's pair is ~5e-18
+// relative at worst for tiny |x|, where lo is a single f64). The
+// bit-exact tables in elementary_dd_test.v pin this behavior.
 //
 // This is the f64 analogue of the f32 baseline in float32/elementary.v
 // and progress toward vlang/vsl#65; a proof for all inputs remains open.
@@ -588,5 +589,75 @@ pub fn tanh_dd(x f64) (f64, f64) {
 // tanh returns tanh(x) rounded from the double-double evaluation.
 pub fn tanh(x f64) f64 {
 	hi, lo := tanh_dd(x)
+	return hi + lo
+}
+
+// expm1_dd returns e^x - 1 as a double-double pair (hi, lo). The
+// subtraction of 1 is done in double-double arithmetic, so the result
+// keeps full accuracy for x near zero, where exp(x) - 1 in f64 would
+// cancel catastrophically.
+pub fn expm1_dd(x f64) (f64, f64) {
+	if x != x {
+		return x, x
+	}
+	if x == 0.0 {
+		return x, 0.0
+	}
+	h, l := exp_dd(x)
+	if !math.is_finite(h) {
+		return h, 0.0
+	}
+	return dd_sub(h, l, 1.0, 0.0)
+}
+
+// expm1 returns e^x - 1 rounded from the double-double evaluation.
+pub fn expm1(x f64) f64 {
+	hi, lo := expm1_dd(x)
+	return hi + lo
+}
+
+// log1p_dd returns log(1 + x) as a double-double pair (hi, lo). Near
+// zero it uses the atanh series with 2 + x formed exactly as a
+// double-double; away from zero it forms 1 + x exactly with two_sum
+// and corrects log(s) by the residual. For x < -1 it returns NaN and
+// for x = -1 it returns -inf, like math.log1p.
+pub fn log1p_dd(x f64) (f64, f64) {
+	if x != x || x < -1.0 {
+		return math.nan(), 0.0
+	}
+	if x == -1.0 {
+		return math.inf(-1), 0.0
+	}
+	if x == 0.0 {
+		return x, 0.0
+	}
+	if x >= -0.4 && x <= 0.6666666666666666 {
+		d_hi, d_lo := two_sum(2.0, x)
+		s_hi, s_lo := dd_div(x, 0.0, d_hi, d_lo)
+		s2_hi, s2_lo := dd_mul(s_hi, s_lo, s_hi, s_lo)
+		mut t_hi, mut t_lo := s_hi, s_lo
+		mut a_hi, mut a_lo := s_hi, s_lo
+		for j in 1 .. 81 {
+			t_hi, t_lo = dd_mul(t_hi, t_lo, s2_hi, s2_lo)
+			c_hi, c_lo := dd_div(t_hi, t_lo, f64(2 * j + 1), 0.0)
+			a_hi, a_lo = dd_add(a_hi, a_lo, c_hi, c_lo)
+			if math.abs(c_hi) < 1e-38 * math.max(1.0, math.abs(a_hi)) {
+				break
+			}
+		}
+		return dd_mul(a_hi, a_lo, 2.0, 0.0)
+	}
+	s, e := two_sum(1.0, x)
+	l_hi, l_lo := log_dd(s)
+	c_hi, c_lo := dd_div(e, 0.0, s, 0.0)
+	c2_hi, c2_lo := dd_mul(c_hi, c_lo, c_hi, c_lo)
+	h2_hi, h2_lo := dd_mul(c2_hi, c2_lo, 0.5, 0.0)
+	k_hi, k_lo := dd_sub(c_hi, c_lo, h2_hi, h2_lo)
+	return dd_add(l_hi, l_lo, k_hi, k_lo)
+}
+
+// log1p returns log(1 + x) rounded from the double-double evaluation.
+pub fn log1p(x f64) f64 {
+	hi, lo := log1p_dd(x)
 	return hi + lo
 }
