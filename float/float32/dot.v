@@ -2,25 +2,32 @@ module float32
 
 import simd
 
-// dot_unitary
+// dot_unitary returns the f32 dot product, accumulating rounded f32 products
+// in f64 so low-order terms are retained until the final f32 result.
 // Length validation allows direct indexed access in the hot loop.
 @[direct_array_access]
 pub fn dot_unitary(x []f32, y []f32) f32 {
 	if y.len < x.len {
 		panic('dot_unitary: second vector is shorter than first')
 	}
+	mut sum0 := 0.0
+	mut sum1 := 0.0
+	mut sum2 := 0.0
+	mut sum3 := 0.0
 	mut i := 0
-	mut sums := simd.splat_f32x8(0)
 	for ; i + 8 <= x.len; i += 8 {
 		x_values := simd.load_f32x8_at(x, i)
 		y_values := simd.load_f32x8_at(y, i)
-		sums = sums + x_values * y_values
+		products := (x_values * y_values).to_array()
+		sum0 += f64(products[0]) + f64(products[4])
+		sum1 += f64(products[1]) + f64(products[5])
+		sum2 += f64(products[2]) + f64(products[6])
+		sum3 += f64(products[3]) + f64(products[7])
 	}
-	mut sum := sums.sum()
 	for ; i < x.len; i++ {
-		sum += y[i] * x[i]
+		sum0 += f64(y[i] * x[i])
 	}
-	return sum
+	return f32((sum0 + sum1) + (sum2 + sum3))
 }
 
 // dot_inc

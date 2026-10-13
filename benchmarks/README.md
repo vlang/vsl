@@ -95,6 +95,9 @@ systemd-run --user --scope -p MemoryMax=4G -p MemorySwapMax=0 -- env VJOBS=2 \
 systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tmp/vsl-f64-level1
 ```
 
+For a paired SciPy BLAS comparison and an f64 accuracy reference for the f32
+dot kernel, see the [benchmark notes](./vs_numpy/README.md).
+
 The f32 L2 norm benchmark compares the SIMD fast path with its previous
 scaled scalar algorithm on the same large vector and reports error against an
 f64 accumulation:
