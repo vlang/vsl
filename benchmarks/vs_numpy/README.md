@@ -272,3 +272,36 @@ coverage is added. Prefer scoped smoke tests for PR validation.
 | Conv2D | `1×1×32×32`, kernel `3×3`, stride 1 |
 
 Tracked in [issue #282](https://github.com/vlang/vsl/issues/282).
+
+## f32 dot precision and SciPy BLAS comparison
+
+This benchmark compares `float32.dot_unitary` with SciPy BLAS `sdot` on
+1,048,576 deterministic `f32` pairs. It also reports NumPy `dot`, an `f64` dot
+reference, and that reference rounded to `f32`. The VSL kernel rounds each
+`f32` product, accumulates those products in `f64`, and rounds once to `f32` at
+the end. Both timed implementations use one thread, three warmups, and nine
+timed calls. Compile V with `-prod` before executing its binary, from
+`~/.vmodules`:
+
+```bash
+systemd-run --user --scope -p MemoryMax=4G -p MemorySwapMax=0 -- env VJOBS=2 \
+	v -no-parallel -cc gcc -prod -cflags "-O3 -march=native" \
+	-o /tmp/vsl-f32-dot-precision-bench ./vsl/benchmarks/vs_numpy/float32_dot_precision_bench.v
+systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 \
+	/tmp/vsl-f32-dot-precision-bench
+systemd-run --user --scope -p MemoryMax=2G -p MemorySwapMax=0 -- env VJOBS=2 \
+	OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 \
+	uv run --offline --no-project --with scipy python \
+	./vsl/benchmarks/vs_numpy/scipy_float32_dot_precision_baseline.py
+```
+
+On an AMD Ryzen 9 5900X with V 0.5.2 `dc16e46`, GCC 16.2.1, SciPy 1.18.1,
+and NumPy 2.5.4, three process runs gave a median of process medians of
+`0.264 ms` for VSL and `0.100 ms` for SciPy BLAS `sdot`; SciPy was `2.64x`
+faster. Both used one thread. For this input, an `f64` sum of the rounded
+`f32` products was `1601.738737106323`, which rounds to `1601.738769531` in
+`f32`. VSL returned that rounded value; SciPy `sdot` and NumPy `dot` returned
+`1601.741210938`, an absolute error of `0.002473831` (about `1.545e-6`
+relative). This records a precision improvement on this input with a measured
+throughput cost; it does not imply that VSL is faster or that all NumPy/SciPy
+builds produce the same result.
