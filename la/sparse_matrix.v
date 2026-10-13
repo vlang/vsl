@@ -141,3 +141,98 @@ pub fn (o Triplet[T]) to_dense() &Matrix[T] {
 	}
 	return a
 }
+
+// to_cc returns the column-compressed matrix corresponding to this Triplet.
+// Repeated coordinates are summed, matching to_dense semantics, and explicit
+// zeros produced by cancellation are dropped.
+pub fn (o Triplet[T]) to_cc() &CCMatrix[T] {
+	mut by_column := []map[int]T{len: o.n}
+	for j in 0 .. o.n {
+		by_column[j] = map[int]T{}
+	}
+	for k := 0; k < o.pos; k++ {
+		by_column[o.j[k]][o.i[k]] += o.x[k]
+	}
+	return cc_from_columns[T](o.m, o.n, by_column)
+}
+
+// cc_from_columns assembles a CCMatrix from per-column row->value maps,
+// sorting row indices within each column and dropping explicit zeros.
+fn cc_from_columns[T](m int, n int, by_column []map[int]T) &CCMatrix[T] {
+	mut p := []int{len: n + 1}
+	mut rows := []int{}
+	mut values := []T{}
+	for j in 0 .. n {
+		mut keys := by_column[j].keys()
+		keys.sort()
+		for row in keys {
+			value := by_column[j][row]
+			if value != T(0) {
+				rows << row
+				values << value
+			}
+		}
+		p[j + 1] = rows.len
+	}
+	return &CCMatrix[T]{
+		m:   m
+		n:   n
+		nnz: rows.len
+		p:   p
+		i:   rows
+		x:   values
+	}
+}
+
+// column_maps returns per-column row->value maps for this CCMatrix.
+fn (a &CCMatrix[T]) column_maps() []map[int]T {
+	mut by_column := []map[int]T{len: a.n}
+	for j in 0 .. a.n {
+		by_column[j] = map[int]T{}
+		for k := a.p[j]; k < a.p[j + 1]; k++ {
+			by_column[j][a.i[k]] = a.x[k]
+		}
+	}
+	return by_column
+}
+
+// to_dense returns the dense matrix corresponding to this CCMatrix.
+pub fn (a &CCMatrix[T]) to_dense() &Matrix[T] {
+	mut dense := Matrix.new[T](a.m, a.n)
+	for j in 0 .. a.n {
+		for k := a.p[j]; k < a.p[j + 1]; k++ {
+			dense.set(a.i[k], j, a.x[k])
+		}
+	}
+	return dense
+}
+
+// CCMatrix addition is element-wise and requires equal shapes.
+pub fn (a &CCMatrix[T]) + (b &CCMatrix[T]) &CCMatrix[T] {
+	if a.m != b.m || a.n != b.n {
+		panic('CCMatrix addition requires equal shapes, got ${a.m}x${a.n} and ${b.m}x${b.n}')
+	}
+	mut by_column := a.column_maps()
+	other := b.column_maps()
+	for j in 0 .. a.n {
+		for row, value in other[j] {
+			by_column[j][row] += value
+		}
+	}
+	return cc_from_columns[T](a.m, a.n, by_column)
+}
+
+// CCMatrix subtraction is element-wise and requires equal shapes.
+pub fn (a &CCMatrix[T]) - (b &CCMatrix[T]) &CCMatrix[T] {
+	if a.m != b.m || a.n != b.n {
+		panic('CCMatrix subtraction requires equal shapes, got ${a.m}x${a.n} and ${b.m}x${b.n}')
+	}
+	mut by_column := a.column_maps()
+	other := b.column_maps()
+	for j in 0 .. a.n {
+		for row, value in other[j] {
+			by_column[j][row] -= value
+		}
+	}
+	return cc_from_columns[T](a.m, a.n, by_column)
+}
