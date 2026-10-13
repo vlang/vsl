@@ -8,8 +8,9 @@ import vsl.float.float64 as f64m
 // (float64 *_dd functions, validated against 200-bit references),
 // rounded to f32 by exact midpoint comparison. Unlike the sampled and
 // directed evidence elsewhere, this is exhaustive for these ranges:
-// log [0.5, 2), exp [0.25, 1) and [-0.5, -0.125), and one complete
-// binade for each of the other fourteen functions. There is no input
+// log [0.25, 4), exp [0.25, 2) and [-1, -0.125), sin/cos [0.5, 2),
+// and one complete binade for each of the other twelve functions.
+// There is no input
 // in those ranges whose f32 result could round the wrong way.
 // Extending this style of proof to every range is the remaining work
 // of vlang/vsl#65; a full f64 exhaustive pass is impossible (2^52
@@ -317,6 +318,94 @@ fn test_cosh_exhaustive_over_binade_half_1() {
 			}
 		}
 		assert mismatches == 0, 'cosh exhaustive [0.5, 1): ${mismatches} mismatches over 8388608 inputs'
+	}
+}
+
+// Additional ranges that exercise different argument-reduction paths:
+// exp with k != 0 scaling in both signs, log with nonzero binary
+// exponents in both directions, and trig past pi/2.
+
+fn test_exp_exhaustive_over_binade_1_2() {
+	$if exhaustive ? {
+		mut mismatches := 0
+		for b := u32(0x3F800000); b < 0x40000000; b++ {
+			x := math.f32_from_bits(b)
+			rh, rl := f64m.exp_dd(f64(x))
+			if math.f32_bits(exp(x)) != math.f32_bits(ref_f32(rh, rl)) {
+				mismatches++
+			}
+		}
+		assert mismatches == 0, 'exp exhaustive [1, 2): ${mismatches} mismatches over 8388608 inputs'
+	}
+}
+
+fn test_exp_exhaustive_over_binade_minus1_minus_half() {
+	$if exhaustive ? {
+		mut mismatches := 0
+		for b := u32(0xBF000000); b < 0xBF800000; b++ {
+			x := math.f32_from_bits(b)
+			rh, rl := f64m.exp_dd(f64(x))
+			if math.f32_bits(exp(x)) != math.f32_bits(ref_f32(rh, rl)) {
+				mismatches++
+			}
+		}
+		assert mismatches == 0, 'exp exhaustive (-1, -0.5]: ${mismatches} mismatches over 8388608 inputs'
+	}
+}
+
+fn test_log_exhaustive_over_binade_2_4() {
+	$if exhaustive ? {
+		mut mismatches := 0
+		for b := u32(0x40000000); b < 0x40800000; b++ {
+			x := math.f32_from_bits(b)
+			rh, rl := f64m.log_dd(f64(x))
+			if math.f32_bits(log(x)) != math.f32_bits(ref_f32(rh, rl)) {
+				mismatches++
+			}
+		}
+		assert mismatches == 0, 'log exhaustive [2, 4): ${mismatches} mismatches over 8388608 inputs'
+	}
+}
+
+fn test_log_exhaustive_over_binade_quarter_half() {
+	$if exhaustive ? {
+		mut mismatches := 0
+		for b := u32(0x3E800000); b < 0x3F000000; b++ {
+			x := math.f32_from_bits(b)
+			rh, rl := f64m.log_dd(f64(x))
+			if math.f32_bits(log(x)) != math.f32_bits(ref_f32(rh, rl)) {
+				mismatches++
+			}
+		}
+		assert mismatches == 0, 'log exhaustive [0.25, 0.5): ${mismatches} mismatches over 8388608 inputs'
+	}
+}
+
+fn test_sin_exhaustive_over_binade_1_2() {
+	$if exhaustive ? {
+		mut mismatches := 0
+		for b := u32(0x3F800000); b < 0x40000000; b++ {
+			x := math.f32_from_bits(b)
+			rh, rl := f64m.sin_dd(f64(x))
+			if math.f32_bits(sin(x)) != math.f32_bits(ref_f32(rh, rl)) {
+				mismatches++
+			}
+		}
+		assert mismatches == 0, 'sin exhaustive [1, 2): ${mismatches} mismatches over 8388608 inputs'
+	}
+}
+
+fn test_cos_exhaustive_over_binade_1_2() {
+	$if exhaustive ? {
+		mut mismatches := 0
+		for b := u32(0x3F800000); b < 0x40000000; b++ {
+			x := math.f32_from_bits(b)
+			rh, rl := f64m.cos_dd(f64(x))
+			if math.f32_bits(cos(x)) != math.f32_bits(ref_f32(rh, rl)) {
+				mismatches++
+			}
+		}
+		assert mismatches == 0, 'cos exhaustive [1, 2): ${mismatches} mismatches over 8388608 inputs'
 	}
 }
 
