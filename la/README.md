@@ -220,5 +220,20 @@ The usual `vector_accum` and `vector_dot` favor throughput. For f64 workflows
 where cancellation can erase small terms, `vector_sum_accurate` and
 `vector_dot_accurate` use Neumaier compensated accumulation. The dot product
 also uses fused multiply-add to recover each finite product's rounding error.
-It returns an error when vector lengths differ. These helpers are opt-in because
-compensation adds work to each element.
+For f32 inputs, `vector_sum_accurate_f32` and `vector_dot_accurate_f32` improve
+precision with compensated f64 accumulation; every finite f32 product is exact
+when represented as f64. These helpers do not guarantee correctly rounded
+results for arbitrary input lengths.
+The dot helpers return an error when vector lengths differ. These helpers are
+opt-in because compensation and wider accumulation add work to each element.
+
+```v
+import vsl.la
+
+values := [f32(1e8), f32(1), f32(-1e8)]
+sum := la.vector_sum_accurate_f32(values) // 1.0; vector_accum(values) loses the small term
+dot := la.vector_dot_accurate_f32(values, [f32(1), f32(1), f32(1)])!
+println('${sum} ${dot}')
+```
+
+See the [runnable example](../examples/la_accurate_f32_reductions/main.v).

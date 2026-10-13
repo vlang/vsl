@@ -82,6 +82,53 @@ fn test_vector_dot_accurate_preserves_non_finite_results() {
 	assert math.is_inf(vector_dot_accurate([1e308, 1e308], [2.0, 2.0])!, 1)
 }
 
+fn test_vector_sum_accurate_f32_preserves_small_terms_and_non_finite_results() {
+	assert vector_sum_accurate_f32([]f32{}) == f32(0)
+	values := [f32(1e8), f32(1), f32(-1e8)]
+	assert vector_accum(values) == f32(0)
+	assert vector_sum_accurate_f32(values) == f32(1)
+	assert math.is_inf(f64(vector_sum_accurate_f32([f32(2e38), f32(2e38)])), 1)
+	assert math.is_nan(f64(vector_sum_accurate_f32([math.inf(1), math.inf(-1)])))
+}
+
+fn test_vector_dot_accurate_f32_preserves_small_terms_and_checks_shape() {
+	assert vector_dot_accurate_f32([]f32{}, []f32{})! == f32(0)
+	left := [f32(1e8), f32(1), f32(-1e8)]
+	right := [f32(1), f32(1), f32(1)]
+	assert vector_dot(left, right) == f32(0)
+	assert vector_dot_accurate_f32(left, right)! == f32(1)
+	if _ := vector_dot_accurate_f32(left, right[..2]) {
+		assert false, 'mismatched vector lengths must return an error'
+	}
+}
+
+fn test_vector_dot_accurate_f32_uses_exact_wide_products() {
+	left := [f32(1.0000001192092896), f32(-1)]
+	right := [f32(1.0000001192092896), f32(1.000000238418579)]
+	reference := f32(f64(left[0]) * f64(right[0]) + f64(left[1]) * f64(right[1]))
+	assert vector_dot(left, right) != reference
+	assert vector_dot_accurate_f32(left, right)! == reference
+}
+
+fn test_vector_dot_accurate_f32_preserves_non_finite_results() {
+	assert math.is_inf(f64(vector_dot_accurate_f32([f32(math.inf(1)), f32(1)], [
+		f32(1),
+		f32(1),
+	])!), 1)
+	assert math.is_nan(f64(vector_dot_accurate_f32([f32(math.inf(1)), f32(math.inf(1))], [
+		f32(1),
+		f32(-1),
+	])!))
+}
+
+fn test_vector_dot_accurate_f32_preserves_finite_input_overflow() {
+	assert math.is_inf(f64(vector_dot_accurate_f32([f32(2e38)], [f32(2)])!), 1)
+	assert math.is_inf(f64(vector_dot_accurate_f32([f32(2e38), f32(2e38)], [
+		f32(1),
+		f32(1),
+	])!), 1)
+}
+
 fn test_vector_norm() {
 	a := [3.0, 4]
 	n := 5.0
