@@ -144,6 +144,97 @@ pub fn vector_dot_accurate(u []f64, v []f64) !f64 {
 	return if math.is_finite(result) { result } else { vector_dot_naive_f64(u, v) }
 }
 
+// vector_sum_accurate_f32 improves f32 summation with an f64 Neumaier accumulator.
+// It falls back to ordinary f32 accumulation when an IEEE non-finite
+// intermediate would otherwise be hidden by the wider accumulator.
+fn vector_sum_naive_f32(values []f32) f32 {
+	mut sum := f32(0)
+	for value in values {
+		sum += value
+	}
+	return sum
+}
+
+pub fn vector_sum_accurate_f32(values []f32) f32 {
+	mut sum := f64(0)
+	mut correction := f64(0)
+	for value in values {
+		wide_value := f64(value)
+		if !math.is_finite(wide_value) {
+			return vector_sum_naive_f32(values)
+		}
+		next := sum + wide_value
+		if !math.is_finite(next) || !math.is_finite(f64(f32(next))) {
+			return vector_sum_naive_f32(values)
+		}
+		if math.abs(sum) >= math.abs(wide_value) {
+			correction += (sum - next) + wide_value
+		} else {
+			correction += (wide_value - next) + sum
+		}
+		if !math.is_finite(correction) {
+			return vector_sum_naive_f32(values)
+		}
+		sum = next
+	}
+	result := sum + correction
+	result_f32 := f32(result)
+	return if math.is_finite(result) && math.is_finite(f64(result_f32)) {
+		result_f32
+	} else {
+		vector_sum_naive_f32(values)
+	}
+}
+
+// vector_dot_accurate_f32 improves f32 dot products using exact f64 products
+// of the f32 inputs and compensated f64 accumulation. It does not promise
+// correctly rounded results for arbitrary vector lengths. The inputs must
+// have equal lengths. It falls back to ordinary f32 accumulation when a
+// non-finite f32 intermediate occurs.
+fn vector_dot_naive_f32(u []f32, v []f32) f32 {
+	mut sum := f32(0)
+	for i, left in u {
+		sum += left * v[i]
+	}
+	return sum
+}
+
+pub fn vector_dot_accurate_f32(u []f32, v []f32) !f32 {
+	if u.len != v.len {
+		return error('vector_dot_accurate_f32 requires vectors with the same length')
+	}
+	mut sum := f64(0)
+	mut correction := f64(0)
+	for i, left in u {
+		right := v[i]
+		f32_product := left * right
+		if !math.is_finite(f64(f32_product)) {
+			return vector_dot_naive_f32(u, v)
+		}
+		product := f64(left) * f64(right)
+		next := sum + product
+		if !math.is_finite(next) || !math.is_finite(f64(f32(next))) {
+			return vector_dot_naive_f32(u, v)
+		}
+		if math.abs(sum) >= math.abs(product) {
+			correction += (sum - next) + product
+		} else {
+			correction += (product - next) + sum
+		}
+		if !math.is_finite(correction) {
+			return vector_dot_naive_f32(u, v)
+		}
+		sum = next
+	}
+	result := sum + correction
+	result_f32 := f32(result)
+	return if math.is_finite(result) && math.is_finite(f64(result_f32)) {
+		result_f32
+	} else {
+		vector_dot_naive_f32(u, v)
+	}
+}
+
 // vector_add adds the scaled components of two vectors
 // res := alpha⋅u + beta⋅v   ⇒   result[i] := alpha⋅u[i] + beta⋅v[i]
 pub fn vector_add[T](alpha T, u []T, beta T, v []T) []T {
