@@ -551,3 +551,18 @@ const log1p_dd_references = [
 	[u64(13830554446647593961), u64(13847339095934615652), u64(13601173227672136482)],
 ]
 
+
+fn test_dd_hard_case_regressions() {
+	// Found by the directed hard-case search: sinh with a fixed 2^-512
+	// reciprocal scaling lost low bits of lo to subnormals (hi off by
+	// ~2036 ulps at this input), and expm1 via exp_dd(x) - 1 lost the
+	// last bit near x ~ 1e-16. Reference bits are mpmath at 200 bits.
+	s_hi, _ := sinh_dd(math.f64_from_bits(u64(2247869377850019816)))
+	assert math.f64_bits(s_hi) == u64(2247869377850019816), 'sinh tiny hard case'
+	s1_hi, _ := sinh_dd(math.f64_from_bits(u64(4368991911145034115)))
+	assert math.f64_bits(s1_hi) == u64(4368991911145034115), 'sinh 1.23e-16 hard case'
+	e_hi, _ := expm1_dd(math.f64_from_bits(u64(4370619454176282056)))
+	assert math.f64_bits(e_hi) == u64(4370619454176282057), 'expm1 1.63e-16 hard case'
+	a_hi, _ := atan_dd(math.f64_from_bits(u64(4614757535453377284)))
+	assert math.f64_bits(a_hi) == u64(4608451770435641893), 'atan hard case'
+}

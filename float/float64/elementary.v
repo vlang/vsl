@@ -505,13 +505,34 @@ pub fn acos(x f64) f64 {
 }
 
 // dd_reciprocal returns 1 / (e_hi, e_lo) for a double-double value. The
-// operand is scaled by 2^-512 first: Dekker's two_prod splitting
-// overflows for operands near 1e303, which exp_dd legitimately produces.
+// operand is scaled to [0.5, 1) by its frexp exponent first: Dekker's
+// two_prod splitting overflows for operands near 1e303, which exp_dd
+// legitimately produces, while a fixed scale factor would push lo into
+// the subnormal range (and lose its low bits) for operands near 1.
+// The directed hard-case search found exactly that failure in sinh for
+// tiny arguments before this adaptive scaling.
 fn dd_reciprocal(e_hi f64, e_lo f64) (f64, f64) {
-	s_hi := math.ldexp(e_hi, -512)
-	s_lo := math.ldexp(e_lo, -512)
+	_, e := math.frexp(e_hi)
+	s_hi := math.ldexp(e_hi, -e)
+	s_lo := math.ldexp(e_lo, -e)
 	q_hi, q_lo := dd_div(1.0, 0.0, s_hi, s_lo)
-	return math.ldexp(q_hi, -512), math.ldexp(q_lo, -512)
+	return math.ldexp(q_hi, -e), math.ldexp(q_lo, -e)
+}
+
+// sinh_series_dd evaluates sinh(r) for |r| <= 1 in double-double.
+fn sinh_series_dd(r_hi f64, r_lo f64) (f64, f64) {
+	s2_hi, s2_lo := dd_mul(r_hi, r_lo, r_hi, r_lo)
+	mut t_hi, mut t_lo := r_hi, r_lo
+	mut a_hi, mut a_lo := r_hi, r_lo
+	for n in 1 .. 61 {
+		t_hi, t_lo = dd_mul(t_hi, t_lo, s2_hi, s2_lo)
+		t_hi, t_lo = dd_div(t_hi, t_lo, f64((2 * n) * (2 * n + 1)), 0.0)
+		a_hi, a_lo = dd_add(a_hi, a_lo, t_hi, t_lo)
+		if math.abs(t_hi) < 1e-38 * math.abs(a_hi) {
+			break
+		}
+	}
+	return a_hi, a_lo
 }
 
 // sinh_dd returns sinh(x) as a double-double pair (hi, lo). For
@@ -525,6 +546,11 @@ pub fn sinh_dd(x f64) (f64, f64) {
 	}
 	if math.abs(x) > 710.0 {
 		return math.sinh(x), 0.0
+	}
+	if math.abs(x) <= 1.0 {
+		// The (e - 1/e) / 2 formula cancels catastrophically for small
+		// |x| at double-double precision; use the Taylor series there.
+		return sinh_series_dd(x, 0.0)
 	}
 	e_hi, e_lo := exp_dd(math.abs(x))
 	i_hi, i_lo := dd_reciprocal(e_hi, e_lo)
@@ -592,22 +618,52 @@ pub fn tanh(x f64) f64 {
 	return hi + lo
 }
 
-// expm1_dd returns e^x - 1 as a double-double pair (hi, lo). The
-// subtraction of 1 is done in double-double arithmetic, so the result
-// keeps full accuracy for x near zero, where exp(x) - 1 in f64 would
-// cancel catastrophically.
+// expm1_series_dd evaluates e^r - 1 for |r| <= ln(2) / 2 directly as a
+// series in double-double, without forming e^r near 1.
+fn expm1_series_dd(r_hi f64, r_lo f64) (f64, f64) {
+	mut s_hi, mut s_lo := 0.0, 0.0
+	mut t_hi, mut t_lo := 1.0, 0.0
+	for n in 1 .. 80 {
+		t_hi, t_lo = dd_mul(t_hi, t_lo, r_hi, r_lo)
+		t_hi, t_lo = dd_div(t_hi, t_lo, f64(n), 0.0)
+		s_hi, s_lo = dd_add(s_hi, s_lo, t_hi, t_lo)
+		if t_hi == 0.0 || math.abs(t_hi) < 1e-38 * math.abs(s_hi) {
+			break
+		}
+	}
+	return s_hi, s_lo
+}
+
+// expm1_dd returns e^x - 1 as a double-double pair (hi, lo). It uses a
+// dedicated e^r - 1 series after the ln(2) range reduction: computing
+// exp_dd(x) first and subtracting 1 loses the last bit exactly in the
+// hard cases the directed search found (x ~ 1e-16), because the exp
+// pair near 1 has ~1e-33 absolute error while e^x - 1 is ~1e-16 there.
 pub fn expm1_dd(x f64) (f64, f64) {
 	if x != x {
 		return x, x
 	}
+	if x > 710.0 {
+		return math.inf(1), 0.0
+	}
+	if x < -746.0 {
+		return -1.0, 0.0
+	}
 	if x == 0.0 {
 		return x, 0.0
 	}
-	h, l := exp_dd(x)
-	if !math.is_finite(h) {
-		return h, 0.0
+	k := int(math.round(x / ln2_hi))
+	mut kh, mut ke := two_prod(f64(k), ln2_hi)
+	ke += f64(k) * ln2_lo
+	kh, ke = quick_two_sum(kh, ke)
+	r_hi, r_lo := dd_sub(x, 0.0, kh, ke)
+	a_hi, a_lo := expm1_series_dd(r_hi, r_lo)
+	if k == 0 {
+		return a_hi, a_lo
 	}
-	return dd_sub(h, l, 1.0, 0.0)
+	// e^x - 1 = (2^k - 1) + 2^k * (e^r - 1)
+	p_hi, p_lo := dd_sub(math.ldexp(1.0, k), 0.0, 1.0, 0.0)
+	return dd_add(p_hi, p_lo, math.ldexp(a_hi, k), math.ldexp(a_lo, k))
 }
 
 // expm1 returns e^x - 1 rounded from the double-double evaluation.
