@@ -10,7 +10,7 @@ Repo roadmap: [ROADMAP.md](../ROADMAP.md) · CUDA: [cuda/README.md](../cuda/READ
 |-------|--------|
 | [#236](https://github.com/vlang/vsl/issues/236) | Multi-backend GPU architecture |
 | [#237](https://github.com/vlang/vsl/issues/237)–[#239](https://github.com/vlang/vsl/issues/239) | Vulkan / CUDA / OpenCL foundations |
-| [#280](https://github.com/vlang/vsl/issues/280) | cuBLAS/cuDNN kernels |
+| [#280](https://github.com/vlang/vsl/issues/280) | Core CUDA kernels; LayerNorm follow-up: [#550](https://github.com/vlang/vsl/issues/550) |
 | [#281](https://github.com/vlang/vsl/issues/281) | GPU numerical validation tests |
 | [#282](https://github.com/vlang/vsl/issues/282) | vs NumPy benchmarks + PR comments |
 | [#283](https://github.com/vlang/vsl/issues/283)–[#285](https://github.com/vlang/vsl/issues/285) | Vulkan gating, conv2d, `ComputeContext` tests |
@@ -74,6 +74,7 @@ follow-ups. The repository issue list is the source for live status.
 - [#545](https://github.com/vlang/vsl/issues/545) generic plotting adapters for VSL models
 - [#546](https://github.com/vlang/vsl/issues/546) SciPy/GSL capability parity tracker
 - [#547](https://github.com/vlang/vsl/issues/547) scaled complementary error function
+- [#550](https://github.com/vlang/vsl/issues/550) CUDA LayerNorm GPU path and capability reporting
 
 Issue #516 is partially implemented: GaussianNB provides fitted class
 statistics, configurable priors, variance smoothing, posterior probabilities,
