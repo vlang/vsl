@@ -46,9 +46,11 @@ remain part of the benchmark suite. Issue #34's closure records operator
 support for the arithmetic struct types present at that time.
 
 **Current open issue inventory (checked 2026-10-14):**
-[#65](https://github.com/vlang/vsl/issues/65). The repository issue list is
-the source for this inventory; check GitHub before relying on it as live
-status.
+[#65](https://github.com/vlang/vsl/issues/65) and
+[#514–#530](https://github.com/vlang/vsl/issues/514). New work is split into
+scikit-learn estimators and workflow tools, GSL-style numerical algorithms,
+sparse solvers, accelerator execution/validation, benchmarks, and migration
+guides. The repository issue list is the source for live status.
 The ML beta uses VSL as a scientific and compute foundation. The stable beta
 contract is the portable CPU/scientific surface plus `vsl.compute`; CUDA,
 Vulkan, and VCL are opt-in experimental accelerators.
