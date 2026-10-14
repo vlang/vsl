@@ -22,17 +22,35 @@ pub enum QuantileMethod {
 // quantile_with_method returns a quantile using the selected estimator.
 // It sorts a copy and rejects empty or non-finite samples.
 pub fn quantile_with_method(values []f64, q f64, method QuantileMethod) !f64 {
+	return quantile_with_method_and_policy(values, q, method, .reject)
+}
+
+// quantile_with_method_and_policy applies a quantile estimator and an explicit
+// policy for non-finite samples.
+pub fn quantile_with_method_and_policy(values []f64, q f64, method QuantileMethod, policy NonFinitePolicy) !f64 {
 	if values.len == 0 {
-		return error('stats.quantile_with_method: values must not be empty')
+		return error('stats.quantile_with_method_and_policy: values must not be empty')
 	}
 	if math.is_nan(q) || math.is_inf(q, 0) || q < 0.0 || q > 1.0 {
-		return error('stats.quantile_with_method: q must be finite and between 0 and 1')
+		return error('stats.quantile_with_method_and_policy: q must be finite and between 0 and 1')
 	}
-	mut sorted := values.clone()
-	for value in sorted {
+	mut sorted := []f64{cap: values.len}
+	mut has_non_finite := false
+	for value in values {
 		if math.is_nan(value) || math.is_inf(value, 0) {
-			return error('stats.quantile_with_method: values must all be finite')
+			has_non_finite = true
+			if policy == .reject {
+				return error('stats.quantile_with_method: values must all be finite')
+			}
+		} else {
+			sorted << value
 		}
+	}
+	if policy == .propagate && has_non_finite {
+		return math.nan()
+	}
+	if sorted.len == 0 {
+		return error('stats.quantile_with_method_and_policy: no finite values remain')
 	}
 	sorted.sort()
 	position := quantile_method_position(q, sorted.len, method)
@@ -48,6 +66,14 @@ pub fn percentile_with_method(values []f64, p f64, method QuantileMethod) !f64 {
 		return error('stats.percentile_with_method: p must be finite and between 0 and 100')
 	}
 	return quantile_with_method(values, p / 100.0, method)
+}
+
+// percentile_with_method_and_policy is the 0..100-scale policy variant.
+pub fn percentile_with_method_and_policy(values []f64, p f64, method QuantileMethod, policy NonFinitePolicy) !f64 {
+	if math.is_nan(p) || math.is_inf(p, 0) || p < 0.0 || p > 100.0 {
+		return error('stats.percentile_with_method_and_policy: p must be finite and between 0 and 100')
+	}
+	return quantile_with_method_and_policy(values, p / 100.0, method, policy)
 }
 
 fn quantile_method_position(q f64, n int, method QuantileMethod) f64 {

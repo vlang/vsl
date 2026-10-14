@@ -76,13 +76,16 @@ interpolation, and weighted quantiles use NumPy's inverted-CDF method.
 Weighted histogram summaries support non-uniform bin widths and normalize
 against total observation weight, including observations outside the range.
 See the runnable [descriptive statistics example](../examples/stats_descriptive/README.md).
-Configurable non-finite policies, inferential tests, confidence intervals, and
-probability distributions remain incomplete. See the
+Configurable non-finite policies now cover summaries, quantiles, weighted
+quantiles, histogram counts, and automatic bin selection; histogram operations
+reject propagation because their outputs cannot represent NaN. Inferential
+tests, confidence intervals, and probability distributions remain incomplete.
+See the
 [statistics module](../stats/README.md) and SciPy
 [`stats`][scipy-stats]
 and GSL [`statistics`][gsl-statistics], [`random generation`][gsl-rng], and
-[`distributions`][gsl-randist]. Follow-ups: [#523](https://github.com/vlang/vsl/issues/523),
-[#576](https://github.com/vlang/vsl/issues/576), and [#572](https://github.com/vlang/vsl/issues/572).
+[`distributions`][gsl-randist]. Follow-ups: [#523](https://github.com/vlang/vsl/issues/523)
+and [#572](https://github.com/vlang/vsl/issues/572).
 
 ### Interpolation, roots, optimization, quadrature, and ODEs
 

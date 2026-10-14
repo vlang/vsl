@@ -55,6 +55,37 @@ fn test_summarize_rejects_non_finite_values() {
 	}
 }
 
+fn test_non_finite_policy_for_summary_and_quantiles() {
+	values := [1.0, math.nan(), 3.0, math.inf(1), math.inf(-1)]
+	summary := summarize_with_policy(values, 0, .omit)!
+	assert summary.count == 2
+	assert summary.mean == 2.0
+	assert summary.variance == 1.0
+	assert summary.min == 1.0
+	assert summary.max == 3.0
+	assert quantile_with_policy(values, 0.5, .omit)! == 2.0
+	assert quantile_with_method_and_policy(values, 0.5, .higher, .omit)! == 3.0
+	assert percentile_with_policy(values, 50.0, .omit)! == 2.0
+	assert percentile_with_method_and_policy(values, 75.0, .higher, .omit)! == 3.0
+
+	propagated := summarize_with_policy(values, 0, .propagate)!
+	assert propagated.count == values.len
+	assert math.is_nan(propagated.mean)
+	assert math.is_nan(propagated.variance)
+	assert math.is_nan(propagated.stddev)
+	assert math.is_nan(propagated.min)
+	assert math.is_nan(propagated.max)
+	assert math.is_nan(quantile_with_policy(values, 0.5, .propagate)!)
+	assert math.is_nan(quantile_with_method_and_policy(values, 0.5, .linear, .propagate)!)
+
+	if _ := summarize_with_policy(values, 2, .omit) {
+		assert false, 'ddof cannot be greater than the remaining sample count'
+	}
+	if _ := summarize_with_policy([math.nan()], 0, .omit) {
+		assert false, 'omit should reject an empty finite sample'
+	}
+}
+
 fn test_quantile_linear_interpolation_and_endpoints() {
 	values := [1.0, 2.0, 3.0, 4.0]
 	assert quantile(values, 0.0)! == 1.0
@@ -167,6 +198,33 @@ fn test_weighted_quantile_validates_shapes_and_weights() {
 	}
 	if _ := quantile_weighted([math.nan(), 2.0], [1.0, 1.0], 0.5) {
 		assert false, 'non-finite values must fail'
+	}
+}
+
+fn test_weighted_quantile_non_finite_policy() {
+	for invalid in [math.nan(), math.inf(1), math.inf(-1)] {
+		values := [1.0, invalid, 3.0]
+		weights := [1.0, 100.0, 1.0]
+		assert quantile_weighted_with_policy(values, weights, 0.75, .omit)! == 3.0
+		assert percentile_weighted_with_policy(values, weights, 75.0, .omit)! == 3.0
+		assert math.is_nan(quantile_weighted_with_policy(values, weights, 0.5, .propagate)!)
+		if _ := quantile_weighted_with_policy(values, weights, 0.5, .reject) {
+			assert false, 'reject policy must reject non-finite sample values'
+		}
+	}
+	for invalid_weight in [math.nan(), math.inf(1), math.inf(-1)] {
+		values := [1.0, 2.0, 3.0]
+		weights := [1.0, invalid_weight, 1.0]
+		assert quantile_weighted_with_policy(values, weights, 0.5, .omit)! == 1.0
+		if _ := quantile_weighted_with_policy(values, weights, 0.5, .reject) {
+			assert false, 'reject policy must reject non-finite weights'
+		}
+		if _ := quantile_weighted_with_policy(values, weights, 0.5, .propagate) {
+			assert false, 'invalid weights cannot be propagated'
+		}
+	}
+	if _ := quantile_weighted_with_policy([1.0, 2.0], [-1.0, 1.0], 0.5, .omit) {
+		assert false, 'finite negative weights remain invalid under omit'
 	}
 }
 

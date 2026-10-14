@@ -2,6 +2,7 @@ module dist
 
 import math
 import vsl.errors
+import vsl.stats
 
 const max_automatic_histogram_bins = 10_000_000
 
@@ -36,6 +37,14 @@ pub fn histogram_bin_edges(values []f64, rule HistogramBinRule) ![]f64 {
 	return histogram_bin_edges_impl(values, rule, minimum, maximum, minimum, maximum)
 }
 
+// histogram_bin_edges_with_policy selects edges after applying a non-finite
+// sample policy. Propagation is undefined for bin-edge selection and errors
+// when any sample is non-finite.
+pub fn histogram_bin_edges_with_policy(values []f64, rule HistogramBinRule, policy stats.NonFinitePolicy) ![]f64 {
+	finite := finite_histogram_samples(values, policy)!
+	return histogram_bin_edges(finite, rule)
+}
+
 // histogram_bin_edges_in_range selects edges over an explicit finite interval.
 // Only observations inside the closed interval influence the bin rule. Samples
 // outside it do not contribute; an interval containing no observations errors.
@@ -59,6 +68,32 @@ pub fn histogram_bin_edges_in_range(values []f64, rule HistogramBinRule, lower f
 	}
 	sample_min, sample_max := histogram_sample_bounds(in_range)
 	return histogram_bin_edges_impl(in_range, rule, sample_min, sample_max, lower, upper)
+}
+
+// histogram_bin_edges_in_range_with_policy applies a non-finite sample policy
+// before selecting edges inside the explicit interval.
+pub fn histogram_bin_edges_in_range_with_policy(values []f64, rule HistogramBinRule, lower f64, upper f64, policy stats.NonFinitePolicy) ![]f64 {
+	finite := finite_histogram_samples(values, policy)!
+	return histogram_bin_edges_in_range(finite, rule, lower, upper)
+}
+
+fn finite_histogram_samples(values []f64, policy stats.NonFinitePolicy) ![]f64 {
+	mut finite := []f64{cap: values.len}
+	for value in values {
+		if math.is_nan(value) || math.is_inf(value, 0) {
+			match policy {
+				.reject {
+					return errors.error('histogram_bin_edges: values must all be finite', .efailed)
+				}
+				.omit { continue }
+				.propagate {
+					return errors.error('histogram_bin_edges cannot propagate non-finite values', .efailed)
+				}
+			}
+		}
+		finite << value
+	}
+	return finite
 }
 
 fn validate_histogram_bin_samples(values []f64) ! {

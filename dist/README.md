@@ -10,6 +10,7 @@ includes its right boundary, matching NumPy histogram edge semantics.
 | `Histogram.new(stations)` | Create a histogram from bin boundaries. |
 | `find_bin(x)` | Return the matching bin index, `-1` when outside the range, or an error for invalid edges/NaN. |
 | `count(values, clear)` | Count values, optionally resetting prior counts first. |
+| `count_with_policy(values, clear, policy)` | Count finite values using `stats.NonFinitePolicy`; return the sample count for density normalization. |
 | `gen_labels(format)` | Format the bins as display labels. |
 | `density(nsamples)` | Estimate per-bin density using each bin's width and the total sample count. |
 | `density_area(nsamples)` | Integrate the density estimate across all bins. |
@@ -29,6 +30,17 @@ println(histogram.density(4)!)
 For non-uniform bins, each density is `count / (sample_count * bin_width)`.
 Values outside the bin range still contribute to `sample_count`; therefore
 `density_area` is the fraction of samples that fell within the histogram range.
+`count_with_policy` returns the number of finite observations, including those
+outside the bin range; pass that count to `density` when using `.omit`. It keeps
+existing counts unchanged on rejected inputs. Its `.propagate` mode returns an
+error when a non-finite value appears because integer bin counts cannot
+represent propagated NaN. Weighted histogram counts and automatic bin
+selection expose matching `*_with_policy` variants; omitted weighted pairs do
+not contribute to bins or the returned normalization weight.
+The legacy unweighted `Histogram.count` rejects NaN but treats infinities as
+out-of-range observations. Legacy weighted histogram counting rejects all
+non-finite values and weights; automatic bin selection rejects non-finite
+samples.
 
 See the [histogram example](../examples/dist_histogram/README.md) and
 [`hist.v`](hist.v) for formatting and boundary behavior.

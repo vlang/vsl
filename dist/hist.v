@@ -3,6 +3,7 @@ module dist
 import math
 import strconv
 import vsl.errors
+import vsl.stats
 import vsl.util
 
 // text_hist prints a text histogram
@@ -155,6 +156,27 @@ pub fn (mut o Histogram) count(vals []f64, clear bool) ! {
 			o.counts[idx]++
 		}
 	}
+}
+
+// count_with_policy counts finite observations according to the selected
+// policy. Propagation is undefined for integer bin counts, so it returns an
+// error if any non-finite observation is present.
+pub fn (mut o Histogram) count_with_policy(vals []f64, clear bool, policy stats.NonFinitePolicy) !int {
+	mut finite := []f64{cap: vals.len}
+	for value in vals {
+		if math.is_nan(value) || math.is_inf(value, 0) {
+			match policy {
+				.reject { return errors.error('Histogram values must all be finite', .efailed) }
+				.omit { continue }
+				.propagate {
+					return errors.error('Histogram cannot propagate non-finite values to integer counts', .efailed)
+				}
+			}
+		}
+		finite << value
+	}
+	o.count(finite, clear)!
+	return finite.len
 }
 
 // gen_labels generate nice labels identifying bins
