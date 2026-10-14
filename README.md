@@ -109,6 +109,7 @@ Visit [VSL Documentation](https://vlang.github.io/vsl) to explore all supported 
 | Scientific computing overview | [Docs index](docs/README.md) |
 | Working examples | [Examples catalog](examples/README.md) |
 | ML/GPU release status | [ML roadmap](docs/ML_ROADMAP.md) |
+| SciPy/GSL capability coverage | [Parity tracker](docs/SCIPY_GSL_PARITY.md) |
 | CUDA backend | [cuda/README.md](cuda/README.md) |
 | Vulkan backend | [vulkan/README.md](vulkan/README.md) |
 | Benchmarks | [benchmarks/README.md](benchmarks/README.md) |

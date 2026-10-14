@@ -20,6 +20,7 @@ docs, benchmarks, and release status.
 | Train tensor/autograd neural networks | [VTL](https://github.com/vlang/vtl) |
 | Use GPU backends | [OpenCL](advanced/02-opencl-gpu.md), [CUDA](advanced/02a-cuda-gpu.md), [Vulkan](../vulkan/README.md) |
 | Compare performance | [Overview](../benchmarks/README.md), [NumPy](../benchmarks/vs_numpy/README.md), [SciPy LAPACK](../benchmarks/vs_scipy/README.md) |
+| Compare scientific-library capabilities | [SciPy and GSL parity tracker](SCIPY_GSL_PARITY.md) |
 | Track the ML release | [ML Roadmap](ML_ROADMAP.md) |
 
 ## Learning Paths
