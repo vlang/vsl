@@ -114,8 +114,14 @@ println(model.predict_proba([1.5, 1.0])!)
 
 Use `GaussianNB.new_with_smoothing` to choose a different smoothing value. The
 model accepts finite `f64` features and finite numeric labels. Probabilities
-follow ascending numeric class order. Incremental `partial_fit` and other Naive
-Bayes variants remain future work.
+follow ascending numeric class order. For streaming data, construct an empty
+model with `GaussianNB.new_untrained` and call `partial_fit`; declare the full
+class set on the first batch. `GaussianNBPartialFitConfig.sample_weights` can
+provide finite non-negative sample weights. Incremental fitting retains only
+weighted sufficient statistics, not the input batches; use
+`class_weight_sums()` to inspect accumulated weight per class.
+See the [streaming GaussianNB example](../examples/ml_gaussian_nb_streaming/README.md)
+for a complete two-batch program.
 
 ## Non-Observer Models
 
