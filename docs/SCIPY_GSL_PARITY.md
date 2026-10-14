@@ -70,9 +70,9 @@ inclusion, and per-bin density estimates that account for non-uniform widths.
 now provides one-pass mean, variance, standard deviation, and extrema for
 finite samples; `vsl.stats.quantile` and `percentile` implement linear Type 7
 interpolation, and weighted quantiles use NumPy's inverted-CDF method.
-Alternative unweighted estimators, histogram summaries, non-finite policies,
-inferential tests, confidence intervals, and probability distributions remain
-incomplete. See the
+Automatic histogram bin selection and weighted histogram summaries,
+configurable non-finite policies, inferential tests, confidence intervals, and
+probability distributions remain incomplete. See the
 [statistics module](../stats/README.md) and SciPy
 [`stats`][scipy-stats]
 and GSL [`statistics`][gsl-statistics], [`random generation`][gsl-rng], and

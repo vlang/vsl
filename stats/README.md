@@ -9,9 +9,16 @@ are rejected rather than propagated or omitted. Variance and standard deviation
 are returned as `f64`.
 
 `stats.quantile(values, q)` and `stats.percentile(values, p)` sort a copy and
-linearly interpolate between adjacent observations (Type 7, the NumPy/SciPy
-default). Probabilities must be finite and lie in `[0, 1]` or `[0, 100]`.
-Input samples must be finite; the input slice is not modified.
+use linear interpolation (Type 7, the NumPy/SciPy default). The
+`quantile_with_method` and `percentile_with_method` variants also support all
+thirteen estimators exposed by NumPy through `QuantileMethod`, including the
+Hyndman-Fan estimators and `lower`, `higher`, `midpoint`, and `nearest`.
+The available methods are `inverted_cdf`, `averaged_inverted_cdf`,
+`closest_observation`, `interpolated_inverted_cdf`, `hazen`, `weibull`,
+`linear`, `median_unbiased`, `normal_unbiased`, `lower`, `higher`, `midpoint`,
+and `nearest`.
+Probabilities must be finite and lie in `[0, 1]` or `[0, 100]`. Input samples
+must be finite; the input slice is not modified.
 
 `stats.quantile_weighted(values, weights, q)` and
 `stats.percentile_weighted(values, weights, p)` implement NumPy's weighted
@@ -26,6 +33,7 @@ println('mean=${summary.mean}, sample stddev=${summary.stddev}')
 ```
 
 This is partial descriptive-statistics coverage tracked in
-[VSL issue #559](https://github.com/vlang/vsl/issues/559). Alternative quantile
-estimators, weighted quantiles, and histogram density summaries remain future
-work.
+[VSL issue #559](https://github.com/vlang/vsl/issues/559). Automatic histogram
+bin selection, weighted histogram summaries, and configurable non-finite
+value policies remain future work. Inferential tests and confidence intervals
+are tracked separately in [VSL issue #572](https://github.com/vlang/vsl/issues/572).
