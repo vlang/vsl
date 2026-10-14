@@ -8,6 +8,11 @@ input must be non-empty, `ddof` must be in `[0, len)`, and non-finite samples
 are rejected rather than propagated or omitted. Variance and standard deviation
 are returned as `f64`.
 
+`stats.quantile(values, q)` and `stats.percentile(values, p)` sort a copy and
+linearly interpolate between adjacent observations (Type 7, the NumPy/SciPy
+default). Probabilities must be finite and lie in `[0, 1]` or `[0, 100]`.
+Input samples must be finite; the input slice is not modified.
+
 ```v
 import vsl.stats
 
@@ -15,6 +20,7 @@ summary := stats.summarize([2.0, 4.0, 6.0], 1)!
 println('mean=${summary.mean}, sample stddev=${summary.stddev}')
 ```
 
-This is the first part of the descriptive-statistics coverage tracked in
-[VSL issue #559](https://github.com/vlang/vsl/issues/559). Quantiles and
-histogram density summaries remain future work.
+This is partial descriptive-statistics coverage tracked in
+[VSL issue #559](https://github.com/vlang/vsl/issues/559). Alternative quantile
+estimators, weighted quantiles, and histogram density summaries remain future
+work.

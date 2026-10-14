@@ -10,4 +10,6 @@ fn main() {
 	println('sample variance: ${summary.variance}')
 	println('sample standard deviation: ${summary.stddev}')
 	println('range: ${summary.min}..${summary.max}')
+	median := stats.quantile(measurements, 0.5) or { panic(err) }
+	println('median: ${median}')
 }
