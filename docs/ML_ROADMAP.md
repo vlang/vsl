@@ -18,6 +18,7 @@ Repo roadmap: [ROADMAP.md](../ROADMAP.md) · CUDA: [cuda/README.md](../cuda/READ
 | [#305](https://github.com/vlang/vsl/pull/305) | Vulkan `vector_mul`, `vector_sqrt`, fused f32 `adam_step` shader |
 | [#328](https://github.com/vlang/vsl/issues/328) | Expanded Windows test coverage and portable test-runner cleanup (#394) |
 | [#534](https://github.com/vlang/vsl/issues/534) | Incremental and sample-weighted GaussianNB fitting (#536) |
+| [#540](https://github.com/vlang/vsl/issues/540) | Inverse error functions with domain and tail coverage |
 
 **VTL (downstream):** CUDA Phases 1–4, f32 autograd/training, Vulkan Linear,
 Conv2D, ReLU/Sigmoid, and Adam are wired into the `nn_cifar10_vulkan` smoke.
@@ -68,7 +69,6 @@ follow-ups. The repository issue list is the source for live status.
 - [#529](https://github.com/vlang/vsl/issues/529) scikit-learn and GSL comparisons
 - [#530](https://github.com/vlang/vsl/issues/530) migration guides
 - [#538](https://github.com/vlang/vsl/issues/538) complete supported Windows CPU test coverage
-- [#540](https://github.com/vlang/vsl/issues/540) inverse error functions
 - [#541](https://github.com/vlang/vsl/issues/541) fractional-order and spherical Bessel families
 - [#543](https://github.com/vlang/vsl/issues/543) Bessel numerical error estimates
 - [#545](https://github.com/vlang/vsl/issues/545) generic plotting adapters for VSL models

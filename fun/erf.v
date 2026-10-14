@@ -382,3 +382,122 @@ pub fn erfc(x_ f64) f64 {
 	}
 	return 0.0
 }
+
+// erf_inv returns the inverse error function for x in [-1, 1].
+//
+// It returns -infinity at -1, +infinity at 1, and NaN for NaN or values
+// outside the domain. For finite interior inputs, the approximation is
+// refined with Halley's method; small inputs use a series to avoid loss of
+// significance near zero.
+pub fn erf_inv(x f64) f64 {
+	if math.is_nan(x) || math.is_inf(x, 0) || x < -1.0 || x > 1.0 {
+		return math.nan()
+	}
+	if x == -1.0 {
+		return math.inf(-1)
+	}
+	if x == 1.0 {
+		return math.inf(1)
+	}
+	if x == 0.0 {
+		return x
+	}
+	negative := x < 0.0
+	abs_x := if negative { -x } else { x }
+	value := if abs_x < 0.1 {
+		erf_inv_small_positive(abs_x)
+	} else {
+		erfc_inv_positive(1.0 - abs_x)
+	}
+	return if negative { -value } else { value }
+}
+
+// erfc_inv returns the inverse complementary error function for x in [0, 2].
+//
+// It returns +infinity at 0, -infinity at 2, zero at 1, and NaN for NaN or
+// values outside the domain. Tail evaluation uses erfc directly so values near
+// zero do not lose precision through `1 - erf(x)`.
+pub fn erfc_inv(x f64) f64 {
+	if math.is_nan(x) || math.is_inf(x, 0) || x < 0.0 || x > 2.0 {
+		return math.nan()
+	}
+	if x == 0.0 {
+		return math.inf(1)
+	}
+	if x == 2.0 {
+		return math.inf(-1)
+	}
+	if x == 1.0 {
+		return 0.0
+	}
+	if x > 1.0 {
+		return -erfc_inv_positive(2.0 - x)
+	}
+	return erfc_inv_positive(x)
+}
+
+fn erf_inv_small_positive(target f64) f64 {
+	t2 := target * target
+	// Maclaurin series for erf^{-1}(target), through target^13. The series
+	// converges rapidly on this branch and provides a stable initial value.
+	mut value := target * (0.88622692545275801365 + t2 * (0.23201366653465449355 + t2 * (0.12755617530559795823 + t2 * (0.08655212924154753373 + t2 * (0.06495961774538541396 + t2 * (0.05173128198461704443 + t2 * 0.04283589802222668066))))))
+	for _ in 0 .. 2 {
+		residual := erf(value) - target
+		derivative := 1.12837916709551257390 * math.exp(-value * value)
+		denominator := derivative + value * residual
+		if denominator == 0.0 || math.is_nan(denominator) {
+			break
+		}
+		value -= residual / denominator
+	}
+	return value
+}
+
+fn erfc_inv_positive(target f64) f64 {
+	if target < 1e-300 {
+		return erfc_inv_log_tail(target)
+	}
+	if target > 0.9 {
+		return erf_inv_small_positive(1.0 - target)
+	}
+	// Winitzki's approximation, evaluated as log(target * (2-target)) so the
+	// complement remains accurate in the far tail.
+	log_term := math.log(target * (2.0 - target))
+	winitzki_parameter := 0.147
+	first := 2.0 / (math.pi * winitzki_parameter) + log_term / 2.0
+	radical := first * first - log_term / winitzki_parameter
+	mut value := math.sqrt(math.sqrt(radical) - first)
+	derivative_scale := 1.12837916709551257390
+	for _ in 0 .. 4 {
+		residual := erfc(value) - target
+		derivative := derivative_scale * math.exp(-value * value)
+		denominator := derivative - value * residual
+		if denominator == 0.0 || math.is_nan(denominator) {
+			break
+		}
+		next := value + residual / denominator
+		if math.is_nan(next) || math.is_inf(next, 0) || next < 0.0 {
+			break
+		}
+		value = next
+	}
+	return value
+}
+
+fn erfc_inv_log_tail(target f64) f64 {
+	log_target := math.log(target)
+	mut value := math.sqrt(-log_target)
+	for _ in 0 .. 8 {
+		inverse_square := 1.0 / (value * value)
+		series := 1.0 + inverse_square * (-0.5 + inverse_square * (0.75 + inverse_square * (-1.875 + inverse_square * (6.5625 + inverse_square * (-29.53125 + inverse_square * (162.421875 - 1055.7421875 * inverse_square))))))
+		log_erfc := -value * value - math.log(value) - 0.5 * math.log(math.pi) + math.log(series)
+		residual := log_erfc - log_target
+		next := value + residual / (2.0 * value + 1.0 / value)
+		if math.abs(next - value) <= 2.0e-15 * value {
+			value = next
+			break
+		}
+		value = next
+	}
+	return value
+}

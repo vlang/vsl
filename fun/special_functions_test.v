@@ -84,3 +84,43 @@ fn test_complex_gamma_and_log_gamma() {
 	assert_close(lg.re, 0.0, 1e-14)
 	assert_close(lg.im, 0.0, 1e-14)
 }
+
+fn test_inverse_error_functions_reference_values() {
+	assert_close(erf_inv(0.5), 0.4769362762044699, 2e-15)
+	assert_close(erf_inv(0.9), 1.163087153676674, 2e-15)
+	assert_close(erf_inv(-0.9), -1.163087153676674, 2e-15)
+	assert_close(erfc_inv(0.1), 1.163087153676674, 2e-15)
+	assert_close(erfc_inv(1e-10), 4.572824967389485, 2e-14)
+	assert_close(erfc_inv(1e-100), 15.065574702592645, 2e-14)
+	assert_close(erfc_inv(1e-300), 26.209469960516124, 2e-14)
+	assert_close(erfc_inv(5e-324), 27.213293210812946, 2e-14)
+	assert_close(erfc_inv(0.9999999999999998), 1.967819075360828e-16, 1e-30)
+}
+
+fn test_inverse_error_functions_round_trip() {
+	for target in [1e-12, 0.01, 0.1, 0.5, 0.9, 0.99, 0.9999999999999998] {
+		actual := erf(erf_inv(target))
+		assert_close(actual, target, 3e-16)
+	}
+	for target in [5e-324, 1e-300, 1e-100, 1e-10, 0.1, 0.5, 1.5, 1.9, 2.0 - 1e-15] {
+		actual := erfc(erfc_inv(target))
+		tolerance := if target < 1e-200 { target * 2e-13 } else { math.max(target * 2e-14, 1e-16) }
+		assert math.abs(actual - target) <= tolerance, 'erfc round trip ${target}: ${actual}'
+	}
+}
+
+fn test_inverse_error_functions_domains_and_endpoints() {
+	assert math.is_inf(erf_inv(-1.0), -1)
+	assert math.is_inf(erf_inv(1.0), 1)
+	assert math.is_inf(erfc_inv(0.0), 1)
+	assert math.is_inf(erfc_inv(2.0), -1)
+	assert erfc_inv(1.0) == 0.0
+	assert math.is_nan(erf_inv(-1.0001))
+	assert math.is_nan(erf_inv(1.0001))
+	assert math.is_nan(erfc_inv(-1e-10))
+	assert math.is_nan(erfc_inv(2.0001))
+	assert math.is_nan(erf_inv(math.nan()))
+	assert math.is_nan(erfc_inv(math.nan()))
+	assert math.is_nan(erf_inv(math.inf(1)))
+	assert math.is_nan(erfc_inv(math.inf(-1)))
+}
