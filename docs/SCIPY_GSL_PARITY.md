@@ -35,6 +35,7 @@ API. Recheck upstream documentation when updating this tracker.
 | Quadrature and ODE solvers | Missing | — | #521 |
 | Fourier transforms | Partial | [fft][vsl-fft] | #527, #528 |
 | Signal processing and wavelets | Missing | [fft][vsl-fft] only | #560 |
+| Multidimensional image processing and morphology | Missing | — | #585 |
 | ML | Partial | [ml][vsl-ml], [prep][vsl-preprocessing], [selection][vsl-model-selection], [metrics][vsl-metrics] | #514–#519, #529, #530 |
 | Plotting and visualization | Partial | [plot][vsl-plot] | #545 |
 | Device selection and accelerator backends | Partial | [compute][vsl-compute], [CUDA][vsl-cuda], [VCL][vsl-vcl], [Vulkan][vsl-vulkan] | #525–#528 |
@@ -103,6 +104,15 @@ See SciPy [`fft`][scipy-fft] and [`signal`][scipy-signal], and GSL [`FFT`][gsl-f
 and [`wavelets`][gsl-wavelet]. Follow-ups: [#527](https://github.com/vlang/vsl/issues/527),
 [#528](https://github.com/vlang/vsl/issues/528), and [#560](https://github.com/vlang/vsl/issues/560).
 
+### Multidimensional image processing
+
+No comparable public API for neighborhood filters, image gradients, connected
+components, or binary morphology was found. These N-dimensional operations are
+distinct from the time-series filters, windows, convolution, and wavelets in
+the signal-processing scope. SciPy's [`ndimage`][scipy-ndimage] is the
+reference; VSL tracks the portable API and differential coverage in
+[#585](https://github.com/vlang/vsl/issues/585).
+
 ### Machine learning, plotting, and backends
 
 VSL has selected ML estimators and workflows; its coverage is much smaller than
@@ -133,6 +143,7 @@ including second derivatives and boundary-aware methods, is tracked in
 [scipy-integrate]: https://docs.scipy.org/doc/scipy-1.18.0/reference/integrate.html
 [scipy-fft]: https://docs.scipy.org/doc/scipy-1.18.0/reference/fft.html
 [scipy-signal]: https://docs.scipy.org/doc/scipy-1.18.0/reference/signal.html
+[scipy-ndimage]: https://docs.scipy.org/doc/scipy-1.18.0/reference/ndimage.html
 [scipy-differentiate]: https://docs.scipy.org/doc/scipy-1.18.0/reference/differentiate.html
 [gsl-blas]: https://www.gnu.org/software/gsl/doc/html/blas.html
 [gsl-linalg]: https://www.gnu.org/software/gsl/doc/html/linalg.html
