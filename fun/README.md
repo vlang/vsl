@@ -21,8 +21,9 @@ analysis.
 - **Error Function**: erf(x) and complementary erfc(x)
 - Inverse error functions `erf_inv(x)` and `erfc_inv(x)` handle finite domains,
   endpoints, and tails.
-- The scaled complementary error function `erfcx` is tracked in
-  [issue #547](https://github.com/vlang/vsl/issues/547).
+- The scaled complementary error function `erfcx(x)` uses a positive-tail
+  expansion to avoid overflow and underflow. It returns zero at positive
+  infinity and may overflow for sufficiently negative finite inputs.
 
 ### Interpolation
 - **Cubic Interpolation**: Smooth curve fitting
@@ -83,7 +84,9 @@ println('erfc(1.0) = ${erfc_val}')
 // Invert the error functions for a Gaussian-tail calculation
 quantile := fun.erf_inv(0.95)
 tail := fun.erfc_inv(1e-12)
+scaled_tail := fun.erfcx(10.0)
 println('erf inverse = ${quantile}, erfc tail inverse = ${tail}')
+println('scaled complementary tail = ${scaled_tail}')
 ```
 
 ### Interpolation Example
@@ -170,6 +173,8 @@ See these examples for practical applications:
 - `erf_inv(x)` - Inverse error function for `[-1, 1]`; infinities at endpoints.
 - `erfc_inv(x)` - Inverse complementary error function for `[0, 2]`;
   infinities at endpoints.
+- `erfcx(x)` - Scaled complementary error function; positive tails remain
+  finite for large finite inputs.
 
 ## 🔗 References
 

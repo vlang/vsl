@@ -501,3 +501,27 @@ fn erfc_inv_log_tail(target f64) f64 {
 	}
 	return value
 }
+
+// erfcx returns the scaled complementary error function exp(x*x) * erfc(x).
+//
+// Positive tails use an asymptotic expansion to avoid overflow in exp(x*x)
+// and underflow in erfc(x). The function returns NaN for NaN, zero at positive
+// infinity, and positive infinity at negative infinity or when the true value
+// exceeds the f64 range.
+pub fn erfcx(x f64) f64 {
+	if math.is_nan(x) {
+		return math.nan()
+	}
+	if math.is_inf(x, 1) {
+		return 0.0
+	}
+	if math.is_inf(x, -1) {
+		return math.inf(1)
+	}
+	if x > 26.0 {
+		inverse_square := 1.0 / (x * x)
+		series := 1.0 + inverse_square * (-0.5 + inverse_square * (0.75 + inverse_square * (-1.875 + inverse_square * (6.5625 + inverse_square * (-29.53125 + inverse_square * (162.421875 - 1055.7421875 * inverse_square))))))
+		return (0.56418958354775628695 * series) / x
+	}
+	return math.exp(x * x) * erfc(x)
+}
