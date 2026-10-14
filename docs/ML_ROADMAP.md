@@ -46,11 +46,26 @@ remain part of the benchmark suite. Issue #34's closure records operator
 support for the arithmetic struct types present at that time.
 
 **Current open issue inventory (checked 2026-10-14):**
-[#65](https://github.com/vlang/vsl/issues/65) and
-[#514–#530](https://github.com/vlang/vsl/issues/514). New work is split into
-scikit-learn estimators and workflow tools, GSL-style numerical algorithms,
-sparse solvers, accelerator execution/validation, benchmarks, and migration
-guides. The repository issue list is the source for live status.
+[#65](https://github.com/vlang/vsl/issues/65) and the following scoped
+follow-ups. The repository issue list is the source for live status.
+
+- [#514](https://github.com/vlang/vsl/issues/514) preprocessing transformers and pipelines
+- [#515](https://github.com/vlang/vsl/issues/515) cross-validation and model selection
+- [#516](https://github.com/vlang/vsl/issues/516) probabilistic and ensemble estimators
+- [#517](https://github.com/vlang/vsl/issues/517) regression estimator coverage
+- [#518](https://github.com/vlang/vsl/issues/518) clustering and decomposition
+- [#519](https://github.com/vlang/vsl/issues/519) nearest-neighbor APIs
+- [#520](https://github.com/vlang/vsl/issues/520) root finding and minimization
+- [#521](https://github.com/vlang/vsl/issues/521) quadrature and ODE solvers
+- [#522](https://github.com/vlang/vsl/issues/522) interpolation and splines
+- [#523](https://github.com/vlang/vsl/issues/523) probability distributions and RNG
+- [#524](https://github.com/vlang/vsl/issues/524) sparse formats and iterative solvers
+- [#525](https://github.com/vlang/vsl/issues/525) multi-GPU dispatch
+- [#526](https://github.com/vlang/vsl/issues/526) GPU memory pools and zero-copy storage
+- [#527](https://github.com/vlang/vsl/issues/527) cross-backend numerical stress validation
+- [#528](https://github.com/vlang/vsl/issues/528) CUDA benchmark variants
+- [#529](https://github.com/vlang/vsl/issues/529) scikit-learn and GSL comparisons
+- [#530](https://github.com/vlang/vsl/issues/530) migration guides
 The ML beta uses VSL as a scientific and compute foundation. The stable beta
 contract is the portable CPU/scientific surface plus `vsl.compute`; CUDA,
 Vulkan, and VCL are opt-in experimental accelerators.
