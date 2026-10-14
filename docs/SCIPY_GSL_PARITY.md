@@ -106,8 +106,9 @@ follow-ups [#514](https://github.com/vlang/vsl/issues/514)–[#519](https://gith
 
 VSL provides numerical differentiation; this status does not claim parity for
 all methods, error estimates, or edge cases. Compare SciPy [`differentiate`][scipy-differentiate]
-and GSL [`numerical differentiation`][gsl-diff]. The broader coverage review,
-including multivariable Jacobians and second derivatives, is tracked in
+and GSL [`numerical differentiation`][gsl-diff]. VSL now exposes multivariable
+Jacobian estimates with per-entry error estimates; continued coverage,
+including second derivatives and boundary-aware methods, is tracked in
 [#564](https://github.com/vlang/vsl/issues/564).
 
 [scipy-linalg]: https://docs.scipy.org/doc/scipy-1.18.0/reference/linalg.html

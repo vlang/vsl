@@ -75,6 +75,38 @@ in `result` and an error estimate in `abserr`. The function `f` should take an a
 of coordinates and return a single value. This method provides both the derivative
 and its error estimate.
 
+### `jacobian`
+
+```v ignore
+pub fn jacobian(f fn ([]f64) []f64, x []f64, h f64) !JacobianResult
+```
+
+This function estimates the Jacobian of a vector-valued function at `x`.
+`JacobianResult.values` and `error_estimate` use shape
+`[output_length, input_length]`: rows are output components and columns are
+input coordinates. It evaluates each coordinate with central differences at a
+scale-aware step and half-step, then applies Richardson extrapolation. The
+difference between those estimates supplies the per-entry error estimate.
+A non-positive or non-finite step, non-finite input or output, changing output
+length, or unrepresentable perturbation returns an error. `evaluations`
+includes the initial output-shape check and all successful perturbation calls.
+
+```v
+import math
+import vsl.deriv
+
+fn model(x []f64) []f64 {
+	return [x[0] * x[0] + 3.0 * x[1], math.sin(x[0]) * math.exp(x[1])]
+}
+
+result := deriv.jacobian(model, [0.5, 0.25], 1e-3)!
+println('Jacobian: ${result.values}')
+println('Error estimates: ${result.error_estimate}')
+```
+
+See the [multivariable Jacobian example](../examples/deriv_jacobian/README.md)
+for a complete program.
+
 ## References and Further Reading
 
 This work is a spiritual descendent of the Differentiation module in [GSL](https://github.com/ampl/gsl). 📖
