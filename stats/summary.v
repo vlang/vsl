@@ -68,33 +68,13 @@ pub fn summarize(values []f64, ddof int) !Summary {
 // quantile returns the requested quantile using linear interpolation between
 // adjacent sorted values (the default Type 7 definition used by NumPy/SciPy).
 pub fn quantile(values []f64, q f64) !f64 {
-	if values.len == 0 {
-		return error('stats.quantile: values must not be empty')
-	}
-	if math.is_nan(q) || math.is_inf(q, 0) || q < 0.0 || q > 1.0 {
-		return error('stats.quantile: q must be finite and between 0 and 1')
-	}
-	mut sorted := values.clone()
-	for value in sorted {
-		if math.is_nan(value) || math.is_inf(value, 0) {
-			return error('stats.quantile: values must all be finite')
-		}
-	}
-	sorted.sort()
-	position := q * f64(sorted.len - 1)
-	lower_index := int(math.floor(position))
-	upper_index := if lower_index + 1 < sorted.len { lower_index + 1 } else { lower_index }
-	fraction := position - f64(lower_index)
-	return sorted[lower_index] * (1.0 - fraction) + sorted[upper_index] * fraction
+	return quantile_with_method(values, q, .linear)
 }
 
 // percentile returns the requested percentile using linear interpolation.
 // `p` is expressed on the inclusive range [0, 100].
 pub fn percentile(values []f64, p f64) !f64 {
-	if math.is_nan(p) || math.is_inf(p, 0) || p < 0.0 || p > 100.0 {
-		return error('stats.percentile: p must be finite and between 0 and 100')
-	}
-	return quantile(values, p / 100.0)
+	return percentile_with_method(values, p, .linear)
 }
 
 struct WeightedValue {

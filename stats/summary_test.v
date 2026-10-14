@@ -73,6 +73,41 @@ fn test_quantile_sorts_a_copy_and_handles_ties() {
 	assert quantile([7.0], 0.9)! == 7.0
 }
 
+fn test_quantile_methods_match_numpy_estimators() {
+	values := [1.0, 2.0, 3.0, 4.0]
+	methods := [QuantileMethod.inverted_cdf, .averaged_inverted_cdf, .closest_observation,
+		.interpolated_inverted_cdf, .hazen, .weibull, .linear, .median_unbiased, .normal_unbiased,
+		.lower, .higher, .midpoint, .nearest]
+	expected := [1.0, 1.5, 1.0, 1.0, 1.5, 1.25, 1.75, 1.4166666666666667, 1.4375, 1.0, 2.0, 1.5,
+		2.0]
+	for i, method in methods {
+		actual := quantile_with_method(values, 0.25, method)!
+		assert math.abs(actual - expected[i]) < 1e-12, '${method}: ${actual} != ${expected[i]}'
+		assert quantile_with_method(values, 0.0, method)! == values[0], '${method} q=0'
+		assert quantile_with_method(values, 1.0, method)! == values[3], '${method} q=1'
+	}
+	assert quantile_with_method(values, 0.5, .closest_observation)! == 2.0
+	assert quantile_with_method(values, 0.5, .nearest)! == 2.0
+	assert quantile_with_method(values, 0.5, .lower)! == 2.0
+	assert quantile_with_method(values, 0.5, .higher)! == 3.0
+	assert quantile_with_method(values, 0.5, .midpoint)! == 2.5
+	assert percentile_with_method(values, 25.0, .hazen)! == 1.5
+}
+
+fn test_quantile_methods_reject_invalid_probability_and_samples() {
+	for q in [-0.1, 1.1, math.nan(), math.inf(1)] {
+		if _ := quantile_with_method([1.0, 2.0], q, .linear) {
+			assert false, 'invalid quantiles must fail'
+		}
+	}
+	if _ := quantile_with_method([math.nan(), 2.0], 0.5, .linear) {
+		assert false, 'non-finite samples must fail'
+	}
+	if _ := percentile_with_method([1.0, 2.0], math.nan(), .linear) {
+		assert false, 'non-finite percentiles must fail'
+	}
+}
+
 fn test_quantile_rejects_invalid_inputs() {
 	quantile([]f64{}, 0.5) or {
 		assert err.msg().contains('empty')
