@@ -30,22 +30,24 @@ still queued; confirm those runs before treating platform validation as green.
 
 ## Post-beta tracking
 
-| Priority | Issue | Topic |
-|----------|-------|--------|
-| P1 | [#160](https://github.com/vlang/vsl/issues/160) (closed) | Automatic GPU selection/partial offload; multi-GPU execution remains TODO. |
-| P1 | Phase I | GPU memory pool / zero-copy |
-| P2 | [#21](https://github.com/vlang/vsl/issues/21) | Pure-V compute performance and SIMD optimization |
-| P2 | [#65](https://github.com/vlang/vsl/issues/65) | Correctly rounded binary32 math research |
-| Design | [#34](https://github.com/vlang/vsl/issues/34) | Operator coverage for VSL structs |
-| P2 | — | CUDA variants of `benchmarks/vs_numpy/` in CI |
-| P2 | — | Extended Vulkan↔CUDA numerical cross-check |
-| P2 | — | Vulkan persistent memory / reduced host sync for VTL training |
+| Tracking item | Remaining work |
+|---------------|----------------|
+| [#160](https://github.com/vlang/vsl/issues/160) (closed) | Automatic GPU selection/partial offload; multi-GPU execution remains TODO. |
+| Phase I | GPU memory pool / zero-copy |
+| — | CUDA variants of `benchmarks/vs_numpy/` in CI |
+| — | Extended Vulkan↔CUDA numerical cross-check |
+| — | Vulkan persistent memory / reduced host sync for VTL training |
 
-**Current open issue inventory:** [#21](https://github.com/vlang/vsl/issues/21),
-[#34](https://github.com/vlang/vsl/issues/34),
-[#65](https://github.com/vlang/vsl/issues/65). The repository issue list is the
-source for this inventory; check GitHub before relying on it as live status.
+Issues #21 and #34 were closed on GitHub on 2026-10-13. Issue #21's
+closure records the adoption of wide-vector/SIMD patterns across hot kernels;
+it does not establish NumPy performance parity, so per-kernel comparisons
+remain part of the benchmark suite. Issue #34's closure records operator
+support for the arithmetic struct types present at that time.
 
+**Current open issue inventory (checked 2026-10-14):**
+[#65](https://github.com/vlang/vsl/issues/65). The repository issue list is
+the source for this inventory; check GitHub before relying on it as live
+status.
 The ML beta uses VSL as a scientific and compute foundation. The stable beta
 contract is the portable CPU/scientific surface plus `vsl.compute`; CUDA,
 Vulkan, and VCL are opt-in experimental accelerators.
