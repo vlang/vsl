@@ -22,6 +22,7 @@ Repo roadmap: [ROADMAP.md](../ROADMAP.md) · CUDA: [cuda/README.md](../cuda/READ
 | [#547](https://github.com/vlang/vsl/issues/547) | Scaled complementary error function with positive-tail handling |
 | [#546](https://github.com/vlang/vsl/issues/546)/[#561](https://github.com/vlang/vsl/pull/561) | SciPy/GSL capability parity tracker |
 | [#562](https://github.com/vlang/vsl/issues/562)/[#563](https://github.com/vlang/vsl/pull/563) | Public Brent root solver with bounded diagnostics |
+| [#559](https://github.com/vlang/vsl/issues/559)/[#582](https://github.com/vlang/vsl/pull/582) | Descriptive sample statistics and runnable example |
 
 **VTL (downstream):** CUDA Phases 1–4, f32 autograd/training, Vulkan Linear,
 Conv2D, ReLU/Sigmoid, and Adam are wired into the `nn_cifar10_vulkan` smoke.
@@ -79,13 +80,18 @@ follow-ups. The repository issue list is the source for live status.
 - [#556](https://github.com/vlang/vsl/issues/556) Airy functions
 - [#557](https://github.com/vlang/vsl/issues/557) elliptic integrals and Jacobi functions
 - [#558](https://github.com/vlang/vsl/issues/558) broader special-function families
-- [#559](https://github.com/vlang/vsl/issues/559) descriptive sample statistics
+- [#567](https://github.com/vlang/vsl/issues/567) sparse direct solvers and reusable factorizations
+- [#572](https://github.com/vlang/vsl/issues/572) inferential tests and confidence intervals
+- [#576](https://github.com/vlang/vsl/issues/576) non-finite sample policies
+- [#580](https://github.com/vlang/vsl/issues/580) model persistence and portable export
 - [#560](https://github.com/vlang/vsl/issues/560) signal processing and wavelet APIs
 - [#564](https://github.com/vlang/vsl/issues/564) numerical differentiation
   coverage: Jacobian estimates are implemented; second derivatives and
   boundary-aware methods remain open.
 
-Issue #516 is partially implemented: GaussianNB provides fitted class
+Issue #559 closed through PR #582: descriptive summaries, quantiles, weighted
+histograms, and a runnable example are now present. Issue #516 is partially
+implemented: GaussianNB provides fitted class
 statistics, configurable priors, variance smoothing, posterior probabilities,
 and incremental/sample-weighted fitting (#534, completed by #536). Other Naive
 Bayes variants and ensemble estimators remain open.
