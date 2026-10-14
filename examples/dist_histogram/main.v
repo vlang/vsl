@@ -52,4 +52,10 @@ fn main() {
 	println('weighted counts = ${weighted_hist.counts}')
 	println('weighted density = ${weighted_hist.density(total_weight)!}')
 	println('weighted density area = ${weighted_hist.density_area(total_weight)!}')
+
+	auto_edges := dist.histogram_bin_edges(values, .auto)!
+	mut auto_hist := dist.Histogram.new(auto_edges)
+	auto_hist.count(values, true)!
+	println('automatic edges = ${auto_edges}')
+	println('automatic counts = ${auto_hist.counts}')
 }

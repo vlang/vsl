@@ -15,7 +15,7 @@ v -prod -o /tmp/vsl-dist-histogram ./vsl/examples/dist_histogram/main.v
 /tmp/vsl-dist-histogram
 ```
 
-The example prints unweighted and weighted counts, densities, and the
-integrated in-range mass for non-uniform bins.
+The example prints unweighted and weighted counts, densities, the integrated
+in-range mass for non-uniform bins, and automatically selected bin edges.
 
 Enjoy exploring the capabilities of the V Scientific Library! 😊

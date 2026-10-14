@@ -65,22 +65,22 @@ Compare SciPy [`special`][scipy-special] and GSL [`special functions`][gsl-speci
 ### Statistics and probability
 
 VSL has covariance/correlation, histogram binning with NumPy-compatible edge
-inclusion, and per-bin density estimates that account for non-uniform widths.
+inclusion, density estimates for non-uniform widths, and automatic bin-edge
+selection using NumPy's `auto`, `fd`, `doane`, `scott`, `stone`, `rice`,
+`sturges`, and `sqrt` rules.
 `vsl.stats.summarize`
 now provides one-pass mean, variance, standard deviation, and extrema for
 finite samples; `vsl.stats.quantile` and `percentile` implement linear Type 7
 interpolation, and weighted quantiles use NumPy's inverted-CDF method.
 Weighted histogram summaries now support non-uniform bin widths and normalize
 against total observation weight, including observations outside the range.
-Automatic histogram bin selection, configurable non-finite policies,
-inferential tests, confidence intervals, and probability distributions remain
-incomplete. See the
+Configurable non-finite policies, inferential tests, confidence intervals, and
+probability distributions remain incomplete. See the
 [statistics module](../stats/README.md) and SciPy
 [`stats`][scipy-stats]
 and GSL [`statistics`][gsl-statistics], [`random generation`][gsl-rng], and
 [`distributions`][gsl-randist]. Follow-ups: [#523](https://github.com/vlang/vsl/issues/523),
-[#559](https://github.com/vlang/vsl/issues/559), [#575](https://github.com/vlang/vsl/issues/575),
-[#576](https://github.com/vlang/vsl/issues/576), and
+[#559](https://github.com/vlang/vsl/issues/559), [#576](https://github.com/vlang/vsl/issues/576), and
 [#572](https://github.com/vlang/vsl/issues/572).
 
 ### Interpolation, roots, optimization, quadrature, and ODEs

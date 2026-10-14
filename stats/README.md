@@ -29,6 +29,9 @@ length, and have positive total mass. Non-finite sample values are rejected.
 non-negative bin weights and returns the total input weight, including samples
 outside the configured range. `density(total_weight)` uses that total for
 normalization, so the integrated density is the in-range weight fraction.
+`vsl.dist.histogram_bin_edges(values, rule)` selects edges with NumPy's
+`auto`, `fd`, `doane`, `scott`, `stone`, `rice`, `sturges`, or `sqrt` rule.
+Use `histogram_bin_edges_in_range` to select edges over an explicit interval.
 
 ```v
 import vsl.stats
@@ -38,9 +41,8 @@ println('mean=${summary.mean}, sample stddev=${summary.stddev}')
 ```
 
 This is partial descriptive-statistics coverage tracked in
-[VSL issue #559](https://github.com/vlang/vsl/issues/559). Automatic histogram
-bin selection and configurable non-finite value policies remain future work in
-[#575](https://github.com/vlang/vsl/issues/575) and
-[#576](https://github.com/vlang/vsl/issues/576), respectively.
+[VSL issue #559](https://github.com/vlang/vsl/issues/559). Configurable
+non-finite value policies remain future work in
+[#576](https://github.com/vlang/vsl/issues/576).
 Inferential tests and confidence intervals
 are tracked separately in [VSL issue #572](https://github.com/vlang/vsl/issues/572).
