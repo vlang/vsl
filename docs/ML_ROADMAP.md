@@ -66,6 +66,10 @@ follow-ups. The repository issue list is the source for live status.
 - [#528](https://github.com/vlang/vsl/issues/528) CUDA benchmark variants
 - [#529](https://github.com/vlang/vsl/issues/529) scikit-learn and GSL comparisons
 - [#530](https://github.com/vlang/vsl/issues/530) migration guides
+
+Issue #516 is partially implemented: GaussianNB now provides fitted class
+statistics, configurable priors, variance smoothing, and posterior
+probabilities. Other Naive Bayes variants and ensemble estimators remain open.
 The ML beta uses VSL as a scientific and compute foundation. The stable beta
 contract is the portable CPU/scientific surface plus `vsl.compute`; CUDA,
 Vulkan, and VCL are opt-in experimental accelerators.

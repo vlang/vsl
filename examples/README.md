@@ -55,6 +55,7 @@ v -cflags <flags> run vsl/examples/<example>/main.v
 | [ml_svm](./ml_svm)                                | Support Vector Machine with kernel functions.           |
 | [ml_decision_tree](./ml_decision_tree)           | Decision tree for classification and regression.       |
 | [ml_random_forest](./ml_random_forest)          | Random Forest ensemble learning.                        |
+| [ml_gaussian_nb](./ml_gaussian_nb)               | Probabilistic classification with Gaussian Naive Bayes. |
 | [ml_complete_pipeline](./ml_complete_pipeline)   | End-to-end preprocessing, model selection, and metrics. |
 
 ## Plotting Examples 📊
