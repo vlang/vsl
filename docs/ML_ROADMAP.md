@@ -67,6 +67,7 @@ follow-ups. The repository issue list is the source for live status.
 - [#528](https://github.com/vlang/vsl/issues/528) CUDA benchmark variants
 - [#529](https://github.com/vlang/vsl/issues/529) scikit-learn and GSL comparisons
 - [#530](https://github.com/vlang/vsl/issues/530) migration guides
+- [#538](https://github.com/vlang/vsl/issues/538) complete supported Windows CPU test coverage
 
 Issue #516 is partially implemented: GaussianNB provides fitted class
 statistics, configurable priors, variance smoothing, posterior probabilities,
