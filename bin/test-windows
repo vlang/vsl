@@ -1,0 +1,110 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+vsl_dir="$(cd -- "${script_dir}/.." && pwd)"
+module_root="$(dirname -- "${vsl_dir}")"
+
+portable_packages=(
+	vsl/blas
+	vsl/blas/blas64
+	vsl/compute
+	vsl/deriv
+	vsl/diff
+	vsl/dist
+	vsl/easings
+	vsl/errors
+	vsl/fft
+	vsl/fit
+	vsl/float/float32
+	vsl/float/float64
+	vsl/fun
+	vsl/func
+	vsl/gm
+	vsl/graph
+	vsl/inout/csv
+	vsl/iter
+	vsl/la
+	vsl/lapack
+	vsl/lapack/lapack64
+	vsl/metrics
+	vsl/ml
+	vsl/model_selection
+	vsl/noise
+	vsl/plot
+	vsl/poly
+	vsl/preprocessing
+	vsl/prime
+	vsl/quaternion
+	vsl/roots
+	vsl/util
+	vsl/vulkan
+)
+
+excluded_test_dirs=(
+	'vsl/cuda/compute|requires CUDA and an NVIDIA device'
+	'vsl/cuda/examples|requires CUDA and an NVIDIA device'
+	'vsl/inout/h5|requires the optional HDF5 library'
+	'vsl/mpi|requires an MPI implementation and launcher'
+	'vsl/vcl/compute|requires an OpenCL SDK and runtime'
+)
+
+fail() {
+	printf 'Windows test coverage error: %s\n' "$1" >&2
+	exit 1
+}
+
+cd "${module_root}"
+
+for package in "${portable_packages[@]}"; do
+	[[ -d "${package}" ]] || fail "portable package does not exist: ${package}"
+	test_file="$(find "${package}" -type f -name '*_test.v' -print -quit)"
+	[[ -n "${test_file}" ]] || fail "portable package has no tests: ${package}"
+done
+
+test_dirs=()
+while IFS= read -r -d '' test_file; do
+	test_dir="${test_file%/*}"
+	found=false
+	for package in "${portable_packages[@]}"; do
+		if [[ "${test_dir}" == "${package}" || "${test_dir}" == "${package}/"* ]]; then
+			found=true
+			break
+		fi
+	done
+	if [[ "${found}" == false ]]; then
+		for exclusion in "${excluded_test_dirs[@]}"; do
+			IFS='|' read -r excluded_dir reason <<< "${exclusion}"
+			if [[ "${test_dir}" == "${excluded_dir}" ]]; then
+				found=true
+				break
+			fi
+		done
+	fi
+	[[ "${found}" == true ]] || fail "test directory is neither included nor explicitly excluded: ${test_dir}"
+	test_dirs+=("${test_dir}")
+done < <(find vsl -type f -name '*_test.v' -print0)
+
+printf 'Windows CPU coverage inventory: %d test directories; %d portable packages; %d explicit exclusions.\n' \
+	"${#test_dirs[@]}" "${#portable_packages[@]}" "${#excluded_test_dirs[@]}"
+active_exclusions=0
+for exclusion in "${excluded_test_dirs[@]}"; do
+	IFS='|' read -r excluded_dir reason <<< "${exclusion}"
+	first_test="$(find "${excluded_dir}" -type f -name '*_test.v' -print -quit 2>/dev/null || true)"
+	if [[ -n "${first_test}" ]]; then
+		((active_exclusions += 1))
+		printf 'Excluded %s: %s\n' "${excluded_dir}" "${reason}"
+	fi
+done
+
+printf 'Active explicit exclusions: %d.\n' "${active_exclusions}"
+
+if [[ "${1:-}" == '--check' ]]; then
+	exit 0
+fi
+if [[ $# -gt 0 ]]; then
+	fail "usage: bin/test-windows [--check]"
+fi
+
+v test "${portable_packages[@]}"
