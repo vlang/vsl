@@ -81,7 +81,9 @@ follow-ups. The repository issue list is the source for live status.
 - [#558](https://github.com/vlang/vsl/issues/558) broader special-function families
 - [#559](https://github.com/vlang/vsl/issues/559) descriptive sample statistics
 - [#560](https://github.com/vlang/vsl/issues/560) signal processing and wavelet APIs
-- [#564](https://github.com/vlang/vsl/issues/564) numerical differentiation coverage
+- [#564](https://github.com/vlang/vsl/issues/564) numerical differentiation
+  coverage: Jacobian estimates are implemented; second derivatives and
+  boundary-aware methods remain open.
 
 Issue #516 is partially implemented: GaussianNB provides fitted class
 statistics, configurable priors, variance smoothing, posterior probabilities,

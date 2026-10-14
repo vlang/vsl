@@ -178,6 +178,7 @@ v -cflags <flags> run vsl/examples/<example>/main.v
 | [prime_factorization](./prime_factorization)       | Prime factorization example.                                      |
 | [roots_bisection_solver](./roots_bisection_solver) | Root finding using the bisection method.                          |
 | [deriv_example](./deriv_example)                   | Derivative calculation example.                                   |
+| [deriv_jacobian](./deriv_jacobian)                 | Multivariable Jacobian with per-entry error estimates.             |
 | [graph_shortest_paths_methods](./graph_shortest_paths_methods) | Compare FW, Dijkstra, and BFS shortest-path strategies.      |
 
 ## Geometry Module Examples 📐
