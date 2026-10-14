@@ -17,6 +17,7 @@ Repo roadmap: [ROADMAP.md](../ROADMAP.md) · CUDA: [cuda/README.md](../cuda/READ
 | [#304](https://github.com/vlang/vsl/pull/304) | Vulkan Conv2D backward `d_weight` GEMM layout fix |
 | [#305](https://github.com/vlang/vsl/pull/305) | Vulkan `vector_mul`, `vector_sqrt`, fused f32 `adam_step` shader |
 | [#328](https://github.com/vlang/vsl/issues/328) | Expanded Windows test coverage and portable test-runner cleanup (#394) |
+| [#534](https://github.com/vlang/vsl/issues/534) | Incremental and sample-weighted GaussianNB fitting (#536) |
 
 **VTL (downstream):** CUDA Phases 1–4, f32 autograd/training, Vulkan Linear,
 Conv2D, ReLU/Sigmoid, and Adam are wired into the `nn_cifar10_vulkan` smoke.
@@ -52,7 +53,6 @@ follow-ups. The repository issue list is the source for live status.
 - [#514](https://github.com/vlang/vsl/issues/514) preprocessing transformers and pipelines
 - [#515](https://github.com/vlang/vsl/issues/515) cross-validation and model selection
 - [#516](https://github.com/vlang/vsl/issues/516) probabilistic and ensemble estimators
-- [#534](https://github.com/vlang/vsl/issues/534) incremental and sample-weighted GaussianNB fitting
 - [#517](https://github.com/vlang/vsl/issues/517) regression estimator coverage
 - [#518](https://github.com/vlang/vsl/issues/518) clustering and decomposition
 - [#519](https://github.com/vlang/vsl/issues/519) nearest-neighbor APIs
@@ -68,10 +68,10 @@ follow-ups. The repository issue list is the source for live status.
 - [#529](https://github.com/vlang/vsl/issues/529) scikit-learn and GSL comparisons
 - [#530](https://github.com/vlang/vsl/issues/530) migration guides
 
-Issue #516 is partially implemented: GaussianNB now provides fitted class
-statistics, configurable priors, variance smoothing, and posterior
-probabilities. Incremental/sample-weighted fitting (#534), other Naive Bayes
-variants, and ensemble estimators remain open.
+Issue #516 is partially implemented: GaussianNB provides fitted class
+statistics, configurable priors, variance smoothing, posterior probabilities,
+and incremental/sample-weighted fitting (#534, completed by #536). Other Naive
+Bayes variants and ensemble estimators remain open.
 The ML beta uses VSL as a scientific and compute foundation. The stable beta
 contract is the portable CPU/scientific surface plus `vsl.compute`; CUDA,
 Vulkan, and VCL are opt-in experimental accelerators.
