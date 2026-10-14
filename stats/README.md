@@ -13,6 +13,11 @@ linearly interpolate between adjacent observations (Type 7, the NumPy/SciPy
 default). Probabilities must be finite and lie in `[0, 1]` or `[0, 100]`.
 Input samples must be finite; the input slice is not modified.
 
+`stats.quantile_weighted(values, weights, q)` and
+`stats.percentile_weighted(values, weights, p)` implement NumPy's weighted
+inverted-CDF method. Weights must be finite, non-negative, match the sample
+length, and have positive total mass. Non-finite sample values are rejected.
+
 ```v
 import vsl.stats
 

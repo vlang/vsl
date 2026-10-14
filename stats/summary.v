@@ -96,3 +96,72 @@ pub fn percentile(values []f64, p f64) !f64 {
 	}
 	return quantile(values, p / 100.0)
 }
+
+struct WeightedValue {
+	value  f64
+	weight f64
+}
+
+fn compare_weighted_values(a &WeightedValue, b &WeightedValue) int {
+	if a.value < b.value {
+		return -1
+	}
+	if a.value > b.value {
+		return 1
+	}
+	return 0
+}
+
+// quantile_weighted returns NumPy's inverted-CDF weighted quantile. Weights
+// represent non-negative sample mass, and values/weights must have equal
+// lengths. Non-finite samples or weights are rejected.
+pub fn quantile_weighted(values []f64, weights []f64, q f64) !f64 {
+	if math.is_nan(q) || math.is_inf(q, 0) || q < 0.0 || q > 1.0 {
+		return error('stats.quantile_weighted: q must be finite and between 0 and 1')
+	}
+	if values.len == 0 {
+		return error('stats.quantile_weighted: values must not be empty')
+	}
+	if values.len != weights.len {
+		return error('stats.quantile_weighted: values and weights must have the same length')
+	}
+	mut pairs := []WeightedValue{cap: values.len}
+	mut total_weight := 0.0
+	for i, value in values {
+		weight := weights[i]
+		if math.is_nan(value) || math.is_inf(value, 0) {
+			return error('stats.quantile_weighted: values must all be finite')
+		}
+		if math.is_nan(weight) || math.is_inf(weight, 0) || weight < 0.0 {
+			return error('stats.quantile_weighted: weights must be finite and non-negative')
+		}
+		total_weight += weight
+		if math.is_inf(total_weight, 0) {
+			return error('stats.quantile_weighted: total weight overflowed f64')
+		}
+		if weight > 0.0 {
+			pairs << WeightedValue{value, weight}
+		}
+	}
+	if total_weight <= 0.0 {
+		return error('stats.quantile_weighted: total weight must be positive')
+	}
+	pairs.sort_with_compare(compare_weighted_values)
+	target := q * total_weight
+	mut cumulative_weight := 0.0
+	for pair in pairs {
+		cumulative_weight += pair.weight
+		if cumulative_weight >= target {
+			return pair.value
+		}
+	}
+	return pairs[pairs.len - 1].value
+}
+
+// percentile_weighted is the 0..100-scale form of quantile_weighted.
+pub fn percentile_weighted(values []f64, weights []f64, p f64) !f64 {
+	if math.is_nan(p) || math.is_inf(p, 0) || p < 0.0 || p > 100.0 {
+		return error('stats.percentile_weighted: p must be finite and between 0 and 100')
+	}
+	return quantile_weighted(values, weights, p / 100.0)
+}

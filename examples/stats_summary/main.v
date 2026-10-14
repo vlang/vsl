@@ -12,4 +12,8 @@ fn main() {
 	println('range: ${summary.min}..${summary.max}')
 	median := stats.quantile(measurements, 0.5) or { panic(err) }
 	println('median: ${median}')
+	weighted_median := stats.quantile_weighted(measurements, [1.0, 1.0, 4.0, 1.0, 1.0], 0.5) or {
+		panic(err)
+	}
+	println('weighted median: ${weighted_median}')
 }
