@@ -41,10 +41,10 @@ fn test_cpu_conv2d_batches_and_channels() {
 
 fn test_cpu_conv2d_rejects_bad_shapes_and_strides() {
 	cpu := new_cpu_backend()
-	if _ := cpu.conv2d([f64(1)], [1], 1, 3, 3, 1, 1, 2, 2, 1, 1) {
+	if _ := cpu.conv2d([f64(1)], [f64(1)], 1, 3, 3, 1, 1, 2, 2, 1, 1) {
 		assert false, 'expected invalid input length to fail'
 	}
-	if _ := cpu.conv2d([f64(1)], [1], 1, 1, 1, 1, 1, 1, 1, 0, 1) {
+	if _ := cpu.conv2d([f64(1)], [f64(1)], 1, 1, 1, 1, 1, 1, 1, 0, 1) {
 		assert false, 'expected zero stride to fail'
 	}
 }
@@ -95,7 +95,7 @@ fn test_unavailable_backend_falls_back_unless_strict() {
 		mut rejected := false
 		_ := strict_ctx.resolve_backend() or {
 			rejected = err.msg().contains('not available in this build')
-			new_cpu_backend()
+			ComputeBackend(new_cpu_backend())
 		}
 		assert rejected
 	}
