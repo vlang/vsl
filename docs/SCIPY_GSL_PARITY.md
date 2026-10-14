@@ -31,7 +31,7 @@ API. Recheck upstream documentation when updating this tracker.
 | Special functions | Partial | [fun][vsl-fun] | #540–#543, #556–#558 |
 | Statistics and probability | Partial | [statistics][vsl-statistics], [dist][vsl-dist] | #523, #559 |
 | Interpolation and splines | Partial | [fun][vsl-fun], [poly][vsl-poly] | #522 |
-| Root finding and minimization | Partial | [roots][vsl-roots] | #520 |
+| Root finding and minimization | Partial | [roots][vsl-roots] | #520, #562 |
 | Quadrature and ODE solvers | Missing | — | #521 |
 | Fourier transforms | Partial | [fft][vsl-fft] | #527, #528 |
 | Signal processing and wavelets | Missing | [fft][vsl-fft] only | #560 |
@@ -72,15 +72,15 @@ and [#559](https://github.com/vlang/vsl/issues/559).
 
 ### Interpolation, roots, optimization, quadrature, and ODEs
 
-VSL has selected interpolation helpers, B-spline curves, Newton and bisection
-root solvers. Brent is not yet publicly callable; minimization, quadrature, and
-ODE solver families are missing. See SciPy [`interpolate`][scipy-interpolate],
+VSL has selected interpolation helpers, B-spline curves, Newton, bisection, and
+a public Brent root solver with bounded convergence diagnostics. Minimization,
+quadrature, and ODE solver families are missing. See SciPy [`interpolate`][scipy-interpolate],
 [`optimize`][scipy-optimize], and [`integrate`][scipy-integrate], plus GSL
 [`interpolation`][gsl-interp], [`roots`][gsl-roots], [`minimization`][gsl-min],
 [`integration`][gsl-integration], and [`ODE solvers`][gsl-ode]. Track these in
 [#520](https://github.com/vlang/vsl/issues/520), [#521](https://github.com/vlang/vsl/issues/521),
-and [#522](https://github.com/vlang/vsl/issues/522). The existing VSL integration
-guide is not evidence of an implementation.
+[#522](https://github.com/vlang/vsl/issues/522), and [#562](https://github.com/vlang/vsl/issues/562).
+The existing VSL integration guide is not evidence of an implementation.
 
 ### FFT and signal processing
 
