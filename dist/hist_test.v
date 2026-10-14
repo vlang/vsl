@@ -123,6 +123,52 @@ fn test_weighted_histogram_rejects_invalid_inputs_without_partial_update() {
 	}
 }
 
+fn test_histogram_non_finite_policies_preserve_state_on_error() {
+	mut hist := Histogram.new([0.0, 1, 2])
+	finite_count := hist.count_with_policy([0.5, math.nan(), math.inf(1), 1.5, 4.0], true, .omit)!
+	assert finite_count == 3
+	assert hist.counts == [1, 1]
+	densities := hist.density(finite_count)!
+	assert math.abs(densities[0] - 1.0 / 3.0) < 1e-12
+	assert math.abs(densities[1] - 1.0 / 3.0) < 1e-12
+	if _ := hist.count_with_policy([0.5, math.inf(-1)], false, .reject) {
+		assert false, 'reject must fail on infinities'
+	}
+	assert hist.counts == [1, 1]
+	if _ := hist.count_with_policy([0.5, math.nan()], false, .propagate) {
+		assert false, 'integer counts cannot propagate NaN'
+	}
+	assert hist.counts == [1, 1]
+}
+
+fn test_weighted_histogram_non_finite_policies() {
+	for invalid in [math.nan(), math.inf(1), math.inf(-1)] {
+		mut hist := WeightedHistogram.new([0.0, 1, 2])
+		total := hist.count_with_policy([0.5, invalid, 1.5], [2.0, 10, 3], true, .omit)!
+		assert total == 5.0
+		assert hist.counts == [2.0, 3.0]
+		if _ := hist.count_with_policy([0.5, invalid], [1.0, 2], false, .reject) {
+			assert false, 'reject policy must reject non-finite observations'
+		}
+		if _ := hist.count_with_policy([0.5, invalid], [1.0, 2], false, .propagate) {
+			assert false, 'weighted counts cannot propagate non-finite observations'
+		}
+		assert hist.counts == [2.0, 3.0]
+	}
+	for invalid_weight in [math.nan(), math.inf(1), math.inf(-1)] {
+		mut hist := WeightedHistogram.new([0.0, 1, 2])
+		total := hist.count_with_policy([0.5, 1.5], [2.0, invalid_weight], true, .omit)!
+		assert total == 2.0
+		assert hist.counts == [2.0, 0.0]
+		if _ := hist.count_with_policy([0.5], [invalid_weight], false, .reject) {
+			assert false, 'reject policy must reject non-finite weights'
+		}
+		if _ := hist.count_with_policy([0.5], [invalid_weight], false, .propagate) {
+			assert false, 'weighted counts cannot propagate non-finite weights'
+		}
+	}
+}
+
 fn test_histogram_rejects_invalid_edges_and_nan_samples() {
 	mut repeated := Histogram.new([0.0, 1, 1])
 	if _ := repeated.find_bin(0.5) {

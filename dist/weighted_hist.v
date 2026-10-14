@@ -2,6 +2,7 @@ module dist
 
 import math
 import vsl.errors
+import vsl.stats
 
 // WeightedHistogram accumulates non-negative observation weights in fixed bins.
 pub struct WeightedHistogram {
@@ -63,6 +64,51 @@ pub fn (mut o WeightedHistogram) count(values []f64, weights []f64, clear bool) 
 	}
 	o.counts = next_counts
 	return total_weight
+}
+
+// count_with_policy accumulates finite value/weight pairs. Under omit, pairs
+// with a non-finite value or weight are excluded from both bins and the
+// returned normalization weight. Propagation is undefined for histogram
+// counts and returns an error when any pair is non-finite.
+pub fn (mut o WeightedHistogram) count_with_policy(values []f64, weights []f64, clear bool, policy stats.NonFinitePolicy) !f64 {
+	if values.len != weights.len {
+		return errors.error('WeightedHistogram values and weights must have equal lengths', .efailed)
+	}
+	mut finite_values := []f64{cap: values.len}
+	mut finite_weights := []f64{cap: weights.len}
+	for i, value in values {
+		weight := weights[i]
+		value_non_finite := math.is_nan(value) || math.is_inf(value, 0)
+		weight_non_finite := math.is_nan(weight) || math.is_inf(weight, 0)
+		if weight_non_finite {
+			match policy {
+				.reject {
+					return errors.error('WeightedHistogram values and weights must all be finite', .efailed)
+				}
+				.omit { continue }
+				.propagate {
+					return errors.error('WeightedHistogram cannot propagate non-finite values to counts', .efailed)
+				}
+			}
+		}
+		if weight < 0.0 {
+			return errors.error('WeightedHistogram weights must be non-negative', .efailed)
+		}
+		if value_non_finite {
+			match policy {
+				.reject {
+					return errors.error('WeightedHistogram values and weights must all be finite', .efailed)
+				}
+				.omit { continue }
+				.propagate {
+					return errors.error('WeightedHistogram cannot propagate non-finite values to counts', .efailed)
+				}
+			}
+		}
+		finite_values << value
+		finite_weights << weight
+	}
+	return o.count(finite_values, finite_weights, clear)
 }
 
 // density returns each bin's accumulated weight fraction divided by its width.

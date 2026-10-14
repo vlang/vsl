@@ -82,7 +82,6 @@ follow-ups. The repository issue list is the source for live status.
 - [#558](https://github.com/vlang/vsl/issues/558) broader special-function families
 - [#567](https://github.com/vlang/vsl/issues/567) sparse direct solvers and reusable factorizations
 - [#572](https://github.com/vlang/vsl/issues/572) inferential tests and confidence intervals
-- [#576](https://github.com/vlang/vsl/issues/576) non-finite sample policies
 - [#580](https://github.com/vlang/vsl/issues/580) model persistence and portable export
 - [#585](https://github.com/vlang/vsl/issues/585) multidimensional image filters and morphology (SciPy `ndimage`)
 - [#560](https://github.com/vlang/vsl/issues/560) signal processing and wavelet APIs

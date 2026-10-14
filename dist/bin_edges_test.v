@@ -67,6 +67,22 @@ fn test_histogram_bin_edges_handle_constants_and_explicit_ranges() {
 	}
 }
 
+fn test_histogram_bin_edges_non_finite_policy() {
+	edges := histogram_bin_edges_with_policy([0.0, 1, 2, math.nan(), math.inf(1), math.inf(-1)], .sturges,
+		.omit)!
+	assert edges.len == 4
+	ranged := histogram_bin_edges_in_range_with_policy([0.0, 1, 2, math.inf(1)], .sturges, 0, 3,
+		.omit)!
+	assert ranged[0] == 0.0
+	assert ranged[ranged.len - 1] == 3.0
+	if _ := histogram_bin_edges_with_policy([0.0, math.nan()], .sturges, .propagate) {
+		assert false, 'bin-edge selection cannot propagate NaN'
+	}
+	if _ := histogram_bin_edges_in_range_with_policy([0.0, math.inf(1)], .sturges, 0, 3, .reject) {
+		assert false, 'reject policy must reject infinity'
+	}
+}
+
 fn test_histogram_bin_edges_reject_invalid_samples_and_ranges() {
 	if _ := histogram_bin_edges([], .auto) {
 		assert false, 'empty samples must be rejected'
