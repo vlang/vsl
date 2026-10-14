@@ -3,7 +3,7 @@ module float32
 import math
 
 // Reference pairs [input_bits, correctly_rounded_output_bits] generated with
-// mpmath at 200 bits of precision. The f64-evaluated implementations must
+// mpmath at 200 bits of precision. The double-double implementations must
 // reproduce the output bit for bit.
 const exp_references = [
 	[u32(1090901509), u32(1166420054)],
@@ -19,6 +19,10 @@ const exp_references = [
 ]
 
 const log_references = [
+	// Regression: exact log of this input is 8.2e-17 below the f32
+	// midpoint, so f64 evaluation double-rounds to ...e8 while the
+	// correctly rounded result is ...e7 (found exhaustively, #65).
+	[u32(0x41178feb), u32(0x400fe5e7)],
 	[u32(1110602972), u32(1081283394)],
 	[u32(1111748638), u32(1081675366)],
 	[u32(1109670940), u32(1080935067)],
