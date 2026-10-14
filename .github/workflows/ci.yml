@@ -159,7 +159,10 @@ jobs:
       - name: Setup V
         uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
-          check-latest: true
+          # Windows currently fails to bootstrap the latest V branch while
+          # its generated C references symbols missing from the vc submodule.
+          # Keep Windows on a tagged V release; Linux/macOS exercise latest V.
+          stable: true
 
       - name: Move VSL source code to V Modules
         shell: bash
