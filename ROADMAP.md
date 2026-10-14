@@ -88,13 +88,13 @@ issue closure as historical; Phase H remains incomplete.
 | Priority | Work item |
 |----------|-----------|
 | P2 | Verify macOS OpenBLAS linkage and BLAS CI; latest `main` run is queued |
-| P2 | [#21](https://github.com/vlang/vsl/issues/21): evaluate Enoki-inspired SIMD and data-layout improvements with benchmarks |
 | P2 | [#65](https://github.com/vlang/vsl/issues/65): investigate correctly rounded binary32 math function by function |
-| Design | [#34](https://github.com/vlang/vsl/issues/34): review missing operator overloads for VSL structs |
-| P1 | Phase H multi-GPU |
-| P1 | Phase I GPU memory pool / zero-copy |
-| P2 | CUDA benchmark variants in CI |
-| P2 | Vulkan stress + cross-backend validation |
+| P1 | [#525](https://github.com/vlang/vsl/issues/525): multi-GPU device selection and workload dispatch |
+| P1 | [#526](https://github.com/vlang/vsl/issues/526): reusable GPU memory pools and zero-copy storage |
+| P2 | [#527](https://github.com/vlang/vsl/issues/527): cross-backend numerical stress validation |
+| P2 | [#528](https://github.com/vlang/vsl/issues/528): CUDA benchmark variants in CI |
+| P2 | [#529](https://github.com/vlang/vsl/issues/529): matched scikit-learn and GSL comparisons |
+| P2 | [#530](https://github.com/vlang/vsl/issues/530): end-to-end migration guides |
 
 **Maintainer project board:** [vlang org project #8](https://github.com/orgs/vlang/projects/8) (may require access)
 
@@ -105,18 +105,14 @@ issue closure as historical; Phase H remains incomplete.
 | # | Title | Priority | Notes |
 |---|-------|----------|-------|
 | [#65](https://github.com/vlang/vsl/issues/65) | Binary float precision | 🟡 P2 | RLibm-style function coverage research |
-| [#34](https://github.com/vlang/vsl/issues/34) | Operator overrides for structs | Design | Define supported types and operators |
-| [#21](https://github.com/vlang/vsl/issues/21) | Enoki-inspired performance | Research | Benchmark SIMD and data layout |
+| [#514–#519](https://github.com/vlang/vsl/issues/514) | Scikit-learn preprocessing, model selection and estimators | P1/P2 | ML workflow and model coverage |
+| [#520–#524](https://github.com/vlang/vsl/issues/520) | GSL-style numerical methods, RNG and sparse solvers | P1/P2 | Scientific computing coverage |
+| [#525–#528](https://github.com/vlang/vsl/issues/525) | Multi-GPU, memory pools, validation and CUDA benchmarks | P1/P2 | Accelerator roadmap |
+| [#529–#530](https://github.com/vlang/vsl/issues/529) | Competitor benchmarks and migration guides | P2 | Evidence and adoption |
 
-**Issue #34 operator coverage:** `la.Matrix[T]` supports `+`, `-`, `*`, and `/`;
-integer matrices also support `%`. `gm.Point` supports `+` and `-`, and
-`quaternion.Quaternion` supports `+`, `-`, `*`, and `/`. Matrix scalar arithmetic
-and Point/Quaternion scalar arithmetic use named methods because V requires
-both overloaded operands to have the same type. Other public structs are
-configuration, result, storage, iterator, or model types without an obvious
-arithmetic interpretation. Keep #34 open for specific missing operations with
-defined semantics; blanket operator coverage for every struct is not a useful
-contract.
+Issues #21 and #34 were closed on 2026-10-13. SIMD improvements and the
+operator coverage present at closure remain historical accomplishments; new
+missing APIs should be tracked as narrowly defined feature requests.
 
 **Closed ML epics:** #236–#239, #240–#244, #280–#285 — see
 [ML_ROADMAP.md](docs/ML_ROADMAP.md).
