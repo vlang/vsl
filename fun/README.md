@@ -20,6 +20,8 @@ analysis.
 ### Error Functions
 - **Error Function**: erf(x) and complementary erfc(x)
 - Inverse error functions are tracked in [issue #540](https://github.com/vlang/vsl/issues/540).
+- The scaled complementary error function `erfcx` is tracked in
+  [issue #547](https://github.com/vlang/vsl/issues/547).
 
 ### Interpolation
 - **Cubic Interpolation**: Smooth curve fitting
