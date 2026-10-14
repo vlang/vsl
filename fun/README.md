@@ -137,7 +137,8 @@ See these examples for practical applications:
 
 - Cylindrical Bessel functions currently support integer orders. Fractional-order
   and spherical families are tracked in [issue #541](https://github.com/vlang/vsl/issues/541).
-- Bessel functions do not expose error estimates.
+- Bessel functions do not expose error estimates; see
+  [issue #543](https://github.com/vlang/vsl/issues/543).
 - Extended-precision variants are not available.
 - Inverse error functions are not implemented yet; see
   [issue #540](https://github.com/vlang/vsl/issues/540).
