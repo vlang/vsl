@@ -38,6 +38,7 @@ portable_packages=(
 	vsl/prime
 	vsl/quaternion
 	vsl/roots
+	vsl/stats
 	vsl/util
 	vsl/vulkan
 )
