@@ -91,6 +91,32 @@ Random Forest is an ensemble method combining multiple decision trees. As an
 observer model, it marks itself for retraining when data changes, allowing the
 entire forest to be rebuilt.
 
+### Gaussian Naive Bayes
+
+`GaussianNB` estimates Gaussian feature distributions for each class and
+returns class predictions or normalized probabilities. `var_smoothing` times
+the largest global feature variance is added to every class-feature variance;
+a positive smoothing value also provides a variance floor when all features are
+constant. Priors default to observed class frequencies and can be overridden
+with `set_priors`.
+
+```v ignore
+mut data := Data.from_raw_xy_sep([
+    [-2.0, -1.0],
+    [-1.0, -1.0],
+    [1.0, 1.0],
+    [2.0, 1.0],
+], [0.0, 0.0, 1.0, 1.0])!
+model := GaussianNB.new(mut data, 'gaussian_nb')!
+println(model.predict([1.5, 1.0])!)
+println(model.predict_proba([1.5, 1.0])!)
+```
+
+Use `GaussianNB.new_with_smoothing` to choose a different smoothing value. The
+model accepts finite `f64` features and finite numeric labels. Probabilities
+follow ascending numeric class order. Incremental `partial_fit` and other Naive
+Bayes variants remain future work.
+
 ## Non-Observer Models
 
 The following machine learning models in VSL do not require the observer pattern
