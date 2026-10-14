@@ -66,8 +66,10 @@ Compare SciPy [`special`][scipy-special] and GSL [`special functions`][gsl-speci
 
 VSL has covariance/correlation and histogram binning. `vsl.stats.summarize`
 now provides one-pass mean, variance, standard deviation, and extrema for
-finite samples; quantiles, non-finite policies, and probability distributions
-remain incomplete. See the [statistics module](../stats/README.md) and SciPy
+finite samples; `vsl.stats.quantile` and `percentile` implement linear Type 7
+interpolation. Alternative and weighted quantiles, histogram summaries,
+non-finite policies, and probability distributions remain incomplete. See the
+[statistics module](../stats/README.md) and SciPy
 [`stats`][scipy-stats]
 and GSL [`statistics`][gsl-statistics], [`random generation`][gsl-rng], and
 [`distributions`][gsl-randist]. Follow-ups: [#523](https://github.com/vlang/vsl/issues/523)
