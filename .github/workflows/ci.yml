@@ -156,13 +156,36 @@ jobs:
           persist-credentials: false
           path: vsl
 
-      - name: Setup V
-        uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
-        with:
-          # Windows currently fails to bootstrap the latest V branch while
-          # its generated C references symbols missing from the vc submodule.
-          # Keep Windows on a tagged V release; Linux/macOS exercise latest V.
-          stable: true
+      - name: Install official V release binary (Windows)
+        shell: pwsh
+        run: |
+          # setup-v's source bootstrap currently fails on Windows.
+          # Use the official release binary and verify its pinned digest.
+          $version = '0.5.2'
+          $expectedSha256 = (
+            '5f1d619b6b04a2b54b4ad21826a25bdc' +
+            'ba2acf75a941c8f72fc95672b6b064ca'
+          )
+          $archive = Join-Path $env:RUNNER_TEMP 'v_windows.zip'
+          $installRoot = Join-Path $env:RUNNER_TEMP 'vlang'
+          $releaseUri = "https://github.com/vlang/v/releases/download/$version"
+          $uri = "$releaseUri/v_windows.zip"
+          Invoke-WebRequest -Uri $uri -OutFile $archive
+          $archiveHash = Get-FileHash -Path $archive -Algorithm SHA256
+          $actualSha256 = $archiveHash.Hash.ToLowerInvariant()
+          if ($actualSha256 -ne $expectedSha256) {
+            throw "V archive SHA-256 mismatch: $actualSha256"
+          }
+          Expand-Archive -LiteralPath $archive `
+            -DestinationPath $installRoot -Force
+          $vDirectory = Join-Path $installRoot 'v'
+          if (-not (Test-Path (Join-Path $vDirectory 'v.exe'))) {
+            throw 'The official V release archive does not contain v.exe'
+          }
+          $vDirectory | Out-File -FilePath $env:GITHUB_PATH `
+            -Append -Encoding utf8
+          $vExecutable = Join-Path $vDirectory 'v.exe'
+          & $vExecutable version
 
       - name: Move VSL source code to V Modules
         shell: bash
