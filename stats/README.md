@@ -25,6 +25,11 @@ must be finite; the input slice is not modified.
 inverted-CDF method. Weights must be finite, non-negative, match the sample
 length, and have positive total mass. Non-finite sample values are rejected.
 
+`vsl.dist.WeightedHistogram.count(values, weights, clear)` accumulates
+non-negative bin weights and returns the total input weight, including samples
+outside the configured range. `density(total_weight)` uses that total for
+normalization, so the integrated density is the in-range weight fraction.
+
 ```v
 import vsl.stats
 
@@ -34,6 +39,8 @@ println('mean=${summary.mean}, sample stddev=${summary.stddev}')
 
 This is partial descriptive-statistics coverage tracked in
 [VSL issue #559](https://github.com/vlang/vsl/issues/559). Automatic histogram
-bin selection, weighted histogram summaries, and configurable non-finite
-value policies remain future work. Inferential tests and confidence intervals
+bin selection and configurable non-finite value policies remain future work in
+[#575](https://github.com/vlang/vsl/issues/575) and
+[#576](https://github.com/vlang/vsl/issues/576), respectively.
+Inferential tests and confidence intervals
 are tracked separately in [VSL issue #572](https://github.com/vlang/vsl/issues/572).
