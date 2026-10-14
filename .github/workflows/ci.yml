@@ -178,7 +178,9 @@ jobs:
         run: |
           cd ~/.vmodules
           bash -n vsl/bin/test
+          bash -n vsl/bin/test-windows
           vsl/bin/test --help
+          vsl/bin/test-windows --check
 
       - name: Install Vulkan headers (Windows)
         uses: humbletim/setup-vulkan-sdk@c25f41106918cde0bf347e6f201277392b3a9e9d # v1.2.1
@@ -208,39 +210,7 @@ jobs:
         shell: bash
         run: |
           cd ~/.vmodules
-          v test \
-            ./vsl/blas \
-            ./vsl/blas/blas64 \
-            ./vsl/compute \
-            ./vsl/deriv \
-            ./vsl/diff \
-            ./vsl/dist \
-            ./vsl/easings \
-            ./vsl/errors \
-            ./vsl/fft \
-            ./vsl/fit \
-            ./vsl/float/float32 \
-            ./vsl/float/float64 \
-            ./vsl/fun \
-            ./vsl/func \
-            ./vsl/gm \
-            ./vsl/graph \
-            ./vsl/inout/csv \
-            ./vsl/iter \
-            ./vsl/la \
-            ./vsl/lapack \
-            ./vsl/lapack/lapack64 \
-            ./vsl/metrics \
-            ./vsl/ml \
-            ./vsl/model_selection \
-            ./vsl/noise \
-            ./vsl/plot \
-            ./vsl/poly \
-            ./vsl/preprocessing \
-            ./vsl/prime \
-            ./vsl/quaternion \
-            ./vsl/roots \
-            ./vsl/util
+          vsl/bin/test-windows
 
       - name: Test Vulkan compute on Windows
         shell: bash
