@@ -45,4 +45,11 @@ fn main() {
 	println(hist_text)
 	println('density = ${hist.density(values.len)!}')
 	println('density area = ${hist.density_area(values.len)!}')
+
+	weights := values.map(1.0 + it / 10.0)
+	mut weighted_hist := dist.WeightedHistogram.new(lims)
+	total_weight := weighted_hist.count(values, weights, true)!
+	println('weighted counts = ${weighted_hist.counts}')
+	println('weighted density = ${weighted_hist.density(total_weight)!}')
+	println('weighted density area = ${weighted_hist.density_area(total_weight)!}')
 }
