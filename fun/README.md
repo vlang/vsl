@@ -19,7 +19,8 @@ analysis.
 
 ### Error Functions
 - **Error Function**: erf(x) and complementary erfc(x)
-- Inverse error functions are tracked in [issue #540](https://github.com/vlang/vsl/issues/540).
+- Inverse error functions `erf_inv(x)` and `erfc_inv(x)` handle finite domains,
+  endpoints, and tails.
 - The scaled complementary error function `erfcx` is tracked in
   [issue #547](https://github.com/vlang/vsl/issues/547).
 
@@ -78,6 +79,11 @@ println('erf(1.0) = ${erf_val}')
 // Complementary error function
 erfc_val := fun.erfc(x)
 println('erfc(1.0) = ${erfc_val}')
+
+// Invert the error functions for a Gaussian-tail calculation
+quantile := fun.erf_inv(0.95)
+tail := fun.erfc_inv(1e-12)
+println('erf inverse = ${quantile}, erfc tail inverse = ${tail}')
 ```
 
 ### Interpolation Example
@@ -142,8 +148,6 @@ See these examples for practical applications:
 - Bessel functions do not expose error estimates; see
   [issue #543](https://github.com/vlang/vsl/issues/543).
 - Extended-precision variants are not available.
-- Inverse error functions are not implemented yet; see
-  [issue #540](https://github.com/vlang/vsl/issues/540).
 
 ## 📚 API Reference
 
@@ -163,6 +167,9 @@ See these examples for practical applications:
 **Error Functions:**
 - `erf(x)` - Error function
 - `erfc(x)` - Complementary error function
+- `erf_inv(x)` - Inverse error function for `[-1, 1]`; infinities at endpoints.
+- `erfc_inv(x)` - Inverse complementary error function for `[0, 2]`;
+  infinities at endpoints.
 
 ## 🔗 References
 
