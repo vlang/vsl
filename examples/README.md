@@ -310,3 +310,5 @@ We welcome new examples! Please ensure your contributions:
 - Test across different platforms
 
 See the [Contributing Guide](../CONTRIBUTING.md) for detailed guidelines.
+
+| [stats_summary](./stats_summary) | Stable one-pass descriptive statistics for finite samples | `v run ./vsl/examples/stats_summary/main.v` |
