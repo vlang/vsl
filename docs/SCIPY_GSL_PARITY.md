@@ -38,7 +38,7 @@ API. Recheck upstream documentation when updating this tracker.
 | ML | Partial | [ml][vsl-ml], [prep][vsl-preprocessing], [selection][vsl-model-selection], [metrics][vsl-metrics] | #514–#519, #529, #530 |
 | Plotting and visualization | Partial | [plot][vsl-plot] | #545 |
 | Device selection and accelerator backends | Partial | [compute][vsl-compute], [CUDA][vsl-cuda], [VCL][vsl-vcl], [Vulkan][vsl-vulkan] | #525–#528 |
-| Numerical differentiation | Implemented, limited scope | [deriv][vsl-deriv] | Coverage review |
+| Numerical differentiation | Implemented, limited scope | [deriv][vsl-deriv] | #564 |
 
 The rows are intentionally coarse. Details and authoritative API references
 for each domain follow:
@@ -106,7 +106,9 @@ follow-ups [#514](https://github.com/vlang/vsl/issues/514)–[#519](https://gith
 
 VSL provides numerical differentiation; this status does not claim parity for
 all methods, error estimates, or edge cases. Compare SciPy [`differentiate`][scipy-differentiate]
-and GSL [`numerical differentiation`][gsl-diff].
+and GSL [`numerical differentiation`][gsl-diff]. The broader coverage review,
+including multivariable Jacobians and second derivatives, is tracked in
+[#564](https://github.com/vlang/vsl/issues/564).
 
 [scipy-linalg]: https://docs.scipy.org/doc/scipy-1.18.0/reference/linalg.html
 [scipy-sparse]: https://docs.scipy.org/doc/scipy-1.18.0/reference/sparse.html

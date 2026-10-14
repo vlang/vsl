@@ -20,6 +20,8 @@ Repo roadmap: [ROADMAP.md](../ROADMAP.md) · CUDA: [cuda/README.md](../cuda/READ
 | [#534](https://github.com/vlang/vsl/issues/534) | Incremental and sample-weighted GaussianNB fitting (#536) |
 | [#540](https://github.com/vlang/vsl/issues/540) | Inverse error functions with domain and tail coverage |
 | [#547](https://github.com/vlang/vsl/issues/547) | Scaled complementary error function with positive-tail handling |
+| [#546](https://github.com/vlang/vsl/issues/546)/[#561](https://github.com/vlang/vsl/pull/561) | SciPy/GSL capability parity tracker |
+| [#562](https://github.com/vlang/vsl/issues/562)/[#563](https://github.com/vlang/vsl/pull/563) | Public Brent root solver with bounded diagnostics |
 
 **VTL (downstream):** CUDA Phases 1–4, f32 autograd/training, Vulkan Linear,
 Conv2D, ReLU/Sigmoid, and Adam are wired into the `nn_cifar10_vulkan` smoke.
@@ -28,9 +30,10 @@ Conv2D, ReLU/Sigmoid, and Adam are wired into the `nn_cifar10_vulkan` smoke.
 
 The OpenBLAS and macOS issues [#91](https://github.com/vlang/vsl/issues/91) and
 [#330](https://github.com/vlang/vsl/issues/330) are closed after the build and
-test-runner fixes landed. At the 2026-10-14 check, the macOS jobs on
-[PR #507](https://github.com/vlang/vsl/pull/507) were still queued. They do not
-yet establish that the new exhaustive-test ranges pass on macOS.
+test-runner fixes landed. PR [#507](https://github.com/vlang/vsl/pull/507) was
+merged on 2026-10-14. Its Windows job failed during **Setup V** before tests
+ran; Linux and macOS jobs remained queued at the latest check. The merge does
+not establish that exhaustive-test ranges pass on those platforms.
 
 ## Post-beta tracking
 
@@ -69,12 +72,16 @@ follow-ups. The repository issue list is the source for live status.
 - [#528](https://github.com/vlang/vsl/issues/528) CUDA benchmark variants
 - [#529](https://github.com/vlang/vsl/issues/529) scikit-learn and GSL comparisons
 - [#530](https://github.com/vlang/vsl/issues/530) migration guides
-- [#538](https://github.com/vlang/vsl/issues/538) complete supported Windows CPU test coverage
 - [#541](https://github.com/vlang/vsl/issues/541) fractional-order and spherical Bessel families
 - [#543](https://github.com/vlang/vsl/issues/543) Bessel numerical error estimates
 - [#545](https://github.com/vlang/vsl/issues/545) generic plotting adapters for VSL models
-- [#546](https://github.com/vlang/vsl/issues/546) SciPy/GSL capability parity tracker
 - [#550](https://github.com/vlang/vsl/issues/550) CUDA LayerNorm GPU path and capability reporting
+- [#556](https://github.com/vlang/vsl/issues/556) Airy functions
+- [#557](https://github.com/vlang/vsl/issues/557) elliptic integrals and Jacobi functions
+- [#558](https://github.com/vlang/vsl/issues/558) broader special-function families
+- [#559](https://github.com/vlang/vsl/issues/559) descriptive sample statistics
+- [#560](https://github.com/vlang/vsl/issues/560) signal processing and wavelet APIs
+- [#564](https://github.com/vlang/vsl/issues/564) numerical differentiation coverage
 
 Issue #516 is partially implemented: GaussianNB provides fitted class
 statistics, configurable priors, variance smoothing, posterior probabilities,
