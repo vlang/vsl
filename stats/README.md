@@ -40,9 +40,10 @@ summary := stats.summarize([2.0, 4.0, 6.0], 1)!
 println('mean=${summary.mean}, sample stddev=${summary.stddev}')
 ```
 
-This is partial descriptive-statistics coverage tracked in
-[VSL issue #559](https://github.com/vlang/vsl/issues/559). Configurable
-non-finite value policies remain future work in
+See the runnable [descriptive statistics example](../examples/stats_descriptive/README.md)
+for summaries, quantiles, and automatic histogram bins. Core descriptive
+statistics are implemented; configurable non-finite value policies remain
+future work in
 [#576](https://github.com/vlang/vsl/issues/576).
 Inferential tests and confidence intervals
 are tracked separately in [VSL issue #572](https://github.com/vlang/vsl/issues/572).
