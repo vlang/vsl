@@ -43,4 +43,6 @@ fn main() {
 	hist_text := dist.text_hist(labels, hist.counts, 0)!
 
 	println(hist_text)
+	println('density = ${hist.density(values.len)!}')
+	println('density area = ${hist.density_area(values.len)!}')
 }
