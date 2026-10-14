@@ -68,6 +68,12 @@ follow-ups. The repository issue list is the source for live status.
 - [#529](https://github.com/vlang/vsl/issues/529) scikit-learn and GSL comparisons
 - [#530](https://github.com/vlang/vsl/issues/530) migration guides
 - [#538](https://github.com/vlang/vsl/issues/538) complete supported Windows CPU test coverage
+- [#540](https://github.com/vlang/vsl/issues/540) inverse error functions
+- [#541](https://github.com/vlang/vsl/issues/541) fractional-order and spherical Bessel families
+- [#543](https://github.com/vlang/vsl/issues/543) Bessel numerical error estimates
+- [#545](https://github.com/vlang/vsl/issues/545) generic plotting adapters for VSL models
+- [#546](https://github.com/vlang/vsl/issues/546) SciPy/GSL capability parity tracker
+- [#547](https://github.com/vlang/vsl/issues/547) scaled complementary error function
 
 Issue #516 is partially implemented: GaussianNB provides fitted class
 statistics, configurable priors, variance smoothing, posterior probabilities,
