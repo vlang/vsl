@@ -59,9 +59,10 @@ pub fn build_text_hist(xmin f64, xmax f64, nstations int, values []f64, numfmt s
 /**
  * Histogram holds data for computing/plotting histograms
  *
- *  bin[i] corresponds to station[i] <= x < station[i+1]
+ *  Bins are left-closed and right-open, except the last bin includes its
+ *  right edge, matching NumPy histogram boundary semantics.
  *
- *       [ bin[0] )[ bin[1] )[ bin[2] )[ bin[3] )[ bin[4] )
+ *       [ bin[0] )[ bin[1] )[ bin[2] )[ bin[3] )[ bin[4] ]
  *    ---|---------|---------|---------|---------|---------|---  x
  *     s[0]      s[1]      s[2]      s[3]      s[4]      s[5]
  *
@@ -80,18 +81,40 @@ pub fn Histogram.new(stations []f64) &Histogram {
 	}
 }
 
-// find_bin finds where x falls in
-// returns -1 if x is outside the range
-pub fn (o Histogram) find_bin(x f64) !int {
-	// check
+fn (o Histogram) validate_stations() ! {
 	if o.stations.len < 2 {
 		return errors.error('Histogram must have at least 2 stations', .efailed)
 	}
+	for i, edge in o.stations {
+		if math.is_nan(edge) || math.is_inf(edge, 0) {
+			return errors.error('Histogram stations must all be finite', .efailed)
+		}
+		if i > 0 && edge <= o.stations[i - 1] {
+			return errors.error('Histogram stations must be strictly increasing', .efailed)
+		}
+	}
+}
+
+// find_bin finds where x falls in
+// returns -1 if x is outside the range
+pub fn (o Histogram) find_bin(x f64) !int {
+	o.validate_stations()!
+	if math.is_nan(x) {
+		return errors.error('Histogram cannot assign NaN to a bin', .efailed)
+	}
+	return o.find_bin_unchecked(x)
+}
+
+fn (o Histogram) find_bin_unchecked(x f64) int {
+	nbins := o.stations.len - 1
 	if x < o.stations[0] {
 		return -1
 	}
-	if x >= o.stations[o.stations.len - 1] {
+	if x > o.stations[o.stations.len - 1] {
 		return -1
+	}
+	if x == o.stations[o.stations.len - 1] {
+		return nbins - 1
 	}
 	// perform binary search
 	mut upper := o.stations.len
@@ -110,9 +133,11 @@ pub fn (o Histogram) find_bin(x f64) !int {
 
 // count counts how many items fall within each bin
 pub fn (mut o Histogram) count(vals []f64, clear bool) ! {
-	// check
-	if o.stations.len < 2 {
-		return errors.error('Histogram must have at least 2 stations', .efailed)
+	o.validate_stations()!
+	for x in vals {
+		if math.is_nan(x) {
+			return errors.error('Histogram cannot assign NaN to a bin', .efailed)
+		}
 	}
 	// allocate/clear counts
 	nbins := o.stations.len - 1
@@ -125,7 +150,7 @@ pub fn (mut o Histogram) count(vals []f64, clear bool) ! {
 	}
 	// add entries to bins
 	for x in vals {
-		idx := o.find_bin(x)!
+		idx := o.find_bin_unchecked(x)
 		if idx >= 0 {
 			o.counts[idx]++
 		}
@@ -134,34 +159,46 @@ pub fn (mut o Histogram) count(vals []f64, clear bool) ! {
 
 // gen_labels generate nice labels identifying bins
 pub fn (o Histogram) gen_labels(numfmt string) ![]string {
-	if o.stations.len < 2 {
-		return errors.error('Histogram must have at least 2 stations', .efailed)
-	}
+	o.validate_stations()!
 	nbins := o.stations.len - 1
 	mut labels := []string{len: nbins}
 	for i in 0 .. nbins {
-		labels[i] = unsafe {
-			strconv.v_sprintf('[${numfmt},${numfmt})', o.stations[i], o.stations[i + 1])
-		}
+		right := if i == nbins - 1 { ']' } else { ')' }
+		labels[i] = unsafe { strconv.v_sprintf('[${numfmt},${numfmt}${right}', o.stations[i], o.stations[i + 1]) }
 	}
 	return labels
 }
 
-// density_area computes the area of the density diagram
-//  nsamples -- number of samples used when generating pseudo-random numbers
+// density returns per-bin probability densities using each bin's actual width.
+// `nsamples` is the total number of observations, including those outside the
+// histogram range; therefore the integrated density is the in-range fraction.
+pub fn (o Histogram) density(nsamples int) ![]f64 {
+	o.validate_stations()!
+	if nsamples <= 0 {
+		return errors.error('histogram density needs a positive sample count', .efailed)
+	}
+	nbins := o.stations.len - 1
+	if o.counts.len != nbins {
+		return errors.error('histogram density requires counts for every bin', .efailed)
+	}
+	mut densities := []f64{len: nbins}
+	for i in 0 .. nbins {
+		width := o.stations[i + 1] - o.stations[i]
+		if math.is_inf(width, 0) || width <= 0 {
+			return errors.error('histogram bin widths must be finite and positive', .efailed)
+		}
+		densities[i] = f64(o.counts[i]) / f64(nsamples) / width
+	}
+	return densities
+}
+
+// density_area integrates per-bin densities over the histogram range.
 pub fn (o Histogram) density_area(nsamples int) !f64 {
-	nstations := o.stations.len
-	if nstations < 2 {
-		return errors.error('density area computation needs at least two stations', .efailed)
-	}
-	dx := (o.stations[nstations - 1] - o.stations[0]) / f64(nstations - 1)
-	mut prob := []f64{len: nstations}
-	for i in 0 .. nstations - 1 {
-		prob[i] = f64(o.counts[i]) / (f64(nsamples) * dx)
-	}
+	densities := o.density(nsamples)!
 	mut area := 0.0
-	for i in 0 .. nstations - 1 {
-		area += dx * prob[i]
+	for i, density in densities {
+		width := o.stations[i + 1] - o.stations[i]
+		area += density * width
 	}
 	return area
 }

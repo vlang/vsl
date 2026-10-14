@@ -29,7 +29,7 @@ API. Recheck upstream documentation when updating this tracker.
 | Dense linear algebra and BLAS/LAPACK | Partial | [blas][vsl-blas], [la][vsl-la], [lapack][vsl-lapack] | #65, #529 |
 | Sparse formats and solvers | Partial | [sparse APIs][vsl-sparse] | #524 iterative methods; #567 direct solvers and reusable factorizations |
 | Special functions | Partial | [fun][vsl-fun] | #540–#543, #556–#558 |
-| Statistics and probability | Partial | [statistics][vsl-statistics], [dist][vsl-dist] | #523, #559 |
+| Statistics and probability | Partial | [statistics][vsl-statistics], [dist][vsl-dist] | #523, #559, #572 |
 | Interpolation and splines | Partial | [fun][vsl-fun], [poly][vsl-poly] | #522 |
 | Root finding and minimization | Partial | [roots][vsl-roots] | #520, #562 |
 | Quadrature and ODE solvers | Missing | — | #521 |
@@ -64,17 +64,21 @@ Compare SciPy [`special`][scipy-special] and GSL [`special functions`][gsl-speci
 
 ### Statistics and probability
 
-VSL has covariance/correlation and histogram binning. `vsl.stats.summarize`
+VSL has covariance/correlation, histogram binning with NumPy-compatible edge
+inclusion, and per-bin density estimates that account for non-uniform widths.
+`vsl.stats.summarize`
 now provides one-pass mean, variance, standard deviation, and extrema for
 finite samples; `vsl.stats.quantile` and `percentile` implement linear Type 7
 interpolation, and weighted quantiles use NumPy's inverted-CDF method.
 Alternative unweighted estimators, histogram summaries, non-finite policies,
-and probability distributions remain incomplete. See the
+inferential tests, confidence intervals, and probability distributions remain
+incomplete. See the
 [statistics module](../stats/README.md) and SciPy
 [`stats`][scipy-stats]
 and GSL [`statistics`][gsl-statistics], [`random generation`][gsl-rng], and
-[`distributions`][gsl-randist]. Follow-ups: [#523](https://github.com/vlang/vsl/issues/523)
-and [#559](https://github.com/vlang/vsl/issues/559).
+[`distributions`][gsl-randist]. Follow-ups: [#523](https://github.com/vlang/vsl/issues/523),
+[#559](https://github.com/vlang/vsl/issues/559), and
+[#572](https://github.com/vlang/vsl/issues/572).
 
 ### Interpolation, roots, optimization, quadrature, and ODEs
 
