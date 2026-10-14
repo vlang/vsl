@@ -24,8 +24,8 @@ import vsl.float.float64 as f64m
 // plus edge regimes: near-zero cancellation for expm1/log1p/sinh/tanh,
 // underflow-to-subnormal outputs for exp/exp2, every positive
 // subnormal input for log, and trig reduction at [1024, 2048).
-// Several ranges are contiguous with no gaps: log [0.25, 256),
-// exp [0.25, 64) and (-64, -0.125], and sin/cos [0.5, 2048).
+// Several ranges are contiguous with no gaps: log [0.25, 512),
+// exp [0.25, 64) and (-64, -0.125], and sin/cos [0.5, 4096).
 // There is no input
 // in those ranges whose f32 result could round the wrong way.
 // Extending this style of proof to every range is the remaining work
@@ -1093,7 +1093,7 @@ fn test_cos_exhaustive_over_binade_32_64() {
 	}
 }
 
-// A fifth scale for the principal functions: log/exp extend the
+// A sixth scale for the principal functions: log/exp extend the
 // contiguous intervals, trig tests another argument-reduction range,
 // tan spans two poles, and tanh approaches saturation.
 
@@ -1374,5 +1374,75 @@ fn test_tanh_exhaustive_over_binade_8_16() {
 			}
 		}
 		assert mismatches == 0, 'tanh exhaustive [8, 16): ${mismatches} mismatches over 8388608 inputs'
+	}
+}
+
+fn test_log_exhaustive_over_binade_256_512() {
+	$if exhaustive ? {
+		mut mismatches := 0
+		for b := u32(0x43800000); b < 0x44000000; b++ {
+			x := math.f32_from_bits(b)
+			rh, rl := f64m.log_dd(f64(x))
+			if math.f32_bits(log(x)) != math.f32_bits(ref_f32(rh, rl)) {
+				mismatches++
+			}
+		}
+		assert mismatches == 0, 'log exhaustive [256, 512): ${mismatches} mismatches over 8388608 inputs'
+	}
+}
+
+fn test_sin_exhaustive_over_binade_2048_4096() {
+	$if exhaustive ? {
+		mut mismatches := 0
+		for b := u32(0x45000000); b < 0x45800000; b++ {
+			x := math.f32_from_bits(b)
+			rh, rl := f64m.sin_dd(f64(x))
+			if math.f32_bits(sin(x)) != math.f32_bits(ref_f32(rh, rl)) {
+				mismatches++
+			}
+		}
+		assert mismatches == 0, 'sin exhaustive [2048, 4096): ${mismatches} mismatches over 8388608 inputs'
+	}
+}
+
+fn test_cos_exhaustive_over_binade_2048_4096() {
+	$if exhaustive ? {
+		mut mismatches := 0
+		for b := u32(0x45000000); b < 0x45800000; b++ {
+			x := math.f32_from_bits(b)
+			rh, rl := f64m.cos_dd(f64(x))
+			if math.f32_bits(cos(x)) != math.f32_bits(ref_f32(rh, rl)) {
+				mismatches++
+			}
+		}
+		assert mismatches == 0, 'cos exhaustive [2048, 4096): ${mismatches} mismatches over 8388608 inputs'
+	}
+}
+
+fn test_tan_exhaustive_over_binade_16_32() {
+	$if exhaustive ? {
+		mut mismatches := 0
+		for b := u32(0x41800000); b < 0x42000000; b++ {
+			x := math.f32_from_bits(b)
+			rh, rl := f64m.tan_dd(f64(x))
+			if math.f32_bits(tan(x)) != math.f32_bits(ref_f32(rh, rl)) {
+				mismatches++
+			}
+		}
+		assert mismatches == 0, 'tan exhaustive [16, 32): ${mismatches} mismatches over 8388608 inputs'
+	}
+}
+
+fn test_tanh_exhaustive_over_binade_16_32() {
+	$if exhaustive ? {
+		mut mismatches := 0
+		for b := u32(0x41800000); b < 0x42000000; b++ {
+			x := math.f32_from_bits(b)
+			rh, rl := f64m.tanh_dd(f64(x))
+			if math.f32_bits(tanh(x)) != math.f32_bits(ref_f32(rh, rl)) {
+				mismatches++
+			}
+		}
+		assert mismatches == 0, 'tanh exhaustive [16, 32): ${mismatches} mismatches over 8388608 inputs'
 	}
 }
