@@ -124,3 +124,24 @@ fn test_inverse_error_functions_domains_and_endpoints() {
 	assert math.is_nan(erf_inv(math.inf(1)))
 	assert math.is_nan(erfc_inv(math.inf(-1)))
 }
+
+fn test_scaled_complementary_error_function_reference_values() {
+	assert_close(erfcx(0.0), 1.0, 1e-15)
+	assert_close(erfcx(1.0), 0.427583576155807, 2e-15)
+	assert_close(erfcx(-1.0), 5.008980080762283, 2e-14)
+	assert_close(erfcx(5.0), 0.11070463773306863, 2e-15)
+	assert_close(erfcx(10.0), 0.05614099274382259, 2e-15)
+	assert_close(erfcx(100.0), 0.005641613782989433, 2e-16)
+}
+
+fn test_scaled_complementary_error_function_extremes() {
+	assert erfcx(26.0) > erfcx(27.0)
+	assert erfcx(27.0) > erfcx(100.0)
+	assert erfcx(1e308) > 0.0
+	assert_close(erfcx(1e308) / 1e-308, 0.5641895835477563, 1e-15)
+	assert !math.is_inf(erfcx(-26.6), 0)
+	assert math.is_inf(erfcx(-27.0), 1)
+	assert erfcx(math.inf(1)) == 0.0
+	assert math.is_inf(erfcx(math.inf(-1)), 1)
+	assert math.is_nan(erfcx(math.nan()))
+}

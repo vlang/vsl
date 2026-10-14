@@ -19,6 +19,7 @@ Repo roadmap: [ROADMAP.md](../ROADMAP.md) · CUDA: [cuda/README.md](../cuda/READ
 | [#328](https://github.com/vlang/vsl/issues/328) | Expanded Windows test coverage and portable test-runner cleanup (#394) |
 | [#534](https://github.com/vlang/vsl/issues/534) | Incremental and sample-weighted GaussianNB fitting (#536) |
 | [#540](https://github.com/vlang/vsl/issues/540) | Inverse error functions with domain and tail coverage |
+| [#547](https://github.com/vlang/vsl/issues/547) | Scaled complementary error function with positive-tail handling |
 
 **VTL (downstream):** CUDA Phases 1–4, f32 autograd/training, Vulkan Linear,
 Conv2D, ReLU/Sigmoid, and Adam are wired into the `nn_cifar10_vulkan` smoke.
@@ -73,7 +74,6 @@ follow-ups. The repository issue list is the source for live status.
 - [#543](https://github.com/vlang/vsl/issues/543) Bessel numerical error estimates
 - [#545](https://github.com/vlang/vsl/issues/545) generic plotting adapters for VSL models
 - [#546](https://github.com/vlang/vsl/issues/546) SciPy/GSL capability parity tracker
-- [#547](https://github.com/vlang/vsl/issues/547) scaled complementary error function
 - [#550](https://github.com/vlang/vsl/issues/550) CUDA LayerNorm GPU path and capability reporting
 
 Issue #516 is partially implemented: GaussianNB provides fitted class
