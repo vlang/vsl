@@ -27,7 +27,7 @@ API. Recheck upstream documentation when updating this tracker.
 | Domain | Status | VSL modules | Follow-up |
 | --- | --- | --- | --- |
 | Dense linear algebra and BLAS/LAPACK | Partial | [blas][vsl-blas], [la][vsl-la], [lapack][vsl-lapack] | #65, #529 |
-| Sparse formats and solvers | Partial | [sparse APIs][vsl-sparse] | #524 |
+| Sparse formats and solvers | Partial | [sparse APIs][vsl-sparse] | #524 iterative methods; #567 direct solvers and reusable factorizations |
 | Special functions | Partial | [fun][vsl-fun] | #540–#543, #556–#558 |
 | Statistics and probability | Partial | [statistics][vsl-statistics], [dist][vsl-dist] | #523, #559 |
 | Interpolation and splines | Partial | [fun][vsl-fun], [poly][vsl-poly] | #522 |
