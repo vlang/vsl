@@ -105,10 +105,23 @@ issue closure as historical; Phase H remains incomplete.
 | # | Title | Priority | Notes |
 |---|-------|----------|-------|
 | [#65](https://github.com/vlang/vsl/issues/65) | Binary float precision | 🟡 P2 | RLibm-style function coverage research |
-| [#514–#519](https://github.com/vlang/vsl/issues/514) | Scikit-learn preprocessing, model selection and estimators | P1/P2 | ML workflow and model coverage |
-| [#520–#524](https://github.com/vlang/vsl/issues/520) | GSL-style numerical methods, RNG and sparse solvers | P1/P2 | Scientific computing coverage |
-| [#525–#528](https://github.com/vlang/vsl/issues/525) | Multi-GPU, memory pools, validation and CUDA benchmarks | P1/P2 | Accelerator roadmap |
-| [#529–#530](https://github.com/vlang/vsl/issues/529) | Competitor benchmarks and migration guides | P2 | Evidence and adoption |
+| [#514](https://github.com/vlang/vsl/issues/514) | Preprocessing transformers and pipelines | P1 | ML workflow |
+| [#515](https://github.com/vlang/vsl/issues/515) | Cross-validation and model selection | P1 | ML workflow |
+| [#516](https://github.com/vlang/vsl/issues/516) | Probabilistic and ensemble estimators | P1 | ML model coverage |
+| [#517](https://github.com/vlang/vsl/issues/517) | Regression estimator coverage | P1 | ML model coverage |
+| [#518](https://github.com/vlang/vsl/issues/518) | Clustering and decomposition estimators | P1 | ML model coverage |
+| [#519](https://github.com/vlang/vsl/issues/519) | Nearest-neighbor estimator APIs | P2 | ML model coverage |
+| [#520](https://github.com/vlang/vsl/issues/520) | Root finding and minimization | P1 | Numerical methods |
+| [#521](https://github.com/vlang/vsl/issues/521) | Quadrature and ODE solvers | P1 | Numerical methods |
+| [#522](https://github.com/vlang/vsl/issues/522) | Interpolation and spline families | P2 | Numerical methods |
+| [#523](https://github.com/vlang/vsl/issues/523) | Probability distributions and independent RNG | P2 | Numerical methods |
+| [#524](https://github.com/vlang/vsl/issues/524) | Sparse formats and iterative solvers | P1 | Linear algebra |
+| [#525](https://github.com/vlang/vsl/issues/525) | Multi-GPU dispatch | P1 | Compute backend |
+| [#526](https://github.com/vlang/vsl/issues/526) | GPU memory pools and zero-copy storage | P1 | Compute backend |
+| [#527](https://github.com/vlang/vsl/issues/527) | Cross-backend numerical validation | P2 | Correctness |
+| [#528](https://github.com/vlang/vsl/issues/528) | CUDA benchmarks | P2 | Performance |
+| [#529](https://github.com/vlang/vsl/issues/529) | scikit-learn and GSL comparisons | P2 | Performance |
+| [#530](https://github.com/vlang/vsl/issues/530) | End-to-end migration guides | P2 | Documentation |
 
 Issues #21 and #34 were closed on 2026-10-13. SIMD improvements and the
 operator coverage present at closure remain historical accomplishments; new
