@@ -105,3 +105,41 @@ fn test_percentile_rejects_out_of_range_values() {
 		assert false, 'expected invalid percentile to be rejected'
 	}
 }
+
+fn test_weighted_quantile_uses_inverted_cdf_semantics() {
+	values := [1.0, 2.0, 3.0, 4.0]
+	weights := [1.0, 1.0, 1.0, 7.0]
+	assert quantile_weighted(values, weights, 0.0)! == 1.0
+	assert quantile_weighted(values, weights, 0.25)! == 3.0
+	assert quantile_weighted(values, weights, 0.5)! == 4.0
+	assert quantile_weighted(values, weights, 1.0)! == 4.0
+	assert percentile_weighted(values, weights, 50.0)! == 4.0
+	assert quantile_weighted([1.0, 2.0, 3.0], [0.0, 2.0, 0.0], 0.0)! == 2.0
+}
+
+fn test_weighted_quantile_validates_shapes_and_weights() {
+	if _ := quantile_weighted([1.0, 2.0], [1.0], 0.5) {
+		assert false, 'mismatched value and weight lengths must fail'
+	}
+	if _ := quantile_weighted([1.0, 2.0], [-1.0, 2.0], 0.5) {
+		assert false, 'negative weights must fail'
+	}
+	if _ := quantile_weighted([1.0, 2.0], [0.0, 0.0], 0.5) {
+		assert false, 'zero total weight must fail'
+	}
+	if _ := quantile_weighted([1.0, 2.0], [math.inf(1), 1.0], 0.5) {
+		assert false, 'non-finite weights must fail'
+	}
+	if _ := quantile_weighted([math.nan(), 2.0], [1.0, 1.0], 0.5) {
+		assert false, 'non-finite values must fail'
+	}
+}
+
+fn test_weighted_quantile_rejects_invalid_probability() {
+	if _ := quantile_weighted([1.0], [1.0], 1.1) {
+		assert false, 'out-of-range quantile must fail'
+	}
+	if _ := percentile_weighted([1.0], [1.0], math.nan()) {
+		assert false, 'non-finite percentile must fail'
+	}
+}
