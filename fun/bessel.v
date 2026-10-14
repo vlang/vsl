@@ -618,6 +618,120 @@ pub fn bessel_yn(n_ int, x f64) f64 {
 	return b
 }
 
+// spherical_bessel_jn returns the spherical Bessel function j_n(x) for
+// non-negative integer order. Negative arguments follow j_n(-x)=(-1)^n*j_n(x).
+// Negative orders return NaN.
+pub fn spherical_bessel_jn(n int, x f64) f64 {
+	if n < 0 || math.is_nan(x) {
+		return math.nan()
+	}
+	if math.is_inf(x, 0) {
+		return 0.0
+	}
+	if x == 0.0 {
+		return if n == 0 { 1.0 } else { 0.0 }
+	}
+	ax := math.abs(x)
+	if n == 0 {
+		return math.sin(x) / x
+	}
+	if n == 1 {
+		return spherical_j1(x)
+	}
+	mut result := 0.0
+	if ax < 1.0 {
+		result = spherical_jn_series(n, ax)
+	} else if f64(n) < ax {
+		mut previous := math.sin(ax) / ax
+		mut current := spherical_j1(ax)
+		for order in 1 .. n {
+			next := (f64(2 * order + 1) / ax) * current - previous
+			previous = current
+			current = next
+		}
+		result = current
+	} else {
+		result = spherical_jn_downward(n, ax)
+	}
+	if x < 0.0 && n & 1 == 1 {
+		return -result
+	}
+	return result
+}
+
+// spherical_bessel_yn returns the spherical Bessel function y_n(x) for
+// non-negative integer order and x > 0. Negative arguments and orders return
+// NaN; the singular value at zero is negative infinity.
+pub fn spherical_bessel_yn(n int, x f64) f64 {
+	if n < 0 || x < 0.0 || math.is_nan(x) {
+		return math.nan()
+	}
+	if math.is_inf(x, 1) {
+		return 0.0
+	}
+	if x == 0.0 {
+		return math.inf(-1)
+	}
+	mut previous := -math.cos(x) / x
+	if n == 0 {
+		return previous
+	}
+	mut current := -math.cos(x) / x / x - math.sin(x) / x
+	for order in 1 .. n {
+		next := (f64(2 * order + 1) / x) * current - previous
+		previous = current
+		current = next
+	}
+	return current
+}
+
+fn spherical_j1(x f64) f64 {
+	return math.sin(x) / x / x - math.cos(x) / x
+}
+
+fn spherical_jn_series(n int, x f64) f64 {
+	mut leading := 1.0
+	for k in 0 .. n {
+		leading *= x / f64(2 * k + 1)
+	}
+	mut term := 1.0
+	mut sum := 1.0
+	for k in 1 .. 1000 {
+		term *= -(x * x) / (2.0 * f64(k) * f64(2 * n + 2 * k + 1))
+		sum += term
+		if math.abs(term) <= 2.220446049250313e-16 * math.abs(sum) {
+			break
+		}
+	}
+	return leading * sum
+}
+
+fn spherical_jn_downward(n int, x f64) f64 {
+	extra := math.max(32, int(math.sqrt(40.0 * f64(n))))
+	m := n + extra
+	mut next := 0.0
+	mut current := 1.0
+	mut target := 0.0
+	for order := m; order > 0; order-- {
+		mut previous := (f64(2 * order + 1) / x) * current - next
+		if order - 1 == n {
+			target = previous
+		}
+		if math.abs(previous) > 1e100 {
+			previous /= 1e100
+			current /= 1e100
+			next /= 1e100
+			target /= 1e100
+		}
+		next = current
+		current = previous
+	}
+	if current == 0.0 {
+		return 0.0
+	}
+	return (target / current) * (math.sin(x) / x)
+}
+
 // The asymptotic expansions of pzero is
 // 1 - 9/128 s**2 + 11025/98304 s**4 - ..., where s = 1/x.
 // For x >= 2, We approximate pzero by
