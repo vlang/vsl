@@ -75,6 +75,46 @@ fn test_modified_bessel_functions() {
 	assert_close(bessel_kn(2, 1.0), 1.6248388986351774, 1e-13)
 }
 
+fn test_spherical_bessel_reference_values() {
+	assert_close(spherical_bessel_jn(0, 1.0), 0.8414709848078965, 1e-15)
+	assert_close(spherical_bessel_jn(1, 1.0), 0.30116867893975674, 1e-15)
+	assert_close(spherical_bessel_jn(2, 1.0), 0.06203505201137386, 2e-15)
+	assert_close(spherical_bessel_jn(2, 2.0), 0.1984479490571466, 2e-15)
+	assert_close(spherical_bessel_jn(2, 3.0), 0.29863749707573356, 2e-15)
+	assert_close(spherical_bessel_yn(0, 1.0), -0.5403023058681398, 1e-15)
+	assert_close(spherical_bessel_yn(1, 1.0), -1.3817732906760363, 2e-15)
+	assert_close(spherical_bessel_yn(2, 1.0), -3.605017566159969, 3e-15)
+	assert_close(spherical_bessel_yn(2, 2.0), -0.7339914246876541, 2e-15)
+	assert_close(spherical_bessel_yn(2, 3.0), -0.26703833526449916, 2e-15)
+	assert_close(spherical_bessel_jn(8, 0.5), 1.9144447323606192e-9, 1e-23)
+}
+
+fn test_spherical_bessel_recurrence_and_domains() {
+	x := 3.0
+	for n in 1 .. 8 {
+		j_previous := spherical_bessel_jn(n - 1, x)
+		j_current := spherical_bessel_jn(n, x)
+		j_next := spherical_bessel_jn(n + 1, x)
+		assert_close(j_next, f64(2 * n + 1) / x * j_current - j_previous, 2e-15)
+
+		y_previous := spherical_bessel_yn(n - 1, x)
+		y_current := spherical_bessel_yn(n, x)
+		y_next := spherical_bessel_yn(n + 1, x)
+		assert_close(y_next, f64(2 * n + 1) / x * y_current - y_previous, 2e-15)
+	}
+	assert_close(spherical_bessel_jn(3, -2.0), -spherical_bessel_jn(3, 2.0), 1e-15)
+	assert_close(spherical_bessel_jn(4, -2.0), spherical_bessel_jn(4, 2.0), 1e-15)
+	assert spherical_bessel_jn(0, 0.0) == 1.0
+	assert spherical_bessel_jn(4, 0.0) == 0.0
+	assert math.is_inf(spherical_bessel_yn(2, 0.0), -1)
+	assert spherical_bessel_jn(2, math.inf(1)) == 0.0
+	assert spherical_bessel_yn(2, math.inf(1)) == 0.0
+	assert math.is_nan(spherical_bessel_jn(-1, 1.0))
+	assert math.is_nan(spherical_bessel_yn(-1, 1.0))
+	assert math.is_nan(spherical_bessel_yn(1, -1.0))
+	assert math.is_nan(spherical_bessel_jn(1, math.nan()))
+}
+
 fn test_complex_gamma_and_log_gamma() {
 	z := cmplx.complex(1.0, 0.0)
 	g := cgamma(z)

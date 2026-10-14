@@ -9,7 +9,8 @@ analysis.
 ### Bessel Functions
 - Cylindrical J, Y, I, and K functions support integer orders, including
   common order-zero and order-one variants.
-- Fractional-order and spherical families are tracked in [issue #541](https://github.com/vlang/vsl/issues/541).
+- Spherical `j_n` and `y_n` functions support non-negative integer orders.
+- Fractional-order cylindrical functions remain tracked in [issue #541](https://github.com/vlang/vsl/issues/541).
 
 ### Gamma Functions
 - **Gamma Function**: Γ(x) and related functions
@@ -50,6 +51,11 @@ println('J_1(2.5) = ${result}')
 // Modified Bessel function
 result_i := fun.bessel_in(order, x)
 println('I_1(2.5) = ${result_i}')
+
+// Spherical Bessel functions use non-negative integer orders.
+spherical_j := fun.spherical_bessel_jn(2, x)
+spherical_y := fun.spherical_bessel_yn(2, x)
+println('j_2(2.5) = ${spherical_j}; y_2(2.5) = ${spherical_y}')
 ```
 
 ### Gamma Function Example
@@ -146,8 +152,9 @@ See these examples for practical applications:
 
 ## 🐛 Current Limitations
 
-- Cylindrical Bessel functions currently support integer orders. Fractional-order
-  and spherical families are tracked in [issue #541](https://github.com/vlang/vsl/issues/541).
+- Cylindrical Bessel functions currently support integer orders. Spherical
+  `j_n` and `y_n` are available for non-negative integer orders; fractional-order
+  cylindrical families are tracked in [issue #541](https://github.com/vlang/vsl/issues/541).
 - Bessel functions do not expose error estimates; see
   [issue #543](https://github.com/vlang/vsl/issues/543).
 - Extended-precision variants are not available.
