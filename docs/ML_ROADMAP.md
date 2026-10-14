@@ -25,8 +25,9 @@ Conv2D, ReLU/Sigmoid, and Adam are wired into the `nn_cifar10_vulkan` smoke.
 
 The OpenBLAS and macOS issues [#91](https://github.com/vlang/vsl/issues/91) and
 [#330](https://github.com/vlang/vsl/issues/330) are closed after the build and
-test-runner fixes landed. The macOS checks for the latest `main` commit are
-still queued; confirm those runs before treating platform validation as green.
+test-runner fixes landed. At the 2026-10-14 check, the macOS jobs on
+[PR #507](https://github.com/vlang/vsl/pull/507) were still queued. They do not
+yet establish that the new exhaustive-test ranges pass on macOS.
 
 ## Post-beta tracking
 
