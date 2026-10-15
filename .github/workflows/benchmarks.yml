@@ -34,6 +34,7 @@ on:
 jobs:
   run-benchmarks-linux:
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 180
 
     strategy:
       fail-fast: false
@@ -57,20 +58,27 @@ jobs:
 
     steps:
       - name: Checkout VSL
+        id: checkout_vsl
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
           path: vsl
 
       - name: Setup V
+        id: setup_v
+        if: ${{ !cancelled() && steps.checkout_vsl.outcome == 'success' }}
         uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
           check-latest: true
 
       - name: V doctor
+        id: v_doctor
+        if: ${{ !cancelled() && steps.setup_v.outcome == 'success' }}
         run: env HOME="$HOME" PATH="$PATH" VJOBS=2 v doctor
 
       - name: Install dependencies
+        id: install_dependencies
+        if: ${{ !cancelled() && steps.v_doctor.outcome == 'success' }}
         run: |
           sudo apt-get update && \
           sudo apt-get install --quiet -y --no-install-recommends \
@@ -89,9 +97,13 @@ jobs:
             ocl-icd-opencl-dev
 
       - name: Move VSL source code to V Modules
+        id: move_vsl_source_code_to_v_modules
+        if: ${{ !cancelled() && steps.install_dependencies.outcome == 'success' }}
         run: mv ./vsl ~/.vmodules
 
       - name: Run BLAS Benchmarks (${{ matrix.backend.name }})
+        id: run_blas_benchmarks_matrix_backend_name
+        if: ${{ !cancelled() && steps.move_vsl_source_code_to_v_modules.outcome == 'success' }}
         run: |
           set -o pipefail
           echo "=========================================="
@@ -105,6 +117,8 @@ jobs:
           env HOME="$HOME" PATH="$PATH" VJOBS=2 OPENBLAS_NUM_THREADS=2 /tmp/vsl-blas-bench 2>&1 | tee blas_bench_${{ matrix.backend.id }}.log
 
       - name: Run LAPACK Benchmarks (${{ matrix.backend.name }})
+        id: run_lapack_benchmarks_matrix_backend_name
+        if: ${{ !cancelled() && steps.run_blas_benchmarks_matrix_backend_name.outcome == 'success' }}
         run: |
           set -o pipefail
           echo "=========================================="
@@ -118,6 +132,8 @@ jobs:
           env HOME="$HOME" PATH="$PATH" VJOBS=2 OPENBLAS_NUM_THREADS=2 /tmp/vsl-lapack-bench 2>&1 | tee lapack_bench_${{ matrix.backend.id }}.log
 
       - name: Run Backend Comparison (${{ matrix.backend.name }})
+        id: run_backend_comparison_matrix_backend_name
+        if: ${{ !cancelled() && steps.run_lapack_benchmarks_matrix_backend_name.outcome == 'success' }}
         run: |
           set -o pipefail
           echo "=========================================="
@@ -143,6 +159,7 @@ jobs:
 
   run-benchmarks-macos:
     runs-on: macos-latest
+    timeout-minutes: 180
 
     strategy:
       fail-fast: false
@@ -163,20 +180,27 @@ jobs:
 
     steps:
       - name: Checkout VSL
+        id: checkout_vsl
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
           path: vsl
 
       - name: Setup V
+        id: setup_v
+        if: ${{ !cancelled() && steps.checkout_vsl.outcome == 'success' }}
         uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
           check-latest: true
 
       - name: V doctor
+        id: v_doctor
+        if: ${{ !cancelled() && steps.setup_v.outcome == 'success' }}
         run: env VJOBS=2 v doctor
 
       - name: Install dependencies
+        id: install_dependencies
+        if: ${{ !cancelled() && steps.v_doctor.outcome == 'success' }}
         run: |
           brew install coreutils
           brew install gcc
@@ -188,9 +212,13 @@ jobs:
           brew install opencl-headers
 
       - name: Move VSL source code to V Modules
+        id: move_vsl_source_code_to_v_modules
+        if: ${{ !cancelled() && steps.install_dependencies.outcome == 'success' }}
         run: mv ./vsl ~/.vmodules
 
       - name: Run BLAS Benchmarks (${{ matrix.backend.name }})
+        id: run_blas_benchmarks_matrix_backend_name
+        if: ${{ !cancelled() && steps.move_vsl_source_code_to_v_modules.outcome == 'success' }}
         run: |
           set -o pipefail
           echo "=========================================="
@@ -204,6 +232,8 @@ jobs:
           env VJOBS=2 OPENBLAS_NUM_THREADS=2 /tmp/vsl-blas-bench 2>&1 | tee blas_bench_${{ matrix.backend.id }}.log
 
       - name: Run LAPACK Benchmarks (${{ matrix.backend.name }})
+        id: run_lapack_benchmarks_matrix_backend_name
+        if: ${{ !cancelled() && steps.run_blas_benchmarks_matrix_backend_name.outcome == 'success' }}
         run: |
           set -o pipefail
           echo "=========================================="
@@ -217,6 +247,8 @@ jobs:
           env VJOBS=2 OPENBLAS_NUM_THREADS=2 /tmp/vsl-lapack-bench 2>&1 | tee lapack_bench_${{ matrix.backend.id }}.log
 
       - name: Run Backend Comparison (${{ matrix.backend.name }})
+        id: run_backend_comparison_matrix_backend_name
+        if: ${{ !cancelled() && steps.run_lapack_benchmarks_matrix_backend_name.outcome == 'success' }}
         run: |
           set -o pipefail
           echo "=========================================="
@@ -242,28 +274,38 @@ jobs:
 
   vs-numpy-benchmarks:
     runs-on: ubuntu-24.04
+    timeout-minutes: 180
     steps:
       - name: Checkout VSL
+        id: checkout_vsl
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
           path: vsl
 
       - name: Setup V
+        id: setup_v
+        if: ${{ !cancelled() && steps.checkout_vsl.outcome == 'success' }}
         uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
           check-latest: true
 
       - name: Install dependencies
+        id: install_dependencies
+        if: ${{ !cancelled() && steps.setup_v.outcome == 'success' }}
         run: |
           sudo apt-get update && \
           sudo apt-get install --quiet -y --no-install-recommends \
             libopenblas-dev liblapacke-dev gfortran python3 python3-numpy
 
       - name: Move VSL to modules
+        id: move_vsl_to_modules
+        if: ${{ !cancelled() && steps.install_dependencies.outcome == 'success' }}
         run: mv ./vsl ~/.vmodules
 
       - name: Run vs NumPy harness (#282)
+        id: run_vs_numpy_harness_282
+        if: ${{ !cancelled() && steps.move_vsl_to_modules.outcome == 'success' }}
         run: |
           cd ~/.vmodules
           set -o pipefail
@@ -286,18 +328,22 @@ jobs:
 
   fft-mpi-benchmarks:
     runs-on: ubuntu-24.04
+    timeout-minutes: 180
     strategy:
       fail-fast: false
       matrix:
         benchmark: [fft, mpi]
     steps:
       - name: Checkout VSL
+        id: checkout_vsl
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
           path: vsl
 
       - name: Setup V
+        id: setup_v
+        if: ${{ !cancelled() && steps.checkout_vsl.outcome == 'success' }}
         uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
           check-latest: true
@@ -315,6 +361,8 @@ jobs:
           sudo apt-get install --quiet -y --no-install-recommends libopenmpi-dev openmpi-bin
 
       - name: Move VSL to modules
+        id: move_vsl_to_modules
+        if: ${{ !cancelled() && steps.setup_v.outcome == 'success' }}
         run: mv ./vsl ~/.vmodules
 
       - name: Run FFT vs NumPy benchmark
