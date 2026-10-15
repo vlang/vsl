@@ -44,13 +44,13 @@ jobs:
           fetch-depth: 0
       - name: Setup V
         id: setup_v
-        if: ${{ !cancelled() && steps.checkout_vsl.outcome == 'success' }}
+        if: ${{ success() && !cancelled() && steps.checkout_vsl.outcome == 'success' }}
         uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
           check-latest: true
       - name: Install dependencies
         id: install_dependencies
-        if: ${{ !cancelled() && steps.setup_v.outcome == 'success' }}
+        if: ${{ success() && !cancelled() && steps.setup_v.outcome == 'success' }}
         run: |
           sudo apt-get update && \
           sudo apt-get install --quiet -y --no-install-recommends \
@@ -70,12 +70,12 @@ jobs:
             libvulkan-dev
       - name: Setup VSL as V module
         id: setup_vsl_as_v_module
-        if: ${{ !cancelled() && steps.install_dependencies.outcome == 'success' }}
+        if: ${{ success() && !cancelled() && steps.install_dependencies.outcome == 'success' }}
         run: |
           mkdir -p ~/.vmodules
           cp -a ./vsl ~/.vmodules/vsl
       - name: Select Markdown files
-        if: ${{ !cancelled() && steps.setup_vsl_as_v_module.outcome == 'success' }}
+        if: ${{ success() && !cancelled() && steps.setup_vsl_as_v_module.outcome == 'success' }}
         id: markdown
         env:
           EVENT_NAME: ${{ github.event_name }}
@@ -134,19 +134,19 @@ jobs:
           path: vsl
       - name: Setup V
         id: setup_v
-        if: ${{ !cancelled() && steps.checkout_vsl.outcome == 'success' }}
+        if: ${{ success() && !cancelled() && steps.checkout_vsl.outcome == 'success' }}
         uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
           check-latest: true
       - name: Setup VSL as V module
         id: setup_vsl_as_v_module
-        if: ${{ !cancelled() && steps.setup_v.outcome == 'success' }}
+        if: ${{ success() && !cancelled() && steps.setup_v.outcome == 'success' }}
         run: |
           mkdir -p ~/.vmodules
           cp -a ./vsl ~/.vmodules/vsl
       - name: Check Formatting
         id: check_formatting
-        if: ${{ !cancelled() && steps.setup_vsl_as_v_module.outcome == 'success' }}
+        if: ${{ success() && !cancelled() && steps.setup_vsl_as_v_module.outcome == 'success' }}
         run: |
           mapfile -t v_files < <(git -C ~/.vmodules/vsl ls-files '*.v' ':!:vulkan/spv.v')
           for i in "${!v_files[@]}"; do
