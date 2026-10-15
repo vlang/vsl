@@ -42,6 +42,7 @@ on:
 jobs:
   run-tests-on-linux:
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
     env:
       VJOBS: '2'
 
@@ -58,27 +59,36 @@ jobs:
 
     steps:
       - name: Checkout VSL
+        id: checkout_vsl
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
           path: vsl
 
       - name: Setup V
+        id: setup_v
+        if: ${{ success() && !cancelled() && steps.checkout_vsl.outcome == 'success' }}
         uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
           check-latest: true
 
       - name: Move VSL source code to V Modules
+        id: move_vsl_source_code_to_v_modules
+        if: ${{ success() && !cancelled() && steps.setup_v.outcome == 'success' }}
         run: |
           mkdir -p ~/.vmodules
           mv ./vsl ~/.vmodules/vsl
 
       - name: V doctor
+        id: v_doctor
+        if: ${{ success() && !cancelled() && steps.move_vsl_source_code_to_v_modules.outcome == 'success' }}
         run: |
           cd ~/.vmodules
           env HOME="$HOME" PATH="$PATH" VJOBS=2 v doctor
 
       - name: Install dependencies
+        id: install_dependencies
+        if: ${{ success() && !cancelled() && steps.v_doctor.outcome == 'success' }}
         run: |
           sudo apt-get update && \
           sudo apt-get install --quiet -y --no-install-recommends \
@@ -121,6 +131,8 @@ jobs:
             mpirun --oversubscribe -n 2 v -d vsl_mpi -cc gcc run ./vsl/mpi/examples/roundtrip/main.v
 
       - name: Execute Tests using Pure V Backend
+        id: execute_tests_using_pure_v_backend
+        if: ${{ success() && !cancelled() && steps.install_dependencies.outcome == 'success' }}
         run: |
           cd ~/.vmodules
           env HOME="$HOME" PATH="$PATH" VJOBS=2 v wipe-cache
@@ -128,6 +140,8 @@ jobs:
             "$HOME/.vmodules/vsl/bin/test" ${{ matrix.flags }} --use-cblas
 
       - name: Execute Tests using Pure V Backend with Pure C Backend
+        id: execute_tests_using_pure_v_backend_with_pure_c_backend
+        if: ${{ success() && !cancelled() && steps.execute_tests_using_pure_v_backend.outcome == 'success' }}
         run: |
           cd ~/.vmodules
           env HOME="$HOME" PATH="$PATH" VJOBS=2 v wipe-cache
@@ -135,6 +149,8 @@ jobs:
             "$HOME/.vmodules/vsl/bin/test" ${{ matrix.flags }} --use-cblas --use-lapacke
 
       - name: Execute Tests using Vulkan Compute Backend
+        id: execute_tests_using_vulkan_compute_backend
+        if: ${{ success() && !cancelled() && steps.execute_tests_using_pure_v_backend_with_pure_c_backend.outcome == 'success' }}
         env:
           VSL_TEST_VULKAN: '1'
         run: |
@@ -146,17 +162,25 @@ jobs:
   run-windows-smoke:
     name: Windows portable test suites
     runs-on: windows-latest
+    timeout-minutes: 60
     env:
+      # Stop a failing test session at its first failure instead of
+      # running the whole suite to completion; the remaining files
+      # add no signal.
+      VTEST_FAIL_FAST: '1'
       VJOBS: '2'
 
     steps:
       - name: Checkout VSL
+        id: checkout_vsl
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
           path: vsl
 
       - name: Install official V release binary (Windows)
+        id: install_official_v_release_binary_windows
+        if: ${{ success() && !cancelled() && steps.checkout_vsl.outcome == 'success' }}
         shell: pwsh
         run: |
           # setup-v's source bootstrap currently fails on Windows.
@@ -188,18 +212,24 @@ jobs:
           & $vExecutable version
 
       - name: Move VSL source code to V Modules
+        id: move_vsl_source_code_to_v_modules
+        if: ${{ success() && !cancelled() && steps.install_official_v_release_binary_windows.outcome == 'success' }}
         shell: bash
         run: |
           mkdir -p ~/.vmodules
           mv ./vsl ~/.vmodules/vsl
 
       - name: V doctor
+        id: v_doctor
+        if: ${{ success() && !cancelled() && steps.move_vsl_source_code_to_v_modules.outcome == 'success' }}
         shell: bash
         run: |
           cd ~/.vmodules
           v doctor
 
       - name: Validate portable test runner
+        id: validate_portable_test_runner
+        if: ${{ success() && !cancelled() && steps.v_doctor.outcome == 'success' }}
         shell: bash
         run: |
           cd ~/.vmodules
@@ -209,6 +239,8 @@ jobs:
           vsl/bin/test-windows --check
 
       - name: Install Vulkan headers (Windows)
+        id: install_vulkan_headers_windows
+        if: ${{ success() && !cancelled() && steps.validate_portable_test_runner.outcome == 'success' }}
         uses: humbletim/setup-vulkan-sdk@c25f41106918cde0bf347e6f201277392b3a9e9d # v1.2.1
         with:
           vulkan-query-version: 1.3.296.0
@@ -216,6 +248,8 @@ jobs:
           vulkan-use-cache: true
 
       - name: Run Windows compute smoke
+        id: run_windows_compute_smoke
+        if: ${{ success() && !cancelled() && steps.install_vulkan_headers_windows.outcome == 'success' }}
         shell: bash
         run: |
           cd ~/.vmodules
@@ -233,12 +267,16 @@ jobs:
           v test vsl/compute/context_test.v
 
       - name: Run portable Windows test suites
+        id: run_portable_windows_test_suites
+        if: ${{ success() && !cancelled() && steps.run_windows_compute_smoke.outcome == 'success' }}
         shell: bash
         run: |
           cd ~/.vmodules
           vsl/bin/test-windows
 
       - name: Test Vulkan compute on Windows
+        id: test_vulkan_compute_on_windows
+        if: ${{ success() && !cancelled() && steps.run_portable_windows_test_suites.outcome == 'success' }}
         shell: bash
         run: |
           cd ~/.vmodules
@@ -253,32 +291,42 @@ jobs:
     # when no matching runner exists. Local: ./bin/test --use-cuda
     if: github.event_name == 'workflow_dispatch' && inputs.run_cuda == true
     runs-on: ubuntu-24.04
+    timeout-minutes: 60
     env:
       VJOBS: '2'
 
     steps:
       - name: Checkout VSL
+        id: checkout_vsl
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
           path: vsl
 
       - name: Setup V
+        id: setup_v
+        if: ${{ success() && !cancelled() && steps.checkout_vsl.outcome == 'success' }}
         uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
           check-latest: true
 
       - name: Move VSL source code to V Modules
+        id: move_vsl_source_code_to_v_modules
+        if: ${{ success() && !cancelled() && steps.setup_v.outcome == 'success' }}
         run: |
           mkdir -p ~/.vmodules
           mv ./vsl ~/.vmodules/vsl
 
       - name: V doctor
+        id: v_doctor
+        if: ${{ success() && !cancelled() && steps.move_vsl_source_code_to_v_modules.outcome == 'success' }}
         run: |
           cd ~/.vmodules
           env HOME="$HOME" PATH="$PATH" VJOBS=2 v doctor
 
       - name: Install CUDA toolkit
+        id: install_cuda_toolkit
+        if: ${{ success() && !cancelled() && steps.v_doctor.outcome == 'success' }}
         run: |
           sudo apt-get update && \
           sudo apt-get install --quiet -y --no-install-recommends \
@@ -286,11 +334,15 @@ jobs:
             libcudnn8 libcudnn8-dev
 
       - name: Verify CUDA installation
+        id: verify_cuda_installation
+        if: ${{ success() && !cancelled() && steps.install_cuda_toolkit.outcome == 'success' }}
         run: |
           nvcc --version
           nvidia-smi || echo "nvidia-smi not available in container (expected on some runners)"
 
       - name: Execute Tests using CUDA Backend
+        id: execute_tests_using_cuda_backend
+        if: ${{ success() && !cancelled() && steps.verify_cuda_installation.outcome == 'success' }}
         run: |
           cd ~/.vmodules
           if ! command -v nvidia-smi >/dev/null 2>&1 || ! nvidia-smi -L >/dev/null 2>&1; then
@@ -306,6 +358,7 @@ jobs:
 
   run-tests-on-macos:
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
     env:
       VJOBS: '2'
 
@@ -320,27 +373,36 @@ jobs:
 
     steps:
       - name: Checkout VSL
+        id: checkout_vsl
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
           path: vsl
 
       - name: Setup V
+        id: setup_v
+        if: ${{ success() && !cancelled() && steps.checkout_vsl.outcome == 'success' }}
         uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
           check-latest: true
 
       - name: Move VSL source code to V Modules
+        id: move_vsl_source_code_to_v_modules
+        if: ${{ success() && !cancelled() && steps.setup_v.outcome == 'success' }}
         run: |
           mkdir -p ~/.vmodules
           mv ./vsl ~/.vmodules/vsl
 
       - name: V doctor
+        id: v_doctor
+        if: ${{ success() && !cancelled() && steps.move_vsl_source_code_to_v_modules.outcome == 'success' }}
         run: |
           cd ~/.vmodules
           v doctor
 
       - name: Install dependencies
+        id: install_dependencies
+        if: ${{ success() && !cancelled() && steps.v_doctor.outcome == 'success' }}
         run: |
           brew install coreutils
           brew install gcc
@@ -353,6 +415,8 @@ jobs:
           brew install vulkan-headers
 
       - name: Export Homebrew BLAS/LAPACK paths
+        id: export_homebrew_blas_lapack_paths
+        if: ${{ success() && !cancelled() && steps.install_dependencies.outcome == 'success' }}
         run: |
           OPENBLAS_PREFIX="$(brew --prefix openblas)"
           LAPACK_PREFIX="$(brew --prefix lapack)"
@@ -364,12 +428,16 @@ jobs:
           } >> "$GITHUB_ENV"
 
       - name: Execute Tests using Pure V Backend
+        id: execute_tests_using_pure_v_backend
+        if: ${{ success() && !cancelled() && steps.export_homebrew_blas_lapack_paths.outcome == 'success' }}
         run: |
           cd ~/.vmodules
           v wipe-cache
           vsl/bin/test
 
       - name: Execute Tests using Pure V Backend with Pure C Backend
+        id: execute_tests_using_pure_v_backend_with_pure_c_backend
+        if: ${{ success() && !cancelled() && steps.execute_tests_using_pure_v_backend.outcome == 'success' }}
         run: |
           cd ~/.vmodules
           v wipe-cache
