@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Getting started — VSL</title>
+<meta name="description" content="Install VSL and run your first scientific computation in V.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="./">VSL <span class="tag">getting started</span></a>
+    <nav class="main">
+      <a href="./">Home</a>
+      <a href="./#modules">Modules</a>
+      <a href="api/">API reference</a>
+      <a href="https://github.com/vlang/vsl">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <section>
+    <h2>Install</h2>
+    <p class="sub">You need a working <a href="https://vlang.io">V</a> installation. The pure-V path has no native dependencies; OpenBLAS, LAPACKE, CUDA and Vulkan backends are opt-in.</p>
+<pre>v install vsl
+v ~/.vmodules/vsl/examples/blas_basic_operations/main.v</pre>
+  </section>
+
+  <hr class="rule">
+  <section>
+    <h2>Solve something</h2>
+    <p class="sub">Dense linear algebra lives in <code>vsl.la</code>. Start with matrices and solvers, then reach for <code>vsl.fft</code>, <code>vsl.deriv</code> and <code>vsl.dist</code> as your problem demands.</p>
+<pre>import vsl.la as la
+
+fn main() {
+    mut a := la.Matrix.new[f64](2, 2)
+    a.set(0, 0, 1.0)
+    a.set(1, 1, 2.0)
+    println(a.get(1, 1)) <span class="cm">// 2.0</span>
+}</pre>
+    <p>Continue with the <a href="https://github.com/vlang/vsl/blob/main/docs/getting-started/01-installation.md">installation guide</a> and the <a href="https://github.com/vlang/vsl/tree/main/examples">examples catalog</a>.</p>
+  </section>
+
+  <hr class="rule">
+  <section>
+    <h2>Go faster, explicitly</h2>
+    <p class="sub">For hot paths, compile in prod mode and, where available, enable a native backend. Backend choice is always explicit — VSL never pretends a fallback ran on a GPU.</p>
+<pre><span class="cm"># build first, then execute — the pattern used by all VSL benchmarks</span>
+v -prod -o /tmp/bench ~/.vmodules/vsl/examples/blas_performance_comparison/main.v
+/tmp/bench</pre>
+    <p>Then browse the <a href="api/">API reference</a> and the <a href="https://github.com/vlang/vsl/blob/main/docs/ML_ROADMAP.md">ML roadmap</a>.</p>
+  </section>
+
+  <footer>
+    <div class="cols">
+      <div><h4>VSL</h4><ul><li><a href="./">Home</a></li><li><a href="api/">API reference</a></li></ul></div>
+      <div><h4>Project</h4><ul><li><a href="https://github.com/vlang/vsl">GitHub repository</a></li><li><a href="https://github.com/vlang/vsl/issues">Issues</a></li></ul></div>
+      <div><h4>Family</h4><ul><li><a href="https://vlang.github.io/vtl">VTL — V Tensor Library</a></li><li><a href="https://vlang.io">V language</a></li></ul></div>
+    </div>
+  </footer>
+</div>
+</body>
+</html>

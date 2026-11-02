@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="x-ua-compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>stats | vdoc</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&display=swap"
+			rel="stylesheet"
+		/>
+		<link
+			href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+		<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+		<link rel="manifest" href="site.webmanifest" />
+		<link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5" />
+		<meta name="msapplication-TileColor" content="#da532c" />
+		<meta name="theme-color" content="#ffffff" />
+		<link rel="stylesheet" href="doc.css" />
+		<link rel="stylesheet" href="normalize.css" />
+		<script src="dark-mode.js"></script>
+	</head>
+
+	<body>
+		<div><a id="skip-to-content-link" href="#main-content">Skip to content</a></div>
+		<div id="page">
+			<header class="doc-nav hidden">
+				<div class="heading-container">
+					<div class="heading">
+						<div class="info">
+							<div class="module">vsl</div>
+							<div class="toggle-version-container">
+								<span>0.2.0-beta.1 </span>
+								<div
+									id="dark-mode-toggle"
+									role="switch"
+									aria-checked="false"
+									aria-label="Toggle dark mode"
+								>
+									<svg xmlns="http://www.w3.org/2000/svg" class="light-icon" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.7l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-5c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-1 16.95h2V19.5h-2v2.95zm-7.45-3.91l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8z"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" class="dark-icon" enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24"><g><rect fill="none" height="24" width="24"/></g><g><g><g><path d="M11.1,12.08C8.77,7.57,10.6,3.6,11.63,2.01C6.27,2.2,1.98,6.59,1.98,12c0,0.14,0.02,0.28,0.02,0.42 C2.62,12.15,3.29,12,4,12c1.66,0,3.18,0.83,4.1,2.15C9.77,14.63,11,16.17,11,18c0,1.52-0.87,2.83-2.12,3.51 c0.98,0.32,2.03,0.5,3.11,0.5c3.5,0,6.58-1.8,8.37-4.52C18,17.72,13.38,16.52,11.1,12.08z"/></g><path d="M7,16l-0.18,0C6.4,14.84,5.3,14,4,14c-1.66,0-3,1.34-3,3s1.34,3,3,3c0.62,0,2.49,0,3,0c1.1,0,2-0.9,2-2 C9,16.9,8.1,16,7,16z"/></g></g></svg>
+
+								</div>
+							</div>
+							<svg xmlns="http://www.w3.org/2000/svg" id="toggle-menu" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+
+						</div>
+						<div id="search">
+							<input type="text" placeholder="Search... (beta)" autocomplete="off" />
+						</div>
+					</div>
+				</div>
+				<nav class="search hidden"></nav>
+				<nav class="content hidden">
+					<ul>
+						<li class="open">
+<div class="menu-row"><a href="./index.html">README</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./main.html">main</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./util.html">util</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./blas.html">blas</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./blas64.html">blas64</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./compute.html">compute</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./consts.html">consts</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./cuda.html">cuda</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./gpu.html">gpu</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./deriv.html">deriv</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./diff.html">diff</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./dist.html">dist</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./easings.html">easings</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./errors.html">errors</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./fft.html">fft</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./fit.html">fit</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./float32.html">float32</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./float64.html">float64</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./fun.html">fun</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./func.html">func</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./gm.html">gm</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./graph.html">graph</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./csv.html">csv</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./h5.html">h5</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./prec.html">prec</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./iter.html">iter</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./la.html">la</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./lapack.html">lapack</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./lapack64.html">lapack64</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./metrics.html">metrics</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./ml.html">ml</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./nlp.html">nlp</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./model_selection.html">model_selection</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./mpi.html">mpi</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./noise.html">noise</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./plot.html">plot</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./poly.html">poly</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./preprocessing.html">preprocessing</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./prime.html">prime</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./quaternion.html">quaternion</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./roots.html">roots</a></div>
+</li>
+<li class="open active">
+<div class="menu-row"><a href="./stats.html">stats</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./vcl.html">vcl</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./dl.html">dl</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./vulkan.html">vulkan</a></div>
+</li>
+
+					</ul>
+				</nav>
+			</header>
+			<div class="doc-scrollview" tabindex="-1" id="main-content">
+				<div class="doc-container">
+					<div class="doc-content">
+								<section id="readme_stats" class="doc-node">
+			<div class="title"><h1> stats <a href="#readme_stats">#</a></h1></div>
+<h1 id="descriptive-sample-statistics">Descriptive sample statistics</h1>
+<p><code>stats.summarize</code> computes count, mean, variance, standard deviation, minimum, and maximum in one pass using Welford's online moment update.</p>
+<p><code>ddof: 0</code> returns population variance; <code>ddof: 1</code> returns sample variance. The input must be non-empty and <code>ddof</code> must be valid for the observations used. The existing API rejects non-finite samples. <code>summarize_with_policy</code> accepts <code>NonFinitePolicy.reject</code>, <code>.omit</code>, or <code>.propagate</code>: omission updates the count and degrees of freedom using finite values only; propagation returns NaN for numeric summary statistics when any sample is non-finite, while count reports the input length. Variance and standard deviation are returned as <code>f64</code>.</p>
+<p><code>stats.quantile(values, q)</code> and <code>stats.percentile(values, p)</code> sort a copy and use linear interpolation (Type 7, the NumPy/SciPy default). The <code>quantile_with_method</code> and <code>percentile_with_method</code> variants also support all thirteen estimators exposed by NumPy through <code>QuantileMethod</code>, including the Hyndman-Fan estimators and <code>lower</code>, <code>higher</code>, <code>midpoint</code>, and <code>nearest</code>. The available methods are <code>inverted_cdf</code>, <code>averaged_inverted_cdf</code>, <code>closest_observation</code>, <code>interpolated_inverted_cdf</code>, <code>hazen</code>, <code>weibull</code>, <code>linear</code>, <code>median_unbiased</code>, <code>normal_unbiased</code>, <code>lower</code>, <code>higher</code>, <code>midpoint</code>, and <code>nearest</code>. Probabilities must be finite and lie in <code>[0, 1]</code> or <code>[0, 100]</code>. Existing quantile APIs reject non-finite samples and do not modify the input slice. <code>quantile_with_policy</code>, <code>percentile_with_policy</code>, and their method variants accept the same policies: <code>.omit</code> filters non-finite samples, while <code>.propagate</code> returns NaN if any sample is non-finite.</p>
+<p><code>stats.quantile_weighted(values, weights, q)</code> and <code>stats.percentile_weighted(values, weights, p)</code> implement NumPy's weighted inverted-CDF method. Weights must be non-negative, match the sample length, and have positive finite total mass. The existing APIs reject non-finite values and weights. Policy variants omit any pair with a non-finite value or weight; propagation returns NaN for non-finite positive-mass values and rejects non-finite weights because their contribution is undefined. Finite negative weights remain invalid under every policy.</p>
+<p><code>vsl.dist.WeightedHistogram.count(values, weights, clear)</code> accumulates non-negative bin weights and returns the total input weight, including samples outside the configured range. <code>density(total_weight)</code> uses that total for normalization, so the integrated density is the in-range weight fraction. The histogram <code>count_with_policy</code> and automatic-bin <code>*_with_policy</code> variants can omit non-finite observations. Since integer counts and bin-edge selection cannot meaningfully propagate NaN, their <code>.propagate</code> policy returns an error when a non-finite sample is present. Existing histogram calls retain their previous behavior. <code>vsl.dist.histogram_bin_edges(values, rule)</code> selects edges with NumPy's <code>auto</code>, <code>fd</code>, <code>doane</code>, <code>scott</code>, <code>stone</code>, <code>rice</code>, <code>sturges</code>, or <code>sqrt</code> rule. Use <code>histogram_bin_edges_in_range</code> to select edges over an explicit interval.</p>
+<pre><code class="language-v"><span class="token keyword">import</span> <span class="token module_">math</span>
+<span class="token keyword">import</span> <span class="token module_">vsl</span><span class="token punctuation">.</span><span class="token module_">stats</span>
+
+summary <span class="token operator">:=</span> <span class="token module_">stats</span><span class="token punctuation">.</span><span class="token function">summarize</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">2.0</span><span class="token punctuation">,</span> <span class="token number">4.0</span><span class="token punctuation">,</span> <span class="token number">6.0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">!</span>
+<span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'mean=</span><span class="token string_interp">$</span><span class="token string_interp">{</span>summary<span class="token punctuation">.</span>mean<span class="token string_interp">}</span><span class="token string">, sample stddev=</span><span class="token string_interp">$</span><span class="token string_interp">{</span>summary<span class="token punctuation">.</span>stddev<span class="token string_interp">}</span><span class="token string">'</span><span class="token punctuation">)</span>
+
+sample <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token module_">math</span><span class="token punctuation">.</span><span class="token function">nan</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">3.0</span><span class="token punctuation">]</span>
+finite_summary <span class="token operator">:=</span> <span class="token module_">stats</span><span class="token punctuation">.</span><span class="token function">summarize_with_policy</span><span class="token punctuation">(</span>sample<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token enum_value">.</span><span class="token enum_value">omit</span><span class="token punctuation">)</span><span class="token operator">!</span>
+propagated_median <span class="token operator">:=</span> <span class="token module_">stats</span><span class="token punctuation">.</span><span class="token function">quantile_with_policy</span><span class="token punctuation">(</span>sample<span class="token punctuation">,</span> <span class="token number">0.5</span><span class="token punctuation">,</span> <span class="token enum_value">.</span><span class="token enum_value">propagate</span><span class="token punctuation">)</span><span class="token operator">!</span>
+<span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'finite count=</span><span class="token string_interp">$</span><span class="token string_interp">{</span>finite_summary<span class="token punctuation">.</span>count<span class="token string_interp">}</span><span class="token string">, propagated median=</span><span class="token string_interp">$</span><span class="token string_interp">{</span>propagated_median<span class="token string_interp">}</span><span class="token string">'</span><span class="token punctuation">)</span></code></pre>
+<p>See the runnable <a href="https://github.com/vlang/vsl/blob/master/examples/stats_descriptive/README.md">descriptive statistics example</a> for summaries, quantiles, and automatic histogram bins. Inferential tests and confidence intervals are tracked separately in <a href="https://github.com/vlang/vsl/issues/572">VSL issue #572</a>.</p>
+
+</section>
+
+		<section id="percentile" class="doc-node">
+			<div class="title"><h2>fn percentile <a href="#percentile">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/stats/summary.v#L135"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">percentile</span><span class="token punctuation">(</span>values <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> p <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">f64</span></code></pre>
+<p>percentile returns the requested percentile using linear interpolation. <code>p</code> is expressed on the inclusive range [0, 100].</p>
+
+</section>
+
+		<section id="percentile_weighted" class="doc-node">
+			<div class="title"><h2>fn percentile_weighted <a href="#percentile_weighted">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/stats/summary.v#L237"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">percentile_weighted</span><span class="token punctuation">(</span>values <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> weights <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> p <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">f64</span></code></pre>
+<p>percentile_weighted is the 0..100-scale form of quantile_weighted.</p>
+
+</section>
+
+		<section id="percentile_weighted_with_policy" class="doc-node">
+			<div class="title"><h2>fn percentile_weighted_with_policy <a href="#percentile_weighted_with_policy">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/stats/summary.v#L242"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">percentile_weighted_with_policy</span><span class="token punctuation">(</span>values <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> weights <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> p <span class="token builtin">f64</span><span class="token punctuation">,</span> policy <span class="token type_name">NonFinitePolicy</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">f64</span></code></pre>
+<p>percentile_weighted_with_policy is the 0..100-scale weighted quantile.</p>
+
+</section>
+
+		<section id="percentile_with_method" class="doc-node">
+			<div class="title"><h2>fn percentile_with_method <a href="#percentile_with_method">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/stats/quantile_methods.v#L64"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">percentile_with_method</span><span class="token punctuation">(</span>values <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> p <span class="token builtin">f64</span><span class="token punctuation">,</span> method <span class="token type_name">QuantileMethod</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">f64</span></code></pre>
+<p>percentile_with_method is the 0..100-scale form of quantile_with_method.</p>
+
+</section>
+
+		<section id="percentile_with_method_and_policy" class="doc-node">
+			<div class="title"><h2>fn percentile_with_method_and_policy <a href="#percentile_with_method_and_policy">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/stats/quantile_methods.v#L72"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">percentile_with_method_and_policy</span><span class="token punctuation">(</span>values <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> p <span class="token builtin">f64</span><span class="token punctuation">,</span> method <span class="token type_name">QuantileMethod</span><span class="token punctuation">,</span> policy <span class="token type_name">NonFinitePolicy</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">f64</span></code></pre>
+<p>percentile_with_method_and_policy is the 0..100-scale policy variant.</p>
+
+</section>
+
+		<section id="percentile_with_policy" class="doc-node">
+			<div class="title"><h2>fn percentile_with_policy <a href="#percentile_with_policy">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/stats/summary.v#L140"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">percentile_with_policy</span><span class="token punctuation">(</span>values <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> p <span class="token builtin">f64</span><span class="token punctuation">,</span> policy <span class="token type_name">NonFinitePolicy</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">f64</span></code></pre>
+<p>percentile_with_policy is the 0..100-scale form of quantile_with_policy.</p>
+
+</section>
+
+		<section id="quantile" class="doc-node">
+			<div class="title"><h2>fn quantile <a href="#quantile">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/stats/summary.v#L123"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">quantile</span><span class="token punctuation">(</span>values <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> q <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">f64</span></code></pre>
+<p>quantile returns the requested quantile using linear interpolation between adjacent sorted values (the default Type 7 definition used by NumPy/SciPy).</p>
+
+</section>
+
+		<section id="quantile_weighted" class="doc-node">
+			<div class="title"><h2>fn quantile_weighted <a href="#quantile_weighted">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/stats/summary.v#L165"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">quantile_weighted</span><span class="token punctuation">(</span>values <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> weights <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> q <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">f64</span></code></pre>
+<p>quantile_weighted returns NumPy's inverted-CDF weighted quantile. Weights represent non-negative sample mass, and values/weights must have equal lengths. Non-finite samples or weights are rejected.</p>
+
+</section>
+
+		<section id="quantile_weighted_with_policy" class="doc-node">
+			<div class="title"><h2>fn quantile_weighted_with_policy <a href="#quantile_weighted_with_policy">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/stats/summary.v#L173"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">quantile_weighted_with_policy</span><span class="token punctuation">(</span>values <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> weights <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> q <span class="token builtin">f64</span><span class="token punctuation">,</span> policy <span class="token type_name">NonFinitePolicy</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">f64</span></code></pre>
+<p>quantile_weighted_with_policy uses NumPy's inverted-CDF weighted quantile. Under omit, any pair with a non-finite value or weight is excluded. Propagate returns NaN when a positive-mass pair contains a non-finite value; invalid weights remain errors because their contribution is undefined.</p>
+
+</section>
+
+		<section id="quantile_with_method" class="doc-node">
+			<div class="title"><h2>fn quantile_with_method <a href="#quantile_with_method">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/stats/quantile_methods.v#L24"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">quantile_with_method</span><span class="token punctuation">(</span>values <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> q <span class="token builtin">f64</span><span class="token punctuation">,</span> method <span class="token type_name">QuantileMethod</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">f64</span></code></pre>
+<p>quantile_with_method returns a quantile using the selected estimator. It sorts a copy and rejects empty or non-finite samples.</p>
+
+</section>
+
+		<section id="quantile_with_method_and_policy" class="doc-node">
+			<div class="title"><h2>fn quantile_with_method_and_policy <a href="#quantile_with_method_and_policy">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/stats/quantile_methods.v#L30"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">quantile_with_method_and_policy</span><span class="token punctuation">(</span>values <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> q <span class="token builtin">f64</span><span class="token punctuation">,</span> method <span class="token type_name">QuantileMethod</span><span class="token punctuation">,</span> policy <span class="token type_name">NonFinitePolicy</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">f64</span></code></pre>
+<p>quantile_with_method_and_policy applies a quantile estimator and an explicit policy for non-finite samples.</p>
+
+</section>
+
+		<section id="quantile_with_policy" class="doc-node">
+			<div class="title"><h2>fn quantile_with_policy <a href="#quantile_with_policy">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/stats/summary.v#L129"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">quantile_with_policy</span><span class="token punctuation">(</span>values <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> q <span class="token builtin">f64</span><span class="token punctuation">,</span> policy <span class="token type_name">NonFinitePolicy</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">f64</span></code></pre>
+<p>quantile_with_policy returns a linear quantile using the selected non-finite sample policy.</p>
+
+</section>
+
+		<section id="summarize" class="doc-node">
+			<div class="title"><h2>fn summarize <a href="#summarize">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/stats/summary.v#L26"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">summarize</span><span class="token punctuation">(</span>values <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> ddof <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token type_name">Summary</span></code></pre>
+<p>summarize computes stable online moments and extrema for a non-empty sample. <code>ddof</code> is the delta degrees of freedom: 0 gives population variance, 1 gives sample variance. Non-finite values are rejected rather than silently skipped.</p>
+
+</section>
+
+		<section id="summarize_with_policy" class="doc-node">
+			<div class="title"><h2>fn summarize_with_policy <a href="#summarize_with_policy">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/stats/summary.v#L34"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">summarize_with_policy</span><span class="token punctuation">(</span>values <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> ddof <span class="token builtin">int</span><span class="token punctuation">,</span> policy <span class="token type_name">NonFinitePolicy</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token type_name">Summary</span></code></pre>
+<p>summarize_with_policy computes stable moments using the selected policy. Omitted samples do not contribute to count or degrees of freedom. Propagate returns NaN for numeric statistics when any sample is non-finite; count remains the number of input observations.</p>
+
+</section>
+
+		<section id="NonFinitePolicy.from" class="doc-node">
+			<div class="title"><h2>fn NonFinitePolicy.from <a href="#NonFinitePolicy.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/stats/summary.v#L6"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token type_name">NonFinitePolicy</span><span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">[</span><span class="token type_name">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token type_name">W</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token type_name">NonFinitePolicy</span></code></pre>
+<p>from returns the <code>NonFinitePolicy</code> value of an integer or of a field name, or an error if there is none.</p>
+
+</section>
+
+		<section id="QuantileMethod.from" class="doc-node">
+			<div class="title"><h2>fn QuantileMethod.from <a href="#QuantileMethod.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/stats/quantile_methods.v#L6"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token type_name">QuantileMethod</span><span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">[</span><span class="token type_name">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token type_name">W</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token type_name">QuantileMethod</span></code></pre>
+<p>from returns the <code>QuantileMethod</code> value of an integer or of a field name, or an error if there is none.</p>
+
+</section>
+
+		<section id="NonFinitePolicy" class="doc-node">
+			<div class="title"><h2>enum NonFinitePolicy <a href="#NonFinitePolicy">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/stats/summary.v#L6"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> <span class="token type_name">NonFinitePolicy</span> <span class="token punctuation">{</span>
+	reject
+	omit
+	propagate
+<span class="token punctuation">}</span></code></pre>
+<p>NonFinitePolicy controls how descriptive statistics handle NaN and infinity.</p>
+
+</section>
+
+		<section id="QuantileMethod" class="doc-node">
+			<div class="title"><h2>enum QuantileMethod <a href="#QuantileMethod">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/stats/quantile_methods.v#L6"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> <span class="token type_name">QuantileMethod</span> <span class="token punctuation">{</span>
+	inverted_cdf
+	averaged_inverted_cdf
+	closest_observation
+	interpolated_inverted_cdf
+	hazen
+	weibull
+	linear
+	median_unbiased
+	normal_unbiased
+	lower
+	higher
+	midpoint
+	nearest
+<span class="token punctuation">}</span></code></pre>
+<p>QuantileMethod selects one of NumPy's thirteen sample-quantile estimators.</p>
+
+</section>
+
+		<section id="Summary" class="doc-node">
+			<div class="title"><h2>struct Summary <a href="#Summary">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/stats/summary.v#L13"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token type_name">Summary</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span><span class="token punctuation">:</span>
+	count    <span class="token builtin">int</span>
+	mean     <span class="token builtin">f64</span>
+	variance <span class="token builtin">f64</span>
+	stddev   <span class="token builtin">f64</span>
+	min      <span class="token builtin">f64</span>
+	max      <span class="token builtin">f64</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Summary contains single-pass descriptive statistics for finite f64 samples.</p>
+
+</section>
+
+
+						<div class="footer">Powered by vdoc. Generated on: 2 Nov 2026 06:43:13</div>
+					</div>
+					<div class="doc-toc"><ul><li class="open"><a href="#readme_stats">README</a></li>
+<li class="open"><a href="#percentile">fn percentile</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#percentile_weighted">fn percentile_weighted</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#percentile_weighted_with_policy">fn percentile_weighted_with_policy</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#percentile_with_method">fn percentile_with_method</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#percentile_with_method_and_policy">fn percentile_with_method_and_policy</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#percentile_with_policy">fn percentile_with_policy</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#quantile">fn quantile</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#quantile_weighted">fn quantile_weighted</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#quantile_weighted_with_policy">fn quantile_weighted_with_policy</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#quantile_with_method">fn quantile_with_method</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#quantile_with_method_and_policy">fn quantile_with_method_and_policy</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#quantile_with_policy">fn quantile_with_policy</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#summarize">fn summarize</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#summarize_with_policy">fn summarize_with_policy</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#NonFinitePolicy.from">fn NonFinitePolicy.from</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#QuantileMethod.from">fn QuantileMethod.from</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#NonFinitePolicy">enum NonFinitePolicy</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#QuantileMethod">enum QuantileMethod</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#Summary">struct Summary</a>        <ul>
+</ul>
+</li>
+</ul></div>
+				</div>
+			</div>
+		</div>
+		<script src="doc.js"></script>
+		<script async src="search_index.js"></script>
+	</body>
+</html>
