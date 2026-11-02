@@ -156,10 +156,10 @@ fn cl_create_command_queue_with_properties(context ClContext, device ClDeviceId,
 	return sfn(context, device, properties, errcode_ret)
 }
 
-type ClCreateCommandQueueType = fn (context ClContext, device ClDeviceId, properties &ClQueueProperties, errcode_ret &int) ClCommandQueue
+type ClCreateCommandQueueType = fn (context ClContext, device ClDeviceId, properties ClCommandQueueProperties, errcode_ret &int) ClCommandQueue
 
 @[inline]
-fn cl_create_command_queue(context ClContext, device ClDeviceId, properties &ClQueueProperties, errcode_ret &int) ClCommandQueue {
+fn cl_create_command_queue(context ClContext, device ClDeviceId, properties ClCommandQueueProperties, errcode_ret &int) ClCommandQueue {
 	f := dl.get_sym('clCreateCommandQueue') or {
 		unsafe {
 			*errcode_ret = map_dl_err_code(err.code())

@@ -15,6 +15,7 @@ type ClMemFlags = u64
 type ClDeviceType = u64
 type ClDeviceInfo = u32
 type ClProperties = u64
+type ClCommandQueueProperties = u64
 type ClQueueProperties = u64
 type ClProgramBuildInfo = u32
 
