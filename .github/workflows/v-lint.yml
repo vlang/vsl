@@ -43,7 +43,7 @@ jobs:
       - name: Setup V
         uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
-          check-latest: true
+          version: 78869311b51c76ddb4c3d2ed17e8a7733d8d5979
       - name: Install dependencies
         run: |
           sudo apt-get update && \
@@ -124,7 +124,7 @@ jobs:
       - name: Setup V
         uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
-          check-latest: true
+          version: 78869311b51c76ddb4c3d2ed17e8a7733d8d5979
       - name: Setup VSL as V module
         run: |
           mkdir -p ~/.vmodules
