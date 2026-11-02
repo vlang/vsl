@@ -464,7 +464,7 @@ fn (f &Hdf5File) getstringattr(dset_name string, attr_name string) !string {
 	assert type_class == C.H5T_STRING
 
 	if type_class == C.H5T_STRING {
-		mut buffer := vcalloc(type_size)
+		mut buffer := vcalloc(int(type_size))
 		errc = C.H5LTget_attribute_string(f.filedesc, dset_name.str, attr_name.str, buffer)
 		assert errc >= 0
 		vs := unsafe { cstring_to_vstring(buffer) }
