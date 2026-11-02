@@ -84,7 +84,7 @@ fn Device.new(id ClDeviceId) !&Device {
 	if C.CL_VERSION_2_0_EXISTS == 1 {
 		d.queue = cl_create_command_queue_with_properties(d.ctx, d.id, unsafe { nil }, &ret)
 	} else {
-		d.queue = cl_create_command_queue(d.ctx, d.id, usize(0), &ret)
+		d.queue = cl_create_command_queue(d.ctx, d.id, ClCommandQueueProperties(0), &ret)
 	}
 	return error_or_default(ret, d)
 }

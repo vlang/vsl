@@ -101,10 +101,10 @@ fn cl_create_command_queue_with_properties(context ClContext, device ClDeviceId,
 	return C.clCreateCommandQueueWithProperties(context, device, properties, errcode_ret)
 }
 
-fn C.clCreateCommandQueue(context ClContext, device ClDeviceId, properties &ClQueueProperties, errcode_ret &int) ClCommandQueue
+fn C.clCreateCommandQueue(context ClContext, device ClDeviceId, properties ClCommandQueueProperties, errcode_ret &int) ClCommandQueue
 
 @[inline]
-fn cl_create_command_queue(context ClContext, device ClDeviceId, properties &ClQueueProperties, errcode_ret &int) ClCommandQueue {
+fn cl_create_command_queue(context ClContext, device ClDeviceId, properties ClCommandQueueProperties, errcode_ret &int) ClCommandQueue {
 	return C.clCreateCommandQueue(context, device, properties, errcode_ret)
 }
 
