@@ -17,17 +17,20 @@ import time
 pub struct PlotConfig {
 	net.ListenOptions
 pub:
-	timeout time.Duration = 1 * time.second
-	use_cdn bool
-	saddr   string = ':0'
+	timeout      time.Duration = 1 * time.second
+	use_cdn      bool
+	saddr        string = ':0'
+	open_browser bool   = true
 }
 
 // show starts a web server and opens a browser window to display the plot.
+// When the browser cannot be opened (headless or remote hosts) the URL is printed
+// instead, and the server keeps serving the plot until the first request.
 pub fn (p Plot) show(config PlotConfig) ! {
 	$if test {
 		println('Ignoring plot.show() because we are running in test mode')
 	} $else {
-		mut handler := PlotlyHandler{
+		mut handler := &PlotlyHandler{
 			use_cdn: true
 			plot:    p
 		}
@@ -43,7 +46,12 @@ pub fn (p Plot) show(config PlotConfig) ! {
 		handler.server = server
 		t := spawn server.listen_and_serve()
 		server.wait_till_running()!
-		os.open_uri('http://${server.addr}')!
+		url := 'http://${server.addr}'
+		if config.open_browser {
+			os.open_uri(url) or { println('Could not open a browser: ${err}. Open ${url} to view the plot.') }
+		} else {
+			println('Open ${url} to view the plot.')
+		}
 		t.wait()
 	}
 }
