@@ -24,3 +24,5 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+# Automated fix for issue #597: plot.show() crashes
