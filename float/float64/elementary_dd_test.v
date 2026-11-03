@@ -44,6 +44,7 @@ fn test_dd_elementary_special_values() {
 	assert math.abs(log(math.e) - 1.0) < 1e-15
 	assert math.abs(exp(1.0) - math.e) < 1e-15
 }
+
 const exp_dd_references = [
 	[u64(4647634439237600404), u64(7904035981971449814), u64(7655326176047143777)],
 	[u64(13861377991302205584), u64(3839983868491045537), u64(3595539227209156055)],
@@ -88,7 +89,6 @@ const log_dd_references = [
 	[u64(9094988921128908188), u64(4649287341619838901), u64(4403039170185985236)],
 ]
 
-
 fn test_sin_dd_matches_correctly_rounded_references() {
 	for triple in sin_dd_references {
 		x := math.f64_from_bits(triple[0])
@@ -124,6 +124,7 @@ fn test_dd_trig_special_values() {
 	s := (h1 + l1) * (h1 + l1) + (h2 + l2) * (h2 + l2)
 	assert math.abs(s - 1.0) < 1e-15
 }
+
 const sin_dd_references = [
 	[u64(13871344857727127504), u64(13829017081451593228), u64(13585946720125060968)],
 	[u64(13860729111711959336), u64(13829761658971020827), u64(4359741786380808388)],
@@ -165,7 +166,6 @@ const cos_dd_references = [
 	[u64(4602678819172646912), u64(4606079780542709072), u64(13585268877995206696)],
 	[u64(13826050856027422720), u64(4606079780542709072), u64(13585268877995206696)],
 ]
-
 
 fn test_exp2_dd_matches_correctly_rounded_references() {
 	for triple in exp2_dd_references {
@@ -226,6 +226,7 @@ fn test_dd_more_special_values() {
 	assert math.is_inf(f64(log2(0.0)), -1)
 	assert math.is_nan(log10(-1.0))
 }
+
 const exp2_dd_references = [
 	[u64(13857200418004759744), u64(4330616481746285872), u64(4088189669291605453)],
 	[u64(13857842668223261596), u64(4301647552102436350), u64(13283668660610709603)],
@@ -293,7 +294,6 @@ const tan_dd_references = [
 	[u64(4602678819172646912), u64(4603095874924660554), u64(4359702029082419721)],
 	[u64(13821547256400052224), u64(13821643487897734230), u64(4348725442727287357)],
 ]
-
 
 fn test_atan_dd_matches_correctly_rounded_references() {
 	for triple in atan_dd_references {
@@ -384,6 +384,7 @@ fn test_dd_inv_hyp_special_values() {
 	assert math.is_inf(f64(sinh(1000.0)), 1)
 	assert math.is_inf(f64(cosh(-1000.0)), 1)
 }
+
 const atan_dd_references = [
 	[u64(4640536292469838248), u64(4609728033584450960), u64(4363905325924274075)],
 	[u64(13869769875896970696), u64(13833114791344027609), u64(4364752466414009883)],
@@ -481,7 +482,6 @@ const tanh_dd_references = [
 	[u64(4636737291354636288), u64(4607182418800017408), u64(0)],
 ]
 
-
 fn test_expm1_dd_matches_correctly_rounded_references() {
 	for triple in expm1_dd_references {
 		x := math.f64_from_bits(triple[0])
@@ -517,6 +517,7 @@ fn test_dd_m1_special_values() {
 	assert math.is_nan(log1p(-2.0))
 	assert math.is_inf(f64(expm1(1000.0)), 1)
 }
+
 const expm1_dd_references = [
 	[u64(13856528500415403072), u64(13830554455654793216), u64(4239350728982437668)],
 	[u64(13853784793044746897), u64(13830554455654793215), u64(13583347138693905589)],
@@ -550,7 +551,6 @@ const log1p_dd_references = [
 	[u64(4352464011485697175), u64(4352464011485697175), u64(13317317303746645066)],
 	[u64(13830554446647593961), u64(13847339095934615652), u64(13601173227672136482)],
 ]
-
 
 fn test_dd_hard_case_regressions() {
 	// Found by the directed hard-case search: sinh with a fixed 2^-512

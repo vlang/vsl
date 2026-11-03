@@ -59,6 +59,7 @@ fn test_cos_dd_hard_cases() {
 		assert math.abs(lo - lo_ref) <= 1e-28, 'cos_dd hard lo mismatch for input ${triple[0]}'
 	}
 }
+
 const exp_dd_hard_references = [
 	[u64(4610287335173575697), u64(4617784333787590503), u64(13600800467744550865)], // dist 3.91e-03 ulp
 	[u64(4606278169209644608), u64(4612718782658970935), u64(4372908487198276590)], // dist 4.82e-03 ulp
@@ -107,7 +108,6 @@ const cos_dd_hard_references = [
 	[u64(4595459001462603443), u64(4607045458933774139), u64(13587357894798825699)], // dist 1.21e-04 ulp
 	[u64(4602498969716406670), u64(4606122498104268901), u64(13587356969503468836)], // dist 1.72e-04 ulp
 ]
-
 
 fn test_exp2_dd_hard_cases() {
 	for triple in exp2_dd_hard_references {
@@ -240,6 +240,7 @@ fn test_tanh_dd_hard_cases() {
 		assert math.abs(lo - lo_ref) <= tol, 'tanh_dd hard lo mismatch for input ${triple[0]}'
 	}
 }
+
 const exp2_dd_hard_references = [
 	[u64(4587339460448728232), u64(4607340629779414291), u64(13591818493652752875)], // dist 2.51e-03 ulp
 	[u64(4651143278985214240), u64(8668108209043843357), u64(17649459209467170473)], // dist 8.20e-03 ulp

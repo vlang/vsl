@@ -65,7 +65,9 @@ fn test_tan_hard_cases() {
 		got := tan(math.f32_from_bits(pair[0]))
 		assert math.f32_bits(got) == pair[1], 'tan hard bits mismatch for input ${pair[0]}'
 	}
-}const exp_hard_references = [
+}
+
+const exp_hard_references = [
 	[u32(1098298036), u32(1251450986)], // dist 2.23e-04 ulp
 	[u32(982897682), u32(1065362811)], // dist 2.70e-04 ulp
 	[u32(1046496415), u32(1067407133)], // dist 4.73e-04 ulp
@@ -149,7 +151,6 @@ const tan_hard_references = [
 	[u32(1066504213), u32(1074412787)], // dist 1.42e-03 ulp
 	[u32(1056579225), u32(1057492784)], // dist 1.50e-03 ulp
 ]
-
 
 fn test_expm1_hard_cases() {
 	for pair in expm1_hard_references {

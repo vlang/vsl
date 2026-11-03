@@ -55,21 +55,21 @@ pub mut:
 	x          XType
 	x0         string @[omitempty] // Single x position for violin/box plots
 	xbins      map[string]f32
-	y          YType      @[omitempty]
-	y0         string     @[omitempty] // Single y position for horizontal plots
-	z          ZType      @[omitempty]
-	name       string     @[omitempty]
-	mode       string     @[omitempty]
-	marker     Marker     @[omitempty]
-	line       Line       @[omitempty]
-	pull       []f64      @[omitempty]
-	hole       f64        @[omitempty]
-	fill       string     @[omitempty]
-	fillcolor  string     @[omitempty]
-	customdata [][]string @[omitempty]
-	colorscale string = 'Viridis'   @[omitempty]
-	textinfo   string     @[omitempty]
-	text       []string   @[omitempty]
+	y          YType              @[omitempty]
+	y0         string             @[omitempty] // Single y position for horizontal plots
+	z          ZType              @[omitempty]
+	name       string             @[omitempty]
+	mode       string             @[omitempty]
+	marker     Marker             @[omitempty]
+	line       Line               @[omitempty]
+	pull       []f64              @[omitempty]
+	hole       f64                @[omitempty]
+	fill       string             @[omitempty]
+	fillcolor  string             @[omitempty]
+	customdata [][]string         @[omitempty]
+	colorscale string = 'Viridis' @[omitempty]
+	textinfo   string             @[omitempty]
+	text       []string           @[omitempty]
 }
 
 // ScatterTrace is a struct for Scatter trace type
@@ -199,15 +199,15 @@ pub mut:
 pub struct ViolinTrace {
 pub mut:
 	// Core violin fields
-	x          []string @[omitempty] // For grouped violin plots
-	y          YType    @[omitempty]
-	x0         string   @[omitempty] // Single x position for violin plots
-	name       string   @[omitempty]
-	marker     Marker   @[omitempty]
-	line       Line     @[omitempty]
+	x          []string           @[omitempty] // For grouped violin plots
+	y          YType              @[omitempty]
+	x0         string             @[omitempty] // Single x position for violin plots
+	name       string             @[omitempty]
+	marker     Marker             @[omitempty]
+	line       Line               @[omitempty]
 	colorscale string = 'Viridis' @[omitempty]
-	fillcolor  string   @[omitempty] // Fill color for violin
-	opacity    f64      @[omitempty] // Opacity for violin
+	fillcolor  string             @[omitempty] // Fill color for violin
+	opacity    f64                @[omitempty] // Opacity for violin
 
 	// Violin-specific fields
 	side        string @[omitempty] // 'both', 'positive', 'negative'
@@ -398,19 +398,19 @@ pub mut:
 // Marker is a struct for marker properties in a trace
 pub struct Marker {
 pub mut:
-	size       []f64    @[omitempty]
-	color      []string @[omitempty]
-	opacity    f64    = 0.8     @[omitempty]
+	size       []f64              @[omitempty]
+	color      []string           @[omitempty]
+	opacity    f64    = 0.8       @[omitempty]
 	colorscale string = 'Viridis' @[omitempty]
 }
 
 // Line is a struct for line properties in a trace
 pub struct Line {
 pub mut:
-	color   string @[omitempty]
-	width   f64    = 2.0   @[omitempty]
+	color   string           @[omitempty]
+	width   f64    = 2.0     @[omitempty]
 	dash    string = 'solid' @[omitempty]
-	visible bool   @[omitempty]
+	visible bool             @[omitempty]
 }
 
 // Bins is a struct for bin limits in a histogram trace
@@ -829,9 +829,9 @@ pub mut:
 pub struct Projection {
 pub mut:
 	type_     string = 'equirectangular' @[omitempty] // 'equirectangular', 'mercator', 'orthographic', etc.
-	rotation  Rotation         @[omitempty]
-	parallels []f64            @[omitempty]
-	scale     f64              @[omitempty]
+	rotation  Rotation                   @[omitempty]
+	parallels []f64                      @[omitempty]
+	scale     f64                        @[omitempty]
 }
 
 // Rotation is a struct for projection rotation (used in geo subplots)
