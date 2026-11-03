@@ -1,6 +1,6 @@
 # ADR-002: CUDA Backward Kernels for the VTL Training Path
 
-**Status:** Proposed
+**Status:** Accepted; phase 1 partially landed (BatchNorm2D and MaxPool2D)
 
 **Tracks:** [vlang/vtl#161](https://github.com/vlang/vtl/issues/161) (backward for LSTM, Attention,
 BatchNorm, LayerNorm, Embedding, Pooling). Builds on [ADR-001](./ADR-001-multi-backend-gpu-compute-vsl.md).
@@ -33,9 +33,10 @@ Two facts shape the decision:
   path adds a compiler step (`nvcc`) or a runtime compiler (NVRTC) that every CUDA user and
   CI runner would need.
 - **cuDNN 9.x already ships these backward operations.** The installed cuDNN is 9.27.0
-  (`cudnn_ops.h` exports `cudnnBatchNormalizationBackward` and `cudnnPoolingBackward`,
-  `cudnnNormalizationBackward` covers LayerNorm, and `cudnn_adv.h` exports the RNN and
-  multi-head attention backward APIs).
+  (`cudnn_ops.h` exports `cudnnBatchNormalizationBackward` and `cudnnPoolingBackward`;
+  `cudnn_adv.h` exports the RNN and multi-head attention backward APIs). LayerNorm is
+  **not** covered by the legacy `cudnnNormalizationBackward`: it has no LAYER mode and cannot
+  express per-feature gamma/beta, so LayerNorm needs the graph API (see Decision).
 
 ## Options Considered
 
@@ -49,9 +50,9 @@ Write each kernel in CUDA C and compile it at build or run time.
 
 ### Option B: cuDNN backward APIs where cuDNN has them
 
-Use `cudnnBatchNormalizationBackwardEx`, `cudnnNormalizationBackward` (LayerNorm),
-`cudnnPoolingBackward` and the RNN backward API (`cudnnRNNBackwardData_v8` /
-`cudnnRNNBackwardWeights_v8`).
+Use `cudnnBatchNormalizationBackwardEx`, `cudnnPoolingBackward`, the RNN backward API
+(`cudnnRNNBackwardData_v8` / `cudnnRNNBackwardWeights_v8`), and the cuDNN graph API for
+LayerNorm (`CUDNN_LAYER_NORM` with `CUDNN_BACKEND_OPERATION_NORM_BACKWARD_DESCRIPTOR`).
 
 - Pros: no new build step; tuned kernels; same error model as the existing cuDNN code;
   uses the library already linked for Conv2D.
@@ -82,7 +83,7 @@ Concretely:
 | Op | Implementation | Why |
 |----|----------------|-----|
 | BatchNorm | `cudnnBatchNormalizationBackwardEx` | Native primitive, same descriptor pattern as the existing Conv2D code |
-| LayerNorm | `cudnnNormalizationBackward` | Native primitive; reuses the optional `cudnn_layernorm` gate |
+| LayerNorm | cuDNN graph API, `NORM_BACKWARD` with `CUDNN_LAYER_NORM` | The legacy `cudnnNormalizationBackward` cannot express LayerNorm's per-feature gamma/beta. The graph API is more code and is deferred to a later phase |
 | MaxPool | `cudnnPoolingBackward` | Native primitive |
 | LSTM | `cudnnRNNBackwardData_v8` + `cudnnRNNBackwardWeights_v8` | Native primitive for the most common recurrent layer |
 | Embedding | cuBLAS GEMM with a one-hot index matrix | No cuDNN primitive; one-hot cost is documented and acceptable for the vocabulary sizes VTL targets; a scatter kernel is the follow-up if profiling shows it matters |
@@ -103,8 +104,10 @@ Rules for every new GPU backward path:
 
 ## Consequences
 
-- Phase 1: BatchNorm, LayerNorm and MaxPool backward (all cuDNN primitives). Each is
-  gradient-checked against the CPU path.
+- Phase 1: BatchNorm2D and MaxPool2D backward (cuDNN legacy primitives) landed in vtl#825,
+  each gradient-checked against the CPU path. BatchNorm1D/3D and LayerNorm (graph API) remain.
+  The MaxPool GPU path falls back to CPU when padding is set or a window has tied maxima,
+  because cuDNN's tie routing is not documented to match the CPU rule.
 - Phase 2: LSTM backward through the RNN API, with weights gradients checked against the CPU LSTM.
 - Phase 3: Embedding and attention backward composed from cuBLAS. A scatter kernel and a
   fused attention path are follow-ups, to be decided by profiling, not assumed now.
