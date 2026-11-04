@@ -12,6 +12,22 @@ analysis.
 - Spherical `j_n` and `y_n` functions support non-negative integer orders.
 - Fractional-order cylindrical functions remain tracked in [issue #541](https://github.com/vlang/vsl/issues/541).
 
+### Airy Functions
+- `airy(x)` returns `AiryValues{ai, bi, aip, bip, err}`: Ai, Bi and their first
+  derivatives, with `err` bounding the absolute error of the four values.
+- `airy_scaled(x)` returns the SciPy `airye` forms: for x >= 0, Ai and Ai' times
+  `exp(zeta)` and Bi and Bi' times `exp(-zeta)`, with `zeta = 2/3 x^(3/2)`. For x < 0
+  nothing is scaled.
+- Convenience functions `airy_ai`, `airy_bi`, `airy_aip` and `airy_bip` return single values.
+- Method: double-double Maclaurin series on `|x| <= 8`; oscillatory asymptotic expansion
+  for `x < -8` (relative error about 1e-14 at x = -8); decaying asymptotic expansion for
+  `x > 8` (relative error about 1e-13 at x = 8). Measured against 140-digit references, the
+  series region is held to 1e-13 relative error and the asymptotic regions to 1e-12.
+- Special values: NaN propagates; `Ai(+inf) = Ai'(+inf) = 0`, `Bi(+inf) = Bi'(+inf) = +inf`;
+  every value is NaN at `-inf`. Unscaled Bi and Bi' overflow to `+inf` beyond x of about 104.
+- Accuracy for `x < -1e6` degrades roughly with `zeta * 2.2e-16`, because the phase of the
+  oscillation is rounded in double precision; `err` includes this term.
+
 ### Gamma Functions
 - **Gamma Function**: Γ(x) and related functions
 - **Log Gamma**: Numerically stable logarithmic form
