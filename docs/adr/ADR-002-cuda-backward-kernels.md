@@ -1,6 +1,6 @@
 # ADR-002: CUDA Backward Kernels for the VTL Training Path
 
-**Status:** Accepted; phase 1 landed (BatchNorm1D/2D/3D, MaxPool2D, LayerNorm FP32)
+**Status:** Accepted; phases 1–3 landed in vtl, with the LSTM revision recorded below
 
 **Tracks:** [vlang/vtl#161](https://github.com/vlang/vtl/issues/161) (backward for LSTM, Attention,
 BatchNorm, LayerNorm, Embedding, Pooling). Builds on [ADR-001](./ADR-001-multi-backend-gpu-compute-vsl.md).
@@ -85,9 +85,9 @@ Concretely:
 | BatchNorm | `cudnnBatchNormalizationBackwardEx` | Native primitive, same descriptor pattern as the existing Conv2D code |
 | LayerNorm | cuDNN graph API, `NORM_BACKWARD` with `CUDNN_LAYER_NORM`, **FP32 only** | The legacy `cudnnNormalizationBackward` cannot express LayerNorm's per-feature gamma/beta. cuDNN 9.27 returns no engines for FP64 LayerNorm backward in the graph API, so FP64 stays on the CPU and is reported as such |
 | MaxPool | `cudnnPoolingBackward` | Native primitive |
-| LSTM | `cudnnRNNBackwardData_v8` + `cudnnRNNBackwardWeights_v8` | Native primitive for the most common recurrent layer |
+| LSTM | cuBLAS composition (**revised**, see below) | Original choice was `cudnnRNNBackwardData_v8` + `cudnnRNNBackwardWeights_v8`; replaced during implementation |
 | Embedding | cuBLAS GEMM with a one-hot index matrix | No cuDNN primitive; one-hot cost is documented and acceptable for the vocabulary sizes VTL targets; a scatter kernel is the follow-up if profiling shows it matters |
-| Attention | Composed: cuBLAS GEMM for `QKᵀ` and `PV` and their transposes, `cudnnSoftmaxBackward` | Keeps the code gradient-checkable against the CPU reference; `cudnnMultiHeadAttn*` is deferred |
+| Attention | Composed: cuBLAS GEMMs per (batch, head) and for the projections; softmax backward on the host in this version | Keeps the code gradient-checkable against the CPU reference; `cudnnSoftmaxBackward` and strided-batched GEMM are follow-ups; `cudnnMultiHeadAttn*` is deferred |
 
 Rules for every new GPU backward path:
 
@@ -101,6 +101,32 @@ Rules for every new GPU backward path:
 5. **Verification on hardware.** GitHub-hosted CI has no GPU, so each PR records the
    local command and the GPU used (CUDA 13.x, cuDNN 9.27, NVIDIA GeForce RTX 3060 in the
    first run) in its description.
+
+## Revision: LSTM uses cuBLAS composition (phase 2)
+
+The decision above chose the cuDNN RNN API for LSTM. During implementation that choice was
+revised, for three reasons:
+
+- `cudnnRNNBackwardData_v8` needs the reserve space written by a cuDNN *training* forward
+  pass. Our forward runs on the CPU, so the GPU path would need its own cuDNN forward too.
+- cuDNN expects the weights in its internal packed layout. Mapping the PyTorch gate order
+  and bias layout onto it adds a fragile conversion step.
+- The composed recurrence reuses the GEMM machinery already gradient-checked for attention
+  and Embedding, and it matches the CPU LSTM to 1e-9 in tests.
+
+The cost is one recurrent GEMM and two host transfers per time step. A fused cuDNN path
+remains a possible follow-up, for example when profiling shows the recurrence dominates.
+
+## Phase status
+
+- Phase 1 (landed in vtl): BatchNorm1D/2D/3D (#825, #826), MaxPool2D (#825), LayerNorm backward
+  in FP32 through the graph API (#827). FP64 LayerNorm stays on the CPU (see above).
+- Phase 2 (landed in vtl, composed): LSTM forward and BPTT backward (#830).
+- Phase 3 (landed in vtl, composed): Embedding via one-hot GEMM (#828), multi-head attention
+  backward via per-head GEMMs (#829).
+- Follow-ups: cudnnSoftmaxBackward for attention, strided-batched GEMM for the per-head loops,
+  a scatter kernel for Embedding if profiling shows the one-hot cost matters, and a fused
+  cuDNN LSTM path if profiling shows the recurrence matters.
 
 ## Consequences
 
