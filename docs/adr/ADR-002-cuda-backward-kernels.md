@@ -1,6 +1,6 @@
 # ADR-002: CUDA Backward Kernels for the VTL Training Path
 
-**Status:** Accepted; phase 1 partially landed (BatchNorm2D and MaxPool2D)
+**Status:** Accepted; phase 1 landed (BatchNorm1D/2D/3D, MaxPool2D, LayerNorm FP32)
 
 **Tracks:** [vlang/vtl#161](https://github.com/vlang/vtl/issues/161) (backward for LSTM, Attention,
 BatchNorm, LayerNorm, Embedding, Pooling). Builds on [ADR-001](./ADR-001-multi-backend-gpu-compute-vsl.md).
@@ -83,7 +83,7 @@ Concretely:
 | Op | Implementation | Why |
 |----|----------------|-----|
 | BatchNorm | `cudnnBatchNormalizationBackwardEx` | Native primitive, same descriptor pattern as the existing Conv2D code |
-| LayerNorm | cuDNN graph API, `NORM_BACKWARD` with `CUDNN_LAYER_NORM` | The legacy `cudnnNormalizationBackward` cannot express LayerNorm's per-feature gamma/beta. The graph API is more code and is deferred to a later phase |
+| LayerNorm | cuDNN graph API, `NORM_BACKWARD` with `CUDNN_LAYER_NORM`, **FP32 only** | The legacy `cudnnNormalizationBackward` cannot express LayerNorm's per-feature gamma/beta. cuDNN 9.27 returns no engines for FP64 LayerNorm backward in the graph API, so FP64 stays on the CPU and is reported as such |
 | MaxPool | `cudnnPoolingBackward` | Native primitive |
 | LSTM | `cudnnRNNBackwardData_v8` + `cudnnRNNBackwardWeights_v8` | Native primitive for the most common recurrent layer |
 | Embedding | cuBLAS GEMM with a one-hot index matrix | No cuDNN primitive; one-hot cost is documented and acceptable for the vocabulary sizes VTL targets; a scatter kernel is the follow-up if profiling shows it matters |
@@ -104,10 +104,19 @@ Rules for every new GPU backward path:
 
 ## Consequences
 
-- Phase 1: BatchNorm2D and MaxPool2D backward (cuDNN legacy primitives) landed in vtl#825,
-  each gradient-checked against the CPU path. BatchNorm1D/3D and LayerNorm (graph API) remain.
-  The MaxPool GPU path falls back to CPU when padding is set or a window has tied maxima,
-  because cuDNN's tie routing is not documented to match the CPU rule.
+- Phase 1 landed in vtl: BatchNorm2D and MaxPool2D (vtl#825), BatchNorm1D and BatchNorm3D
+  (vtl#826), and LayerNorm in FP32 through the graph API. Each is gradient-checked against
+  the CPU path. The MaxPool GPU path falls back to CPU when padding is set or a window has
+  tied maxima, because cuDNN's tie routing is not documented to match the CPU rule.
+- LayerNorm FP64 is not on the GPU. cuDNN 9.27 returns no engine configurations for FP64
+  LayerNorm backward in the graph API (checked with the heuristic modes INSTANT, A, B and
+  FALLBACK), while FP32 returns engines. Silently downcasting FP64 to FP32 would lose
+  precision, so FP64 keeps the CPU path.
+- Graph API notes found during implementation: the operation graph and the execution plan
+  both need `CUDNN_ATTR_*_HANDLE` set before finalization. Without it the plan is rejected
+  with `CUDNN_STATUS_NOT_SUPPORTED` (3000) for every engine configuration. The backend entry
+  points are exported by libcudnn 9.x but their prototypes are not in the installed headers,
+  so VTL declares them.
 - Phase 2: LSTM backward through the RNN API, with weights gradients checked against the CPU LSTM.
 - Phase 3: Embedding and attention backward composed from cuBLAS. A scatter kernel and a
   fused attention path are follow-ups, to be decided by profiling, not assumed now.
