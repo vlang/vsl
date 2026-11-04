@@ -211,6 +211,14 @@
 <li>Cylindrical J, Y, I, and K functions support integer orders, including common order-zero and order-one variants.</li>
 <li>Spherical <code>j_n</code> and <code>y_n</code> functions support non-negative integer orders.</li>
 <li>Fractional-order cylindrical functions remain tracked in <a href="https://github.com/vlang/vsl/issues/541">issue #541</a>.</li></ul>
+<h3 id="airy-functions">Airy Functions</h3>
+<ul>
+<li><code>airy(x)</code> returns <code>AiryValues{ai, bi, aip, bip, err}</code>: Ai, Bi and their first derivatives, with <code>err</code> bounding the absolute error of the four values.</li>
+<li><code>airy_scaled(x)</code> returns the SciPy <code>airye</code> forms: for x &gt;= 0, Ai and Ai' times <code>exp(zeta)</code> and Bi and Bi' times <code>exp(-zeta)</code>, with <code>zeta = 2/3 x^(3/2)</code>. For x &lt; 0 nothing is scaled.</li>
+<li>Convenience functions <code>airy_ai</code>, <code>airy_bi</code>, <code>airy_aip</code> and <code>airy_bip</code> return single values.</li>
+<li>Method: double-double Maclaurin series on <code>|x| &lt;= 8</code>; oscillatory asymptotic expansion for <code>x &lt; -8</code> (relative error about 1e-14 at x = -8); decaying asymptotic expansion for <code>x &gt; 8</code> (relative error about 1e-13 at x = 8). Measured against 140-digit references, the series region is held to 1e-13 relative error and the asymptotic regions to 1e-12.</li>
+<li>Special values: NaN propagates; <code>Ai(+inf) = Ai'(+inf) = 0</code>, <code>Bi(+inf) = Bi'(+inf) = +inf</code>; every value is NaN at <code>-inf</code>. Unscaled Bi and Bi' overflow to <code>+inf</code> beyond x of about 104.</li>
+<li>Accuracy for <code>x &lt; -1e6</code> degrades roughly with <code>zeta * 2.2e-16</code>, because the phase of the oscillation is rounded in double precision; <code>err</code> includes this term.</li></ul>
 <h3 id="gamma-functions">Gamma Functions</h3>
 <ul>
 <li><strong>Gamma Function</strong>: Γ(x) and related functions</li>
@@ -358,6 +366,54 @@ y_new <span class="token operator">:=</span> interp<span class="token punctuatio
 <li>Numerical Recipes in Scientific Computing</li></ul>
 <hr>
 <p>For more special functions, see the <a href="https://vlang.github.io/vsl">VSL documentation</a> and <a href="https://github.com/vlang/vsl/blob/master/examples">examples directory</a>.</p>
+
+</section>
+
+		<section id="airy" class="doc-node">
+			<div class="title"><h2>fn airy <a href="#airy">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/fun/airy.v#L378"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">airy</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token type_name">AiryValues</span></code></pre>
+<p>airy computes Ai, Bi, Ai' and Bi' at x, in unscaled form.</p>
+
+</section>
+
+		<section id="airy_ai" class="doc-node">
+			<div class="title"><h2>fn airy_ai <a href="#airy_ai">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/fun/airy.v#L404"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">airy_ai</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>airy_ai returns Ai(x).</p>
+
+</section>
+
+		<section id="airy_aip" class="doc-node">
+			<div class="title"><h2>fn airy_aip <a href="#airy_aip">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/fun/airy.v#L414"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">airy_aip</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>airy_aip returns Ai'(x).</p>
+
+</section>
+
+		<section id="airy_bi" class="doc-node">
+			<div class="title"><h2>fn airy_bi <a href="#airy_bi">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/fun/airy.v#L409"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">airy_bi</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>airy_bi returns Bi(x).</p>
+
+</section>
+
+		<section id="airy_bip" class="doc-node">
+			<div class="title"><h2>fn airy_bip <a href="#airy_bip">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/fun/airy.v#L419"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">airy_bip</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
+<p>airy_bip returns Bi'(x).</p>
+
+</section>
+
+		<section id="airy_scaled" class="doc-node">
+			<div class="title"><h2>fn airy_scaled <a href="#airy_scaled">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/fun/airy.v#L385"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">airy_scaled</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token type_name">AiryValues</span></code></pre>
+<p>airy_scaled computes the exponentially scaled forms, as SciPy's airye does. For x &gt;= 0, Ai and Ai' are multiplied by exp(zeta) and Bi and Bi' by exp(-zeta), with zeta = 2/3 x^{3/2}. For x &lt; 0 the result equals airy(x).</p>
 
 </section>
 
@@ -1014,6 +1070,21 @@ y_new <span class="token operator">:=</span> interp<span class="token punctuatio
 
 </section>
 
+		<section id="AiryValues" class="doc-node">
+			<div class="title"><h2>struct AiryValues <a href="#AiryValues">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/fun/airy.v#L28"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token type_name">AiryValues</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span><span class="token punctuation">:</span>
+	ai  <span class="token builtin">f64</span>
+	bi  <span class="token builtin">f64</span>
+	aip <span class="token builtin">f64</span>
+	bip <span class="token builtin">f64</span>
+	err <span class="token builtin">f64</span>
+<span class="token punctuation">}</span></code></pre>
+<p>AiryValues holds Ai, Bi and their first derivatives at one point. err is an estimate of the largest absolute error among the four values, derived from the method used.</p>
+
+</section>
+
 		<section id="ChebSeries" class="doc-node">
 			<div class="title"><h2>struct ChebSeries <a href="#ChebSeries">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/fun/cheb.v#L7"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
@@ -1268,9 +1339,27 @@ y_new <span class="token operator">:=</span> interp<span class="token punctuatio
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 3 Nov 2026 11:35:59</div>
+						<div class="footer">Powered by vdoc. Generated on: 4 Nov 2026 05:04:57</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_fun">README</a></li>
+<li class="open"><a href="#airy">fn airy</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#airy_ai">fn airy_ai</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#airy_aip">fn airy_aip</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#airy_bi">fn airy_bi</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#airy_bip">fn airy_bip</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#airy_scaled">fn airy_scaled</a>        <ul>
+</ul>
+</li>
 <li class="open"><a href="#atan2p">fn atan2p</a>        <ul>
 </ul>
 </li>
@@ -1506,6 +1595,9 @@ y_new <span class="token operator">:=</span> interp<span class="token punctuatio
 </ul>
 </li>
 <li class="open"><a href="#InterpFn">type InterpFn</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#AiryValues">struct AiryValues</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#ChebSeries">struct ChebSeries</a>        <ul>

@@ -1944,15 +1944,15 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 </section>
 
 		<section id="Plot.show" class="doc-node">
-			<div class="title"><h2>fn (Plot) show <a href="#Plot.show">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/plot/show.v#L26"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (Plot) show <a href="#Plot.show">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/plot/show.v#L29"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>p <span class="token type_name">Plot</span><span class="token punctuation">)</span> <span class="token function">show</span><span class="token punctuation">(</span>config <span class="token type_name">PlotConfig</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
-<p>show starts a web server and opens a browser window to display the plot.</p>
+<p>show starts a web server and opens a browser window to display the plot. When the browser cannot be opened (headless or remote hosts) the URL is printed instead, and the server keeps serving the plot until the first request.</p>
 
 </section>
 
 		<section id="Plot.get_plotly_script" class="doc-node">
-			<div class="title"><h2>fn (Plot) get_plotly_script <a href="#Plot.get_plotly_script">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/plot/show.v#L65"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (Plot) get_plotly_script <a href="#Plot.get_plotly_script">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/plot/show.v#L73"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>p <span class="token type_name">Plot</span><span class="token punctuation">)</span> <span class="token function">get_plotly_script</span><span class="token punctuation">(</span>element_id <span class="token builtin">string</span><span class="token punctuation">,</span> config <span class="token type_name">PlotlyScriptConfig</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token module_">html</span><span class="token punctuation">.</span><span class="token type_name">Tag</span></code></pre>
 <p>get_plotly_script returns the plot script as an html tag.</p>
@@ -1966,16 +1966,17 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <code><span class="token keyword">struct</span> <span class="token type_name">PlotConfig</span> <span class="token punctuation">{</span>
 	<span class="token module_">net</span><span class="token punctuation">.</span><span class="token type_name">ListenOptions</span>
 <span class="token keyword">pub</span><span class="token punctuation">:</span>
-	timeout <span class="token module_">time</span><span class="token punctuation">.</span><span class="token type_name">Duration</span> <span class="token operator">=</span> <span class="token number">1</span> <span class="token operator">*</span> <span class="token module_">time</span><span class="token punctuation">.</span>second
-	use_cdn <span class="token builtin">bool</span>
-	saddr   <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">':0'</span>
+	timeout      <span class="token module_">time</span><span class="token punctuation">.</span><span class="token type_name">Duration</span> <span class="token operator">=</span> <span class="token number">1</span> <span class="token operator">*</span> <span class="token module_">time</span><span class="token punctuation">.</span>second
+	use_cdn      <span class="token builtin">bool</span>
+	saddr        <span class="token builtin">string</span> <span class="token operator">=</span> <span class="token string">':0'</span>
+	open_browser <span class="token builtin">bool</span>   <span class="token operator">=</span> <span class="token boolean">true</span>
 <span class="token punctuation">}</span></code></pre>
 <p>PlotConfig defines a public data structure for this module.</p>
 
 </section>
 
 		<section id="PlotlyScriptConfig" class="doc-node">
-			<div class="title"><h2>struct PlotlyScriptConfig <a href="#PlotlyScriptConfig">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/plot/show.v#L60"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>struct PlotlyScriptConfig <a href="#PlotlyScriptConfig">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/plot/show.v#L68"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <div class="attributes"><div class="attribute">@[params]</div></div>
 <pre class="signature">
 <code><span class="token keyword">struct</span> <span class="token type_name">PlotlyScriptConfig</span> <span class="token punctuation">{</span>
@@ -2367,7 +2368,7 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 3 Nov 2026 11:35:59</div>
+						<div class="footer">Powered by vdoc. Generated on: 4 Nov 2026 05:04:57</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_plot">README</a></li>
 <li class="open"><a href="#plot_actual_vs_predicted">fn plot_actual_vs_predicted</a>        <ul>
