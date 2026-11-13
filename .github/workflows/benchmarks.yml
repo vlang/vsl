@@ -321,7 +321,9 @@ jobs:
           sudo apt-get install --quiet -y --no-install-recommends libopenmpi-dev openmpi-bin
 
       - name: Move VSL to modules
-        run: mv ./vsl ~/.vmodules
+        run: |
+          mkdir -p ~/.vmodules
+          mv ./vsl ~/.vmodules/vsl
 
       - name: Run FFT vs NumPy benchmark
         if: matrix.benchmark == 'fft'
