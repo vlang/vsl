@@ -14,3 +14,8 @@ retry_wait_time = 2
 concurrency = 1
 request_interval = "2s"
 # GNU.org rate-limits automated link checks; serialize requests and wait between them.
+
+# The parity tracker references many GitHub issues; avoid bursty unauthenticated requests.
+[hosts."github.com"]
+concurrency = 1
+request_interval = "1s"
