@@ -39,7 +39,7 @@ pub fn (mut v Vector[T]) load(data []T) chan IError {
 // data gets T data from device, it's a blocking call
 pub fn (v &Vector[T]) data() ![]T {
 	mut data := []T{len: int(v.buf.size / int(sizeof(T)))}
-	ret := cl_enqueue_read_buffer(v.buf.device.queue, v.buf.memobj, true, 0, usize(v.buf.size),
+	ret := cl_enqueue_read_buffer(v.buf.device.queue, v.buf.memobj, true, 0, uint(v.buf.size),
 		unsafe { &data[0] }, 0, unsafe { nil }, unsafe { nil })
 	return error_or_default(ret, data)
 }
@@ -93,7 +93,7 @@ pub fn (v &VectorF32) data() ![]f32 {
 	if data.len == 0 {
 		return data
 	}
-	ret := cl_enqueue_read_buffer(v.buf.device.queue, v.buf.memobj, true, 0, usize(v.buf.size),
+	ret := cl_enqueue_read_buffer(v.buf.device.queue, v.buf.memobj, true, 0, uint(v.buf.size),
 		unsafe { &data[0] }, 0, unsafe { nil }, unsafe { nil })
 	return error_or_default(ret, data)
 }

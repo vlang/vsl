@@ -6,7 +6,7 @@ type Hdf5HidT = i64
 type Hdf5HsizeT = u64
 type Hdf5HerrT = int
 type Hdf5ClassT = int
-type Hdf5SizeT = usize
+type Hdf5SizeT = uint
 
 fn C.H5Fcreate(filename &char, flags int, fcpl_id Hdf5HidT, fapl_id Hdf5HidT) Hdf5HidT
 fn C.H5Fopen(filename &char, flags int, fcpl_id Hdf5HidT) Hdf5HidT

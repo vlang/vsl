@@ -32,7 +32,7 @@ pub fn (b &Bytes) load(data []u8) chan IError {
 // data gets data from device, it's a blocking call
 pub fn (b &Bytes) data() ![]u8 {
 	mut data := []u8{len: b.buf.size}
-	ret := cl_enqueue_read_buffer(b.buf.device.queue, b.buf.memobj, true, 0, usize(b.buf.size),
+	ret := cl_enqueue_read_buffer(b.buf.device.queue, b.buf.memobj, true, 0, uint(b.buf.size),
 		unsafe { &data[0] }, 0, unsafe { nil }, unsafe { nil })
 	if ret != success {
 		return error_from_code(ret)

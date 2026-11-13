@@ -197,7 +197,7 @@ pub mut:
 	sType    u32
 	pNext    voidptr
 	flags    u32
-	codeSize usize
+	codeSize uint
 	pCode    &u32
 }
 

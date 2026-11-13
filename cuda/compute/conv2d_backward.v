@@ -84,8 +84,8 @@ pub fn conv2d_backward_cuda(dev &cuda.CudaDevice, grad_out []f64, input []f64, k
 	data_algo := cuda.CudnnConvolutionBwdDataAlgo(0)
 	filter_algo := cuda.CudnnConvolutionBwdFilterAlgo(0)
 
-	mut ws_data := usize(0)
-	mut ws_filter := usize(0)
+	mut ws_data := uint(0)
+	mut ws_filter := uint(0)
 	sw0 := C.cudnnGetConvolutionBackwardDataWorkspaceSize(dev.cudnn, filter_desc, dy_tensor_desc,
 		conv_desc, in_tensor_desc, data_algo, &ws_data)
 	if sw0 != cuda.cudnn_status_success {
