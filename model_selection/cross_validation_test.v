@@ -82,6 +82,37 @@ fn test_stratified_kfold_basic() {
 	}
 }
 
+fn test_stratified_kfold_keeps_fractional_labels_distinct() ! {
+	y := [0.25, 0.25, 0.25, 0.25, 0.75, 0.75, 0.75, 0.75]
+	skf := StratifiedKFold.new(2, false, 42)
+	folds := skf.split(y)!
+
+	for fold in folds {
+		mut lower_class := 0
+		mut upper_class := 0
+		for index in fold.test_indices {
+			if y[index] == 0.25 {
+				lower_class++
+			} else if y[index] == 0.75 {
+				upper_class++
+			}
+		}
+		assert lower_class == 2
+		assert upper_class == 2
+	}
+}
+
+fn test_stratified_kfold_balances_folds_when_classes_are_small() ! {
+	y := [0.0, 1.0, 2.0, 3.0]
+	skf := StratifiedKFold.new(2, false, 42)
+	folds := skf.split(y)!
+
+	assert folds[0].test_indices.len == 2
+	assert folds[1].test_indices.len == 2
+	assert folds[0].test_indices == [0, 2]
+	assert folds[1].test_indices == [1, 3]
+}
+
 fn test_leave_one_out() {
 	loo := LeaveOneOut.new()
 	folds := loo.split(5)

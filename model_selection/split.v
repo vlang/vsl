@@ -37,7 +37,8 @@ pub fn train_test_split(x [][]f64, y []f64, config TrainTestSplitConfig) !TrainT
 
 	// Shuffle if not stratified
 	if config.stratify {
-		indices = stratified_indices(y, config.test_size, config.random_seed)!
+		indices = stratified_indices(y, config.test_size, config.random_seed, n_test,
+			config.shuffle)!
 	} else if config.shuffle {
 		shuffle_indices(mut indices, config.random_seed)
 	}
@@ -79,29 +80,44 @@ pub:
 }
 
 // stratified_indices returns indices that preserve class proportions
-fn stratified_indices(y []f64, test_ratio f64, seed u32) ![]int {
-	// Group indices by class
-	mut class_indices := map[int][]int{}
-
-	for i, val in y {
-		class_key := int(val)
-		if class_key !in class_indices {
-			class_indices[class_key] = []int{}
-		}
-		class_indices[class_key] << i
-	}
-
+fn stratified_indices(y []f64, test_ratio f64, seed u32, n_test int, shuffle bool) ![]int {
+	groups := stratified_class_groups(y)!
 	mut train_indices := []int{}
 	mut test_indices := []int{}
-
-	// For each class, split proportionally
-	for _, indices in class_indices {
-		mut class_idx := indices.clone()
-		shuffle_indices(mut class_idx, seed)
-
-		n_test := int(math.round(f64(class_idx.len) * test_ratio))
-		n_train := class_idx.len - n_test
-
+	mut test_counts := []int{len: groups.keys.len}
+	mut remainders := []f64{len: groups.keys.len}
+	mut allocated_test := 0
+	for class_index, key in groups.keys {
+		expected_test := f64(groups.indices[key].len) * test_ratio
+		test_counts[class_index] = int(math.floor(expected_test))
+		remainders[class_index] = expected_test - f64(test_counts[class_index])
+		allocated_test += test_counts[class_index]
+	}
+	if allocated_test > n_test {
+		return errors.error('stratified allocation exceeds requested test size', .einval)
+	}
+	for _ in 0 .. n_test - allocated_test {
+		mut best_class := -1
+		for class_index, remainder in remainders {
+			if remainder < 0.0 {
+				continue
+			}
+			if best_class == -1 || remainder > remainders[best_class] {
+				best_class = class_index
+			}
+		}
+		if best_class == -1 {
+			return errors.error('cannot allocate requested stratified test size', .einval)
+		}
+		test_counts[best_class]++
+		remainders[best_class] = -1.0
+	}
+	for class_index, key in groups.keys {
+		mut class_idx := groups.indices[key].clone()
+		if shuffle {
+			shuffle_indices(mut class_idx, seed)
+		}
+		n_train := class_idx.len - test_counts[class_index]
 		for i in 0 .. n_train {
 			train_indices << class_idx[i]
 		}
@@ -109,21 +125,41 @@ fn stratified_indices(y []f64, test_ratio f64, seed u32) ![]int {
 			test_indices << class_idx[i]
 		}
 	}
-
-	// Shuffle train and test separately
-	shuffle_indices(mut train_indices, seed)
-	shuffle_indices(mut test_indices, seed + 1)
-
-	// Combine: train first, then test
-	mut result := []int{}
-	for idx in train_indices {
-		result << idx
+	if shuffle {
+		shuffle_indices(mut train_indices, seed)
+		shuffle_indices(mut test_indices, seed + 1)
+	} else {
+		train_indices.sort()
+		test_indices.sort()
 	}
-	for idx in test_indices {
-		result << idx
-	}
-
+	mut result := train_indices.clone()
+	result << test_indices
 	return result
+}
+
+struct StratifiedClassGroups {
+	keys    []string
+	indices map[string][]int
+}
+
+fn stratified_class_groups(y []f64) !StratifiedClassGroups {
+	mut keys := []string{}
+	mut indices := map[string][]int{}
+	for i, value in y {
+		if math.is_nan(value) || value == math.inf(1) || value == math.inf(-1) {
+			return errors.error('stratification labels must be finite', .einval)
+		}
+		key := if value == 0.0 { '0' } else { value.str() }
+		if key !in indices {
+			keys << key
+			indices[key] = []int{}
+		}
+		indices[key] << i
+	}
+	return StratifiedClassGroups{
+		keys:    keys
+		indices: indices
+	}
 }
 
 // shuffle_indices shuffles an array of indices in place
