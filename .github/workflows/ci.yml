@@ -66,7 +66,7 @@ jobs:
       - name: Setup V
         uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
-          version: 78869311b51c76ddb4c3d2ed17e8a7733d8d5979
+          version: ba41fa121b738a1a694e0050401a45d2376e09b9
 
       - name: Move VSL source code to V Modules
         run: |
@@ -167,7 +167,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           repository: vlang/v
-          ref: 78869311b51c76ddb4c3d2ed17e8a7733d8d5979
+          ref: ba41fa121b738a1a694e0050401a45d2376e09b9
           persist-credentials: false
           path: v
 
@@ -287,7 +287,7 @@ jobs:
       - name: Setup V
         uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
-          version: 78869311b51c76ddb4c3d2ed17e8a7733d8d5979
+          version: ba41fa121b738a1a694e0050401a45d2376e09b9
 
       - name: Move VSL source code to V Modules
         run: |
@@ -349,7 +349,7 @@ jobs:
       - name: Setup V
         uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
-          version: 78869311b51c76ddb4c3d2ed17e8a7733d8d5979
+          version: ba41fa121b738a1a694e0050401a45d2376e09b9
 
       - name: Move VSL source code to V Modules
         run: |
