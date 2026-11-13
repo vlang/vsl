@@ -10,7 +10,7 @@ mut:
 
 // buffer creates a new buffer with specified size
 fn (d &Device) buffer(size int) !&Buffer {
-	mut ret := 0
+	mut ret := ClInt(0)
 	buffer := cl_create_buffer(d.ctx, mem_read_write, uint(size), unsafe { nil }, &ret)
 	if ret != success {
 		return error_from_code(ret)

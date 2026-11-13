@@ -4,7 +4,7 @@ module vcl
 const err_unknown = error('vcl_cl: unknown error')
 
 // ErrVCL converts that OpenCL error code to an V error
-pub type ErrVCL = int
+pub type ErrVCL = ClInt
 
 pub fn (e ErrVCL) err() IError {
 	if e == success {
@@ -83,25 +83,25 @@ pub fn (e ErrVCL) err() IError {
 	return error_with_code(err, int(e))
 }
 
-pub fn error_from_code(code int) IError {
+pub fn error_from_code(code ClInt) IError {
 	return ErrVCL(code).err()
 }
 
-pub fn error_or_default[T](code int, default T) !T {
+pub fn error_or_default[T](code ClInt, default T) !T {
 	if code == success {
 		return default
 	}
 	return ErrVCL(code).err()
 }
 
-pub fn typed_error[T](code int) !T {
+pub fn typed_error[T](code ClInt) !T {
 	if code == success {
 		return
 	}
 	return ErrVCL(code).err()
 }
 
-pub fn vcl_error(code int) ! {
+pub fn vcl_error(code ClInt) ! {
 	err := ErrVCL(code).err()
 	match err {
 		none {}
@@ -111,7 +111,7 @@ pub fn vcl_error(code int) ! {
 	}
 }
 
-pub fn panic_on_error(code int) {
+pub fn panic_on_error(code ClInt) {
 	err := ErrVCL(code).err()
 	match err {
 		none {}
