@@ -2,13 +2,13 @@ module lapack
 
 import vsl.blas
 
-fn C.LAPACKE_dgesv(matrix_layout int, n int, nrhs int, a &f64, lda int, ipiv &int, b &f64, ldb int) int
+fn C.LAPACKE_dgesv(matrix_layout int, n int, nrhs int, a &f64, lda int, ipiv &i32, b &f64, ldb int) int
 
 fn C.LAPACKE_dgesvd(matrix_layout int, jobu u8, jobvt u8, m int, n int, a &f64, lda int, s &f64, u &f64, ldu int, vt &f64, ldvt int, superb &f64) int
 
-fn C.LAPACKE_dgetrf(matrix_layout int, m int, n int, a &f64, lda int, ipiv &int) int
+fn C.LAPACKE_dgetrf(matrix_layout int, m int, n int, a &f64, lda int, ipiv &i32) int
 
-fn C.LAPACKE_dgetri(matrix_layout int, n int, a &f64, lda int, ipiv &int) int
+fn C.LAPACKE_dgetri(matrix_layout int, n int, a &f64, lda int, ipiv &i32) int
 
 fn C.LAPACKE_dpotrf(matrix_layout int, uplo u8, n int, a &f64, lda int) int
 
@@ -188,6 +188,20 @@ fn C.LAPACKE_zlange(matrix_layout int, norm u8, m int, n int, a voidptr, lda int
 // V WRAPPER FUNCTIONS
 // ========================================
 
+fn lapacke_pivots_to_i32(ipiv []int) []i32 {
+	mut pivots := []i32{len: ipiv.len}
+	for i, pivot in ipiv {
+		pivots[i] = i32(pivot)
+	}
+	return pivots
+}
+
+fn lapacke_pivots_to_int(pivots []i32, mut ipiv []int, count int) {
+	for i in 0 .. count {
+		ipiv[i] = int(pivots[i])
+	}
+}
+
 // dgesv - Direct wrapper for LAPACKE_dgesv (flat array interface)
 
 // dgesv exposes this operation as part of the public API.
@@ -195,10 +209,18 @@ fn C.LAPACKE_zlange(matrix_layout int, norm u8, m int, n int, a voidptr, lda int
 // dgesv exposes this operation as part of the public API.
 @[inline]
 pub fn dgesv(n int, nrhs int, mut a []f64, lda int, mut ipiv []int, mut b []f64, ldb int) int {
-	unsafe {
-		return C.LAPACKE_dgesv(int(blas.MemoryLayout.row_major), n, nrhs, &a[0], lda, &ipiv[0],
+	if ipiv.len < n {
+		panic('lapack: bad length of ipiv')
+	}
+	mut c_ipiv := lapacke_pivots_to_i32(ipiv)
+	status := unsafe {
+		C.LAPACKE_dgesv(int(blas.MemoryLayout.row_major), n, nrhs, &a[0], lda, &c_ipiv[0],
 			&b[0], ldb)
 	}
+	if status >= 0 {
+		lapacke_pivots_to_int(c_ipiv, mut ipiv, n)
+	}
+	return status
 }
 
 // dgesvd - Direct wrapper for LAPACKE_dgesvd (flat array interface)
@@ -300,9 +322,18 @@ pub fn dorgqr(m int, n int, k int, mut a []f64, lda int, tau []f64) int {
 // dgetrf exposes this operation as part of the public API.
 @[inline]
 pub fn dgetrf(m int, n int, mut a []f64, lda int, mut ipiv []int) int {
-	unsafe {
-		return C.LAPACKE_dgetrf(int(blas.MemoryLayout.row_major), m, n, &a[0], lda, &ipiv[0])
+	pivot_count := if m < n { m } else { n }
+	if ipiv.len != pivot_count {
+		panic('lapack: bad length of ipiv')
 	}
+	mut c_ipiv := lapacke_pivots_to_i32(ipiv)
+	status := unsafe {
+		C.LAPACKE_dgetrf(int(blas.MemoryLayout.row_major), m, n, &a[0], lda, &c_ipiv[0])
+	}
+	if status >= 0 {
+		lapacke_pivots_to_int(c_ipiv, mut ipiv, if m < n { m } else { n })
+	}
+	return status
 }
 
 $if !macos {
@@ -331,7 +362,11 @@ $if !macos {
 // dgetri exposes this operation as part of the public API.
 @[inline]
 pub fn dgetri(n int, mut a []f64, lda int, mut ipiv []int) int {
-	unsafe {
-		return C.LAPACKE_dgetri(int(blas.MemoryLayout.row_major), n, &a[0], lda, &ipiv[0])
+	if ipiv.len != n {
+		panic('lapack: bad length of ipiv')
+	}
+	c_ipiv := lapacke_pivots_to_i32(ipiv)
+	return unsafe {
+		C.LAPACKE_dgetri(int(blas.MemoryLayout.row_major), n, &a[0], lda, &c_ipiv[0])
 	}
 }
