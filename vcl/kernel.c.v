@@ -10,7 +10,7 @@ interface KernelBufferArgument {
 // if retrieving the kernel didn't complete the function will return an error
 pub fn (d &Device) kernel(name string) !&Kernel {
 	mut k := ClKernel(0)
-	mut ret := 0
+	mut ret := ClInt(0)
 	for p in d.programs {
 		k = cl_create_kernel(p, &char(name.str), &ret)
 		if ret == invalid_kernel_name {

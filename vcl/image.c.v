@@ -69,7 +69,7 @@ fn (d &Device) create_image(image_type ImageChannelOrder, bounds Rect, row_pitch
 		flags = ClMemFlags(mem_read_write | mem_copy_host_ptr)
 	}
 
-	mut ret := 0
+	mut ret := ClInt(0)
 	// memobj := cl_create_image(d.ctx, flags, format, desc, data, &ret)
 	memobj := cl_create_image2d(d.ctx, flags, format, uint(bounds.width), uint(bounds.height),
 		uint(row_pitch), data, &ret)
@@ -123,7 +123,7 @@ pub fn (image &Image) data() !IImage {
 	return error_or_default(ret, IImage(img))
 }
 
-fn (image &Image) write_queue() !int {
+fn (image &Image) write_queue() !ClInt {
 	mut origin := [3]uint{}
 	mut region := [3]uint{}
 	temp := [uint(image.bounds.width), uint(image.bounds.height), 1]
