@@ -3,7 +3,8 @@
 **Status:** Accepted; phases 1–3 landed in vtl, with the LSTM revision recorded below
 
 **Tracks:** [vlang/vtl#161](https://github.com/vlang/vtl/issues/161) (backward for LSTM, Attention,
-BatchNorm, LayerNorm, Embedding, Pooling). Builds on [ADR-001](./ADR-001-multi-backend-gpu-compute-vsl.md).
+BatchNorm, LayerNorm, Embedding, Pooling). Builds on
+[ADR-001](./ADR-001-multi-backend-gpu-compute-vsl.md).
 
 ## Context
 
@@ -11,8 +12,8 @@ ADR-001 chose a backend abstraction and cuBLAS/cuDNN for CUDA. Since then the fo
 has become GPU-backed (GEMM/GEMV, activations, softmax, Conv2D, optional LayerNorm), and
 Conv2D backward has landed through `cudnnConvolutionBackward*`.
 
-The backward path is still mostly CPU. The current state, from [`cuda/README.md`](../../cuda/README.md)
-and the VTL CUDA code:
+The backward path is still mostly CPU. Current state is based on
+[`cuda/README.md`](../../cuda/README.md) and the VTL CUDA code:
 
 | Backward op | GPU today | Notes |
 |-------------|-----------|-------|
