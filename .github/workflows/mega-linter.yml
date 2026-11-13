@@ -51,7 +51,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
-          persist-credentials: false
+          persist-credentials: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
           # If you use VALIDATE_ALL_CODEBASE = true, you can remove this line to
@@ -181,7 +181,6 @@ jobs:
           ) &&
           !contains(github.event.head_commit.message, 'skip fix')
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
           branch: >-
             ${{
               github.event.pull_request.head.ref ||
