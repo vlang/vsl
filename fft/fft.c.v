@@ -123,13 +123,29 @@ pub fn create_plan[T](x T) ?Fftplan {
 		return none
 	}
 	$if T is []f32 {
-		return Fftplan(Fft32{C.make_rfft_plan_f32(x.len)})
+		plan := C.make_rfft_plan_f32(x.len)
+		if isnil(plan) {
+			return none
+		}
+		return Fftplan(Fft32{plan})
 	} $else $if T is []f64 {
-		return Fftplan(Fft64{C.make_rfft_plan_f64(x.len)})
+		plan := C.make_rfft_plan_f64(x.len)
+		if isnil(plan) {
+			return none
+		}
+		return Fftplan(Fft64{plan})
 	} $else $if T is []cmplx_f32 {
-		return Fftplan(Cfft32{C.make_cfft_plan_f32(x.len), x.len})
+		plan := C.make_cfft_plan_f32(x.len)
+		if isnil(plan) {
+			return none
+		}
+		return Fftplan(Cfft32{plan, x.len})
 	} $else $if T is []cmplx_f64 {
-		return Fftplan(Cfft64{C.make_cfft_plan_f64(x.len), x.len})
+		plan := C.make_cfft_plan_f64(x.len)
+		if isnil(plan) {
+			return none
+		}
+		return Fftplan(Cfft64{plan, x.len})
 	} $else {
 		eprintln('fftplan unsupported type: ${typeof(x).name}')
 	}
