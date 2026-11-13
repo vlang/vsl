@@ -48,6 +48,7 @@ excluded_test_dirs=(
 	'vsl/cuda/examples|requires CUDA and an NVIDIA device'
 	'vsl/inout/h5|requires the optional HDF5 library'
 	'vsl/mpi|requires an MPI implementation and launcher'
+	'vsl/vcl|requires the OpenCL SDK headers and library'
 	'vsl/vcl/compute|requires an OpenCL SDK and runtime'
 	'vsl/vulkan|requires Vulkan SDK headers; tested in a dedicated step'
 	'vsl/vulkan/compute|requires Vulkan SDK headers; tested in a dedicated step'
