@@ -25,6 +25,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          path: vsl
           persist-credentials: false
 
       - uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
@@ -37,7 +38,9 @@ jobs:
           sudo apt-get install -qq -y libopenblas-dev liblapacke-dev gfortran python3 python3-numpy
 
       - name: Install module
-        run: mv . ~/.vmodules/vsl
+        run: |
+          mkdir -p ~/.vmodules
+          mv ./vsl ~/.vmodules/vsl
 
       - name: Run vs NumPy harness
         run: |
