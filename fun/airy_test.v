@@ -54,7 +54,8 @@ fn test_airy_matches_high_precision_reference() {
 fn test_airy_error_estimate_bounds_the_error() {
 	for fixture in airy_fixtures {
 		v := airy(fixture.x)
-		for pair in [[v.ai, fixture.ai], [v.bi, fixture.bi], [v.aip, fixture.aip], [v.bip, fixture.bip]] {
+		for pair in [[v.ai, fixture.ai], [v.bi, fixture.bi], [v.aip, fixture.aip],
+			[v.bip, fixture.bip]] {
 			assert math.abs(pair[0] - pair[1]) <= v.err + 1e-300, 'error at x=${fixture.x}: ${math.abs(pair[0] - pair[1])} exceeds estimate ${v.err}'
 		}
 	}
