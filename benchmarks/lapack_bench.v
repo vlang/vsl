@@ -5,7 +5,11 @@ import vsl.lapack
 import math
 
 fn main() {
-	benchmark_util.print_header('LAPACK Performance Benchmarks (Pure V)')
+	$if vsl_lapack_lapacke ? {
+		benchmark_util.print_header('LAPACK Performance Benchmarks (LAPACKE)')
+	} $else {
+		benchmark_util.print_header('LAPACK Performance Benchmarks (Pure V)')
+	}
 
 	// Benchmark configuration
 	config := benchmark_util.BenchmarkConfig{

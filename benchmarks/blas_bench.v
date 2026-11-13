@@ -5,7 +5,14 @@ import vsl.blas
 import vsl.util
 
 fn main() {
-	benchmark_util.print_header('BLAS Performance Benchmarks (Pure V)')
+	backend := $if vsl_blas_cblas {
+		'CBLAS'
+	} $else $if vsl_blas_generic_cblas {
+		'generic CBLAS'
+	} $else {
+		'Pure V'
+	}
+	benchmark_util.print_header('BLAS Performance Benchmarks (${backend})')
 
 	// Benchmark configuration
 	config := benchmark_util.BenchmarkConfig{
