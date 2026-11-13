@@ -4,7 +4,7 @@ permissions:
   contents: read
 
 env:
-  VJOBS: '2'
+  VJOBS: "2"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -17,7 +17,7 @@ on:
   workflow_dispatch:
     inputs:
       run_cuda:
-        description: 'Run CUDA tests (requires org GPU runner; not configured today)'
+        description: "Run CUDA tests (requires org GPU runner; not configured today)"
         type: boolean
         default: false
 
@@ -25,25 +25,25 @@ on:
     branches:
       - main
     paths-ignore:
-      - '**.md'
-      - 'static/DOCS.md'
-      - 'docs/**'
-      - 'examples/**/README.md'
+      - "**.md"
+      - "static/DOCS.md"
+      - "docs/**"
+      - "examples/**/README.md"
 
   pull_request:
     branches:
       - main
     paths-ignore:
-      - '**.md'
-      - 'static/DOCS.md'
-      - 'docs/**'
-      - 'examples/**/README.md'
+      - "**.md"
+      - "static/DOCS.md"
+      - "docs/**"
+      - "examples/**/README.md"
 
 jobs:
   run-tests-on-linux:
     runs-on: ${{ matrix.os }}
     env:
-      VJOBS: '2'
+      VJOBS: "2"
 
     strategy:
       fail-fast: false
@@ -103,7 +103,7 @@ jobs:
       - name: Test OpenCL compute backend
         if: matrix.os == 'ubuntu-24.04' && matrix.flags == ''
         env:
-          VJOBS: '2'
+          VJOBS: "2"
         run: |
           cd ~/.vmodules
           env HOME="$HOME" PATH="$PATH" VJOBS=2 \
@@ -136,7 +136,7 @@ jobs:
 
       - name: Execute Tests using Vulkan Compute Backend
         env:
-          VSL_TEST_VULKAN: '1'
+          VSL_TEST_VULKAN: "1"
         run: |
           cd ~/.vmodules
           env HOME="$HOME" PATH="$PATH" VJOBS=2 TERM="$TERM" VSL_TEST_VULKAN=1 v wipe-cache
@@ -147,7 +147,7 @@ jobs:
     name: Windows portable test suites
     runs-on: windows-latest
     env:
-      VJOBS: '2'
+      VJOBS: "2"
 
     steps:
       - name: Checkout VSL
@@ -252,7 +252,7 @@ jobs:
 
       - name: Test Vulkan suite on Windows
         env:
-          VSL_TEST_VULKAN: '1'
+          VSL_TEST_VULKAN: "1"
         shell: bash
         run: |
           cd ~/.vmodules
@@ -268,7 +268,7 @@ jobs:
     if: github.event_name == 'workflow_dispatch' && inputs.run_cuda == true
     runs-on: ubuntu-24.04
     env:
-      VJOBS: '2'
+      VJOBS: "2"
 
     steps:
       - name: Checkout VSL
@@ -321,7 +321,7 @@ jobs:
   run-tests-on-macos:
     runs-on: ${{ matrix.os }}
     env:
-      VJOBS: '2'
+      VJOBS: "2"
 
     strategy:
       fail-fast: false
