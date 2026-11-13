@@ -9,3 +9,7 @@ exclude = [
 timeout = 30
 max_retries = 2
 retry_wait_time = 2
+
+[hosts."www.gnu.org"]
+concurrency = 1
+host_request_interval = "2s"

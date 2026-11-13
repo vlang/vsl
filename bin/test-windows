@@ -32,6 +32,7 @@ portable_packages=(
 	vsl/ml
 	vsl/model_selection
 	vsl/noise
+	vsl/ode
 	vsl/plot
 	vsl/poly
 	vsl/preprocessing
@@ -86,7 +87,7 @@ while IFS= read -r -d '' test_file; do
 	fi
 	[[ "${found}" == true ]] || fail "test directory is neither included nor explicitly excluded: ${test_dir}"
 	test_dirs+=("${test_dir}")
-done < <(find vsl -type f -name '*_test.v' -print0)
+done < <(find -L vsl -type f -name '*_test.v' -print0)
 
 printf 'Windows CPU coverage inventory: %d test directories; %d portable packages; %d explicit exclusions.\n' \
 	"${#test_dirs[@]}" "${#portable_packages[@]}" "${#excluded_test_dirs[@]}"
