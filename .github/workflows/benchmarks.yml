@@ -287,7 +287,10 @@ jobs:
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: vs-numpy-benchmark-logs
-          path: ~/.vmodules/vs_numpy_*.log
+          path: |
+            ~/.vmodules/vs_numpy_matmul.log
+            ~/.vmodules/vs_numpy_gemv.log
+            ~/.vmodules/vs_numpy_conv2d.log
           retention-days: 14
 
   fft-mpi-benchmarks:
