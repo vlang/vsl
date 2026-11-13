@@ -2,21 +2,21 @@ module vcl
 
 import vsl.vcl.internal.dl
 
-fn map_dl_err_code(code int) int {
+fn map_dl_err_code(code int) ClInt {
 	match code {
 		dl.dl_open_issue_code { return dl_sym_issue }
 		dl.dl_no_path_issue_code { return dl_sym_issue }
 		dl.dl_sym_issue_code { return dl_open_issue }
 		dl.dl_close_issue_code { return dl_open_issue }
 		dl.dl_register_issue_code { return dl_sym_issue }
-		else { return code }
+		else { return ClInt(code) }
 	}
 }
 
-type ClCreateBufferType = fn (context ClContext, flags ClMemFlags, size uint, host_ptr voidptr, errcode_ret &int) ClMem
+type ClCreateBufferType = fn (context ClContext, flags ClMemFlags, size uint, host_ptr voidptr, errcode_ret &ClInt) ClMem
 
 @[inline]
-fn cl_create_buffer(context ClContext, flags ClMemFlags, size uint, host_ptr voidptr, errcode_ret &int) ClMem {
+fn cl_create_buffer(context ClContext, flags ClMemFlags, size uint, host_ptr voidptr, errcode_ret &ClInt) ClMem {
 	f := dl.get_sym('clCreateBuffer') or {
 		unsafe {
 			*errcode_ret = map_dl_err_code(err.code())
@@ -27,111 +27,111 @@ fn cl_create_buffer(context ClContext, flags ClMemFlags, size uint, host_ptr voi
 	return sfn(context, flags, size, host_ptr, errcode_ret)
 }
 
-type ClReleaseMemObjectType = fn (memobj ClMem) int
+type ClReleaseMemObjectType = fn (memobj ClMem) ClInt
 
 @[inline]
-fn cl_release_mem_object(memobj ClMem) int {
+fn cl_release_mem_object(memobj ClMem) ClInt {
 	f := dl.get_sym('clReleaseMemObject') or { return map_dl_err_code(err.code()) }
 	sfn := ClReleaseMemObjectType(f)
 	return sfn(memobj)
 }
 
-type ClEnqueueWriteBufferType = fn (command_queue ClCommandQueue, buffer ClMem, blocking_write bool, offset uint, cb uint, ptr voidptr, num_events_in_wait_list u32, event_wait_list &ClEvent, event &ClEvent) int
+type ClEnqueueWriteBufferType = fn (command_queue ClCommandQueue, buffer ClMem, blocking_write bool, offset uint, cb uint, ptr voidptr, num_events_in_wait_list u32, event_wait_list &ClEvent, event &ClEvent) ClInt
 
 @[inline]
-fn cl_enqueue_write_buffer(command_queue ClCommandQueue, buffer ClMem, blocking_write bool, offset uint, cb uint, ptr voidptr, num_events_in_wait_list u32, event_wait_list &ClEvent, event &ClEvent) int {
+fn cl_enqueue_write_buffer(command_queue ClCommandQueue, buffer ClMem, blocking_write bool, offset uint, cb uint, ptr voidptr, num_events_in_wait_list u32, event_wait_list &ClEvent, event &ClEvent) ClInt {
 	f := dl.get_sym('clEnqueueWriteBuffer') or { return map_dl_err_code(err.code()) }
 	sfn := ClEnqueueWriteBufferType(f)
 	return sfn(command_queue, buffer, blocking_write, offset, cb, ptr, num_events_in_wait_list,
 		event_wait_list, event)
 }
 
-type ClReleaseEventType = fn (event ClEvent) int
+type ClReleaseEventType = fn (event ClEvent) ClInt
 
 @[inline]
-fn cl_release_event(event ClEvent) int {
+fn cl_release_event(event ClEvent) ClInt {
 	f := dl.get_sym('clReleaseEvent') or { return map_dl_err_code(err.code()) }
 	sfn := ClReleaseEventType(f)
 	return sfn(event)
 }
 
-type ClWaitForEventsType = fn (num_events u32, event_list &ClEvent) int
+type ClWaitForEventsType = fn (num_events u32, event_list &ClEvent) ClInt
 
 @[inline]
-fn cl_wait_for_events(num_events u32, event_list &ClEvent) int {
+fn cl_wait_for_events(num_events u32, event_list &ClEvent) ClInt {
 	f := dl.get_sym('clWaitForEvents') or { return map_dl_err_code(err.code()) }
 	sfn := ClWaitForEventsType(f)
 	return sfn(num_events, event_list)
 }
 
-type ClEnqueueReadBufferType = fn (command_queue ClCommandQueue, buffer ClMem, blocking_read bool, offset uint, cb uint, ptr voidptr, num_events_in_wait_list u32, event_wait_list &ClEvent, event &ClEvent) int
+type ClEnqueueReadBufferType = fn (command_queue ClCommandQueue, buffer ClMem, blocking_read bool, offset uint, cb uint, ptr voidptr, num_events_in_wait_list u32, event_wait_list &ClEvent, event &ClEvent) ClInt
 
 @[inline]
-fn cl_enqueue_read_buffer(command_queue ClCommandQueue, buffer ClMem, blocking_read bool, offset uint, cb uint, ptr voidptr, num_events_in_wait_list u32, event_wait_list &ClEvent, event &ClEvent) int {
+fn cl_enqueue_read_buffer(command_queue ClCommandQueue, buffer ClMem, blocking_read bool, offset uint, cb uint, ptr voidptr, num_events_in_wait_list u32, event_wait_list &ClEvent, event &ClEvent) ClInt {
 	f := dl.get_sym('clEnqueueReadBuffer') or { return map_dl_err_code(err.code()) }
 	sfn := ClEnqueueReadBufferType(f)
 	return sfn(command_queue, buffer, blocking_read, offset, cb, ptr, num_events_in_wait_list,
 		event_wait_list, event)
 }
 
-type ClReleaseProgramType = fn (program ClProgram) int
+type ClReleaseProgramType = fn (program ClProgram) ClInt
 
 @[inline]
-fn cl_release_program(program ClProgram) int {
+fn cl_release_program(program ClProgram) ClInt {
 	f := dl.get_sym('clReleaseProgram') or { return map_dl_err_code(err.code()) }
 	sfn := ClReleaseProgramType(f)
 	return sfn(program)
 }
 
-type ClReleaseCommandQueueType = fn (command_queue ClCommandQueue) int
+type ClReleaseCommandQueueType = fn (command_queue ClCommandQueue) ClInt
 
 @[inline]
-fn cl_release_command_queue(command_queue ClCommandQueue) int {
+fn cl_release_command_queue(command_queue ClCommandQueue) ClInt {
 	f := dl.get_sym('clReleaseCommandQueue') or { return map_dl_err_code(err.code()) }
 	sfn := ClReleaseCommandQueueType(f)
 	return sfn(command_queue)
 }
 
-type ClReleaseContextType = fn (context ClContext) int
+type ClReleaseContextType = fn (context ClContext) ClInt
 
 @[inline]
-fn cl_release_context(context ClContext) int {
+fn cl_release_context(context ClContext) ClInt {
 	f := dl.get_sym('clReleaseContext') or { return map_dl_err_code(err.code()) }
 	sfn := ClReleaseContextType(f)
 	return sfn(context)
 }
 
-type ClReleaseDeviceType = fn (device ClDeviceId) int
+type ClReleaseDeviceType = fn (device ClDeviceId) ClInt
 
 @[inline]
-fn cl_release_device(device ClDeviceId) int {
+fn cl_release_device(device ClDeviceId) ClInt {
 	f := dl.get_sym('clReleaseDevice') or { return map_dl_err_code(err.code()) }
 	sfn := ClReleaseDeviceType(f)
 	return sfn(device)
 }
 
-type ClGetDeviceInfoType = fn (device ClDeviceId, param_name ClDeviceInfo, param_value_size uint, param_value voidptr, param_value_size_ret &uint) int
+type ClGetDeviceInfoType = fn (device ClDeviceId, param_name ClDeviceInfo, param_value_size uint, param_value voidptr, param_value_size_ret &uint) ClInt
 
 @[inline]
-fn cl_get_device_info(device ClDeviceId, param_name ClDeviceInfo, param_value_size uint, param_value voidptr, param_value_size_ret &uint) int {
+fn cl_get_device_info(device ClDeviceId, param_name ClDeviceInfo, param_value_size uint, param_value voidptr, param_value_size_ret &uint) ClInt {
 	f := dl.get_sym('clGetDeviceInfo') or { return map_dl_err_code(err.code()) }
 	sfn := ClGetDeviceInfoType(f)
 	return sfn(device, param_name, param_value_size, param_value, param_value_size_ret)
 }
 
-type ClGetDeviceIDsType = fn (platform ClPlatformId, device_type ClDeviceType, num_entries u32, devices &ClDeviceId, num_devices &u32) int
+type ClGetDeviceIDsType = fn (platform ClPlatformId, device_type ClDeviceType, num_entries u32, devices &ClDeviceId, num_devices &u32) ClInt
 
 @[inline]
-fn cl_get_device_i_ds(platform ClPlatformId, device_type ClDeviceType, num_entries u32, devices &ClDeviceId, num_devices &u32) int {
+fn cl_get_device_i_ds(platform ClPlatformId, device_type ClDeviceType, num_entries u32, devices &ClDeviceId, num_devices &u32) ClInt {
 	f := dl.get_sym('clGetDeviceIDs') or { return map_dl_err_code(err.code()) }
 	sfn := ClGetDeviceIDsType(f)
 	return sfn(platform, device_type, num_entries, devices, num_devices)
 }
 
-type ClCreateProgramWithSourceType = fn (context ClContext, count u32, strings &&char, lengths &uint, errcode_ret &int) ClProgram
+type ClCreateProgramWithSourceType = fn (context ClContext, count u32, strings &&char, lengths &uint, errcode_ret &ClInt) ClProgram
 
 @[inline]
-fn cl_create_program_with_source(context ClContext, count u32, strings &&char, lengths &uint, errcode_ret &int) ClProgram {
+fn cl_create_program_with_source(context ClContext, count u32, strings &&char, lengths &uint, errcode_ret &ClInt) ClProgram {
 	f := dl.get_sym('clCreateProgramWithSource') or {
 		unsafe {
 			*errcode_ret = map_dl_err_code(err.code())
@@ -142,10 +142,10 @@ fn cl_create_program_with_source(context ClContext, count u32, strings &&char, l
 	return sfn(context, count, strings, lengths, errcode_ret)
 }
 
-type ClCreateCommandQueueWithPropertiesType = fn (context ClContext, device ClDeviceId, properties &ClQueueProperties, errcode_ret &int) ClCommandQueue
+type ClCreateCommandQueueWithPropertiesType = fn (context ClContext, device ClDeviceId, properties &ClQueueProperties, errcode_ret &ClInt) ClCommandQueue
 
 @[inline]
-fn cl_create_command_queue_with_properties(context ClContext, device ClDeviceId, properties &ClQueueProperties, errcode_ret &int) ClCommandQueue {
+fn cl_create_command_queue_with_properties(context ClContext, device ClDeviceId, properties &ClQueueProperties, errcode_ret &ClInt) ClCommandQueue {
 	f := dl.get_sym('clCreateCommandQueueWithProperties') or {
 		unsafe {
 			*errcode_ret = map_dl_err_code(err.code())
@@ -156,10 +156,10 @@ fn cl_create_command_queue_with_properties(context ClContext, device ClDeviceId,
 	return sfn(context, device, properties, errcode_ret)
 }
 
-type ClCreateCommandQueueType = fn (context ClContext, device ClDeviceId, properties ClCommandQueueProperties, errcode_ret &int) ClCommandQueue
+type ClCreateCommandQueueType = fn (context ClContext, device ClDeviceId, properties ClCommandQueueProperties, errcode_ret &ClInt) ClCommandQueue
 
 @[inline]
-fn cl_create_command_queue(context ClContext, device ClDeviceId, properties ClCommandQueueProperties, errcode_ret &int) ClCommandQueue {
+fn cl_create_command_queue(context ClContext, device ClDeviceId, properties ClCommandQueueProperties, errcode_ret &ClInt) ClCommandQueue {
 	f := dl.get_sym('clCreateCommandQueue') or {
 		unsafe {
 			*errcode_ret = map_dl_err_code(err.code())
@@ -170,28 +170,28 @@ fn cl_create_command_queue(context ClContext, device ClDeviceId, properties ClCo
 	return sfn(context, device, properties, errcode_ret)
 }
 
-type ClBuildProgramType = fn (program ClProgram, num_devices u32, device_list &ClDeviceId, options &char, pfn_notify voidptr, user_data voidptr) int
+type ClBuildProgramType = fn (program ClProgram, num_devices u32, device_list &ClDeviceId, options &char, pfn_notify voidptr, user_data voidptr) ClInt
 
 @[inline]
-fn cl_build_program(program ClProgram, num_devices u32, device_list &ClDeviceId, options &char, pfn_notify voidptr, user_data voidptr) int {
+fn cl_build_program(program ClProgram, num_devices u32, device_list &ClDeviceId, options &char, pfn_notify voidptr, user_data voidptr) ClInt {
 	f := dl.get_sym('clBuildProgram') or { return map_dl_err_code(err.code()) }
 	sfn := ClBuildProgramType(f)
 	return sfn(program, num_devices, device_list, options, pfn_notify, user_data)
 }
 
-type ClGetProgramBuildInfoType = fn (program ClProgram, device ClDeviceId, param_name ClProgramBuildInfo, param_value_size uint, param_value voidptr, param_value_size_ret &uint) int
+type ClGetProgramBuildInfoType = fn (program ClProgram, device ClDeviceId, param_name ClProgramBuildInfo, param_value_size uint, param_value voidptr, param_value_size_ret &uint) ClInt
 
 @[inline]
-fn cl_get_program_build_info(program ClProgram, device ClDeviceId, param_name ClProgramBuildInfo, param_value_size uint, param_value voidptr, param_value_size_ret &uint) int {
+fn cl_get_program_build_info(program ClProgram, device ClDeviceId, param_name ClProgramBuildInfo, param_value_size uint, param_value voidptr, param_value_size_ret &uint) ClInt {
 	f := dl.get_sym('clGetProgramBuildInfo') or { return map_dl_err_code(err.code()) }
 	sfn := ClGetProgramBuildInfoType(f)
 	return sfn(program, device, param_name, param_value_size, param_value, param_value_size_ret)
 }
 
-type ClCreateKernelType = fn (program ClProgram, kernel_name &char, errcode_ret &int) ClKernel
+type ClCreateKernelType = fn (program ClProgram, kernel_name &char, errcode_ret &ClInt) ClKernel
 
 @[inline]
-fn cl_create_kernel(program ClProgram, kernel_name &char, errcode_ret &int) ClKernel {
+fn cl_create_kernel(program ClProgram, kernel_name &char, errcode_ret &ClInt) ClKernel {
 	f := dl.get_sym('clCreateKernel') or {
 		unsafe {
 			*errcode_ret = map_dl_err_code(err.code())
@@ -202,47 +202,47 @@ fn cl_create_kernel(program ClProgram, kernel_name &char, errcode_ret &int) ClKe
 	return sfn(program, kernel_name, errcode_ret)
 }
 
-type ClReleaseKernelType = fn (kernel ClKernel) int
+type ClReleaseKernelType = fn (kernel ClKernel) ClInt
 
 @[inline]
-fn cl_release_kernel(kernel ClKernel) int {
+fn cl_release_kernel(kernel ClKernel) ClInt {
 	f := dl.get_sym('clReleaseKernel') or { return map_dl_err_code(err.code()) }
 	sfn := ClReleaseKernelType(f)
 	return sfn(kernel)
 }
 
-type ClSetKernelArgType = fn (kernel ClKernel, arg_index u32, arg_size uint, arg_value voidptr) int
+type ClSetKernelArgType = fn (kernel ClKernel, arg_index u32, arg_size uint, arg_value voidptr) ClInt
 
 @[inline]
-fn cl_set_kernel_arg(kernel ClKernel, arg_index u32, arg_size uint, arg_value voidptr) int {
+fn cl_set_kernel_arg(kernel ClKernel, arg_index u32, arg_size uint, arg_value voidptr) ClInt {
 	f := dl.get_sym('clSetKernelArg') or { return map_dl_err_code(err.code()) }
 	sfn := ClSetKernelArgType(f)
 	return sfn(kernel, arg_index, arg_size, arg_value)
 }
 
-type ClEnqueueNDRangeKernelType = fn (command_queue ClCommandQueue, kernel ClKernel, work_dim u32, global_work_offset &uint, global_work_size &uint, local_work_size &uint, num_events_in_wait_list u32, event_wait_list &ClEvent, event &ClEvent) int
+type ClEnqueueNDRangeKernelType = fn (command_queue ClCommandQueue, kernel ClKernel, work_dim u32, global_work_offset &uint, global_work_size &uint, local_work_size &uint, num_events_in_wait_list u32, event_wait_list &ClEvent, event &ClEvent) ClInt
 
 @[inline]
-fn cl_enqueue_nd_range_kernel(command_queue ClCommandQueue, kernel ClKernel, work_dim u32, global_work_offset &uint, global_work_size &uint, local_work_size &uint, num_events_in_wait_list u32, event_wait_list &ClEvent, event &ClEvent) int {
+fn cl_enqueue_nd_range_kernel(command_queue ClCommandQueue, kernel ClKernel, work_dim u32, global_work_offset &uint, global_work_size &uint, local_work_size &uint, num_events_in_wait_list u32, event_wait_list &ClEvent, event &ClEvent) ClInt {
 	f := dl.get_sym('clEnqueueNDRangeKernel') or { return map_dl_err_code(err.code()) }
 	sfn := ClEnqueueNDRangeKernelType(f)
 	return sfn(command_queue, kernel, work_dim, global_work_offset, global_work_size,
 		local_work_size, num_events_in_wait_list, event_wait_list, event)
 }
 
-type ClGetPlatformIDsType = fn (num_entries u32, platforms &ClPlatformId, num_platforms &u32) int
+type ClGetPlatformIDsType = fn (num_entries u32, platforms &ClPlatformId, num_platforms &u32) ClInt
 
 @[inline]
-fn cl_get_platform_i_ds(num_entries u32, platforms &ClPlatformId, num_platforms &u32) int {
+fn cl_get_platform_i_ds(num_entries u32, platforms &ClPlatformId, num_platforms &u32) ClInt {
 	f := dl.get_sym('clGetPlatformIDs') or { return map_dl_err_code(err.code()) }
 	sfn := ClGetPlatformIDsType(f)
 	return sfn(num_entries, platforms, num_platforms)
 }
 
-type ClCreateContextType = fn (properties &ClContextProperties, num_devices u32, devices &ClDeviceId, pfn_notify voidptr, user_data voidptr, errcode_ret &int) ClContext
+type ClCreateContextType = fn (properties &ClContextProperties, num_devices u32, devices &ClDeviceId, pfn_notify voidptr, user_data voidptr, errcode_ret &ClInt) ClContext
 
 @[inline]
-fn cl_create_context(properties &ClContextProperties, num_devices u32, devices &ClDeviceId, pfn_notify voidptr, user_data voidptr, errcode_ret &int) ClContext {
+fn cl_create_context(properties &ClContextProperties, num_devices u32, devices &ClDeviceId, pfn_notify voidptr, user_data voidptr, errcode_ret &ClInt) ClContext {
 	f := dl.get_sym('clCreateContext') or {
 		unsafe {
 			*errcode_ret = map_dl_err_code(err.code())
@@ -253,10 +253,10 @@ fn cl_create_context(properties &ClContextProperties, num_devices u32, devices &
 	return sfn(properties, num_devices, devices, pfn_notify, user_data, errcode_ret)
 }
 
-type ClCreateImage2DType = fn (context ClContext, flags ClMemFlags, format &ClImageFormat, width uint, height uint, row_pitch uint, data voidptr, errcode_ret &int) ClMem
+type ClCreateImage2DType = fn (context ClContext, flags ClMemFlags, format &ClImageFormat, width uint, height uint, row_pitch uint, data voidptr, errcode_ret &ClInt) ClMem
 
 @[inline]
-fn cl_create_image2d(context ClContext, flags ClMemFlags, format &ClImageFormat, width uint, height uint, row_pitch uint, data voidptr, errcode_ret &int) ClMem {
+fn cl_create_image2d(context ClContext, flags ClMemFlags, format &ClImageFormat, width uint, height uint, row_pitch uint, data voidptr, errcode_ret &ClInt) ClMem {
 	f := dl.get_sym('clCreateImage2D') or {
 		unsafe {
 			*errcode_ret = map_dl_err_code(err.code())
@@ -267,30 +267,30 @@ fn cl_create_image2d(context ClContext, flags ClMemFlags, format &ClImageFormat,
 	return sfn(context, flags, format, width, height, row_pitch, data, errcode_ret)
 }
 
-type ClEnqueueReadImageType = fn (command_queue ClCommandQueue, image ClMem, blocking_read bool, origin3 &uint, region3 &uint, row_pitch uint, slice_pitch uint, ptr voidptr, num_events_in_wait_list u32, event_wait_list &ClEvent, event &ClEvent) int
+type ClEnqueueReadImageType = fn (command_queue ClCommandQueue, image ClMem, blocking_read bool, origin3 &uint, region3 &uint, row_pitch uint, slice_pitch uint, ptr voidptr, num_events_in_wait_list u32, event_wait_list &ClEvent, event &ClEvent) ClInt
 
 @[inline]
-fn cl_enqueue_read_image(command_queue ClCommandQueue, image ClMem, blocking_read bool, origin3 [3]uint, region3 [3]uint, row_pitch uint, slice_pitch uint, ptr voidptr, num_events_in_wait_list u32, event_wait_list &ClEvent, event &ClEvent) int {
-	f := dl.get_sym('clEnqueueReadImage') or { return err.code() }
+fn cl_enqueue_read_image(command_queue ClCommandQueue, image ClMem, blocking_read bool, origin3 [3]uint, region3 [3]uint, row_pitch uint, slice_pitch uint, ptr voidptr, num_events_in_wait_list u32, event_wait_list &ClEvent, event &ClEvent) ClInt {
+	f := dl.get_sym('clEnqueueReadImage') or { return ClInt(err.code()) }
 	sfn := ClEnqueueReadImageType(f)
 	return sfn(command_queue, image, blocking_read, unsafe { &origin3[0] }, unsafe { &region3[0] }, row_pitch, slice_pitch, ptr,
 		num_events_in_wait_list, event_wait_list, event)
 }
 
-type ClEnqueueWriteImageType = fn (command_queue ClCommandQueue, image ClMem, blocking_write bool, origin3 &uint, region3 &uint, row_pitch uint, slice_pitch uint, ptr voidptr, num_events_in_wait_list u32, event_wait_list &ClEvent, event &ClEvent) int
+type ClEnqueueWriteImageType = fn (command_queue ClCommandQueue, image ClMem, blocking_write bool, origin3 &uint, region3 &uint, row_pitch uint, slice_pitch uint, ptr voidptr, num_events_in_wait_list u32, event_wait_list &ClEvent, event &ClEvent) ClInt
 
 @[inline]
-fn cl_enqueue_write_image(command_queue ClCommandQueue, image ClMem, blocking_write bool, origin3 [3]uint, region3 [3]uint, row_pitch uint, slice_pitch uint, ptr voidptr, num_events_in_wait_list u32, event_wait_list &ClEvent, event &ClEvent) int {
-	f := dl.get_sym('clEnqueueWriteImage') or { return err.code() }
+fn cl_enqueue_write_image(command_queue ClCommandQueue, image ClMem, blocking_write bool, origin3 [3]uint, region3 [3]uint, row_pitch uint, slice_pitch uint, ptr voidptr, num_events_in_wait_list u32, event_wait_list &ClEvent, event &ClEvent) ClInt {
+	f := dl.get_sym('clEnqueueWriteImage') or { return ClInt(err.code()) }
 	sfn := ClEnqueueWriteImageType(f)
 	return sfn(command_queue, image, blocking_write, unsafe { &origin3[0] }, unsafe { &region3[0] }, row_pitch, slice_pitch, ptr,
 		num_events_in_wait_list, event_wait_list, event)
 }
 
-type ClCreateImageType = fn (context ClContext, flags ClMemFlags, format &ClImageFormat, desc ClImageDesc, data voidptr, errcode_ret &int) ClMem
+type ClCreateImageType = fn (context ClContext, flags ClMemFlags, format &ClImageFormat, desc ClImageDesc, data voidptr, errcode_ret &ClInt) ClMem
 
 @[inline]
-fn cl_create_image(context ClContext, flags ClMemFlags, format &ClImageFormat, desc ClImageDesc, data voidptr, errcode_ret &int) ClMem {
+fn cl_create_image(context ClContext, flags ClMemFlags, format &ClImageFormat, desc ClImageDesc, data voidptr, errcode_ret &ClInt) ClMem {
 	f := dl.get_sym('clCreateImage') or {
 		unsafe {
 			*errcode_ret = map_dl_err_code(err.code())
