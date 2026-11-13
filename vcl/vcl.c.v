@@ -73,7 +73,7 @@ fn Device.new(id ClDeviceId) !&Device {
 	mut d := &Device{
 		id: id
 	}
-	mut ret := 0
+	mut ret := ClInt(0)
 	d.ctx = cl_create_context(unsafe { nil }, 1, &id, unsafe { nil }, unsafe { nil }, &ret)
 	if ret != success {
 		return error_from_code(ret)
