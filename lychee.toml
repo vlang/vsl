@@ -12,4 +12,4 @@ retry_wait_time = 2
 
 [hosts."www.gnu.org"]
 concurrency = 1
-host_request_interval = "2s"
+request_interval = "2s"
