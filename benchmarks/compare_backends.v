@@ -1,6 +1,5 @@
 module main
 
-import benchmark
 import vsl.benchmarks.util as benchmark_util
 import vsl.blas
 import vsl.util
@@ -31,23 +30,22 @@ fn main() {
 		beta := 0.0
 
 		// Pure V backend
-		mut bench := benchmark.new_benchmark()
+		mut timer := benchmark_util.BenchmarkTimer{}
 		for _ in 0 .. config.warmup_runs {
 			mut c_warmup := benchmark_util.random_matrix(m, n)
 			mut c_warmup_flat := util.flatten_row_major(c_warmup)
 			blas.dgemm(.no_trans, .no_trans, m, n, k, alpha, a_flat, k, b_flat, n, beta, mut
 				c_warmup_flat, n)
 		}
-		bench.step()
 		for _ in 0 .. config.iterations {
 			mut c := benchmark_util.random_matrix(m, n)
 			mut c_flat := util.flatten_row_major(c)
-			bench.step()
+			started_at := timer.start()
 			blas.dgemm(.no_trans, .no_trans, m, n, k, alpha, a_flat, k, b_flat, n, beta, mut
 				c_flat, n)
-			bench.stop()
+			timer.record(started_at)
 		}
-		avg_time_pure_v := f64(bench.total_duration()) / f64(config.iterations)
+		avg_time_pure_v := timer.mean_ns(config.iterations)
 		gflops_pure_v := benchmark_util.calculate_gflops_gemm(m, n, k, avg_time_pure_v)
 
 		benchmark_util.print_result('dgemm (Pure V)', '${m}x${n}x${k}', avg_time_pure_v,
