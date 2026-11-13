@@ -240,8 +240,8 @@ a<span class="token punctuation">.</span><span class="token function">set</span>
 <span class="token keyword">mut</span> c <span class="token operator">:=</span> <span class="token module_">la</span><span class="token punctuation">.</span><span class="token type_name">Matrix</span><span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span>
 <span class="token module_">la</span><span class="token punctuation">.</span><span class="token function">matrix_matrix_mul</span><span class="token punctuation">(</span><span class="token keyword">mut</span> c<span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">,</span> a<span class="token punctuation">,</span> b<span class="token punctuation">)</span>
 
-<span class="token comment">// Print result</span>
-<span class="token function">println</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span></code></pre>
+<span class="token comment">// Print one result element</span>
+<span class="token function">println</span><span class="token punctuation">(</span>c<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
 <p><code>Matrix</code> supports element-wise <code>+</code>, <code>-</code>, <code>/</code>, and integer-only <code>%</code> between equal-shaped matrices. <code>*</code> performs conventional matrix multiplication and requires matching inner dimensions. Scalar arithmetic is available through <code>add_scalar</code>, <code>sub_scalar</code>, <code>scale</code>, and <code>div_scalar</code>; integer matrices also provide <code>remainder_scalar</code>. These methods return a new matrix and leave the input unchanged. Since constructors return heap references and V uses <code>-</code> for pointer subtraction, dereference both operands when using matrix subtraction.</p>
 <pre><code class="language-v"><span class="token keyword">import</span> <span class="token module_">vsl</span><span class="token punctuation">.</span><span class="token module_">la</span>
 
@@ -1505,7 +1505,7 @@ tr <span class="token operator">:=</span> <span class="token module_">la</span><
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 13 Nov 2026 05:50:24</div>
+						<div class="footer">Powered by vdoc. Generated on: 13 Nov 2026 06:51:13</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_la">README</a></li>
 <li class="open"><a href="#center_matrix">fn center_matrix</a>        <ul>
