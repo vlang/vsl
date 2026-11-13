@@ -250,14 +250,16 @@ jobs:
           cd ~/.vmodules
           vsl/bin/test-windows
 
-      - name: Test Vulkan compute on Windows
+      - name: Test Vulkan suite on Windows
+        env:
+          VSL_TEST_VULKAN: '1'
         shell: bash
         run: |
           cd ~/.vmodules
           vulkan_root="${VULKAN_SDK//\\//}"
           export CFLAGS="-I${vulkan_root}/Include"
           export LIB="${vulkan_root}/Lib"
-          v test ./vsl/vulkan/compute
+          v test ./vsl/vulkan
 
   run-tests-on-cuda:
     # CUDA needs an org larger/GPU runner (label was linux-x64-16c). Standard GitHub
