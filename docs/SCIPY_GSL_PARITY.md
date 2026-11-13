@@ -92,8 +92,10 @@ and [#572](https://github.com/vlang/vsl/issues/572).
 ### Interpolation, roots, optimization, quadrature, and ODEs
 
 VSL has selected interpolation helpers, B-spline curves, Newton, bisection, and
-a public Brent root solver with bounded convergence diagnostics. Minimization,
-quadrature, and ODE solver families are missing. See SciPy [`interpolate`][scipy-interpolate],
+a public Brent root solver with bounded convergence diagnostics. The
+derivative-free Nelder-Mead algorithm supports multivariate local minimization.
+Scalar and gradient-based minimization, quadrature, and ODE solver families
+remain missing. See SciPy [`interpolate`][scipy-interpolate],
 [`optimize`][scipy-optimize], and [`integrate`][scipy-integrate], plus GSL
 [`interpolation`][gsl-interp], [`roots`][gsl-roots], [`minimization`][gsl-min],
 [`integration`][gsl-integration], and [`ODE solvers`][gsl-ode]. Track these in
