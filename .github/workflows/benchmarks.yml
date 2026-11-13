@@ -89,7 +89,9 @@ jobs:
             ocl-icd-opencl-dev
 
       - name: Move VSL source code to V Modules
-        run: mv ./vsl ~/.vmodules
+        run: |
+          mkdir -p ~/.vmodules
+          mv ./vsl ~/.vmodules/vsl
 
       - name: Run BLAS Benchmarks (${{ matrix.backend.name }})
         run: |
@@ -188,7 +190,9 @@ jobs:
           brew install opencl-headers
 
       - name: Move VSL source code to V Modules
-        run: mv ./vsl ~/.vmodules
+        run: |
+          mkdir -p ~/.vmodules
+          mv ./vsl ~/.vmodules/vsl
 
       - name: Run BLAS Benchmarks (${{ matrix.backend.name }})
         run: |
@@ -261,7 +265,9 @@ jobs:
             libopenblas-dev liblapacke-dev gfortran python3 python3-numpy
 
       - name: Move VSL to modules
-        run: mv ./vsl ~/.vmodules
+        run: |
+          mkdir -p ~/.vmodules
+          mv ./vsl ~/.vmodules/vsl
 
       - name: Run vs NumPy harness (#282)
         run: |
