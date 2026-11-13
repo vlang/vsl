@@ -10,6 +10,7 @@ The currently usable solvers are:
 | `Bisection.new(f, params).solve()` | Bisection | Requires a sign-changing interval; returns the last iteration or the limit result. |
 | `Brent.new_with_params(f, params).solve()` | Brent's method | Returns root, final bracket, residual, counts, and a termination status. |
 | `GoldenSection.new_with_params(f, params).solve()` | Golden-section minimization | Minimizes a unimodal scalar function on a bounded interval without derivatives. |
+| `BrentMinimizer.new_with_params(f, params).solve()` | Brent minimization | Combines safeguarded parabolic interpolation with golden-section steps for a unimodal scalar function. |
 
 `BisectionParams` configures bounds, relative and absolute tolerances, and the
 iteration limit. `Bisection.next()` exposes individual steps. `BrentParams`
@@ -33,6 +34,13 @@ precision-limit status also reports when adjacent objective values are
 indistinguishable at floating-point precision, so the solver cannot safely
 narrow the interval. It can have a NaN `fx` and zero evaluations when no
 representable interior point exists.
+
+`BrentMinimizerParams` exposes the same bounds, absolute tolerance, iteration,
+and evaluation limits. Brent minimization uses parabolic interpolation when
+the proposed step is safe and falls back to golden-section steps otherwise.
+Like Golden-section minimization, it assumes a unimodal objective and reports
+the best observed point, final interval, maximum distance to either endpoint,
+counts, and termination status.
 
 ```v
 import math
@@ -97,7 +105,31 @@ println('status=${result.status} x=${result.x} f(x)=${result.fx}')
 println('interval=[${result.lower}, ${result.upper}] evaluations=${result.n_calls}')
 ```
 
+Brent minimization uses the same objective and reports its termination diagnostics:
+
+```v
+import vsl.func
+import vsl.roots
+
+fn objective(x f64, _ []f64) f64 {
+	return (x - 1.25) * (x - 1.25)
+}
+
+f := func.Fn.new(f: objective)
+mut minimizer := roots.BrentMinimizer.new_with_params(f, roots.BrentMinimizerParams{
+	xmin:      -5.0
+	xmax:      5.0
+	tol:       1e-8
+	n_max:     100
+	max_evals: 102
+})
+result := minimizer.solve()!
+println('status=${result.status} x=${result.x} f(x)=${result.fx}')
+println('interval=[${result.lower}, ${result.upper}] evaluations=${result.n_calls}')
+```
+
 See the [bisection example](../examples/roots_bisection_solver/README.md),
 the [Brent example](../examples/roots_brent_solver/README.md),
 the [Golden-section example](../examples/roots_golden_section/README.md),
+the [Brent minimization example](../examples/roots_brent_minimizer/README.md),
 [`bisection.v`](bisection.v), and [`newton.v`](newton.v).

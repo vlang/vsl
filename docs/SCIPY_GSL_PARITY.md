@@ -93,9 +93,9 @@ and [#572](https://github.com/vlang/vsl/issues/572).
 
 VSL has selected interpolation helpers, B-spline curves, Newton, bisection, a
 public Brent root solver with bounded convergence diagnostics, and bounded
-derivative-free Golden-section minimization for unimodal scalar objectives.
-Gradient-based and multivariate minimization, quadrature, and ODE solver
-families remain missing. See SciPy [`interpolate`][scipy-interpolate],
+derivative-free Golden-section and Brent minimizers for unimodal scalar
+objectives. Gradient-based and multivariate minimization, quadrature, and ODE
+solver families remain missing. See SciPy [`interpolate`][scipy-interpolate],
 [`optimize`][scipy-optimize], and [`integrate`][scipy-integrate], plus GSL
 [`interpolation`][gsl-interp], [`roots`][gsl-roots], [`minimization`][gsl-min],
 [`integration`][gsl-integration], and [`ODE solvers`][gsl-ode]. Track these in
