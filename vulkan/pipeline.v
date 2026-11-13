@@ -34,7 +34,7 @@ pub fn (d &Device) create_pipeline(spv []u32, entry string) !&ComputePipeline {
 	mut ds := VkDescriptorSet(unsafe { nil })
 
 	// Delegate all Vulkan struct construction to C helper (avoids V's struct layout bug)
-	vk_create_compute_pipeline_simple(d.device, entry.str, &spv[0], usize(spv.len * 4),
+	vk_create_compute_pipeline_simple(d.device, entry.str, &spv[0], uint(spv.len * 4),
 		&shader_mod, &layout, &pl, &dsl, &dp, &ds)!
 
 	// Shader module is no longer needed after pipeline creation

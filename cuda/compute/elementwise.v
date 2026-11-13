@@ -304,7 +304,7 @@ pub fn conv2d_cuda(dev &cuda.CudaDevice, input []f64, kernel []f64, batch int, i
 
 	algo := cuda.CudnnConvolutionFwdAlgo(0)
 
-	mut ws_bytes := usize(0)
+	mut ws_bytes := uint(0)
 	sw := C.cudnnGetConvolutionForwardWorkspaceSize(dev.cudnn, in_tensor_desc, filter_desc,
 		conv_desc, out_tensor_desc, algo, &ws_bytes)
 	if sw != cuda.cudnn_status_success {

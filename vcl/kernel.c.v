@@ -182,7 +182,7 @@ fn (k &Kernel) set_arg_local(index int, size int) ! {
 }
 
 fn (k &Kernel) set_arg_unsafe(index int, arg_size int, arg voidptr) ! {
-	res := cl_set_kernel_arg(k.k, u32(index), usize(arg_size), arg)
+	res := cl_set_kernel_arg(k.k, u32(index), uint(arg_size), arg)
 	if res != success {
 		return vcl_error(res)
 	}
@@ -195,15 +195,15 @@ fn (k &Kernel) call(work_sizes []int, lokal_sizes []int) chan IError {
 		ch <- error('length of work_sizes and localSizes differ')
 		return ch
 	}
-	mut global_work_offset_ptr := []usize{len: work_dim}
-	mut global_work_size_ptr := []usize{len: work_dim}
-	mut local_work_size_ptr := []usize{len: work_dim}
+	mut global_work_offset_ptr := []uint{len: work_dim}
+	mut global_work_size_ptr := []uint{len: work_dim}
+	mut local_work_size_ptr := []uint{len: work_dim}
 	for i in 0 .. work_dim {
 		if work_sizes[i] <= 0 || lokal_sizes[i] <= 0 {
 			ch <- error('global and local work sizes must be positive')
 			return ch
 		}
-		global_work_size_ptr[i] = usize(work_sizes[i])
+		global_work_size_ptr[i] = uint(work_sizes[i])
 		mut local_size := if lokal_sizes[i] < work_sizes[i] {
 			lokal_sizes[i]
 		} else {
@@ -212,7 +212,7 @@ fn (k &Kernel) call(work_sizes []int, lokal_sizes []int) chan IError {
 		for local_size > 1 && work_sizes[i] % local_size != 0 {
 			local_size--
 		}
-		local_work_size_ptr[i] = usize(local_size)
+		local_work_size_ptr[i] = uint(local_size)
 	}
 	mut event := ClEvent(0)
 	res := cl_enqueue_nd_range_kernel(k.d.queue, k.k, u32(work_dim),
