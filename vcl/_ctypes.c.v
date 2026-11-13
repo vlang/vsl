@@ -1,5 +1,7 @@
 module vcl
 
+type ClInt = i32
+
 type ClPlatformId = voidptr
 type ClDeviceId = voidptr
 type ClContext = voidptr
