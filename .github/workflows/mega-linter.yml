@@ -181,6 +181,7 @@ jobs:
           ) &&
           !contains(github.event.head_commit.message, 'skip fix')
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           branch: >-
             ${{
               github.event.pull_request.head.ref ||
