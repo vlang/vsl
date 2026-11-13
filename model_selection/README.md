@@ -232,7 +232,8 @@ println('Average CV Accuracy: ${avg}')
 
 ## Notes
 
-- Stratified methods require labels to be integers (class labels)
+- Stratified methods treat each distinct finite `f64` label as a class; NaN and
+  infinite labels are rejected.
 - Cross-validation returns indices, use `get_fold_data` for actual arrays
 - Train and test indices are always disjoint within each fold
 - Random seed ensures reproducibility across runs
