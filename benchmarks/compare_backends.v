@@ -1,14 +1,19 @@
 module main
 
-import benchmark
 import vsl.benchmarks.util as benchmark_util
 import vsl.blas
 import vsl.util
 
 fn main() {
-	benchmark_util.print_header('BLAS Backend Comparison: Pure V vs C Backend')
-	println('\nNote: Run with -d vsl_blas_cblas to compare with C backend')
-	println('      Pure V backend is used by default\n')
+	backend := $if vsl_blas_cblas {
+		'CBLAS'
+	} $else $if vsl_blas_generic_cblas {
+		'generic CBLAS'
+	} $else {
+		'Pure V'
+	}
+	benchmark_util.print_header('BLAS GEMM Performance Benchmark (${backend})')
+	println('\nSelected backend: ${backend}\n')
 
 	config := benchmark_util.BenchmarkConfig{
 		sizes:       [100, 500, 1000, 2000]
@@ -30,38 +35,31 @@ fn main() {
 		alpha := 1.0
 		beta := 0.0
 
-		// Pure V backend
-		mut bench := benchmark.new_benchmark()
+		mut timer := benchmark_util.BenchmarkTimer{}
 		for _ in 0 .. config.warmup_runs {
 			mut c_warmup := benchmark_util.random_matrix(m, n)
 			mut c_warmup_flat := util.flatten_row_major(c_warmup)
 			blas.dgemm(.no_trans, .no_trans, m, n, k, alpha, a_flat, k, b_flat, n, beta, mut
 				c_warmup_flat, n)
 		}
-		bench.step()
 		for _ in 0 .. config.iterations {
 			mut c := benchmark_util.random_matrix(m, n)
 			mut c_flat := util.flatten_row_major(c)
-			bench.step()
+			started_at := timer.start()
 			blas.dgemm(.no_trans, .no_trans, m, n, k, alpha, a_flat, k, b_flat, n, beta, mut
 				c_flat, n)
-			bench.stop()
+			timer.record(started_at)
 		}
-		avg_time_pure_v := f64(bench.total_duration()) / f64(config.iterations)
-		gflops_pure_v := benchmark_util.calculate_gflops_gemm(m, n, k, avg_time_pure_v)
+		avg_time := timer.mean_ns(config.iterations)
+		gflops := benchmark_util.calculate_gflops_gemm(m, n, k, avg_time)
 
-		benchmark_util.print_result('dgemm (Pure V)', '${m}x${n}x${k}', avg_time_pure_v,
-			'${gflops_pure_v:.2f} GFLOPS')
-
-		// Note: C backend comparison would require compilation with -d vsl_blas_cblas
-		// This is a placeholder showing the structure
-		println('  (Run with -d vsl_blas_cblas to see C backend comparison)')
+		benchmark_util.print_result('dgemm (${backend})', '${m}x${n}x${k}', avg_time,
+			'${gflops:.2f} GFLOPS')
 	}
 
 	println('\n${'='.repeat(80)}')
 	println('Performance Summary:')
-	println('  Pure V backend provides competitive performance')
-	println('  Use C backend (-d vsl_blas_cblas) for maximum performance when available')
-	println('  Pure V backend offers zero-dependency deployment')
+	println('  Selected backend: ${backend}')
+	println('  Build each backend separately to compare results under identical conditions')
 	println('${'='.repeat(80)}')
 }
