@@ -2,6 +2,7 @@ module util
 
 import rand
 import math
+import time
 
 // Benchmark configuration
 pub struct BenchmarkConfig {
@@ -9,6 +10,26 @@ pub:
 	sizes       []int
 	iterations  int = 10
 	warmup_runs int = 3
+}
+
+pub struct BenchmarkTimer {
+mut:
+	elapsed_ns u64
+}
+
+pub fn (timer BenchmarkTimer) start() u64 {
+	return time.sys_mono_now()
+}
+
+pub fn (mut timer BenchmarkTimer) record(started_at u64) {
+	timer.elapsed_ns += time.sys_mono_now() - started_at
+}
+
+pub fn (timer BenchmarkTimer) mean_ns(iterations int) f64 {
+	if iterations <= 0 {
+		panic('benchmark iterations must be positive')
+	}
+	return f64(timer.elapsed_ns) / f64(iterations)
 }
 
 // Generate random vector

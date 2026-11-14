@@ -1,4 +1,4 @@
-# Multivariate Minimization
+# Multivariate Minimization with Nelder-Mead
 
 The `roots.NelderMead` optimizer minimizes a scalar objective over a vector of
 parameters without requiring derivatives. It supports local optimization for

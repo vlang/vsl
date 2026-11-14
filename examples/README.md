@@ -38,7 +38,7 @@ v -cflags <flags> run vsl/examples/<example>/main.v
 `ml_complete_pipeline` → `ml_sentiment_analysis`
 
 **Scientific Computing**: Dive into → `fft_plot_example` → `deriv_example` →
-`mpi_basic_example`
+`ode_rk23` → `integrate_gauss_kronrod` → `mpi_basic_example`
 
 ## Machine Learning Examples 🤖
 
