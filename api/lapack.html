@@ -132,6 +132,9 @@
 <div class="menu-row"><a href="./h5.html">h5</a></div>
 </li>
 <li class="open">
+<div class="menu-row"><a href="./integrate.html">integrate</a></div>
+</li>
+<li class="open">
 <div class="menu-row"><a href="./prec.html">prec</a></div>
 </li>
 <li class="open">
@@ -163,6 +166,9 @@
 </li>
 <li class="open">
 <div class="menu-row"><a href="./noise.html">noise</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./ode.html">ode</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./plot.html">plot</a></div>
@@ -205,10 +211,30 @@
 			<div class="title"><h1> lapack <a href="#readme_lapack">#</a></h1></div>
 <h1 id="the-v-linear-algebra-package">The V Linear Algebra Package</h1>
 <p>This package implements Linear Algebra routines in V.</p>
-<p>| Backend | Description | Status | Compilation flag |
-| --- | --- | --- | --- |
-| LAPACK | Pure V implementation; high performance and dependency-free. | Stable | None |
-| LAPACKE | C interface to the standard LAPACK distribution. See <a href="#lapacke-backend">LAPACKE backend</a>. | Stable | <code>-d vsl_lapack_lapacke</code> |</p>
+<table>
+<thead>
+<tr>
+<th>Backend</th>
+<th>Description</th>
+<th>Status</th>
+<th>Compilation flag</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LAPACK</td>
+<td>Pure V implementation; high performance and dependency-free.</td>
+<td>Stable</td>
+<td>None</td>
+</tr>
+<tr>
+<td>LAPACKE</td>
+<td>C interface to the standard LAPACK distribution. See <a href="#lapacke-backend">LAPACKE backend</a>.</td>
+<td>Stable</td>
+<td><code>-d vsl_lapack_lapacke</code></td>
+</tr>
+</tbody>
+</table>
 <h2 id="pure-v-implementation">🎉 Pure V Implementation</h2>
 <p>The pure V LAPACK implementation is <strong>stable and production-ready</strong>, offering:</p>
 <ul>
@@ -282,9 +308,9 @@ systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 \
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">dgeev</span><span class="token punctuation">(</span>calc_vl <span class="token type_name">LeftEigenVectorsJob</span><span class="token punctuation">,</span> calc_vr <span class="token type_name">RightEigenVectorsJob</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> wr <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> wi <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> vl <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> ldvl <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> vr <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> ldvr <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>dgeev computes for an N-by-N real nonsymmetric matrix A, the eigenvalues and, optionally, the left and/or right eigenvectors.</p>
-<p>See: http://www.netlib.org/lapack/explore-html/d9/d28/dgeev_8f.html</p>
-<p>See: https://software.intel.com/en-us/mkl-developer-reference-c-geev</p>
-<p>See: https://www.nag.co.uk/numeric/fl/nagdoc_fl26/html/f08/f08naf.html</p>
+<p>See: <a href="http://www.netlib.org/lapack/explore-html/d9/d28/dgeev_8f.html">http://www.netlib.org/lapack/explore-html/d9/d28/dgeev_8f.html</a></p>
+<p>See: <a href="https://software.intel.com/en-us/mkl-developer-reference-c-geev">https://software.intel.com/en-us/mkl-developer-reference-c-geev</a></p>
+<p>See: <a href="https://www.nag.co.uk/numeric/fl/nagdoc_fl26/html/f08/f08naf.html">https://www.nag.co.uk/numeric/fl/nagdoc_fl26/html/f08/f08naf.html</a></p>
 <p>The right eigenvector v(j) of A satisfies</p>
 <p>A * v(j) = lambda(j) * v(j)</p>
 <p>where lambda(j) is its eigenvalue.</p>
@@ -336,8 +362,8 @@ systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 \
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">dgesvd</span><span class="token punctuation">(</span>jobu <span class="token type_name">SVDJob</span><span class="token punctuation">,</span> jobvt <span class="token type_name">SVDJob</span><span class="token punctuation">,</span> m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> s <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> u <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> ldu <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> vt <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> ldvt <span class="token builtin">int</span><span class="token punctuation">,</span> superb <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>dgesvd computes the singular value decomposition (SingularValueDecomposition) of a real M-by-N matrix A, optionally computing the left and/or right singular vectors.</p>
-<p>See: http://www.netlib.org/lapack/explore-html/d8/d2d/dgesvd_8f.html</p>
-<p>See: https://software.intel.com/en-us/mkl-developer-reference-c-gesvd</p>
+<p>See: <a href="http://www.netlib.org/lapack/explore-html/d8/d2d/dgesvd_8f.html">http://www.netlib.org/lapack/explore-html/d8/d2d/dgesvd_8f.html</a></p>
+<p>See: <a href="https://software.intel.com/en-us/mkl-developer-reference-c-gesvd">https://software.intel.com/en-us/mkl-developer-reference-c-gesvd</a></p>
 <p>The SingularValueDecomposition is written</p>
 <p>A = U * SIGMA * transpose(V)</p>
 <p>where SIGMA is an M-by-N matrix which is zero except for its min(m,n) diagonal elements, U is an M-by-M orthogonal matrix, and V is an N-by-N orthogonal matrix.  The diagonal elements of SIGMA are the singular values of A; they are real and non-negative, and are returned in descending order.  The first min(m,n) columns of U and V are the left and right singular vectors of A.</p>
@@ -351,8 +377,8 @@ systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 \
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">dgetrf</span><span class="token punctuation">(</span>m <span class="token builtin">int</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> ipiv <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>dgetrf computes an LU factorization of a general M-by-N matrix A using partial pivoting with row interchanges.</p>
-<p>See: http://www.netlib.org/lapack/explore-html/d3/d6a/dgetrf_8f.html</p>
-<p>See: https://software.intel.com/en-us/mkl-developer-reference-c-getrf</p>
+<p>See: <a href="http://www.netlib.org/lapack/explore-html/d3/d6a/dgetrf_8f.html">http://www.netlib.org/lapack/explore-html/d3/d6a/dgetrf_8f.html</a></p>
+<p>See: <a href="https://software.intel.com/en-us/mkl-developer-reference-c-getrf">https://software.intel.com/en-us/mkl-developer-reference-c-getrf</a></p>
 <p>The factorization has the form A = P * L * U where P is a permutation matrix, L is lower triangular with unit diagonal elements (lower trapezoidal if m &gt; n), and U is upper triangular (upper trapezoidal if m &lt; n).</p>
 <p>This is the right-looking Level 3 BLAS version of the algorithm.</p>
 <p>Note: (1) matrix 'a' will be modified(2) ipiv indices are 1-based (i.e. Fortran)</p>
@@ -364,8 +390,8 @@ systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 \
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">dgetri</span><span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> ipiv <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>dgetri computes the inverse of a matrix using the LU factorization computed by DGETRF.</p>
-<p>See: http://www.netlib.org/lapack/explore-html/df/da4/dgetri_8f.html</p>
-<p>See: https://software.intel.com/en-us/mkl-developer-reference-c-getri</p>
+<p>See: <a href="http://www.netlib.org/lapack/explore-html/df/da4/dgetri_8f.html">http://www.netlib.org/lapack/explore-html/df/da4/dgetri_8f.html</a></p>
+<p>See: <a href="https://software.intel.com/en-us/mkl-developer-reference-c-getri">https://software.intel.com/en-us/mkl-developer-reference-c-getri</a></p>
 <p>This method inverts U and then computes inv(A) by solving the system inv(A)*L = inv(U) for inv(A).</p>
 
 </section>
@@ -401,8 +427,8 @@ systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 \
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">dpotrf</span><span class="token punctuation">(</span>uplo <span class="token module_">blas</span><span class="token punctuation">.</span><span class="token type_name">Uplo</span><span class="token punctuation">,</span> n <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> lda <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
 <p>dpotrf computes the Cholesky factorization of a real symmetric positive definite matrix A.</p>
-<p>See: http://www.netlib.org/lapack/explore-html/d0/d8a/dpotrf_8f.html</p>
-<p>See: https://software.intel.com/en-us/mkl-developer-reference-c-potrf</p>
+<p>See: <a href="http://www.netlib.org/lapack/explore-html/d0/d8a/dpotrf_8f.html">http://www.netlib.org/lapack/explore-html/d0/d8a/dpotrf_8f.html</a></p>
+<p>See: <a href="https://software.intel.com/en-us/mkl-developer-reference-c-potrf">https://software.intel.com/en-us/mkl-developer-reference-c-potrf</a></p>
 <p>The factorization has the form</p>
 <p>A = U**T * U,  if UPLO = 'U'</p>
 <p>or</p>
@@ -1347,7 +1373,7 @@ systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 \
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 13 Nov 2026 07:52:58</div>
+						<div class="footer">Powered by vdoc. Generated on: 14 Nov 2026 05:26:13</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_lapack">README</a></li>
 <li class="open"><a href="#dgeev">fn dgeev</a>        <ul>

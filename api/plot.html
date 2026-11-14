@@ -132,6 +132,9 @@
 <div class="menu-row"><a href="./h5.html">h5</a></div>
 </li>
 <li class="open">
+<div class="menu-row"><a href="./integrate.html">integrate</a></div>
+</li>
+<li class="open">
 <div class="menu-row"><a href="./prec.html">prec</a></div>
 </li>
 <li class="open">
@@ -163,6 +166,9 @@
 </li>
 <li class="open">
 <div class="menu-row"><a href="./noise.html">noise</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./ode.html">ode</a></div>
 </li>
 <li class="open active">
 <div class="menu-row"><a href="./plot.html">plot</a></div>
@@ -627,16 +633,48 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 <span class="token keyword">mut</span> plt <span class="token operator">:=</span> <span class="token module_">plot</span><span class="token punctuation">.</span><span class="token function">plot_actual_vs_predicted</span><span class="token punctuation">(</span>y_true<span class="token punctuation">,</span> y_pred<span class="token punctuation">)</span>
 plt<span class="token punctuation">.</span><span class="token function">show</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">!</span></code></pre>
 <h3 id="available-ml-plotting-functions">Available ML Plotting Functions</h3>
-<p>| Function | Description |
-|----------|-------------|
-| <code>plot_confusion_matrix(cm, class_names)</code> | Heatmap of confusion matrix |
-| <code>plot_roc_curve(fpr, tpr, auc)</code> | ROC curve with AUC in legend |
-| <code>plot_precision_recall_curve(precision, recall, ap)</code> | PR curve |
-| <code>plot_correlation_matrix(corr, feature_names)</code> | Correlation heatmap |
-| <code>plot_feature_importance(importances, names, top_n)</code> | Horizontal bar chart |
-| <code>plot_learning_curve(sizes, train, val)</code> | Train vs validation curves |
-| <code>plot_residuals(y_pred, residuals)</code> | Residual scatter plot |
-| <code>plot_actual_vs_predicted(y_true, y_pred)</code> | Actual vs predicted scatter |</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>plot_confusion_matrix(cm, class_names)</code></td>
+<td>Heatmap of confusion matrix</td>
+</tr>
+<tr>
+<td><code>plot_roc_curve(fpr, tpr, auc)</code></td>
+<td>ROC curve with AUC in legend</td>
+</tr>
+<tr>
+<td><code>plot_precision_recall_curve(precision, recall, ap)</code></td>
+<td>PR curve</td>
+</tr>
+<tr>
+<td><code>plot_correlation_matrix(corr, feature_names)</code></td>
+<td>Correlation heatmap</td>
+</tr>
+<tr>
+<td><code>plot_feature_importance(importances, names, top_n)</code></td>
+<td>Horizontal bar chart</td>
+</tr>
+<tr>
+<td><code>plot_learning_curve(sizes, train, val)</code></td>
+<td>Train vs validation curves</td>
+</tr>
+<tr>
+<td><code>plot_residuals(y_pred, residuals)</code></td>
+<td>Residual scatter plot</td>
+</tr>
+<tr>
+<td><code>plot_actual_vs_predicted(y_true, y_pred)</code></td>
+<td>Actual vs predicted scatter</td>
+</tr>
+</tbody>
+</table>
 <hr>
 <p>Create beautiful, interactive visualizations with VSL Plot! 🚀</p>
 <p>Based on <a href="https://plotly.com/python/graph-objects/">Plotly's graph_objects</a> API design.</p>
@@ -2368,7 +2406,7 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 13 Nov 2026 07:52:58</div>
+						<div class="footer">Powered by vdoc. Generated on: 14 Nov 2026 05:26:13</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_plot">README</a></li>
 <li class="open"><a href="#plot_actual_vs_predicted">fn plot_actual_vs_predicted</a>        <ul>

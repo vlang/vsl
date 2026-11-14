@@ -132,6 +132,9 @@
 <div class="menu-row"><a href="./h5.html">h5</a></div>
 </li>
 <li class="open">
+<div class="menu-row"><a href="./integrate.html">integrate</a></div>
+</li>
+<li class="open">
 <div class="menu-row"><a href="./prec.html">prec</a></div>
 </li>
 <li class="open">
@@ -163,6 +166,9 @@
 </li>
 <li class="open">
 <div class="menu-row"><a href="./noise.html">noise</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./ode.html">ode</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./plot.html">plot</a></div>
@@ -203,7 +209,7 @@
 					<div class="doc-content">
 								<section id="readme_float32" class="doc-node">
 			<div class="title"><h1> float32 <a href="#readme_float32">#</a></h1></div>
-<p>dd_add_f64 returns the double-double sum of two double-double values held in f64 pairs.</p>
+<p>Compensated (double-double) sums and dot products for f32 inputs, the f32 counterpart of the float64 dd API. Every f32 is exact in f64 and every product of two f32 values is exact in f64 (24 + 24 mantissa bits fit in 53), so accumulating the f64 values with error-free transformations keeps roughly 106 bits of precision: the results stay accurate on inputs where naive f32 evaluation cancels catastrophically, and the compensated variants are correctly rounded in practice (see vlang/vsl#65).</p>
 
 </section>
 
@@ -508,7 +514,7 @@
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 13 Nov 2026 07:52:58</div>
+						<div class="footer">Powered by vdoc. Generated on: 14 Nov 2026 05:26:13</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_float32">README</a></li>
 <li class="open"><a href="#acos">fn acos</a>        <ul>

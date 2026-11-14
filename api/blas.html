@@ -132,6 +132,9 @@
 <div class="menu-row"><a href="./h5.html">h5</a></div>
 </li>
 <li class="open">
+<div class="menu-row"><a href="./integrate.html">integrate</a></div>
+</li>
+<li class="open">
 <div class="menu-row"><a href="./prec.html">prec</a></div>
 </li>
 <li class="open">
@@ -163,6 +166,9 @@
 </li>
 <li class="open">
 <div class="menu-row"><a href="./noise.html">noise</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./ode.html">ode</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./plot.html">plot</a></div>
@@ -205,11 +211,36 @@
 			<div class="title"><h1> blas <a href="#readme_blas">#</a></h1></div>
 <h1 id="the-v-basic-linear-algebra-system">The V Basic Linear Algebra System</h1>
 <p>This package implements Basic Linear Algebra System (BLAS) routines in V.</p>
-<p>| Backend | Description | Status | Compilation flag |
-| --- | --- | --- | --- |
-| BLAS | Pure V implementation; portable and dependency-free. | Stable | None |
-| OpenBLAS | Optimized BLAS library. See <a href="#openblas-backend">OpenBLAS backend</a>. | Stable | <code>-d vsl_blas_cblas</code> |
-| System CBLAS | Host CBLAS for f32/f64 GEMM and GEMV, plus f64 DNRM2; performance depends on the provider. | Linux | <code>-d vsl_blas_generic_cblas</code> |</p>
+<table>
+<thead>
+<tr>
+<th>Backend</th>
+<th>Description</th>
+<th>Status</th>
+<th>Compilation flag</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BLAS</td>
+<td>Pure V implementation; portable and dependency-free.</td>
+<td>Stable</td>
+<td>None</td>
+</tr>
+<tr>
+<td>OpenBLAS</td>
+<td>Optimized BLAS library. See <a href="#openblas-backend">OpenBLAS backend</a>.</td>
+<td>Stable</td>
+<td><code>-d vsl_blas_cblas</code></td>
+</tr>
+<tr>
+<td>System CBLAS</td>
+<td>Host CBLAS for f32/f64 GEMM and GEMV, plus f64 DNRM2; performance depends on the provider.</td>
+<td>Linux</td>
+<td><code>-d vsl_blas_generic_cblas</code></td>
+</tr>
+</tbody>
+</table>
 <h2 id="pure-v-implementation">Pure V implementation</h2>
 <p>The pure V backend provides a zero-dependency, cross-platform implementation of BLAS Level 1, 2, and 3. It is the portable fallback; its dense matrix multiplication is not expected to match tuned OpenBLAS or other optimized C BLAS libraries. Use the CBLAS backend for performance-sensitive GEMM workloads.</p>
 <p>For pure V GEMM, concurrency follows <code>runtime.nr_jobs()</code>; <code>VJOBS</code> caps the worker count on constrained systems. f64 GEMM distributes output tiles among workers. The row-major, no-transpose f32 SGEMM path uses V SIMD vectors and distributes larger row blocks among workers; small products stay serial to avoid worker startup overhead. Other f32 transpose layouts use the portable scalar path.</p>
@@ -993,7 +1024,7 @@ systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 \
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 13 Nov 2026 07:52:58</div>
+						<div class="footer">Powered by vdoc. Generated on: 14 Nov 2026 05:26:13</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_blas">README</a></li>
 <li class="open"><a href="#cm_daxpy">fn cm_daxpy</a>        <ul>

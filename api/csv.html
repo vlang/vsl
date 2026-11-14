@@ -132,6 +132,9 @@
 <div class="menu-row"><a href="./h5.html">h5</a></div>
 </li>
 <li class="open">
+<div class="menu-row"><a href="./integrate.html">integrate</a></div>
+</li>
+<li class="open">
 <div class="menu-row"><a href="./prec.html">prec</a></div>
 </li>
 <li class="open">
@@ -163,6 +166,9 @@
 </li>
 <li class="open">
 <div class="menu-row"><a href="./noise.html">noise</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./ode.html">ode</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./plot.html">plot</a></div>
@@ -260,20 +266,85 @@ data <span class="token operator">:=</span> <span class="token punctuation">[</s
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token operator">!</span></code></pre>
 <h2 id="configuration-options">Configuration Options</h2>
 <h3 id="csvreadconfig">CsvReadConfig</h3>
-<p>| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| <code>delimiter</code> | <code>u8</code> | <code>,</code> | Field delimiter character |
-| <code>skip_header</code> | <code>bool</code> | <code>false</code> | Skip first row and store as header |
-| <code>skip_rows</code> | <code>int</code> | <code>0</code> | Number of rows to skip at beginning |
-| <code>use_cols</code> | <code>[]int</code> | <code>[]</code> | Column indices to use (empty = all) |
-| <code>max_rows</code> | <code>int</code> | <code>-1</code> | Maximum rows to read (-1 = all) |
-| <code>comment</code> | <code>u8</code> | <code>#</code> | Comment character (lines starting with this are skipped) |</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>delimiter</code></td>
+<td><code>u8</code></td>
+<td><code>,</code></td>
+<td>Field delimiter character</td>
+</tr>
+<tr>
+<td><code>skip_header</code></td>
+<td><code>bool</code></td>
+<td><code>false</code></td>
+<td>Skip first row and store as header</td>
+</tr>
+<tr>
+<td><code>skip_rows</code></td>
+<td><code>int</code></td>
+<td><code>0</code></td>
+<td>Number of rows to skip at beginning</td>
+</tr>
+<tr>
+<td><code>use_cols</code></td>
+<td><code>[]int</code></td>
+<td><code>[]</code></td>
+<td>Column indices to use (empty = all)</td>
+</tr>
+<tr>
+<td><code>max_rows</code></td>
+<td><code>int</code></td>
+<td><code>-1</code></td>
+<td>Maximum rows to read (-1 = all)</td>
+</tr>
+<tr>
+<td><code>comment</code></td>
+<td><code>u8</code></td>
+<td><code>#</code></td>
+<td>Comment character (lines starting with this are skipped)</td>
+</tr>
+</tbody>
+</table>
 <h3 id="csvwriteconfig">CsvWriteConfig</h3>
-<p>| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| <code>delimiter</code> | <code>u8</code> | <code>,</code> | Field delimiter character |
-| <code>header</code> | <code>[]string</code> | <code>[]</code> | Optional header row |
-| <code>float_format</code> | <code>string</code> | <code>%.6g</code> | Format string for floats |</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>delimiter</code></td>
+<td><code>u8</code></td>
+<td><code>,</code></td>
+<td>Field delimiter character</td>
+</tr>
+<tr>
+<td><code>header</code></td>
+<td><code>[]string</code></td>
+<td><code>[]</code></td>
+<td>Optional header row</td>
+</tr>
+<tr>
+<td><code>float_format</code></td>
+<td><code>string</code></td>
+<td><code>%.6g</code></td>
+<td>Format string for floats</td>
+</tr>
+</tbody>
+</table>
 <h2 id="csvdata-methods">CsvData Methods</h2>
 <ul>
 <li><code>to_matrix()</code> - Convert to <code>la.Matrix[f64]</code></li>
@@ -436,7 +507,7 @@ train_data<span class="token punctuation">,</span> test_data <span class="token 
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 13 Nov 2026 07:52:58</div>
+						<div class="footer">Powered by vdoc. Generated on: 14 Nov 2026 05:26:13</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_csv">README</a></li>
 <li class="open"><a href="#parse_csv">fn parse_csv</a>        <ul>

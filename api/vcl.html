@@ -132,6 +132,9 @@
 <div class="menu-row"><a href="./h5.html">h5</a></div>
 </li>
 <li class="open">
+<div class="menu-row"><a href="./integrate.html">integrate</a></div>
+</li>
+<li class="open">
 <div class="menu-row"><a href="./prec.html">prec</a></div>
 </li>
 <li class="open">
@@ -163,6 +166,9 @@
 </li>
 <li class="open">
 <div class="menu-row"><a href="./noise.html">noise</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./ode.html">ode</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./plot.html">plot</a></div>
@@ -236,10 +242,30 @@ device<span class="token punctuation">.</span><span class="token function">add_p
 <p>Pass a vector's device buffer with <code>vector.buffer()</code>. Scalar argument widths must match the OpenCL kernel declaration: use <code>i32</code> for OpenCL <code>int</code>, <code>f32</code> for <code>float</code>, and <code>f64</code> for <code>double</code>. VCL treats each requested local work size as a maximum and selects a divisor of the corresponding global work size, so sizes such as 3 elements can run with a requested local size of 64.</p>
 <h2 id="visual-gallery">📊 Visual Gallery</h2>
 <p>VCL enables creation of stunning GPU-accelerated visualizations:</p>
-<p>|                                      |                                |                |                       |
-| :----------------------------------: | :----------------------------: | :------------: | :-------------------: |
-|       <img src="https://github.com/vlang/vsl/blob/master/vcl/static/sierpinski_triangle.png" alt="Sierpinski Triangle">       | <img src="https://github.com/vlang/vsl/blob/master/vcl/static/mandelbrot_blue_red_black.png" alt="Mandelbrot Blue Red Black"> |   <img src="https://github.com/vlang/vsl/blob/master/vcl/static/julia.png" alt="Julia">   | <img src="https://github.com/vlang/vsl/blob/master/vcl/static/mandelbrot_basic.png" alt="Mandelbrot Basic"> |
-| <img src="https://github.com/vlang/vsl/blob/master/vcl/static/mandelbrot_pseudo_random_colors.png" alt="Mandelbrot Pseudo Random Colors"> |   <img src="https://github.com/vlang/vsl/blob/master/vcl/static/sierpinski_triangle2.png" alt="Sierpinski Triangle 2">    | <img src="https://github.com/vlang/vsl/blob/master/vcl/static/julia_set.png" alt="Julia Set"> |   <img src="https://github.com/vlang/vsl/blob/master/vcl/static/julia_basic.png" alt="Julia Basic">    |</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><img src="https://github.com/vlang/vsl/blob/master/vcl/static/sierpinski_triangle.png" alt="Sierpinski Triangle"></td>
+<td align="center"><img src="https://github.com/vlang/vsl/blob/master/vcl/static/mandelbrot_blue_red_black.png" alt="Mandelbrot Blue Red Black"></td>
+<td align="center"><img src="https://github.com/vlang/vsl/blob/master/vcl/static/julia.png" alt="Julia"></td>
+<td align="center"><img src="https://github.com/vlang/vsl/blob/master/vcl/static/mandelbrot_basic.png" alt="Mandelbrot Basic"></td>
+</tr>
+<tr>
+<td align="center"><img src="https://github.com/vlang/vsl/blob/master/vcl/static/mandelbrot_pseudo_random_colors.png" alt="Mandelbrot Pseudo Random Colors"></td>
+<td align="center"><img src="https://github.com/vlang/vsl/blob/master/vcl/static/sierpinski_triangle2.png" alt="Sierpinski Triangle 2"></td>
+<td align="center"><img src="https://github.com/vlang/vsl/blob/master/vcl/static/julia_set.png" alt="Julia Set"></td>
+<td align="center"><img src="https://github.com/vlang/vsl/blob/master/vcl/static/julia_basic.png" alt="Julia Basic"></td>
+</tr>
+</tbody>
+</table>
 <h2 id="installation-configuration">🔧 Installation &amp; Configuration</h2>
 <h3 id="prerequisites">Prerequisites</h3>
 <ol>
@@ -422,7 +448,7 @@ export VCL_LIBOPENCL_PATH=/usr/lib/libOpenCL.so:/opt/intel/opencl/lib64/libOpenC
 		<section id="error_from_code" class="doc-node">
 			<div class="title"><h2>fn error_from_code <a href="#error_from_code">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/errors.c.v#L86"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token function">error_from_code</span><span class="token punctuation">(</span>code <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token type_name">IError</span></code></pre>
+<code><span class="token keyword">fn</span> <span class="token function">error_from_code</span><span class="token punctuation">(</span>code <span class="token type_name">ClInt</span><span class="token punctuation">)</span> <span class="token type_name">IError</span></code></pre>
 
 
 </section>
@@ -430,7 +456,7 @@ export VCL_LIBOPENCL_PATH=/usr/lib/libOpenCL.so:/opt/intel/opencl/lib64/libOpenC
 		<section id="error_or_default" class="doc-node">
 			<div class="title"><h2>fn error_or_default <a href="#error_or_default">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/errors.c.v#L90"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token function">error_or_default</span><span class="token punctuation">[</span><span class="token type_name">T</span><span class="token punctuation">]</span><span class="token punctuation">(</span>code <span class="token builtin">int</span><span class="token punctuation">,</span> default <span class="token type_name">T</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token type_name">T</span></code></pre>
+<code><span class="token keyword">fn</span> <span class="token function">error_or_default</span><span class="token punctuation">[</span><span class="token type_name">T</span><span class="token punctuation">]</span><span class="token punctuation">(</span>code <span class="token type_name">ClInt</span><span class="token punctuation">,</span> default <span class="token type_name">T</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token type_name">T</span></code></pre>
 
 
 </section>
@@ -454,7 +480,7 @@ export VCL_LIBOPENCL_PATH=/usr/lib/libOpenCL.so:/opt/intel/opencl/lib64/libOpenC
 		<section id="panic_on_error" class="doc-node">
 			<div class="title"><h2>fn panic_on_error <a href="#panic_on_error">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/errors.c.v#L114"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token function">panic_on_error</span><span class="token punctuation">(</span>code <span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
+<code><span class="token keyword">fn</span> <span class="token function">panic_on_error</span><span class="token punctuation">(</span>code <span class="token type_name">ClInt</span><span class="token punctuation">)</span></code></pre>
 
 
 </section>
@@ -462,7 +488,7 @@ export VCL_LIBOPENCL_PATH=/usr/lib/libOpenCL.so:/opt/intel/opencl/lib64/libOpenC
 		<section id="typed_error" class="doc-node">
 			<div class="title"><h2>fn typed_error <a href="#typed_error">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/errors.c.v#L97"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token function">typed_error</span><span class="token punctuation">[</span><span class="token type_name">T</span><span class="token punctuation">]</span><span class="token punctuation">(</span>code <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token type_name">T</span></code></pre>
+<code><span class="token keyword">fn</span> <span class="token function">typed_error</span><span class="token punctuation">[</span><span class="token type_name">T</span><span class="token punctuation">]</span><span class="token punctuation">(</span>code <span class="token type_name">ClInt</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token type_name">T</span></code></pre>
 
 
 </section>
@@ -470,7 +496,7 @@ export VCL_LIBOPENCL_PATH=/usr/lib/libOpenCL.so:/opt/intel/opencl/lib64/libOpenC
 		<section id="vcl_error" class="doc-node">
 			<div class="title"><h2>fn vcl_error <a href="#vcl_error">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/errors.c.v#L104"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">fn</span> <span class="token function">vcl_error</span><span class="token punctuation">(</span>code <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
+<code><span class="token keyword">fn</span> <span class="token function">vcl_error</span><span class="token punctuation">(</span>code <span class="token type_name">ClInt</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
 
 
 </section>
@@ -484,7 +510,7 @@ export VCL_LIBOPENCL_PATH=/usr/lib/libOpenCL.so:/opt/intel/opencl/lib64/libOpenC
 </section>
 
 		<section id="ImageChannelDataType.from" class="doc-node">
-			<div class="title"><h2>fn ImageChannelDataType.from <a href="#ImageChannelDataType.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/_ctypes.c.v#L29"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn ImageChannelDataType.from <a href="#ImageChannelDataType.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/_ctypes.c.v#L31"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token type_name">ImageChannelDataType</span><span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">[</span><span class="token type_name">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token type_name">W</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token type_name">ImageChannelDataType</span></code></pre>
 <p>from returns the <code>ImageChannelDataType</code> value of an integer or of a field name, or an error if there is none.</p>
@@ -492,7 +518,7 @@ export VCL_LIBOPENCL_PATH=/usr/lib/libOpenCL.so:/opt/intel/opencl/lib64/libOpenC
 </section>
 
 		<section id="ImageChannelOrder.from" class="doc-node">
-			<div class="title"><h2>fn ImageChannelOrder.from <a href="#ImageChannelOrder.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/_ctypes.c.v#L23"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn ImageChannelOrder.from <a href="#ImageChannelOrder.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/_ctypes.c.v#L25"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token type_name">ImageChannelOrder</span><span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">[</span><span class="token type_name">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token type_name">W</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token type_name">ImageChannelOrder</span></code></pre>
 <p>from returns the <code>ImageChannelOrder</code> value of an integer or of a field name, or an error if there is none.</p>
@@ -523,7 +549,7 @@ export VCL_LIBOPENCL_PATH=/usr/lib/libOpenCL.so:/opt/intel/opencl/lib64/libOpenC
 		<section id="ErrVCL" class="doc-node">
 			<div class="title"><h2>type ErrVCL <a href="#ErrVCL">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/errors.c.v#L7"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
-<code><span class="token keyword">type</span> <span class="token type_name">ErrVCL</span> <span class="token operator">=</span> <span class="token builtin">int</span></code></pre>
+<code><span class="token keyword">type</span> <span class="token type_name">ErrVCL</span> <span class="token operator">=</span> <span class="token type_name">ClInt</span></code></pre>
 <p>ErrVCL converts that OpenCL error code to an V error</p>
 
 </section>
@@ -601,7 +627,7 @@ export VCL_LIBOPENCL_PATH=/usr/lib/libOpenCL.so:/opt/intel/opencl/lib64/libOpenC
 </section>
 
 		<section id="ImageChannelDataType" class="doc-node">
-			<div class="title"><h2>enum ImageChannelDataType <a href="#ImageChannelDataType">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/_ctypes.c.v#L29"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>enum ImageChannelDataType <a href="#ImageChannelDataType">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/_ctypes.c.v#L31"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">enum</span> <span class="token type_name">ImageChannelDataType</span> <span class="token punctuation">{</span>
 	unorm_int8 <span class="token operator">=</span> <span class="token type_name">C</span><span class="token punctuation">.</span><span class="token type_name">CL_UNORM_INT8</span>
@@ -611,7 +637,7 @@ export VCL_LIBOPENCL_PATH=/usr/lib/libOpenCL.so:/opt/intel/opencl/lib64/libOpenC
 </section>
 
 		<section id="ImageChannelOrder" class="doc-node">
-			<div class="title"><h2>enum ImageChannelOrder <a href="#ImageChannelOrder">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/_ctypes.c.v#L23"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>enum ImageChannelOrder <a href="#ImageChannelOrder">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/_ctypes.c.v#L25"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">enum</span> <span class="token type_name">ImageChannelOrder</span> <span class="token punctuation">{</span>
 	intensity <span class="token operator">=</span> <span class="token type_name">C</span><span class="token punctuation">.</span><span class="token type_name">CL_INTENSITY</span>
@@ -778,6 +804,9 @@ export VCL_LIBOPENCL_PATH=/usr/lib/libOpenCL.so:/opt/intel/opencl/lib64/libOpenC
 			<div class="title"><h2>fn (Device) add_program <a href="#Device.add_program">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/vcl/device.c.v#L147"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> d <span class="token type_name">Device</span><span class="token punctuation">)</span> <span class="token function">add_program</span><span class="token punctuation">(</span>source <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
+<p>add_program compiles program source from OpenCL C code This method takes OpenCL C source code, compiles it, and stores the resulting program for later kernel creation and execution.</p>
+<p>Parameters: source: OpenCL C source code as a string</p>
+<p>Returns: Error if compilation fails, including detailed build log for debugging</p>
 <p>Note: If compilation fails, the error will include the complete build logwith line numbers and specific error messages from the OpenCL compiler.</p>
 
 <section class="doc-node examples"><h4>Example</h4>
@@ -1022,7 +1051,7 @@ export VCL_LIBOPENCL_PATH=/usr/lib/libOpenCL.so:/opt/intel/opencl/lib64/libOpenC
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 13 Nov 2026 07:52:58</div>
+						<div class="footer">Powered by vdoc. Generated on: 14 Nov 2026 05:26:13</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_vcl">README</a></li>
 <li class="open"><a href="#error_from_code">fn error_from_code</a>        <ul>

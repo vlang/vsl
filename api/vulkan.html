@@ -132,6 +132,9 @@
 <div class="menu-row"><a href="./h5.html">h5</a></div>
 </li>
 <li class="open">
+<div class="menu-row"><a href="./integrate.html">integrate</a></div>
+</li>
+<li class="open">
 <div class="menu-row"><a href="./prec.html">prec</a></div>
 </li>
 <li class="open">
@@ -163,6 +166,9 @@
 </li>
 <li class="open">
 <div class="menu-row"><a href="./noise.html">noise</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./ode.html">ode</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./plot.html">plot</a></div>
@@ -207,14 +213,40 @@
 <p>GPU compute via Vulkan shaders for VSL and downstream VTL f32 training.</p>
 <p>Vulkan is opt-in (<code>-d vulkan</code>) and most integration tests are gated with <code>VSL_TEST_VULKAN=1</code> to avoid surprising users without a Vulkan runtime.</p>
 <h2 id="status">Status</h2>
-<p>| Area | Supported |
-|------|-----------|
-| Linear algebra | GEMM/GEMV f32 kernels behind f64 host APIs |
-| Elementwise | <code>vector_add</code>, <code>vector_mul</code>, <code>vector_sqrt</code>, ReLU, Sigmoid, Softplus, SELU, HardSwish, GELU |
-| Convolution | <code>im2col</code> + GEMM Conv2D forward; backward <code>d_weight</code> GEMM |
-| Pooling | AvgPool2D, GlobalAvgPool2D, MaxPool2D |
-| Optimizers | Fused f32 <code>adam_step</code> shader |
-| Descriptor layout | Up to <strong>8</strong> storage-buffer bindings (<code>vulkan.h</code>) |</p>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Supported</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linear algebra</td>
+<td>GEMM/GEMV f32 kernels behind f64 host APIs</td>
+</tr>
+<tr>
+<td>Elementwise</td>
+<td><code>vector_add</code>, <code>vector_mul</code>, <code>vector_sqrt</code>, ReLU, Sigmoid, Softplus, SELU, HardSwish, GELU</td>
+</tr>
+<tr>
+<td>Convolution</td>
+<td><code>im2col</code> + GEMM Conv2D forward; backward <code>d_weight</code> GEMM</td>
+</tr>
+<tr>
+<td>Pooling</td>
+<td>AvgPool2D, GlobalAvgPool2D, MaxPool2D</td>
+</tr>
+<tr>
+<td>Optimizers</td>
+<td>Fused f32 <code>adam_step</code> shader</td>
+</tr>
+<tr>
+<td>Descriptor layout</td>
+<td>Up to <strong>8</strong> storage-buffer bindings (<code>vulkan.h</code>)</td>
+</tr>
+</tbody>
+</table>
 <p>Shader sources live in <a href="https://github.com/vlang/vsl/blob/master/vulkan/shaders"><code>shaders/</code></a>; generated SPIR-V arrays are embedded in <code>spv.v</code>, <code>spv_adam.v</code>, and <code>spv_activations.v</code>.</p>
 <h2 id="running-tests-safely">Running tests safely</h2>
 <p>Integration tests live in <code>vulkan_manual_test.v</code> (not <code>*_test.v</code>) so default <code>v test vsl</code> does not hit a <code>v_stable_sort</code> crash in the V test runner.</p>
@@ -19556,7 +19588,7 @@ theta -= lr_t * m / (sqrt(v) + epsilon)
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 13 Nov 2026 07:52:58</div>
+						<div class="footer">Powered by vdoc. Generated on: 14 Nov 2026 05:26:14</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_vulkan">README</a></li>
 <li class="open"><a href="#Constants">Constants</a></li>

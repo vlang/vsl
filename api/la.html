@@ -132,6 +132,9 @@
 <div class="menu-row"><a href="./h5.html">h5</a></div>
 </li>
 <li class="open">
+<div class="menu-row"><a href="./integrate.html">integrate</a></div>
+</li>
+<li class="open">
 <div class="menu-row"><a href="./prec.html">prec</a></div>
 </li>
 <li class="open">
@@ -163,6 +166,9 @@
 </li>
 <li class="open">
 <div class="menu-row"><a href="./noise.html">noise</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./ode.html">ode</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./plot.html">plot</a></div>
@@ -469,8 +475,9 @@ dot <span class="token operator">:=</span> <span class="token module_">la</span>
 <code><span class="token keyword">fn</span> <span class="token function">lstsq</span><span class="token punctuation">(</span>a <span class="token operator">&amp;</span><span class="token type_name">Matrix</span><span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> b <span class="token operator">&amp;</span><span class="token type_name">Matrix</span><span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
 <p>lstsq solves the linear least-squares problem: minimise ||A·x − B||₂ for each column of B.</p>
 <p>Uses a full SVD-based pseudo-inverse. By default singular values at or below <code>max(m, n) * machine_epsilon * largest_singular_value</code> are treated as zero.</p>
-<p>Returns <code>(x, residuals, rank, singular_values)</code> where:- <code>x</code>               — solution matrix (n × nrhs)</p>
+<p>Returns <code>(x, residuals, rank, singular_values)</code> where:</p>
 <ul>
+<li><code>x</code>               — solution matrix (n × nrhs)</li>
 <li><code>residuals</code>       — squared residual per RHS column when m &gt; n and A has full column rank; otherwise empty</li>
 <li><code>rank</code>            — effective numerical rank under the selected cutoff</li>
 <li><code>singular_values</code> — descending singular values of A</li></ul>
@@ -499,8 +506,9 @@ x<span class="token punctuation">,</span> _<span class="token punctuation">,</sp
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">lu</span><span class="token punctuation">(</span>a <span class="token operator">&amp;</span><span class="token type_name">Matrix</span><span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">(</span><span class="token operator">&amp;</span><span class="token type_name">Matrix</span><span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span><span class="token type_name">Matrix</span><span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token punctuation">)</span></code></pre>
 <p>lu computes the LU factorisation of <code>a</code> with partial pivoting: P·A = L·U.</p>
-<p>Returns <code>(L, U, piv)</code> where:- <code>L</code> is lower-triangular with unit diagonal, shape <code>m × min(m,n)</code></p>
+<p>Returns <code>(L, U, piv)</code> where:</p>
 <ul>
+<li><code>L</code> is lower-triangular with unit diagonal, shape <code>m × min(m,n)</code></li>
 <li><code>U</code> is upper-triangular, shape <code>min(m,n) × n</code></li>
 <li><code>piv</code> are the zero-based pivot row indices (length <code>min(m,n)</code>)</li></ul>
 
@@ -674,8 +682,9 @@ l<span class="token punctuation">,</span> u<span class="token punctuation">,</sp
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">norm</span><span class="token punctuation">(</span>a <span class="token operator">&amp;</span><span class="token type_name">Matrix</span><span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> ord <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
 <p>norm returns the specified norm of a matrix.</p>
-<p><code>ord</code> selects the norm type:- <code>&quot;&quot;</code> or <code>&quot;F&quot;</code> — Frobenius norm (sqrt of sum of squares of all elements)</p>
+<p><code>ord</code> selects the norm type:</p>
 <ul>
+<li><code>&quot;&quot;</code> or <code>&quot;F&quot;</code> — Frobenius norm (sqrt of sum of squares of all elements)</li>
 <li><code>&quot;I&quot;</code>         — Infinity norm (maximum absolute row sum)</li>
 <li><code>&quot;1&quot;</code>         — 1-norm (maximum absolute column sum)</li></ul>
 
@@ -708,8 +717,9 @@ one  <span class="token operator">:=</span> <span class="token module_">la</span
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">qr</span><span class="token punctuation">(</span>a <span class="token operator">&amp;</span><span class="token type_name">Matrix</span><span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">(</span><span class="token operator">&amp;</span><span class="token type_name">Matrix</span><span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span><span class="token type_name">Matrix</span><span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>
 <p>qr computes the QR factorisation of <code>a</code> (m × n) via LAPACK <code>dgeqrf</code> + <code>dorgqr</code>.</p>
-<p>Returns <code>(Q, R)</code> where:- <code>Q</code> is orthonormal with shape <code>m × min(m,n)</code></p>
+<p>Returns <code>(Q, R)</code> where:</p>
 <ul>
+<li><code>Q</code> is orthonormal with shape <code>m × min(m,n)</code></li>
 <li><code>R</code> is upper-triangular with shape <code>min(m,n) × n</code></li></ul>
 <p>So <code>A ≈ Q · R</code>.</p>
 
@@ -1505,7 +1515,7 @@ tr <span class="token operator">:=</span> <span class="token module_">la</span><
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 13 Nov 2026 07:52:58</div>
+						<div class="footer">Powered by vdoc. Generated on: 14 Nov 2026 05:26:13</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_la">README</a></li>
 <li class="open"><a href="#center_matrix">fn center_matrix</a>        <ul>

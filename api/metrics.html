@@ -132,6 +132,9 @@
 <div class="menu-row"><a href="./h5.html">h5</a></div>
 </li>
 <li class="open">
+<div class="menu-row"><a href="./integrate.html">integrate</a></div>
+</li>
+<li class="open">
 <div class="menu-row"><a href="./prec.html">prec</a></div>
 </li>
 <li class="open">
@@ -163,6 +166,9 @@
 </li>
 <li class="open">
 <div class="menu-row"><a href="./noise.html">noise</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./ode.html">ode</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./plot.html">plot</a></div>
@@ -320,37 +326,131 @@ r2 <span class="token operator">:=</span> <span class="token module_">metrics</s
 <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'R²: </span><span class="token string_interp">$</span><span class="token string_interp">{</span>r2<span class="token string_interp">}</span><span class="token string">'</span><span class="token punctuation">)</span></code></pre>
 <h2 id="api-reference">API Reference</h2>
 <h3 id="classification-functions">Classification Functions</h3>
-<p>| Function | Description |
-|----------|-------------|
-| <code>confusion_matrix(y_true, y_pred)</code> | Returns [[TN, FP], [FN, TP]] |
-| <code>multiclass_confusion_matrix(y_true, y_pred)</code> | Sorted integer labels and a true-row/predicted-column matrix |
-| <code>accuracy_score(y_true, y_pred)</code> | (TP + TN) / total |
-| <code>precision_score(y_true, y_pred)</code> | TP / (TP + FP) |
-| <code>recall_score(y_true, y_pred)</code> | TP / (TP + FN) |
-| <code>f1_score(y_true, y_pred)</code> | 2 * P * R / (P + R) |
-| <code>precision_score_multiclass(y_true, y_pred, average)</code> | Macro, micro, or support-weighted precision |
-| <code>recall_score_multiclass(y_true, y_pred, average)</code> | Macro, micro, or support-weighted recall |
-| <code>f1_score_multiclass(y_true, y_pred, average)</code> | Macro, micro, or support-weighted F1 |
-| <code>roc_curve(y_true, y_score)</code> | Returns FPR, TPR, thresholds |
-| <code>roc_auc_score(y_true, y_score)</code> | Area under ROC curve |
-| <code>precision_recall_curve(y_true, y_score)</code> | Returns precision, recall, thresholds |
-| <code>average_precision_score(y_true, y_score)</code> | AP from predictions |
-| <code>log_loss(y_true, y_pred)</code> | Cross-entropy loss |
-| <code>gini_coefficient(y_true, y_score)</code> | 2 * AUC - 1 |
-| <code>ks_statistic(y_true, y_score)</code> | Max difference between CDFs |
-| <code>auc(x, y)</code> | Area under curve (trapezoidal) |</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>confusion_matrix(y_true, y_pred)</code></td>
+<td>Returns [[TN, FP], [FN, TP]]</td>
+</tr>
+<tr>
+<td><code>multiclass_confusion_matrix(y_true, y_pred)</code></td>
+<td>Sorted integer labels and a true-row/predicted-column matrix</td>
+</tr>
+<tr>
+<td><code>accuracy_score(y_true, y_pred)</code></td>
+<td>(TP + TN) / total</td>
+</tr>
+<tr>
+<td><code>precision_score(y_true, y_pred)</code></td>
+<td>TP / (TP + FP)</td>
+</tr>
+<tr>
+<td><code>recall_score(y_true, y_pred)</code></td>
+<td>TP / (TP + FN)</td>
+</tr>
+<tr>
+<td><code>f1_score(y_true, y_pred)</code></td>
+<td>2 * P * R / (P + R)</td>
+</tr>
+<tr>
+<td><code>precision_score_multiclass(y_true, y_pred, average)</code></td>
+<td>Macro, micro, or support-weighted precision</td>
+</tr>
+<tr>
+<td><code>recall_score_multiclass(y_true, y_pred, average)</code></td>
+<td>Macro, micro, or support-weighted recall</td>
+</tr>
+<tr>
+<td><code>f1_score_multiclass(y_true, y_pred, average)</code></td>
+<td>Macro, micro, or support-weighted F1</td>
+</tr>
+<tr>
+<td><code>roc_curve(y_true, y_score)</code></td>
+<td>Returns FPR, TPR, thresholds</td>
+</tr>
+<tr>
+<td><code>roc_auc_score(y_true, y_score)</code></td>
+<td>Area under ROC curve</td>
+</tr>
+<tr>
+<td><code>precision_recall_curve(y_true, y_score)</code></td>
+<td>Returns precision, recall, thresholds</td>
+</tr>
+<tr>
+<td><code>average_precision_score(y_true, y_score)</code></td>
+<td>AP from predictions</td>
+</tr>
+<tr>
+<td><code>log_loss(y_true, y_pred)</code></td>
+<td>Cross-entropy loss</td>
+</tr>
+<tr>
+<td><code>gini_coefficient(y_true, y_score)</code></td>
+<td>2 * AUC - 1</td>
+</tr>
+<tr>
+<td><code>ks_statistic(y_true, y_score)</code></td>
+<td>Max difference between CDFs</td>
+</tr>
+<tr>
+<td><code>auc(x, y)</code></td>
+<td>Area under curve (trapezoidal)</td>
+</tr>
+</tbody>
+</table>
 <h3 id="regression-functions">Regression Functions</h3>
-<p>| Function | Description |
-|----------|-------------|
-| <code>mean_squared_error(y_true, y_pred)</code> | Σ(y - ŷ)² / n |
-| <code>root_mean_squared_error(y_true, y_pred)</code> | √MSE |
-| <code>mean_absolute_error(y_true, y_pred)</code> | Σ|y - ŷ| / n |
-| <code>r2_score(y_true, y_pred)</code> | 1 - SS_res / SS_tot |
-| <code>mean_absolute_percentage_error(y_true, y_pred)</code> | MAPE in % |
-| <code>explained_variance_score(y_true, y_pred)</code> | 1 - Var(residuals) / Var(y) |
-| <code>max_error(y_true, y_pred)</code> | max(|y - ŷ|) |
-| <code>median_absolute_error(y_true, y_pred)</code> | median(|y - ŷ|) |
-| <code>mean_squared_log_error(y_true, y_pred)</code> | MSLE (for non-negative) |</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mean_squared_error(y_true, y_pred)</code></td>
+<td>Σ(y - ŷ)² / n</td>
+</tr>
+<tr>
+<td><code>root_mean_squared_error(y_true, y_pred)</code></td>
+<td>√MSE</td>
+</tr>
+<tr>
+<td><code>mean_absolute_error(y_true, y_pred)</code></td>
+<td>Σ|y - ŷ| / n</td>
+</tr>
+<tr>
+<td><code>r2_score(y_true, y_pred)</code></td>
+<td>1 - SS_res / SS_tot</td>
+</tr>
+<tr>
+<td><code>mean_absolute_percentage_error(y_true, y_pred)</code></td>
+<td>MAPE in %</td>
+</tr>
+<tr>
+<td><code>explained_variance_score(y_true, y_pred)</code></td>
+<td>1 - Var(residuals) / Var(y)</td>
+</tr>
+<tr>
+<td><code>max_error(y_true, y_pred)</code></td>
+<td>max(|y - ŷ|)</td>
+</tr>
+<tr>
+<td><code>median_absolute_error(y_true, y_pred)</code></td>
+<td>median(|y - ŷ|)</td>
+</tr>
+<tr>
+<td><code>mean_squared_log_error(y_true, y_pred)</code></td>
+<td>MSLE (for non-negative)</td>
+</tr>
+</tbody>
+</table>
 <h2 id="integration-with-ml-models">Integration with ML Models</h2>
 <pre><code class="language-v"><span class="token keyword">import</span> <span class="token module_">vsl</span><span class="token punctuation">.</span><span class="token module_">metrics</span>
 <span class="token keyword">import</span> <span class="token module_">vsl</span><span class="token punctuation">.</span><span class="token module_">ml</span>
@@ -689,7 +789,7 @@ plt<span class="token punctuation">.</span><span class="token function">show</sp
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 13 Nov 2026 07:52:58</div>
+						<div class="footer">Powered by vdoc. Generated on: 14 Nov 2026 05:26:13</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_metrics">README</a></li>
 <li class="open"><a href="#accuracy_score">fn accuracy_score</a>        <ul>

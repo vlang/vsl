@@ -132,6 +132,9 @@
 <div class="menu-row"><a href="./h5.html">h5</a></div>
 </li>
 <li class="open">
+<div class="menu-row"><a href="./integrate.html">integrate</a></div>
+</li>
+<li class="open">
 <div class="menu-row"><a href="./prec.html">prec</a></div>
 </li>
 <li class="open">
@@ -163,6 +166,9 @@
 </li>
 <li class="open">
 <div class="menu-row"><a href="./noise.html">noise</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./ode.html">ode</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./plot.html">plot</a></div>
@@ -205,17 +211,52 @@
 			<div class="title"><h1> dist <a href="#readme_dist">#</a></h1></div>
 <h1 id="vsldist"><code>vsl.dist</code></h1>
 <p><code>vsl.dist</code> provides histogram binning, density estimates, and text rendering for numeric samples. <code>Histogram</code> stores finite, strictly increasing bin boundaries and counts. Bins are left-closed and right-open, except the last bin includes its right boundary, matching NumPy histogram edge semantics.</p>
-<p>| API | Purpose |
-| --- | --- |
-| <code>Histogram.new(stations)</code> | Create a histogram from bin boundaries. |
-| <code>find_bin(x)</code> | Return the matching bin index, <code>-1</code> when outside the range, or an error for invalid edges/NaN. |
-| <code>count(values, clear)</code> | Count values, optionally resetting prior counts first. |
-| <code>count_with_policy(values, clear, policy)</code> | Count finite values using <code>stats.NonFinitePolicy</code>; return the sample count for density normalization. |
-| <code>gen_labels(format)</code> | Format the bins as display labels. |
-| <code>density(nsamples)</code> | Estimate per-bin density using each bin's width and the total sample count. |
-| <code>density_area(nsamples)</code> | Integrate the density estimate across all bins. |
-| <code>text_hist(labels, counts, barlen)</code> | Render labeled counts as a text chart. |
-| <code>build_text_hist(...)</code> | Build a histogram and render it in one call. |</p>
+<table>
+<thead>
+<tr>
+<th>API</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Histogram.new(stations)</code></td>
+<td>Create a histogram from bin boundaries.</td>
+</tr>
+<tr>
+<td><code>find_bin(x)</code></td>
+<td>Return the matching bin index, <code>-1</code> when outside the range, or an error for invalid edges/NaN.</td>
+</tr>
+<tr>
+<td><code>count(values, clear)</code></td>
+<td>Count values, optionally resetting prior counts first.</td>
+</tr>
+<tr>
+<td><code>count_with_policy(values, clear, policy)</code></td>
+<td>Count finite values using <code>stats.NonFinitePolicy</code>; return the sample count for density normalization.</td>
+</tr>
+<tr>
+<td><code>gen_labels(format)</code></td>
+<td>Format the bins as display labels.</td>
+</tr>
+<tr>
+<td><code>density(nsamples)</code></td>
+<td>Estimate per-bin density using each bin's width and the total sample count.</td>
+</tr>
+<tr>
+<td><code>density_area(nsamples)</code></td>
+<td>Integrate the density estimate across all bins.</td>
+</tr>
+<tr>
+<td><code>text_hist(labels, counts, barlen)</code></td>
+<td>Render labeled counts as a text chart.</td>
+</tr>
+<tr>
+<td><code>build_text_hist(...)</code></td>
+<td>Build a histogram and render it in one call.</td>
+</tr>
+</tbody>
+</table>
 <pre><code class="language-v"><span class="token keyword">import</span> <span class="token module_">vsl</span><span class="token punctuation">.</span><span class="token module_">dist</span>
 
 <span class="token keyword">mut</span> histogram <span class="token operator">:=</span> <span class="token module_">dist</span><span class="token punctuation">.</span><span class="token type_name">Histogram</span><span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">2.0</span><span class="token punctuation">,</span> <span class="token number">3.0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
@@ -422,7 +463,7 @@ labels <span class="token operator">:=</span> histogram<span class="token punctu
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 13 Nov 2026 07:52:58</div>
+						<div class="footer">Powered by vdoc. Generated on: 14 Nov 2026 05:26:13</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_dist">README</a></li>
 <li class="open"><a href="#build_text_hist">fn build_text_hist</a>        <ul>

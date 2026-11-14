@@ -132,6 +132,9 @@
 <div class="menu-row"><a href="./h5.html">h5</a></div>
 </li>
 <li class="open">
+<div class="menu-row"><a href="./integrate.html">integrate</a></div>
+</li>
+<li class="open">
 <div class="menu-row"><a href="./prec.html">prec</a></div>
 </li>
 <li class="open">
@@ -163,6 +166,9 @@
 </li>
 <li class="open">
 <div class="menu-row"><a href="./noise.html">noise</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./ode.html">ode</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./plot.html">plot</a></div>
@@ -1596,8 +1602,9 @@
 <p>dlartg generates a plane rotation so that</p>
 <p>[ cs sn] * [f] = [r] [-sn cs]   [g] = [0]</p>
 <p>where cs<em>cs + sn</em>sn = 1.</p>
-<p>This is a more accurate version of BLAS Drotg that uses scaling to avoid overflow or underflow, with the other differences that- cs &gt;= 0</p>
+<p>This is a more accurate version of BLAS Drotg that uses scaling to avoid overflow or underflow, with the other differences that</p>
 <ul>
+<li>cs &gt;= 0</li>
 <li>if g = 0, then cs = 1 and sn = 0</li>
 <li>if f = 0 and g != 0, then cs = 0 and sn = sign(1,g)</li></ul>
 <p>dlartg is an internal routine. It is exported for testing purposes.</p>
@@ -2351,7 +2358,7 @@
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 13 Nov 2026 07:52:58</div>
+						<div class="footer">Powered by vdoc. Generated on: 14 Nov 2026 05:26:13</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_lapack64">README</a></li>
 <li class="open"><a href="#Constants">Constants</a></li>

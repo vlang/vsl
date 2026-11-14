@@ -132,6 +132,9 @@
 <div class="menu-row"><a href="./h5.html">h5</a></div>
 </li>
 <li class="open">
+<div class="menu-row"><a href="./integrate.html">integrate</a></div>
+</li>
+<li class="open">
 <div class="menu-row"><a href="./prec.html">prec</a></div>
 </li>
 <li class="open">
@@ -163,6 +166,9 @@
 </li>
 <li class="open">
 <div class="menu-row"><a href="./noise.html">noise</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./ode.html">ode</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./plot.html">plot</a></div>
@@ -242,6 +248,7 @@ result <span class="token operator">:=</span> <span class="token module_">model_
     test_size<span class="token punctuation">:</span> <span class="token number">0.3</span>
     stratify<span class="token punctuation">:</span>  <span class="token boolean">true</span> <span class="token comment">// Maintains 50/50 class balance in both sets</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token operator">!</span></code></pre>
+<p>Stratification treats each distinct finite <code>f64</code> label as a separate class. NaN and infinite labels return an error. The requested overall test size is preserved while per-class counts are allocated by largest remainder; setting <code>shuffle: false</code> preserves the original sample order.</p>
 <h3 id="train-validation-test-split">Train-Validation-Test Split</h3>
 <pre><code class="language-v"><span class="token keyword">import</span> <span class="token module_">vsl</span><span class="token punctuation">.</span><span class="token module_">model_selection</span>
 
@@ -298,27 +305,112 @@ folds <span class="token operator">:=</span> ss<span class="token punctuation">.
 <span class="token comment">// Creates 10 different random splits</span></code></pre>
 <h2 id="api-reference">API Reference</h2>
 <h3 id="traintestsplitconfig">TrainTestSplitConfig</h3>
-<p>| Field | Type | Default | Description |
-|-------|------|---------|-------------|
-| <code>test_size</code> | <code>f64</code> | <code>0.25</code> | Proportion for test set (0.0-1.0) |
-| <code>shuffle</code> | <code>bool</code> | <code>true</code> | Whether to shuffle before splitting |
-| <code>stratify</code> | <code>bool</code> | <code>false</code> | Preserve class proportions |
-| <code>random_seed</code> | <code>u32</code> | <code>42</code> | Random seed for reproducibility |</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>test_size</code></td>
+<td><code>f64</code></td>
+<td><code>0.25</code></td>
+<td>Proportion for test set (0.0-1.0)</td>
+</tr>
+<tr>
+<td><code>shuffle</code></td>
+<td><code>bool</code></td>
+<td><code>true</code></td>
+<td>Whether to shuffle before splitting</td>
+</tr>
+<tr>
+<td><code>stratify</code></td>
+<td><code>bool</code></td>
+<td><code>false</code></td>
+<td>Preserve class proportions</td>
+</tr>
+<tr>
+<td><code>random_seed</code></td>
+<td><code>u32</code></td>
+<td><code>42</code></td>
+<td>Random seed for reproducibility</td>
+</tr>
+</tbody>
+</table>
 <h3 id="trainvaltestconfig">TrainValTestConfig</h3>
-<p>| Field | Type | Default | Description |
-|-------|------|---------|-------------|
-| <code>val_size</code> | <code>f64</code> | <code>0.1</code> | Proportion for validation set |
-| <code>test_size</code> | <code>f64</code> | <code>0.2</code> | Proportion for test set |
-| <code>shuffle</code> | <code>bool</code> | <code>true</code> | Whether to shuffle |
-| <code>stratify</code> | <code>bool</code> | <code>false</code> | Preserve class proportions |
-| <code>random_seed</code> | <code>u32</code> | <code>42</code> | Random seed |</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>val_size</code></td>
+<td><code>f64</code></td>
+<td><code>0.1</code></td>
+<td>Proportion for validation set</td>
+</tr>
+<tr>
+<td><code>test_size</code></td>
+<td><code>f64</code></td>
+<td><code>0.2</code></td>
+<td>Proportion for test set</td>
+</tr>
+<tr>
+<td><code>shuffle</code></td>
+<td><code>bool</code></td>
+<td><code>true</code></td>
+<td>Whether to shuffle</td>
+</tr>
+<tr>
+<td><code>stratify</code></td>
+<td><code>bool</code></td>
+<td><code>false</code></td>
+<td>Preserve class proportions</td>
+</tr>
+<tr>
+<td><code>random_seed</code></td>
+<td><code>u32</code></td>
+<td><code>42</code></td>
+<td>Random seed</td>
+</tr>
+</tbody>
+</table>
 <h3 id="cross-validators">Cross-Validators</h3>
-<p>| Class | Description |
-|-------|-------------|
-| <code>KFold</code> | Standard K-Fold CV |
-| <code>StratifiedKFold</code> | Stratified K-Fold (for classification) |
-| <code>LeaveOneOut</code> | Leave-one-out CV (n folds for n samples) |
-| <code>ShuffleSplit</code> | Random permutation splits |</p>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>KFold</code></td>
+<td>Standard K-Fold CV</td>
+</tr>
+<tr>
+<td><code>StratifiedKFold</code></td>
+<td>Stratified K-Fold (for classification)</td>
+</tr>
+<tr>
+<td><code>LeaveOneOut</code></td>
+<td>Leave-one-out CV (n folds for n samples)</td>
+</tr>
+<tr>
+<td><code>ShuffleSplit</code></td>
+<td>Random permutation splits</td>
+</tr>
+</tbody>
+</table>
 <h3 id="fold-structure">Fold Structure</h3>
 <pre><code class="language-v"><span class="token keyword">pub</span> <span class="token keyword">struct</span> <span class="token type_name">Fold</span> <span class="token punctuation">{</span>
 <span class="token keyword">pub</span><span class="token punctuation">:</span>
@@ -326,9 +418,20 @@ folds <span class="token operator">:=</span> ss<span class="token punctuation">.
     test_indices  <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span> <span class="token comment">// Indices for testing</span>
 <span class="token punctuation">}</span></code></pre>
 <h3 id="helper-functions">Helper Functions</h3>
-<p>| Function | Description |
-|----------|-------------|
-| <code>get_fold_data(x, y, fold)</code> | Extract actual data arrays from fold indices |</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>get_fold_data(x, y, fold)</code></td>
+<td>Extract actual data arrays from fold indices</td>
+</tr>
+</tbody>
+</table>
 <h2 id="integration-with-ml-pipeline">Integration with ML Pipeline</h2>
 <pre><code class="language-v"><span class="token keyword">import</span> <span class="token module_">vsl</span><span class="token punctuation">.</span><span class="token module_">model_selection</span>
 <span class="token keyword">import</span> <span class="token module_">vsl</span><span class="token punctuation">.</span><span class="token module_">metrics</span>
@@ -381,7 +484,7 @@ avg <span class="token operator">/=</span> <span class="token builtin">f64</span
 <li><strong>Use ShuffleSplit for large datasets</strong> - Faster than full K-Fold</li></ol>
 <h2 id="notes">Notes</h2>
 <ul>
-<li>Stratified methods require labels to be integers (class labels)</li>
+<li>Stratified methods treat each distinct finite <code>f64</code> label as a class; NaN and infinite labels are rejected.</li>
 <li>Cross-validation returns indices, use <code>get_fold_data</code> for actual arrays</li>
 <li>Train and test indices are always disjoint within each fold</li>
 <li>Random seed ensures reproducibility across runs</li></ul>
@@ -394,7 +497,7 @@ avg <span class="token operator">/=</span> <span class="token builtin">f64</span
 </section>
 
 		<section id="get_fold_data" class="doc-node">
-			<div class="title"><h2>fn get_fold_data <a href="#get_fold_data">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L277"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn get_fold_data <a href="#get_fold_data">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L272"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">get_fold_data</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> y <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> fold <span class="token type_name">Fold</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
 <p>get_fold_data extracts the actual data for a fold</p>
@@ -410,7 +513,7 @@ avg <span class="token operator">/=</span> <span class="token builtin">f64</span
 </section>
 
 		<section id="train_val_test_split" class="doc-node">
-			<div class="title"><h2>fn train_val_test_split <a href="#train_val_test_split">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/split.v#L142"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn train_val_test_split <a href="#train_val_test_split">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/split.v#L178"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">train_val_test_split</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> y <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> config <span class="token type_name">TrainValTestConfig</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token type_name">TrainValTestResult</span></code></pre>
 <p>train_val_test_split splits data into train, validation, and test sets</p>
@@ -426,7 +529,7 @@ avg <span class="token operator">/=</span> <span class="token builtin">f64</span
 </section>
 
 		<section id="LeaveOneOut.new" class="doc-node">
-			<div class="title"><h2>fn LeaveOneOut.new <a href="#LeaveOneOut.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L180"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn LeaveOneOut.new <a href="#LeaveOneOut.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L175"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token type_name">LeaveOneOut</span><span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token type_name">LeaveOneOut</span></code></pre>
 <p>LeaveOneOut.new creates a new LeaveOneOut cross-validator</p>
@@ -434,7 +537,7 @@ avg <span class="token operator">/=</span> <span class="token builtin">f64</span
 </section>
 
 		<section id="ShuffleSplit.new" class="doc-node">
-			<div class="title"><h2>fn ShuffleSplit.new <a href="#ShuffleSplit.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L219"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn ShuffleSplit.new <a href="#ShuffleSplit.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L214"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token type_name">ShuffleSplit</span><span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>n_splits <span class="token builtin">int</span><span class="token punctuation">,</span> test_size <span class="token builtin">f64</span><span class="token punctuation">,</span> random_seed <span class="token builtin">u32</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token type_name">ShuffleSplit</span></code></pre>
 <p>ShuffleSplit.new creates a new ShuffleSplit cross-validator</p>
@@ -484,7 +587,7 @@ avg <span class="token operator">/=</span> <span class="token builtin">f64</span
 </section>
 
 		<section id="LeaveOneOut" class="doc-node">
-			<div class="title"><h2>struct LeaveOneOut <a href="#LeaveOneOut">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L176"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>struct LeaveOneOut <a href="#LeaveOneOut">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L171"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <div class="attributes"><div class="attribute">@[heap]</div></div>
 <pre class="signature">
 <code><span class="token keyword">struct</span> <span class="token type_name">LeaveOneOut</span> <span class="token punctuation">{</span>
@@ -494,7 +597,7 @@ avg <span class="token operator">/=</span> <span class="token builtin">f64</span
 </section>
 
 		<section id="LeaveOneOut.split" class="doc-node">
-			<div class="title"><h2>fn (LeaveOneOut) split <a href="#LeaveOneOut.split">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L185"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (LeaveOneOut) split <a href="#LeaveOneOut.split">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L180"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>loo <span class="token operator">&amp;</span><span class="token type_name">LeaveOneOut</span><span class="token punctuation">)</span> <span class="token function">split</span><span class="token punctuation">(</span>n_samples <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token type_name">Fold</span></code></pre>
 <p>split generates indices for leave-one-out CV</p>
@@ -502,7 +605,7 @@ avg <span class="token operator">/=</span> <span class="token builtin">f64</span
 </section>
 
 		<section id="ShuffleSplit" class="doc-node">
-			<div class="title"><h2>struct ShuffleSplit <a href="#ShuffleSplit">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L211"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>struct ShuffleSplit <a href="#ShuffleSplit">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L206"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <div class="attributes"><div class="attribute">@[heap]</div></div>
 <pre class="signature">
 <code><span class="token keyword">struct</span> <span class="token type_name">ShuffleSplit</span> <span class="token punctuation">{</span>
@@ -516,7 +619,7 @@ avg <span class="token operator">/=</span> <span class="token builtin">f64</span
 </section>
 
 		<section id="ShuffleSplit.split" class="doc-node">
-			<div class="title"><h2>fn (ShuffleSplit) split <a href="#ShuffleSplit.split">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L228"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (ShuffleSplit) split <a href="#ShuffleSplit.split">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L223"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>ss <span class="token operator">&amp;</span><span class="token type_name">ShuffleSplit</span><span class="token punctuation">)</span> <span class="token function">split</span><span class="token punctuation">(</span>n_samples <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token type_name">Fold</span></code></pre>
 <p>split generates random train/test indices</p>
@@ -560,7 +663,7 @@ avg <span class="token operator">/=</span> <span class="token builtin">f64</span
 </section>
 
 		<section id="TrainTestSplitConfig" class="doc-node">
-			<div class="title"><h2>struct TrainTestSplitConfig <a href="#TrainTestSplitConfig">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/split.v#L73"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>struct TrainTestSplitConfig <a href="#TrainTestSplitConfig">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/split.v#L74"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">struct</span> <span class="token type_name">TrainTestSplitConfig</span> <span class="token punctuation">{</span>
 <span class="token keyword">pub</span><span class="token punctuation">:</span>
@@ -574,7 +677,7 @@ avg <span class="token operator">/=</span> <span class="token builtin">f64</span
 </section>
 
 		<section id="TrainValTestConfig" class="doc-node">
-			<div class="title"><h2>struct TrainValTestConfig <a href="#TrainValTestConfig">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/split.v#L178"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>struct TrainValTestConfig <a href="#TrainValTestConfig">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/split.v#L214"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">struct</span> <span class="token type_name">TrainValTestConfig</span> <span class="token punctuation">{</span>
 <span class="token keyword">pub</span><span class="token punctuation">:</span>
@@ -589,7 +692,7 @@ avg <span class="token operator">/=</span> <span class="token builtin">f64</span
 </section>
 
 		<section id="TrainValTestResult" class="doc-node">
-			<div class="title"><h2>struct TrainValTestResult <a href="#TrainValTestResult">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/split.v#L188"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>struct TrainValTestResult <a href="#TrainValTestResult">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/split.v#L224"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">struct</span> <span class="token type_name">TrainValTestResult</span> <span class="token punctuation">{</span>
 <span class="token keyword">pub</span><span class="token punctuation">:</span>
@@ -605,7 +708,7 @@ avg <span class="token operator">/=</span> <span class="token builtin">f64</span
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 13 Nov 2026 07:52:58</div>
+						<div class="footer">Powered by vdoc. Generated on: 14 Nov 2026 05:26:13</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_model_selection">README</a></li>
 <li class="open"><a href="#get_fold_data">fn get_fold_data</a>        <ul>

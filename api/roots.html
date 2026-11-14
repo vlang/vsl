@@ -132,6 +132,9 @@
 <div class="menu-row"><a href="./h5.html">h5</a></div>
 </li>
 <li class="open">
+<div class="menu-row"><a href="./integrate.html">integrate</a></div>
+</li>
+<li class="open">
 <div class="menu-row"><a href="./prec.html">prec</a></div>
 </li>
 <li class="open">
@@ -163,6 +166,9 @@
 </li>
 <li class="open">
 <div class="menu-row"><a href="./noise.html">noise</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./ode.html">ode</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./plot.html">plot</a></div>
@@ -204,14 +210,57 @@
 								<section id="readme_roots" class="doc-node">
 			<div class="title"><h1> roots <a href="#readme_roots">#</a></h1></div>
 <h1 id="vslroots"><code>vsl.roots</code></h1>
-<p>Root-finding routines in <code>vsl.roots</code> accept callbacks from <a href="https://github.com/vlang/vsl/blob/master/func/func.v"><code>vsl.func</code></a>. The currently usable solvers are:</p>
-<p>| API | Method | Notes |
-| --- | --- | --- |
-| <code>newton(f, x0, x_eps, fx_eps, n_max)</code> | Newton iteration | Uses a function and derivative callback (<code>FnFdf</code>). |
-| <code>newton_bisection(f, x_min, x_max, tol, max_iter)</code> | Newton with bisection safeguard | Requires a bracket and derivative callback. |
-| <code>Bisection.new(f, params).solve()</code> | Bisection | Requires a sign-changing interval; returns the last iteration or the limit result. |
-| <code>Brent.new_with_params(f, params).solve()</code> | Brent's method | Returns root, final bracket, residual, counts, and a termination status. |</p>
+<p>Root-finding and minimization routines in <code>vsl.roots</code> accept callbacks from <a href="https://github.com/vlang/vsl/blob/master/func/func.v"><code>vsl.func</code></a>. Current public APIs include:</p>
+<table>
+<thead>
+<tr>
+<th>API</th>
+<th>Method</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>newton(f, x0, x_eps, fx_eps, n_max)</code></td>
+<td>Newton iteration</td>
+<td>Uses a function and derivative callback (<code>FnFdf</code>).</td>
+</tr>
+<tr>
+<td><code>newton_bisection(f, x_min, x_max, tol, max_iter)</code></td>
+<td>Newton with bisection safeguard</td>
+<td>Requires a bracket and derivative callback.</td>
+</tr>
+<tr>
+<td><code>Bisection.new(f, params).solve()</code></td>
+<td>Bisection</td>
+<td>Requires a sign-changing interval; returns the last iteration or the limit result.</td>
+</tr>
+<tr>
+<td><code>Brent.new_with_params(f, params).solve()</code></td>
+<td>Brent's method</td>
+<td>Returns root, final bracket, residual, counts, and a termination status.</td>
+</tr>
+<tr>
+<td><code>NelderMead.new_with_params(f, params).solve()</code></td>
+<td>Nelder-Mead minimization</td>
+<td>Derivative-free local minimization for multivariate scalar objectives.</td>
+</tr>
+<tr>
+<td><code>GoldenSection.new_with_params(f, params).solve()</code></td>
+<td>Golden-section minimization</td>
+<td>Bounded unimodal scalar minimizer.</td>
+</tr>
+<tr>
+<td><code>BrentMinimizer.new_with_params(f, params).solve()</code></td>
+<td>Brent minimization</td>
+<td>Safeguarded scalar minimizer.</td>
+</tr>
+</tbody>
+</table>
 <p><code>BisectionParams</code> configures bounds, relative and absolute tolerances, and the iteration limit. <code>Bisection.next()</code> exposes individual steps. <code>BrentParams</code> configures the bracket, tolerance, iteration limit, and function-evaluation limit. A valid bracket is required. The solver reports <code>.converged</code>, <code>.invalid_bracket</code>, <code>.max_iterations</code>, <code>.max_evaluations</code>, or <code>.non_finite_function_value</code>, or <code>.precision_limit</code> in its result; invalid parameter values return an error. <code>error_bound</code> is the maximum distance from the reported estimate to either end of the final bracket, so it bounds the estimate's distance to any root still enclosed by that bracket. A precision limit means floating-point spacing prevents the requested tolerance from being reached.</p>
+<p><code>NelderMeadParams</code> configures the initial point, a positive step applied to each simplex axis in turn, absolute coordinate and objective tolerances, and iteration/evaluation limits. The evaluation limit must allow the initial <code>n+1</code> simplex vertices. The result reports the best point, objective value, maximum coordinate spread, objective spread, counts, and termination status. Nelder-Mead is derivative-free and has no bounds or global-optimum guarantee; it is most appropriate for low-dimensional local optimization.</p>
+<p><code>GoldenSectionParams</code> configures the minimizer's bounds, absolute tolerance, iteration limit, and callback evaluation limit. It assumes the objective is unimodal over the full interval; it does not search for multiple local minima. The result reports the best finite point observed, the final interval, its maximum distance from that point, iteration and evaluation counts, and a termination status. The function is evaluated only at interior points. A precision-limit status also reports when adjacent objective values are indistinguishable at floating-point precision, so the solver cannot safely narrow the interval. It can have a NaN <code>fx</code> and zero evaluations when no representable interior point exists.</p>
+<p><code>BrentMinimizerParams</code> exposes the same bounds, absolute tolerance, iteration, and evaluation limits. Brent minimization uses parabolic interpolation when the proposed step is safe and falls back to golden-section steps otherwise. Like Golden-section minimization, it assumes a unimodal objective and reports the best observed point, final interval, maximum distance to either endpoint, counts, and termination status.</p>
 <pre><code class="language-v"><span class="token keyword">import</span> <span class="token module_">math</span>
 <span class="token keyword">import</span> <span class="token module_">vsl</span><span class="token punctuation">.</span><span class="token module_">func</span>
 <span class="token keyword">import</span> <span class="token module_">vsl</span><span class="token punctuation">.</span><span class="token module_">roots</span>
@@ -245,7 +294,68 @@ f <span class="token operator">:=</span> <span class="token module_">func</span>
 result <span class="token operator">:=</span> solver<span class="token punctuation">.</span><span class="token function">solve</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">!</span>
 <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'status=</span><span class="token string_interp">$</span><span class="token string_interp">{</span>result<span class="token punctuation">.</span>status<span class="token string_interp">}</span><span class="token string"> root=</span><span class="token string_interp">$</span><span class="token string_interp">{</span>result<span class="token punctuation">.</span>x<span class="token string_interp">}</span><span class="token string"> residual=</span><span class="token string_interp">$</span><span class="token string_interp">{</span>result<span class="token punctuation">.</span>fx<span class="token string_interp">}</span><span class="token string">'</span><span class="token punctuation">)</span>
 <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'bracket=[</span><span class="token string_interp">$</span><span class="token string_interp">{</span>result<span class="token punctuation">.</span>lower<span class="token string_interp">}</span><span class="token string">, </span><span class="token string_interp">$</span><span class="token string_interp">{</span>result<span class="token punctuation">.</span>upper<span class="token string_interp">}</span><span class="token string">] evaluations=</span><span class="token string_interp">$</span><span class="token string_interp">{</span>result<span class="token punctuation">.</span>n_calls<span class="token string_interp">}</span><span class="token string">'</span><span class="token punctuation">)</span></code></pre>
-<p>See the <a href="https://github.com/vlang/vsl/blob/master/examples/roots_bisection_solver/README.md">bisection example</a>, the <a href="https://github.com/vlang/vsl/blob/master/examples/roots_brent_solver/README.md">Brent example</a>, <a href="https://github.com/vlang/vsl/blob/master/roots/bisection.v"><code>bisection.v</code></a>, and <a href="https://github.com/vlang/vsl/blob/master/roots/newton.v"><code>newton.v</code></a>.</p>
+<p>Nelder-Mead minimizes multivariate objectives without derivative callbacks:</p>
+<pre><code class="language-v"><span class="token keyword">import</span> <span class="token module_">vsl</span><span class="token punctuation">.</span><span class="token module_">func</span>
+<span class="token keyword">import</span> <span class="token module_">vsl</span><span class="token punctuation">.</span><span class="token module_">roots</span>
+
+<span class="token keyword">fn</span> <span class="token function">objective</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> _ <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span> <span class="token punctuation">{</span>
+    a <span class="token operator">:=</span> <span class="token number">1.0</span> <span class="token operator">-</span> x<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+    b <span class="token operator">:=</span> x<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">-</span> x<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">*</span> x<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+    <span class="token keyword">return</span> a <span class="token operator">*</span> a <span class="token operator">+</span> <span class="token number">100.0</span> <span class="token operator">*</span> b <span class="token operator">*</span> b
+<span class="token punctuation">}</span>
+
+f <span class="token operator">:=</span> <span class="token module_">func</span><span class="token punctuation">.</span><span class="token type_name">FnND</span><span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>objective<span class="token punctuation">)</span>
+<span class="token keyword">mut</span> optimizer <span class="token operator">:=</span> <span class="token module_">roots</span><span class="token punctuation">.</span><span class="token type_name">NelderMead</span><span class="token punctuation">.</span><span class="token function">new_with_params</span><span class="token punctuation">(</span>f<span class="token punctuation">,</span> <span class="token module_">roots</span><span class="token punctuation">.</span><span class="token type_name">NelderMeadParams</span><span class="token punctuation">{</span>
+    x0<span class="token punctuation">:</span>           <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1.2</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">]</span>
+    initial_step<span class="token punctuation">:</span> <span class="token number">0.5</span>
+    x_tol<span class="token punctuation">:</span>        <span class="token number">1e-6</span>
+    f_tol<span class="token punctuation">:</span>        <span class="token number">1e-12</span>
+    n_max<span class="token punctuation">:</span>        <span class="token number">2000</span>
+    max_evals<span class="token punctuation">:</span>    <span class="token number">5000</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+result <span class="token operator">:=</span> optimizer<span class="token punctuation">.</span><span class="token function">solve</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">!</span>
+<span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'status=</span><span class="token string_interp">$</span><span class="token string_interp">{</span>result<span class="token punctuation">.</span>status<span class="token string_interp">}</span><span class="token string">, x=</span><span class="token string_interp">$</span><span class="token string_interp">{</span>result<span class="token punctuation">.</span>x<span class="token string_interp">}</span><span class="token string">, f(x)=</span><span class="token string_interp">$</span><span class="token string_interp">{</span>result<span class="token punctuation">.</span>fx<span class="token string_interp">}</span><span class="token string">'</span><span class="token punctuation">)</span>
+<span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'spreads=(</span><span class="token string_interp">$</span><span class="token string_interp">{</span>result<span class="token punctuation">.</span>x_spread<span class="token string_interp">}</span><span class="token string">, </span><span class="token string_interp">$</span><span class="token string_interp">{</span>result<span class="token punctuation">.</span>f_spread<span class="token string_interp">}</span><span class="token string">), evaluations=</span><span class="token string_interp">$</span><span class="token string_interp">{</span>result<span class="token punctuation">.</span>n_calls<span class="token string_interp">}</span><span class="token string">'</span><span class="token punctuation">)</span></code></pre>
+<p>See the <a href="https://github.com/vlang/vsl/blob/master/examples/roots_nelder_mead/README.md">Nelder-Mead example</a> and the <a href="https://github.com/vlang/vsl/blob/master/docs/scientific-computing/06-multivariate-minimization.md">multivariate minimization guide</a>.</p>
+<p>Golden-section minimization reports bounded execution diagnostics:</p>
+<pre><code class="language-v"><span class="token keyword">import</span> <span class="token module_">vsl</span><span class="token punctuation">.</span><span class="token module_">func</span>
+<span class="token keyword">import</span> <span class="token module_">vsl</span><span class="token punctuation">.</span><span class="token module_">roots</span>
+
+<span class="token keyword">fn</span> <span class="token function">objective</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">,</span> _ <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>x <span class="token operator">-</span> <span class="token number">1.25</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token punctuation">(</span>x <span class="token operator">-</span> <span class="token number">1.25</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+f <span class="token operator">:=</span> <span class="token module_">func</span><span class="token punctuation">.</span><span class="token type_name">Fn</span><span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>f<span class="token punctuation">:</span> objective<span class="token punctuation">)</span>
+<span class="token keyword">mut</span> minimizer <span class="token operator">:=</span> <span class="token module_">roots</span><span class="token punctuation">.</span><span class="token type_name">GoldenSection</span><span class="token punctuation">.</span><span class="token function">new_with_params</span><span class="token punctuation">(</span>f<span class="token punctuation">,</span> <span class="token module_">roots</span><span class="token punctuation">.</span><span class="token type_name">GoldenSectionParams</span><span class="token punctuation">{</span>
+    xmin<span class="token punctuation">:</span>      <span class="token operator">-</span><span class="token number">5.0</span>
+    xmax<span class="token punctuation">:</span>      <span class="token number">5.0</span>
+    tol<span class="token punctuation">:</span>       <span class="token number">1e-8</span>
+    n_max<span class="token punctuation">:</span>     <span class="token number">100</span>
+    max_evals<span class="token punctuation">:</span> <span class="token number">104</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+result <span class="token operator">:=</span> minimizer<span class="token punctuation">.</span><span class="token function">solve</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">!</span>
+<span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'status=</span><span class="token string_interp">$</span><span class="token string_interp">{</span>result<span class="token punctuation">.</span>status<span class="token string_interp">}</span><span class="token string"> x=</span><span class="token string_interp">$</span><span class="token string_interp">{</span>result<span class="token punctuation">.</span>x<span class="token string_interp">}</span><span class="token string"> f(x)=</span><span class="token string_interp">$</span><span class="token string_interp">{</span>result<span class="token punctuation">.</span>fx<span class="token string_interp">}</span><span class="token string">'</span><span class="token punctuation">)</span>
+<span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'interval=[</span><span class="token string_interp">$</span><span class="token string_interp">{</span>result<span class="token punctuation">.</span>lower<span class="token string_interp">}</span><span class="token string">, </span><span class="token string_interp">$</span><span class="token string_interp">{</span>result<span class="token punctuation">.</span>upper<span class="token string_interp">}</span><span class="token string">] evaluations=</span><span class="token string_interp">$</span><span class="token string_interp">{</span>result<span class="token punctuation">.</span>n_calls<span class="token string_interp">}</span><span class="token string">'</span><span class="token punctuation">)</span></code></pre>
+<p>Brent minimization uses the same objective and reports its termination diagnostics:</p>
+<pre><code class="language-v"><span class="token keyword">import</span> <span class="token module_">vsl</span><span class="token punctuation">.</span><span class="token module_">func</span>
+<span class="token keyword">import</span> <span class="token module_">vsl</span><span class="token punctuation">.</span><span class="token module_">roots</span>
+
+<span class="token keyword">fn</span> <span class="token function">objective</span><span class="token punctuation">(</span>x <span class="token builtin">f64</span><span class="token punctuation">,</span> _ <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>x <span class="token operator">-</span> <span class="token number">1.25</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token punctuation">(</span>x <span class="token operator">-</span> <span class="token number">1.25</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+f <span class="token operator">:=</span> <span class="token module_">func</span><span class="token punctuation">.</span><span class="token type_name">Fn</span><span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>f<span class="token punctuation">:</span> objective<span class="token punctuation">)</span>
+<span class="token keyword">mut</span> minimizer <span class="token operator">:=</span> <span class="token module_">roots</span><span class="token punctuation">.</span><span class="token type_name">BrentMinimizer</span><span class="token punctuation">.</span><span class="token function">new_with_params</span><span class="token punctuation">(</span>f<span class="token punctuation">,</span> <span class="token module_">roots</span><span class="token punctuation">.</span><span class="token type_name">BrentMinimizerParams</span><span class="token punctuation">{</span>
+    xmin<span class="token punctuation">:</span>      <span class="token operator">-</span><span class="token number">5.0</span>
+    xmax<span class="token punctuation">:</span>      <span class="token number">5.0</span>
+    tol<span class="token punctuation">:</span>       <span class="token number">1e-8</span>
+    n_max<span class="token punctuation">:</span>     <span class="token number">100</span>
+    max_evals<span class="token punctuation">:</span> <span class="token number">102</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+result <span class="token operator">:=</span> minimizer<span class="token punctuation">.</span><span class="token function">solve</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">!</span>
+<span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'status=</span><span class="token string_interp">$</span><span class="token string_interp">{</span>result<span class="token punctuation">.</span>status<span class="token string_interp">}</span><span class="token string"> x=</span><span class="token string_interp">$</span><span class="token string_interp">{</span>result<span class="token punctuation">.</span>x<span class="token string_interp">}</span><span class="token string"> f(x)=</span><span class="token string_interp">$</span><span class="token string_interp">{</span>result<span class="token punctuation">.</span>fx<span class="token string_interp">}</span><span class="token string">'</span><span class="token punctuation">)</span>
+<span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'interval=[</span><span class="token string_interp">$</span><span class="token string_interp">{</span>result<span class="token punctuation">.</span>lower<span class="token string_interp">}</span><span class="token string">, </span><span class="token string_interp">$</span><span class="token string_interp">{</span>result<span class="token punctuation">.</span>upper<span class="token string_interp">}</span><span class="token string">] evaluations=</span><span class="token string_interp">$</span><span class="token string_interp">{</span>result<span class="token punctuation">.</span>n_calls<span class="token string_interp">}</span><span class="token string">'</span><span class="token punctuation">)</span></code></pre>
+<p>See the <a href="https://github.com/vlang/vsl/blob/master/examples/roots_bisection_solver/README.md">bisection example</a>, the <a href="https://github.com/vlang/vsl/blob/master/examples/roots_brent_solver/README.md">Brent example</a>, the <a href="https://github.com/vlang/vsl/blob/master/examples/roots_nelder_mead/README.md">Nelder-Mead example</a>, the <a href="https://github.com/vlang/vsl/blob/master/examples/roots_golden_section/README.md">Golden-section example</a>, the <a href="https://github.com/vlang/vsl/blob/master/examples/roots_brent_minimizer/README.md">Brent minimization example</a>, <a href="https://github.com/vlang/vsl/blob/master/roots/bisection.v"><code>bisection.v</code></a>, and <a href="https://github.com/vlang/vsl/blob/master/roots/newton.v"><code>newton.v</code></a>.</p>
 
 </section>
 
@@ -289,11 +399,75 @@ result <span class="token operator">:=</span> solver<span class="token punctuati
 
 </section>
 
+		<section id="BrentMinimizer.new" class="doc-node">
+			<div class="title"><h2>fn BrentMinimizer.new <a href="#BrentMinimizer.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/roots/brent_minimize.v#L47"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token type_name">BrentMinimizer</span><span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>f <span class="token module_">func</span><span class="token punctuation">.</span><span class="token type_name">Fn</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token type_name">BrentMinimizer</span></code></pre>
+<p>BrentMinimizer.new creates a minimizer with default tolerances and limits. Set xmin and xmax before calling solve, or use new_with_params.</p>
+
+</section>
+
+		<section id="BrentMinimizer.new_with_params" class="doc-node">
+			<div class="title"><h2>fn BrentMinimizer.new_with_params <a href="#BrentMinimizer.new_with_params">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/roots/brent_minimize.v#L52"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token type_name">BrentMinimizer</span><span class="token punctuation">.</span><span class="token function">new_with_params</span><span class="token punctuation">(</span>f <span class="token module_">func</span><span class="token punctuation">.</span><span class="token type_name">Fn</span><span class="token punctuation">,</span> params <span class="token type_name">BrentMinimizerParams</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token type_name">BrentMinimizer</span></code></pre>
+<p>BrentMinimizer.new_with_params creates a configured minimizer.</p>
+
+</section>
+
 		<section id="BrentStatus.from" class="doc-node">
 			<div class="title"><h2>fn BrentStatus.from <a href="#BrentStatus.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/roots/brent.v#L9"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token type_name">BrentStatus</span><span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">[</span><span class="token type_name">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token type_name">W</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token type_name">BrentStatus</span></code></pre>
 <p>from returns the <code>BrentStatus</code> value of an integer or of a field name, or an error if there is none.</p>
+
+</section>
+
+		<section id="GoldenSection.new" class="doc-node">
+			<div class="title"><h2>fn GoldenSection.new <a href="#GoldenSection.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/roots/minimize.v#L56"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token type_name">GoldenSection</span><span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>f <span class="token module_">func</span><span class="token punctuation">.</span><span class="token type_name">Fn</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token type_name">GoldenSection</span></code></pre>
+<p>GoldenSection.new creates a minimizer with default tolerances and limits. Set xmin and xmax before calling solve, or use new_with_params.</p>
+
+</section>
+
+		<section id="GoldenSection.new_with_params" class="doc-node">
+			<div class="title"><h2>fn GoldenSection.new_with_params <a href="#GoldenSection.new_with_params">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/roots/minimize.v#L61"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token type_name">GoldenSection</span><span class="token punctuation">.</span><span class="token function">new_with_params</span><span class="token punctuation">(</span>f <span class="token module_">func</span><span class="token punctuation">.</span><span class="token type_name">Fn</span><span class="token punctuation">,</span> params <span class="token type_name">GoldenSectionParams</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token type_name">GoldenSection</span></code></pre>
+<p>GoldenSection.new_with_params creates a configured minimizer.</p>
+
+</section>
+
+		<section id="MinimizeStatus.from" class="doc-node">
+			<div class="title"><h2>fn MinimizeStatus.from <a href="#MinimizeStatus.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/roots/minimize.v#L8"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token type_name">MinimizeStatus</span><span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">[</span><span class="token type_name">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token type_name">W</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token type_name">MinimizeStatus</span></code></pre>
+<p>from returns the <code>MinimizeStatus</code> value of an integer or of a field name, or an error if there is none.</p>
+
+</section>
+
+		<section id="NelderMead.new" class="doc-node">
+			<div class="title"><h2>fn NelderMead.new <a href="#NelderMead.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/roots/nelder_mead.v#L57"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token type_name">NelderMead</span><span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>f <span class="token module_">func</span><span class="token punctuation">.</span><span class="token type_name">FnND</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token type_name">NelderMead</span></code></pre>
+<p>NelderMead.new creates an optimizer with default tolerances and limits. Set x0 before calling solve, or use new_with_params.</p>
+
+</section>
+
+		<section id="NelderMead.new_with_params" class="doc-node">
+			<div class="title"><h2>fn NelderMead.new_with_params <a href="#NelderMead.new_with_params">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/roots/nelder_mead.v#L62"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token type_name">NelderMead</span><span class="token punctuation">.</span><span class="token function">new_with_params</span><span class="token punctuation">(</span>f <span class="token module_">func</span><span class="token punctuation">.</span><span class="token type_name">FnND</span><span class="token punctuation">,</span> params <span class="token type_name">NelderMeadParams</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token type_name">NelderMead</span></code></pre>
+<p>NelderMead.new_with_params creates a configured optimizer.</p>
+
+</section>
+
+		<section id="NelderMeadStatus.from" class="doc-node">
+			<div class="title"><h2>fn NelderMeadStatus.from <a href="#NelderMeadStatus.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/roots/nelder_mead.v#L8"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token type_name">NelderMeadStatus</span><span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">[</span><span class="token type_name">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token type_name">W</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token type_name">NelderMeadStatus</span></code></pre>
+<p>from returns the <code>NelderMeadStatus</code> value of an integer or of a field name, or an error if there is none.</p>
 
 </section>
 
@@ -309,6 +483,34 @@ result <span class="token operator">:=</span> solver<span class="token punctuati
 	precision_limit
 <span class="token punctuation">}</span></code></pre>
 <p>BrentStatus reports why a Brent solver stopped.</p>
+
+</section>
+
+		<section id="MinimizeStatus" class="doc-node">
+			<div class="title"><h2>enum MinimizeStatus <a href="#MinimizeStatus">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/roots/minimize.v#L8"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> <span class="token type_name">MinimizeStatus</span> <span class="token punctuation">{</span>
+	converged
+	max_iterations
+	max_evaluations
+	non_finite_function_value
+	precision_limit
+<span class="token punctuation">}</span></code></pre>
+<p>MinimizeStatus reports why a bounded minimizer stopped.</p>
+
+</section>
+
+		<section id="NelderMeadStatus" class="doc-node">
+			<div class="title"><h2>enum NelderMeadStatus <a href="#NelderMeadStatus">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/roots/nelder_mead.v#L8"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> <span class="token type_name">NelderMeadStatus</span> <span class="token punctuation">{</span>
+	converged
+	max_iterations
+	max_evaluations
+	non_finite_function_value
+	precision_limit
+<span class="token punctuation">}</span></code></pre>
+<p>NelderMeadStatus reports why the optimizer stopped.</p>
 
 </section>
 
@@ -423,6 +625,67 @@ result <span class="token operator">:=</span> solver<span class="token punctuati
 
 </section>
 
+		<section id="BrentMinimizer" class="doc-node">
+			<div class="title"><h2>struct BrentMinimizer <a href="#BrentMinimizer">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/roots/brent_minimize.v#L32"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token type_name">BrentMinimizer</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span><span class="token punctuation">:</span>
+	f <span class="token module_">func</span><span class="token punctuation">.</span><span class="token type_name">Fn</span> <span class="token attribute">@[</span><span class="token attribute">required</span><span class="token attribute">]</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	xmin      <span class="token builtin">f64</span>
+	xmax      <span class="token builtin">f64</span>
+	tol       <span class="token builtin">f64</span>
+	n_max     <span class="token builtin">int</span>
+	max_evals <span class="token builtin">int</span>
+	n_calls   <span class="token builtin">int</span>
+	n_iter    <span class="token builtin">int</span>
+<span class="token punctuation">}</span></code></pre>
+<p>BrentMinimizer minimizes a unimodal scalar function over [xmin, xmax].</p>
+
+</section>
+
+		<section id="BrentMinimizer.solve" class="doc-node">
+			<div class="title"><h2>fn (BrentMinimizer) solve <a href="#BrentMinimizer.solve">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/roots/brent_minimize.v#L88"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> solver <span class="token type_name">BrentMinimizer</span><span class="token punctuation">)</span> <span class="token function">solve</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token type_name">BrentMinimizerIteration</span></code></pre>
+<p>solve minimizes a unimodal function over the configured interval. A non-converged termination is returned in result.status; invalid parameters are returned as errors. The function is evaluated only at interior points.</p>
+
+</section>
+
+		<section id="BrentMinimizerIteration" class="doc-node">
+			<div class="title"><h2>struct BrentMinimizerIteration <a href="#BrentMinimizerIteration">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/roots/brent_minimize.v#L19"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token type_name">BrentMinimizerIteration</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span><span class="token punctuation">:</span>
+	x           <span class="token builtin">f64</span>
+	fx          <span class="token builtin">f64</span>
+	lower       <span class="token builtin">f64</span>
+	upper       <span class="token builtin">f64</span>
+	error_bound <span class="token builtin">f64</span>
+	n_calls     <span class="token builtin">int</span>
+	n_iter      <span class="token builtin">int</span>
+	status      <span class="token type_name">MinimizeStatus</span>
+<span class="token punctuation">}</span></code></pre>
+<p>BrentMinimizerIteration is the best point and termination diagnostics.</p>
+
+</section>
+
+		<section id="BrentMinimizerParams" class="doc-node">
+			<div class="title"><h2>struct BrentMinimizerParams <a href="#BrentMinimizerParams">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/roots/brent_minimize.v#L9"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<div class="attributes"><div class="attribute">@[params]</div></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token type_name">BrentMinimizerParams</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span><span class="token punctuation">:</span>
+	xmin      <span class="token builtin">f64</span>
+	xmax      <span class="token builtin">f64</span>
+	tol       <span class="token builtin">f64</span> <span class="token operator">=</span> <span class="token number">1e-6</span>
+	n_max     <span class="token builtin">int</span> <span class="token operator">=</span> <span class="token number">100</span>
+	max_evals <span class="token builtin">int</span> <span class="token operator">=</span> <span class="token number">102</span>
+<span class="token punctuation">}</span></code></pre>
+<p>BrentMinimizerParams configures a bounded scalar minimizer.</p>
+
+</section>
+
 		<section id="BrentParams" class="doc-node">
 			<div class="title"><h2>struct BrentParams <a href="#BrentParams">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/roots/brent.v#L20"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <div class="attributes"><div class="attribute">@[params]</div></div>
@@ -439,8 +702,131 @@ result <span class="token operator">:=</span> solver<span class="token punctuati
 
 </section>
 
+		<section id="GoldenSection" class="doc-node">
+			<div class="title"><h2>struct GoldenSection <a href="#GoldenSection">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/roots/minimize.v#L41"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token type_name">GoldenSection</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span><span class="token punctuation">:</span>
+	f <span class="token module_">func</span><span class="token punctuation">.</span><span class="token type_name">Fn</span> <span class="token attribute">@[</span><span class="token attribute">required</span><span class="token attribute">]</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	xmin      <span class="token builtin">f64</span>
+	xmax      <span class="token builtin">f64</span>
+	tol       <span class="token builtin">f64</span>
+	n_max     <span class="token builtin">int</span>
+	max_evals <span class="token builtin">int</span>
+	n_calls   <span class="token builtin">int</span>
+	n_iter    <span class="token builtin">int</span>
+<span class="token punctuation">}</span></code></pre>
+<p>GoldenSection minimizes a unimodal scalar function over [xmin, xmax].</p>
 
-						<div class="footer">Powered by vdoc. Generated on: 13 Nov 2026 07:52:58</div>
+</section>
+
+		<section id="GoldenSection.solve" class="doc-node">
+			<div class="title"><h2>fn (GoldenSection) solve <a href="#GoldenSection.solve">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/roots/minimize.v#L99"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> solver <span class="token type_name">GoldenSection</span><span class="token punctuation">)</span> <span class="token function">solve</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token type_name">GoldenSectionIteration</span></code></pre>
+<p>solve minimizes a unimodal function over the configured interval. A non-converged termination is returned in result.status; invalid parameters are returned as errors. The function is evaluated only at interior points.</p>
+
+</section>
+
+		<section id="GoldenSectionIteration" class="doc-node">
+			<div class="title"><h2>struct GoldenSectionIteration <a href="#GoldenSectionIteration">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/roots/minimize.v#L28"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token type_name">GoldenSectionIteration</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span><span class="token punctuation">:</span>
+	x           <span class="token builtin">f64</span>
+	fx          <span class="token builtin">f64</span>
+	lower       <span class="token builtin">f64</span>
+	upper       <span class="token builtin">f64</span>
+	error_bound <span class="token builtin">f64</span>
+	n_calls     <span class="token builtin">int</span>
+	n_iter      <span class="token builtin">int</span>
+	status      <span class="token type_name">MinimizeStatus</span>
+<span class="token punctuation">}</span></code></pre>
+<p>GoldenSectionIteration is the best observed point and termination diagnostics.</p>
+
+</section>
+
+		<section id="GoldenSectionParams" class="doc-node">
+			<div class="title"><h2>struct GoldenSectionParams <a href="#GoldenSectionParams">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/roots/minimize.v#L18"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<div class="attributes"><div class="attribute">@[params]</div></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token type_name">GoldenSectionParams</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span><span class="token punctuation">:</span>
+	xmin      <span class="token builtin">f64</span>
+	xmax      <span class="token builtin">f64</span>
+	tol       <span class="token builtin">f64</span> <span class="token operator">=</span> <span class="token number">1e-6</span>
+	n_max     <span class="token builtin">int</span> <span class="token operator">=</span> <span class="token number">100</span>
+	max_evals <span class="token builtin">int</span> <span class="token operator">=</span> <span class="token number">104</span>
+<span class="token punctuation">}</span></code></pre>
+<p>GoldenSectionParams configures a bounded scalar minimizer.</p>
+
+</section>
+
+		<section id="NelderMead" class="doc-node">
+			<div class="title"><h2>struct NelderMead <a href="#NelderMead">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/roots/nelder_mead.v#L41"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token type_name">NelderMead</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span><span class="token punctuation">:</span>
+	f <span class="token module_">func</span><span class="token punctuation">.</span><span class="token type_name">FnND</span> <span class="token attribute">@[</span><span class="token attribute">required</span><span class="token attribute">]</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	x0           <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
+	initial_step <span class="token builtin">f64</span>
+	x_tol        <span class="token builtin">f64</span>
+	f_tol        <span class="token builtin">f64</span>
+	n_max        <span class="token builtin">int</span>
+	max_evals    <span class="token builtin">int</span>
+	n_calls      <span class="token builtin">int</span>
+	n_iter       <span class="token builtin">int</span>
+<span class="token punctuation">}</span></code></pre>
+<p>NelderMead minimizes a scalar objective over an n-dimensional input.</p>
+
+</section>
+
+		<section id="NelderMead.solve" class="doc-node">
+			<div class="title"><h2>fn (NelderMead) solve <a href="#NelderMead.solve">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/roots/nelder_mead.v#L162"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> solver <span class="token type_name">NelderMead</span><span class="token punctuation">)</span> <span class="token function">solve</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token type_name">NelderMeadResult</span></code></pre>
+<p>solve minimizes a multivariate objective using the Nelder-Mead simplex method. Invalid parameters return errors; other termination reasons appear in the result. The initial simplex applies the same positive step along each coordinate axis, and convergence requires both coordinate and objective spreads to meet their absolute tolerances.</p>
+
+</section>
+
+		<section id="NelderMeadParams" class="doc-node">
+			<div class="title"><h2>struct NelderMeadParams <a href="#NelderMeadParams">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/roots/nelder_mead.v#L18"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<div class="attributes"><div class="attribute">@[params]</div></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token type_name">NelderMeadParams</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span><span class="token punctuation">:</span>
+	x0           <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
+	initial_step <span class="token builtin">f64</span> <span class="token operator">=</span> <span class="token number">1.0</span>
+	x_tol        <span class="token builtin">f64</span> <span class="token operator">=</span> <span class="token number">1e-8</span>
+	f_tol        <span class="token builtin">f64</span> <span class="token operator">=</span> <span class="token number">1e-8</span>
+	n_max        <span class="token builtin">int</span> <span class="token operator">=</span> <span class="token number">200</span>
+	max_evals    <span class="token builtin">int</span> <span class="token operator">=</span> <span class="token number">1000</span>
+<span class="token punctuation">}</span></code></pre>
+<p>NelderMeadParams configures derivative-free multivariate minimization.</p>
+
+</section>
+
+		<section id="NelderMeadResult" class="doc-node">
+			<div class="title"><h2>struct NelderMeadResult <a href="#NelderMeadResult">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/roots/nelder_mead.v#L29"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token type_name">NelderMeadResult</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span><span class="token punctuation">:</span>
+	x        <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
+	fx       <span class="token builtin">f64</span>
+	x_spread <span class="token builtin">f64</span>
+	f_spread <span class="token builtin">f64</span>
+	n_calls  <span class="token builtin">int</span>
+	n_iter   <span class="token builtin">int</span>
+	status   <span class="token type_name">NelderMeadStatus</span>
+<span class="token punctuation">}</span></code></pre>
+<p>NelderMeadResult contains the best point and simplex convergence diagnostics.</p>
+
+</section>
+
+
+						<div class="footer">Powered by vdoc. Generated on: 14 Nov 2026 05:26:13</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_roots">README</a></li>
 <li class="open"><a href="#newton">fn newton</a>        <ul>
@@ -458,10 +844,40 @@ result <span class="token operator">:=</span> solver<span class="token punctuati
 <li class="open"><a href="#Brent.new_with_params">fn Brent.new_with_params</a>        <ul>
 </ul>
 </li>
+<li class="open"><a href="#BrentMinimizer.new">fn BrentMinimizer.new</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#BrentMinimizer.new_with_params">fn BrentMinimizer.new_with_params</a>        <ul>
+</ul>
+</li>
 <li class="open"><a href="#BrentStatus.from">fn BrentStatus.from</a>        <ul>
 </ul>
 </li>
+<li class="open"><a href="#GoldenSection.new">fn GoldenSection.new</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#GoldenSection.new_with_params">fn GoldenSection.new_with_params</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#MinimizeStatus.from">fn MinimizeStatus.from</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#NelderMead.new">fn NelderMead.new</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#NelderMead.new_with_params">fn NelderMead.new_with_params</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#NelderMeadStatus.from">fn NelderMeadStatus.from</a>        <ul>
+</ul>
+</li>
 <li class="open"><a href="#BrentStatus">enum BrentStatus</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#MinimizeStatus">enum MinimizeStatus</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#NelderMeadStatus">enum NelderMeadStatus</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#Bisection">struct Bisection</a>        <ul>
@@ -482,7 +898,37 @@ result <span class="token operator">:=</span> solver<span class="token punctuati
 <li class="open"><a href="#BrentIteration">struct BrentIteration</a>        <ul>
 </ul>
 </li>
+<li class="open"><a href="#BrentMinimizer">struct BrentMinimizer</a>        <ul>
+<li><a href="#BrentMinimizer.solve">fn solve</a></li>
+</ul>
+</li>
+<li class="open"><a href="#BrentMinimizerIteration">struct BrentMinimizerIteration</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#BrentMinimizerParams">struct BrentMinimizerParams</a>        <ul>
+</ul>
+</li>
 <li class="open"><a href="#BrentParams">struct BrentParams</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#GoldenSection">struct GoldenSection</a>        <ul>
+<li><a href="#GoldenSection.solve">fn solve</a></li>
+</ul>
+</li>
+<li class="open"><a href="#GoldenSectionIteration">struct GoldenSectionIteration</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#GoldenSectionParams">struct GoldenSectionParams</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#NelderMead">struct NelderMead</a>        <ul>
+<li><a href="#NelderMead.solve">fn solve</a></li>
+</ul>
+</li>
+<li class="open"><a href="#NelderMeadParams">struct NelderMeadParams</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#NelderMeadResult">struct NelderMeadResult</a>        <ul>
 </ul>
 </li>
 </ul></div>

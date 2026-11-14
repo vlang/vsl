@@ -132,6 +132,9 @@
 <div class="menu-row"><a href="./h5.html">h5</a></div>
 </li>
 <li class="open">
+<div class="menu-row"><a href="./integrate.html">integrate</a></div>
+</li>
+<li class="open">
 <div class="menu-row"><a href="./prec.html">prec</a></div>
 </li>
 <li class="open">
@@ -163,6 +166,9 @@
 </li>
 <li class="open">
 <div class="menu-row"><a href="./noise.html">noise</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./ode.html">ode</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./plot.html">plot</a></div>
@@ -213,18 +219,78 @@ implemented; CPU fallback when CUDA/cuDNN is unavailable.</p>
 <p><strong>VTL integration</strong> (opt-in CUDA Linear/Conv2D): merged in<br>
 <a href="https://github.com/vlang/vtl/pull/93">vlang/vtl#93</a> (issues #89–#91 closed).</p>
 </blockquote>
-<p>| Operation | GPU (CUDA+cuDNN) | Fallback | Tracker |
-|-----------|------------------|----------|---------|
-| <code>gemm</code> | ✅ <code>cublasDgemm</code> | CPU col-major | — |
-| <code>gemv</code> | ✅ <code>cublasDgemv</code> | CPU | — |
-| <code>relu</code> / <code>sigmoid</code> / <code>tanh</code> | ✅ cuDNN activation | CPU | — |
-| <code>add_vec</code> | ✅ <code>cublasDaxpy</code> | CPU | — |
-| <code>mul_vec</code> | ✅ <code>cublasDdgmm</code> | CPU | — |
-| <code>add_scalar</code> / <code>mul_scalar</code> | ✅ cuBLAS/cuDNN path | CPU | — |
-| <code>softmax</code> | ✅ <code>cudnnSoftmaxForward</code> | CPU | — |
-| <code>layernorm</code> | optional <code>-d cudnn_layernorm</code> | CPU | — |
-| <code>conv2d</code> | ✅ <code>cudnnConvolutionForward</code> | CPU | — |
-| <code>conv2d_backward</code> | ✅ <code>cudnnConvolutionBackward*</code> | CPU | — |</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>GPU (CUDA+cuDNN)</th>
+<th>Fallback</th>
+<th>Tracker</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gemm</code></td>
+<td>✅ <code>cublasDgemm</code></td>
+<td>CPU col-major</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>gemv</code></td>
+<td>✅ <code>cublasDgemv</code></td>
+<td>CPU</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>relu</code> / <code>sigmoid</code> / <code>tanh</code></td>
+<td>✅ cuDNN activation</td>
+<td>CPU</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>add_vec</code></td>
+<td>✅ <code>cublasDaxpy</code></td>
+<td>CPU</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>mul_vec</code></td>
+<td>✅ <code>cublasDdgmm</code></td>
+<td>CPU</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>add_scalar</code> / <code>mul_scalar</code></td>
+<td>✅ cuBLAS/cuDNN path</td>
+<td>CPU</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>softmax</code></td>
+<td>✅ <code>cudnnSoftmaxForward</code></td>
+<td>CPU</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>layernorm</code></td>
+<td>optional <code>-d cudnn_layernorm</code></td>
+<td>CPU</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>conv2d</code></td>
+<td>✅ <code>cudnnConvolutionForward</code></td>
+<td>CPU</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>conv2d_backward</code></td>
+<td>✅ <code>cudnnConvolutionBackward*</code></td>
+<td>CPU</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
 <p><code>mul_vec</code> uses legacy <code>cublasDdgmm</code> (<code>SIDE_RIGHT</code>, 1×n row layout; <code>cublasDdgmm_v2</code> absent on some distros). Layer norm GPU: build with <code>-d cudnn_layernorm</code> when libcudnn exports <code>cudnnLayerNormForward</code> (9.1+). Numerical parity tests: <code>cuda/compute/numerical_validation_test.v</code> (<a href="https://github.com/vlang/vsl/issues/281">#281</a>).</p>
 <h2 id="architecture">📁 Architecture</h2>
 <pre><code>vsl.cuda
@@ -322,13 +388,36 @@ v -d cuda vet .
 v -d cuda run cuda/examples/relu_example.v
 </code></pre>
 <h2 id="roadmap">🗺️ Roadmap</h2>
-<p>| Phase | Description |
-|-------|-------------|
-| ✅ <strong>Phase B</strong> | Infrastructure ready; CPU fallback path |
-| ✅ <strong>Phase C</strong> | cuBLAS/cuDNN kernels for GEMM/GEMV, activations, softmax, Conv2D, LayerNorm |
-| 🏗️ <strong>Phase D</strong> | Device discovery, multi-GPU support |
-| 🧠 <strong>Phase E</strong> | GPU memory management (avoid CPU↔GPU copies) |
-| ✅ <strong>Phase F</strong> | Numerical validation vs reference for key kernels |</p>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅ <strong>Phase B</strong></td>
+<td>Infrastructure ready; CPU fallback path</td>
+</tr>
+<tr>
+<td>✅ <strong>Phase C</strong></td>
+<td>cuBLAS/cuDNN kernels for GEMM/GEMV, activations, softmax, Conv2D, LayerNorm</td>
+</tr>
+<tr>
+<td>🏗️ <strong>Phase D</strong></td>
+<td>Device discovery, multi-GPU support</td>
+</tr>
+<tr>
+<td>🧠 <strong>Phase E</strong></td>
+<td>GPU memory management (avoid CPU↔GPU copies)</td>
+</tr>
+<tr>
+<td>✅ <strong>Phase F</strong></td>
+<td>Numerical validation vs reference for key kernels</td>
+</tr>
+</tbody>
+</table>
 <h2 id="resources">🔗 Resources</h2>
 <ul>
 <li><a href="https://vlang.github.io/vsl">VSL Documentation</a></li>
@@ -676,7 +765,7 @@ v -d cuda run cuda/examples/relu_example.v
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 13 Nov 2026 07:52:58</div>
+						<div class="footer">Powered by vdoc. Generated on: 14 Nov 2026 05:26:13</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_cuda">README</a></li>
 <li class="open"><a href="#Constants">Constants</a></li>

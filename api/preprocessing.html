@@ -132,6 +132,9 @@
 <div class="menu-row"><a href="./h5.html">h5</a></div>
 </li>
 <li class="open">
+<div class="menu-row"><a href="./integrate.html">integrate</a></div>
+</li>
+<li class="open">
 <div class="menu-row"><a href="./prec.html">prec</a></div>
 </li>
 <li class="open">
@@ -163,6 +166,9 @@
 </li>
 <li class="open">
 <div class="menu-row"><a href="./noise.html">noise</a></div>
+</li>
+<li class="open">
+<div class="menu-row"><a href="./ode.html">ode</a></div>
 </li>
 <li class="open">
 <div class="menu-row"><a href="./plot.html">plot</a></div>
@@ -205,12 +211,16 @@
 			<div class="title"><h1> preprocessing <a href="#readme_preprocessing">#</a></h1></div>
 <h1 id="vsl-preprocessing-module">VSL Preprocessing Module</h1>
 <p>The <code>vsl.preprocessing</code> module provides utilities for data preprocessing commonly used in machine learning pipelines.</p>
+<p>Numeric transformers implement a shared fit/transform contract and can be composed with <code>preprocessing.Pipeline</code>. Fit the pipeline on training data only, then reuse its learned state for validation, test, and inference data.</p>
 <h2 id="features">Features</h2>
 <h3 id="scalers">Scalers</h3>
 <ul>
 <li><strong>StandardScaler</strong>: Standardizes features by removing the mean and scaling to unit variance (Z-score normalization)</li>
 <li><strong>MinMaxScaler</strong>: Transforms features by scaling to a given range (default [0, 1])</li>
 <li><strong>RobustScaler</strong>: Scales features using statistics robust to outliers (median and IQR)</li></ul>
+<h3 id="imputation">Imputation</h3>
+<ul>
+<li><strong>SimpleImputer</strong>: Learns per-feature mean, median, or constant replacements for NaN values from training data and reuses them during inference</li></ul>
 <h3 id="encoders">Encoders</h3>
 <ul>
 <li><strong>LabelEncoder</strong>: Encodes categorical labels as integers</li>
@@ -224,6 +234,10 @@
 <h3 id="polynomial-features">Polynomial Features</h3>
 <ul>
 <li><strong>PolynomialFeatures</strong>: Generates polynomial powers and feature interactions</li></ul>
+<h3 id="numeric-pipelines">Numeric Pipelines</h3>
+<ul>
+<li><strong>MatrixTransformer</strong>: Common interface for fitted numeric transformations</li>
+<li><strong>Pipeline</strong>: Fits named transformations in sequence and tracks output feature names</li></ul>
 <h2 id="quick-start">Quick Start</h2>
 <h3 id="standard-scaling-z-score-normalization">Standard Scaling (Z-Score Normalization)</h3>
 <pre><code class="language-v"><span class="token keyword">import</span> <span class="token module_">vsl</span><span class="token punctuation">.</span><span class="token module_">preprocessing</span>
@@ -258,6 +272,19 @@ data <span class="token operator">:=</span> <span class="token punctuation">[</s
 <span class="token keyword">mut</span> scaler <span class="token operator">:=</span> <span class="token module_">preprocessing</span><span class="token punctuation">.</span><span class="token type_name">RobustScaler</span><span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 scaled <span class="token operator">:=</span> scaler<span class="token punctuation">.</span><span class="token function">fit_transform</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token operator">!</span>
 <span class="token comment">// Uses median and IQR, so outlier has less effect</span></code></pre>
+<h3 id="missing-values">Missing Values</h3>
+<p><code>SimpleImputer</code> treats NaN as missing and learns its statistics only from the matrix passed to <code>fit</code> or <code>fit_transform</code>. Mean and median strategies return an error for a feature containing no observed values; constant imputation can fill such a feature.</p>
+<pre><code class="language-v"><span class="token keyword">import</span> <span class="token module_">math</span>
+<span class="token keyword">import</span> <span class="token module_">vsl</span><span class="token punctuation">.</span><span class="token module_">preprocessing</span>
+
+missing <span class="token operator">:=</span> <span class="token module_">math</span><span class="token punctuation">.</span><span class="token function">nan</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+training <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1.0</span><span class="token punctuation">,</span> missing<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">3.0</span><span class="token punctuation">,</span> <span class="token number">4.0</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
+<span class="token keyword">mut</span> imputer <span class="token operator">:=</span> <span class="token module_">preprocessing</span><span class="token punctuation">.</span><span class="token type_name">SimpleImputer</span><span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token enum_value">.</span><span class="token enum_value">mean</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">)</span>
+_ <span class="token operator">:=</span> imputer<span class="token punctuation">.</span><span class="token function">fit_transform</span><span class="token punctuation">(</span>training<span class="token punctuation">)</span><span class="token operator">!</span>
+
+inference <span class="token operator">:=</span> imputer<span class="token punctuation">.</span><span class="token function">transform</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">[</span>missing<span class="token punctuation">,</span> <span class="token number">10.0</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">!</span>
+<span class="token comment">// The first feature uses the training mean (2), not an inference statistic.</span>
+<span class="token keyword">assert</span> inference <span class="token operator">==</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">2.0</span><span class="token punctuation">,</span> <span class="token number">10.0</span><span class="token punctuation">]</span><span class="token punctuation">]</span></code></pre>
 <h3 id="label-encoding">Label Encoding</h3>
 <pre><code class="language-v"><span class="token keyword">import</span> <span class="token module_">vsl</span><span class="token punctuation">.</span><span class="token module_">preprocessing</span>
 
@@ -313,69 +340,318 @@ expanded <span class="token operator">:=</span> features<span class="token punct
 <span class="token comment">// Columns: [bias, x1, x2, x1^2, x1*x2, x2^2]</span>
 <span class="token comment">// First row: [1, 2, 3, 4, 6, 9]</span></code></pre>
 <p>Set <code>interaction_only: true</code> to exclude repeated input features in a term, or <code>include_bias: false</code> to omit the leading column of ones.</p>
+<h3 id="leakage-safe-numeric-pipeline">Leakage-safe numeric pipeline</h3>
+<pre><code class="language-v"><span class="token keyword">import</span> <span class="token module_">math</span>
+<span class="token keyword">import</span> <span class="token module_">vsl</span><span class="token punctuation">.</span><span class="token module_">preprocessing</span>
+
+missing <span class="token operator">:=</span> <span class="token module_">math</span><span class="token punctuation">.</span><span class="token function">nan</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+training <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1.0</span><span class="token punctuation">,</span> missing<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">3.0</span><span class="token punctuation">,</span> <span class="token number">4.0</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
+<span class="token keyword">mut</span> pipeline <span class="token operator">:=</span> <span class="token module_">preprocessing</span><span class="token punctuation">.</span><span class="token type_name">Pipeline</span><span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+    <span class="token module_">preprocessing</span><span class="token punctuation">.</span><span class="token type_name">PipelineStep</span><span class="token punctuation">{</span>
+        name<span class="token punctuation">:</span>        <span class="token string">'impute'</span>
+        transformer<span class="token punctuation">:</span> <span class="token module_">preprocessing</span><span class="token punctuation">.</span><span class="token type_name">SimpleImputer</span><span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token enum_value">.</span><span class="token enum_value">mean</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token module_">preprocessing</span><span class="token punctuation">.</span><span class="token type_name">PipelineStep</span><span class="token punctuation">{</span>
+        name<span class="token punctuation">:</span>        <span class="token string">'scale'</span>
+        transformer<span class="token punctuation">:</span> <span class="token module_">preprocessing</span><span class="token punctuation">.</span><span class="token type_name">StandardScaler</span><span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">!</span>
+
+scaled_training <span class="token operator">:=</span> pipeline<span class="token punctuation">.</span><span class="token function">fit_transform</span><span class="token punctuation">(</span>training<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'age'</span><span class="token punctuation">,</span> <span class="token string">'income'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">!</span>
+inference <span class="token operator">:=</span> pipeline<span class="token punctuation">.</span><span class="token function">transform</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">[</span>missing<span class="token punctuation">,</span> <span class="token number">10.0</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">!</span>
+names <span class="token operator">:=</span> pipeline<span class="token punctuation">.</span><span class="token function">get_feature_names_out</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">!</span></code></pre>
+<p>An empty feature-name slice asks the pipeline to generate <code>x0</code>, <code>x1</code>, etc. Transformers that change feature count, such as <code>PolynomialFeatures</code>, update the tracked names in their output order.</p>
 <h2 id="api-reference">API Reference</h2>
 <h3 id="standardscaler">StandardScaler</h3>
-<p>| Method | Description |
-|--------|-------------|
-| <code>new()</code> | Creates a new StandardScaler |
-| <code>fit(x)</code> | Computes mean and std from data |
-| <code>transform(x)</code> | Applies standardization |
-| <code>fit_transform(x)</code> | Fits and transforms in one step |
-| <code>inverse_transform(x)</code> | Reverses standardization |</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>new()</code></td>
+<td>Creates a new StandardScaler</td>
+</tr>
+<tr>
+<td><code>fit(x)</code></td>
+<td>Computes mean and std from data</td>
+</tr>
+<tr>
+<td><code>transform(x)</code></td>
+<td>Applies standardization</td>
+</tr>
+<tr>
+<td><code>fit_transform(x)</code></td>
+<td>Fits and transforms in one step</td>
+</tr>
+<tr>
+<td><code>inverse_transform(x)</code></td>
+<td>Reverses standardization</td>
+</tr>
+</tbody>
+</table>
 <p><strong>Attributes after fitting:</strong></p>
 <ul>
 <li><code>mean_</code>: Mean of each feature</li>
 <li><code>std_</code>: Standard deviation of each feature</li></ul>
 <h3 id="minmaxscaler">MinMaxScaler</h3>
-<p>| Method | Description |
-|--------|-------------|
-| <code>new(feature_min, feature_max)</code> | Creates scaler with desired range |
-| <code>fit(x)</code> | Computes min and max from data |
-| <code>transform(x)</code> | Applies min-max scaling |
-| <code>fit_transform(x)</code> | Fits and transforms in one step |
-| <code>inverse_transform(x)</code> | Reverses scaling |</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>new(feature_min, feature_max)</code></td>
+<td>Creates scaler with desired range</td>
+</tr>
+<tr>
+<td><code>fit(x)</code></td>
+<td>Computes min and max from data</td>
+</tr>
+<tr>
+<td><code>transform(x)</code></td>
+<td>Applies min-max scaling</td>
+</tr>
+<tr>
+<td><code>fit_transform(x)</code></td>
+<td>Fits and transforms in one step</td>
+</tr>
+<tr>
+<td><code>inverse_transform(x)</code></td>
+<td>Reverses scaling</td>
+</tr>
+</tbody>
+</table>
 <h3 id="robustscaler">RobustScaler</h3>
-<p>| Method | Description |
-|--------|-------------|
-| <code>new()</code> | Creates a new RobustScaler |
-| <code>fit(x)</code> | Computes median and IQR from data |
-| <code>transform(x)</code> | Applies robust scaling |
-| <code>fit_transform(x)</code> | Fits and transforms in one step |</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>new()</code></td>
+<td>Creates a new RobustScaler</td>
+</tr>
+<tr>
+<td><code>fit(x)</code></td>
+<td>Computes median and IQR from data</td>
+</tr>
+<tr>
+<td><code>transform(x)</code></td>
+<td>Applies robust scaling</td>
+</tr>
+<tr>
+<td><code>fit_transform(x)</code></td>
+<td>Fits and transforms in one step</td>
+</tr>
+</tbody>
+</table>
+<h3 id="simpleimputer">SimpleImputer</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>new(strategy, fill_value)</code></td>
+<td>Creates a NaN imputer</td>
+</tr>
+<tr>
+<td><code>fit(x)</code></td>
+<td>Learns one replacement value per feature</td>
+</tr>
+<tr>
+<td><code>transform(x)</code></td>
+<td>Replaces NaNs using learned training statistics</td>
+</tr>
+<tr>
+<td><code>fit_transform(x)</code></td>
+<td>Fits and transforms in one step</td>
+</tr>
+</tbody>
+</table>
+<p><strong>ImputationStrategy:</strong></p>
+<ul>
+<li><code>.mean</code>: Mean of observed values per feature</li>
+<li><code>.median</code>: Median of observed values per feature</li>
+<li><code>.constant</code>: The configured <code>fill_value</code></li></ul>
+<p><code>fill_value</code> is ignored for mean and median strategies. Matrices must be rectangular and contain at least one feature. Transformations must preserve the fitted feature count. Empty inference batches are accepted. Mean and median fitting fails if any feature contains only NaNs; constant imputation supports all-NaN features. Only NaN is considered missing. Fitted state is held in memory; serialization remains outside this pipeline slice.</p>
 <h3 id="labelencoder">LabelEncoder</h3>
-<p>| Method | Description |
-|--------|-------------|
-| <code>new()</code> | Creates a new LabelEncoder |
-| <code>fit(y)</code> | Learns unique classes |
-| <code>transform(y)</code> | Encodes labels to integers |
-| <code>fit_transform(y)</code> | Fits and transforms in one step |
-| <code>inverse_transform(y)</code> | Converts integers back to labels |</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>new()</code></td>
+<td>Creates a new LabelEncoder</td>
+</tr>
+<tr>
+<td><code>fit(y)</code></td>
+<td>Learns unique classes</td>
+</tr>
+<tr>
+<td><code>transform(y)</code></td>
+<td>Encodes labels to integers</td>
+</tr>
+<tr>
+<td><code>fit_transform(y)</code></td>
+<td>Fits and transforms in one step</td>
+</tr>
+<tr>
+<td><code>inverse_transform(y)</code></td>
+<td>Converts integers back to labels</td>
+</tr>
+</tbody>
+</table>
 <h3 id="onehotencoder">OneHotEncoder</h3>
-<p>| Method | Description |
-|--------|-------------|
-| <code>new(drop_first)</code> | Creates encoder; drop_first for dummy encoding |
-| <code>fit(x)</code> | Learns categories for each feature |
-| <code>transform(x)</code> | Applies one-hot encoding |
-| <code>fit_transform(x)</code> | Fits and transforms in one step |
-| <code>get_feature_names(input_names)</code> | Returns output feature names |</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>new(drop_first)</code></td>
+<td>Creates encoder; drop_first for dummy encoding</td>
+</tr>
+<tr>
+<td><code>fit(x)</code></td>
+<td>Learns categories for each feature</td>
+</tr>
+<tr>
+<td><code>transform(x)</code></td>
+<td>Applies one-hot encoding</td>
+</tr>
+<tr>
+<td><code>fit_transform(x)</code></td>
+<td>Fits and transforms in one step</td>
+</tr>
+<tr>
+<td><code>get_feature_names(input_names)</code></td>
+<td>Returns output feature names</td>
+</tr>
+</tbody>
+</table>
 <h3 id="binner">Binner</h3>
-<p>| Method | Description |
-|--------|-------------|
-| <code>new(n_bins, strategy, labels)</code> | Creates binner with specified strategy |
-| <code>fit(values)</code> | Computes bin edges |
-| <code>transform(values)</code> | Assigns values to bins |
-| <code>fit_transform(values)</code> | Fits and transforms in one step |
-| <code>transform_to_indices(values)</code> | Returns bin indices instead of labels |</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>new(n_bins, strategy, labels)</code></td>
+<td>Creates binner with specified strategy</td>
+</tr>
+<tr>
+<td><code>fit(values)</code></td>
+<td>Computes bin edges</td>
+</tr>
+<tr>
+<td><code>transform(values)</code></td>
+<td>Assigns values to bins</td>
+</tr>
+<tr>
+<td><code>fit_transform(values)</code></td>
+<td>Fits and transforms in one step</td>
+</tr>
+<tr>
+<td><code>transform_to_indices(values)</code></td>
+<td>Returns bin indices instead of labels</td>
+</tr>
+</tbody>
+</table>
 <p><strong>BinningStrategy:</strong></p>
 <ul>
 <li><code>.uniform</code>: Equal-width bins</li>
 <li><code>.quantile</code>: Equal-frequency bins</li></ul>
 <h3 id="polynomialfeatures">PolynomialFeatures</h3>
-<p>| Field | Description |
-|-------|-------------|
-| <code>degree</code> | Maximum polynomial degree (default 2) |
-| <code>interaction_only</code> | Use each input feature at most once in each term |
-| <code>include_bias</code> | Add a leading column of ones (default true) |
-| <code>transform(data)</code> | Expands a rectangular matrix into polynomial features |</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>degree</code></td>
+<td>Maximum polynomial degree (default 2)</td>
+</tr>
+<tr>
+<td><code>interaction_only</code></td>
+<td>Use each input feature at most once in each term</td>
+</tr>
+<tr>
+<td><code>include_bias</code></td>
+<td>Add a leading column of ones (default true)</td>
+</tr>
+<tr>
+<td><code>transform(data)</code></td>
+<td>Expands a rectangular matrix into polynomial features</td>
+</tr>
+<tr>
+<td><code>get_feature_names_out(input_features)</code></td>
+<td>Returns names in transform output order</td>
+</tr>
+</tbody>
+</table>
+<h3 id="numeric-pipeline">Numeric Pipeline</h3>
+<table>
+<thead>
+<tr>
+<th>API</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Pipeline.new(steps)</code></td>
+<td>Creates a pipeline from named <code>PipelineStep</code> values</td>
+</tr>
+<tr>
+<td><code>PipelineStep{name, transformer}</code></td>
+<td>Associates a unique name with a <code>MatrixTransformer</code></td>
+</tr>
+<tr>
+<td><code>fit(data, feature_names)</code></td>
+<td>Fits steps in sequence; <code>[]</code> generates <code>x0</code>, <code>x1</code>, etc.</td>
+</tr>
+<tr>
+<td><code>fit_transform(data, feature_names)</code></td>
+<td>Fits the steps and returns training features</td>
+</tr>
+<tr>
+<td><code>transform(data)</code></td>
+<td>Reuses fitted state and validates input/output widths</td>
+</tr>
+<tr>
+<td><code>get_feature_names_out()</code></td>
+<td>Returns the output names learned during fitting</td>
+</tr>
+</tbody>
+</table>
+<p><code>MatrixTransformer</code> requires <code>fit</code>, <code>transform</code>, and <code>get_feature_names_out</code>. <code>StandardScaler</code>, <code>MinMaxScaler</code>, <code>RobustScaler</code>, <code>SimpleImputer</code>, and <code>PolynomialFeatures</code> implement it. String encoders and serialization are not yet integrated with this numeric pipeline.</p>
 <h2 id="integration-with-ml-pipeline">Integration with ML Pipeline</h2>
 <pre><code class="language-v"><span class="token keyword">import</span> <span class="token module_">vsl</span><span class="token punctuation">.</span><span class="token module_">preprocessing</span>
 <span class="token keyword">import</span> <span class="token module_">vsl</span><span class="token punctuation">.</span><span class="token module_">inout</span><span class="token punctuation">.</span><span class="token module_">csv</span>
@@ -447,6 +723,14 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 
 </section>
 
+		<section id="ImputationStrategy.from" class="doc-node">
+			<div class="title"><h2>fn ImputationStrategy.from <a href="#ImputationStrategy.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/imputers.v#L7"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token type_name">ImputationStrategy</span><span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">[</span><span class="token type_name">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token type_name">W</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token type_name">ImputationStrategy</span></code></pre>
+<p>from returns the <code>ImputationStrategy</code> value of an integer or of a field name, or an error if there is none.</p>
+
+</section>
+
 		<section id="LabelEncoder.new" class="doc-node">
 			<div class="title"><h2>fn LabelEncoder.new <a href="#LabelEncoder.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/encoders.v#L20"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
@@ -456,7 +740,7 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 </section>
 
 		<section id="MinMaxScaler.new" class="doc-node">
-			<div class="title"><h2>fn MinMaxScaler.new <a href="#MinMaxScaler.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/scalers.v#L124"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn MinMaxScaler.new <a href="#MinMaxScaler.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/scalers.v#L132"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token type_name">MinMaxScaler</span><span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>feature_min <span class="token builtin">f64</span><span class="token punctuation">,</span> feature_max <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token type_name">MinMaxScaler</span></code></pre>
 <p>MinMaxScaler.new creates a new MinMaxScaler with optional range</p>
@@ -479,11 +763,27 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 
 </section>
 
+		<section id="Pipeline.new" class="doc-node">
+			<div class="title"><h2>fn Pipeline.new <a href="#Pipeline.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/pipeline.v#L39"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token type_name">Pipeline</span><span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>steps <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token type_name">PipelineStep</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token operator">&amp;</span><span class="token type_name">Pipeline</span></code></pre>
+<p>Pipeline.new creates a pipeline from named numeric transformers.</p>
+
+</section>
+
 		<section id="RobustScaler.new" class="doc-node">
-			<div class="title"><h2>fn RobustScaler.new <a href="#RobustScaler.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/scalers.v#L224"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn RobustScaler.new <a href="#RobustScaler.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/scalers.v#L240"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token type_name">RobustScaler</span><span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token type_name">RobustScaler</span></code></pre>
 <p>RobustScaler.new creates a new RobustScaler</p>
+
+</section>
+
+		<section id="SimpleImputer.new" class="doc-node">
+			<div class="title"><h2>fn SimpleImputer.new <a href="#SimpleImputer.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/imputers.v#L27"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token type_name">SimpleImputer</span><span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>strategy <span class="token type_name">ImputationStrategy</span><span class="token punctuation">,</span> fill_value <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token type_name">SimpleImputer</span></code></pre>
+<p>SimpleImputer.new creates an imputer that treats NaN values as missing.</p>
 
 </section>
 
@@ -495,6 +795,23 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 
 </section>
 
+		<section id="MatrixTransformer" class="doc-node">
+			<div class="title"><h2>interface MatrixTransformer <a href="#MatrixTransformer">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/pipeline.v#L6"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">interface</span> <span class="token type_name">MatrixTransformer</span> <span class="token punctuation">{</span>
+	<span class="token comment">// transform applies the learned transformation without mutating its state.</span>
+	<span class="token function">transform</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
+
+	<span class="token comment">// get_feature_names_out returns names for the transformed columns.</span>
+	<span class="token function">get_feature_names_out</span><span class="token punctuation">(</span>input_features <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span>
+	<span class="token comment">// fit learns transform state from the supplied training matrix.</span>
+<span class="token keyword">mut</span><span class="token punctuation">:</span>
+	<span class="token function">fit</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span>
+<span class="token punctuation">}</span></code></pre>
+<p>MatrixTransformer is a fitted transform for numeric feature matrices.</p>
+
+</section>
+
 		<section id="BinningStrategy" class="doc-node">
 			<div class="title"><h2>enum BinningStrategy <a href="#BinningStrategy">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/binning.v#L6"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
@@ -503,6 +820,18 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 	quantile <span class="token comment">// equal-frequency bins</span>
 <span class="token punctuation">}</span></code></pre>
 <p>BinningStrategy specifies how to create bin edges</p>
+
+</section>
+
+		<section id="ImputationStrategy" class="doc-node">
+			<div class="title"><h2>enum ImputationStrategy <a href="#ImputationStrategy">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/imputers.v#L7"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> <span class="token type_name">ImputationStrategy</span> <span class="token punctuation">{</span>
+	mean
+	median
+	constant
+<span class="token punctuation">}</span></code></pre>
+<p>ImputationStrategy selects how a feature's missing values are filled.</p>
 
 </section>
 
@@ -603,7 +932,7 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 </section>
 
 		<section id="MinMaxScaler" class="doc-node">
-			<div class="title"><h2>struct MinMaxScaler <a href="#MinMaxScaler">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/scalers.v#L111"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>struct MinMaxScaler <a href="#MinMaxScaler">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/scalers.v#L119"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <div class="attributes"><div class="attribute">@[heap]</div></div>
 <pre class="signature">
 <code><span class="token keyword">struct</span> <span class="token type_name">MinMaxScaler</span> <span class="token punctuation">{</span>
@@ -622,7 +951,7 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 </section>
 
 		<section id="MinMaxScaler.fit" class="doc-node">
-			<div class="title"><h2>fn (MinMaxScaler) fit <a href="#MinMaxScaler.fit">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/scalers.v#L132"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (MinMaxScaler) fit <a href="#MinMaxScaler.fit">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/scalers.v#L140"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> s <span class="token type_name">MinMaxScaler</span><span class="token punctuation">)</span> <span class="token function">fit</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
 <p>fit computes the min and max to be used for later scaling</p>
@@ -630,7 +959,7 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 </section>
 
 		<section id="MinMaxScaler.transform" class="doc-node">
-			<div class="title"><h2>fn (MinMaxScaler) transform <a href="#MinMaxScaler.transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/scalers.v#L164"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (MinMaxScaler) transform <a href="#MinMaxScaler.transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/scalers.v#L172"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>s <span class="token operator">&amp;</span><span class="token type_name">MinMaxScaler</span><span class="token punctuation">)</span> <span class="token function">transform</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 <p>transform applies the min-max scaling to the data</p>
@@ -638,7 +967,7 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 </section>
 
 		<section id="MinMaxScaler.fit_transform" class="doc-node">
-			<div class="title"><h2>fn (MinMaxScaler) fit_transform <a href="#MinMaxScaler.fit_transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/scalers.v#L183"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (MinMaxScaler) fit_transform <a href="#MinMaxScaler.fit_transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/scalers.v#L191"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> s <span class="token type_name">MinMaxScaler</span><span class="token punctuation">)</span> <span class="token function">fit_transform</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 <p>fit_transform fits and transforms in one step</p>
@@ -646,10 +975,18 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 </section>
 
 		<section id="MinMaxScaler.inverse_transform" class="doc-node">
-			<div class="title"><h2>fn (MinMaxScaler) inverse_transform <a href="#MinMaxScaler.inverse_transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/scalers.v#L189"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (MinMaxScaler) inverse_transform <a href="#MinMaxScaler.inverse_transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/scalers.v#L197"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>s <span class="token operator">&amp;</span><span class="token type_name">MinMaxScaler</span><span class="token punctuation">)</span> <span class="token function">inverse_transform</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 <p>inverse_transform reverses the min-max scaling</p>
+
+</section>
+
+		<section id="MinMaxScaler.get_feature_names_out" class="doc-node">
+			<div class="title"><h2>fn (MinMaxScaler) get_feature_names_out <a href="#MinMaxScaler.get_feature_names_out">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/scalers.v#L216"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>s <span class="token operator">&amp;</span><span class="token type_name">MinMaxScaler</span><span class="token punctuation">)</span> <span class="token function">get_feature_names_out</span><span class="token punctuation">(</span>input_features <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span></code></pre>
+<p>get_feature_names_out preserves names because scaling does not change columns.</p>
 
 </section>
 
@@ -740,6 +1077,69 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 
 </section>
 
+		<section id="Pipeline" class="doc-node">
+			<div class="title"><h2>struct Pipeline <a href="#Pipeline">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/pipeline.v#L26"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<div class="attributes"><div class="attribute">@[heap]</div></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token type_name">Pipeline</span> <span class="token punctuation">{</span>
+<span class="token keyword">mut</span><span class="token punctuation">:</span>
+	steps                  <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token type_name">PipelineStep</span>
+	n_features_out_by_step <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>
+	fitted                 <span class="token builtin">bool</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	n_features_in_     <span class="token builtin">int</span>
+	n_features_out_    <span class="token builtin">int</span>
+	feature_names_in_  <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span>
+	feature_names_out_ <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Pipeline fits and applies numeric transformers in sequence.</p>
+
+</section>
+
+		<section id="Pipeline.fit" class="doc-node">
+			<div class="title"><h2>fn (Pipeline) fit <a href="#Pipeline.fit">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/pipeline.v#L59"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> p <span class="token type_name">Pipeline</span><span class="token punctuation">)</span> <span class="token function">fit</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> feature_names <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
+<p>fit learns each transform in sequence. An empty feature-name slice generates x0, x1, ...</p>
+
+</section>
+
+		<section id="Pipeline.fit_transform" class="doc-node">
+			<div class="title"><h2>fn (Pipeline) fit_transform <a href="#Pipeline.fit_transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/pipeline.v#L64"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> p <span class="token type_name">Pipeline</span><span class="token punctuation">)</span> <span class="token function">fit_transform</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> feature_names <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>fit_transform fits each step on its input and returns the transformed data.</p>
+
+</section>
+
+		<section id="Pipeline.transform" class="doc-node">
+			<div class="title"><h2>fn (Pipeline) transform <a href="#Pipeline.transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/pipeline.v#L122"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>p <span class="token operator">&amp;</span><span class="token type_name">Pipeline</span><span class="token punctuation">)</span> <span class="token function">transform</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>transform applies the fitted steps without changing their learned state.</p>
+
+</section>
+
+		<section id="Pipeline.get_feature_names_out" class="doc-node">
+			<div class="title"><h2>fn (Pipeline) get_feature_names_out <a href="#Pipeline.get_feature_names_out">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/pipeline.v#L148"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>p <span class="token operator">&amp;</span><span class="token type_name">Pipeline</span><span class="token punctuation">)</span> <span class="token function">get_feature_names_out</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span></code></pre>
+<p>get_feature_names_out returns the output feature names learned during fit.</p>
+
+</section>
+
+		<section id="PipelineStep" class="doc-node">
+			<div class="title"><h2>struct PipelineStep <a href="#PipelineStep">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/pipeline.v#L18"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token type_name">PipelineStep</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span><span class="token punctuation">:</span>
+	name        <span class="token builtin">string</span>
+	transformer <span class="token type_name">MatrixTransformer</span>
+<span class="token punctuation">}</span></code></pre>
+<p>PipelineStep names one transformer in a numeric preprocessing pipeline.</p>
+
+</section>
+
 		<section id="PolynomialFeatures" class="doc-node">
 			<div class="title"><h2>struct PolynomialFeatures <a href="#PolynomialFeatures">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/polynomial.v#L8"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <div class="attributes"><div class="attribute">@[params]</div></div>
@@ -754,16 +1154,32 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 
 </section>
 
+		<section id="PolynomialFeatures.fit" class="doc-node">
+			<div class="title"><h2>fn (PolynomialFeatures) fit <a href="#PolynomialFeatures.fit">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/polynomial.v#L16"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>p <span class="token type_name">PolynomialFeatures</span><span class="token punctuation">)</span> <span class="token function">fit</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
+<p>fit validates the feature matrix before the transformer is used in a pipeline.</p>
+
+</section>
+
 		<section id="PolynomialFeatures.transform" class="doc-node">
-			<div class="title"><h2>fn (PolynomialFeatures) transform <a href="#PolynomialFeatures.transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/polynomial.v#L17"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (PolynomialFeatures) transform <a href="#PolynomialFeatures.transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/polynomial.v#L34"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>p <span class="token type_name">PolynomialFeatures</span><span class="token punctuation">)</span> <span class="token function">transform</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 <p>transform expands each row into polynomial features. Output columns are ordered by degree, then lexicographically by input feature index.</p>
 
 </section>
 
+		<section id="PolynomialFeatures.get_feature_names_out" class="doc-node">
+			<div class="title"><h2>fn (PolynomialFeatures) get_feature_names_out <a href="#PolynomialFeatures.get_feature_names_out">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/polynomial.v#L64"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>p <span class="token type_name">PolynomialFeatures</span><span class="token punctuation">)</span> <span class="token function">get_feature_names_out</span><span class="token punctuation">(</span>input_features <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span></code></pre>
+<p>get_feature_names_out returns names in the same order as transform.</p>
+
+</section>
+
 		<section id="RobustScaler" class="doc-node">
-			<div class="title"><h2>struct RobustScaler <a href="#RobustScaler">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/scalers.v#L214"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>struct RobustScaler <a href="#RobustScaler">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/scalers.v#L230"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <div class="attributes"><div class="attribute">@[heap]</div></div>
 <pre class="signature">
 <code><span class="token keyword">struct</span> <span class="token type_name">RobustScaler</span> <span class="token punctuation">{</span>
@@ -779,7 +1195,7 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 </section>
 
 		<section id="RobustScaler.fit" class="doc-node">
-			<div class="title"><h2>fn (RobustScaler) fit <a href="#RobustScaler.fit">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/scalers.v#L229"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (RobustScaler) fit <a href="#RobustScaler.fit">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/scalers.v#L245"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> s <span class="token type_name">RobustScaler</span><span class="token punctuation">)</span> <span class="token function">fit</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
 <p>fit computes the median and IQR to be used for later scaling</p>
@@ -787,7 +1203,7 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 </section>
 
 		<section id="RobustScaler.transform" class="doc-node">
-			<div class="title"><h2>fn (RobustScaler) transform <a href="#RobustScaler.transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/scalers.v#L271"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (RobustScaler) transform <a href="#RobustScaler.transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/scalers.v#L287"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>s <span class="token operator">&amp;</span><span class="token type_name">RobustScaler</span><span class="token punctuation">)</span> <span class="token function">transform</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 <p>transform applies the robust scaling to the data</p>
@@ -795,10 +1211,68 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 </section>
 
 		<section id="RobustScaler.fit_transform" class="doc-node">
-			<div class="title"><h2>fn (RobustScaler) fit_transform <a href="#RobustScaler.fit_transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/scalers.v#L288"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (RobustScaler) fit_transform <a href="#RobustScaler.fit_transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/scalers.v#L304"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> s <span class="token type_name">RobustScaler</span><span class="token punctuation">)</span> <span class="token function">fit_transform</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 <p>fit_transform fits and transforms in one step</p>
+
+</section>
+
+		<section id="RobustScaler.get_feature_names_out" class="doc-node">
+			<div class="title"><h2>fn (RobustScaler) get_feature_names_out <a href="#RobustScaler.get_feature_names_out">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/scalers.v#L310"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>s <span class="token operator">&amp;</span><span class="token type_name">RobustScaler</span><span class="token punctuation">)</span> <span class="token function">get_feature_names_out</span><span class="token punctuation">(</span>input_features <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span></code></pre>
+<p>get_feature_names_out preserves names because scaling does not change columns.</p>
+
+</section>
+
+		<section id="SimpleImputer" class="doc-node">
+			<div class="title"><h2>struct SimpleImputer <a href="#SimpleImputer">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/imputers.v#L15"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<div class="attributes"><div class="attribute">@[heap]</div></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token type_name">SimpleImputer</span> <span class="token punctuation">{</span>
+<span class="token keyword">mut</span><span class="token punctuation">:</span>
+	fitted <span class="token builtin">bool</span>
+<span class="token keyword">pub</span><span class="token punctuation">:</span>
+	strategy   <span class="token type_name">ImputationStrategy</span>
+	fill_value <span class="token builtin">f64</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	statistics_ <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
+	n_features  <span class="token builtin">int</span>
+<span class="token punctuation">}</span></code></pre>
+<p>SimpleImputer learns one replacement value per feature from training data.</p>
+
+</section>
+
+		<section id="SimpleImputer.fit" class="doc-node">
+			<div class="title"><h2>fn (SimpleImputer) fit <a href="#SimpleImputer.fit">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/imputers.v#L35"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> imputer <span class="token type_name">SimpleImputer</span><span class="token punctuation">)</span> <span class="token function">fit</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
+<p>fit learns replacement values from the provided training matrix.</p>
+
+</section>
+
+		<section id="SimpleImputer.transform" class="doc-node">
+			<div class="title"><h2>fn (SimpleImputer) transform <a href="#SimpleImputer.transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/imputers.v#L92"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>imputer <span class="token operator">&amp;</span><span class="token type_name">SimpleImputer</span><span class="token punctuation">)</span> <span class="token function">transform</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>transform replaces NaN values using statistics learned by fit.</p>
+
+</section>
+
+		<section id="SimpleImputer.fit_transform" class="doc-node">
+			<div class="title"><h2>fn (SimpleImputer) fit_transform <a href="#SimpleImputer.fit_transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/imputers.v#L117"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> imputer <span class="token type_name">SimpleImputer</span><span class="token punctuation">)</span> <span class="token function">fit_transform</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>fit_transform learns replacement values and applies them to the same matrix.</p>
+
+</section>
+
+		<section id="SimpleImputer.get_feature_names_out" class="doc-node">
+			<div class="title"><h2>fn (SimpleImputer) get_feature_names_out <a href="#SimpleImputer.get_feature_names_out">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/imputers.v#L123"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>imputer <span class="token operator">&amp;</span><span class="token type_name">SimpleImputer</span><span class="token punctuation">)</span> <span class="token function">get_feature_names_out</span><span class="token punctuation">(</span>input_features <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span></code></pre>
+<p>get_feature_names_out preserves names because imputation does not change columns.</p>
 
 </section>
 
@@ -850,8 +1324,16 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 
 </section>
 
+		<section id="StandardScaler.get_feature_names_out" class="doc-node">
+			<div class="title"><h2>fn (StandardScaler) get_feature_names_out <a href="#StandardScaler.get_feature_names_out">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/scalers.v#L105"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>s <span class="token operator">&amp;</span><span class="token type_name">StandardScaler</span><span class="token punctuation">)</span> <span class="token function">get_feature_names_out</span><span class="token punctuation">(</span>input_features <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span></code></pre>
+<p>get_feature_names_out preserves names because scaling does not change columns.</p>
 
-						<div class="footer">Powered by vdoc. Generated on: 13 Nov 2026 07:52:58</div>
+</section>
+
+
+						<div class="footer">Powered by vdoc. Generated on: 14 Nov 2026 05:26:13</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_preprocessing">README</a></li>
 <li class="open"><a href="#cut">fn cut</a>        <ul>
@@ -869,6 +1351,9 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 <li class="open"><a href="#BinningStrategy.from">fn BinningStrategy.from</a>        <ul>
 </ul>
 </li>
+<li class="open"><a href="#ImputationStrategy.from">fn ImputationStrategy.from</a>        <ul>
+</ul>
+</li>
 <li class="open"><a href="#LabelEncoder.new">fn LabelEncoder.new</a>        <ul>
 </ul>
 </li>
@@ -881,13 +1366,25 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 <li class="open"><a href="#OrdinalEncoder.new">fn OrdinalEncoder.new</a>        <ul>
 </ul>
 </li>
+<li class="open"><a href="#Pipeline.new">fn Pipeline.new</a>        <ul>
+</ul>
+</li>
 <li class="open"><a href="#RobustScaler.new">fn RobustScaler.new</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#SimpleImputer.new">fn SimpleImputer.new</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#StandardScaler.new">fn StandardScaler.new</a>        <ul>
 </ul>
 </li>
+<li class="open"><a href="#MatrixTransformer">interface MatrixTransformer</a>        <ul>
+</ul>
+</li>
 <li class="open"><a href="#BinningStrategy">enum BinningStrategy</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#ImputationStrategy">enum ImputationStrategy</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#Binner">struct Binner</a>        <ul>
@@ -909,6 +1406,7 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 <li><a href="#MinMaxScaler.transform">fn transform</a></li>
 <li><a href="#MinMaxScaler.fit_transform">fn fit_transform</a></li>
 <li><a href="#MinMaxScaler.inverse_transform">fn inverse_transform</a></li>
+<li><a href="#MinMaxScaler.get_feature_names_out">fn get_feature_names_out</a></li>
 </ul>
 </li>
 <li class="open"><a href="#OneHotEncoder">struct OneHotEncoder</a>        <ul>
@@ -924,14 +1422,34 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 <li><a href="#OrdinalEncoder.fit_transform">fn fit_transform</a></li>
 </ul>
 </li>
+<li class="open"><a href="#Pipeline">struct Pipeline</a>        <ul>
+<li><a href="#Pipeline.fit">fn fit</a></li>
+<li><a href="#Pipeline.fit_transform">fn fit_transform</a></li>
+<li><a href="#Pipeline.transform">fn transform</a></li>
+<li><a href="#Pipeline.get_feature_names_out">fn get_feature_names_out</a></li>
+</ul>
+</li>
+<li class="open"><a href="#PipelineStep">struct PipelineStep</a>        <ul>
+</ul>
+</li>
 <li class="open"><a href="#PolynomialFeatures">struct PolynomialFeatures</a>        <ul>
+<li><a href="#PolynomialFeatures.fit">fn fit</a></li>
 <li><a href="#PolynomialFeatures.transform">fn transform</a></li>
+<li><a href="#PolynomialFeatures.get_feature_names_out">fn get_feature_names_out</a></li>
 </ul>
 </li>
 <li class="open"><a href="#RobustScaler">struct RobustScaler</a>        <ul>
 <li><a href="#RobustScaler.fit">fn fit</a></li>
 <li><a href="#RobustScaler.transform">fn transform</a></li>
 <li><a href="#RobustScaler.fit_transform">fn fit_transform</a></li>
+<li><a href="#RobustScaler.get_feature_names_out">fn get_feature_names_out</a></li>
+</ul>
+</li>
+<li class="open"><a href="#SimpleImputer">struct SimpleImputer</a>        <ul>
+<li><a href="#SimpleImputer.fit">fn fit</a></li>
+<li><a href="#SimpleImputer.transform">fn transform</a></li>
+<li><a href="#SimpleImputer.fit_transform">fn fit_transform</a></li>
+<li><a href="#SimpleImputer.get_feature_names_out">fn get_feature_names_out</a></li>
 </ul>
 </li>
 <li class="open"><a href="#StandardScaler">struct StandardScaler</a>        <ul>
@@ -939,6 +1457,7 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 <li><a href="#StandardScaler.transform">fn transform</a></li>
 <li><a href="#StandardScaler.fit_transform">fn fit_transform</a></li>
 <li><a href="#StandardScaler.inverse_transform">fn inverse_transform</a></li>
+<li><a href="#StandardScaler.get_feature_names_out">fn get_feature_names_out</a></li>
 </ul>
 </li>
 </ul></div>
