@@ -1,5 +1,7 @@
 module blas64
 
+import os
+
 fn test_dgemv_no_trans_1() {
 	expected := [0.0, 0, 0, 0, 0]
 	a := [
@@ -166,4 +168,34 @@ fn test_dgemv_trans_4() {
 	mut y := [7.0, 8, 9]
 	dgemv(.trans, m, n, 8.0, flatten(a), a[0].len, x, incx, beta, mut y, incy)
 	assert expected == y
+}
+
+fn test_dgemv_threaded_matches_serial() {
+	// Wide enough to engage the thread pool (see gemv_n_workers floor);
+	// threaded and serial must agree bitwise (deterministic partition).
+	orig_vjobs := os.getenv_opt('VJOBS')
+	defer {
+		if v := orig_vjobs {
+			os.setenv('VJOBS', v, true)
+		} else {
+			os.unsetenv('VJOBS')
+		}
+	}
+	m := 2048
+	n := 2048
+	mut a := []f64{len: m * n}
+	mut x := []f64{len: n}
+	for i in 0 .. a.len {
+		a[i] = f64(i % 13) * 0.125
+	}
+	for i in 0 .. x.len {
+		x[i] = f64(i % 7) * 0.25
+	}
+	os.setenv('VJOBS', '1', true)
+	mut y1 := []f64{len: m}
+	dgemv(.no_trans, m, n, 1.5, a, n, x, 1, 0.0, mut y1, 1)
+	os.setenv('VJOBS', '8', true)
+	mut y2 := []f64{len: m}
+	dgemv(.no_trans, m, n, 1.5, a, n, x, 1, 0.0, mut y2, 1)
+	assert y1 == y2
 }
