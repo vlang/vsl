@@ -145,7 +145,7 @@ pub fn (d &Device) driver_version() !string {
 // Note: If compilation fails, the error will include the complete build log
 // with line numbers and specific error messages from the OpenCL compiler.
 pub fn (mut d Device) add_program(source string) ! {
-	mut ret := 0
+	mut ret := ClInt(0)
 	source_ptr := &char(source.str)
 
 	// Create program object from source code

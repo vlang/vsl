@@ -65,7 +65,7 @@ jobs:
       - name: Setup V
         uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
-          version: 78869311b51c76ddb4c3d2ed17e8a7733d8d5979
+          version: ba41fa121b738a1a694e0050401a45d2376e09b9
 
       - name: V doctor
         run: env HOME="$HOME" PATH="$PATH" VJOBS=2 v doctor
@@ -173,7 +173,7 @@ jobs:
       - name: Setup V
         uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
-          version: 78869311b51c76ddb4c3d2ed17e8a7733d8d5979
+          version: ba41fa121b738a1a694e0050401a45d2376e09b9
 
       - name: V doctor
         run: env VJOBS=2 v doctor
@@ -256,7 +256,7 @@ jobs:
       - name: Setup V
         uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
-          version: 78869311b51c76ddb4c3d2ed17e8a7733d8d5979
+          version: ba41fa121b738a1a694e0050401a45d2376e09b9
 
       - name: Install dependencies
         run: |
@@ -287,7 +287,10 @@ jobs:
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: vs-numpy-benchmark-logs
-          path: ~/.vmodules/vs_numpy_*.log
+          path: |
+            ~/.vmodules/vs_numpy_matmul.log
+            ~/.vmodules/vs_numpy_gemv.log
+            ~/.vmodules/vs_numpy_conv2d.log
           retention-days: 14
 
   fft-mpi-benchmarks:
@@ -306,7 +309,7 @@ jobs:
       - name: Setup V
         uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
-          version: 78869311b51c76ddb4c3d2ed17e8a7733d8d5979
+          version: ba41fa121b738a1a694e0050401a45d2376e09b9
 
       - name: Install FFT comparison dependencies
         if: matrix.benchmark == 'fft'
@@ -321,7 +324,9 @@ jobs:
           sudo apt-get install --quiet -y --no-install-recommends libopenmpi-dev openmpi-bin
 
       - name: Move VSL to modules
-        run: mv ./vsl ~/.vmodules
+        run: |
+          mkdir -p ~/.vmodules
+          mv ./vsl ~/.vmodules/vsl
 
       - name: Run FFT vs NumPy benchmark
         if: matrix.benchmark == 'fft'

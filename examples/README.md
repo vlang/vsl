@@ -38,7 +38,7 @@ v -cflags <flags> run vsl/examples/<example>/main.v
 `ml_complete_pipeline` → `ml_sentiment_analysis`
 
 **Scientific Computing**: Dive into → `fft_plot_example` → `deriv_example` →
-`mpi_basic_example`
+`ode_rk23` → `integrate_gauss_kronrod` → `mpi_basic_example`
 
 ## Machine Learning Examples 🤖
 
@@ -168,6 +168,7 @@ v -cflags <flags> run vsl/examples/<example>/main.v
 | -------------------------------------------------- | ----------------------------------------------------------------- |
 | [fft_plot_example](./fft_plot_example)             | Example demonstrating Fast Fourier Transform (FFT) with plotting. |
 | [roots_brent_solver](./roots_brent_solver) | Bracketed Brent root finding with termination and evaluation diagnostics. |
+| [roots_nelder_mead](./roots_nelder_mead) | Derivative-free multivariate minimization with simplex convergence diagnostics. |
 | [diff_example](./diff_example)                     | Differentiation example.                                          |
 | [poly_examples](./poly_examples)                   | Core polynomial operations and root solvers.                      |
 | [prime_examples](./prime_examples)                 | Prime module usage: primality checks and sieve.                   |

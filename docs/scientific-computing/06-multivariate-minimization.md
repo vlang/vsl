@@ -1,0 +1,46 @@
+# Multivariate Minimization with Nelder-Mead
+
+The `roots.NelderMead` optimizer minimizes a scalar objective over a vector of
+parameters without requiring derivatives. It supports local optimization for
+low-dimensional problems and reports the best point, objective value, simplex
+spreads, and evaluation/iteration counts.
+
+Nelder-Mead is not a global optimizer and does not impose parameter bounds.
+The initial simplex is constructed by adding the same `initial_step` to one
+coordinate at a time. Convergence requires both the maximum coordinate spread
+and the objective spread to be within their absolute tolerances.
+
+```v
+import vsl.func
+import vsl.roots
+
+fn rosenbrock(x []f64, _ []f64) f64 {
+	a := 1.0 - x[0]
+	b := x[1] - x[0] * x[0]
+	return a * a + 100.0 * b * b
+}
+
+objective := func.FnND.new(rosenbrock)
+mut optimizer := roots.NelderMead.new_with_params(objective, roots.NelderMeadParams{
+	x0:           [-1.2, 1.0]
+	initial_step: 0.5
+	x_tol:        1e-6
+	f_tol:        1e-12
+	n_max:        2000
+	max_evals:    5000
+})
+result := optimizer.solve()!
+println('status=${result.status}')
+println('minimum: x=${result.x}, f(x)=${result.fx}')
+println('simplex spreads: x=${result.x_spread}, f=${result.f_spread}')
+println('iterations=${result.n_iter}, evaluations=${result.n_calls}')
+```
+
+The initial point must be non-empty and finite, `initial_step` and both
+tolerances must be finite and positive, and `max_evals` must be at least the
+number of initial simplex vertices (`dimension + 1`). Invalid parameters
+return an error. Reaching an execution limit, an unrepresentable simplex step,
+or a non-finite callback value is reported through the result status.
+
+See the [Nelder-Mead example](../../examples/roots_nelder_mead/README.md) and
+the [roots API reference](../../roots/README.md).

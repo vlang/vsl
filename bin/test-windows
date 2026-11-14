@@ -9,6 +9,7 @@ module_root="$(dirname -- "${vsl_dir}")"
 portable_packages=(
 	vsl/blas
 	vsl/blas/blas64
+	vsl/benchmarks/util
 	vsl/compute
 	vsl/deriv
 	vsl/diff
@@ -24,6 +25,7 @@ portable_packages=(
 	vsl/gm
 	vsl/graph
 	vsl/inout/csv
+	vsl/integrate
 	vsl/iter
 	vsl/la
 	vsl/lapack
@@ -32,6 +34,7 @@ portable_packages=(
 	vsl/ml
 	vsl/model_selection
 	vsl/noise
+	vsl/ode
 	vsl/plot
 	vsl/poly
 	vsl/preprocessing
@@ -47,6 +50,7 @@ excluded_test_dirs=(
 	'vsl/cuda/examples|requires CUDA and an NVIDIA device'
 	'vsl/inout/h5|requires the optional HDF5 library'
 	'vsl/mpi|requires an MPI implementation and launcher'
+	'vsl/vcl|requires the OpenCL SDK headers and library'
 	'vsl/vcl/compute|requires an OpenCL SDK and runtime'
 	'vsl/vulkan|requires Vulkan SDK headers; tested in a dedicated step'
 	'vsl/vulkan/compute|requires Vulkan SDK headers; tested in a dedicated step'
@@ -86,7 +90,7 @@ while IFS= read -r -d '' test_file; do
 	fi
 	[[ "${found}" == true ]] || fail "test directory is neither included nor explicitly excluded: ${test_dir}"
 	test_dirs+=("${test_dir}")
-done < <(find vsl -type f -name '*_test.v' -print0)
+done < <(find -L vsl -type f -name '*_test.v' -print0)
 
 printf 'Windows CPU coverage inventory: %d test directories; %d portable packages; %d explicit exclusions.\n' \
 	"${#test_dirs[@]}" "${#portable_packages[@]}" "${#excluded_test_dirs[@]}"
