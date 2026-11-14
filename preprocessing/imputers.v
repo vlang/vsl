@@ -119,6 +119,14 @@ pub fn (mut imputer SimpleImputer) fit_transform(data [][]f64) ![][]f64 {
 	return imputer.transform(data)
 }
 
+// get_feature_names_out preserves names because imputation does not change columns.
+pub fn (imputer &SimpleImputer) get_feature_names_out(input_features []string) ![]string {
+	if !imputer.fitted {
+		return errors.error('SimpleImputer must be fitted before get_feature_names_out', .efailed)
+	}
+	return identity_feature_names(input_features, imputer.n_features, 'SimpleImputer')
+}
+
 fn validate_imputer_matrix(data [][]f64, expected_features int) !int {
 	if data.len == 0 {
 		return errors.error('cannot fit an imputer on empty data', .einval)

@@ -52,6 +52,44 @@ assert inference == [[2.0, 10.0]]
 Mean and median strategies return an error for a feature with no observed
 training values. Use `.constant` to fill even an all-missing feature.
 
+## Composing fitted numeric transforms
+
+`preprocessing.Pipeline` fits each step on the output of the previous step.
+Fit it on training data only; validation and inference calls use the learned
+statistics and feature layout without refitting.
+
+```v
+import math
+import vsl.preprocessing
+
+missing := math.nan()
+training := [[1.0, missing], [3.0, 4.0]]
+mut pipeline := preprocessing.Pipeline.new([
+	preprocessing.PipelineStep{
+		name:        'impute'
+		transformer: preprocessing.SimpleImputer.new(.mean, 0.0)
+	},
+	preprocessing.PipelineStep{
+		name:        'scale'
+		transformer: preprocessing.StandardScaler.new()
+	},
+	preprocessing.PipelineStep{
+		name:        'polynomial'
+		transformer: preprocessing.PolynomialFeatures{
+			degree: 2
+		}
+	},
+])!
+
+train_features := pipeline.fit_transform(training, ['age', 'income'])!
+test_features := pipeline.transform([[missing, 10.0]])!
+output_names := pipeline.get_feature_names_out()!
+```
+
+The pipeline validates the input width on every transform and tracks names
+through feature-generating steps. Passing an empty name slice generates `x0`,
+`x1`, and so on.
+
 ## Next Steps
 
 - [Clustering](02-clustering.md)

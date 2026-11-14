@@ -3,6 +3,10 @@
 The `vsl.preprocessing` module provides utilities for data preprocessing
 commonly used in machine learning pipelines.
 
+Numeric transformers implement a shared fit/transform contract and can be
+composed with `preprocessing.Pipeline`. Fit the pipeline on training data only,
+then reuse its learned state for validation, test, and inference data.
+
 ## Features
 
 ### Scalers
@@ -27,6 +31,10 @@ commonly used in machine learning pipelines.
 
 ### Polynomial Features
 - **PolynomialFeatures**: Generates polynomial powers and feature interactions
+
+### Numeric Pipelines
+- **MatrixTransformer**: Common interface for fitted numeric transformations
+- **Pipeline**: Fits named transformations in sequence and tracks output feature names
 
 ## Quick Start
 
@@ -169,6 +177,34 @@ expanded := features.transform(data)!
 Set `interaction_only: true` to exclude repeated input features in a term, or
 `include_bias: false` to omit the leading column of ones.
 
+### Leakage-safe numeric pipeline
+
+```v
+import math
+import vsl.preprocessing
+
+missing := math.nan()
+training := [[1.0, missing], [3.0, 4.0]]
+mut pipeline := preprocessing.Pipeline.new([
+	preprocessing.PipelineStep{
+		name:        'impute'
+		transformer: preprocessing.SimpleImputer.new(.mean, 0.0)
+	},
+	preprocessing.PipelineStep{
+		name:        'scale'
+		transformer: preprocessing.StandardScaler.new()
+	},
+])!
+
+scaled_training := pipeline.fit_transform(training, ['age', 'income'])!
+inference := pipeline.transform([[missing, 10.0]])!
+names := pipeline.get_feature_names_out()!
+```
+
+An empty feature-name slice asks the pipeline to generate `x0`, `x1`, etc.
+Transformers that change feature count, such as `PolynomialFeatures`, update
+the tracked names in their output order.
+
 ## API Reference
 
 ### StandardScaler
@@ -223,8 +259,7 @@ Matrices must be rectangular and contain at least one feature. Transformations
 must preserve the fitted feature count. Empty inference batches are accepted.
 Mean and median fitting fails if any feature contains only NaNs; constant
 imputation supports all-NaN features. Only NaN is considered missing. Fitted
-state is held in memory; pipeline composition and serialization are not part of
-this imputer slice.
+state is held in memory; serialization remains outside this pipeline slice.
 
 ### LabelEncoder
 
@@ -268,6 +303,23 @@ this imputer slice.
 | `interaction_only` | Use each input feature at most once in each term |
 | `include_bias` | Add a leading column of ones (default true) |
 | `transform(data)` | Expands a rectangular matrix into polynomial features |
+| `get_feature_names_out(input_features)` | Returns names in transform output order |
+
+### Numeric Pipeline
+
+| API | Description |
+|-----|-------------|
+| `Pipeline.new(steps)` | Creates a pipeline from named `PipelineStep` values |
+| `PipelineStep{name, transformer}` | Associates a unique name with a `MatrixTransformer` |
+| `fit(data, feature_names)` | Fits steps in sequence; `[]` generates `x0`, `x1`, etc. |
+| `fit_transform(data, feature_names)` | Fits the steps and returns training features |
+| `transform(data)` | Reuses fitted state and validates input/output widths |
+| `get_feature_names_out()` | Returns the output names learned during fitting |
+
+`MatrixTransformer` requires `fit`, `transform`, and
+`get_feature_names_out`. `StandardScaler`, `MinMaxScaler`, `RobustScaler`,
+`SimpleImputer`, and `PolynomialFeatures` implement it. String encoders and
+serialization are not yet integrated with this numeric pipeline.
 
 ## Integration with ML Pipeline
 

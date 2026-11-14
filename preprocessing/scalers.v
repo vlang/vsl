@@ -101,6 +101,14 @@ pub fn (s &StandardScaler) inverse_transform(x [][]f64) ![][]f64 {
 	return result
 }
 
+// get_feature_names_out preserves names because scaling does not change columns.
+pub fn (s &StandardScaler) get_feature_names_out(input_features []string) ![]string {
+	if !s.fitted {
+		return errors.error('StandardScaler must be fitted before get_feature_names_out', .efailed)
+	}
+	return identity_feature_names(input_features, s.n_features, 'StandardScaler')
+}
+
 // MinMaxScaler transforms features by scaling each feature to a given range.
 // Formula: x_scaled = (x - min) / (max - min) * (feature_max - feature_min) + feature_min
 
@@ -204,6 +212,14 @@ pub fn (s &MinMaxScaler) inverse_transform(x [][]f64) ![][]f64 {
 	return result
 }
 
+// get_feature_names_out preserves names because scaling does not change columns.
+pub fn (s &MinMaxScaler) get_feature_names_out(input_features []string) ![]string {
+	if !s.fitted {
+		return errors.error('MinMaxScaler must be fitted before get_feature_names_out', .efailed)
+	}
+	return identity_feature_names(input_features, s.n_features, 'MinMaxScaler')
+}
+
 // RobustScaler scales features using statistics that are robust to outliers.
 // Uses median and interquartile range (IQR) instead of mean and std.
 
@@ -288,4 +304,12 @@ pub fn (s &RobustScaler) transform(x [][]f64) ![][]f64 {
 pub fn (mut s RobustScaler) fit_transform(x [][]f64) ![][]f64 {
 	s.fit(x)!
 	return s.transform(x)
+}
+
+// get_feature_names_out preserves names because scaling does not change columns.
+pub fn (s &RobustScaler) get_feature_names_out(input_features []string) ![]string {
+	if !s.fitted {
+		return errors.error('RobustScaler must be fitted before get_feature_names_out', .efailed)
+	}
+	return identity_feature_names(input_features, s.n_features, 'RobustScaler')
 }
