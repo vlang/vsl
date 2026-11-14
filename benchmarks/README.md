@@ -170,6 +170,12 @@ systemd-run --user --scope -p MemoryMax=4G -p MemorySwapMax=0 -- env VJOBS=2 \
 systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tmp/vsl-backend-bench
 ```
 
+`compare_backends.v` measures the dgemm implementation selected at compile
+time. Build and run it once without a backend define and once with
+`-d vsl_blas_cblas` to compare separate results on the same hardware and with
+the same compiler and thread settings; it does not time both backends in one
+process.
+
 ### Run a C backend benchmark
 
 The BLAS and LAPACK benchmark sizes are configured in their source files.
@@ -187,7 +193,7 @@ systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tm
 
 - **`blas_bench.v`**: Comprehensive BLAS Level 1, 2, and 3 benchmarks
 - **`lapack_bench.v`**: LAPACK operation benchmarks (linear systems, factorizations, etc.)
-- **`compare_backends.v`**: Direct comparison between pure V and C backends
+- **`compare_backends.v`**: Selected-backend dgemm benchmark; build once per backend for comparison
 - **`fft_bench.v` and `fft_numpy_baseline.py`**: Real f64 forward FFT timing for VSL and NumPy
 - **`mpi_bench.v`**: Two-rank MPI send/receive, broadcast, and reduction latency
 - **`benchmark_utils.v`**: Shared utilities for benchmark setup and reporting
