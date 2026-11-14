@@ -15,6 +15,9 @@ pub type FdfFn = fn (x f64, params []f64) (f64, f64)
 // VectorValuedFn defines a public type used by this module.
 pub type VectorValuedFn = fn (x f64, y []f64, params []f64) f64
 
+// MultivariateFn defines a scalar-valued function over an n-dimensional input.
+pub type MultivariateFn = fn (x []f64, params []f64) f64
+
 // Definition of an arbitrary function with parameters
 pub struct Fn {
 pub:
@@ -54,6 +57,43 @@ fn is_finite(a f64) bool {
 @[inline]
 pub fn (f Fn) safe_eval(x f64) !f64 {
 	y := f.f(x, f.params)
+	if is_finite(y) {
+		return y
+	}
+	return errors.error('function value is not finite', .ebadfunc)
+}
+
+// FnND represents a scalar-valued multivariate function with optional parameters.
+pub struct FnND {
+pub:
+	f MultivariateFn @[required]
+mut:
+	params []f64
+}
+
+// FnND.new creates a multivariate function without callback parameters.
+pub fn FnND.new(f MultivariateFn) FnND {
+	return FnND{
+		f: f
+	}
+}
+
+// FnND.new_with_params creates a multivariate function with callback parameters.
+pub fn FnND.new_with_params(f MultivariateFn, params []f64) FnND {
+	return FnND{
+		f:      f
+		params: params.clone()
+	}
+}
+
+// eval evaluates the multivariate function.
+pub fn (f FnND) eval(x []f64) f64 {
+	return f.f(x, f.params)
+}
+
+// safe_eval returns an error when the function value is NaN or infinite.
+pub fn (f FnND) safe_eval(x []f64) !f64 {
+	y := f.eval(x)
 	if is_finite(y) {
 		return y
 	}

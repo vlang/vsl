@@ -12,7 +12,7 @@ timeout = 30
 max_retries = 2
 retry_wait_time = 2
 
-# The GNU GSL manual rate-limits concurrent CI checks.
+# GNU GSL and GitHub issue pages rate-limit concurrent CI requests.
 [hosts."www.gnu.org"]
 concurrency = 1
 request_interval = "2s"

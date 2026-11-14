@@ -100,6 +100,7 @@ Numerical methods and signal processing:
 - [Root Finding and Scalar Minimization](scientific-computing/03-root-finding.md)
 - [Integration](scientific-computing/04-integration.md)
 - [Initial-value ODEs](scientific-computing/05-odes.md)
+- [Multivariate Minimization](scientific-computing/06-multivariate-minimization.md)
 
 ### Advanced Topics
 High-performance and specialized topics:
