@@ -7,7 +7,11 @@ and LAPACK implementations.
 
 The benchmark suite demonstrates the performance characteristics of VSL's pure V
 implementations compared to C backends (OpenBLAS/LAPACKE). All benchmarks use V's
-built-in `benchmark` module for accurate timing measurements.
+monotonic nanosecond clock through `util/benchmark_utils.v`. The read-only BLAS
+Level 1 operations are measured in 100-call batches to reduce clock-resolution
+noise; their reported times include the loop and checksum accumulation, and the
+checksums keep computed results observable. Mutating operations retain individual
+timing samples with setup outside the timed region.
 
 ## Running Benchmarks
 
