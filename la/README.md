@@ -28,7 +28,8 @@ an MPI implementation and exposes `SparseConfig.with_comm`. Without the flag,
 ### Dense Linear Systems
 
 - **Direct Solvers**: LU decomposition, Gaussian elimination
-- **Iterative Solvers**: Conjugate gradient, GMRES
+- **Sparse Iterative Solver**: CSR conjugate gradient for symmetric
+  positive-definite systems
 - **Condition Analysis**: Matrix conditioning and stability assessment
 
 ## 📖 Usage Examples

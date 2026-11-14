@@ -42,11 +42,19 @@ same duplicate-summing and zero-dropping behavior. `CCMatrix.to_csr()` converts
 to CSR. Both compressed formats can be converted to dense matrices.
 
 The current sparse API is intentionally focused: CSR matrix-vector
-multiplication and format conversion are available; sparse solvers and broader
-arithmetic are not implied by these storage types.
+multiplication, conjugate-gradient solving, and format conversion are available;
+broader sparse arithmetic and preconditioners are not implied by these storage
+types.
 
 See [`examples/la_csr_matvec`](../../examples/la_csr_matvec/main.v), or run it
 with `v run examples/la_csr_matvec/main.v`.
+
+The CSR conjugate-gradient solver assumes a symmetric positive-definite matrix,
+uses a zero initial guess, and reports the true residual norm. A result can
+indicate that the iteration limit was reached; encountered non-positive
+curvature returns an error. See
+[`examples/la_sparse_cg`](../../examples/la_sparse_cg/main.v) for a runnable
+example.
 
 ## When to Use Sparse
 
