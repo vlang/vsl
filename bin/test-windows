@@ -25,6 +25,7 @@ portable_packages=(
 	vsl/gm
 	vsl/graph
 	vsl/inout/csv
+	vsl/integrate
 	vsl/iter
 	vsl/la
 	vsl/lapack
@@ -33,6 +34,7 @@ portable_packages=(
 	vsl/ml
 	vsl/model_selection
 	vsl/noise
+	vsl/ode
 	vsl/plot
 	vsl/poly
 	vsl/preprocessing
