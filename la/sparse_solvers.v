@@ -15,6 +15,17 @@ pub:
 // It returns a non-converged result when the iteration limit is reached and an
 // error when the iteration encounters non-positive curvature or invalid input.
 pub fn (a &CSRMatrix[f64]) conjugate_gradient(b []f64, tolerance f64, max_iterations int) !CGResult {
+	return conjugate_gradient_impl(a, b, tolerance, max_iterations, [])
+}
+
+// preconditioned_conjugate_gradient solves A*x=b using the Jacobi
+// preconditioner formed from the positive diagonal of A.
+pub fn (a &CSRMatrix[f64]) preconditioned_conjugate_gradient(b []f64, tolerance f64, max_iterations int) !CGResult {
+	diagonal := jacobi_preconditioner(a)!
+	return conjugate_gradient_impl(a, b, tolerance, max_iterations, diagonal)
+}
+
+fn conjugate_gradient_impl(a &CSRMatrix[f64], b []f64, tolerance f64, max_iterations int, diagonal []f64) !CGResult {
 	if a.m != a.n {
 		return error('conjugate_gradient requires a square matrix, got ${a.m}x${a.n}')
 	}
@@ -40,8 +51,9 @@ pub fn (a &CSRMatrix[f64]) conjugate_gradient(b []f64, tolerance f64, max_iterat
 
 	mut x := []f64{len: a.n}
 	mut r := b.clone()
-	mut p := r.clone()
-	mut residual_squared := vector_dot(r, r)
+	mut z := apply_cg_preconditioner(r, diagonal)
+	mut p := z.clone()
+	residual_squared := vector_dot(r, r)
 	if !math.is_finite(residual_squared) {
 		return error('conjugate_gradient residual norm overflowed')
 	}
@@ -59,6 +71,10 @@ pub fn (a &CSRMatrix[f64]) conjugate_gradient(b []f64, tolerance f64, max_iterat
 			converged:     true
 		}
 	}
+	mut rho := vector_dot(r, z)
+	if !math.is_finite(rho) || rho <= 0.0 {
+		return error('conjugate_gradient preconditioned residual product is non-positive or non-finite')
+	}
 
 	for iteration in 0 .. max_iterations {
 		ap := a.matvec(p)!
@@ -69,7 +85,7 @@ pub fn (a &CSRMatrix[f64]) conjugate_gradient(b []f64, tolerance f64, max_iterat
 		if curvature <= 0.0 {
 			return error('conjugate_gradient encountered non-positive curvature; matrix may not be positive definite')
 		}
-		alpha := residual_squared / curvature
+		alpha := rho / curvature
 		if !math.is_finite(alpha) {
 			return error('conjugate_gradient step size is non-finite')
 		}
@@ -102,15 +118,24 @@ pub fn (a &CSRMatrix[f64]) conjugate_gradient(b []f64, tolerance f64, max_iterat
 				}
 			}
 			r = actual_residual.clone()
-			p = r.clone()
-			residual_squared = actual_residual_squared
+			z = apply_cg_preconditioner(r, diagonal)
+			rho = vector_dot(r, z)
+			if !math.is_finite(rho) || rho <= 0.0 {
+				return error('conjugate_gradient preconditioned residual product is non-positive or non-finite')
+			}
+			p = z.clone()
 			continue
 		}
-		beta := next_residual_squared / residual_squared
-		for i in 0 .. a.n {
-			p[i] = r[i] + beta * p[i]
+		z = apply_cg_preconditioner(r, diagonal)
+		next_rho := vector_dot(r, z)
+		if !math.is_finite(next_rho) || next_rho <= 0.0 {
+			return error('conjugate_gradient preconditioned residual product is non-positive or non-finite')
 		}
-		residual_squared = next_residual_squared
+		beta := next_rho / rho
+		for i in 0 .. a.n {
+			p[i] = z[i] + beta * p[i]
+		}
+		rho = next_rho
 	}
 
 	actual_ap := a.matvec(x)!
@@ -128,4 +153,36 @@ pub fn (a &CSRMatrix[f64]) conjugate_gradient(b []f64, tolerance f64, max_iterat
 		residual_norm: math.sqrt(actual_residual_squared)
 		converged:     false
 	}
+}
+
+fn jacobi_preconditioner(a &CSRMatrix[f64]) ![]f64 {
+	if a.m != a.n {
+		return error('preconditioned_conjugate_gradient requires a square matrix')
+	}
+	mut diagonal := []f64{len: a.n}
+	for row in 0 .. a.n {
+		mut found := false
+		for k in a.p[row] .. a.p[row + 1] {
+			if a.j[k] == row {
+				diagonal[row] = a.x[k]
+				found = true
+				break
+			}
+		}
+		if !found || !math.is_finite(diagonal[row]) || diagonal[row] <= 0.0 {
+			return error('preconditioned_conjugate_gradient requires a finite positive diagonal')
+		}
+	}
+	return diagonal
+}
+
+fn apply_cg_preconditioner(residual []f64, diagonal []f64) []f64 {
+	if diagonal.len == 0 {
+		return residual.clone()
+	}
+	mut result := []f64{len: residual.len}
+	for index, value in residual {
+		result[index] = value / diagonal[index]
+	}
+	return result
 }

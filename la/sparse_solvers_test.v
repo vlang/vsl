@@ -66,6 +66,55 @@ fn test_csr_conjugate_gradient_rejects_non_positive_curvature() {
 	}
 }
 
+fn test_csr_preconditioned_conjugate_gradient_uses_jacobi_diagonal() {
+	mut entries := Triplet.new[f64](3, 3, 3)
+	entries.put(0, 0, 1.0)!
+	entries.put(1, 1, 100.0)!
+	entries.put(2, 2, 10_000.0)!
+
+	matrix := entries.to_csr()!
+	result := matrix.preconditioned_conjugate_gradient([2.0, 300.0, 40_000.0], 1e-12, 3)!
+
+	assert result.converged
+	assert result.iterations == 1
+	assert result.x == [2.0, 3.0, 4.0]
+	assert result.residual_norm == 0.0
+
+	mut coupled_entries := Triplet.new[f64](3, 3, 7)
+	coupled_entries.put(0, 0, 4.0)!
+	coupled_entries.put(0, 1, 1.0)!
+	coupled_entries.put(1, 0, 1.0)!
+	coupled_entries.put(1, 1, 3.0)!
+	coupled_entries.put(1, 2, 1.0)!
+	coupled_entries.put(2, 1, 1.0)!
+	coupled_entries.put(2, 2, 2.0)!
+	coupled_matrix := coupled_entries.to_csr()!
+	coupled_result := coupled_matrix.preconditioned_conjugate_gradient([6.0, 10.0, 8.0],
+		1e-12, 10)!
+	assert coupled_result.converged
+	assert coupled_result.iterations <= 3
+	assert math.abs(coupled_result.x[0] - 1.0) < 1e-12
+	assert math.abs(coupled_result.x[1] - 2.0) < 1e-12
+	assert math.abs(coupled_result.x[2] - 3.0) < 1e-12
+	assert coupled_result.residual_norm < 1e-12
+}
+
+fn test_csr_preconditioned_conjugate_gradient_rejects_missing_or_nonpositive_diagonal() {
+	mut missing_diagonal := Triplet.new[f64](2, 2, 1)
+	missing_diagonal.put(0, 0, 1.0)!
+	if _ := missing_diagonal.to_csr()!.preconditioned_conjugate_gradient([1.0, 1.0], 1e-8, 5) {
+		assert false
+	}
+
+	mut negative_diagonal := Triplet.new[f64](2, 2, 2)
+	negative_diagonal.put(0, 0, -1.0)!
+	negative_diagonal.put(1, 1, 1.0)!
+	if _ := negative_diagonal.to_csr()!.preconditioned_conjugate_gradient([1.0, 1.0], 1e-8,
+		5) {
+		assert false
+	}
+}
+
 fn test_csr_conjugate_gradient_validates_inputs() {
 	mut rectangular := Triplet.new[f64](2, 3, 1)
 	rectangular.put(0, 0, 1.0)!
