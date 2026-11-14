@@ -28,7 +28,8 @@ an MPI implementation and exposes `SparseConfig.with_comm`. Without the flag,
 ### Dense Linear Systems
 
 - **Direct Solvers**: LU decomposition, Gaussian elimination
-- **Iterative Solvers**: Conjugate gradient, GMRES
+- **Sparse Iterative Solver**: CSR conjugate gradient for symmetric
+  positive-definite systems
 - **Condition Analysis**: Matrix conditioning and stability assessment
 
 ## 📖 Usage Examples
@@ -155,7 +156,10 @@ v -cflags "-lopenblas -llapack" run your_program.v
 
 - `Matrix` - Dense matrix representation
 - `Vector` - Dense vector representation
-- `SparseMatrix` - Sparse matrix for large, sparse data
+- `Triplet[T]` - coordinate (COO) sparse entries
+- `CCMatrix[T]` - compressed-column (CSC) storage
+- `CSRMatrix[T]` - compressed-row storage with dense conversion and
+  matrix-vector multiplication
 
 ### Key Functions
 
