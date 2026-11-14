@@ -1,5 +1,7 @@
 module blas64
 
+import os
+
 fn test_dgemv_no_trans_1() {
 	expected := [0.0, 0, 0, 0, 0]
 	a := [
@@ -166,4 +168,38 @@ fn test_dgemv_trans_4() {
 	mut y := [7.0, 8, 9]
 	dgemv(.trans, m, n, 8.0, flatten(a), a[0].len, x, incx, beta, mut y, incy)
 	assert expected == y
+}
+
+fn test_dgemv_threaded_matches_serial() {
+	// Wide enough to engage the thread pool; the odd row count exercises
+	// uneven partitions and beta != 0 checks accumulation into existing y.
+	orig_vjobs := os.getenv_opt('VJOBS')
+	defer {
+		if v := orig_vjobs {
+			os.setenv('VJOBS', v, true)
+		} else {
+			os.unsetenv('VJOBS')
+		}
+	}
+	m := 2049
+	n := 2048
+	mut a := []f64{len: m * n}
+	mut x := []f64{len: n}
+	for i in 0 .. a.len {
+		a[i] = f64(i % 13) * 0.125
+	}
+	for i in 0 .. x.len {
+		x[i] = f64(i % 7) * 0.25
+	}
+	mut initial_y := []f64{len: m}
+	for i in 0 .. initial_y.len {
+		initial_y[i] = f64(i % 5) * 0.125
+	}
+	os.setenv('VJOBS', '1', true)
+	mut y1 := initial_y.clone()
+	dgemv(.no_trans, m, n, 1.5, a, n, x, 1, 0.5, mut y1, 1)
+	os.setenv('VJOBS', '2', true)
+	mut y2 := initial_y.clone()
+	dgemv(.no_trans, m, n, 1.5, a, n, x, 1, 0.5, mut y2, 1)
+	assert y1 == y2
 }

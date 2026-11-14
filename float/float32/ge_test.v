@@ -1,6 +1,7 @@
 module float32
 
 import math
+import os
 
 const ge_tests = [ // m x n ( kernels executed )
 	GeTest{ // 1 x 1 (1x1)
@@ -98,4 +99,36 @@ fn test_gemv_negative_increments() {
 	gemv_t(2, 2, 1, a, 2, x, -1, 0, mut y_t, -1)
 	assert y_n == [f32(38), 16]
 	assert y_t == [f32(32), 21]
+}
+
+fn test_gemv_n_threaded_matches_serial() {
+	orig_vjobs := os.getenv_opt('VJOBS')
+	defer {
+		if v := orig_vjobs {
+			os.setenv('VJOBS', v, true)
+		} else {
+			os.unsetenv('VJOBS')
+		}
+	}
+	m := 2049
+	n := 2048
+	mut a := []f32{len: m * n}
+	mut x := []f32{len: n}
+	for i in 0 .. a.len {
+		a[i] = f32(i % 13) * 0.125
+	}
+	for i in 0 .. x.len {
+		x[i] = f32(i % 7) * 0.25
+	}
+	mut initial_y := []f32{len: m}
+	for i in 0 .. initial_y.len {
+		initial_y[i] = f32(i % 5) * 0.125
+	}
+	os.setenv('VJOBS', '1', true)
+	mut y1 := initial_y.clone()
+	gemv_n(u32(m), u32(n), 1.5, a, u32(n), x, 1, 0.5, mut y1, 1)
+	os.setenv('VJOBS', '2', true)
+	mut y2 := initial_y.clone()
+	gemv_n(u32(m), u32(n), 1.5, a, u32(n), x, 1, 0.5, mut y2, 1)
+	assert y1 == y2
 }
