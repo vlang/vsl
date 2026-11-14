@@ -14,6 +14,7 @@
 ##         --use-autofree                    Execute tests using atofree
 ##         --use-gc=STRATEGY                 Execute tests using garbage collector
 ##         --skip-examples                   Skip examples compilation
+##         --use-opencl                      Include OpenCL runtime tests (requires a working OpenCL compiler)
 ##         --use-vulkan                      Execute tests using Vulkan compute
 ##         --use-cuda                        Execute tests using CUDA backend
 ##
@@ -106,6 +107,17 @@ if [[ -z "${use_cuda}" ]]; then
         hidden_tests+=("$f")
     done < <(find "${vsl_dir_path}/cuda" -name '*_test.v' -print0 2>/dev/null)
 fi
+
+# OpenCL compute tests require a compatible runtime/compiler. They are opt-in
+# here; CI runs them separately on the supported Ubuntu 24.04 image.
+if [[ -z "${use_opencl}" ]]; then
+    echo "Skipping OpenCL compute tests (use --use-opencl to include)"
+    while IFS= read -r -d '' f; do
+        mv "$f" "${f}.skip"
+        hidden_tests+=("$f")
+    done < <(find "${vsl_dir_path}/vcl/compute" -name '*_test.v' -print0 2>/dev/null)
+fi
+
 if [[ "$(uname -s)" == "Darwin" ]]; then
     flags="${flags} -d vsl_vulkan_dlopen"
     while IFS= read -r -d '' f; do

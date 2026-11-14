@@ -64,6 +64,44 @@ fn test_train_test_split_stratified() {
 	assert math.abs(test_ratio - 0.5) < 0.3
 }
 
+fn test_train_test_split_stratified_preserves_fractional_labels_and_shuffle_setting() ! {
+	x := [[0.0], [1.0], [2.0], [3.0], [4.0], [5.0]]
+	y := [0.25, 0.25, 0.25, 0.25, 0.75, 0.75]
+
+	result := train_test_split(x, y, TrainTestSplitConfig{
+		test_size: 0.5
+		shuffle:   false
+		stratify:  true
+	})!
+
+	assert result.y_train == [0.25, 0.25, 0.75]
+	assert result.y_test == [0.25, 0.25, 0.75]
+}
+
+fn test_train_test_split_stratified_preserves_global_test_size() ! {
+	x := [[0.0], [1.0], [2.0], [3.0]]
+	y := [0.0, 1.0, 2.0, 3.0]
+
+	result := train_test_split(x, y, TrainTestSplitConfig{
+		test_size: 0.4
+		shuffle:   false
+		stratify:  true
+	})!
+
+	assert result.y_train == [2.0, 3.0]
+	assert result.y_test == [0.0, 1.0]
+}
+
+fn test_train_test_split_stratified_rejects_nonfinite_labels() {
+	for y in [[0.0, math.nan(), 1.0], [0.0, math.inf(1), 1.0], [0.0, math.inf(-1), 1.0]] {
+		if _ := train_test_split([[0.0], [1.0], [2.0]], y, TrainTestSplitConfig{
+			stratify: true
+		}) {
+			assert false, 'stratified splitting must reject non-finite labels'
+		}
+	}
+}
+
 fn test_train_val_test_split() {
 	x := [][]f64{len: 100, init: [f64(index)]}
 	y := []f64{len: 100, init: f64(index % 2)}
