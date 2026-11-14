@@ -8,6 +8,7 @@ Learn how to prepare data for machine learning in VSL.
 - Splitting data
 - Feature engineering
 - Data normalization
+- Missing-value imputation
 
 ## Creating Data
 
@@ -29,6 +30,27 @@ mut train_data, test_data := data.split(0.8)!
 println('Training samples: ${train_data.nb_samples}')
 println('Test samples: ${test_data.nb_samples}')
 ```
+
+## Missing-Value Imputation
+
+Fit the imputer on training data, then reuse the learned replacement values
+for inference data. Only NaN values are considered missing.
+
+```v
+import math
+import vsl.preprocessing
+
+missing := math.nan()
+training := [[1.0, missing], [3.0, 4.0]]
+mut imputer := preprocessing.SimpleImputer.new(.mean, 0.0)
+_ := imputer.fit_transform(training)!
+
+inference := imputer.transform([[missing, 10.0]])!
+assert inference == [[2.0, 10.0]]
+```
+
+Mean and median strategies return an error for a feature with no observed
+training values. Use `.constant` to fill even an all-missing feature.
 
 ## Next Steps
 
