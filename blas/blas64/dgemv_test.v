@@ -173,6 +173,14 @@ fn test_dgemv_trans_4() {
 fn test_dgemv_threaded_matches_serial() {
 	// Wide enough to engage the thread pool (see gemv_n_workers floor);
 	// threaded and serial must agree bitwise (deterministic partition).
+	orig_vjobs := os.getenv_opt('VJOBS')
+	defer {
+		if v := orig_vjobs {
+			os.setenv('VJOBS', v, true)
+		} else {
+			os.unsetenv('VJOBS')
+		}
+	}
 	m := 2048
 	n := 2048
 	mut a := []f64{len: m * n}
@@ -189,6 +197,5 @@ fn test_dgemv_threaded_matches_serial() {
 	os.setenv('VJOBS', '8', true)
 	mut y2 := []f64{len: m}
 	dgemv(.no_trans, m, n, 1.5, a, n, x, 1, 0.0, mut y2, 1)
-	os.unsetenv('VJOBS')
 	assert y1 == y2
 }

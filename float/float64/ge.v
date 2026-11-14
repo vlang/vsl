@@ -42,10 +42,11 @@ pub fn gemv_n(m u32, n u32, alpha f64, a []f64, lda u32, x []f64, incx int, beta
 		if workers > 1 {
 			mut wg := sync.new_waitgroup()
 			wg.add(workers)
-			chunk := int(m) / workers
+			base := int(m) / workers
+			rem := int(m) % workers
 			for t in 0 .. workers {
-				r0 := t * chunk
-				r1 := if t == workers - 1 { int(m) } else { r0 + chunk }
+				r0 := t * base + (if t < rem { t } else { rem })
+				r1 := r0 + base + (if t < rem { 1 } else { 0 })
 				go fn (m u32, n u32, alpha f64, a []f64, lda u32, x []f64, beta f64, mut y []f64, r0 int, r1 int, mut wg sync.WaitGroup) {
 					defer {
 						wg.done()
