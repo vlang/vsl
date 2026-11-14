@@ -97,7 +97,7 @@ ML algorithms and data processing:
 Numerical methods and signal processing:
 - [FFT Signal Processing](scientific-computing/01-fft-signal-processing.md)
 - [Numerical Differentiation](scientific-computing/02-numerical-differentiation.md)
-- [Root Finding](scientific-computing/03-root-finding.md)
+- [Root Finding and Scalar Minimization](scientific-computing/03-root-finding.md)
 - [Integration](scientific-computing/04-integration.md)
 
 ### Advanced Topics
