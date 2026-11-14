@@ -4,6 +4,8 @@ import vsl.benchmarks.util as benchmark_util
 import vsl.blas
 import vsl.util
 
+const level1_batch_repetitions = 100
+
 fn main() {
 	backend := $if vsl_blas_cblas {
 		'CBLAS'
@@ -44,39 +46,54 @@ fn benchmark_level1(config benchmark_util.BenchmarkConfig) {
 		for _ in 0 .. config.warmup_runs {
 			blas.ddot(size, x, 1, y, 1)
 		}
+		mut checksum := 0.0
 		for _ in 0 .. config.iterations {
 			started_at := timer.start()
-			blas.ddot(size, x, 1, y, 1)
+			mut batch_checksum := 0.0
+			for _ in 0 .. level1_batch_repetitions {
+				batch_checksum += blas.ddot(size, x, 1, y, 1)
+			}
 			timer.record(started_at)
+			checksum += batch_checksum
 		}
-		mut avg_time := timer.mean_ns(config.iterations)
-		benchmark_util.print_result('ddot', 'n=${size}', avg_time, '')
+		mut avg_time := timer.mean_ns(config.iterations * level1_batch_repetitions)
+		benchmark_util.print_result('ddot', 'n=${size}', avg_time, 'checksum=${checksum}')
 
 		// dnrm2 - Euclidean norm
 		timer = benchmark_util.BenchmarkTimer{}
 		for _ in 0 .. config.warmup_runs {
 			blas.dnrm2(size, x, 1)
 		}
+		checksum = 0.0
 		for _ in 0 .. config.iterations {
 			started_at := timer.start()
-			blas.dnrm2(size, x, 1)
+			mut batch_checksum := 0.0
+			for _ in 0 .. level1_batch_repetitions {
+				batch_checksum += blas.dnrm2(size, x, 1)
+			}
 			timer.record(started_at)
+			checksum += batch_checksum
 		}
-		avg_time = timer.mean_ns(config.iterations)
-		benchmark_util.print_result('dnrm2', 'n=${size}', avg_time, '')
+		avg_time = timer.mean_ns(config.iterations * level1_batch_repetitions)
+		benchmark_util.print_result('dnrm2', 'n=${size}', avg_time, 'checksum=${checksum}')
 
 		// dasum - sum of absolute values
 		timer = benchmark_util.BenchmarkTimer{}
 		for _ in 0 .. config.warmup_runs {
 			blas.dasum(size, x, 1)
 		}
+		checksum = 0.0
 		for _ in 0 .. config.iterations {
 			started_at := timer.start()
-			blas.dasum(size, x, 1)
+			mut batch_checksum := 0.0
+			for _ in 0 .. level1_batch_repetitions {
+				batch_checksum += blas.dasum(size, x, 1)
+			}
 			timer.record(started_at)
+			checksum += batch_checksum
 		}
-		avg_time = timer.mean_ns(config.iterations)
-		benchmark_util.print_result('dasum', 'n=${size}', avg_time, '')
+		avg_time = timer.mean_ns(config.iterations * level1_batch_repetitions)
+		benchmark_util.print_result('dasum', 'n=${size}', avg_time, 'checksum=${checksum}')
 
 		// daxpy - y = alpha*x + y
 		mut y_copy := y.clone()
@@ -116,13 +133,18 @@ fn benchmark_level1(config benchmark_util.BenchmarkConfig) {
 		for _ in 0 .. config.warmup_runs {
 			blas.idamax(size, x, 1)
 		}
+		checksum = 0.0
 		for _ in 0 .. config.iterations {
 			started_at := timer.start()
-			blas.idamax(size, x, 1)
+			mut batch_checksum := 0.0
+			for _ in 0 .. level1_batch_repetitions {
+				batch_checksum += f64(blas.idamax(size, x, 1))
+			}
 			timer.record(started_at)
+			checksum += batch_checksum
 		}
-		avg_time = timer.mean_ns(config.iterations)
-		benchmark_util.print_result('idamax', 'n=${size}', avg_time, '')
+		avg_time = timer.mean_ns(config.iterations * level1_batch_repetitions)
+		benchmark_util.print_result('idamax', 'n=${size}', avg_time, 'checksum=${checksum}')
 	}
 }
 
