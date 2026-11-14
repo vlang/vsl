@@ -10,8 +10,8 @@ mut:
 
 // buffer creates a new buffer with specified size
 fn (d &Device) buffer(size int) !&Buffer {
-	mut ret := 0
-	buffer := cl_create_buffer(d.ctx, mem_read_write, usize(size), unsafe { nil }, &ret)
+	mut ret := ClInt(0)
+	buffer := cl_create_buffer(d.ctx, mem_read_write, uint(size), unsafe { nil }, &ret)
 	if ret != success {
 		return error_from_code(ret)
 	}
@@ -37,7 +37,7 @@ fn (b &Buffer) load(size int, ptr voidptr) chan IError {
 		return ch
 	}
 	mut event := ClEvent(0)
-	ret := cl_enqueue_write_buffer(b.device.queue, b.memobj, false, 0, usize(size), ptr, 0,
+	ret := cl_enqueue_write_buffer(b.device.queue, b.memobj, false, 0, uint(size), ptr, 0,
 		unsafe { nil }, &event)
 	if ret != success {
 		ch <- error_from_code(ret)

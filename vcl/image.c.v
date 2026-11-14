@@ -60,19 +60,19 @@ pub fn (d &Device) from_image(img IImage) !&Image {
 
 // create_image creates a new image
 fn (d &Device) create_image(image_type ImageChannelOrder, bounds Rect, row_pitch int, data voidptr) !&Image {
-	format := create_image_format(usize(image_type), usize(ImageChannelDataType.unorm_int8))
-	desc := create_image_desc(C.CL_MEM_OBJECT_IMAGE2D, usize(bounds.width), usize(bounds.height),
-		0, 0, usize(row_pitch), 0, 0, 0, unsafe { nil })
+	format := create_image_format(uint(image_type), uint(ImageChannelDataType.unorm_int8))
+	desc := create_image_desc(C.CL_MEM_OBJECT_IMAGE2D, uint(bounds.width), uint(bounds.height),
+		0, 0, uint(row_pitch), 0, 0, 0, unsafe { nil })
 
 	mut flags := ClMemFlags(mem_read_write)
 	if !isnil(data) {
 		flags = ClMemFlags(mem_read_write | mem_copy_host_ptr)
 	}
 
-	mut ret := 0
+	mut ret := ClInt(0)
 	// memobj := cl_create_image(d.ctx, flags, format, desc, data, &ret)
-	memobj := cl_create_image2d(d.ctx, flags, format, usize(bounds.width), usize(bounds.height),
-		usize(row_pitch), data, &ret)
+	memobj := cl_create_image2d(d.ctx, flags, format, uint(bounds.width), uint(bounds.height),
+		uint(row_pitch), data, &ret)
 	if ret != success {
 		return error_from_code(ret)
 	}
@@ -107,9 +107,9 @@ fn (d &Device) create_image(image_type ImageChannelOrder, bounds Rect, row_pitch
 }
 
 pub fn (image &Image) data() !IImage {
-	origin := [3]usize{init: 0}
-	region0 := [usize(image.bounds.width), usize(image.bounds.height), 1]
-	region := [3]usize{init: region0[index]}
+	origin := [3]uint{init: 0}
+	region0 := [uint(image.bounds.width), uint(image.bounds.height), 1]
+	region := [3]uint{init: region0[index]}
 	read_image_result := []u8{len: image.buf.size, cap: image.buf.size}
 	ret := cl_enqueue_read_image(image.buf.device.queue, image.buf.memobj, true, origin, region, 0,
 		0, unsafe { &read_image_result[0] }, 0, unsafe { nil }, unsafe { nil })
@@ -123,10 +123,10 @@ pub fn (image &Image) data() !IImage {
 	return error_or_default(ret, IImage(img))
 }
 
-fn (image &Image) write_queue() !int {
-	mut origin := [3]usize{}
-	mut region := [3]usize{}
-	temp := [usize(image.bounds.width), usize(image.bounds.height), 1]
+fn (image &Image) write_queue() !ClInt {
+	mut origin := [3]uint{}
+	mut region := [3]uint{}
+	temp := [uint(image.bounds.width), uint(image.bounds.height), 1]
 	for i := 0; i < 3; i++ {
 		origin[i] = 0
 		region[i] = temp[i]

@@ -40,6 +40,18 @@ fn vec_weighted_sum(x f64, y []f64, params []f64) f64 {
 	return acc
 }
 
+fn multivariate_weighted_squares(x []f64, params []f64) f64 {
+	mut acc := params[0]
+	for i, xi in x {
+		acc += params[i + 1] * xi * xi
+	}
+	return acc
+}
+
+fn multivariate_nan(_ []f64, _ []f64) f64 {
+	return math.nan()
+}
+
 fn test_fn_eval_with_parameters() {
 	f := Fn.new(f: affine, params: [2.5, -1.0])
 	assert math.abs(f.eval(4.0) - 9.0) < 1e-12
@@ -103,4 +115,20 @@ fn test_fnvec_eval_weighted_projection() {
 	// 1.5*x + 2*y0 -1*y1 + 0.5*y2 with x=2
 	result := fv.eval(2.0, y)
 	assert math.abs(result - 13.0) < 1e-12
+}
+
+fn test_fnnd_eval_with_parameters() {
+	f := FnND.new_with_params(multivariate_weighted_squares, [2.0, 1.0, 3.0])
+	assert f.eval([2.0, -1.0]) == 9.0
+	assert f.safe_eval([2.0, -1.0])! == 9.0
+}
+
+fn test_fnnd_safe_eval_rejects_non_finite_values() {
+	f := FnND.new(multivariate_nan)
+	if value := f.safe_eval([0.0, 1.0]) {
+		assert false, 'expected non-finite value to return an error, got ${value}'
+	} else {
+		assert err.code() == 9
+		assert err.msg().contains('function value is not finite')
+	}
 }

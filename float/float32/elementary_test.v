@@ -163,6 +163,7 @@ fn test_more_elementary_special_values() {
 	assert tanh(0.0) == 0.0
 	assert math.abs(f64(tan(0.7853981633974483)) - 1.0) < 1e-6
 }
+
 const tan_references = [
 	[u32(1100703705), u32(1059475839)],
 	[u32(3240812450), u32(3225666232)],
@@ -318,4 +319,3 @@ const tanh_references = [
 	[u32(1095194936), u32(1065353216)],
 	[u32(3247408286), u32(3212836864)],
 ]
-

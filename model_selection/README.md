@@ -50,6 +50,11 @@ result := model_selection.train_test_split(x, y, model_selection.TrainTestSplitC
 })!
 ```
 
+Stratification treats each distinct finite `f64` label as a separate class.
+NaN and infinite labels return an error. The requested overall test size is
+preserved while per-class counts are allocated by largest remainder; setting
+`shuffle: false` preserves the original sample order.
+
 ### Train-Validation-Test Split
 
 ```v ignore
@@ -227,7 +232,8 @@ println('Average CV Accuracy: ${avg}')
 
 ## Notes
 
-- Stratified methods require labels to be integers (class labels)
+- Stratified methods treat each distinct finite `f64` label as a class; NaN and
+  infinite labels are rejected.
 - Cross-validation returns indices, use `get_fold_data` for actual arrays
 - Train and test indices are always disjoint within each fold
 - Random seed ensures reproducibility across runs

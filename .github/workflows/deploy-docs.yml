@@ -29,7 +29,7 @@ jobs:
       - name: Setup V
         uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
-          check-latest: true
+          version: ba41fa121b738a1a694e0050401a45d2376e09b9
 
       - name: Copy VSL to V Modules
         run: |

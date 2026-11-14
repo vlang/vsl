@@ -47,7 +47,7 @@ jobs:
         if: ${{ success() && !cancelled() && steps.checkout_vsl.outcome == 'success' }}
         uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
-          check-latest: true
+          version: ba41fa121b738a1a694e0050401a45d2376e09b9
       - name: Install dependencies
         id: install_dependencies
         if: ${{ success() && !cancelled() && steps.setup_v.outcome == 'success' }}
@@ -137,7 +137,7 @@ jobs:
         if: ${{ success() && !cancelled() && steps.checkout_vsl.outcome == 'success' }}
         uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
-          check-latest: true
+          version: ba41fa121b738a1a694e0050401a45d2376e09b9
       - name: Setup VSL as V module
         id: setup_vsl_as_v_module
         if: ${{ success() && !cancelled() && steps.setup_v.outcome == 'success' }}

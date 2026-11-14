@@ -25,11 +25,12 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          path: vsl
           persist-credentials: false
 
       - uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
-          check-latest: true
+          version: ba41fa121b738a1a694e0050401a45d2376e09b9
 
       - name: Install deps
         run: |
@@ -37,11 +38,15 @@ jobs:
           sudo apt-get install -qq -y libopenblas-dev liblapacke-dev gfortran python3 python3-numpy
 
       - name: Install module
-        run: mv . ~/.vmodules/vsl
+        run: |
+          mkdir -p ~/.vmodules
+          mv ./vsl ~/.vmodules/vsl
 
       - name: Run vs NumPy harness
+        shell: bash
         run: |
           cd ~/.vmodules
+          set -o pipefail
           run_v_benchmark() {
             local name="$1"
             local source="$2"
@@ -52,6 +57,17 @@ jobs:
             env HOME="$HOME" PATH="$PATH" VJOBS=2 OPENBLAS_NUM_THREADS=2 "$binary"
           }
           {
+            source /etc/os-release
+            echo '## Benchmark environment'
+            echo "- PR head: ${{ github.event.pull_request.head.sha }}"
+            echo "- Runner: ${PRETTY_NAME} ($(uname -m))"
+            echo "- CPU: $(grep -m1 '^model name' /proc/cpuinfo | cut -d: -f2- | xargs)"
+            echo "- V compiler: $(v version)"
+            echo "- GCC: $(gcc -dumpfullversion -dumpversion)"
+            echo "- NumPy: $(python3 -c 'import numpy; print(numpy.__version__)')"
+            echo '- V flags: `-no-parallel -cc gcc -prod -cflags "-march=native"`'
+            echo '- Threads: `VJOBS=2`, `OPENBLAS_NUM_THREADS=2`'
+            echo ''
             echo '## VSL vs NumPy (OpenBLAS backend)'
             run_v_benchmark vsl-matmul vsl/benchmarks/vs_numpy/matmul_bench.v -d vsl_blas_cblas
             run_v_benchmark vsl-gemv vsl/benchmarks/vs_numpy/gemv_bench.v -d vsl_blas_cblas
@@ -61,10 +77,20 @@ jobs:
             env HOME="$HOME" PATH="$PATH" VJOBS=2 OPENBLAS_NUM_THREADS=2 python3 vsl/benchmarks/vs_numpy/numpy_baseline.py matmul
             env HOME="$HOME" PATH="$PATH" VJOBS=2 OPENBLAS_NUM_THREADS=2 python3 vsl/benchmarks/vs_numpy/numpy_baseline.py gemv
             env HOME="$HOME" PATH="$PATH" VJOBS=2 OPENBLAS_NUM_THREADS=2 python3 vsl/benchmarks/vs_numpy/numpy_baseline.py conv2d
-          } 2>&1 | tee vs_numpy_pr.md
+          } 2>&1 | tee "$RUNNER_TEMP/vs_numpy_pr.md"
 
-      - name: Post sticky PR comment
+      - name: Upload benchmark results
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: vs-numpy-pr-${{ github.event.pull_request.number }}
+          path: ${{ runner.temp }}/vs_numpy_pr.md
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Post sticky PR comment (same-repository PRs only)
+        if: github.event.pull_request.head.repo.full_name == github.repository
         uses: marocchino/sticky-pull-request-comment@5770ad5eb8f42dd2c4f34da00c94c5381e49af88 # v3
         with:
           header: vsl-vs-numpy
-          path: ~/.vmodules/vs_numpy_pr.md
+          path: ${{ runner.temp }}/vs_numpy_pr.md

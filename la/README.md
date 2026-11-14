@@ -51,8 +51,8 @@ a.set(0, 1, 2.0)
 mut c := la.Matrix.new[f64](3, 3)
 la.matrix_matrix_mul(mut c, 1.0, a, b)
 
-// Print result
-println(c)
+// Print one result element
+println(c.get(0, 0))
 ```
 
 `Matrix` supports element-wise `+`, `-`, `/`, and integer-only `%` between

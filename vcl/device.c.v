@@ -68,7 +68,7 @@ pub fn (mut d Device) release() ! {
 
 fn (d &Device) get_info_str(param ClDeviceInfo, should_panic_on_error bool) !string {
 	mut info_bytes := [1024]u8{}
-	mut info_bytes_size := usize(0)
+	mut info_bytes_size := uint(0)
 	code := cl_get_device_info(d.id, param, 1024, &info_bytes[0], &info_bytes_size)
 	if code != success {
 		if should_panic_on_error {
@@ -145,7 +145,7 @@ pub fn (d &Device) driver_version() !string {
 // Note: If compilation fails, the error will include the complete build log
 // with line numbers and specific error messages from the OpenCL compiler.
 pub fn (mut d Device) add_program(source string) ! {
-	mut ret := 0
+	mut ret := ClInt(0)
 	source_ptr := &char(source.str)
 
 	// Create program object from source code
@@ -159,7 +159,7 @@ pub fn (mut d Device) add_program(source string) ! {
 	if ret != success {
 		if ret == build_program_failure {
 			// Get detailed build log for debugging
-			mut n := usize(0)
+			mut n := uint(0)
 			cl_get_program_build_info(p, d.id, program_build_log, 0, unsafe { nil }, &n)
 			log := []u8{len: int(n)}
 			cl_get_program_build_info(p, d.id, program_build_log, n, &log[0], unsafe { nil })

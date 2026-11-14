@@ -83,7 +83,6 @@ fn round_dd_to_f32(hi f64, lo f64) f32 {
 	return y
 }
 
-
 // is_inf_f32 reports whether x is positive or negative infinity.
 fn is_inf_f32(x f32) bool {
 	b := math.f32_bits(x)

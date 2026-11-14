@@ -11,6 +11,10 @@ commonly used in machine learning pipelines.
 - **MinMaxScaler**: Transforms features by scaling to a given range (default [0, 1])
 - **RobustScaler**: Scales features using statistics robust to outliers (median and IQR)
 
+### Imputation
+- **SimpleImputer**: Learns per-feature mean, median, or constant replacements
+  for NaN values from training data and reuses them during inference
+
 ### Encoders
 - **LabelEncoder**: Encodes categorical labels as integers
 - **OneHotEncoder**: Encodes categorical features as one-hot numeric arrays
@@ -69,6 +73,27 @@ data := [[1.0], [2.0], [3.0], [4.0], [5.0], [100.0]]
 mut scaler := preprocessing.RobustScaler.new()
 scaled := scaler.fit_transform(data)!
 // Uses median and IQR, so outlier has less effect
+```
+
+### Missing Values
+
+`SimpleImputer` treats NaN as missing and learns its statistics only from the
+matrix passed to `fit` or `fit_transform`. Mean and median strategies return an
+error for a feature containing no observed values; constant imputation can fill
+such a feature.
+
+```v
+import math
+import vsl.preprocessing
+
+missing := math.nan()
+training := [[1.0, missing], [3.0, 4.0]]
+mut imputer := preprocessing.SimpleImputer.new(.mean, 0.0)
+_ := imputer.fit_transform(training)!
+
+inference := imputer.transform([[missing, 10.0]])!
+// The first feature uses the training mean (2), not an inference statistic.
+assert inference == [[2.0, 10.0]]
 ```
 
 ### Label Encoding
@@ -178,6 +203,28 @@ Set `interaction_only: true` to exclude repeated input features in a term, or
 | `fit(x)` | Computes median and IQR from data |
 | `transform(x)` | Applies robust scaling |
 | `fit_transform(x)` | Fits and transforms in one step |
+
+### SimpleImputer
+
+| Method | Description |
+|--------|-------------|
+| `new(strategy, fill_value)` | Creates a NaN imputer |
+| `fit(x)` | Learns one replacement value per feature |
+| `transform(x)` | Replaces NaNs using learned training statistics |
+| `fit_transform(x)` | Fits and transforms in one step |
+
+**ImputationStrategy:**
+- `.mean`: Mean of observed values per feature
+- `.median`: Median of observed values per feature
+- `.constant`: The configured `fill_value`
+
+`fill_value` is ignored for mean and median strategies.
+Matrices must be rectangular and contain at least one feature. Transformations
+must preserve the fitted feature count. Empty inference batches are accepted.
+Mean and median fitting fails if any feature contains only NaNs; constant
+imputation supports all-NaN features. Only NaN is considered missing. Fitted
+state is held in memory; pipeline composition and serialization are not part of
+this imputer slice.
 
 ### LabelEncoder
 

@@ -69,7 +69,7 @@ jobs:
         if: ${{ success() && !cancelled() && steps.checkout_vsl.outcome == 'success' }}
         uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
-          check-latest: true
+          version: ba41fa121b738a1a694e0050401a45d2376e09b9
 
       - name: V doctor
         id: v_doctor
@@ -99,7 +99,9 @@ jobs:
       - name: Move VSL source code to V Modules
         id: move_vsl_source_code_to_v_modules
         if: ${{ success() && !cancelled() && steps.install_dependencies.outcome == 'success' }}
-        run: mv ./vsl ~/.vmodules
+        run: |
+          mkdir -p ~/.vmodules
+          mv ./vsl ~/.vmodules/vsl
 
       - name: Run BLAS Benchmarks (${{ matrix.backend.name }})
         id: run_blas_benchmarks_matrix_backend_name
@@ -191,7 +193,7 @@ jobs:
         if: ${{ success() && !cancelled() && steps.checkout_vsl.outcome == 'success' }}
         uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
-          check-latest: true
+          version: ba41fa121b738a1a694e0050401a45d2376e09b9
 
       - name: V doctor
         id: v_doctor
@@ -214,7 +216,9 @@ jobs:
       - name: Move VSL source code to V Modules
         id: move_vsl_source_code_to_v_modules
         if: ${{ success() && !cancelled() && steps.install_dependencies.outcome == 'success' }}
-        run: mv ./vsl ~/.vmodules
+        run: |
+          mkdir -p ~/.vmodules
+          mv ./vsl ~/.vmodules/vsl
 
       - name: Run BLAS Benchmarks (${{ matrix.backend.name }})
         id: run_blas_benchmarks_matrix_backend_name
@@ -288,7 +292,7 @@ jobs:
         if: ${{ success() && !cancelled() && steps.checkout_vsl.outcome == 'success' }}
         uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
-          check-latest: true
+          version: ba41fa121b738a1a694e0050401a45d2376e09b9
 
       - name: Install dependencies
         id: install_dependencies
@@ -301,7 +305,9 @@ jobs:
       - name: Move VSL to modules
         id: move_vsl_to_modules
         if: ${{ success() && !cancelled() && steps.install_dependencies.outcome == 'success' }}
-        run: mv ./vsl ~/.vmodules
+        run: |
+          mkdir -p ~/.vmodules
+          mv ./vsl ~/.vmodules/vsl
 
       - name: Run vs NumPy harness (#282)
         id: run_vs_numpy_harness_282
@@ -323,7 +329,10 @@ jobs:
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: vs-numpy-benchmark-logs
-          path: ~/.vmodules/vs_numpy_*.log
+          path: |
+            ~/.vmodules/vs_numpy_matmul.log
+            ~/.vmodules/vs_numpy_gemv.log
+            ~/.vmodules/vs_numpy_conv2d.log
           retention-days: 14
 
   fft-mpi-benchmarks:
@@ -346,7 +355,7 @@ jobs:
         if: ${{ success() && !cancelled() && steps.checkout_vsl.outcome == 'success' }}
         uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
-          check-latest: true
+          version: ba41fa121b738a1a694e0050401a45d2376e09b9
 
       - name: Install FFT comparison dependencies
         if: matrix.benchmark == 'fft'
@@ -363,7 +372,9 @@ jobs:
       - name: Move VSL to modules
         id: move_vsl_to_modules
         if: ${{ success() && !cancelled() && steps.setup_v.outcome == 'success' }}
-        run: mv ./vsl ~/.vmodules
+        run: |
+          mkdir -p ~/.vmodules
+          mv ./vsl ~/.vmodules/vsl
 
       - name: Run FFT vs NumPy benchmark
         if: matrix.benchmark == 'fft'

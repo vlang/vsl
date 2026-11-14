@@ -39,6 +39,26 @@ fn test_det() {
 	}
 }
 
+fn test_lapacke_pivot_buffers() {
+	$if vsl_lapack_lapacke ? {
+		mut lu := [0.0, 1.0, 1.0, 0.0]
+		mut pivots := [0, 0]
+		assert lapack.dgetrf(2, 2, mut lu, 2, mut pivots) == 0
+		assert pivots == [2, 2]
+
+		mut inverse := lu.clone()
+		assert lapack.dgetri(2, mut inverse, 2, mut pivots) == 0
+		assert tolerance_equal(inverse, [0.0, 1.0, 1.0, 0.0])
+
+		mut a := [0.0, 1.0, 1.0, 0.0]
+		mut solve_pivots := [0, 0, 9]
+		mut b := [2.0, 1.0]
+		assert lapack.dgesv(2, 1, mut a, 2, mut solve_pivots, mut b, 1) == 0
+		assert solve_pivots == [2, 2, 9]
+		assert b == [1.0, 2.0]
+	}
+}
+
 fn test_matrix_inv_small() {
 	// case 1
 	mat1 := Matrix.deep2([

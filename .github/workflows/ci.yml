@@ -4,7 +4,7 @@ permissions:
   contents: read
 
 env:
-  VJOBS: '2'
+  VJOBS: "2"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -17,7 +17,7 @@ on:
   workflow_dispatch:
     inputs:
       run_cuda:
-        description: 'Run CUDA tests (requires org GPU runner; not configured today)'
+        description: "Run CUDA tests (requires org GPU runner; not configured today)"
         type: boolean
         default: false
 
@@ -25,26 +25,26 @@ on:
     branches:
       - main
     paths-ignore:
-      - '**.md'
-      - 'static/DOCS.md'
-      - 'docs/**'
-      - 'examples/**/README.md'
+      - "**.md"
+      - "static/DOCS.md"
+      - "docs/**"
+      - "examples/**/README.md"
 
   pull_request:
     branches:
       - main
     paths-ignore:
-      - '**.md'
-      - 'static/DOCS.md'
-      - 'docs/**'
-      - 'examples/**/README.md'
+      - "**.md"
+      - "static/DOCS.md"
+      - "docs/**"
+      - "examples/**/README.md"
 
 jobs:
   run-tests-on-linux:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 60
     env:
-      VJOBS: '2'
+      VJOBS: "2"
 
     strategy:
       fail-fast: false
@@ -70,7 +70,7 @@ jobs:
         if: ${{ success() && !cancelled() && steps.checkout_vsl.outcome == 'success' }}
         uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
-          check-latest: true
+          version: ba41fa121b738a1a694e0050401a45d2376e09b9
 
       - name: Move VSL source code to V Modules
         id: move_vsl_source_code_to_v_modules
@@ -105,15 +105,22 @@ jobs:
             hdf5-tools \
             opencl-headers \
             ocl-icd-opencl-dev \
-            pocl-opencl-icd \
             vulkan-tools \
             mesa-vulkan-drivers \
             libvulkan-dev
 
+      # Ubuntu 22.04's PoCL 1.8/LLVM 11 cannot identify the hosted AMD EPYC
+      # CPU and fails kernel builds with "unknown target CPU 'generic'".
+      # OpenCL runtime coverage is provided by the dedicated Ubuntu 24.04 job.
+      - name: Install PoCL runtime
+        if: matrix.os == 'ubuntu-24.04'
+        run: |
+          sudo apt-get install --quiet -y --no-install-recommends pocl-opencl-icd
+
       - name: Test OpenCL compute backend
         if: matrix.os == 'ubuntu-24.04' && matrix.flags == ''
         env:
-          VJOBS: '2'
+          VJOBS: "2"
         run: |
           cd ~/.vmodules
           env HOME="$HOME" PATH="$PATH" VJOBS=2 \
@@ -152,7 +159,7 @@ jobs:
         id: execute_tests_using_vulkan_compute_backend
         if: ${{ success() && !cancelled() && steps.execute_tests_using_pure_v_backend_with_pure_c_backend.outcome == 'success' }}
         env:
-          VSL_TEST_VULKAN: '1'
+          VSL_TEST_VULKAN: "1"
         run: |
           cd ~/.vmodules
           env HOME="$HOME" PATH="$PATH" VJOBS=2 TERM="$TERM" VSL_TEST_VULKAN=1 v wipe-cache
@@ -168,7 +175,7 @@ jobs:
       # running the whole suite to completion; the remaining files
       # add no signal.
       VTEST_FAIL_FAST: '1'
-      VJOBS: '2'
+      VJOBS: "2"
 
     steps:
       - name: Checkout VSL
@@ -178,42 +185,60 @@ jobs:
           persist-credentials: false
           path: vsl
 
-      - name: Install official V release binary (Windows)
-        id: install_official_v_release_binary_windows
+      - name: Checkout pinned V compiler source
+        id: checkout_pinned_v_compiler_source
         if: ${{ success() && !cancelled() && steps.checkout_vsl.outcome == 'success' }}
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          repository: vlang/v
+          ref: ba41fa121b738a1a694e0050401a45d2376e09b9
+          persist-credentials: false
+          path: v
+
+      - name: Checkout V Windows bootstrap source
+        id: checkout_v_windows_bootstrap_source
+        if: ${{ success() && !cancelled() && steps.checkout_pinned_v_compiler_source.outcome == 'success' }}
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          repository: vlang/vc
+          ref: caf995ea5694ba9f2a044972e3b74388576bde8c
+          persist-credentials: false
+          path: v/vc
+
+      - name: Checkout bundled Windows TCC
+        id: checkout_bundled_windows_tcc
+        if: ${{ success() && !cancelled() && steps.checkout_v_windows_bootstrap_source.outcome == 'success' }}
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          repository: vlang/tccbin
+          ref: c2f1eaf22973877b336b8064271d725aa15a420a
+          persist-credentials: false
+          path: v/thirdparty/tcc
+
+      - name: Build pinned V compiler (Windows)
+        id: build_pinned_v_compiler_windows
+        if: ${{ success() && !cancelled() && steps.checkout_bundled_windows_tcc.outcome == 'success' }}
         shell: pwsh
         run: |
-          # setup-v's source bootstrap currently fails on Windows.
-          # Use the official release binary and verify its pinned digest.
-          $version = '0.5.2'
-          $expectedSha256 = (
-            '5f1d619b6b04a2b54b4ad21826a25bdc' +
-            'ba2acf75a941c8f72fc95672b6b064ca'
-          )
-          $archive = Join-Path $env:RUNNER_TEMP 'v_windows.zip'
-          $installRoot = Join-Path $env:RUNNER_TEMP 'vlang'
-          $releaseUri = "https://github.com/vlang/v/releases/download/$version"
-          $uri = "$releaseUri/v_windows.zip"
-          Invoke-WebRequest -Uri $uri -OutFile $archive
-          $archiveHash = Get-FileHash -Path $archive -Algorithm SHA256
-          $actualSha256 = $archiveHash.Hash.ToLowerInvariant()
-          if ($actualSha256 -ne $expectedSha256) {
-            throw "V archive SHA-256 mismatch: $actualSha256"
+          Push-Location v
+          try {
+            $bootstrap = 'makev.bat -msvc --local && ' +
+              'v.exe -o v2.exe cmd/v && v2.exe -showcc -o v.exe cmd/v'
+            cmd /c $bootstrap
+            if ($LASTEXITCODE -ne 0) {
+              throw "V bootstrap failed with exit code $LASTEXITCODE"
+            }
+            $vDirectory = (Get-Location).Path
+            Add-Content -Path $env:GITHUB_PATH -Value $vDirectory
+            & (Join-Path $vDirectory 'v.exe') version
           }
-          Expand-Archive -LiteralPath $archive `
-            -DestinationPath $installRoot -Force
-          $vDirectory = Join-Path $installRoot 'v'
-          if (-not (Test-Path (Join-Path $vDirectory 'v.exe'))) {
-            throw 'The official V release archive does not contain v.exe'
+          finally {
+            Pop-Location
           }
-          $vDirectory | Out-File -FilePath $env:GITHUB_PATH `
-            -Append -Encoding utf8
-          $vExecutable = Join-Path $vDirectory 'v.exe'
-          & $vExecutable version
 
       - name: Move VSL source code to V Modules
         id: move_vsl_source_code_to_v_modules
-        if: ${{ success() && !cancelled() && steps.install_official_v_release_binary_windows.outcome == 'success' }}
+        if: ${{ success() && !cancelled() && steps.build_pinned_v_compiler_windows.outcome == 'success' }}
         shell: bash
         run: |
           mkdir -p ~/.vmodules
@@ -274,16 +299,18 @@ jobs:
           cd ~/.vmodules
           vsl/bin/test-windows
 
-      - name: Test Vulkan compute on Windows
-        id: test_vulkan_compute_on_windows
+      - name: Test Vulkan suite on Windows
+        id: test_vulkan_suite_on_windows
         if: ${{ success() && !cancelled() && steps.run_portable_windows_test_suites.outcome == 'success' }}
+        env:
+          VSL_TEST_VULKAN: "1"
         shell: bash
         run: |
           cd ~/.vmodules
           vulkan_root="${VULKAN_SDK//\\//}"
           export CFLAGS="-I${vulkan_root}/Include"
           export LIB="${vulkan_root}/Lib"
-          v test ./vsl/vulkan/compute
+          v test ./vsl/vulkan
 
   run-tests-on-cuda:
     # CUDA needs an org larger/GPU runner (label was linux-x64-16c). Standard GitHub
@@ -293,7 +320,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     env:
-      VJOBS: '2'
+      VJOBS: "2"
 
     steps:
       - name: Checkout VSL
@@ -308,7 +335,7 @@ jobs:
         if: ${{ success() && !cancelled() && steps.checkout_vsl.outcome == 'success' }}
         uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
-          check-latest: true
+          version: ba41fa121b738a1a694e0050401a45d2376e09b9
 
       - name: Move VSL source code to V Modules
         id: move_vsl_source_code_to_v_modules
@@ -360,7 +387,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 60
     env:
-      VJOBS: '2'
+      VJOBS: "2"
 
     strategy:
       fail-fast: false
@@ -384,7 +411,7 @@ jobs:
         if: ${{ success() && !cancelled() && steps.checkout_vsl.outcome == 'success' }}
         uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
-          check-latest: true
+          version: ba41fa121b738a1a694e0050401a45d2376e09b9
 
       - name: Move VSL source code to V Modules
         id: move_vsl_source_code_to_v_modules

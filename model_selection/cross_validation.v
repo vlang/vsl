@@ -112,22 +112,7 @@ pub fn (skf &StratifiedKFold) split(y []f64) ![]Fold {
 		return errors.error('n_splits must be at least 2', .einval)
 	}
 
-	// Group indices by class
-	mut class_indices := map[int][]int{}
-	for i, val in y {
-		class_key := int(val)
-		if class_key !in class_indices {
-			class_indices[class_key] = []int{}
-		}
-		class_indices[class_key] << i
-	}
-
-	// Shuffle within each class if requested
-	if skf.shuffle {
-		for _, mut indices in class_indices {
-			shuffle_array(mut indices, skf.random_seed)
-		}
-	}
+	groups := stratified_class_groups(y)!
 
 	// Initialize folds
 	mut folds := []Fold{len: skf.n_splits, init: Fold{
@@ -136,14 +121,20 @@ pub fn (skf &StratifiedKFold) split(y []f64) ![]Fold {
 	}}
 
 	// Distribute each class across folds
-	for _, class_idx in class_indices {
+	mut fold_offset := 0
+	for key in groups.keys {
+		mut class_idx := groups.indices[key].clone()
+		if skf.shuffle {
+			shuffle_array(mut class_idx, skf.random_seed)
+		}
 		n_class := class_idx.len
 		fold_size := n_class / skf.n_splits
 		remainder := n_class % skf.n_splits
 
 		mut start := 0
 		for i in 0 .. skf.n_splits {
-			end := start + fold_size + if i < remainder { 1 } else { 0 }
+			fold_order := (i + skf.n_splits - fold_offset) % skf.n_splits
+			end := start + fold_size + if fold_order < remainder { 1 } else { 0 }
 
 			// Add to test indices for this fold
 			for j in start .. end {
@@ -152,10 +143,14 @@ pub fn (skf &StratifiedKFold) split(y []f64) ![]Fold {
 
 			start = end
 		}
+		fold_offset = (fold_offset + remainder) % skf.n_splits
 	}
 
 	// Build train indices (everything not in test)
 	for i in 0 .. skf.n_splits {
+		if !skf.shuffle {
+			folds[i].test_indices.sort()
+		}
 		test_set := array_to_set(folds[i].test_indices)
 		for j in 0 .. n_samples {
 			if j !in test_set {
