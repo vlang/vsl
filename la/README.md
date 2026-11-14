@@ -155,7 +155,10 @@ v -cflags "-lopenblas -llapack" run your_program.v
 
 - `Matrix` - Dense matrix representation
 - `Vector` - Dense vector representation
-- `SparseMatrix` - Sparse matrix for large, sparse data
+- `Triplet[T]` - coordinate (COO) sparse entries
+- `CCMatrix[T]` - compressed-column (CSC) storage
+- `CSRMatrix[T]` - compressed-row storage with dense conversion and
+  matrix-vector multiplication
 
 ### Key Functions
 

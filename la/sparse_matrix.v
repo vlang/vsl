@@ -34,6 +34,21 @@ mut:
 	x []T
 }
 
+// CSRMatrix represents a sparse matrix in compressed sparse row format.
+pub struct CSRMatrix[T] {
+mut:
+	// matrix dimension (rows, columns)
+	m int
+	n int
+	// number of non-zeros
+	nnz int
+	// row pointers and column indices (len(p)=m+1, len(j)=nnz)
+	p []int
+	j []int
+	// values (len(x)=nnz)
+	x []T
+}
+
 // Triplet.new returns a new Triplet. This is a wrapper to new(Triplet) followed by init()
 pub fn Triplet.new[T](m int, n int, max int) &Triplet[T] {
 	mut o := &Triplet[T]{}
@@ -51,11 +66,11 @@ pub fn (mut o Triplet[T]) init(m int, n int, max int) {
 
 // put inserts an element to a pre-allocated (with init) triplet matrix
 pub fn (mut o Triplet[T]) put(i int, j int, x T) ! {
-	if i >= o.m {
+	if i < 0 || i >= o.m {
 		return errors.error('cannot put item because index of row is outside range (i=${i}, m=${o.m})',
 			.erange)
 	}
-	if j >= o.n {
+	if j < 0 || j >= o.n {
 		return errors.error('cannot put item because index of columns is outside range (j=${j}, n=${o.n})',
 			.erange)
 	}
@@ -156,6 +171,28 @@ pub fn (o Triplet[T]) to_cc() &CCMatrix[T] {
 	return cc_from_columns[T](o.m, o.n, by_column)
 }
 
+// to_csr returns the row-compressed matrix corresponding to this Triplet.
+// Repeated coordinates are summed, and explicit zeros produced by cancellation
+// are dropped.
+pub fn (o Triplet[T]) to_csr() !&CSRMatrix[T] {
+	if o.m < 0 || o.n < 0 {
+		return error('cannot convert a triplet with negative dimensions to CSR')
+	}
+	mut by_row := []map[int]T{len: o.m}
+	for row in 0 .. o.m {
+		by_row[row] = map[int]T{}
+	}
+	for k in 0 .. o.pos {
+		row := o.i[k]
+		column := o.j[k]
+		if row < 0 || row >= o.m || column < 0 || column >= o.n {
+			return error('cannot convert a triplet with out-of-range coordinates to CSR')
+		}
+		by_row[row][column] += o.x[k]
+	}
+	return csr_from_rows[T](o.m, o.n, by_row)
+}
+
 // cc_from_columns assembles a CCMatrix from per-column row->value maps,
 // sorting row indices within each column and dropping explicit zeros.
 fn cc_from_columns[T](m int, n int, by_column []map[int]T) &CCMatrix[T] {
@@ -184,6 +221,34 @@ fn cc_from_columns[T](m int, n int, by_column []map[int]T) &CCMatrix[T] {
 	}
 }
 
+// csr_from_rows assembles a CSRMatrix from per-row column->value maps,
+// sorting column indices within each row and dropping explicit zeros.
+fn csr_from_rows[T](m int, n int, by_row []map[int]T) &CSRMatrix[T] {
+	mut p := []int{len: m + 1}
+	mut columns := []int{}
+	mut values := []T{}
+	for row in 0 .. m {
+		mut keys := by_row[row].keys()
+		keys.sort()
+		for column in keys {
+			value := by_row[row][column]
+			if value != T(0) {
+				columns << column
+				values << value
+			}
+		}
+		p[row + 1] = columns.len
+	}
+	return &CSRMatrix[T]{
+		m:   m
+		n:   n
+		nnz: columns.len
+		p:   p
+		j:   columns
+		x:   values
+	}
+}
+
 // column_maps returns per-column row->value maps for this CCMatrix.
 fn (a &CCMatrix[T]) column_maps() []map[int]T {
 	mut by_column := []map[int]T{len: a.n}
@@ -207,6 +272,20 @@ pub fn (a &CCMatrix[T]) to_dense() &Matrix[T] {
 	return dense
 }
 
+// to_csr converts this column-compressed matrix to row-compressed storage.
+pub fn (a &CCMatrix[T]) to_csr() &CSRMatrix[T] {
+	mut by_row := []map[int]T{len: a.m}
+	for row in 0 .. a.m {
+		by_row[row] = map[int]T{}
+	}
+	for column in 0 .. a.n {
+		for k in a.p[column] .. a.p[column + 1] {
+			by_row[a.i[k]][column] = a.x[k]
+		}
+	}
+	return csr_from_rows[T](a.m, a.n, by_row)
+}
+
 // CCMatrix addition is element-wise and requires equal shapes.
 pub fn (a &CCMatrix[T]) + (b &CCMatrix[T]) &CCMatrix[T] {
 	if a.m != b.m || a.n != b.n {
@@ -220,6 +299,55 @@ pub fn (a &CCMatrix[T]) + (b &CCMatrix[T]) &CCMatrix[T] {
 		}
 	}
 	return cc_from_columns[T](a.m, a.n, by_column)
+}
+
+// size returns the row/column size of the CSR matrix.
+pub fn (a &CSRMatrix[T]) size() (int, int) {
+	return a.m, a.n
+}
+
+// nnz returns the number of stored nonzero entries.
+pub fn (a &CSRMatrix[T]) nnz() int {
+	return a.nnz
+}
+
+// to_dense returns the dense matrix corresponding to this CSRMatrix.
+pub fn (a &CSRMatrix[T]) to_dense() &Matrix[T] {
+	mut dense := Matrix.new[T](a.m, a.n)
+	for row in 0 .. a.m {
+		for k in a.p[row] .. a.p[row + 1] {
+			dense.set(row, a.j[k], a.x[k])
+		}
+	}
+	return dense
+}
+
+// to_cc converts this CSRMatrix to column-compressed storage.
+pub fn (a &CSRMatrix[T]) to_cc() &CCMatrix[T] {
+	mut by_column := []map[int]T{len: a.n}
+	for column in 0 .. a.n {
+		by_column[column] = map[int]T{}
+	}
+	for row in 0 .. a.m {
+		for k in a.p[row] .. a.p[row + 1] {
+			by_column[a.j[k]][row] = a.x[k]
+		}
+	}
+	return cc_from_columns[T](a.m, a.n, by_column)
+}
+
+// matvec multiplies this matrix by a dense vector.
+pub fn (a &CSRMatrix[T]) matvec(vector []T) ![]T {
+	if vector.len != a.n {
+		return error('CSR matvec vector length ${vector.len} does not match matrix column count ${a.n}')
+	}
+	mut result := []T{len: a.m}
+	for row in 0 .. a.m {
+		for k in a.p[row] .. a.p[row + 1] {
+			result[row] += a.x[k] * vector[a.j[k]]
+		}
+	}
+	return result
 }
 
 // CCMatrix subtraction is element-wise and requires equal shapes.
