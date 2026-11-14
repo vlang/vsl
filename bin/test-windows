@@ -25,6 +25,7 @@ portable_packages=(
 	vsl/gm
 	vsl/graph
 	vsl/inout/csv
+	vsl/integrate
 	vsl/iter
 	vsl/la
 	vsl/lapack

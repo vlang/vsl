@@ -32,7 +32,7 @@ API. Recheck upstream documentation when updating this tracker.
 | Statistics and probability | Partial | [statistics][vsl-statistics], [dist][vsl-dist] | #523, #559, #572 |
 | Interpolation and splines | Partial | [fun][vsl-fun], [poly][vsl-poly] | #522 |
 | Root finding and minimization | Partial | [roots][vsl-roots] | #520, #562 |
-| Quadrature and ODE solvers | Missing | — | #521 |
+| Quadrature and ODE solvers | Partial | [integrate][vsl-integrate] | #521 improper integration and ODE solvers |
 | Fourier transforms | Partial | [fft][vsl-fft] | #527, #528 |
 | Signal processing and wavelets | Missing | [fft][vsl-fft] only | #560 |
 | Multidimensional image processing and morphology | Missing | — | #585 |
@@ -94,8 +94,10 @@ and [#572](https://github.com/vlang/vsl/issues/572).
 VSL has selected interpolation helpers, B-spline curves, Newton, bisection, a
 public Brent root solver with bounded convergence diagnostics, and bounded
 derivative-free Golden-section and Brent minimizers for unimodal scalar
-objectives. Gradient-based and multivariate minimization, quadrature, and ODE
-solver families remain missing. See SciPy [`interpolate`][scipy-interpolate],
+objectives. It also has adaptive finite-interval 7/15-point Gauss-Kronrod
+quadrature with estimated errors and execution limits. Gradient-based and
+multivariate minimization, improper integration, and ODE solver families
+remain missing. See SciPy [`interpolate`][scipy-interpolate],
 [`optimize`][scipy-optimize], and [`integrate`][scipy-integrate], plus GSL
 [`interpolation`][gsl-interp], [`roots`][gsl-roots], [`minimization`][gsl-min],
 [`integration`][gsl-integration], and [`ODE solvers`][gsl-ode]. Track these in
@@ -177,6 +179,7 @@ including second derivatives and boundary-aware methods, is tracked in
 [vsl-dist]: ../dist/README.md
 [vsl-poly]: ../poly/README.md
 [vsl-roots]: ../roots/README.md
+[vsl-integrate]: ../integrate/README.md
 [vsl-fft]: ../fft/README.md
 [vsl-ml]: ../ml/README.md
 [vsl-preprocessing]: ../preprocessing/README.md
