@@ -171,8 +171,8 @@ fn test_dgemv_trans_4() {
 }
 
 fn test_dgemv_threaded_matches_serial() {
-	// Wide enough to engage the thread pool (see gemv_n_workers floor);
-	// threaded and serial must agree bitwise (deterministic partition).
+	// Wide enough to engage the thread pool; the odd row count exercises
+	// uneven partitions and beta != 0 checks accumulation into existing y.
 	orig_vjobs := os.getenv_opt('VJOBS')
 	defer {
 		if v := orig_vjobs {
@@ -181,7 +181,7 @@ fn test_dgemv_threaded_matches_serial() {
 			os.unsetenv('VJOBS')
 		}
 	}
-	m := 2048
+	m := 2049
 	n := 2048
 	mut a := []f64{len: m * n}
 	mut x := []f64{len: n}
@@ -191,11 +191,15 @@ fn test_dgemv_threaded_matches_serial() {
 	for i in 0 .. x.len {
 		x[i] = f64(i % 7) * 0.25
 	}
+	mut initial_y := []f64{len: m}
+	for i in 0 .. initial_y.len {
+		initial_y[i] = f64(i % 5) * 0.125
+	}
 	os.setenv('VJOBS', '1', true)
-	mut y1 := []f64{len: m}
-	dgemv(.no_trans, m, n, 1.5, a, n, x, 1, 0.0, mut y1, 1)
-	os.setenv('VJOBS', '8', true)
-	mut y2 := []f64{len: m}
-	dgemv(.no_trans, m, n, 1.5, a, n, x, 1, 0.0, mut y2, 1)
+	mut y1 := initial_y.clone()
+	dgemv(.no_trans, m, n, 1.5, a, n, x, 1, 0.5, mut y1, 1)
+	os.setenv('VJOBS', '2', true)
+	mut y2 := initial_y.clone()
+	dgemv(.no_trans, m, n, 1.5, a, n, x, 1, 0.5, mut y2, 1)
 	assert y1 == y2
 }
