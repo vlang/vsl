@@ -1,5 +1,8 @@
 module float64
 
+import runtime
+import sync
+
 // ger performs the rank-one operation
 //  A += alpha * x * yᵀ
 // where A is an m×n dense matrix, x and y are vectors, and alpha is a scalar.
@@ -35,6 +38,31 @@ pub fn gemv_n(m u32, n u32, alpha f64, a []f64, lda u32, x []f64, incx int, beta
 		return
 	}
 	if incx == 1 && incy == 1 {
+		workers := gemv_n_workers(m, n, 8)
+		if workers > 1 {
+			mut wg := sync.new_waitgroup()
+			wg.add(workers)
+			chunk := int(m) / workers
+			for t in 0 .. workers {
+				r0 := t * chunk
+				r1 := if t == workers - 1 { int(m) } else { r0 + chunk }
+				go fn (m u32, n u32, alpha f64, a []f64, lda u32, x []f64, beta f64, mut y []f64, r0 int, r1 int, mut wg sync.WaitGroup) {
+					defer {
+						wg.done()
+					}
+					for i in r0 .. r1 {
+						sum := dot_unitary(a[lda * u32(i)..lda * u32(i) + n], x)
+						if beta == 0 {
+							y[i] = alpha * sum
+						} else {
+							y[i] = beta * y[i] + alpha * sum
+						}
+					}
+				}(m, n, alpha, a, lda, x, beta, mut y, r0, r1, mut wg)
+			}
+			wg.wait()
+			return
+		}
 		for i in 0 .. m {
 			sum := dot_unitary(a[lda * i..lda * i + n], x)
 			if beta == 0 {
@@ -74,6 +102,32 @@ pub fn gemv_n(m u32, n u32, alpha f64, a []f64, lda u32, x []f64, incx int, beta
 			y[iy] = beta * y[iy] + alpha * sum
 		}
 	}
+}
+
+// gemv_n_workers sizes the row-block pool for gemv_n: one worker per
+// block while every worker streams at least ~4MB, so spawn cost (~10s
+// of us) vanishes next to DRAM time, and never fewer than the serial
+// kernel needs. Mirrors the sgemm worker bounding (runtime.nr_jobs,
+// VJOBS-tunable); the transposed path stays serial because all rows
+// accumulate into the same y (a reduction, not a partition).
+fn gemv_n_workers(m u32, n u32, elem_bytes u64) int {
+	if m < 2 {
+		return 1
+	}
+	if u64(m) * u64(n) * elem_bytes < u64(16) << 20 {
+		return 1
+	}
+	mut workers := runtime.nr_jobs()
+	if workers < 2 {
+		return 1
+	}
+	if workers > int(m) {
+		workers = int(m)
+	}
+	for workers > 2 && u64(m) * u64(n) * elem_bytes / u64(workers) < u64(4) << 20 {
+		workers--
+	}
+	return workers
 }
 
 // gemv_t computes
