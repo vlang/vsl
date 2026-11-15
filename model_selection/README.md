@@ -29,9 +29,9 @@ x := [[1.0, 2.0], [3.0, 4.0], [5.0, 6.0], [7.0, 8.0], [9.0, 10.0]]
 y := [0.0, 1.0, 0.0, 1.0, 0.0]
 
 result := model_selection.train_test_split(x, y, model_selection.TrainTestSplitConfig{
- test_size:   0.2
- shuffle:     true
- random_seed: 42
+	test_size:   0.2
+	shuffle:     true
+	random_seed: 42
 })!
 
 println('Train size: ${result.x_train.len}')
@@ -47,8 +47,8 @@ x := [[1.0], [2.0], [3.0], [4.0], [5.0], [6.0], [7.0], [8.0], [9.0], [10.0]]
 y := [0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0]
 
 result := model_selection.train_test_split(x, y, model_selection.TrainTestSplitConfig{
- test_size: 0.3
- stratify:  true // Maintains 50/50 class balance in both sets
+	test_size: 0.3
+	stratify:  true // Maintains 50/50 class balance in both sets
 })!
 ```
 
@@ -115,8 +115,8 @@ loo := model_selection.LeaveOneOut.new()
 folds := loo.split(10) // Returns 10 folds, each with 1 test sample
 
 for fold in folds {
- // fold.test_indices has exactly 1 element
- // fold.train_indices has n-1 elements
+	// fold.test_indices has exactly 1 element
+	// fold.train_indices has n-1 elements
 }
 ```
 
@@ -218,8 +218,8 @@ scores := model_selection.cross_val_score_with_factory(x, y, folds, factory, sco
 ```v
 pub struct Fold {
 pub:
- train_indices []int // Indices for training
- test_indices  []int // Indices for testing
+	train_indices []int // Indices for training
+	test_indices  []int // Indices for testing
 }
 ```
 
