@@ -249,3 +249,82 @@ fn test_csr_gmres_zero_rhs_and_input_validation() {
 		assert false
 	}
 }
+
+fn test_csr_preconditioned_gmres_jacobi_solves_scaled_and_coupled_systems() {
+	mut diagonal_entries := Triplet.new[f64](3, 3, 3)
+	diagonal_entries.put(0, 0, 1.0)!
+	diagonal_entries.put(1, 1, 100.0)!
+	diagonal_entries.put(2, 2, 10_000.0)!
+	diagonal_matrix := diagonal_entries.to_csr()!
+	diagonal_result := diagonal_matrix.preconditioned_gmres([2.0, 300.0, 40_000.0],
+		1e-12, 3, 3)!
+	unpreconditioned := diagonal_matrix.gmres([2.0, 300.0, 40_000.0], 1e-14, 10, 3)!
+	assert diagonal_result.converged
+	assert diagonal_result.iterations == 1
+	assert unpreconditioned.converged
+	assert unpreconditioned.iterations > diagonal_result.iterations
+	assert diagonal_result.x == [2.0, 3.0, 4.0]
+	assert diagonal_result.residual_norm == 0.0
+
+	mut coupled_entries := Triplet.new[f64](3, 3, 6)
+	coupled_entries.put(0, 0, 1.0)!
+	coupled_entries.put(0, 1, 1.0)!
+	coupled_entries.put(1, 1, 100.0)!
+	coupled_entries.put(1, 2, 1.0)!
+	coupled_entries.put(2, 0, 1.0)!
+	coupled_entries.put(2, 2, 10_000.0)!
+	coupled_matrix := coupled_entries.to_csr()!
+	right_hand_side := [-1.0, -296.0, 40_002.0]
+	coupled_result := coupled_matrix.preconditioned_gmres(right_hand_side, 1e-12, 10, 2)!
+	assert coupled_result.converged
+	assert coupled_result.iterations > 2
+	assert math.abs(coupled_result.x[0] - 2.0) < 1e-10
+	assert math.abs(coupled_result.x[1] + 3.0) < 1e-10
+	assert math.abs(coupled_result.x[2] - 4.0) < 1e-10
+	dense_result := matrix_vector_mul(1.0, coupled_matrix.to_dense(), coupled_result.x)
+	assert math.abs(coupled_result.residual_norm - vector_norm_diff(dense_result,
+		right_hand_side)) < 1e-12
+}
+
+fn test_csr_preconditioned_gmres_reports_true_residual_at_iteration_limit() {
+	mut entries := Triplet.new[f64](3, 3, 6)
+	entries.put(0, 0, 1.0)!
+	entries.put(0, 1, 1.0)!
+	entries.put(1, 1, 100.0)!
+	entries.put(1, 2, 1.0)!
+	entries.put(2, 0, 1.0)!
+	entries.put(2, 2, 10_000.0)!
+	matrix := entries.to_csr()!
+	right_hand_side := [-1.0, -296.0, 40_002.0]
+	result := matrix.preconditioned_gmres(right_hand_side, 1e-14, 1, 1)!
+
+	assert !result.converged
+	assert result.iterations == 1
+	dense_result := matrix_vector_mul(1.0, matrix.to_dense(), result.x)
+	assert math.abs(result.residual_norm - vector_norm_diff(dense_result,
+		right_hand_side)) < 1e-10
+}
+
+fn test_csr_preconditioned_gmres_accepts_negative_diagonal_and_rejects_zero_or_missing() {
+	mut negative_entries := Triplet.new[f64](2, 2, 2)
+	negative_entries.put(0, 0, -2.0)!
+	negative_entries.put(1, 1, 3.0)!
+	negative_matrix := negative_entries.to_csr()!
+	negative_result := negative_matrix.preconditioned_gmres([-8.0, 6.0], 1e-12, 2, 2)!
+	assert negative_result.converged
+	assert math.abs(negative_result.x[0] - 4.0) < 1e-12
+	assert math.abs(negative_result.x[1] - 2.0) < 1e-12
+
+	mut missing_diagonal := Triplet.new[f64](2, 2, 1)
+	missing_diagonal.put(0, 1, 1.0)!
+	if _ := missing_diagonal.to_csr()!.preconditioned_gmres([1.0, 1.0], 1e-8, 5, 2) {
+		assert false, 'expected a missing diagonal to be rejected'
+	}
+
+	mut zero_diagonal := Triplet.new[f64](2, 2, 2)
+	zero_diagonal.put(0, 0, 1.0)!
+	zero_diagonal.put(1, 1, 0.0)!
+	if _ := zero_diagonal.to_csr()!.preconditioned_gmres([1.0, 1.0], 1e-8, 5, 2) {
+		assert false, 'expected a zero diagonal to be rejected'
+	}
+}

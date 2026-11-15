@@ -66,6 +66,13 @@ with an exact solution converges; an inconsistent singular system returns a
 non-converged result with its true residual. Restart length and iteration
 limit must both be positive.
 
+`preconditioned_gmres` applies a right Jacobi preconditioner to nonsymmetric
+systems. Every diagonal entry must be finite and nonzero; negative diagonal
+entries are allowed. It uses the same restart, tolerance, and true-residual
+reporting contract as `gmres`. The runnable
+[`sparse solver example`](../../examples/la_sparse_cg/main.v) demonstrates
+both GMRES variants.
+
 ## When to Use Sparse
 
 - Matrix is >90% zeros
