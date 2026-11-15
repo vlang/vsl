@@ -139,3 +139,83 @@ fn test_csr_conjugate_gradient_validates_inputs() {
 		assert false
 	}
 }
+
+fn test_csr_gmres_solves_nonsymmetric_system_and_reports_true_residual() {
+	mut entries := Triplet.new[f64](3, 3, 7)
+	entries.put(0, 0, 4.0)!
+	entries.put(0, 1, 1.0)!
+	entries.put(1, 0, 2.0)!
+	entries.put(1, 1, 3.0)!
+	entries.put(1, 2, 1.0)!
+	entries.put(2, 1, 1.0)!
+	entries.put(2, 2, 2.0)!
+
+	matrix := entries.to_csr()!
+	right_hand_side := [6.0, 7.0, 0.0]
+	result := matrix.gmres(right_hand_side, 1e-12, 10, 3)!
+
+	assert result.converged
+	assert result.iterations > 0
+	assert result.iterations <= 3
+	assert math.abs(result.x[0] - 1.0) < 1e-12
+	assert math.abs(result.x[1] - 2.0) < 1e-12
+	assert math.abs(result.x[2] + 1.0) < 1e-12
+	dense_result := matrix_vector_mul(1.0, matrix.to_dense(), result.x)
+	assert math.abs(result.residual_norm - vector_norm_diff(dense_result, right_hand_side)) < 1e-14
+	assert result.residual_norm < 1e-12
+}
+
+fn test_csr_gmres_restarts_and_reports_iteration_limit() {
+	mut entries := Triplet.new[f64](3, 3, 7)
+	entries.put(0, 0, 4.0)!
+	entries.put(0, 1, 1.0)!
+	entries.put(1, 0, 2.0)!
+	entries.put(1, 1, 3.0)!
+	entries.put(1, 2, 1.0)!
+	entries.put(2, 1, 1.0)!
+	entries.put(2, 2, 2.0)!
+
+	matrix := entries.to_csr()!
+	right_hand_side := [6.0, 7.0, 0.0]
+	restarted := matrix.gmres(right_hand_side, 1e-10, 30, 2)!
+	assert restarted.converged
+	assert restarted.iterations > 2
+	assert math.abs(restarted.x[0] - 1.0) < 1e-9
+	assert math.abs(restarted.x[1] - 2.0) < 1e-9
+	assert math.abs(restarted.x[2] + 1.0) < 1e-9
+
+	limited := matrix.gmres(right_hand_side, 1e-14, 1, 1)!
+	assert !limited.converged
+	assert limited.iterations == 1
+	dense_result := matrix_vector_mul(1.0, matrix.to_dense(), limited.x)
+	assert math.abs(limited.residual_norm - vector_norm_diff(dense_result, right_hand_side)) < 1e-14
+}
+
+fn test_csr_gmres_zero_rhs_and_input_validation() {
+	mut entries := Triplet.new[f64](2, 2, 2)
+	entries.put(0, 0, 2.0)!
+	entries.put(1, 1, 3.0)!
+	matrix := entries.to_csr()!
+
+	zero := matrix.gmres([0.0, 0.0], 1e-8, 5, 2)!
+	assert zero.converged
+	assert zero.iterations == 0
+	assert zero.residual_norm == 0.0
+	assert zero.x == [0.0, 0.0]
+
+	if _ := matrix.gmres([1.0], 1e-8, 5, 2) {
+		assert false
+	}
+	if _ := matrix.gmres([1.0, 1.0], 0.0, 5, 2) {
+		assert false
+	}
+	if _ := matrix.gmres([1.0, 1.0], 1e-8, 0, 2) {
+		assert false
+	}
+	if _ := matrix.gmres([1.0, 1.0], 1e-8, 5, 0) {
+		assert false
+	}
+	if _ := matrix.gmres([math.inf(1), 1.0], 1e-8, 5, 2) {
+		assert false
+	}
+}

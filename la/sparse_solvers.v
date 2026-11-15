@@ -11,6 +11,15 @@ pub:
 	converged     bool
 }
 
+// GMRESResult contains the approximate solution and convergence diagnostics.
+pub struct GMRESResult {
+pub:
+	x             []f64
+	iterations    int
+	residual_norm f64
+	converged     bool
+}
+
 // conjugate_gradient solves A*x=b for a symmetric positive-definite CSR matrix.
 // It returns a non-converged result when the iteration limit is reached and an
 // error when the iteration encounters non-positive curvature or invalid input.
@@ -185,4 +194,224 @@ fn apply_cg_preconditioner(residual []f64, diagonal []f64) []f64 {
 		result[index] = value / diagonal[index]
 	}
 	return result
+}
+
+// gmres solves a square CSR system with restarted, unpreconditioned GMRES.
+// The initial guess is zero; a non-converged result reports the true residual.
+pub fn (a &CSRMatrix[f64]) gmres(b []f64, tolerance f64, max_iterations int, restart int) !GMRESResult {
+	if a.m != a.n {
+		return error('gmres requires a square matrix, got ${a.m}x${a.n}')
+	}
+	if b.len != a.n {
+		return error('gmres right-hand side length ${b.len} does not match matrix size ${a.n}')
+	}
+	if !math.is_finite(tolerance) || tolerance <= 0.0 {
+		return error('gmres tolerance must be finite and positive')
+	}
+	if max_iterations <= 0 {
+		return error('gmres maximum iterations must be positive')
+	}
+	if restart <= 0 {
+		return error('gmres restart length must be positive')
+	}
+	for value in b {
+		if !math.is_finite(value) {
+			return error('gmres right-hand side must contain only finite values')
+		}
+	}
+	for value in a.x {
+		if !math.is_finite(value) {
+			return error('gmres matrix values must be finite')
+		}
+	}
+
+	mut x := []f64{len: a.n}
+	mut residual := b.clone()
+	mut residual_norm := stable_vector_norm(residual)!
+	target := tolerance * residual_norm
+	if !math.is_finite(target) {
+		return error('gmres residual tolerance overflowed')
+	}
+	if residual_norm <= target {
+		return GMRESResult{
+			x:             x
+			iterations:    0
+			residual_norm: residual_norm
+			converged:     true
+		}
+	}
+
+	mut iterations := 0
+	for iterations < max_iterations {
+		mut cycle_length := restart
+		remaining_iterations := max_iterations - iterations
+		if cycle_length > remaining_iterations {
+			cycle_length = remaining_iterations
+		}
+		if cycle_length > a.n {
+			cycle_length = a.n
+		}
+		mut basis := [][]f64{len: cycle_length + 1}
+		for i in 0 .. basis.len {
+			basis[i] = []f64{len: a.n}
+		}
+		for i, value in residual {
+			basis[0][i] = value / residual_norm
+		}
+		mut hessenberg := [][]f64{len: cycle_length + 1}
+		for i in 0 .. hessenberg.len {
+			hessenberg[i] = []f64{len: cycle_length}
+		}
+		mut cosines := []f64{len: cycle_length}
+		mut sines := []f64{len: cycle_length}
+		mut g := []f64{len: cycle_length + 1}
+		g[0] = residual_norm
+		mut active_columns := 0
+		mut breakdown := false
+
+		for column in 0 .. cycle_length {
+			mut work := a.matvec(basis[column])!
+			for _ in 0 .. 2 {
+				for row in 0 .. column + 1 {
+					correction := vector_dot(basis[row], work)
+					if !math.is_finite(correction) {
+						return error('gmres Arnoldi orthogonalization became non-finite')
+					}
+					hessenberg[row][column] += correction
+					for i in 0 .. a.n {
+						work[i] -= correction * basis[row][i]
+					}
+				}
+			}
+			arnoldi_norm := stable_vector_norm(work)!
+			hessenberg[column + 1][column] = arnoldi_norm
+			if arnoldi_norm > 0.0 {
+				for i in 0 .. a.n {
+					basis[column + 1][i] = work[i] / arnoldi_norm
+				}
+			}
+
+			for row in 0 .. column {
+				top := cosines[row] * hessenberg[row][column] +
+					sines[row] * hessenberg[row + 1][column]
+				bottom := -sines[row] * hessenberg[row][column] +
+					cosines[row] * hessenberg[row + 1][column]
+				hessenberg[row][column] = top
+				hessenberg[row + 1][column] = bottom
+			}
+			rotation_norm := stable_hypot(hessenberg[column][column],
+				hessenberg[column + 1][column])
+			if !math.is_finite(rotation_norm) {
+				return error('gmres Givens rotation became non-finite')
+			}
+			if rotation_norm == 0.0 {
+				breakdown = true
+				break
+			}
+			cosines[column] = hessenberg[column][column] / rotation_norm
+			sines[column] = hessenberg[column + 1][column] / rotation_norm
+			hessenberg[column][column] = rotation_norm
+			hessenberg[column + 1][column] = 0.0
+			g[column + 1] = -sines[column] * g[column]
+			g[column] *= cosines[column]
+			iterations++
+			active_columns = column + 1
+
+			if arnoldi_norm == 0.0 {
+				breakdown = true
+			}
+			if math.abs(g[column + 1]) <= target || breakdown {
+				break
+			}
+		}
+		if active_columns == 0 {
+			return GMRESResult{
+				x:             x
+				iterations:    iterations
+				residual_norm: residual_norm
+				converged:     false
+			}
+		}
+
+		coefficients := gmres_back_substitute(hessenberg, g, active_columns)!
+		for column in 0 .. active_columns {
+			for i in 0 .. a.n {
+				x[i] += coefficients[column] * basis[column][i]
+			}
+		}
+		ax := a.matvec(x)!
+		for i in 0 .. a.n {
+			residual[i] = b[i] - ax[i]
+		}
+		residual_norm = stable_vector_norm(residual)!
+		if residual_norm <= target {
+			return GMRESResult{
+				x:             x
+				iterations:    iterations
+				residual_norm: residual_norm
+				converged:     true
+			}
+		}
+		if breakdown {
+			return GMRESResult{
+				x:             x
+				iterations:    iterations
+				residual_norm: residual_norm
+				converged:     false
+			}
+		}
+	}
+	return GMRESResult{
+		x:             x
+		iterations:    iterations
+		residual_norm: residual_norm
+		converged:     false
+	}
+}
+
+fn gmres_back_substitute(hessenberg [][]f64, g []f64, size int) ![]f64 {
+	mut solution := []f64{len: size}
+	for row := size - 1; row >= 0; row-- {
+		mut value := g[row]
+		for column in row + 1 .. size {
+			value -= hessenberg[row][column] * solution[column]
+		}
+		diagonal := hessenberg[row][row]
+		if !math.is_finite(diagonal) || diagonal == 0.0 {
+			return error('gmres encountered a singular Hessenberg system')
+		}
+		solution[row] = value / diagonal
+		if !math.is_finite(solution[row]) {
+			return error('gmres Hessenberg solution became non-finite')
+		}
+	}
+	return solution
+}
+
+fn stable_vector_norm(vector []f64) !f64 {
+	mut length := 0.0
+	for value in vector {
+		if !math.is_finite(value) {
+			return error('gmres vector contains a non-finite value')
+		}
+		length = stable_hypot(length, value)
+		if !math.is_finite(length) {
+			return error('gmres vector norm became non-finite')
+		}
+	}
+	return length
+}
+
+fn stable_hypot(left f64, right f64) f64 {
+	abs_left := math.abs(left)
+	abs_right := math.abs(right)
+	if abs_left > abs_right {
+		ratio := abs_right / abs_left
+		return abs_left * math.sqrt(1.0 + ratio * ratio)
+	}
+	if abs_right > 0.0 {
+		ratio := abs_left / abs_right
+		return abs_right * math.sqrt(1.0 + ratio * ratio)
+	}
+	return 0.0
 }

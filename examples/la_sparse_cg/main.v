@@ -28,4 +28,17 @@ fn main() {
 	assert scaled.converged
 	assert scaled.x == [2.0, 3.0, 4.0]
 	println('Jacobi-preconditioned solution: ${scaled.x}')
+
+	mut nonsymmetric_entries := la.Triplet.new[f64](3, 3, 7)
+	nonsymmetric_entries.put(0, 0, 4.0)!
+	nonsymmetric_entries.put(0, 1, 1.0)!
+	nonsymmetric_entries.put(1, 0, 2.0)!
+	nonsymmetric_entries.put(1, 1, 3.0)!
+	nonsymmetric_entries.put(1, 2, 1.0)!
+	nonsymmetric_entries.put(2, 1, 1.0)!
+	nonsymmetric_entries.put(2, 2, 2.0)!
+	gmres := nonsymmetric_entries.to_csr()!.gmres([6.0, 7.0, 0.0], 1e-12, 10, 3)!
+	assert gmres.converged
+	assert gmres.residual_norm < 1e-12
+	println('GMRES solution: ${gmres.x}, residual: ${gmres.residual_norm}')
 }

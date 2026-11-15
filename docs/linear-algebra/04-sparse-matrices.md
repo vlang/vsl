@@ -42,9 +42,9 @@ same duplicate-summing and zero-dropping behavior. `CCMatrix.to_csr()` converts
 to CSR. Both compressed formats can be converted to dense matrices.
 
 The current sparse API is intentionally focused: CSR matrix-vector
-multiplication, conjugate-gradient solving, and format conversion are available;
-broader sparse arithmetic and preconditioners beyond Jacobi are not implied by
-these storage types.
+multiplication, iterative solving, and format conversion are available; broader
+sparse arithmetic and preconditioners beyond Jacobi are not implied by these
+storage types.
 
 See [`examples/la_csr_matvec`](../../examples/la_csr_matvec/main.v), or run it
 with `v run examples/la_csr_matvec/main.v`.
@@ -56,6 +56,13 @@ curvature returns an error. See
 [`examples/la_sparse_cg`](../../examples/la_sparse_cg/main.v) for a runnable
 example. `preconditioned_conjugate_gradient` uses a Jacobi preconditioner and
 requires every diagonal entry to be finite and positive.
+
+`gmres(b, tolerance, max_iterations, restart)` solves square systems that need
+not be symmetric. It uses a zero initial guess, an absolute stopping target of
+`tolerance * ||b||₂`, and restarted, unpreconditioned GMRES. Its result reports
+the true residual norm; `converged` is false when the iteration limit is
+reached or Arnoldi breaks down before meeting the target. Restart length and
+iteration limit must both be positive.
 
 ## When to Use Sparse
 
