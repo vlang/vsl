@@ -119,15 +119,16 @@ establish a general sparsity crossover or predict other matrix structures.
 
 ### Sparse solver and Jacobi-preconditioner comparison
 
-`sparse_solver_preconditioner_bench.v` solves the same known-answer, diagonally
-scaled SPD tridiagonal system with CG/Jacobi-PCG, restarted GMRES/right-Jacobi
-GMRES, and BiCGSTAB/right-Jacobi BiCGSTAB. Each result must converge and match
-the constructed solution before it is timed. The CSV reports iteration count,
-residual norm, median, minimum, and maximum solve times over five samples, and
-a solution checksum; two warmups are excluded. Matrix construction and
-right-hand-side generation are outside the timed region. The SPD workload does
-not characterize behavior on nonsymmetric systems, and these results are not a
-general performance claim for any solver or preconditioner.
+`sparse_solver_preconditioner_bench.v` solves two known-answer, row-scaled
+tridiagonal systems. The symmetric positive-definite system compares
+CG/Jacobi-PCG, restarted GMRES/right-Jacobi GMRES, and BiCGSTAB/right-Jacobi
+BiCGSTAB. A diagonally dominant nonsymmetric system compares the GMRES and
+BiCGSTAB pairs. Every result must converge and match the constructed solution
+before timing. The CSV reports iteration count, residual norm, median, minimum,
+and maximum solve times over five samples, plus a solution checksum; two
+warmups are excluded. Matrix construction and right-hand-side generation are
+outside the timed region. These generated workloads do not establish general
+performance claims for other matrix structures or preconditioners.
 
 Build and run it from `~/.vmodules` with the resource-limited pattern above:
 
@@ -136,6 +137,30 @@ v -prod -no-parallel -cc gcc -cflags "-march=native" \
 	-o /tmp/vsl-sparse-solver-bench ./vsl/benchmarks/sparse_solver_preconditioner_bench.v
 /tmp/vsl-sparse-solver-bench
 ```
+
+One sample run on an AMD Ryzen 9 5900X, Linux x86_64, V 0.5.2
+(`4a23b18ca9`), with `VJOBS=1` and `v -prod run` using the default Pure V
+backend produced the following results. Both systems have 128 rows and f64
+values; the exact solution is `x[i] = (i % 13 - 6) / 7`, tolerance is `1e-8`,
+the iteration cap is 512, GMRES restart is 20, and timings exclude two warmups
+and report five samples. Times are microseconds; the checksum is the sum of the
+solution's center value across timed runs.
+
+| System | Solver | Iterations | Residual norm | Median µs | Min µs | Max µs | Checksum |
+|--------|--------|-----------:|--------------:|----------:|-------:|-------:|---------:|
+| SPD | CG | 86 | 2.798186e-06 | 270.261 | 196.000 | 312.670 | 4.28571416 |
+| SPD | Jacobi-PCG | 12 | 1.812080e-06 | 41.048 | 35.567 | 53.100 | 4.28571428 |
+| SPD | GMRES | 115 | 3.502907e-06 | 1587.857 | 1459.104 | 1676.244 | 4.28571419 |
+| SPD | Right-Jacobi GMRES | 12 | 1.738593e-06 | 142.278 | 117.030 | 211.449 | 4.28571429 |
+| SPD | BiCGSTAB | 65 | 3.385005e-06 | 486.177 | 440.000 | 494.563 | 4.28571429 |
+| SPD | Right-Jacobi BiCGSTAB | 7 | 2.605855e-06 | 54.523 | 52.810 | 108.955 | 4.28571429 |
+| Nonsymmetric | GMRES | 126 | 3.639929e-06 | 1487.468 | 1440.349 | 1539.085 | 4.28571438 |
+| Nonsymmetric | Right-Jacobi GMRES | 14 | 1.589543e-06 | 132.009 | 129.965 | 138.582 | 4.28571429 |
+| Nonsymmetric | BiCGSTAB | 59 | 2.984785e-06 | 389.325 | 346.133 | 397.631 | 4.28571424 |
+| Nonsymmetric | Right-Jacobi BiCGSTAB | 7 | 2.834329e-06 | 47.470 | 46.347 | 55.224 | 4.28571425 |
+
+These are single-run results from generated tridiagonal systems, not a general
+solver or preconditioner performance claim.
 
 The f32 L2 norm benchmark compares the SIMD fast path with its previous
 scaled scalar algorithm on the same large vector and reports error against an

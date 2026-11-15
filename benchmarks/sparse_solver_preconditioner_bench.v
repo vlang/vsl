@@ -188,4 +188,26 @@ fn main() {
 	benchmark_gmres('right_jacobi_gmres', matrix, rhs, expected, true)
 	benchmark_bicgstab('bicgstab', matrix, rhs, expected, false)
 	benchmark_bicgstab('right_jacobi_bicgstab', matrix, rhs, expected, true)
+
+	mut nonsymmetric_entries := la.Triplet.new[f64](system_size, system_size, 3 * system_size)
+	for row in 0 .. system_size {
+		if row > 0 {
+			nonsymmetric_entries.put(row, row - 1, -0.35 * scale[row]) or { panic(err) }
+		}
+		nonsymmetric_entries.put(row, row, 2.5 * scale[row]) or { panic(err) }
+		if row + 1 < system_size {
+			nonsymmetric_entries.put(row, row + 1, -0.65 * scale[row]) or { panic(err) }
+		}
+	}
+	nonsymmetric_matrix := nonsymmetric_entries.to_csr() or { panic(err) }
+	nonsymmetric_rhs := nonsymmetric_matrix.matvec(expected) or { panic(err) }
+
+	println('# system=nonsymmetric, diagonally-dominant, row-scaled tridiagonal')
+	benchmark_gmres('nonsymmetric_gmres', nonsymmetric_matrix, nonsymmetric_rhs, expected, false)
+	benchmark_gmres('nonsymmetric_right_jacobi_gmres', nonsymmetric_matrix, nonsymmetric_rhs,
+		expected, true)
+	benchmark_bicgstab('nonsymmetric_bicgstab', nonsymmetric_matrix, nonsymmetric_rhs, expected,
+		false)
+	benchmark_bicgstab('nonsymmetric_right_jacobi_bicgstab', nonsymmetric_matrix,
+		nonsymmetric_rhs, expected, true)
 }
