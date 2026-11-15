@@ -213,6 +213,9 @@ scorer := fn (_y_true []f64, y_pred []f64) !f64 {
 scores := model_selection.cross_val_score_with_factory(x, y, folds, factory, scorer)!
 ```
 
+The [`ml_cross_validation` example](../examples/ml_cross_validation) compares
+logistic regression and Gaussian Naive Bayes using the same stratified folds.
+
 ### Fold Structure
 
 ```v

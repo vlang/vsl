@@ -35,7 +35,7 @@ v -cflags <flags> run vsl/examples/<example>/main.v
 `plot_choropleth_population` → `plot_sankey_energy` → `plot_json_export`
 
 **Machine Learning**: Progress → `ml_kmeans` → `ml_linreg_plot` →
-`ml_complete_pipeline` → `ml_sentiment_analysis`
+`ml_complete_pipeline` → `ml_cross_validation` → `ml_sentiment_analysis`
 
 **Scientific Computing**: Dive into → `fft_plot_example` → `deriv_example` →
 `ode_rk23` → `integrate_gauss_kronrod` → `mpi_basic_example`
@@ -57,6 +57,7 @@ v -cflags <flags> run vsl/examples/<example>/main.v
 | [ml_random_forest](./ml_random_forest)          | Random Forest ensemble learning.                        |
 | [ml_gaussian_nb](./ml_gaussian_nb)               | Probabilistic classification with Gaussian Naive Bayes. |
 | [ml_complete_pipeline](./ml_complete_pipeline)   | End-to-end preprocessing, model selection, and metrics. |
+| [ml_cross_validation](./ml_cross_validation)     | Compare logistic regression and Gaussian Naive Bayes with stratified cross-validation. |
 
 ## Plotting Examples 📊
 
