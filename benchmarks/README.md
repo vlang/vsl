@@ -102,6 +102,21 @@ systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tm
 For a paired SciPy BLAS comparison and an f64 accuracy reference for the f32
 dot kernel, see the [benchmark notes](./vs_numpy/README.md).
 
+### Sparse CSR versus dense matrix-vector multiplication
+
+`sparse_solvers_bench.v` compares CSR matvec with VSL's dense matrix-vector
+operation on the same tridiagonal 1D Laplacian and f64 input. It checks the
+results before timing, warms both paths, and reports per-call time, checksums,
+and estimated array-payload bytes averaged over five timed samples. Dense
+comparisons stop at 2048×2048; larger sizes report CSR only. Payload estimates
+exclude V array headers, allocator overhead, and temporary workspaces. Matrix
+construction, dense conversion, and
+correctness checks are outside the timed regions; output allocation is included.
+The dense operation may select a BLAS backend from the build flags, so record
+those flags when comparing results. Run the program from `~/.vmodules` using the
+resource-limited build/run pattern above. This single banded workload does not
+establish a general sparsity crossover or predict other matrix structures.
+
 The f32 L2 norm benchmark compares the SIMD fast path with its previous
 scaled scalar algorithm on the same large vector and reports error against an
 f64 accumulation:
@@ -197,6 +212,7 @@ systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tm
 
 - **`blas_bench.v`**: Comprehensive BLAS Level 1, 2, and 3 benchmarks
 - **`lapack_bench.v`**: LAPACK operation benchmarks (linear systems, factorizations, etc.)
+- **`sparse_solvers_bench.v`**: CSR versus dense f64 matvec runtime and payload sizes
 - **`compare_backends.v`**: Selected-backend dgemm benchmark; build once per backend for comparison
 - **`fft_bench.v` and `fft_numpy_baseline.py`**: Real f64 forward FFT timing for VSL and NumPy
 - **`mpi_bench.v`**: Two-rank MPI send/receive, broadcast, and reduction latency
