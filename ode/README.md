@@ -18,16 +18,16 @@ import math
 import vsl.ode
 
 fn exponential_system(_ f64, state []f64, _ []f64) []f64 {
-	return [state[0]]
+ return [state[0]]
 }
 
 result := ode.solve_rk23(exponential_system, ode.RK23Params{
-	t_start:       0.0
-	t_end:         1.0
-	initial_state: [1.0]
-	output_times:  [0.25, 0.75]
-	abs_tol:       1e-9
-	rel_tol:       1e-7
+ t_start:       0.0
+ t_end:         1.0
+ initial_state: [1.0]
+ output_times:  [0.25, 0.75]
+ abs_tol:       1e-9
+ rel_tol:       1e-7
 })!
 assert math.abs(result.state[0] - math.e) < 1e-5
 assert result.sampled_times == [0.25, 0.75]
