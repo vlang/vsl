@@ -29,9 +29,9 @@ x := [[1.0, 2.0], [3.0, 4.0], [5.0, 6.0], [7.0, 8.0], [9.0, 10.0]]
 y := [0.0, 1.0, 0.0, 1.0, 0.0]
 
 result := model_selection.train_test_split(x, y, model_selection.TrainTestSplitConfig{
-	test_size:   0.2
-	shuffle:     true
-	random_seed: 42
+ test_size:   0.2
+ shuffle:     true
+ random_seed: 42
 })!
 
 println('Train size: ${result.x_train.len}')
@@ -47,8 +47,8 @@ x := [[1.0], [2.0], [3.0], [4.0], [5.0], [6.0], [7.0], [8.0], [9.0], [10.0]]
 y := [0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0]
 
 result := model_selection.train_test_split(x, y, model_selection.TrainTestSplitConfig{
-	test_size: 0.3
-	stratify:  true // Maintains 50/50 class balance in both sets
+ test_size: 0.3
+ stratify:  true // Maintains 50/50 class balance in both sets
 })!
 ```
 
@@ -63,9 +63,9 @@ preserved while per-class counts are allocated by largest remainder; setting
 import vsl.model_selection
 
 result := model_selection.train_val_test_split(x, y, model_selection.TrainValTestConfig{
-	val_size:  0.1 // 10% validation
-	test_size: 0.2 // 20% test (70% train)
-	stratify:  true
+ val_size:  0.1 // 10% validation
+ test_size: 0.2 // 20% test (70% train)
+ stratify:  true
 })!
 
 println('Train: ${result.x_train.len}')
@@ -82,14 +82,14 @@ kf := model_selection.KFold.new(5, true, 42)
 folds := kf.split(100)! // 100 samples
 
 for i, fold in folds {
-	println('Fold ${i + 1}:')
-	println('  Train indices: ${fold.train_indices.len}')
-	println('  Test indices: ${fold.test_indices.len}')
+ println('Fold ${i + 1}:')
+ println('  Train indices: ${fold.train_indices.len}')
+ println('  Test indices: ${fold.test_indices.len}')
 
-	// Get actual data for this fold
-	x_train, y_train, x_test, y_test := model_selection.get_fold_data(x, y, fold)
+ // Get actual data for this fold
+ x_train, y_train, x_test, y_test := model_selection.get_fold_data(x, y, fold)
 
-	// Train and evaluate your model here
+ // Train and evaluate your model here
 }
 ```
 
@@ -115,8 +115,8 @@ loo := model_selection.LeaveOneOut.new()
 folds := loo.split(10) // Returns 10 folds, each with 1 test sample
 
 for fold in folds {
-	// fold.test_indices has exactly 1 element
-	// fold.train_indices has n-1 elements
+ // fold.test_indices has exactly 1 element
+ // fold.train_indices has n-1 elements
 }
 ```
 
@@ -180,8 +180,8 @@ the scorer defines those conventions.
 ```v
 pub struct Fold {
 pub:
-	train_indices []int // Indices for training
-	test_indices  []int // Indices for testing
+ train_indices []int // Indices for training
+ test_indices  []int // Indices for testing
 }
 ```
 
@@ -208,19 +208,19 @@ kf := model_selection.KFold.new(5, true, 42)
 folds := kf.split(x.len)!
 
 predictor := fn (x_train [][]f64, y_train []f64, x_test [][]f64) ![]f64 {
-	mut train_data := ml.Data.from_raw_xy_sep(x_train, y_train)!
-	mut model := ml.LogReg.new(mut train_data, 'cv_model')
-	model.train(ml.LogRegTrainConfig{})
+ mut train_data := ml.Data.from_raw_xy_sep(x_train, y_train)!
+ mut model := ml.LogReg.new(mut train_data, 'cv_model')
+ model.train(ml.LogRegTrainConfig{})
 
-	mut predictions := []f64{}
-	for row in x_test {
-		predictions << model.predict(row)
-	}
-	return predictions
+ mut predictions := []f64{}
+ for row in x_test {
+  predictions << model.predict(row)
+ }
+ return predictions
 }
 
 scorer := fn (y_true []f64, y_pred []f64) !f64 {
-	return metrics.accuracy_score(y_true, y_pred)
+ return metrics.accuracy_score(y_true, y_pred)
 }
 
 scores := model_selection.cross_val_score(x, y, folds, predictor, scorer)!
@@ -228,7 +228,7 @@ scores := model_selection.cross_val_score(x, y, folds, predictor, scorer)!
 // Report average score
 mut avg := 0.0
 for s in scores {
-	avg += s
+ avg += s
 }
 avg /= f64(scores.len)
 println('Average CV Accuracy: ${avg}')
