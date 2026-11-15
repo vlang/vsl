@@ -175,6 +175,44 @@ fold scores explicitly. Labels and predictions are passed as `[]f64` without
 class encoding, thresholding, positive-class selection, or sample weighting;
 the scorer defines those conventions.
 
+For clearer estimator lifecycle separation, `cross_val_score_with_factory`
+accepts a factory that receives only the current fold's training data and
+returns a predictor for held-out features. The factory runs once per fold and
+must create independently fitted model state:
+
+```v
+import vsl.model_selection
+
+x := [[0.0], [1.0], [2.0], [3.0]]
+y := [0.0, 1.0, 3.0, 7.0]
+folds := model_selection.KFold.new(2, false, 42).split(y.len)!
+
+factory := fn (_x_train [][]f64, y_train []f64) !model_selection.FoldPrediction {
+	mut mean := 0.0
+	for value in y_train {
+		mean += value
+	}
+	mean /= f64(y_train.len)
+	return fn [mean] (x_test [][]f64) ![]f64 {
+		mut predictions := []f64{cap: x_test.len}
+		for _ in x_test {
+			predictions << mean
+		}
+		return predictions
+	}
+}
+
+scorer := fn (_y_true []f64, y_pred []f64) !f64 {
+	mut mean := 0.0
+	for value in y_pred {
+		mean += value
+	}
+	return mean / f64(y_pred.len)
+}
+
+scores := model_selection.cross_val_score_with_factory(x, y, folds, factory, scorer)!
+```
+
 ### Fold Structure
 
 ```v
@@ -191,6 +229,7 @@ pub:
 |---------------------------------------------------|----------------------------------------------------|
 | `get_fold_data(x, y, fold)`                       | Extract actual data arrays from fold indices       |
 | `cross_val_score(x, y, folds, predictor, scorer)` | Run a predictor and scorer for each validated fold |
+| `cross_val_score_with_factory(x, y, folds, factory, scorer)` | Fit a new predictor from each fold's training data |
 
 ## Integration with ML Pipeline
 

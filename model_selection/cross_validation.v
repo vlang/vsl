@@ -17,6 +17,13 @@ pub type FoldPredictor = fn (x_train [][]f64, y_train []f64, x_test [][]f64) ![]
 // FoldScorer computes one score from test labels and corresponding predictions.
 pub type FoldScorer = fn (y_true []f64, y_pred []f64) !f64
 
+// FoldPrediction predicts test labels using a model fitted for one fold.
+pub type FoldPrediction = fn (x_test [][]f64) ![]f64
+
+// FoldEstimatorFactory fits and returns a predictor using only one fold's
+// training data. It is called once per fold and must not reuse fitted state.
+pub type FoldEstimatorFactory = fn (x_train [][]f64, y_train []f64) !FoldPrediction
+
 // KFold generates train/test indices for k-fold cross-validation
 
 // KFold defines a public data structure for this module.
@@ -301,6 +308,34 @@ pub fn get_fold_data(x [][]f64, y []f64, fold Fold) ([][]f64, []f64, [][]f64, []
 // Scores are returned in fold order without aggregation or direction changes;
 // label and higher-is-better conventions belong to the supplied scorer.
 pub fn cross_val_score(x [][]f64, y []f64, folds []Fold, predictor FoldPredictor, scorer FoldScorer) ![]f64 {
+	validate_cross_val_inputs(x, y, folds)!
+
+	mut scores := []f64{cap: folds.len}
+	for fold_index, fold in folds {
+		x_train, y_train, x_test, y_test := get_fold_data(x, y, fold)
+		y_pred := predictor(x_train, y_train, x_test)!
+		scores << score_fold(y_test, y_pred, fold_index, scorer)!
+	}
+	return scores
+}
+
+// cross_val_score_with_factory calls a model factory once for every fold with
+// only that fold's training data, then scores predictions on held-out features.
+// The factory must return a predictor backed by new, independently fitted state.
+pub fn cross_val_score_with_factory(x [][]f64, y []f64, folds []Fold, factory FoldEstimatorFactory, scorer FoldScorer) ![]f64 {
+	validate_cross_val_inputs(x, y, folds)!
+
+	mut scores := []f64{cap: folds.len}
+	for fold_index, fold in folds {
+		x_train, y_train, x_test, y_test := get_fold_data(x, y, fold)
+		predict := factory(x_train, y_train)!
+		y_pred := predict(x_test)!
+		scores << score_fold(y_test, y_pred, fold_index, scorer)!
+	}
+	return scores
+}
+
+fn validate_cross_val_inputs(x [][]f64, y []f64, folds []Fold) ! {
 	if x.len != y.len {
 		return errors.error('features and labels must have the same number of samples', .einval)
 	}
@@ -316,19 +351,17 @@ pub fn cross_val_score(x [][]f64, y []f64, folds []Fold, predictor FoldPredictor
 			return errors.error('feature rows must have a consistent width', .einval)
 		}
 	}
-
-	mut scores := []f64{cap: folds.len}
 	for fold_index, fold in folds {
 		validate_fold_indices(fold, x.len, fold_index)!
-		x_train, y_train, x_test, y_test := get_fold_data(x, y, fold)
-		y_pred := predictor(x_train, y_train, x_test)!
-		if y_pred.len != y_test.len {
-			return errors.error('predictor returned ${y_pred.len} predictions for fold ${fold_index}, expected ${y_test.len}',
-				.einval)
-		}
-		scores << scorer(y_test, y_pred)!
 	}
-	return scores
+}
+
+fn score_fold(y_true []f64, y_pred []f64, fold_index int, scorer FoldScorer) !f64 {
+	if y_pred.len != y_true.len {
+		return errors.error('predictor returned ${y_pred.len} predictions for fold ${fold_index}, expected ${y_true.len}',
+			.einval)
+	}
+	return scorer(y_true, y_pred)
 }
 
 fn validate_fold_indices(fold Fold, n_samples int, fold_index int) ! {

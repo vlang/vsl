@@ -29,6 +29,29 @@ fn failing_score(_y_true []f64, _y_pred []f64) !f64 {
 	return error('scorer failed')
 }
 
+fn mean_prediction_factory(_x_train [][]f64, y_train []f64) !FoldPrediction {
+	mut sum := 0.0
+	for value in y_train {
+		sum += value
+	}
+	mean := sum / f64(y_train.len)
+	return fn [mean] (x_test [][]f64) ![]f64 {
+		mut predictions := []f64{cap: x_test.len}
+		for _ in x_test {
+			predictions << mean
+		}
+		return predictions
+	}
+}
+
+fn mean_prediction_score(_y_true []f64, y_pred []f64) !f64 {
+	mut sum := 0.0
+	for value in y_pred {
+		sum += value
+	}
+	return sum / f64(y_pred.len)
+}
+
 fn test_kfold_basic() {
 	kf := KFold.new(5, false, 42)
 	folds := kf.split(100)!
@@ -220,6 +243,25 @@ fn test_cross_val_score_preserves_fold_order_without_aggregation() ! {
 
 	scores := cross_val_score(x, y, folds, predict_first_feature, exact_match_score)!
 	assert scores == [0.0, 1.0]
+}
+
+fn test_cross_val_score_factory_fits_from_each_training_fold() ! {
+	x := [[0.0], [1.0], [2.0], [3.0]]
+	y := [0.0, 1.0, 3.0, 7.0]
+	folds := [
+		Fold{
+			train_indices: [2, 3]
+			test_indices:  [0, 1]
+		},
+		Fold{
+			train_indices: [0, 1]
+			test_indices:  [2, 3]
+		},
+	]
+
+	scores := cross_val_score_with_factory(x, y, folds, mean_prediction_factory,
+		mean_prediction_score)!
+	assert scores == [5.0, 0.5]
 }
 
 fn test_cross_val_score_rejects_malformed_data_and_folds() {
