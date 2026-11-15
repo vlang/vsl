@@ -75,4 +75,3 @@ iteration limit must both be positive.
 
 - [Examples](../../examples/) - Find sparse matrix examples
 - [Advanced Topics](../advanced/) - More advanced techniques
-
