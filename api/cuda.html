@@ -273,9 +273,9 @@ implemented; CPU fallback when CUDA/cuDNN is unavailable.</p>
 </tr>
 <tr>
 <td><code>layernorm</code></td>
-<td>optional <code>-d cudnn_layernorm</code></td>
-<td>CPU</td>
-<td>—</td>
+<td>optional <code>-d cudnn_layernorm</code> with cuDNN 9.1+</td>
+<td>CPU when the GPU implementation is unavailable</td>
+<td>#550</td>
 </tr>
 <tr>
 <td><code>conv2d</code></td>
@@ -291,7 +291,7 @@ implemented; CPU fallback when CUDA/cuDNN is unavailable.</p>
 </tr>
 </tbody>
 </table>
-<p><code>mul_vec</code> uses legacy <code>cublasDdgmm</code> (<code>SIDE_RIGHT</code>, 1×n row layout; <code>cublasDdgmm_v2</code> absent on some distros). Layer norm GPU: build with <code>-d cudnn_layernorm</code> when libcudnn exports <code>cudnnLayerNormForward</code> (9.1+). Numerical parity tests: <code>cuda/compute/numerical_validation_test.v</code> (<a href="https://github.com/vlang/vsl/issues/281">#281</a>).</p>
+<p><code>mul_vec</code> uses legacy <code>cublasDdgmm</code> (<code>SIDE_RIGHT</code>, 1×n row layout; <code>cublasDdgmm_v2</code> absent on some distros). Layer norm GPU: build with <code>-d cudnn_layernorm</code> when libcudnn exports <code>cudnnLayerNormForward</code> (9.1+). <code>CUDABackend.supports('layernorm')</code> reports whether the selected device and build can execute the GPU implementation. If it is available but execution fails, the error is propagated; only an unavailable GPU implementation uses the CPU fallback. Strict compute contexts reject that fallback. Numerical parity tests: <code>cuda/compute/numerical_validation_test.v</code> (<a href="https://github.com/vlang/vsl/issues/281">#281</a>).</p>
 <h2 id="architecture">📁 Architecture</h2>
 <pre><code>vsl.cuda
 ├── backend.v           # CUDABackend (ComputeBackend interface impl)
@@ -765,7 +765,7 @@ v -d cuda run cuda/examples/relu_example.v
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 14 Nov 2026 05:26:13</div>
+						<div class="footer">Powered by vdoc. Generated on: 15 Nov 2026 06:15:32</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_cuda">README</a></li>
 <li class="open"><a href="#Constants">Constants</a></li>
