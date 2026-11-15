@@ -86,6 +86,11 @@ pub fn FnND.new_with_params(f MultivariateFn, params []f64) FnND {
 	}
 }
 
+// parameters returns a copy of the callback parameters.
+pub fn (f FnND) parameters() []f64 {
+	return f.params.clone()
+}
+
 // eval evaluates the multivariate function.
 pub fn (f FnND) eval(x []f64) f64 {
 	return f.f(x, f.params)

@@ -121,6 +121,7 @@ fn test_fnnd_eval_with_parameters() {
 	f := FnND.new_with_params(multivariate_weighted_squares, [2.0, 1.0, 3.0])
 	assert f.eval([2.0, -1.0]) == 9.0
 	assert f.safe_eval([2.0, -1.0])! == 9.0
+	assert f.parameters() == [2.0, 1.0, 3.0]
 }
 
 fn test_fnnd_safe_eval_rejects_non_finite_values() {
