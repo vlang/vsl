@@ -41,4 +41,10 @@ fn main() {
 	assert gmres.converged
 	assert gmres.residual_norm < 1e-12
 	println('GMRES solution: ${gmres.x}, residual: ${gmres.residual_norm}')
+
+	preconditioned_gmres := nonsymmetric_entries.to_csr()!.preconditioned_gmres([6.0, 7.0, 0.0],
+		1e-12, 10, 3)!
+	assert preconditioned_gmres.converged
+	assert preconditioned_gmres.residual_norm < 1e-12
+	println('right-Jacobi GMRES solution: ${preconditioned_gmres.x}, residual: ${preconditioned_gmres.residual_norm}')
 }

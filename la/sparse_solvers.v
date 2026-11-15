@@ -199,6 +199,17 @@ fn apply_cg_preconditioner(residual []f64, diagonal []f64) []f64 {
 // gmres solves a square CSR system with restarted, unpreconditioned GMRES.
 // The initial guess is zero; a non-converged result reports the true residual.
 pub fn (a &CSRMatrix[f64]) gmres(b []f64, tolerance f64, max_iterations int, restart int) !GMRESResult {
+	return gmres_impl(a, b, tolerance, max_iterations, restart, [])
+}
+
+// preconditioned_gmres solves a square CSR system using right Jacobi
+// preconditioning. Its diagonal entries must be finite and nonzero.
+pub fn (a &CSRMatrix[f64]) preconditioned_gmres(b []f64, tolerance f64, max_iterations int, restart int) !GMRESResult {
+	diagonal := gmres_jacobi_preconditioner(a)!
+	return gmres_impl(a, b, tolerance, max_iterations, restart, diagonal)
+}
+
+fn gmres_impl(a &CSRMatrix[f64], b []f64, tolerance f64, max_iterations int, restart int, diagonal []f64) !GMRESResult {
 	if a.m != a.n {
 		return error('gmres requires a square matrix, got ${a.m}x${a.n}')
 	}
@@ -262,6 +273,7 @@ pub fn (a &CSRMatrix[f64]) gmres(b []f64, tolerance f64, max_iterations int, res
 		for i in 0 .. hessenberg.len {
 			hessenberg[i] = []f64{len: cycle_length}
 		}
+		mut search_directions := [][]f64{len: cycle_length}
 		mut cosines := []f64{len: cycle_length}
 		mut sines := []f64{len: cycle_length}
 		mut g := []f64{len: cycle_length + 1}
@@ -270,7 +282,12 @@ pub fn (a &CSRMatrix[f64]) gmres(b []f64, tolerance f64, max_iterations int, res
 		mut breakdown := false
 
 		for column in 0 .. cycle_length {
-			mut work := a.matvec(basis[column])!
+			search_directions[column] = if diagonal.len == 0 {
+				basis[column]
+			} else {
+				apply_gmres_preconditioner(basis[column], diagonal)!
+			}
+			mut work := a.matvec(search_directions[column])!
 			for _ in 0 .. 2 {
 				for row in 0 .. column + 1 {
 					correction := vector_dot(basis[row], work)
@@ -336,7 +353,7 @@ pub fn (a &CSRMatrix[f64]) gmres(b []f64, tolerance f64, max_iterations int, res
 		coefficients := gmres_back_substitute(hessenberg, g, active_columns)!
 		for column in 0 .. active_columns {
 			for i in 0 .. a.n {
-				x[i] += coefficients[column] * basis[column][i]
+				x[i] += coefficients[column] * search_directions[column][i]
 			}
 		}
 		ax := a.matvec(x)!
@@ -367,6 +384,38 @@ pub fn (a &CSRMatrix[f64]) gmres(b []f64, tolerance f64, max_iterations int, res
 		residual_norm: residual_norm
 		converged:     false
 	}
+}
+
+fn gmres_jacobi_preconditioner(a &CSRMatrix[f64]) ![]f64 {
+	if a.m != a.n {
+		return error('preconditioned_gmres requires a square matrix')
+	}
+	mut diagonal := []f64{len: a.n}
+	for row in 0 .. a.n {
+		mut found := false
+		for k in a.p[row] .. a.p[row + 1] {
+			if a.j[k] == row {
+				diagonal[row] = a.x[k]
+				found = true
+				break
+			}
+		}
+		if !found || !math.is_finite(diagonal[row]) || diagonal[row] == 0.0 {
+			return error('preconditioned_gmres requires a finite nonzero diagonal')
+		}
+	}
+	return diagonal
+}
+
+fn apply_gmres_preconditioner(vector []f64, diagonal []f64) ![]f64 {
+	mut result := []f64{len: vector.len}
+	for index, value in vector {
+		result[index] = value / diagonal[index]
+		if !math.is_finite(result[index]) {
+			return error('preconditioned_gmres Jacobi preconditioner produced a non-finite value')
+		}
+	}
+	return result
 }
 
 fn gmres_back_substitute(hessenberg [][]f64, g []f64, size int) ![]f64 {
