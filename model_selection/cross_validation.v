@@ -41,6 +41,20 @@ pub:
 	mean_score  f64
 }
 
+// CrossValScoreDirection specifies how a scorer's mean should be optimized.
+pub enum CrossValScoreDirection {
+	maximize
+	minimize
+}
+
+// CrossValSearchResult contains all evaluations and the selected candidate's
+// index in candidate_scores.
+pub struct CrossValSearchResult {
+pub:
+	candidate_scores     []CrossValCandidateScore
+	best_candidate_index int
+}
+
 // KFold generates train/test indices for k-fold cross-validation
 
 // KFold defines a public data structure for this module.
@@ -398,6 +412,33 @@ pub fn cross_val_compare(x [][]f64, y []f64, folds []Fold, candidates []CrossVal
 		}
 	}
 	return results
+}
+
+// cross_val_search evaluates a bounded caller-supplied candidate list and
+// selects the highest or lowest unweighted mean score. Ties keep the earliest
+// candidate. Scorers that return NaN cannot define a reliable ordering.
+pub fn cross_val_search(x [][]f64, y []f64, folds []Fold, candidates []CrossValCandidate, max_candidates int, direction CrossValScoreDirection, scorer FoldScorer) !CrossValSearchResult {
+	scores := cross_val_compare(x, y, folds, candidates, max_candidates, scorer)!
+	mut best_candidate_index := 0
+	for index, score in scores {
+		if math.is_nan(score.mean_score) {
+			return errors.error('candidate ${score.name} has a NaN mean score', .einval)
+		}
+		if index == 0 {
+			continue
+		}
+		is_better := match direction {
+			.maximize { score.mean_score > scores[best_candidate_index].mean_score }
+			.minimize { score.mean_score < scores[best_candidate_index].mean_score }
+		}
+		if is_better {
+			best_candidate_index = index
+		}
+	}
+	return CrossValSearchResult{
+		candidate_scores:     scores
+		best_candidate_index: best_candidate_index
+	}
 }
 
 fn validate_cross_val_inputs(x [][]f64, y []f64, folds []Fold) ! {

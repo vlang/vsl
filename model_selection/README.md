@@ -215,11 +215,24 @@ scores := model_selection.cross_val_score_with_factory(x, y, folds, factory, sco
 
 `cross_val_compare` evaluates a bounded list of named factories sequentially on
 the same folds. It returns each candidate's fold scores and unweighted
-arithmetic mean in caller-supplied order; it does not rank candidates or infer
-whether a higher or lower score is better. Factories may capture candidate
-hyperparameters, but must fit independent state for each fold. The
+arithmetic mean in caller-supplied order without ranking them. Use
+`cross_val_search` when selection is desired; pass `.maximize` or `.minimize`
+explicitly so the library does not guess the scorer's direction. It returns
+all evaluations and the selected candidate index, keeps the first candidate
+on ties, and rejects NaN means because they cannot be ordered. The caller
+supplies candidate factories (which may capture hyperparameters); automatic
+Cartesian-grid construction and random sampling are not provided. Factories
+must fit independent state for each fold. The
 [`ml_cross_validation` example](../examples/ml_cross_validation) compares
-logistic regression and Gaussian Naive Bayes this way.
+logistic regression and Gaussian Naive Bayes and selects the best mean
+accuracy.
+
+```v ignore
+search := model_selection.cross_val_search(x, y, folds, candidates, 20,
+	.maximize, scorer)!
+best := search.candidate_scores[search.best_candidate_index]
+println('Best candidate: ${best.name} (${best.mean_score:.3f})')
+```
 
 ### Fold Structure
 
@@ -239,6 +252,7 @@ pub:
 | `cross_val_score(x, y, folds, predictor, scorer)` | Run a predictor and scorer for each validated fold |
 | `cross_val_score_with_factory(x, y, folds, factory, scorer)` | Fit a new predictor from each fold's training data |
 | `cross_val_compare(x, y, folds, candidates, max_candidates, scorer)` | Compare bounded candidate factories on shared folds |
+| `cross_val_search(x, y, folds, candidates, max_candidates, direction, scorer)` | Select a bounded candidate using an explicit score direction |
 
 ## Integration with ML Pipeline
 

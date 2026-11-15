@@ -1,5 +1,7 @@
 module model_selection
 
+import math
+
 fn predict_first_feature(_x_train [][]f64, _y_train []f64, x_test [][]f64) ![]f64 {
 	mut predictions := []f64{cap: x_test.len}
 	for row in x_test {
@@ -50,6 +52,10 @@ fn mean_prediction_score(_y_true []f64, y_pred []f64) !f64 {
 		sum += value
 	}
 	return sum / f64(y_pred.len)
+}
+
+fn nan_score(_y_true []f64, _y_pred []f64) !f64 {
+	return math.nan()
 }
 
 fn offset_mean_factory(offset f64) FoldEstimatorFactory {
@@ -341,6 +347,70 @@ fn test_cross_val_compare_validates_candidate_limit_and_names() ! {
 	}
 	if _ := cross_val_compare(x, y, folds, [candidate], 0, mean_prediction_score) {
 		assert false, 'non-positive candidate limits must be rejected'
+	}
+}
+
+fn test_cross_val_search_selects_score_direction_and_keeps_first_tie() ! {
+	x := [[0.0], [1.0], [2.0], [3.0]]
+	y := [0.0, 1.0, 3.0, 7.0]
+	folds := [
+		Fold{
+			train_indices: [2, 3]
+			test_indices:  [0, 1]
+		},
+		Fold{
+			train_indices: [0, 1]
+			test_indices:  [2, 3]
+		},
+	]
+	candidates := [
+		CrossValCandidate{
+			name:    'mean'
+			factory: offset_mean_factory(0.0)
+		},
+		CrossValCandidate{
+			name:    'offset mean'
+			factory: offset_mean_factory(1.0)
+		},
+	]
+
+	maximized := cross_val_search(x, y, folds, candidates, 2, .maximize,
+		mean_prediction_score)!
+	assert maximized.best_candidate_index == 1
+	assert maximized.candidate_scores[maximized.best_candidate_index].name == 'offset mean'
+
+	minimized := cross_val_search(x, y, folds, candidates, 2, .minimize,
+		mean_prediction_score)!
+	assert minimized.best_candidate_index == 0
+
+	tie_candidates := [
+		CrossValCandidate{
+			name:    'first mean'
+			factory: offset_mean_factory(0.0)
+		},
+		CrossValCandidate{
+			name:    'second mean'
+			factory: offset_mean_factory(0.0)
+		},
+	]
+	tied := cross_val_search(x, y, folds, tie_candidates, 2, .maximize,
+		mean_prediction_score)!
+	assert tied.best_candidate_index == 0
+}
+
+fn test_cross_val_search_rejects_nan_scores() {
+	x := [[0.0], [1.0]]
+	y := [0.0, 1.0]
+	folds := [Fold{
+		train_indices: [0]
+		test_indices:  [1]
+	}]
+	candidates := [CrossValCandidate{
+		name:    'nan'
+		factory: offset_mean_factory(0.0)
+	}]
+	if _ := cross_val_search(x, y, folds, candidates, 1, .maximize, nan_score) {
+		assert false, 'NaN scores do not define a candidate ordering'
 	}
 }
 

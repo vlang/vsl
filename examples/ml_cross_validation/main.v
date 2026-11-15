@@ -66,9 +66,12 @@ fn run() ! {
 			factory: gaussian_nb_factory
 		},
 	]
-	results := model_selection.cross_val_compare(x, y, folds, candidates, 2, scorer)!
-	for result in results {
+	search := model_selection.cross_val_search(x, y, folds, candidates, 2, .maximize,
+		scorer)!
+	for result in search.candidate_scores {
 		println('${result.name} fold accuracy: ${result.fold_scores}')
 		println('${result.name} mean accuracy: ${result.mean_score:.3f}')
 	}
+	best := search.candidate_scores[search.best_candidate_index]
+	println('Selected candidate: ${best.name}')
 }
