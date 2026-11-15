@@ -205,7 +205,7 @@ pub fn (a &CSRMatrix[f64]) gmres(b []f64, tolerance f64, max_iterations int, res
 // preconditioned_gmres solves a square CSR system using right Jacobi
 // preconditioning. Its diagonal entries must be finite and nonzero.
 pub fn (a &CSRMatrix[f64]) preconditioned_gmres(b []f64, tolerance f64, max_iterations int, restart int) !GMRESResult {
-	diagonal := gmres_jacobi_preconditioner(a)!
+	diagonal := right_jacobi_preconditioner(a, 'preconditioned_gmres')!
 	return gmres_impl(a, b, tolerance, max_iterations, restart, diagonal)
 }
 
@@ -285,7 +285,7 @@ fn gmres_impl(a &CSRMatrix[f64], b []f64, tolerance f64, max_iterations int, res
 			search_directions[column] = if diagonal.len == 0 {
 				basis[column]
 			} else {
-				apply_gmres_preconditioner(basis[column], diagonal)!
+				apply_right_jacobi_preconditioner(basis[column], diagonal, 'preconditioned_gmres')!
 			}
 			mut work := a.matvec(search_directions[column])!
 			for _ in 0 .. 2 {
@@ -386,9 +386,9 @@ fn gmres_impl(a &CSRMatrix[f64], b []f64, tolerance f64, max_iterations int, res
 	}
 }
 
-fn gmres_jacobi_preconditioner(a &CSRMatrix[f64]) ![]f64 {
+fn right_jacobi_preconditioner(a &CSRMatrix[f64], method string) ![]f64 {
 	if a.m != a.n {
-		return error('preconditioned_gmres requires a square matrix')
+		return error('${method} requires a square matrix')
 	}
 	mut diagonal := []f64{len: a.n}
 	for row in 0 .. a.n {
@@ -401,18 +401,18 @@ fn gmres_jacobi_preconditioner(a &CSRMatrix[f64]) ![]f64 {
 			}
 		}
 		if !found || !math.is_finite(diagonal[row]) || diagonal[row] == 0.0 {
-			return error('preconditioned_gmres requires a finite nonzero diagonal')
+			return error('${method} requires a finite nonzero diagonal')
 		}
 	}
 	return diagonal
 }
 
-fn apply_gmres_preconditioner(vector []f64, diagonal []f64) ![]f64 {
+fn apply_right_jacobi_preconditioner(vector []f64, diagonal []f64, method string) ![]f64 {
 	mut result := []f64{len: vector.len}
 	for index, value in vector {
 		result[index] = value / diagonal[index]
 		if !math.is_finite(result[index]) {
-			return error('preconditioned_gmres Jacobi preconditioner produced a non-finite value')
+			return error('${method} Jacobi preconditioner produced a non-finite value')
 		}
 	}
 	return result

@@ -73,12 +73,13 @@ reporting contract as `gmres`. The runnable
 [`sparse solver example`](../../examples/la_sparse_cg/main.v) demonstrates
 both GMRES variants.
 
-`bicgstab` is another unpreconditioned solver for nonsymmetric square systems.
-It uses O(n) vector workspace, a zero initial guess, and the same relative
-residual target as GMRES. Its result reports the recomputed true residual and
-whether the iteration encountered a breakdown; the method may fail to
-converge for some matrices even when GMRES succeeds. The sparse solver example
-also demonstrates BiCGSTAB.
+`bicgstab` is another solver for nonsymmetric square systems. It uses O(n)
+vector workspace, a zero initial guess, and the same relative residual target
+as GMRES. `preconditioned_bicgstab` applies right Jacobi using the finite,
+nonzero diagonal of the matrix. Both methods report the recomputed true
+residual and whether the iteration encountered a breakdown; either method may
+fail to converge for some matrices even when GMRES succeeds. The sparse solver
+example demonstrates both BiCGSTAB variants.
 
 ## When to Use Sparse
 

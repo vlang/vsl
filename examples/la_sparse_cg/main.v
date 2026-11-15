@@ -47,6 +47,15 @@ fn main() {
 	assert bicgstab.residual_norm < 1e-12
 	println('BiCGSTAB solution: ${bicgstab.x}, residual: ${bicgstab.residual_norm}')
 
+	preconditioned_bicgstab := nonsymmetric_entries.to_csr()!.preconditioned_bicgstab([
+		6.0,
+		7.0,
+		0.0,
+	], 1e-12, 10)!
+	assert preconditioned_bicgstab.converged
+	assert preconditioned_bicgstab.residual_norm < 1e-12
+	println('right-Jacobi BiCGSTAB solution: ${preconditioned_bicgstab.x}, residual: ${preconditioned_bicgstab.residual_norm}')
+
 	preconditioned_gmres := nonsymmetric_entries.to_csr()!.preconditioned_gmres([6.0, 7.0, 0.0],
 		1e-12, 10, 3)!
 	assert preconditioned_gmres.converged

@@ -15,6 +15,17 @@ pub:
 // bicgstab solves a square CSR system with the BiCGSTAB iterative method.
 // The initial guess is zero; a non-converged result reports the true residual.
 pub fn (a &CSRMatrix[f64]) bicgstab(b []f64, tolerance f64, max_iterations int) !BiCGSTABResult {
+	return bicgstab_impl(a, b, tolerance, max_iterations, [])
+}
+
+// preconditioned_bicgstab solves a square CSR system using right Jacobi
+// preconditioning. Its diagonal entries must be finite and nonzero.
+pub fn (a &CSRMatrix[f64]) preconditioned_bicgstab(b []f64, tolerance f64, max_iterations int) !BiCGSTABResult {
+	diagonal := right_jacobi_preconditioner(a, 'preconditioned_bicgstab')!
+	return bicgstab_impl(a, b, tolerance, max_iterations, diagonal)
+}
+
+fn bicgstab_impl(a &CSRMatrix[f64], b []f64, tolerance f64, max_iterations int, diagonal []f64) !BiCGSTABResult {
 	if a.m != a.n {
 		return error('bicgstab requires a square matrix, got ${a.m}x${a.n}')
 	}
@@ -73,7 +84,12 @@ pub fn (a &CSRMatrix[f64]) bicgstab(b []f64, tolerance f64, max_iterations int) 
 		if !finite_f64_vector(p) {
 			return error('bicgstab search direction became non-finite')
 		}
-		v = a.matvec(p)!.clone()
+		p_direction := if diagonal.len == 0 {
+			p.clone()
+		} else {
+			apply_right_jacobi_preconditioner(p, diagonal, 'preconditioned_bicgstab')!
+		}
+		v = a.matvec(p_direction)!.clone()
 		if !finite_f64_vector(v) {
 			return error('bicgstab matrix product became non-finite')
 		}
@@ -98,7 +114,7 @@ pub fn (a &CSRMatrix[f64]) bicgstab(b []f64, tolerance f64, max_iterations int) 
 		s_norm := stable_vector_norm(s)!
 		if s_norm <= target {
 			for i in 0 .. a.n {
-				x[i] += alpha * p[i]
+				x[i] += alpha * p_direction[i]
 			}
 			true_residual, true_residual_norm := bicgstab_true_residual(a, b, x)!
 			if true_residual_norm <= target {
@@ -114,7 +130,12 @@ pub fn (a &CSRMatrix[f64]) bicgstab(b []f64, tolerance f64, max_iterations int) 
 			continue
 		}
 
-		t := a.matvec(s)!
+		s_direction := if diagonal.len == 0 {
+			s.clone()
+		} else {
+			apply_right_jacobi_preconditioner(s, diagonal, 'preconditioned_bicgstab')!
+		}
+		t := a.matvec(s_direction)!
 		if !finite_f64_vector(t) {
 			return error('bicgstab second matrix product became non-finite')
 		}
@@ -124,7 +145,7 @@ pub fn (a &CSRMatrix[f64]) bicgstab(b []f64, tolerance f64, max_iterations int) 
 		}
 		if t_squared == 0.0 {
 			for i in 0 .. a.n {
-				x[i] += alpha * p[i]
+				x[i] += alpha * p_direction[i]
 			}
 			return bicgstab_finish(a, b, x, iteration + 1, target, true)
 		}
@@ -134,13 +155,13 @@ pub fn (a &CSRMatrix[f64]) bicgstab(b []f64, tolerance f64, max_iterations int) 
 		}
 		if omega == 0.0 {
 			for i in 0 .. a.n {
-				x[i] += alpha * p[i]
+				x[i] += alpha * p_direction[i]
 			}
 			return bicgstab_finish(a, b, x, iteration + 1, target, true)
 		}
 		mut next_r := []f64{len: a.n}
 		for i in 0 .. a.n {
-			x[i] += alpha * p[i] + omega * s[i]
+			x[i] += alpha * p_direction[i] + omega * s_direction[i]
 			next_r[i] = s[i] - omega * t[i]
 		}
 		if !finite_f64_vector(x) || !finite_f64_vector(next_r) {

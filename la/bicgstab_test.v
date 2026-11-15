@@ -101,3 +101,43 @@ fn test_csr_bicgstab_validates_inputs_and_finite_values() {
 		assert false
 	}
 }
+
+fn test_csr_preconditioned_bicgstab_solves_scaled_nonsymmetric_system() {
+	mut entries := Triplet.new[f64](3, 3, 6)
+	entries.put(0, 0, 1.0)!
+	entries.put(0, 1, 1.0)!
+	entries.put(1, 1, 100.0)!
+	entries.put(1, 2, 1.0)!
+	entries.put(2, 0, 1.0)!
+	entries.put(2, 2, 10_000.0)!
+	matrix := entries.to_csr()!
+	right_hand_side := [-1.0, -296.0, 40_002.0]
+
+	result := matrix.preconditioned_bicgstab(right_hand_side, 1e-12, 20)!
+	assert result.converged
+	assert !result.breakdown
+	assert math.abs(result.x[0] - 2.0) < 1e-10
+	assert math.abs(result.x[1] + 3.0) < 1e-10
+	assert math.abs(result.x[2] - 4.0) < 1e-10
+	dense_result := matrix_vector_mul(1.0, matrix.to_dense(), result.x)
+	assert math.abs(result.residual_norm - vector_norm_diff(dense_result,
+		right_hand_side)) < 1e-12
+}
+
+fn test_csr_preconditioned_bicgstab_requires_finite_nonzero_diagonal() {
+	mut entries := Triplet.new[f64](2, 2, 2)
+	entries.put(0, 1, 1.0)!
+	entries.put(1, 1, 2.0)!
+	matrix := entries.to_csr()!
+	if _ := matrix.preconditioned_bicgstab([1.0, 1.0], 1e-8, 5) {
+		assert false
+	}
+
+	mut non_finite_entries := Triplet.new[f64](2, 2, 2)
+	non_finite_entries.put(0, 0, math.inf(1))!
+	non_finite_entries.put(1, 1, 1.0)!
+	non_finite_matrix := non_finite_entries.to_csr()!
+	if _ := non_finite_matrix.preconditioned_bicgstab([1.0, 1.0], 1e-8, 5) {
+		assert false
+	}
+}
