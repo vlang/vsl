@@ -24,6 +24,23 @@ pub type FoldPrediction = fn (x_test [][]f64) ![]f64
 // training data. It is called once per fold and must not reuse fitted state.
 pub type FoldEstimatorFactory = fn (x_train [][]f64, y_train []f64) !FoldPrediction
 
+// CrossValCandidate names one estimator configuration for bounded comparison.
+// Capture its hyperparameters in factory; the factory must fit fresh state.
+pub struct CrossValCandidate {
+pub:
+	name    string
+	factory FoldEstimatorFactory @[required]
+}
+
+// CrossValCandidateScore contains fold-ordered scores and their unweighted
+// arithmetic mean for one candidate.
+pub struct CrossValCandidateScore {
+pub:
+	name        string
+	fold_scores []f64
+	mean_score  f64
+}
+
 // KFold generates train/test indices for k-fold cross-validation
 
 // KFold defines a public data structure for this module.
@@ -324,7 +341,10 @@ pub fn cross_val_score(x [][]f64, y []f64, folds []Fold, predictor FoldPredictor
 // The factory must return a predictor backed by new, independently fitted state.
 pub fn cross_val_score_with_factory(x [][]f64, y []f64, folds []Fold, factory FoldEstimatorFactory, scorer FoldScorer) ![]f64 {
 	validate_cross_val_inputs(x, y, folds)!
+	return cross_val_score_with_factory_validated(x, y, folds, factory, scorer)
+}
 
+fn cross_val_score_with_factory_validated(x [][]f64, y []f64, folds []Fold, factory FoldEstimatorFactory, scorer FoldScorer) ![]f64 {
 	mut scores := []f64{cap: folds.len}
 	for fold_index, fold in folds {
 		x_train, y_train, x_test, y_test := get_fold_data(x, y, fold)
@@ -333,6 +353,51 @@ pub fn cross_val_score_with_factory(x [][]f64, y []f64, folds []Fold, factory Fo
 		scores << score_fold(y_test, y_pred, fold_index, scorer)!
 	}
 	return scores
+}
+
+// cross_val_compare evaluates each named factory sequentially on the same
+// validated folds. max_candidates bounds the number of candidate fits; scores
+// remain in candidate/fold order and are not ranked or direction-transformed.
+// mean_score is the unweighted arithmetic mean of that candidate's fold scores.
+pub fn cross_val_compare(x [][]f64, y []f64, folds []Fold, candidates []CrossValCandidate, max_candidates int, scorer FoldScorer) ![]CrossValCandidateScore {
+	validate_cross_val_inputs(x, y, folds)!
+	if max_candidates < 1 {
+		return errors.error('max_candidates must be positive', .einval)
+	}
+	if candidates.len == 0 {
+		return errors.error('cross-validation comparison requires at least one candidate', .einval)
+	}
+	if candidates.len > max_candidates {
+		return errors.error('candidate count ${candidates.len} exceeds max_candidates ${max_candidates}',
+			.einval)
+	}
+	mut candidate_names := map[string]bool{}
+	for candidate in candidates {
+		if candidate.name.trim_space() == '' {
+			return errors.error('candidate names must not be empty', .einval)
+		}
+		if candidate.name in candidate_names {
+			return errors.error('duplicate cross-validation candidate name: ${candidate.name}', .einval)
+		}
+		candidate_names[candidate.name] = true
+	}
+
+	mut results := []CrossValCandidateScore{cap: candidates.len}
+	for candidate in candidates {
+		scores := cross_val_score_with_factory_validated(x, y, folds, candidate.factory,
+			scorer)!
+		mut mean_score := 0.0
+		for score in scores {
+			mean_score += score
+		}
+		mean_score /= f64(scores.len)
+		results << CrossValCandidateScore{
+			name:        candidate.name
+			fold_scores: scores
+			mean_score:  mean_score
+		}
+	}
+	return results
 }
 
 fn validate_cross_val_inputs(x [][]f64, y []f64, folds []Fold) ! {

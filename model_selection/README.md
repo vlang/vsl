@@ -213,8 +213,13 @@ scorer := fn (_y_true []f64, y_pred []f64) !f64 {
 scores := model_selection.cross_val_score_with_factory(x, y, folds, factory, scorer)!
 ```
 
-The [`ml_cross_validation` example](../examples/ml_cross_validation) compares
-logistic regression and Gaussian Naive Bayes using the same stratified folds.
+`cross_val_compare` evaluates a bounded list of named factories sequentially on
+the same folds. It returns each candidate's fold scores and unweighted
+arithmetic mean in caller-supplied order; it does not rank candidates or infer
+whether a higher or lower score is better. Factories may capture candidate
+hyperparameters, but must fit independent state for each fold. The
+[`ml_cross_validation` example](../examples/ml_cross_validation) compares
+logistic regression and Gaussian Naive Bayes this way.
 
 ### Fold Structure
 
@@ -233,6 +238,7 @@ pub:
 | `get_fold_data(x, y, fold)`                       | Extract actual data arrays from fold indices       |
 | `cross_val_score(x, y, folds, predictor, scorer)` | Run a predictor and scorer for each validated fold |
 | `cross_val_score_with_factory(x, y, folds, factory, scorer)` | Fit a new predictor from each fold's training data |
+| `cross_val_compare(x, y, folds, candidates, max_candidates, scorer)` | Compare bounded candidate factories on shared folds |
 
 ## Integration with ML Pipeline
 

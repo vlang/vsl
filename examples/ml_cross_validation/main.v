@@ -33,14 +33,6 @@ fn gaussian_nb_factory(x_train [][]f64, y_train []f64) !model_selection.FoldPred
 	}
 }
 
-fn mean(values []f64) f64 {
-	mut sum := 0.0
-	for value in values {
-		sum += value
-	}
-	return sum / f64(values.len)
-}
-
 fn main() {
 	run() or { panic(err) }
 }
@@ -64,13 +56,19 @@ fn run() ! {
 	scorer := fn (y_true []f64, y_pred []f64) !f64 {
 		return metrics.accuracy_score(y_true, y_pred)
 	}
-	logistic_scores := model_selection.cross_val_score_with_factory(x, y, folds,
-		logistic_factory, scorer)!
-	gaussian_nb_scores := model_selection.cross_val_score_with_factory(x, y, folds,
-		gaussian_nb_factory, scorer)!
-
-	println('Logistic regression fold accuracy: ${logistic_scores}')
-	println('Logistic regression mean accuracy: ${mean(logistic_scores):.3f}')
-	println('Gaussian Naive Bayes fold accuracy: ${gaussian_nb_scores}')
-	println('Gaussian Naive Bayes mean accuracy: ${mean(gaussian_nb_scores):.3f}')
+	candidates := [
+		model_selection.CrossValCandidate{
+			name:    'Logistic regression'
+			factory: logistic_factory
+		},
+		model_selection.CrossValCandidate{
+			name:    'Gaussian Naive Bayes'
+			factory: gaussian_nb_factory
+		},
+	]
+	results := model_selection.cross_val_compare(x, y, folds, candidates, 2, scorer)!
+	for result in results {
+		println('${result.name} fold accuracy: ${result.fold_scores}')
+		println('${result.name} mean accuracy: ${result.mean_score:.3f}')
+	}
 }
