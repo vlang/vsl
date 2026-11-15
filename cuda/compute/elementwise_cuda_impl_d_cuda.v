@@ -29,6 +29,10 @@ pub fn mul_vec_cuda_impl(dev &cuda.CudaDevice, a_data []f64, b_data []f64) ![]f6
 }
 
 // layernorm_cuda_impl: GPU via elementwise_layernorm_cuda_impl_d_cudnn_layernorm_cuda.v
+fn layernorm_cuda_impl_available() bool {
+	return false
+}
+
 pub fn layernorm_cuda_impl(dev &cuda.CudaDevice, x_data []f64, gamma []f64, beta []f64) ![]f64 {
 	_ := dev
 	return error('layernorm_cuda_impl: build with -d cudnn_layernorm when cuDNN exports cudnnLayerNormForward')

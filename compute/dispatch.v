@@ -157,6 +157,9 @@ pub fn softmax(ctx &ComputeContext, x_data []f64) ![]f64 {
 // layernorm exposes this operation as part of the public API.
 pub fn layernorm(ctx &ComputeContext, x_data []f64, gamma []f64, beta []f64) ![]f64 {
 	be := ctx.resolve_backend()!
+	if ctx.strict && ctx.select_backend() == .cuda && !be.supports('layernorm') {
+		return error('compute.layernorm: strict CUDA execution requested but no CUDA LayerNorm implementation is available')
+	}
 	return be.layernorm(x_data, gamma, beta)
 }
 

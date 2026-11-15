@@ -5,6 +5,10 @@ module compute
 
 import vsl.cuda
 
+fn layernorm_cuda_impl_available() bool {
+	return true
+}
+
 // layernorm_cuda_impl exposes this operation as part of the public API.
 pub fn layernorm_cuda_impl(dev &cuda.CudaDevice, x_data []f64, gamma []f64, beta []f64) ![]f64 {
 	n := x_data.len

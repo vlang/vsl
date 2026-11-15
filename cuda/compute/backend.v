@@ -44,6 +44,9 @@ pub fn (b &CUDABackend) name() string {
 
 // supports exposes this operation as part of the public API.
 pub fn (b &CUDABackend) supports(op string) bool {
+	if op == 'layernorm' {
+		return layernorm_cuda_gpu_available(b.dev)
+	}
 	return op in ['gemm', 'gemv', 'relu', 'sigmoid', 'tanh', 'add_vec', 'mul_vec', 'add_scalar',
 		'mul_scalar', 'softmax', 'layernorm', 'conv2d']
 }

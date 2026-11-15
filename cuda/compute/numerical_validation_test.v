@@ -78,6 +78,28 @@ fn test_layernorm_cuda_matches_cpu_reference() ! {
 	}
 }
 
+fn test_layernorm_cuda_reports_and_uses_cpu_fallback_without_gpu_kernel() ! {
+	dev := &cuda.CudaDevice{}
+	assert !layernorm_cuda_gpu_available(dev)
+	backend := new_cuda_backend_with_device(dev)
+	assert !backend.supports('layernorm')
+
+	x := [1.0, 2.0, 3.0, 4.0]
+	gamma := [1.0, 0.5, 2.0, -1.0]
+	beta := [0.0, 1.0, -1.0, 2.0]
+	assert layernorm_cuda(dev, x, gamma, beta)! == layernorm_cpu_f64(x, gamma, beta)!
+}
+
+fn test_layernorm_cuda_rejects_invalid_shapes_before_fallback() {
+	dev := &cuda.CudaDevice{}
+	if _ := layernorm_cuda(dev, [], [], []) {
+		assert false, 'expected empty input to fail'
+	}
+	if _ := layernorm_cuda(dev, [1.0, 2.0], [1.0], [0.0, 0.0]) {
+		assert false, 'expected affine parameter mismatch to fail'
+	}
+}
+
 fn test_conv2d_cuda_matches_cpu_same_pad() ! {
 	if os.getenv('VSL_TEST_CUDA') != '1' {
 		return

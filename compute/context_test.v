@@ -2,6 +2,10 @@ module compute
 
 import math
 
+$if cuda ? {
+	import vsl.cuda
+}
+
 fn test_op_supported_cpu() {
 	assert op_supported(.cpu, 'gemm')
 	assert op_supported(.cpu, 'relu')
@@ -98,5 +102,19 @@ fn test_unavailable_backend_falls_back_unless_strict() {
 			ComputeBackend(new_cpu_backend())
 		}
 		assert rejected
+	}
+}
+
+$if cuda ? {
+	fn test_strict_cuda_layernorm_rejects_cpu_fallback() {
+		mut dev := &cuda.CudaDevice{}
+		mut ctx := new_context(.cuda)
+		ctx.with_cuda_device(unsafe { voidptr(dev) })
+		ctx.with_strict(true)
+		if _ := layernorm(ctx, [1.0], [1.0], [0.0]) {
+			assert false, 'expected strict CUDA LayerNorm to reject CPU fallback'
+		} else {
+			assert err.msg().contains('strict CUDA execution requested')
+		}
 	}
 }

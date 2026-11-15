@@ -212,14 +212,23 @@ pub fn softmax_cuda(dev &cuda.CudaDevice, x_data []f64) ![]f64 {
 	return out
 }
 
-// layernorm_cuda applies layer normalisation (cuDNN 9+ when available, else CPU).
+// layernorm_cuda_gpu_available reports whether this device can run LayerNorm on CUDA.
+fn layernorm_cuda_gpu_available(dev &cuda.CudaDevice) bool {
+	return !isnil(dev.cudnn) && layernorm_cuda_impl_available()
+}
+
+// layernorm_cuda applies layer normalisation, falling back only when no GPU implementation exists.
 pub fn layernorm_cuda(dev &cuda.CudaDevice, x_data []f64, gamma []f64, beta []f64) ![]f64 {
-	if isnil(dev.cudnn) {
+	if x_data.len == 0 {
+		return error('layernorm_cuda: input must not be empty')
+	}
+	if gamma.len != x_data.len || beta.len != x_data.len {
+		return error('layernorm_cuda: gamma/beta length mismatch')
+	}
+	if !layernorm_cuda_gpu_available(dev) {
 		return layernorm_cpu_f64(x_data, gamma, beta)
 	}
-	return layernorm_cuda_impl(dev, x_data, gamma, beta) or {
-		return layernorm_cpu_f64(x_data, gamma, beta)
-	}
+	return layernorm_cuda_impl(dev, x_data, gamma, beta)
 }
 
 // conv2d_cuda applies 2-D convolution using cuDNN convolution forward.
