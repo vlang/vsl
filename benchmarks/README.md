@@ -120,13 +120,14 @@ establish a general sparsity crossover or predict other matrix structures.
 ### Sparse solver and Jacobi-preconditioner comparison
 
 `sparse_solver_preconditioner_bench.v` solves the same known-answer, diagonally
-scaled SPD tridiagonal system with CG, Jacobi-PCG, restarted GMRES, and
-right-Jacobi GMRES. Each result must converge and match the constructed
-solution before it is timed. The CSV reports iteration count, residual norm,
-median, minimum, and maximum solve times over five samples, and a solution
-checksum; two warmups are excluded. Matrix construction and right-hand-side
-generation are outside the timed region. This is one controlled system shape,
-not a general performance claim for Jacobi preconditioning.
+scaled SPD tridiagonal system with CG/Jacobi-PCG, restarted GMRES/right-Jacobi
+GMRES, and BiCGSTAB/right-Jacobi BiCGSTAB. Each result must converge and match
+the constructed solution before it is timed. The CSV reports iteration count,
+residual norm, median, minimum, and maximum solve times over five samples, and
+a solution checksum; two warmups are excluded. Matrix construction and
+right-hand-side generation are outside the timed region. The SPD workload does
+not characterize behavior on nonsymmetric systems, and these results are not a
+general performance claim for any solver or preconditioner.
 
 Build and run it from `~/.vmodules` with the resource-limited pattern above:
 
@@ -232,8 +233,8 @@ systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tm
 - **`blas_bench.v`**: Comprehensive BLAS Level 1, 2, and 3 benchmarks
 - **`lapack_bench.v`**: LAPACK operation benchmarks (linear systems, factorizations, etc.)
 - **`sparse_solvers_bench.v`**: CSR versus dense f64 matvec runtime and payload sizes
-- **`sparse_solver_preconditioner_bench.v`**: CSR CG/GMRES iteration and timing
-  with Jacobi preconditioning
+- **`sparse_solver_preconditioner_bench.v`**: CSR CG, GMRES, and BiCGSTAB
+  iteration and timing with Jacobi preconditioning
 - **`compare_backends.v`**: Selected-backend dgemm benchmark; build once per backend for comparison
 - **`fft_bench.v` and `fft_numpy_baseline.py`**: Real f64 forward FFT timing for VSL and NumPy
 - **`mpi_bench.v`**: Two-rank MPI send/receive, broadcast, and reduction latency
