@@ -1,5 +1,34 @@
 module model_selection
 
+fn predict_first_feature(_x_train [][]f64, _y_train []f64, x_test [][]f64) ![]f64 {
+	mut predictions := []f64{cap: x_test.len}
+	for row in x_test {
+		predictions << row[0]
+	}
+	return predictions
+}
+
+fn exact_match_score(y_true []f64, y_pred []f64) !f64 {
+	if y_true.len != y_pred.len || y_true.len == 0 {
+		return error('score inputs must have equal non-zero lengths')
+	}
+	mut correct := 0
+	for i, value in y_true {
+		if value == y_pred[i] {
+			correct++
+		}
+	}
+	return f64(correct) / f64(y_true.len)
+}
+
+fn predict_no_values(_x_train [][]f64, _y_train []f64, _x_test [][]f64) ![]f64 {
+	return []f64{}
+}
+
+fn failing_score(_y_true []f64, _y_pred []f64) !f64 {
+	return error('scorer failed')
+}
+
 fn test_kfold_basic() {
 	kf := KFold.new(5, false, 42)
 	folds := kf.split(100)!
@@ -164,6 +193,50 @@ fn test_get_fold_data() {
 	assert y_test.len == 1
 	assert x_test[0] == [7.0, 8.0]
 	assert y_test[0] == 1.0
+}
+
+fn test_cross_val_score_runs_predictor_and_scorer_for_each_fold() ! {
+	x := [[0.0], [1.0], [2.0], [3.0], [4.0], [5.0]]
+	y := [0.0, 1.0, 2.0, 3.0, 4.0, 5.0]
+	folds := KFold.new(3, false, 42).split(y.len)!
+
+	scores := cross_val_score(x, y, folds, predict_first_feature, exact_match_score)!
+	assert scores == [1.0, 1.0, 1.0]
+}
+
+fn test_cross_val_score_rejects_malformed_data_and_folds() {
+	fold := Fold{
+		train_indices: [0, 1]
+		test_indices:  [1]
+	}
+	if _ := cross_val_score([[0.0], [1.0]], [0.0, 1.0], [fold], predict_first_feature,
+		exact_match_score) {
+		assert false, 'overlapping fold indices must be rejected'
+	}
+	if _ := cross_val_score([[0.0], [1.0]], [0.0, 1.0], [Fold{
+		train_indices: [0]
+		test_indices:  [2]
+	}], predict_first_feature, exact_match_score) {
+		assert false, 'out-of-bounds fold indices must be rejected'
+	}
+	if _ := cross_val_score([[0.0]], [0.0, 1.0], [Fold{
+		train_indices: [0]
+		test_indices:  [1]
+	}], predict_first_feature, exact_match_score) {
+		assert false, 'mismatched feature and label counts must be rejected'
+	}
+	if _ := cross_val_score([[0.0], [1.0]], [0.0, 1.0], [Fold{
+		train_indices: [0]
+		test_indices:  [1]
+	}], predict_no_values, exact_match_score) {
+		assert false, 'predictors must return one value per test sample'
+	}
+	if _ := cross_val_score([[0.0], [1.0]], [0.0, 1.0], [Fold{
+		train_indices: [0]
+		test_indices:  [1]
+	}], predict_first_feature, failing_score) {
+		assert false, 'scorer errors must be returned to the caller'
+	}
 }
 
 fn test_kfold_error_too_few_samples() {

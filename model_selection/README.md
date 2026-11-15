@@ -159,6 +159,13 @@ folds := ss.split(100)!
 | `LeaveOneOut` | Leave-one-out CV (n folds for n samples) |
 | `ShuffleSplit` | Random permutation splits |
 
+`cross_val_score(x, y, folds, predictor, scorer)` runs one prediction and scoring
+pass per supplied fold and returns one score per fold. The predictor receives
+`x_train`, `y_train`, and `x_test` (not the test labels), so it should create
+and fit a fresh estimator on each call. The scorer receives `y_test` and the
+predictions. Invalid, overlapping, duplicate, or out-of-range fold indices and
+prediction-length mismatches are returned as errors.
+
 ### Fold Structure
 
 ```v
@@ -174,6 +181,7 @@ pub:
 | Function | Description |
 |----------|-------------|
 | `get_fold_data(x, y, fold)` | Extract actual data arrays from fold indices |
+| `cross_val_score(x, y, folds, predictor, scorer)` | Run a predictor and scorer for each validated fold |
 
 ## Integration with ML Pipeline
 
@@ -190,28 +198,23 @@ y := your_labels
 kf := model_selection.KFold.new(5, true, 42)
 folds := kf.split(x.len)!
 
-mut scores := []f64{}
-
-for fold in folds {
-	x_train, y_train, x_test, y_test := model_selection.get_fold_data(x, y, fold)
-
-	// Create ML Data
+predictor := fn (x_train [][]f64, y_train []f64, x_test [][]f64) ![]f64 {
 	mut train_data := ml.Data.from_raw_xy_sep(x_train, y_train)!
-
-	// Train model
 	mut model := ml.LogReg.new(mut train_data, 'cv_model')
 	model.train(ml.LogRegTrainConfig{})
 
-	// Predict
 	mut predictions := []f64{}
 	for row in x_test {
 		predictions << model.predict(row)
 	}
-
-	// Evaluate
-	acc := metrics.accuracy_score(y_test, predictions)!
-	scores << acc
+	return predictions
 }
+
+scorer := fn (y_true []f64, y_pred []f64) !f64 {
+	return metrics.accuracy_score(y_true, y_pred)
+}
+
+scores := model_selection.cross_val_score(x, y, folds, predictor, scorer)!
 
 // Report average score
 mut avg := 0.0
