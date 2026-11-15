@@ -35,35 +35,36 @@ v -cflags <flags> run vsl/examples/<example>/main.v
 `plot_choropleth_population` → `plot_sankey_energy` → `plot_json_export`
 
 **Machine Learning**: Progress → `ml_kmeans` → `ml_linreg_plot` →
-`ml_complete_pipeline` → `ml_sentiment_analysis`
+`ml_complete_pipeline` → `ml_cross_validation` → `ml_sentiment_analysis`
 
 **Scientific Computing**: Dive into → `fft_plot_example` → `deriv_example` →
 `ode_rk23` → `integrate_gauss_kronrod` → `mpi_basic_example`
 
 ## Machine Learning Examples 🤖
 
-| Example                                          | Description                                             |
-| ------------------------------------------------ | ------------------------------------------------------- |
-| [ml_kmeans](./ml_kmeans)                         | Example demonstrating the K-means clustering algorithm. |
-| [ml_sentiment_analysis](./ml_sentiment_analysis) | Example for sentiment analysis using machine learning.  |
-| [ml_linreg01](./ml_linreg01)                     | Basic linear regression example.                        |
-| [ml_linreg02](./ml_linreg02)                     | Advanced linear regression example.                     |
-| [ml_linreg_plot](./ml_linreg_plot)               | Linear regression with plotting.                        |
-| [ml_kmeans_plot](./ml_kmeans_plot)               | K-means clustering with plotting.                       |
-| [ml_knn_plot](./ml_knn_plot)                     | K-Nearest Neighbors algorithm with plotting.            |
-| [ml_logreg](./ml_logreg)                         | Logistic regression for binary classification.          |
-| [ml_svm](./ml_svm)                                | Support Vector Machine with kernel functions.           |
-| [ml_decision_tree](./ml_decision_tree)           | Decision tree for classification and regression.       |
-| [ml_random_forest](./ml_random_forest)          | Random Forest ensemble learning.                        |
-| [ml_gaussian_nb](./ml_gaussian_nb)               | Probabilistic classification with Gaussian Naive Bayes. |
-| [ml_complete_pipeline](./ml_complete_pipeline)   | End-to-end preprocessing, model selection, and metrics. |
+| Example                                          | Description                                                                            |
+|--------------------------------------------------|----------------------------------------------------------------------------------------|
+| [ml_kmeans](./ml_kmeans)                         | Example demonstrating the K-means clustering algorithm.                                |
+| [ml_sentiment_analysis](./ml_sentiment_analysis) | Example for sentiment analysis using machine learning.                                 |
+| [ml_linreg01](./ml_linreg01)                     | Basic linear regression example.                                                       |
+| [ml_linreg02](./ml_linreg02)                     | Advanced linear regression example.                                                    |
+| [ml_linreg_plot](./ml_linreg_plot)               | Linear regression with plotting.                                                       |
+| [ml_kmeans_plot](./ml_kmeans_plot)               | K-means clustering with plotting.                                                      |
+| [ml_knn_plot](./ml_knn_plot)                     | K-Nearest Neighbors algorithm with plotting.                                           |
+| [ml_logreg](./ml_logreg)                         | Logistic regression for binary classification.                                         |
+| [ml_svm](./ml_svm)                               | Support Vector Machine with kernel functions.                                          |
+| [ml_decision_tree](./ml_decision_tree)           | Decision tree for classification and regression.                                       |
+| [ml_random_forest](./ml_random_forest)           | Random Forest ensemble learning.                                                       |
+| [ml_gaussian_nb](./ml_gaussian_nb)               | Probabilistic classification with Gaussian Naive Bayes.                                |
+| [ml_complete_pipeline](./ml_complete_pipeline)   | End-to-end preprocessing, model selection, and metrics.                                |
+| [ml_cross_validation](./ml_cross_validation)     | Compare logistic regression and Gaussian Naive Bayes with stratified cross-validation. |
 
 ## Plotting Examples 📊
 
 ### Core Plot Types
 
 | Example                                                  | Description                                |
-| -------------------------------------------------------- | ------------------------------------------ |
+|----------------------------------------------------------|--------------------------------------------|
 | [plot_scatter](./plot_scatter)                           | Basic scatter plot example.                |
 | [plot_line_timeseries](./plot_line_timeseries)           | Time series line chart plotting.           |
 | [plot_bar](./plot_bar)                                   | Basic bar plot example.                    |
@@ -83,7 +84,7 @@ v -cflags <flags> run vsl/examples/<example>/main.v
 ### Statistical & Distribution Charts
 
 | Example                                                        | Description                                 |
-| -------------------------------------------------------------- | ------------------------------------------- |
+|----------------------------------------------------------------|---------------------------------------------|
 | [plot_box_statistics](./plot_box_statistics)                   | Box plot for statistical analysis.          |
 | [plot_violin_distributions](./plot_violin_distributions)       | Violin plot for distribution visualization. |
 | [plot_contour_topography](./plot_contour_topography)           | Contour plot for topographical data.        |
@@ -91,18 +92,18 @@ v -cflags <flags> run vsl/examples/<example>/main.v
 
 ### Business & Financial Charts
 
-| Example                                                | Description                             |
-| ------------------------------------------------------ | --------------------------------------- |
-| [plot_waterfall_financial](./plot_waterfall_financial) | Waterfall chart for financial analysis. |
-| [plot_candlestick_stocks](./plot_candlestick_stocks)   | Candlestick chart for stock data.       |
-| [plot_ohlc_market_regime](./plot_ohlc_market_regime)   | OHLC chart for market regime analysis.  |
-| [plot_funnel_conversion](./plot_funnel_conversion)     | Funnel chart for conversion analysis.   |
+| Example                                                        | Description                                 |
+|----------------------------------------------------------------|---------------------------------------------|
+| [plot_waterfall_financial](./plot_waterfall_financial)         | Waterfall chart for financial analysis.     |
+| [plot_candlestick_stocks](./plot_candlestick_stocks)           | Candlestick chart for stock data.           |
+| [plot_ohlc_market_regime](./plot_ohlc_market_regime)           | OHLC chart for market regime analysis.      |
+| [plot_funnel_conversion](./plot_funnel_conversion)             | Funnel chart for conversion analysis.       |
 | [plot_table_executive_summary](./plot_table_executive_summary) | KPI summary table for executive dashboards. |
 
 ### Hierarchical & Network Charts
 
 | Example                                              | Description                                |
-| ---------------------------------------------------- | ------------------------------------------ |
+|------------------------------------------------------|--------------------------------------------|
 | [plot_sunburst_hierarchy](./plot_sunburst_hierarchy) | Sunburst chart for hierarchical data.      |
 | [plot_treemap_portfolio](./plot_treemap_portfolio)   | Treemap chart for portfolio visualization. |
 | [plot_sankey_energy](./plot_sankey_energy)           | Sankey diagram for energy flow analysis.   |
@@ -110,14 +111,14 @@ v -cflags <flags> run vsl/examples/<example>/main.v
 ### Advanced Analytics
 
 | Example                                              | Description                                     |
-| ---------------------------------------------------- | ----------------------------------------------- |
+|------------------------------------------------------|-------------------------------------------------|
 | [plot_radar_performance](./plot_radar_performance)   | Radar chart for multi-dimensional analysis.     |
 | [plot_parcoords_analysis](./plot_parcoords_analysis) | Parallel coordinates for high-dimensional data. |
 
 ### Geographic & Mapping
 
 | Example                                                    | Description                               |
-| ---------------------------------------------------------- | ----------------------------------------- |
+|------------------------------------------------------------|-------------------------------------------|
 | [plot_choropleth_population](./plot_choropleth_population) | Choropleth map for geographic data.       |
 | [plot_scattermapbox_cities](./plot_scattermapbox_cities)   | Scatter plot on mapbox for location data. |
 
@@ -129,7 +130,7 @@ v -cflags <flags> run vsl/examples/<example>/main.v
 ### Styling & Customization
 
 | Example                                                            | Description                                |
-| ------------------------------------------------------------------ | ------------------------------------------ |
+|--------------------------------------------------------------------|--------------------------------------------|
 | [plot_line_axis_titles](./plot_line_axis_titles)                   | Line plot with axis titles.                |
 | [plot_scatter_with_annotations](./plot_scatter_with_annotations)   | Scatter plot with annotations.             |
 | [plot_annotated_pie_chart](./plot_annotated_pie_chart)             | Annotated pie chart example.               |
@@ -148,52 +149,52 @@ v -cflags <flags> run vsl/examples/<example>/main.v
 ### Script Mode Examples
 
 | Example                                                                      | Description                                 |
-| ---------------------------------------------------------------------------- | ------------------------------------------- |
+|------------------------------------------------------------------------------|---------------------------------------------|
 | [plot_script_mode_ac_signal](./plot_script_mode_ac_signal)                   | AC signal plotting in script mode.          |
 | [plot_script_mode_simple_plot](./plot_script_mode_simple_plot)               | Simple plot in script mode.                 |
 | [plot_script_mode_three_phase_signal](./plot_script_mode_three_phase_signal) | Three-phase signal plotting in script mode. |
 
 ## BLAS & LAPACK Examples 🚀
 
-| Example                                                    | Description                                                       |
-| ---------------------------------------------------------- | ----------------------------------------------------------------- |
-| [blas_basic_operations](./blas_basic_operations)           | Basic BLAS operations (Level 1, 2, 3) - vector and matrix ops.   |
-| [blas_performance_comparison](./blas_performance_comparison) | Performance benchmarking of BLAS operations.                      |
-| [lapack_linear_systems](./lapack_linear_systems)          | Solving linear systems using LAPACK (dgesv, dgetrf, dpotrf).      |
-| [lapack_eigenvalue_problems](./lapack_eigenvalue_problems) | Eigenvalue decomposition using LAPACK (dsyev).                   |
+| Example                                                      | Description                                                    |
+|--------------------------------------------------------------|----------------------------------------------------------------|
+| [blas_basic_operations](./blas_basic_operations)             | Basic BLAS operations (Level 1, 2, 3) - vector and matrix ops. |
+| [blas_performance_comparison](./blas_performance_comparison) | Performance benchmarking of BLAS operations.                   |
+| [lapack_linear_systems](./lapack_linear_systems)             | Solving linear systems using LAPACK (dgesv, dgetrf, dpotrf).   |
+| [lapack_eigenvalue_problems](./lapack_eigenvalue_problems)   | Eigenvalue decomposition using LAPACK (dsyev).                 |
 
 ## Mathematical and Scientific Computation Examples 🔢
 
-| Example                                            | Description                                                       |
-| -------------------------------------------------- | ----------------------------------------------------------------- |
-| [fft_plot_example](./fft_plot_example)             | Example demonstrating Fast Fourier Transform (FFT) with plotting. |
-| [roots_brent_solver](./roots_brent_solver) | Bracketed Brent root finding with termination and evaluation diagnostics. |
-| [roots_nelder_mead](./roots_nelder_mead) | Derivative-free multivariate minimization with simplex convergence diagnostics. |
-| [roots_bfgs](./roots_bfgs) | Analytic-gradient multivariate minimization with BFGS. |
-| [la_sparse_cg](./la_sparse_cg) | Sparse conjugate-gradient and nonsymmetric GMRES/BiCGSTAB examples. |
-| [diff_example](./diff_example)                     | Differentiation example.                                          |
-| [poly_examples](./poly_examples)                   | Core polynomial operations and root solvers.                      |
-| [prime_examples](./prime_examples)                 | Prime module usage: primality checks and sieve.                   |
-| [easings_motion_profiles](./easings_motion_profiles) | Kinematic analysis of representative easing motion profiles.      |
-| [easings_signal_shaping](./easings_signal_shaping) | ADSR-like signal envelope shaping with easing functions.          |
-| [../fit/examples/line_calibration](../fit/examples/line_calibration) | Linear fit for sensor calibration and residual analysis.         |
-| [../fit/examples/trend_quality](../fit/examples/trend_quality) | Linear fit with uncertainty, chi-square, and RMSE inspection.   |
-| [prime_factorization](./prime_factorization)       | Prime factorization example.                                      |
-| [roots_bisection_solver](./roots_bisection_solver) | Root finding using the bisection method.                          |
-| [deriv_example](./deriv_example)                   | Derivative calculation example.                                   |
+| Example                                                              | Description                                                                     |
+|----------------------------------------------------------------------|---------------------------------------------------------------------------------|
+| [fft_plot_example](./fft_plot_example)                               | Example demonstrating Fast Fourier Transform (FFT) with plotting.               |
+| [roots_brent_solver](./roots_brent_solver)                           | Bracketed Brent root finding with termination and evaluation diagnostics.       |
+| [roots_nelder_mead](./roots_nelder_mead)                             | Derivative-free multivariate minimization with simplex convergence diagnostics. |
+| [roots_bfgs](./roots_bfgs)                                           | Analytic-gradient multivariate minimization with BFGS.                          |
+| [la_sparse_cg](./la_sparse_cg)                                       | Sparse conjugate-gradient and nonsymmetric GMRES/BiCGSTAB examples.             |
+| [diff_example](./diff_example)                                       | Differentiation example.                                                        |
+| [poly_examples](./poly_examples)                                     | Core polynomial operations and root solvers.                                    |
+| [prime_examples](./prime_examples)                                   | Prime module usage: primality checks and sieve.                                 |
+| [easings_motion_profiles](./easings_motion_profiles)                 | Kinematic analysis of representative easing motion profiles.                    |
+| [easings_signal_shaping](./easings_signal_shaping)                   | ADSR-like signal envelope shaping with easing functions.                        |
+| [../fit/examples/line_calibration](../fit/examples/line_calibration) | Linear fit for sensor calibration and residual analysis.                        |
+| [../fit/examples/trend_quality](../fit/examples/trend_quality)       | Linear fit with uncertainty, chi-square, and RMSE inspection.                   |
+| [prime_factorization](./prime_factorization)                         | Prime factorization example.                                                    |
+| [roots_bisection_solver](./roots_bisection_solver)                   | Root finding using the bisection method.                                        |
+| [deriv_example](./deriv_example)                                     | Derivative calculation example.                                                 |
 
 ## Statistics Examples 📈
 
-| Example | Description |
-| --- | --- |
-| [stats_descriptive](./stats_descriptive) | Sample summaries, quantiles, automatic histogram edges, and counts. |
-| [deriv_jacobian](./deriv_jacobian)                 | Multivariable Jacobian with per-entry error estimates.             |
-| [graph_shortest_paths_methods](./graph_shortest_paths_methods) | Compare FW, Dijkstra, and BFS shortest-path strategies.      |
+| Example                                                        | Description                                                         |
+|----------------------------------------------------------------|---------------------------------------------------------------------|
+| [stats_descriptive](./stats_descriptive)                       | Sample summaries, quantiles, automatic histogram edges, and counts. |
+| [deriv_jacobian](./deriv_jacobian)                             | Multivariable Jacobian with per-entry error estimates.              |
+| [graph_shortest_paths_methods](./graph_shortest_paths_methods) | Compare FW, Dijkstra, and BFS shortest-path strategies.             |
 
 ## Geometry Module Examples 📐
 
 | Example                                                | Description                              |
-| ------------------------------------------------------ | ---------------------------------------- |
+|--------------------------------------------------------|------------------------------------------|
 | [gm_basic_geometry](./gm_basic_geometry)               | Fundamental 3D geometry operations.      |
 | [gm_advanced_analysis](./gm_advanced_analysis)         | Advanced geometric analysis techniques.  |
 | [gm_distance_analysis](./gm_distance_analysis)         | Distance calculation and shape analysis. |
@@ -203,34 +204,34 @@ v -cflags <flags> run vsl/examples/<example>/main.v
 
 ## Quaternion Examples 🔄
 
-| Example                                                      | Description                                           |
-| ------------------------------------------------------------ | ----------------------------------------------------- |
-| [quaternion_rotation_3d](./quaternion_rotation_3d)           | Visualize 3D rotations using quaternions and plotting. |
-| [quaternion_interpolation_animation](./quaternion_interpolation_animation) | Animated quaternion interpolation visualization.      |
-| [quaternion_julia_fractal](./quaternion_julia_fractal)       | Quaternion Julia set fractal visualization.          |
-| [quaternion_orientation_tracking](./quaternion_orientation_tracking) | Track object orientation over time with visualization. |
-| [quaternion_rotation_composition](./quaternion_rotation_composition) | Compose multiple rotations and visualize the path.    |
-| [quaternion_camera_look](./quaternion_camera_look)           | Camera yaw/pitch composition and lock-on blending.    |
-| [quaternion_turret_tracking](./quaternion_turret_tracking)   | Turret tracking with angular-error interpolation checks. |
+| Example                                                                    | Description                                              |
+|----------------------------------------------------------------------------|----------------------------------------------------------|
+| [quaternion_rotation_3d](./quaternion_rotation_3d)                         | Visualize 3D rotations using quaternions and plotting.   |
+| [quaternion_interpolation_animation](./quaternion_interpolation_animation) | Animated quaternion interpolation visualization.         |
+| [quaternion_julia_fractal](./quaternion_julia_fractal)                     | Quaternion Julia set fractal visualization.              |
+| [quaternion_orientation_tracking](./quaternion_orientation_tracking)       | Track object orientation over time with visualization.   |
+| [quaternion_rotation_composition](./quaternion_rotation_composition)       | Compose multiple rotations and visualize the path.       |
+| [quaternion_camera_look](./quaternion_camera_look)                         | Camera yaw/pitch composition and lock-on blending.       |
+| [quaternion_turret_tracking](./quaternion_turret_tracking)                 | Turret tracking with angular-error interpolation checks. |
 
 ## Library Integration Examples 🔗
 
-| Example                                                | Description                                           |
-| ------------------------------------------------------ | ----------------------------------------------------- |
-| [ml_quaternion_features](./ml_quaternion_features)     | Use quaternions as ML features for clustering.        |
-| [fft_quaternion_signal](./fft_quaternion_signal)      | Process quaternion-valued signals and visualize.      |
+| Example                                                | Description                                          |
+|--------------------------------------------------------|------------------------------------------------------|
+| [ml_quaternion_features](./ml_quaternion_features)     | Use quaternions as ML features for clustering.       |
+| [fft_quaternion_signal](./fft_quaternion_signal)       | Process quaternion-valued signals and visualize.     |
 | [geometry_ml_clustering](./geometry_ml_clustering)     | Combine geometry module with ML clustering.          |
-| [lapack_plot_eigenvalues](./lapack_plot_eigenvalues)  | Visualize eigenvalue problems solved with LAPACK.     |
-| [noise_quaternion_fractal](./noise_quaternion_fractal) | Combine quaternions and noise for textured fractals.  |
+| [lapack_plot_eigenvalues](./lapack_plot_eigenvalues)   | Visualize eigenvalue problems solved with LAPACK.    |
+| [noise_quaternion_fractal](./noise_quaternion_fractal) | Combine quaternions and noise for textured fractals. |
 
 ## GPU / Accelerator Examples ⚡
 
-| Example | Description |
-|---------|-------------|
-| [vcl_opencl_basic](./vcl_opencl_basic) | Basic OpenCL/VCL device and kernel usage. |
-| [vcl_opencl_kernel_params](./vcl_opencl_kernel_params) | OpenCL kernel parameter handling. |
-| [vcl_opencl_image_example](./vcl_opencl_image_example) | OpenCL image processing example. |
-| [vcl_opencl_fractals_one_argument](./vcl_opencl_fractals_one_argument) | Fractal compute workload with OpenCL. |
+| Example                                                                | Description                               |
+|------------------------------------------------------------------------|-------------------------------------------|
+| [vcl_opencl_basic](./vcl_opencl_basic)                                 | Basic OpenCL/VCL device and kernel usage. |
+| [vcl_opencl_kernel_params](./vcl_opencl_kernel_params)                 | OpenCL kernel parameter handling.         |
+| [vcl_opencl_image_example](./vcl_opencl_image_example)                 | OpenCL image processing example.          |
+| [vcl_opencl_fractals_one_argument](./vcl_opencl_fractals_one_argument) | Fractal compute workload with OpenCL.     |
 
 CUDA and Vulkan backend smoke tests live under [`cuda/`](../cuda/) and
 [`vulkan/`](../vulkan/), because they are backend-level validation rather than
@@ -239,14 +240,14 @@ end-user examples.
 ## Noise & Signal Processing Examples 🌊
 
 | Example                                | Description                  |
-| -------------------------------------- | ---------------------------- |
+|----------------------------------------|------------------------------|
 | [noise_fractal_2d](./noise_fractal_2d) | 2D fractal noise generation. |
 | [noise_simplex_2d](./noise_simplex_2d) | 2D simplex noise generation. |
 
 ## Data Analysis Examples 📈
 
 | Example                                          | Description                                         |
-| ------------------------------------------------ | --------------------------------------------------- |
+|--------------------------------------------------|-----------------------------------------------------|
 | [data_analysis_example](./data_analysis_example) | Basic data analysis example.                        |
 | [io_h5_relax](./io_h5_relax)                     | Example demonstrating HDF5 I/O for relaxation data. |
 | [io_h5_dataset](./io_h5_dataset)                 | Example demonstrating HDF5 I/O for datasets.        |
@@ -254,20 +255,20 @@ end-user examples.
 ## Iteration and Lazy Generation Examples 🔄
 
 | Example                                        | Description                                 |
-| ---------------------------------------------- | ------------------------------------------- |
+|------------------------------------------------|---------------------------------------------|
 | [iter_lazy_generation](./iter_lazy_generation) | Example of lazy generation using iterators. |
 
 ## Parallel and Distributed Computing Examples 🌐
 
 | Example                                  | Description                          |
-| ---------------------------------------- | ------------------------------------ |
+|------------------------------------------|--------------------------------------|
 | [mpi_bcast_example](./mpi_bcast_example) | Example demonstrating MPI broadcast. |
 | [mpi_basic_example](./mpi_basic_example) | Basic MPI example.                   |
 
 ## OpenCL Examples 🖥️
 
 | Example                                                                | Description                      |
-| ---------------------------------------------------------------------- | -------------------------------- |
+|------------------------------------------------------------------------|----------------------------------|
 | [vcl_opencl_fractals_one_argument](./vcl_opencl_fractals_one_argument) | Fractal generation using OpenCL. |
 | [vcl_opencl_image_example](./vcl_opencl_image_example)                 | Image processing using OpenCL.   |
 | [vcl_opencl_basic](./vcl_opencl_basic)                                 | Basic OpenCL example.            |
@@ -275,7 +276,7 @@ end-user examples.
 ## Miscellaneous Examples 🌟
 
 | Example                            | Description                                      |
-| ---------------------------------- | ------------------------------------------------ |
+|------------------------------------|--------------------------------------------------|
 | [la_triplet01](./la_triplet01)     | Example demonstrating linear algebra operations. |
 | [dist_histogram](./dist_histogram) | Distribution histogram example.                  |
 
