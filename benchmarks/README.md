@@ -117,6 +117,25 @@ those flags when comparing results. Run the program from `~/.vmodules` using the
 resource-limited build/run pattern above. This single banded workload does not
 establish a general sparsity crossover or predict other matrix structures.
 
+### Sparse solver and Jacobi-preconditioner comparison
+
+`sparse_solver_preconditioner_bench.v` solves the same known-answer, diagonally
+scaled SPD tridiagonal system with CG, Jacobi-PCG, restarted GMRES, and
+right-Jacobi GMRES. Each result must converge and match the constructed
+solution before it is timed. The CSV reports iteration count, residual norm,
+median, minimum, and maximum solve times over five samples, and a solution
+checksum; two warmups are excluded. Matrix construction and right-hand-side
+generation are outside the timed region. This is one controlled system shape,
+not a general performance claim for Jacobi preconditioning.
+
+Build and run it from `~/.vmodules` with the resource-limited pattern above:
+
+```sh
+v -prod -no-parallel -cc gcc -cflags "-march=native" \
+	-o /tmp/vsl-sparse-solver-bench ./vsl/benchmarks/sparse_solver_preconditioner_bench.v
+/tmp/vsl-sparse-solver-bench
+```
+
 The f32 L2 norm benchmark compares the SIMD fast path with its previous
 scaled scalar algorithm on the same large vector and reports error against an
 f64 accumulation:
@@ -213,6 +232,8 @@ systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tm
 - **`blas_bench.v`**: Comprehensive BLAS Level 1, 2, and 3 benchmarks
 - **`lapack_bench.v`**: LAPACK operation benchmarks (linear systems, factorizations, etc.)
 - **`sparse_solvers_bench.v`**: CSR versus dense f64 matvec runtime and payload sizes
+- **`sparse_solver_preconditioner_bench.v`**: CSR CG/GMRES iteration and timing
+  with Jacobi preconditioning
 - **`compare_backends.v`**: Selected-backend dgemm benchmark; build once per backend for comparison
 - **`fft_bench.v` and `fft_numpy_baseline.py`**: Real f64 forward FFT timing for VSL and NumPy
 - **`mpi_bench.v`**: Two-rank MPI send/receive, broadcast, and reduction latency
