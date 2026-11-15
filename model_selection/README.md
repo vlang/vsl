@@ -29,9 +29,9 @@ x := [[1.0, 2.0], [3.0, 4.0], [5.0, 6.0], [7.0, 8.0], [9.0, 10.0]]
 y := [0.0, 1.0, 0.0, 1.0, 0.0]
 
 result := model_selection.train_test_split(x, y, model_selection.TrainTestSplitConfig{
-	test_size:   0.2
-	shuffle:     true
-	random_seed: 42
+ test_size:   0.2
+ shuffle:     true
+ random_seed: 42
 })!
 
 println('Train size: ${result.x_train.len}')
@@ -47,8 +47,8 @@ x := [[1.0], [2.0], [3.0], [4.0], [5.0], [6.0], [7.0], [8.0], [9.0], [10.0]]
 y := [0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0]
 
 result := model_selection.train_test_split(x, y, model_selection.TrainTestSplitConfig{
-	test_size: 0.3
-	stratify:  true // Maintains 50/50 class balance in both sets
+ test_size: 0.3
+ stratify:  true // Maintains 50/50 class balance in both sets
 })!
 ```
 
@@ -115,8 +115,8 @@ loo := model_selection.LeaveOneOut.new()
 folds := loo.split(10) // Returns 10 folds, each with 1 test sample
 
 for fold in folds {
-	// fold.test_indices has exactly 1 element
-	// fold.train_indices has n-1 elements
+ // fold.test_indices has exactly 1 element
+ // fold.train_indices has n-1 elements
 }
 ```
 
@@ -188,26 +188,26 @@ y := [0.0, 1.0, 3.0, 7.0]
 folds := model_selection.KFold.new(2, false, 42).split(y.len)!
 
 factory := fn (_x_train [][]f64, y_train []f64) !model_selection.FoldPrediction {
-	mut mean := 0.0
-	for value in y_train {
-		mean += value
-	}
-	mean /= f64(y_train.len)
-	return fn [mean] (x_test [][]f64) ![]f64 {
-		mut predictions := []f64{cap: x_test.len}
-		for _ in x_test {
-			predictions << mean
-		}
-		return predictions
-	}
+ mut mean := 0.0
+ for value in y_train {
+  mean += value
+ }
+ mean /= f64(y_train.len)
+ return fn [mean] (x_test [][]f64) ![]f64 {
+  mut predictions := []f64{cap: x_test.len}
+  for _ in x_test {
+   predictions << mean
+  }
+  return predictions
+ }
 }
 
 scorer := fn (_y_true []f64, y_pred []f64) !f64 {
-	mut mean := 0.0
-	for value in y_pred {
-		mean += value
-	}
-	return mean / f64(y_pred.len)
+ mut mean := 0.0
+ for value in y_pred {
+  mean += value
+ }
+ return mean / f64(y_pred.len)
 }
 
 scores := model_selection.cross_val_score_with_factory(x, y, folds, factory, scorer)!
@@ -229,7 +229,7 @@ accuracy.
 
 ```v ignore
 search := model_selection.cross_val_search(x, y, folds, candidates, 20,
-	.maximize, scorer)!
+ .maximize, scorer)!
 best := search.candidate_scores[search.best_candidate_index]
 println('Best candidate: ${best.name} (${best.mean_score:.3f})')
 ```
@@ -239,19 +239,19 @@ println('Best candidate: ${best.name} (${best.mean_score:.3f})')
 ```v
 pub struct Fold {
 pub:
-	train_indices []int // Indices for training
-	test_indices  []int // Indices for testing
+ train_indices []int // Indices for training
+ test_indices  []int // Indices for testing
 }
 ```
 
 ### Helper Functions
 
-| Function                                          | Description                                        |
-|---------------------------------------------------|----------------------------------------------------|
-| `get_fold_data(x, y, fold)`                       | Extract actual data arrays from fold indices       |
-| `cross_val_score(x, y, folds, predictor, scorer)` | Run a predictor and scorer for each validated fold |
-| `cross_val_score_with_factory(x, y, folds, factory, scorer)` | Fit a new predictor from each fold's training data |
-| `cross_val_compare(x, y, folds, candidates, max_candidates, scorer)` | Compare bounded candidate factories on shared folds |
+| Function                                                                       | Description                                                  |
+|--------------------------------------------------------------------------------|--------------------------------------------------------------|
+| `get_fold_data(x, y, fold)`                                                    | Extract actual data arrays from fold indices                 |
+| `cross_val_score(x, y, folds, predictor, scorer)`                              | Run a predictor and scorer for each validated fold           |
+| `cross_val_score_with_factory(x, y, folds, factory, scorer)`                   | Fit a new predictor from each fold's training data           |
+| `cross_val_compare(x, y, folds, candidates, max_candidates, scorer)`           | Compare bounded candidate factories on shared folds          |
 | `cross_val_search(x, y, folds, candidates, max_candidates, direction, scorer)` | Select a bounded candidate using an explicit score direction |
 
 ## Integration with ML Pipeline
