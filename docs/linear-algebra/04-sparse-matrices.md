@@ -42,9 +42,16 @@ same duplicate-summing and zero-dropping behavior. `CCMatrix.to_csr()` converts
 to CSR. Both compressed formats can be converted to dense matrices.
 
 The current sparse API is intentionally focused: CSR matrix-vector
-multiplication, iterative solving, and format conversion are available; broader
-sparse arithmetic and preconditioners beyond Jacobi are not implied by these
-storage types.
+multiplication, triangular and iterative solving, and format conversion are
+available; broader sparse arithmetic and preconditioners beyond Jacobi are not
+implied by these storage types.
+
+`CSRMatrix[f64].solve_lower_triangular(b)!` and
+`solve_upper_triangular(b)!` perform forward or backward substitution directly
+from CSR storage. They require a square matrix, a finite right-hand side of
+matching length, a finite triangular matrix, and a finite nonzero diagonal in
+every row. They return an error for an entry on the wrong side of the diagonal
+or if an intermediate/result becomes non-finite.
 
 See [`examples/la_csr_matvec`](../../examples/la_csr_matvec/main.v), or run it
 with `v run examples/la_csr_matvec/main.v`.
