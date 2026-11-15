@@ -204,6 +204,24 @@ fn test_cross_val_score_runs_predictor_and_scorer_for_each_fold() ! {
 	assert scores == [1.0, 1.0, 1.0]
 }
 
+fn test_cross_val_score_preserves_fold_order_without_aggregation() ! {
+	x := [[0.0], [1.0]]
+	y := [0.0, 0.0]
+	folds := [
+		Fold{
+			train_indices: [0]
+			test_indices:  [1]
+		},
+		Fold{
+			train_indices: [1]
+			test_indices:  [0]
+		},
+	]
+
+	scores := cross_val_score(x, y, folds, predict_first_feature, exact_match_score)!
+	assert scores == [0.0, 1.0]
+}
+
 fn test_cross_val_score_rejects_malformed_data_and_folds() {
 	fold := Fold{
 		train_indices: [0, 1]
