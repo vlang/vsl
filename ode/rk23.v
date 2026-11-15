@@ -24,6 +24,7 @@ pub:
 	t_end           f64
 	initial_state   []f64 @[required]
 	function_params []f64
+	output_times    []f64
 	initial_step    f64
 	max_step        f64
 	abs_tol         f64 = 1e-9
@@ -35,21 +36,28 @@ pub:
 // RK23Result contains the last accepted state and adaptive-step diagnostics.
 pub struct RK23Result {
 pub:
-	t          f64
-	state      []f64
-	error_norm f64
-	n_calls    int
-	n_steps    int
-	n_accepted int
-	n_rejected int
-	status     RK23Status
+	t              f64
+	state          []f64
+	sampled_times  []f64
+	sampled_states [][]f64
+	error_norm     f64
+	n_calls        int
+	n_steps        int
+	n_accepted     int
+	n_rejected     int
+	status         RK23Status
 }
 
 struct EvaluationState {
 mut:
-	calls  int
-	status RK23Status
-	limit  int
+	calls          int
+	status         RK23Status
+	limit          int
+	direction      f64
+	output_times   []f64
+	output_index   int
+	sampled_times  []f64
+	sampled_states [][]f64
 }
 
 // solve_rk23 integrates y'=f(t,y) from t_start to t_end using adaptive
@@ -74,18 +82,24 @@ pub fn solve_rk23(f ODEFunction, params RK23Params) !RK23Result {
 			return error('RK23 function parameters must contain only finite values')
 		}
 	}
+	direction := if params.t_start <= params.t_end { 1.0 } else { -1.0 }
+	if !valid_output_times(params.output_times, params.t_start, params.t_end, direction) {
+		return error('RK23 output times must be finite, ordered, and within the integration interval')
+	}
+	mut evaluation := EvaluationState{
+		limit:        params.max_evals
+		direction:    direction
+		output_times: params.output_times.clone()
+	}
+	sample_initial_state(params.t_start, params.initial_state, mut evaluation)
 	if params.t_start == params.t_end {
-		return RK23Result{
-			t:      params.t_end
-			state:  params.initial_state.clone()
-			status: .converged
-		}
+		return rk23_result(params.t_end, params.initial_state, 0.0, evaluation, 0, 0, 0,
+			.converged)
 	}
 	span := math.abs(params.t_end - params.t_start)
 	if !finite_value(span) {
 		return error('RK23 integration span must be finite')
 	}
-	direction := if params.t_start < params.t_end { 1.0 } else { -1.0 }
 	mut state := params.initial_state.clone()
 	mut t := params.t_start
 	mut step_size := if params.initial_step > 0.0 {
@@ -95,9 +109,6 @@ pub fn solve_rk23(f ODEFunction, params RK23Params) !RK23Result {
 	}
 	if params.max_step > 0.0 {
 		step_size = math.min(step_size, params.max_step)
-	}
-	mut evaluation := EvaluationState{
-		limit: params.max_evals
 	}
 	mut n_steps := 0
 	mut n_accepted := 0
@@ -116,6 +127,12 @@ pub fn solve_rk23(f ODEFunction, params RK23Params) !RK23Result {
 		}
 		reaches_end := step_size >= remaining
 		n_steps++
+		step_start := t
+		step_start_state := if evaluation.output_index < evaluation.output_times.len {
+			state.clone()
+		} else {
+			[]f64{}
+		}
 		k1 := evaluate(f, t, state, params.function_params, mut evaluation)
 		if evaluation.status != .converged {
 			return rk23_result(t, state, last_error_norm, evaluation, n_steps, n_accepted,
@@ -180,8 +197,15 @@ pub fn solve_rk23(f ODEFunction, params RK23Params) !RK23Result {
 				n_rejected, .non_finite_estimate)
 		}
 		if last_error_norm <= 1.0 {
+			step_end := if reaches_end { params.t_end } else { t + step }
+			sample_rk23_interval(step_start, step_start_state, step_end, candidate, k1, k4,
+				mut evaluation)
+			if evaluation.status != .converged {
+				return rk23_result(step_start, step_start_state, last_error_norm, evaluation,
+					n_steps, n_accepted, n_rejected, evaluation.status)
+			}
 			state = candidate.clone()
-			t = if reaches_end { params.t_end } else { t + step }
+			t = step_end
 			n_accepted++
 			if t == params.t_end {
 				return rk23_result(t, state, last_error_norm, evaluation, n_steps, n_accepted,
@@ -201,6 +225,70 @@ pub fn solve_rk23(f ODEFunction, params RK23Params) !RK23Result {
 	}
 	return rk23_result(t, state, last_error_norm, evaluation, n_steps, n_accepted,
 		n_rejected, .converged)
+}
+
+fn valid_output_times(times []f64, start f64, end f64, direction f64) bool {
+	mut previous := start
+	for index, value in times {
+		if !finite_value(value) || value < math.min(start, end) || value > math.max(start, end) {
+			return false
+		}
+		if index > 0 && ((direction > 0.0 && value < previous)
+			|| (direction < 0.0 && value > previous)) {
+			return false
+		}
+		previous = value
+	}
+	return true
+}
+
+fn sample_initial_state(t f64, state []f64, mut evaluation EvaluationState) {
+	for evaluation.output_index < evaluation.output_times.len
+		&& evaluation.output_times[evaluation.output_index] == t {
+		evaluation.sampled_times << t
+		evaluation.sampled_states << state.clone()
+		evaluation.output_index++
+	}
+}
+
+fn sample_rk23_interval(start f64, start_state []f64, end f64, end_state []f64, start_derivative []f64, end_derivative []f64, mut evaluation EvaluationState) {
+	h := end - start
+	mut output_index := evaluation.output_index
+	mut step_sample_times := []f64{}
+	mut step_sample_states := [][]f64{}
+	for output_index < evaluation.output_times.len {
+		sample_time := evaluation.output_times[output_index]
+		if (evaluation.direction > 0.0 && sample_time > end)
+			|| (evaluation.direction < 0.0 && sample_time < end) {
+			break
+		}
+		s := (sample_time - start) / h
+		s2 := s * s
+		s3 := s2 * s
+		h00 := 2.0 * s3 - 3.0 * s2 + 1.0
+		h10 := s3 - 2.0 * s2 + s
+		h01 := -2.0 * s3 + 3.0 * s2
+		h11 := s3 - s2
+		mut sampled_state := []f64{len: start_state.len}
+		for i in 0 .. start_state.len {
+			sampled_state[i] = h00 * start_state[i] + h10 * h * start_derivative[i] +
+				h01 * end_state[i] + h11 * h * end_derivative[i]
+		}
+		if !finite_state(sampled_state) {
+			evaluation.status = .non_finite_estimate
+			return
+		}
+		step_sample_times << sample_time
+		step_sample_states << sampled_state
+		output_index++
+	}
+	for sample_time in step_sample_times {
+		evaluation.sampled_times << sample_time
+	}
+	for sampled_state in step_sample_states {
+		evaluation.sampled_states << sampled_state
+	}
+	evaluation.output_index = output_index
 }
 
 fn evaluate(f ODEFunction, t f64, state []f64, params []f64, mut evaluation EvaluationState) []f64 {
@@ -261,13 +349,15 @@ fn finite_value(value f64) bool {
 
 fn rk23_result(t f64, state []f64, error_norm f64, evaluation EvaluationState, n_steps int, n_accepted int, n_rejected int, status RK23Status) RK23Result {
 	return RK23Result{
-		t:          t
-		state:      state.clone()
-		error_norm: error_norm
-		n_calls:    evaluation.calls
-		n_steps:    n_steps
-		n_accepted: n_accepted
-		n_rejected: n_rejected
-		status:     status
+		t:              t
+		state:          state.clone()
+		sampled_times:  evaluation.sampled_times.clone()
+		sampled_states: evaluation.sampled_states.clone()
+		error_norm:     error_norm
+		n_calls:        evaluation.calls
+		n_steps:        n_steps
+		n_accepted:     n_accepted
+		n_rejected:     n_rejected
+		status:         status
 	}
 }
