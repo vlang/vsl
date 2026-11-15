@@ -115,6 +115,45 @@ fn benchmark_gmres(name string, matrix &la.CSRMatrix[f64], rhs []f64, expected [
 	println('${name},${iterations},${residual_norm:.6e},${samples[timed_samples / 2]:.3f},${samples[0]:.3f},${samples[timed_samples - 1]:.3f},${checksum:.8f}')
 }
 
+fn benchmark_bicgstab(name string, matrix &la.CSRMatrix[f64], rhs []f64, expected []f64, preconditioned bool) {
+	for _ in 0 .. warmup_runs {
+		result := if preconditioned {
+			matrix.preconditioned_bicgstab(rhs, solver_tolerance, solver_max_iterations) or {
+				panic(err)
+			}
+		} else {
+			matrix.bicgstab(rhs, solver_tolerance, solver_max_iterations) or { panic(err) }
+		}
+		if !result.converged || max_abs_difference(result.x, expected) > 1e-4 {
+			panic('${name} warmup failed to converge to the reference solution')
+		}
+	}
+
+	mut samples := []f64{cap: timed_samples}
+	mut iterations := 0
+	mut residual_norm := 0.0
+	mut checksum := 0.0
+	for _ in 0 .. timed_samples {
+		started := time.sys_mono_now()
+		result := if preconditioned {
+			matrix.preconditioned_bicgstab(rhs, solver_tolerance, solver_max_iterations) or {
+				panic(err)
+			}
+		} else {
+			matrix.bicgstab(rhs, solver_tolerance, solver_max_iterations) or { panic(err) }
+		}
+		samples << f64(time.sys_mono_now() - started) / 1e3
+		if !result.converged || max_abs_difference(result.x, expected) > 1e-4 {
+			panic('${name} timed solve failed to converge to the reference solution')
+		}
+		iterations = result.iterations
+		residual_norm = result.residual_norm
+		checksum += result.x[system_size / 2]
+	}
+	samples.sort()
+	println('${name},${iterations},${residual_norm:.6e},${samples[timed_samples / 2]:.3f},${samples[0]:.3f},${samples[timed_samples - 1]:.3f},${checksum:.8f}')
+}
+
 fn main() {
 	mut scale := []f64{len: system_size}
 	mut expected := []f64{len: system_size}
@@ -147,4 +186,6 @@ fn main() {
 	benchmark_cg('jacobi_pcg', matrix, rhs, expected, true)
 	benchmark_gmres('gmres', matrix, rhs, expected, false)
 	benchmark_gmres('right_jacobi_gmres', matrix, rhs, expected, true)
+	benchmark_bicgstab('bicgstab', matrix, rhs, expected, false)
+	benchmark_bicgstab('right_jacobi_bicgstab', matrix, rhs, expected, true)
 }
