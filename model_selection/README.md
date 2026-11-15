@@ -166,6 +166,13 @@ and fit a fresh estimator on each call. The scorer receives `y_test` and the
 predictions. Invalid, overlapping, duplicate, or out-of-range fold indices and
 prediction-length mismatches are returned as errors.
 
+Scores are returned in the supplied fold order; this API does not average,
+negate, or otherwise transform them. For model selection, use a
+higher-is-better scorer (negate a loss when appropriate) and aggregate the
+fold scores explicitly. Labels and predictions are passed as `[]f64` without
+class encoding, thresholding, positive-class selection, or sample weighting;
+the scorer defines those conventions.
+
 ### Fold Structure
 
 ```v

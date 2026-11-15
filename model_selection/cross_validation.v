@@ -298,6 +298,8 @@ pub fn get_fold_data(x [][]f64, y []f64, fold Fold) ([][]f64, []f64, [][]f64, []
 // cross_val_score evaluates a predictor independently on each supplied fold.
 // The predictor receives training labels but only test features, avoiding
 // target leakage; create an unfitted estimator inside each invocation.
+// Scores are returned in fold order without aggregation or direction changes;
+// label and higher-is-better conventions belong to the supplied scorer.
 pub fn cross_val_score(x [][]f64, y []f64, folds []Fold, predictor FoldPredictor, scorer FoldScorer) ![]f64 {
 	if x.len != y.len {
 		return errors.error('features and labels must have the same number of samples', .einval)
