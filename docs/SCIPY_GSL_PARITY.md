@@ -94,12 +94,14 @@ and [#572](https://github.com/vlang/vsl/issues/572).
 VSL has selected interpolation helpers, B-spline curves, Newton, bisection, a
 public Brent root solver with bounded convergence diagnostics, bounded
 derivative-free Golden-section and Brent minimizers for unimodal scalar
-objectives, and derivative-free Nelder-Mead for local multivariate
+objectives, derivative-free Nelder-Mead for local multivariate minimization,
+and analytic-gradient BFGS with Armijo backtracking for unconstrained local
 minimization. VSL also has adaptive finite-interval 7/15-point Gauss-Kronrod
 quadrature with estimated errors and execution limits, plus an adaptive
-Bogacki-Shampine RK23 method for non-stiff initial-value systems.
-gradient-based minimization, stiff ODE methods, dense output, and event handling
-remain missing. See SciPy
+Bogacki-Shampine RK23 method for non-stiff initial-value systems. Broader
+optimization methods, including limited-memory, trust-region, and constrained
+algorithms, stiff ODE methods, dense output, and event handling remain missing.
+See SciPy
 [`interpolate`][scipy-interpolate],
 [`optimize`][scipy-optimize], and [`integrate`][scipy-integrate], plus GSL
 [`interpolation`][gsl-interp], [`roots`][gsl-roots], [`minimization`][gsl-min],

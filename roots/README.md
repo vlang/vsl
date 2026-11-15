@@ -10,6 +10,7 @@ Root-finding and minimization routines in `vsl.roots` accept callbacks from
 | `Bisection.new(f, params).solve()` | Bisection | Requires a sign-changing interval; returns the last iteration or the limit result. |
 | `Brent.new_with_params(f, params).solve()` | Brent's method | Returns root, final bracket, residual, counts, and a termination status. |
 | `NelderMead.new_with_params(f, params).solve()` | Nelder-Mead minimization | Derivative-free local minimization for multivariate scalar objectives. |
+| `BFGS.new_with_params(f, gradient, params).solve()` | BFGS minimization | Analytic-gradient local minimization with an Armijo line search. |
 | `GoldenSection.new_with_params(f, params).solve()` | Golden-section minimization | Bounded unimodal scalar minimizer. |
 | `BrentMinimizer.new_with_params(f, params).solve()` | Brent minimization | Safeguarded scalar minimizer. |
 
@@ -32,6 +33,14 @@ iteration/evaluation limits. The evaluation limit must allow the initial
 maximum coordinate spread, objective spread, counts, and termination status.
 Nelder-Mead is derivative-free and has no bounds or global-optimum guarantee;
 it is most appropriate for low-dimensional local optimization.
+
+`BFGSParams` configures the initial point, gradient-norm tolerance, initial
+line-search step, iteration/evaluation limits, and maximum backtracking
+trials. The gradient callback must return a finite vector with the same length
+as the input and receives the objective's `FnND` parameters. The result reports
+the accepted point, objective, gradient norm, objective and gradient callback
+counts, and termination status. The dense inverse Hessian uses O(n²) storage.
+BFGS has no bounds or global-optimum guarantee.
 
 `GoldenSectionParams` configures the minimizer's bounds, absolute tolerance,
 iteration limit, and callback evaluation limit. It assumes the objective is
@@ -119,6 +128,37 @@ println('spreads=(${result.x_spread}, ${result.f_spread}), evaluations=${result.
 
 See the [Nelder-Mead example](../examples/roots_nelder_mead/README.md) and
 the [multivariate minimization guide](../docs/scientific-computing/06-multivariate-minimization.md).
+
+BFGS uses an explicit gradient callback:
+
+```v
+import vsl.func
+import vsl.roots
+
+fn rosenbrock(x []f64, _ []f64) f64 {
+	a := 1.0 - x[0]
+	b := x[1] - x[0] * x[0]
+	return a * a + 100.0 * b * b
+}
+
+fn rosenbrock_gradient(x []f64, _ []f64) []f64 {
+	b := x[1] - x[0] * x[0]
+	return [2.0 * (x[0] - 1.0) - 400.0 * x[0] * b, 200.0 * b]
+}
+
+objective := func.FnND.new(rosenbrock)
+mut optimizer := roots.BFGS.new_with_params(objective, rosenbrock_gradient,
+	roots.BFGSParams{
+		x0:           [-1.2, 1.0]
+		gradient_tol: 1e-6
+		n_max:        1000
+		max_evals:    5000
+	})
+result := optimizer.solve()!
+println('status=${result.status}, x=${result.x}, f(x)=${result.fx}')
+```
+
+See the [BFGS example](../examples/roots_bfgs/README.md).
 
 Golden-section minimization reports bounded execution diagnostics:
 
