@@ -27,7 +27,7 @@ API. Recheck upstream documentation when updating this tracker.
 | Domain | Status | VSL modules | Follow-up |
 | --- | --- | --- | --- |
 | Dense linear algebra and BLAS/LAPACK | Partial | [blas][vsl-blas], [la][vsl-la], [lapack][vsl-lapack] | #65, #529 |
-| Sparse formats and solvers | Partial | [sparse APIs][vsl-sparse] | #524 iterative methods; #567 direct solvers and reusable factorizations |
+| Sparse formats and solvers | Partial | [sparse APIs][vsl-sparse] | #524 broader formats/preconditioners; #567 direct solvers and reusable factorizations |
 | Special functions | Partial | [fun][vsl-fun] | #540–#543, #556–#558 |
 | Statistics and probability | Partial | [statistics][vsl-statistics], [dist][vsl-dist] | #523, #559, #572 |
 | Interpolation and splines | Partial | [fun][vsl-fun], [poly][vsl-poly] | #522 |
@@ -47,9 +47,13 @@ for each domain follow:
 ### Dense and sparse linear algebra
 
 VSL provides portable BLAS/LAPACK routines and optional C backends, but its
-routine and dtype coverage is narrower. Sparse formats and iterative solvers
-are also limited. See SciPy [`linalg`][scipy-linalg] and [`sparse`][scipy-sparse],
-and GSL [`BLAS`][gsl-blas], [`linear algebra`][gsl-linalg],
+routine and dtype coverage is narrower. Sparse support includes COO/CSR/CSC
+conversion, CSR matvec, CG with Jacobi-PCG, restarted GMRES with right Jacobi,
+and unpreconditioned BiCGSTAB. Sparse arithmetic, direct solvers, and broader
+preconditioner coverage remain limited; current performance comparisons use
+specific generated systems rather than representative application matrices.
+See SciPy [`linalg`][scipy-linalg] and [`sparse`][scipy-sparse], and GSL
+[`BLAS`][gsl-blas], [`linear algebra`][gsl-linalg],
 [`sparse matrices`][gsl-spmatrix], and [`sparse solvers`][gsl-splinalg].
 
 ### Special functions

@@ -42,6 +42,11 @@ fn main() {
 	assert gmres.residual_norm < 1e-12
 	println('GMRES solution: ${gmres.x}, residual: ${gmres.residual_norm}')
 
+	bicgstab := nonsymmetric_entries.to_csr()!.bicgstab([6.0, 7.0, 0.0], 1e-12, 10)!
+	assert bicgstab.converged
+	assert bicgstab.residual_norm < 1e-12
+	println('BiCGSTAB solution: ${bicgstab.x}, residual: ${bicgstab.residual_norm}')
+
 	preconditioned_gmres := nonsymmetric_entries.to_csr()!.preconditioned_gmres([6.0, 7.0, 0.0],
 		1e-12, 10, 3)!
 	assert preconditioned_gmres.converged
