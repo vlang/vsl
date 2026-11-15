@@ -66,6 +66,16 @@ fn test_csr_conjugate_gradient_rejects_non_positive_curvature() {
 	}
 }
 
+fn test_csr_conjugate_gradient_rejects_zero_curvature_on_singular_system() {
+	mut entries := Triplet.new[f64](2, 2, 1)
+	entries.put(0, 0, 1.0)!
+	matrix := entries.to_csr()!
+
+	if _ := matrix.conjugate_gradient([0.0, 1.0], 1e-12, 5) {
+		assert false, 'expected zero curvature to fail for a singular system'
+	}
+}
+
 fn test_csr_preconditioned_conjugate_gradient_uses_jacobi_diagonal() {
 	mut entries := Triplet.new[f64](3, 3, 3)
 	entries.put(0, 0, 1.0)!
@@ -189,6 +199,26 @@ fn test_csr_gmres_restarts_and_reports_iteration_limit() {
 	assert limited.iterations == 1
 	dense_result := matrix_vector_mul(1.0, matrix.to_dense(), limited.x)
 	assert math.abs(limited.residual_norm - vector_norm_diff(dense_result, right_hand_side)) < 1e-14
+}
+
+fn test_csr_gmres_singular_systems_report_happy_and_unhappy_breakdown() {
+	mut entries := Triplet.new[f64](2, 2, 1)
+	entries.put(0, 0, 1.0)!
+	matrix := entries.to_csr()!
+
+	consistent := matrix.gmres([1.0, 0.0], 1e-12, 5, 2)!
+	assert consistent.converged
+	assert consistent.x == [1.0, 0.0]
+	assert consistent.residual_norm == 0.0
+
+	inconsistent_rhs := [1.0, 1.0]
+	inconsistent := matrix.gmres(inconsistent_rhs, 1e-12, 5, 2)!
+	assert !inconsistent.converged
+	assert inconsistent.iterations > 0
+	dense_result := matrix_vector_mul(1.0, matrix.to_dense(), inconsistent.x)
+	assert math.abs(inconsistent.residual_norm - vector_norm_diff(dense_result,
+		inconsistent_rhs)) < 1e-14
+	assert math.abs(inconsistent.residual_norm - 1.0) < 1e-12
 }
 
 fn test_csr_gmres_zero_rhs_and_input_validation() {
