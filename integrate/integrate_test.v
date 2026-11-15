@@ -153,3 +153,133 @@ fn test_integrate_rejects_invalid_parameters() {
 	}
 	assert false, 'expected invalid integration parameters to return an error'
 }
+
+fn test_integrate_improper_one_sided_exponential_tails() {
+	positive_tail := func.Fn.new(
+		f: fn (x f64, _ []f64) f64 {
+			return math.exp(-x)
+		}
+	)
+	right := adaptive_gauss_kronrod_improper(positive_tail, ImproperGaussKronrodParams{
+		a:       0.0
+		b:       math.inf(1)
+		abs_tol: 1e-9
+		rel_tol: 1e-9
+	})!
+	assert right.status == .converged
+	assert math.abs(right.value - 1.0) < 1e-8
+	assert right.error_estimate <= 1e-9 + 1e-9 * math.abs(right.value)
+
+	negative_tail := func.Fn.new(
+		f: fn (x f64, _ []f64) f64 {
+			return math.exp(x)
+		}
+	)
+	left := adaptive_gauss_kronrod_improper(negative_tail, ImproperGaussKronrodParams{
+		a:       math.inf(-1)
+		b:       0.0
+		abs_tol: 1e-9
+		rel_tol: 1e-9
+	})!
+	assert left.status == .converged
+	assert math.abs(left.value - 1.0) < 1e-8
+
+	reversed := adaptive_gauss_kronrod_improper(positive_tail, ImproperGaussKronrodParams{
+		a:       math.inf(1)
+		b:       0.0
+		abs_tol: 1e-9
+		rel_tol: 1e-9
+	})!
+	assert reversed.status == .converged
+	assert math.abs(reversed.value + 1.0) < 1e-8
+}
+
+fn test_integrate_improper_whole_line_and_finite_bounds() {
+	rational := func.Fn.new(
+		f: fn (x f64, _ []f64) f64 {
+			return 1.0 / (1.0 + x * x)
+		}
+	)
+	whole_line := adaptive_gauss_kronrod_improper(rational, ImproperGaussKronrodParams{
+		a:       math.inf(-1)
+		b:       math.inf(1)
+		abs_tol: 1e-9
+		rel_tol: 1e-9
+	})!
+	assert whole_line.status == .converged
+	assert math.abs(whole_line.value - math.acos(-1.0)) < 1e-8
+	assert whole_line.error_estimate <= 1e-9 + 1e-9 * math.abs(whole_line.value)
+	assert whole_line.n_calls >= 30
+
+	reversed := adaptive_gauss_kronrod_improper(rational, ImproperGaussKronrodParams{
+		a:       math.inf(1)
+		b:       math.inf(-1)
+		abs_tol: 1e-9
+		rel_tol: 1e-9
+	})!
+	assert reversed.status == .converged
+	assert math.abs(reversed.value + whole_line.value) < 1e-12
+
+	polynomial := func.Fn.new(
+		f: fn (x f64, _ []f64) f64 {
+			return x * x
+		}
+	)
+	finite := adaptive_gauss_kronrod_improper(polynomial, ImproperGaussKronrodParams{
+		a: 0.0
+		b: 1.0
+	})!
+	assert finite.status == .converged
+	assert math.abs(finite.value - 1.0 / 3.0) < 1e-12
+}
+
+fn test_integrate_improper_validates_bounds_and_whole_line_budget() {
+	f := func.Fn.new(
+		f: fn (x f64, _ []f64) f64 {
+			return math.exp(-x * x)
+		}
+	)
+	if _ := adaptive_gauss_kronrod_improper(f, ImproperGaussKronrodParams{
+		a: math.inf(1)
+		b: math.inf(1)
+	}) {
+		assert false, 'equal infinite bounds must be rejected'
+	}
+	if _ := adaptive_gauss_kronrod_improper(f, ImproperGaussKronrodParams{
+		a:       math.inf(-1)
+		b:       math.inf(1)
+		abs_tol: 0.0
+		rel_tol: 1e-8
+	}) {
+		assert false, 'whole-line integration requires a positive absolute tolerance'
+	}
+	limited := adaptive_gauss_kronrod_improper(f, ImproperGaussKronrodParams{
+		a:             math.inf(-1)
+		b:             math.inf(1)
+		abs_tol:       1e-8
+		max_intervals: 1
+	})!
+	assert limited.status == .max_intervals
+
+	evaluation_limited := adaptive_gauss_kronrod_improper(f, ImproperGaussKronrodParams{
+		a:         math.inf(-1)
+		b:         math.inf(1)
+		abs_tol:   1e-8
+		max_evals: 29
+	})!
+	assert evaluation_limited.status == .max_evaluations
+
+	non_finite := func.Fn.new(
+		f: fn (_ f64, _ []f64) f64 {
+			return math.inf(1)
+		}
+	)
+	non_finite_result := adaptive_gauss_kronrod_improper(non_finite,
+		ImproperGaussKronrodParams{
+			a:       0.0
+			b:       math.inf(1)
+			abs_tol: 1e-8
+		})!
+	assert non_finite_result.status == .non_finite_function_value
+	assert non_finite_result.n_calls == 1
+}

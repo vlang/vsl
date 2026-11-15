@@ -8,6 +8,10 @@ fn oscillatory(x f64, _ []f64) f64 {
 	return math.sin(20.0 * x)
 }
 
+fn decaying(x f64, _ []f64) f64 {
+	return math.exp(-x)
+}
+
 fn main() {
 	f := func.Fn.new(f: oscillatory)
 	result := integrate.adaptive_gauss_kronrod(f, integrate.GaussKronrodParams{
@@ -21,4 +25,15 @@ fn main() {
 	println('estimated error: ${result.error_estimate}')
 	println('intervals: ${result.n_intervals}, evaluations: ${result.n_calls}')
 	assert result.status == .converged
+
+	tail := integrate.adaptive_gauss_kronrod_improper(func.Fn.new(f: decaying),
+		integrate.ImproperGaussKronrodParams{
+			a:       0.0
+			b:       math.inf(1)
+			abs_tol: 1e-9
+			rel_tol: 1e-9
+		})!
+	assert tail.status == .converged
+	assert math.abs(tail.value - 1.0) < 1e-8
+	println('integral over [0, +inf): ${tail.value}')
 }

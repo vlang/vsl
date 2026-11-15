@@ -98,8 +98,8 @@ objectives, and derivative-free Nelder-Mead for local multivariate
 minimization. VSL also has adaptive finite-interval 7/15-point Gauss-Kronrod
 quadrature with estimated errors and execution limits, plus an adaptive
 Bogacki-Shampine RK23 method for non-stiff initial-value systems.
-Gradient-based minimization, improper integration, stiff ODE methods, dense
-output, and event handling remain missing. See SciPy
+gradient-based minimization, stiff ODE methods, dense output, and event handling
+remain missing. See SciPy
 [`interpolate`][scipy-interpolate],
 [`optimize`][scipy-optimize], and [`integrate`][scipy-integrate], plus GSL
 [`interpolation`][gsl-interp], [`roots`][gsl-roots], [`minimization`][gsl-min],
