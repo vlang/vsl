@@ -34,10 +34,15 @@ NCHW convolution: input `[batch,in_ch,in_h,in_w]`, kernel
 `[out_ch,in_ch,k_h,k_w]`, and output `[batch,out_ch,out_h,out_w]`. It requires
 positive channels, spatial sizes, kernel sizes, and strides; batch may be zero.
 Implemented operations are backend-specific: check `available_backends()` for
-build availability and `op_supported` for the operation list, then handle
-returned errors. The portable CPU backend implements convolution alongside
-GEMM/GEMV, activations, vector/scalar arithmetic, softmax, and layer
-normalization.
+build availability and `op_supported` for the declared operation list, then
+handle returned errors. These queries do not inspect runtime device capabilities.
+For runtime-specific accelerator support, query the instantiated
+`ComputeBackend.supports` method; for example, CUDA LayerNorm returns `false`
+unless the device has cuDNN and the build includes its LayerNorm implementation.
+A strict CUDA context returns an error rather than silently using CPU LayerNorm
+when that GPU implementation is unavailable. The portable CPU backend implements
+convolution alongside GEMM/GEMV, activations, vector/scalar arithmetic, softmax,
+and layer normalization.
 
 The `auto` preference selects a backend compiled into the build, in the order
 Vulkan, VCL, CUDA, then CPU. It does not benchmark devices. For an explicitly

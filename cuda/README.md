@@ -21,14 +21,19 @@
 | `mul_vec` | ✅ `cublasDdgmm` | CPU | — |
 | `add_scalar` / `mul_scalar` | ✅ cuBLAS/cuDNN path | CPU | — |
 | `softmax` | ✅ `cudnnSoftmaxForward` | CPU | — |
-| `layernorm` | optional `-d cudnn_layernorm` | CPU | — |
+| `layernorm` | optional `-d cudnn_layernorm` with cuDNN 9.1+ | CPU when the GPU implementation is unavailable | #550 |
 | `conv2d` | ✅ `cudnnConvolutionForward` | CPU | — |
 | `conv2d_backward` | ✅ `cudnnConvolutionBackward*` | CPU | — |
 
 `mul_vec` uses legacy `cublasDdgmm` (`SIDE_RIGHT`, 1×n row layout;
 `cublasDdgmm_v2` absent on some distros). Layer norm GPU: build with
 `-d cudnn_layernorm` when libcudnn exports `cudnnLayerNormForward` (9.1+).
-Numerical parity tests: `cuda/compute/numerical_validation_test.v` ([#281](https://github.com/vlang/vsl/issues/281)).
+`CUDABackend.supports('layernorm')` reports whether the selected device and
+build can execute the GPU implementation. If it is available but execution
+fails, the error is propagated; only an unavailable GPU implementation uses
+the CPU fallback. Strict compute contexts reject that fallback. Numerical
+parity tests: `cuda/compute/numerical_validation_test.v`
+([#281](https://github.com/vlang/vsl/issues/281)).
 
 ## 📁 Architecture
 
