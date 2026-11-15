@@ -53,6 +53,19 @@ pub:
 	max_evals     int = 30000
 }
 
+// ImproperGaussKronrodParams configures quadrature with finite or infinite
+// bounds. Infinite endpoints must be opposite-signed for a whole-line integral.
+@[params]
+pub struct ImproperGaussKronrodParams {
+pub:
+	a             f64
+	b             f64
+	abs_tol       f64 = 1e-10
+	rel_tol       f64 = 1e-8
+	max_intervals int = 1000
+	max_evals     int = 30000
+}
+
 // GaussKronrodResult contains the integral estimate and convergence diagnostics.
 pub struct GaussKronrodResult {
 pub:
@@ -77,9 +90,142 @@ mut:
 	status IntegrationStatus
 }
 
+interface IntegrationFunction {
+	safe_eval(x f64) !f64
+}
+
+enum InfiniteDirection {
+	positive
+	negative
+}
+
+struct MappedIntegrand {
+	f         func.Fn
+	bound     f64
+	direction InfiniteDirection
+}
+
 // adaptive_gauss_kronrod integrates a function over a finite interval using
 // the embedded 7/15-point Gauss-Kronrod rule and adaptive interval subdivision.
 pub fn adaptive_gauss_kronrod(f func.Fn, params GaussKronrodParams) !GaussKronrodResult {
+	return adaptive_gauss_kronrod_impl(f, params)
+}
+
+// adaptive_gauss_kronrod_improper integrates over finite or infinite bounds.
+// Infinite tails are mapped to [0, 1); a whole-line integral is split at zero.
+pub fn adaptive_gauss_kronrod_improper(f func.Fn, params ImproperGaussKronrodParams) !GaussKronrodResult {
+	if math.is_nan(params.a) || math.is_nan(params.b) || !finite_value(params.abs_tol)
+		|| !finite_value(params.rel_tol) || params.abs_tol < 0.0 || params.rel_tol < 0.0
+		|| (params.abs_tol == 0.0 && params.rel_tol == 0.0) || params.max_intervals < 1
+		|| params.max_evals < 1 {
+		return error('invalid improper Gauss-Kronrod integration parameters')
+	}
+	a_is_infinite := math.is_inf(params.a, 0)
+	b_is_infinite := math.is_inf(params.b, 0)
+	if a_is_infinite && b_is_infinite && params.a == params.b {
+		return error('improper Gauss-Kronrod integration requires distinct infinite bounds')
+	}
+	if params.a > params.b {
+		reversed := adaptive_gauss_kronrod_improper(f, ImproperGaussKronrodParams{
+			a:             params.b
+			b:             params.a
+			abs_tol:       params.abs_tol
+			rel_tol:       params.rel_tol
+			max_intervals: params.max_intervals
+			max_evals:     params.max_evals
+		})!
+		return signed_integration_result(reversed, -1.0)
+	}
+	if !a_is_infinite && !b_is_infinite {
+		return adaptive_gauss_kronrod(f, GaussKronrodParams{
+			a:             params.a
+			b:             params.b
+			abs_tol:       params.abs_tol
+			rel_tol:       params.rel_tol
+			max_intervals: params.max_intervals
+			max_evals:     params.max_evals
+		})
+	}
+	if a_is_infinite && b_is_infinite {
+		if params.abs_tol == 0.0 {
+			return error('whole-line improper integration requires a positive absolute tolerance')
+		}
+		if params.max_intervals < 2 {
+			return GaussKronrodResult{
+				value:          math.nan()
+				error_estimate: math.nan()
+				status:         .max_intervals
+			}
+		}
+		if params.max_evals < 30 {
+			return GaussKronrodResult{
+				value:          math.nan()
+				error_estimate: math.nan()
+				status:         .max_evaluations
+			}
+		}
+		left_intervals := params.max_intervals / 2
+		left_evals := params.max_evals / 2
+		half_params := GaussKronrodParams{
+			a:             0.0
+			b:             1.0
+			abs_tol:       params.abs_tol / 2.0
+			rel_tol:       0.0
+			max_intervals: left_intervals
+			max_evals:     left_evals
+		}
+		left := integrate_infinite_tail(f, 0.0, .negative, half_params)!
+		if left.status != .converged {
+			return left
+		}
+		right := integrate_infinite_tail(f, 0.0, .positive, GaussKronrodParams{
+			a:             0.0
+			b:             1.0
+			abs_tol:       params.abs_tol / 2.0
+			rel_tol:       0.0
+			max_intervals: params.max_intervals - left_intervals
+			max_evals:     params.max_evals - left_evals
+		})!
+		value := left.value + right.value
+		error_estimate := left.error_estimate + right.error_estimate
+		if !finite_value(value) || !finite_value(error_estimate) {
+			return GaussKronrodResult{
+				value:          value
+				error_estimate: error_estimate
+				n_calls:        left.n_calls + right.n_calls
+				n_intervals:    left.n_intervals + right.n_intervals
+				status:         .non_finite_estimate
+			}
+		}
+		return GaussKronrodResult{
+			value:          value
+			error_estimate: error_estimate
+			n_calls:        left.n_calls + right.n_calls
+			n_intervals:    left.n_intervals + right.n_intervals
+			status:         right.status
+		}
+	}
+	if a_is_infinite {
+		return integrate_infinite_tail(f, params.b, .negative, GaussKronrodParams{
+			a:             0.0
+			b:             1.0
+			abs_tol:       params.abs_tol
+			rel_tol:       params.rel_tol
+			max_intervals: params.max_intervals
+			max_evals:     params.max_evals
+		})
+	}
+	return integrate_infinite_tail(f, params.a, .positive, GaussKronrodParams{
+		a:             0.0
+		b:             1.0
+		abs_tol:       params.abs_tol
+		rel_tol:       params.rel_tol
+		max_intervals: params.max_intervals
+		max_evals:     params.max_evals
+	})
+}
+
+fn adaptive_gauss_kronrod_impl(f IntegrationFunction, params GaussKronrodParams) !GaussKronrodResult {
 	if !finite_value(params.a) || !finite_value(params.b) || !finite_value(params.abs_tol)
 		|| !finite_value(params.rel_tol) || params.abs_tol < 0.0 || params.rel_tol < 0.0
 		|| (params.abs_tol == 0.0 && params.rel_tol == 0.0) || params.max_intervals < 1
@@ -199,7 +345,44 @@ pub fn adaptive_gauss_kronrod(f func.Fn, params GaussKronrodParams) !GaussKronro
 	}
 }
 
-fn estimate_interval(f func.Fn, a f64, b f64, mut evaluation EvaluationState) IntervalEstimate {
+fn integrate_infinite_tail(f func.Fn, bound f64, direction InfiniteDirection, params GaussKronrodParams) !GaussKronrodResult {
+	return adaptive_gauss_kronrod_impl(MappedIntegrand{
+		f:         f
+		bound:     bound
+		direction: direction
+	}, params)
+}
+
+fn (integrand MappedIntegrand) safe_eval(t f64) !f64 {
+	remaining := 1.0 - t
+	if t < 0.0 || remaining <= 0.0 {
+		return error('improper integration transform received an invalid point')
+	}
+	distance := t / remaining
+	x := if integrand.direction == .positive {
+		integrand.bound + distance
+	} else {
+		integrand.bound - distance
+	}
+	jacobian := 1.0 / (remaining * remaining)
+	value := integrand.f.safe_eval(x)! * jacobian
+	if !finite_value(value) {
+		return error('improper integration transform produced a non-finite value')
+	}
+	return value
+}
+
+fn signed_integration_result(result GaussKronrodResult, sign f64) GaussKronrodResult {
+	return GaussKronrodResult{
+		value:          result.value * sign
+		error_estimate: result.error_estimate
+		n_calls:        result.n_calls
+		n_intervals:    result.n_intervals
+		status:         result.status
+	}
+}
+
+fn estimate_interval(f IntegrationFunction, a f64, b f64, mut evaluation EvaluationState) IntervalEstimate {
 	center := 0.5 * a + 0.5 * b
 	half_length := 0.5 * b - 0.5 * a
 	f_center := sample(f, center, mut evaluation)
@@ -281,7 +464,7 @@ fn estimate_interval(f func.Fn, a f64, b f64, mut evaluation EvaluationState) In
 	}
 }
 
-fn sample(f func.Fn, x f64, mut evaluation EvaluationState) f64 {
+fn sample(f IntegrationFunction, x f64, mut evaluation EvaluationState) f64 {
 	value := f.safe_eval(x) or {
 		evaluation.calls++
 		evaluation.status = .non_finite_function_value

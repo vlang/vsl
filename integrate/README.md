@@ -27,5 +27,17 @@ println('${result.value} ± ${result.error_estimate} (${result.status})')
 
 The reported `error_estimate` is an estimate, not a certified mathematical
 bound. Non-finite callback values and non-finite integral estimates have
-distinct statuses. The first implementation supports finite bounds only;
-improper integrals, breakpoints, and ODE solvers are not included.
+distinct statuses.
+
+## Improper intervals
+
+`adaptive_gauss_kronrod_improper` accepts finite bounds and either sign of
+infinity through `math.inf(1)` and `math.inf(-1)`. It maps one-sided tails onto
+`[0, 1)` with the corresponding Jacobian. A whole-line integral is split at
+zero and the absolute tolerance and execution budgets are divided between the
+two tails; therefore whole-line calls require a positive absolute tolerance.
+Reversed bounds negate the result. The transform and adaptive error estimate do
+not guarantee convergence for conditionally convergent or highly oscillatory
+tails.
+
+Breakpoints and stiff ODE solvers are not included.

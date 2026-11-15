@@ -33,8 +33,15 @@ println('estimated error=${result.error_estimate} evaluations=${result.n_calls}'
 `abs_tol` and `rel_tol` bound the requested estimated error by
 `abs_tol + rel_tol * abs(value)`. The result status reports convergence,
 non-finite callback or estimate, precision limits, and interval/evaluation
-caps. Error estimates are not certified bounds. This initial implementation
-does not support improper integrals, explicit breakpoints, or ODEs.
+caps. Error estimates are not certified bounds.
+
+`adaptive_gauss_kronrod_improper` also accepts one-sided and whole-line bounds
+using `math.inf(1)` and `math.inf(-1)`. It maps infinite tails onto a finite
+interval and splits whole-line integration at zero; whole-line calls require a
+positive absolute tolerance so each tail receives a bounded error budget.
+Reversed bounds negate the result. The method is not a guarantee of convergence
+for conditionally convergent or strongly oscillatory tails. Explicit
+breakpoints remain unsupported.
 
 Run the [adaptive integration example](../../examples/integrate_gauss_kronrod/README.md)
 from `~/.vmodules`.
