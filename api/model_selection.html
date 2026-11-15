@@ -253,9 +253,9 @@ result <span class="token operator">:=</span> <span class="token module_">model_
 <pre><code class="language-v"><span class="token keyword">import</span> <span class="token module_">vsl</span><span class="token punctuation">.</span><span class="token module_">model_selection</span>
 
 result <span class="token operator">:=</span> <span class="token module_">model_selection</span><span class="token punctuation">.</span><span class="token function">train_val_test_split</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> <span class="token module_">model_selection</span><span class="token punctuation">.</span><span class="token type_name">TrainValTestConfig</span><span class="token punctuation">{</span>
-    val_size<span class="token punctuation">:</span>  <span class="token number">0.1</span> <span class="token comment">// 10% validation</span>
-    test_size<span class="token punctuation">:</span> <span class="token number">0.2</span> <span class="token comment">// 20% test (70% train)</span>
-    stratify<span class="token punctuation">:</span>  <span class="token boolean">true</span>
+ val_size<span class="token punctuation">:</span>  <span class="token number">0.1</span> <span class="token comment">// 10% validation</span>
+ test_size<span class="token punctuation">:</span> <span class="token number">0.2</span> <span class="token comment">// 20% test (70% train)</span>
+ stratify<span class="token punctuation">:</span>  <span class="token boolean">true</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token operator">!</span>
 
 <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'Train: </span><span class="token string_interp">$</span><span class="token string_interp">{</span>result<span class="token punctuation">.</span>x_train<span class="token punctuation">.</span>len<span class="token string_interp">}</span><span class="token string">'</span><span class="token punctuation">)</span>
@@ -268,14 +268,14 @@ kf <span class="token operator">:=</span> <span class="token module_">model_sele
 folds <span class="token operator">:=</span> kf<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token operator">!</span> <span class="token comment">// 100 samples</span>
 
 <span class="token keyword">for</span> i<span class="token punctuation">,</span> fold <span class="token keyword">in</span> folds <span class="token punctuation">{</span>
-    <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'Fold </span><span class="token string_interp">$</span><span class="token string_interp">{</span>i <span class="token operator">+</span> <span class="token number">1</span><span class="token string_interp">}</span><span class="token string">:'</span><span class="token punctuation">)</span>
-    <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'  Train indices: </span><span class="token string_interp">$</span><span class="token string_interp">{</span>fold<span class="token punctuation">.</span>train_indices<span class="token punctuation">.</span>len<span class="token string_interp">}</span><span class="token string">'</span><span class="token punctuation">)</span>
-    <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'  Test indices: </span><span class="token string_interp">$</span><span class="token string_interp">{</span>fold<span class="token punctuation">.</span>test_indices<span class="token punctuation">.</span>len<span class="token string_interp">}</span><span class="token string">'</span><span class="token punctuation">)</span>
+ <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'Fold </span><span class="token string_interp">$</span><span class="token string_interp">{</span>i <span class="token operator">+</span> <span class="token number">1</span><span class="token string_interp">}</span><span class="token string">:'</span><span class="token punctuation">)</span>
+ <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'  Train indices: </span><span class="token string_interp">$</span><span class="token string_interp">{</span>fold<span class="token punctuation">.</span>train_indices<span class="token punctuation">.</span>len<span class="token string_interp">}</span><span class="token string">'</span><span class="token punctuation">)</span>
+ <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'  Test indices: </span><span class="token string_interp">$</span><span class="token string_interp">{</span>fold<span class="token punctuation">.</span>test_indices<span class="token punctuation">.</span>len<span class="token string_interp">}</span><span class="token string">'</span><span class="token punctuation">)</span>
 
-    <span class="token comment">// Get actual data for this fold</span>
-    x_train<span class="token punctuation">,</span> y_train<span class="token punctuation">,</span> x_test<span class="token punctuation">,</span> y_test <span class="token operator">:=</span> <span class="token module_">model_selection</span><span class="token punctuation">.</span><span class="token function">get_fold_data</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> fold<span class="token punctuation">)</span>
+ <span class="token comment">// Get actual data for this fold</span>
+ x_train<span class="token punctuation">,</span> y_train<span class="token punctuation">,</span> x_test<span class="token punctuation">,</span> y_test <span class="token operator">:=</span> <span class="token module_">model_selection</span><span class="token punctuation">.</span><span class="token function">get_fold_data</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> fold<span class="token punctuation">)</span>
 
-    <span class="token comment">// Train and evaluate your model here</span>
+ <span class="token comment">// Train and evaluate your model here</span>
 <span class="token punctuation">}</span></code></pre>
 <h3 id="stratified-k-fold">Stratified K-Fold</h3>
 <pre><code class="language-v"><span class="token keyword">import</span> <span class="token module_">vsl</span><span class="token punctuation">.</span><span class="token module_">model_selection</span>
@@ -411,6 +411,44 @@ folds <span class="token operator">:=</span> ss<span class="token punctuation">.
 </tr>
 </tbody>
 </table>
+<p><code>cross_val_score(x, y, folds, predictor, scorer)</code> runs one prediction and scoring pass per supplied fold and returns one score per fold. The predictor receives <code>x_train</code>, <code>y_train</code>, and <code>x_test</code> (not the test labels), so it should create and fit a fresh estimator on each call. The scorer receives <code>y_test</code> and the predictions. Invalid, overlapping, duplicate, or out-of-range fold indices and prediction-length mismatches are returned as errors.</p>
+<p>Scores are returned in the supplied fold order; this API does not average, negate, or otherwise transform them. For model selection, use a higher-is-better scorer (negate a loss when appropriate) and aggregate the fold scores explicitly. Labels and predictions are passed as <code>[]f64</code> without class encoding, thresholding, positive-class selection, or sample weighting; the scorer defines those conventions.</p>
+<p>For clearer estimator lifecycle separation, <code>cross_val_score_with_factory</code> accepts a factory that receives only the current fold's training data and returns a predictor for held-out features. The factory runs once per fold and must create independently fitted model state:</p>
+<pre><code class="language-v"><span class="token keyword">import</span> <span class="token module_">vsl</span><span class="token punctuation">.</span><span class="token module_">model_selection</span>
+
+x <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">0.0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1.0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">2.0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">3.0</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
+y <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">3.0</span><span class="token punctuation">,</span> <span class="token number">7.0</span><span class="token punctuation">]</span>
+folds <span class="token operator">:=</span> <span class="token module_">model_selection</span><span class="token punctuation">.</span><span class="token type_name">KFold</span><span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">,</span> <span class="token number">42</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span>y<span class="token punctuation">.</span>len<span class="token punctuation">)</span><span class="token operator">!</span>
+
+factory <span class="token operator">:=</span> <span class="token keyword">fn</span> <span class="token punctuation">(</span>_x_train <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> y_train <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token module_">model_selection</span><span class="token punctuation">.</span><span class="token type_name">FoldPrediction</span> <span class="token punctuation">{</span>
+    <span class="token keyword">mut</span> mean <span class="token operator">:=</span> <span class="token number">0.0</span>
+    <span class="token keyword">for</span> value <span class="token keyword">in</span> y_train <span class="token punctuation">{</span>
+        mean <span class="token operator">+=</span> value
+    <span class="token punctuation">}</span>
+    mean <span class="token operator">/=</span> <span class="token builtin">f64</span><span class="token punctuation">(</span>y_train<span class="token punctuation">.</span>len<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token keyword">fn</span> <span class="token punctuation">[</span>mean<span class="token punctuation">]</span> <span class="token punctuation">(</span>x_test <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span> <span class="token punctuation">{</span>
+        <span class="token keyword">mut</span> predictions <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">{</span>cap<span class="token punctuation">:</span> x_test<span class="token punctuation">.</span>len<span class="token punctuation">}</span>
+        <span class="token keyword">for</span> _ <span class="token keyword">in</span> x_test <span class="token punctuation">{</span>
+            predictions <span class="token operator">&lt;&lt;</span> mean
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> predictions
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+scorer <span class="token operator">:=</span> <span class="token keyword">fn</span> <span class="token punctuation">(</span>_y_true <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> y_pred <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">f64</span> <span class="token punctuation">{</span>
+    <span class="token keyword">mut</span> mean <span class="token operator">:=</span> <span class="token number">0.0</span>
+    <span class="token keyword">for</span> value <span class="token keyword">in</span> y_pred <span class="token punctuation">{</span>
+        mean <span class="token operator">+=</span> value
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> mean <span class="token operator">/</span> <span class="token builtin">f64</span><span class="token punctuation">(</span>y_pred<span class="token punctuation">.</span>len<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+scores <span class="token operator">:=</span> <span class="token module_">model_selection</span><span class="token punctuation">.</span><span class="token function">cross_val_score_with_factory</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> folds<span class="token punctuation">,</span> factory<span class="token punctuation">,</span> scorer<span class="token punctuation">)</span><span class="token operator">!</span></code></pre>
+<p><code>cross_val_compare</code> evaluates a bounded list of named factories sequentially on the same folds. It returns each candidate's fold scores and unweighted arithmetic mean in caller-supplied order without ranking them. Use <code>cross_val_search</code> when selection is desired; pass <code>.maximize</code> or <code>.minimize</code> explicitly so the library does not guess the scorer's direction. It returns all evaluations and the selected candidate index, keeps the first candidate on ties, and rejects NaN means because they cannot be ordered. The caller supplies candidate factories (which may capture hyperparameters); automatic Cartesian-grid construction and random sampling are not provided. Factories must fit independent state for each fold. The <a href="https://github.com/vlang/vsl/blob/master/examples/ml_cross_validation"><code>ml_cross_validation</code> example</a> compares logistic regression and Gaussian Naive Bayes and selects the best mean accuracy.</p>
+<pre><code class="language-v">search <span class="token operator">:=</span> <span class="token module_">model_selection</span><span class="token punctuation">.</span><span class="token function">cross_val_search</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> folds<span class="token punctuation">,</span> candidates<span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">,</span>
+ <span class="token enum_value">.</span><span class="token enum_value">maximize</span><span class="token punctuation">,</span> scorer<span class="token punctuation">)</span><span class="token operator">!</span>
+best <span class="token operator">:=</span> search<span class="token punctuation">.</span>candidate_scores<span class="token punctuation">[</span>search<span class="token punctuation">.</span>best_candidate_index<span class="token punctuation">]</span>
+<span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'Best candidate: </span><span class="token string_interp">$</span><span class="token string_interp">{</span>best<span class="token punctuation">.</span>name<span class="token string_interp">}</span><span class="token string"> (</span><span class="token string_interp">$</span><span class="token string_interp">{</span>best<span class="token punctuation">.</span>mean_score<span class="token string_interp">:</span><span class="token string_interp">.3</span><span class="token string_interp">f</span><span class="token string_interp">}</span><span class="token string">)'</span><span class="token punctuation">)</span></code></pre>
 <h3 id="fold-structure">Fold Structure</h3>
 <pre><code class="language-v"><span class="token keyword">pub</span> <span class="token keyword">struct</span> <span class="token type_name">Fold</span> <span class="token punctuation">{</span>
 <span class="token keyword">pub</span><span class="token punctuation">:</span>
@@ -430,6 +468,22 @@ folds <span class="token operator">:=</span> ss<span class="token punctuation">.
 <td><code>get_fold_data(x, y, fold)</code></td>
 <td>Extract actual data arrays from fold indices</td>
 </tr>
+<tr>
+<td><code>cross_val_score(x, y, folds, predictor, scorer)</code></td>
+<td>Run a predictor and scorer for each validated fold</td>
+</tr>
+<tr>
+<td><code>cross_val_score_with_factory(x, y, folds, factory, scorer)</code></td>
+<td>Fit a new predictor from each fold's training data</td>
+</tr>
+<tr>
+<td><code>cross_val_compare(x, y, folds, candidates, max_candidates, scorer)</code></td>
+<td>Compare bounded candidate factories on shared folds</td>
+</tr>
+<tr>
+<td><code>cross_val_search(x, y, folds, candidates, max_candidates, direction, scorer)</code></td>
+<td>Select a bounded candidate using an explicit score direction</td>
+</tr>
 </tbody>
 </table>
 <h2 id="integration-with-ml-pipeline">Integration with ML Pipeline</h2>
@@ -445,33 +499,28 @@ y <span class="token operator">:=</span> your_labels
 kf <span class="token operator">:=</span> <span class="token module_">model_selection</span><span class="token punctuation">.</span><span class="token type_name">KFold</span><span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token number">42</span><span class="token punctuation">)</span>
 folds <span class="token operator">:=</span> kf<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>len<span class="token punctuation">)</span><span class="token operator">!</span>
 
-<span class="token keyword">mut</span> scores <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+predictor <span class="token operator">:=</span> <span class="token keyword">fn</span> <span class="token punctuation">(</span>x_train <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> y_train <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> x_test <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span> <span class="token punctuation">{</span>
+ <span class="token keyword">mut</span> train_data <span class="token operator">:=</span> <span class="token module_">ml</span><span class="token punctuation">.</span><span class="token type_name">Data</span><span class="token punctuation">.</span><span class="token function">from_raw_xy_sep</span><span class="token punctuation">(</span>x_train<span class="token punctuation">,</span> y_train<span class="token punctuation">)</span><span class="token operator">!</span>
+ <span class="token keyword">mut</span> model <span class="token operator">:=</span> <span class="token module_">ml</span><span class="token punctuation">.</span><span class="token type_name">LogReg</span><span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token keyword">mut</span> train_data<span class="token punctuation">,</span> <span class="token string">'cv_model'</span><span class="token punctuation">)</span>
+ model<span class="token punctuation">.</span><span class="token function">train</span><span class="token punctuation">(</span><span class="token module_">ml</span><span class="token punctuation">.</span><span class="token type_name">LogRegTrainConfig</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
 
-<span class="token keyword">for</span> fold <span class="token keyword">in</span> folds <span class="token punctuation">{</span>
-    x_train<span class="token punctuation">,</span> y_train<span class="token punctuation">,</span> x_test<span class="token punctuation">,</span> y_test <span class="token operator">:=</span> <span class="token module_">model_selection</span><span class="token punctuation">.</span><span class="token function">get_fold_data</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> fold<span class="token punctuation">)</span>
-
-    <span class="token comment">// Create ML Data</span>
-    <span class="token keyword">mut</span> train_data <span class="token operator">:=</span> <span class="token module_">ml</span><span class="token punctuation">.</span><span class="token type_name">Data</span><span class="token punctuation">.</span><span class="token function">from_raw_xy_sep</span><span class="token punctuation">(</span>x_train<span class="token punctuation">,</span> y_train<span class="token punctuation">)</span><span class="token operator">!</span>
-
-    <span class="token comment">// Train model</span>
-    <span class="token keyword">mut</span> model <span class="token operator">:=</span> <span class="token module_">ml</span><span class="token punctuation">.</span><span class="token type_name">LogReg</span><span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token keyword">mut</span> train_data<span class="token punctuation">,</span> <span class="token string">'cv_model'</span><span class="token punctuation">)</span>
-    model<span class="token punctuation">.</span><span class="token function">train</span><span class="token punctuation">(</span><span class="token module_">ml</span><span class="token punctuation">.</span><span class="token type_name">LogRegTrainConfig</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
-
-    <span class="token comment">// Predict</span>
-    <span class="token keyword">mut</span> predictions <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
-    <span class="token keyword">for</span> row <span class="token keyword">in</span> x_test <span class="token punctuation">{</span>
-        predictions <span class="token operator">&lt;&lt;</span> model<span class="token punctuation">.</span><span class="token function">predict</span><span class="token punctuation">(</span>row<span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token comment">// Evaluate</span>
-    acc <span class="token operator">:=</span> <span class="token module_">metrics</span><span class="token punctuation">.</span><span class="token function">accuracy_score</span><span class="token punctuation">(</span>y_test<span class="token punctuation">,</span> predictions<span class="token punctuation">)</span><span class="token operator">!</span>
-    scores <span class="token operator">&lt;&lt;</span> acc
+ <span class="token keyword">mut</span> predictions <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+ <span class="token keyword">for</span> row <span class="token keyword">in</span> x_test <span class="token punctuation">{</span>
+  predictions <span class="token operator">&lt;&lt;</span> model<span class="token punctuation">.</span><span class="token function">predict</span><span class="token punctuation">(</span>row<span class="token punctuation">)</span>
+ <span class="token punctuation">}</span>
+ <span class="token keyword">return</span> predictions
 <span class="token punctuation">}</span>
+
+scorer <span class="token operator">:=</span> <span class="token keyword">fn</span> <span class="token punctuation">(</span>y_true <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> y_pred <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">f64</span> <span class="token punctuation">{</span>
+ <span class="token keyword">return</span> <span class="token module_">metrics</span><span class="token punctuation">.</span><span class="token function">accuracy_score</span><span class="token punctuation">(</span>y_true<span class="token punctuation">,</span> y_pred<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+scores <span class="token operator">:=</span> <span class="token module_">model_selection</span><span class="token punctuation">.</span><span class="token function">cross_val_score</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> folds<span class="token punctuation">,</span> predictor<span class="token punctuation">,</span> scorer<span class="token punctuation">)</span><span class="token operator">!</span>
 
 <span class="token comment">// Report average score</span>
 <span class="token keyword">mut</span> avg <span class="token operator">:=</span> <span class="token number">0.0</span>
 <span class="token keyword">for</span> s <span class="token keyword">in</span> scores <span class="token punctuation">{</span>
-    avg <span class="token operator">+=</span> s
+ avg <span class="token operator">+=</span> s
 <span class="token punctuation">}</span>
 avg <span class="token operator">/=</span> <span class="token builtin">f64</span><span class="token punctuation">(</span>scores<span class="token punctuation">.</span>len<span class="token punctuation">)</span>
 <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">'Average CV Accuracy: </span><span class="token string_interp">$</span><span class="token string_interp">{</span>avg<span class="token string_interp">}</span><span class="token string">'</span><span class="token punctuation">)</span></code></pre>
@@ -496,8 +545,40 @@ avg <span class="token operator">/=</span> <span class="token builtin">f64</span
 
 </section>
 
+		<section id="cross_val_compare" class="doc-node">
+			<div class="title"><h2>fn cross_val_compare <a href="#cross_val_compare">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L376"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">cross_val_compare</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> y <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> folds <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token type_name">Fold</span><span class="token punctuation">,</span> candidates <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token type_name">CrossValCandidate</span><span class="token punctuation">,</span> max_candidates <span class="token builtin">int</span><span class="token punctuation">,</span> scorer <span class="token type_name">FoldScorer</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token type_name">CrossValCandidateScore</span></code></pre>
+<p>cross_val_compare evaluates each named factory sequentially on the same validated folds. max_candidates bounds the number of candidate fits; scores remain in candidate/fold order and are not ranked or direction-transformed. mean_score is the unweighted arithmetic mean of that candidate's fold scores.</p>
+
+</section>
+
+		<section id="cross_val_score" class="doc-node">
+			<div class="title"><h2>fn cross_val_score <a href="#cross_val_score">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L341"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">cross_val_score</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> y <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> folds <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token type_name">Fold</span><span class="token punctuation">,</span> predictor <span class="token type_name">FoldPredictor</span><span class="token punctuation">,</span> scorer <span class="token type_name">FoldScorer</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>cross_val_score evaluates a predictor independently on each supplied fold. The predictor receives training labels but only test features, avoiding target leakage; create an unfitted estimator inside each invocation. Scores are returned in fold order without aggregation or direction changes; label and higher-is-better conventions belong to the supplied scorer.</p>
+
+</section>
+
+		<section id="cross_val_score_with_factory" class="doc-node">
+			<div class="title"><h2>fn cross_val_score_with_factory <a href="#cross_val_score_with_factory">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L356"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">cross_val_score_with_factory</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> y <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> folds <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token type_name">Fold</span><span class="token punctuation">,</span> factory <span class="token type_name">FoldEstimatorFactory</span><span class="token punctuation">,</span> scorer <span class="token type_name">FoldScorer</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>cross_val_score_with_factory calls a model factory once for every fold with only that fold's training data, then scores predictions on held-out features. The factory must return a predictor backed by new, independently fitted state.</p>
+
+</section>
+
+		<section id="cross_val_search" class="doc-node">
+			<div class="title"><h2>fn cross_val_search <a href="#cross_val_search">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L420"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">cross_val_search</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> y <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> folds <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token type_name">Fold</span><span class="token punctuation">,</span> candidates <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token type_name">CrossValCandidate</span><span class="token punctuation">,</span> max_candidates <span class="token builtin">int</span><span class="token punctuation">,</span> direction <span class="token type_name">CrossValScoreDirection</span><span class="token punctuation">,</span> scorer <span class="token type_name">FoldScorer</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token type_name">CrossValSearchResult</span></code></pre>
+<p>cross_val_search evaluates a bounded caller-supplied candidate list and selects the highest or lowest unweighted mean score. Ties keep the earliest candidate. Scorers that return NaN cannot define a reliable ordering.</p>
+
+</section>
+
 		<section id="get_fold_data" class="doc-node">
-			<div class="title"><h2>fn get_fold_data <a href="#get_fold_data">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L272"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn get_fold_data <a href="#get_fold_data">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L317"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">get_fold_data</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> y <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> fold <span class="token type_name">Fold</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
 <p>get_fold_data extracts the actual data for a fold</p>
@@ -520,8 +601,16 @@ avg <span class="token operator">/=</span> <span class="token builtin">f64</span
 
 </section>
 
+		<section id="CrossValScoreDirection.from" class="doc-node">
+			<div class="title"><h2>fn CrossValScoreDirection.from <a href="#CrossValScoreDirection.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L45"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token type_name">CrossValScoreDirection</span><span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">[</span><span class="token type_name">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token type_name">W</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token type_name">CrossValScoreDirection</span></code></pre>
+<p>from returns the <code>CrossValScoreDirection</code> value of an integer or of a field name, or an error if there is none.</p>
+
+</section>
+
 		<section id="KFold.new" class="doc-node">
-			<div class="title"><h2>fn KFold.new <a href="#KFold.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L27"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn KFold.new <a href="#KFold.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L72"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token type_name">KFold</span><span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>n_splits <span class="token builtin">int</span><span class="token punctuation">,</span> shuffle <span class="token builtin">bool</span><span class="token punctuation">,</span> random_seed <span class="token builtin">u32</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token type_name">KFold</span></code></pre>
 <p>KFold.new creates a new KFold cross-validator</p>
@@ -529,7 +618,7 @@ avg <span class="token operator">/=</span> <span class="token builtin">f64</span
 </section>
 
 		<section id="LeaveOneOut.new" class="doc-node">
-			<div class="title"><h2>fn LeaveOneOut.new <a href="#LeaveOneOut.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L175"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn LeaveOneOut.new <a href="#LeaveOneOut.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L220"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token type_name">LeaveOneOut</span><span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token type_name">LeaveOneOut</span></code></pre>
 <p>LeaveOneOut.new creates a new LeaveOneOut cross-validator</p>
@@ -537,7 +626,7 @@ avg <span class="token operator">/=</span> <span class="token builtin">f64</span
 </section>
 
 		<section id="ShuffleSplit.new" class="doc-node">
-			<div class="title"><h2>fn ShuffleSplit.new <a href="#ShuffleSplit.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L214"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn ShuffleSplit.new <a href="#ShuffleSplit.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L259"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token type_name">ShuffleSplit</span><span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>n_splits <span class="token builtin">int</span><span class="token punctuation">,</span> test_size <span class="token builtin">f64</span><span class="token punctuation">,</span> random_seed <span class="token builtin">u32</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token type_name">ShuffleSplit</span></code></pre>
 <p>ShuffleSplit.new creates a new ShuffleSplit cross-validator</p>
@@ -545,10 +634,90 @@ avg <span class="token operator">/=</span> <span class="token builtin">f64</span
 </section>
 
 		<section id="StratifiedKFold.new" class="doc-node">
-			<div class="title"><h2>fn StratifiedKFold.new <a href="#StratifiedKFold.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L96"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn StratifiedKFold.new <a href="#StratifiedKFold.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L141"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token type_name">StratifiedKFold</span><span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>n_splits <span class="token builtin">int</span><span class="token punctuation">,</span> shuffle <span class="token builtin">bool</span><span class="token punctuation">,</span> random_seed <span class="token builtin">u32</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token type_name">StratifiedKFold</span></code></pre>
 <p>StratifiedKFold.new creates a new StratifiedKFold cross-validator</p>
+
+</section>
+
+		<section id="FoldEstimatorFactory" class="doc-node">
+			<div class="title"><h2>type FoldEstimatorFactory <a href="#FoldEstimatorFactory">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L25"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">type</span> <span class="token type_name">FoldEstimatorFactory</span> <span class="token operator">=</span> <span class="token keyword">fn</span> <span class="token punctuation">(</span>x_train <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> y_train <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token type_name">FoldPrediction</span></code></pre>
+<p>FoldEstimatorFactory fits and returns a predictor using only one fold's training data. It is called once per fold and must not reuse fitted state.</p>
+
+</section>
+
+		<section id="FoldPrediction" class="doc-node">
+			<div class="title"><h2>type FoldPrediction <a href="#FoldPrediction">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L21"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">type</span> <span class="token type_name">FoldPrediction</span> <span class="token operator">=</span> <span class="token keyword">fn</span> <span class="token punctuation">(</span>x_test <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>FoldPrediction predicts test labels using a model fitted for one fold.</p>
+
+</section>
+
+		<section id="FoldPredictor" class="doc-node">
+			<div class="title"><h2>type FoldPredictor <a href="#FoldPredictor">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L15"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">type</span> <span class="token type_name">FoldPredictor</span> <span class="token operator">=</span> <span class="token keyword">fn</span> <span class="token punctuation">(</span>x_train <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> y_train <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> x_test <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>FoldPredictor fits a fresh estimator from one fold's training data and returns predictions for that fold's test features.</p>
+
+</section>
+
+		<section id="FoldScorer" class="doc-node">
+			<div class="title"><h2>type FoldScorer <a href="#FoldScorer">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L18"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">type</span> <span class="token type_name">FoldScorer</span> <span class="token operator">=</span> <span class="token keyword">fn</span> <span class="token punctuation">(</span>y_true <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> y_pred <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">f64</span></code></pre>
+<p>FoldScorer computes one score from test labels and corresponding predictions.</p>
+
+</section>
+
+		<section id="CrossValScoreDirection" class="doc-node">
+			<div class="title"><h2>enum CrossValScoreDirection <a href="#CrossValScoreDirection">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L45"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> <span class="token type_name">CrossValScoreDirection</span> <span class="token punctuation">{</span>
+	maximize
+	minimize
+<span class="token punctuation">}</span></code></pre>
+<p>CrossValScoreDirection specifies how a scorer's mean should be optimized.</p>
+
+</section>
+
+		<section id="CrossValCandidate" class="doc-node">
+			<div class="title"><h2>struct CrossValCandidate <a href="#CrossValCandidate">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L29"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token type_name">CrossValCandidate</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span><span class="token punctuation">:</span>
+	name    <span class="token builtin">string</span>
+	factory <span class="token type_name">FoldEstimatorFactory</span> <span class="token attribute">@[</span><span class="token attribute">required</span><span class="token attribute">]</span>
+<span class="token punctuation">}</span></code></pre>
+<p>CrossValCandidate names one estimator configuration for bounded comparison. Capture its hyperparameters in factory; the factory must fit fresh state.</p>
+
+</section>
+
+		<section id="CrossValCandidateScore" class="doc-node">
+			<div class="title"><h2>struct CrossValCandidateScore <a href="#CrossValCandidateScore">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L37"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token type_name">CrossValCandidateScore</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span><span class="token punctuation">:</span>
+	name        <span class="token builtin">string</span>
+	fold_scores <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
+	mean_score  <span class="token builtin">f64</span>
+<span class="token punctuation">}</span></code></pre>
+<p>CrossValCandidateScore contains fold-ordered scores and their unweighted arithmetic mean for one candidate.</p>
+
+</section>
+
+		<section id="CrossValSearchResult" class="doc-node">
+			<div class="title"><h2>struct CrossValSearchResult <a href="#CrossValSearchResult">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L52"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token type_name">CrossValSearchResult</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span><span class="token punctuation">:</span>
+	candidate_scores     <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token type_name">CrossValCandidateScore</span>
+	best_candidate_index <span class="token builtin">int</span>
+<span class="token punctuation">}</span></code></pre>
+<p>CrossValSearchResult contains all evaluations and the selected candidate's index in candidate_scores.</p>
 
 </section>
 
@@ -565,7 +734,7 @@ avg <span class="token operator">/=</span> <span class="token builtin">f64</span
 </section>
 
 		<section id="KFold" class="doc-node">
-			<div class="title"><h2>struct KFold <a href="#KFold">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L19"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>struct KFold <a href="#KFold">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L64"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <div class="attributes"><div class="attribute">@[heap]</div></div>
 <pre class="signature">
 <code><span class="token keyword">struct</span> <span class="token type_name">KFold</span> <span class="token punctuation">{</span>
@@ -579,7 +748,7 @@ avg <span class="token operator">/=</span> <span class="token builtin">f64</span
 </section>
 
 		<section id="KFold.split" class="doc-node">
-			<div class="title"><h2>fn (KFold) split <a href="#KFold.split">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L36"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (KFold) split <a href="#KFold.split">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L81"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>kf <span class="token operator">&amp;</span><span class="token type_name">KFold</span><span class="token punctuation">)</span> <span class="token function">split</span><span class="token punctuation">(</span>n_samples <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token type_name">Fold</span></code></pre>
 <p>split generates indices to split data into training and test sets</p>
@@ -587,7 +756,7 @@ avg <span class="token operator">/=</span> <span class="token builtin">f64</span
 </section>
 
 		<section id="LeaveOneOut" class="doc-node">
-			<div class="title"><h2>struct LeaveOneOut <a href="#LeaveOneOut">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L171"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>struct LeaveOneOut <a href="#LeaveOneOut">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L216"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <div class="attributes"><div class="attribute">@[heap]</div></div>
 <pre class="signature">
 <code><span class="token keyword">struct</span> <span class="token type_name">LeaveOneOut</span> <span class="token punctuation">{</span>
@@ -597,7 +766,7 @@ avg <span class="token operator">/=</span> <span class="token builtin">f64</span
 </section>
 
 		<section id="LeaveOneOut.split" class="doc-node">
-			<div class="title"><h2>fn (LeaveOneOut) split <a href="#LeaveOneOut.split">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L180"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (LeaveOneOut) split <a href="#LeaveOneOut.split">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L225"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>loo <span class="token operator">&amp;</span><span class="token type_name">LeaveOneOut</span><span class="token punctuation">)</span> <span class="token function">split</span><span class="token punctuation">(</span>n_samples <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token type_name">Fold</span></code></pre>
 <p>split generates indices for leave-one-out CV</p>
@@ -605,7 +774,7 @@ avg <span class="token operator">/=</span> <span class="token builtin">f64</span
 </section>
 
 		<section id="ShuffleSplit" class="doc-node">
-			<div class="title"><h2>struct ShuffleSplit <a href="#ShuffleSplit">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L206"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>struct ShuffleSplit <a href="#ShuffleSplit">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L251"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <div class="attributes"><div class="attribute">@[heap]</div></div>
 <pre class="signature">
 <code><span class="token keyword">struct</span> <span class="token type_name">ShuffleSplit</span> <span class="token punctuation">{</span>
@@ -619,7 +788,7 @@ avg <span class="token operator">/=</span> <span class="token builtin">f64</span
 </section>
 
 		<section id="ShuffleSplit.split" class="doc-node">
-			<div class="title"><h2>fn (ShuffleSplit) split <a href="#ShuffleSplit.split">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L223"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (ShuffleSplit) split <a href="#ShuffleSplit.split">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L268"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>ss <span class="token operator">&amp;</span><span class="token type_name">ShuffleSplit</span><span class="token punctuation">)</span> <span class="token function">split</span><span class="token punctuation">(</span>n_samples <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token type_name">Fold</span></code></pre>
 <p>split generates random train/test indices</p>
@@ -627,7 +796,7 @@ avg <span class="token operator">/=</span> <span class="token builtin">f64</span
 </section>
 
 		<section id="StratifiedKFold" class="doc-node">
-			<div class="title"><h2>struct StratifiedKFold <a href="#StratifiedKFold">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L88"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>struct StratifiedKFold <a href="#StratifiedKFold">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L133"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <div class="attributes"><div class="attribute">@[heap]</div></div>
 <pre class="signature">
 <code><span class="token keyword">struct</span> <span class="token type_name">StratifiedKFold</span> <span class="token punctuation">{</span>
@@ -641,7 +810,7 @@ avg <span class="token operator">/=</span> <span class="token builtin">f64</span
 </section>
 
 		<section id="StratifiedKFold.split" class="doc-node">
-			<div class="title"><h2>fn (StratifiedKFold) split <a href="#StratifiedKFold.split">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L105"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (StratifiedKFold) split <a href="#StratifiedKFold.split">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L150"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>skf <span class="token operator">&amp;</span><span class="token type_name">StratifiedKFold</span><span class="token punctuation">)</span> <span class="token function">split</span><span class="token punctuation">(</span>y <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token type_name">Fold</span></code></pre>
 <p>split generates stratified indices to split data</p>
@@ -708,9 +877,21 @@ avg <span class="token operator">/=</span> <span class="token builtin">f64</span
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 15 Nov 2026 16:07:06</div>
+						<div class="footer">Powered by vdoc. Generated on: 15 Nov 2026 22:03:33</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_model_selection">README</a></li>
+<li class="open"><a href="#cross_val_compare">fn cross_val_compare</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#cross_val_score">fn cross_val_score</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#cross_val_score_with_factory">fn cross_val_score_with_factory</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#cross_val_search">fn cross_val_search</a>        <ul>
+</ul>
+</li>
 <li class="open"><a href="#get_fold_data">fn get_fold_data</a>        <ul>
 </ul>
 </li>
@@ -718,6 +899,9 @@ avg <span class="token operator">/=</span> <span class="token builtin">f64</span
 </ul>
 </li>
 <li class="open"><a href="#train_val_test_split">fn train_val_test_split</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#CrossValScoreDirection.from">fn CrossValScoreDirection.from</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#KFold.new">fn KFold.new</a>        <ul>
@@ -730,6 +914,30 @@ avg <span class="token operator">/=</span> <span class="token builtin">f64</span
 </ul>
 </li>
 <li class="open"><a href="#StratifiedKFold.new">fn StratifiedKFold.new</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#FoldEstimatorFactory">type FoldEstimatorFactory</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#FoldPrediction">type FoldPrediction</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#FoldPredictor">type FoldPredictor</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#FoldScorer">type FoldScorer</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#CrossValScoreDirection">enum CrossValScoreDirection</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#CrossValCandidate">struct CrossValCandidate</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#CrossValCandidateScore">struct CrossValCandidateScore</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#CrossValSearchResult">struct CrossValSearchResult</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#Fold">struct Fold</a>        <ul>
