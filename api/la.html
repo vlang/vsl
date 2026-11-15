@@ -1096,6 +1096,22 @@ tr <span class="token operator">:=</span> <span class="token module_">la</span><
 
 </section>
 
+		<section id="CSRMatrix[f64].solve_lower_triangular" class="doc-node">
+			<div class="title"><h2>fn (CSRMatrix[f64]) solve_lower_triangular <a href="#CSRMatrix[f64].solve_lower_triangular">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/sparse_triangular.v#L7"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>a <span class="token operator">&amp;</span><span class="token type_name">CSRMatrix</span><span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">solve_lower_triangular</span><span class="token punctuation">(</span>b <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>solve_lower_triangular solves A*x=b for a nonsingular lower-triangular CSR matrix without materializing a dense matrix.</p>
+
+</section>
+
+		<section id="CSRMatrix[f64].solve_upper_triangular" class="doc-node">
+			<div class="title"><h2>fn (CSRMatrix[f64]) solve_upper_triangular <a href="#CSRMatrix[f64].solve_upper_triangular">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/sparse_triangular.v#L13"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>a <span class="token operator">&amp;</span><span class="token type_name">CSRMatrix</span><span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">solve_upper_triangular</span><span class="token punctuation">(</span>b <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>solve_upper_triangular solves A*x=b for a nonsingular upper-triangular CSR matrix without materializing a dense matrix.</p>
+
+</section>
+
 		<section id="Matrix[T].set_from_deep2" class="doc-node">
 			<div class="title"><h2>fn (Matrix[T]) set_from_deep2 <a href="#Matrix[T].set_from_deep2">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/matrix.v#L51"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
@@ -1684,7 +1700,7 @@ tr <span class="token operator">:=</span> <span class="token module_">la</span><
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 15 Nov 2026 06:15:32</div>
+						<div class="footer">Powered by vdoc. Generated on: 15 Nov 2026 16:07:06</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_la">README</a></li>
 <li class="open"><a href="#center_matrix">fn center_matrix</a>        <ul>
@@ -1901,6 +1917,8 @@ tr <span class="token operator">:=</span> <span class="token module_">la</span><
 <li><a href="#CSRMatrix[f64].preconditioned_conjugate_gradient">fn preconditioned_conjugate_gradient</a></li>
 <li><a href="#CSRMatrix[f64].gmres">fn gmres</a></li>
 <li><a href="#CSRMatrix[f64].preconditioned_gmres">fn preconditioned_gmres</a></li>
+<li><a href="#CSRMatrix[f64].solve_lower_triangular">fn solve_lower_triangular</a></li>
+<li><a href="#CSRMatrix[f64].solve_upper_triangular">fn solve_upper_triangular</a></li>
 </ul>
 </li>
 <li class="open"><a href="#Matrix[T].set_from_deep2">type Matrix[T]</a>        <ul>
