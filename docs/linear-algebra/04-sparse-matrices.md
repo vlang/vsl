@@ -61,8 +61,10 @@ requires every diagonal entry to be finite and positive.
 not be symmetric. It uses a zero initial guess, an absolute stopping target of
 `tolerance * ||b||₂`, and restarted, unpreconditioned GMRES. Its result reports
 the true residual norm; `converged` is false when the iteration limit is
-reached or Arnoldi breaks down before meeting the target. Restart length and
-iteration limit must both be positive.
+reached or Arnoldi breaks down before meeting the target. A happy breakdown
+with an exact solution converges; an inconsistent singular system returns a
+non-converged result with its true residual. Restart length and iteration
+limit must both be positive.
 
 ## When to Use Sparse
 
