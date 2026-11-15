@@ -34,13 +34,13 @@ active backend, compiler, thread count, and hardware for every result.
 ```sh
 cd ~/.vmodules
 systemd-run --user --scope -p MemoryMax=4G -p MemorySwapMax=0 -- env VJOBS=2 \
-	v -prod -o /tmp/vsl-matmul ./vsl/benchmarks/vs_numpy/matmul_bench.v
+ v -prod -o /tmp/vsl-matmul ./vsl/benchmarks/vs_numpy/matmul_bench.v
 systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tmp/vsl-matmul
 systemd-run --user --scope -p MemoryMax=4G -p MemorySwapMax=0 -- env VJOBS=2 \
-	v -prod -o /tmp/vsl-gemv ./vsl/benchmarks/vs_numpy/gemv_bench.v
+ v -prod -o /tmp/vsl-gemv ./vsl/benchmarks/vs_numpy/gemv_bench.v
 systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tmp/vsl-gemv
 systemd-run --user --scope -p MemoryMax=4G -p MemorySwapMax=0 -- env VJOBS=2 \
-	v -prod -o /tmp/vsl-conv2d ./vsl/benchmarks/vs_numpy/conv2d_bench.v
+ v -prod -o /tmp/vsl-conv2d ./vsl/benchmarks/vs_numpy/conv2d_bench.v
 systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tmp/vsl-conv2d
 ```
 
@@ -56,10 +56,10 @@ Install NumPy in the Python environment before running the baseline.
 ```sh
 cd ~/.vmodules
 systemd-run --user --scope -p MemoryMax=4G -p MemorySwapMax=0 -- env VJOBS=2 \
-	v -prod -o /tmp/vsl-fft ./vsl/benchmarks/fft_bench.v
+ v -prod -o /tmp/vsl-fft ./vsl/benchmarks/fft_bench.v
 systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tmp/vsl-fft
 systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
-	-- env VJOBS=2 python3 ./vsl/benchmarks/fft_numpy_baseline.py
+ -- env VJOBS=2 python3 ./vsl/benchmarks/fft_numpy_baseline.py
 ```
 
 The two CSV tables report mean microseconds per call. Compare them on the same
@@ -86,7 +86,7 @@ accumulation of the f32 inputs. Timings are hardware- and compiler-dependent.
 ```sh
 cd ~/.vmodules
 systemd-run --user --scope -p MemoryMax=4G -p MemorySwapMax=0 -- env VJOBS=2 \
-	v -prod -o /tmp/vsl-f32-level1 ./vsl/benchmarks/float32_level1_bench.v
+ v -prod -o /tmp/vsl-f32-level1 ./vsl/benchmarks/float32_level1_bench.v
 systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tmp/vsl-f32-level1
 ```
 
@@ -95,7 +95,7 @@ The f64 unit-stride dot kernel has a matching benchmark:
 ```sh
 cd ~/.vmodules
 systemd-run --user --scope -p MemoryMax=4G -p MemorySwapMax=0 -- env VJOBS=2 \
-	v -prod -o /tmp/vsl-f64-level1 ./vsl/benchmarks/float64_level1_bench.v
+ v -prod -o /tmp/vsl-f64-level1 ./vsl/benchmarks/float64_level1_bench.v
 systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tmp/vsl-f64-level1
 ```
 
@@ -134,7 +134,7 @@ Build and run it from `~/.vmodules` with the resource-limited pattern above:
 
 ```sh
 v -prod -no-parallel -cc gcc -cflags "-march=native" \
-	-o /tmp/vsl-sparse-solver-bench ./vsl/benchmarks/sparse_solver_preconditioner_bench.v
+ -o /tmp/vsl-sparse-solver-bench ./vsl/benchmarks/sparse_solver_preconditioner_bench.v
 /tmp/vsl-sparse-solver-bench
 ```
 
@@ -146,18 +146,18 @@ the iteration cap is 512, GMRES restart is 20, and timings exclude two warmups
 and report five samples. Times are microseconds; the checksum is the sum of the
 solution's center value across timed runs.
 
-| System | Solver | Iterations | Residual norm | Median µs | Min µs | Max µs | Checksum |
-|--------|--------|-----------:|--------------:|----------:|-------:|-------:|---------:|
-| SPD | CG | 86 | 2.798186e-06 | 270.261 | 196.000 | 312.670 | 4.28571416 |
-| SPD | Jacobi-PCG | 12 | 1.812080e-06 | 41.048 | 35.567 | 53.100 | 4.28571428 |
-| SPD | GMRES | 115 | 3.502907e-06 | 1587.857 | 1459.104 | 1676.244 | 4.28571419 |
-| SPD | Right-Jacobi GMRES | 12 | 1.738593e-06 | 142.278 | 117.030 | 211.449 | 4.28571429 |
-| SPD | BiCGSTAB | 65 | 3.385005e-06 | 486.177 | 440.000 | 494.563 | 4.28571429 |
-| SPD | Right-Jacobi BiCGSTAB | 7 | 2.605855e-06 | 54.523 | 52.810 | 108.955 | 4.28571429 |
-| Nonsymmetric | GMRES | 126 | 3.639929e-06 | 1487.468 | 1440.349 | 1539.085 | 4.28571438 |
-| Nonsymmetric | Right-Jacobi GMRES | 14 | 1.589543e-06 | 132.009 | 129.965 | 138.582 | 4.28571429 |
-| Nonsymmetric | BiCGSTAB | 59 | 2.984785e-06 | 389.325 | 346.133 | 397.631 | 4.28571424 |
-| Nonsymmetric | Right-Jacobi BiCGSTAB | 7 | 2.834329e-06 | 47.470 | 46.347 | 55.224 | 4.28571425 |
+| System       | Solver                | Iterations | Residual norm | Median µs |   Min µs |   Max µs |   Checksum |
+|--------------|-----------------------|-----------:|--------------:|----------:|---------:|---------:|-----------:|
+| SPD          | CG                    |         86 |  2.798186e-06 |   270.261 |  196.000 |  312.670 | 4.28571416 |
+| SPD          | Jacobi-PCG            |         12 |  1.812080e-06 |    41.048 |   35.567 |   53.100 | 4.28571428 |
+| SPD          | GMRES                 |        115 |  3.502907e-06 |  1587.857 | 1459.104 | 1676.244 | 4.28571419 |
+| SPD          | Right-Jacobi GMRES    |         12 |  1.738593e-06 |   142.278 |  117.030 |  211.449 | 4.28571429 |
+| SPD          | BiCGSTAB              |         65 |  3.385005e-06 |   486.177 |  440.000 |  494.563 | 4.28571429 |
+| SPD          | Right-Jacobi BiCGSTAB |          7 |  2.605855e-06 |    54.523 |   52.810 |  108.955 | 4.28571429 |
+| Nonsymmetric | GMRES                 |        126 |  3.639929e-06 |  1487.468 | 1440.349 | 1539.085 | 4.28571438 |
+| Nonsymmetric | Right-Jacobi GMRES    |         14 |  1.589543e-06 |   132.009 |  129.965 |  138.582 | 4.28571429 |
+| Nonsymmetric | BiCGSTAB              |         59 |  2.984785e-06 |   389.325 |  346.133 |  397.631 | 4.28571424 |
+| Nonsymmetric | Right-Jacobi BiCGSTAB |          7 |  2.834329e-06 |    47.470 |   46.347 |   55.224 | 4.28571425 |
 
 These are single-run results from generated tridiagonal systems, not a general
 solver or preconditioner performance claim.
@@ -169,7 +169,7 @@ f64 accumulation:
 ```sh
 cd ~/.vmodules
 systemd-run --user --scope -p MemoryMax=4G -p MemorySwapMax=0 -- env VJOBS=2 \
-	v -prod -o /tmp/vsl-f32-l2norm ./vsl/benchmarks/float32_l2norm_bench.v
+ v -prod -o /tmp/vsl-f32-l2norm ./vsl/benchmarks/float32_l2norm_bench.v
 systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tmp/vsl-f32-l2norm
 ```
 
@@ -181,10 +181,10 @@ root reductions for one and 1024 i64 values. Build once and launch two ranks:
 ```sh
 cd ~/.vmodules
 systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
-	-- env VJOBS=2 v -d vsl_mpi -cc gcc -o /tmp/vsl-mpi-bench \
-	./vsl/benchmarks/mpi_bench.v
+ -- env VJOBS=2 v -d vsl_mpi -cc gcc -o /tmp/vsl-mpi-bench \
+ ./vsl/benchmarks/mpi_bench.v
 systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
-	-- mpirun --oversubscribe -n 2 /tmp/vsl-mpi-bench
+ -- mpirun --oversubscribe -n 2 /tmp/vsl-mpi-bench
 ```
 
 ### GPU smoke benchmarks
@@ -195,10 +195,10 @@ small scoped GPU smokes before running any heavy benchmark:
 ```sh
 cd ~/.vmodules
 systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
-	-- env VJOBS=2 VSL_TEST_VULKAN=1 v -prod -d vulkan test \
-	./vsl/vulkan/compute/adam_step_vulkan_test.v
+ -- env VJOBS=2 VSL_TEST_VULKAN=1 v -prod -d vulkan test \
+ ./vsl/vulkan/compute/adam_step_vulkan_test.v
 systemd-run --user --scope --quiet --property=MemoryMax=768M --property=MemorySwapMax=0 \
-	-- env VJOBS=2 v -d cuda test ./vsl/cuda/examples/cuda_ops_test.v
+ -- env VJOBS=2 v -d cuda test ./vsl/cuda/examples/cuda_ops_test.v
 ```
 
 If you run from `~/.vmodules`, prefix benchmark paths with `vsl/`.
@@ -210,7 +210,7 @@ and device-to-host output transfer. Run it from `~/.vmodules`:
 ```sh
 cd ~/.vmodules
 systemd-run --user --scope -p MemoryMax=4G -p MemorySwapMax=0 -- env VJOBS=2 \
-	v -prod -d vulkan -o /tmp/vsl-vulkan-gemm ./vsl/benchmarks/vulkan_gemm_f32_bench.v
+ v -prod -d vulkan -o /tmp/vsl-vulkan-gemm ./vsl/benchmarks/vulkan_gemm_f32_bench.v
 systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tmp/vsl-vulkan-gemm
 ```
 
@@ -224,13 +224,13 @@ directly with CPU timings that include allocation or different thread counts.
 ```sh
 cd ~/.vmodules
 systemd-run --user --scope -p MemoryMax=4G -p MemorySwapMax=0 -- env VJOBS=2 \
-	v -prod -o /tmp/vsl-blas-bench ./vsl/benchmarks/blas_bench.v
+ v -prod -o /tmp/vsl-blas-bench ./vsl/benchmarks/blas_bench.v
 systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tmp/vsl-blas-bench
 systemd-run --user --scope -p MemoryMax=4G -p MemorySwapMax=0 -- env VJOBS=2 \
-	v -prod -o /tmp/vsl-lapack-bench ./vsl/benchmarks/lapack_bench.v
+ v -prod -o /tmp/vsl-lapack-bench ./vsl/benchmarks/lapack_bench.v
 systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tmp/vsl-lapack-bench
 systemd-run --user --scope -p MemoryMax=4G -p MemorySwapMax=0 -- env VJOBS=2 \
-	v -prod -o /tmp/vsl-backend-bench ./vsl/benchmarks/compare_backends.v
+ v -prod -o /tmp/vsl-backend-bench ./vsl/benchmarks/compare_backends.v
 systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tmp/vsl-backend-bench
 ```
 
@@ -249,7 +249,7 @@ backend, pass its compile-time define:
 ```sh
 cd ~/.vmodules
 systemd-run --user --scope -p MemoryMax=4G -p MemorySwapMax=0 -- env VJOBS=2 \
-	v -d vsl_blas_cblas -prod -o /tmp/vsl-blas-cblas ./vsl/benchmarks/blas_bench.v
+ v -d vsl_blas_cblas -prod -o /tmp/vsl-blas-cblas ./vsl/benchmarks/blas_bench.v
 systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tmp/vsl-blas-cblas
 ```
 
@@ -268,6 +268,7 @@ systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tm
 ## Understanding Results
 
 Benchmark results show:
+
 - **Operation**: The BLAS/LAPACK function being benchmarked
 - **Size**: Problem size (vector length, matrix dimensions)
 - **Time**: Average execution time over multiple runs
@@ -276,10 +277,10 @@ Benchmark results show:
 
 Example report shape:
 
-| Operation | Size | Backend | Time | GFLOPS / ratio |
-|-----------|------|---------|------|----------------|
-| GEMM | 512 | pure V / C BLAS / NumPy | ms | backend-specific |
-| Conv2D | `1x1x32x32`, `3x3` | VSL / NumPy reference | ms | ratio |
+| Operation | Size               | Backend                 | Time | GFLOPS / ratio   |
+|-----------|--------------------|-------------------------|------|------------------|
+| GEMM      | 512                | pure V / C BLAS / NumPy | ms   | backend-specific |
+| Conv2D    | `1x1x32x32`, `3x3` | VSL / NumPy reference   | ms   | ratio            |
 
 Do not compare numbers across machines without recording CPU/GPU model,
 compiler flags, and backend flags.
