@@ -172,6 +172,7 @@ v -cflags <flags> run vsl/examples/<example>/main.v
 | [roots_nelder_mead](./roots_nelder_mead)                             | Derivative-free multivariate minimization with simplex convergence diagnostics. |
 | [roots_bfgs](./roots_bfgs)                                           | Analytic-gradient multivariate minimization with BFGS.                          |
 | [la_sparse_cg](./la_sparse_cg)                                       | Sparse conjugate-gradient and nonsymmetric GMRES/BiCGSTAB examples.             |
+| [la_sparse_lu](./la_sparse_lu)                                       | Reusable partial-pivoted LU factorization and solves for f64 CSR.                |
 | [diff_example](./diff_example)                                       | Differentiation example.                                                        |
 | [poly_examples](./poly_examples)                                     | Core polynomial operations and root solvers.                                    |
 | [prime_examples](./prime_examples)                                   | Prime module usage: primality checks and sieve.                                 |
