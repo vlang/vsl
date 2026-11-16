@@ -177,6 +177,23 @@ probability := model.predict([4.0, 6.0])
 println('Probability of passing: ${probability:.2f}')
 ```
 
+## Save and Load Inference State
+
+VSL currently supports a version-1 JSON artifact for the learned inference
+parameters of `LogReg[f64]`:
+
+```v ignore
+model.save_json('student_model.json')!
+loaded := ml.load_logreg_artifact('student_model.json')!
+probability := loaded.predict([4.0, 6.0])!
+```
+
+The loaded artifact predicts without retaining the training dataset. Loading
+checks the exact schema and model identifiers, version, feature count, weight
+shape, and finite parameters. This focused format does not include training
+data or optimizer history and does not imply persistence support for other
+models or ONNX export.
+
 ## Visualization
 
 ```v ignore
