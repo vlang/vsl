@@ -32,6 +32,11 @@ then reuse its learned state for validation, test, and inference data.
 ### Polynomial Features
 - **PolynomialFeatures**: Generates polynomial powers and feature interactions
 
+### Feature Selection
+
+- **VarianceThreshold**: Removes features whose training-set variance is at or
+  below a configured threshold
+
 ### Numeric Pipelines
 - **MatrixTransformer**: Common interface for fitted numeric transformations
 - **Pipeline**: Fits named transformations in sequence and tracks output feature names
@@ -177,6 +182,25 @@ expanded := features.transform(data)!
 Set `interaction_only: true` to exclude repeated input features in a term, or
 `include_bias: false` to omit the leading column of ones.
 
+### Variance-based feature selection
+
+```v
+import vsl.preprocessing
+
+training := [[1.0, 7.0], [3.0, 7.0], [5.0, 7.0]]
+mut selector := preprocessing.VarianceThreshold.new(0.0)
+selected := selector.fit_transform(training)!
+assert selector.get_support()! == [0]
+assert selector.get_feature_names_out(['signal', 'constant'])! == ['signal']
+```
+
+`VarianceThreshold` uses population variance and keeps columns whose variance
+is strictly greater than `threshold`. Fit it on training data only, then reuse
+the fitted selector to transform validation, test, or inference data. Fitting
+requires a non-empty rectangular matrix of finite values; a threshold that
+removes every feature returns an error. It implements `MatrixTransformer` and
+can be used as a named step in `Pipeline`.
+
 ### Leakage-safe numeric pipeline
 
 ```v
@@ -305,6 +329,17 @@ state is held in memory; serialization remains outside this pipeline slice.
 | `transform(data)` | Expands a rectangular matrix into polynomial features |
 | `get_feature_names_out(input_features)` | Returns names in transform output order |
 
+### VarianceThreshold
+
+| Method | Description |
+|--------|-------------|
+| `new(threshold)` | Creates a selector that keeps population variance greater than the threshold |
+| `fit(data)` | Learns per-feature variances and retained columns from training data |
+| `transform(data)` | Selects the fitted columns in their original order |
+| `fit_transform(data)` | Fits and selects in one step |
+| `get_support()` | Returns retained input-column indices |
+| `get_feature_names_out(input_features)` | Returns names for the retained columns |
+
 ### Numeric Pipeline
 
 | API | Description |
@@ -318,8 +353,9 @@ state is held in memory; serialization remains outside this pipeline slice.
 
 `MatrixTransformer` requires `fit`, `transform`, and
 `get_feature_names_out`. `StandardScaler`, `MinMaxScaler`, `RobustScaler`,
-`SimpleImputer`, and `PolynomialFeatures` implement it. String encoders and
-serialization are not yet integrated with this numeric pipeline.
+`SimpleImputer`, `PolynomialFeatures`, and `VarianceThreshold` implement it.
+String encoders and serialization are not yet integrated with this numeric
+pipeline.
 
 ## Integration with ML Pipeline
 
