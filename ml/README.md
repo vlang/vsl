@@ -72,8 +72,8 @@ data changes, which is beneficial for datasets that are frequently updated.
 `query_neighbors(training, queries, k, metric)` returns each query row's top-k
 training-row indices and distances, ordered by distance and then by original
 training index. Euclidean and Manhattan metrics are supported; identical rows
-remain distinct neighbors. This first slice is exact brute force, not yet a
-classifier, regressor, or indexed backend.
+remain distinct neighbors. `KNNRegressor` uses this exact query primitive for
+fixed-k regression; it is not an indexed backend.
 
 ```v ignore
 result := query_neighbors([[0.0, 0.0], [2.0, 1.0]], [[1.0, 1.0]], 1, .euclidean)!
@@ -82,6 +82,21 @@ println(result.distances)
 ```
 
 See the [exact neighbor query example](../examples/ml_neighbor_query/README.md).
+
+### K-Nearest Neighbors Regression
+
+`KNNRegressor.new(training, targets, k: 5, metric: .euclidean)` constructs a
+fixed-k regressor using `KNNRegressorConfig`; `.euclidean` and `.manhattan`
+metrics are supported. Uniform weighting averages selected targets; distance
+weighting uses inverse distance, averaging only exact-match targets when any
+selected neighbor has zero distance. Use `predict` for one row or
+`predict_batch` to preserve the order of multiple query rows.
+
+The constructor requires nonempty, well-formed training data, one finite target
+per feature row, and `1 <= k <= training row count`. Queries must match the
+training feature width and contain finite values. Because this estimator always
+selects `k` neighbors, there is no empty-neighborhood case; radius APIs are out
+of scope. See the [KNN regression example](../examples/ml_knn_regression/README.md).
 
 ### Logistic Regression
 
