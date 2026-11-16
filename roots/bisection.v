@@ -61,7 +61,7 @@ pub mut:
 
 // next returns the next iteration of the bisection method.
 pub fn (mut solver Bisection) next() ?&BisectionIteration {
-	if solver.initialized && (solver.xmin != solver.cached_xmin || solver.xmax != solver.cached_xmax) {
+	if solver.xmin != solver.cached_xmin || solver.xmax != solver.cached_xmax {
 		solver.initialized = false
 		solver.finished = false
 		solver.n_iter = 0
@@ -71,6 +71,8 @@ pub fn (mut solver Bisection) next() ?&BisectionIteration {
 		return none
 	}
 	if !solver.initialized {
+		solver.cached_xmin = solver.xmin
+		solver.cached_xmax = solver.xmax
 		if !finite_value(solver.xmin) || !finite_value(solver.xmax) || solver.xmin >= solver.xmax
 			|| !finite_value(solver.epsabs) || solver.epsabs < 0.0 || !finite_value(solver.epsrel)
 			|| solver.epsrel < 0.0 || solver.n_max <= 0 {

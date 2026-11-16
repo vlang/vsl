@@ -99,6 +99,26 @@ fn test_bisection_rejects_an_interval_without_a_sign_change() {
 	}
 }
 
+fn test_bisection_retries_after_initial_bounds_are_corrected() {
+	f := func.Fn.new(f: f_identity)
+	mut solver := Bisection.new(f, xmin: 1.0, xmax: 2.0)
+	if result := solver.next() {
+		assert false, 'expected an invalid bracket, got ${result}'
+	}
+	assert solver.n_f_calls == 2
+	if result := solver.next() {
+		assert false, 'unchanged invalid bounds must remain terminal, got ${result}'
+	}
+	assert solver.n_f_calls == 2
+
+	solver.xmin = -1.0
+	solver.xmax = 1.0
+	result := solver.solve()?
+	assert result.x == 0.0
+	assert result.fx == 0.0
+	assert result.n_iter == 1
+}
+
 fn test_bisection_revalidates_bounds_changed_between_steps() {
 	f := func.Fn.new(f: f_nonfinite_on_second_midpoint)
 	mut solver := Bisection.new(f,
