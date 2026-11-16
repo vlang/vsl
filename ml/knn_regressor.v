@@ -112,14 +112,14 @@ fn (regressor &KNNRegressor) predict_from_neighbors(indices []int, distances []f
 		return 0.0
 	}
 
-	mut weighted_sum := CompensatedSum{}
-	mut weight_sum := CompensatedSum{}
+	mut weighted_sum := 0.0
+	mut weight_sum := 0.0
 	for i, index in indices {
 		weight := min_distance / distances[i]
-		weighted_sum.add((regressor.targets[index] / scale) * weight)
-		weight_sum.add(weight)
+		weighted_sum += (regressor.targets[index] / scale) * weight
+		weight_sum += weight
 	}
-	return finite_prediction((weighted_sum.total() / weight_sum.total()) * scale)!
+	return finite_prediction((weighted_sum / weight_sum) * scale)!
 }
 
 fn stable_uniform_mean(values []f64) !f64 {
@@ -133,31 +133,11 @@ fn stable_uniform_mean(values []f64) !f64 {
 	if scale == 0.0 {
 		return 0.0
 	}
-	mut scaled_sum := CompensatedSum{}
+	mut scaled_sum := 0.0
 	for value in values {
-		scaled_sum.add(value / scale)
+		scaled_sum += value / scale
 	}
-	return finite_prediction((scaled_sum.total() / f64(values.len)) * scale)!
-}
-
-struct CompensatedSum {
-mut:
-	sum        f64
-	correction f64
-}
-
-fn (mut accumulator CompensatedSum) add(value f64) {
-	next := accumulator.sum + value
-	if math.abs(accumulator.sum) >= math.abs(value) {
-		accumulator.correction += (accumulator.sum - next) + value
-	} else {
-		accumulator.correction += (value - next) + accumulator.sum
-	}
-	accumulator.sum = next
-}
-
-fn (accumulator CompensatedSum) total() f64 {
-	return accumulator.sum + accumulator.correction
+	return finite_prediction((scaled_sum / f64(values.len)) * scale)!
 }
 
 fn finite_prediction(value f64) !f64 {
