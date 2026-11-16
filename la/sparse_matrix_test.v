@@ -70,6 +70,26 @@ fn test_triplet_to_csr_sums_duplicates_and_supports_matvec() {
 	}
 }
 
+fn test_csr_rmatvec_handles_rectangular_matrices_and_empty_rows_and_columns() ! {
+	mut triplet := Triplet.new[f64](4, 5, 6)
+	triplet.put(0, 0, 0.5)!
+	triplet.put(0, 0, 0.5)!
+	triplet.put(0, 2, 2.0)!
+	triplet.put(1, 1, 3.0)!
+	triplet.put(3, 0, 4.0)!
+	triplet.put(3, 2, 5.0)!
+
+	matrix := triplet.to_csr()!
+	assert matrix.rmatvec([2.0, 3.0, 4.0, 5.0])! == [22.0, 9.0, 29.0, 0.0, 0.0]
+
+	if _ := matrix.rmatvec([1.0, 2.0, 3.0]) {
+		assert false, 'CSR rmatvec must require one value per matrix row'
+	}
+
+	empty := Triplet.new[f64](3, 0, 0).to_csr()!
+	assert empty.rmatvec([1.0, 2.0, 3.0])! == []
+}
+
 fn test_empty_triplet_converts_to_csr_with_empty_rows() {
 	triplet := Triplet.new[f64](3, 0, 0)
 	csr := triplet.to_csr()!
