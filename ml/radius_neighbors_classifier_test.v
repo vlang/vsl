@@ -8,7 +8,7 @@ fn test_radius_neighbors_classifier_uniform_and_inverse_distance_weights() {
 	uniform := RadiusNeighborsClassifier.new(training, labels, RadiusNeighborsClassifierConfig{
 		radius:  2.0
 		metric:  .euclidean
-		weights: .uniform
+		weights: RadiusNeighborsVoteWeights.uniform
 	})!
 	inverse := RadiusNeighborsClassifier.new(training, labels, RadiusNeighborsClassifierConfig{
 		radius:  2.0

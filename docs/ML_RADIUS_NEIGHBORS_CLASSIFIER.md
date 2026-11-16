@@ -30,3 +30,7 @@ println(model.predict([1.0, 1.0])!)
 ```
 
 See the [radius-neighbor classifier example](../examples/ml_radius_neighbors_classifier/README.md).
+
+The matching `RadiusNeighborsRegressor` uses the same
+`RadiusNeighborsWeighting` options to average numeric targets. See the
+[radius-neighbor regression guide](ML_RADIUS_NEIGHBORS_REGRESSOR.md).

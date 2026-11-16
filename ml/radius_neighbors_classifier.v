@@ -3,18 +3,21 @@ module ml
 import math
 import vsl.errors
 
-// RadiusNeighborsVoteWeights selects how matching rows contribute to a class score.
-pub enum RadiusNeighborsVoteWeights {
+// RadiusNeighborsWeighting selects how matching rows contribute to a prediction.
+pub enum RadiusNeighborsWeighting {
 	uniform
 	inverse_distance
 }
+
+// RadiusNeighborsVoteWeights remains available for existing classifier callers.
+pub type RadiusNeighborsVoteWeights = RadiusNeighborsWeighting
 
 // RadiusNeighborsClassifierConfig controls a radius-neighbor classifier.
 pub struct RadiusNeighborsClassifierConfig {
 pub:
 	radius  f64
 	metric  NeighborMetric
-	weights RadiusNeighborsVoteWeights
+	weights RadiusNeighborsWeighting
 }
 
 // RadiusNeighborsClassifier predicts a numeric class from all training rows
