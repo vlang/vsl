@@ -198,7 +198,7 @@ jobs:
       # Stop a failing test session at its first failure instead of
       # running the whole suite to completion; the remaining files
       # add no signal.
-      VTEST_FAIL_FAST: '1'
+      VTEST_FAIL_FAST: "1"
       VJOBS: "2"
 
     steps:
