@@ -40,15 +40,15 @@ Requested-time interpolation is opt-in and does not retain a full trajectory.
 The optional `RK23Params.event_function` detects the first exact zero at an
 accepted-step boundary or sign change across an accepted step. The solver
 stops at that event with status `.event_detected`; it localizes the root by
-bisection over the step's cubic Hermite interpolant, up to exact zero or the
+bisection using the step's cubic Hermite interpolation, up to exact zero or the
 adjacent representable times. An event already equal to zero at `t_start`
 stops immediately. Roots that only touch zero without changing sign are not
 detected, and multiple crossings within one accepted step may be missed.
 Rejected steps do not invoke the event callback. Event callback evaluations
-share `max_evals` with derivative evaluations and are reported separately as
-`n_event_calls`; `n_calls` remains the derivative callback count. Non-finite
-event values stop with `.non_finite_event_value`. Requested output samples are
-returned only through the localized event time.
+share the configured evaluation budget with derivative evaluations and are
+reported separately as `n_event_calls`; `n_calls` remains the derivative
+callback count. Non-finite event values stop with `.non_finite_event_value`.
+Requested output samples are returned only through the localized event time.
 
 This ODE slice does not provide stiff methods, multiple/directional events, or
 event handling for roots that do not change sign.
