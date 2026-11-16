@@ -123,6 +123,27 @@ weighted sufficient statistics, not the input batches; use
 See the [streaming GaussianNB example](../examples/ml_gaussian_nb_streaming/README.md)
 for a complete two-batch program.
 
+## Logistic Regression JSON Persistence
+
+The current persistence slice is limited to the fitted inference state of
+`LogReg[f64]`. Save the schema-versioned JSON artifact with `save_json`, then
+load an independent `LogRegArtifact` for prediction without the original
+training data:
+
+```v ignore
+model.save_json('student_model.json')!
+loaded := ml.load_logreg_artifact('student_model.json')!
+probability := loaded.predict([3.5, 6.0])!
+```
+
+The version-1 artifact contains model/schema identifiers, feature count,
+weights, bias, and a non-negative regularization parameter. Decoding validates
+the exact field set, supported identifiers/version, feature dimensions, and
+finite parameters. It uses JSON data decoding only and does not deserialize
+executable code. This does not persist training data, observer state, optimizer
+configuration, preprocessing pipelines, other estimators, or provide ONNX
+export; it is not a general cross-version persistence contract.
+
 ## Non-Observer Models
 
 The following machine learning models in VSL do not require the observer pattern
