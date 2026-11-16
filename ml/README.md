@@ -187,3 +187,17 @@ Linear Regression is used for predicting a continuous target variable based on o
 or more predictor variables. It is typically trained once on a dataset and used to
 make predictions without requiring continuous updates. Hence, it is not implemented
 as an observer model.
+
+### Lasso Sample Weights
+
+`Lasso.train_with_sample_weights(sample_weights)` fits the model using finite,
+non-negative weights, one per sample. Zero-weight samples are ignored; the
+weights must have a positive sum. Passing an empty slice assigns unit weight to
+every sample. The data terms use the weights, and the L1 threshold scales with
+their sum so integer weights match fitting duplicated observations. The
+unweighted `train()` method uses the same solver with unit weights. Both methods
+center features using the corresponding sample-weighted means and recover the
+intercept from the weighted feature and target means.
+
+See the [weighted Lasso example](../examples/ml_weighted_lasso/README.md) for a
+complete program.
