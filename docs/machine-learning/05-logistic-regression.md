@@ -93,6 +93,7 @@ C = (1/m) Σ[-y·log(h(x)) - (1-y)·log(1-h(x))] + (λ/2m)Σθ²
 ```
 
 Where:
+
 - `h(x) = σ(b + xᵀθ)` is the predicted probability
 - `y` is the true label (0 or 1)
 - `m` is the number of samples
@@ -103,12 +104,14 @@ The regularization term `(λ/2m)Σθ²` helps prevent overfitting.
 ### Training Methods
 
 **Gradient Descent:**
+
 - Iteratively updates parameters: `θ := θ - α·∇C`
 - `α` is the learning rate
 - More stable, works well for large datasets
 - Requires tuning learning rate
 
 **Newton's Method:**
+
 - Uses second-order derivatives (Hessian matrix)
 - Faster convergence (fewer iterations)
 - More computation per iteration
@@ -205,6 +208,7 @@ plt.show()!
 ```
 
 The plot shows:
+
 - Data points colored by class
 - Decision boundary (sigmoid curve)
 - Probability distribution
@@ -232,15 +236,19 @@ The plot shows:
 ## Common Issues and Solutions
 
 **Problem**: Model always predicts the same class
+
 - **Solution**: Check feature scaling, try different initial parameters, increase learning rate
 
 **Problem**: Cost increases during training
+
 - **Solution**: Reduce learning rate, check for bugs in gradient computation
 
 **Problem**: Model doesn't converge
+
 - **Solution**: Increase epochs, adjust learning rate, try Newton's method
 
 **Problem**: Overfitting
+
 - **Solution**: Add regularization (increase lambda), use more training data
 
 ## Performance Considerations
@@ -255,4 +263,3 @@ The plot shows:
 - [SVM](06-svm.md) - Support Vector Machines for non-linear classification
 - [Decision Trees](07-decision-trees.md) - Tree-based classification
 - [Examples](../../examples/ml_logreg/) - Working examples
-
