@@ -103,4 +103,3 @@ example demonstrates both BiCGSTAB variants.
 
 - [Examples](../../examples/) - Find sparse matrix examples
 - [Advanced Topics](../advanced/) - More advanced techniques
-
