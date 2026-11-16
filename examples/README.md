@@ -56,6 +56,7 @@ v -cflags <flags> run vsl/examples/<example>/main.v
 | [ml_decision_tree](./ml_decision_tree)           | Decision tree for classification and regression.                                       |
 | [ml_random_forest](./ml_random_forest)           | Random Forest ensemble learning.                                                       |
 | [ml_gaussian_nb](./ml_gaussian_nb)               | Probabilistic classification with Gaussian Naive Bayes.                                |
+| [ml_knn_regression](./ml_knn_regression)         | Fixed-k regression with uniform and distance weighting.                                |
 | [ml_complete_pipeline](./ml_complete_pipeline)   | End-to-end preprocessing, model selection, and metrics.                                |
 | [ml_cross_validation](./ml_cross_validation)     | Compare logistic regression and Gaussian Naive Bayes with stratified cross-validation. |
 
