@@ -58,7 +58,7 @@ v -cflags <flags> run vsl/examples/<example>/main.v
 | [ml_gaussian_nb](./ml_gaussian_nb)               | Probabilistic classification with Gaussian Naive Bayes.                                |
 | [ml_complete_pipeline](./ml_complete_pipeline)   | End-to-end preprocessing, model selection, and metrics.                                |
 | [ml_cross_validation](./ml_cross_validation)     | Compare logistic regression and Gaussian Naive Bayes with stratified cross-validation. |
-| [ml_logreg_persistence](./ml_logreg_persistence) | Train, save, reload, and predict with a versioned logistic-regression JSON artifact.    |
+| [ml_logreg_persistence](./ml_logreg_persistence) | Train, save, reload, and predict with a versioned logistic-regression JSON artifact.   |
 
 ## Plotting Examples 📊
 
