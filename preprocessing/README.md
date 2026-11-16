@@ -10,26 +10,31 @@ then reuse its learned state for validation, test, and inference data.
 ## Features
 
 ### Scalers
+
 - **StandardScaler**: Standardizes features by removing the mean and scaling
   to unit variance (Z-score normalization)
 - **MinMaxScaler**: Transforms features by scaling to a given range (default [0, 1])
 - **RobustScaler**: Scales features using statistics robust to outliers (median and IQR)
 
 ### Imputation
+
 - **SimpleImputer**: Learns per-feature mean, median, or constant replacements
   for NaN values from training data and reuses them during inference
 
 ### Encoders
+
 - **LabelEncoder**: Encodes categorical labels as integers
 - **OneHotEncoder**: Encodes categorical features as one-hot numeric arrays
 - **OrdinalEncoder**: Encodes categorical features as ordinal integers
 
 ### Binning
+
 - **cut**: Bins values into discrete intervals using equal-width binning
 - **qcut**: Bins values using quantile-based (equal-frequency) binning
 - **Binner**: Fitted binning transformer for consistent bin assignment
 
 ### Polynomial Features
+
 - **PolynomialFeatures**: Generates polynomial powers and feature interactions
 
 ### Feature Selection
@@ -38,6 +43,7 @@ then reuse its learned state for validation, test, and inference data.
   below a configured threshold
 
 ### Numeric Pipelines
+
 - **MatrixTransformer**: Common interface for fitted numeric transformations
 - **Pipeline**: Fits named transformations in sequence and tracks output feature names
 
@@ -233,47 +239,49 @@ the tracked names in their output order.
 
 ### StandardScaler
 
-| Method | Description |
-|--------|-------------|
-| `new()` | Creates a new StandardScaler |
-| `fit(x)` | Computes mean and std from data |
-| `transform(x)` | Applies standardization |
-| `fit_transform(x)` | Fits and transforms in one step |
-| `inverse_transform(x)` | Reverses standardization |
+| Method                 | Description                     |
+|------------------------|---------------------------------|
+| `new()`                | Creates a new StandardScaler    |
+| `fit(x)`               | Computes mean and std from data |
+| `transform(x)`         | Applies standardization         |
+| `fit_transform(x)`     | Fits and transforms in one step |
+| `inverse_transform(x)` | Reverses standardization        |
 
 **Attributes after fitting:**
+
 - `mean_`: Mean of each feature
 - `std_`: Standard deviation of each feature
 
 ### MinMaxScaler
 
-| Method | Description |
-|--------|-------------|
+| Method                          | Description                       |
+|---------------------------------|-----------------------------------|
 | `new(feature_min, feature_max)` | Creates scaler with desired range |
-| `fit(x)` | Computes min and max from data |
-| `transform(x)` | Applies min-max scaling |
-| `fit_transform(x)` | Fits and transforms in one step |
-| `inverse_transform(x)` | Reverses scaling |
+| `fit(x)`                        | Computes min and max from data    |
+| `transform(x)`                  | Applies min-max scaling           |
+| `fit_transform(x)`              | Fits and transforms in one step   |
+| `inverse_transform(x)`          | Reverses scaling                  |
 
 ### RobustScaler
 
-| Method | Description |
-|--------|-------------|
-| `new()` | Creates a new RobustScaler |
-| `fit(x)` | Computes median and IQR from data |
-| `transform(x)` | Applies robust scaling |
-| `fit_transform(x)` | Fits and transforms in one step |
+| Method             | Description                       |
+|--------------------|-----------------------------------|
+| `new()`            | Creates a new RobustScaler        |
+| `fit(x)`           | Computes median and IQR from data |
+| `transform(x)`     | Applies robust scaling            |
+| `fit_transform(x)` | Fits and transforms in one step   |
 
 ### SimpleImputer
 
-| Method | Description |
-|--------|-------------|
-| `new(strategy, fill_value)` | Creates a NaN imputer |
-| `fit(x)` | Learns one replacement value per feature |
-| `transform(x)` | Replaces NaNs using learned training statistics |
-| `fit_transform(x)` | Fits and transforms in one step |
+| Method                      | Description                                     |
+|-----------------------------|-------------------------------------------------|
+| `new(strategy, fill_value)` | Creates a NaN imputer                           |
+| `fit(x)`                    | Learns one replacement value per feature        |
+| `transform(x)`              | Replaces NaNs using learned training statistics |
+| `fit_transform(x)`          | Fits and transforms in one step                 |
 
 **ImputationStrategy:**
+
 - `.mean`: Mean of observed values per feature
 - `.median`: Median of observed values per feature
 - `.constant`: The configured `fill_value`
@@ -287,69 +295,70 @@ state is held in memory; serialization remains outside this pipeline slice.
 
 ### LabelEncoder
 
-| Method | Description |
-|--------|-------------|
-| `new()` | Creates a new LabelEncoder |
-| `fit(y)` | Learns unique classes |
-| `transform(y)` | Encodes labels to integers |
-| `fit_transform(y)` | Fits and transforms in one step |
+| Method                 | Description                      |
+|------------------------|----------------------------------|
+| `new()`                | Creates a new LabelEncoder       |
+| `fit(y)`               | Learns unique classes            |
+| `transform(y)`         | Encodes labels to integers       |
+| `fit_transform(y)`     | Fits and transforms in one step  |
 | `inverse_transform(y)` | Converts integers back to labels |
 
 ### OneHotEncoder
 
-| Method | Description |
-|--------|-------------|
-| `new(drop_first)` | Creates encoder; drop_first for dummy encoding |
-| `fit(x)` | Learns categories for each feature |
-| `transform(x)` | Applies one-hot encoding |
-| `fit_transform(x)` | Fits and transforms in one step |
-| `get_feature_names(input_names)` | Returns output feature names |
+| Method                           | Description                                    |
+|----------------------------------|------------------------------------------------|
+| `new(drop_first)`                | Creates encoder; drop_first for dummy encoding |
+| `fit(x)`                         | Learns categories for each feature             |
+| `transform(x)`                   | Applies one-hot encoding                       |
+| `fit_transform(x)`               | Fits and transforms in one step                |
+| `get_feature_names(input_names)` | Returns output feature names                   |
 
 ### Binner
 
-| Method | Description |
-|--------|-------------|
+| Method                          | Description                            |
+|---------------------------------|----------------------------------------|
 | `new(n_bins, strategy, labels)` | Creates binner with specified strategy |
-| `fit(values)` | Computes bin edges |
-| `transform(values)` | Assigns values to bins |
-| `fit_transform(values)` | Fits and transforms in one step |
-| `transform_to_indices(values)` | Returns bin indices instead of labels |
+| `fit(values)`                   | Computes bin edges                     |
+| `transform(values)`             | Assigns values to bins                 |
+| `fit_transform(values)`         | Fits and transforms in one step        |
+| `transform_to_indices(values)`  | Returns bin indices instead of labels  |
 
 **BinningStrategy:**
+
 - `.uniform`: Equal-width bins
 - `.quantile`: Equal-frequency bins
 
 ### PolynomialFeatures
 
-| Field | Description |
-|-------|-------------|
-| `degree` | Maximum polynomial degree (default 2) |
-| `interaction_only` | Use each input feature at most once in each term |
-| `include_bias` | Add a leading column of ones (default true) |
-| `transform(data)` | Expands a rectangular matrix into polynomial features |
-| `get_feature_names_out(input_features)` | Returns names in transform output order |
+| Field                                   | Description                                           |
+|-----------------------------------------|-------------------------------------------------------|
+| `degree`                                | Maximum polynomial degree (default 2)                 |
+| `interaction_only`                      | Use each input feature at most once in each term      |
+| `include_bias`                          | Add a leading column of ones (default true)           |
+| `transform(data)`                       | Expands a rectangular matrix into polynomial features |
+| `get_feature_names_out(input_features)` | Returns names in transform output order               |
 
 ### VarianceThreshold
 
-| Method | Description |
-|--------|-------------|
-| `new(threshold)` | Creates a selector that keeps population variance greater than the threshold |
-| `fit(data)` | Learns per-feature variances and retained columns from training data |
-| `transform(data)` | Selects the fitted columns in their original order |
-| `fit_transform(data)` | Fits and selects in one step |
-| `get_support()` | Returns retained input-column indices |
-| `get_feature_names_out(input_features)` | Returns names for the retained columns |
+| Method                                  | Description                                                                  |
+|-----------------------------------------|------------------------------------------------------------------------------|
+| `new(threshold)`                        | Creates a selector that keeps population variance greater than the threshold |
+| `fit(data)`                             | Learns per-feature variances and retained columns from training data         |
+| `transform(data)`                       | Selects the fitted columns in their original order                           |
+| `fit_transform(data)`                   | Fits and selects in one step                                                 |
+| `get_support()`                         | Returns retained input-column indices                                        |
+| `get_feature_names_out(input_features)` | Returns names for the retained columns                                       |
 
 ### Numeric Pipeline
 
-| API | Description |
-|-----|-------------|
-| `Pipeline.new(steps)` | Creates a pipeline from named `PipelineStep` values |
-| `PipelineStep{name, transformer}` | Associates a unique name with a `MatrixTransformer` |
-| `fit(data, feature_names)` | Fits steps in sequence; `[]` generates `x0`, `x1`, etc. |
-| `fit_transform(data, feature_names)` | Fits the steps and returns training features |
-| `transform(data)` | Reuses fitted state and validates input/output widths |
-| `get_feature_names_out()` | Returns the output names learned during fitting |
+| API                                  | Description                                             |
+|--------------------------------------|---------------------------------------------------------|
+| `Pipeline.new(steps)`                | Creates a pipeline from named `PipelineStep` values     |
+| `PipelineStep{name, transformer}`    | Associates a unique name with a `MatrixTransformer`     |
+| `fit(data, feature_names)`           | Fits steps in sequence; `[]` generates `x0`, `x1`, etc. |
+| `fit_transform(data, feature_names)` | Fits the steps and returns training features            |
+| `transform(data)`                    | Reuses fitted state and validates input/output widths   |
+| `get_feature_names_out()`            | Returns the output names learned during fitting         |
 
 `MatrixTransformer` requires `fit`, `transform`, and
 `get_feature_names_out`. `StandardScaler`, `MinMaxScaler`, `RobustScaler`,

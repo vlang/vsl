@@ -59,7 +59,7 @@ v -cflags <flags> run vsl/examples/<example>/main.v
 | [ml_gaussian_nb](./ml_gaussian_nb)               | Probabilistic classification with Gaussian Naive Bayes.                                |
 | [ml_complete_pipeline](./ml_complete_pipeline)   | End-to-end preprocessing, model selection, and metrics.                                |
 | [ml_cross_validation](./ml_cross_validation)     | Compare logistic regression and Gaussian Naive Bayes with stratified cross-validation. |
-| [ml_variance_threshold](./ml_variance_threshold) | Select non-constant features using training-only variance and a fitted pipeline.        |
+| [ml_variance_threshold](./ml_variance_threshold) | Select non-constant features using training-only variance and a fitted pipeline.       |
 
 ## Plotting Examples 📊
 
