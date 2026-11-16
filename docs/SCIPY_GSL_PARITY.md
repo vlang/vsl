@@ -24,22 +24,22 @@ API. Recheck upstream documentation when updating this tracker.
 
 ## Capability matrix
 
-| Domain | Status | VSL modules | Follow-up |
-| --- | --- | --- | --- |
-| Dense linear algebra and BLAS/LAPACK | Partial | [blas][vsl-blas], [la][vsl-la], [lapack][vsl-lapack] | #65, #529 |
-| Sparse formats and solvers | Partial | [sparse APIs][vsl-sparse] | #524 broader formats/preconditioners; #567 direct solvers and reusable factorizations |
-| Special functions | Partial | [fun][vsl-fun] | #540–#543, #556–#558 |
-| Statistics and probability | Partial | [statistics][vsl-statistics], [dist][vsl-dist] | #523, #559, #572 |
-| Interpolation and splines | Partial | [fun][vsl-fun], [poly][vsl-poly] | #522 |
-| Root finding and minimization | Partial | [roots][vsl-roots] | #520, #562 |
-| Quadrature and ODE solvers | Partial | [integrate][vsl-integrate], [ode][vsl-ode] | #521 improper integration, stiff solvers, dense output, and events |
-| Fourier transforms | Partial | [fft][vsl-fft] | #527, #528 |
-| Signal processing and wavelets | Missing | [fft][vsl-fft] only | #560 |
-| Multidimensional image processing and morphology | Missing | — | #585 |
-| ML | Partial | [ml][vsl-ml], [prep][vsl-preprocessing], [selection][vsl-model-selection], [metrics][vsl-metrics] | #514–#519, #529, #530 |
-| Plotting and visualization | Partial | [plot][vsl-plot] | #545 |
-| Device selection and accelerator backends | Partial | [compute][vsl-compute], [CUDA][vsl-cuda], [VCL][vsl-vcl], [Vulkan][vsl-vulkan] | #525–#528 |
-| Numerical differentiation | Implemented, limited scope | [deriv][vsl-deriv] | #564 |
+| Domain                                           | Status                     | VSL modules                                                                                       | Follow-up                                                                             |
+|--------------------------------------------------|----------------------------|---------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------|
+| Dense linear algebra and BLAS/LAPACK             | Partial                    | [blas][vsl-blas], [la][vsl-la], [lapack][vsl-lapack]                                              | #65, #529                                                                             |
+| Sparse formats and solvers                       | Partial                    | [sparse APIs][vsl-sparse]                                                                         | #524 broader formats/preconditioners; #567 direct solvers and reusable factorizations |
+| Special functions                                | Partial                    | [fun][vsl-fun]                                                                                    | #540–#543, #556–#558                                                                  |
+| Statistics and probability                       | Partial                    | [statistics][vsl-statistics], [dist][vsl-dist]                                                    | #523, #559, #572                                                                      |
+| Interpolation and splines                        | Partial                    | [fun][vsl-fun], [poly][vsl-poly]                                                                  | #522                                                                                  |
+| Root finding and minimization                    | Partial                    | [roots][vsl-roots]                                                                                | #520, #562                                                                            |
+| Quadrature and ODE solvers                       | Partial                    | [integrate][vsl-integrate], [ode][vsl-ode]                                                        | #521 improper integration, stiff solvers, dense output, and events                    |
+| Fourier transforms                               | Partial                    | [fft][vsl-fft]                                                                                    | #527, #528                                                                            |
+| Signal processing and wavelets                   | Missing                    | [fft][vsl-fft] only                                                                               | #560                                                                                  |
+| Multidimensional image processing and morphology | Missing                    | —                                                                                                 | #585                                                                                  |
+| ML                                               | Partial                    | [ml][vsl-ml], [prep][vsl-preprocessing], [selection][vsl-model-selection], [metrics][vsl-metrics] | #514–#519, #529, #530                                                                 |
+| Plotting and visualization                       | Partial                    | [plot][vsl-plot]                                                                                  | #545                                                                                  |
+| Device selection and accelerator backends        | Partial                    | [compute][vsl-compute], [CUDA][vsl-cuda], [VCL][vsl-vcl], [Vulkan][vsl-vulkan]                    | #525–#528                                                                             |
+| Numerical differentiation                        | Implemented, limited scope | [deriv][vsl-deriv]                                                                                | #564                                                                                  |
 
 The rows are intentionally coarse. Details and authoritative API references
 for each domain follow:
