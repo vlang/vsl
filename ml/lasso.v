@@ -103,6 +103,9 @@ pub fn (mut o Lasso) train_with_sample_weights(sample_weights []f64) ! {
 		if math.is_inf(weight_sum, 0) {
 			return errors.error('sum of sample weights overflowed', .einval)
 		}
+		if weight == 0.0 {
+			continue
+		}
 		if math.is_nan(y[i]) || math.is_inf(y[i], 0) {
 			return errors.error('training targets must be finite', .einval)
 		}
@@ -140,6 +143,9 @@ pub fn (mut o Lasso) train_with_sample_weights(sample_weights []f64) ! {
 	for j in 0 .. n {
 		for i in 0 .. m {
 			weight := if sample_weights.len == 0 { 1.0 } else { sample_weights[i] }
+			if weight == 0.0 {
+				continue
+			}
 			centered := x.get(i, j) - x_means[j]
 			x_norms[j] += weight * centered * centered
 		}
@@ -151,6 +157,11 @@ pub fn (mut o Lasso) train_with_sample_weights(sample_weights []f64) ! {
 	mut coefficients := []f64{len: n}
 	mut residual := y.clone()
 	for i in 0 .. m {
+		weight := if sample_weights.len == 0 { 1.0 } else { sample_weights[i] }
+		if weight == 0.0 {
+			residual[i] = 0.0
+			continue
+		}
 		residual[i] -= y_mean
 		if math.is_nan(residual[i]) || math.is_inf(residual[i], 0) {
 			return errors.error('centered targets overflowed', .einval)
@@ -167,6 +178,10 @@ pub fn (mut o Lasso) train_with_sample_weights(sample_weights []f64) ! {
 			old_coef := coefficients[j]
 			if old_coef != 0.0 {
 				for i in 0 .. m {
+					weight := if sample_weights.len == 0 { 1.0 } else { sample_weights[i] }
+					if weight == 0.0 {
+						continue
+					}
 					centered := x.get(i, j) - x_means[j]
 					residual[i] += centered * old_coef
 					if math.is_nan(residual[i]) || math.is_inf(residual[i], 0) {
@@ -178,6 +193,9 @@ pub fn (mut o Lasso) train_with_sample_weights(sample_weights []f64) ! {
 			mut rho := 0.0
 			for i in 0 .. m {
 				weight := if sample_weights.len == 0 { 1.0 } else { sample_weights[i] }
+				if weight == 0.0 {
+					continue
+				}
 				centered := x.get(i, j) - x_means[j]
 				rho += weight * centered * residual[i]
 			}
@@ -195,6 +213,10 @@ pub fn (mut o Lasso) train_with_sample_weights(sample_weights []f64) ! {
 			coefficients[j] = new_coef
 			if new_coef != 0.0 {
 				for i in 0 .. m {
+					weight := if sample_weights.len == 0 { 1.0 } else { sample_weights[i] }
+					if weight == 0.0 {
+						continue
+					}
 					centered := x.get(i, j) - x_means[j]
 					residual[i] -= centered * new_coef
 					if math.is_nan(residual[i]) || math.is_inf(residual[i], 0) {
