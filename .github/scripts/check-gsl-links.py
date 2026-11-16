@@ -43,7 +43,9 @@ def check_url(url: str) -> bool | None:
                 print(f"Checked {url}: HTTP {response.status}")
                 return True
         except HTTPError as error:
-            if error.code == 429:
+            status = error.code
+            error.close()
+            if status == 429:
                 if attempt < MAX_RETRIES:
                     print(f"GNU rate limit for {url}; retrying once")
                     time.sleep(RETRY_DELAY_SECONDS)
@@ -53,7 +55,7 @@ def check_url(url: str) -> bool | None:
                     f"{url}"
                 )
                 return None
-            print(f"ERROR: {url} returned HTTP {error.code}", file=sys.stderr)
+            print(f"ERROR: {url} returned HTTP {status}", file=sys.stderr)
             return False
         except (TimeoutError, URLError) as error:
             if attempt < MAX_RETRIES:
