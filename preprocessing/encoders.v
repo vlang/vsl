@@ -102,11 +102,7 @@ pub fn OneHotEncoder.new(drop_first bool) &OneHotEncoder {
 
 // fit learns the categories for each feature
 pub fn (mut e OneHotEncoder) fit(x [][]string) ! {
-	if x.len == 0 {
-		return errors.error('cannot fit on empty data', .einval)
-	}
-
-	e.n_features = x[0].len
+	e.n_features = validate_categorical_matrix(x, -1, false, 'OneHotEncoder')!
 	e.categories_ = [][]string{len: e.n_features}
 
 	for j in 0 .. e.n_features {
@@ -129,6 +125,7 @@ pub fn (e &OneHotEncoder) transform(x [][]string) ![][]f64 {
 	if !e.fitted {
 		return errors.error('OneHotEncoder must be fitted before transform', .efailed)
 	}
+	validate_categorical_matrix(x, e.n_features, true, 'OneHotEncoder')!
 
 	// Calculate total output columns
 	mut n_output_cols := 0
@@ -147,6 +144,9 @@ pub fn (e &OneHotEncoder) transform(x [][]string) ![][]f64 {
 		mut col_idx := 0
 		for j in 0 .. e.n_features {
 			cats := e.categories_[j]
+			if x[i][j] !in cats {
+				return errors.error('unknown category `${x[i][j]}` for feature ${j}', .einval)
+			}
 			start_idx := if e.drop_first { 1 } else { 0 }
 			for k := start_idx; k < cats.len; k++ {
 				if x[i][j] == cats[k] {
@@ -205,11 +205,7 @@ pub fn OrdinalEncoder.new() &OrdinalEncoder {
 
 // fit learns the categories for each feature
 pub fn (mut e OrdinalEncoder) fit(x [][]string) ! {
-	if x.len == 0 {
-		return errors.error('cannot fit on empty data', .einval)
-	}
-
-	e.n_features = x[0].len
+	e.n_features = validate_categorical_matrix(x, -1, false, 'OrdinalEncoder')!
 	e.categories_ = [][]string{len: e.n_features}
 
 	for j in 0 .. e.n_features {
@@ -232,6 +228,7 @@ pub fn (e &OrdinalEncoder) transform(x [][]string) ![][]f64 {
 	if !e.fitted {
 		return errors.error('OrdinalEncoder must be fitted before transform', .efailed)
 	}
+	validate_categorical_matrix(x, e.n_features, true, 'OrdinalEncoder')!
 
 	mut result := [][]f64{len: x.len}
 	for i in 0 .. x.len {
@@ -253,6 +250,30 @@ pub fn (e &OrdinalEncoder) transform(x [][]string) ![][]f64 {
 		result[i] = row
 	}
 	return result
+}
+
+fn validate_categorical_matrix(x [][]string, expected_features int, allow_empty bool, encoder_name string) !int {
+	if x.len == 0 {
+		if allow_empty {
+			return expected_features
+		}
+		return errors.error('${encoder_name} cannot fit on empty data', .einval)
+	}
+	n_features := x[0].len
+	if n_features == 0 {
+		return errors.error('${encoder_name} input must contain at least one feature', .einval)
+	}
+	if expected_features >= 0 && n_features != expected_features {
+		return errors.error('${encoder_name} expected ${expected_features} features, got ${n_features}',
+			.einval)
+	}
+	for row_index, row in x {
+		if row.len != n_features {
+			return errors.error('row ${row_index} has ${row.len} features; expected ${n_features}',
+				.einval)
+		}
+	}
+	return n_features
 }
 
 // fit_transform fits and transforms in one step
