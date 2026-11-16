@@ -138,6 +138,23 @@ v -prod -no-parallel -cc gcc -cflags "-march=native" \
 /tmp/vsl-sparse-solver-bench
 ```
 
+### Sparse LU factorization and reusable solve
+
+`sparse_lu_bench.v` builds a fixed tridiagonal f64 CSR system, validates the
+solution and true residual, then reports factorization and solve timings
+separately. Factorization samples include creation of a new factor each time;
+solve samples reuse one factorization across repeated right-hand sides.
+Matrix construction, right-hand-side creation, and correctness checks are
+outside the timed regions. The generated system is a reproducible smoke
+workload, not a general sparse-LU performance claim. Run from `~/.vmodules`
+using the resource-limited benchmark pattern above:
+
+```sh
+v -prod -no-parallel -cc gcc -cflags "-march=native" \
+	-o ./vsl-sparse-lu-bench ./vsl/benchmarks/sparse_lu_bench.v
+./vsl-sparse-lu-bench
+```
+
 One sample run on an AMD Ryzen 9 5900X, Linux x86_64, V 0.5.2
 (`4a23b18ca9`), with `VJOBS=1` and `v -prod run` using the default Pure V
 backend produced the following results. Both systems have 128 rows and f64
@@ -260,6 +277,7 @@ systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tm
 - **`sparse_solvers_bench.v`**: CSR versus dense f64 matvec runtime and payload sizes
 - **`sparse_solver_preconditioner_bench.v`**: CSR CG, GMRES, and BiCGSTAB
   iteration and timing with Jacobi preconditioning
+- **`sparse_lu_bench.v`**: sparse LU factorization versus repeated solve timing
 - **`compare_backends.v`**: Selected-backend dgemm benchmark; build once per backend for comparison
 - **`fft_bench.v` and `fft_numpy_baseline.py`**: Real f64 forward FFT timing for VSL and NumPy
 - **`mpi_bench.v`**: Two-rank MPI send/receive, broadcast, and reduction latency

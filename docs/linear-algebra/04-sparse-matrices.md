@@ -46,6 +46,29 @@ multiplication, triangular and iterative solving, and format conversion are
 available; broader sparse arithmetic and preconditioners beyond Jacobi are not
 implied by these storage types.
 
+### Reusable sparse LU for f64 CSR
+
+`CSRMatrix[f64].factorize_lu()!` computes a pure-V LU factorization using
+partial row pivoting. The returned `SparseLU` can solve multiple right-hand
+sides with `solve(b)!`; factorization is performed once and each solve applies
+the recorded row permutation followed by sparse forward and backward
+substitution. Neither factorization nor solve converts the matrix to dense
+storage. Elimination stores fill-in in sparse row maps, and in the worst case
+fill-in can make the factors dense, requiring O(n²) factor storage and O(n³)
+factorization work.
+
+This first slice is limited to square CSR matrices with `f64` values and one
+right-hand side per `solve` call. It does not provide CSC input, complex or
+other numeric types, multiple right-hand sides in one call, ordering
+heuristics, backend dispatch, condition estimates, or iterative refinement.
+The factorization returns an error for nonsquare or malformed CSR storage,
+non-finite matrix entries, an exactly zero pivot (singularity), or a
+non-finite intermediate. It does not classify small nonzero pivots as
+singular. `solve` returns an error if the right-hand side has the wrong length,
+contains non-finite values, or substitution produces a non-finite value.
+See the runnable [sparse LU example](../../examples/la_sparse_lu/main.v).
+Run it from the repository root with `v run examples/la_sparse_lu/main.v`.
+
 `CSRMatrix[f64].solve_lower_triangular(b)!` and
 `solve_upper_triangular(b)!` perform forward or backward substitution directly
 from CSR storage. They require a square matrix, a finite right-hand side of
