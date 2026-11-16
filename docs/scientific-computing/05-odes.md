@@ -39,8 +39,8 @@ example](../../examples/ode_rk23/README.md).
 
 Set `event_function` to stop at the first event value that is zero on an
 accepted-step boundary or changes sign across an accepted step. The solver
-localizes sign changes by bisection over the accepted step's cubic Hermite
-interpolant and returns the event time/state with `.event_detected`.
+localizes sign changes by bisection using the accepted step's cubic Hermite
+interpolation and returns the event time/state with `.event_detected`.
 
 ```v ignore
 fn crossed_zero(_ f64, state []f64, _ []f64) f64 {
@@ -64,7 +64,8 @@ assert math.abs(result.t - 0.5) < 1e-12
 An event that is already zero at `t_start` stops before any derivative
 evaluation. Tangential roots that do not change sign are not detected. Event
 callback results must be finite; multiple crossings inside one accepted step
-may be missed. Event callback evaluations count against `max_evals` and are
-reported separately in `n_event_calls`. Samples after the event are omitted.
+may be missed. Event callback evaluations share the configured evaluation
+budget with derivative evaluations and are reported separately in
+`n_event_calls`. Samples after the event are omitted.
 See the [`vsl.ode` API guide](../../ode/README.md) for callback and status
 details.
