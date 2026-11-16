@@ -32,7 +32,7 @@ API. Recheck upstream documentation when updating this tracker.
 | Statistics and probability | Partial | [statistics][vsl-statistics], [dist][vsl-dist] | #523, #559, #572 |
 | Interpolation and splines | Partial | [fun][vsl-fun], [poly][vsl-poly] | #522 |
 | Root finding and minimization | Partial | [roots][vsl-roots] | #520, #562 |
-| Quadrature and ODE solvers | Partial | [integrate][vsl-integrate], [ode][vsl-ode] | #521 improper integration, stiff solvers, dense output, and events |
+| Quadrature and ODE solvers | Partial | [integrate][vsl-integrate], [ode][vsl-ode] | #521 improper integration, stiff solvers, and dense output |
 | Fourier transforms | Partial | [fft][vsl-fft] | #527, #528 |
 | Signal processing and wavelets | Missing | [fft][vsl-fft] only | #560 |
 | Multidimensional image processing and morphology | Missing | — | #585 |
@@ -103,9 +103,12 @@ objectives, derivative-free Nelder-Mead for local multivariate minimization,
 and analytic-gradient BFGS with Armijo backtracking for unconstrained local
 minimization. VSL also has adaptive finite-interval 7/15-point Gauss-Kronrod
 quadrature with estimated errors and execution limits, plus an adaptive
-Bogacki-Shampine RK23 method for non-stiff initial-value systems. Broader
+Bogacki-Shampine RK23 method for non-stiff initial-value systems with a
+terminal scalar event callback. Event localization currently detects initial
+and exact accepted-step boundary roots and sign-changing roots; it does not detect
+tangential roots. Broader
 optimization methods, including limited-memory, trust-region, and constrained
-algorithms, stiff ODE methods, dense output, and event handling remain missing.
+algorithms, stiff ODE methods, and general dense output remain missing.
 See SciPy
 [`interpolate`][scipy-interpolate],
 [`optimize`][scipy-optimize], and [`integrate`][scipy-integrate], plus GSL
