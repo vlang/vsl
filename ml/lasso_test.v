@@ -140,6 +140,18 @@ fn test_lasso_sample_weights_match_duplicated_observations() {
 	assert math.abs(weighted.predict([1.5]) - duplicated.predict([1.5])) < 1e-12
 }
 
+fn test_lasso_zero_weight_samples_do_not_affect_centered_residuals() {
+	mut data := Data.from_raw_xy_sep[f64]([[0.0], [1.0]], [0.0, 1.0])!
+	mut model := Lasso.new(mut data, 'zero_weight_lasso', 0.25)
+	data.y = [-1e308, 1e308]
+
+	model.train_with_sample_weights([1.0, 0.0])!
+
+	assert model.coef_[0] == 0.0
+	assert model.intercept_ == -1e308
+	assert model.predict([0.0]) == -1e308
+}
+
 fn test_lasso_centers_features_when_fitting_intercept() {
 	mut regular_data := Data.from_raw_xy_sep[f64]([[2.0], [4.0], [6.0]], [5.0, 9.0, 13.0])!
 	mut weighted_data := Data.from_raw_xy_sep[f64]([[2.0], [4.0], [6.0]], [5.0, 9.0, 13.0])!
