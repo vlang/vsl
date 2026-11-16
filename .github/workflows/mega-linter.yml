@@ -58,6 +58,9 @@ jobs:
           # improve performance
           fetch-depth: 0
 
+      - name: Check GNU GSL manual links
+        run: python3 .github/scripts/check-gsl-links.py
+
       # MegaLinter
       - name: MegaLinter
 
