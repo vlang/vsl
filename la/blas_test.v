@@ -21,3 +21,13 @@ fn test_mat_vec_mul() {
 	result := matrix_vector_mul(1.0, a, x)
 	assert result == expected
 }
+
+fn test_matrix_vector_mul_add_with_rectangular_matrix() {
+	a := Matrix.deep2([
+		[1.0, 2.0],
+		[3.0, 4.0],
+		[5.0, 6.0],
+	])
+	result := matrix_vector_mul_add(1.0, a, [1.0, 2.0])
+	assert result == [5.0, 11.0, 17.0]
+}
