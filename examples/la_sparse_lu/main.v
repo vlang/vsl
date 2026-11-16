@@ -3,7 +3,7 @@ module main
 import vsl.la
 
 fn main() {
-	mut entries := la.Triplet.new[f64](3, 3, 7)
+	mut entries := la.Triplet.new[f64](3, 3, 8)
 	entries.put(0, 1, 2.0)!
 	entries.put(0, 2, 1.0)!
 	entries.put(1, 0, 1.0)!
