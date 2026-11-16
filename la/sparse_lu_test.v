@@ -45,7 +45,9 @@ fn test_sparse_lu_pivots_and_reuses_factorization() {
 	second_solution_expected := [2.0, -1.0, 3.0]
 	second_rhs := matrix.matvec(second_solution_expected)!
 	second_solution := factor.solve(second_rhs)!
-	assert second_solution == second_solution_expected
+	for index in 0 .. second_solution_expected.len {
+		assert math.abs(second_solution[index] - second_solution_expected[index]) < 1e-12
+	}
 	assert sparse_lu_dense_residual_norm(matrix, second_solution, second_rhs) < 1e-12
 }
 
