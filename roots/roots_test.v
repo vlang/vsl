@@ -99,6 +99,24 @@ fn test_bisection_rejects_an_interval_without_a_sign_change() {
 	}
 }
 
+fn test_bisection_revalidates_bounds_changed_between_steps() {
+	f := func.Fn.new(f: f_nonfinite_on_second_midpoint)
+	mut solver := Bisection.new(f,
+		xmin:   0.0
+		xmax:   4.0
+		epsrel: 0.0
+		epsabs: 0.0
+		n_max:  10
+	)
+	first := solver.next()?
+	assert first.x == 2.0
+	solver.xmin = 4.0
+	solver.xmax = 6.0
+	if result := solver.next() {
+		assert false, 'expected changed bounds without a sign change to return none, got ${result}'
+	}
+}
+
 fn test_bisection_does_not_return_a_stale_result_after_nonfinite_evaluation() {
 	f := func.Fn.new(f: f_nonfinite_on_second_midpoint)
 	mut solver := Bisection.new(f,
