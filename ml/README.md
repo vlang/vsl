@@ -67,6 +67,22 @@ K-Nearest Neighbors (KNN) is used for classification tasks where the target
 variable is categorical. As an observer model, it re-trains automatically when the
 data changes, which is beneficial for datasets that are frequently updated.
 
+### Exact Neighbor Queries
+
+`query_neighbors(training, queries, k, metric)` returns each query row's top-k
+training-row indices and distances, ordered by distance and then by original
+training index. Euclidean and Manhattan metrics are supported; identical rows
+remain distinct neighbors. This first slice is exact brute force, not yet a
+classifier, regressor, or indexed backend.
+
+```v ignore
+result := query_neighbors([[0.0, 0.0], [2.0, 1.0]], [[1.0, 1.0]], 1, .euclidean)!
+println(result.indices)
+println(result.distances)
+```
+
+See the [exact neighbor query example](../examples/ml_neighbor_query/README.md).
+
 ### Logistic Regression
 
 Logistic Regression is used for binary classification tasks. As an observer model,
