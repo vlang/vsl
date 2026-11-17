@@ -245,6 +245,12 @@
 <p>K-Means Clustering is used for unsupervised learning to group data points into clusters. As an observer model, it re-trains automatically when the data changes, which is useful for dynamic datasets that require continuous updates.</p>
 <h3 id="k-nearest-neighbors-knn">K-Nearest Neighbors (KNN)</h3>
 <p>K-Nearest Neighbors (KNN) is used for classification tasks where the target variable is categorical. As an observer model, it re-trains automatically when the data changes, which is beneficial for datasets that are frequently updated.</p>
+<h3 id="exact-neighbor-queries">Exact Neighbor Queries</h3>
+<p><code>query_neighbors(training, queries, k, metric)</code> returns each query row's top-k training-row indices and distances, ordered by distance and then by original training index. Euclidean and Manhattan metrics are supported; identical rows remain distinct neighbors. This first slice is exact brute force, not yet a classifier, regressor, or indexed backend.</p>
+<pre><code class="language-v">result <span class="token operator">:=</span> <span class="token function">query_neighbors</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">2.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token enum_value">.</span><span class="token enum_value">euclidean</span><span class="token punctuation">)</span><span class="token operator">!</span>
+<span class="token function">println</span><span class="token punctuation">(</span>result<span class="token punctuation">.</span>indices<span class="token punctuation">)</span>
+<span class="token function">println</span><span class="token punctuation">(</span>result<span class="token punctuation">.</span>distances<span class="token punctuation">)</span></code></pre>
+<p>See the <a href="https://github.com/vlang/vsl/blob/master/examples/ml_neighbor_query/README.md">exact neighbor query example</a>.</p>
 <h3 id="logistic-regression">Logistic Regression</h3>
 <p>Logistic Regression is used for binary classification tasks. As an observer model, it automatically updates when data changes, recalculating internal statistics and preparing for retraining.</p>
 <h3 id="support-vector-machine-svm">Support Vector Machine (SVM)</h3>
@@ -269,6 +275,14 @@ model <span class="token operator">:=</span> <span class="token type_name">Gauss
 <p>The following machine learning models in VSL do not require the observer pattern and are trained once on a dataset without continuous updates.</p>
 <h3 id="linear-regression">Linear Regression</h3>
 <p>Linear Regression is used for predicting a continuous target variable based on one or more predictor variables. It is typically trained once on a dataset and used to make predictions without requiring continuous updates. Hence, it is not implemented as an observer model.</p>
+
+</section>
+
+		<section id="query_neighbors" class="doc-node">
+			<div class="title"><h2>fn query_neighbors <a href="#query_neighbors">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/neighbor_query.v#L31"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">query_neighbors</span><span class="token punctuation">(</span>training <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> queries <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> k <span class="token builtin">int</span><span class="token punctuation">,</span> metric <span class="token type_name">NeighborMetric</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token type_name">NeighborQueryResult</span></code></pre>
+<p>query_neighbors returns the exact top-k training rows for every query row. This is a brute-force search, not a classifier, regressor, or indexed nearest-neighbor backend. It computes distances one training row at a time and does not allocate a query-by-training distance matrix.</p>
 
 </section>
 
@@ -424,6 +438,14 @@ to [10.0, 10.0] (which is class 1.0).</p>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token type_name">LogReg</span><span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token keyword">mut</span> data <span class="token type_name">Data</span><span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> name <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token type_name">LogReg</span></code></pre>
 <p>LogReg.new returns a new LogReg object Input: data   -- x,y data name   -- unique name of this (observer) object Output: new LogReg object</p>
+
+</section>
+
+		<section id="NeighborMetric.from" class="doc-node">
+			<div class="title"><h2>fn NeighborMetric.from <a href="#NeighborMetric.from">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/neighbor_query.v#L8"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token type_name">NeighborMetric</span><span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">[</span><span class="token type_name">W</span><span class="token punctuation">]</span><span class="token punctuation">(</span>input <span class="token type_name">W</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token type_name">NeighborMetric</span></code></pre>
+<p>from returns the <code>NeighborMetric</code> value of an integer or of a field name, or an error if there is none.</p>
 
 </section>
 
@@ -760,6 +782,17 @@ to [10.0, 10.0] (which is class 1.0).</p>
 	rbf
 <span class="token punctuation">}</span></code></pre>
 <p>KernelType represents the type of kernel function</p>
+
+</section>
+
+		<section id="NeighborMetric" class="doc-node">
+			<div class="title"><h2>enum NeighborMetric <a href="#NeighborMetric">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/neighbor_query.v#L8"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">enum</span> <span class="token type_name">NeighborMetric</span> <span class="token punctuation">{</span>
+	euclidean
+	manhattan
+<span class="token punctuation">}</span></code></pre>
+<p>NeighborMetric selects the exact distance measure for a neighbor query.</p>
 
 </section>
 
@@ -1600,6 +1633,18 @@ to [10.0, 10.0] (which is class 1.0).</p>
 
 </section>
 
+		<section id="NeighborQueryResult" class="doc-node">
+			<div class="title"><h2>struct NeighborQueryResult <a href="#NeighborQueryResult">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/neighbor_query.v#L16"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token type_name">NeighborQueryResult</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span><span class="token punctuation">:</span>
+	indices   <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>
+	distances <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
+<span class="token punctuation">}</span></code></pre>
+<p>NeighborQueryResult stores the sorted neighbors for each query row. The outer arrays follow query order; each inner row is ordered by distance, then by original training-row index.</p>
+
+</section>
+
 		<section id="ParamsReg" class="doc-node">
 			<div class="title"><h2>struct ParamsReg <a href="#ParamsReg">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/paramsreg.v#L10"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <div class="attributes"><div class="attribute">@[heap]</div></div>
@@ -1949,9 +1994,12 @@ to [10.0, 10.0] (which is class 1.0).</p>
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 16 Nov 2026 21:11:26</div>
+						<div class="footer">Powered by vdoc. Generated on: 17 Nov 2026 09:49:32</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_ml">README</a></li>
+<li class="open"><a href="#query_neighbors">fn query_neighbors</a>        <ul>
+</ul>
+</li>
 <li class="open"><a href="#safe_log_1p_exp">fn safe_log_1p_exp</a>        <ul>
 </ul>
 </li>
@@ -2007,6 +2055,9 @@ to [10.0, 10.0] (which is class 1.0).</p>
 </ul>
 </li>
 <li class="open"><a href="#LogReg.new">fn LogReg.new</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#NeighborMetric.from">fn NeighborMetric.from</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#ParamsReg.new">fn ParamsReg.new</a>        <ul>
@@ -2073,6 +2124,9 @@ to [10.0, 10.0] (which is class 1.0).</p>
 </ul>
 </li>
 <li class="open"><a href="#KernelType">enum KernelType</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#NeighborMetric">enum NeighborMetric</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#RegularizationType">enum RegularizationType</a>        <ul>
@@ -2185,6 +2239,9 @@ to [10.0, 10.0] (which is class 1.0).</p>
 </ul>
 </li>
 <li class="open"><a href="#LogRegTrainConfig">struct LogRegTrainConfig</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#NeighborQueryResult">struct NeighborQueryResult</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#ParamsReg">struct ParamsReg</a>        <ul>
