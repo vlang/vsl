@@ -120,6 +120,7 @@ fn test_lin_reg_weighted_fit_resets_weights_after_sample_count_changes() {
 
 	replacement := Data.from_raw_xy_sep[f64]([[0.0], [1.0]], [1.0, 2.0])!
 	data.set(replacement.x, replacement.y)!
+	assert reg.sample_weights.len == 0
 
 	cost := reg.cost()
 	assert float64.tolerance(cost, 0.044921875, 1e-12)

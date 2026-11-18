@@ -41,12 +41,17 @@ pub fn LinReg.new(mut data Data[f64], name string) &LinReg {
 		e:      []f64{len: data.nb_samples}
 		params: params
 	}
+	data.add_observer(reg)
 	return reg
 }
 
 // name returns the name of this LinReg object (thus defining the Observer interface)
 pub fn (o &LinReg) name() string {
 	return o.name
+}
+
+pub fn (mut o LinReg) update() {
+	o.reset_stale_sample_weights()
 }
 
 // predict returns the model evaluation @ {x;theta,b}
