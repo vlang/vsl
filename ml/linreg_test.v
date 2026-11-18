@@ -112,6 +112,22 @@ fn test_lin_reg_weighted_gradients() {
 	assert float64.tolerance(bias_gradient, 0.0, 1e-12)
 }
 
+fn test_lin_reg_weighted_fit_resets_weights_after_sample_count_changes() {
+	mut data := Data.from_raw_xy_sep[f64]([[0.0], [1.0], [2.0]], [1.0, 2.0, 4.0])!
+	mut reg := LinReg.new(mut data, 'resized weighted linear regression')
+	reg.params.set_lambda(0.25)
+	reg.train_with_sample_weights([1.0, 3.0, 0.0])!
+
+	replacement := Data.from_raw_xy_sep[f64]([[0.0], [1.0]], [1.0, 2.0])!
+	data.set(replacement.x, replacement.y)!
+
+	cost := reg.cost()
+	assert float64.tolerance(cost, 0.044921875, 1e-12)
+	gradient, bias_gradient := reg.gradients()
+	assert float64.tolerance(gradient[0], 0.0625, 1e-12)
+	assert float64.tolerance(bias_gradient, 0.0625, 1e-12)
+}
+
 fn test_lin_reg_weighted_fit_rejects_invalid_weights() {
 	assert weighted_linreg_rejects([1.0])
 	assert weighted_linreg_rejects([1.0, -1.0, 1.0])

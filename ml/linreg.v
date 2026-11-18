@@ -60,6 +60,13 @@ pub fn (o &LinReg) predict(x []f64) f64 {
 	return b + la.vector_dot(x, theta) // b + xᵀtheta
 }
 
+fn (mut o LinReg) reset_stale_sample_weights() {
+	if o.sample_weights.len > 0 && o.sample_weights.len != o.data.nb_samples {
+		o.sample_weights = []f64{}
+		o.weight_sum = 0.0
+	}
+}
+
 // cost returns the cost c(x;theta,b)
 //   Input:
 //     data -- x,y data
@@ -68,6 +75,7 @@ pub fn (o &LinReg) predict(x []f64) f64 {
 //   Output:
 //     c -- total cost (model error)
 pub fn (mut o LinReg) cost() f64 {
+	o.reset_stale_sample_weights()
 	// auxiliary
 	weight_sum := if o.sample_weights.len == 0 { f64(o.data.nb_samples) } else { o.weight_sum }
 	m_1 := 1.0 / weight_sum
@@ -95,6 +103,7 @@ pub fn (mut o LinReg) cost() f64 {
 //     dcdtheta -- ∂C/∂theta
 //     dcdb -- ∂C/∂b
 pub fn (mut o LinReg) gradients() ([]f64, f64) {
+	o.reset_stale_sample_weights()
 	// auxiliary
 	weight_sum := if o.sample_weights.len == 0 { f64(o.data.nb_samples) } else { o.weight_sum }
 	m_1 := 1.0 / weight_sum
