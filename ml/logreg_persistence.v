@@ -3,12 +3,16 @@ module ml
 import json2
 import math
 import os
+import rand
+import strings
 import vsl.errors
 import vsl.fun
 
 const logreg_artifact_schema = 'vsl.ml.model'
 const logreg_artifact_model = 'logistic_regression'
 const logreg_artifact_version = 1
+const logreg_artifact_max_size = 64 * 1024 * 1024
+const logreg_artifact_read_buffer_size = 16 * 1024
 const logreg_artifact_fields = ['schema', 'version', 'model', 'feature_count', 'weights', 'bias',
 	'lambda']
 
@@ -68,12 +72,13 @@ pub fn (model &LogReg) save_json(path string) ! {
 		bias:          artifact.bias
 		lambda:        artifact.lambda
 	}
-	os.write_file(path, json2.encode(json_artifact, prettify: true))!
+	write_logreg_artifact(path, json2.encode(json_artifact, prettify: true))!
 }
 
 // from_json validates and decodes a logistic-regression inference artifact.
 // JSON is parsed as data only; no code or executable object is deserialized.
 pub fn LogRegArtifact.from_json(text string) !LogRegArtifact {
+	validate_logreg_artifact_size(u64(text.len))!
 	fields := json2.decode[map[string]json2.Any](text, json2.DecoderOptions{
 		strict: true
 	}) or {
@@ -148,10 +153,86 @@ pub fn LogRegArtifact.from_json(text string) !LogRegArtifact {
 
 // load_logreg_artifact reads a validated inference artifact from a JSON file.
 pub fn load_logreg_artifact(path string) !LogRegArtifact {
-	text := os.read_file(path) or {
+	text := read_logreg_artifact(path)!
+	return LogRegArtifact.from_json(text)
+}
+
+fn write_logreg_artifact(path string, text string) ! {
+	validate_logreg_artifact_size(u64(text.len))!
+	temp_dir := os.join_path(os.dir(path), '.vsl-logreg-${rand.ulid()}')
+	os.mkdir(temp_dir) or {
+		return errors.error('cannot create temporary logistic-regression artifact: ${err.msg()}',
+			.efailed)
+	}
+	defer {
+		os.rmdir_all(temp_dir) or {
+			eprintln('cannot remove temporary logistic-regression artifact directory `${temp_dir}`: ${err.msg()}')
+		}
+	}
+	temp_path := os.join_path(temp_dir, 'artifact.json')
+	os.write_file(temp_path, text) or {
+		return errors.error('cannot write temporary logistic-regression artifact: ${err.msg()}',
+			.efailed)
+	}
+	replace_logreg_artifact(temp_path, path)!
+}
+
+fn replace_logreg_artifact(source string, destination string) ! {
+	$if windows {
+		replace_logreg_artifact_windows(source, destination)!
+	} $else {
+		os.rename(source, destination) or {
+			return errors.error('cannot replace logistic-regression artifact: ${err.msg()}',
+				.efailed)
+		}
+	}
+}
+
+fn read_logreg_artifact(path string) !string {
+	file_stat := os.stat(path) or {
+		return errors.error('cannot inspect logistic-regression artifact: ${err.msg()}', .efailed)
+	}
+	if file_stat.get_filetype() != .regular {
+		return errors.error('logistic-regression artifact must be a regular file', .einval)
+	}
+	validate_logreg_artifact_size(file_stat.size)!
+	initial_capacity := if file_stat.size < u64(logreg_artifact_read_buffer_size) {
+		int(file_stat.size)
+	} else {
+		logreg_artifact_read_buffer_size
+	}
+	mut file := os.open_file(path, 'rb') or {
 		return errors.error('cannot read logistic-regression artifact: ${err.msg()}', .efailed)
 	}
-	return LogRegArtifact.from_json(text)
+	defer {
+		file.close()
+	}
+	mut text := strings.new_builder(initial_capacity)
+	mut total_size := u64(0)
+	mut buffer := []u8{len: logreg_artifact_read_buffer_size}
+	for {
+		bytes_read := file.read(mut buffer) or {
+			if err is os.Eof {
+				break
+			}
+			return errors.error('cannot read logistic-regression artifact: ${err.msg()}',
+				.efailed)
+		}
+		if bytes_read == 0 {
+			break
+		}
+		total_size += u64(bytes_read)
+		validate_logreg_artifact_size(total_size)!
+		text.write(buffer[..bytes_read])!
+	}
+	return text.str()
+}
+
+fn validate_logreg_artifact_size(size u64) ! {
+	if size > u64(logreg_artifact_max_size) {
+		return errors.error('logistic-regression artifact exceeds the ${logreg_artifact_max_size}-byte maximum',
+			.einval)
+	}
 }
 
 fn (model &LogReg) to_logreg_artifact() !LogRegArtifact {

@@ -142,7 +142,8 @@ the exact field set, supported identifiers/version, feature dimensions, and
 finite parameters. It uses JSON data decoding only and does not deserialize
 executable code. This does not persist training data, observer state, optimizer
 configuration, preprocessing pipelines, other estimators, or provide ONNX
-export; it is not a general cross-version persistence contract.
+export; it is not a general cross-version persistence contract. Artifacts are
+limited to 64 MiB, and oversized JSON is rejected before decoding.
 
 ## Non-Observer Models
 
