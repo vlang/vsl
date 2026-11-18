@@ -156,10 +156,21 @@ fn multinomial_nb_derive(data &Data[f64], config MultinomialNBConfig) !Multinomi
 		return errors.error('MultinomialNB requires positive total sample weight', .einval)
 	}
 
-	mut class_log_priors := []f64{len: unique_classes.len}
-	mut feature_log_probs := [][]f64{len: unique_classes.len}
-	for class_index in 0 .. unique_classes.len {
-		class_weight := class_weight_sums[class_index]
+	mut fitted_classes := []f64{cap: unique_classes.len}
+	mut fitted_class_weight_sums := []f64{cap: unique_classes.len}
+	mut fitted_feature_counts := [][]f64{cap: unique_classes.len}
+	for class_index, class_weight in class_weight_sums {
+		if class_weight > 0.0 {
+			fitted_classes << unique_classes[class_index]
+			fitted_class_weight_sums << class_weight
+			fitted_feature_counts << feature_counts[class_index]
+		}
+	}
+
+	mut class_log_priors := []f64{len: fitted_classes.len}
+	mut feature_log_probs := [][]f64{len: fitted_classes.len}
+	for class_index in 0 .. fitted_classes.len {
+		class_weight := fitted_class_weight_sums[class_index]
 		class_log_priors[class_index] = if class_weight > 0.0 {
 			math.log(class_weight / total_weight)
 		} else {
@@ -167,7 +178,7 @@ fn multinomial_nb_derive(data &Data[f64], config MultinomialNBConfig) !Multinomi
 		}
 		feature_log_probs[class_index] = []f64{len: data.nb_features}
 		mut feature_total := 0.0
-		for count in feature_counts[class_index] {
+		for count in fitted_feature_counts[class_index] {
 			feature_total += count
 			if math.is_inf(feature_total, 0) {
 				return errors.error('MultinomialNB class feature counts overflowed', .einval)
@@ -179,7 +190,7 @@ fn multinomial_nb_derive(data &Data[f64], config MultinomialNBConfig) !Multinomi
 			return errors.error('MultinomialNB needs positive finite feature mass or alpha',
 				.einval)
 		}
-		for column, count in feature_counts[class_index] {
+		for column, count in fitted_feature_counts[class_index] {
 			smoothed_count := count + config.alpha
 			feature_log_probs[class_index][column] = if smoothed_count > 0.0 {
 				math.log(smoothed_count / denominator)
@@ -189,8 +200,8 @@ fn multinomial_nb_derive(data &Data[f64], config MultinomialNBConfig) !Multinomi
 		}
 	}
 	return MultinomialNBDerived{
-		classes:           unique_classes
-		class_weight_sums: class_weight_sums
+		classes:           fitted_classes
+		class_weight_sums: fitted_class_weight_sums
 		class_log_priors:  class_log_priors
 		feature_log_probs: feature_log_probs
 	}
