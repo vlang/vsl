@@ -9,6 +9,7 @@ pub struct Bisection {
 mut:
 	last_iter   ?&BisectionIteration // last iteration
 	f_xmin      f64
+	f_xmax      f64
 	cached_xmin f64
 	cached_xmax f64
 	initialized bool
@@ -118,6 +119,7 @@ pub fn (mut solver Bisection) next() ?&BisectionIteration {
 			return none
 		}
 		solver.f_xmin = fxmin
+		solver.f_xmax = fxmax
 		solver.cached_xmin = solver.xmin
 		solver.cached_xmax = solver.xmax
 		solver.initialized = true
@@ -125,7 +127,22 @@ pub fn (mut solver Bisection) next() ?&BisectionIteration {
 	xmid := solver.xmin * 0.5 + solver.xmax * 0.5
 	if xmid == solver.xmin || xmid == solver.xmax {
 		solver.finished = true
-		return none
+		if math.abs(solver.f_xmin) <= math.abs(solver.f_xmax) {
+			solver.last_iter = &BisectionIteration{
+				x:         solver.xmin
+				fx:        solver.f_xmin
+				n_f_calls: solver.n_f_calls
+				n_iter:    solver.n_iter
+			}
+		} else {
+			solver.last_iter = &BisectionIteration{
+				x:         solver.xmax
+				fx:        solver.f_xmax
+				n_f_calls: solver.n_f_calls
+				n_iter:    solver.n_iter
+			}
+		}
+		return solver.last_iter?
 	}
 	solver.n_f_calls++
 	fxmid := solver.f.safe_eval(xmid) or {
@@ -152,6 +169,7 @@ pub fn (mut solver Bisection) next() ?&BisectionIteration {
 		solver.cached_xmin = xmid
 	} else {
 		solver.xmax = xmid
+		solver.f_xmax = fxmid
 		solver.cached_xmax = xmid
 	}
 	return solver.last_iter?

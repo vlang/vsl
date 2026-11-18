@@ -24,6 +24,13 @@ fn f_positive(x f64, _ []f64) f64 {
 	return x * x + 1.0
 }
 
+fn f_adjacent_sign_change(x f64, _ []f64) f64 {
+	if x <= 1.0 {
+		return 2.0
+	}
+	return -1.0
+}
+
 fn f_large_root(x f64, _ []f64) f64 {
 	return x - 1_000_001.0
 }
@@ -89,6 +96,54 @@ fn test_bisection_returns_an_exact_endpoint_root() {
 	assert result.fx == 0.0
 	assert result.n_iter == 0
 	assert result.n_f_calls == 1
+}
+
+fn test_bisection_returns_best_estimate_when_precision_stagnates() {
+	f := func.Fn.new(f: f_adjacent_sign_change)
+	xmin := 1.0
+	xmax := 1.0000000000000002
+	mut solver := Bisection.new(f,
+		xmin:   0.0
+		xmax:   2.0
+		epsrel: 0.0
+		epsabs: 0.0
+		n_max:  10
+	)
+	first := solver.next()?
+	assert first.x == 1.0
+	assert first.n_iter == 1
+
+	solver.xmin = xmin
+	solver.xmax = xmax
+	result := solver.next()?
+	assert result.x == xmax
+	assert result.fx == -1.0
+	assert result.n_iter == 0
+	assert result.n_f_calls == 5
+	if next_result := solver.next() {
+		assert false, 'a precision-limited solver must be finished, got ${next_result}'
+	}
+
+	mut solve_solver := Bisection.new(f,
+		xmin:   xmin
+		xmax:   xmax
+		epsrel: 0.0
+		epsabs: 0.0
+		n_max:  10
+	)
+	solve_result := solve_solver.solve()?
+	assert solve_result.x == xmax
+	assert solve_result.fx == -1.0
+	assert solve_result.n_iter == 0
+	assert solve_result.n_f_calls == 2
+
+	exact_root_f := func.Fn.new(f: f_identity)
+	mut exact_root_solver := Bisection.new(exact_root_f, xmin: 0.0, xmax: 1.0)
+	exact_root := exact_root_solver.solve()?
+	assert exact_root.x == 0.0
+	assert exact_root.fx == 0.0
+	assert exact_root.n_iter == 0
+	assert exact_root.n_f_calls == 1
 }
 
 fn test_bisection_rejects_an_interval_without_a_sign_change() {
