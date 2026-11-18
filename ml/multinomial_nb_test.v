@@ -80,6 +80,33 @@ fn test_multinomial_nb_zero_smoothing_preserves_zero_probability_edges() ! {
 	}
 }
 
+fn test_multinomial_nb_ignores_zero_weight_only_classes_without_smoothing() ! {
+	mut data_with_zero_weight_class := Data.from_raw_xy_sep([
+		[2.0, 0.0],
+		[0.0, 2.0],
+		[10.0, 0.0],
+	], [1.0, 2.0, 0.0])!
+	with_zero_weight_class := MultinomialNB.new_with_config(mut data_with_zero_weight_class,
+		'zero_weight_class', MultinomialNBConfig{
+		alpha:          0.0
+		sample_weights: [1.0, 1.0, 0.0]
+	})!
+	mut data_without_class := Data.from_raw_xy_sep([[2.0, 0.0], [0.0, 2.0]], [1.0, 2.0])!
+	without_class := MultinomialNB.new_with_config(mut data_without_class, 'without_class',
+		MultinomialNBConfig{
+		alpha: 0.0
+	})!
+
+	assert with_zero_weight_class.classes() == [1.0, 2.0]
+	assert with_zero_weight_class.classes() == without_class.classes()
+	assert with_zero_weight_class.class_priors() == without_class.class_priors()
+	assert with_zero_weight_class.feature_log_probabilities() == without_class.feature_log_probabilities()
+	for features in [[1.0, 0.0], [0.0, 1.0]] {
+		assert with_zero_weight_class.predict(features)! == without_class.predict(features)!
+		assert with_zero_weight_class.predict_proba(features)! == without_class.predict_proba(features)!
+	}
+}
+
 fn test_multinomial_nb_normalizes_extreme_finite_counts() ! {
 	mut equal_data := Data.from_raw_xy_sep([
 		[1.0, 99.0],
