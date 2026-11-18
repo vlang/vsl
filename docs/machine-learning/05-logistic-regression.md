@@ -193,7 +193,8 @@ probability := loaded.predict([4.0, 6.0])!
 
 The loaded artifact predicts without retaining the training dataset. Loading
 checks the exact schema and model identifiers, version, feature count, weight
-shape, and finite parameters. This focused format does not include training
+shape, and finite parameters. Artifacts are limited to 64 MiB and oversized
+JSON is rejected before decoding. This focused format does not include training
 data or optimizer history and does not imply persistence support for other
 models or ONNX export.
 
