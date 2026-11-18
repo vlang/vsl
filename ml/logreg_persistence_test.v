@@ -2,6 +2,7 @@ module ml
 
 import math
 import os
+import strings
 
 fn test_logreg_json_artifact_round_trip_predicts_without_training_data() ! {
 	mut data := Data.from_raw_xy_sep([
@@ -15,16 +16,38 @@ fn test_logreg_json_artifact_round_trip_predicts_without_training_data() ! {
 	model.train(epochs: 100, learning_rate: 0.1)
 	expected := model.predict([1.5])
 
-	path := os.join_path(os.dir(@FILE), '.logreg_persistence_${os.getpid()}.json')
+	path := '.logreg_persistence_${os.getpid()}.json'
 	defer {
 		os.rm(path) or {}
 	}
+	os.write_file(path, 'existing artifact')!
 	model.save_json(path)!
 
 	artifact := load_logreg_artifact(path)!
 	actual := artifact.predict([1.5])!
 	assert artifact.n_features() == 1
 	assert math.abs(actual - expected) < 1e-14
+}
+
+fn test_logreg_json_artifact_rejects_oversized_input() ! {
+	oversized := strings.repeat(` `, logreg_artifact_max_size + 1)
+	if _ := LogRegArtifact.from_json(oversized) {
+		assert false, 'oversized artifact must be rejected'
+	} else {
+		assert err.msg().contains('maximum')
+	}
+
+	path := '.logreg_persistence_oversized_${os.getpid()}.json'
+	defer {
+		os.rm(path) or {}
+	}
+	os.write_file(path, 'existing artifact')!
+	if _ := write_logreg_artifact(path, oversized) {
+		assert false, 'oversized artifact must not be saved'
+	} else {
+		assert err.msg().contains('maximum')
+	}
+	assert os.read_file(path)! == 'existing artifact'
 }
 
 fn test_logreg_json_artifact_rejects_malformed_and_unsupported_content() ! {
