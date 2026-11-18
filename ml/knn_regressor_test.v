@@ -20,6 +20,24 @@ fn test_knn_regressor_distance_weighting_averages_exact_matches() {
 	assert model.predict([1.0])! == 10.0
 }
 
+fn test_knn_regressor_uniform_prediction_preserves_small_mixed_sign_target() {
+	model := KNNRegressor.new([[1.0, 0.0], [-1.0, 0.0], [0.0, 1.0]], [
+		1e308,
+		1.0,
+		-1e308,
+	], k: 3)!
+	assert math.abs(model.predict([0.0, 0.0])! - 1.0 / 3.0) < 1e-15
+}
+
+fn test_knn_regressor_distance_weighting_preserves_small_mixed_sign_target() {
+	model := KNNRegressor.new([[1.0, 0.0], [-1.0, 0.0], [0.0, 1.0]], [
+		1e308,
+		1.0,
+		-1e308,
+	], k: 3, weighting: .distance)!
+	assert math.abs(model.predict([0.0, 0.0])! - 1.0 / 3.0) < 1e-15
+}
+
 fn test_knn_regressor_predict_batch_preserves_query_order() {
 	model := KNNRegressor.new([[0.0], [10.0]], [1.0, 9.0], k: 1)!
 	predictions := model.predict_batch([[9.0], [1.0], [10.0]])!
