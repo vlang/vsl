@@ -14,6 +14,7 @@
 ##         --use-autofree                    Execute tests using atofree
 ##         --use-gc=STRATEGY                 Execute tests using garbage collector
 ##         --skip-examples                   Skip examples compilation
+##         --examples-only                   Compile examples without running tests
 ##         --use-opencl                      Include OpenCL runtime tests (requires a working OpenCL compiler)
 ##         --use-vulkan                      Execute tests using Vulkan compute
 ##         --use-cuda                        Execute tests using CUDA backend
@@ -84,11 +85,50 @@ else
     flags="${flags} -cc gcc"
 fi
 
+read -r -a flags_array <<< "${flags}"
+
 # On macOS, also use Vulkan dlopen since libvulkan is not installed
 # (only headers via brew). On Linux, libvulkan-dev provides both headers
 # and the .so, so normal linking works.
 # Also hide the vulkan module tests on macOS — the dlopen path still
 # generates linker references that can't be resolved without libvulkan.
+compile_examples() {
+    echo "Compiling examples"
+    echo "Compiling Examples with flags ${flags}"
+    while IFS= read -r -d '' file; do
+        if [[ "${file}" == *"not_ci"* ]]; then
+            echo "Skipping ${file}"
+            continue
+        fi
+        # Skip vulkan examples on macOS — no libvulkan runtime available
+        if [[ "$(uname -s)" == "Darwin" && ( "${file}" == *"/vulkan/"* || "${file}" == *"/examples/vulkan_"* ) ]]; then
+            echo "Skipping ${file} (no Vulkan on macOS)"
+            continue
+        fi
+        echo "Compiling ${file}"
+        if ! v -no-parallel "${flags_array[@]}" -o "${file}.bin" "${file}"; then
+            # V can intermittently emit unresolved anonymous BLAS wrapper
+            # symbols while linking; a clean retry succeeds for valid examples.
+            rm -f "${file}.bin"
+            echo "Retrying ${file} once after the compile failure"
+            v -no-parallel "${flags_array[@]}" -o "${file}.bin" "${file}"
+        fi
+        echo "${file}.bin created"
+        echo "Removing ${file}.bin"
+        rm -f "${file}.bin"
+    done < <(find "${vsl_dir_path}" -type f -path '*/examples/*.v' -print0)
+}
+
+if [[ -n "${examples_only}" && -n "${skip_examples}" ]]; then
+    echo "Error: --examples-only cannot be combined with --skip-examples" >&2
+    exit 2
+fi
+
+if [[ -n "${examples_only}" ]]; then
+    compile_examples
+    exit 0
+fi
+
 hidden_tests=()
 isolated_tests=()
 restore_hidden_tests() {
@@ -167,30 +207,7 @@ while IFS= read -r -d '' test_binary; do
 done < <(find "${vsl_dir_path}" -type f \( -name '*_test' -o -name '*_test.exe' \) -print0)
 
 if [[ -z "${skip_examples}" ]]; then
-    echo "Compiling examples"
-    echo "Compiling Examples with flags ${flags}"
-    while IFS= read -r -d '' file; do
-        if [[ "${file}" == *"not_ci"* ]]; then
-            echo "Skipping ${file}"
-            continue
-        fi
-        # Skip vulkan examples on macOS — no libvulkan runtime available
-        if [[ "$(uname -s)" == "Darwin" && ( "${file}" == *"/vulkan/"* || "${file}" == *"/examples/vulkan_"* ) ]]; then
-            echo "Skipping ${file} (no Vulkan on macOS)"
-            continue
-        fi
-        echo "Compiling ${file}"
-        if ! v -no-parallel "${flags_array[@]}" -o "${file}.bin" "${file}"; then
-            # V can intermittently emit unresolved anonymous BLAS wrapper
-            # symbols while linking; a clean retry succeeds for valid examples.
-            rm -f "${file}.bin"
-            echo "Retrying ${file} once after the compile failure"
-            v -no-parallel "${flags_array[@]}" -o "${file}.bin" "${file}"
-        fi
-        echo "${file}.bin created"
-        echo "Removing ${file}.bin"
-        rm -f "${file}.bin"
-    done < <(find "${vsl_dir_path}" -type f -path '*/examples/*.v' -print0)
+    compile_examples
 else
     echo "Skipping examples compilation"
 fi
