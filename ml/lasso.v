@@ -68,96 +68,181 @@ pub fn (o &Lasso) predict(x []f64) f64 {
 
 // train fits the Lasso model using coordinate descent
 pub fn (mut o Lasso) train() {
+	o.train_with_sample_weights([]f64{}) or { panic(err) }
+}
+
+// train_with_sample_weights fits the Lasso model using one finite,
+// non-negative weight per sample. An empty slice assigns unit weight to each
+// sample. Weights scale the data terms, and the L1 threshold scales with their
+// sum so integer weights match fitting duplicated observations.
+pub fn (mut o Lasso) train_with_sample_weights(sample_weights []f64) ! {
 	m := o.data.nb_samples
 	n := o.data.nb_features
 	x := o.data.x
 	y := o.data.y
-
-	// Initialize coefficients
-	o.coef_ = []f64{len: n}
-	o.intercept_ = 0.0
-
-	// Center y (compute and store mean)
-	mut y_mean := 0.0
-	for val in y {
-		y_mean += val
+	if m <= 0 || x.m != m || x.n != n || y.len != m {
+		return errors.error('training data dimensions do not match', .einval)
 	}
-	y_mean /= f64(m)
+	if sample_weights.len != 0 && sample_weights.len != m {
+		return errors.error('sample_weights must be empty or match the number of samples',
+			.einval)
+	}
+	if math.is_nan(o.alpha) || math.is_inf(o.alpha, 0) || o.alpha < 0.0 {
+		return errors.error('alpha must be finite and non-negative', .einval)
+	}
 
-	// Compute X column norms for normalization
+	mut weight_sum := 0.0
+	mut y_sum := 0.0
+	mut x_sums := []f64{len: n}
+	for i in 0 .. m {
+		weight := if sample_weights.len == 0 { 1.0 } else { sample_weights[i] }
+		if math.is_nan(weight) || math.is_inf(weight, 0) || weight < 0.0 {
+			return errors.error('sample weights must be finite and non-negative', .einval)
+		}
+		weight_sum += weight
+		if math.is_inf(weight_sum, 0) {
+			return errors.error('sum of sample weights overflowed', .einval)
+		}
+		if weight == 0.0 {
+			continue
+		}
+		if math.is_nan(y[i]) || math.is_inf(y[i], 0) {
+			return errors.error('training targets must be finite', .einval)
+		}
+		y_sum += weight * y[i]
+		if math.is_nan(y_sum) || math.is_inf(y_sum, 0) {
+			return errors.error('weighted target sum overflowed', .einval)
+		}
+		for j in 0 .. n {
+			value := x.get(i, j)
+			if math.is_nan(value) || math.is_inf(value, 0) {
+				return errors.error('training features must be finite', .einval)
+			}
+			x_sums[j] += weight * value
+			if math.is_nan(x_sums[j]) || math.is_inf(x_sums[j], 0) {
+				return errors.error('weighted feature sum overflowed', .einval)
+			}
+		}
+	}
+	if weight_sum <= 0.0 {
+		return errors.error('sample weights must have a positive sum', .einval)
+	}
+
+	y_mean := y_sum / weight_sum
+	mut x_means := []f64{len: n}
+	for j in 0 .. n {
+		x_means[j] = x_sums[j] / weight_sum
+		if math.is_nan(x_means[j]) || math.is_inf(x_means[j], 0) {
+			return errors.error('weighted feature mean overflowed', .einval)
+		}
+	}
+	if math.is_nan(y_mean) || math.is_inf(y_mean, 0) {
+		return errors.error('weighted target mean overflowed', .einval)
+	}
 	mut x_norms := []f64{len: n}
 	for j in 0 .. n {
-		mut norm := 0.0
 		for i in 0 .. m {
-			val := x.get(i, j)
-			norm += val * val
+			weight := if sample_weights.len == 0 { 1.0 } else { sample_weights[i] }
+			if weight == 0.0 {
+				continue
+			}
+			centered := x.get(i, j) - x_means[j]
+			x_norms[j] += weight * centered * centered
 		}
-		x_norms[j] = norm
+		if math.is_nan(x_norms[j]) || math.is_inf(x_norms[j], 0) {
+			return errors.error('weighted feature norm overflowed', .einval)
+		}
 	}
 
-	// Residuals
+	mut coefficients := []f64{len: n}
 	mut residual := y.clone()
 	for i in 0 .. m {
+		weight := if sample_weights.len == 0 { 1.0 } else { sample_weights[i] }
+		if weight == 0.0 {
+			residual[i] = 0.0
+			continue
+		}
 		residual[i] -= y_mean
+		if math.is_nan(residual[i]) || math.is_inf(residual[i], 0) {
+			return errors.error('centered targets overflowed', .einval)
+		}
 	}
 
-	// Coordinate descent
+	threshold := o.alpha * weight_sum / 2.0
+	if math.is_nan(threshold) || math.is_inf(threshold, 0) {
+		return errors.error('L1 threshold overflowed', .einval)
+	}
 	for iter := 0; iter < o.max_iter; iter++ {
 		mut max_change := 0.0
-
 		for j in 0 .. n {
-			// Add back the contribution of current coefficient
-			old_coef := o.coef_[j]
-			if old_coef != 0 {
+			old_coef := coefficients[j]
+			if old_coef != 0.0 {
 				for i in 0 .. m {
-					residual[i] += x.get(i, j) * old_coef
+					weight := if sample_weights.len == 0 { 1.0 } else { sample_weights[i] }
+					if weight == 0.0 {
+						continue
+					}
+					centered := x.get(i, j) - x_means[j]
+					residual[i] += centered * old_coef
+					if math.is_nan(residual[i]) || math.is_inf(residual[i], 0) {
+						return errors.error('coordinate residual overflowed', .einval)
+					}
 				}
 			}
 
-			// Compute the simple linear regression coefficient
 			mut rho := 0.0
 			for i in 0 .. m {
-				rho += x.get(i, j) * residual[i]
+				weight := if sample_weights.len == 0 { 1.0 } else { sample_weights[i] }
+				if weight == 0.0 {
+					continue
+				}
+				centered := x.get(i, j) - x_means[j]
+				rho += weight * centered * residual[i]
+			}
+			if math.is_nan(rho) || math.is_inf(rho, 0) {
+				return errors.error('weighted feature-target product overflowed', .einval)
 			}
 
-			// Apply soft thresholding (L1 regularization)
-			if x_norms[j] > 0 {
-				o.coef_[j] = soft_threshold(rho, o.alpha * f64(m) / 2.0) / x_norms[j]
-			} else {
-				o.coef_[j] = 0.0
+			mut new_coef := 0.0
+			if x_norms[j] > 0.0 {
+				new_coef = soft_threshold(rho, threshold) / x_norms[j]
 			}
-
-			// Update residual
-			if o.coef_[j] != 0 {
+			if math.is_nan(new_coef) || math.is_inf(new_coef, 0) {
+				return errors.error('coefficient update overflowed', .einval)
+			}
+			coefficients[j] = new_coef
+			if new_coef != 0.0 {
 				for i in 0 .. m {
-					residual[i] -= x.get(i, j) * o.coef_[j]
+					weight := if sample_weights.len == 0 { 1.0 } else { sample_weights[i] }
+					if weight == 0.0 {
+						continue
+					}
+					centered := x.get(i, j) - x_means[j]
+					residual[i] -= centered * new_coef
+					if math.is_nan(residual[i]) || math.is_inf(residual[i], 0) {
+						return errors.error('coordinate residual overflowed', .einval)
+					}
 				}
 			}
-
-			// Track convergence
-			change := math.abs(o.coef_[j] - old_coef)
+			change := math.abs(new_coef - old_coef)
 			if change > max_change {
 				max_change = change
 			}
 		}
-
-		// Check convergence
 		if max_change < o.tol {
 			break
 		}
 	}
 
-	// Compute intercept
-	o.intercept_ = y_mean
+	mut intercept := y_mean
 	for j in 0 .. n {
-		mut x_mean := 0.0
-		for i in 0 .. m {
-			x_mean += x.get(i, j)
-		}
-		x_mean /= f64(m)
-		o.intercept_ -= o.coef_[j] * x_mean
+		intercept -= coefficients[j] * x_means[j]
 	}
-
+	if math.is_nan(intercept) || math.is_inf(intercept, 0) {
+		return errors.error('intercept update overflowed', .einval)
+	}
+	o.coef_ = coefficients
+	o.intercept_ = intercept
 	o.fitted = true
 }
 
