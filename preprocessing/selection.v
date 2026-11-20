@@ -27,11 +27,6 @@ pub fn VarianceThreshold.new(threshold f64) &VarianceThreshold {
 
 // fit learns feature variances from the supplied training matrix.
 pub fn (mut selector VarianceThreshold) fit(data [][]f64) ! {
-	selector.fitted = false
-	selector.support_ = []int{}
-	selector.variances_ = []f64{}
-	selector.n_features_in_ = 0
-
 	if math.is_nan(selector.threshold) || math.is_inf(selector.threshold, 0)
 		|| selector.threshold < 0.0 {
 		return errors.error('variance threshold must be finite and non-negative', .einval)
@@ -43,9 +38,13 @@ pub fn (mut selector VarianceThreshold) fit(data [][]f64) ! {
 	for row_index, row in data {
 		count := f64(row_index + 1)
 		for feature, value in row {
-			delta := value - means[feature]
+			centered := value - data[0][feature]
+			if math.is_nan(centered) || math.is_inf(centered, 0) {
+				return errors.error('feature ${feature} variance is not finite', .einval)
+			}
+			delta := centered - means[feature]
 			means[feature] += delta / count
-			sum_squares[feature] += delta * (value - means[feature])
+			sum_squares[feature] += delta * (centered - means[feature])
 		}
 	}
 
