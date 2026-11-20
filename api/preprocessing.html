@@ -234,6 +234,9 @@
 <h3 id="polynomial-features">Polynomial Features</h3>
 <ul>
 <li><strong>PolynomialFeatures</strong>: Generates polynomial powers and feature interactions</li></ul>
+<h3 id="feature-selection">Feature Selection</h3>
+<ul>
+<li><strong>VarianceThreshold</strong>: Removes features whose training-set variance is at or below a configured threshold</li></ul>
 <h3 id="numeric-pipelines">Numeric Pipelines</h3>
 <ul>
 <li><strong>MatrixTransformer</strong>: Common interface for fitted numeric transformations</li>
@@ -340,6 +343,15 @@ expanded <span class="token operator">:=</span> features<span class="token punct
 <span class="token comment">// Columns: [bias, x1, x2, x1^2, x1*x2, x2^2]</span>
 <span class="token comment">// First row: [1, 2, 3, 4, 6, 9]</span></code></pre>
 <p>Set <code>interaction_only: true</code> to exclude repeated input features in a term, or <code>include_bias: false</code> to omit the leading column of ones.</p>
+<h3 id="variance-based-feature-selection">Variance-based feature selection</h3>
+<pre><code class="language-v"><span class="token keyword">import</span> <span class="token module_">vsl</span><span class="token punctuation">.</span><span class="token module_">preprocessing</span>
+
+training <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">7.0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">3.0</span><span class="token punctuation">,</span> <span class="token number">7.0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">5.0</span><span class="token punctuation">,</span> <span class="token number">7.0</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
+<span class="token keyword">mut</span> selector <span class="token operator">:=</span> <span class="token module_">preprocessing</span><span class="token punctuation">.</span><span class="token type_name">VarianceThreshold</span><span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token number">0.0</span><span class="token punctuation">)</span>
+selected <span class="token operator">:=</span> selector<span class="token punctuation">.</span><span class="token function">fit_transform</span><span class="token punctuation">(</span>training<span class="token punctuation">)</span><span class="token operator">!</span>
+<span class="token keyword">assert</span> selector<span class="token punctuation">.</span><span class="token function">get_support</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">!</span> <span class="token operator">==</span> <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+<span class="token keyword">assert</span> selector<span class="token punctuation">.</span><span class="token function">get_feature_names_out</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'signal'</span><span class="token punctuation">,</span> <span class="token string">'constant'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">!</span> <span class="token operator">==</span> <span class="token punctuation">[</span><span class="token string">'signal'</span><span class="token punctuation">]</span></code></pre>
+<p><code>VarianceThreshold</code> uses population variance and keeps columns whose variance is strictly greater than <code>threshold</code>. Fit it on training data only, then reuse the fitted selector to transform validation, test, or inference data. Fitting requires a non-empty rectangular matrix of finite values; a threshold that removes every feature returns an error. It implements <code>MatrixTransformer</code> and can be used as a named step in <code>Pipeline</code>.</p>
 <h3 id="leakage-safe-numeric-pipeline">Leakage-safe numeric pipeline</h3>
 <pre><code class="language-v"><span class="token keyword">import</span> <span class="token module_">math</span>
 <span class="token keyword">import</span> <span class="token module_">vsl</span><span class="token punctuation">.</span><span class="token module_">preprocessing</span>
@@ -616,6 +628,41 @@ names <span class="token operator">:=</span> pipeline<span class="token punctuat
 </tr>
 </tbody>
 </table>
+<h3 id="variancethreshold">VarianceThreshold</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>new(threshold)</code></td>
+<td>Creates a selector that keeps population variance greater than the threshold</td>
+</tr>
+<tr>
+<td><code>fit(data)</code></td>
+<td>Learns per-feature variances and retained columns from training data</td>
+</tr>
+<tr>
+<td><code>transform(data)</code></td>
+<td>Selects the fitted columns in their original order</td>
+</tr>
+<tr>
+<td><code>fit_transform(data)</code></td>
+<td>Fits and selects in one step</td>
+</tr>
+<tr>
+<td><code>get_support()</code></td>
+<td>Returns retained input-column indices</td>
+</tr>
+<tr>
+<td><code>get_feature_names_out(input_features)</code></td>
+<td>Returns names for the retained columns</td>
+</tr>
+</tbody>
+</table>
 <h3 id="numeric-pipeline">Numeric Pipeline</h3>
 <table>
 <thead>
@@ -651,7 +698,7 @@ names <span class="token operator">:=</span> pipeline<span class="token punctuat
 </tr>
 </tbody>
 </table>
-<p><code>MatrixTransformer</code> requires <code>fit</code>, <code>transform</code>, and <code>get_feature_names_out</code>. <code>StandardScaler</code>, <code>MinMaxScaler</code>, <code>RobustScaler</code>, <code>SimpleImputer</code>, and <code>PolynomialFeatures</code> implement it. String encoders and serialization are not yet integrated with this numeric pipeline.</p>
+<p><code>MatrixTransformer</code> requires <code>fit</code>, <code>transform</code>, and <code>get_feature_names_out</code>. <code>StandardScaler</code>, <code>MinMaxScaler</code>, <code>RobustScaler</code>, <code>SimpleImputer</code>, <code>PolynomialFeatures</code>, and <code>VarianceThreshold</code> implement it. String encoders and serialization are not yet integrated with this numeric pipeline.</p>
 <h2 id="integration-with-ml-pipeline">Integration with ML Pipeline</h2>
 <pre><code class="language-v"><span class="token keyword">import</span> <span class="token module_">vsl</span><span class="token punctuation">.</span><span class="token module_">preprocessing</span>
 <span class="token keyword">import</span> <span class="token module_">vsl</span><span class="token punctuation">.</span><span class="token module_">inout</span><span class="token punctuation">.</span><span class="token module_">csv</span>
@@ -792,6 +839,14 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token type_name">StandardScaler</span><span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token type_name">StandardScaler</span></code></pre>
 <p>StandardScaler.new creates a new StandardScaler</p>
+
+</section>
+
+		<section id="VarianceThreshold.new" class="doc-node">
+			<div class="title"><h2>fn VarianceThreshold.new <a href="#VarianceThreshold.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L22"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token type_name">VarianceThreshold</span><span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>threshold <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token type_name">VarianceThreshold</span></code></pre>
+<p>VarianceThreshold.new creates a selector that keeps features with variance greater than threshold.</p>
 
 </section>
 
@@ -1332,8 +1387,66 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 
 </section>
 
+		<section id="VarianceThreshold" class="doc-node">
+			<div class="title"><h2>struct VarianceThreshold <a href="#VarianceThreshold">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L9"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<div class="attributes"><div class="attribute">@[heap]</div></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token type_name">VarianceThreshold</span> <span class="token punctuation">{</span>
+<span class="token keyword">mut</span><span class="token punctuation">:</span>
+	fitted   <span class="token builtin">bool</span>
+	support_ <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>
+<span class="token keyword">pub</span><span class="token punctuation">:</span>
+	threshold <span class="token builtin">f64</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	variances_     <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
+	n_features_in_ <span class="token builtin">int</span>
+<span class="token punctuation">}</span></code></pre>
+<p>VarianceThreshold removes features whose population variance is not greater than the configured threshold.</p>
 
-						<div class="footer">Powered by vdoc. Generated on: 18 Nov 2026 05:48:04</div>
+</section>
+
+		<section id="VarianceThreshold.fit" class="doc-node">
+			<div class="title"><h2>fn (VarianceThreshold) fit <a href="#VarianceThreshold.fit">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L29"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> selector <span class="token type_name">VarianceThreshold</span><span class="token punctuation">)</span> <span class="token function">fit</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
+<p>fit learns feature variances from the supplied training matrix.</p>
+
+</section>
+
+		<section id="VarianceThreshold.transform" class="doc-node">
+			<div class="title"><h2>fn (VarianceThreshold) transform <a href="#VarianceThreshold.transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L82"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>selector <span class="token operator">&amp;</span><span class="token type_name">VarianceThreshold</span><span class="token punctuation">)</span> <span class="token function">transform</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>transform selects the fitted columns without changing row order.</p>
+
+</section>
+
+		<section id="VarianceThreshold.fit_transform" class="doc-node">
+			<div class="title"><h2>fn (VarianceThreshold) fit_transform <a href="#VarianceThreshold.fit_transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L103"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> selector <span class="token type_name">VarianceThreshold</span><span class="token punctuation">)</span> <span class="token function">fit_transform</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>fit_transform learns variances and returns the selected training columns.</p>
+
+</section>
+
+		<section id="VarianceThreshold.get_support" class="doc-node">
+			<div class="title"><h2>fn (VarianceThreshold) get_support <a href="#VarianceThreshold.get_support">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L109"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>selector <span class="token operator">&amp;</span><span class="token type_name">VarianceThreshold</span><span class="token punctuation">)</span> <span class="token function">get_support</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span></code></pre>
+<p>get_support returns the original column indices retained by fit.</p>
+
+</section>
+
+		<section id="VarianceThreshold.get_feature_names_out" class="doc-node">
+			<div class="title"><h2>fn (VarianceThreshold) get_feature_names_out <a href="#VarianceThreshold.get_feature_names_out">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L118"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>selector <span class="token operator">&amp;</span><span class="token type_name">VarianceThreshold</span><span class="token punctuation">)</span> <span class="token function">get_feature_names_out</span><span class="token punctuation">(</span>input_features <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span></code></pre>
+<p>get_feature_names_out returns the retained names in original column order.</p>
+
+</section>
+
+
+						<div class="footer">Powered by vdoc. Generated on: 20 Nov 2026 06:44:39</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_preprocessing">README</a></li>
 <li class="open"><a href="#cut">fn cut</a>        <ul>
@@ -1376,6 +1489,9 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 </ul>
 </li>
 <li class="open"><a href="#StandardScaler.new">fn StandardScaler.new</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#VarianceThreshold.new">fn VarianceThreshold.new</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#MatrixTransformer">interface MatrixTransformer</a>        <ul>
@@ -1458,6 +1574,14 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 <li><a href="#StandardScaler.fit_transform">fn fit_transform</a></li>
 <li><a href="#StandardScaler.inverse_transform">fn inverse_transform</a></li>
 <li><a href="#StandardScaler.get_feature_names_out">fn get_feature_names_out</a></li>
+</ul>
+</li>
+<li class="open"><a href="#VarianceThreshold">struct VarianceThreshold</a>        <ul>
+<li><a href="#VarianceThreshold.fit">fn fit</a></li>
+<li><a href="#VarianceThreshold.transform">fn transform</a></li>
+<li><a href="#VarianceThreshold.fit_transform">fn fit_transform</a></li>
+<li><a href="#VarianceThreshold.get_support">fn get_support</a></li>
+<li><a href="#VarianceThreshold.get_feature_names_out">fn get_feature_names_out</a></li>
 </ul>
 </li>
 </ul></div>
