@@ -68,6 +68,35 @@ fn test_sparse_lu_matches_dense_reference_residual_for_sparse_system() {
 	assert sparse_lu_dense_residual_norm(matrix, solution, rhs) < 1e-12
 }
 
+fn test_sparse_lu_handles_fill_in_after_multiple_pivots() {
+	matrix := sparse_lu_matrix([
+		[f64(0), 1, 1, 0],
+		[2, 0, 3, 0],
+		[0, 4, 0, 5],
+		[6, 0, 7, 8],
+	])!
+	expected := [1.0, -2.0, 0.5, 3.0]
+	rhs := matrix.matvec(expected)!
+	factor := matrix.factorize_lu()!
+
+	assert factor.permutation == [3, 2, 0, 1]
+	assert math.abs(factor.rows[2][3] + 1.25) < 1e-12
+
+	solution := factor.solve(rhs)!
+	for index in 0 .. expected.len {
+		assert math.abs(solution[index] - expected[index]) < 1e-12
+	}
+	assert sparse_lu_dense_residual_norm(matrix, solution, rhs) < 1e-12
+
+	second_expected := [-1.0, 0.25, 2.0, -0.5]
+	second_rhs := matrix.matvec(second_expected)!
+	second_solution := factor.solve(second_rhs)!
+	for index in 0 .. second_expected.len {
+		assert math.abs(second_solution[index] - second_expected[index]) < 1e-12
+	}
+	assert sparse_lu_dense_residual_norm(matrix, second_solution, second_rhs) < 1e-12
+}
+
 fn test_sparse_lu_rejects_singular_and_invalid_shapes() {
 	singular := sparse_lu_matrix([
 		[f64(1), 2],
