@@ -32,8 +32,10 @@ out-of-range indices or exhausted capacity. Repeated coordinates are allowed.
 
 `Triplet.to_csr()!` converts COO entries to CSR, summing duplicate coordinates
 and dropping entries whose accumulated value is zero. CSR provides
-`to_dense()`, `to_cc()`, `size()`, `nnz()`, and `matvec(vector)!`. `matvec`
-requires a vector whose length matches the matrix's column count.
+`to_dense()`, `to_cc()`, `size()`, `nnz()`, `matvec(vector)!`, and
+`rmatvec(vector)!`. `matvec` requires one value per matrix column and returns
+one value per row; `rmatvec` multiplies by the transpose, requiring one value
+per row and returning one value per column.
 
 ### Compressed Sparse Column (CSC): `CCMatrix[T]`
 
@@ -53,8 +55,10 @@ matching length, a finite triangular matrix, and a finite nonzero diagonal in
 every row. They return an error for an entry on the wrong side of the diagonal
 or if an intermediate/result becomes non-finite.
 
-See [`examples/la_csr_matvec`](../../examples/la_csr_matvec/main.v), or run it
-with `v run examples/la_csr_matvec/main.v`.
+See [`examples/la_csr_matvec`](../../examples/la_csr_matvec/main.v) and
+[`examples/la_csr_rmatvec`](../../examples/la_csr_rmatvec/main.v), or run them
+with `v run examples/la_csr_matvec/main.v` and
+`v run examples/la_csr_rmatvec/main.v`.
 
 The CSR conjugate-gradient solver assumes a symmetric positive-definite matrix,
 uses a zero initial guess, and reports the true residual norm. A result can
@@ -99,4 +103,3 @@ example demonstrates both BiCGSTAB variants.
 
 - [Examples](../../examples/) - Find sparse matrix examples
 - [Advanced Topics](../advanced/) - More advanced techniques
-
