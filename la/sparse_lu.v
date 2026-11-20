@@ -74,6 +74,9 @@ pub fn (a &CSRMatrix[f64]) factorize_lu() !&SparseLU {
 		}
 
 		pivot := rows[pivot_column][pivot_column]
+		if !math.is_finite(pivot) {
+			return error('CSR LU factorization produced a non-finite pivot')
+		}
 		for row in pivot_column + 1 .. a.n {
 			entry := rows[row][pivot_column]
 			if entry == 0.0 {
