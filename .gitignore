@@ -17,3 +17,7 @@ vsl
 
 megalinter-reports/
 reference
+
+# Python bytecode
+__pycache__/
+*.py[cod]
