@@ -1,5 +1,6 @@
 module ml
 
+import math
 import vsl.float.float64
 
 fn test_lin_reg() {
@@ -29,8 +30,7 @@ fn test_lin_reg() {
 	mut reg := LinReg.new(mut data, 'linear regression')
 
 	reg.train()
-	// TODO: Fix this test
-	// assert float64.tolerance(reg.cost(), 5.312454218805082e-01, 1e-15)
+	assert float64.tolerance(reg.cost(), 5.312454218805082e-01, 1e-15)
 }
 
 fn test_lin_reg_pred() {
@@ -68,4 +68,95 @@ fn test_lin_reg_pred() {
 		pred := reg.predict([x0])
 		assert float64.tolerance(pred, reg.stat.mean_y, 1e-3)
 	}
+}
+
+fn test_lin_reg_weighted_fit() {
+	mut data := Data.from_raw_xy_sep[f64]([[0.0], [1.0], [2.0]], [1.0, 2.0, 4.0])!
+	mut reg := LinReg.new(mut data, 'weighted linear regression')
+	reg.params.set_lambda(0.25)
+
+	reg.train_with_sample_weights([1.0, 3.0, 0.0])!
+
+	assert float64.tolerance(reg.params.access_thetas()[0], 0.75, 1e-12)
+	assert float64.tolerance(reg.params.get_bias(), 1.1875, 1e-12)
+}
+
+fn test_lin_reg_weighted_fit_is_stable_with_large_feature_offsets() {
+	mut data := Data.from_raw_xy_sep[f64]([[1e12], [1e12 + 1.0]], [0.0, 1.0])!
+	mut reg := LinReg.new(mut data, 'large-offset weighted linear regression')
+
+	reg.train_with_sample_weights([1.0, 1.0])!
+
+	assert float64.tolerance(reg.params.access_thetas()[0], 1.0, 1e-12)
+	assert math.abs(reg.predict([1e12])) < 1e-10
+	assert math.abs(reg.predict([1e12 + 1.0]) - 1.0) < 1e-10
+}
+
+fn test_lin_reg_weighted_cost() {
+	mut data := Data.from_raw_xy_sep[f64]([[0.0], [1.0], [2.0]], [1.0, 2.0, 4.0])!
+	mut reg := LinReg.new(mut data, 'weighted linear regression cost')
+	reg.params.set_lambda(0.25)
+	reg.train_with_sample_weights([1.0, 3.0, 0.0])!
+
+	assert float64.tolerance(reg.cost(), 0.0234375, 1e-12)
+}
+
+fn test_lin_reg_weighted_gradients() {
+	mut data := Data.from_raw_xy_sep[f64]([[0.0], [1.0], [2.0]], [1.0, 2.0, 4.0])!
+	mut reg := LinReg.new(mut data, 'weighted linear regression gradients')
+	reg.params.set_lambda(0.25)
+	reg.train_with_sample_weights([1.0, 3.0, 0.0])!
+
+	gradient, bias_gradient := reg.gradients()
+	assert float64.tolerance(gradient[0], 0.0, 1e-12)
+	assert float64.tolerance(bias_gradient, 0.0, 1e-12)
+}
+
+fn test_lin_reg_weighted_fit_resets_weights_after_sample_count_changes() {
+	mut data := Data.from_raw_xy_sep[f64]([[0.0], [1.0], [2.0]], [1.0, 2.0, 4.0])!
+	mut reg := LinReg.new(mut data, 'resized weighted linear regression')
+	reg.params.set_lambda(0.25)
+	reg.train_with_sample_weights([1.0, 3.0, 0.0])!
+
+	replacement := Data.from_raw_xy_sep[f64]([[0.0], [1.0]], [1.0, 2.0])!
+	data.set(replacement.x, replacement.y)!
+	assert reg.sample_weights.len == 0
+
+	cost := reg.cost()
+	assert float64.tolerance(cost, 0.044921875, 1e-12)
+	gradient, bias_gradient := reg.gradients()
+	assert float64.tolerance(gradient[0], 0.0625, 1e-12)
+	assert float64.tolerance(bias_gradient, 0.0625, 1e-12)
+}
+
+fn test_lin_reg_weighted_fit_rejects_invalid_weights() {
+	assert weighted_linreg_rejects([1.0])
+	assert weighted_linreg_rejects([1.0, -1.0, 1.0])
+	assert weighted_linreg_rejects([0.0, 0.0, 0.0])
+	assert weighted_linreg_rejects([1.0, math.nan(), 1.0])
+	assert weighted_linreg_rejects([1.0, math.inf(1), 1.0])
+	assert weighted_linreg_rejects([math.max_f64, math.max_f64, 0.0])
+}
+
+fn weighted_linreg_rejects(weights []f64) bool {
+	mut data := Data.from_raw_xy_sep[f64]([[0.0], [1.0], [2.0]], [1.0, 2.0, 4.0]) or {
+		panic(err)
+	}
+	mut reg := LinReg.new(mut data, 'invalid weighted linear regression')
+	reg.train_with_sample_weights(weights) or { return true }
+	return false
+}
+
+fn test_lin_reg_weighted_fit_rejects_nonfinite_target() {
+	mut data := Data.from_raw_xy_sep[f64]([[0.0], [1.0]], [1.0, math.nan()])!
+	mut reg := LinReg.new(mut data, 'nonfinite weighted linear regression')
+	reg.train_with_sample_weights([1.0, 1.0]) or { return }
+	assert false, 'expected a non-finite target to fail'
+}
+
+fn test_lin_reg_weighted_fit_rejects_nonfinite_feature() {
+	mut feature_data := Data.from_raw_xy_sep[f64]([[0.0], [math.inf(1)]], [1.0, 2.0])!
+	mut feature_reg := LinReg.new(mut feature_data, 'nonfinite weighted feature')
+	feature_reg.train_with_sample_weights([1.0, 1.0]) or { return }
+	assert false, 'expected a non-finite feature to fail'
 }
