@@ -56,6 +56,47 @@ fn test_one_hot_encoder_basic() {
 	}
 }
 
+fn test_one_hot_encoder_rejects_unknown_categories() {
+	data := [['baseline'], ['known']]
+	mut encoder := OneHotEncoder.new(true)
+	encoder.fit(data)!
+
+	if _ := encoder.transform([['unseen']]) {
+		assert false, 'unknown categories must not be encoded as the dropped baseline'
+	} else {
+		assert err.msg().contains('unknown category')
+	}
+}
+
+fn test_categorical_encoders_reject_malformed_feature_matrices() {
+	mut one_hot := OneHotEncoder.new(false)
+	if _ := one_hot.fit([['a', 'b'], ['c']]) {
+		assert false, 'OneHotEncoder fit must reject ragged rows'
+	} else {
+		assert err.msg().contains('row 1')
+	}
+	one_hot.fit([['a', 'b'], ['c', 'd']])!
+	if _ := one_hot.transform([['a'], ['c', 'd']]) {
+		assert false, 'OneHotEncoder transform must reject inconsistent feature counts'
+	} else {
+		assert err.msg().contains('expected 2 features')
+	}
+	assert one_hot.transform([])! == [][]f64{}
+
+	mut ordinal := OrdinalEncoder.new()
+	ordinal.fit([['low']])!
+	if _ := ordinal.transform([['low', 'extra']]) {
+		assert false, 'OrdinalEncoder transform must reject inconsistent feature counts'
+	} else {
+		assert err.msg().contains('expected 1 features')
+	}
+	if _ := ordinal.fit([[], []]) {
+		assert false, 'categorical encoders must reject zero-feature inputs'
+	} else {
+		assert err.msg().contains('at least one feature')
+	}
+}
+
 fn test_one_hot_encoder_drop_first() {
 	data := [['a'], ['b'], ['c']]
 

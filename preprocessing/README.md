@@ -152,6 +152,11 @@ dummy := dummy_encoder.fit_transform(data)!
 // Result: [[0,0], [1,0], [0,1], [0,0]]
 ```
 
+Categorical feature encoders require non-empty rectangular input with at least
+one feature. `transform` requires the fitted feature count; unknown categories
+return an error, including when `drop_first` would otherwise encode them as the
+all-zero baseline. Empty transform batches are supported.
+
 ### Binning
 
 ```v
