@@ -88,14 +88,14 @@ fn test_multinomial_nb_ignores_zero_weight_only_classes_without_smoothing() ! {
 	], [1.0, 2.0, 0.0])!
 	with_zero_weight_class := MultinomialNB.new_with_config(mut data_with_zero_weight_class,
 		'zero_weight_class', MultinomialNBConfig{
-		alpha:          0.0
-		sample_weights: [1.0, 1.0, 0.0]
-	})!
+			alpha:          0.0
+			sample_weights: [1.0, 1.0, 0.0]
+		})!
 	mut data_without_class := Data.from_raw_xy_sep([[2.0, 0.0], [0.0, 2.0]], [1.0, 2.0])!
 	without_class := MultinomialNB.new_with_config(mut data_without_class, 'without_class',
 		MultinomialNBConfig{
-		alpha: 0.0
-	})!
+			alpha: 0.0
+		})!
 
 	assert with_zero_weight_class.classes() == [1.0, 2.0]
 	assert with_zero_weight_class.classes() == without_class.classes()
