@@ -43,6 +43,9 @@ pub mut:
 // Output:
 // new object
 pub fn Data.new[T](nb_samples int, nb_features int, use_y bool, allocate bool) !&Data[T] {
+	if nb_samples < 0 || nb_features < 0 {
+		return errors.error('data dimensions must be non-negative', .einval)
+	}
 	x := if allocate {
 		la.Matrix.new[T](nb_samples, nb_features)
 	} else {
@@ -66,11 +69,11 @@ pub fn Data.new[T](nb_samples int, nb_features int, use_y bool, allocate bool) !
 // y -- y values [optional]
 pub fn (mut o Data[T]) set(x &la.Matrix[T], y []T) ! {
 	// Update dimensions from the new data
-	o.nb_samples = x.m
-	o.nb_features = x.n
-	if y.len < o.nb_samples {
+	if y.len != 0 && y.len != x.m {
 		return errors.error('y vector must have same length as number of samples', .efailed)
 	}
+	o.nb_samples = x.m
+	o.nb_features = x.n
 	o.x = x
 	o.y = y
 	o.observable.notify_update()
@@ -78,7 +81,7 @@ pub fn (mut o Data[T]) set(x &la.Matrix[T], y []T) ! {
 
 // set_y exposes this operation as part of the public API.
 pub fn (mut o Data[T]) set_y(y []T) ! {
-	if y.len < o.nb_samples {
+	if y.len != o.nb_samples {
 		return errors.error('y vector must have same length as number of samples', .efailed)
 	}
 	o.y = y
@@ -87,7 +90,7 @@ pub fn (mut o Data[T]) set_y(y []T) ! {
 
 // set_x exposes this operation as part of the public API.
 pub fn (mut o Data[T]) set_x(x &la.Matrix[T]) ! {
-	if x.n < o.nb_samples || x.m < o.nb_features {
+	if x.m != o.nb_samples || x.n != o.nb_features {
 		return errors.error('x matrix must have same dimensions as number of samples and features',
 			.efailed)
 	}
@@ -108,6 +111,11 @@ pub fn Data.from_raw_x[T](xraw [][]T) !&Data[T] {
 	}
 	// allocate new object
 	nb_features := xraw[0].len
+	for row_index, row in xraw {
+		if row.len != nb_features {
+			return errors.error('x row ${row_index} must have ${nb_features} features', .einval)
+		}
+	}
 	mut o := Data.new[T](nb_samples, nb_features, true, true)!
 	// copy data from raw table to x matrix
 	for i := 0; i < nb_samples; i++ {
@@ -128,8 +136,16 @@ pub fn Data.from_raw_xy_sep[T](xraw [][]T, yraw []T) !&Data[T] {
 	if nb_samples < 1 {
 		return errors.error('at least one row of data in table must be provided', .efailed)
 	}
+	if yraw.len != nb_samples {
+		return errors.error('y vector must have same length as number of samples', .einval)
+	}
 	// allocate new object
 	nb_features := xraw[0].len
+	for row_index, row in xraw {
+		if row.len != nb_features {
+			return errors.error('x row ${row_index} must have ${nb_features} features', .einval)
+		}
+	}
 	mut o := Data.new[T](nb_samples, nb_features, false, true)!
 	// copy data from raw table to x matrix
 	for i := 0; i < nb_samples; i++ {
@@ -155,8 +171,17 @@ pub fn Data.from_raw_xy[T](xyraw [][]T) !&Data[T] {
 	if nb_samples < 1 {
 		return errors.error('at least one row of data in table must be provided', .efailed)
 	}
+	if xyraw[0].len == 0 {
+		return errors.error('each row must contain at least one feature or target value', .einval)
+	}
+	nb_columns := xyraw[0].len
+	for row_index, row in xyraw {
+		if row.len != nb_columns {
+			return errors.error('xy row ${row_index} must have ${nb_columns} values', .einval)
+		}
+	}
 	// allocate new object
-	nb_features := xyraw[0].len - 1 // -1 because of y column
+	nb_features := nb_columns - 1 // -1 because of y column
 	mut o := Data.new[T](nb_samples, nb_features, true, true)!
 	// copy data from raw table to x and y arrays
 	for i := 0; i < nb_samples; i++ {
