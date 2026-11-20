@@ -92,3 +92,25 @@ fn test_knn_predict_with_weights() {
 	knn.set_weights(w)!
 	assert knn.predict(k: 5, to_pred: [9.8])! == 3.0
 }
+
+fn test_knn_predict_rejects_invalid_k_and_feature_width() {
+	mut data := Data.from_raw_xy_sep([[0.0, 0.0], [1.0, 1.0]], [0.0, 1.0])!
+	mut knn := KNN.new(mut data, 'knn')!
+
+	assert_knn_predict_error(mut knn, PredictConfig{
+		k:       3
+		to_pred: [0.5, 0.5]
+	}, 'no greater than the number of training samples')
+	assert_knn_predict_error(mut knn, PredictConfig{
+		k:       1
+		to_pred: [0.5]
+	}, 'have 2 features')
+}
+
+fn assert_knn_predict_error(mut knn KNN, config PredictConfig, expected string) {
+	_ := knn.predict(config) or {
+		assert err.msg().contains(expected)
+		return
+	}
+	assert false
+}

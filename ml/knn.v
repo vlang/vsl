@@ -133,8 +133,16 @@ pub fn (mut knn KNN) predict(config PredictConfig) !f64 {
 	if k <= 0 {
 		return errors.error('expects k (int) to be >= 1.', .einval)
 	}
+	if k > knn.neighbors.len {
+		return errors.error('expects k (int) to be no greater than the number of training samples.',
+			.einval)
+	}
 	if to_pred.len <= 0 {
 		return errors.error('expects to_pred ([]f64) to have at least 1 element.', .einval)
+	}
+	if to_pred.len != knn.data.nb_features {
+		return errors.error('expects to_pred ([]f64) to have ${knn.data.nb_features} features.',
+			.einval)
 	}
 	mut x := knn.data.x.get_deep2()
 	for i := 0; i < x.len; i++ {
