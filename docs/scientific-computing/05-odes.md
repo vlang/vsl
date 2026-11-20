@@ -31,6 +31,41 @@ steps. They must be ordered in the integration direction and lie inside the
 integration interval; duplicate times are allowed. The solver returns sampled
 states in request order and only includes samples reached before any execution
 limit. Sampling is opt-in and does not retain every accepted step. VSL has no
-stiff method or event support yet. See the [`vsl.ode` API
+stiff method. See the [`vsl.ode` API
 guide](../../ode/README.md) and [harmonic oscillator
 example](../../examples/ode_rk23/README.md).
+
+## Detecting a terminal event
+
+Set `event_function` to stop at the first event value that is zero on an
+accepted-step boundary or changes sign across an accepted step. The solver
+localizes sign changes by bisection using the accepted step's cubic Hermite
+interpolation and returns the event time/state with `.event_detected`.
+
+```v ignore
+fn crossed_zero(_ f64, state []f64, _ []f64) f64 {
+	return state[0]
+}
+
+fn unit_rate_system(_ f64, _ []f64, _ []f64) []f64 {
+	return [1.0]
+}
+
+result := ode.solve_rk23(unit_rate_system, ode.RK23Params{
+	t_start:        0.0
+	t_end:          1.0
+	initial_state:  [-0.5]
+	event_function: crossed_zero
+})!
+assert result.status == .event_detected
+assert math.abs(result.t - 0.5) < 1e-12
+```
+
+An event that is already zero at `t_start` stops before any derivative
+evaluation. Tangential roots that do not change sign are not detected. Event
+callback results must be finite; multiple crossings inside one accepted step
+may be missed. Event callback evaluations share the configured evaluation
+budget with derivative evaluations and are reported separately in
+`n_event_calls`. Samples after the event are omitted.
+See the [`vsl.ode` API guide](../../ode/README.md) for callback and status
+details.
