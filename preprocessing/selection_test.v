@@ -28,6 +28,20 @@ fn test_variance_threshold_reuses_fit_state_for_inference_and_pipeline() ! {
 	assert pipeline.transform([[20.0, 1000.0]])! == [[20.0]]
 }
 
+fn test_variance_threshold_handles_large_offsets_and_preserves_failed_fit() ! {
+	base := 1_000_000_000_000_000.0
+	mut selector := VarianceThreshold.new(0.0)
+	selector.fit([[base], [base + 1.0], [base + 2.0]])!
+	assert math.abs(selector.variances_[0] - 2.0 / 3.0) < 1e-12
+	assert selector.get_support()! == [0]
+
+	if _ := selector.fit([[1.0, 2.0]]) {
+		assert false, 'a refit with a different width must fail'
+	}
+	assert selector.get_support()! == [0]
+	assert math.abs(selector.variances_[0] - 2.0 / 3.0) < 1e-12
+}
+
 fn test_variance_threshold_rejects_invalid_or_unfitted_inputs() {
 	mut unfitted := VarianceThreshold.new(0.0)
 	if _ := unfitted.transform([[1.0]]) {
