@@ -14,8 +14,18 @@ Root-finding and minimization routines in `vsl.roots` accept callbacks from
 | `GoldenSection.new_with_params(f, params).solve()` | Golden-section minimization | Bounded unimodal scalar minimizer. |
 | `BrentMinimizer.new_with_params(f, params).solve()` | Brent minimization | Safeguarded scalar minimizer. |
 
-`BisectionParams` configures bounds, relative and absolute tolerances, and the
-iteration limit. `Bisection.next()` exposes individual steps. `BrentParams`
+`BisectionParams` configures finite bounds, relative and absolute tolerances,
+and the iteration limit. Bisection requires a sign-changing interval (an exact
+endpoint root is accepted); it stops when the exact root is found or the
+half-width is at most `epsabs + epsrel * abs(x)`. If floating-point rounding
+leaves no representable midpoint before that tolerance is met, it finishes with
+the bracket endpoint having the smaller absolute residual. This precision-limit
+estimate reuses the already evaluated endpoint values, so it adds no function
+calls or midpoint iterations. `Bisection.next()` exposes individual steps, and
+its function-call count includes the initial endpoint evaluations. `solve()`
+returns the latest iteration (including the last one at the iteration limit or
+the best endpoint at a precision limit), or `none` for invalid parameters, a
+non-bracketing interval, or a non-finite function value. `BrentParams`
 configures the bracket, tolerance, iteration limit, and function-evaluation
 limit. A valid bracket is required. The solver reports `.converged`,
 `.invalid_bracket`, `.max_iterations`, `.max_evaluations`, or
