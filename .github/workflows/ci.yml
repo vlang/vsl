@@ -191,7 +191,9 @@ jobs:
 
   compile-examples-on-linux:
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 60
+    # Production examples include CBLAS/LAPACKE and Vulkan builds; allow the
+    # matrix job to finish without masking progress as a timeout cancellation.
+    timeout-minutes: 120
     env:
       VJOBS: "2"
 
