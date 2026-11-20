@@ -50,6 +50,23 @@ fn test_logreg_json_artifact_rejects_oversized_input() ! {
 	assert os.read_file(path)! == 'existing artifact'
 }
 
+fn test_logreg_json_artifact_rejects_directory_destination_without_partial_state() ! {
+	path := '.logreg_persistence_directory_${os.getpid()}'
+	defer {
+		os.rmdir_all(path) or {}
+	}
+	os.mkdir(path)!
+	artifact_path := os.join_path(path, 'artifact.json')
+	os.write_file(artifact_path, 'existing artifact')!
+
+	if _ := write_logreg_artifact(path, '{"not":"a model"}') {
+		assert false, 'a directory destination must be rejected'
+	} else {
+		assert err.msg().contains('destination must be a regular file')
+	}
+	assert os.read_file(artifact_path)! == 'existing artifact'
+}
+
 fn test_logreg_json_artifact_rejects_malformed_and_unsupported_content() ! {
 	valid := '{"schema":"vsl.ml.model","version":1,"model":"logistic_regression","feature_count":2,"weights":[0.5,-1.0],"bias":0.25,"lambda":0.1}'
 	unsupported_version := '{"schema":"vsl.ml.model","version":2,"model":"logistic_regression","feature_count":2,"weights":[0.5,-1.0],"bias":0.25,"lambda":0.1}'

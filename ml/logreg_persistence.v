@@ -159,6 +159,7 @@ pub fn load_logreg_artifact(path string) !LogRegArtifact {
 
 fn write_logreg_artifact(path string, text string) ! {
 	validate_logreg_artifact_size(u64(text.len))!
+	validate_logreg_destination(path)!
 	temp_dir := os.join_path(os.dir(path), '.vsl-logreg-${rand.ulid()}')
 	os.mkdir(temp_dir) or {
 		return errors.error('cannot create temporary logistic-regression artifact: ${err.msg()}',
@@ -170,18 +171,51 @@ fn write_logreg_artifact(path string, text string) ! {
 		}
 	}
 	temp_path := os.join_path(temp_dir, 'artifact.json')
-	os.write_file(temp_path, text) or {
+	mut temp_file := os.create(temp_path) or {
+		return errors.error('cannot create temporary logistic-regression artifact: ${err.msg()}',
+			.efailed)
+	}
+	defer {
+		temp_file.close()
+	}
+	bytes_written := temp_file.write_string(text) or {
 		return errors.error('cannot write temporary logistic-regression artifact: ${err.msg()}',
 			.efailed)
 	}
+	if bytes_written != text.len {
+		return errors.error('cannot write complete temporary logistic-regression artifact', .efailed)
+	}
+	temp_file.flush()
+	temp_file.close()
+	written_text := os.read_file(temp_path) or {
+		return errors.error('cannot verify temporary logistic-regression artifact: ${err.msg()}',
+			.efailed)
+	}
+	if written_text != text {
+		return errors.error('temporary logistic-regression artifact failed verification', .efailed)
+	}
 	replace_logreg_artifact(temp_path, path)!
+}
+
+fn validate_logreg_destination(path string) ! {
+	if !os.exists(path) {
+		return
+	}
+	file_stat := os.stat(path) or {
+		return errors.error('cannot inspect logistic-regression artifact destination: ${err.msg()}',
+			.efailed)
+	}
+	if file_stat.get_filetype() != .regular {
+		return errors.error('logistic-regression artifact destination must be a regular file',
+			.einval)
+	}
 }
 
 fn replace_logreg_artifact(source string, destination string) ! {
 	$if windows {
 		replace_logreg_artifact_windows(source, destination)!
 	} $else {
-		os.rename(source, destination) or {
+		os.rename_dir(source, destination) or {
 			return errors.error('cannot replace logistic-regression artifact: ${err.msg()}',
 				.efailed)
 		}
