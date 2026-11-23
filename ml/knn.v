@@ -1,5 +1,6 @@
 module ml
 
+import math
 import vsl.float.float64 { l2_distance_unitary }
 import vsl.errors
 import vsl.plot
@@ -70,6 +71,9 @@ pub fn (mut knn KNN) set_weights(weights map[f64]f64) ! {
 		if v == 0.0 {
 			return errors.error('expects weights (map[f64]f64) to not have ' + 'zeroes, as it cannot divide by zero.',
 				.ezerodiv)
+		}
+		if v < 0.0 || math.is_nan(v) || math.is_inf(v, 0) {
+			return errors.error('expects weights (map[f64]f64) to be finite and positive.', .einval)
 		}
 		new_weights[k] = v
 	}
