@@ -99,7 +99,9 @@ fn test_knn_rejects_invalid_weights() {
 	mut knn := KNN.new(mut data, 'knn')!
 
 	for invalid_weight in [-1.0, math.nan(), math.inf(1)] {
-		if _ := knn.set_weights({0.0: invalid_weight}) {
+		if _ := knn.set_weights({
+			0.0: invalid_weight
+		}) {
 			assert false, 'invalid class weights must be rejected'
 		}
 	}
