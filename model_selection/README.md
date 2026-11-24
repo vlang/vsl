@@ -18,6 +18,33 @@ performing cross-validation for machine learning model evaluation.
 - **LeaveOneOut**: Leave-one-out cross-validation
 - **ShuffleSplit**: Random permutation cross-validator
 
+### Permutation Importance
+
+`permutation_importance` evaluates an already-fitted predictor on held-out
+data, then repeatedly shuffles each feature (or configured feature group) and
+reports the resulting score decrease:
+
+```v
+result := model_selection.permutation_importance(
+	x_test,
+	y_test,
+	predictor,
+	metrics.accuracy_score,
+	model_selection.PermutationImportanceConfig{
+		n_repeats: 10
+		random_seed: 42
+	}
+)!
+println(result.importances_mean)
+```
+
+The predictor and scorer are caller-supplied, so classification and regression
+use the same API. A fixed seed makes the permutations deterministic and input
+rows are not mutated. Importance measures predictive reliance on this dataset;
+correlated features can mask one another, so interpret scores together with
+domain knowledge. When `feature_groups` is supplied, each group is shuffled
+together and result entries follow group order.
+
 ## Quick Start
 
 ### Basic Train-Test Split
@@ -253,6 +280,7 @@ pub:
 | `cross_val_score_with_factory(x, y, folds, factory, scorer)`                   | Fit a new predictor from each fold's training data           |
 | `cross_val_compare(x, y, folds, candidates, max_candidates, scorer)`           | Compare bounded candidate factories on shared folds          |
 | `cross_val_search(x, y, folds, candidates, max_candidates, direction, scorer)` | Select a bounded candidate using an explicit score direction |
+| `permutation_importance(x, y, predictor, scorer, config)`                    | Estimate score decrease from repeated feature permutations |
 
 ## Integration with ML Pipeline
 
