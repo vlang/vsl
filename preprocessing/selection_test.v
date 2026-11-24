@@ -100,3 +100,43 @@ fn test_variance_threshold_validates_transform_width_and_feature_names() ! {
 		assert err.msg().contains('expected 2 feature names')
 	}
 }
+
+fn test_correlation_selector_selects_top_features_and_names() ! {
+	training := [[1.0, 4.0, 3.0], [2.0, 3.0, 3.0], [3.0, 2.0, 5.0], [4.0, 1.0, 3.0]]
+	target := [1.0, 2.0, 3.0, 4.0]
+	mut selector := CorrelationSelector.new(2)
+
+	selected := selector.fit_transform(training, target)!
+	assert selector.get_support()! == [0, 1]
+	assert selector.get_feature_names_out(['up', 'down', 'noise'])! == ['up', 'down']
+	assert selected == [[1.0, 4.0], [2.0, 3.0], [3.0, 2.0], [4.0, 1.0]]
+	assert math.abs(selector.scores_[0] - 1.0) < 1e-12
+	assert math.abs(selector.scores_[1] - 1.0) < 1e-12
+}
+
+fn test_correlation_selector_tie_breaks_by_original_index() ! {
+	mut selector := CorrelationSelector.new(1)
+	selector.fit([[1.0, 1.0], [2.0, 2.0], [3.0, 3.0]], [3.0, 2.0, 1.0])!
+	assert selector.get_support()! == [0]
+}
+
+fn test_correlation_selector_rejects_invalid_inputs_and_preserves_fit() ! {
+	mut selector := CorrelationSelector.new(1)
+	selector.fit([[1.0, 4.0], [2.0, 3.0]], [1.0, 2.0])!
+	if _ := selector.fit([[1.0]], [1.0, 2.0]) {
+		assert false, 'target length mismatch must fail'
+	}
+	assert selector.get_support()! == [0]
+	if _ := selector.fit([[math.nan()], [2.0]], [1.0, 2.0]) {
+		assert false, 'non-finite features must fail'
+	}
+	if _ := selector.transform([[1.0]]) {
+		assert false, 'transform width mismatch must fail'
+	}
+	for k in [0, 3] {
+		mut invalid := CorrelationSelector.new(k)
+		if _ := invalid.fit([[1.0, 2.0], [2.0, 3.0]], [1.0, 2.0]) {
+			assert false, 'invalid k must fail'
+		}
+	}
+}
