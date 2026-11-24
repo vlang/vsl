@@ -350,6 +350,20 @@ pub fn (a &CSRMatrix[T]) matvec(vector []T) ![]T {
 	return result
 }
 
+// rmatvec multiplies the transpose of this matrix by a dense vector.
+pub fn (a &CSRMatrix[T]) rmatvec(vector []T) ![]T {
+	if vector.len != a.m {
+		return error('CSR rmatvec vector length ${vector.len} does not match matrix row count ${a.m}')
+	}
+	mut result := []T{len: a.n}
+	for row in 0 .. a.m {
+		for k in a.p[row] .. a.p[row + 1] {
+			result[a.j[k]] += a.x[k] * vector[row]
+		}
+	}
+	return result
+}
+
 // CCMatrix subtraction is element-wise and requires equal shapes.
 pub fn (a &CCMatrix[T]) - (b &CCMatrix[T]) &CCMatrix[T] {
 	if a.m != b.m || a.n != b.n {
