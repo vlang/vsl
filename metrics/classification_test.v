@@ -212,6 +212,44 @@ fn test_brier_score_rejects_invalid_inputs() {
 	}
 }
 
+fn test_calibration_curve_uses_non_empty_uniform_bins() {
+	y_true := [1.0, 0.0, 1.0, 0.0]
+	y_prob := [0.1, 0.2, 0.8, 1.0]
+
+	curve := calibration_curve(y_true, y_prob, 2)!
+	assert curve.counts == [2, 2]
+	assert math.abs(curve.mean_predicted_probability[0] - 0.15) < 1e-12
+	assert math.abs(curve.mean_predicted_probability[1] - 0.9) < 1e-12
+	assert math.abs(curve.fraction_positive[0] - 0.5) < 1e-12
+	assert math.abs(curve.fraction_positive[1] - 0.5) < 1e-12
+}
+
+fn test_expected_calibration_error() {
+	y_true := [1.0, 0.0, 1.0, 0.0]
+	y_prob := [0.1, 0.2, 0.8, 1.0]
+
+	assert math.abs(expected_calibration_error(y_true, y_prob, 2)! - 0.375) < 1e-12
+	assert expected_calibration_error([0.0, 1.0], [0.0, 1.0], 4)! == 0.0
+}
+
+fn test_calibration_apis_reject_invalid_inputs() {
+	if _ := calibration_curve([0.0], [0.5, 0.5], 2) {
+		assert false, 'different lengths must return an error'
+	}
+	if _ := calibration_curve([], [], 2) {
+		assert false, 'empty inputs must return an error'
+	}
+	if _ := calibration_curve([0.5], [0.5], 2) {
+		assert false, 'non-binary labels must return an error'
+	}
+	if _ := calibration_curve([1.0], [1.1], 2) {
+		assert false, 'out-of-range probabilities must return an error'
+	}
+	if _ := calibration_curve([1.0], [0.5], 0) {
+		assert false, 'non-positive bin counts must return an error'
+	}
+}
+
 fn test_gini_coefficient() {
 	y_true := [1.0, 1.0, 0.0, 0.0]
 	y_score := [0.9, 0.8, 0.2, 0.1]
