@@ -304,6 +304,37 @@ pub fn roc_curve(y_true []f64, y_score []f64) !RocCurveResult {
 	}
 }
 
+// optimal_threshold returns the score threshold maximizing Youden's J
+// statistic (true-positive rate minus false-positive rate).
+pub fn optimal_threshold(y_true []f64, y_score []f64) !f64 {
+	if y_true.len != y_score.len {
+		return errors.error('y_true and y_score must have the same length', .einval)
+	}
+	if y_true.len == 0 {
+		return errors.error('empty input arrays', .einval)
+	}
+	for i, label in y_true {
+		if label != 0.0 && label != 1.0 {
+			return errors.error('y_true must contain only binary labels 0 or 1', .einval)
+		}
+		score := y_score[i]
+		if math.is_nan(score) || math.is_inf(score, 0) {
+			return errors.error('y_score must contain only finite values', .einval)
+		}
+	}
+	roc := roc_curve(y_true, y_score)!
+	mut best_index := 0
+	mut best_j := roc.tpr[0] - roc.fpr[0]
+	for i in 1 .. roc.thresholds.len {
+		j := roc.tpr[i] - roc.fpr[i]
+		if j > best_j {
+			best_j = j
+			best_index = i
+		}
+	}
+	return roc.thresholds[best_index]
+}
+
 // roc_auc_score computes Area Under the ROC Curve using the trapezoidal rule
 pub fn roc_auc_score(y_true []f64, y_score []f64) !f64 {
 	roc := roc_curve(y_true, y_score)!
