@@ -511,6 +511,80 @@ pub fn brier_score(y_true []f64, y_prob []f64) !f64 {
 	return total / f64(y_true.len)
 }
 
+// CalibrationCurveResult contains observed positive rates and mean predicted
+// probabilities for non-empty uniform probability bins.
+pub struct CalibrationCurveResult {
+pub:
+	mean_predicted_probability []f64
+	fraction_positive          []f64
+	counts                     []int
+}
+
+// calibration_curve computes reliability-diagram points for binary
+// probabilities using uniform bins over [0, 1].
+pub fn calibration_curve(y_true []f64, y_prob []f64, n_bins int) !CalibrationCurveResult {
+	if y_true.len != y_prob.len {
+		return errors.error('y_true and y_prob must have the same length', .einval)
+	}
+	if y_true.len == 0 {
+		return errors.error('empty input arrays', .einval)
+	}
+	if n_bins <= 0 {
+		return errors.error('n_bins must be positive', .einval)
+	}
+
+	mut probability_sums := []f64{len: n_bins, init: 0.0}
+	mut positive_counts := []int{len: n_bins, init: 0}
+	mut counts := []int{len: n_bins, init: 0}
+	for i, label in y_true {
+		probability := y_prob[i]
+		if label != 0.0 && label != 1.0 {
+			return errors.error('y_true must contain only binary labels 0 or 1', .einval)
+		}
+		if math.is_nan(probability) || math.is_inf(probability, 0) || probability < 0.0
+			|| probability > 1.0 {
+			return errors.error('y_prob must contain finite probabilities in [0, 1]', .einval)
+		}
+		mut bin := int(probability * f64(n_bins))
+		if bin == n_bins {
+			bin = n_bins - 1
+		}
+		probability_sums[bin] += probability
+		positive_counts[bin] += int(label)
+		counts[bin]++
+	}
+
+	mut mean_predicted_probability := []f64{}
+	mut fraction_positive := []f64{}
+	mut non_empty_counts := []int{}
+	for bin in 0 .. n_bins {
+		if counts[bin] == 0 {
+			continue
+		}
+		mean_predicted_probability << probability_sums[bin] / f64(counts[bin])
+		fraction_positive << f64(positive_counts[bin]) / f64(counts[bin])
+		non_empty_counts << counts[bin]
+	}
+	return CalibrationCurveResult{
+		mean_predicted_probability: mean_predicted_probability
+		fraction_positive:          fraction_positive
+		counts:                     non_empty_counts
+	}
+}
+
+// expected_calibration_error computes the count-weighted absolute gap between
+// predicted probability and observed positive rate across uniform bins.
+pub fn expected_calibration_error(y_true []f64, y_prob []f64, n_bins int) !f64 {
+	curve := calibration_curve(y_true, y_prob, n_bins)!
+	mut total := 0.0
+	mut sample_count := 0
+	for i, count in curve.counts {
+		total += f64(count) * math.abs(curve.mean_predicted_probability[i] - curve.fraction_positive[i])
+		sample_count += count
+	}
+	return total / f64(sample_count)
+}
+
 // gini_coefficient computes the Gini coefficient from predictions
 pub fn gini_coefficient(y_true []f64, y_score []f64) !f64 {
 	auc_val := roc_auc_score(y_true, y_score)!
