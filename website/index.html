@@ -10,10 +10,11 @@
 <link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to content</a>
 <header class="top">
   <div class="wrap top-in">
     <a class="brand" href="./">VSL <span class="tag">v0.2.0-beta.1</span></a>
-    <nav class="main">
+    <nav class="main" aria-label="Primary navigation">
       <a href="getting-started.html">Getting started</a>
       <a href="#modules">Modules</a>
       <a href="#benchmarks">Benchmarks</a>
@@ -23,14 +24,20 @@
   </div>
 </header>
 
-<div class="wrap">
+<main id="main-content" class="wrap">
   <div class="hero">
     <div>
+      <div class="eyebrow">Pure V · SIMD kernels · explicit backends</div>
       <h1>The scientific engine <span class="hl">under V computing.</span></h1>
       <p class="lede">VSL is the V Scientific Library — linear algebra, FFT, statistics, differentiation, optimization and machine-learning primitives, with SIMD kernels and optional OpenBLAS, LAPACKE, CUDA and Vulkan backends. It is the backend that powers <a href="https://vlang.github.io/vtl">VTL</a> tensors.</p>
       <div class="btns">
         <a class="btn primary" href="getting-started.html">Start computing</a>
         <a class="btn" href="api/">Browse the API</a>
+      </div>
+      <div class="hero-meta" aria-label="Project highlights">
+        <span><strong>Core path</strong> pure V</span>
+        <span><strong>Acceleration</strong> opt-in</span>
+        <span><strong>Frontend</strong> VTL-ready</span>
       </div>
     </div>
     <figure class="plot" aria-label="Function plot">
@@ -127,6 +134,7 @@ fn main() {
     <p><a href="https://github.com/vlang/vsl/blob/main/docs/ML_ROADMAP.md">Read the ML roadmap →</a> · <a href="https://github.com/vlang/vsl/issues">Open issues →</a></p>
   </section>
 
+  </main>
   <footer>
     <div class="cols">
       <div>
@@ -155,6 +163,5 @@ fn main() {
       </div>
     </div>
   </footer>
-</div>
 </body>
 </html>
