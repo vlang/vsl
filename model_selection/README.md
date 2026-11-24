@@ -280,7 +280,7 @@ pub:
 | `cross_val_score_with_factory(x, y, folds, factory, scorer)`                   | Fit a new predictor from each fold's training data           |
 | `cross_val_compare(x, y, folds, candidates, max_candidates, scorer)`           | Compare bounded candidate factories on shared folds          |
 | `cross_val_search(x, y, folds, candidates, max_candidates, direction, scorer)` | Select a bounded candidate using an explicit score direction |
-| `permutation_importance(x, y, predictor, scorer, config)`                    | Estimate score decrease from repeated feature permutations |
+| `permutation_importance(x, y, predictor, scorer, config)`                      | Estimate score decrease from repeated feature permutations   |
 
 ## Integration with ML Pipeline
 
