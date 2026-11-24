@@ -113,13 +113,13 @@ fn (regressor &KNNRegressor) predict_from_neighbors(indices []int, distances []f
 	}
 
 	mut weighted_sum := CompensatedSum{}
-	mut weight_sum := 0.0
+	mut weight_sum := CompensatedSum{}
 	for i, index in indices {
 		weight := min_distance / distances[i]
 		weighted_sum.add((regressor.targets[index] / scale) * weight)
-		weight_sum += weight
+		weight_sum.add(weight)
 	}
-	return finite_prediction((weighted_sum.total() / weight_sum) * scale)!
+	return finite_prediction((weighted_sum.total() / weight_sum.total()) * scale)!
 }
 
 fn stable_uniform_mean(values []f64) !f64 {
