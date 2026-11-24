@@ -123,3 +123,30 @@ fn test_knn_regressor_stabilizes_large_targets_and_small_distances() {
 	)!
 	assert small_distance_model.predict([5e-309])! == 5.0
 }
+
+fn test_knn_regressor_distance_weighting_keeps_large_equal_targets_finite() {
+	model := KNNRegressor.new([[0.0], [1e308]], [1e308, 1e308],
+		k:         2
+		metric:    .manhattan
+		weighting: .distance
+	)!
+	assert model.predict([1.0])! == 1e308
+}
+
+fn test_knn_regressor_distance_weighting_preserves_small_denominator_terms() {
+	mut training := [[0.0]]
+	mut targets := [0.0]
+	for _ in 0 .. 1000 {
+		training << [18014398509481984.0]
+		targets << 1e308
+	}
+	model := KNNRegressor.new(training, targets,
+		k:         1001
+		metric:    .manhattan
+		weighting: .distance
+	)!
+	prediction := model.predict([1.0])!
+	expected := (1000.0 / 18014398509481984.0) /
+		(1.0 + 1000.0 / 18014398509481984.0) * 1e308
+	assert math.abs((prediction - expected) / expected) < 1e-15
+}
