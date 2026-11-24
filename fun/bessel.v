@@ -254,6 +254,32 @@ pub fn bessel_j1(x_ f64) f64 {
 	return z
 }
 
+// bessel_j1_e evaluates J1 and returns a documented, conservative estimate
+// for approximation and floating-point error across the implemented branches.
+pub fn bessel_j1_e(x f64) BesselEstimate {
+	value := bessel_j1(x)
+	if math.is_nan(x) {
+		return BesselEstimate{ value: value, abs_error: math.nan() }
+	}
+	if math.is_inf(x, 0) {
+		return BesselEstimate{ value: value, abs_error: 0.0 }
+	}
+	abs_x := math.abs(x)
+	scale := math.max(1.0, math.abs(value))
+	roundoff := 8.0 * prec.f64_epsilon * scale
+	truncation := if abs_x < two_m27 {
+		abs_x * abs_x * abs_x / 16.0
+	} else if abs_x < 2.0 {
+		16.0 * prec.f64_epsilon * scale
+	} else {
+		32.0 * prec.sqrt_f64_epsilon * scale / math.sqrt(abs_x)
+	}
+	return BesselEstimate{
+		value:     value
+		abs_error: roundoff + truncation
+	}
+}
+
 // bessel_jn returns the order-n Bessel function of the first kind.
 //
 // special cases are:

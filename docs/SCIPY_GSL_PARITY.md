@@ -69,7 +69,7 @@ Inverse error functions shipped in [#540](https://github.com/vlang/vsl/issues/54
 Airy functions Ai, Bi and their derivatives, with scaled forms, ship in
 [#556](https://github.com/vlang/vsl/issues/556) (`fun/airy.v`, validated against high-precision
 references and the Wronskian identity; see `examples/airy_turning_point`). Fractional Bessel
-functions, error-estimating variants beyond `bessel_j0_e`, elliptic families, and other special functions remain tracked in
+functions, error-estimating variants beyond `bessel_j0_e` and `bessel_j1_e`, elliptic families, and other special functions remain tracked in
 [#541](https://github.com/vlang/vsl/issues/541), [#543](https://github.com/vlang/vsl/issues/543),
 [#557](https://github.com/vlang/vsl/issues/557), and [#558](https://github.com/vlang/vsl/issues/558).
 Compare SciPy [`special`][scipy-special] and GSL [`special functions`][gsl-special].
