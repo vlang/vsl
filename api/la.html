@@ -218,6 +218,7 @@
 <li><strong>Basic Operations</strong>: Element-wise addition, subtraction, division, integer remainder, matrix multiplication, and transposition</li>
 <li><strong>Advanced Operations</strong>: Decompositions (LU, QR, SVD), eigenvalue analysis</li>
 <li><strong>Sparse Matrices</strong>: Efficient storage and operations for sparse data</li>
+<li><strong>Sparse LU</strong>: Reusable partial-pivoted LU factorization for f64 CSR matrices</li>
 <li><strong>BLAS Integration</strong>: Optional high-performance BLAS backend</li></ul>
 <h3 id="vector-example">Vector Example</h3>
 <ul>
@@ -310,7 +311,8 @@ x<span class="token punctuation">,</span> residuals<span class="token punctuatio
 <li><code>Vector</code> - Dense vector representation</li>
 <li><code>Triplet[T]</code> - coordinate (COO) sparse entries</li>
 <li><code>CCMatrix[T]</code> - compressed-column (CSC) storage</li>
-<li><code>CSRMatrix[T]</code> - compressed-row storage with dense conversion and matrix-vector multiplication</li></ul>
+<li><code>CSRMatrix[T]</code> - compressed-row storage with dense conversion and matrix-vector multiplication</li>
+<li><code>SparseLU</code> - reusable pure-V LU factorization produced by <code>CSRMatrix[f64].factorize_lu()</code></li></ul>
 <h3 id="key-functions">Key Functions</h3>
 <ul>
 <li><code>matrix_new(rows, cols)</code> - Create new matrix</li>
@@ -1001,7 +1003,7 @@ tr <span class="token operator">:=</span> <span class="token module_">la</span><
 </section>
 
 		<section id="CCMatrix[T].-" class="doc-node">
-			<div class="title"><h2>fn (CCMatrix[T]) - <a href="#CCMatrix[T].-">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/sparse_matrix.v#L354"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (CCMatrix[T]) - <a href="#CCMatrix[T].-">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/sparse_matrix.v#L368"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>a <span class="token operator">&amp;</span><span class="token type_name">CCMatrix</span><span class="token punctuation">[</span><span class="token type_name">T</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token punctuation">(</span>b <span class="token operator">&amp;</span><span class="token type_name">CCMatrix</span><span class="token punctuation">[</span><span class="token type_name">T</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token type_name">CCMatrix</span><span class="token punctuation">[</span><span class="token type_name">T</span><span class="token punctuation">]</span></code></pre>
 <p>CCMatrix subtraction is element-wise and requires equal shapes.</p>
@@ -1048,6 +1050,14 @@ tr <span class="token operator">:=</span> <span class="token module_">la</span><
 
 </section>
 
+		<section id="CSRMatrix[T].rmatvec" class="doc-node">
+			<div class="title"><h2>fn (CSRMatrix[T]) rmatvec <a href="#CSRMatrix[T].rmatvec">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/sparse_matrix.v#L354"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>a <span class="token operator">&amp;</span><span class="token type_name">CSRMatrix</span><span class="token punctuation">[</span><span class="token type_name">T</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">rmatvec</span><span class="token punctuation">(</span>vector <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token type_name">T</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token type_name">T</span></code></pre>
+<p>rmatvec multiplies the transpose of this matrix by a dense vector.</p>
+
+</section>
+
 		<section id="CSRMatrix[f64].bicgstab" class="doc-node">
 			<div class="title"><h2>fn (CSRMatrix[f64]) bicgstab <a href="#CSRMatrix[f64].bicgstab">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/bicgstab.v#L17"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
@@ -1061,6 +1071,14 @@ tr <span class="token operator">:=</span> <span class="token module_">la</span><
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>a <span class="token operator">&amp;</span><span class="token type_name">CSRMatrix</span><span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">preconditioned_bicgstab</span><span class="token punctuation">(</span>b <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> tolerance <span class="token builtin">f64</span><span class="token punctuation">,</span> max_iterations <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token type_name">BiCGSTABResult</span></code></pre>
 <p>preconditioned_bicgstab solves a square CSR system using right Jacobi preconditioning. Its diagonal entries must be finite and nonzero.</p>
+
+</section>
+
+		<section id="CSRMatrix[f64].factorize_lu" class="doc-node">
+			<div class="title"><h2>fn (CSRMatrix[f64]) factorize_lu <a href="#CSRMatrix[f64].factorize_lu">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/sparse_lu.v#L19"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>a <span class="token operator">&amp;</span><span class="token type_name">CSRMatrix</span><span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">factorize_lu</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token operator">&amp;</span><span class="token type_name">SparseLU</span></code></pre>
+<p>factorize_lu computes a partial-pivoted LU factorization without converting the matrix to dense storage. It returns an error for nonsquare or malformed CSR input, non-finite values, singular pivots, or non-finite elimination results. Singularity is determined by an exactly zero pivot; no condition estimate or near-singularity threshold is applied.</p>
 
 </section>
 
@@ -1678,6 +1696,27 @@ tr <span class="token operator">:=</span> <span class="token module_">la</span><
 
 </section>
 
+		<section id="SparseLU" class="doc-node">
+			<div class="title"><h2>struct SparseLU <a href="#SparseLU">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/sparse_lu.v#L7"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token type_name">SparseLU</span> <span class="token punctuation">{</span>
+	size <span class="token builtin">int</span>
+<span class="token keyword">mut</span><span class="token punctuation">:</span>
+	rows        <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">map</span><span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
+	permutation <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>
+<span class="token punctuation">}</span></code></pre>
+<p>SparseLU is a reusable, pure-V LU factorization of a square f64 CSR matrix. The internal rows contain both the unit-lower multipliers and upper factor.</p>
+
+</section>
+
+		<section id="SparseLU.solve" class="doc-node">
+			<div class="title"><h2>fn (SparseLU) solve <a href="#SparseLU.solve">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/sparse_lu.v#L116"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>factor <span class="token operator">&amp;</span><span class="token type_name">SparseLU</span><span class="token punctuation">)</span> <span class="token function">solve</span><span class="token punctuation">(</span>b <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>solve applies a previously computed sparse LU factorization to one right-hand side. The factorization can be reused for subsequent right-hand sides.</p>
+
+</section>
+
 		<section id="Triplet" class="doc-node">
 			<div class="title"><h2>struct Triplet <a href="#Triplet">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/la/sparse_matrix.v#L7"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
@@ -1700,7 +1739,7 @@ tr <span class="token operator">:=</span> <span class="token module_">la</span><
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 24 Nov 2026 06:17:03</div>
+						<div class="footer">Powered by vdoc. Generated on: 24 Nov 2026 19:19:57</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_la">README</a></li>
 <li class="open"><a href="#center_matrix">fn center_matrix</a>        <ul>
@@ -1908,11 +1947,13 @@ tr <span class="token operator">:=</span> <span class="token module_">la</span><
 <li><a href="#CSRMatrix[T].to_dense">fn to_dense</a></li>
 <li><a href="#CSRMatrix[T].to_cc">fn to_cc</a></li>
 <li><a href="#CSRMatrix[T].matvec">fn matvec</a></li>
+<li><a href="#CSRMatrix[T].rmatvec">fn rmatvec</a></li>
 </ul>
 </li>
 <li class="open"><a href="#CSRMatrix[f64].bicgstab">type CSRMatrix[f64]</a>        <ul>
 <li><a href="#CSRMatrix[f64].bicgstab">fn bicgstab</a></li>
 <li><a href="#CSRMatrix[f64].preconditioned_bicgstab">fn preconditioned_bicgstab</a></li>
+<li><a href="#CSRMatrix[f64].factorize_lu">fn factorize_lu</a></li>
 <li><a href="#CSRMatrix[f64].conjugate_gradient">fn conjugate_gradient</a></li>
 <li><a href="#CSRMatrix[f64].preconditioned_conjugate_gradient">fn preconditioned_conjugate_gradient</a></li>
 <li><a href="#CSRMatrix[f64].gmres">fn gmres</a></li>
@@ -2002,6 +2043,10 @@ tr <span class="token operator">:=</span> <span class="token module_">la</span><
 <li><a href="#SparseConfig.set_umfpack_symmetry">fn set_umfpack_symmetry</a></li>
 <li><a href="#SparseConfig.set_mumps_ordering">fn set_mumps_ordering</a></li>
 <li><a href="#SparseConfig.set_mumps_scaling">fn set_mumps_scaling</a></li>
+</ul>
+</li>
+<li class="open"><a href="#SparseLU">struct SparseLU</a>        <ul>
+<li><a href="#SparseLU.solve">fn solve</a></li>
 </ul>
 </li>
 <li class="open"><a href="#Triplet">struct Triplet</a>        <ul>

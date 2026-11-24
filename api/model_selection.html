@@ -223,6 +223,20 @@
 <li><strong>StratifiedKFold</strong>: Stratified K-Fold (preserves class balance)</li>
 <li><strong>LeaveOneOut</strong>: Leave-one-out cross-validation</li>
 <li><strong>ShuffleSplit</strong>: Random permutation cross-validator</li></ul>
+<h3 id="permutation-importance">Permutation Importance</h3>
+<p><code>permutation_importance</code> evaluates an already-fitted predictor on held-out data, then repeatedly shuffles each feature (or configured feature group) and reports the resulting score decrease:</p>
+<pre><code class="language-v">result <span class="token operator">:=</span> <span class="token module_">model_selection</span><span class="token punctuation">.</span><span class="token function">permutation_importance</span><span class="token punctuation">(</span>
+    x_test<span class="token punctuation">,</span>
+    y_test<span class="token punctuation">,</span>
+    predictor<span class="token punctuation">,</span>
+    <span class="token module_">metrics</span><span class="token punctuation">.</span>accuracy_score<span class="token punctuation">,</span>
+    <span class="token module_">model_selection</span><span class="token punctuation">.</span><span class="token type_name">PermutationImportanceConfig</span><span class="token punctuation">{</span>
+        n_repeats<span class="token punctuation">:</span> <span class="token number">10</span>
+        random_seed<span class="token punctuation">:</span> <span class="token number">42</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">)</span><span class="token operator">!</span>
+<span class="token function">println</span><span class="token punctuation">(</span>result<span class="token punctuation">.</span>importances_mean<span class="token punctuation">)</span></code></pre>
+<p>The predictor and scorer are caller-supplied, so classification and regression use the same API. A fixed seed makes the permutations deterministic and input rows are not mutated. Importance measures predictive reliance on this dataset; correlated features can mask one another, so interpret scores together with domain knowledge. When <code>feature_groups</code> is supplied, each group is shuffled together and result entries follow group order.</p>
 <h2 id="quick-start">Quick Start</h2>
 <h3 id="basic-train-test-split">Basic Train-Test Split</h3>
 <pre><code class="language-v"><span class="token keyword">import</span> <span class="token module_">vsl</span><span class="token punctuation">.</span><span class="token module_">model_selection</span>
@@ -484,6 +498,10 @@ best <span class="token operator">:=</span> search<span class="token punctuation
 <td><code>cross_val_search(x, y, folds, candidates, max_candidates, direction, scorer)</code></td>
 <td>Select a bounded candidate using an explicit score direction</td>
 </tr>
+<tr>
+<td><code>permutation_importance(x, y, predictor, scorer, config)</code></td>
+<td>Estimate score decrease from repeated feature permutations</td>
+</tr>
 </tbody>
 </table>
 <h2 id="integration-with-ml-pipeline">Integration with ML Pipeline</h2>
@@ -582,6 +600,15 @@ avg <span class="token operator">/=</span> <span class="token builtin">f64</span
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">get_fold_data</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> y <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> fold <span class="token type_name">Fold</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
 <p>get_fold_data extracts the actual data for a fold</p>
+
+</section>
+
+		<section id="permutation_importance" class="doc-node">
+			<div class="title"><h2>fn permutation_importance <a href="#permutation_importance">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/permutation_importance.v#L31"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">permutation_importance</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> y <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> predictor <span class="token type_name">FoldPrediction</span><span class="token punctuation">,</span> scorer <span class="token type_name">FoldScorer</span><span class="token punctuation">,</span>
+	config <span class="token type_name">PermutationImportanceConfig</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token type_name">PermutationImportanceResult</span></code></pre>
+<p>permutation_importance estimates predictive reliance on held-out data. The predictor and scorer are supplied by the caller so this utility works with any fitted estimator and with either classification or regression.</p>
 
 </section>
 
@@ -773,6 +800,36 @@ avg <span class="token operator">/=</span> <span class="token builtin">f64</span
 
 </section>
 
+		<section id="PermutationImportanceConfig" class="doc-node">
+			<div class="title"><h2>struct PermutationImportanceConfig <a href="#PermutationImportanceConfig">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/permutation_importance.v#L7"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token type_name">PermutationImportanceConfig</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span><span class="token punctuation">:</span>
+	n_repeats   <span class="token builtin">int</span> <span class="token operator">=</span> <span class="token number">5</span>
+	random_seed <span class="token builtin">u32</span> <span class="token operator">=</span> <span class="token number">42</span>
+	<span class="token comment">// Each group is permuted together. An empty list means one group per feature.</span>
+	feature_groups <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>
+<span class="token punctuation">}</span></code></pre>
+<p>PermutationImportanceConfig controls repeated feature permutation.</p>
+
+</section>
+
+		<section id="PermutationImportanceResult" class="doc-node">
+			<div class="title"><h2>struct PermutationImportanceResult <a href="#PermutationImportanceResult">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/permutation_importance.v#L18"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token type_name">PermutationImportanceResult</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span><span class="token punctuation">:</span>
+	importances_mean <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
+	importances_std  <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
+	baseline_score   <span class="token builtin">f64</span>
+	n_repeats        <span class="token builtin">int</span>
+	random_seed      <span class="token builtin">u32</span>
+	feature_groups   <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>
+<span class="token punctuation">}</span></code></pre>
+<p>PermutationImportanceResult contains score decreases caused by permutation. Positive values indicate that the estimator relied on the corresponding feature group for the supplied data and scorer.</p>
+
+</section>
+
 		<section id="ShuffleSplit" class="doc-node">
 			<div class="title"><h2>struct ShuffleSplit <a href="#ShuffleSplit">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/model_selection/cross_validation.v#L251"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <div class="attributes"><div class="attribute">@[heap]</div></div>
@@ -877,7 +934,7 @@ avg <span class="token operator">/=</span> <span class="token builtin">f64</span
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 24 Nov 2026 06:17:03</div>
+						<div class="footer">Powered by vdoc. Generated on: 24 Nov 2026 19:19:57</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_model_selection">README</a></li>
 <li class="open"><a href="#cross_val_compare">fn cross_val_compare</a>        <ul>
@@ -893,6 +950,9 @@ avg <span class="token operator">/=</span> <span class="token builtin">f64</span
 </ul>
 </li>
 <li class="open"><a href="#get_fold_data">fn get_fold_data</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#permutation_importance">fn permutation_importance</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#train_test_split">fn train_test_split</a>        <ul>
@@ -949,6 +1009,12 @@ avg <span class="token operator">/=</span> <span class="token builtin">f64</span
 </li>
 <li class="open"><a href="#LeaveOneOut">struct LeaveOneOut</a>        <ul>
 <li><a href="#LeaveOneOut.split">fn split</a></li>
+</ul>
+</li>
+<li class="open"><a href="#PermutationImportanceConfig">struct PermutationImportanceConfig</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#PermutationImportanceResult">struct PermutationImportanceResult</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#ShuffleSplit">struct ShuffleSplit</a>        <ul>

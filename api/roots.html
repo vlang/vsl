@@ -432,7 +432,7 @@ result <span class="token operator">:=</span> minimizer<span class="token punctu
 </section>
 
 		<section id="Bisection.new" class="doc-node">
-			<div class="title"><h2>fn Bisection.new <a href="#Bisection.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/roots/bisection.v#L37"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn Bisection.new <a href="#Bisection.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/roots/bisection.v#L40"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token type_name">Bisection</span><span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>f <span class="token module_">func</span><span class="token punctuation">.</span><span class="token type_name">Fn</span><span class="token punctuation">,</span> params <span class="token type_name">BisectionParams</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token type_name">Bisection</span></code></pre>
 <p>Bisection.new creates a new Bisection object with the given parameters</p>
@@ -666,7 +666,10 @@ result <span class="token operator">:=</span> minimizer<span class="token punctu
 <code><span class="token keyword">struct</span> <span class="token type_name">Bisection</span> <span class="token punctuation">{</span>
 	f <span class="token module_">func</span><span class="token punctuation">.</span><span class="token type_name">Fn</span> <span class="token attribute">@[</span><span class="token attribute">required</span><span class="token attribute">]</span>
 <span class="token keyword">mut</span><span class="token punctuation">:</span>
-	last_iter <span class="token operator">?</span><span class="token operator">&amp;</span><span class="token type_name">BisectionIteration</span> <span class="token comment">// last iteration</span>
+	last_iter   <span class="token operator">?</span><span class="token operator">&amp;</span><span class="token type_name">BisectionIteration</span> <span class="token comment">// last iteration</span>
+	f_xmin      <span class="token builtin">f64</span>
+	initialized <span class="token builtin">bool</span>
+	finished    <span class="token builtin">bool</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
 	xmin      <span class="token builtin">f64</span> <span class="token comment">// lower bound</span>
 	xmax      <span class="token builtin">f64</span> <span class="token comment">// upper bound</span>
@@ -681,7 +684,7 @@ result <span class="token operator">:=</span> minimizer<span class="token punctu
 </section>
 
 		<section id="Bisection.next" class="doc-node">
-			<div class="title"><h2>fn (Bisection) next <a href="#Bisection.next">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/roots/bisection.v#L58"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (Bisection) next <a href="#Bisection.next">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/roots/bisection.v#L61"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> solver <span class="token type_name">Bisection</span><span class="token punctuation">)</span> <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">?</span><span class="token operator">&amp;</span><span class="token type_name">BisectionIteration</span></code></pre>
 <p>next returns the next iteration of the bisection method.</p>
@@ -689,7 +692,7 @@ result <span class="token operator">:=</span> minimizer<span class="token punctu
 </section>
 
 		<section id="Bisection.solve" class="doc-node">
-			<div class="title"><h2>fn (Bisection) solve <a href="#Bisection.solve">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/roots/bisection.v#L92"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (Bisection) solve <a href="#Bisection.solve">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/roots/bisection.v#L153"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> solver <span class="token type_name">Bisection</span><span class="token punctuation">)</span> <span class="token function">solve</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">?</span><span class="token operator">&amp;</span><span class="token type_name">BisectionIteration</span></code></pre>
 <p>solve solves for the root of the function using the bisection method.</p>
@@ -697,7 +700,7 @@ result <span class="token operator">:=</span> minimizer<span class="token punctu
 </section>
 
 		<section id="BisectionIteration" class="doc-node">
-			<div class="title"><h2>struct BisectionIteration <a href="#BisectionIteration">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/roots/bisection.v#L49"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>struct BisectionIteration <a href="#BisectionIteration">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/roots/bisection.v#L52"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">struct</span> <span class="token type_name">BisectionIteration</span> <span class="token punctuation">{</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
@@ -711,7 +714,7 @@ result <span class="token operator">:=</span> minimizer<span class="token punctu
 </section>
 
 		<section id="BisectionParams" class="doc-node">
-			<div class="title"><h2>struct BisectionParams <a href="#BisectionParams">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/roots/bisection.v#L27"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>struct BisectionParams <a href="#BisectionParams">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/roots/bisection.v#L30"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <div class="attributes"><div class="attribute">@[params]</div></div>
 <pre class="signature">
 <code><span class="token keyword">struct</span> <span class="token type_name">BisectionParams</span> <span class="token punctuation">{</span>
@@ -972,7 +975,7 @@ result <span class="token operator">:=</span> minimizer<span class="token punctu
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 24 Nov 2026 06:17:03</div>
+						<div class="footer">Powered by vdoc. Generated on: 24 Nov 2026 19:19:57</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_roots">README</a></li>
 <li class="open"><a href="#newton">fn newton</a>        <ul>

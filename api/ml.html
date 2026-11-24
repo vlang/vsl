@@ -274,10 +274,24 @@ model <span class="token operator">:=</span> <span class="token type_name">Gauss
 <span class="token function">println</span><span class="token punctuation">(</span>model<span class="token punctuation">.</span><span class="token function">predict</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1.5</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">!</span><span class="token punctuation">)</span>
 <span class="token function">println</span><span class="token punctuation">(</span>model<span class="token punctuation">.</span><span class="token function">predict_proba</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1.5</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">!</span><span class="token punctuation">)</span></code></pre>
 <p>Use <code>GaussianNB.new_with_smoothing</code> to choose a different smoothing value. The model accepts finite <code>f64</code> features and finite numeric labels. Probabilities follow ascending numeric class order. For streaming data, construct an empty model with <code>GaussianNB.new_untrained</code> and call <code>partial_fit</code>; declare the full class set on the first batch. <code>GaussianNBPartialFitConfig.sample_weights</code> can provide finite non-negative sample weights. Incremental fitting retains only weighted sufficient statistics, not the input batches; use <code>class_weight_sums()</code> to inspect accumulated weight per class. See the <a href="https://github.com/vlang/vsl/blob/master/examples/ml_gaussian_nb_streaming/README.md">streaming GaussianNB example</a> for a complete two-batch program.</p>
+<h2 id="logistic-regression-json-persistence">Logistic Regression JSON Persistence</h2>
+<p>The current persistence slice is limited to the fitted inference state of <code>LogReg[f64]</code>. Save the schema-versioned JSON artifact with <code>save_json</code>, then load an independent <code>LogRegArtifact</code> for prediction without the original training data:</p>
+<pre><code class="language-v"><span class="token module_">model</span><span class="token punctuation">.</span><span class="token function">save_json</span><span class="token punctuation">(</span><span class="token string">'student_model.json'</span><span class="token punctuation">)</span><span class="token operator">!</span>
+loaded <span class="token operator">:=</span> <span class="token module_">ml</span><span class="token punctuation">.</span><span class="token function">load_logreg_artifact</span><span class="token punctuation">(</span><span class="token string">'student_model.json'</span><span class="token punctuation">)</span><span class="token operator">!</span>
+probability <span class="token operator">:=</span> loaded<span class="token punctuation">.</span><span class="token function">predict</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">3.5</span><span class="token punctuation">,</span> <span class="token number">6.0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">!</span></code></pre>
+<p>The version-1 artifact contains model/schema identifiers, feature count, weights, bias, and a non-negative regularization parameter. Decoding validates the exact field set, supported identifiers/version, feature dimensions, and finite parameters. It uses JSON data decoding only and does not deserialize executable code. This does not persist training data, observer state, optimizer configuration, preprocessing pipelines, other estimators, or provide ONNX export; it is not a general cross-version persistence contract. Artifacts are limited to 64 MiB, and oversized JSON is rejected before decoding.</p>
 <h2 id="non-observer-models">Non-Observer Models</h2>
 <p>The following machine learning models in VSL do not require the observer pattern and are trained once on a dataset without continuous updates.</p>
 <h3 id="linear-regression">Linear Regression</h3>
 <p>Linear Regression is used for predicting a continuous target variable based on one or more predictor variables. It is typically trained once on a dataset and used to make predictions without requiring continuous updates. Hence, it is not implemented as an observer model.</p>
+
+</section>
+
+		<section id="load_logreg_artifact" class="doc-node">
+			<div class="title"><h2>fn load_logreg_artifact <a href="#load_logreg_artifact">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/logreg_persistence.v#L155"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">load_logreg_artifact</span><span class="token punctuation">(</span>path <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token type_name">LogRegArtifact</span></code></pre>
+<p>load_logreg_artifact reads a validated inference artifact from a JSON file.</p>
 
 </section>
 
@@ -299,7 +313,7 @@ model <span class="token operator">:=</span> <span class="token type_name">Gauss
 </section>
 
 		<section id="safe_log_1p_exp" class="doc-node">
-			<div class="title"><h2>fn safe_log_1p_exp <a href="#safe_log_1p_exp">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/logreg.v#L335"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn safe_log_1p_exp <a href="#safe_log_1p_exp">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/logreg.v#L408"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">safe_log_1p_exp</span><span class="token punctuation">(</span>z <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
 <p>safe_log_1p_exp computes log(1+exp(-z)) safely by checking if exp(-z) is &gt;&gt; 1, thus returning -z. This is the case when z&lt;0 and |z| is too large</p>
@@ -466,10 +480,34 @@ to [10.0, 10.0] (which is class 1.0).</p>
 </section>
 
 		<section id="LogReg.new" class="doc-node">
-			<div class="title"><h2>fn LogReg.new <a href="#LogReg.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/logreg.v#L36"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn LogReg.new <a href="#LogReg.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/logreg.v#L37"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token type_name">LogReg</span><span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token keyword">mut</span> data <span class="token type_name">Data</span><span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> name <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token type_name">LogReg</span></code></pre>
 <p>LogReg.new returns a new LogReg object Input: data   -- x,y data name   -- unique name of this (observer) object Output: new LogReg object</p>
+
+</section>
+
+		<section id="LogRegArtifact.from_json" class="doc-node">
+			<div class="title"><h2>fn LogRegArtifact.from_json <a href="#LogRegArtifact.from_json">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/logreg_persistence.v#L80"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token type_name">LogRegArtifact</span><span class="token punctuation">.</span><span class="token function">from_json</span><span class="token punctuation">(</span>text <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token type_name">LogRegArtifact</span></code></pre>
+<p>from_json validates and decodes a logistic-regression inference artifact. JSON is parsed as data only; no code or executable object is deserialized.</p>
+
+</section>
+
+		<section id="MultinomialNB.new" class="doc-node">
+			<div class="title"><h2>fn MultinomialNB.new <a href="#MultinomialNB.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/multinomial_nb.v#L37"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token type_name">MultinomialNB</span><span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span><span class="token keyword">mut</span> data <span class="token type_name">Data</span><span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> name <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token operator">&amp;</span><span class="token type_name">MultinomialNB</span></code></pre>
+<p>MultinomialNB.new creates and trains a classifier with Laplace smoothing.</p>
+
+</section>
+
+		<section id="MultinomialNB.new_with_config" class="doc-node">
+			<div class="title"><h2>fn MultinomialNB.new_with_config <a href="#MultinomialNB.new_with_config">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/multinomial_nb.v#L43"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token type_name">MultinomialNB</span><span class="token punctuation">.</span><span class="token function">new_with_config</span><span class="token punctuation">(</span><span class="token keyword">mut</span> data <span class="token type_name">Data</span><span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> name <span class="token builtin">string</span><span class="token punctuation">,</span> config <span class="token type_name">MultinomialNBConfig</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token operator">&amp;</span><span class="token type_name">MultinomialNB</span></code></pre>
+<p>MultinomialNB.new_with_config creates and trains a classifier. <code>alpha</code> must be finite and non-negative; an empty sample_weights slice means unit weights.</p>
 
 </section>
 
@@ -1579,9 +1617,10 @@ to [10.0, 10.0] (which is class 1.0).</p>
 	name <span class="token builtin">string</span> <span class="token comment">// name of this "observer"</span>
 	data <span class="token operator">&amp;</span><span class="token type_name">Data</span><span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">unsafe</span> <span class="token punctuation">{</span> <span class="token keyword">nil</span> <span class="token punctuation">}</span> <span class="token comment">// x-y data</span>
 	<span class="token comment">// workspace</span>
-	ybar <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span> <span class="token comment">// bar{y}: yb[i] = (1 - y[i]) / m</span>
-	l    <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span> <span class="token comment">// vector l = b⋅o + x⋅θ [nb_samples]</span>
-	hmy  <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span> <span class="token comment">// vector e = h(l) - y [nb_samples]</span>
+	ybar           <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span> <span class="token comment">// weighted (1 - y) / sum(sample_weights)</span>
+	l              <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span> <span class="token comment">// vector l = b⋅o + x⋅θ [nb_samples]</span>
+	hmy            <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span> <span class="token comment">// vector e = h(l) - y [nb_samples]</span>
+	sample_weights <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span> <span class="token comment">// empty for unit weights; otherwise one weight per sample</span>
 <span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
 	params <span class="token operator">&amp;</span><span class="token type_name">ParamsReg</span><span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">unsafe</span> <span class="token punctuation">{</span> <span class="token keyword">nil</span> <span class="token punctuation">}</span> <span class="token comment">// parameters: θ, b, λ</span>
 	stat   <span class="token operator">&amp;</span><span class="token type_name">Stat</span><span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span>      <span class="token operator">=</span> <span class="token keyword">unsafe</span> <span class="token punctuation">{</span> <span class="token keyword">nil</span> <span class="token punctuation">}</span> <span class="token comment">// statistics</span>
@@ -1591,7 +1630,7 @@ to [10.0, 10.0] (which is class 1.0).</p>
 </section>
 
 		<section id="LogReg.name" class="doc-node">
-			<div class="title"><h2>fn (LogReg) name <a href="#LogReg.name">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/logreg.v#L58"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (LogReg) name <a href="#LogReg.name">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/logreg.v#L59"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&amp;</span><span class="token type_name">LogReg</span><span class="token punctuation">)</span> <span class="token function">name</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">string</span></code></pre>
 <p>name returns the name of this LogReg object (thus defining the Observer interface)</p>
@@ -1599,7 +1638,7 @@ to [10.0, 10.0] (which is class 1.0).</p>
 </section>
 
 		<section id="LogReg.update" class="doc-node">
-			<div class="title"><h2>fn (LogReg) update <a href="#LogReg.update">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/logreg.v#L63"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (LogReg) update <a href="#LogReg.update">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/logreg.v#L64"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o <span class="token type_name">LogReg</span><span class="token punctuation">)</span> <span class="token function">update</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <p>update perform updates after data has been changed (as an Observer)</p>
@@ -1607,7 +1646,7 @@ to [10.0, 10.0] (which is class 1.0).</p>
 </section>
 
 		<section id="LogReg.predict" class="doc-node">
-			<div class="title"><h2>fn (LogReg) predict <a href="#LogReg.predict">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/logreg.v#L89"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (LogReg) predict <a href="#LogReg.predict">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/logreg.v#L142"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&amp;</span><span class="token type_name">LogReg</span><span class="token punctuation">)</span> <span class="token function">predict</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
 <p>predict returns the model evaluation @ {x;θ,b} Input: x -- vector of features Output: y -- model prediction y(x) (probability between 0 and 1)</p>
@@ -1615,7 +1654,7 @@ to [10.0, 10.0] (which is class 1.0).</p>
 </section>
 
 		<section id="LogReg.cost" class="doc-node">
-			<div class="title"><h2>fn (LogReg) cost <a href="#LogReg.cost">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/logreg.v#L102"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (LogReg) cost <a href="#LogReg.cost">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/logreg.v#L155"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o <span class="token type_name">LogReg</span><span class="token punctuation">)</span> <span class="token function">cost</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
 <p>cost returns the cost c(x;θ,b) Output: c -- total cost (model error)</p>
@@ -1623,7 +1662,7 @@ to [10.0, 10.0] (which is class 1.0).</p>
 </section>
 
 		<section id="LogReg.allocate_gradient" class="doc-node">
-			<div class="title"><h2>fn (LogReg) allocate_gradient <a href="#LogReg.allocate_gradient">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/logreg.v#L119"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (LogReg) allocate_gradient <a href="#LogReg.allocate_gradient">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/logreg.v#L177"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&amp;</span><span class="token type_name">LogReg</span><span class="token punctuation">)</span> <span class="token function">allocate_gradient</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 <p>allocate_gradient allocate object to compute gradients</p>
@@ -1631,7 +1670,7 @@ to [10.0, 10.0] (which is class 1.0).</p>
 </section>
 
 		<section id="LogReg.gradients" class="doc-node">
-			<div class="title"><h2>fn (LogReg) gradients <a href="#LogReg.gradients">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/logreg.v#L127"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (LogReg) gradients <a href="#LogReg.gradients">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/logreg.v#L185"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o <span class="token type_name">LogReg</span><span class="token punctuation">)</span> <span class="token function">gradients</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token builtin">f64</span><span class="token punctuation">)</span></code></pre>
 <p>gradients returns ∂C/∂θ and ∂C/∂b Output: dcdtheta -- ∂C/∂θ dcdb -- ∂C/∂b</p>
@@ -1639,7 +1678,7 @@ to [10.0, 10.0] (which is class 1.0).</p>
 </section>
 
 		<section id="LogReg.allocate_hessian" class="doc-node">
-			<div class="title"><h2>fn (LogReg) allocate_hessian <a href="#LogReg.allocate_hessian">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/logreg.v#L147"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (LogReg) allocate_hessian <a href="#LogReg.allocate_hessian">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/logreg.v#L211"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&amp;</span><span class="token type_name">LogReg</span><span class="token punctuation">)</span> <span class="token function">allocate_hessian</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span><span class="token module_">la</span><span class="token punctuation">.</span><span class="token type_name">Matrix</span><span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span><span class="token module_">la</span><span class="token punctuation">.</span><span class="token type_name">Matrix</span><span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>
 <p>allocate_hessian allocate objects to compute hessian</p>
@@ -1647,17 +1686,17 @@ to [10.0, 10.0] (which is class 1.0).</p>
 </section>
 
 		<section id="LogReg.hessian" class="doc-node">
-			<div class="title"><h2>fn (LogReg) hessian <a href="#LogReg.hessian">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/logreg.v#L168"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (LogReg) hessian <a href="#LogReg.hessian">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/logreg.v#L233"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o <span class="token type_name">LogReg</span><span class="token punctuation">)</span> <span class="token function">hessian</span><span class="token punctuation">(</span><span class="token keyword">mut</span> d <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> v <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> dm <span class="token module_">la</span><span class="token punctuation">.</span><span class="token type_name">Matrix</span><span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">mut</span> hm <span class="token module_">la</span><span class="token punctuation">.</span><span class="token type_name">Matrix</span><span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
 <p>hessian computes the hessian matrix and other partial derivatives</p>
-<p>Input: d -- [nSamples]  d[i] = g(l[i]) * [ 1 - g(l[i]) ]  auxiliary vector v -- [nFeatures] v = ∂²C/∂θ∂b second order partial derivative dm -- [nSamples][nFeatures]  dm[i][j] = d[i]*x[i][j]  auxiliary matrix hm -- [nFeatures][nFeatures]  hm = ∂²C/∂θ² hessian matrix</p>
+<p>Input: d -- [nSamples]  d[i] = g(l[i]) * [ 1 - g(l[i]) ]  auxiliary vector v -- [nFeatures] v = ∂²C/∂θ∂b second order partial derivative dm -- [nSamples][nFeatures]  dm[i][j] = weight[i]*d[i]*x[i][j] (where d[i] = g(l[i]) * [1 - g(l[i])]) hm -- [nFeatures][nFeatures]  hm = ∂²C/∂θ² hessian matrix</p>
 <p>Output: w -- ∂²C/∂b²</p>
 
 </section>
 
 		<section id="LogReg.train" class="doc-node">
-			<div class="title"><h2>fn (LogReg) train <a href="#LogReg.train">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/logreg.v#L211"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (LogReg) train <a href="#LogReg.train">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/logreg.v#L283"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o <span class="token type_name">LogReg</span><span class="token punctuation">)</span> <span class="token function">train</span><span class="token punctuation">(</span>config <span class="token type_name">LogRegTrainConfig</span><span class="token punctuation">)</span></code></pre>
 <p>train finds θ and b using gradient descent or Newton's method</p>
@@ -1665,7 +1704,7 @@ to [10.0, 10.0] (which is class 1.0).</p>
 </section>
 
 		<section id="LogReg.calcl" class="doc-node">
-			<div class="title"><h2>fn (LogReg) calcl <a href="#LogReg.calcl">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/logreg.v#L297"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (LogReg) calcl <a href="#LogReg.calcl">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/logreg.v#L370"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o <span class="token type_name">LogReg</span><span class="token punctuation">)</span> <span class="token function">calcl</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <p>calcl calculates l vector (saves into o.l) (linear model) Output: l = b⋅o + x⋅θ</p>
@@ -1673,7 +1712,7 @@ to [10.0, 10.0] (which is class 1.0).</p>
 </section>
 
 		<section id="LogReg.calcsumq" class="doc-node">
-			<div class="title"><h2>fn (LogReg) calcsumq <a href="#LogReg.calcsumq">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/logreg.v#L314"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (LogReg) calcsumq <a href="#LogReg.calcsumq">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/logreg.v#L387"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&amp;</span><span class="token type_name">LogReg</span><span class="token punctuation">)</span> <span class="token function">calcsumq</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
 <p>calcsumq calculates Σq[i] where q[i] = log(1 + exp(-l[i])) Input: l -- precomputed o.l Output: sq -- sum(q)</p>
@@ -1681,7 +1720,7 @@ to [10.0, 10.0] (which is class 1.0).</p>
 </section>
 
 		<section id="LogReg.calchmy" class="doc-node">
-			<div class="title"><h2>fn (LogReg) calchmy <a href="#LogReg.calchmy">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/logreg.v#L327"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (LogReg) calchmy <a href="#LogReg.calchmy">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/logreg.v#L400"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> o <span class="token type_name">LogReg</span><span class="token punctuation">)</span> <span class="token function">calchmy</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <p>calchmy calculates h(l) - y vector (saves into o.hmy) Input: l -- precomputed o.l Output: hmy -- computes hmy = h(l) - y</p>
@@ -1689,7 +1728,7 @@ to [10.0, 10.0] (which is class 1.0).</p>
 </section>
 
 		<section id="LogReg.str" class="doc-node">
-			<div class="title"><h2>fn (LogReg) str <a href="#LogReg.str">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/logreg.v#L343"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (LogReg) str <a href="#LogReg.str">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/logreg.v#L416"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&amp;</span><span class="token type_name">LogReg</span><span class="token punctuation">)</span> <span class="token function">str</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">string</span></code></pre>
 <p>str is a custom str function for observers to avoid printing data</p>
@@ -1697,15 +1736,52 @@ to [10.0, 10.0] (which is class 1.0).</p>
 </section>
 
 		<section id="LogReg.get_plotter" class="doc-node">
-			<div class="title"><h2>fn (LogReg) get_plotter <a href="#LogReg.get_plotter">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/logreg.v#L354"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (LogReg) get_plotter <a href="#LogReg.get_plotter">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/logreg.v#L427"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>o <span class="token operator">&amp;</span><span class="token type_name">LogReg</span><span class="token punctuation">)</span> <span class="token function">get_plotter</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token module_">plot</span><span class="token punctuation">.</span><span class="token type_name">Plot</span></code></pre>
 <p>get_plotter returns a plot.Plot struct for plotting the data and the logistic regression model</p>
 
 </section>
 
+		<section id="LogReg.save_json" class="doc-node">
+			<div class="title"><h2>fn (LogReg) save_json <a href="#LogReg.save_json">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/logreg_persistence.v#L64"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>model <span class="token operator">&amp;</span><span class="token type_name">LogReg</span><span class="token punctuation">)</span> <span class="token function">save_json</span><span class="token punctuation">(</span>path <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
+<p>save_json writes the fitted parameters and schema metadata as JSON.</p>
+
+</section>
+
+		<section id="LogRegArtifact" class="doc-node">
+			<div class="title"><h2>struct LogRegArtifact <a href="#LogRegArtifact">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/logreg_persistence.v#L31"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token type_name">LogRegArtifact</span> <span class="token punctuation">{</span>
+	feature_count <span class="token builtin">int</span>
+	weights       <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
+	bias          <span class="token builtin">f64</span>
+	lambda        <span class="token builtin">f64</span>
+<span class="token punctuation">}</span></code></pre>
+<p>LogRegArtifact stores validated inference state without retaining training data.</p>
+
+</section>
+
+		<section id="LogRegArtifact.n_features" class="doc-node">
+			<div class="title"><h2>fn (LogRegArtifact) n_features <a href="#LogRegArtifact.n_features">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/logreg_persistence.v#L39"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>artifact <span class="token operator">&amp;</span><span class="token type_name">LogRegArtifact</span><span class="token punctuation">)</span> <span class="token function">n_features</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int</span></code></pre>
+<p>n_features returns the feature count expected by this fitted model.</p>
+
+</section>
+
+		<section id="LogRegArtifact.predict" class="doc-node">
+			<div class="title"><h2>fn (LogRegArtifact) predict <a href="#LogRegArtifact.predict">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/logreg_persistence.v#L44"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>artifact <span class="token operator">&amp;</span><span class="token type_name">LogRegArtifact</span><span class="token punctuation">)</span> <span class="token function">predict</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">f64</span></code></pre>
+<p>predict returns the probability of the positive class for one feature row.</p>
+
+</section>
+
 		<section id="LogRegTrainConfig" class="doc-node">
-			<div class="title"><h2>struct LogRegTrainConfig <a href="#LogRegTrainConfig">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/logreg.v#L202"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>struct LogRegTrainConfig <a href="#LogRegTrainConfig">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/logreg.v#L271"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">struct</span> <span class="token type_name">LogRegTrainConfig</span> <span class="token punctuation">{</span>
 <span class="token keyword">pub</span><span class="token punctuation">:</span>
@@ -1713,8 +1789,123 @@ to [10.0, 10.0] (which is class 1.0).</p>
 	learning_rate <span class="token builtin">f64</span> <span class="token operator">=</span> <span class="token number">0.01</span> <span class="token comment">// learning rate for gradient descent</span>
 	tolerance     <span class="token builtin">f64</span> <span class="token operator">=</span> <span class="token number">1e-6</span> <span class="token comment">// convergence tolerance</span>
 	use_newton    <span class="token builtin">bool</span> <span class="token comment">// use Newton's method instead of gradient descent</span>
+	<span class="token comment">// sample_weights is empty for unit weights or contains one finite,</span>
+	<span class="token comment">// non-negative value per sample with a positive finite total.</span>
+	sample_weights <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
 <span class="token punctuation">}</span></code></pre>
 <p>LogRegTrainConfig holds training configuration for logistic regression</p>
+
+</section>
+
+		<section id="MultinomialNB" class="doc-node">
+			<div class="title"><h2>struct MultinomialNB <a href="#MultinomialNB">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/multinomial_nb.v#L23"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<div class="attributes"><div class="attribute">@[heap]</div></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token type_name">MultinomialNB</span> <span class="token punctuation">{</span>
+<span class="token keyword">mut</span><span class="token punctuation">:</span>
+	name              <span class="token builtin">string</span>
+	data              <span class="token operator">&amp;</span><span class="token type_name">Data</span><span class="token punctuation">[</span><span class="token builtin">f64</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">unsafe</span> <span class="token punctuation">{</span> <span class="token keyword">nil</span> <span class="token punctuation">}</span>
+	config            <span class="token type_name">MultinomialNBConfig</span>
+	n_features        <span class="token builtin">int</span>
+	classes           <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
+	class_weight_sums <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
+	class_log_priors  <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
+	feature_log_probs <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
+	trained           <span class="token builtin">bool</span>
+<span class="token punctuation">}</span></code></pre>
+<p>MultinomialNB implements a multinomial Naive Bayes classifier for non-negative f64 features and finite numeric class labels.</p>
+
+</section>
+
+		<section id="MultinomialNB.name" class="doc-node">
+			<div class="title"><h2>fn (MultinomialNB) name <a href="#MultinomialNB.name">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/multinomial_nb.v#L58"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>model <span class="token operator">&amp;</span><span class="token type_name">MultinomialNB</span><span class="token punctuation">)</span> <span class="token function">name</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">string</span></code></pre>
+<p>name returns this model's observer name.</p>
+
+</section>
+
+		<section id="MultinomialNB.update" class="doc-node">
+			<div class="title"><h2>fn (MultinomialNB) update <a href="#MultinomialNB.update">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/multinomial_nb.v#L63"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> model <span class="token type_name">MultinomialNB</span><span class="token punctuation">)</span> <span class="token function">update</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<p>update recomputes the learned statistics after the observed data changes.</p>
+
+</section>
+
+		<section id="MultinomialNB.train" class="doc-node">
+			<div class="title"><h2>fn (MultinomialNB) train <a href="#MultinomialNB.train">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/multinomial_nb.v#L70"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> model <span class="token type_name">MultinomialNB</span><span class="token punctuation">)</span> <span class="token function">train</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
+<p>train recomputes class and feature probabilities from the observed dataset.</p>
+
+</section>
+
+		<section id="MultinomialNB.predict_log_proba" class="doc-node">
+			<div class="title"><h2>fn (MultinomialNB) predict_log_proba <a href="#MultinomialNB.predict_log_proba">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/multinomial_nb.v#L211"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>model <span class="token operator">&amp;</span><span class="token type_name">MultinomialNB</span><span class="token punctuation">)</span> <span class="token function">predict_log_proba</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>predict_log_proba returns normalized log probabilities in ascending class order.</p>
+
+</section>
+
+		<section id="MultinomialNB.predict_proba" class="doc-node">
+			<div class="title"><h2>fn (MultinomialNB) predict_proba <a href="#MultinomialNB.predict_proba">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/multinomial_nb.v#L293"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>model <span class="token operator">&amp;</span><span class="token type_name">MultinomialNB</span><span class="token punctuation">)</span> <span class="token function">predict_proba</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>predict_proba returns class probabilities in ascending class order.</p>
+
+</section>
+
+		<section id="MultinomialNB.predict" class="doc-node">
+			<div class="title"><h2>fn (MultinomialNB) predict <a href="#MultinomialNB.predict">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/multinomial_nb.v#L303"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>model <span class="token operator">&amp;</span><span class="token type_name">MultinomialNB</span><span class="token punctuation">)</span> <span class="token function">predict</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">f64</span></code></pre>
+<p>predict returns the class with the greatest posterior probability.</p>
+
+</section>
+
+		<section id="MultinomialNB.classes" class="doc-node">
+			<div class="title"><h2>fn (MultinomialNB) classes <a href="#MultinomialNB.classes">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/multinomial_nb.v#L315"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>model <span class="token operator">&amp;</span><span class="token type_name">MultinomialNB</span><span class="token punctuation">)</span> <span class="token function">classes</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>classes returns the sorted class labels known to the model.</p>
+
+</section>
+
+		<section id="MultinomialNB.class_weight_sums" class="doc-node">
+			<div class="title"><h2>fn (MultinomialNB) class_weight_sums <a href="#MultinomialNB.class_weight_sums">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/multinomial_nb.v#L320"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>model <span class="token operator">&amp;</span><span class="token type_name">MultinomialNB</span><span class="token punctuation">)</span> <span class="token function">class_weight_sums</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>class_weight_sums returns the accumulated sample weight for each sorted class.</p>
+
+</section>
+
+		<section id="MultinomialNB.class_priors" class="doc-node">
+			<div class="title"><h2>fn (MultinomialNB) class_priors <a href="#MultinomialNB.class_priors">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/multinomial_nb.v#L325"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>model <span class="token operator">&amp;</span><span class="token type_name">MultinomialNB</span><span class="token punctuation">)</span> <span class="token function">class_priors</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>class_priors returns the prior probability for each sorted class.</p>
+
+</section>
+
+		<section id="MultinomialNB.feature_log_probabilities" class="doc-node">
+			<div class="title"><h2>fn (MultinomialNB) feature_log_probabilities <a href="#MultinomialNB.feature_log_probabilities">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/multinomial_nb.v#L330"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>model <span class="token operator">&amp;</span><span class="token type_name">MultinomialNB</span><span class="token punctuation">)</span> <span class="token function">feature_log_probabilities</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>feature_log_probabilities returns a copy in [class][feature] order.</p>
+
+</section>
+
+		<section id="MultinomialNBConfig" class="doc-node">
+			<div class="title"><h2>struct MultinomialNBConfig <a href="#MultinomialNBConfig">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/ml/multinomial_nb.v#L7"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token type_name">MultinomialNBConfig</span> <span class="token punctuation">{</span>
+<span class="token keyword">pub</span><span class="token punctuation">:</span>
+	alpha          <span class="token builtin">f64</span> <span class="token operator">=</span> <span class="token number">1.0</span>
+	sample_weights <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
+<span class="token punctuation">}</span></code></pre>
+<p>MultinomialNBConfig controls smoothing and optional per-sample weights.</p>
 
 </section>
 
@@ -2079,9 +2270,12 @@ to [10.0, 10.0] (which is class 1.0).</p>
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 24 Nov 2026 06:17:03</div>
+						<div class="footer">Powered by vdoc. Generated on: 24 Nov 2026 19:19:57</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_ml">README</a></li>
+<li class="open"><a href="#load_logreg_artifact">fn load_logreg_artifact</a>        <ul>
+</ul>
+</li>
 <li class="open"><a href="#query_neighbors">fn query_neighbors</a>        <ul>
 </ul>
 </li>
@@ -2149,6 +2343,15 @@ to [10.0, 10.0] (which is class 1.0).</p>
 </ul>
 </li>
 <li class="open"><a href="#LogReg.new">fn LogReg.new</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#LogRegArtifact.from_json">fn LogRegArtifact.from_json</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#MultinomialNB.new">fn MultinomialNB.new</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#MultinomialNB.new_with_config">fn MultinomialNB.new_with_config</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#NeighborMetric.from">fn NeighborMetric.from</a>        <ul>
@@ -2341,9 +2544,31 @@ to [10.0, 10.0] (which is class 1.0).</p>
 <li><a href="#LogReg.calchmy">fn calchmy</a></li>
 <li><a href="#LogReg.str">fn str</a></li>
 <li><a href="#LogReg.get_plotter">fn get_plotter</a></li>
+<li><a href="#LogReg.save_json">fn save_json</a></li>
+</ul>
+</li>
+<li class="open"><a href="#LogRegArtifact">struct LogRegArtifact</a>        <ul>
+<li><a href="#LogRegArtifact.n_features">fn n_features</a></li>
+<li><a href="#LogRegArtifact.predict">fn predict</a></li>
 </ul>
 </li>
 <li class="open"><a href="#LogRegTrainConfig">struct LogRegTrainConfig</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#MultinomialNB">struct MultinomialNB</a>        <ul>
+<li><a href="#MultinomialNB.name">fn name</a></li>
+<li><a href="#MultinomialNB.update">fn update</a></li>
+<li><a href="#MultinomialNB.train">fn train</a></li>
+<li><a href="#MultinomialNB.predict_log_proba">fn predict_log_proba</a></li>
+<li><a href="#MultinomialNB.predict_proba">fn predict_proba</a></li>
+<li><a href="#MultinomialNB.predict">fn predict</a></li>
+<li><a href="#MultinomialNB.classes">fn classes</a></li>
+<li><a href="#MultinomialNB.class_weight_sums">fn class_weight_sums</a></li>
+<li><a href="#MultinomialNB.class_priors">fn class_priors</a></li>
+<li><a href="#MultinomialNB.feature_log_probabilities">fn feature_log_probabilities</a></li>
+</ul>
+</li>
+<li class="open"><a href="#MultinomialNBConfig">struct MultinomialNBConfig</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#NeighborQueryResult">struct NeighborQueryResult</a>        <ul>
