@@ -75,6 +75,28 @@ fn test_modified_bessel_functions() {
 	assert_close(bessel_kn(2, 1.0), 1.6248388986351774, 1e-13)
 }
 
+fn test_bessel_j0_error_estimate_reports_value_and_nonnegative_error() {
+	for x in [0.0, 1.0, 10.0, 1000.0] {
+		estimate := bessel_j0_e(x)
+		assert estimate.abs_error >= 0.0
+		assert !math.is_nan(estimate.abs_error)
+		assert !math.is_inf(estimate.abs_error, 0)
+	}
+	assert_close(bessel_j0_e(0.0).value, 1.0, 0.0)
+	assert_close(bessel_j0_e(1.0).value, 0.7651976865579666, 1e-14)
+	assert_close(bessel_j0_e(10.0).value, -0.24593576445134835, 1e-14)
+	assert_close(bessel_j0_e(1000.0).value, 0.02478668615242017, 1e-12)
+}
+
+fn test_bessel_j0_error_estimate_handles_non_finite_inputs() {
+	infinite := bessel_j0_e(math.inf(1))
+	assert infinite.value == 0.0
+	assert infinite.abs_error == 0.0
+	nan_value := bessel_j0_e(math.nan())
+	assert math.is_nan(nan_value.value)
+	assert math.is_nan(nan_value.abs_error)
+}
+
 fn test_spherical_bessel_reference_values() {
 	assert_close(spherical_bessel_jn(0, 1.0), 0.8414709848078965, 1e-15)
 	assert_close(spherical_bessel_jn(1, 1.0), 0.30116867893975674, 1e-15)
