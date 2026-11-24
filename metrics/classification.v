@@ -453,6 +453,33 @@ pub fn log_loss(y_true []f64, y_pred []f64) !f64 {
 	return total / f64(y_true.len)
 }
 
+// brier_score computes the mean squared probability error for binary labels.
+// Labels must be exactly 0 or 1 and probabilities must be finite in [0, 1].
+pub fn brier_score(y_true []f64, y_prob []f64) !f64 {
+	if y_true.len != y_prob.len {
+		return errors.error('y_true and y_prob must have the same length', .einval)
+	}
+	if y_true.len == 0 {
+		return errors.error('empty input arrays', .einval)
+	}
+
+	mut total := 0.0
+	for i in 0 .. y_true.len {
+		label := y_true[i]
+		probability := y_prob[i]
+		if label != 0.0 && label != 1.0 {
+			return errors.error('y_true must contain only binary labels 0 or 1', .einval)
+		}
+		if math.is_nan(probability) || math.is_inf(probability, 0) || probability < 0.0
+			|| probability > 1.0 {
+			return errors.error('y_prob must contain finite probabilities in [0, 1]', .einval)
+		}
+		difference := probability - label
+		total += difference * difference
+	}
+	return total / f64(y_true.len)
+}
+
 // gini_coefficient computes the Gini coefficient from predictions
 pub fn gini_coefficient(y_true []f64, y_score []f64) !f64 {
 	auc_val := roc_auc_score(y_true, y_score)!
