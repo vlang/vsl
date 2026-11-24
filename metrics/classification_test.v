@@ -159,6 +159,37 @@ fn test_log_loss_perfect() {
 	assert ll < 0.001
 }
 
+fn test_brier_score() {
+	y_true := [1.0, 0.0, 1.0, 0.0]
+	y_prob := [0.9, 0.1, 0.6, 0.4]
+
+	score := brier_score(y_true, y_prob)!
+	assert math.abs(score - 0.085) < 1e-12
+}
+
+fn test_brier_score_perfect_and_worst_predictions() {
+	assert brier_score([0.0, 1.0], [0.0, 1.0])! == 0.0
+	assert brier_score([0.0, 1.0], [1.0, 0.0])! == 1.0
+}
+
+fn test_brier_score_rejects_invalid_inputs() {
+	if _ := brier_score([0.0], [0.5, 0.5]) {
+		assert false, 'different lengths must return an error'
+	}
+	if _ := brier_score([], []) {
+		assert false, 'empty inputs must return an error'
+	}
+	if _ := brier_score([0.5], [0.5]) {
+		assert false, 'non-binary labels must return an error'
+	}
+	if _ := brier_score([1.0], [1.1]) {
+		assert false, 'out-of-range probabilities must return an error'
+	}
+	if _ := brier_score([1.0], [math.nan()]) {
+		assert false, 'NaN probabilities must return an error'
+	}
+}
+
 fn test_gini_coefficient() {
 	y_true := [1.0, 1.0, 0.0, 0.0]
 	y_score := [0.9, 0.8, 0.2, 0.1]
