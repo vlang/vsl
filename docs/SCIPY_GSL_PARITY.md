@@ -178,7 +178,7 @@ including second derivatives and boundary-aware methods, is tracked in
 [gsl-integration]: https://www.gnu.org/software/gsl/doc/html/integration.html
 [gsl-ode]: https://www.gnu.org/software/gsl/doc/html/ode-initval.html
 [gsl-fft]: https://www.gnu.org/software/gsl/doc/html/fft.html
-[gsl-wavelet]: https://www.gnu.org/software/gsl/doc/html/wavelet.html
+[gsl-wavelet]: https://www.gnu.org/software/gsl/doc/html/dwt.html
 [gsl-diff]: https://www.gnu.org/software/gsl/doc/html/diff.html
 [vsl-blas]: ../blas/README.md
 [vsl-la]: ../la/README.md
