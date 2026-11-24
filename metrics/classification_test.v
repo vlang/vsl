@@ -128,6 +128,28 @@ fn test_roc_auc_score_random() {
 	assert auc_val >= 0.0 && auc_val <= 1.0
 }
 
+fn test_optimal_threshold_maximizes_youden_j() {
+	y_true := [1.0, 1.0, 0.0, 0.0]
+	y_score := [0.9, 0.8, 0.2, 0.1]
+
+	assert optimal_threshold(y_true, y_score)! == 0.8
+}
+
+fn test_optimal_threshold_rejects_invalid_inputs() {
+	if _ := optimal_threshold([1.0], [0.5, 0.4]) {
+		assert false, 'different lengths must return an error'
+	}
+	if _ := optimal_threshold([], []) {
+		assert false, 'empty inputs must return an error'
+	}
+	if _ := optimal_threshold([0.5], [0.4]) {
+		assert false, 'non-binary labels must return an error'
+	}
+	if _ := optimal_threshold([1.0], [math.inf(1)]) {
+		assert false, 'non-finite scores must return an error'
+	}
+}
+
 fn test_precision_recall_curve() {
 	y_true := [1.0, 1.0, 0.0, 0.0]
 	y_score := [0.9, 0.8, 0.3, 0.1]
