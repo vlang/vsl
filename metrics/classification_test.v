@@ -270,6 +270,37 @@ fn test_ks_statistic() {
 	assert ks > 0.5
 }
 
+fn test_sigmoid_calibrator_maps_scores_to_bounded_probabilities() ! {
+	mut calibrator := SigmoidCalibrator{}
+	calibrator.fit([0.0, 0.0, 1.0, 1.0], [-2.0, -1.0, 1.0, 2.0])!
+	probabilities := calibrator.predict([-2.0, 0.0, 2.0])!
+	assert probabilities.len == 3
+	assert probabilities[0] < probabilities[1]
+	assert probabilities[1] < probabilities[2]
+	for probability in probabilities {
+		assert probability > 0.0 && probability < 1.0
+	}
+}
+
+fn test_sigmoid_calibrator_handles_degenerate_labels_and_rejects_bad_inputs() ! {
+	mut calibrator := SigmoidCalibrator{}
+	calibrator.fit([1.0, 1.0, 1.0], [0.0, 0.0, 0.0])!
+	probabilities := calibrator.predict([0.0])!
+	assert probabilities[0] > 0.5
+
+	mut unfitted := SigmoidCalibrator{}
+	if _ := unfitted.predict([0.0]) {
+		assert false
+	} else {
+		assert err.msg().contains('must be fitted')
+	}
+	if _ := calibrator.fit([0.0], [0.0, 1.0]) {
+		assert false
+	} else {
+		assert err.msg().contains('equal non-zero lengths')
+	}
+}
+
 fn test_auc_basic() {
 	x := [0.0, 0.5, 1.0]
 	y := [0.0, 0.5, 1.0]

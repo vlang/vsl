@@ -3,6 +3,104 @@ module metrics
 import math
 import vsl.errors
 
+// SigmoidCalibrator maps decision scores to probabilities using a fitted
+// logistic (Platt-style) calibration curve.
+@[heap]
+pub struct SigmoidCalibrator {
+pub mut:
+	coef_      f64
+	intercept_ f64
+mut:
+	fitted bool
+}
+
+// fit estimates the sigmoid parameters from binary labels and decision scores.
+pub fn (mut calibrator SigmoidCalibrator) fit(y_true []f64, y_score []f64) ! {
+	if y_true.len == 0 || y_true.len != y_score.len {
+		return errors.error('calibration labels and scores must have equal non-zero lengths',
+			.einval)
+	}
+	mut positives := 0
+	for index, label in y_true {
+		if label != 0.0 && label != 1.0 {
+			return errors.error('calibration labels must be binary', .einval)
+		}
+		if math.is_nan(label) || math.is_inf(label, 0) || math.is_nan(y_score[index])
+			|| math.is_inf(y_score[index], 0) {
+			return errors.error('calibration inputs must be finite', .einval)
+		}
+		if label == 1.0 {
+			positives++
+		}
+	}
+
+	n := f64(y_true.len)
+	target_positive := (f64(positives) + 0.5) / (n + 1.0)
+	mut a := 0.0
+	mut b := math.log(target_positive / (1.0 - target_positive))
+	for _ in 0 .. 100 {
+		mut gradient_a := 0.0
+		mut gradient_b := 0.0
+		mut hessian_aa := 0.0
+		mut hessian_ab := 0.0
+		mut hessian_bb := 0.0
+		for index, score in y_score {
+			probability := sigmoid_probability(a * score + b)
+			residual := probability - y_true[index]
+			weight := probability * (1.0 - probability)
+			gradient_a += residual * score
+			gradient_b += residual
+			hessian_aa += weight * score * score
+			hessian_ab += weight * score
+			hessian_bb += weight
+		}
+		determinant := hessian_aa * hessian_bb - hessian_ab * hessian_ab
+		if determinant <= 1e-18 {
+			break
+		}
+		delta_a := (hessian_bb * gradient_a - hessian_ab * gradient_b) / determinant
+		delta_b := (-hessian_ab * gradient_a + hessian_aa * gradient_b) / determinant
+		a -= delta_a
+		b -= delta_b
+		if math.abs(delta_a) + math.abs(delta_b) < 1e-10 {
+			break
+		}
+	}
+	if math.is_nan(a) || math.is_inf(a, 0) || math.is_nan(b) || math.is_inf(b, 0) {
+		return errors.error('calibration fit produced non-finite parameters', .efailed)
+	}
+	calibrator.coef_ = a
+	calibrator.intercept_ = b
+	calibrator.fitted = true
+}
+
+// predict returns calibrated probabilities for decision scores.
+pub fn (calibrator &SigmoidCalibrator) predict(y_score []f64) ![]f64 {
+	if !calibrator.fitted {
+		return errors.error('SigmoidCalibrator must be fitted before predict', .efailed)
+	}
+	mut probabilities := []f64{len: y_score.len}
+	for index, score in y_score {
+		if math.is_nan(score) || math.is_inf(score, 0) {
+			return errors.error('calibration scores must be finite', .einval)
+		}
+		probabilities[index] = sigmoid_probability(calibrator.coef_ * score +
+			calibrator.intercept_)
+	}
+	return probabilities
+}
+
+fn sigmoid_probability(value f64) f64 {
+	mut probability := 0.0
+	if value >= 0.0 {
+		probability = 1.0 / (1.0 + math.exp(-value))
+	} else {
+		exp_value := math.exp(value)
+		probability = exp_value / (1.0 + exp_value)
+	}
+	return math.max(1e-15, math.min(1.0 - 1e-15, probability))
+}
+
 // MulticlassConfusionMatrix stores sorted class labels and counts, where rows
 // are true labels and columns are predicted labels.
 pub struct MulticlassConfusionMatrix {
