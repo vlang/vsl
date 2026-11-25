@@ -771,7 +771,7 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 </section>
 
 		<section id="CorrelationSelector.new" class="doc-node">
-			<div class="title"><h2>fn CorrelationSelector.new <a href="#CorrelationSelector.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L176"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn CorrelationSelector.new <a href="#CorrelationSelector.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L179"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token type_name">CorrelationSelector</span><span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>k <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token type_name">CorrelationSelector</span></code></pre>
 <p>CorrelationSelector.new creates a deterministic top-k univariate selector.</p>
@@ -834,6 +834,14 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 
 </section>
 
+		<section id="SelectKBest.new" class="doc-node">
+			<div class="title"><h2>fn SelectKBest.new <a href="#SelectKBest.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L364"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token type_name">SelectKBest</span><span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>k <span class="token builtin">int</span><span class="token punctuation">,</span> score_fn <span class="token type_name">FeatureScoreFn</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token type_name">SelectKBest</span></code></pre>
+<p>SelectKBest.new creates a deterministic top-k univariate selector.</p>
+
+</section>
+
 		<section id="SimpleImputer.new" class="doc-node">
 			<div class="title"><h2>fn SimpleImputer.new <a href="#SimpleImputer.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/imputers.v#L27"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
@@ -851,7 +859,7 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 </section>
 
 		<section id="VarianceThreshold.new" class="doc-node">
-			<div class="title"><h2>fn VarianceThreshold.new <a href="#VarianceThreshold.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L22"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn VarianceThreshold.new <a href="#VarianceThreshold.new">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L25"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token type_name">VarianceThreshold</span><span class="token punctuation">.</span><span class="token function">new</span><span class="token punctuation">(</span>threshold <span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span><span class="token type_name">VarianceThreshold</span></code></pre>
 <p>VarianceThreshold.new creates a selector that keeps features with variance greater than threshold.</p>
@@ -872,6 +880,14 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 	<span class="token function">fit</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span>
 <span class="token punctuation">}</span></code></pre>
 <p>MatrixTransformer is a fitted transform for numeric feature matrices.</p>
+
+</section>
+
+		<section id="FeatureScoreFn" class="doc-node">
+			<div class="title"><h2>type FeatureScoreFn <a href="#FeatureScoreFn">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L7"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">type</span> <span class="token type_name">FeatureScoreFn</span> <span class="token operator">=</span> <span class="token keyword">fn</span> <span class="token punctuation">(</span>feature <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> target <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">f64</span></code></pre>
+<p>FeatureScoreFn scores one feature column against the target.</p>
 
 </section>
 
@@ -948,7 +964,7 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 </section>
 
 		<section id="CorrelationSelector" class="doc-node">
-			<div class="title"><h2>struct CorrelationSelector <a href="#CorrelationSelector">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L164"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>struct CorrelationSelector <a href="#CorrelationSelector">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L167"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <div class="attributes"><div class="attribute">@[heap]</div></div>
 <pre class="signature">
 <code><span class="token keyword">struct</span> <span class="token type_name">CorrelationSelector</span> <span class="token punctuation">{</span>
@@ -966,7 +982,7 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 </section>
 
 		<section id="CorrelationSelector.fit" class="doc-node">
-			<div class="title"><h2>fn (CorrelationSelector) fit <a href="#CorrelationSelector.fit">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L181"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (CorrelationSelector) fit <a href="#CorrelationSelector.fit">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L184"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> selector <span class="token type_name">CorrelationSelector</span><span class="token punctuation">)</span> <span class="token function">fit</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> target <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
 <p>fit computes one correlation score per feature using only the training data.</p>
@@ -974,7 +990,7 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 </section>
 
 		<section id="CorrelationSelector.transform" class="doc-node">
-			<div class="title"><h2>fn (CorrelationSelector) transform <a href="#CorrelationSelector.transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L247"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (CorrelationSelector) transform <a href="#CorrelationSelector.transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L250"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>selector <span class="token operator">&amp;</span><span class="token type_name">CorrelationSelector</span><span class="token punctuation">)</span> <span class="token function">transform</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 <p>transform selects the fitted columns without changing row order.</p>
@@ -982,7 +998,7 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 </section>
 
 		<section id="CorrelationSelector.fit_transform" class="doc-node">
-			<div class="title"><h2>fn (CorrelationSelector) fit_transform <a href="#CorrelationSelector.fit_transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L267"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (CorrelationSelector) fit_transform <a href="#CorrelationSelector.fit_transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L270"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> selector <span class="token type_name">CorrelationSelector</span><span class="token punctuation">)</span> <span class="token function">fit_transform</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> target <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 <p>fit_transform fits the selector and returns the selected training columns.</p>
@@ -990,7 +1006,7 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 </section>
 
 		<section id="CorrelationSelector.get_support" class="doc-node">
-			<div class="title"><h2>fn (CorrelationSelector) get_support <a href="#CorrelationSelector.get_support">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L273"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (CorrelationSelector) get_support <a href="#CorrelationSelector.get_support">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L276"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>selector <span class="token operator">&amp;</span><span class="token type_name">CorrelationSelector</span><span class="token punctuation">)</span> <span class="token function">get_support</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span></code></pre>
 <p>get_support returns the original column indices retained by fit.</p>
@@ -998,7 +1014,7 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 </section>
 
 		<section id="CorrelationSelector.get_feature_names_out" class="doc-node">
-			<div class="title"><h2>fn (CorrelationSelector) get_feature_names_out <a href="#CorrelationSelector.get_feature_names_out">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L282"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (CorrelationSelector) get_feature_names_out <a href="#CorrelationSelector.get_feature_names_out">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L285"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>selector <span class="token operator">&amp;</span><span class="token type_name">CorrelationSelector</span><span class="token punctuation">)</span> <span class="token function">get_feature_names_out</span><span class="token punctuation">(</span>input_features <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span></code></pre>
 <p>get_feature_names_out returns the retained names in original column order.</p>
@@ -1347,6 +1363,65 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 
 </section>
 
+		<section id="SelectKBest" class="doc-node">
+			<div class="title"><h2>struct SelectKBest <a href="#SelectKBest">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L351"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<div class="attributes"><div class="attribute">@[heap]</div></div>
+<pre class="signature">
+<code><span class="token keyword">struct</span> <span class="token type_name">SelectKBest</span> <span class="token punctuation">{</span>
+<span class="token keyword">mut</span><span class="token punctuation">:</span>
+	fitted   <span class="token builtin">bool</span>
+	support_ <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>
+<span class="token keyword">pub</span><span class="token punctuation">:</span>
+	k        <span class="token builtin">int</span>
+	score_fn <span class="token type_name">FeatureScoreFn</span> <span class="token attribute">@[</span><span class="token attribute">required</span><span class="token attribute">]</span>
+<span class="token keyword">pub</span> <span class="token keyword">mut</span><span class="token punctuation">:</span>
+	scores_        <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span>
+	n_features_in_ <span class="token builtin">int</span>
+<span class="token punctuation">}</span></code></pre>
+<p>SelectKBest retains the k features with the highest scores from a user-supplied univariate scoring function.</p>
+
+</section>
+
+		<section id="SelectKBest.fit" class="doc-node">
+			<div class="title"><h2>fn (SelectKBest) fit <a href="#SelectKBest.fit">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L372"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> selector <span class="token type_name">SelectKBest</span><span class="token punctuation">)</span> <span class="token function">fit</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> target <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
+<p>fit computes one score per feature using only the supplied training data.</p>
+
+</section>
+
+		<section id="SelectKBest.transform" class="doc-node">
+			<div class="title"><h2>fn (SelectKBest) transform <a href="#SelectKBest.transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L418"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>selector <span class="token operator">&amp;</span><span class="token type_name">SelectKBest</span><span class="token punctuation">)</span> <span class="token function">transform</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>transform selects the fitted columns without changing row order.</p>
+
+</section>
+
+		<section id="SelectKBest.fit_transform" class="doc-node">
+			<div class="title"><h2>fn (SelectKBest) fit_transform <a href="#SelectKBest.fit_transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L438"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> selector <span class="token type_name">SelectKBest</span><span class="token punctuation">)</span> <span class="token function">fit_transform</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> target <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
+<p>fit_transform fits the selector and returns the selected training columns.</p>
+
+</section>
+
+		<section id="SelectKBest.get_support" class="doc-node">
+			<div class="title"><h2>fn (SelectKBest) get_support <a href="#SelectKBest.get_support">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L444"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>selector <span class="token operator">&amp;</span><span class="token type_name">SelectKBest</span><span class="token punctuation">)</span> <span class="token function">get_support</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span></code></pre>
+<p>get_support returns the original column indices retained by fit.</p>
+
+</section>
+
+		<section id="SelectKBest.get_feature_names_out" class="doc-node">
+			<div class="title"><h2>fn (SelectKBest) get_feature_names_out <a href="#SelectKBest.get_feature_names_out">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L452"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token punctuation">(</span>selector <span class="token operator">&amp;</span><span class="token type_name">SelectKBest</span><span class="token punctuation">)</span> <span class="token function">get_feature_names_out</span><span class="token punctuation">(</span>input_features <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span></code></pre>
+<p>get_feature_names_out returns the retained names in original column order.</p>
+
+</section>
+
 		<section id="SimpleImputer" class="doc-node">
 			<div class="title"><h2>struct SimpleImputer <a href="#SimpleImputer">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/imputers.v#L15"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <div class="attributes"><div class="attribute">@[heap]</div></div>
@@ -1454,7 +1529,7 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 </section>
 
 		<section id="VarianceThreshold" class="doc-node">
-			<div class="title"><h2>struct VarianceThreshold <a href="#VarianceThreshold">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L9"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>struct VarianceThreshold <a href="#VarianceThreshold">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L12"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <div class="attributes"><div class="attribute">@[heap]</div></div>
 <pre class="signature">
 <code><span class="token keyword">struct</span> <span class="token type_name">VarianceThreshold</span> <span class="token punctuation">{</span>
@@ -1472,7 +1547,7 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 </section>
 
 		<section id="VarianceThreshold.fit" class="doc-node">
-			<div class="title"><h2>fn (VarianceThreshold) fit <a href="#VarianceThreshold.fit">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L29"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (VarianceThreshold) fit <a href="#VarianceThreshold.fit">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L32"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> selector <span class="token type_name">VarianceThreshold</span><span class="token punctuation">)</span> <span class="token function">fit</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span></code></pre>
 <p>fit learns feature variances from the supplied training matrix.</p>
@@ -1480,7 +1555,7 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 </section>
 
 		<section id="VarianceThreshold.transform" class="doc-node">
-			<div class="title"><h2>fn (VarianceThreshold) transform <a href="#VarianceThreshold.transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L81"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (VarianceThreshold) transform <a href="#VarianceThreshold.transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L84"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>selector <span class="token operator">&amp;</span><span class="token type_name">VarianceThreshold</span><span class="token punctuation">)</span> <span class="token function">transform</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 <p>transform selects the fitted columns without changing row order.</p>
@@ -1488,7 +1563,7 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 </section>
 
 		<section id="VarianceThreshold.fit_transform" class="doc-node">
-			<div class="title"><h2>fn (VarianceThreshold) fit_transform <a href="#VarianceThreshold.fit_transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L102"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (VarianceThreshold) fit_transform <a href="#VarianceThreshold.fit_transform">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L105"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span><span class="token keyword">mut</span> selector <span class="token type_name">VarianceThreshold</span><span class="token punctuation">)</span> <span class="token function">fit_transform</span><span class="token punctuation">(</span>data <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span></code></pre>
 <p>fit_transform learns variances and returns the selected training columns.</p>
@@ -1496,7 +1571,7 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 </section>
 
 		<section id="VarianceThreshold.get_support" class="doc-node">
-			<div class="title"><h2>fn (VarianceThreshold) get_support <a href="#VarianceThreshold.get_support">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L108"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (VarianceThreshold) get_support <a href="#VarianceThreshold.get_support">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L111"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>selector <span class="token operator">&amp;</span><span class="token type_name">VarianceThreshold</span><span class="token punctuation">)</span> <span class="token function">get_support</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span></code></pre>
 <p>get_support returns the original column indices retained by fit.</p>
@@ -1504,7 +1579,7 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 </section>
 
 		<section id="VarianceThreshold.get_feature_names_out" class="doc-node">
-			<div class="title"><h2>fn (VarianceThreshold) get_feature_names_out <a href="#VarianceThreshold.get_feature_names_out">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L117"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn (VarianceThreshold) get_feature_names_out <a href="#VarianceThreshold.get_feature_names_out">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/preprocessing/selection.v#L120"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token punctuation">(</span>selector <span class="token operator">&amp;</span><span class="token type_name">VarianceThreshold</span><span class="token punctuation">)</span> <span class="token function">get_feature_names_out</span><span class="token punctuation">(</span>input_features <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">string</span></code></pre>
 <p>get_feature_names_out returns the retained names in original column order.</p>
@@ -1512,7 +1587,7 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 25 Nov 2026 01:18:49</div>
+						<div class="footer">Powered by vdoc. Generated on: 25 Nov 2026 02:05:07</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_preprocessing">README</a></li>
 <li class="open"><a href="#cut">fn cut</a>        <ul>
@@ -1554,6 +1629,9 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 <li class="open"><a href="#RobustScaler.new">fn RobustScaler.new</a>        <ul>
 </ul>
 </li>
+<li class="open"><a href="#SelectKBest.new">fn SelectKBest.new</a>        <ul>
+</ul>
+</li>
 <li class="open"><a href="#SimpleImputer.new">fn SimpleImputer.new</a>        <ul>
 </ul>
 </li>
@@ -1564,6 +1642,9 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 </ul>
 </li>
 <li class="open"><a href="#MatrixTransformer">interface MatrixTransformer</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#FeatureScoreFn">type FeatureScoreFn</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#BinningStrategy">enum BinningStrategy</a>        <ul>
@@ -1636,6 +1717,14 @@ prediction <span class="token operator">:=</span> model<span class="token punctu
 <li><a href="#RobustScaler.transform">fn transform</a></li>
 <li><a href="#RobustScaler.fit_transform">fn fit_transform</a></li>
 <li><a href="#RobustScaler.get_feature_names_out">fn get_feature_names_out</a></li>
+</ul>
+</li>
+<li class="open"><a href="#SelectKBest">struct SelectKBest</a>        <ul>
+<li><a href="#SelectKBest.fit">fn fit</a></li>
+<li><a href="#SelectKBest.transform">fn transform</a></li>
+<li><a href="#SelectKBest.fit_transform">fn fit_transform</a></li>
+<li><a href="#SelectKBest.get_support">fn get_support</a></li>
+<li><a href="#SelectKBest.get_feature_names_out">fn get_feature_names_out</a></li>
 </ul>
 </li>
 <li class="open"><a href="#SimpleImputer">struct SimpleImputer</a>        <ul>
