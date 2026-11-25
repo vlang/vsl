@@ -1,7 +1,7 @@
-# Adaptive RK23 ODE example
+# Adaptive RK23 ODE event example
 
-Integrate a harmonic oscillator through one full period and inspect the final
-state and adaptive-step counts.
+Integrate a harmonic oscillator until its position first crosses zero. The
+example prints the localized event time/state and adaptive-step counts.
 
 Run from the V modules directory:
 

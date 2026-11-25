@@ -58,6 +58,12 @@ jobs:
           # improve performance
           fetch-depth: 0
 
+      - name: Test GNU GSL manual link checker
+        run: python3 .github/scripts/test_check_gsl_links.py
+
+      - name: Check GNU GSL manual links
+        run: python3 .github/scripts/check-gsl-links.py
+
       # MegaLinter
       - name: MegaLinter
 
@@ -70,6 +76,9 @@ jobs:
         # All available variables are described in documentation
         # https://megalinter.io/latest/config-file/
         env:
+          # The full main-branch link scan exceeds MegaLinter's 300s default.
+          SPELL_LYCHEE_TIMEOUT_SECONDS: 900
+
           # Validates all source when push on main, else just the git diff with
           # main. Override with true if you always want to lint all sources
           #

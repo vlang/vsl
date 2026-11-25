@@ -3,6 +3,104 @@ module metrics
 import math
 import vsl.errors
 
+// SigmoidCalibrator maps decision scores to probabilities using a fitted
+// logistic (Platt-style) calibration curve.
+@[heap]
+pub struct SigmoidCalibrator {
+pub mut:
+	coef_      f64
+	intercept_ f64
+mut:
+	fitted bool
+}
+
+// fit estimates the sigmoid parameters from binary labels and decision scores.
+pub fn (mut calibrator SigmoidCalibrator) fit(y_true []f64, y_score []f64) ! {
+	if y_true.len == 0 || y_true.len != y_score.len {
+		return errors.error('calibration labels and scores must have equal non-zero lengths',
+			.einval)
+	}
+	mut positives := 0
+	for index, label in y_true {
+		if label != 0.0 && label != 1.0 {
+			return errors.error('calibration labels must be binary', .einval)
+		}
+		if math.is_nan(label) || math.is_inf(label, 0) || math.is_nan(y_score[index])
+			|| math.is_inf(y_score[index], 0) {
+			return errors.error('calibration inputs must be finite', .einval)
+		}
+		if label == 1.0 {
+			positives++
+		}
+	}
+
+	n := f64(y_true.len)
+	target_positive := (f64(positives) + 0.5) / (n + 1.0)
+	mut a := 0.0
+	mut b := math.log(target_positive / (1.0 - target_positive))
+	for _ in 0 .. 100 {
+		mut gradient_a := 0.0
+		mut gradient_b := 0.0
+		mut hessian_aa := 0.0
+		mut hessian_ab := 0.0
+		mut hessian_bb := 0.0
+		for index, score in y_score {
+			probability := sigmoid_probability(a * score + b)
+			residual := probability - y_true[index]
+			weight := probability * (1.0 - probability)
+			gradient_a += residual * score
+			gradient_b += residual
+			hessian_aa += weight * score * score
+			hessian_ab += weight * score
+			hessian_bb += weight
+		}
+		determinant := hessian_aa * hessian_bb - hessian_ab * hessian_ab
+		if determinant <= 1e-18 {
+			break
+		}
+		delta_a := (hessian_bb * gradient_a - hessian_ab * gradient_b) / determinant
+		delta_b := (-hessian_ab * gradient_a + hessian_aa * gradient_b) / determinant
+		a -= delta_a
+		b -= delta_b
+		if math.abs(delta_a) + math.abs(delta_b) < 1e-10 {
+			break
+		}
+	}
+	if math.is_nan(a) || math.is_inf(a, 0) || math.is_nan(b) || math.is_inf(b, 0) {
+		return errors.error('calibration fit produced non-finite parameters', .efailed)
+	}
+	calibrator.coef_ = a
+	calibrator.intercept_ = b
+	calibrator.fitted = true
+}
+
+// predict returns calibrated probabilities for decision scores.
+pub fn (calibrator &SigmoidCalibrator) predict(y_score []f64) ![]f64 {
+	if !calibrator.fitted {
+		return errors.error('SigmoidCalibrator must be fitted before predict', .efailed)
+	}
+	mut probabilities := []f64{len: y_score.len}
+	for index, score in y_score {
+		if math.is_nan(score) || math.is_inf(score, 0) {
+			return errors.error('calibration scores must be finite', .einval)
+		}
+		probabilities[index] = sigmoid_probability(calibrator.coef_ * score +
+			calibrator.intercept_)
+	}
+	return probabilities
+}
+
+fn sigmoid_probability(value f64) f64 {
+	mut probability := 0.0
+	if value >= 0.0 {
+		probability = 1.0 / (1.0 + math.exp(-value))
+	} else {
+		exp_value := math.exp(value)
+		probability = exp_value / (1.0 + exp_value)
+	}
+	return math.max(1e-15, math.min(1.0 - 1e-15, probability))
+}
+
 // MulticlassConfusionMatrix stores sorted class labels and counts, where rows
 // are true labels and columns are predicted labels.
 pub struct MulticlassConfusionMatrix {
@@ -304,6 +402,37 @@ pub fn roc_curve(y_true []f64, y_score []f64) !RocCurveResult {
 	}
 }
 
+// optimal_threshold returns the score threshold maximizing Youden's J
+// statistic (true-positive rate minus false-positive rate).
+pub fn optimal_threshold(y_true []f64, y_score []f64) !f64 {
+	if y_true.len != y_score.len {
+		return errors.error('y_true and y_score must have the same length', .einval)
+	}
+	if y_true.len == 0 {
+		return errors.error('empty input arrays', .einval)
+	}
+	for i, label in y_true {
+		if label != 0.0 && label != 1.0 {
+			return errors.error('y_true must contain only binary labels 0 or 1', .einval)
+		}
+		score := y_score[i]
+		if math.is_nan(score) || math.is_inf(score, 0) {
+			return errors.error('y_score must contain only finite values', .einval)
+		}
+	}
+	roc := roc_curve(y_true, y_score)!
+	mut best_index := 0
+	mut best_j := roc.tpr[0] - roc.fpr[0]
+	for i in 1 .. roc.thresholds.len {
+		j := roc.tpr[i] - roc.fpr[i]
+		if j > best_j {
+			best_j = j
+			best_index = i
+		}
+	}
+	return roc.thresholds[best_index]
+}
+
 // roc_auc_score computes Area Under the ROC Curve using the trapezoidal rule
 pub fn roc_auc_score(y_true []f64, y_score []f64) !f64 {
 	roc := roc_curve(y_true, y_score)!
@@ -451,6 +580,107 @@ pub fn log_loss(y_true []f64, y_pred []f64) !f64 {
 	}
 
 	return total / f64(y_true.len)
+}
+
+// brier_score computes the mean squared probability error for binary labels.
+// Labels must be exactly 0 or 1 and probabilities must be finite in [0, 1].
+pub fn brier_score(y_true []f64, y_prob []f64) !f64 {
+	if y_true.len != y_prob.len {
+		return errors.error('y_true and y_prob must have the same length', .einval)
+	}
+	if y_true.len == 0 {
+		return errors.error('empty input arrays', .einval)
+	}
+
+	mut total := 0.0
+	for i in 0 .. y_true.len {
+		label := y_true[i]
+		probability := y_prob[i]
+		if label != 0.0 && label != 1.0 {
+			return errors.error('y_true must contain only binary labels 0 or 1', .einval)
+		}
+		if math.is_nan(probability) || math.is_inf(probability, 0) || probability < 0.0
+			|| probability > 1.0 {
+			return errors.error('y_prob must contain finite probabilities in [0, 1]', .einval)
+		}
+		difference := probability - label
+		total += difference * difference
+	}
+	return total / f64(y_true.len)
+}
+
+// CalibrationCurveResult contains observed positive rates and mean predicted
+// probabilities for non-empty uniform probability bins.
+pub struct CalibrationCurveResult {
+pub:
+	mean_predicted_probability []f64
+	fraction_positive          []f64
+	counts                     []int
+}
+
+// calibration_curve computes reliability-diagram points for binary
+// probabilities using uniform bins over [0, 1].
+pub fn calibration_curve(y_true []f64, y_prob []f64, n_bins int) !CalibrationCurveResult {
+	if y_true.len != y_prob.len {
+		return errors.error('y_true and y_prob must have the same length', .einval)
+	}
+	if y_true.len == 0 {
+		return errors.error('empty input arrays', .einval)
+	}
+	if n_bins <= 0 {
+		return errors.error('n_bins must be positive', .einval)
+	}
+
+	mut probability_sums := []f64{len: n_bins, init: 0.0}
+	mut positive_counts := []int{len: n_bins, init: 0}
+	mut counts := []int{len: n_bins, init: 0}
+	for i, label in y_true {
+		probability := y_prob[i]
+		if label != 0.0 && label != 1.0 {
+			return errors.error('y_true must contain only binary labels 0 or 1', .einval)
+		}
+		if math.is_nan(probability) || math.is_inf(probability, 0) || probability < 0.0
+			|| probability > 1.0 {
+			return errors.error('y_prob must contain finite probabilities in [0, 1]', .einval)
+		}
+		mut bin := int(probability * f64(n_bins))
+		if bin == n_bins {
+			bin = n_bins - 1
+		}
+		probability_sums[bin] += probability
+		positive_counts[bin] += int(label)
+		counts[bin]++
+	}
+
+	mut mean_predicted_probability := []f64{}
+	mut fraction_positive := []f64{}
+	mut non_empty_counts := []int{}
+	for bin in 0 .. n_bins {
+		if counts[bin] == 0 {
+			continue
+		}
+		mean_predicted_probability << probability_sums[bin] / f64(counts[bin])
+		fraction_positive << f64(positive_counts[bin]) / f64(counts[bin])
+		non_empty_counts << counts[bin]
+	}
+	return CalibrationCurveResult{
+		mean_predicted_probability: mean_predicted_probability
+		fraction_positive:          fraction_positive
+		counts:                     non_empty_counts
+	}
+}
+
+// expected_calibration_error computes the count-weighted absolute gap between
+// predicted probability and observed positive rate across uniform bins.
+pub fn expected_calibration_error(y_true []f64, y_prob []f64, n_bins int) !f64 {
+	curve := calibration_curve(y_true, y_prob, n_bins)!
+	mut total := 0.0
+	mut sample_count := 0
+	for i, count in curve.counts {
+		total += f64(count) * math.abs(curve.mean_predicted_probability[i] - curve.fraction_positive[i])
+		sample_count += count
+	}
+	return total / f64(sample_count)
 }
 
 // gini_coefficient computes the Gini coefficient from predictions

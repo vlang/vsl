@@ -1,6 +1,7 @@
 module fun
 
 import math
+import vsl.internal.prec
 
 const huge = 1e+300
 const two_m27 = 1.0 / (1 << 27) // 2**-27 0x3e40000000000000
@@ -155,6 +156,42 @@ pub fn bessel_j0(x_ f64) f64 {
 	return (1.0 + u) * (1.0 - u) + z * (r / s) // 1.0 < |x| < 2.0
 }
 
+// BesselEstimate contains a special-function value and an absolute
+// roundoff/truncation estimate. The estimate is not a rigorous error bound.
+pub struct BesselEstimate {
+pub:
+	value     f64
+	abs_error f64
+}
+
+// bessel_j0_e evaluates J0 and returns a documented, conservative estimate
+// for approximation and floating-point error across the implemented branches.
+pub fn bessel_j0_e(x f64) BesselEstimate {
+	value := bessel_j0(x)
+	if math.is_nan(x) {
+		return BesselEstimate{ value: value, abs_error: math.nan() }
+	}
+	if math.is_inf(x, 0) {
+		return BesselEstimate{ value: value, abs_error: 0.0 }
+	}
+	abs_x := math.abs(x)
+	scale := math.max(1.0, math.abs(value))
+	roundoff := 8.0 * prec.f64_epsilon * scale
+	truncation := if abs_x < two_m27 {
+		0.25 * abs_x * abs_x
+	} else if abs_x < two_m13 {
+		abs_x * abs_x * abs_x * abs_x / 64.0
+	} else if abs_x < 2.0 {
+		16.0 * prec.f64_epsilon * scale
+	} else {
+		32.0 * prec.sqrt_f64_epsilon * scale / math.sqrt(abs_x)
+	}
+	return BesselEstimate{
+		value:     value
+		abs_error: roundoff + truncation
+	}
+}
+
 // bessel_j1 returns the order-one Bessel function of the first kind.
 //
 // special cases are:
@@ -215,6 +252,32 @@ pub fn bessel_j1(x_ f64) f64 {
 		return -z
 	}
 	return z
+}
+
+// bessel_j1_e evaluates J1 and returns a documented, conservative estimate
+// for approximation and floating-point error across the implemented branches.
+pub fn bessel_j1_e(x f64) BesselEstimate {
+	value := bessel_j1(x)
+	if math.is_nan(x) {
+		return BesselEstimate{ value: value, abs_error: math.nan() }
+	}
+	if math.is_inf(x, 0) {
+		return BesselEstimate{ value: value, abs_error: 0.0 }
+	}
+	abs_x := math.abs(x)
+	scale := math.max(1.0, math.abs(value))
+	roundoff := 8.0 * prec.f64_epsilon * scale
+	truncation := if abs_x < two_m27 {
+		abs_x * abs_x * abs_x / 16.0
+	} else if abs_x < 2.0 {
+		16.0 * prec.f64_epsilon * scale
+	} else {
+		32.0 * prec.sqrt_f64_epsilon * scale / math.sqrt(abs_x)
+	}
+	return BesselEstimate{
+		value:     value
+		abs_error: roundoff + truncation
+	}
 }
 
 // bessel_jn returns the order-n Bessel function of the first kind.

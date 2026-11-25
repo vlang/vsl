@@ -135,3 +135,94 @@ fn test_model_coefficients() {
 	pred := model.predict([3.0])
 	assert math.abs(pred - 6.0) < 1.0
 }
+
+fn test_lasso_sample_weights_match_duplicated_observations() {
+	mut weighted_data := Data.from_raw_xy_sep[f64]([[0.0], [1.0], [2.0]], [1.0, 2.0, 10.0])!
+	mut duplicated_data := Data.from_raw_xy_sep[f64]([[0.0], [1.0], [1.0]], [1.0, 2.0, 2.0])!
+
+	mut weighted := Lasso.new(mut weighted_data, 'weighted_lasso', 0.25)
+	mut duplicated := Lasso.new(mut duplicated_data, 'duplicated_lasso', 0.25)
+	weighted.train_with_sample_weights([1.0, 2.0, 0.0])!
+	duplicated.train()
+
+	assert weighted.coef_.len == duplicated.coef_.len
+	assert math.abs(weighted.coef_[0] - duplicated.coef_[0]) < 1e-12
+	assert math.abs(weighted.intercept_ - duplicated.intercept_) < 1e-12
+	assert math.abs(weighted.predict([1.5]) - duplicated.predict([1.5])) < 1e-12
+}
+
+fn test_lasso_zero_weight_samples_do_not_affect_centered_residuals() {
+	mut data := Data.from_raw_xy_sep[f64]([[0.0], [1.0]], [0.0, 1.0])!
+	mut model := Lasso.new(mut data, 'zero_weight_lasso', 0.25)
+	data.y = [-1e308, 1e308]
+
+	model.train_with_sample_weights([1.0, 0.0])!
+
+	assert model.coef_[0] == 0.0
+	assert model.intercept_ == -1e308
+	assert model.predict([0.0]) == -1e308
+}
+
+fn test_lasso_centers_features_when_fitting_intercept() {
+	mut regular_data := Data.from_raw_xy_sep[f64]([[2.0], [4.0], [6.0]], [5.0, 9.0, 13.0])!
+	mut weighted_data := Data.from_raw_xy_sep[f64]([[2.0], [4.0], [6.0]], [5.0, 9.0, 13.0])!
+
+	mut regular := Lasso.new(mut regular_data, 'centered_lasso', 0.0)
+	mut weighted := Lasso.new(mut weighted_data, 'centered_weighted_lasso', 0.0)
+	regular.train()
+	weighted.train_with_sample_weights([]f64{})!
+
+	assert math.abs(regular.coef_[0] - 2.0) < 1e-12
+	assert math.abs(regular.intercept_ - 1.0) < 1e-12
+	assert math.abs(weighted.coef_[0] - 2.0) < 1e-12
+	assert math.abs(weighted.intercept_ - 1.0) < 1e-12
+}
+
+fn test_lasso_empty_sample_weights_preserve_unit_weight_behavior() {
+	mut regular_data := Data.from_raw_xy_sep[f64]([[0.0], [1.0], [2.0]], [1.0, 2.0, 4.0])!
+	mut weighted_data := Data.from_raw_xy_sep[f64]([[0.0], [1.0], [2.0]], [1.0, 2.0, 4.0])!
+
+	mut regular := Lasso.new(mut regular_data, 'regular_lasso', 0.1)
+	mut weighted := Lasso.new(mut weighted_data, 'unit_weight_lasso', 0.1)
+	regular.train()
+	weighted.train_with_sample_weights([]f64{})!
+
+	assert math.abs(regular.coef_[0] - weighted.coef_[0]) < 1e-12
+	assert math.abs(regular.intercept_ - weighted.intercept_) < 1e-12
+}
+
+fn test_lasso_failed_weighted_refit_preserves_fitted_model() {
+	mut data := Data.from_raw_xy_sep[f64]([[2.0], [4.0], [6.0]], [5.0, 9.0, 13.0])!
+	mut model := Lasso.new(mut data, 'atomic_weighted_lasso', 0.1)
+	model.train()
+
+	previous_coefficient := model.coef_[0]
+	previous_intercept := model.intercept_
+	previous_prediction := model.predict([3.0])
+	data.y = [-1e308, 0.0, 1e308]
+	model.train_with_sample_weights([1.0, 1.0, 1.0]) or {
+		assert math.abs(model.coef_[0] - previous_coefficient) < 1e-12
+		assert math.abs(model.intercept_ - previous_intercept) < 1e-12
+		assert math.abs(model.predict([3.0]) - previous_prediction) < 1e-12
+		assert model.fitted
+		return
+	}
+	assert false, 'expected overflowing coordinate products to fail'
+}
+
+fn test_lasso_sample_weights_reject_invalid_values() {
+	assert lasso_rejects_sample_weights([1.0])
+	assert lasso_rejects_sample_weights([1.0, -1.0, 1.0])
+	assert lasso_rejects_sample_weights([1.0, math.nan(), 1.0])
+	assert lasso_rejects_sample_weights([1.0, math.inf(1), 1.0])
+	assert lasso_rejects_sample_weights([0.0, 0.0, 0.0])
+}
+
+fn lasso_rejects_sample_weights(sample_weights []f64) bool {
+	mut data := Data.from_raw_xy_sep[f64]([[0.0], [1.0], [2.0]], [1.0, 2.0, 4.0]) or {
+		panic(err)
+	}
+	mut model := Lasso.new(mut data, 'invalid_weight_lasso', 0.1)
+	model.train_with_sample_weights(sample_weights) or { return true }
+	return false
+}

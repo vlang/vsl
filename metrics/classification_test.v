@@ -128,6 +128,28 @@ fn test_roc_auc_score_random() {
 	assert auc_val >= 0.0 && auc_val <= 1.0
 }
 
+fn test_optimal_threshold_maximizes_youden_j() {
+	y_true := [1.0, 1.0, 0.0, 0.0]
+	y_score := [0.9, 0.8, 0.2, 0.1]
+
+	assert optimal_threshold(y_true, y_score)! == 0.8
+}
+
+fn test_optimal_threshold_rejects_invalid_inputs() {
+	if _ := optimal_threshold([1.0], [0.5, 0.4]) {
+		assert false, 'different lengths must return an error'
+	}
+	if _ := optimal_threshold([], []) {
+		assert false, 'empty inputs must return an error'
+	}
+	if _ := optimal_threshold([0.5], [0.4]) {
+		assert false, 'non-binary labels must return an error'
+	}
+	if _ := optimal_threshold([1.0], [math.inf(1)]) {
+		assert false, 'non-finite scores must return an error'
+	}
+}
+
 fn test_precision_recall_curve() {
 	y_true := [1.0, 1.0, 0.0, 0.0]
 	y_score := [0.9, 0.8, 0.3, 0.1]
@@ -159,6 +181,75 @@ fn test_log_loss_perfect() {
 	assert ll < 0.001
 }
 
+fn test_brier_score() {
+	y_true := [1.0, 0.0, 1.0, 0.0]
+	y_prob := [0.9, 0.1, 0.6, 0.4]
+
+	score := brier_score(y_true, y_prob)!
+	assert math.abs(score - 0.085) < 1e-12
+}
+
+fn test_brier_score_perfect_and_worst_predictions() {
+	assert brier_score([0.0, 1.0], [0.0, 1.0])! == 0.0
+	assert brier_score([0.0, 1.0], [1.0, 0.0])! == 1.0
+}
+
+fn test_brier_score_rejects_invalid_inputs() {
+	if _ := brier_score([0.0], [0.5, 0.5]) {
+		assert false, 'different lengths must return an error'
+	}
+	if _ := brier_score([], []) {
+		assert false, 'empty inputs must return an error'
+	}
+	if _ := brier_score([0.5], [0.5]) {
+		assert false, 'non-binary labels must return an error'
+	}
+	if _ := brier_score([1.0], [1.1]) {
+		assert false, 'out-of-range probabilities must return an error'
+	}
+	if _ := brier_score([1.0], [math.nan()]) {
+		assert false, 'NaN probabilities must return an error'
+	}
+}
+
+fn test_calibration_curve_uses_non_empty_uniform_bins() {
+	y_true := [1.0, 0.0, 1.0, 0.0]
+	y_prob := [0.1, 0.2, 0.8, 1.0]
+
+	curve := calibration_curve(y_true, y_prob, 2)!
+	assert curve.counts == [2, 2]
+	assert math.abs(curve.mean_predicted_probability[0] - 0.15) < 1e-12
+	assert math.abs(curve.mean_predicted_probability[1] - 0.9) < 1e-12
+	assert math.abs(curve.fraction_positive[0] - 0.5) < 1e-12
+	assert math.abs(curve.fraction_positive[1] - 0.5) < 1e-12
+}
+
+fn test_expected_calibration_error() {
+	y_true := [1.0, 0.0, 1.0, 0.0]
+	y_prob := [0.1, 0.2, 0.8, 1.0]
+
+	assert math.abs(expected_calibration_error(y_true, y_prob, 2)! - 0.375) < 1e-12
+	assert expected_calibration_error([0.0, 1.0], [0.0, 1.0], 4)! == 0.0
+}
+
+fn test_calibration_apis_reject_invalid_inputs() {
+	if _ := calibration_curve([0.0], [0.5, 0.5], 2) {
+		assert false, 'different lengths must return an error'
+	}
+	if _ := calibration_curve([], [], 2) {
+		assert false, 'empty inputs must return an error'
+	}
+	if _ := calibration_curve([0.5], [0.5], 2) {
+		assert false, 'non-binary labels must return an error'
+	}
+	if _ := calibration_curve([1.0], [1.1], 2) {
+		assert false, 'out-of-range probabilities must return an error'
+	}
+	if _ := calibration_curve([1.0], [0.5], 0) {
+		assert false, 'non-positive bin counts must return an error'
+	}
+}
+
 fn test_gini_coefficient() {
 	y_true := [1.0, 1.0, 0.0, 0.0]
 	y_score := [0.9, 0.8, 0.2, 0.1]
@@ -177,6 +268,37 @@ fn test_ks_statistic() {
 
 	// Perfect separation should give high KS
 	assert ks > 0.5
+}
+
+fn test_sigmoid_calibrator_maps_scores_to_bounded_probabilities() ! {
+	mut calibrator := SigmoidCalibrator{}
+	calibrator.fit([0.0, 0.0, 1.0, 1.0], [-2.0, -1.0, 1.0, 2.0])!
+	probabilities := calibrator.predict([-2.0, 0.0, 2.0])!
+	assert probabilities.len == 3
+	assert probabilities[0] < probabilities[1]
+	assert probabilities[1] < probabilities[2]
+	for probability in probabilities {
+		assert probability > 0.0 && probability < 1.0
+	}
+}
+
+fn test_sigmoid_calibrator_handles_degenerate_labels_and_rejects_bad_inputs() ! {
+	mut calibrator := SigmoidCalibrator{}
+	calibrator.fit([1.0, 1.0, 1.0], [0.0, 0.0, 0.0])!
+	probabilities := calibrator.predict([0.0])!
+	assert probabilities[0] > 0.5
+
+	mut unfitted := SigmoidCalibrator{}
+	if _ := unfitted.predict([0.0]) {
+		assert false
+	} else {
+		assert err.msg().contains('must be fitted')
+	}
+	if _ := calibrator.fit([0.0], [0.0, 1.0]) {
+		assert false
+	} else {
+		assert err.msg().contains('equal non-zero lengths')
+	}
 }
 
 fn test_auc_basic() {

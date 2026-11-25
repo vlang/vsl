@@ -32,8 +32,10 @@ out-of-range indices or exhausted capacity. Repeated coordinates are allowed.
 
 `Triplet.to_csr()!` converts COO entries to CSR, summing duplicate coordinates
 and dropping entries whose accumulated value is zero. CSR provides
-`to_dense()`, `to_cc()`, `size()`, `nnz()`, and `matvec(vector)!`. `matvec`
-requires a vector whose length matches the matrix's column count.
+`to_dense()`, `to_cc()`, `size()`, `nnz()`, `matvec(vector)!`, and
+`rmatvec(vector)!`. `matvec` requires one value per matrix column and returns
+one value per row; `rmatvec` multiplies by the transpose, requiring one value
+per row and returning one value per column.
 
 ### Compressed Sparse Column (CSC): `CCMatrix[T]`
 
@@ -46,6 +48,29 @@ multiplication, triangular and iterative solving, and format conversion are
 available; broader sparse arithmetic and preconditioners beyond Jacobi are not
 implied by these storage types.
 
+### Reusable sparse LU for f64 CSR
+
+`CSRMatrix[f64].factorize_lu()!` computes a pure-V LU factorization using
+partial row pivoting. The returned `SparseLU` can solve multiple right-hand
+sides with `solve(b)!`; factorization is performed once and each solve applies
+the recorded row permutation followed by sparse forward and backward
+substitution. Neither factorization nor solve converts the matrix to dense
+storage. Elimination stores fill-in in sparse row maps, and in the worst case
+fill-in can make the factors dense, requiring O(n²) factor storage and O(n³)
+factorization work.
+
+This first slice is limited to square CSR matrices with `f64` values and one
+right-hand side per `solve` call. It does not provide CSC input, complex or
+other numeric types, multiple right-hand sides in one call, ordering
+heuristics, backend dispatch, condition estimates, or iterative refinement.
+The factorization returns an error for nonsquare or malformed CSR storage,
+non-finite matrix entries, an exactly zero pivot (singularity), or a
+non-finite intermediate. It does not classify small nonzero pivots as
+singular. `solve` returns an error if the right-hand side has the wrong length,
+contains non-finite values, or substitution produces a non-finite value.
+See the runnable [sparse LU example](../../examples/la_sparse_lu/main.v).
+Run it from the repository root with `v run examples/la_sparse_lu/main.v`.
+
 `CSRMatrix[f64].solve_lower_triangular(b)!` and
 `solve_upper_triangular(b)!` perform forward or backward substitution directly
 from CSR storage. They require a square matrix, a finite right-hand side of
@@ -53,8 +78,10 @@ matching length, a finite triangular matrix, and a finite nonzero diagonal in
 every row. They return an error for an entry on the wrong side of the diagonal
 or if an intermediate/result becomes non-finite.
 
-See [`examples/la_csr_matvec`](../../examples/la_csr_matvec/main.v), or run it
-with `v run examples/la_csr_matvec/main.v`.
+See [`examples/la_csr_matvec`](../../examples/la_csr_matvec/main.v) and
+[`examples/la_csr_rmatvec`](../../examples/la_csr_rmatvec/main.v), or run them
+with `v run examples/la_csr_matvec/main.v` and
+`v run examples/la_csr_rmatvec/main.v`.
 
 The CSR conjugate-gradient solver assumes a symmetric positive-definite matrix,
 uses a zero initial guess, and reports the true residual norm. A result can

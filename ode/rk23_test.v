@@ -18,6 +18,30 @@ fn zero_system(_ f64, state []f64, _ []f64) []f64 {
 	return [state[0] * 0.0]
 }
 
+fn unit_rate_system(_ f64, _ []f64, _ []f64) []f64 {
+	return [1.0]
+}
+
+fn event_at_four_tenths(_ f64, state []f64, _ []f64) f64 {
+	return state[0] - 0.4
+}
+
+fn event_at_one(_ f64, state []f64, _ []f64) f64 {
+	return state[0] - 1.0
+}
+
+fn event_at_zero(_ f64, state []f64, _ []f64) f64 {
+	return state[0]
+}
+
+fn non_finite_event(_ f64, _ []f64, _ []f64) f64 {
+	return math.nan()
+}
+
+fn non_finite_event_after_start(t f64, _ []f64, _ []f64) f64 {
+	return if t == 0.0 { -1.0 } else { math.inf(1) }
+}
+
 fn wrong_shape_system(_ f64, _ []f64, _ []f64) []f64 {
 	return [1.0, 2.0]
 }
@@ -181,6 +205,115 @@ fn test_rk23_returns_only_samples_reached_before_execution_limit() {
 	assert result.n_accepted == 1
 	assert result.sampled_times == [0.0, 0.05, 0.1]
 	assert math.abs(result.sampled_states[1][0] - math.exp(0.05)) < 1e-5
+}
+
+fn test_rk23_localizes_events_forward_and_backward() {
+	forward := solve_rk23(unit_rate_system, RK23Params{
+		t_start:        0.0
+		t_end:          1.0
+		initial_state:  [0.0]
+		initial_step:   1.0
+		output_times:   [0.2, 0.6]
+		event_function: event_at_four_tenths
+	})!
+	assert forward.status == .event_detected
+	assert math.abs(forward.t - 0.4) < 1e-14
+	assert math.abs(forward.state[0] - 0.4) < 1e-14
+	assert forward.sampled_times == [0.2]
+	assert math.abs(forward.sampled_states[0][0] - 0.2) < 1e-14
+
+	backward := solve_rk23(unit_rate_system, RK23Params{
+		t_start:        1.0
+		t_end:          0.0
+		initial_state:  [1.0]
+		initial_step:   1.0
+		output_times:   [1.0, 0.75, 0.25]
+		event_function: event_at_four_tenths
+	})!
+	assert backward.status == .event_detected
+	assert math.abs(backward.t - 0.4) < 1e-14
+	assert math.abs(backward.state[0] - 0.4) < 1e-14
+	assert backward.sampled_times == [1.0, 0.75]
+	assert math.abs(backward.sampled_states[1][0] - 0.75) < 1e-14
+}
+
+fn test_rk23_events_handle_initial_and_endpoint_roots() {
+	initial := solve_rk23(unit_rate_system, RK23Params{
+		t_start:        0.0
+		t_end:          1.0
+		initial_state:  [0.0]
+		event_function: event_at_zero
+	})!
+	assert initial.status == .event_detected
+	assert initial.t == 0.0
+	assert initial.state == [0.0]
+	assert initial.n_calls == 0
+	assert initial.n_event_calls == 1
+
+	endpoint := solve_rk23(unit_rate_system, RK23Params{
+		t_start:        0.0
+		t_end:          1.0
+		initial_state:  [0.0]
+		initial_step:   1.0
+		event_function: event_at_one
+	})!
+	assert endpoint.status == .event_detected
+	assert endpoint.t == 1.0
+	assert endpoint.state == [1.0]
+	assert endpoint.n_event_calls == 2
+}
+
+fn test_rk23_reports_non_finite_event_values() {
+	initial := solve_rk23(unit_rate_system, RK23Params{
+		t_start:        0.0
+		t_end:          1.0
+		initial_state:  [0.0]
+		event_function: non_finite_event
+	})!
+	assert initial.status == .non_finite_event_value
+	assert initial.n_event_calls == 1
+
+	after_start := solve_rk23(unit_rate_system, RK23Params{
+		t_start:        0.0
+		t_end:          1.0
+		initial_state:  [0.0]
+		initial_step:   1.0
+		event_function: non_finite_event_after_start
+	})!
+	assert after_start.status == .non_finite_event_value
+	assert after_start.t == 0.0
+	assert after_start.n_calls == 4
+	assert after_start.n_event_calls == 2
+}
+
+fn test_rk23_event_evaluations_share_the_execution_budget() {
+	endpoint_limited := solve_rk23(unit_rate_system, RK23Params{
+		t_start:        0.0
+		t_end:          1.0
+		initial_state:  [0.0]
+		initial_step:   1.0
+		max_evals:      5
+		event_function: event_at_four_tenths
+	})!
+	assert endpoint_limited.status == .max_evaluations
+	assert endpoint_limited.t == 0.0
+	assert endpoint_limited.n_calls == 4
+	assert endpoint_limited.n_event_calls == 1
+	assert endpoint_limited.n_accepted == 0
+
+	localization_limited := solve_rk23(unit_rate_system, RK23Params{
+		t_start:        0.0
+		t_end:          1.0
+		initial_state:  [0.0]
+		initial_step:   1.0
+		max_evals:      7
+		event_function: event_at_four_tenths
+	})!
+	assert localization_limited.status == .max_evaluations
+	assert localization_limited.t == 0.0
+	assert localization_limited.n_calls == 4
+	assert localization_limited.n_event_calls == 3
+	assert localization_limited.n_accepted == 0
 }
 
 fn test_rk23_rejects_invalid_requested_output_times() {
