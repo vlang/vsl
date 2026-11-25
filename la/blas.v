@@ -363,7 +363,7 @@ pub fn matrix_tr_vector_mul[T Numeric](alpha T, a &Matrix[T], u []T) []T {
 //
 // a = alpha⋅u⋅vᵀ    ⇒    aij = alpha * ui * vj
 //
-pub fn vector_vector_tr_mul[T](alpha T, u []T, v []T) &Matrix[T] {
+pub fn vector_vector_tr_mul[T Numeric](alpha T, u []T, v []T) &Matrix[T] {
 	$if T is f64 {
 		mut m := Matrix.new[f64](u.len, v.len)
 		if m.m < 9 && m.n < 9 {
