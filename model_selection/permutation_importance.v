@@ -25,6 +25,44 @@ pub:
 	feature_groups   [][]int
 }
 
+// PartialDependenceResult contains the averaged predictions for one feature
+// over a caller-supplied evaluation grid.
+pub struct PartialDependenceResult {
+pub:
+	feature_index int
+	grid          []f64
+	average       []f64
+	sample_count  int
+}
+
+// partial_dependence estimates the marginal prediction response for one
+// feature by replacing that feature with each grid value in turn.
+pub fn partial_dependence(x [][]f64, feature_index int, grid []f64, predictor FoldPrediction) !PartialDependenceResult {
+	validate_partial_dependence_inputs(x, feature_index, grid)!
+	mut average := []f64{len: grid.len}
+	for grid_index, value in grid {
+		mut modified := clone_rows(x)
+		for row_index in 0 .. modified.len {
+			modified[row_index][feature_index] = value
+		}
+		predictions := predictor(modified)!
+		if predictions.len != x.len {
+			return errors.error('predictor returned ${predictions.len} predictions, expected ${x.len}', .einval)
+		}
+		mut total := 0.0
+		for prediction in predictions {
+			total += prediction
+		}
+		average[grid_index] = total / f64(predictions.len)
+	}
+	return PartialDependenceResult{
+		feature_index: feature_index
+		grid:          grid.clone()
+		average:       average
+		sample_count:  x.len
+	}
+}
+
 // permutation_importance estimates predictive reliance on held-out data.
 // The predictor and scorer are supplied by the caller so this utility works
 // with any fitted estimator and with either classification or regression.
@@ -72,11 +110,11 @@ pub fn permutation_importance(x [][]f64, y []f64, predictor FoldPrediction, scor
 
 	return PermutationImportanceResult{
 		importances_mean: means
-		importances_std: stds
-		baseline_score: baseline
-		n_repeats: config.n_repeats
-		random_seed: config.random_seed
-		feature_groups: groups
+		importances_std:  stds
+		baseline_score:   baseline
+		n_repeats:        config.n_repeats
+		random_seed:      config.random_seed
+		feature_groups:   groups
 	}
 }
 
@@ -97,6 +135,26 @@ fn validate_permutation_inputs(x [][]f64, y []f64, config PermutationImportanceC
 	}
 	if config.n_repeats < 1 {
 		return errors.error('n_repeats must be at least 1', .einval)
+	}
+}
+
+fn validate_partial_dependence_inputs(x [][]f64, feature_index int, grid []f64) ! {
+	if x.len == 0 {
+		return errors.error('partial dependence requires at least one sample', .einval)
+	}
+	if x[0].len == 0 {
+		return errors.error('partial dependence requires at least one feature', .einval)
+	}
+	if feature_index < 0 || feature_index >= x[0].len {
+		return errors.error('feature index ${feature_index} is out of bounds', .einval)
+	}
+	if grid.len == 0 {
+		return errors.error('partial dependence requires at least one grid value', .einval)
+	}
+	for row in x {
+		if row.len != x[0].len {
+			return errors.error('feature rows must have a consistent width', .einval)
+		}
 	}
 }
 
