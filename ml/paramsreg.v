@@ -1,6 +1,5 @@
 module ml
 
-import vsl.la
 import vsl.util
 
 // ParamsReg defines a public data structure for this module.
@@ -88,7 +87,9 @@ pub fn (o &ParamsReg[T]) get_param(i int) T {
 
 // set_thetas sets the whole vector theta and notifies observers
 pub fn (mut o ParamsReg[T]) set_thetas(theta []T) {
-	la.vector_apply(mut o.theta, 1.0, theta)
+	for i in 0 .. o.theta.len {
+		o.theta[i] = theta[i]
+	}
 	o.notify_update()
 }
 

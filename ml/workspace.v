@@ -98,7 +98,9 @@ pub fn (mut o Stat[T]) sum_vars() ([]T, T) {
 	s := la.matrix_tr_vector_mul(1.0, o.data.x, one)
 	mut t := 0.0
 	if o.data.y.len > 0 {
-		t = la.vector_dot(one, o.data.y)
+		for i in 0 .. one.len {
+			t += one[i] * o.data.y[i]
+		}
 	}
 	return s, t
 }
