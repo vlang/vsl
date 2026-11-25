@@ -50,6 +50,7 @@ v -cflags <flags> run vsl/examples/<example>/main.v
 | [ml_linreg01](./ml_linreg01)                     | Basic linear regression example.                                                       |
 | [ml_linreg02](./ml_linreg02)                     | Advanced linear regression example.                                                    |
 | [ml_linreg_plot](./ml_linreg_plot)               | Linear regression with plotting.                                                       |
+| [ml_weighted_ridge](./ml_weighted_ridge)         | Ridge regression with per-sample weights.                                              |
 | [ml_weighted_lasso](./ml_weighted_lasso)         | Lasso regression with per-sample weights.                                              |
 | [ml_kmeans_plot](./ml_kmeans_plot)               | K-means clustering with plotting.                                                      |
 | [ml_knn_plot](./ml_knn_plot)                     | K-Nearest Neighbors algorithm with plotting.                                           |

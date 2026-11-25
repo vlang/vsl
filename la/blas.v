@@ -395,7 +395,7 @@ pub fn vector_vector_tr_mul[T Numeric](alpha T, u []T, v []T) &Matrix[T] {
 //
 pub fn matrix_vector_mul_add(alpha f64, a &Matrix[f64], u []f64) []f64 {
 	mut v := []f64{len: a.m}
-	blas.dgemv(.no_trans, a.m, a.n, alpha, a.data, a.m, u, 1, 1.0, mut v, 1)
+	blas.dgemv(.no_trans, a.m, a.n, alpha, a.data, a.n, u, 1, 1.0, mut v, 1)
 	return v
 }
 

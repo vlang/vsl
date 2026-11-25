@@ -93,6 +93,17 @@ fn test_ridge_basic() {
 	assert math.abs(pred - 7.0) < 0.5
 }
 
+fn test_ridge_weighted_fit_ignores_zero_weight_samples() {
+	mut data := Data.from_raw_xy_sep[f64]([[0.0], [1.0], [2.0]], [1.0, 2.0, 4.0])!
+	mut model := Ridge.new(mut data, 'ridge_weighted', 0.25)
+
+	model.train_with_sample_weights([1.0, 3.0, 0.0])!
+
+	assert math.abs(model.coef_[0] - 0.75) < 1e-12
+	assert math.abs(model.intercept_ - 1.1875) < 1e-12
+	assert math.abs(model.predict([2.0]) - 2.6875) < 1e-12
+}
+
 fn test_lasso_multivariate() {
 	// y = 1*x1 + 2*x2 + 3
 	x_data := [[1.0, 1.0], [2.0, 1.0], [1.0, 2.0], [2.0, 2.0], [3.0, 1.0]]

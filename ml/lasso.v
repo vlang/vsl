@@ -499,6 +499,15 @@ pub fn (mut o Ridge) train() {
 	o.fitted = true
 }
 
+// train_with_sample_weights fits the Ridge model using one finite,
+// non-negative weight per sample. An empty slice assigns unit weight.
+pub fn (mut o Ridge) train_with_sample_weights(sample_weights []f64) ! {
+	o.linreg.train_with_sample_weights(sample_weights)!
+	o.coef_ = o.linreg.params.access_thetas().clone()
+	o.intercept_ = o.linreg.params.get_bias()
+	o.fitted = true
+}
+
 // get_plotter returns a plot for the model
 pub fn (o &Ridge) get_plotter() &plot.Plot {
 	return o.linreg.get_plotter()

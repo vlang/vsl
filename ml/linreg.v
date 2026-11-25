@@ -1,8 +1,10 @@
 module ml
 
+import math
 import vsl.la
 import vsl.plot
 import vsl.util
+import vsl.errors
 
 // LinReg implements a linear regression model
 
@@ -16,7 +18,9 @@ mut:
 	name string // name of this "observer"
 	data &Data[f64] = unsafe { nil } // x-y data
 	// workspace
-	e []f64 // vector e = b⋅o + x⋅theta - y [nb_samples]
+	e              []f64 // vector e = b⋅o + x⋅theta - y [nb_samples]
+	sample_weights []f64
+	weight_sum     f64
 pub mut:
 	stat   &Stat[f64]      = unsafe { nil } // statistics
 	params &ParamsReg[f64] = unsafe { nil }
@@ -37,12 +41,17 @@ pub fn LinReg.new(mut data Data[f64], name string) &LinReg {
 		e:      []f64{len: data.nb_samples}
 		params: params
 	}
+	data.add_observer(reg)
 	return reg
 }
 
 // name returns the name of this LinReg object (thus defining the Observer interface)
 pub fn (o &LinReg) name() string {
 	return o.name
+}
+
+pub fn (mut o LinReg) update() {
+	o.reset_stale_sample_weights()
 }
 
 // predict returns the model evaluation @ {x;theta,b}
@@ -56,6 +65,13 @@ pub fn (o &LinReg) predict(x []f64) f64 {
 	return b + la.vector_dot(x, theta) // b + xᵀtheta
 }
 
+fn (mut o LinReg) reset_stale_sample_weights() {
+	if o.sample_weights.len > 0 && o.sample_weights.len != o.data.nb_samples {
+		o.sample_weights = []f64{}
+		o.weight_sum = 0.0
+	}
+}
+
 // cost returns the cost c(x;theta,b)
 //   Input:
 //     data -- x,y data
@@ -64,15 +80,25 @@ pub fn (o &LinReg) predict(x []f64) f64 {
 //   Output:
 //     c -- total cost (model error)
 pub fn (mut o LinReg) cost() f64 {
+	o.reset_stale_sample_weights()
 	// auxiliary
-	m_1 := 1.0 / f64(o.data.nb_samples)
+	weight_sum := if o.sample_weights.len == 0 { f64(o.data.nb_samples) } else { o.weight_sum }
+	m_1 := 1.0 / weight_sum
 	lambda := o.params.get_lambda()
 	theta := o.params.access_thetas()
 	// cost
 	o.calce() // e := b⋅o + x⋅theta - y
-	mut c := (0.5 * m_1) * la.vector_dot(o.e, o.e) // C := (0.5/m) eᵀe
+	mut squared_error := 0.0
+	if o.sample_weights.len == 0 {
+		squared_error = la.vector_dot(o.e, o.e)
+	} else {
+		for i in 0 .. o.data.nb_samples {
+			squared_error += o.sample_weights[i] * o.e[i] * o.e[i]
+		}
+	}
+	mut c := (0.5 * m_1) * squared_error
 	if lambda > 0 {
-		c += (0.5 * lambda * m_1) * la.vector_dot(theta, theta) // c += (0.5lambda/m) thetaᵀtheta
+		c += (0.5 * lambda * m_1) * la.vector_dot(theta, theta)
 	}
 	return c
 }
@@ -82,19 +108,37 @@ pub fn (mut o LinReg) cost() f64 {
 //     dcdtheta -- ∂C/∂theta
 //     dcdb -- ∂C/∂b
 pub fn (mut o LinReg) gradients() ([]f64, f64) {
+	o.reset_stale_sample_weights()
 	// auxiliary
-	m_1 := 1.0 / f64(o.data.nb_samples)
+	weight_sum := if o.sample_weights.len == 0 { f64(o.data.nb_samples) } else { o.weight_sum }
+	m_1 := 1.0 / weight_sum
 	lambda := o.params.get_lambda()
 	theta := o.params.access_thetas()
 	x := o.data.x
 	// dcdtheta
 	o.calce() // e := b⋅o + x⋅theta - y
-	mut dcdtheta := la.matrix_tr_vector_mul(1.0 * m_1, x, o.e) // dcdtheta := (1/m) xᵀe
+	mut dcdtheta := []f64{len: o.data.nb_features}
+	if o.sample_weights.len == 0 {
+		dcdtheta = la.matrix_tr_vector_mul(m_1, x, o.e)
+	} else {
+		for j in 0 .. o.data.nb_features {
+			for i in 0 .. o.data.nb_samples {
+				dcdtheta[j] += o.sample_weights[i] * x.get(i, j) * o.e[i] * m_1
+			}
+		}
+	}
 	if lambda > 0 {
-		dcdtheta = la.vector_add(1.0, dcdtheta, lambda * m_1, theta) // dcdtheta += (1/m) theta
+		dcdtheta = la.vector_add(1.0, dcdtheta, lambda * m_1, theta)
 	}
 	// dcdb
-	return dcdtheta, (1.0 * m_1) * la.vector_accum(o.e) // dcdb = (1/m) oᵀe
+	mut bias_gradient := la.vector_accum(o.e) * m_1
+	if o.sample_weights.len > 0 {
+		bias_gradient = 0.0
+		for i in 0 .. o.data.nb_samples {
+			bias_gradient += o.sample_weights[i] * o.e[i] * m_1
+		}
+	}
+	return dcdtheta, bias_gradient
 }
 
 // train finds theta and b using closed-form solution
@@ -103,6 +147,8 @@ pub fn (mut o LinReg) gradients() ([]f64, f64) {
 //   Output:
 //     params -- theta and b
 pub fn (mut o LinReg) train() {
+	o.sample_weights = []
+	o.weight_sum = 0.0
 	// auxiliary
 	lambda := o.params.get_lambda()
 	x, y := o.data.x, o.data.y
@@ -131,15 +177,135 @@ pub fn (mut o LinReg) train() {
 	o.params.set_bias(b_)
 }
 
+// train_with_sample_weights fits the model using one finite, non-negative
+// weight per sample. An empty slice assigns unit weight to every sample.
+pub fn (mut o LinReg) train_with_sample_weights(sample_weights []f64) ! {
+	m := o.data.nb_samples
+	n := o.data.nb_features
+	if m <= 0 || o.data.x.m != m || o.data.x.n != n || o.data.y.len != m {
+		return errors.error('training data dimensions do not match', .einval)
+	}
+	if sample_weights.len != 0 && sample_weights.len != m {
+		return errors.error('sample_weights must be empty or match the number of samples',
+			.einval)
+	}
+	weights := if sample_weights.len == 0 {
+		[]f64{len: m, init: 1.0}
+	} else {
+		sample_weights.clone()
+	}
+	mut total_weight := 0.0
+	for i in 0 .. m {
+		weight := weights[i]
+		if math.is_nan(weight) || math.is_inf(weight, 0) || weight < 0.0 {
+			return errors.error('sample weights must be finite and non-negative', .einval)
+		}
+		total_weight += weight
+		if math.is_inf(total_weight, 0) {
+			return errors.error('sum of sample weights overflowed', .einval)
+		}
+		if math.is_nan(o.data.y[i]) || math.is_inf(o.data.y[i], 0) {
+			return errors.error('training targets must be finite', .einval)
+		}
+		for j in 0 .. n {
+			value := o.data.x.get(i, j)
+			if math.is_nan(value) || math.is_inf(value, 0) {
+				return errors.error('training features must be finite', .einval)
+			}
+		}
+	}
+	if total_weight <= 0.0 {
+		return errors.error('sample weights must have a positive sum', .einval)
+	}
+
+	mut sum_x := []f64{len: n}
+	mut sum_y := 0.0
+	for i in 0 .. m {
+		weight := weights[i]
+		sum_y += weight * o.data.y[i]
+		for j in 0 .. n {
+			sum_x[j] += weight * o.data.x.get(i, j)
+		}
+	}
+	if math.is_nan(sum_y) || math.is_inf(sum_y, 0) {
+		return errors.error('weighted target sum overflowed', .einval)
+	}
+	for j in 0 .. n {
+		if math.is_nan(sum_x[j]) || math.is_inf(sum_x[j], 0) {
+			return errors.error('weighted feature sums overflowed', .einval)
+		}
+	}
+
+	mut mean_x := []f64{len: n}
+	for j in 0 .. n {
+		mean_x[j] = sum_x[j] / total_weight
+		if math.is_nan(mean_x[j]) || math.is_inf(mean_x[j], 0) {
+			return errors.error('weighted feature means overflowed', .einval)
+		}
+	}
+	mean_y := sum_y / total_weight
+	if math.is_nan(mean_y) || math.is_inf(mean_y, 0) {
+		return errors.error('weighted target mean overflowed', .einval)
+	}
+
+	mut rhs := []f64{len: n}
+	mut covariance := la.Matrix.new[f64](n, n)
+	for i in 0 .. m {
+		weight := weights[i]
+		if weight == 0.0 {
+			continue
+		}
+		y_centered := o.data.y[i] - mean_y
+		for j in 0 .. n {
+			x_j_centered := o.data.x.get(i, j) - mean_x[j]
+			rhs[j] += weight * x_j_centered * y_centered
+			for k in 0 .. n {
+				x_k_centered := o.data.x.get(i, k) - mean_x[k]
+				covariance.set(j, k, covariance.get(j, k) + weight * x_j_centered *
+					x_k_centered)
+			}
+		}
+	}
+	for j in 0 .. n {
+		if math.is_nan(rhs[j]) || math.is_inf(rhs[j], 0) {
+			return errors.error('centered weighted target products overflowed', .einval)
+		}
+		for k in 0 .. n {
+			value := covariance.get(j, k)
+			if math.is_nan(value) || math.is_inf(value, 0) {
+				return errors.error('centered weighted feature products overflowed', .einval)
+			}
+		}
+	}
+	if n == 0 {
+		o.params.set_bias(sum_y / total_weight)
+	} else {
+		lambda := o.params.get_lambda()
+		if lambda > 0.0 {
+			for j in 0 .. n {
+				covariance.set(j, j, covariance.get(j, j) + lambda)
+			}
+		}
+		mut theta := o.params.access_thetas()
+		la.den_solve(mut theta, covariance, rhs, false)
+		bias := mean_y - la.vector_dot(mean_x, theta)
+		o.params.set_bias(bias)
+	}
+	o.sample_weights = if sample_weights.len == 0 { []f64{} } else { weights }
+	o.weight_sum = total_weight
+}
+
 // calce calculates e vector (save into o.e)
 //  Output: e = b⋅o + x⋅theta - y
 pub fn (mut o LinReg) calce() {
 	theta := o.params.access_thetas()
 	b := o.params.get_bias()
 	x, y := o.data.x, o.data.y
-	o.e = [b]
-	o.e = la.matrix_vector_mul_add(1, x, theta) // e := b⋅o + x⋅theta
-	o.e = la.vector_add(1.0, o.e, -1, y) // e := b⋅o + x⋅theta - y
+	o.e = la.matrix_vector_mul_add(1.0, x, theta)
+	for i in 0 .. o.data.nb_samples {
+		o.e[i] += b
+	}
+	o.e = la.vector_add(1.0, o.e, -1.0, y)
 }
 
 // str is a custom str function for observers to avoid printing data
