@@ -3,6 +3,9 @@ module preprocessing
 import math
 import vsl.errors
 
+// FeatureScoreFn scores one feature column against the target.
+pub type FeatureScoreFn = fn (feature []f64, target []f64) !f64
+
 // VarianceThreshold removes features whose population variance is not greater
 // than the configured threshold.
 @[heap]
@@ -340,4 +343,124 @@ fn validate_correlation_width(data [][]f64, expected_features int) !int {
 		}
 	}
 	return n_features
+}
+
+// SelectKBest retains the k features with the highest scores from a
+// user-supplied univariate scoring function.
+@[heap]
+pub struct SelectKBest {
+mut:
+	fitted   bool
+	support_ []int
+pub:
+	k        int
+	score_fn FeatureScoreFn @[required]
+pub mut:
+	scores_        []f64
+	n_features_in_ int
+}
+
+// SelectKBest.new creates a deterministic top-k univariate selector.
+pub fn SelectKBest.new(k int, score_fn FeatureScoreFn) &SelectKBest {
+	return &SelectKBest{
+		k:        k
+		score_fn: score_fn
+	}
+}
+
+// fit computes one score per feature using only the supplied training data.
+pub fn (mut selector SelectKBest) fit(data [][]f64, target []f64) ! {
+	n_features := validate_correlation_matrix(data, target)!
+	if selector.k <= 0 || selector.k > n_features {
+		return errors.error('k must be in the range [1, ${n_features}]', .einval)
+	}
+
+	mut scores := []f64{len: n_features}
+	for feature in 0 .. n_features {
+		mut column := []f64{len: data.len}
+		for row_index, row in data {
+			column[row_index] = row[feature]
+		}
+		score := selector.score_fn(column, target) or {
+			return errors.error('feature ${feature} scoring failed: ${err.msg()}', .einval)
+		}
+		if math.is_nan(score) || math.is_inf(score, 0) {
+			return errors.error('feature ${feature} score is not finite', .einval)
+		}
+		scores[feature] = score
+	}
+
+	mut ranked := []int{len: n_features, init: index}
+	ranked.sort_with_compare(fn [scores] (a &int, b &int) int {
+		if scores[*a] > scores[*b] {
+			return -1
+		}
+		if scores[*a] < scores[*b] {
+			return 1
+		}
+		return if *a < *b {
+			-1
+		} else if *a > *b {
+			1
+		} else {
+			0
+		}
+	})
+	mut support := ranked[..selector.k].clone()
+	support.sort()
+	selector.scores_ = scores
+	selector.support_ = support
+	selector.n_features_in_ = n_features
+	selector.fitted = true
+}
+
+// transform selects the fitted columns without changing row order.
+pub fn (selector &SelectKBest) transform(data [][]f64) ![][]f64 {
+	if !selector.fitted {
+		return errors.error('SelectKBest must be fitted before transform', .efailed)
+	}
+	if data.len == 0 {
+		return [][]f64{}
+	}
+	validate_correlation_width(data, selector.n_features_in_)!
+	mut result := [][]f64{cap: data.len}
+	for row in data {
+		mut selected := []f64{cap: selector.support_.len}
+		for feature in selector.support_ {
+			selected << row[feature]
+		}
+		result << selected
+	}
+	return result
+}
+
+// fit_transform fits the selector and returns the selected training columns.
+pub fn (mut selector SelectKBest) fit_transform(data [][]f64, target []f64) ![][]f64 {
+	selector.fit(data, target)!
+	return selector.transform(data)
+}
+
+// get_support returns the original column indices retained by fit.
+pub fn (selector &SelectKBest) get_support() ![]int {
+	if !selector.fitted {
+		return errors.error('SelectKBest must be fitted before requesting support', .efailed)
+	}
+	return selector.support_.clone()
+}
+
+// get_feature_names_out returns the retained names in original column order.
+pub fn (selector &SelectKBest) get_feature_names_out(input_features []string) ![]string {
+	if !selector.fitted {
+		return errors.error('SelectKBest must be fitted before requesting feature names',
+			.efailed)
+	}
+	if input_features.len != selector.n_features_in_ {
+		return errors.error('SelectKBest expected ${selector.n_features_in_} feature names, got ${input_features.len}',
+			.einval)
+	}
+	mut names := []string{cap: selector.support_.len}
+	for feature in selector.support_ {
+		names << input_features[feature]
+	}
+	return names
 }

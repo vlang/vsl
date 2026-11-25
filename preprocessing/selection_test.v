@@ -140,3 +140,38 @@ fn test_correlation_selector_rejects_invalid_inputs_and_preserves_fit() ! {
 		}
 	}
 }
+
+fn select_k_best_score(feature []f64, _target []f64) !f64 {
+	mut score := 0.0
+	for value in feature {
+		score += value
+	}
+	return score
+}
+
+fn test_select_k_best_scores_features_with_stable_ties() ! {
+	training := [[1.0, 5.0, 2.0], [1.0, 4.0, 3.0], [1.0, 3.0, 4.0]]
+	mut selector := SelectKBest.new(2, select_k_best_score)
+	selected := selector.fit_transform(training, [0.0, 0.0, 0.0])!
+	assert selector.get_support()! == [1, 2]
+	assert selector.get_feature_names_out(['constant', 'high', 'rising'])! == ['high', 'rising']
+	assert selected == [[5.0, 2.0], [4.0, 3.0], [3.0, 4.0]]
+}
+
+fn test_select_k_best_rejects_invalid_scores_and_preserves_fit() ! {
+	mut selector := SelectKBest.new(1, select_k_best_score)
+	selector.fit([[1.0, 2.0], [2.0, 3.0]], [0.0, 1.0])!
+	if _ := selector.fit([[1.0]], [0.0, 1.0]) {
+		assert false
+	}
+	assert selector.get_support()! == [1]
+
+	mut invalid := SelectKBest.new(1, fn (_feature []f64, _target []f64) !f64 {
+		return math.nan()
+	})
+	if _ := invalid.fit([[1.0], [2.0]], [0.0, 1.0]) {
+		assert false
+	} else {
+		assert err.msg().contains('score is not finite')
+	}
+}
