@@ -1,5 +1,6 @@
 module ml
 
+import math
 import vsl.float.float64 { l2_distance_unitary }
 import vsl.errors
 import vsl.plot
@@ -71,6 +72,9 @@ pub fn (mut knn KNN) set_weights(weights map[f64]f64) ! {
 			return errors.error('expects weights (map[f64]f64) to not have ' + 'zeroes, as it cannot divide by zero.',
 				.ezerodiv)
 		}
+		if v < 0.0 || math.is_nan(v) || math.is_inf(v, 0) {
+			return errors.error('expects weights (map[f64]f64) to be finite and positive.', .einval)
+		}
 		new_weights[k] = v
 	}
 	for class in knn.data.y {
@@ -133,8 +137,16 @@ pub fn (mut knn KNN) predict(config PredictConfig) !f64 {
 	if k <= 0 {
 		return errors.error('expects k (int) to be >= 1.', .einval)
 	}
+	if k > knn.neighbors.len {
+		return errors.error('expects k (int) to be no greater than the number of training samples.',
+			.einval)
+	}
 	if to_pred.len <= 0 {
 		return errors.error('expects to_pred ([]f64) to have at least 1 element.', .einval)
+	}
+	if to_pred.len != knn.data.nb_features {
+		return errors.error('expects to_pred ([]f64) to have ${knn.data.nb_features} features.',
+			.einval)
 	}
 	mut x := knn.data.x.get_deep2()
 	for i := 0; i < x.len; i++ {

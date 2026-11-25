@@ -72,8 +72,8 @@ data changes, which is beneficial for datasets that are frequently updated.
 `query_neighbors(training, queries, k, metric)` returns each query row's top-k
 training-row indices and distances, ordered by distance and then by original
 training index. Euclidean and Manhattan metrics are supported; identical rows
-remain distinct neighbors. This first slice is exact brute force, not yet a
-classifier, regressor, or indexed backend.
+remain distinct neighbors. `KNNRegressor` uses this exact query primitive for
+fixed-k regression; it is not an indexed backend.
 
 ```v ignore
 result := query_neighbors([[0.0, 0.0], [2.0, 1.0]], [[1.0, 1.0]], 1, .euclidean)!
@@ -82,6 +82,21 @@ println(result.distances)
 ```
 
 See the [exact neighbor query example](../examples/ml_neighbor_query/README.md).
+
+### K-Nearest Neighbors Regression
+
+`KNNRegressor.new(training, targets, k: 5, metric: .euclidean)` constructs a
+fixed-k regressor using `KNNRegressorConfig`; `.euclidean` and `.manhattan`
+metrics are supported. Uniform weighting averages selected targets; distance
+weighting uses inverse distance, averaging only exact-match targets when any
+selected neighbor has zero distance. Use `predict` for one row or
+`predict_batch` to preserve the order of multiple query rows.
+
+The constructor requires nonempty, well-formed training data, one finite target
+per feature row, and `1 <= k <= training row count`. Queries must match the
+training feature width and contain finite values. Because this estimator always
+selects `k` neighbors, there is no empty-neighborhood case; radius APIs are out
+of scope. See the [KNN regression example](../examples/ml_knn_regression/README.md).
 
 ### Logistic Regression
 
@@ -138,6 +153,28 @@ weighted sufficient statistics, not the input batches; use
 `class_weight_sums()` to inspect accumulated weight per class.
 See the [streaming GaussianNB example](../examples/ml_gaussian_nb_streaming/README.md)
 for a complete two-batch program.
+
+## Logistic Regression JSON Persistence
+
+The current persistence slice is limited to the fitted inference state of
+`LogReg[f64]`. Save the schema-versioned JSON artifact with `save_json`, then
+load an independent `LogRegArtifact` for prediction without the original
+training data:
+
+```v ignore
+model.save_json('student_model.json')!
+loaded := ml.load_logreg_artifact('student_model.json')!
+probability := loaded.predict([3.5, 6.0])!
+```
+
+The version-1 artifact contains model/schema identifiers, feature count,
+weights, bias, and a non-negative regularization parameter. Decoding validates
+the exact field set, supported identifiers/version, feature dimensions, and
+finite parameters. It uses JSON data decoding only and does not deserialize
+executable code. This does not persist training data, observer state, optimizer
+configuration, preprocessing pipelines, other estimators, or provide ONNX
+export; it is not a general cross-version persistence contract. Artifacts are
+limited to 64 MiB, and oversized JSON is rejected before decoding.
 
 ## Non-Observer Models
 

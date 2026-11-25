@@ -56,6 +56,18 @@ fn test_one_hot_encoder_basic() {
 	}
 }
 
+fn test_one_hot_encoder_rejects_unknown_categories() {
+	data := [['baseline'], ['known']]
+	mut encoder := OneHotEncoder.new(true)
+	encoder.fit(data)!
+
+	if _ := encoder.transform([['unseen']]) {
+		assert false, 'unknown categories must not be encoded as the dropped baseline'
+	} else {
+		assert err.msg().contains('unknown category')
+	}
+}
+
 fn test_one_hot_encoder_drop_first() {
 	data := [['a'], ['b'], ['c']]
 

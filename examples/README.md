@@ -35,7 +35,8 @@ v -cflags <flags> run vsl/examples/<example>/main.v
 `plot_choropleth_population` → `plot_sankey_energy` → `plot_json_export`
 
 **Machine Learning**: Progress → `ml_kmeans` → `ml_linreg_plot` →
-`ml_complete_pipeline` → `ml_cross_validation` → `ml_sentiment_analysis`
+`ml_complete_pipeline` → `ml_cross_validation` → `ml_variance_threshold` →
+`ml_sentiment_analysis`
 
 **Scientific Computing**: Dive into → `fft_plot_example` → `deriv_example` →
 `ode_rk23` → `integrate_gauss_kronrod` → `mpi_basic_example`
@@ -56,8 +57,11 @@ v -cflags <flags> run vsl/examples/<example>/main.v
 | [ml_decision_tree](./ml_decision_tree)           | Decision tree for classification and regression.                                       |
 | [ml_random_forest](./ml_random_forest)           | Random Forest ensemble learning.                                                       |
 | [ml_gaussian_nb](./ml_gaussian_nb)               | Probabilistic classification with Gaussian Naive Bayes.                                |
+| [ml_knn_regression](./ml_knn_regression)         | Fixed-k regression with uniform and distance weighting.                                |
 | [ml_complete_pipeline](./ml_complete_pipeline)   | End-to-end preprocessing, model selection, and metrics.                                |
 | [ml_cross_validation](./ml_cross_validation)     | Compare logistic regression and Gaussian Naive Bayes with stratified cross-validation. |
+| [ml_variance_threshold](./ml_variance_threshold) | Select non-constant features using training-only variance and a fitted pipeline.       |
+| [ml_logreg_persistence](./ml_logreg_persistence) | Train, save, reload, and predict with a versioned logistic-regression JSON artifact.    |
 
 ## Plotting Examples 📊
 
@@ -172,6 +176,7 @@ v -cflags <flags> run vsl/examples/<example>/main.v
 | [roots_nelder_mead](./roots_nelder_mead)                             | Derivative-free multivariate minimization with simplex convergence diagnostics. |
 | [roots_bfgs](./roots_bfgs)                                           | Analytic-gradient multivariate minimization with BFGS.                          |
 | [la_sparse_cg](./la_sparse_cg)                                       | Sparse conjugate-gradient and nonsymmetric GMRES/BiCGSTAB examples.             |
+| [la_sparse_lu](./la_sparse_lu)                                       | Reusable partial-pivoted LU factorization and solves for f64 CSR.                |
 | [diff_example](./diff_example)                                       | Differentiation example.                                                        |
 | [poly_examples](./poly_examples)                                     | Core polynomial operations and root solvers.                                    |
 | [prime_examples](./prime_examples)                                   | Prime module usage: primality checks and sieve.                                 |

@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import errno
 import os
 import re
 import sys
@@ -32,16 +33,17 @@ MAX_RETRIES = 1
 RETRY_DELAY_SECONDS = 5
 REQUEST_INTERVAL_SECONDS = 3
 REQUEST_TIMEOUT_SECONDS = 10
+CONNECTIVITY_ERRNOS = {errno.ENETUNREACH, errno.ECONNRESET}
 
 
-def check_url(url: str) -> bool | None:
+def check_url(url: str) -> str:
     for attempt in range(MAX_RETRIES + 1):
         try:
             request = Request(url, headers={"User-Agent": "VSL GSL manual link checker"})
             with urlopen(request, timeout=REQUEST_TIMEOUT_SECONDS) as response:
                 response.read(1)
                 print(f"Checked {url}: HTTP {response.status}")
-                return True
+                return "ok"
         except HTTPError as error:
             status = error.code
             error.close()
@@ -54,18 +56,25 @@ def check_url(url: str) -> bool | None:
                     "::warning::GNU GSL manual link not verified after rate limiting: "
                     f"{url}"
                 )
-                return None
+                return "rate_limited"
             print(f"ERROR: {url} returned HTTP {status}", file=sys.stderr)
-            return False
+            return "broken"
         except (TimeoutError, URLError) as error:
             if attempt < MAX_RETRIES:
                 print(f"Transient network error for {url}; retrying once")
                 time.sleep(RETRY_DELAY_SECONDS)
                 continue
+            reason = error.reason if isinstance(error, URLError) else error
+            if getattr(reason, "errno", None) in CONNECTIVITY_ERRNOS:
+                print(
+                    "::warning::GNU GSL manual link not verified because the CI "
+                    f"runner could not reach {url}: {reason}"
+                )
+                return "unverified_connectivity"
             print(f"ERROR: could not check {url}: {error}", file=sys.stderr)
-            return False
+            return "broken"
 
-    return False
+    return "broken"
 
 
 def repository_documents():
@@ -91,19 +100,23 @@ def main() -> int:
         return 1
 
     failures = 0
-    unverified = 0
+    rate_limited = 0
+    unverified_connectivity = 0
     for index, url in enumerate(urls):
         if index:
             time.sleep(REQUEST_INTERVAL_SECONDS)
         result = check_url(url)
-        if result is False:
+        if result == "broken":
             failures += 1
-        elif result is None:
-            unverified += 1
+        elif result == "rate_limited":
+            rate_limited += 1
+        elif result == "unverified_connectivity":
+            unverified_connectivity += 1
 
     print(
-        f"Checked {len(urls)} GSL manual URL(s); {failures} broken/unreachable, "
-        f"{unverified} unverified due to rate limiting."
+        f"Checked {len(urls)} GSL manual URL(s); {failures} broken, "
+        f"{rate_limited} unverified due to rate limiting, "
+        f"{unverified_connectivity} unverified due to runner connectivity."
     )
     return int(failures > 0)
 

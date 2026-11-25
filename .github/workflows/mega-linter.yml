@@ -76,6 +76,9 @@ jobs:
         # All available variables are described in documentation
         # https://megalinter.io/latest/config-file/
         env:
+          # The full main-branch link scan exceeds MegaLinter's 300s default.
+          SPELL_LYCHEE_TIMEOUT_SECONDS: 900
+
           # Validates all source when push on main, else just the git diff with
           # main. Override with true if you always want to lint all sources
           #

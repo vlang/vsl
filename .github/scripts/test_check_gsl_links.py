@@ -3,13 +3,14 @@
 from __future__ import annotations
 
 import contextlib
+import errno
 import importlib.util
 import io
 import sys
 import tempfile
 import unittest
 from pathlib import Path
-from urllib.error import HTTPError
+from urllib.error import HTTPError, URLError
 from unittest.mock import patch
 
 SCRIPT = Path(__file__).with_name("check-gsl-links.py")
@@ -47,7 +48,7 @@ class CheckUrlTests(unittest.TestCase):
             ),
             patch.object(CHECKER.time, "sleep") as sleep,
         ):
-            self.assertIs(CHECKER.check_url(url), True)
+            self.assertEqual(CHECKER.check_url(url), "ok")
         sleep.assert_called_once_with(CHECKER.RETRY_DELAY_SECONDS)
 
     def test_persistent_rate_limit_is_unverified_not_success(self) -> None:
@@ -61,7 +62,7 @@ class CheckUrlTests(unittest.TestCase):
             patch.object(CHECKER.time, "sleep"),
             contextlib.redirect_stdout(io.StringIO()) as output,
         ):
-            self.assertIsNone(CHECKER.check_url(url))
+            self.assertEqual(CHECKER.check_url(url), "rate_limited")
         self.assertIn("not verified after rate limiting", output.getvalue())
 
     def test_not_found_is_a_failure(self) -> None:
@@ -70,10 +71,30 @@ class CheckUrlTests(unittest.TestCase):
         with patch.object(
             CHECKER, "urlopen", side_effect=error
         ), contextlib.redirect_stderr(io.StringIO()):
-            self.assertIs(CHECKER.check_url(url), False)
+            self.assertEqual(CHECKER.check_url(url), "broken")
         self.assertTrue(error.fp.closed)
 
-    def test_main_fails_when_a_link_is_broken_even_if_one_is_rate_limited(self) -> None:
+    def test_runner_connectivity_is_unverified_after_retry(self) -> None:
+        url = "https://www.gnu.org/software/gsl/doc/html/a.html"
+        network_error = URLError(OSError(errno.ENETUNREACH, "Network is unreachable"))
+        with (
+            patch.object(CHECKER, "urlopen", side_effect=[network_error, network_error]),
+            patch.object(CHECKER.time, "sleep"),
+            contextlib.redirect_stdout(io.StringIO()) as output,
+        ):
+            self.assertEqual(CHECKER.check_url(url), "unverified_connectivity")
+        self.assertIn("not verified because the CI runner", output.getvalue())
+
+    def test_timeout_remains_a_failure(self) -> None:
+        url = "https://www.gnu.org/software/gsl/doc/html/a.html"
+        with (
+            patch.object(CHECKER, "urlopen", side_effect=URLError("handshake timed out")),
+            patch.object(CHECKER.time, "sleep"),
+            contextlib.redirect_stderr(io.StringIO()),
+        ):
+            self.assertEqual(CHECKER.check_url(url), "broken")
+
+    def test_main_fails_when_a_link_is_broken_even_if_one_is_unverified(self) -> None:
         first = "https://www.gnu.org/software/gsl/doc/html/a.html"
         second = "https://www.gnu.org/software/gsl/doc/html/b.html"
         with tempfile.TemporaryDirectory() as directory:
@@ -87,8 +108,8 @@ class CheckUrlTests(unittest.TestCase):
                     CHECKER,
                     "urlopen",
                     side_effect=[
-                        http_error(first, 429),
-                        http_error(first, 429),
+                        URLError(OSError(errno.ECONNRESET, "Connection reset by peer")),
+                        URLError(OSError(errno.ECONNRESET, "Connection reset by peer")),
                         http_error(second, 404),
                     ],
                 ),
@@ -97,7 +118,7 @@ class CheckUrlTests(unittest.TestCase):
                 contextlib.redirect_stderr(error),
             ):
                 self.assertEqual(CHECKER.main(), 1)
-            self.assertIn("1 unverified due to rate limiting", output.getvalue())
+            self.assertIn("1 unverified due to runner connectivity", output.getvalue())
             self.assertIn("HTTP 404", error.getvalue())
 
 

@@ -17,6 +17,7 @@ an MPI implementation and exposes `SparseConfig.with_comm`. Without the flag,
   remainder, matrix multiplication, and transposition
 - **Advanced Operations**: Decompositions (LU, QR, SVD), eigenvalue analysis
 - **Sparse Matrices**: Efficient storage and operations for sparse data
+- **Sparse LU**: Reusable partial-pivoted LU factorization for f64 CSR matrices
 - **BLAS Integration**: Optional high-performance BLAS backend
 
 ### Vector Example
@@ -81,6 +82,11 @@ println(a.add_scalar(1.0)) // [[2, 3], [4, 5]]
 ```
 
 ### Vector Operations
+
+Generic arithmetic helpers such as `vector_dot`, `vector_add`, `vector_accum`,
+and matrix-vector multiplication are constrained to `la.Numeric`. Unsupported
+element types are rejected at compile time instead of failing after
+instantiation.
 
 ```v
 import vsl.la
@@ -160,6 +166,8 @@ v -cflags "-lopenblas -llapack" run your_program.v
 - `CCMatrix[T]` - compressed-column (CSC) storage
 - `CSRMatrix[T]` - compressed-row storage with dense conversion and
   matrix-vector multiplication
+- `SparseLU` - reusable pure-V LU factorization produced by
+  `CSRMatrix[f64].factorize_lu()`
 
 ### Key Functions
 

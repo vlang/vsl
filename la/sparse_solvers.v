@@ -156,11 +156,12 @@ fn conjugate_gradient_impl(a &CSRMatrix[f64], b []f64, tolerance f64, max_iterat
 	if !math.is_finite(actual_residual_squared) || actual_residual_squared < 0.0 {
 		return error('conjugate_gradient true residual norm became non-finite')
 	}
+	actual_residual_norm := math.sqrt(actual_residual_squared)
 	return CGResult{
 		x:             x
 		iterations:    max_iterations
-		residual_norm: math.sqrt(actual_residual_squared)
-		converged:     false
+		residual_norm: actual_residual_norm
+		converged:     actual_residual_norm <= target
 	}
 }
 

@@ -10,10 +10,11 @@
 <link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to content</a>
 <header class="top">
   <div class="wrap top-in">
     <a class="brand" href="./">VSL <span class="tag">getting started</span></a>
-    <nav class="main">
+    <nav class="main" aria-label="Primary navigation">
       <a href="./">Home</a>
       <a href="./#modules">Modules</a>
       <a href="api/">API reference</a>
@@ -22,7 +23,7 @@
   </div>
 </header>
 
-<div class="wrap">
+<main id="main-content" class="wrap">
   <section>
     <h2>Install</h2>
     <p class="sub">You need a working <a href="https://vlang.io">V</a> installation. The pure-V path has no native dependencies; OpenBLAS, LAPACKE, CUDA and Vulkan backends are opt-in.</p>
@@ -55,6 +56,7 @@ v -prod -o /tmp/bench ~/.vmodules/vsl/examples/blas_performance_comparison/main.
     <p>Then browse the <a href="api/">API reference</a> and the <a href="https://github.com/vlang/vsl/blob/main/docs/ML_ROADMAP.md">ML roadmap</a>.</p>
   </section>
 
+  </main>
   <footer>
     <div class="cols">
       <div><h4>VSL</h4><ul><li><a href="./">Home</a></li><li><a href="api/">API reference</a></li></ul></div>
@@ -62,6 +64,5 @@ v -prod -o /tmp/bench ~/.vmodules/vsl/examples/blas_performance_comparison/main.
       <div><h4>Family</h4><ul><li><a href="https://vlang.github.io/vtl">VTL — V Tensor Library</a></li><li><a href="https://vlang.io">V language</a></li></ul></div>
     </div>
   </footer>
-</div>
 </body>
 </html>

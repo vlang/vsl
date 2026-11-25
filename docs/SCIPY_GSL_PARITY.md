@@ -24,22 +24,22 @@ API. Recheck upstream documentation when updating this tracker.
 
 ## Capability matrix
 
-| Domain                                           | Status                     | VSL modules                                                                                       | Follow-up                                                                             |
-|--------------------------------------------------|----------------------------|---------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------|
-| Dense linear algebra and BLAS/LAPACK             | Partial                    | [blas][vsl-blas], [la][vsl-la], [lapack][vsl-lapack]                                              | #65, #529                                                                             |
-| Sparse formats and solvers                       | Partial                    | [sparse APIs][vsl-sparse]                                                                         | #524 broader formats/preconditioners; #567 direct solvers and reusable factorizations |
-| Special functions                                | Partial                    | [fun][vsl-fun]                                                                                    | #540–#543, #556–#558                                                                  |
-| Statistics and probability                       | Partial                    | [statistics][vsl-statistics], [dist][vsl-dist]                                                    | #523, #559, #572                                                                      |
-| Interpolation and splines                        | Partial                    | [fun][vsl-fun], [poly][vsl-poly]                                                                  | #522                                                                                  |
-| Root finding and minimization                    | Partial                    | [roots][vsl-roots]                                                                                | #520, #562                                                                            |
-| Quadrature and ODE solvers                       | Partial                    | [integrate][vsl-integrate], [ode][vsl-ode]                                                        | #521 improper integration, stiff solvers, dense output, and events                    |
-| Fourier transforms                               | Partial                    | [fft][vsl-fft]                                                                                    | #527, #528                                                                            |
-| Signal processing and wavelets                   | Missing                    | [fft][vsl-fft] only                                                                               | #560                                                                                  |
-| Multidimensional image processing and morphology | Missing                    | —                                                                                                 | #585                                                                                  |
-| ML                                               | Partial                    | [ml][vsl-ml], [prep][vsl-preprocessing], [selection][vsl-model-selection], [metrics][vsl-metrics] | #514–#519, #529, #530                                                                 |
-| Plotting and visualization                       | Partial                    | [plot][vsl-plot]                                                                                  | #545                                                                                  |
-| Device selection and accelerator backends        | Partial                    | [compute][vsl-compute], [CUDA][vsl-cuda], [VCL][vsl-vcl], [Vulkan][vsl-vulkan]                    | #525–#528                                                                             |
-| Numerical differentiation                        | Implemented, limited scope | [deriv][vsl-deriv]                                                                                | #564                                                                                  |
+| Domain | Status | VSL modules | Follow-up |
+| --- | --- | --- | --- |
+| Dense linear algebra and BLAS/LAPACK | Partial | [blas][vsl-blas], [la][vsl-la], [lapack][vsl-lapack] | #65, #529 |
+| Sparse formats and solvers | Partial | [sparse APIs][vsl-sparse] | #524 more formats/preconditioners; #567 dtypes and backend coverage |
+| Special functions | Partial | [fun][vsl-fun] | #540–#543, #556–#558 |
+| Statistics and probability | Partial | [statistics][vsl-statistics], [dist][vsl-dist] | #523, #559, #572 |
+| Interpolation and splines | Partial | [fun][vsl-fun], [poly][vsl-poly] | #522 |
+| Root finding and minimization | Partial | [roots][vsl-roots] | #520, #562 |
+| Quadrature and ODE solvers | Partial | [integrate][vsl-integrate], [ode][vsl-ode] | #521 improper integration, stiff solvers, and dense output |
+| Fourier transforms | Partial | [fft][vsl-fft] | #527, #528 |
+| Signal processing and wavelets | Missing | [fft][vsl-fft] only | #560 |
+| Multidimensional image processing and morphology | Missing | — | #585 |
+| ML | Partial | [ml][vsl-ml], [prep][vsl-preprocessing], [selection][vsl-model-selection], [metrics][vsl-metrics] | #514–#519, #529, #530 |
+| Plotting and visualization | Partial | [plot][vsl-plot] | #545 |
+| Device selection and accelerator backends | Partial | [compute][vsl-compute], [CUDA][vsl-cuda], [VCL][vsl-vcl], [Vulkan][vsl-vulkan] | #525–#528 |
+| Numerical differentiation | Implemented, limited scope | [deriv][vsl-deriv] | #564 |
 
 The rows are intentionally coarse. Details and authoritative API references
 for each domain follow:
@@ -49,10 +49,14 @@ for each domain follow:
 VSL provides portable BLAS/LAPACK routines and optional C backends, but its
 routine and dtype coverage is narrower. Sparse support includes COO/CSR/CSC
 conversion, CSR matvec, CG with Jacobi-PCG, restarted GMRES with right Jacobi,
-and BiCGSTAB with optional right-Jacobi preconditioning. Sparse arithmetic,
-direct solvers, and broader preconditioner coverage remain limited; current
-performance comparisons use specific generated systems rather than
-representative application matrices.
+BiCGSTAB with optional right-Jacobi preconditioning, and a first pure-V
+partial-pivoted LU factorization for square f64 CSR matrices with reusable
+single-right-hand-side solves. This LU implementation retains sparse row
+storage but may incur dense worst-case fill-in; CSC, other dtypes, ordering
+heuristics, and backend dispatch are not included. Sparse arithmetic and
+broader preconditioner coverage remain limited; current performance
+comparisons use specific generated systems rather than representative
+application matrices.
 See SciPy [`linalg`][scipy-linalg] and [`sparse`][scipy-sparse], and GSL
 [`BLAS`][gsl-blas], [`linear algebra`][gsl-linalg],
 [`sparse matrices`][gsl-spmatrix], and [`sparse solvers`][gsl-splinalg].
@@ -65,7 +69,7 @@ Inverse error functions shipped in [#540](https://github.com/vlang/vsl/issues/54
 Airy functions Ai, Bi and their derivatives, with scaled forms, ship in
 [#556](https://github.com/vlang/vsl/issues/556) (`fun/airy.v`, validated against high-precision
 references and the Wronskian identity; see `examples/airy_turning_point`). Fractional Bessel
-functions, Bessel error estimates, elliptic families, and other special functions remain tracked in
+functions, error-estimating variants beyond `bessel_j0_e` and `bessel_j1_e`, elliptic families, and other special functions remain tracked in
 [#541](https://github.com/vlang/vsl/issues/541), [#543](https://github.com/vlang/vsl/issues/543),
 [#557](https://github.com/vlang/vsl/issues/557), and [#558](https://github.com/vlang/vsl/issues/558).
 Compare SciPy [`special`][scipy-special] and GSL [`special functions`][gsl-special].
@@ -103,9 +107,12 @@ objectives, derivative-free Nelder-Mead for local multivariate minimization,
 and analytic-gradient BFGS with Armijo backtracking for unconstrained local
 minimization. VSL also has adaptive finite-interval 7/15-point Gauss-Kronrod
 quadrature with estimated errors and execution limits, plus an adaptive
-Bogacki-Shampine RK23 method for non-stiff initial-value systems. Broader
+Bogacki-Shampine RK23 method for non-stiff initial-value systems with a
+terminal scalar event callback. Event localization currently detects initial
+and exact accepted-step boundary roots and sign-changing roots; it does not detect
+tangential roots. Broader
 optimization methods, including limited-memory, trust-region, and constrained
-algorithms, stiff ODE methods, dense output, and event handling remain missing.
+algorithms, stiff ODE methods, and general dense output remain missing.
 See SciPy
 [`interpolate`][scipy-interpolate],
 [`optimize`][scipy-optimize], and [`integrate`][scipy-integrate], plus GSL

@@ -147,6 +147,9 @@ pub fn (e &OneHotEncoder) transform(x [][]string) ![][]f64 {
 		mut col_idx := 0
 		for j in 0 .. e.n_features {
 			cats := e.categories_[j]
+			if x[i][j] !in cats {
+				return errors.error('unknown category `${x[i][j]}` for feature ${j}', .einval)
+			}
 			start_idx := if e.drop_first { 1 } else { 0 }
 			for k := start_idx; k < cats.len; k++ {
 				if x[i][j] == cats[k] {

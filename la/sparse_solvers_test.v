@@ -56,6 +56,21 @@ fn test_csr_conjugate_gradient_returns_nonconverged_at_iteration_limit() {
 	assert math.abs(result.residual_norm - vector_norm_diff(dense_result, right_hand_side)) < 1e-14
 }
 
+fn test_csr_conjugate_gradient_converges_on_true_residual_at_iteration_limit() {
+	mut entries := Triplet.new[f64](2, 2, 4)
+	entries.put(0, 0, 2.0)!
+	entries.put(0, 1, 1.0)!
+	entries.put(1, 0, 1.0)!
+	entries.put(1, 1, 2.0)!
+
+	tolerance := 6e-17
+	result := entries.to_csr()!.conjugate_gradient([1.0, 2.0], tolerance, 2)!
+
+	assert result.iterations == 2
+	assert result.converged
+	assert result.residual_norm <= tolerance * math.sqrt(5.0)
+}
+
 fn test_csr_conjugate_gradient_rejects_non_positive_curvature() {
 	mut entries := Triplet.new[f64](2, 2, 2)
 	entries.put(0, 0, -1.0)!

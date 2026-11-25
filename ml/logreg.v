@@ -19,9 +19,10 @@ mut:
 	name string // name of this "observer"
 	data &Data[f64] = unsafe { nil } // x-y data
 	// workspace
-	ybar []f64 // bar{y}: yb[i] = (1 - y[i]) / m
-	l    []f64 // vector l = b⋅o + x⋅θ [nb_samples]
-	hmy  []f64 // vector e = h(l) - y [nb_samples]
+	ybar           []f64 // weighted (1 - y) / sum(sample_weights)
+	l              []f64 // vector l = b⋅o + x⋅θ [nb_samples]
+	hmy            []f64 // vector e = h(l) - y [nb_samples]
+	sample_weights []f64 // empty for unit weights; otherwise one weight per sample
 pub mut:
 	params &ParamsReg[f64] = unsafe { nil } // parameters: θ, b, λ
 	stat   &Stat[f64]      = unsafe { nil } // statistics
@@ -61,10 +62,10 @@ pub fn (o &LogReg) name() string {
 
 // update perform updates after data has been changed (as an Observer)
 pub fn (mut o LogReg) update() {
-	if o.data.nb_samples == 0 {
-		return
+	if o.sample_weights.len > 0 && o.sample_weights.len != o.data.nb_samples {
+		// Data row count changed; positional weights can no longer be applied safely.
+		o.sample_weights = []f64{}
 	}
-	m_1 := 1.0 / f64(o.data.nb_samples)
 	// Resize arrays if needed
 	if o.ybar.len != o.data.nb_samples {
 		o.ybar = []f64{len: o.data.nb_samples}
@@ -76,9 +77,61 @@ pub fn (mut o LogReg) update() {
 		o.hmy = []f64{len: o.data.nb_samples}
 	}
 	// Recompute ybar
-	for i in 0 .. o.data.nb_samples {
-		o.ybar[i] = (1.0 - o.data.y[i]) * m_1
+	if o.data.nb_samples == 0 {
+		return
 	}
+	weight_sum := o.sample_weight_sum()
+	for i in 0 .. o.data.nb_samples {
+		weight_fraction := o.sample_weight(i) / weight_sum
+		o.ybar[i] = weight_fraction * (1.0 - o.data.y[i])
+	}
+}
+
+fn (o &LogReg) sample_weight(i int) f64 {
+	return if o.sample_weights.len == 0 { 1.0 } else { o.sample_weights[i] }
+}
+
+fn (o &LogReg) sample_weight_sum() f64 {
+	if o.sample_weights.len == 0 {
+		return f64(o.data.nb_samples)
+	}
+	mut sum := 0.0
+	for weight in o.sample_weights {
+		sum += weight
+	}
+	return sum
+}
+
+fn logreg_regularization_scales(lambda f64, weight_sum f64) (f64, f64) {
+	gradient_scale := lambda / weight_sum
+	loss_scale := gradient_scale * 0.5
+	if math.is_nan(gradient_scale) || math.is_inf(gradient_scale, 0) || gradient_scale <= 0.0
+		|| math.is_nan(loss_scale) || math.is_inf(loss_scale, 0) || loss_scale <= 0.0 {
+		errors.vsl_panic('LogReg regularization coefficient is not representable for sample_weights',
+			.einval)
+	}
+	return gradient_scale, loss_scale
+}
+
+fn (mut o LogReg) set_sample_weights(weights []f64) {
+	if weights.len > 0 && weights.len != o.data.nb_samples {
+		errors.vsl_panic('LogReg sample_weights must have one value per sample', .einval)
+	}
+	mut weight_sum := 0.0
+	for weight in weights {
+		if math.is_nan(weight) || math.is_inf(weight, 0) || weight < 0.0 {
+			errors.vsl_panic('LogReg sample_weights must be finite and non-negative', .einval)
+		}
+		weight_sum += weight
+		if math.is_inf(weight_sum, 0) {
+			errors.vsl_panic('LogReg sample_weights total must be finite and positive', .einval)
+		}
+	}
+	if weights.len > 0 && weight_sum <= 0.0 {
+		errors.vsl_panic('LogReg sample_weights total must be finite and positive', .einval)
+	}
+	o.sample_weights = weights.clone()
+	o.update()
 }
 
 // predict returns the model evaluation @ {x;θ,b}
@@ -101,16 +154,21 @@ pub fn (o &LogReg) predict(x []f64) f64 {
 //     c -- total cost (model error)
 pub fn (mut o LogReg) cost() f64 {
 	// auxiliary
-	m_1 := 1.0 / f64(o.data.nb_samples)
+	weight_sum := o.sample_weight_sum()
 	lambda := o.params.get_lambda()
 	theta := o.params.access_thetas()
 
 	// cost
 	o.calcl()
-	sq := o.calcsumq()
-	mut c := sq * m_1 + la.vector_dot(o.ybar, o.l)
+	mut weighted_sum_q := 0.0
+	for i in 0 .. o.data.nb_samples {
+		weight_fraction := o.sample_weight(i) / weight_sum
+		weighted_sum_q += weight_fraction * safe_log_1p_exp(o.l[i])
+	}
+	mut c := weighted_sum_q + la.vector_dot(o.ybar, o.l)
 	if lambda > 0 {
-		c += (0.5 * lambda * m_1) * la.vector_dot(theta, theta) // c += (0.5λ/m) θᵀθ
+		_, loss_scale := logreg_regularization_scales(lambda, weight_sum)
+		c += loss_scale * la.vector_dot(theta, theta)
 	}
 	return c
 }
@@ -126,7 +184,7 @@ pub fn (o &LogReg) allocate_gradient() []f64 {
 //     dcdb -- ∂C/∂b
 pub fn (mut o LogReg) gradients() ([]f64, f64) {
 	// auxiliary
-	m_1 := 1.0 / f64(o.data.nb_samples)
+	weight_sum := o.sample_weight_sum()
 	lambda := o.params.get_lambda()
 	theta := o.params.access_thetas()
 	x := o.data.x
@@ -134,13 +192,19 @@ pub fn (mut o LogReg) gradients() ([]f64, f64) {
 	// dcdtheta
 	o.calcl() // l := b + x⋅θ
 	o.calchmy() // hmy := h(l) - y
-	mut dcdtheta := la.matrix_tr_vector_mul(1.0 * m_1, x, o.hmy) // dcdtheta := (1/m) xᵀhmy
+	mut weighted_hmy := []f64{len: o.data.nb_samples}
+	for i in 0 .. o.data.nb_samples {
+		weight_fraction := o.sample_weight(i) / weight_sum
+		weighted_hmy[i] = weight_fraction * o.hmy[i]
+	}
+	mut dcdtheta := la.matrix_tr_vector_mul(1.0, x, weighted_hmy)
 	if lambda > 0 {
-		dcdtheta = la.vector_add(1.0, dcdtheta, lambda * m_1, theta) // dcdtheta += (λ/m) θ
+		gradient_scale, _ := logreg_regularization_scales(lambda, weight_sum)
+		dcdtheta = la.vector_add(1.0, dcdtheta, gradient_scale, theta)
 	}
 
 	// dcdb
-	return dcdtheta, m_1 * la.vector_accum(o.hmy) // dcdb = (1/m) oᵀhmy
+	return dcdtheta, la.vector_accum(weighted_hmy)
 }
 
 // allocate_hessian allocate objects to compute hessian
@@ -159,7 +223,8 @@ pub fn (o &LogReg) allocate_hessian() ([]f64, []f64, &la.Matrix[f64], &la.Matrix
 //   Input:
 //     d -- [nSamples]  d[i] = g(l[i]) * [ 1 - g(l[i]) ]  auxiliary vector
 //     v -- [nFeatures] v = ∂²C/∂θ∂b second order partial derivative
-//     dm -- [nSamples][nFeatures]  dm[i][j] = d[i]*x[i][j]  auxiliary matrix
+//     dm -- [nSamples][nFeatures]  dm[i][j] = weight[i]*d[i]*x[i][j]
+//     (where d[i] = g(l[i]) * [1 - g(l[i])])
 //     hm -- [nFeatures][nFeatures]  hm = ∂²C/∂θ² hessian matrix
 //
 //   Output:
@@ -171,30 +236,34 @@ pub fn (mut o LogReg) hessian(mut d []f64, mut v []f64, mut dm la.Matrix[f64], m
 	n := o.data.nb_features
 	x := o.data.x
 	lambda := o.params.get_lambda()
-	mm_1 := 1.0 / f64(m)
+	weight_sum := o.sample_weight_sum()
 
 	// calc d vector and dm matrix
 	o.calcl()
+	mut weighted_d := []f64{len: m}
 	for i in 0 .. m {
 		d[i] = fun.logistic_d1(o.l[i]) // d vector
+		weight_fraction := o.sample_weight(i) / weight_sum
+		weighted_d[i] = weight_fraction * d[i]
 		for j in 0 .. n {
-			dm.set(i, j, d[i] * x.get(i, j)) // dm matrix
+			dm.set(i, j, weighted_d[i] * x.get(i, j)) // dm matrix
 		}
 	}
 
 	// calc hm matrix
-	la.matrix_tr_matrix_mul(mut hm, 1.0 * mm_1, x, dm)
+	la.matrix_tr_matrix_mul(mut hm, 1.0, x, dm)
 	if lambda > 0 {
+		gradient_scale, _ := logreg_regularization_scales(lambda, weight_sum)
 		for i in 0 .. n {
-			hm.set(i, i, hm.get(i, i) + lambda * mm_1) // hm += (λ/m) I
+			hm.set(i, i, hm.get(i, i) + gradient_scale)
 		}
 	}
 
 	// calc v
-	v = la.matrix_tr_vector_mul(1.0 * mm_1, x, d) // v := (1/m) xᵀd
+	v = la.matrix_tr_vector_mul(1.0, x, weighted_d)
 
 	// calc w
-	w := la.vector_accum(d) * mm_1
+	w := la.vector_accum(weighted_d)
 	return w
 }
 
@@ -205,10 +274,14 @@ pub:
 	learning_rate f64 = 0.01 // learning rate for gradient descent
 	tolerance     f64 = 1e-6 // convergence tolerance
 	use_newton    bool // use Newton's method instead of gradient descent
+	// sample_weights is empty for unit weights or contains one finite,
+	// non-negative value per sample with a positive finite total.
+	sample_weights []f64
 }
 
 // train finds θ and b using gradient descent or Newton's method
 pub fn (mut o LogReg) train(config LogRegTrainConfig) {
+	o.set_sample_weights(config.sample_weights)
 	if config.use_newton {
 		o.train_newton(config)
 	} else {

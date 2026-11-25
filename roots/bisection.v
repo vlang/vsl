@@ -7,7 +7,10 @@ import math
 pub struct Bisection {
 	f func.Fn @[required]
 mut:
-	last_iter ?&BisectionIteration // last iteration
+	last_iter   ?&BisectionIteration // last iteration
+	f_xmin      f64
+	initialized bool
+	finished    bool
 pub mut:
 	xmin      f64 // lower bound
 	xmax      f64 // upper bound
@@ -56,34 +59,92 @@ pub mut:
 
 // next returns the next iteration of the bisection method.
 pub fn (mut solver Bisection) next() ?&BisectionIteration {
-	if solver.n_iter == solver.n_max {
+	if solver.finished || solver.n_iter >= solver.n_max {
 		return none
 	}
-	solver.n_iter += 1
-	xmid := (solver.xmin + solver.xmax) / 2.0
-	fxmid := solver.f.safe_eval(xmid) or { return none }
-	solver.n_f_calls += 1
-	if math.abs(fxmid) < solver.epsabs || math.abs(fxmid) < solver.epsrel * math.abs(fxmid) {
+	if !solver.initialized {
+		if math.is_nan(solver.xmin) || math.is_inf(solver.xmin, 0)
+			|| math.is_nan(solver.xmax) || math.is_inf(solver.xmax, 0)
+			|| solver.xmin >= solver.xmax || math.is_nan(solver.epsabs)
+			|| math.is_inf(solver.epsabs, 0) || solver.epsabs < 0.0
+			|| math.is_nan(solver.epsrel) || math.is_inf(solver.epsrel, 0)
+			|| solver.epsrel < 0.0 || solver.n_max <= 0 {
+			solver.finished = true
+			return none
+		}
+		solver.f_xmin = solver.f.safe_eval(solver.xmin) or {
+			solver.finished = true
+			return none
+		}
+		solver.n_f_calls++
+		if solver.f_xmin == 0.0 {
+			solver.finished = true
+			solver.last_iter = &BisectionIteration{
+				x:         solver.xmin
+				fx:        solver.f_xmin
+				n_f_calls: solver.n_f_calls
+				n_iter:    solver.n_iter
+			}
+			return solver.last_iter?
+		}
+		fxmax := solver.f.safe_eval(solver.xmax) or {
+			solver.finished = true
+			return none
+		}
+		solver.n_f_calls++
+		if fxmax == 0.0 {
+			solver.finished = true
+			solver.last_iter = &BisectionIteration{
+				x:         solver.xmax
+				fx:        fxmax
+				n_f_calls: solver.n_f_calls
+				n_iter:    solver.n_iter
+			}
+			return solver.last_iter?
+		}
+		if (solver.f_xmin < 0.0 && fxmax < 0.0) || (solver.f_xmin > 0.0 && fxmax > 0.0) {
+			solver.finished = true
+			return none
+		}
+		solver.initialized = true
+	}
+
+	xmid := solver.xmin * 0.5 + solver.xmax * 0.5
+	if xmid == solver.xmin || xmid == solver.xmax {
+		solver.finished = true
 		solver.last_iter = &BisectionIteration{
-			x:         xmid
-			fx:        fxmid
+			x:         solver.xmin
+			fx:        solver.f_xmin
 			n_f_calls: solver.n_f_calls
 			n_iter:    solver.n_iter
 		}
 		return solver.last_iter?
 	}
-	fxmin := solver.f.safe_eval(solver.xmin) or { return none }
-	if fxmid * fxmin < 0.0 {
-		solver.xmax = xmid
-	} else {
-		solver.xmin = xmid
-	}
 
+	fxmid := solver.f.safe_eval(xmid) or {
+		solver.finished = true
+		solver.last_iter = none
+		return none
+	}
+	solver.n_f_calls++
+	solver.n_iter++
 	solver.last_iter = &BisectionIteration{
 		x:         xmid
 		fx:        fxmid
 		n_f_calls: solver.n_f_calls
 		n_iter:    solver.n_iter
+	}
+	half_width := math.abs(solver.xmax * 0.5 - solver.xmin * 0.5)
+	x_tolerance := solver.epsabs + solver.epsrel * math.abs(xmid)
+	if fxmid == 0.0 || half_width <= x_tolerance {
+		solver.finished = true
+		return solver.last_iter?
+	}
+	if (solver.f_xmin < 0.0 && fxmid < 0.0) || (solver.f_xmin > 0.0 && fxmid > 0.0) {
+		solver.xmin = xmid
+		solver.f_xmin = fxmid
+	} else {
+		solver.xmax = xmid
 	}
 	return solver.last_iter?
 }

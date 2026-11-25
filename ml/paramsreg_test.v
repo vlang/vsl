@@ -38,4 +38,7 @@ fn test_params_reg() {
 	assert float64.tolerance(params.bkp_bias, 4.0, 1e-15)
 	assert float64.tolerance(params.bkp_lambda, 0.1, 1e-15)
 	assert params.bkp_degree == 3
+
+	params.set_thetas([5.0, 6.0, 7.0])
+	assert params.theta == [5.0, 6, 7]
 }
