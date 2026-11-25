@@ -21,8 +21,8 @@ fn C.fma(a f64, b f64, c f64) f64
  *   scale[i] = a + m*|s[i]|
 */
 // vector_rms_error exposes this operation as part of the public API.
-pub fn vector_rms_error[T](u []T, v []T, a T, m T, s []T) T {
-	mut rms := T{}
+pub fn vector_rms_error[T Numeric](u []T, v []T, a T, m T, s []T) T {
+	mut rms := T(0)
 	for i in 0 .. u.len {
 		scale := a + m * math.abs(s[i])
 		err := math.abs(u[i] - v[i])
@@ -33,9 +33,9 @@ pub fn vector_rms_error[T](u []T, v []T, a T, m T, s []T) T {
 
 // vector_dot returns the dot product between two vectors:
 // s := u・v
-pub fn vector_dot[T](u []T, v []T) T {
+pub fn vector_dot[T Numeric](u []T, v []T) T {
 	$if T is f64 {
-		mut res := T{}
+		mut res := T(0)
 		cutoff := 150
 		if u.len <= cutoff {
 			for i in 0 .. u.len {
@@ -45,7 +45,7 @@ pub fn vector_dot[T](u []T, v []T) T {
 		}
 		return blas.ddot(u.len, u, 1, v, 1)
 	} $else {
-		mut res := T{}
+		mut res := T(0)
 		for i in 0 .. u.len {
 			res += u[i] * v[i]
 		}
@@ -237,7 +237,7 @@ pub fn vector_dot_accurate_f32(u []f32, v []f32) !f32 {
 
 // vector_add adds the scaled components of two vectors
 // res := alpha⋅u + beta⋅v   ⇒   result[i] := alpha⋅u[i] + beta⋅v[i]
-pub fn vector_add[T](alpha T, u []T, beta T, v []T) []T {
+pub fn vector_add[T Numeric](alpha T, u []T, beta T, v []T) []T {
 	$if T is f64 {
 		mut res := []f64{len: v.len}
 		n := u.len
@@ -277,7 +277,7 @@ pub fn vector_add[T](alpha T, u []T, beta T, v []T) []T {
 
 // vector_max_diff returns the maximum absolute difference between two vectors
 // maxdiff = max(|u - v|)
-pub fn vector_max_diff[T](u []T, v []T) T {
+pub fn vector_max_diff[T Numeric](u []T, v []T) T {
 	mut maxdiff := math.abs(u[0] - v[0])
 	for i := 1; i < u.len; i++ {
 		diff := math.abs(u[i] - v[i])
@@ -290,7 +290,7 @@ pub fn vector_max_diff[T](u []T, v []T) T {
 
 // vector_scale_abs creates a "scale" vector using the absolute value of another vector
 // scale := a + m ⋅ |x|     ⇒      scale[i] := a + m ⋅ |x[i]|
-pub fn vector_scale_abs[T](a T, m T, x []T) []T {
+pub fn vector_scale_abs[T Numeric](a T, m T, x []T) []T {
 	mut scale := []T{len: x.len}
 	for i in 0 .. x.len {
 		scale[i] = a + m * math.abs(x[i])
@@ -302,12 +302,12 @@ pub fn vector_scale_abs[T](a T, m T, x []T) []T {
 //
 // v = alpha⋅a⋅u    ⇒    vi = alpha * aij * uj
 //
-pub fn matrix_vector_mul[T](alpha T, a &Matrix[T], u []T) []T {
+pub fn matrix_vector_mul[T Numeric](alpha T, a &Matrix[T], u []T) []T {
 	$if T is f64 {
 		mut v := []f64{len: a.m}
 		if a.m < 9 && a.n < 9 {
 			for i in 0 .. a.m {
-				v[i] = 0.0
+				v[i] = T(0)
 				for j := 0; j < a.n; j++ {
 					v[i] += alpha * a.get(i, j) * u[j]
 				}
@@ -319,7 +319,7 @@ pub fn matrix_vector_mul[T](alpha T, a &Matrix[T], u []T) []T {
 	} $else {
 		mut v := []T{len: a.m}
 		for i in 0 .. a.m {
-			v[i] = 0.0
+			v[i] = T(0)
 			for j := 0; j < a.n; j++ {
 				v[i] += alpha * a.get(i, j) * u[j]
 			}
@@ -332,12 +332,12 @@ pub fn matrix_vector_mul[T](alpha T, a &Matrix[T], u []T) []T {
 //
 // v = alpha⋅aᵀ⋅u    ⇒    vi = alpha * aji * uj = alpha * uj * aji
 //
-pub fn matrix_tr_vector_mul[T](alpha T, a &Matrix[T], u []T) []T {
+pub fn matrix_tr_vector_mul[T Numeric](alpha T, a &Matrix[T], u []T) []T {
 	$if T is f64 {
 		mut v := []f64{len: a.n}
 		if a.m < 9 && a.n < 9 {
 			for i in 0 .. a.n {
-				v[i] = 0.0
+				v[i] = T(0)
 				for j := 0; j < a.m; j++ {
 					v[i] += alpha * a.get(j, i) * u[j]
 				}
@@ -349,7 +349,7 @@ pub fn matrix_tr_vector_mul[T](alpha T, a &Matrix[T], u []T) []T {
 	} $else {
 		mut v := []T{len: a.n}
 		for i in 0 .. a.n {
-			v[i] = 0.0
+			v[i] = T(0)
 			for j := 0; j < a.m; j++ {
 				v[i] += alpha * a.get(j, i) * u[j]
 			}

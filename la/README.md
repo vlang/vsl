@@ -83,6 +83,11 @@ println(a.add_scalar(1.0)) // [[2, 3], [4, 5]]
 
 ### Vector Operations
 
+Generic arithmetic helpers such as `vector_dot`, `vector_add`, `vector_accum`,
+and matrix-vector multiplication are constrained to `la.Numeric`. Unsupported
+element types are rejected at compile time instead of failing after
+instantiation.
+
 ```v
 import vsl.la
 
