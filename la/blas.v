@@ -409,6 +409,10 @@ pub fn matrix_matrix_mul_f32(mut c []f32, m int, n int, k int, alpha f32, a []f3
 }
 
 pub fn matrix_matrix_mul(mut c Matrix[f64], alpha f64, a &Matrix[f64], b &Matrix[f64]) {
+	if alpha == 1.0 && c.m == c.n && a.m == a.n && b.m == b.n && a.m == c.m && a.n == b.m && b.n == c.n && c.m >= 128 {
+		strassen_matrix_mul(mut c, a, b)
+		return
+	}
 	if c.m < 6 && c.n < 6 && a.n < 30 {
 		for i in 0 .. c.m {
 			for j := 0; j < c.n; j++ {
@@ -422,6 +426,97 @@ pub fn matrix_matrix_mul(mut c Matrix[f64], alpha f64, a &Matrix[f64], b &Matrix
 	}
 	blas.dgemm(.no_trans, .no_trans, a.m, b.n, a.n, alpha, a.data, a.n, b.data, b.n, 0.0, mut
 		c.data, c.n)
+}
+
+fn strassen_matrix_mul(mut c Matrix[f64], a &Matrix[f64], b &Matrix[f64]) {
+	n := c.m
+	strassen_flat(mut c.data, a.data, b.data, n)
+}
+
+fn strassen_flat(mut c []f64, a []f64, b []f64, n int) {
+	if n <= 64 {
+		blas.dgemm(.no_trans, .no_trans, n, n, n, 1.0, a, n, b, n, 0.0, mut c, n)
+		return
+	}
+	if n % 2 != 0 {
+		blas.dgemm(.no_trans, .no_trans, n, n, n, 1.0, a, n, b, n, 0.0, mut c, n)
+		return
+	}
+	half := n / 2
+	block := half * half
+	mut a11 := []f64{len: block}
+	mut a12 := []f64{len: block}
+	mut a21 := []f64{len: block}
+	mut a22 := []f64{len: block}
+	mut b11 := []f64{len: block}
+	mut b12 := []f64{len: block}
+	mut b21 := []f64{len: block}
+	mut b22 := []f64{len: block}
+	for i in 0 .. half {
+		for j in 0 .. half {
+			a11[i * half + j] = a[i * n + j]
+			a12[i * half + j] = a[i * n + j + half]
+			a21[i * half + j] = a[(i + half) * n + j]
+			a22[i * half + j] = a[(i + half) * n + j + half]
+			b11[i * half + j] = b[i * n + j]
+			b12[i * half + j] = b[i * n + j + half]
+			b21[i * half + j] = b[(i + half) * n + j]
+			b22[i * half + j] = b[(i + half) * n + j + half]
+		}
+	}
+	mut t1 := []f64{len: block}
+	mut t2 := []f64{len: block}
+	for i in 0 .. block {
+		t1[i] = a11[i] + a22[i]
+		t2[i] = b11[i] + b22[i]
+	}
+	mut m1 := []f64{len: block}
+	strassen_flat(mut m1, t1, t2, half)
+	for i in 0 .. block {
+		t1[i] = a21[i] + a22[i]
+	}
+	strassen_flat(mut t2, t1, b11, half)
+	mut m2 := t2.clone()
+	for i in 0 .. block {
+		t1[i] = b12[i] - b22[i]
+	}
+	strassen_flat(mut t2, a11, t1, half)
+	mut m3 := t2.clone()
+	for i in 0 .. block {
+		t1[i] = b21[i] - b11[i]
+	}
+	strassen_flat(mut t2, a22, t1, half)
+	mut m4 := t2.clone()
+	for i in 0 .. block {
+		t1[i] = a11[i] + a12[i]
+	}
+	strassen_flat(mut t2, t1, b22, half)
+	mut m5 := t2.clone()
+	for i in 0 .. block {
+		t1[i] = a21[i] - a11[i]
+		t2[i] = b11[i] + b12[i]
+	}
+	mut m6 := []f64{len: block}
+	strassen_flat(mut m6, t1, t2, half)
+	for i in 0 .. block {
+		t1[i] = a12[i] - a22[i]
+		t2[i] = b21[i] + b22[i]
+	}
+	mut m7 := []f64{len: block}
+	strassen_flat(mut m7, t1, t2, half)
+	for i in 0 .. half {
+		for j in 0 .. half {
+			idx := i * half + j
+			c11 := m1[idx] + m4[idx] - m5[idx] + m7[idx]
+			c12 := m3[idx] + m5[idx]
+			c21 := m2[idx] + m4[idx]
+			c22 := m1[idx] - m2[idx] + m3[idx] + m6[idx]
+			c[i * n + j] = c11
+			c[i * n + j + half] = c12
+			c[(i + half) * n + j] = c21
+			c[(i + half) * n + j + half] = c22
+		}
+	}
 }
 
 // matrix_tr_matrix_mul returns the matrix multiplication (scaled) with transposed(a)
