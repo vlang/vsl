@@ -409,7 +409,7 @@ pub fn matrix_matrix_mul_f32(mut c []f32, m int, n int, k int, alpha f32, a []f3
 }
 
 pub fn matrix_matrix_mul(mut c Matrix[f64], alpha f64, a &Matrix[f64], b &Matrix[f64]) {
-	if alpha == 1.0 && c.m == c.n && a.m == a.n && b.m == b.n && a.m == c.m && a.n == b.m && b.n == c.n && c.m >= 128 {
+	if alpha == 1.0 && c.m == c.n && a.m == a.n && b.m == b.n && a.m == c.m && a.n == b.m && b.n == c.n && c.m >= 128 && matrix_values_finite(a) && matrix_values_finite(b) {
 		strassen_matrix_mul(mut c, a, b)
 		return
 	}
@@ -431,6 +431,15 @@ pub fn matrix_matrix_mul(mut c Matrix[f64], alpha f64, a &Matrix[f64], b &Matrix
 fn strassen_matrix_mul(mut c Matrix[f64], a &Matrix[f64], b &Matrix[f64]) {
 	n := c.m
 	strassen_flat(mut c.data, a.data, b.data, n)
+}
+
+fn matrix_values_finite(m &Matrix[f64]) bool {
+	for value in m.data {
+		if value != value || value == math.inf(1) || value == math.inf(-1) {
+			return false
+		}
+	}
+	return true
 }
 
 fn strassen_flat(mut c []f64, a []f64, b []f64, n int) {
