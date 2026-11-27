@@ -15,6 +15,7 @@
 | Operation | GPU (CUDA+cuDNN) | Fallback | Tracker |
 |-----------|------------------|----------|---------|
 | `gemm` | ✅ `cublasDgemm` | CPU col-major | — |
+| `gemm_i8_i64_cuda` | ✅ `cublasGemmEx` with INT32 partials and exact INT64 accumulation | — | — |
 | `gemv` | ✅ `cublasDgemv` | CPU | — |
 | `relu` / `sigmoid` / `tanh` | ✅ cuDNN activation | CPU | — |
 | `add_vec` | ✅ `cublasDaxpy` | CPU | — |
@@ -34,6 +35,11 @@ fails, the error is propagated; only an unavailable GPU implementation uses
 the CPU fallback. Strict compute contexts reject that fallback. Numerical
 parity tests: `cuda/compute/numerical_validation_test.v`
 ([#281](https://github.com/vlang/vsl/issues/281)).
+
+`gemm_i8_i64_cuda` accepts row-major signed INT8 matrices and returns exact
+INT64 dot accumulators. It pads dimensions for cuBLAS alignment and splits
+large reductions into INT32-safe chunks before accumulating the partial
+results in INT64 on the host.
 
 ## 📁 Architecture
 

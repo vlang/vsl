@@ -43,6 +43,8 @@ fn (b &GpuBuf) download[T](mut out []T) ! {
 	}
 }
 
+const max_i8_gemm_reduction = 131068
+
 // release frees the GPU buffer.
 fn (b &GpuBuf) release() {
 	if !isnil(b.ptr) {
@@ -77,6 +79,48 @@ pub fn gemm_cuda_impl(dev &cuda.CudaDevice, a_col []f64, b_col []f64, m int, n i
 	mut c_col := []f64{len: m * n}
 	d_c.download[f64](mut c_col)!
 	return c_col
+}
+
+// gemm_i8_i64_cuda_impl computes row-major A[M,K] * B[K,N] with cuBLAS.
+// Each device reduction is bounded so its exact INT32 result cannot overflow.
+fn gemm_i8_i64_cuda_impl(dev &cuda.CudaDevice, a_data []i8, b_data []i8, m int, n int, k int) ![]i64 {
+	mut d_a := gpu_buf_new[i8](a_data.len)!
+	defer { d_a.release() }
+	mut d_b := gpu_buf_new[i8](b_data.len)!
+	defer { d_b.release() }
+	mut d_c := gpu_buf_new[i32](m * n)!
+	defer { d_c.release() }
+	d_a.upload[i8](a_data)!
+	d_b.upload[i8](b_data)!
+
+	alpha := i32(1)
+	beta := i32(0)
+	mut result := []i64{len: m * n}
+	mut partial := []i32{len: m * n}
+	for k_start := 0; k_start < k; k_start += max_i8_gemm_reduction {
+		chunk_k := if k - k_start > max_i8_gemm_reduction {
+			max_i8_gemm_reduction
+		} else {
+			k - k_start
+		}
+		// Row-major buffers are interpreted as their transposed column-major views:
+		// Cᵀ = Bᵀ * Aᵀ.
+		// CUDA is supported only on 64-bit targets; uint may truncate device addresses.
+		b_ptr := unsafe { voidptr(u64(d_b.ptr) + u64(k_start * n)) }
+		a_ptr := unsafe { voidptr(u64(d_a.ptr) + u64(k_start)) }
+		status := C.cublasGemmEx(dev.cublas, cuda.cublas_op_n, cuda.cublas_op_n, n, m,
+			chunk_k, &alpha, b_ptr, cuda.cuda_data_type_i8, n, a_ptr,
+			cuda.cuda_data_type_i8, k, &beta, d_c.ptr, cuda.cuda_data_type_i32, n,
+			cuda.cublas_compute_32i, cuda.cublas_gemm_default)
+		if status != cuda.cublas_status_success {
+			return error('gemm_i8_i64_cuda_impl: cublasGemmEx failed: ${cuda.cublas_error(status)}')
+		}
+		d_c.download[i32](mut partial)!
+		for i, value in partial {
+			result[i] += i64(value)
+		}
+	}
+	return result
 }
 
 // gemv_cuda_impl computes y = A * x using cuBLAS dgemv (column-major, f64).

@@ -17,6 +17,12 @@ type CublasPointerMode = int
 
 pub const cublas_status_success = 0
 
+// cuBLAS integer GEMM types and compute mode.
+pub const cuda_data_type_i8 = 3
+pub const cuda_data_type_i32 = 10
+pub const cublas_compute_32i = 72
+pub const cublas_gemm_default = -1
+
 // CublasOperation values.
 pub const cublas_op_n = 0 // Non-transpose
 pub const cublas_op_t = 1 // Transpose
@@ -114,6 +120,7 @@ pub fn cublas_error(status CublasStatus) string {
 		11 { 'CUBLAS_STATUS_MAPPING_ERROR' }
 		13 { 'CUBLAS_STATUS_EXECUTION_FAILED' }
 		14 { 'CUBLAS_STATUS_INTERNAL_ERROR' }
+		15 { 'CUBLAS_STATUS_NOT_SUPPORTED' }
 		else { 'CUBLAS_STATUS_UNKNOWN(${status})' }
 	}
 }

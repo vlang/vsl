@@ -32,6 +32,9 @@ fn C.cublasGetPointerMode_v2(handle CublasHandle, mode &CublasPointerMode) Cubla
 // C is [m x n]
 fn C.cublasDgemm_v2(handle CublasHandle, transa CublasOperation, transb CublasOperation, m int, n int, k int, alpha &f64, A &f64, lda int, B &f64, ldb int, beta &f64, C &f64, ldc int) CublasStatus
 
+// cublasGemmEx supports signed INT8 inputs with exact INT32 accumulation.
+fn C.cublasGemmEx(handle CublasHandle, transa CublasOperation, transb CublasOperation, m int, n int, k int, alpha &i32, A voidptr, a_type int, lda int, B voidptr, b_type int, ldb int, beta &i32, C voidptr, c_type int, ldc int, compute_type int, algo int) CublasStatus
+
 // cublasDgemv performs double-precision matrix-vector multiply.
 // y = alpha * op(A) * x + beta * y
 fn C.cublasDgemv_v2(handle CublasHandle, trans CublasOperation, m int, n int, alpha &f64, A &f64, lda int, x &f64, incx int, beta &f64, y &f64, incy int) CublasStatus

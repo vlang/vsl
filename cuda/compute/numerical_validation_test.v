@@ -27,6 +27,44 @@ fn test_gemm_cuda_matches_cpu_reference() ! {
 	}
 }
 
+fn test_gemm_i8_i64_cuda_matches_cpu_reference() ! {
+	if os.getenv('VSL_TEST_CUDA') != '1' {
+		return
+	}
+	dev := cuda.get_default_device()!
+	a := [i8(-128), 3, 5, 2, -7, 11]
+	b := [i8(7), -8, -10, 11, 12, 5]
+	cpu := cpu_gemm_i8_i64(a, b, 2, 2, 3)
+	gpu := gemm_i8_i64_cuda(dev, a, b, 2, 2, 3)!
+	assert gpu == cpu, 'INT8 GEMM mismatch: got ${gpu}, want ${cpu}'
+}
+
+fn test_gemm_i8_i64_cuda_splits_reductions_without_overflow() ! {
+	if os.getenv('VSL_TEST_CUDA') != '1' {
+		return
+	}
+	dev := cuda.get_default_device()!
+	k := 131072
+	a := []i8{len: 4 * k, init: -128}
+	b := []i8{len: 4 * k, init: -128}
+	got := gemm_i8_i64_cuda(dev, a, b, 4, 4, k)!
+	for value in got {
+		assert value == i64(k) * 16384
+	}
+}
+
+fn test_gemm_i8_i64_cuda_handles_empty_shapes_without_device_access() ! {
+	dev := &cuda.CudaDevice{}
+	assert gemm_i8_i64_cuda(dev, [], [], 2, 3, 0)! == []i64{len: 6}
+	assert gemm_i8_i64_cuda(dev, [], []i8{len: 12}, 0, 3, 4)! == []i64{}
+	if _ := gemm_i8_i64_cuda(dev, [], [], -1, 1, 1) {
+		assert false, 'expected negative dimensions to fail'
+	}
+	if _ := gemm_i8_i64_cuda(dev, [i8(1)], [], 1, 1, 2) {
+		assert false, 'expected mismatched input length to fail'
+	}
+}
+
 fn test_relu_cuda_matches_cpu_reference() ! {
 	if os.getenv('VSL_TEST_CUDA') != '1' {
 		return
@@ -126,6 +164,20 @@ fn cpu_gemm_row_major(a []f64, b []f64, m int, n int, k int) []f64 {
 				sum += a[i * k + p] * b[p * n + j]
 			}
 			c[i * n + j] = sum
+		}
+	}
+	return c
+}
+
+fn cpu_gemm_i8_i64(a []i8, b []i8, m int, n int, k int) []i64 {
+	mut c := []i64{len: m * n}
+	for row in 0 .. m {
+		for col in 0 .. n {
+			mut sum := i64(0)
+			for inner in 0 .. k {
+				sum += i64(a[row * k + inner]) * i64(b[inner * n + col])
+			}
+			c[row * n + col] = sum
 		}
 	}
 	return c
