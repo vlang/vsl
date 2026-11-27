@@ -12,6 +12,18 @@ mut:
 	size int
 }
 
+// CudaI8Matrix owns an aligned signed-INT8 matrix uploaded to a CUDA device.
+@[heap]
+pub struct CudaI8Matrix {
+mut:
+	rows        int
+	cols        int
+	padded_rows int
+	padded_cols int
+	device_id   int
+	data GpuBuf
+}
+
 // gpu_buf_new allocates count * sizeof(T) bytes on the GPU.
 fn gpu_buf_new[T](count int) !GpuBuf {
 	mut ptr := unsafe { nil }
@@ -84,15 +96,27 @@ pub fn gemm_cuda_impl(dev &cuda.CudaDevice, a_col []f64, b_col []f64, m int, n i
 // gemm_i8_i64_cuda_impl computes row-major A[M,K] * B[K,N] with cuBLAS.
 // Each device reduction is bounded so its exact INT32 result cannot overflow.
 fn gemm_i8_i64_cuda_impl(dev &cuda.CudaDevice, a_data []i8, b_data []i8, m int, n int, k int) ![]i64 {
-	mut d_a := gpu_buf_new[i8](a_data.len)!
-	defer { d_a.release() }
 	mut d_b := gpu_buf_new[i8](b_data.len)!
 	defer { d_b.release() }
+	d_b.upload[i8](b_data)!
+	return gemm_i8_i64_cuda_preuploaded_b_impl(dev, a_data, d_b.ptr, m, n, k)
+}
+
+fn upload_i8_matrix_cuda_impl(data []i8) !GpuBuf {
+	mut device_data := gpu_buf_new[i8](data.len)!
+	device_data.upload[i8](data) or {
+		device_data.release()
+		return err
+	}
+	return device_data
+}
+
+fn gemm_i8_i64_cuda_preuploaded_b_impl(dev &cuda.CudaDevice, a_data []i8, b_ptr voidptr, m int, n int, k int) ![]i64 {
+	mut d_a := gpu_buf_new[i8](a_data.len)!
+	defer { d_a.release() }
 	mut d_c := gpu_buf_new[i32](m * n)!
 	defer { d_c.release() }
 	d_a.upload[i8](a_data)!
-	d_b.upload[i8](b_data)!
-
 	alpha := i32(1)
 	beta := i32(0)
 	mut result := []i64{len: m * n}
@@ -106,10 +130,10 @@ fn gemm_i8_i64_cuda_impl(dev &cuda.CudaDevice, a_data []i8, b_data []i8, m int, 
 		// Row-major buffers are interpreted as their transposed column-major views:
 		// Cᵀ = Bᵀ * Aᵀ.
 		// CUDA is supported only on 64-bit targets; uint may truncate device addresses.
-		b_ptr := unsafe { voidptr(u64(d_b.ptr) + u64(k_start * n)) }
+		chunk_b_ptr := unsafe { voidptr(u64(b_ptr) + u64(k_start * n)) }
 		a_ptr := unsafe { voidptr(u64(d_a.ptr) + u64(k_start)) }
 		status := C.cublasGemmEx(dev.cublas, cuda.cublas_op_n, cuda.cublas_op_n, n, m,
-			chunk_k, &alpha, b_ptr, cuda.cuda_data_type_i8, n, a_ptr,
+			chunk_k, &alpha, chunk_b_ptr, cuda.cuda_data_type_i8, n, a_ptr,
 			cuda.cuda_data_type_i8, k, &beta, d_c.ptr, cuda.cuda_data_type_i32, n,
 			cuda.cublas_compute_32i, cuda.cublas_gemm_default)
 		if status != cuda.cublas_status_success {

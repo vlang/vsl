@@ -39,6 +39,38 @@ fn test_gemm_i8_i64_cuda_matches_cpu_reference() ! {
 	assert gpu == cpu, 'INT8 GEMM mismatch: got ${gpu}, want ${cpu}'
 }
 
+fn test_gemm_i8_i64_cuda_reuses_preuploaded_b() ! {
+	if os.getenv('VSL_TEST_CUDA') != '1' {
+		return
+	}
+	dev := cuda.get_default_device()!
+	a := [i8(-128), 3, 5, 2, -7, 11]
+	b := [i8(7), -8, -10, 11, 12, 5]
+	mut device_b := upload_i8_matrix_cuda(dev, b, 3, 2)!
+	defer {
+		device_b.release() or { panic(err) }
+	}
+	expected := cpu_gemm_i8_i64(a, b, 2, 2, 3)
+	for _ in 0 .. 2 {
+		got := gemm_i8_i64_cuda_with_b(dev, a, 2, 2, 3, device_b)!
+		assert got == expected, 'preuploaded INT8 GEMM mismatch: got ${got}, want ${expected}'
+	}
+	if _ := gemm_i8_i64_cuda_with_b(dev, a, 2, 3, 3, device_b) {
+		assert false, 'expected mismatched device matrix shape to fail'
+	}
+	other_device := &cuda.CudaDevice{
+		device_id: dev.device_id + 1
+	}
+	if _ := gemm_i8_i64_cuda_with_b(other_device, a, 2, 2, 3, device_b) {
+		assert false, 'expected mismatched CUDA device to fail'
+	}
+	device_b.release()!
+	device_b.release()!
+	if _ := gemm_i8_i64_cuda_with_b(dev, a, 2, 2, 3, device_b) {
+		assert false, 'expected use after release to fail'
+	}
+}
+
 fn test_gemm_i8_i64_cuda_splits_reductions_without_overflow() ! {
 	if os.getenv('VSL_TEST_CUDA') != '1' {
 		return
@@ -57,6 +89,9 @@ fn test_gemm_i8_i64_cuda_handles_empty_shapes_without_device_access() ! {
 	dev := &cuda.CudaDevice{}
 	assert gemm_i8_i64_cuda(dev, [], [], 2, 3, 0)! == []i64{len: 6}
 	assert gemm_i8_i64_cuda(dev, [], []i8{len: 12}, 0, 3, 4)! == []i64{}
+	if _ := upload_i8_matrix_cuda(dev, [], 2, 2) {
+		assert false, 'expected mismatched uploaded matrix length to fail before device access'
+	}
 	if _ := gemm_i8_i64_cuda(dev, [], [], -1, 1, 1) {
 		assert false, 'expected negative dimensions to fail'
 	}

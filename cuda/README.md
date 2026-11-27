@@ -15,7 +15,7 @@
 | Operation | GPU (CUDA+cuDNN) | Fallback | Tracker |
 |-----------|------------------|----------|---------|
 | `gemm` | ✅ `cublasDgemm` | CPU col-major | — |
-| `gemm_i8_i64_cuda` | ✅ `cublasGemmEx` with INT32 partials and exact INT64 accumulation | — | — |
+| `gemm_i8_i64_cuda` | ✅ `cublasGemmEx` with INT32 partials and exact INT64 accumulation; reusable device-side B matrix | — | — |
 | `gemv` | ✅ `cublasDgemv` | CPU | — |
 | `relu` / `sigmoid` / `tanh` | ✅ cuDNN activation | CPU | — |
 | `add_vec` | ✅ `cublasDaxpy` | CPU | — |
@@ -39,7 +39,10 @@ parity tests: `cuda/compute/numerical_validation_test.v`
 `gemm_i8_i64_cuda` accepts row-major signed INT8 matrices and returns exact
 INT64 dot accumulators. It pads dimensions for cuBLAS alignment and splits
 large reductions into INT32-safe chunks before accumulating the partial
-results in INT64 on the host.
+results in INT64 on the host. For repeated inference, `upload_i8_matrix_cuda`
+creates an owned, padded device matrix and `gemm_i8_i64_cuda_with_b` reuses it
+without re-uploading B. Call `release()` when the matrix is no longer needed;
+the operation rejects released matrices and device mismatches.
 
 ## 📁 Architecture
 
