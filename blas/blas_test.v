@@ -371,6 +371,40 @@ fn test_ddot() {
 	assert float64.tolerance(result, expected, test_tol), 'DDOT failed: expected ${expected}, got ${result}'
 }
 
+fn test_sdot_unitary_and_strided() {
+	assert sdot(3, [f32(1), 2, 3], 1, [f32(4), 5, 6], 1) == 32
+	assert sdot(3, [f32(1), 99, 2, 99, 3], 2, [f32(4), 99, 5, 99, 6], 2) == 32
+	assert sdot(3, [f32(1), 2, 3], -1, [f32(4), 5, 6], 1) == 28
+	assert sdot(0, []f32{}, 1, []f32{}, 1) == 0
+}
+
+fn test_sdot_large_unitary_dispatch_matches_f32_product_reference() {
+	n := 1024
+	mut x := []f32{len: n}
+	mut y := []f32{len: n}
+	mut reference := f64(0)
+	for i in 0 .. n {
+		x[i] = f32((i % 17) - 8) * 0.125
+		y[i] = f32((i % 13) - 6) * 0.25
+		reference += f64(x[i] * y[i])
+	}
+	result := sdot(n, x, 1, y, 1)
+	assert math.abs(f64(result) - f64(f32(reference))) < 1e-3
+}
+
+fn test_ddot_large_unitary_dispatch_matches_reference() {
+	n := 1024
+	mut x := []f64{len: n}
+	mut y := []f64{len: n}
+	mut expected := 0.0
+	for i in 0 .. n {
+		x[i] = f64((i % 17) - 8) * 0.125
+		y[i] = f64((i % 13) - 6) * 0.25
+		expected += x[i] * y[i]
+	}
+	assert ddot(n, x, 1, y, 1) == expected
+}
+
 fn test_dswap() {
 	mut x := [1.0, 2.0, 3.0]
 	mut y := [4.0, 5.0, 6.0]

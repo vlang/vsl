@@ -37,6 +37,7 @@ systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 \
 ### Available Functions
 
 **Level 1 BLAS**:
+- `sdot` - Single-precision dot product
 - `ddot` - Dot product
 - `snrm2` - Single-precision Euclidean norm
 - `dnrm2` - Euclidean norm
@@ -69,6 +70,12 @@ The `sgemv` and `dgemv` routines accept row-major matrices and support
 `.no_trans`, `.trans`, `.conj_trans`, and `.conj_no_trans`. The generic system
 CBLAS build uses CBLAS GEMM and GEMV for positive vector increments; unsupported
 cases use the pure V implementation.
+
+On GCC/Clang x86 builds, contiguous `sdot` and `ddot` calls of at least 128
+elements runtime-dispatch to AVX2 and AVX2/FMA kernels, respectively, when the
+CPU supports them. `sdot` keeps f32 product rounding; other compilers and CPUs
+use portable V/scalar paths. No consumer CPU flags or optional BLAS dependency
+are required.
 
 Therefore, its routines are a little more _lower level_ than the ones in the package `vsl.la`.
 

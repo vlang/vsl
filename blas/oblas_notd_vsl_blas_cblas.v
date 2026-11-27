@@ -27,7 +27,64 @@ pub fn set_num_threads(n int) {}
 // ddot exposes this operation as part of the public API.
 @[inline]
 pub fn ddot(n int, x []f64, incx int, y []f64, incy int) f64 {
+	if n >= 128 && incx == 1 && incy == 1 {
+		if x.len < n {
+			panic(blas64.short_x)
+		}
+		if y.len < n {
+			panic(blas64.short_y)
+		}
+		if C.vsl_blas_ddot_avx2_fma_supported() != 0 {
+			return C.vsl_blas_ddot_dispatch(n, unsafe { &x[0] }, unsafe { &y[0] })
+		}
+	}
 	return blas64.ddot(n, x, incx, y, incy)
+}
+
+// sdot computes the dot product of two single-precision vectors.
+@[inline]
+pub fn sdot(n int, x []f32, incx int, y []f32, incy int) f32 {
+	if incx == 0 {
+		panic(blas64.zero_incx)
+	}
+	if incy == 0 {
+		panic(blas64.zero_incy)
+	}
+	if n <= 0 {
+		if n == 0 {
+			return 0
+		}
+		panic(blas64.nlt0)
+	}
+	mut ix := 0
+	mut iy := 0
+	if incx < 0 {
+		ix = (-n + 1) * incx
+	}
+	if incy < 0 {
+		iy = (-n + 1) * incy
+	}
+	if ix >= x.len || ix + (n - 1) * incx >= x.len {
+		panic(blas64.short_x)
+	}
+	if iy >= y.len || iy + (n - 1) * incy >= y.len {
+		panic(blas64.short_y)
+	}
+	if incx == 1 && incy == 1 {
+		if n >= 128 {
+			if C.vsl_blas_sdot_avx2_supported() != 0 {
+				return C.vsl_blas_sdot_dispatch(n, unsafe { &x[0] }, unsafe { &y[0] })
+			}
+		}
+		return float32.dot_unitary(x[..n], y[..n])
+	}
+	mut sum := f32(0)
+	for _ in 0 .. n {
+		sum += x[ix] * y[iy]
+		ix += incx
+		iy += incy
+	}
+	return sum
 }
 
 // dasum computes the sum of the absolute values of elements in a vector.
