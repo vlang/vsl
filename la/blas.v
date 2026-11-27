@@ -491,16 +491,16 @@ fn strassen_flat(mut c []f64, a []f64, b []f64, n int) {
 	half := n / 2
 	block := half * half
 	mut ws := []f64{len: block * 10}
-	mut a11 := ws[0..block]
-	mut a12 := ws[block..2 * block]
-	mut a21 := ws[2 * block..3 * block]
-	mut a22 := ws[3 * block..4 * block]
-	mut b11 := ws[4 * block..5 * block]
-	mut b12 := ws[5 * block..6 * block]
-	mut b21 := ws[6 * block..7 * block]
-	mut b22 := ws[7 * block..8 * block]
-	mut t1 := ws[8 * block..9 * block]
-	mut t2 := ws[9 * block..10 * block]
+	mut a11 := unsafe { ws[0..block] }
+	mut a12 := unsafe { ws[block..2 * block] }
+	mut a21 := unsafe { ws[2 * block..3 * block] }
+	mut a22 := unsafe { ws[3 * block..4 * block] }
+	mut b11 := unsafe { ws[4 * block..5 * block] }
+	mut b12 := unsafe { ws[5 * block..6 * block] }
+	mut b21 := unsafe { ws[6 * block..7 * block] }
+	mut b22 := unsafe { ws[7 * block..8 * block] }
+	mut t1 := unsafe { ws[8 * block..9 * block] }
+	mut t2 := unsafe { ws[9 * block..10 * block] }
 	for i in 0 .. half {
 		for j in 0 .. half {
 			a11[i * half + j] = a[i * n + j]
@@ -514,13 +514,13 @@ fn strassen_flat(mut c []f64, a []f64, b []f64, n int) {
 		}
 	}
 	mut out := []f64{len: block * 7}
-	mut m1 := out[0..block]
-	mut m2 := out[block..2 * block]
-	mut m3 := out[2 * block..3 * block]
-	mut m4 := out[3 * block..4 * block]
-	mut m5 := out[4 * block..5 * block]
-	mut m6 := out[5 * block..6 * block]
-	mut m7 := out[6 * block..7 * block]
+	mut m1 := unsafe { out[0..block] }
+	mut m2 := unsafe { out[block..2 * block] }
+	mut m3 := unsafe { out[2 * block..3 * block] }
+	mut m4 := unsafe { out[3 * block..4 * block] }
+	mut m5 := unsafe { out[4 * block..5 * block] }
+	mut m6 := unsafe { out[5 * block..6 * block] }
+	mut m7 := unsafe { out[6 * block..7 * block] }
 	for i in 0 .. block {
 		t1[i] = a11[i] + a22[i]
 		t2[i] = b11[i] + b22[i]
