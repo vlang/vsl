@@ -225,16 +225,27 @@
 <li><strong>ShuffleSplit</strong>: Random permutation cross-validator</li></ul>
 <h3 id="permutation-importance">Permutation Importance</h3>
 <p><code>permutation_importance</code> evaluates an already-fitted predictor on held-out data, then repeatedly shuffles each feature (or configured feature group) and reports the resulting score decrease:</p>
-<pre><code class="language-v">result <span class="token operator">:=</span> <span class="token module_">model_selection</span><span class="token punctuation">.</span><span class="token function">permutation_importance</span><span class="token punctuation">(</span>
-    x_test<span class="token punctuation">,</span>
+<pre><code class="language-v"><span class="token keyword">import</span> <span class="token module_">vsl</span><span class="token punctuation">.</span><span class="token module_">metrics</span>
+<span class="token keyword">import</span> <span class="token module_">vsl</span><span class="token punctuation">.</span><span class="token module_">model_selection</span>
+
+x_test <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">10.0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">20.0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">30.0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">40.0</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
+y_test <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">]</span>
+predictor <span class="token operator">:=</span> <span class="token keyword">fn</span> <span class="token punctuation">(</span>rows <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span> <span class="token punctuation">{</span>
+    <span class="token keyword">mut</span> predictions <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">{</span>cap<span class="token punctuation">:</span> rows<span class="token punctuation">.</span>len<span class="token punctuation">}</span>
+    <span class="token keyword">for</span> row <span class="token keyword">in</span> rows <span class="token punctuation">{</span>
+        predictions <span class="token operator">&lt;&lt;</span> row<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> predictions
+<span class="token punctuation">}</span>
+
+result <span class="token operator">:=</span> <span class="token module_">model_selection</span><span class="token punctuation">.</span><span class="token function">permutation_importance</span><span class="token punctuation">(</span>x_test<span class="token punctuation">,</span>
     y_test<span class="token punctuation">,</span>
     predictor<span class="token punctuation">,</span>
     <span class="token module_">metrics</span><span class="token punctuation">.</span>accuracy_score<span class="token punctuation">,</span>
     <span class="token module_">model_selection</span><span class="token punctuation">.</span><span class="token type_name">PermutationImportanceConfig</span><span class="token punctuation">{</span>
-        n_repeats<span class="token punctuation">:</span> <span class="token number">10</span>
+        n_repeats<span class="token punctuation">:</span>   <span class="token number">10</span>
         random_seed<span class="token punctuation">:</span> <span class="token number">42</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">)</span><span class="token operator">!</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token operator">!</span>
 <span class="token function">println</span><span class="token punctuation">(</span>result<span class="token punctuation">.</span>importances_mean<span class="token punctuation">)</span></code></pre>
 <p>The predictor and scorer are caller-supplied, so classification and regression use the same API. A fixed seed makes the permutations deterministic and input rows are not mutated. Importance measures predictive reliance on this dataset; correlated features can mask one another, so interpret scores together with domain knowledge. When <code>feature_groups</code> is supplied, each group is shuffled together and result entries follow group order.</p>
 <h2 id="quick-start">Quick Start</h2>
@@ -956,7 +967,7 @@ avg <span class="token operator">/=</span> <span class="token builtin">f64</span
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 25 Nov 2026 06:50:48</div>
+						<div class="footer">Powered by vdoc. Generated on: 27 Nov 2026 04:36:49</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_model_selection">README</a></li>
 <li class="open"><a href="#cross_val_compare">fn cross_val_compare</a>        <ul>
