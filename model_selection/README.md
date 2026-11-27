@@ -25,16 +25,27 @@ data, then repeatedly shuffles each feature (or configured feature group) and
 reports the resulting score decrease:
 
 ```v
-result := model_selection.permutation_importance(
-	x_test,
+import vsl.metrics
+import vsl.model_selection
+
+x_test := [[0.0, 10.0], [0.0, 20.0], [1.0, 30.0], [1.0, 40.0]]
+y_test := [0.0, 0.0, 1.0, 1.0]
+predictor := fn (rows [][]f64) ![]f64 {
+	mut predictions := []f64{cap: rows.len}
+	for row in rows {
+		predictions << row[0]
+	}
+	return predictions
+}
+
+result := model_selection.permutation_importance(x_test,
 	y_test,
 	predictor,
 	metrics.accuracy_score,
 	model_selection.PermutationImportanceConfig{
-		n_repeats: 10
+		n_repeats:   10
 		random_seed: 42
-	}
-)!
+	})!
 println(result.importances_mean)
 ```
 
