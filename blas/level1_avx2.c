@@ -1,4 +1,5 @@
 #include <stddef.h>
+#include <stdint.h>
 
 #if (defined(__GNUC__) || defined(__clang__)) && !defined(__TINYC__) \
 	&& (defined(__x86_64__) || defined(__i386__))
@@ -65,6 +66,42 @@ static double vsl_blas_ddot_avx2(int n, const double *x, const double *y) {
 		sum += x[i] * y[i];
 	}
 	return sum;
+}
+
+__attribute__((target("avx2")))
+static int64_t vsl_blas_i16_dot_avx2(int n, const int16_t *x, const int16_t *y) {
+	__m256i sums0 = _mm256_setzero_si256();
+	__m256i sums1 = _mm256_setzero_si256();
+	int64_t overflow_pairs = 0;
+	int i = 0;
+	for (; i + 16 <= n; i += 16) {
+		__m256i xv = _mm256_loadu_si256((const __m256i *)(const void *)(x + i));
+		__m256i yv = _mm256_loadu_si256((const __m256i *)(const void *)(y + i));
+		__m256i products = _mm256_madd_epi16(xv, yv);
+		sums0 = _mm256_add_epi64(sums0,
+			_mm256_cvtepi32_epi64(_mm256_castsi256_si128(products)));
+		sums1 = _mm256_add_epi64(sums1,
+			_mm256_cvtepi32_epi64(_mm256_extracti128_si256(products, 1)));
+		// madd wraps only when both products in a pair equal INT16_MIN squared.
+		__m256i min_value = _mm256_set1_epi16(INT16_MIN);
+		__m256i min_pairs = _mm256_and_si256(_mm256_cmpeq_epi16(xv, min_value),
+			_mm256_cmpeq_epi16(yv, min_value));
+		uint32_t match_bits = (uint32_t)_mm256_movemask_epi8(min_pairs);
+		overflow_pairs += (int64_t)__builtin_popcount(match_bits & (match_bits >> 2) &
+			0x11111111u);
+	}
+	int64_t lanes[8];
+	_mm256_storeu_si256((__m256i *)(void *)(lanes), sums0);
+	_mm256_storeu_si256((__m256i *)(void *)(lanes + 4), sums1);
+	int64_t total = 0;
+	for (int lane = 0; lane < 8; ++lane) {
+		total += lanes[lane];
+	}
+	total += overflow_pairs * (INT64_C(1) << 32);
+	for (; i < n; ++i) {
+		total += (int64_t)x[i] * (int64_t)y[i];
+	}
+	return total;
 }
 
 __attribute__((target("avx2,fma")))
@@ -222,6 +259,23 @@ void vsl_blas_dscal_dispatch(int n, double alpha, double *x) {
 	for (int i = 0; i < n; ++i) {
 		x[i] *= alpha;
 	}
+}
+
+static int64_t vsl_blas_i16_dot_scalar(int n, const int16_t *x, const int16_t *y) {
+	int64_t sum = 0;
+	for (int i = 0; i < n; ++i) {
+		sum += (int64_t)x[i] * (int64_t)y[i];
+	}
+	return sum;
+}
+
+int64_t vsl_blas_i16_dot_dispatch(int n, const int16_t *x, const int16_t *y) {
+#if defined(VSL_HAS_AVX2_DISPATCH)
+	if (n >= 128 && vsl_blas_cpu_has_avx2()) {
+		return vsl_blas_i16_dot_avx2(n, x, y);
+	}
+#endif
+	return vsl_blas_i16_dot_scalar(n, x, y);
 }
 
 void vsl_blas_sgemv_n_dispatch(int m, int n, int lda, float alpha, const float *a,

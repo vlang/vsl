@@ -113,6 +113,19 @@ systemd-run --user --scope -p MemoryMax=2G -p MemorySwapMax=0 -- env VJOBS=1 \
 	/tmp/vsl-level1-dispatch
 ```
 
+The signed INT16 dot benchmark checks exact i64 checksums before timing the
+scalar V reference and the runtime-dispatched BLAS implementation across small
+quantized reductions and larger vectors:
+
+```sh
+cd ~/.vmodules
+systemd-run --user --scope -p MemoryMax=2G -p MemorySwapMax=0 -p CPUQuota=200% -- env VJOBS=1 \
+	v -no-parallel -cc gcc -prod -o /tmp/vsl-int16-dot \
+	./vsl/benchmarks/int16_dot_bench.v
+systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -p CPUQuota=200% -- env VJOBS=1 \
+	/tmp/vsl-int16-dot
+```
+
 The GEMV benchmark similarly compares pure-V and dispatched row-major
 `sgemv`/`dgemv` paths with padded leading dimensions in both transposed and
 non-transposed layouts:

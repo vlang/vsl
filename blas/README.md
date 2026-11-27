@@ -39,6 +39,7 @@ systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 \
 **Level 1 BLAS**:
 - `sdot` - Single-precision dot product
 - `ddot` - Dot product
+- `dot_i16_i64` - Exact signed INT16 dot product with an i64 accumulator
 - `snrm2` - Single-precision Euclidean norm
 - `dnrm2` - Euclidean norm
 - `dasum` - Sum of absolute values
@@ -76,6 +77,10 @@ calls of at least 128 elements runtime-dispatch to AVX2 or AVX2/FMA kernels
 when the CPU supports them. `sdot` keeps f32 product rounding; `ddot` and
 `daxpy` use FMA. Other compilers and CPUs retain the portable V/scalar paths,
 and no consumer CPU flags or optional BLAS dependency are required.
+
+`dot_i16_i64` also uses an exact AVX2 kernel for reductions of at least 128
+elements on supported GCC/Clang x86 builds. Smaller reductions and unsupported
+targets use the scalar implementation.
 
 Unit-stride row-major `sgemv` and `dgemv` also dispatch for reduction
 dimensions of at least 128, in both transposed and non-transposed layouts.
