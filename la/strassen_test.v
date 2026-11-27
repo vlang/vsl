@@ -79,6 +79,75 @@ fn test_strassen_alpha_one_required() {
 	assert c.get(1, 1) == 100.0
 }
 
+fn test_strassen_direct_128_matches_reference() {
+	n := 128
+	a := strassen_test_matrix(n, 7)
+	b := strassen_test_matrix(n, 8)
+	mut c := Matrix.new[f64](n, n)
+	strassen_matrix_mul(mut c, a, b)
+
+	mut expected := Matrix.new[f64](n, n)
+	for i in 0 .. n {
+		for j in 0 .. n {
+			mut sum := 0.0
+			for k in 0 .. n {
+				sum += a.get(i, k) * b.get(k, j)
+			}
+			expected.set(i, j, sum)
+		}
+	}
+	for i in 0 .. n * n {
+		scale := math.max(1.0, math.abs(expected.data[i]))
+		assert math.abs(c.data[i] - expected.data[i]) <= strassen_test_tol * scale
+	}
+}
+
+fn test_strassen_direct_256_matches_reference() {
+	n := 256
+	a := strassen_test_matrix(n, 9)
+	b := strassen_test_matrix(n, 10)
+	mut c := Matrix.new[f64](n, n)
+	strassen_matrix_mul(mut c, a, b)
+
+	mut expected := Matrix.new[f64](n, n)
+	for i in 0 .. n {
+		for j in 0 .. n {
+			mut sum := 0.0
+			for k in 0 .. n {
+				sum += a.get(i, k) * b.get(k, j)
+			}
+			expected.set(i, j, sum)
+		}
+	}
+	for i in 0 .. n * n {
+		scale := math.max(1.0, math.abs(expected.data[i]))
+		assert math.abs(c.data[i] - expected.data[i]) <= strassen_test_tol * scale
+	}
+}
+
+fn test_strassen_direct_130_matches_reference() {
+	n := 130
+	a := strassen_test_matrix(n, 11)
+	b := strassen_test_matrix(n, 12)
+	mut c := Matrix.new[f64](n, n)
+	strassen_matrix_mul(mut c, a, b)
+
+	mut expected := Matrix.new[f64](n, n)
+	for i in 0 .. n {
+		for j in 0 .. n {
+			mut sum := 0.0
+			for k in 0 .. n {
+				sum += a.get(i, k) * b.get(k, j)
+			}
+			expected.set(i, j, sum)
+		}
+	}
+	for i in 0 .. n * n {
+		scale := math.max(1.0, math.abs(expected.data[i]))
+		assert math.abs(c.data[i] - expected.data[i]) <= strassen_test_tol * scale
+	}
+}
+
 fn test_strassen_odd_dimension_uses_blas() {
 	n := 129
 	a := strassen_test_matrix(n, 5)
