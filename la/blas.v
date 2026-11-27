@@ -409,7 +409,10 @@ pub fn matrix_matrix_mul_f32(mut c []f32, m int, n int, k int, alpha f32, a []f3
 }
 
 pub fn matrix_matrix_mul(mut c Matrix[f64], alpha f64, a &Matrix[f64], b &Matrix[f64]) {
-	if alpha == 1.0 && c.m == c.n && a.m == a.n && b.m == b.n && a.m == c.m && a.n == b.m && b.n == c.n && c.m >= 128 && matrix_values_finite(a) && matrix_values_finite(b) && matrix_values_in_safe_range(a) && matrix_values_in_safe_range(b) {
+	// The Strassen path is deferred for now: on the default pure-V BLAS backend
+	// it did not show a stable end-to-end win across the tested size range.
+	// Keep the implementation and guards below for future tuning.
+	if false && alpha == 1.0 && c.m == c.n && a.m == a.n && b.m == b.n && a.m == c.m && a.n == b.m && b.n == c.n && c.m >= 128 && matrix_values_finite(a) && matrix_values_finite(b) && matrix_values_in_safe_range(a) && matrix_values_in_safe_range(b) && matrix_dynamic_range_safe(a) && matrix_dynamic_range_safe(b) {
 		strassen_matrix_mul(mut c, a, b)
 		if matrix_values_finite(c) {
 			return
@@ -452,6 +455,31 @@ fn matrix_values_in_safe_range(m &Matrix[f64]) bool {
 		}
 	}
 	return true
+}
+
+// matrix_dynamic_range_safe rejects inputs whose largest and smallest nonzero
+// magnitudes differ enough that Strassen's quadrant additions/subtractions can
+// absorb a smaller summand. Such cases keep the conventional BLAS path, which
+// does not mix operands across quadrants before multiplying.
+fn matrix_dynamic_range_safe(m &Matrix[f64]) bool {
+	mut max_abs := 0.0
+	mut min_abs := math.inf(1)
+	for value in m.data {
+		av := if value < 0 { -value } else { value }
+		if av == 0.0 {
+			continue
+		}
+		if av > max_abs {
+			max_abs = av
+		}
+		if av < min_abs {
+			min_abs = av
+		}
+	}
+	if min_abs == math.inf(1) {
+		return true
+	}
+	return max_abs / min_abs <= 1e15
 }
 
 fn strassen_flat(mut c []f64, a []f64, b []f64, n int) {
