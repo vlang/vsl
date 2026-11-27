@@ -79,6 +79,32 @@ fn test_strassen_alpha_one_required() {
 	assert c.get(1, 1) == 100.0
 }
 
+// The alpha == 1.0 gate must hold at Strassen-eligible sizes too: a broken
+// gate would feed alpha != 1 into strassen_flat, which scales nothing, and
+// the result would come out unscaled relative to alpha*a*b.
+fn test_strassen_skips_path_when_alpha_not_one() {
+	n := 128
+	a := strassen_test_matrix(n, 13)
+	b := strassen_test_matrix(n, 14)
+	mut c := Matrix.new[f64](n, n)
+	matrix_matrix_mul(mut c, 2.0, a, b)
+
+	mut expected := Matrix.new[f64](n, n)
+	for i in 0 .. n {
+		for j in 0 .. n {
+			mut sum := 0.0
+			for k in 0 .. n {
+				sum += a.get(i, k) * b.get(k, j)
+			}
+			expected.set(i, j, 2.0 * sum)
+		}
+	}
+	for i in 0 .. n * n {
+		scale := math.max(1.0, math.abs(expected.data[i]))
+		assert math.abs(c.data[i] - expected.data[i]) <= strassen_test_tol * scale
+	}
+}
+
 fn test_strassen_direct_128_matches_reference() {
 	n := 128
 	a := strassen_test_matrix(n, 7)
