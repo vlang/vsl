@@ -256,6 +256,7 @@ systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 \
 <ul>
 <li><code>sdot</code> - Single-precision dot product</li>
 <li><code>ddot</code> - Dot product</li>
+<li><code>dot_i16_i64</code> - Exact signed INT16 dot product with an i64 accumulator</li>
 <li><code>snrm2</code> - Single-precision Euclidean norm</li>
 <li><code>dnrm2</code> - Euclidean norm</li>
 <li><code>dasum</code> - Sum of absolute values</li>
@@ -284,6 +285,7 @@ systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 \
 <li><code>dtrsm</code> - Triangular solve with multiple RHS</li></ul>
 <p>The <code>sgemv</code> and <code>dgemv</code> routines accept row-major matrices and support <code>.no_trans</code>, <code>.trans</code>, <code>.conj_trans</code>, and <code>.conj_no_trans</code>. The generic system CBLAS build uses CBLAS GEMM and GEMV for positive vector increments; unsupported cases use the pure V implementation.</p>
 <p>On GCC/Clang x86 builds, contiguous <code>sdot</code>, <code>ddot</code>, <code>daxpy</code>, and <code>dscal</code> calls of at least 128 elements runtime-dispatch to AVX2 or AVX2/FMA kernels when the CPU supports them. <code>sdot</code> keeps f32 product rounding; <code>ddot</code> and <code>daxpy</code> use FMA. Other compilers and CPUs retain the portable V/scalar paths, and no consumer CPU flags or optional BLAS dependency are required.</p>
+<p><code>dot_i16_i64</code> also uses an exact AVX2 kernel for reductions of at least 128 elements on supported GCC/Clang x86 builds. Smaller reductions and unsupported targets use the scalar implementation.</p>
 <p>Unit-stride row-major <code>sgemv</code> and <code>dgemv</code> also dispatch for reduction dimensions of at least 128, in both transposed and non-transposed layouts. The f32 path uses AVX2; the f64 path uses AVX2/FMA.</p>
 <p>Therefore, its routines are a little more <em>lower level</em> than the ones in the package <code>vsl.la</code>.</p>
 <h2 id="openblas-backend">OpenBLAS Backend</h2>
@@ -468,6 +470,14 @@ systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 \
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">dnrm2</span><span class="token punctuation">(</span>n <span class="token builtin">int</span><span class="token punctuation">,</span> x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">f64</span><span class="token punctuation">,</span> incx <span class="token builtin">int</span><span class="token punctuation">)</span> <span class="token builtin">f64</span></code></pre>
 <p>dnrm2 exposes this operation as part of the public API.</p>
+
+</section>
+
+		<section id="dot_i16_i64" class="doc-node">
+			<div class="title"><h2>fn dot_i16_i64 <a href="#dot_i16_i64">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/blas/int16_dot.v#L4"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+<pre class="signature">
+<code><span class="token keyword">fn</span> <span class="token function">dot_i16_i64</span><span class="token punctuation">(</span>x <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">i16</span><span class="token punctuation">,</span> y <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">i16</span><span class="token punctuation">)</span> <span class="token operator">!</span><span class="token builtin">i64</span></code></pre>
+<p>dot_i16_i64 computes an exact signed i16 dot product with an i64 accumulator.</p>
 
 </section>
 
@@ -1036,7 +1046,7 @@ systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 \
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 27 Nov 2026 06:31:36</div>
+						<div class="footer">Powered by vdoc. Generated on: 27 Nov 2026 07:19:47</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_blas">README</a></li>
 <li class="open"><a href="#cm_daxpy">fn cm_daxpy</a>        <ul>
@@ -1091,6 +1101,9 @@ systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 \
 </ul>
 </li>
 <li class="open"><a href="#dnrm2">fn dnrm2</a>        <ul>
+</ul>
+</li>
+<li class="open"><a href="#dot_i16_i64">fn dot_i16_i64</a>        <ul>
 </ul>
 </li>
 <li class="open"><a href="#drot">fn drot</a>        <ul>
