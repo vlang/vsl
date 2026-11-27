@@ -69,7 +69,7 @@ jobs:
         if: ${{ success() && !cancelled() && steps.checkout_vsl.outcome == 'success' }}
         uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
-          version: ba41fa121b738a1a694e0050401a45d2376e09b9
+          version: 7f5b9a3ddedafcfa86a88a4697c12c10e5901168
 
       - name: V doctor
         id: v_doctor
@@ -193,7 +193,7 @@ jobs:
         if: ${{ success() && !cancelled() && steps.checkout_vsl.outcome == 'success' }}
         uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
-          version: ba41fa121b738a1a694e0050401a45d2376e09b9
+          version: 7f5b9a3ddedafcfa86a88a4697c12c10e5901168
 
       - name: V doctor
         id: v_doctor
@@ -292,7 +292,7 @@ jobs:
         if: ${{ success() && !cancelled() && steps.checkout_vsl.outcome == 'success' }}
         uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
-          version: ba41fa121b738a1a694e0050401a45d2376e09b9
+          version: 7f5b9a3ddedafcfa86a88a4697c12c10e5901168
 
       - name: Install dependencies
         id: install_dependencies
@@ -355,7 +355,7 @@ jobs:
         if: ${{ success() && !cancelled() && steps.checkout_vsl.outcome == 'success' }}
         uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
-          version: ba41fa121b738a1a694e0050401a45d2376e09b9
+          version: 7f5b9a3ddedafcfa86a88a4697c12c10e5901168
 
       - name: Install FFT comparison dependencies
         if: matrix.benchmark == 'fft'

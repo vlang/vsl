@@ -92,7 +92,7 @@ jobs:
         if: ${{ success() && !cancelled() && steps.checkout_vsl.outcome == 'success' }}
         uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
-          version: ba41fa121b738a1a694e0050401a45d2376e09b9
+          version: 7f5b9a3ddedafcfa86a88a4697c12c10e5901168
 
       - name: Move VSL source code to V Modules
         id: move_vsl_source_code_to_v_modules
@@ -229,7 +229,7 @@ jobs:
       - name: Setup V
         uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
-          version: ba41fa121b738a1a694e0050401a45d2376e09b9
+          version: 7f5b9a3ddedafcfa86a88a4697c12c10e5901168
 
       - name: Move VSL source code to V Modules
         run: |
@@ -296,7 +296,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           repository: vlang/v
-          ref: ba41fa121b738a1a694e0050401a45d2376e09b9
+          ref: 7f5b9a3ddedafcfa86a88a4697c12c10e5901168
           persist-credentials: false
           path: v
 
@@ -440,7 +440,7 @@ jobs:
         if: ${{ success() && !cancelled() && steps.checkout_vsl.outcome == 'success' }}
         uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
-          version: ba41fa121b738a1a694e0050401a45d2376e09b9
+          version: 7f5b9a3ddedafcfa86a88a4697c12c10e5901168
 
       - name: Move VSL source code to V Modules
         id: move_vsl_source_code_to_v_modules
@@ -516,7 +516,7 @@ jobs:
         if: ${{ success() && !cancelled() && steps.checkout_vsl.outcome == 'success' }}
         uses: vlang/setup-v@663cc08827d1fc0532ee755b4dedbb183c11d06a # v1.7
         with:
-          version: ba41fa121b738a1a694e0050401a45d2376e09b9
+          version: 7f5b9a3ddedafcfa86a88a4697c12c10e5901168
 
       - name: Move VSL source code to V Modules
         id: move_vsl_source_code_to_v_modules
