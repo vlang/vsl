@@ -9,6 +9,14 @@ import vsl.float.float64
 const vector_size = 1_048_576
 const iteration_count = 31
 
+fn sum_f64(values []f64) f64 {
+	mut sum := 0.0
+	for value in values {
+		sum += value
+	}
+	return sum
+}
+
 fn main() {
 	mut x32 := []f32{len: vector_size}
 	mut y32 := []f32{len: vector_size}
@@ -64,11 +72,49 @@ fn main() {
 	}
 	dispatched_ddot_ns := time.sys_mono_now() - started
 
+	mut pure_axpy_x := x64.clone()
+	mut pure_axpy_y := y64.clone()
+	mut dispatched_axpy_x := x64.clone()
+	mut dispatched_axpy_y := y64.clone()
+	started = time.sys_mono_now()
+	for i in 0 .. iteration_count {
+		pure_axpy_x[i] = x64[i] + f64(i) * 0.00001
+		float64.axpy_unitary(0.25, pure_axpy_x, mut pure_axpy_y)
+	}
+	pure_daxpy_ns := time.sys_mono_now() - started
+
+	started = time.sys_mono_now()
+	for i in 0 .. iteration_count {
+		dispatched_axpy_x[i] = x64[i] + f64(i) * 0.00001
+		blas.daxpy(vector_size, 0.25, dispatched_axpy_x, 1, mut dispatched_axpy_y, 1)
+	}
+	dispatched_daxpy_ns := time.sys_mono_now() - started
+
+	mut pure_scal_x := x64.clone()
+	mut dispatched_scal_x := x64.clone()
+	started = time.sys_mono_now()
+	for _ in 0 .. iteration_count {
+		float64.scal_unitary(0.99999, mut pure_scal_x)
+	}
+	pure_dscal_ns := time.sys_mono_now() - started
+
+	started = time.sys_mono_now()
+	for _ in 0 .. iteration_count {
+		blas.dscal(vector_size, 0.99999, mut dispatched_scal_x, 1)
+	}
+	dispatched_dscal_ns := time.sys_mono_now() - started
+
 	if math.abs(f64(pure_sdot_checksum - dispatched_sdot_checksum)) > 0.01 {
 		panic('sdot checksum mismatch: pure=${pure_sdot_checksum}, dispatched=${dispatched_sdot_checksum}')
 	}
 	if math.abs(pure_ddot_checksum - dispatched_ddot_checksum) > 1e-7 {
 		panic('ddot checksum mismatch: pure=${pure_ddot_checksum}, dispatched=${dispatched_ddot_checksum}')
+	}
+	if math.abs(sum_f64(pure_axpy_y) - sum_f64(dispatched_axpy_y)) > 1e-6 {
+		panic('daxpy result mismatch: pure=${sum_f64(pure_axpy_y)}, dispatched=${sum_f64(dispatched_axpy_y)}')
+	}
+	if math.abs(sum_f64(pure_scal_x) - sum_f64(dispatched_scal_x)) > 1e-9 {
+		panic('dscal result mismatch: pure=${sum_f64(pure_scal_x)}, dispatched=${sum_f64(dispatched_scal_x)}')
 	}
 
 	println('vector length: ${vector_size}, iterations: ${iteration_count}')
@@ -78,5 +124,11 @@ fn main() {
 	println('ddot pure-V SIMD: ${f64(pure_ddot_ns) / iteration_count / 1e6:.3f} ms')
 	println('ddot dispatch:    ${f64(dispatched_ddot_ns) / iteration_count / 1e6:.3f} ms')
 	println('ddot speedup:     ${f64(pure_ddot_ns) / f64(dispatched_ddot_ns):.2f}x')
-	println('checksums: sdot=${dispatched_sdot_checksum:.6f}, ddot=${dispatched_ddot_checksum:.6f}')
+	println('daxpy pure-V SIMD: ${f64(pure_daxpy_ns) / iteration_count / 1e6:.3f} ms')
+	println('daxpy dispatch:    ${f64(dispatched_daxpy_ns) / iteration_count / 1e6:.3f} ms')
+	println('daxpy speedup:     ${f64(pure_daxpy_ns) / f64(dispatched_daxpy_ns):.2f}x')
+	println('dscal pure-V SIMD: ${f64(pure_dscal_ns) / iteration_count / 1e6:.3f} ms')
+	println('dscal dispatch:    ${f64(dispatched_dscal_ns) / iteration_count / 1e6:.3f} ms')
+	println('dscal speedup:     ${f64(pure_dscal_ns) / f64(dispatched_dscal_ns):.2f}x')
+	println('checksums: sdot=${dispatched_sdot_checksum:.6f}, ddot=${dispatched_ddot_checksum:.6f}, daxpy=${sum_f64(dispatched_axpy_y):.6f}, dscal=${sum_f64(dispatched_scal_x):.6f}')
 }

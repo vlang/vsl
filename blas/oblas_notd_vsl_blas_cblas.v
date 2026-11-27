@@ -34,7 +34,7 @@ pub fn ddot(n int, x []f64, incx int, y []f64, incy int) f64 {
 		if y.len < n {
 			panic(blas64.short_y)
 		}
-		if C.vsl_blas_ddot_avx2_fma_supported() != 0 {
+		if C.vsl_blas_avx2_fma_supported() != 0 {
 			return C.vsl_blas_ddot_dispatch(n, unsafe { &x[0] }, unsafe { &y[0] })
 		}
 	}
@@ -72,7 +72,7 @@ pub fn sdot(n int, x []f32, incx int, y []f32, incy int) f32 {
 	}
 	if incx == 1 && incy == 1 {
 		if n >= 128 {
-			if C.vsl_blas_sdot_avx2_supported() != 0 {
+			if C.vsl_blas_avx2_supported() != 0 {
 				return C.vsl_blas_sdot_dispatch(n, unsafe { &x[0] }, unsafe { &y[0] })
 			}
 		}
@@ -146,6 +146,18 @@ pub fn snrm2(n int, x []f32, incx int) f32 {
 // daxpy exposes this operation as part of the public API.
 @[inline]
 pub fn daxpy(n int, alpha f64, x []f64, incx int, mut y []f64, incy int) {
+	if n >= 128 && alpha != 0 && incx == 1 && incy == 1 {
+		if x.len < n {
+			panic(blas64.short_x)
+		}
+		if y.len < n {
+			panic(blas64.short_y)
+		}
+		if C.vsl_blas_avx2_fma_supported() != 0 {
+			C.vsl_blas_daxpy_dispatch(n, alpha, unsafe { &x[0] }, unsafe { &y[0] })
+			return
+		}
+	}
 	blas64.daxpy(n, alpha, x, incx, mut y, incy)
 }
 
@@ -186,6 +198,15 @@ pub fn drot(n int, mut x []f64, incx int, mut y []f64, incy int, c f64, s f64) {
 // dscal exposes this operation as part of the public API.
 @[inline]
 pub fn dscal(n int, alpha f64, mut x []f64, incx int) {
+	if n >= 128 && alpha != 0 && incx == 1 {
+		if x.len < n {
+			panic(blas64.short_x)
+		}
+		if C.vsl_blas_avx2_supported() != 0 {
+			C.vsl_blas_dscal_dispatch(n, alpha, unsafe { &x[0] })
+			return
+		}
+	}
 	blas64.dscal(n, alpha, mut x, incx)
 }
 

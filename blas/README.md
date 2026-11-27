@@ -71,11 +71,11 @@ The `sgemv` and `dgemv` routines accept row-major matrices and support
 CBLAS build uses CBLAS GEMM and GEMV for positive vector increments; unsupported
 cases use the pure V implementation.
 
-On GCC/Clang x86 builds, contiguous `sdot` and `ddot` calls of at least 128
-elements runtime-dispatch to AVX2 and AVX2/FMA kernels, respectively, when the
-CPU supports them. `sdot` keeps f32 product rounding; other compilers and CPUs
-use portable V/scalar paths. No consumer CPU flags or optional BLAS dependency
-are required.
+On GCC/Clang x86 builds, contiguous `sdot`, `ddot`, `daxpy`, and `dscal`
+calls of at least 128 elements runtime-dispatch to AVX2 or AVX2/FMA kernels
+when the CPU supports them. `sdot` keeps f32 product rounding; `ddot` and
+`daxpy` use FMA. Other compilers and CPUs retain the portable V/scalar paths,
+and no consumer CPU flags or optional BLAS dependency are required.
 
 Therefore, its routines are a little more _lower level_ than the ones in the package `vsl.la`.
 

@@ -340,6 +340,23 @@ fn test_dscal() {
 	}
 }
 
+fn test_dscal_large_unitary_dispatch_and_zero_alpha() {
+	n := 1024
+	mut x := []f64{len: n}
+	mut expected := []f64{len: n}
+	for i in 0 .. n {
+		x[i] = f64((i % 17) - 8) * 0.125
+		expected[i] = x[i] * 1.5
+	}
+	dscal(n, 1.5, mut x, 1)
+	assert float64.arrays_tolerance(x, expected, test_tol)
+
+	mut zeroed := []f64{len: 128, init: 1.0}
+	zeroed[0] = math.inf(1)
+	dscal(zeroed.len, 0, mut zeroed, 1)
+	assert zeroed == []f64{len: 128}
+}
+
 fn test_dcopy() {
 	x := [1.0, 2.0, 3.0, 4.0, 5.0]
 	mut y := [0.0, 0.0, 0.0, 0.0, 0.0]
@@ -361,6 +378,20 @@ fn test_daxpy() {
 	daxpy(3, alpha, x, 1, mut y, 1)
 	expected := [6.0, 9.0, 12.0] // y = alpha*x + y = 2*[1,2,3] + [4,5,6]
 	assert float64.arrays_tolerance(y, expected, test_tol), 'DAXPY failed: expected ${expected}, got ${y}'
+}
+
+fn test_daxpy_large_unitary_dispatch() {
+	n := 1024
+	mut x := []f64{len: n}
+	mut y := []f64{len: n}
+	mut expected := []f64{len: n}
+	for i in 0 .. n {
+		x[i] = f64((i % 17) - 8) * 0.125
+		y[i] = f64((i % 13) - 6) * 0.25
+		expected[i] = y[i] + 0.5 * x[i]
+	}
+	daxpy(n, 0.5, x, 1, mut y, 1)
+	assert float64.arrays_tolerance(y, expected, test_tol)
 }
 
 fn test_ddot() {

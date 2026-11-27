@@ -66,6 +66,40 @@ static double vsl_blas_ddot_avx2(int n, const double *x, const double *y) {
 	}
 	return sum;
 }
+
+__attribute__((target("avx2,fma")))
+static void vsl_blas_daxpy_avx2(int n, double alpha, const double *x, double *y) {
+	__m256d valpha = _mm256_set1_pd(alpha);
+	int i = 0;
+	for (; i + 16 <= n; i += 16) {
+		_mm256_storeu_pd(y + i, _mm256_fmadd_pd(valpha, _mm256_loadu_pd(x + i),
+			_mm256_loadu_pd(y + i)));
+		_mm256_storeu_pd(y + i + 4, _mm256_fmadd_pd(valpha, _mm256_loadu_pd(x + i + 4),
+			_mm256_loadu_pd(y + i + 4)));
+		_mm256_storeu_pd(y + i + 8, _mm256_fmadd_pd(valpha, _mm256_loadu_pd(x + i + 8),
+			_mm256_loadu_pd(y + i + 8)));
+		_mm256_storeu_pd(y + i + 12, _mm256_fmadd_pd(valpha, _mm256_loadu_pd(x + i + 12),
+			_mm256_loadu_pd(y + i + 12)));
+	}
+	for (; i < n; ++i) {
+		y[i] = alpha * x[i] + y[i];
+	}
+}
+
+__attribute__((target("avx2")))
+static void vsl_blas_dscal_avx2(int n, double alpha, double *x) {
+	__m256d valpha = _mm256_set1_pd(alpha);
+	int i = 0;
+	for (; i + 16 <= n; i += 16) {
+		_mm256_storeu_pd(x + i, _mm256_mul_pd(valpha, _mm256_loadu_pd(x + i)));
+		_mm256_storeu_pd(x + i + 4, _mm256_mul_pd(valpha, _mm256_loadu_pd(x + i + 4)));
+		_mm256_storeu_pd(x + i + 8, _mm256_mul_pd(valpha, _mm256_loadu_pd(x + i + 8)));
+		_mm256_storeu_pd(x + i + 12, _mm256_mul_pd(valpha, _mm256_loadu_pd(x + i + 12)));
+	}
+	for (; i < n; ++i) {
+		x[i] *= alpha;
+	}
+}
 #endif
 
 float vsl_blas_sdot_dispatch(int n, const float *x, const float *y) {
@@ -94,7 +128,7 @@ double vsl_blas_ddot_dispatch(int n, const double *x, const double *y) {
 	return sum;
 }
 
-int vsl_blas_sdot_avx2_supported(void) {
+int vsl_blas_avx2_supported(void) {
 #if defined(VSL_HAS_AVX2_DISPATCH)
 	return vsl_blas_cpu_has_avx2();
 #else
@@ -102,10 +136,34 @@ int vsl_blas_sdot_avx2_supported(void) {
 #endif
 }
 
-int vsl_blas_ddot_avx2_fma_supported(void) {
+int vsl_blas_avx2_fma_supported(void) {
 #if defined(VSL_HAS_AVX2_DISPATCH)
 	return vsl_blas_cpu_has_avx2_fma();
 #else
 	return 0;
 #endif
+}
+
+void vsl_blas_daxpy_dispatch(int n, double alpha, const double *x, double *y) {
+#if defined(VSL_HAS_AVX2_DISPATCH)
+	if (n >= 128 && vsl_blas_cpu_has_avx2_fma()) {
+		vsl_blas_daxpy_avx2(n, alpha, x, y);
+		return;
+	}
+#endif
+	for (int i = 0; i < n; ++i) {
+		y[i] = alpha * x[i] + y[i];
+	}
+}
+
+void vsl_blas_dscal_dispatch(int n, double alpha, double *x) {
+#if defined(VSL_HAS_AVX2_DISPATCH)
+	if (n >= 128 && vsl_blas_cpu_has_avx2()) {
+		vsl_blas_dscal_avx2(n, alpha, x);
+		return;
+	}
+#endif
+	for (int i = 0; i < n; ++i) {
+		x[i] *= alpha;
+	}
 }

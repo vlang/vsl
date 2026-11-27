@@ -99,10 +99,10 @@ systemd-run --user --scope -p MemoryMax=4G -p MemorySwapMax=0 -- env VJOBS=2 \
 systemd-run --user --scope -p MemoryMax=1G -p MemorySwapMax=0 -- env VJOBS=2 /tmp/vsl-f64-level1
 ```
 
-The Level 1 BLAS dot-dispatch benchmark compares the default pure-V SIMD
-kernels with `sdot`/`ddot`, which can select portable AVX2 and AVX2/FMA C
-kernels, respectively, at runtime without `-march=native`. It checks checksums
-before reporting times:
+The Level 1 BLAS dispatch benchmark compares the default pure-V SIMD kernels
+with `sdot`, `ddot`, `daxpy`, and `dscal`, which can select portable AVX2 or
+AVX2/FMA C kernels at runtime without `-march=native`. It checks results before
+reporting times:
 
 ```sh
 cd ~/.vmodules
