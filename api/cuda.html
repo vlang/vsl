@@ -237,7 +237,7 @@ implemented; CPU fallback when CUDA/cuDNN is unavailable.</p>
 </tr>
 <tr>
 <td><code>gemm_i8_i64_cuda</code></td>
-<td>✅ <code>cublasGemmEx</code> with INT32 partials and exact INT64 accumulation</td>
+<td>✅ <code>cublasGemmEx</code> with INT32 partials and exact INT64 accumulation; reusable device-side B matrix</td>
 <td>—</td>
 <td>—</td>
 </tr>
@@ -298,7 +298,7 @@ implemented; CPU fallback when CUDA/cuDNN is unavailable.</p>
 </tbody>
 </table>
 <p><code>mul_vec</code> uses legacy <code>cublasDdgmm</code> (<code>SIDE_RIGHT</code>, 1×n row layout; <code>cublasDdgmm_v2</code> absent on some distros). Layer norm GPU: build with <code>-d cudnn_layernorm</code> when libcudnn exports <code>cudnnLayerNormForward</code> (9.1+). <code>CUDABackend.supports('layernorm')</code> reports whether the selected device and build can execute the GPU implementation. If it is available but execution fails, the error is propagated; only an unavailable GPU implementation uses the CPU fallback. Strict compute contexts reject that fallback. Numerical parity tests: <code>cuda/compute/numerical_validation_test.v</code> (<a href="https://github.com/vlang/vsl/issues/281">#281</a>).</p>
-<p><code>gemm_i8_i64_cuda</code> accepts row-major signed INT8 matrices and returns exact INT64 dot accumulators. It pads dimensions for cuBLAS alignment and splits large reductions into INT32-safe chunks before accumulating the partial results in INT64 on the host.</p>
+<p><code>gemm_i8_i64_cuda</code> accepts row-major signed INT8 matrices and returns exact INT64 dot accumulators. It pads dimensions for cuBLAS alignment and splits large reductions into INT32-safe chunks before accumulating the partial results in INT64 on the host. For repeated inference, <code>upload_i8_matrix_cuda</code> creates an owned, padded device matrix and <code>gemm_i8_i64_cuda_with_b</code> reuses it without re-uploading B. Call <code>release()</code> when the matrix is no longer needed; the operation rejects released matrices and device mismatches.</p>
 <h2 id="architecture">📁 Architecture</h2>
 <pre><code>vsl.cuda
 ├── backend.v           # CUDABackend (ComputeBackend interface impl)
@@ -800,7 +800,7 @@ v -d cuda run cuda/examples/relu_example.v
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 27 Nov 2026 09:37:13</div>
+						<div class="footer">Powered by vdoc. Generated on: 27 Nov 2026 09:53:10</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_cuda">README</a></li>
 <li class="open"><a href="#Constants">Constants</a></li>
