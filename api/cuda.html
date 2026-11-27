@@ -236,6 +236,12 @@ implemented; CPU fallback when CUDA/cuDNN is unavailable.</p>
 <td>—</td>
 </tr>
 <tr>
+<td><code>gemm_i8_i64_cuda</code></td>
+<td>✅ <code>cublasGemmEx</code> with INT32 partials and exact INT64 accumulation</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
 <td><code>gemv</code></td>
 <td>✅ <code>cublasDgemv</code></td>
 <td>CPU</td>
@@ -292,6 +298,7 @@ implemented; CPU fallback when CUDA/cuDNN is unavailable.</p>
 </tbody>
 </table>
 <p><code>mul_vec</code> uses legacy <code>cublasDdgmm</code> (<code>SIDE_RIGHT</code>, 1×n row layout; <code>cublasDdgmm_v2</code> absent on some distros). Layer norm GPU: build with <code>-d cudnn_layernorm</code> when libcudnn exports <code>cudnnLayerNormForward</code> (9.1+). <code>CUDABackend.supports('layernorm')</code> reports whether the selected device and build can execute the GPU implementation. If it is available but execution fails, the error is propagated; only an unavailable GPU implementation uses the CPU fallback. Strict compute contexts reject that fallback. Numerical parity tests: <code>cuda/compute/numerical_validation_test.v</code> (<a href="https://github.com/vlang/vsl/issues/281">#281</a>).</p>
+<p><code>gemm_i8_i64_cuda</code> accepts row-major signed INT8 matrices and returns exact INT64 dot accumulators. It pads dimensions for cuBLAS alignment and splits large reductions into INT32-safe chunks before accumulating the partial results in INT64 on the host.</p>
 <h2 id="architecture">📁 Architecture</h2>
 <pre><code>vsl.cuda
 ├── backend.v           # CUDABackend (ComputeBackend interface impl)
@@ -467,6 +474,34 @@ v -d cuda run cuda/examples/relu_example.v
 
 		<section id="" class="doc-node const">
 <pre class="signature">
+<code><span class="token keyword">const</span> cuda_data_type_i8 <span class="token operator">=</span> <span class="token number">3</span></code></pre>
+<p>cuBLAS integer GEMM types and compute mode.</p>
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> cuda_data_type_i32 <span class="token operator">=</span> <span class="token number">10</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> cublas_compute_32i <span class="token operator">=</span> <span class="token number">72</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
+<code><span class="token keyword">const</span> cublas_gemm_default <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span></code></pre>
+
+
+</section>
+
+		<section id="" class="doc-node const">
+<pre class="signature">
 <code><span class="token keyword">const</span> cublas_op_n <span class="token operator">=</span> <span class="token number">0</span> <span class="token comment">// Non-transpose</span></code></pre>
 <p>CublasOperation values.</p>
 
@@ -572,7 +607,7 @@ v -d cuda run cuda/examples/relu_example.v
 </section>
 
 		<section id="cublas_error" class="doc-node">
-			<div class="title"><h2>fn cublas_error <a href="#cublas_error">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L107"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn cublas_error <a href="#cublas_error">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L113"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">cublas_error</span><span class="token punctuation">(</span>status <span class="token type_name">CublasStatus</span><span class="token punctuation">)</span> <span class="token builtin">string</span></code></pre>
 <p>cublas_error returns a string description of a cuBLAS status code.</p>
@@ -580,7 +615,7 @@ v -d cuda run cuda/examples/relu_example.v
 </section>
 
 		<section id="cudnn_error" class="doc-node">
-			<div class="title"><h2>fn cudnn_error <a href="#cudnn_error">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L122"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>fn cudnn_error <a href="#cudnn_error">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L129"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">fn</span> <span class="token function">cudnn_error</span><span class="token punctuation">(</span>status <span class="token type_name">CudnnStatus</span><span class="token punctuation">)</span> <span class="token builtin">string</span></code></pre>
 <p>cudnn_error returns a string description of a cuDNN status code.</p>
@@ -620,7 +655,7 @@ v -d cuda run cuda/examples/relu_example.v
 </section>
 
 		<section id="CudnnActivationDescriptor" class="doc-node">
-			<div class="title"><h2>type CudnnActivationDescriptor <a href="#CudnnActivationDescriptor">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L57"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>type CudnnActivationDescriptor <a href="#CudnnActivationDescriptor">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L63"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">type</span> <span class="token type_name">CudnnActivationDescriptor</span> <span class="token operator">=</span> <span class="token builtin">voidptr</span></code></pre>
 <p>cudnnActivationDescriptor_t is a handle to an activation descriptor.</p>
@@ -628,7 +663,7 @@ v -d cuda run cuda/examples/relu_example.v
 </section>
 
 		<section id="CudnnActivationMode" class="doc-node">
-			<div class="title"><h2>type CudnnActivationMode <a href="#CudnnActivationMode">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L45"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>type CudnnActivationMode <a href="#CudnnActivationMode">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L51"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">type</span> <span class="token type_name">CudnnActivationMode</span> <span class="token operator">=</span> <span class="token builtin">int</span></code></pre>
 <p>cudnnActivationMode_t specifies the activation mode.</p>
@@ -636,7 +671,7 @@ v -d cuda run cuda/examples/relu_example.v
 </section>
 
 		<section id="CudnnConvolutionBwdDataAlgo" class="doc-node">
-			<div class="title"><h2>type CudnnConvolutionBwdDataAlgo <a href="#CudnnConvolutionBwdDataAlgo">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L75"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>type CudnnConvolutionBwdDataAlgo <a href="#CudnnConvolutionBwdDataAlgo">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L81"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">type</span> <span class="token type_name">CudnnConvolutionBwdDataAlgo</span> <span class="token operator">=</span> <span class="token builtin">int</span></code></pre>
 <p>cudnnConvolutionBwdDataAlgo_t / BwdFilterAlgo_t — backward convolution algorithms.</p>
@@ -644,7 +679,7 @@ v -d cuda run cuda/examples/relu_example.v
 </section>
 
 		<section id="CudnnConvolutionBwdFilterAlgo" class="doc-node">
-			<div class="title"><h2>type CudnnConvolutionBwdFilterAlgo <a href="#CudnnConvolutionBwdFilterAlgo">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L76"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>type CudnnConvolutionBwdFilterAlgo <a href="#CudnnConvolutionBwdFilterAlgo">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L82"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">type</span> <span class="token type_name">CudnnConvolutionBwdFilterAlgo</span> <span class="token operator">=</span> <span class="token builtin">int</span></code></pre>
 
@@ -652,7 +687,7 @@ v -d cuda run cuda/examples/relu_example.v
 </section>
 
 		<section id="CudnnConvolutionDescriptor" class="doc-node">
-			<div class="title"><h2>type CudnnConvolutionDescriptor <a href="#CudnnConvolutionDescriptor">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L60"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>type CudnnConvolutionDescriptor <a href="#CudnnConvolutionDescriptor">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L66"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">type</span> <span class="token type_name">CudnnConvolutionDescriptor</span> <span class="token operator">=</span> <span class="token builtin">voidptr</span></code></pre>
 <p>cudnnConvolutionDescriptor_t is a handle to a convolution descriptor.</p>
@@ -660,7 +695,7 @@ v -d cuda run cuda/examples/relu_example.v
 </section>
 
 		<section id="CudnnConvolutionFwdAlgo" class="doc-node">
-			<div class="title"><h2>type CudnnConvolutionFwdAlgo <a href="#CudnnConvolutionFwdAlgo">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L72"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>type CudnnConvolutionFwdAlgo <a href="#CudnnConvolutionFwdAlgo">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L78"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">type</span> <span class="token type_name">CudnnConvolutionFwdAlgo</span> <span class="token operator">=</span> <span class="token builtin">int</span></code></pre>
 <p>cudnnConvolutionFwdAlgo_t specifies the convolution forward algorithm.</p>
@@ -668,7 +703,7 @@ v -d cuda run cuda/examples/relu_example.v
 </section>
 
 		<section id="CudnnDataType" class="doc-node">
-			<div class="title"><h2>type CudnnDataType <a href="#CudnnDataType">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L69"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>type CudnnDataType <a href="#CudnnDataType">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L75"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">type</span> <span class="token type_name">CudnnDataType</span> <span class="token operator">=</span> <span class="token builtin">int</span></code></pre>
 <p>cudnnDataType_t specifies the data type of a tensor.</p>
@@ -676,7 +711,7 @@ v -d cuda run cuda/examples/relu_example.v
 </section>
 
 		<section id="CudnnFilterDescriptor" class="doc-node">
-			<div class="title"><h2>type CudnnFilterDescriptor <a href="#CudnnFilterDescriptor">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L63"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>type CudnnFilterDescriptor <a href="#CudnnFilterDescriptor">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L69"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">type</span> <span class="token type_name">CudnnFilterDescriptor</span> <span class="token operator">=</span> <span class="token builtin">voidptr</span></code></pre>
 <p>cudnnFilterDescriptor_t is a handle to a filter descriptor.</p>
@@ -684,7 +719,7 @@ v -d cuda run cuda/examples/relu_example.v
 </section>
 
 		<section id="CudnnSoftmaxAlgorithm" class="doc-node">
-			<div class="title"><h2>type CudnnSoftmaxAlgorithm <a href="#CudnnSoftmaxAlgorithm">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L48"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>type CudnnSoftmaxAlgorithm <a href="#CudnnSoftmaxAlgorithm">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L54"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">type</span> <span class="token type_name">CudnnSoftmaxAlgorithm</span> <span class="token operator">=</span> <span class="token builtin">int</span></code></pre>
 <p>cudnnSoftmaxAlgorithm_t specifies the softmax algorithm.</p>
@@ -692,7 +727,7 @@ v -d cuda run cuda/examples/relu_example.v
 </section>
 
 		<section id="CudnnSoftmaxMode" class="doc-node">
-			<div class="title"><h2>type CudnnSoftmaxMode <a href="#CudnnSoftmaxMode">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L51"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>type CudnnSoftmaxMode <a href="#CudnnSoftmaxMode">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L57"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">type</span> <span class="token type_name">CudnnSoftmaxMode</span> <span class="token operator">=</span> <span class="token builtin">int</span></code></pre>
 <p>cudnnSoftmaxMode_t specifies the softmax mode.</p>
@@ -700,7 +735,7 @@ v -d cuda run cuda/examples/relu_example.v
 </section>
 
 		<section id="CudnnTensorDescriptor" class="doc-node">
-			<div class="title"><h2>type CudnnTensorDescriptor <a href="#CudnnTensorDescriptor">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L54"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>type CudnnTensorDescriptor <a href="#CudnnTensorDescriptor">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L60"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">type</span> <span class="token type_name">CudnnTensorDescriptor</span> <span class="token operator">=</span> <span class="token builtin">voidptr</span></code></pre>
 <p>cudnnTensorDescriptor_t is a handle to a tensor descriptor.</p>
@@ -708,7 +743,7 @@ v -d cuda run cuda/examples/relu_example.v
 </section>
 
 		<section id="CudnnTensorFormat" class="doc-node">
-			<div class="title"><h2>type CudnnTensorFormat <a href="#CudnnTensorFormat">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L66"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
+			<div class="title"><h2>type CudnnTensorFormat <a href="#CudnnTensorFormat">#</a></h2><a class="link" rel="noreferrer" target="_blank" href="https://github.com/vlang/vsl/blob/master/cuda/_ctypes.c.v#L72"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></a></div>
 <pre class="signature">
 <code><span class="token keyword">type</span> <span class="token type_name">CudnnTensorFormat</span> <span class="token operator">=</span> <span class="token builtin">int</span></code></pre>
 <p>cudnnTensorFormat_t specifies the memory layout of a tensor.</p>
@@ -765,7 +800,7 @@ v -d cuda run cuda/examples/relu_example.v
 </section>
 
 
-						<div class="footer">Powered by vdoc. Generated on: 27 Nov 2026 08:34:21</div>
+						<div class="footer">Powered by vdoc. Generated on: 27 Nov 2026 09:37:13</div>
 					</div>
 					<div class="doc-toc"><ul><li class="open"><a href="#readme_cuda">README</a></li>
 <li class="open"><a href="#Constants">Constants</a></li>
