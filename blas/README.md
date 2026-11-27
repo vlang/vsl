@@ -77,6 +77,10 @@ when the CPU supports them. `sdot` keeps f32 product rounding; `ddot` and
 `daxpy` use FMA. Other compilers and CPUs retain the portable V/scalar paths,
 and no consumer CPU flags or optional BLAS dependency are required.
 
+Unit-stride row-major `sgemv` and `dgemv` also dispatch for reduction
+dimensions of at least 128, in both transposed and non-transposed layouts.
+The f32 path uses AVX2; the f64 path uses AVX2/FMA.
+
 Therefore, its routines are a little more _lower level_ than the ones in the package `vsl.la`.
 
 ## OpenBLAS Backend

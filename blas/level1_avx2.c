@@ -100,6 +100,62 @@ static void vsl_blas_dscal_avx2(int n, double alpha, double *x) {
 		x[i] *= alpha;
 	}
 }
+
+__attribute__((target("avx2")))
+static void vsl_blas_sgemv_t_avx2(int m, int n, int lda, float alpha, const float *a,
+	const float *x, float beta, float *y) {
+	int j = 0;
+	for (; j + 8 <= n; j += 8) {
+		__m256 sum = _mm256_setzero_ps();
+		for (int i = 0; i < m; ++i) {
+			__m256 row = _mm256_loadu_ps(a + (size_t)i * lda + j);
+			__m256 xv = _mm256_set1_ps(x[i]);
+			sum = _mm256_add_ps(sum, _mm256_mul_ps(row, xv));
+		}
+		float lanes[8];
+		_mm256_storeu_ps(lanes, sum);
+		for (int lane = 0; lane < 8; ++lane) {
+			float product = alpha * lanes[lane];
+			y[j + lane] = beta == 0 ? product : beta * y[j + lane] + product;
+		}
+	}
+	for (; j < n; ++j) {
+		float sum = 0.0f;
+		for (int i = 0; i < m; ++i) {
+			sum += a[(size_t)i * lda + j] * x[i];
+		}
+		float product = alpha * sum;
+		y[j] = beta == 0 ? product : beta * y[j] + product;
+	}
+}
+
+__attribute__((target("avx2,fma")))
+static void vsl_blas_dgemv_t_avx2(int m, int n, int lda, double alpha, const double *a,
+	const double *x, double beta, double *y) {
+	int j = 0;
+	for (; j + 4 <= n; j += 4) {
+		__m256d sum = _mm256_setzero_pd();
+		for (int i = 0; i < m; ++i) {
+			__m256d row = _mm256_loadu_pd(a + (size_t)i * lda + j);
+			__m256d xv = _mm256_set1_pd(x[i]);
+			sum = _mm256_fmadd_pd(row, xv, sum);
+		}
+		double lanes[4];
+		_mm256_storeu_pd(lanes, sum);
+		for (int lane = 0; lane < 4; ++lane) {
+			double product = alpha * lanes[lane];
+			y[j + lane] = beta == 0 ? product : beta * y[j + lane] + product;
+		}
+	}
+	for (; j < n; ++j) {
+		double sum = 0.0;
+		for (int i = 0; i < m; ++i) {
+			sum += a[(size_t)i * lda + j] * x[i];
+		}
+		double product = alpha * sum;
+		y[j] = beta == 0 ? product : beta * y[j] + product;
+	}
+}
 #endif
 
 float vsl_blas_sdot_dispatch(int n, const float *x, const float *y) {
@@ -165,5 +221,85 @@ void vsl_blas_dscal_dispatch(int n, double alpha, double *x) {
 #endif
 	for (int i = 0; i < n; ++i) {
 		x[i] *= alpha;
+	}
+}
+
+void vsl_blas_sgemv_n_dispatch(int m, int n, int lda, float alpha, const float *a,
+	const float *x, float beta, float *y) {
+#if defined(VSL_HAS_AVX2_DISPATCH)
+	if (n >= 128 && vsl_blas_cpu_has_avx2()) {
+		for (int i = 0; i < m; ++i) {
+			float sum = vsl_blas_sdot_avx2(n, a + (size_t)i * lda, x);
+			float product = alpha * sum;
+			y[i] = beta == 0 ? product : beta * y[i] + product;
+		}
+		return;
+	}
+#endif
+	for (int i = 0; i < m; ++i) {
+		float sum = 0.0f;
+		for (int j = 0; j < n; ++j) {
+			sum += a[(size_t)i * lda + j] * x[j];
+		}
+		float product = alpha * sum;
+		y[i] = beta == 0 ? product : beta * y[i] + product;
+	}
+}
+
+void vsl_blas_dgemv_n_dispatch(int m, int n, int lda, double alpha, const double *a,
+	const double *x, double beta, double *y) {
+#if defined(VSL_HAS_AVX2_DISPATCH)
+	if (n >= 128 && vsl_blas_cpu_has_avx2_fma()) {
+		for (int i = 0; i < m; ++i) {
+			double sum = vsl_blas_ddot_avx2(n, a + (size_t)i * lda, x);
+			double product = alpha * sum;
+			y[i] = beta == 0 ? product : beta * y[i] + product;
+		}
+		return;
+	}
+#endif
+	for (int i = 0; i < m; ++i) {
+		double sum = 0.0;
+		for (int j = 0; j < n; ++j) {
+			sum += a[(size_t)i * lda + j] * x[j];
+		}
+		double product = alpha * sum;
+		y[i] = beta == 0 ? product : beta * y[i] + product;
+	}
+}
+
+void vsl_blas_sgemv_t_dispatch(int m, int n, int lda, float alpha, const float *a,
+	const float *x, float beta, float *y) {
+#if defined(VSL_HAS_AVX2_DISPATCH)
+	if (m >= 128 && vsl_blas_cpu_has_avx2()) {
+		vsl_blas_sgemv_t_avx2(m, n, lda, alpha, a, x, beta, y);
+		return;
+	}
+#endif
+	for (int j = 0; j < n; ++j) {
+		float sum = 0.0f;
+		for (int i = 0; i < m; ++i) {
+			sum += a[(size_t)i * lda + j] * x[i];
+		}
+		float product = alpha * sum;
+		y[j] = beta == 0 ? product : beta * y[j] + product;
+	}
+}
+
+void vsl_blas_dgemv_t_dispatch(int m, int n, int lda, double alpha, const double *a,
+	const double *x, double beta, double *y) {
+#if defined(VSL_HAS_AVX2_DISPATCH)
+	if (m >= 128 && vsl_blas_cpu_has_avx2_fma()) {
+		vsl_blas_dgemv_t_avx2(m, n, lda, alpha, a, x, beta, y);
+		return;
+	}
+#endif
+	for (int j = 0; j < n; ++j) {
+		double sum = 0.0;
+		for (int i = 0; i < m; ++i) {
+			sum += a[(size_t)i * lda + j] * x[i];
+		}
+		double product = alpha * sum;
+		y[j] = beta == 0 ? product : beta * y[j] + product;
 	}
 }

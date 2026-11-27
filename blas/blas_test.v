@@ -341,7 +341,7 @@ fn test_dscal() {
 }
 
 fn test_dscal_large_unitary_dispatch_and_zero_alpha() {
-	n := 1024
+	n := 1027
 	mut x := []f64{len: n}
 	mut expected := []f64{len: n}
 	for i in 0 .. n {
@@ -381,7 +381,7 @@ fn test_daxpy() {
 }
 
 fn test_daxpy_large_unitary_dispatch() {
-	n := 1024
+	n := 1027
 	mut x := []f64{len: n}
 	mut y := []f64{len: n}
 	mut expected := []f64{len: n}
@@ -410,7 +410,7 @@ fn test_sdot_unitary_and_strided() {
 }
 
 fn test_sdot_large_unitary_dispatch_matches_f32_product_reference() {
-	n := 1024
+	n := 1027
 	mut x := []f32{len: n}
 	mut y := []f32{len: n}
 	mut reference := f64(0)
@@ -424,7 +424,7 @@ fn test_sdot_large_unitary_dispatch_matches_f32_product_reference() {
 }
 
 fn test_ddot_large_unitary_dispatch_matches_reference() {
-	n := 1024
+	n := 1027
 	mut x := []f64{len: n}
 	mut y := []f64{len: n}
 	mut expected := 0.0
@@ -474,6 +474,55 @@ fn test_dgemv() {
 	assert conj_no_trans_y == [14.0, 32]
 }
 
+fn test_dgemv_large_no_trans_dispatch_with_padded_rows_and_zero_beta() {
+	m := 8
+	n := 259
+	lda := n + 3
+	mut a := []f64{len: m * lda}
+	mut x := []f64{len: n}
+	mut y := []f64{len: m}
+	mut expected := []f64{len: m}
+	for j in 0 .. n {
+		x[j] = f64((j % 7) - 3) * 0.25
+	}
+	for i in 0 .. m {
+		mut sum := 0.0
+		for j in 0 .. n {
+			a[i * lda + j] = f64(((i + j) % 11) - 5) * 0.125
+			sum += a[i * lda + j] * x[j]
+		}
+		expected[i] = 0.75 * sum
+	}
+	y[0] = math.inf(1)
+	dgemv(.no_trans, m, n, 0.75, a, lda, x, 1, 0, mut y, 1)
+	assert y == expected
+}
+
+fn test_dgemv_large_trans_dispatch_with_padded_rows() {
+	m := 256
+	n := 10
+	lda := n + 3
+	mut a := []f64{len: m * lda}
+	mut x := []f64{len: m}
+	mut y := []f64{len: n}
+	mut expected := []f64{len: n}
+	for i in 0 .. m {
+		x[i] = f64((i % 7) - 3) * 0.25
+		for j in 0 .. n {
+			a[i * lda + j] = f64(((i + j) % 11) - 5) * 0.125
+		}
+	}
+	for j in 0 .. n {
+		mut sum := 0.0
+		for i in 0 .. m {
+			sum += a[i * lda + j] * x[i]
+		}
+		expected[j] = 0.75 * sum + 0.5 * y[j]
+	}
+	dgemv(.trans, m, n, 0.75, a, lda, x, 1, 0.5, mut y, 1)
+	assert float64.arrays_tolerance(y, expected, test_tol)
+}
+
 fn test_sgemv() {
 	a := [f32(1), 2, 3, 4, 5, 6]
 	mut y := [f32(1), 1, 1]
@@ -493,6 +542,55 @@ fn test_sgemv() {
 	mut scaled := [f32(1), 99, 2, 99, 3]
 	sgemv(.trans, 2, 3, 0, a, 3, [f32(0), 0], 1, 3, mut scaled, 2)
 	assert scaled == [f32(3), 99, 6, 99, 9]
+}
+
+fn test_sgemv_large_no_trans_dispatch_with_padded_rows_and_zero_beta() {
+	m := 8
+	n := 259
+	lda := n + 3
+	mut a := []f32{len: m * lda}
+	mut x := []f32{len: n}
+	mut y := []f32{len: m}
+	mut expected := []f32{len: m}
+	for j in 0 .. n {
+		x[j] = f32((j % 7) - 3) * 0.25
+	}
+	for i in 0 .. m {
+		mut sum := f32(0)
+		for j in 0 .. n {
+			a[i * lda + j] = f32(((i + j) % 11) - 5) * 0.125
+			sum += a[i * lda + j] * x[j]
+		}
+		expected[i] = 0.75 * sum
+	}
+	y[0] = f32(math.inf(1))
+	sgemv(.no_trans, m, n, 0.75, a, lda, x, 1, 0, mut y, 1)
+	assert y == expected
+}
+
+fn test_sgemv_large_trans_dispatch_with_padded_rows() {
+	m := 256
+	n := 10
+	lda := n + 3
+	mut a := []f32{len: m * lda}
+	mut x := []f32{len: m}
+	mut y := []f32{len: n}
+	mut expected := []f32{len: n}
+	for i in 0 .. m {
+		x[i] = f32((i % 7) - 3) * 0.25
+		for j in 0 .. n {
+			a[i * lda + j] = f32(((i + j) % 11) - 5) * 0.125
+		}
+	}
+	for j in 0 .. n {
+		mut sum := f32(0)
+		for i in 0 .. m {
+			sum += a[i * lda + j] * x[i]
+		}
+		expected[j] = 0.75 * sum + 0.5 * y[j]
+	}
+	sgemv(.trans, m, n, 0.75, a, lda, x, 1, 0.5, mut y, 1)
+	assert y == expected
 }
 
 fn test_dger() {

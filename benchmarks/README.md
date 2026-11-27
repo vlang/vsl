@@ -113,6 +113,19 @@ systemd-run --user --scope -p MemoryMax=2G -p MemorySwapMax=0 -- env VJOBS=1 \
 	/tmp/vsl-level1-dispatch
 ```
 
+The GEMV benchmark similarly compares pure-V and dispatched row-major
+`sgemv`/`dgemv` paths with padded leading dimensions in both transposed and
+non-transposed layouts:
+
+```sh
+cd ~/.vmodules
+systemd-run --user --scope -p MemoryMax=2G -p MemorySwapMax=0 -- env VJOBS=1 \
+	v -no-parallel -cc gcc -prod -o /tmp/vsl-gemv-dispatch \
+	./vsl/benchmarks/gemv_avx2_dispatch_bench.v
+systemd-run --user --scope -p MemoryMax=2G -p MemorySwapMax=0 -- env VJOBS=1 \
+	/tmp/vsl-gemv-dispatch
+```
+
 For a paired SciPy BLAS comparison and an f64 accuracy reference for the f32
 dot kernel, see the [benchmark notes](./vs_numpy/README.md).
 

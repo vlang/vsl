@@ -1,6 +1,7 @@
 module blas
 
 import math
+import runtime
 import vsl.blas.blas64
 import vsl.float.float32
 
@@ -240,6 +241,22 @@ pub fn dgemv(trans Transpose, m int, n int, alpha f64, a []f64, lda int, x []f64
 			return
 		}
 	}
+	if incx == 1 && incy == 1 && alpha != 0 {
+		if trans == .no_trans || trans == .conj_no_trans {
+			if n >= 128 && gemv_can_use_serial_dispatch(m, n, 8)
+				&& C.vsl_blas_avx2_fma_supported() != 0 {
+				C.vsl_blas_dgemv_n_dispatch(m, n, lda, alpha, unsafe { &a[0] }, unsafe {
+					&x[0]
+				}, beta, unsafe { &y[0] })
+				return
+			}
+		} else if m >= 128 && n >= 4 && C.vsl_blas_avx2_fma_supported() != 0 {
+			C.vsl_blas_dgemv_t_dispatch(m, n, lda, alpha, unsafe { &a[0] }, unsafe {
+				&x[0]
+			}, beta, unsafe { &y[0] })
+			return
+		}
+	}
 	blas64.dgemv(to_blas64_transpose(trans), m, n, alpha, a, lda, x, incx, beta, mut y, incy)
 }
 
@@ -253,6 +270,22 @@ pub fn sgemv(trans Transpose, m int, n int, alpha f32, a []f32, lda int, x []f32
 		if incx > 0 && incy > 0 && alpha != 0 {
 			C.cblas_sgemv(int(MemoryLayout.row_major), cblas_gemv_transpose(trans), m, n, alpha,
 				unsafe { &a[0] }, lda, unsafe { &x[0] }, incx, beta, unsafe { &y[0] }, incy)
+			return
+		}
+	}
+	if incx == 1 && incy == 1 && alpha != 0 {
+		if trans == .no_trans || trans == .conj_no_trans {
+			if n >= 128 && gemv_can_use_serial_dispatch(m, n, 4)
+				&& C.vsl_blas_avx2_supported() != 0 {
+				C.vsl_blas_sgemv_n_dispatch(m, n, lda, alpha, unsafe { &a[0] }, unsafe {
+					&x[0]
+				}, beta, unsafe { &y[0] })
+				return
+			}
+		} else if m >= 128 && n >= 8 && C.vsl_blas_avx2_supported() != 0 {
+			C.vsl_blas_sgemv_t_dispatch(m, n, lda, alpha, unsafe { &a[0] }, unsafe {
+				&x[0]
+			}, beta, unsafe { &y[0] })
 			return
 		}
 	}
@@ -310,6 +343,11 @@ fn validate_gemv_arguments(trans Transpose, m int, n int, lda int, a_len int, in
 
 fn cblas_gemv_transpose(trans Transpose) int {
 	return if trans == .conj_no_trans { int(Transpose.no_trans) } else { int(trans) }
+}
+
+fn gemv_can_use_serial_dispatch(m int, n int, element_bytes u64) bool {
+	work_bytes := u64(m) * u64(n) * element_bytes
+	return m < 2 || work_bytes < (u64(16) << 20) || runtime.nr_jobs() < 2
 }
 
 // dger performs the rank-1 update of a matrix.

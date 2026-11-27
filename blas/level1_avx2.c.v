@@ -8,3 +8,7 @@ fn C.vsl_blas_sdot_dispatch(n int, x &f32, y &f32) f32
 fn C.vsl_blas_ddot_dispatch(n int, x &f64, y &f64) f64
 fn C.vsl_blas_daxpy_dispatch(n int, alpha f64, x &f64, y &f64)
 fn C.vsl_blas_dscal_dispatch(n int, alpha f64, x &f64)
+fn C.vsl_blas_sgemv_n_dispatch(m int, n int, lda int, alpha f32, a &f32, x &f32, beta f32, y &f32)
+fn C.vsl_blas_dgemv_n_dispatch(m int, n int, lda int, alpha f64, a &f64, x &f64, beta f64, y &f64)
+fn C.vsl_blas_sgemv_t_dispatch(m int, n int, lda int, alpha f32, a &f32, x &f32, beta f32, y &f32)
+fn C.vsl_blas_dgemv_t_dispatch(m int, n int, lda int, alpha f64, a &f64, x &f64, beta f64, y &f64)
