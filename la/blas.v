@@ -409,10 +409,7 @@ pub fn matrix_matrix_mul_f32(mut c []f32, m int, n int, k int, alpha f32, a []f3
 }
 
 pub fn matrix_matrix_mul(mut c Matrix[f64], alpha f64, a &Matrix[f64], b &Matrix[f64]) {
-	// The Strassen path is deferred for now: on the default pure-V BLAS backend
-	// it did not show a stable end-to-end win across the tested size range.
-	// Keep the implementation and guards below for future tuning.
-	if false && alpha == 1.0 && c.m == c.n && a.m == a.n && b.m == b.n && a.m == c.m && a.n == b.m && b.n == c.n && c.m >= 128 && matrix_values_finite(a) && matrix_values_finite(b) && matrix_values_in_safe_range(a) && matrix_values_in_safe_range(b) && matrix_dynamic_range_safe(a) && matrix_dynamic_range_safe(b) {
+	if alpha == 1.0 && c.m == c.n && a.m == a.n && b.m == b.n && a.m == c.m && a.n == b.m && b.n == c.n && c.m >= 128 && matrix_values_finite(a) && matrix_values_finite(b) && matrix_values_in_safe_range(a) && matrix_values_in_safe_range(b) && matrix_dynamic_range_safe(a) && matrix_dynamic_range_safe(b) {
 		strassen_matrix_mul(mut c, a, b)
 		if matrix_values_finite(c) {
 			return
@@ -493,14 +490,17 @@ fn strassen_flat(mut c []f64, a []f64, b []f64, n int) {
 	}
 	half := n / 2
 	block := half * half
-	mut a11 := []f64{len: block}
-	mut a12 := []f64{len: block}
-	mut a21 := []f64{len: block}
-	mut a22 := []f64{len: block}
-	mut b11 := []f64{len: block}
-	mut b12 := []f64{len: block}
-	mut b21 := []f64{len: block}
-	mut b22 := []f64{len: block}
+	mut ws := []f64{len: block * 10}
+	mut a11 := ws[0..block]
+	mut a12 := ws[block..2 * block]
+	mut a21 := ws[2 * block..3 * block]
+	mut a22 := ws[3 * block..4 * block]
+	mut b11 := ws[4 * block..5 * block]
+	mut b12 := ws[5 * block..6 * block]
+	mut b21 := ws[6 * block..7 * block]
+	mut b22 := ws[7 * block..8 * block]
+	mut t1 := ws[8 * block..9 * block]
+	mut t2 := ws[9 * block..10 * block]
 	for i in 0 .. half {
 		for j in 0 .. half {
 			a11[i * half + j] = a[i * n + j]
@@ -513,45 +513,44 @@ fn strassen_flat(mut c []f64, a []f64, b []f64, n int) {
 			b22[i * half + j] = b[(i + half) * n + j + half]
 		}
 	}
-	mut t1 := []f64{len: block}
-	mut t2 := []f64{len: block}
+	mut out := []f64{len: block * 7}
+	mut m1 := out[0..block]
+	mut m2 := out[block..2 * block]
+	mut m3 := out[2 * block..3 * block]
+	mut m4 := out[3 * block..4 * block]
+	mut m5 := out[4 * block..5 * block]
+	mut m6 := out[5 * block..6 * block]
+	mut m7 := out[6 * block..7 * block]
 	for i in 0 .. block {
 		t1[i] = a11[i] + a22[i]
 		t2[i] = b11[i] + b22[i]
 	}
-	mut m1 := []f64{len: block}
 	strassen_flat(mut m1, t1, t2, half)
 	for i in 0 .. block {
 		t1[i] = a21[i] + a22[i]
 	}
-	strassen_flat(mut t2, t1, b11, half)
-	mut m2 := t2.clone()
+	strassen_flat(mut m2, t1, b11, half)
 	for i in 0 .. block {
 		t1[i] = b12[i] - b22[i]
 	}
-	strassen_flat(mut t2, a11, t1, half)
-	mut m3 := t2.clone()
+	strassen_flat(mut m3, a11, t1, half)
 	for i in 0 .. block {
 		t1[i] = b21[i] - b11[i]
 	}
-	strassen_flat(mut t2, a22, t1, half)
-	mut m4 := t2.clone()
+	strassen_flat(mut m4, a22, t1, half)
 	for i in 0 .. block {
 		t1[i] = a11[i] + a12[i]
 	}
-	strassen_flat(mut t2, t1, b22, half)
-	mut m5 := t2.clone()
+	strassen_flat(mut m5, t1, b22, half)
 	for i in 0 .. block {
 		t1[i] = a21[i] - a11[i]
 		t2[i] = b11[i] + b12[i]
 	}
-	mut m6 := []f64{len: block}
 	strassen_flat(mut m6, t1, t2, half)
 	for i in 0 .. block {
 		t1[i] = a12[i] - a22[i]
 		t2[i] = b21[i] + b22[i]
 	}
-	mut m7 := []f64{len: block}
 	strassen_flat(mut m7, t1, t2, half)
 	for i in 0 .. half {
 		for j in 0 .. half {
