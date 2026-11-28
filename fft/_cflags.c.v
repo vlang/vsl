@@ -13,7 +13,13 @@ module fft
 
 #flag @VMODROOT/pocket-fft/f32.o
 #flag @VMODROOT/pocket-fft/f64.o
-#flag -lm
+
+$if !windows {
+	#flag -lm
+}
+$if windows && tinyc {
+	#flag @VMODROOT/ucrt_fma.def
+}
 
 #include <pocket-fft/pocketfft_f32.h>
 #include <pocket-fft/pocketfft_f64.h>

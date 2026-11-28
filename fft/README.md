@@ -32,6 +32,10 @@ exactly once with `destroy_plan`.
 The helpers require exactly twice the plan length in values of the matching
 precision and validate that size before calling the native backend.
 
+On Windows, builds using V's bundled TinyCC link the PocketFFT `fma` and
+`fmaf` imports from the Universal CRT; non-Windows builds retain the system
+math-library link.
+
 ```v
 import vsl.fft
 
