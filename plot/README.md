@@ -589,6 +589,41 @@ plt.show()!
 | `plot_residuals(y_pred, residuals)` | Residual scatter plot |
 | `plot_actual_vs_predicted(y_true, y_pred)` | Actual vs predicted scatter |
 
+### Plottable adapters
+
+`plot.Plottable` is a public interface for VSL values that can describe
+themselves as a chart:
+
+```v ignore
+pub interface Plottable {
+	to_plot() &Plot
+}
+
+pub fn render(value Plottable) &Plot
+```
+
+`to_plot` extracts data and returns a `Plot`; it never calls `show`, writes a
+file, or opens a browser, so adapters are safe to use on headless hosts.
+`plot.render` is the generic entry point for any `Plottable` value. Implementations
+live in the module that owns the type, which keeps rendering optional and avoids
+an import cycle with the ML module. Built-in adapters:
+
+| Type | View |
+| --- | --- |
+| `vsl.ml.Kmeans` | Clustered samples and centroids |
+| `vsl.ml.KNN` | Samples grouped by class |
+| `vsl.ml.LinReg` | Observations and fitted regression line |
+| `vsl.ml.LogReg` | Observations and decision boundary |
+| `vsl.graph.Graph` | Vertex markers joined by edge lines |
+
+```v ignore
+plt := plot.render(model)
+plt.show(plot.PlotConfig{})!
+```
+
+Third-party types can opt in by adding a `pub fn (o &MyType) to_plot() &plot.Plot`
+method. See the [Plottable example](../examples/plot_plottable/README.md).
+
 ---
 
 Create beautiful, interactive visualizations with VSL Plot! 🚀

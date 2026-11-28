@@ -113,3 +113,8 @@ v run ./vsl/examples/graph_shortest_paths_methods/main.v
 
 It compares `.fw`, `.dijkstra`, and `.bfs` in practical scenarios and highlights
 when each method should be preferred.
+
+`Graph` implements `vsl.plot.Plottable`: `to_plot()` returns vertex markers
+joined by edge lines using the first two coordinates of each vertex. The method
+only extracts data, so it works without a display; use `vsl.plot.render(g)` for
+generic access.

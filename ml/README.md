@@ -201,3 +201,8 @@ intercept from the weighted feature and target means.
 
 See the [weighted Lasso example](../examples/ml_weighted_lasso/README.md) for a
 complete program.
+
+`Kmeans`, `KNN`, `LinReg`, and `LogReg` implement `vsl.plot.Plottable` through
+their `to_plot()` methods, which return the same chart as `get_plotter()` without
+rendering it. Use `vsl.plot.render(model)` to work with any of them through one
+generic interface; see the [Plottable example](../examples/plot_plottable/README.md).
