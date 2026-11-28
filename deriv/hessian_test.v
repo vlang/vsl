@@ -85,21 +85,13 @@ fn test_hessian_rejects_empty_input() {
 }
 
 fn test_hessian_rejects_invalid_steps() {
-	hessian(hessian_test_quadratic, [1.0, 2.0], 0.0) or {
-		assert err.code() == 4
-		return
+	for step in [0.0, -1e-3, math.nan()] {
+		hessian(hessian_test_quadratic, [1.0, 2.0], step) or {
+			assert err.code() == 4
+			continue
+		}
+		assert false, 'expected step ${step} to be rejected'
 	}
-	assert false, 'expected zero step to be rejected'
-	hessian(hessian_test_quadratic, [1.0, 2.0], -1e-3) or {
-		assert err.code() == 4
-		return
-	}
-	assert false, 'expected negative step to be rejected'
-	hessian(hessian_test_quadratic, [1.0, 2.0], math.nan()) or {
-		assert err.code() == 4
-		return
-	}
-	assert false, 'expected non-finite step to be rejected'
 }
 
 fn test_hessian_rejects_non_finite_coordinates() {
