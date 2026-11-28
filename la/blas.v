@@ -411,7 +411,7 @@ pub fn matrix_matrix_mul_f32(mut c []f32, m int, n int, k int, alpha f32, a []f3
 pub fn matrix_matrix_mul(mut c Matrix[f64], alpha f64, a &Matrix[f64], b &Matrix[f64]) {
 	if alpha == 1.0 && c.m == c.n && a.m == a.n && b.m == b.n && a.m == c.m && a.n == b.m && b.n == c.n && c.m >= 128 && matrix_values_finite(a) && matrix_values_finite(b) && matrix_values_in_safe_range(a) && matrix_values_in_safe_range(b) && matrix_dynamic_range_safe(a) && matrix_dynamic_range_safe(b) {
 		strassen_matrix_mul(mut c, a, b)
-		if matrix_values_finite(c) {
+		if matrix_values_finite(c) && strassen_repair_cancellation(mut c, a, b) {
 			return
 		}
 	}
@@ -447,7 +447,8 @@ fn matrix_values_finite(m &Matrix[f64]) bool {
 fn matrix_values_in_safe_range(m &Matrix[f64]) bool {
 	for value in m.data {
 		av := if value < 0 { -value } else { value }
-		if av > 1e150 {
+		// !(av <= 1e150) also rejects NaN, which `av > 1e150` would miss.
+		if !(av <= 1e150) {
 			return false
 		}
 	}
@@ -477,6 +478,76 @@ fn matrix_dynamic_range_safe(m &Matrix[f64]) bool {
 		return true
 	}
 	return max_abs / min_abs <= 1e15
+}
+
+// strassen_error_bound conservatively bounds the per-entry forward error
+// of strassen_matrix_mul. Every level combines four subproducts of its
+// inputs, so the base-case accumulation and the per-level additions
+// accumulate to about 2*n^2*eps*||a||_inf*||b||_inf over the recursion.
+fn strassen_error_bound(a &Matrix[f64], b &Matrix[f64]) f64 {
+	n := a.n
+	mut max_row_a := 0.0
+	mut max_row_b := 0.0
+	for i in 0 .. n {
+		mut sum_a := 0.0
+		mut sum_b := 0.0
+		for j in 0 .. n {
+			va := a.data[i * n + j]
+			vb := b.data[i * n + j]
+			sum_a += if va < 0 { -va } else { va }
+			sum_b += if vb < 0 { -vb } else { vb }
+		}
+		if sum_a > max_row_a {
+			max_row_a = sum_a
+		}
+		if sum_b > max_row_b {
+			max_row_b = sum_b
+		}
+	}
+	return 2.0 * f64(n) * f64(n) * 2.220446049250313e-16 * max_row_a * max_row_b
+}
+
+// strassen_repair_cancellation recomputes entries of c whose magnitude
+// sits below four times the forward-error bound: those are exactly the
+// entries where the combine step can cancel far below the scale of the
+// subproducts (crafted quadrant-uniform inputs pass every input guard
+// yet lose ~24 digits). When more than a quarter of the entries would
+// need repair the whole Strassen result is discarded instead and the
+// caller re-runs the conventional BLAS path. Returns false when the
+// result was discarded.
+fn strassen_repair_cancellation(mut c Matrix[f64], a &Matrix[f64], b &Matrix[f64]) bool {
+	bound := strassen_error_bound(a, b)
+	if bound == 0.0 {
+		// A or B is all zeros: every product is exactly zero.
+		return true
+	}
+	n := c.m
+	threshold := 4.0 * bound
+	mut suspects := 0
+	for value in c.data {
+		av := if value < 0 { -value } else { value }
+		if av <= threshold {
+			suspects++
+		}
+	}
+	if suspects * 4 > n * n {
+		return false
+	}
+	for i in 0 .. n {
+		for j in 0 .. n {
+			index := i * n + j
+			value := c.data[index]
+			av := if value < 0 { -value } else { value }
+			if av <= threshold {
+				mut sum := 0.0
+				for k in 0 .. n {
+					sum += a.data[i * n + k] * b.data[k * n + j]
+				}
+				c.data[index] = sum
+			}
+		}
+	}
+	return true
 }
 
 fn strassen_flat(mut c []f64, a []f64, b []f64, n int) {

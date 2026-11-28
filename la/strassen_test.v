@@ -194,3 +194,69 @@ fn test_strassen_odd_dimension_uses_blas() {
 		assert math.abs(c.data[i] - expected.data[i]) <= strassen_test_tol * scale
 	}
 }
+
+// Quadrant-uniform inputs pass every Strassen guard, yet the combine step
+// cancels 6.4e295-scale subproducts down to a 1.92e272 result: without a
+// forward-error check the naive reference and Strassen differ by ~2.8e8
+// relative. The result check must discard the Strassen output and let the
+// BLAS path reproduce the naive product.
+fn test_strassen_discards_result_when_quadrant_cancellation_dominates() {
+	n := 128
+	half := n / 2
+	mut a := Matrix.new[f64](n, n)
+	mut b := Matrix.new[f64](n, n)
+	for i in 0 .. half {
+		for j in 0 .. half {
+			a.set(i, j, 1e135)
+			a.set(i, j + half, 1e135)
+			a.set(i + half, j, 1e135)
+			a.set(i + half, j + half, 1e147)
+			b.set(i, j, 1e135)
+			b.set(i, j + half, 1e135)
+			b.set(i + half, j, 2e135)
+			b.set(i + half, j + half, 1e147)
+		}
+	}
+	// The inputs must genuinely take the Strassen entry path.
+	assert matrix_values_finite(a) && matrix_values_finite(b)
+	assert matrix_values_in_safe_range(a) && matrix_values_in_safe_range(b)
+	assert matrix_dynamic_range_safe(a) && matrix_dynamic_range_safe(b)
+
+	mut c := Matrix.new[f64](n, n)
+	matrix_matrix_mul(mut c, 1.0, a, b)
+
+	mut expected := Matrix.new[f64](n, n)
+	for i in 0 .. n {
+		for j in 0 .. n {
+			mut sum := 0.0
+			for k in 0 .. n {
+				sum += a.get(i, k) * b.get(k, j)
+			}
+			expected.set(i, j, sum)
+		}
+	}
+	for i in 0 .. n * n {
+		scale := math.max(1.0, math.abs(expected.data[i]))
+		assert math.abs(c.data[i] - expected.data[i]) <= strassen_test_tol * scale
+	}
+}
+
+fn test_matrix_values_in_safe_range_rejects_nan_and_boundary() {
+	mut m := Matrix.new[f64](1, 1)
+	m.set(0, 0, 1e150)
+	assert matrix_values_in_safe_range(m)
+	m.set(0, 0, 1.1e150)
+	assert !matrix_values_in_safe_range(m)
+	m.set(0, 0, math.nan())
+	assert !matrix_values_in_safe_range(m)
+	assert !matrix_values_finite(m)
+}
+
+fn test_matrix_dynamic_range_safe_rejects_beyond_limit() {
+	mut m := Matrix.new[f64](1, 2)
+	m.set(0, 0, 1e15)
+	m.set(0, 1, 1.0)
+	assert matrix_dynamic_range_safe(m)
+	m.set(0, 0, 1e15 + 1.0)
+	assert !matrix_dynamic_range_safe(m)
+}
