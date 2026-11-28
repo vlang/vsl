@@ -409,6 +409,12 @@ pub fn matrix_matrix_mul_f32(mut c []f32, m int, n int, k int, alpha f32, a []f3
 }
 
 pub fn matrix_matrix_mul(mut c Matrix[f64], alpha f64, a &Matrix[f64], b &Matrix[f64]) {
+	if alpha == 1.0 && c.m == c.n && a.m == a.n && b.m == b.n && a.m == c.m && a.n == b.m && b.n == c.n && c.m >= 128 && matrix_values_finite(a) && matrix_values_finite(b) && matrix_values_in_safe_range(a) && matrix_values_in_safe_range(b) && matrix_dynamic_range_safe(a) && matrix_dynamic_range_safe(b) {
+		strassen_matrix_mul(mut c, a, b)
+		if matrix_values_finite(c) && strassen_repair_cancellation(mut c, a, b) {
+			return
+		}
+	}
 	if c.m < 6 && c.n < 6 && a.n < 30 {
 		for i in 0 .. c.m {
 			for j := 0; j < c.n; j++ {
@@ -422,6 +428,214 @@ pub fn matrix_matrix_mul(mut c Matrix[f64], alpha f64, a &Matrix[f64], b &Matrix
 	}
 	blas.dgemm(.no_trans, .no_trans, a.m, b.n, a.n, alpha, a.data, a.n, b.data, b.n, 0.0, mut
 		c.data, c.n)
+}
+
+fn strassen_matrix_mul(mut c Matrix[f64], a &Matrix[f64], b &Matrix[f64]) {
+	n := c.m
+	strassen_flat(mut c.data, a.data, b.data, n)
+}
+
+fn matrix_values_finite(m &Matrix[f64]) bool {
+	for value in m.data {
+		if value != value || value == math.inf(1) || value == math.inf(-1) {
+			return false
+		}
+	}
+	return true
+}
+
+fn matrix_values_in_safe_range(m &Matrix[f64]) bool {
+	for value in m.data {
+		av := if value < 0 { -value } else { value }
+		// !(av <= 1e150) also rejects NaN, which `av > 1e150` would miss.
+		if !(av <= 1e150) {
+			return false
+		}
+	}
+	return true
+}
+
+// matrix_dynamic_range_safe rejects inputs whose largest and smallest nonzero
+// magnitudes differ enough that Strassen's quadrant additions/subtractions can
+// absorb a smaller summand. Such cases keep the conventional BLAS path, which
+// does not mix operands across quadrants before multiplying.
+fn matrix_dynamic_range_safe(m &Matrix[f64]) bool {
+	mut max_abs := 0.0
+	mut min_abs := math.inf(1)
+	for value in m.data {
+		av := if value < 0 { -value } else { value }
+		if av == 0.0 {
+			continue
+		}
+		if av > max_abs {
+			max_abs = av
+		}
+		if av < min_abs {
+			min_abs = av
+		}
+	}
+	if min_abs == math.inf(1) {
+		return true
+	}
+	return max_abs / min_abs <= 1e15
+}
+
+// strassen_error_bound conservatively bounds the per-entry forward error
+// of strassen_matrix_mul. Every level combines four subproducts of its
+// inputs, so the base-case accumulation and the per-level additions
+// accumulate to about 2*n^2*eps*||a||_inf*||b||_inf over the recursion.
+fn strassen_error_bound(a &Matrix[f64], b &Matrix[f64]) f64 {
+	n := a.n
+	mut max_row_a := 0.0
+	mut max_row_b := 0.0
+	for i in 0 .. n {
+		mut sum_a := 0.0
+		mut sum_b := 0.0
+		for j in 0 .. n {
+			va := a.data[i * n + j]
+			vb := b.data[i * n + j]
+			sum_a += if va < 0 { -va } else { va }
+			sum_b += if vb < 0 { -vb } else { vb }
+		}
+		if sum_a > max_row_a {
+			max_row_a = sum_a
+		}
+		if sum_b > max_row_b {
+			max_row_b = sum_b
+		}
+	}
+	return 2.0 * f64(n) * f64(n) * 2.220446049250313e-16 * max_row_a * max_row_b
+}
+
+// strassen_repair_cancellation recomputes entries of c whose magnitude
+// sits below four times the forward-error bound: those are exactly the
+// entries where the combine step can cancel far below the scale of the
+// subproducts (crafted quadrant-uniform inputs pass every input guard
+// yet lose ~24 digits). When more than a quarter of the entries would
+// need repair the whole Strassen result is discarded instead and the
+// caller re-runs the conventional BLAS path. Returns false when the
+// result was discarded.
+fn strassen_repair_cancellation(mut c Matrix[f64], a &Matrix[f64], b &Matrix[f64]) bool {
+	bound := strassen_error_bound(a, b)
+	if bound == 0.0 {
+		// A or B is all zeros: every product is exactly zero.
+		return true
+	}
+	n := c.m
+	threshold := 4.0 * bound
+	mut suspects := 0
+	for value in c.data {
+		av := if value < 0 { -value } else { value }
+		if av <= threshold {
+			suspects++
+		}
+	}
+	if suspects * 4 > n * n {
+		return false
+	}
+	for i in 0 .. n {
+		for j in 0 .. n {
+			index := i * n + j
+			value := c.data[index]
+			av := if value < 0 { -value } else { value }
+			if av <= threshold {
+				mut sum := 0.0
+				for k in 0 .. n {
+					sum += a.data[i * n + k] * b.data[k * n + j]
+				}
+				c.data[index] = sum
+			}
+		}
+	}
+	return true
+}
+
+fn strassen_flat(mut c []f64, a []f64, b []f64, n int) {
+	if n <= 64 {
+		blas.dgemm(.no_trans, .no_trans, n, n, n, 1.0, a, n, b, n, 0.0, mut c, n)
+		return
+	}
+	if n % 2 != 0 {
+		blas.dgemm(.no_trans, .no_trans, n, n, n, 1.0, a, n, b, n, 0.0, mut c, n)
+		return
+	}
+	half := n / 2
+	block := half * half
+	mut ws := []f64{len: block * 10}
+	mut a11 := unsafe { ws[0..block] }
+	mut a12 := unsafe { ws[block..2 * block] }
+	mut a21 := unsafe { ws[2 * block..3 * block] }
+	mut a22 := unsafe { ws[3 * block..4 * block] }
+	mut b11 := unsafe { ws[4 * block..5 * block] }
+	mut b12 := unsafe { ws[5 * block..6 * block] }
+	mut b21 := unsafe { ws[6 * block..7 * block] }
+	mut b22 := unsafe { ws[7 * block..8 * block] }
+	mut t1 := unsafe { ws[8 * block..9 * block] }
+	mut t2 := unsafe { ws[9 * block..10 * block] }
+	for i in 0 .. half {
+		for j in 0 .. half {
+			a11[i * half + j] = a[i * n + j]
+			a12[i * half + j] = a[i * n + j + half]
+			a21[i * half + j] = a[(i + half) * n + j]
+			a22[i * half + j] = a[(i + half) * n + j + half]
+			b11[i * half + j] = b[i * n + j]
+			b12[i * half + j] = b[i * n + j + half]
+			b21[i * half + j] = b[(i + half) * n + j]
+			b22[i * half + j] = b[(i + half) * n + j + half]
+		}
+	}
+	mut out := []f64{len: block * 7}
+	mut m1 := unsafe { out[0..block] }
+	mut m2 := unsafe { out[block..2 * block] }
+	mut m3 := unsafe { out[2 * block..3 * block] }
+	mut m4 := unsafe { out[3 * block..4 * block] }
+	mut m5 := unsafe { out[4 * block..5 * block] }
+	mut m6 := unsafe { out[5 * block..6 * block] }
+	mut m7 := unsafe { out[6 * block..7 * block] }
+	for i in 0 .. block {
+		t1[i] = a11[i] + a22[i]
+		t2[i] = b11[i] + b22[i]
+	}
+	strassen_flat(mut m1, t1, t2, half)
+	for i in 0 .. block {
+		t1[i] = a21[i] + a22[i]
+	}
+	strassen_flat(mut m2, t1, b11, half)
+	for i in 0 .. block {
+		t1[i] = b12[i] - b22[i]
+	}
+	strassen_flat(mut m3, a11, t1, half)
+	for i in 0 .. block {
+		t1[i] = b21[i] - b11[i]
+	}
+	strassen_flat(mut m4, a22, t1, half)
+	for i in 0 .. block {
+		t1[i] = a11[i] + a12[i]
+	}
+	strassen_flat(mut m5, t1, b22, half)
+	for i in 0 .. block {
+		t1[i] = a21[i] - a11[i]
+		t2[i] = b11[i] + b12[i]
+	}
+	strassen_flat(mut m6, t1, t2, half)
+	for i in 0 .. block {
+		t1[i] = a12[i] - a22[i]
+		t2[i] = b21[i] + b22[i]
+	}
+	strassen_flat(mut m7, t1, t2, half)
+	for i in 0 .. half {
+		for j in 0 .. half {
+			idx := i * half + j
+			c11 := m1[idx] + m4[idx] - m5[idx] + m7[idx]
+			c12 := m3[idx] + m5[idx]
+			c21 := m2[idx] + m4[idx]
+			c22 := m1[idx] - m2[idx] + m3[idx] + m6[idx]
+			c[i * n + j] = c11
+			c[i * n + j + half] = c12
+			c[(i + half) * n + j] = c21
+			c[(i + half) * n + j + half] = c22
+		}
+	}
 }
 
 // matrix_tr_matrix_mul returns the matrix multiplication (scaled) with transposed(a)
