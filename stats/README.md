@@ -62,5 +62,51 @@ println('finite count=${finite_summary.count}, propagated median=${propagated_me
 ```
 
 See the runnable [descriptive statistics example](../examples/stats_descriptive/README.md)
-for summaries, quantiles, and automatic histogram bins. Inferential tests and confidence intervals
-are tracked separately in [VSL issue #572](https://github.com/vlang/vsl/issues/572).
+for summaries, quantiles, and automatic histogram bins.
+
+## Inferential statistics
+
+`stats.mean_confidence_interval(sample, confidence)` returns a two-sided
+t-based interval for the population mean. The sample needs at least two finite
+observations and `confidence` must lie strictly between 0 and 1.
+
+```v ignore
+pub fn mean_confidence_interval(sample []f64, confidence f64) !ConfidenceInterval
+```
+
+`stats.t_test_one_sample(sample, mu, alternative)`,
+`stats.t_test_paired(before, after, alternative)`, and
+`stats.t_test_independent(a, b, equal_var, alternative)` return a
+`TTestResult` with the statistic, p-value, degrees of freedom, standard error
+of the difference, and observed difference. `Alternative` selects
+`.two_sided`, `.less`, or `.greater`. Independent tests use the
+pooled-variance Student test when `equal_var` is true and Welch's test
+otherwise (the two may have different degrees of freedom).
+
+`stats.chi_square_goodness_of_fit(observed, expected)` and
+`stats.chi_square_independence(table)` return a `ChiSquareResult` with the
+statistic, upper-tail p-value, and degrees of freedom. Expected counts must be
+positive; the contingency table must be rectangular with at least two rows and
+two columns.
+
+`stats.adjust_p_values(pvalues, method)` applies either `.bonferroni` or the
+`.benjamini_hochberg` step-up correction. The input p-values must be finite and
+within `[0, 1]`; the original slice is not modified.
+
+All inferential functions reject non-finite observations and degenerate
+samples with a VSL error rather than returning NaN. The p-values use internal
+regularized incomplete beta and gamma implementations; no external
+distribution library is required.
+
+```v
+import vsl.stats
+
+sample := [f64(2.0), 4.0, 6.0, 8.0, 10.0]
+interval := stats.mean_confidence_interval(sample, 0.95)!
+println('95% CI: [${interval.lower}, ${interval.upper}]')
+
+test := stats.t_test_one_sample(sample, 5.0, .two_sided)!
+println('t=${test.statistic}, df=${test.df}, p=${test.p_value}')
+```
+
+See the runnable [inferential statistics example](../examples/stats_inference/README.md).
