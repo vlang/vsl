@@ -50,5 +50,40 @@ reported separately as `n_event_calls`; `n_calls` remains the derivative
 callback count. Non-finite event values stop with `.non_finite_event_value`.
 Requested output samples are returned only through the localized event time.
 
-This ODE slice does not provide stiff methods, multiple/directional events, or
-event handling for roots that do not change sign.
+## Stiff systems
+
+`solve_implicit_euler` integrates the same first-order systems with an adaptive
+A-stable implicit Euler method. Each step solves the implicit equation with
+Newton iteration using a finite-difference Jacobian and a small pivoted linear
+solve; Richardson step doubling supplies the error estimate and step-size
+control. It accepts forward and backward integration and reports convergence,
+Newton, evaluation, and step-limit statuses.
+
+```v
+import math
+import vsl.ode
+
+fn stiff_system(t f64, state []f64, _ []f64) []f64 {
+	return [-1000.0 * (state[0] - math.cos(t)) - math.sin(t)]
+}
+
+result := ode.solve_implicit_euler(stiff_system, ode.ImplicitEulerParams{
+	t_start:       0.0
+	t_end:         1.0
+	initial_state: [f64(0.0)]
+	initial_step:  0.1
+	max_step:      1.0
+	abs_tol:       1e-6
+	rel_tol:       1e-4
+})!
+assert result.status == .converged
+assert math.abs(result.state[0] - math.cos(1.0)) < 1e-3
+```
+
+Implicit Euler is first order: it is stable on stiff problems but needs smaller
+steps than RK23 to reach the same accuracy on non-stiff ones. It does not
+currently support requested output times or event functions.
+
+This ODE slice does not provide multiple/directional events, event handling for
+roots that do not change sign, general dense output, or higher-order implicit
+methods. See the [stiff ODE example](../examples/ode_stiff/README.md).
