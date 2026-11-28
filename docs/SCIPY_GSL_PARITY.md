@@ -69,11 +69,14 @@ Inverse error functions shipped in [#540](https://github.com/vlang/vsl/issues/54
 Airy functions Ai, Bi and their derivatives, with scaled forms, ship in
 [#556](https://github.com/vlang/vsl/issues/556) (`fun/airy.v`, validated against high-precision
 references and the Wronskian identity; see `examples/airy_turning_point`).
+Complete and incomplete elliptic integrals and Jacobi `sn`/`cn`/`dn` ship in
+[#557](https://github.com/vlang/vsl/issues/557) (`fun/elliptic.v`, using the
+parameter convention `m = k^2`, validated against independent numerical
+references and the Jacobi identities; see `examples/elliptic_pendulum`).
 Fractional Bessel functions, error-estimating variants beyond `bessel_j0_e`
-and `bessel_j1_e`, elliptic families, and other special functions remain
-tracked in
+and `bessel_j1_e`, and other special functions remain tracked in
 [#541](https://github.com/vlang/vsl/issues/541), [#543](https://github.com/vlang/vsl/issues/543),
-[#557](https://github.com/vlang/vsl/issues/557), and [#558](https://github.com/vlang/vsl/issues/558).
+and [#558](https://github.com/vlang/vsl/issues/558).
 Compare SciPy [`special`][scipy-special] and GSL [`special functions`][gsl-special].
 
 ### Statistics and probability

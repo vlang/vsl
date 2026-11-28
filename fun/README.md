@@ -199,6 +199,22 @@ See these examples for practical applications:
 - `erfcx(x)` - Scaled complementary error function; positive tails remain
   finite for large finite inputs.
 
+**Elliptic integrals and Jacobi functions** (parameter convention `m = k^2`,
+all APIs return errors for invalid or singular inputs):
+- `ellipk(m)` - Complete elliptic integral of the first kind K(m).
+- `ellipe(m)` - Complete elliptic integral of the second kind E(m); `ellipe(1) = 1`.
+- `ellippi(n, m)` - Complete elliptic integral of the third kind Pi(n, m).
+- `ellipf(phi, m)` - Incomplete first kind F(phi, m), odd in `phi`.
+- `ellipe_inc(phi, m)` - Incomplete second kind E(phi, m).
+- `ellippi_inc(n, phi, m)` - Incomplete third kind Pi(n, phi, m).
+- `ellipj(u, m)` - Jacobi `sn`, `cn`, `dn` as `JacobiValues`, with quarter-period
+  transformations and the `m = 0, 1` limits.
+
+Complete K and E use the arithmetic-geometric mean; incomplete integrals use
+adaptive Simpson with a `1e-14` target. Values near `m = 1` converge slowly for
+the incomplete integrals. See the
+[pendulum example](../examples/elliptic_pendulum/README.md).
+
 ## 🔗 References
 
 - Abramowitz & Stegun: "Handbook of Mathematical Functions"
