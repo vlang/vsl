@@ -107,6 +107,44 @@ println('Error estimates: ${result.error_estimate}')
 See the [multivariable Jacobian example](../examples/deriv_jacobian/README.md)
 for a complete program.
 
+### `hessian`
+
+```v ignore
+pub fn hessian(f fn ([]f64) f64, x []f64, h f64) !HessianResult
+```
+
+This function estimates the Hessian matrix of second partial derivatives of a
+scalar-valued function at `x`. Both `HessianResult.values` and
+`error_estimate` are symmetric matrices shaped `[input_length, input_length]`.
+
+Diagonal entries use the central second difference
+`(f(x + s) - 2 f(x) + f(x - s)) / s^2`; off-diagonal entries use the four-point
+mixed-partial stencil. Every entry is computed at `s` and `s/2` and refined with
+Richardson extrapolation, which removes the leading `O(s^2)` truncation term.
+The difference between the two estimates supplies the per-entry error estimate.
+Only the upper triangle is evaluated and mirrored to the lower triangle.
+
+Each coordinate uses `h * max(1, abs(x[i]))` as its initial step. A non-positive
+or non-finite step, non-finite input or output, unrepresentable perturbation, or
+denominator overflow returns an error. `evaluations` counts the initial value at
+`x` plus all perturbation calls.
+
+```v
+import math
+import vsl.deriv
+
+fn potential(x []f64) f64 {
+	return x[0] * x[0] + 2.0 * x[0] * x[1] + math.sin(x[1])
+}
+
+result := deriv.hessian(potential, [0.5, 0.25], 1e-3)!
+println('Hessian: ${result.values}')
+println('Error estimates: ${result.error_estimate}')
+```
+
+See the [Hessian example](../examples/deriv_hessian/README.md) for a complete
+program.
+
 ## References and Further Reading
 
 This work is a spiritual descendent of the Differentiation module in [GSL](https://github.com/ampl/gsl). 📖
