@@ -87,6 +87,56 @@ fn test_adjust_p_values_bh_preserves_order_with_unsorted_input() {
 	assert math.abs(adjusted[2] - 0.05) < 1e-12
 }
 
+fn test_t_tail_of_huge_statistic_is_representable() {
+	result := t_test_one_sample([f64(0.0), 2.0], 1e200, .two_sided)!
+	expected := 2.0 / (math.pi * 1e200)
+	assert math.abs(result.p_value / expected - 1.0) < 1e-9
+}
+
+fn test_extreme_confidence_brackets_the_critical_value() {
+	confidence := 0.99999999999999
+	interval := mean_confidence_interval([f64(0.0), 2.0], confidence)!
+	alpha := 0.5 * (1.0 - confidence)
+	expected := 1.0 / (math.pi * alpha)
+	assert math.abs(interval.upper / expected - 1.0) < 1e-4
+}
+
+fn test_pooled_variance_does_not_overflow() {
+	huge := [f64(-8e153), 8e153]
+	result := t_test_independent(huge, huge, true, .two_sided)!
+	assert result.statistic == 0.0
+	assert result.p_value == 1.0
+}
+
+fn test_welch_df_is_scale_invariant() {
+	base := t_test_independent([f64(1.0), 2.0, 3.0], [f64(2.0), 3.0, 4.0], false, .two_sided)!
+	mut scaled_a := []f64{len: 3}
+	mut scaled_b := []f64{len: 3}
+	for i, value in [f64(1.0), 2.0, 3.0] {
+		scaled_a[i] = value * 1e100
+		scaled_b[i] = (value + 1.0) * 1e100
+	}
+	scaled := t_test_independent(scaled_a, scaled_b, false, .two_sided)!
+	assert math.abs(scaled.df - base.df) < 1e-9
+	assert math.abs(scaled.statistic - base.statistic) < 1e-9
+}
+
+fn test_chi_square_goodness_of_fit_rejects_unequal_totals() {
+	chi_square_goodness_of_fit([f64(20.0), 20.0], [f64(10.0), 10.0]) or {
+		assert err.msg().contains('totals must agree')
+		return
+	}
+	assert false, 'unequal observed and expected totals should be rejected'
+}
+
+fn test_gamma_series_rejects_unconverged_result() {
+	gamma_series(500000.0, 500000.0) or {
+		assert err.msg().contains('did not converge')
+		return
+	}
+	assert false, 'an unconverged gamma series should be rejected'
+}
+
 fn test_inference_rejects_invalid_samples() {
 	mean_confidence_interval([1.0], 0.95) or {
 		return

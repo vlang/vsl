@@ -115,14 +115,29 @@ fn t_upper_tail(t f64, df f64) f64 {
 	if df <= 0.0 {
 		return math.nan()
 	}
-	x := df / (df + t * t)
+	abs_t := math.abs(t)
+	if !finite_value(abs_t) {
+		return 0.0
+	}
+	x := df / (df + abs_t * abs_t)
+	if x == 0.0 {
+		// t*t overflowed: use the leading small-x term of I_x(a, b) in the log
+		// domain, where the continued fraction approaches one.
+		a := df * 0.5
+		log_x := math.log(df) - 2.0 * math.log(abs_t)
+		log_front := fun.log_gamma(a + 0.5) - fun.log_gamma(a) - fun.log_gamma(0.5) + a * log_x
+		return 0.5 * math.exp(log_front - math.log(a))
+	}
 	return 0.5 * beta_regularized(df * 0.5, 0.5, x)
 }
 
-fn t_critical(alpha f64, df f64) f64 {
+fn t_critical(alpha f64, df f64) !f64 {
 	mut low := 0.0
 	mut high := 1.0
-	for t_upper_tail(high, df) > alpha && high < 1e12 {
+	for t_upper_tail(high, df) > alpha {
+		if high >= 1e300 {
+			return error('stats.mean_confidence_interval: confidence is too close to one')
+		}
 		high *= 2.0
 	}
 	for _ in 0 .. 200 {
@@ -136,17 +151,17 @@ fn t_critical(alpha f64, df f64) f64 {
 	return 0.5 * (low + high)
 }
 
-fn gamma_series(a f64, x f64) f64 {
+fn gamma_series(a f64, x f64) !f64 {
 	mut sum := 1.0 / a
 	mut term := sum
 	for n := 1; n <= 500; n++ {
 		term *= x / (a + f64(n))
 		sum += term
 		if math.abs(term) < math.abs(sum) * 1e-15 {
-			break
+			return sum * math.exp(-x + a * math.log(x) - fun.log_gamma(a))
 		}
 	}
-	return sum * math.exp(-x + a * math.log(x) - fun.log_gamma(a))
+	return error('stats: gamma series did not converge')
 }
 
 fn gamma_continued_fraction(a f64, x f64) f64 {
@@ -176,17 +191,17 @@ fn gamma_continued_fraction(a f64, x f64) f64 {
 }
 
 // gamma_upper_regularized returns Q(a, x), the upper regularized gamma.
-fn gamma_upper_regularized(a f64, x f64) f64 {
+fn gamma_upper_regularized(a f64, x f64) !f64 {
 	if x <= 0.0 {
 		return 1.0
 	}
 	if x < a + 1.0 {
-		return 1.0 - gamma_series(a, x)
+		return 1.0 - gamma_series(a, x)!
 	}
 	return math.exp(-x + a * math.log(x) - fun.log_gamma(a)) * gamma_continued_fraction(a, x)
 }
 
-fn chi_square_upper_tail(x f64, df f64) f64 {
+fn chi_square_upper_tail(x f64, df f64) !f64 {
 	if df <= 0.0 || x < 0.0 {
 		return math.nan()
 	}
@@ -253,7 +268,7 @@ pub fn mean_confidence_interval(sample []f64, confidence f64) !ConfidenceInterva
 	}
 	summary := inference_sample(sample, 'stats.mean_confidence_interval')!
 	df := f64(summary.count - 1)
-	critical := t_critical(0.5 * (1.0 - confidence), df)
+	critical := t_critical(0.5 * (1.0 - confidence), df)!
 	standard_error := summary.stddev / math.sqrt(f64(summary.count))
 	return ConfidenceInterval{
 		estimate:   summary.mean
@@ -311,17 +326,25 @@ pub fn t_test_independent(a []f64, b []f64, equal_var bool, alternative Alternat
 	mut standard_error := 0.0
 	mut df := 0.0
 	if equal_var {
-		pooled := ((na - 1.0) * left.variance + (nb - 1.0) * right.variance) / (na + nb - 2.0)
+		denom := na + nb - 2.0
+		weight_a := (na - 1.0) / denom
+		pooled := weight_a * left.variance + (1.0 - weight_a) * right.variance
 		standard_error = math.sqrt(pooled * (1.0 / na + 1.0 / nb))
-		df = na + nb - 2.0
+		df = denom
 	} else {
 		standard_error = math.sqrt(va_over_na + vb_over_nb)
-		denominator := (va_over_na * va_over_na) / (na - 1.0) +
-			(vb_over_nb * vb_over_nb) / (nb - 1.0)
+		scale := math.max(va_over_na, vb_over_nb)
+		if scale <= 0.0 {
+			return error('stats.t_test_independent: Welch degrees of freedom are undefined')
+		}
+		a_scaled := va_over_na / scale
+		b_scaled := vb_over_nb / scale
+		denominator := (a_scaled * a_scaled) / (na - 1.0) +
+			(b_scaled * b_scaled) / (nb - 1.0)
 		if denominator <= 0.0 {
 			return error('stats.t_test_independent: Welch degrees of freedom are undefined')
 		}
-		df = (va_over_na + vb_over_nb) * (va_over_na + vb_over_nb) / denominator
+		df = (a_scaled + b_scaled) * (a_scaled + b_scaled) / denominator
 	}
 	if !finite_value(standard_error) || standard_error <= 0.0 || !finite_value(df) || df <= 0.0 {
 		return error('stats.t_test_independent: test statistics are not finite')
@@ -344,21 +367,32 @@ pub fn chi_square_goodness_of_fit(observed []f64, expected []f64) !ChiSquareResu
 		return error('stats.chi_square_goodness_of_fit: samples must have equal length of at least two')
 	}
 	mut statistic := 0.0
+	mut observed_total := 0.0
+	mut expected_total := 0.0
 	for i, count in observed {
 		target := expected[i]
 		if !finite_value(count) || !finite_value(target) || count < 0.0 || target <= 0.0 {
 			return error('stats.chi_square_goodness_of_fit: counts must be finite and non-negative, expected counts positive')
 		}
+		observed_total += count
+		expected_total += target
 		delta := count - target
 		statistic += delta * delta / target
 	}
 	if !finite_value(statistic) {
 		return error('stats.chi_square_goodness_of_fit: statistic overflowed f64')
 	}
+	if observed_total <= 0.0 || !finite_value(observed_total) || !finite_value(expected_total) {
+		return error('stats.chi_square_goodness_of_fit: observed total must be positive and finite')
+	}
+	tolerance := 1e-12 * math.max(1.0, math.abs(observed_total))
+	if math.abs(observed_total - expected_total) > tolerance {
+		return error('stats.chi_square_goodness_of_fit: observed and expected totals must agree')
+	}
 	df := f64(observed.len - 1)
 	return ChiSquareResult{
 		statistic: statistic
-		p_value:   clamp_probability(chi_square_upper_tail(statistic, df))
+		p_value:   clamp_probability(chi_square_upper_tail(statistic, df)!)
 		df:        df
 	}
 }
@@ -407,7 +441,7 @@ pub fn chi_square_independence(table [][]f64) !ChiSquareResult {
 	df := f64((rows - 1) * (cols - 1))
 	return ChiSquareResult{
 		statistic: statistic
-		p_value:   clamp_probability(chi_square_upper_tail(statistic, df))
+		p_value:   clamp_probability(chi_square_upper_tail(statistic, df)!)
 		df:        df
 	}
 }
