@@ -13,6 +13,7 @@ module fft
 
 #flag @VMODROOT/pocket-fft/f32.o
 #flag @VMODROOT/pocket-fft/f64.o
+
 $if !windows {
 	#flag -lm
 }
