@@ -1,0 +1,4 @@
+LIBRARY ucrtbase.dll
+EXPORTS
+fma
+fmaf
